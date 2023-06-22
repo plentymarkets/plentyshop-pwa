@@ -1,0 +1,21 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "nodemon",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "dependencies": {
+    "@vue-storefront/middleware": "3.0.0-rc.2",
+    "consola": "^2.15.3",
+    "nodemon": "^2.0.19",
+    "ts-node-dev": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.13"
+  }
+}

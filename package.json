@@ -1,0 +1,54 @@
+{
+  "name": "@vsf/nuxt3-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "prepare": "is-ci || husky install",
+    "build": "turbo run build",
+    "build:analyze": "turbo run build:analyze",
+    "dev": "turbo run dev",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,vue,css,scss,md}\"",
+    "clean": "npx rimraf ./**/node_modules && rm yarn.lock",
+    "clean:hard": "npx rimraf ./**/node_modules && npx rimraf ./**/lib && rm yarn.lock && npx rimraf ./**/.turbo && npx rimraf ./**/.nuxt",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "test:coverage": "npx turbo run test:coverage"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "eslint": "^8.38.0",
+    "rimraf": "^3.0.2",
+    "dotenv": "^16.0.3"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "@vue-storefront/eslint-config": "^2.0.0-rc.5",
+    "babel-preset-node": "^5.1.1",
+    "commitizen": "^4.2.5",
+    "husky": "^7.0.4",
+    "is-ci": "^1.0.0",
+    "lint-staged": "^13.2.1",
+    "prettier": "^2.8.8",
+    "rollup": "^2.79.0",
+    "turbo": "1.5.5",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  },
+  "packageManager": "yarn@1.22.10",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog",
+      "disableScopeLowerCase": true
+    }
+  }
+}
