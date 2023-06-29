@@ -3,7 +3,7 @@
     <h1 class="typography-headline-1">
       {{ $t('vsfHomepage') }}
     </h1>
-    <SfButton type="button" variant="tertiary">🚀</SfButton>
+    <NuxtImg src="images/hero.png" alt="Vue Storefront" sizes="md:90vw lg:45vw" />
   </div>
   <pre>
     <code>{{ JSON.stringify(data, null, 2) }}</code>
@@ -11,7 +11,6 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton } from '@storefront-ui/vue';
 import { sdk } from '~/sdk';
 
 const { data } = await useAsyncData('cms-content', () => sdk.commerce.getContent());
