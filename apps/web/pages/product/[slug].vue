@@ -2,7 +2,7 @@
   <NarrowContainer>
     <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
       <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-        <!-- Gallery -->
+        <Gallery :images="product?.gallery ?? []" />
       </section>
       <section class="mb-10 grid-in-right md:mb-0">
         <!-- PurchaseCard -->
@@ -22,10 +22,13 @@
 </template>
 
 <script lang="ts" setup>
-// example of title override
-const title = ref('Mocked product title');
-// example of using cached data from Home Page
-// const { data } = useContent('home-page');
+const route = useRoute();
+const slug = route.params.slug as string;
+const { data: product, fetchProduct } = useProduct(slug);
+
+fetchProduct(slug);
+
+const title = computed(() => product.value?.name ?? '');
 
 useHead({
   title,
