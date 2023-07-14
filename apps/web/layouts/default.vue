@@ -51,8 +51,13 @@ import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();
 
+const { getCart, data: cart } = useCart();
+
+getCart();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-const cartLineItemsCount = computed(() => 1);
+const cartLineItemsCount = computed(
+  () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
+);
 </script>
