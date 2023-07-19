@@ -3,8 +3,8 @@ import NarrowContainer from '~/components/NarrowContainer/NarrowContainer.vue';
 
 describe('<NarrowContainer />', () => {
   it('should render component', () => {
-    const wrapper = mount(NarrowContainer);
+    const { getByTestId } = mount(NarrowContainer);
 
-    expect(wrapper.findByTestId('narrow-container').exists()).toBeTruthy();
+    expect(getByTestId('narrow-container'));
   });
 });
