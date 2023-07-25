@@ -1,8 +1,8 @@
 import { initSDK, buildModule } from '@vue-storefront/sdk';
-import { type SdkModule, sdkModule } from '@vue-storefront/storefront-boilerplate-sdk';
+import { type BoilerplateModuleType, boilerplateModule } from '../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 const sdkConfig = {
-  commerce: buildModule<SdkModule>(sdkModule),
+  commerce: buildModule<BoilerplateModuleType>(boilerplateModule),
 };
 
 export const sdk = initSDK<typeof sdkConfig>(sdkConfig);
