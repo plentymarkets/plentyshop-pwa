@@ -15,7 +15,7 @@
           <component :is="icon" />
           <SfBadge
             v-if="label === 'cart'"
-            :content="cartLineItemsCount"
+            :content="cartItemsCount"
             class="outline-white bg-white !text-neutral-900 translate-x-[5px] translate-y-[-3px]"
           />
         </div>
@@ -75,8 +75,8 @@ const items = [
     path: paths.cart,
   },
 ];
-const cartLineItemsCount = computed(
-  () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
+const cartItemsCount = computed(
+  () => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0,
 );
 const handleClick = (path: string) => {
   if (path === paths.search) {
