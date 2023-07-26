@@ -1,42 +1,62 @@
 import { mount } from '@vue/test-utils';
 import OrderSummary from '~/components/OrderSummary/OrderSummary.vue';
-import { SfCart } from '@vue-storefront/unified-data-model';
+import type { Cart } from '../../../../../../plentymarkets-sdk/packages/api-client';
 
-const cart: SfCart = {
-  appliedCoupons: [],
-  billingAddress: null,
-  customerEmail: null,
-  id: 'test',
-  lineItems: [],
-  shippingAddress: null,
-  shippingMethod: null,
-  subtotalDiscountedPrice: {
-    amount: 0,
-    currency: 'USD',
-    precisionAmount: '2',
-  },
-  subtotalRegularPrice: {
-    amount: 99.99,
-    currency: 'USD',
-    precisionAmount: '2',
-  },
-  totalCouponDiscounts: {
-    amount: 0.0,
-    currency: 'USD',
-    precisionAmount: '2',
-  },
-  totalItems: 0,
-  totalPrice: {
-    amount: 99.99,
-    currency: 'USD',
-    precisionAmount: '2',
-  },
-  totalShippingPrice: null,
-  totalTax: {
-    amount: 0,
-    currency: 'USD',
-    precisionAmount: '2',
-  },
+const cart: Cart =   {
+  "id": 1,
+  "sessionId": '1',
+  "orderId": null,
+  "customerId": null,
+  "customerShippingAddressId": null,
+  "currency": '1',
+  "referrerId": 1,
+  "shippingCountryId": 12,
+  "methodOfPaymentId": 6000,
+  "shippingProviderId": 101,
+  "shippingProfileId": 6,
+  "itemSum": 1,
+  "itemSumNet": 1,
+  "basketAmount": 1,
+  "basketAmountNet": 1,
+  "shippingAmount": 1,
+  "shippingAmountNet": 1,
+  "paymentAmount": 0,
+  "couponCode": "",
+  "couponDiscount": 0,
+  "shippingDeleteByCoupon": false,
+  "basketRebate": 0,
+  "maxFsk": 0,
+  "orderTimestamp": null,
+  "createdAt": '1',
+  "updatedAt": '1',
+  "basketRebateType": "0",
+  "customerInvoiceAddressId": null,
+  "itemQuantity": 1,
+  "totalVats": [
+    {
+      "vatAmount": 1,
+      "vatValue": 19
+    }
+  ],
+  "subAmount": 1,
+  "isExportDelivery": true,
+  "shopCountryId": 1,
+  "itemWishListIds": [],
+  "items": [
+    {
+      "id": 1,
+      "quantity": 1,
+      "price": 180,
+      "itemId": 157,
+      "variation": null,
+      "variationId": 1100,
+      "basketItemOrderParams": [],
+      "inputLength": 0,
+      "inputWidth": 0,
+      "setComponents": [],
+      "itemType": 1
+    }
+  ]
 };
 
 describe('<OrderSummary />', () => {
@@ -47,6 +67,6 @@ describe('<OrderSummary />', () => {
       }
     });
 
-    expect(wrapper.getByTestId('order-summary'));    
+    expect(wrapper.getByTestId('order-summary'));
   });
 });
