@@ -22,7 +22,7 @@ export const useCart: UseCartReturn = () => {
   const getCart: GetCart = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => sdk.commerce.getCart());
+      const { data, error } = await useAsyncData(() => sdk.plentysystems.getCart());
       useHandleError(error.value);
       state.value.data = data.value?.data;
       return data;

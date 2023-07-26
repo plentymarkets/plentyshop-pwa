@@ -21,7 +21,7 @@ export const useProducts: UseProductsReturn = () => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.commerce.getFacet(params));
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getFacet(params));
     useHandleError(error.value);
     state.value.data = data.value?.data;
     state.value.loading = false;

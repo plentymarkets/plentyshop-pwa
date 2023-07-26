@@ -23,7 +23,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (slug) => {
    */
   const fetchProductRecommended: FetchProductRecommended = async (slug) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.commerce.getProductRecommended({ slug }));
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProductRecommended({ slug }));
     useHandleError(error.value);
     state.value.data = data.value;
     state.value.loading = false;
