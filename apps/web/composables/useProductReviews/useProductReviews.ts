@@ -22,7 +22,7 @@ export const useProductReviews: UseProductReviews = (slug) => {
    */
   const fetchProductReviews: FetchProductReviews = async (slug) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.commerce.getProductReviews({ slug }));
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProductReviews({ slug }));
     useHandleError(error.value);
     state.value.data = data.value;
     state.value.loading = false;
