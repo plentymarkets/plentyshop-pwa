@@ -1,5 +1,5 @@
-import type { SfCart } from '@vue-storefront/unified-data-model';
+import type { Cart } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export type OrderSummaryPropsType = {
-  cart: SfCart;
+  cart: Cart | null | undefined;
 };
