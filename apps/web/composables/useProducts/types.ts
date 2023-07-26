@@ -1,13 +1,16 @@
 import { Ref } from 'vue';
-import type { GetProducts } from '@vue-storefront/storefront-boilerplate-sdk';
-import type { Maybe } from '@vue-storefront/unified-data-model';
+import type {
+  FacetApiResponse,
+  GetFacetResponse,
+  FacetSearchCriteria,
+} from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductsState {
-  data: GetProducts | null;
+  data: FacetApiResponse | null | undefined;
   loading: boolean;
 }
 
-export type FetchProducts = () => Promise<Ref<Maybe<GetProducts>>>;
+export type FetchProducts = (params: FacetSearchCriteria) => Promise<Ref<GetFacetResponse | null>>;
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;

@@ -1,5 +1,6 @@
 import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 import { sdk } from '~/sdk';
+import { FacetSearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 /**
  * @description Composable for managing products.
@@ -16,13 +17,13 @@ export const useProducts: UseProductsReturn = () => {
   /**
    * @description Function for fetching products.
    * @example
-   * getProducts();
+   * getFacet(@props: FacetSearchCriteria)
    */
-  const fetchProducts: FetchProducts = async () => {
+  const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(sdk.commerce.getProducts);
+    const { data, error } = await useAsyncData(() => sdk.commerce.getFacet(params));
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data.value?.data;
     state.value.loading = false;
     return data;
   };
