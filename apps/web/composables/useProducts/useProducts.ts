@@ -19,9 +19,9 @@ export const useProducts: UseProductsReturn = () => {
    * @example
    * getFacet(@props: FacetSearchCriteria)
    */
-  const fetchProducts: FetchProducts = async (slug: FacetSearchCriteria) => {
+  const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.commerce.getFacet(slug));
+    const { data, error } = await useAsyncData(() => sdk.commerce.getFacet(params));
     useHandleError(error.value);
     state.value.data = data.value?.data;
     state.value.loading = false;

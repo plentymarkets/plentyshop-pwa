@@ -10,7 +10,7 @@ export interface UseProductsState {
   loading: boolean;
 }
 
-export type FetchProducts = (slug: FacetSearchCriteria) => Promise<Ref<GetFacetResponse | null>>;
+export type FetchProducts = (params: FacetSearchCriteria) => Promise<Ref<GetFacetResponse | null>>;
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;
