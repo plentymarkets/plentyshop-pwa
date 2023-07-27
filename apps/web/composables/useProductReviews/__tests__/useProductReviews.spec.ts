@@ -12,8 +12,8 @@ vi.mock('~/sdk', () => ({
 
 describe('useProductReview', () => {
   it('should return product reviews', async () => {
-    const productId = '1100'
-    const itemId = 1
+    const productId = '1100';
+    const itemId = 1;
     const { data, fetchProductReviews } = useProductReviews(productId, itemId);
 
     await fetchProductReviews(productId, itemId);
