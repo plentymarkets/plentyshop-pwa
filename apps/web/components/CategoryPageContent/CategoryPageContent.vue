@@ -30,8 +30,8 @@
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product)"
               :price="productGetters.getPrice(product).regular ?? 0"
-              :image-url="'TODO'"
-              :image-alt="'TODO'"
+              :image-url="productGetters.getCoverImage(product)"
+              :image-alt="productGetters.getName(product) ?? ''"
               :slug="productGetters.getSlug(product)"
               :priority="index === 0"
             />
