@@ -3,7 +3,7 @@
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-          <Gallery :images="product?.gallery ?? []" />
+          <Gallery :images="productGetters.getGallery(product)" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <UiPurchaseCard v-if="product" :product="product" />
@@ -26,6 +26,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import { productGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 const route = useRoute();
 const slug = route.params.slug as string;
