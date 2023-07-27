@@ -41,10 +41,10 @@ const { t } = useI18n();
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('category'), link: '/category' },
-  { name: product.value?.name as string, link: `#` },
+  { name: productGetters.getName(product.value), link: `#` },
 ];
 
-const title = computed(() => product.value?.name ?? '');
+const title = computed(() => productGetters.getName(product.value));
 
 useHead({
   title,
