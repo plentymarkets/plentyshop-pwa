@@ -9,7 +9,7 @@
           {{ $t('productDetails') }}
         </h2>
       </template>
-      <p>{{ product.description }}</p>
+      <p>{{ productGetters.getDescription(product) }}</p>
     </UiAccordionItem>
     <UiDivider class="my-4" />
     <UiAccordionItem
@@ -27,13 +27,17 @@
 
 <script lang="ts" setup>
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
+import { productGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 const props = defineProps<ProductAccordionPropsType>();
 
 const { product } = toRefs(props);
 
-const { data: productReviews, fetchProductReviews } = useProductReviews(product.value.slug);
-fetchProductReviews(product.value.slug);
+const { data: productReviews, fetchProductReviews } = useProductReviews(
+  product.value.variation.number,
+  product.value.item.id,
+);
+fetchProductReviews(product.value.variation.number, product.value.item.id);
 
 const productDetailsOpen = ref(true);
 </script>
