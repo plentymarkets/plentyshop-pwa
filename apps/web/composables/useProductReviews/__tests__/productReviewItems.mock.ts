@@ -1,6 +1,5 @@
-import type { Review } from '../../../../../../plentymarkets-sdk/packages/api-client';
-export const mockProductReviews: Review = {
-  feedbacks: [
+import type { ReviewItem } from '../../../../../../plentymarkets-sdk/packages/api-client';
+export const mockProductReviewItems: ReviewItem[] = [
     {
       id: 1,
       title: 'title',
@@ -58,11 +57,4 @@ export const mockProductReviews: Review = {
       },
       replies: []
     }
-  ],
-  itemAttributes: [],
-  pagination: {
-    page: '1',
-    lastPage: 1,
-    isLastPage: true
-  }
-}
+]

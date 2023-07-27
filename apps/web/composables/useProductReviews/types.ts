@@ -1,12 +1,11 @@
-import type { Maybe } from '@vue-storefront/unified-data-model';
-import type { ReviewResponse } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Review, ReviewResponse } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductReviewsState {
-  data: Maybe<ReviewResponse>;
+  data: Review | null;
   loading: boolean;
 }
 
-export type FetchProductReviews = (productId: string, itemId: number) => Promise<Ref<Maybe<ReviewResponse>>>;
+export type FetchProductReviews = (productId: string, itemId: number) => Promise<Ref<ReviewResponse | null>>;
 
 export interface UseProductReviewsReturn {
   data: Readonly<Ref<UseProductReviewsState['data']>>;

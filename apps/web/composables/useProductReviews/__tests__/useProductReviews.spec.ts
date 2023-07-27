@@ -12,10 +12,11 @@ vi.mock('~/sdk', () => ({
 
 describe('useProductReview', () => {
   it('should return product reviews', async () => {
-    const slug = 'athletic-mens-walking-sneakers';
-    const { data, fetchProductReviews } = useProductReviews(slug);
+    const productId = '1100'
+    const itemId = 1
+    const { data, fetchProductReviews } = useProductReviews(productId, itemId);
 
-    await fetchProductReviews(slug);
+    await fetchProductReviews(productId, itemId);
 
     expect(data.value).toEqual(mockProductReviews);
   });
