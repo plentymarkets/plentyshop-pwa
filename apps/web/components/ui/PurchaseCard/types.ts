@@ -1,5 +1,5 @@
-import { SfProduct } from '@vue-storefront/unified-data-model';
-
+// import { SfProduct } from '@vue-storefront/unified-data-model';
+import type { ProductItemDocumentData } from '../../../../../../plentymarkets-sdk/packages/api-client';
 export type PurchaseCardProps = {
-  product: SfProduct;
+  product: ProductItemDocumentData;
 };
