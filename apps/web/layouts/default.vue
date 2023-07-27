@@ -18,14 +18,14 @@
         class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-2 -ml-0.5 rounded-md"
         :tag="NuxtLink"
         :to="paths.cart"
-        :aria-label="$t('numberInCart', cartLineItemsCount)"
+        :aria-label="$t('numberInCart', cartItemsCount)"
         variant="tertiary"
         square
       >
         <template #prefix>
           <SfIconShoppingCart />
           <SfBadge
-            :content="cartLineItemsCount"
+            :content="cartItemsCount"
             class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
             data-testid="cart-badge"
           />
@@ -57,7 +57,8 @@ getCart();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-const cartLineItemsCount = computed(
-  () => cart.value?.lineItems.reduce((total, { quantity }) => total + quantity, 0) ?? 0,
+
+const cartItemsCount = computed(
+    () => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0,
 );
 </script>
