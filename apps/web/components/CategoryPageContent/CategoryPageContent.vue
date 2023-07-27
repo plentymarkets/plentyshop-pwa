@@ -9,7 +9,7 @@
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
             <span class="font-bold font-headings md:text-lg">
-              {{ $t('numberOfProducts', { count: totalProducts }) }}
+              {{ $t('numberOfProducts') }} {{ totalProducts }}
             </span>
             <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
               <template #prefix>
@@ -24,15 +24,15 @@
             data-testid="category-grid"
           >
             <UiProductCard
-              v-for="({ id, name, rating, price, primaryImage, slug }, index) in products"
-              :key="id"
-              :name="name ?? ''"
-              :rating-count="rating?.count"
-              :rating="rating?.average"
-              :price="price?.value.amount"
-              :image-url="primaryImage?.url ?? ''"
-              :image-alt="primaryImage?.alt ?? ''"
-              :slug="slug"
+              v-for="(product, index) in products"
+              :key="productGetters.getId(product)"
+              :name="productGetters.getName(product) ?? ''"
+              :rating-count="productGetters.getTotalReviews(product)"
+              :rating="productGetters.getAverageRating(product)"
+              :price="productGetters.getPrice(product).regular ?? 0"
+              :image-url="productGetters.getCoverImage(product)"
+              :image-alt="productGetters.getName(product) ?? ''"
+              :slug="productGetters.getSlug(product)"
               :priority="index === 0"
             />
           </section>
@@ -54,6 +54,7 @@
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { productGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,

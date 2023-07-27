@@ -1,16 +1,13 @@
 import { Ref } from 'vue';
-import type {
-  FacetApiResponse,
-  GetFacetResponse,
-  FacetSearchCriteria,
-} from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Facet, FacetResponse, FacetSearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductsState {
-  data: FacetApiResponse | null | undefined;
+  data: Facet | null | undefined;
   loading: boolean;
 }
 
-export type FetchProducts = (params: FacetSearchCriteria) => Promise<Ref<GetFacetResponse | null>>;
+export type FetchProducts = (params: FacetSearchCriteria) => Promise<Ref<FacetResponse | null>>;
+
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;
