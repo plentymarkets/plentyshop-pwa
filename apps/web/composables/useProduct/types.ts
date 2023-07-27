@@ -1,11 +1,11 @@
 import type { Ref } from 'vue';
 import type { SfProduct, Maybe } from '@vue-storefront/unified-data-model';
 import type {
-  ProductResponse
+  ProductResponse, Product
 } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductState {
-  data: ProductResponse | null | undefined;
+  data: Product | null | undefined;
   loading: boolean;
 }
 
