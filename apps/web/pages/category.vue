@@ -3,7 +3,7 @@
     <CategoryPageContent
       v-if="productsCatalog"
       :title="$t('allProducts')"
-      :total-products="productsCatalog.pagination.totalResults"
+      :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
     >
       <template #sidebar>
@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import { Category } from '../../../../plentymarkets-sdk/packages/api-client';
 
 definePageMeta({
   layout: false,
@@ -25,18 +26,19 @@ definePageMeta({
 const { fetchProducts, data: productsCatalog } = useProducts();
 const { t } = useI18n();
 
-await fetchProducts();
+await fetchProducts({});
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('allProducts'), link: '/category' },
 ];
-const subCategories = productsCatalog.value?.subCategories;
+const subCategories = productsCatalog.value?.category.children ?? [];
+
 const categories = computed(
   () =>
-    subCategories?.map(({ name, productCount }) => ({
-      name,
-      count: productCount || undefined,
+    subCategories?.map((item: Category) => ({
+      name: item?.details[0].name,
+      count: undefined,
       href: paths.category,
     })) || [],
 );
