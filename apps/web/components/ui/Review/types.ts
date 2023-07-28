@@ -1,5 +1,5 @@
-import type { SfProductReview } from '@vue-storefront/unified-data-model';
+import type { ReviewItem } from '../../../../../../plentymarkets-sdk/packages/api-client';
 
 export type ReviewProps = {
-  review: SfProductReview;
+  reviewItem: ReviewItem;
 };
