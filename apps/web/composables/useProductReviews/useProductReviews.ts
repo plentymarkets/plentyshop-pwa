@@ -10,8 +10,8 @@ import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } f
  * @param productId
  * @param itemId
  */
-export const useProductReviews: UseProductReviews = (productId: string, itemId: number) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}`, () => ({
+export const useProductReviews: UseProductReviews = (productId: string | number, itemId: number) => {
+  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}-${itemId}`, () => ({
     data: null,
     loading: false,
   }));
@@ -20,7 +20,7 @@ export const useProductReviews: UseProductReviews = (productId: string, itemId: 
    * @example
    * fetchProductReviews('product-slug');
    */
-  const fetchProductReviews: FetchProductReviews = async (productId: string, itemId: number) => {
+  const fetchProductReviews: FetchProductReviews = async (productId: string | number, itemId: number) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => sdk.plentysystems.getReview({ productId, itemId }));
     useHandleError(error.value);
