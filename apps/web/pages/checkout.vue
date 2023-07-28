@@ -23,7 +23,7 @@
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
           :button-text="$t('shipping.addButton')"
-          :saved-address="cart.shippingAddress"
+          :saved-address="cart.deliveryAddress"
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
