@@ -26,6 +26,8 @@
           :saved-address="cart.shippingAddress"
           type="shippingAddress"
         />
+        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <ShippingMethod :shipping-methods="shippingMethods" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -69,5 +71,7 @@ definePageMeta({
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart } = useCart();
+const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
+await getShippingMethods();
 const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
 </script>
