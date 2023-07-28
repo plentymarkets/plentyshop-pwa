@@ -1,7 +1,7 @@
 import type { Review, ReviewResponse } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductReviewsState {
-  data: Review | null;
+  data: Review;
   loading: boolean;
 }
 
