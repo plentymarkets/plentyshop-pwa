@@ -80,6 +80,7 @@
 <script lang="ts" setup>
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
+import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 const props = defineProps<AddressFormProps>();
 
@@ -87,16 +88,18 @@ const isCartUpdateLoading = false;
 
 const { savedAddress } = toRefs(props);
 
+// TODO: find a better way for this condition.
+// TODO: fix the getter for countries.
 const defaultValues = ref({
-  firstName: savedAddress?.value?.firstName ?? '',
-  lastName: savedAddress?.value?.lastName ?? '',
-  phone: savedAddress?.value?.phoneNumber ?? '',
-  country: savedAddress?.value?.country ?? '',
-  streetName: savedAddress?.value?.address1 ?? '',
-  streetNumber: savedAddress?.value?.address2 ?? '',
-  city: savedAddress?.value?.city ?? '',
-  state: savedAddress?.value?.state ?? '',
-  postalCode: savedAddress?.value?.postalCode ?? '',
+  firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
+  lastName: savedAddress?.value ? userAddressGetters.getLastName(savedAddress?.value) ?? '' : '',
+  phone: savedAddress?.value ? userAddressGetters.getPhone(savedAddress?.value) ?? '' : '',
+  country: [],
+  streetName: savedAddress?.value ? userAddressGetters.getStreetName(savedAddress?.value) ?? '' : '',
+  streetNumber: savedAddress?.value ? userAddressGetters.getStreetNumber(savedAddress?.value) ?? '' : '',
+  city: savedAddress?.value ? userAddressGetters.getCity(savedAddress?.value) ?? '' : '',
+  state: savedAddress?.value ? userAddressGetters.getProvince(savedAddress?.value) ?? '' : '',
+  postalCode: savedAddress?.value ? userAddressGetters.getPostCode(savedAddress?.value) ?? '' : '',
 });
 const countries = ['US'];
 const states = ['California'];

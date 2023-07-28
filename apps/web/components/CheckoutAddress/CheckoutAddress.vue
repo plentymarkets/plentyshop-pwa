@@ -8,10 +8,10 @@
     </div>
 
     <div v-if="savedAddress" class="mt-2 md:w-[520px]">
-      <p>{{ `${savedAddress.firstName} ${savedAddress.lastName}` }}</p>
-      <p>{{ savedAddress.phoneNumber }}</p>
-      <p>{{ `${savedAddress.address1} ${savedAddress.address2}` }}</p>
-      <p>{{ `${savedAddress.state}, ${savedAddress.postalCode}` }}</p>
+      <p>{{ `${userAddressGetters.getFirstName(savedAddress)} ${userAddressGetters.getLastName(savedAddress)}` }}</p>
+      <p>{{ userAddressGetters.getPhone(savedAddress) }}</p>
+      <p>{{ userAddressGetters.getStreetName(savedAddress) }} {{ userAddressGetters.getStreetNumber(savedAddress) }}</p>
+      <p>{{ `${userAddressGetters.getProvince(savedAddress)} ${userAddressGetters.getPostCode(savedAddress)}` }}</p>
     </div>
 
     <div v-else class="w-full md:max-w-[520px]">
@@ -45,6 +45,7 @@
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
+import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 defineProps<CheckoutAddressProps>();
 
