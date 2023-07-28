@@ -20,9 +20,9 @@ export const useProductReviews: UseProductReviews = (productId: string, itemId: 
    * @example
    * fetchProductReviews('product-slug');
    */
-  const fetchProductReviews: FetchProductReviews = async () => {
+  const fetchProductReviews: FetchProductReviews = async (productId: string, itemId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getReview({ productId: '1100', itemId: 1 }));
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getReview({ productId, itemId }));
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? null;
     state.value.loading = false;
