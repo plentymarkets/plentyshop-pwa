@@ -1,6 +1,5 @@
 <template>
   <SfScrollable
-    v-if="items?.length"
     buttons-placement="floating"
     class="items-center pb-4"
     :wrapper-class="wrapperClass"
