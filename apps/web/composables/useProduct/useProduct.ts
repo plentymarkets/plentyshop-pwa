@@ -24,7 +24,7 @@ export const useProduct: UseProductReturn = (slug) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => sdk.plentysystems.getProduct({ id: slug }));
     useHandleError(error.value);
-    state.value.data = data.value?.data?.item?.documents[0]?.data
+    state.value.data = data.value?.data?.item?.documents[0]?.data ?? null;
     state.value.loading = false;
     return data;
   };

@@ -1,11 +1,8 @@
 import type { Ref } from 'vue';
-import type { SfProduct, Maybe } from '@vue-storefront/unified-data-model';
-import type {
-  ProductResponse, ProductItemDocumentData
-} from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { ProductResponse, ProductItemDocumentData } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductState {
-  data: ProductItemDocumentData | null | undefined;
+  data: ProductItemDocumentData | null;
   loading: boolean;
 }
 
