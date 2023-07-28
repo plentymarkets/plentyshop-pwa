@@ -2,7 +2,7 @@
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-        <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
+        <section v-if="product" class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <Gallery :images="productGetters.getGallery(product)" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
@@ -41,14 +41,20 @@ const { t } = useI18n();
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('category'), link: '/category' },
-  { name: productGetters.getName(product.value), link: `#` },
 ];
 
-const title = computed(() => productGetters.getName(product.value));
+if (product.value) {
+  const productName = productGetters.getName(product.value);
 
-useHead({
-  title,
-});
+  breadcrumbs.push({ name: productName, link: `#` });
+
+  const title = computed(() => productName);
+
+  useHead({
+    title,
+  });
+}
+
 definePageMeta({
   layout: false,
 });
