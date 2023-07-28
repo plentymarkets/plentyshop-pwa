@@ -23,9 +23,18 @@ export const useProductRecommended: UseProductRecommendedReturn = (slug) => {
    */
   const fetchProductRecommended: FetchProductRecommended = async (slug) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProductRecommended({ slug }));
+    // this is temporary because we don't have endpoint for recommanded so we should use (get all products from a category util we have endpoint)
+    const payload = {
+      categoryId: '17',
+      categorySlug: "armchair-stool",
+      page: 1,
+      itemsPerPage: 20,
+      sort: 'sorting.price.avg_asc',
+      facets: 'feedback-2'
+    }
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getFacet(payload));
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data.value?.data.itemList?.documents;
     state.value.loading = false;
     return data;
   };
