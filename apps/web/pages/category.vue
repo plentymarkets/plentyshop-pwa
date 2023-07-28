@@ -9,7 +9,7 @@
       <template #sidebar>
         <CategoryTree :categories="categories" :parent="{ name: $t('allProducts'), href: paths.category }" />
         <CategorySorting />
-        <!-- <CategoryFilters :facets="productsCatalog.facets" /> -->
+        <CategoryFilters :facets="productsCatalog.facets" />
       </template>
     </CategoryPageContent>
   </NuxtLayout>
