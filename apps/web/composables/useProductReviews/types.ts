@@ -5,7 +5,7 @@ export interface UseProductReviewsState {
   loading: boolean;
 }
 
-export type FetchProductReviews = (productId: string, itemId: number) => Promise<Ref<ReviewResponse | null>>;
+export type FetchProductReviews = (productId: string | number, itemId: number) => Promise<Ref<ReviewResponse | null>>;
 
 export interface UseProductReviewsReturn {
   data: Readonly<Ref<UseProductReviewsState['data']>>;
@@ -13,4 +13,4 @@ export interface UseProductReviewsReturn {
   fetchProductReviews: FetchProductReviews;
 }
 
-export type UseProductReviews = (productId: string, itemId: number) => UseProductReviewsReturn;
+export type UseProductReviews = (productId: string | number, itemId: number) => UseProductReviewsReturn;
