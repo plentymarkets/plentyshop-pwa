@@ -1,30 +1,30 @@
 import { toRefs } from '@vueuse/shared';
 import { sdk } from '~/sdk';
-import type { UseProductReviews, UseProductReviewsState, FetchProductReviews } from './types';
+import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } from './types';
 
 /**
  * @description Composable managing product reviews data
- * @param {string} slug Product slug
  * @returns {@link UseProductReturn}
  * @example
  * const { data, loading, fetchProductReviews } = useProductReviews('product-slug');
+ * @param productId
+ * @param itemId
  */
-export const useProductReviews: UseProductReviews = (slug) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${slug}`, () => ({
+export const useProductReviews: UseProductReviews = (productId: string | number, itemId: number) => {
+  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}-${itemId}`, () => ({
     data: null,
     loading: false,
   }));
 
   /** Function for fetching product reviews data
-   * @param {string} slug Product slug
    * @example
    * fetchProductReviews('product-slug');
    */
-  const fetchProductReviews: FetchProductReviews = async (slug) => {
+  const fetchProductReviews: FetchProductReviews = async (productId: string | number, itemId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProductReviews({ slug }));
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getReview({ productId, itemId }));
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data?.value?.data ?? null;
     state.value.loading = false;
     return data;
   };
