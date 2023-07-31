@@ -3,7 +3,7 @@
     <CategoryPageContent
       v-if="productsCatalog"
       :title="$t('resultsFor', { phrase: query.search })"
-      :total-products="productsCatalog.pagination.totalResults"
+      :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
     >
       <template #sidebar>
@@ -22,5 +22,5 @@ definePageMeta({
 const { query } = useRoute();
 const { fetchProducts, data: productsCatalog } = useProducts();
 
-await fetchProducts();
+await fetchProducts({});
 </script>

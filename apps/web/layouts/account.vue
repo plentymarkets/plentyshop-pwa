@@ -12,7 +12,7 @@
               </SfListItem>
               <li v-for="{ label, link } in subsections" :key="label">
                 <SfListItem
-                  :tag="NuxtLink"
+                  :tag="NuxtLink.toString()"
                   :href="link"
                   :class="[
                     'first-of-type:mt-2 rounded-md active:bg-primary-100 !text-neutral-900',
@@ -29,7 +29,7 @@
             <UiDivider />
             <ul>
               <SfListItem
-                :tag="NuxtLink"
+                :tag="NuxtLink.toString()"
                 href="/logout"
                 class="mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
               >

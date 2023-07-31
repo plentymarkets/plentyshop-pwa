@@ -1,15 +1,13 @@
-import { SfFacet } from '@vue-storefront/unified-data-model';
+import { FilterGroup } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export type CategoryFiltersProps = {
-  facets: SfFacet[];
+  facets: FilterGroup[];
 };
 
 export type FilterProps = {
-  facet?: SfFacet;
-  selected: string[];
-  type: 'size' | 'color';
+  facet?: FilterGroup;
 };
 
 export type FilterEmits = {
-  (event: 'update:selected', parameter: FilterProps['selected']): void;
+  // (event: 'update:selected', parameter: FilterProps['selected']): void;
 };
