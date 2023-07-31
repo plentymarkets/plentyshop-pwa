@@ -12,7 +12,7 @@
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product)"
       :image-url="productGetters.getCoverImage(product)"
-      :image-alt="''"
+      :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
       :rating="productGetters.getAverageRating(product)"
