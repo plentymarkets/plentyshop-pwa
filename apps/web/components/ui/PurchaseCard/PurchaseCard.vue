@@ -7,24 +7,24 @@
       <SfIconSell size="sm" class="mr-1" />
       <span class="mr-1">{{ $t(`sale`) }}</span>
     </UiTag>
-    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ product.name }}</h1>
+    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ productGetters.getName(product) }}</h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        ${{ product.price?.value.amount }}
+        ${{ productGetters.getPrice(product).special }}
       </span>
       <span class="text-base font-normal text-neutral-500 line-through">
-        ${{ product.price?.regularPrice.amount }}
+        ${{ productGetters.getRegularPrice(product) }}
       </span>
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="product.rating?.average" :max="5" />
-      <SfCounter class="ml-1" size="xs">{{ product.rating?.count }}</SfCounter>
+      <SfRating size="xs" :value="productGetters.getAverageRating(product)" :max="5" />
+      <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(product) }}</SfCounter>
       <SfLink href="#" variant="secondary" class="ml-2 text-xs text-neutral-500">
-        {{ $t('reviewsCount', { count: product.rating?.count }) }}
+        {{ $t('reviewsCount', { count: productGetters.getTotalReviews(product) }) }}
       </SfLink>
     </div>
     <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-      {{ product.description }}
+      {{  productGetters.getDescription(product) }}
     </p>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <UiTag class="w-full mb-4">
@@ -87,6 +87,7 @@
 </template>
 
 <script lang="ts" setup>
+import { productGetters } from '../../../../../../plentymarkets-sdk/packages/sdk/src/index';
 import {
   SfButton,
   SfCounter,

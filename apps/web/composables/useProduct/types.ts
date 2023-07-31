@@ -1,12 +1,12 @@
 import type { Ref } from 'vue';
-import type { Product } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { ProductItemDocumentData } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseProductState {
-  data: Product;
+  data: ProductItemDocumentData;
   loading: boolean;
 }
 
-export type FetchProduct = (slug: string) => Promise<Product>;
+export type FetchProduct = (slug: string) => Promise<ProductItemDocumentData>;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
