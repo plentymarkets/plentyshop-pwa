@@ -2,7 +2,7 @@
   <p data-testid="recommended-products" class="my-4 typography-text-lg">
     {{ $t('recommendedProducts') }}
   </p>
-  <ProductSlider :items="products" />
+  <ProductSlider v-if="products?.length" :items="products" />
 </template>
 
 <script setup lang="ts">
