@@ -10,24 +10,30 @@ import { sdk } from '~/sdk';
  * Composable for getting recommended products data
  * @param {string} slug Product slug
  */
-export const useProductRecommended: UseProductRecommendedReturn = (slug) => {
-  const state = useState<UseProductRecommendedState>(`useProductRecommended-${slug}`, () => ({
-    data: null,
+export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
+  const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
+    data: [],
     loading: false,
   }));
 
   /** Function for fetching product recommended data
-   * @param {string} slug Product slug
    * @example
    * fetchProductRecommended('product-slug');
+   * @param categoryId
    */
-  const fetchProductRecommended: FetchProductRecommended = async (slug) => {
+  const fetchProductRecommended: FetchProductRecommended = async (categoryId: string) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProductRecommended({ slug }));
+    const payload = {
+      categoryId: categoryId,
+      itemsPerPage: 20,
+      sort: 'sorting.price.avg_asc',
+    };
+
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getFacet(payload));
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;
-    return data;
+    return state.value.data;
   };
 
   return {
