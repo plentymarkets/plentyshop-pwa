@@ -1,5 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 import { sdk } from '~/sdk';
+import type { Review } from '../../../../../plentymarkets-sdk/packages/api-client';
 import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } from './types';
 
 /**
@@ -10,9 +11,9 @@ import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } f
  * @param productId
  * @param itemId
  */
-export const useProductReviews: UseProductReviews = (productId: string, itemId: number) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}`, () => ({
-    data: null,
+export const useProductReviews: UseProductReviews = (productId: string | number, itemId: number) => {
+  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}-${itemId}`, () => ({
+    data: {} as Review,
     loading: false,
   }));
 
@@ -20,13 +21,13 @@ export const useProductReviews: UseProductReviews = (productId: string, itemId: 
    * @example
    * fetchProductReviews('product-slug');
    */
-  const fetchProductReviews: FetchProductReviews = async (productId: string, itemId: number) => {
+  const fetchProductReviews: FetchProductReviews = async (productId: string | number, itemId: number) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => sdk.plentysystems.getReview({ productId, itemId }));
     useHandleError(error.value);
-    state.value.data = data?.value?.data ?? null;
+    state.value.data = data?.value?.data ?? state.value.data;
     state.value.loading = false;
-    return data;
+    return state.value.data;
   };
 
   return {

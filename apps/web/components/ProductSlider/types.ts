@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'vue';
-import type { SfProduct } from '@vue-storefront/unified-data-model';
+import type { ProductItemDocumentData } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export type ProductSliderProps = {
-  items?: SfProduct[];
+  items?: ProductItemDocumentData[];
   wrapperClass?: HTMLAttributes['class'];
 };

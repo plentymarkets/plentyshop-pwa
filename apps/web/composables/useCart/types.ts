@@ -1,12 +1,12 @@
 import type { Ref } from 'vue';
-import type { Cart, CartResponse } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Cart } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseCartState {
-  data: Cart | null | undefined;
+  data: Cart;
   loading: boolean;
 }
 
-export type GetCart = () => Promise<Ref<CartResponse | null>>;
+export type GetCart = () => Promise<Cart>;
 
 export interface UseCart {
   data: Readonly<Ref<UseCartState['data']>>;
