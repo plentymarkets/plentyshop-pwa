@@ -1,6 +1,7 @@
 import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 import { sdk } from '~/sdk';
 import { FacetSearchCriteria } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Facet } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 const ITEMS_PER_PAGE = [10, 20, 50];
 
@@ -12,7 +13,7 @@ const ITEMS_PER_PAGE = [10, 20, 50];
  */
 export const useProducts: UseProductsReturn = () => {
   const state = useState<UseProductsState>('products', () => ({
-    data: null,
+    data: {} as Facet,
     loading: false,
   }));
 
@@ -28,9 +29,9 @@ export const useProducts: UseProductsReturn = () => {
 
     if (data.value) data.value.data.pagination.perPageOptions = ITEMS_PER_PAGE;
 
-    state.value.data = data.value?.data;
+    state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;
-    return data;
+    return state.value.data;
   };
 
   return {
