@@ -87,7 +87,7 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '../@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
 import {
   SfButton,
   SfCounter,
