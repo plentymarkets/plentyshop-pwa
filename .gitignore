@@ -27,7 +27,7 @@ coverage
 .DS_Store
 .idea
 *.pem
-.idea
+.yarnrc.yml
 
 # debug
 npm-debug.log*
