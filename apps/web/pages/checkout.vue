@@ -27,7 +27,7 @@
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod :shipping-methods="shippingMethods" />
+        <ShippingMethod :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -64,6 +64,7 @@
 <script lang="ts" setup>
 import { SfButton, SfLink } from '@storefront-ui/vue';
 import { PaymentMethod } from '~/components/CheckoutPayment/types';
+import { shippingProviderGetters } from '../../../../plentymarkets-sdk/packages/sdk/src/index';
 
 definePageMeta({
   layout: false,

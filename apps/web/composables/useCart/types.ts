@@ -11,7 +11,7 @@ export type GetCart = () => Promise<Cart>;
 export interface UseCart {
   data: Readonly<Ref<UseCartState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  fetchCard: FetchCard;
+  getCart: GetCart;
 }
 
 export type UseCartReturn = () => UseCart;

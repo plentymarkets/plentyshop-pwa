@@ -1,5 +1,5 @@
-import { SfShippingMethods, Maybe } from '@vue-storefront/unified-data-model';
+import type { ShippingMethod } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export type ShippingMethodProps = {
-  shippingMethods: Maybe<SfShippingMethods>;
+  shippingMethods: ShippingMethod[];
 };

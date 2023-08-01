@@ -19,7 +19,6 @@
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
       <SfSelect
-        v-model="defaultValues.country"
         name="country"
         :placeholder="$t('form.selectPlaceholder')"
         auto-complete="country-name"
@@ -79,8 +78,8 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import type { AddressFormProps } from './types';
 import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 

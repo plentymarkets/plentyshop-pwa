@@ -1,11 +1,11 @@
-import { SfShippingMethods, Maybe } from '@vue-storefront/unified-data-model';
+import type { ShippingProvider } from '../../../../../plentymarkets-sdk/packages/api-client';
 
 export interface UseCartShippingMethodsState {
-  data: Maybe<SfShippingMethods>;
+  data: ShippingProvider;
   loading: boolean;
 }
 
-export type GetShippingMethods = () => Promise<Ref<Maybe<SfShippingMethods>>>;
+export type GetShippingMethods = () => Promise<ShippingProvider>;
 
 export interface UseCartShippingMethods {
   data: Readonly<Ref<UseCartShippingMethodsState['data']>>;

@@ -115,10 +115,10 @@ const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClos
 
 defineProps<DefaultLayoutProps>();
 
-const { fetchCard, data: cart } = useCart();
+const { getCart, data: cart } = useCart();
 const { fetchAccount, data: account } = useAccount();
 
-fetchCard();
+getCart();
 fetchAccount();
 usePageTitle();
 

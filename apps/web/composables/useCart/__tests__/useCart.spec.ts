@@ -2,9 +2,9 @@ import { useCart } from '~/composables/useCart/useCart';
 
 describe('useCart', () => {
   it('should return account data', async () => {
-    const { fetchCard, data } = useCart();
+    const { getCart, data } = useCart();
 
-    await fetchCard();
+    await getCart();
 
     expect(data.value).not.toBeUndefined();
   });
