@@ -1,5 +1,5 @@
 import { Ref } from 'vue';
-import type { Facet, FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client';
+import type { Facet, FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseProductsState {
   data: Facet;

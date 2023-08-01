@@ -1,7 +1,7 @@
 import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 import { sdk } from '~/sdk';
-import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client';
-import type { Facet } from '@plentymarkets/plentymarkets-sdk/packages/api-client';
+import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Facet } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 const ITEMS_PER_PAGE = [10, 20, 50];
 
