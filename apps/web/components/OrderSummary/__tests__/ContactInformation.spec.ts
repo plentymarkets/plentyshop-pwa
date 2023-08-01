@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import OrderSummary from '~/components/OrderSummary/OrderSummary.vue';
-import type { Cart } from '../../../../../../plentymarkets-sdk/packages/api-client';
+import type { Cart } from '../@plentymarkets/plentymarkets-sdk/packages/api-client';
 
 const cart: Cart =   {
   "id": 1,

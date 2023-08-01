@@ -1,4 +1,4 @@
-import { ProductItemDocumentData } from '../../../../../plentymarkets-sdk/packages/api-client';
+import { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client';
 
 export type CategoryPageContentProps = {
   title: string;

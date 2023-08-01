@@ -80,7 +80,7 @@
 <script lang="ts" setup>
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
-import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const props = defineProps<AddressFormProps>();
 

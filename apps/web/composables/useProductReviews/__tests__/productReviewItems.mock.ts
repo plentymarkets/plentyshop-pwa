@@ -1,4 +1,4 @@
-import type { ReviewItem } from '../../../../../../plentymarkets-sdk/packages/api-client';
+import type { ReviewItem } from '../@plentymarkets/plentymarkets-sdk/packages/api-client';
 export const mockProductReviewItems: ReviewItem[] = [
     {
       id: 1,

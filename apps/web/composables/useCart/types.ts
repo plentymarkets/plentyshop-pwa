@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { Cart } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client';
 
 export interface UseCartState {
   data: Cart;

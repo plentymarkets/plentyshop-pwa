@@ -33,7 +33,7 @@
 
 <script lang="ts" setup>
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
-import { productGetters, reviewGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { productGetters, reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const props = defineProps<ProductAccordionPropsType>();
 
