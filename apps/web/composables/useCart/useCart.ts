@@ -20,7 +20,7 @@ export const useCart: UseCartReturn = () => {
    * @example
    * getCart();
    */
-  const getCart: GetCart = async () => {
+  const fetchCard: FetchCard = async () => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() => sdk.plentysystems.getCart());
@@ -35,7 +35,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   return {
-    getCart,
+    fetchCard,
     ...toRefs(state.value),
   };
 };
