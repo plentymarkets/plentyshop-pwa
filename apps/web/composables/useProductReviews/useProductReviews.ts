@@ -1,6 +1,6 @@
+import type { Review } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import { sdk } from '~/sdk';
-import type { Review } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } from './types';
 
 /**

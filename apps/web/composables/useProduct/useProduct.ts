@@ -1,6 +1,6 @@
+import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import { sdk } from '~/sdk';
-import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import type { UseProductReturn, UseProductState, FetchProduct } from './types';
 
 /**

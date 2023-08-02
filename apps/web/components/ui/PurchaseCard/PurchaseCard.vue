@@ -7,7 +7,9 @@
       <SfIconSell size="sm" class="mr-1" />
       <span class="mr-1">{{ $t(`sale`) }}</span>
     </UiTag>
-    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ productGetters.getName(product) }}</h1>
+    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+      {{ productGetters.getName(product) }}
+    </h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         ${{ productGetters.getPrice(product).special }}
@@ -24,7 +26,7 @@
       </SfLink>
     </div>
     <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-      {{  productGetters.getDescription(product) }}
+      {{ productGetters.getDescription(product) }}
     </p>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <UiTag class="w-full mb-4">

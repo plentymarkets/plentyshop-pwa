@@ -75,9 +75,7 @@ const items = [
     path: paths.cart,
   },
 ];
-const cartItemsCount = computed(
-  () => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0,
-);
+const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const handleClick = (path: string) => {
   if (path === paths.search) {
     open();

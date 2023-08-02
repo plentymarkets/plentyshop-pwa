@@ -29,9 +29,9 @@
 </template>
 
 <script lang="ts" setup>
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const { data: cart } = useCart();
 
