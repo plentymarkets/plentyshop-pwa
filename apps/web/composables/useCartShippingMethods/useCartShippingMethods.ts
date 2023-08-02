@@ -5,7 +5,7 @@ import type {
   GetShippingMethods,
 } from '~/composables/useCartShippingMethods/types';
 import { sdk } from '~/sdk';
-import type { ShippingProvider } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 /**
  * @description Composable for getting shipping methods.

@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import type { ShippingMethodProps } from '~/components/ShippingMethod/types';
-import { shippingProviderGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 defineProps<ShippingMethodProps>();
 

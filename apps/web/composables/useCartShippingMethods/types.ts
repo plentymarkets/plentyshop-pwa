@@ -1,4 +1,4 @@
-import type { ShippingProvider } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseCartShippingMethodsState {
   data: ShippingProvider;
