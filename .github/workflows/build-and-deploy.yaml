@@ -32,6 +32,13 @@ jobs:
           echo "target-url=$TARGET_URL" >> $GITHUB_OUTPUT
           echo "project-name=$PROJECT_NAME" >> $GITHUB_OUTPUT
           echo "region=$REGION" >> $GITHUB_OUTPUT
+      - name: Create NPMRC
+        run: |
+          echo "npmScopes:
+                  plentymarkets:
+                    npmRegistryServer: 'https://npm.pkg.github.com'
+                    npmAuthToken: '${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}'
+                  " >> ~/.yarnrc.yml
 
   build:
     name: Build
