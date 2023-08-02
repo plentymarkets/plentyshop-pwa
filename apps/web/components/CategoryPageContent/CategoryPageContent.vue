@@ -54,7 +54,7 @@
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
-import { productGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,

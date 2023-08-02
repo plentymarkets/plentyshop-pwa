@@ -1,7 +1,7 @@
 import { toRefs } from '@vueuse/shared';
 import { sdk } from '~/sdk';
-import type { Cart } from '../../../../../plentymarkets-sdk/packages/api-client';
 import type { UseCartReturn, UseCartState, GetCart } from './types';
+import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 /**
  * @description Composable for managing cart.

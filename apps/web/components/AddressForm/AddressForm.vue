@@ -78,8 +78,8 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
-import { AddressFormProps } from './types';
+import type { AddressFormProps } from './types';
+import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const props = defineProps<AddressFormProps>();
 
@@ -93,7 +93,7 @@ const defaultValues = ref({
   firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
   lastName: savedAddress?.value ? userAddressGetters.getLastName(savedAddress?.value) ?? '' : '',
   phone: savedAddress?.value ? userAddressGetters.getPhone(savedAddress?.value) ?? '' : '',
-  country: [],
+  country: '',
   streetName: savedAddress?.value ? userAddressGetters.getStreetName(savedAddress?.value) ?? '' : '',
   streetNumber: savedAddress?.value ? userAddressGetters.getStreetNumber(savedAddress?.value) ?? '' : '',
   city: savedAddress?.value ? userAddressGetters.getCity(savedAddress?.value) ?? '' : '',

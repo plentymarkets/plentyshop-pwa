@@ -31,7 +31,7 @@
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
-import { cartGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const { data: cart } = useCart();
 

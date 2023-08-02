@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { ProductItemDocumentData } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseProductState {
   data: ProductItemDocumentData;

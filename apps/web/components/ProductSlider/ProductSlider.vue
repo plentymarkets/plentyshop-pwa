@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 

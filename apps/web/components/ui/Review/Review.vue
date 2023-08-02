@@ -42,7 +42,7 @@
 <script lang="ts" setup>
 import { SfRating, SfIconCheck, SfIconThumbUp, SfIconThumbDown, SfCounter } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
-import { reviewGetters } from '../../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
 
 const props = defineProps<ReviewProps>();
 
