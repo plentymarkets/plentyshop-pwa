@@ -1,10 +1,11 @@
 name: Code quality (sonarcloud)
 on:
-  push:
-    branches:
-      - develop
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch
+#  push:
+#    branches:
+#      - develop
+#  pull_request:
+#    types: [opened, synchronize, reopened]
 jobs:
   sonarcloud-server:
     runs-on: ubuntu-latest
