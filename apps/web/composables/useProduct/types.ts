@@ -1,12 +1,12 @@
 import type { Ref } from 'vue';
-import type { SfProduct, Maybe } from '@vue-storefront/unified-data-model';
+import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseProductState {
-  data: Maybe<SfProduct>;
+  data: ProductItemDocumentData;
   loading: boolean;
 }
 
-export type FetchProduct = (slug: string) => Promise<Ref<Maybe<SfProduct>>>;
+export type FetchProduct = (slug: string) => Promise<ProductItemDocumentData>;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;

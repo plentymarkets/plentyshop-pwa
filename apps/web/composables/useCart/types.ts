@@ -1,12 +1,12 @@
 import type { Ref } from 'vue';
-import type { SfCart, Maybe } from '@vue-storefront/unified-data-model';
+import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseCartState {
-  data: Maybe<SfCart>;
+  data: Cart;
   loading: boolean;
 }
 
-export type GetCart = () => Promise<Ref<Maybe<SfCart>>>;
+export type GetCart = () => Promise<Cart>;
 
 export interface UseCart {
   data: Readonly<Ref<UseCartState['data']>>;

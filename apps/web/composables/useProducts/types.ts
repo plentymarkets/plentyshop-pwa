@@ -1,13 +1,13 @@
 import { Ref } from 'vue';
-import type { GetProducts } from '@vue-storefront/storefront-boilerplate-sdk';
-import type { Maybe } from '@vue-storefront/unified-data-model';
+import type { Facet, FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseProductsState {
-  data: GetProducts | null;
+  data: Facet;
   loading: boolean;
 }
 
-export type FetchProducts = () => Promise<Ref<Maybe<GetProducts>>>;
+export type FetchProducts = (params: FacetSearchCriteria) => Promise<Facet>;
+
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;

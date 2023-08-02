@@ -1,22 +1,22 @@
 <template>
-  <div v-if="cart?.lineItems.length" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
+  <div v-if="cart?.items?.length ?? 0 > 0" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
     <div class="col-span-7 mb-10 md:mb-0">
-      <div v-for="{ id, attributes, image, name, totalPrice, unitPrice, quantity, slug } in cart.lineItems" :key="id">
+      <div v-for="(cartItem, id) in cart?.items" :key="id">
         <UiCartProductCard
-          :attributes="attributes"
-          :image-url="image?.url"
-          :image-alt="image?.alt"
-          :name="name ?? ''"
-          :price="totalPrice?.amount || 0"
-          :special-price="unitPrice?.value?.amount || 0"
+          :attributes="[]"
+          :image-url="cartGetters.getItemImage(cartItem)"
+          :image-alt="cartGetters.getItemImage(cartItem)"
+          :name="cartGetters.getItemName(cartItem) ?? ''"
+          :price="cartGetters.getItemPrice(cartItem)?.regular || 0"
+          :special-price="cartGetters.getItemPrice(cartItem)?.special || 0"
           :max-value="10"
           :min-value="1"
-          :value="quantity"
-          :slug="slug"
+          :value="cartGetters.getItemQty(cartItem)"
+          :slug="cartGetters.getItemName(cartItem)"
         />
       </div>
     </div>
-    <OrderSummary :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
+    <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
       <SfButton :tag="NuxtLink" :to="paths.checkout" size="lg" class="w-full mb-4 md:mb-0">
         {{ $t('goToCheckout') }}
       </SfButton>
@@ -30,6 +30,8 @@
 
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
+import { useCart } from '~/composables';
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const { data: cart } = useCart();
 
