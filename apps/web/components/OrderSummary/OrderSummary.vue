@@ -52,7 +52,7 @@
 <script setup lang="ts">
 import { SfButton, SfInput } from '@storefront-ui/vue';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
-import { cartGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 defineProps<OrderSummaryPropsType>();
 </script>

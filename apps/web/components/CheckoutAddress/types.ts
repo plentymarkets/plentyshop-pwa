@@ -1,4 +1,4 @@
-import type { Address } from '../../../../../plentymarkets-sdk/packages/api-client';
+import type { Address } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export type CheckoutAddressProps = {
   type: 'billingAddress' | 'shippingAddress';

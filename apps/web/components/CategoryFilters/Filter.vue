@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { SfAccordionItem, SfChip, SfCounter, SfIconChevronLeft, SfListItem, SfThumbnail } from '@storefront-ui/vue';
 import type { FilterEmits, FilterProps } from '~/components/CategoryFilters/types';
-import { facetGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const props = defineProps<FilterProps>();
 const emit = defineEmits<FilterEmits>();

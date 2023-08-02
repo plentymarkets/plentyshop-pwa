@@ -3,7 +3,7 @@ import { SfAttribute, SfProduct } from '@vue-storefront/unified-data-model';
 import { groupBy, uniqBy } from 'lodash-es';
 import type {
   ProductItemDocumentData
-} from '../../../../../plentymarkets-sdk/packages/api-client';
+} from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 /**
  * composable for getting product attributes data
  * @param {SfProduct} product Product object

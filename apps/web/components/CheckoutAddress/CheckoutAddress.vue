@@ -45,7 +45,7 @@
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
-import { userAddressGetters } from '../../../../../plentymarkets-sdk/packages/sdk/src/index';
+import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 defineProps<CheckoutAddressProps>();
 
