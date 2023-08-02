@@ -2,7 +2,10 @@ import { PlentysystemsModuleType, plentysystemsModule } from '@plentymarkets/ple
 import { initSDK, buildModule } from '@vue-storefront/sdk';
 
 const sdkConfig = {
-  plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule),
+  plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
+    apiUrl: 'http://localhost:8181/plentysystems'
+  }),
 };
+
 
 export const sdk = initSDK<typeof sdkConfig>(sdkConfig);
