@@ -4,8 +4,8 @@ import type {
   UseCartShippingMethodsReturn,
   GetShippingMethods,
 } from '~/composables/useCartShippingMethods/types';
-import { sdk } from '~/sdk';
 import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for getting shipping methods.
@@ -27,7 +27,7 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
 
   const getShippingMethods: GetShippingMethods = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getShippingProvider());
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getShippingProvider());
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;
