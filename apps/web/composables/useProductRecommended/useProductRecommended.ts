@@ -4,7 +4,7 @@ import type {
   UseProductRecommendedState,
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
-import { sdk } from '~/sdk';
+import { useSdk } from '~/sdk';
 
 /**
  * Composable for getting recommended products data
@@ -29,7 +29,7 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
       sort: 'sorting.price.avg_asc',
     };
 
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getFacet(payload));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(payload));
     useHandleError(error.value);
     state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;

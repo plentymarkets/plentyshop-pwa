@@ -1,7 +1,7 @@
-import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
-import { sdk } from '~/sdk';
 import type { UseCartReturn, UseCartState, GetCart } from './types';
+import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing cart.
@@ -23,7 +23,7 @@ export const useCart: UseCartReturn = () => {
   const getCart: GetCart = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => sdk.plentysystems.getCart());
+      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getCart());
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
       return state.value.data;
