@@ -37,7 +37,7 @@ const { data: product, fetchProduct } = useProduct(productId);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
 
 await fetchProduct(productId);
-await fetchProductRecommended(productId);
+await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);
 
 const { t } = useI18n();
 
