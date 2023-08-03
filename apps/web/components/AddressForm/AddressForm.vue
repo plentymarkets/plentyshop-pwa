@@ -18,12 +18,7 @@
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
-      <SfSelect
-        name="country"
-        :placeholder="$t('form.selectPlaceholder')"
-        auto-complete="country-name"
-        required
-      >
+      <SfSelect name="country" :placeholder="$t('form.selectPlaceholder')" auto-complete="country-name" required>
         <option v-for="country in countries" :key="country">{{ country }}</option>
       </SfSelect>
     </label>
@@ -87,7 +82,9 @@ const isCartUpdateLoading = false;
 
 const { savedAddress } = toRefs(props);
 
+// eslint-disable-next-line unicorn/expiring-todo-comments
 // TODO: find a better way for this condition.
+// eslint-disable-next-line unicorn/expiring-todo-comments
 // TODO: fix the getter for countries.
 const defaultValues = ref({
   firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',

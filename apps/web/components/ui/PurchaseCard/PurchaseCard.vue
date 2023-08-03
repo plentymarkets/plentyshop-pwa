@@ -89,7 +89,8 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from "@plentymarkets/plentymarkets-sdk/packages/sdk/src";
+import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import {
   SfButton,
   SfCounter,
@@ -105,7 +106,6 @@ import {
   SfIconShoppingCart,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import {ReviewAverage} from "@plentymarkets/plentymarkets-sdk/packages/api-client/server";
 
 defineProps<PurchaseCardProps>();
 

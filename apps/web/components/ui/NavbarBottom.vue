@@ -55,8 +55,6 @@ const items = [
     link: paths.account,
   },
 ];
-const cartItemsCount = computed(
-  () => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0,
-);
+const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
