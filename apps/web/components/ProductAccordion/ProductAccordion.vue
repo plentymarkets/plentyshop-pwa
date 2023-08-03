@@ -13,7 +13,7 @@
     </UiAccordionItem>
     <UiDivider class="my-4" />
     <UiAccordionItem
-      v-if="productReviews && (reviewGetters.getItems(productReviews)?.length)"
+      v-if="productReviews && reviewGetters.getItems(productReviews)?.length"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center"
     >
       <template #summary>
@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 import { productGetters, reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();
 

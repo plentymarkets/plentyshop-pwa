@@ -27,8 +27,8 @@
               v-for="(product, index) in products"
               :key="productGetters.getId(product)"
               :name="productGetters.getName(product) ?? ''"
-              :rating-count="productGetters.getTotalReviews(product)"
-              :rating="productGetters.getAverageRating(product)"
+              :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
+              :rating="productGetters.getAverageRating({} as ReviewAverage)"
               :price="productGetters.getPrice(product).regular ?? 0"
               :image-url="productGetters.getCoverImage(product)"
               :image-alt="productGetters.getName(product) ?? ''"
@@ -55,6 +55,7 @@ import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import {ReviewAverage} from "@plentymarkets/plentymarkets-sdk/packages/api-client/server";
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,

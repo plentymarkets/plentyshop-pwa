@@ -1,6 +1,6 @@
-import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
-export const mockProduct: ProductItemDocumentData = {
+export const mockProduct: Product = {
   defaultCategories: [
     {
       id: 73,
