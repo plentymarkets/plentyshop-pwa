@@ -1,10 +1,11 @@
 name: Code quality (sonarcloud)
 on:
-  push:
-    branches:
-      - develop
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch
+#  push:
+#    branches:
+#      - develop
+#  pull_request:
+#    types: [opened, synchronize, reopened]
 jobs:
   sonarcloud-server:
     runs-on: ubuntu-latest
@@ -34,9 +35,17 @@ jobs:
           node-version-file: './.github/.node-version'
           cache: 'yarn'
 
+      - name: Create NPMRC
+        run: |
+          echo "npmScopes:
+                  plentymarkets:
+                    npmRegistryServer: 'https://npm.pkg.github.com'
+                    npmAuthToken: '${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}'
+                  " >> ~/.yarnrc.yml
+
       - name: Install dependencies
         run: yarn --frozen-lockfile
-    
+
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v1.9.1
         with:

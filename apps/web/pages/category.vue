@@ -16,8 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 import { Category } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 definePageMeta({
   layout: false,

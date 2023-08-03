@@ -7,7 +7,9 @@
       <SfIconSell size="sm" class="mr-1" />
       <span class="mr-1">{{ $t(`sale`) }}</span>
     </UiTag>
-    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">{{ productGetters.getName(product) }}</h1>
+    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+      {{ productGetters.getName(product) }}
+    </h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         ${{ productGetters.getPrice(product).special }}
