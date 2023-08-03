@@ -3,6 +3,6 @@ import { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/sr
 export type CategoryPageContentProps = {
   title: string;
   totalProducts: number;
-  itemsPerPage?: number;
+  itemsPerPage: number;
   products?: Product[];
 };
