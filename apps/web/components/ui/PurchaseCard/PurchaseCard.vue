@@ -17,14 +17,14 @@
       </span>
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="productGetters.getAverageRating(product)" :max="5" />
-      <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(product) }}</SfCounter>
+      <SfRating size="xs" :value="productGetters.getAverageRating({} as ReviewAverage)" :max="5" />
+      <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews({} as ReviewAverage) }}</SfCounter>
       <SfLink href="#" variant="secondary" class="ml-2 text-xs text-neutral-500">
-        {{ $t('reviewsCount', { count: productGetters.getTotalReviews(product) }) }}
+        {{ $t('reviewsCount', { count: productGetters.getTotalReviews({} as ReviewAverage) }) }}
       </SfLink>
     </div>
     <p class="mb-4 font-normal typography-text-sm" data-testid="product-description">
-      {{  productGetters.getDescription(product) }}
+      {{ productGetters.getDescription(product) }}
     </p>
     <div class="py-4 mb-4 border-gray-200 border-y">
       <UiTag class="w-full mb-4">
@@ -87,7 +87,7 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
+import { productGetters } from "@plentymarkets/plentymarkets-sdk/packages/sdk/src";
 import {
   SfButton,
   SfCounter,
@@ -103,6 +103,7 @@ import {
   SfIconShoppingCart,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import {ReviewAverage} from "@plentymarkets/plentymarkets-sdk/packages/api-client/server";
 
 defineProps<PurchaseCardProps>();
 
