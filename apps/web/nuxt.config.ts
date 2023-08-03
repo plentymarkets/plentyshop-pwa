@@ -34,7 +34,7 @@ export default defineNuxtConfig({
       '2xl': 1366,
       xl: 1280,
       lg: 1024,
-      md: 767,
+      md: 768,
       sm: 640,
       xs: 376,
       '2xs': 360,
@@ -71,8 +71,14 @@ export default defineNuxtConfig({
   ],
   nitro: {
     prerender: {
-      routes: ['/'],
+      crawlLinks: true,
     },
+    compressPublicAssets: true,
+  },
+  routeRules: {
+    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
   },
   pwa: {
     registerType: 'autoUpdate',

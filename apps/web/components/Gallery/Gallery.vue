@@ -22,13 +22,17 @@
             :alt="alt ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
-            class="object-contain h-full"
+            class="object-contain h-full w-full"
             :quality="80"
             :src="url"
-            sizes="2xs:100vw, xs:100vw, sm:100vw, md:700px"
+            sizes="2xs:100vw, md:700px"
             draggable="false"
             :loading="index !== 0 ? 'lazy' : undefined"
             :fetchpriority="index === 0 ? 'high' : undefined"
+            :preload="index === 0"
+            format="webp"
+            width="600"
+            height="600"
           />
         </div>
       </SfScrollable>
@@ -71,7 +75,16 @@
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
-          <NuxtImg alt="" class="object-contain" width="80" height="80" :src="url" :quality="80" loading="lazy" />
+          <NuxtImg
+            alt=""
+            class="object-contain"
+            width="80"
+            height="80"
+            :src="url"
+            :quality="80"
+            loading="lazy"
+            format="webp"
+          />
         </button>
 
         <template #nextButton>

@@ -11,6 +11,8 @@
           height="190"
           :loading="lazy && !priority ? 'lazy' : undefined"
           :fetchpriority="priority ? 'high' : undefined"
+          :preload="priority"
+          format="webp"
         />
       </SfLink>
     </div>

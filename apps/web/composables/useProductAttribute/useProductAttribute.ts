@@ -1,16 +1,12 @@
 import { ref } from 'vue';
-import type { ProductItemDocumentData } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { SfAttribute } from '@vue-storefront/unified-data-model';
-
+import { SfAttribute, SfProduct } from '@vue-storefront/unified-data-model';
+import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 /**
  * composable for getting product attributes data
  * @param {SfProduct} product Product object
  * @param {TAttribute} attributesNames get specific product attributes
  */
-export function useProductAttribute<TAttribute extends string>(
-  product: ProductItemDocumentData,
-  attributesNames: TAttribute[] = [],
-) {
+export function useProductAttribute<TAttribute extends string>(product: Product, attributesNames: TAttribute[] = []) {
   // const attributes = groupBy(
   //   uniqBy(
   //     (product?.variants || []).flatMap((variant) => variant?.attributes),
