@@ -40,9 +40,9 @@
 </template>
 
 <script lang="ts" setup>
+import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
 import { SfRating, SfIconCheck, SfIconThumbUp, SfIconThumbDown, SfCounter } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
-import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
 
 const props = defineProps<ReviewProps>();
 
@@ -56,8 +56,6 @@ const reviewMessage = reviewGetters.getReviewMessage(reviewItem.value);
 const isButtonVisible = computed(() => reviewMessage?.length || 0 > charLimit);
 
 const truncatedContent = computed(() =>
-  isButtonVisible.value && isCollapsed.value
-    ? `${reviewMessage?.slice(0, Math.max(0, charLimit))}...`
-    : reviewMessage,
+  isButtonVisible.value && isCollapsed.value ? `${reviewMessage?.slice(0, Math.max(0, charLimit))}...` : reviewMessage,
 );
 </script>

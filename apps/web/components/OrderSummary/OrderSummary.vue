@@ -19,11 +19,16 @@
           <p data-testid="special-price">${{ cartGetters.getTotals(cart)?.shippingAmount }}</p>
           <p class="typography-text-xs text-neutral-500">${{ cartGetters.getTotals(cart)?.total }}</p>
           <p class="typography-text-xs text-secondary-700">${{ cartGetters.getTotals(cart)?.couponDiscount }}</p>
-          <p v-if="!!cartGetters.getTotals(cart)?.shippingAmount" class="my-2">${{ cartGetters.getTotals(cart)?.shippingAmount }}</p>
+          <p v-if="!!cartGetters.getTotals(cart)?.shippingAmount" class="my-2">
+            ${{ cartGetters.getTotals(cart)?.shippingAmount }}
+          </p>
           <p>${{ cartGetters.getTotals(cart)?.vatAmount }}</p>
         </div>
       </div>
-      <div v-if="!!cartGetters.getTotals(cart)?.couponDiscount" class="flex items-center py-4 border-t border-neutral-200">
+      <div
+        v-if="!!cartGetters.getTotals(cart)?.couponDiscount"
+        class="flex items-center py-4 border-t border-neutral-200"
+      >
         <p>{{ $t('promoCode') }}</p>
         <SfButton size="sm" variant="tertiary" class="ml-auto mr-2">
           {{ $t('remove') }}
@@ -50,9 +55,9 @@
 </template>
 
 <script setup lang="ts">
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfInput } from '@storefront-ui/vue';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 defineProps<OrderSummaryPropsType>();
 </script>

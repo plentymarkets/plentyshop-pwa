@@ -43,9 +43,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
-import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 defineProps<CheckoutAddressProps>();
 
