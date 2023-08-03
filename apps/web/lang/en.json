@@ -219,6 +219,7 @@
   "orderErrorMessage": "Something went wrong. Try again later.",
   "orderNumber": "Order number",
   "productDetails": "Product Details",
+  "technicalData": "Technical data",
   "customerReviews": "Customer Reviews",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
