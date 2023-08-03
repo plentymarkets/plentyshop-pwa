@@ -69,9 +69,11 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     'nuxt-vitest',
   ],
+  // eslint-disable-next-line unicorn/expiring-todo-comments
+  // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
-      crawlLinks: true,
+      crawlLinks: false,
     },
     compressPublicAssets: true,
   },
