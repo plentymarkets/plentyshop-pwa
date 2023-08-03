@@ -1,6 +1,6 @@
 import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
-import { sdk } from '~/sdk';
+import { useSdk } from '~/sdk';
 import type { UseProductReturn, UseProductState, FetchProduct } from './types';
 
 /**
@@ -23,7 +23,7 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const fetchProduct: FetchProduct = async (slug) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProduct({ id: slug }));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct({ id: slug }));
     useHandleError(error.value);
 
     state.value.data = data.value?.data ?? state.value.data;
