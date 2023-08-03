@@ -14,13 +14,14 @@
       :image-url="productGetters.getCoverImage(product)"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
-      :rating-count="productGetters.getTotalReviews(product)"
-      :rating="productGetters.getAverageRating(product)"
+      :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
+      :rating="productGetters.getAverageRating({} as ReviewAverage)"
     />
   </SfScrollable>
 </template>
 
 <script setup lang="ts">
+import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
