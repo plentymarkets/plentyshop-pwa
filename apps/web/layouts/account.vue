@@ -12,7 +12,7 @@
               </SfListItem>
               <li v-for="{ label, link } in subsections" :key="label">
                 <SfListItem
-                  :tag="NuxtLink.toString()"
+                  :tag="NuxtLink"
                   :href="link"
                   :class="[
                     'first-of-type:mt-2 rounded-md active:bg-primary-100 !text-neutral-900',
@@ -29,7 +29,7 @@
             <UiDivider />
             <ul>
               <SfListItem
-                :tag="NuxtLink.toString()"
+                :tag="NuxtLink"
                 href="/logout"
                 class="mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
               >
@@ -94,7 +94,6 @@ const sections = [
 ];
 
 const currentPath = computed(() => router.currentRoute.value.path);
-// eslint-disable-next-line prettier/prettier
 const rootPathRegex = new RegExp(`^${paths.account}/?$`);
 const isRoot = computed(() => rootPathRegex.test(currentPath.value));
 const findCurrentPage = computed(() =>

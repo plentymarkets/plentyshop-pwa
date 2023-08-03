@@ -30,11 +30,14 @@ import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/sr
 
 const route = useRoute();
 const slug = route.params.slug as string;
-const { data: product, fetchProduct } = useProduct(slug);
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(slug);
 
-await fetchProduct(slug);
-await fetchProductRecommended(slug);
+const productId = slug.split('-').pop() ?? '0';
+
+const { data: product, fetchProduct } = useProduct(productId);
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
+
+await fetchProduct(productId);
+await fetchProductRecommended(productId);
 
 const { t } = useI18n();
 

@@ -19,7 +19,6 @@
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
       <SfSelect
-        v-model="defaultValues.country"
         name="country"
         :placeholder="$t('form.selectPlaceholder')"
         auto-complete="country-name"

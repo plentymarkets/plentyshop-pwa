@@ -18,7 +18,7 @@
           :saved-address="cart.billingAddress"
           type="billingAddress"
         />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
@@ -27,6 +27,10 @@
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <ShippingMethod :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <SfButton :tag="NuxtLink" :to="paths.orderSuccess" size="lg" class="w-full mb-4 md:mb-0">
@@ -59,10 +63,16 @@
 
 <script lang="ts" setup>
 import { SfButton, SfLink } from '@storefront-ui/vue';
+import { PaymentMethod } from '~/components/CheckoutPayment/types';
+import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src'
 
 definePageMeta({
   layout: false,
 });
+
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart } = useCart();
+const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
+await getShippingMethods();
+const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
 </script>

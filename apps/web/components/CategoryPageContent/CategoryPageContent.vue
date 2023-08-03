@@ -32,7 +32,7 @@
               :price="productGetters.getPrice(product).regular ?? 0"
               :image-url="productGetters.getCoverImage(product)"
               :image-alt="productGetters.getName(product) ?? ''"
-              :slug="productGetters.getSlug(product)"
+              :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index === 0"
             />
           </section>
