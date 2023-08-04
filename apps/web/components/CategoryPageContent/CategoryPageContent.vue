@@ -8,9 +8,7 @@
         </CategorySidebar>
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
-            <span class="font-bold font-headings md:text-lg">
-              {{ $t('numberOfProducts') }} {{ totalProducts }}
-            </span>
+            <span class="font-bold font-headings md:text-lg"> {{ $t('numberOfProducts') }} {{ totalProducts }} </span>
             <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
               <template #prefix>
                 <SfIconTune />
@@ -51,11 +49,11 @@
 </template>
 
 <script setup lang="ts">
+import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import {ReviewAverage} from "@plentymarkets/plentymarkets-sdk/packages/api-client/server";
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,

@@ -1,6 +1,7 @@
 import { ref } from 'vue';
-import { SfAttribute, SfProduct } from '@vue-storefront/unified-data-model';
 import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { SfAttribute } from '@vue-storefront/unified-data-model';
+
 /**
  * composable for getting product attributes data
  * @param {SfProduct} product Product object

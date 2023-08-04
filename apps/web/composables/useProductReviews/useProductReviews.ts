@@ -1,7 +1,7 @@
-import { toRefs } from '@vueuse/shared';
 import type { Review } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } from './types';
+import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
+import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } from './types';
 
 /**
  * @description Composable managing product reviews data
