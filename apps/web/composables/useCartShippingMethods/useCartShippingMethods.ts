@@ -1,10 +1,10 @@
+import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCartShippingMethodsState,
   UseCartShippingMethodsReturn,
   GetShippingMethods,
 } from '~/composables/useCartShippingMethods/types';
-import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { useSdk } from '~/sdk';
 
 /**

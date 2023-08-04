@@ -62,9 +62,9 @@
 </template>
 
 <script lang="ts" setup>
+import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink } from '@storefront-ui/vue';
 import { PaymentMethod } from '~/components/CheckoutPayment/types';
-import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src'
 
 definePageMeta({
   layout: false,
