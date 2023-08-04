@@ -27,10 +27,11 @@
       v-html="productGetters.getShortDescription(product)"
     ></div>
     <div class="py-4">
+      <!--
       <UiTag class="w-full mb-4">
         <SfIconShoppingCartCheckout />
         {{ $t('numberInCart', { count: 1 }) }}
-      </UiTag>
+      </UiTag> -->
       <div class="flex mb-4">
         <SfButton type="button" size="sm" variant="tertiary">
           <SfIconFavorite size="sm" />
