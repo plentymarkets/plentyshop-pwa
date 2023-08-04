@@ -6,7 +6,7 @@
           <Gallery :images="productGetters.getGallery(product)" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" />
+          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage"/>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mb-6" />
@@ -35,9 +35,11 @@ const productId = slug.split('-').pop() ?? '0';
 
 const { data: product, fetchProduct } = useProduct(productId);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId)
 
 await fetchProduct(productId);
 await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);
+await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();
 

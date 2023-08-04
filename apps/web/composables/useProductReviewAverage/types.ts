@@ -10,7 +10,7 @@ export type FetchProductReviewAverage = (itemId: number) => Promise<ReviewAverag
 export interface UseProductReviewsAverageReturn {
   data: Readonly<Ref<UseProductReviewAverageState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  fetchProductReviews: FetchProductReviewAverage;
+  fetchProductReviewAverage: FetchProductReviewAverage;
 }
 
-export type UseProductReviewAverage = (itemId: number) => UseProductReviewsAverageReturn;
+export type UseProductReviewAverage = (itemId: string) => UseProductReviewsAverageReturn;

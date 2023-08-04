@@ -11,7 +11,7 @@ import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-cli
  * @param productId
  * @param itemId
  */
-export const useProductReviews: UseProductReviewAverage = (itemId: number) => {
+export const useProductReviewAverage: UseProductReviewAverage = (itemId: string) => {
   const state = useState<UseProductReviewAverageState>(`useProductReviewAverage-${itemId}`, () => ({
     data: {} as ReviewAverage,
     loading: false,
@@ -21,7 +21,7 @@ export const useProductReviews: UseProductReviewAverage = (itemId: number) => {
    * @example
    * fetchProductReviews('product-slug');
    */
-  const fetchProductReviews: FetchProductReviewAverage = async (itemId: number) => {
+  const fetchProductReviewAverage: FetchProductReviewAverage = async (itemId: number) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getReviewAverage({ itemId: itemId }));
     useHandleError(error.value);
@@ -31,7 +31,7 @@ export const useProductReviews: UseProductReviewAverage = (itemId: number) => {
   };
 
   return {
-    fetchProductReviews,
+    fetchProductReviewAverage,
     ...toRefs(state.value),
   };
 };
