@@ -4,11 +4,10 @@ import { FetchProductReviewAverage, UseProductReviewAverage, UseProductReviewAve
 import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 
 /**
- * @description Composable managing product reviews data
- * @returns {@link UseProductReturn}
+ * @description Composable managing review average data
+ * @returns {@link UseProductReviewsAverageReturn}
  * @example
- * const { data, loading, fetchProductReviews } = useProductReviews('product-slug');
- * @param productId
+ * const { data, loading, fetchProductReviewAverage } = useProductReviewAverage(itemId);
  * @param itemId
  */
 export const useProductReviewAverage: UseProductReviewAverage = (itemId: string) => {
@@ -19,7 +18,7 @@ export const useProductReviewAverage: UseProductReviewAverage = (itemId: string)
 
   /** Function for fetching product reviews data
    * @example
-   * fetchProductReviews('product-slug');
+   * fetchProductReviewAverage(itemId);
    */
   const fetchProductReviewAverage: FetchProductReviewAverage = async (itemId: number) => {
     state.value.loading = true;
