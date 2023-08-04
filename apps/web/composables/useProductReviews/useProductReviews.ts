@@ -26,8 +26,6 @@ export const useProductReviews: UseProductReviews = (productId: string | number,
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.getReview({
         itemId: itemId,
-        page: 1,
-        feedbacksPerPage: 10,
       }),
     );
     useHandleError(error.value);
