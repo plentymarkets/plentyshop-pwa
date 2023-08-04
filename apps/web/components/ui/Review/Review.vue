@@ -20,40 +20,24 @@
     >
       {{ $t(isCollapsed ? 'readMore' : 'readLess') }}
     </button>
-    <footer class="flex items-center justify-between">
-      <div class="text-sm text-neutral-500">
-        <button type="button" class="mr-6 hover:text-primary-800">
-          <SfIconThumbUp size="sm" class="mr-2.5" />
-          <SfCounter size="sm" class="text-inherit">6</SfCounter>
-        </button>
-        <button type="button" class="hover:text-primary-800">
-          <SfIconThumbDown size="sm" class="mr-2.5" />
-          <SfCounter size="sm" class="text-inherit">2</SfCounter>
-        </button>
-      </div>
-
-      <button class="px-3 py-1.5 text-neutral-500 font-medium text-sm hover:text-primary-800" type="button">
-        {{ $t('review.reportAbuse') }}
-      </button>
-    </footer>
   </article>
 </template>
 
 <script lang="ts" setup>
 import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
-import { SfRating, SfIconCheck, SfIconThumbUp, SfIconThumbDown, SfCounter } from '@storefront-ui/vue';
+import { SfRating, SfIconCheck } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 
 const props = defineProps<ReviewProps>();
 
 const { reviewItem } = toRefs(props);
 
-const charLimit = 400;
+const charLimit = 250;
 const isCollapsed = ref(true);
 
 const reviewMessage = reviewGetters.getReviewMessage(reviewItem.value);
 
-const isButtonVisible = computed(() => reviewMessage?.length || 0 > charLimit);
+const isButtonVisible = computed(() => (reviewMessage?.length || 0) > charLimit);
 
 const truncatedContent = computed(() =>
   isButtonVisible.value && isCollapsed.value ? `${reviewMessage?.slice(0, Math.max(0, charLimit))}...` : reviewMessage,

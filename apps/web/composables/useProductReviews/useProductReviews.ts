@@ -23,7 +23,13 @@ export const useProductReviews: UseProductReviews = (productId: string | number,
    */
   const fetchProductReviews: FetchProductReviews = async (productId: string | number, itemId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getReview({ productId, itemId }));
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.getReview({
+        itemId: itemId,
+        page: 1,
+        feedbacksPerPage: 10,
+      }),
+    );
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     state.value.loading = false;
