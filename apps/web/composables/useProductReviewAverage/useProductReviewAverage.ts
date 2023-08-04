@@ -22,7 +22,7 @@ export const useProductReviewAverage: UseProductReviewAverage = (itemId: string)
    */
   const fetchProductReviewAverage: FetchProductReviewAverage = async (itemId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getReviewAverage({ itemId: itemId }));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getReviewAverage({ itemId }));
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     state.value.loading = false;
