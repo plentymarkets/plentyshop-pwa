@@ -68,12 +68,12 @@
 
 <script lang="ts" setup>
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfCounter, SfLink, SfRating, SfIconFavorite, SfIconShoppingCart } from '@storefront-ui/vue';
+import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 defineProps<PurchaseCardProps>();
 
-const { addToCart, data: cart, loading: isLoading } = useCart();
+const { addToCart } = useCart();
 
 const quantitySelectorValue = ref(1);
 
