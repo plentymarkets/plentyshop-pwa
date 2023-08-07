@@ -223,7 +223,7 @@
   "customerReviews": "Customer Reviews",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
-  "recommendedProducts": "Recommended with this product",
+  "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
   "additionalInfo": {
     "shipping": "Free shipping, arrives by Thu, Apr 7. Want it faster? {addAddress} to see options",
