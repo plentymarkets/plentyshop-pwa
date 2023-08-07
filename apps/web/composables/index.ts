@@ -3,4 +3,4 @@ export * from './useCart';
 export * from './useHandleError';
 export * from './useProduct';
 export * from './useProducts';
-export * from './useProductReviewAverage'
+export * from './useProductReviewAverage';
