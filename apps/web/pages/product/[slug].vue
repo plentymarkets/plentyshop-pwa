@@ -35,7 +35,7 @@ const productId = slug.split('-').pop() ?? '0';
 
 const { data: product, fetchProduct } = useProduct(productId);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId)
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 await fetchProduct(productId);
 await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);
