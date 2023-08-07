@@ -35,9 +35,13 @@ export const useCart: UseCartReturn = () => {
   };
 
   /**
-   * @description Function for fetching the cart.
+   * @description Function for adding cart items.
+   * @param params
    * @example
-   * getCart();
+   * addToCart({
+   *     productId: 1,
+   *     quantity: 1,
+   * });
    */
   const addToCart: AddToCart = async (params) => {
     state.value.loading = true;
