@@ -1,43 +1,34 @@
 <template>
-  <UiNavbarTop filled>
-    <SfButton
-      class="!px-2 mr-auto hidden lg:flex text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
-      type="button"
-      variant="tertiary"
-      :tag="NuxtLink"
-      :to="paths.category"
-    >
-      <template #suffix>
-        <SfIconExpandMore class="hidden lg:block" />
-      </template>
-      <span class="hidden lg:flex whitespace-nowrap">{{ $t('allProductsLinkText') }}</span>
-    </SfButton>
+  <MegaMenu :categories="categoryTree">
+    <NuxtLink :to="paths.home" aria-label="Sf Homepage" class="h-6 md:h-7 -mt-1.5">
+      <UiVsfLogo />
+    </NuxtLink>
     <UiSearch class="hidden md:block flex-1" />
     <nav class="hidden md:flex md:flex-row md:flex-nowrap">
       <SfButton
-        class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-        :tag="NuxtLink"
-        :to="paths.cart"
-        :aria-label="$t('numberInCart', cartItemsCount)"
-        variant="tertiary"
-        square
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="paths.cart"
+          :aria-label="$t('numberInCart', cartItemsCount)"
+          variant="tertiary"
+          square
       >
         <template #prefix>
           <SfIconShoppingCart />
           <SfBadge
-            :content="cartItemsCount"
-            class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-            data-testid="cart-badge"
+              :content="cartItemsCount"
+              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              data-testid="cart-badge"
           />
         </template>
       </SfButton>
       <SfDropdown v-model="isAccountDropdownOpen" placement="bottom-end">
         <template #trigger>
           <SfButton
-            variant="tertiary"
-            class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-            :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-            @click="accountDropdownToggle()"
+              variant="tertiary"
+              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
+              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
+              @click="accountDropdownToggle()"
           >
             <template #prefix><SfIconPerson /></template>
             {{ account?.firstName }}
@@ -57,14 +48,14 @@
       </SfDropdown>
     </nav>
     <SfButton
-      variant="tertiary"
-      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        square
+        @click="searchModalOpen"
     >
       <SfIconSearch />
     </SfButton>
-  </UiNavbarTop>
+  </MegaMenu>
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -98,7 +89,6 @@
 import {
   SfBadge,
   SfButton,
-  SfIconExpandMore,
   SfIconShoppingCart,
   SfIconClose,
   SfIconSearch,
@@ -108,6 +98,7 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { useCategoryTree } from "~/composables/useCategoryTree";
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
@@ -115,9 +106,11 @@ const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClos
 
 defineProps<DefaultLayoutProps>();
 
+const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { getCart, data: cart } = useCart();
 const { fetchAccount, data: account } = useAccount();
 
+getCategoryTree();
 getCart();
 fetchAccount();
 usePageTitle();
