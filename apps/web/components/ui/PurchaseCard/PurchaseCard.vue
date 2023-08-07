@@ -77,7 +77,7 @@ const { addToCart, data: cart, loading: isLoading } = useCart();
 
 const quantitySelectorValue = ref(1);
 
-const changeQuantity = (quantity) => {
+const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
 </script>
