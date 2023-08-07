@@ -2,8 +2,8 @@
   <div class="px-4" data-testid="product-properties">
     <div v-if="product && product.variations" class="flex flex-col gap-y-6 font-body">
       <label>
-        <span class="pb-1 text-sm font-medium text-neutral-900"> Variations </span>
-        <SfSelect @update:modelValue="changeVariationId" size="sm" placeholder="-- Select --">
+        <!-- <span class="pb-1 text-sm font-medium text-neutral-900"> Variations </span> -->
+        <SfSelect @update:modelValue="changeVariationId" size="sm" placeholder="--Please Select --">
           <option v-for="{ variationId } in product.variations" :key="variationId" :value="variationId">
             {{ variationId }}
           </option>

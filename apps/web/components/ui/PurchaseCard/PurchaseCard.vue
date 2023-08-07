@@ -26,18 +26,23 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
+    <div class="mb-2">
+      <ProductProperties v-if="product" :product="product" />
+    </div>
     <div class="py-4">
       <!--
       <UiTag class="w-full mb-4">
         <SfIconShoppingCartCheckout />
         {{ $t('numberInCart', { count: 1 }) }}
       </UiTag> -->
+
       <div class="flex mb-4">
         <SfButton type="button" size="sm" variant="tertiary">
           <SfIconFavorite size="sm" />
           {{ $t('addToList') }}
         </SfButton>
       </div>
+
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
         <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">

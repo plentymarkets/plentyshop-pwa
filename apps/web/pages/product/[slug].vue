@@ -6,11 +6,10 @@
           <Gallery :images="productGetters.getGallery(product)" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage"/>
+          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mb-6" />
-          <ProductProperties v-if="product" :product="product" />
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <ProductAccordion v-if="product" :product="product" />
         </section>
