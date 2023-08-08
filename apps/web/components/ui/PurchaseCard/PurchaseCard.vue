@@ -43,8 +43,22 @@
         </SfButton>
       </div> -->
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
-        <UiQuantitySelector :value="quantitySelectorValue" class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
+        <UiQuantitySelector
+          :value="quantitySelectorValue"
+          @change-quantity="changeQuantity"
+          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+        />
+        <SfButton
+          type="button"
+          size="lg"
+          class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+          @click="
+            addToCart({
+              productId: Number(productGetters.getId(product)),
+              quantity: Number(quantitySelectorValue),
+            })
+          "
+        >
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
@@ -57,27 +71,20 @@
 
 <script lang="ts" setup>
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import {
-  SfButton,
-  SfCounter,
-  SfLink,
-  SfRating,
-  SfIconSafetyCheck,
-  SfIconCompareArrows,
-  SfIconWarehouse,
-  SfIconPackage,
-  SfIconFavorite,
-  SfIconSell,
-  SfIconShoppingCartCheckout,
-  SfIconShoppingCart,
-} from '@storefront-ui/vue';
+import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
+const { addToCart } = useCart();
+
 const quantitySelectorValue = ref(1);
+
+const changeQuantity = (quantity: string) => {
+  quantitySelectorValue.value = Number(quantity);
+};
 
 const actualPrice = computed(
   () => productGetters.getPrice(product.value)?.special || productGetters.getPrice(product.value)?.regular || 0,

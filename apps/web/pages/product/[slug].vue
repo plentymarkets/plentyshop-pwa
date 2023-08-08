@@ -6,7 +6,7 @@
           <Gallery :images="productGetters.getGallery(product)" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage"/>
+          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mb-6" />
