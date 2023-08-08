@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full z-[1000]">
+  <div class="w-full h-full">
     <header ref="referenceRef" class="relative">
       <div
         class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
@@ -60,7 +60,7 @@
               :key="activeMenu.id"
               ref="megaMenuRef"
               :style="style"
-              class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none"
+              class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-[1000]"
               tabindex="0"
               @mouseleave="close()"
               @keydown.esc="focusTrigger(index)"
@@ -86,7 +86,7 @@
                   <ul class="mt-2">
                     <li v-for="child in node.children" :key="child.id">
                       <SfListItem
-                        v-if="categoryTreeGetters.getCategoryDetails(child)"
+                        v-if="categoryTreeGetters.getCategoryDetails(child) !== null"
                         tag="a"
                         size="sm"
                         :href="
@@ -144,7 +144,7 @@
                 <SfListItem
                   size="lg"
                   tag="a"
-                  :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
+                  :href="categoryTreeGetters.getSlug(activeMenu) + '/1/' + categoryTreeGetters.getSlug(node)"
                   class="first-of-type:mt-2"
                 >
                   <div class="flex items-center">
@@ -203,12 +203,13 @@ const category = {
   children: categories.value,
 } as CategoryTreeItem;
 
+console.log(categories);
+
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
     const [currentKey, ...restKeys] = keys;
     return findNode(restKeys, node.children?.find((child) => child.id === currentKey) || node);
   } else {
-    console.log(keys, node);
     return node.children?.find((child) => child.id === keys[0]) || node;
   }
 };
