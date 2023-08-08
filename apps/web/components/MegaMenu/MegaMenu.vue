@@ -2,8 +2,28 @@
   <div class="w-full h-full z-500">
     <header ref="referenceRef" class="relative">
       <div
-        class="flex gap-[clamp(1rem,3vw,3rem)] text-white justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+        class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
       >
+        <div class="flex items-center">
+          <SfButton
+            variant="tertiary"
+            square
+            aria-label="Close menu"
+            class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+            @click="openMenu([])"
+          >
+            <SfIconMenu class="text-white" />
+          </SfButton>
+
+          <NuxtLink
+            :to="paths.home"
+            aria-label="Sf Homepage"
+            class="flex shrink-0 w-8 h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          >
+            <UiVsfLogo />
+          </NuxtLink>
+        </div>
+
         <slot />
       </div>
       <!-- Desktop dropdown -->
@@ -18,23 +38,26 @@
             }
           "
         >
-          <li v-for="(menuNode, index) in content.children" :key="menuNode.key">
+          <li v-for="(menuNode, index) in categories" :key="menuNode.id">
             <SfButton
               ref="triggerRefs"
               variant="tertiary"
               class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
-              @mouseenter="openMenu([menuNode.key])"
-              @click="openMenu([menuNode.key])"
+              @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
+              @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             >
-              <span>{{ menuNode.value.label }}</span>
-              <SfIconChevronRight
-                class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-              />
+              <NuxtLink :to="menuNode.childCount === 0 ? categoryTreeGetters.getSlug(menuNode) : '#'">
+                <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
+                <SfIconChevronRight
+                  v-if="menuNode.childCount > 0"
+                  class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
+                />
+              </NuxtLink>
             </SfButton>
 
             <div
-              v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.key"
-              :key="activeMenu.key"
+              v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.id && menuNode.childCount > 0"
+              :key="activeMenu.id"
               ref="megaMenuRef"
               :style="style"
               class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none"
@@ -43,9 +66,14 @@
               @keydown.esc="focusTrigger(index)"
             >
               <template v-for="node in activeMenu.children" :key="node.key">
-                <template v-if="node.isLeaf">
-                  <SfListItem tag="a" size="sm" :href="node.value.link" class="typography-text-sm mb-2">
-                    {{ node.value.label }}
+                <template v-if="node.childCount === 0">
+                  <SfListItem
+                    tag="a"
+                    size="sm"
+                    :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
+                    class="typography-text-sm mb-2"
+                  >
+                    {{ categoryTreeGetters.getName(node) }}
                   </SfListItem>
                   <div class="col-start-2 col-end-5" />
                 </template>
@@ -53,25 +81,23 @@
                   <p
                     class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid"
                   >
-                    {{ node.value.label }}
+                    {{ categoryTreeGetters.getName(node) }}
                   </p>
                   <ul class="mt-2">
-                    <li v-for="child in node.children" :key="child.key">
-                      <SfListItem tag="a" size="sm" :href="child.value.link" class="typography-text-sm py-1.5">
-                        {{ child.value.label }}
+                    <li v-for="child in node.children" :key="child.id">
+                      <SfListItem
+                        v-if="categoryTreeGetters.getCategoryDetails(child)"
+                        tag="a"
+                        size="sm"
+                        :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node) + '/' + categoryTreeGetters.getSlug(child)"
+                        class="typography-text-sm py-1.5"
+                      >
+                        {{ categoryTreeGetters.getName(child) }}
                       </SfListItem>
                     </li>
                   </ul>
                 </div>
               </template>
-              <div
-                class="flex flex-col items-center justify-center overflow-hidden rounded-md bg-neutral-100 border-neutral-300 grow"
-              >
-                <img :src="bannerNode.value.banner" :alt="bannerNode.value.bannerTitle" class="object-contain" />
-                <p class="px-4 mt-4 mb-4 font-medium text-center typography-text-base">
-                  {{ bannerNode.value.bannerTitle }}
-                </p>
-              </div>
             </div>
           </li>
         </ul>
@@ -93,7 +119,7 @@
             </SfButton>
           </div>
           <ul class="mt-2 mb-6">
-            <li v-if="activeMenu.key !== 'root'">
+            <li v-if="activeMenu.id !== 0">
               <SfListItem
                 size="lg"
                 tag="button"
@@ -103,25 +129,30 @@
               >
                 <div class="flex items-center">
                   <SfIconArrowBack class="text-neutral-500" />
-                  <p class="ml-5 font-medium">{{ activeMenu.value.label }}</p>
+                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
                 </div>
               </SfListItem>
             </li>
-            <template v-for="node in activeMenu.children" :key="node.value.label">
-              <li v-if="node.isLeaf">
-                <SfListItem size="lg" tag="a" :href="node.value.link" class="first-of-type:mt-2">
+            <template v-for="node in activeMenu.children" :key="node.id">
+              <li v-if="node.childCount === 0">
+                <SfListItem
+                  size="lg"
+                  tag="a"
+                  :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
+                  class="first-of-type:mt-2"
+                >
                   <div class="flex items-center">
-                    <p class="text-left">{{ node.value.label }}</p>
-                    <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                    <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                   </div>
                 </SfListItem>
               </li>
               <li v-else>
-                <SfListItem size="lg" tag="button" type="button" @click="goNext(node.key)">
+                <SfListItem size="lg" tag="button" type="button" @click="goNext(node.id)">
                   <div class="flex justify-between items-center">
                     <div class="flex items-center">
-                      <p class="text-left">{{ node.value.label }}</p>
-                      <SfCounter class="ml-2">{{ node.value.counter }}</SfCounter>
+                      <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                     </div>
                     <SfIconChevronRight class="text-neutral-500" />
                   </div>
@@ -129,17 +160,6 @@
               </li>
             </template>
           </ul>
-          <div
-            v-if="bannerNode.value.banner"
-            class="flex items-center overflow-hidden bg-neutral-100 border-neutral-300 grow"
-          >
-            <img
-              :src="bannerNode.value.banner"
-              :alt="bannerNode.value.bannerTitle"
-              class="object-contain w-[50%] basis-6/12"
-            />
-            <p class="basis-6/12 p-6 font-medium typography-text-base">{{ bannerNode.value.bannerTitle }}</p>
-          </div>
         </nav>
       </SfDrawer>
     </header>
@@ -149,9 +169,6 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import {
-  SfIconShoppingCart,
-  SfIconFavorite,
-  SfIconPerson,
   SfIconClose,
   SfButton,
   SfDrawer,
@@ -159,21 +176,34 @@ import {
   SfIconChevronRight,
   SfCounter,
   SfIconArrowBack,
+  SfIconMenu,
   useDisclosure,
   useTrapFocus,
   useDropdown,
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { MegaMenuProps } from '~/components/MegaMenu/types';
+import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import type { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
-defineProps<MegaMenuProps>();
+const props = defineProps<MegaMenuProps>();
+const categories = computed(() => categoryTreeGetters.getTree(props.categories));
+const category = {
+  id: 0,
+  type: 'root',
+  itemCount: [],
+  childCount: categories.value.length,
+  details: [],
+  children: categories.value,
+} as CategoryTreeItem;
 
-const findNode = (keys: string[], node: Node): Node => {
+const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
     const [currentKey, ...restKeys] = keys;
-    return findNode(restKeys, node.children?.find((child) => child.key === currentKey) || node);
+    return findNode(restKeys, node.children?.find((child) => child.id === currentKey) || node);
   } else {
-    return node.children?.find((child) => child.key === keys[0]) || node;
+    console.log(keys, node);
+    return node.children?.find((child) => child.id === keys[0]) || node;
   }
 };
 
@@ -188,10 +218,9 @@ const { referenceRef, floatingRef, style } = useDropdown({
 const drawerRef = ref();
 const megaMenuRef = ref();
 const triggerRefs = ref();
-const activeNode = ref<string[]>([]);
+const activeNode = ref<number[]>([]);
 
-const activeMenu = computed(() => findNode(activeNode.value, content));
-const bannerNode = computed(() => findNode(activeNode.value.slice(0, 1), content));
+const activeMenu = computed(() => findNode(activeNode.value, category));
 
 const trapFocusOptions = {
   activeState: isOpen,
@@ -204,7 +233,7 @@ useTrapFocus(
 );
 useTrapFocus(drawerRef, trapFocusOptions);
 
-const openMenu = (menuType: string[]) => {
+const openMenu = (menuType: number[]) => {
   activeNode.value = menuType;
   open();
 };
@@ -213,336 +242,11 @@ const goBack = () => {
   activeNode.value = activeNode.value.slice(0, activeNode.value.length - 1);
 };
 
-const goNext = (key: string) => {
+const goNext = (key: number) => {
   activeNode.value = [...activeNode.value, key];
 };
 
 const focusTrigger = (index: number) => {
   unrefElement(triggerRefs.value[index]).focus();
-};
-
-type Node = {
-  key: string;
-  value: {
-    label: string;
-    counter: number;
-    link?: string;
-    banner?: string;
-    bannerTitle?: string;
-  };
-  children?: Node[];
-  isLeaf: boolean;
-};
-
-const content: Node = {
-  key: 'root',
-  value: { label: '', counter: 0 },
-  isLeaf: false,
-  children: [
-    {
-      key: 'WOMEN',
-      value: {
-        label: 'Women',
-        counter: 515,
-        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/glasses.png',
-        bannerTitle: 'The world in a new light',
-      },
-      isLeaf: false,
-      children: [
-        {
-          key: 'ALL_WOMEN',
-          value: { label: "All Women's", counter: 515, link: '#' },
-          isLeaf: true,
-        },
-        {
-          key: 'CATEGORIES',
-          value: { label: 'Categories', counter: 178 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_CATEGORIES',
-              value: { label: 'All Categories', counter: 178, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'CLOTHING',
-              value: { label: 'Clothing', counter: 30, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'SHOES',
-              value: { label: 'Shoes', counter: 28, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'ACCESSORIES',
-              value: { label: 'Accessories', counter: 56, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'WEARABLES',
-              value: { label: 'Wearables', counter: 12, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FOOD_DRINKS',
-              value: { label: 'Food & Drinks', counter: 52, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'ACTIVITIES',
-          value: { label: 'Activities', counter: 239 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_ACTIVITIES',
-              value: { label: 'All Activities', counter: 239, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FITNESS',
-              value: { label: 'Fitness', counter: 83, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'PILATES',
-              value: { label: 'Pilates', counter: 65, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'TRAINING',
-              value: { label: 'Training', counter: 21, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'CARDIO_WORKOUT',
-              value: { label: 'Cardio Workout', counter: 50, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'YOGA',
-              value: { label: 'Yoga', counter: 20, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'DEALS',
-          value: { label: 'Deals', counter: 98 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_DEALS',
-              value: { label: 'All Deals', counter: 98, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'OUTLET',
-              value: { label: 'Outlet', counter: 98, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: 'MEN',
-      value: {
-        label: 'Men',
-        counter: 364,
-        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/watch.png',
-        bannerTitle: 'New in designer watches',
-      },
-      isLeaf: false,
-      children: [
-        {
-          key: 'ALL_MEN',
-          value: { label: "All Men's", counter: 364, link: '#' },
-          isLeaf: true,
-        },
-        {
-          key: 'CATEGORIES',
-          value: { label: 'Categories', counter: 164 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_CATEGORIES',
-              value: { label: 'All Categories', counter: 164, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'CLOTHING',
-              value: { label: 'Clothing', counter: 41, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'SHOES',
-              value: { label: 'Shoes', counter: 20, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'ACCESSORIES',
-              value: { label: 'Accessories', counter: 56, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'WEARABLES',
-              value: { label: 'Wearables', counter: 32, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FOOD_DRINKS',
-              value: { label: 'Food & Drinks', counter: 15, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'ACTIVITIES',
-          value: { label: 'Activities', counter: 132 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_ACTIVITIES',
-              value: { label: 'All Activities', counter: 132, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'TRAINING',
-              value: { label: 'Training', counter: 21, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'WORKOUT',
-              value: { label: 'Workout', counter: 43, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FOOTBALL',
-              value: { label: 'Football', counter: 30, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FITNESS',
-              value: { label: 'Fitness', counter: 38, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'DEALS',
-          value: { label: 'Deals', counter: 68 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_DEALS',
-              value: { label: 'All Deals', counter: 68, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'OUTLET',
-              value: { label: 'Outlet', counter: 68, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-      ],
-    },
-    {
-      key: 'KIDS',
-      value: {
-        label: 'Kids',
-        counter: 263,
-        banner: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/toy.png',
-        bannerTitle: 'Unleash your imagination',
-      },
-      isLeaf: false,
-      children: [
-        {
-          key: 'ALL_KIDS',
-          value: { label: 'All Kids', counter: 263, link: '#' },
-          isLeaf: true,
-        },
-        {
-          key: 'CATEGORIES',
-          value: { label: 'Categories', counter: 192 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_CATEGORIES',
-              value: { label: 'All Categories', counter: 192, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'CLOTHING',
-              value: { label: 'Clothing', counter: 29, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'SHOES',
-              value: { label: 'Shoes', counter: 60, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'ACCESSORIES',
-              value: { label: 'Accessories', counter: 48, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'WEARABLES',
-              value: { label: 'Wearables', counter: 22, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FOOD_DRINKS',
-              value: { label: 'Food & Drinks', counter: 33, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'ACTIVITIES',
-          value: { label: 'Activities', counter: 40 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_ACTIVITIES',
-              value: { label: 'All Activities', counter: 40, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'FOOTBALL',
-              value: { label: 'Football', counter: 21, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'BASKETBALL',
-              value: { label: 'Basketball', counter: 19, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-        {
-          key: 'DEALS',
-          value: { label: 'Deals', counter: 31 },
-          isLeaf: false,
-          children: [
-            {
-              key: 'ALL_DEALS',
-              value: { label: 'All Deals', counter: 31, link: '#' },
-              isLeaf: true,
-            },
-            {
-              key: 'OUTLET',
-              value: { label: 'Outlet', counter: 31, link: '#' },
-              isLeaf: true,
-            },
-          ],
-        },
-      ],
-    },
-  ],
 };
 </script>

@@ -1,34 +1,31 @@
 <template>
   <MegaMenu :categories="categoryTree">
-    <NuxtLink :to="paths.home" aria-label="Sf Homepage" class="h-6 md:h-7 -mt-1.5">
-      <UiVsfLogo />
-    </NuxtLink>
     <UiSearch class="hidden md:block flex-1" />
-    <nav class="hidden md:flex md:flex-row md:flex-nowrap">
+    <nav class="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
       <SfButton
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :to="paths.cart"
-          :aria-label="$t('numberInCart', cartItemsCount)"
-          variant="tertiary"
-          square
+        class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+        :tag="NuxtLink"
+        :to="paths.cart"
+        :aria-label="$t('numberInCart', cartItemsCount)"
+        variant="tertiary"
+        square
       >
         <template #prefix>
           <SfIconShoppingCart />
           <SfBadge
-              :content="cartItemsCount"
-              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-              data-testid="cart-badge"
+            :content="cartItemsCount"
+            class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+            data-testid="cart-badge"
           />
         </template>
       </SfButton>
       <SfDropdown v-model="isAccountDropdownOpen" placement="bottom-end">
         <template #trigger>
           <SfButton
-              variant="tertiary"
-              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-              @click="accountDropdownToggle()"
+            variant="tertiary"
+            class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
+            :class="{ 'bg-primary-900': isAccountDropdownOpen }"
+            @click="accountDropdownToggle()"
           >
             <template #prefix><SfIconPerson /></template>
             {{ account?.firstName }}
@@ -46,15 +43,15 @@
           </li>
         </ul>
       </SfDropdown>
-    </nav>
-    <SfButton
+      <SfButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
         square
         @click="searchModalOpen"
-    >
-      <SfIconSearch />
-    </SfButton>
+      >
+        <SfIconSearch />
+      </SfButton>
+    </nav>
   </MegaMenu>
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
@@ -64,7 +61,6 @@
   <main>
     <slot />
   </main>
-  <UiNavbarBottom />
   <UiFooter />
   <SfModal
     v-model="isSearchModalOpen"
