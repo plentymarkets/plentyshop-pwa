@@ -67,15 +67,16 @@
             >
               <template v-for="node in activeMenu.children" :key="node.key">
                 <template v-if="node.childCount === 0">
-                  <SfListItem
-                    tag="a"
-                    size="sm"
-                    :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
-                    class="typography-text-sm mb-2"
-                  >
-                    {{ categoryTreeGetters.getName(node) }}
-                  </SfListItem>
-                  <div class="col-start-2 col-end-5" />
+                  <ul>
+                    <SfListItem
+                      tag="a"
+                      size="sm"
+                      :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
+                      class="typography-text-sm mb-2"
+                    >
+                      {{ categoryTreeGetters.getName(node) }}
+                    </SfListItem>
+                  </ul>
                 </template>
                 <div v-else>
                   <p
@@ -202,8 +203,6 @@ const category = {
   details: [],
   children: categories.value,
 } as CategoryTreeItem;
-
-console.log(categories);
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
