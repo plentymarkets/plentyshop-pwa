@@ -56,7 +56,7 @@ import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
-  itemsPerPage: 24,
+  itemsPerPage: 50,
 });
 
 const { isOpen, open, close } = useDisclosure();
