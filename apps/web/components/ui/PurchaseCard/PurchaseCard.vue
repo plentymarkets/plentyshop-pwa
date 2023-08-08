@@ -8,10 +8,13 @@
     </h1>
     <div class="my-1">
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        ${{ productGetters.getPrice(product).special }}
+        {{ $n(actualPrice, 'currency') }}
       </span>
-      <span class="text-base font-normal text-neutral-500 line-through">
-        ${{ productGetters.getRegularPrice(product) }}
+      <span
+        v-if="productGetters.getPrice(product)?.special"
+        class="text-base font-normal text-neutral-500 line-through"
+      >
+        {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
@@ -71,7 +74,9 @@ import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/sr
 import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
-defineProps<PurchaseCardProps>();
+const props = defineProps<PurchaseCardProps>();
+
+const { product } = toRefs(props);
 
 const { addToCart } = useCart();
 
@@ -80,4 +85,8 @@ const quantitySelectorValue = ref(1);
 const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
+
+const actualPrice = computed(
+  () => productGetters.getPrice(product.value)?.special || productGetters.getPrice(product.value)?.regular || 0,
+);
 </script>
