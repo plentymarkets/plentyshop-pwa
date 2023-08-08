@@ -4,7 +4,7 @@ import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composable
 import { useSdk } from '~/sdk';
 
 const PER_PAGE_STEPS = [10, 20, 50, 100];
-const DEFAULT_ITEMS_PER_PAGE = '50';
+const DEFAULT_ITEMS_PER_PAGE = 50;
 
 /**
  * @description Composable for managing products.

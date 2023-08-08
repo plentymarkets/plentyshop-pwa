@@ -35,8 +35,8 @@ await fetchProducts({
   itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
 });
 
-const selected = async (event) => {
-  await fetchProducts({ itemsPerPage: event });
+const selected = async (perPage: number) => {
+  await fetchProducts({ itemsPerPage: perPage });
 };
 
 const breadcrumbs: Breadcrumb[] = [
