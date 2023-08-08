@@ -46,7 +46,7 @@
               @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
               @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             >
-              <NuxtLink :to="menuNode.childCount === 0 ? categoryTreeGetters.getSlug(menuNode) : '#'">
+              <NuxtLink to="#">
                 <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
                 <SfIconChevronRight
                   v-if="menuNode.childCount > 0"
@@ -68,12 +68,7 @@
               <template v-for="node in activeMenu.children" :key="node.key">
                 <template v-if="node.childCount === 0">
                   <ul>
-                    <SfListItem
-                      tag="a"
-                      size="sm"
-                      :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node)"
-                      class="typography-text-sm mb-2"
-                    >
+                    <SfListItem tag="a" size="sm" href="#" class="typography-text-sm mb-2">
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
                   </ul>
@@ -90,13 +85,7 @@
                         v-if="categoryTreeGetters.getCategoryDetails(child) !== null"
                         tag="a"
                         size="sm"
-                        :href="
-                          categoryTreeGetters.getSlug(activeMenu) +
-                          '/' +
-                          categoryTreeGetters.getSlug(node) +
-                          '/' +
-                          categoryTreeGetters.getSlug(child)
-                        "
+                        href="#"
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -142,12 +131,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem
-                  size="lg"
-                  tag="a"
-                  :href="categoryTreeGetters.getSlug(activeMenu) + '/1/' + categoryTreeGetters.getSlug(node)"
-                  class="first-of-type:mt-2"
-                >
+                <SfListItem size="lg" tag="a" href="#" class="first-of-type:mt-2">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
