@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full z-500">
+  <div class="w-full h-full z-[1000]">
     <header ref="referenceRef" class="relative">
       <div
         class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
@@ -89,7 +89,13 @@
                         v-if="categoryTreeGetters.getCategoryDetails(child)"
                         tag="a"
                         size="sm"
-                        :href="categoryTreeGetters.getSlug(activeMenu) + '/' + categoryTreeGetters.getSlug(node) + '/' + categoryTreeGetters.getSlug(child)"
+                        :href="
+                          categoryTreeGetters.getSlug(activeMenu) +
+                          '/' +
+                          categoryTreeGetters.getSlug(node) +
+                          '/' +
+                          categoryTreeGetters.getSlug(child)
+                        "
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -109,7 +115,7 @@
         ref="drawerRef"
         v-model="isOpen"
         placement="left"
-        class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto"
+        class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto z-[1000]"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
@@ -168,6 +174,8 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import type { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import {
   SfIconClose,
   SfButton,
@@ -183,8 +191,6 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import { MegaMenuProps } from '~/components/MegaMenu/types';
-import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import type { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 const props = defineProps<MegaMenuProps>();
 const categories = computed(() => categoryTreeGetters.getTree(props.categories));
@@ -239,7 +245,7 @@ const openMenu = (menuType: number[]) => {
 };
 
 const goBack = () => {
-  activeNode.value = activeNode.value.slice(0, activeNode.value.length - 1);
+  activeNode.value = activeNode.value.slice(0, -1);
 };
 
 const goNext = (key: number) => {
