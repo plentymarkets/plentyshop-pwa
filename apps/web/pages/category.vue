@@ -9,6 +9,11 @@
       <template #sidebar>
         <CategoryTree :categories="categories" :parent="{ name: $t('allProducts'), href: paths.category }" />
         <CategorySorting />
+        <CategoryItemsPerPage
+          class="mt-6"
+          @selected="selected($event)"
+          :total-products="productsCatalog.products.length"
+        />
         <CategoryFilters :facets="productsCatalog.facets" />
       </template>
     </CategoryPageContent>
@@ -23,10 +28,16 @@ definePageMeta({
   layout: false,
 });
 
-const { fetchProducts, data: productsCatalog } = useProducts();
+const { fetchProducts, data: productsCatalog, DEFAULT_ITEMS_PER_PAGE } = useProducts();
 const { t } = useI18n();
 
-await fetchProducts({});
+await fetchProducts({
+  itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
+});
+
+const selected = async (perPage: number) => {
+  await fetchProducts({ itemsPerPage: perPage });
+};
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
