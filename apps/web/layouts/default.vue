@@ -94,7 +94,7 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
-import { useCategoryTree } from "~/composables/useCategoryTree";
+import { useCategoryTree } from '~/composables/useCategoryTree';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();

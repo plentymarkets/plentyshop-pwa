@@ -40,7 +40,7 @@
         >
           <li v-for="(menuNode, index) in categories" :key="menuNode.id">
             <SfButton
-              ref="triggerRefs"
+              ref="triggerReference"
               variant="tertiary"
               class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
               @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
@@ -58,7 +58,7 @@
             <div
               v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.id && menuNode.childCount > 0"
               :key="activeMenu.id"
-              ref="megaMenuRef"
+              ref="megaMenuReference"
               :style="style"
               class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-[1000]"
               tabindex="0"
@@ -102,7 +102,7 @@
       <!-- Mobile drawer -->
       <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
-        ref="drawerRef"
+        ref="drawerReference"
         v-model="isOpen"
         placement="left"
         class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto z-[1000]"
@@ -205,9 +205,9 @@ const { referenceRef, floatingRef, style } = useDropdown({
   middleware: [],
 });
 
-const drawerRef = ref();
-const megaMenuRef = ref();
-const triggerRefs = ref();
+const drawerReference = ref();
+const megaMenuReference = ref();
+const triggerReference = ref();
 const activeNode = ref<number[]>([]);
 
 const activeMenu = computed(() => findNode(activeNode.value, category));
@@ -218,10 +218,10 @@ const trapFocusOptions = {
   initialFocus: 'container',
 } as const;
 useTrapFocus(
-  computed(() => megaMenuRef.value?.[0]),
+  computed(() => megaMenuReference.value?.[0]),
   trapFocusOptions,
 );
-useTrapFocus(drawerRef, trapFocusOptions);
+useTrapFocus(drawerReference, trapFocusOptions);
 
 const openMenu = (menuType: number[]) => {
   activeNode.value = menuType;
@@ -237,6 +237,6 @@ const goNext = (key: number) => {
 };
 
 const focusTrigger = (index: number) => {
-  unrefElement(triggerRefs.value[index]).focus();
+  unrefElement(triggerReference.value[index]).focus();
 };
 </script>
