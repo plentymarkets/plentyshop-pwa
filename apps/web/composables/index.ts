@@ -1,3 +1,4 @@
+export * from './defaults';
 export * from './useCart';
 export * from './useCategoryFilter';
 // export * from './useContent';

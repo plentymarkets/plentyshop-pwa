@@ -23,16 +23,17 @@
 <script setup lang="ts">
 import { Category } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import { defaults } from '~/composables';
 
 definePageMeta({
   layout: false,
 });
 
-const { fetchProducts, data: productsCatalog, DEFAULT_ITEMS_PER_PAGE } = useProducts();
+const { fetchProducts, data: productsCatalog } = useProducts();
 const { t } = useI18n();
 
 await fetchProducts({
-  itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
+  itemsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
 });
 
 const selected = async (perPage: number) => {
