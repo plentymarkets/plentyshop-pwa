@@ -22,13 +22,10 @@ jobs:
           node-version-file: './.github/.node-version'
           cache: 'yarn'
 
-      - name: Create NPMRC
+      - name: Create yarnrc
         run: |
-          echo "npmScopes:
-                  plentymarkets:
-                    npmRegistryServer: 'https://npm.pkg.github.com'
-                    npmAuthToken: '${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}'
-                  " >> ~/.yarnrc.yml
+          cp ~/.yarnrc.yml.example ~/.yarnrc.yml
+          sed -i 's/<TOKEN>/${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}/' ~/.yarnrc.yml
 
       - name: Install dependencies
         run: yarn install
