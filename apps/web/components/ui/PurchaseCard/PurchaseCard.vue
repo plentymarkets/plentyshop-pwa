@@ -86,8 +86,6 @@ const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
 
-console.log('producct: ', product)
-
 const actualPrice = computed(
   () => productGetters.getPrice(product.value)?.special || productGetters.getPrice(product.value)?.regular || 0,
 );
