@@ -1,5 +1,3 @@
-import { AgnosticCategoryTree } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/getters/agnostic.types';
-
 export interface GetFacetsFromURLResponse {
   categorySlug?: string;
   facets?: string;
@@ -16,7 +14,6 @@ export interface Filters {
 
 export interface UseCategoryFiltersResponse {
   getFacetsFromURL(): GetFacetsFromURLResponse;
-  getCatLink(category: AgnosticCategoryTree): string;
   updateFilters(filters: Filters): void;
   updateItemsPerPage(itemsPerPage: number): void;
   updateSearchTerm(term: string): void;

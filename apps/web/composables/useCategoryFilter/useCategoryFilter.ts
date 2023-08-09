@@ -1,14 +1,9 @@
 import { useRoute } from 'nuxt/app';
-import { AgnosticCategoryTree } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/getters/agnostic.types';
 import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
 const nonFilters = new Set(['page', 'sort', 'term', 'itemsPerPage']);
 const defaultPage = 1;
 const defaultItemsPerPage = 20;
-
-const getCatLink = (category: AgnosticCategoryTree): string => {
-  return `/c/${category.slug}`;
-};
 
 const reduceFilters =
   (query: GetFacetsFromURLResponse) =>
@@ -77,7 +72,6 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   return {
-    getCatLink,
     getFacetsFromURL,
     updateFilters,
     updateItemsPerPage,
