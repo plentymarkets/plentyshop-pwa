@@ -1,7 +1,7 @@
 import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
-import type { UseCartReturn, UseCartState, GetCart } from './types';
+import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
 
 /**
  * @description Composable for managing cart.
@@ -34,7 +34,36 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  /**
+   * @description Function for adding cart items.
+   * @param params
+   * @example
+   * addToCart({
+   *     productId: 1,
+   *     quantity: 1,
+   * });
+   */
+  const addToCart: AddToCart = async (params) => {
+    state.value.loading = true;
+    try {
+      const { data, error } = await useAsyncData(() =>
+        useSdk().plentysystems.doAddCartItem({
+          productId: params.productId,
+          quantity: params.quantity,
+        }),
+      );
+      useHandleError(error.value);
+      state.value.data = data?.value?.data ?? state.value.data;
+      return state.value.data;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
   return {
+    addToCart,
     getCart,
     ...toRefs(state.value),
   };
