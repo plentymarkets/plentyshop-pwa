@@ -4,10 +4,10 @@ import { useSdk } from '~/sdk';
 import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree } from './types';
 
 /**
- * @description Composable for managing cart.
- * @returns {@link UseCartReturn}
+ * @description Composable for getting the category tree.
+ * @returns {@link UseCategoryTreeMethodsReturn}
  * @example
- * const { data, loading } = useCart();
+ * const { data, loading } = useCategoryTree();
  */
 export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   const state = useState<UseCategoryTreeState>('useCategoryTree', () => ({
@@ -16,9 +16,9 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   }));
 
   /**
-   * @description Function for fetching the cart.
+   * @description Function for fetching the category tree.
    * @example
-   * getCart();
+   * getCategoryTree();
    */
   const getCategoryTree: GetCategoryTree = async () => {
     state.value.loading = true;
