@@ -16,12 +16,13 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 import { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
+import { defaults } from '~/composables';
 
 const props = defineProps<CategoryItemsPerPageProps>();
 
-const { PER_PAGE_STEPS, DEFAULT_ITEMS_PER_PAGE } = useProducts();
-
-const options = ref(PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })));
+const options = ref(
+  defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
+);
 
 let firstHigherValueOptionFound = false;
 
@@ -37,10 +38,12 @@ options.value = options.value.map((option) => {
 });
 
 const lastDisabledValue =
-  options.value.findLast((op: Option) => !op.disabled)?.value || DEFAULT_ITEMS_PER_PAGE.toString();
+  options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 
 const selected = ref(
-  Number(lastDisabledValue) > Number(DEFAULT_ITEMS_PER_PAGE) ? DEFAULT_ITEMS_PER_PAGE.toString() : lastDisabledValue,
+  Number(lastDisabledValue) > Number(defaults.DEFAULT_ITEMS_PER_PAGE)
+    ? defaults.DEFAULT_ITEMS_PER_PAGE.toString()
+    : lastDisabledValue,
 );
 
 defineEmits(['selected']);
