@@ -131,7 +131,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" tag="a" href="#" class="first-of-type:mt-2">
+                <SfListItem size="lg" tag="a" href="#">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -139,13 +139,17 @@
                 </SfListItem>
               </li>
               <li v-else>
-                <SfListItem size="lg" tag="button" type="button" @click="goNext(node.id)">
-                  <div class="flex justify-between items-center">
-                    <div class="flex items-center">
-                      <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                <SfListItem size="lg" tag="button" type="button" class="!p-0">
+                  <div class="flex items-center w-100">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" to="#">
+                      <div class="flex items-center">
+                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                      </div>
+                    </NuxtLink>
+                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
+                      <SfIconChevronRight class="text-neutral-500" />
                     </div>
-                    <SfIconChevronRight class="text-neutral-500" />
                   </div>
                 </SfListItem>
               </li>
