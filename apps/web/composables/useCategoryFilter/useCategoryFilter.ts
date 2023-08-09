@@ -2,8 +2,6 @@ import { useRoute } from 'nuxt/app';
 import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
 const nonFilters = new Set(['page', 'sort', 'term', 'itemsPerPage']);
-const defaultPage = 1;
-const defaultItemsPerPage = 20;
 
 const reduceFilters =
   (query: GetFacetsFromURLResponse) =>
@@ -31,10 +29,10 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     return {
       categorySlug: fullPath.split('/').pop(),
-      page: Number.parseInt(query.page as string) ?? defaultPage,
+      page: Number.parseInt(query.page as string) ?? defaults.DEFAULT_PAGE,
       sort: query.sort?.toString(),
       facets: query.facets?.toString(),
-      itemsPerPage: Number.parseInt(query.itemsPerPage as string) ?? defaultItemsPerPage,
+      itemsPerPage: Number.parseInt(query.itemsPerPage as string) ?? defaults.DEFAULT_ITEMS_PER_PAGE,
       term: query.term?.toString(),
     };
   };
