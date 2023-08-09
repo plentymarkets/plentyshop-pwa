@@ -12,8 +12,6 @@ export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;
   fetchProducts: FetchProducts;
-  PER_PAGE_STEPS: number[];
-  DEFAULT_ITEMS_PER_PAGE: number;
 }
 
 export type UseProductsReturn = () => UseProducts;
