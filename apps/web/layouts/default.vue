@@ -1,19 +1,7 @@
 <template>
-  <UiNavbarTop filled>
-    <SfButton
-      class="!px-2 mr-auto hidden lg:flex text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
-      type="button"
-      variant="tertiary"
-      :tag="NuxtLink"
-      :to="paths.category"
-    >
-      <template #suffix>
-        <SfIconExpandMore class="hidden lg:block" />
-      </template>
-      <span class="hidden lg:flex whitespace-nowrap">{{ $t('allProductsLinkText') }}</span>
-    </SfButton>
+  <MegaMenu :categories="categoryTree">
     <UiSearch class="hidden md:block flex-1" />
-    <nav class="hidden md:flex md:flex-row md:flex-nowrap">
+    <nav class="flex flex-nowrap justify-end items-center md:ml-10 gap-x-1">
       <SfButton
         class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
         :tag="NuxtLink"
@@ -55,16 +43,16 @@
           </li>
         </ul>
       </SfDropdown>
+      <SfButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        square
+        @click="searchModalOpen"
+      >
+        <SfIconSearch />
+      </SfButton>
     </nav>
-    <SfButton
-      variant="tertiary"
-      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
-    >
-      <SfIconSearch />
-    </SfButton>
-  </UiNavbarTop>
+  </MegaMenu>
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -73,7 +61,6 @@
   <main>
     <slot />
   </main>
-  <UiNavbarBottom />
   <UiFooter />
   <SfModal
     v-model="isSearchModalOpen"
@@ -98,7 +85,6 @@
 import {
   SfBadge,
   SfButton,
-  SfIconExpandMore,
   SfIconShoppingCart,
   SfIconClose,
   SfIconSearch,
@@ -108,6 +94,7 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { useCategoryTree } from '~/composables/useCategoryTree';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
@@ -115,9 +102,11 @@ const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClos
 
 defineProps<DefaultLayoutProps>();
 
+const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { getCart, data: cart } = useCart();
 const { fetchAccount, data: account } = useAccount();
 
+getCategoryTree();
 getCart();
 fetchAccount();
 usePageTitle();
