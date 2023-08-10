@@ -12,7 +12,7 @@
       :disabled="pagination.selectedPage <= 1"
       variant="tertiary"
       class="gap-3"
-      @click="pagination.prev"
+      @click="previousPage"
     >
       <template #prefix>
         <SfIconChevronLeft />
@@ -31,7 +31,7 @@
             type="button"
             class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
             :aria-current="pagination.selectedPage === 1"
-            @click="pagination.setPage(1)"
+            @click="setPage(1)"
           >
             1
           </button>
@@ -50,7 +50,7 @@
             type="button"
             class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
             :aria-current="pagination.endPage - 1 === pagination.selectedPage"
-            @click="pagination.setPage(pagination.endPage - 1)"
+            @click="setPage(pagination.endPage - 1)"
           >
             {{ pagination.endPage - 1 }}
           </button>
@@ -73,7 +73,7 @@
             ]"
             :aria-label="$t('currentPage', { page, totalPages: pagination.totalPages })"
             :aria-current="pagination.selectedPage === page"
-            @click="pagination.setPage(page)"
+            @click="setPage(page)"
           >
             {{ page }}
           </button>
@@ -85,7 +85,7 @@
             type="button"
             class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
             :aria-label="$t('secondPageAriaLabel')"
-            @click="pagination.setPage(2)"
+            @click="setPage(2)"
           >
             2
           </button>
@@ -109,7 +109,7 @@
             type="button"
             class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
             :aria-current="pagination.totalPages === pagination.selectedPage"
-            @click="pagination.setPage(pagination.totalPages)"
+            @click="setPage(pagination.totalPages)"
           >
             {{ pagination.totalPages }}
           </button>
@@ -123,7 +123,7 @@
       :disabled="pagination.selectedPage >= pagination.totalPages"
       variant="tertiary"
       class="gap-3"
-      @click="pagination.next"
+      @click="nextPage"
     >
       <span class="hidden sm:inline-flex">{{ $t('next') }}</span>
       <template #suffix>
@@ -136,6 +136,8 @@
 <script setup lang="ts">
 import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
 import { PaginationProps } from '~/components/ui/Pagination/types';
+
+const { updatePage } = useCategoryFilter();
 
 const props = defineProps<PaginationProps>();
 const { currentPage, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = toRefs(props);
@@ -150,4 +152,18 @@ const pagination = computed(() =>
     }),
   ),
 );
+
+const setPage = (page: number) => {
+  updatePage(page.toString());
+  pagination.value.setPage(page);
+};
+
+const previousPage = () => {
+  pagination.value.prev;
+  setPage(pagination.value.selectedPage - 1);
+};
+const nextPage = () => {
+  pagination.value.next;
+  setPage(pagination.value.selectedPage + 1);
+};
 </script>

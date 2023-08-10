@@ -23,24 +23,24 @@ const getFiltersToUpdate = (filters: Filters): string => {
 };
 
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
-  const { fullPath, query } = useRoute();
+  const route = useRoute();
   const router = useRouter();
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     return {
-      categorySlug: fullPath.split('/').pop(),
-      page: Number.parseInt(query.page as string) ?? defaults.DEFAULT_PAGE,
-      sort: query.sort?.toString(),
-      facets: query.facets?.toString(),
-      itemsPerPage: Number.parseInt(query.itemsPerPage as string) ?? defaults.DEFAULT_ITEMS_PER_PAGE,
-      term: query.term?.toString(),
+      categorySlug: route.fullPath.split('/').pop(),
+      page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
+      sort: route.query.sort?.toString(),
+      facets: route.query.facets?.toString(),
+      itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
+      term: route.query.term?.toString(),
     };
   };
 
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
-    return Object.keys(query)
+    return Object.keys(route.query)
       .filter((f) => nonFilters.has(f))
-      .reduce(reduceFilters(query), {});
+      .reduce(reduceFilters(route.query), {});
   };
 
   const updateQuery = (parameter?: object) => {
@@ -58,7 +58,11 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateItemsPerPage = (itemsPerPage: number): void => {
-    updateQuery({ itemsPerPage: itemsPerPage });
+    updateQuery({ itemsPerPage: itemsPerPage, page: 1 });
+  };
+
+  const updatePage = (page: string): void => {
+    updateQuery({ page: page });
   };
 
   const updateSearchTerm = (term: string): void => {
@@ -66,7 +70,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateSorting = (sort: string): void => {
-    router.push({ query: { ...query, sort } });
+    router.push({ query: { ...route.query, sort } });
   };
 
   return {
@@ -75,6 +79,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateItemsPerPage,
     updateSearchTerm,
     updateSorting,
+    updatePage,
   };
 };
 
