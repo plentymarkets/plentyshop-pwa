@@ -27,8 +27,6 @@ export const useProducts: UseProductsReturn = () => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
     useHandleError(error.value);
 
-    // if (data.value) data.value.data.pagination.totals = 29;
-
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
     if (data.value) data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
