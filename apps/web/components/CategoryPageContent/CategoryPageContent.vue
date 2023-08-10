@@ -37,7 +37,7 @@
           <CategoryEmptyState v-else />
           <UiPagination
             v-if="totalProducts > itemsPerPage"
-            :current-page="getFacetsFromURL().page"
+            :current-page="getFacetsFromURL().page ?? 1"
             :total-items="totalProducts"
             :page-size="itemsPerPage"
             :max-visible-pages="maxVisiblePages"

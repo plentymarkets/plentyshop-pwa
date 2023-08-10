@@ -12,7 +12,7 @@
       :disabled="pagination.selectedPage <= 1"
       variant="tertiary"
       class="gap-3"
-      @click="pagination.prev && setPage(pagination.selectedPage - 1)"
+      @click="pagination.prev() && setPage(pagination.selectedPage - 1)"
     >
       <template #prefix>
         <SfIconChevronLeft />
@@ -123,7 +123,7 @@
       :disabled="pagination.selectedPage >= pagination.totalPages"
       variant="tertiary"
       class="gap-3"
-      @click="pagination.next && setPage(pagination.selectedPage + 1)"
+      @click="pagination.next() && setPage(pagination.selectedPage + 1)"
     >
       <span class="hidden sm:inline-flex">{{ $t('next') }}</span>
       <template #suffix>
@@ -153,7 +153,7 @@ const pagination = computed(() =>
   ),
 );
 
-const setPage = (page) => {
+const setPage = (page: number) => {
   updatePage(page.toString());
   pagination.value.setPage(page);
 };

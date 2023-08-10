@@ -43,7 +43,11 @@ options.value = options.value.map((option) => {
 const lastDisabledValue =
   options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 
-const selected = ref(
-  Number(lastDisabledValue) > getFacetsFromURL().itemsPerPage ? getFacetsFromURL().itemsPerPage : lastDisabledValue,
-);
+const facetsFromURL = getFacetsFromURL();
+const selectedValue =
+  facetsFromURL.itemsPerPage && facetsFromURL.itemsPerPage > Number(lastDisabledValue)
+    ? lastDisabledValue
+    : facetsFromURL.itemsPerPage?.toString() || lastDisabledValue;
+
+const selected = ref(selectedValue);
 </script>
