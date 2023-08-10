@@ -37,7 +37,7 @@
           <CategoryEmptyState v-else />
           <UiPagination
             v-if="totalProducts > itemsPerPage"
-            :current-page="1"
+            :current-page="getFacetsFromURL().page"
             :total-items="totalProducts"
             :page-size="itemsPerPage"
             :max-visible-pages="maxVisiblePages"
@@ -51,13 +51,15 @@
 <script setup lang="ts">
 import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
+import {SfButton, SfIconTune, useDisclosure} from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,
 });
+
+const { getFacetsFromURL } = useCategoryFilter();
 
 const { isOpen, open, close } = useDisclosure();
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);

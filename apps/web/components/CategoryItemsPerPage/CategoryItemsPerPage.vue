@@ -3,8 +3,9 @@
     <h6 class="bg-neutral-100 mb-4 px-4 py-2 rounded uppercase typography-headline-6 font-bold tracking-widest">
       {{ $t('perPage') }}
     </h6>
+
     <div class="px-4">
-      <SfSelect v-model="selected" :aria-label="$t('perPage')" @change="$emit('selected', selected)">
+      <SfSelect v-model="selected" :aria-label="$t('perPage')" @change="updateItemsPerPage(Number(selected))">
         <option v-for="{ value, label, disabled } in options" :key="value" :value="value" :disabled="disabled">
           {{ label }}
         </option>
@@ -19,6 +20,8 @@ import { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPer
 import { defaults } from '~/composables';
 
 const props = defineProps<CategoryItemsPerPageProps>();
+
+const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
 
 const options = ref(
   defaults.PER_PAGE_STEPS.map((o: number) => ({ label: o.toString(), value: o.toString(), disabled: false })),
@@ -41,10 +44,6 @@ const lastDisabledValue =
   options.value.findLast((op: Option) => !op.disabled)?.value || defaults.DEFAULT_ITEMS_PER_PAGE.toString();
 
 const selected = ref(
-  Number(lastDisabledValue) > Number(defaults.DEFAULT_ITEMS_PER_PAGE)
-    ? defaults.DEFAULT_ITEMS_PER_PAGE.toString()
-    : lastDisabledValue,
+  Number(lastDisabledValue) > getFacetsFromURL().itemsPerPage ? getFacetsFromURL().itemsPerPage : lastDisabledValue,
 );
-
-defineEmits(['selected']);
 </script>

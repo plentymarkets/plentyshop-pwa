@@ -1,11 +1,7 @@
-export interface GetFacetsFromURLResponse {
-  categorySlug?: string;
-  facets?: string;
-  itemsPerPage?: number;
-  page?: number;
-  sort?: string;
+import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+
+export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
-  categoryId?: string;
 }
 
 export interface Filters {
@@ -18,4 +14,5 @@ export interface UseCategoryFiltersResponse {
   updateItemsPerPage(itemsPerPage: number): void;
   updateSearchTerm(term: string): void;
   updateSorting(sort: string): void;
+  updatePage(page: string): void;
 }
