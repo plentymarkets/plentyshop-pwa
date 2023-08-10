@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import {SfButton, SfIconTune, useDisclosure} from '@storefront-ui/vue';
+import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
