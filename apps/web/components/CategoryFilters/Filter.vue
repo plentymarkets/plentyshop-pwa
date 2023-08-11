@@ -51,10 +51,10 @@
 </template>
 
 <script setup lang="ts">
+import { Filter } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfAccordionItem, SfIconChevronLeft, SfRadio, SfListItem, SfCheckbox, SfCounter, SfRating } from '@storefront-ui/vue';
+import { SfAccordionItem, SfIconChevronLeft, SfListItem, SfCheckbox, SfCounter } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
-import {Filter} from "@plentymarkets/plentymarkets-sdk/packages/api-client/server";
 import { useCategoryFilter, Filters } from '~/composables';
 
 const { getFacetsFromURL, updateFilters } = useCategoryFilter();
