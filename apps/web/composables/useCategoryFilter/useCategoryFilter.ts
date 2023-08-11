@@ -1,6 +1,5 @@
 import { useRoute } from 'nuxt/app';
 import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
-import {computed} from "#build/imports";
 
 const nonFilters = new Set(['page', 'sort', 'term', 'itemsPerPage']);
 
@@ -26,7 +25,6 @@ const getFiltersToUpdate = (filters: Filters): string => {
 };
 
 const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
-  console.log('oldFilters', oldFilters);
   const mergedFilters = { ...oldFilters };
   Object.keys(filters).forEach((key) => {
     mergedFilters[key] = filters[key];
