@@ -1,26 +1,10 @@
 <template>
   <div class="px-4" data-testid="product-properties">
-    <!-- <div>
-      {{ optionsold }}
-    </div> -->
-    <div>
-      options new-Different on client (correctway)
-    </div>
-    <div>
-      {{ optionsClientSsrCorrectWay }}
-    </div>
-      <!-- <SfSelect
-      v-for="(option, key) in options"
-      :key="key"
-      size="sm"
-      v-e2e="'size-select'"
-      class="sf-select--underlined product__select-size"
-      :label="option.label"
-    >
-      <option v-for="(optionValue, valueKey) in option.value" :key="valueKey" :value="valueKey">
-        {{ optionValue }}
+    <SfSelect @update:modelValue="changeVariationId" v-model="selectedVariation" size="sm" placeholder="-- Select --">
+      <option v-for="{ value, label } in options" :key="value" :value="value">
+        {{ label }}
       </option>
-    </SfSelect> -->
+    </SfSelect>
   </div>
 </template>
 
@@ -32,30 +16,15 @@ import { ProductPropertiesProps } from '~/components/ProductProperties/types';
 
 const props = defineProps<ProductPropertiesProps>();
 const product = props.product;
-
-const optionsold = computed(() => {
-  if(product) {
-    return productGetters.getAttributes([product], ['color', 'size']);
-  }
-  return null
-});
-
-const optionsClientSsrCorrectWay = computed(() => {
-  if(product) {
-    let options = null
-    if (process.client) {
-      options =  productGetters.getAttributes([product.value], ['color', 'size']);
-    } else {
-      options =  productGetters.getAttributes([product], ['color', 'size']);
-    }
-    return options
-  }
-  return null
-});
+// this should be refactored..if you have multiple variation types
+const options = computed(() => productGetters.getAttributes([product], ['color', 'size'])[0][0].map(x => ({ value: x.variationId, label: x.value })));
 
 const router = useRouter();
 const route = useRoute();
 const slug = route.params.slug as string;
+const productId = slug.split('-').pop() ?? '0';
+const selectedVariation = ref(productId);
+
 const changeVariationId = (newId: String) => {
   const delimiter = '-' as string;
   const newLink = slug.substring(0, slug.lastIndexOf(delimiter)) + delimiter + `${newId}` as String;
