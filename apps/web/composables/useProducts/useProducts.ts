@@ -14,6 +14,7 @@ export const useProducts: UseProductsReturn = () => {
   const state = useState<UseProductsState>('products', () => ({
     data: {} as Facet,
     loading: false,
+    productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
   }));
 
   /**
@@ -26,9 +27,12 @@ export const useProducts: UseProductsReturn = () => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
     useHandleError(error.value);
 
+    state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
+
     if (data.value) data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
 
     state.value.data = data.value?.data ?? state.value.data;
+
     state.value.loading = false;
     return state.value.data;
   };

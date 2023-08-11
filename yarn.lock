@@ -3575,13 +3575,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/plentymarkets-sdk@npm:0.1.18":
-  version: 0.1.18
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.18::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.18%2F801d111bee334cc453c33fe9013a95d3471e3158"
+"@plentymarkets/plentymarkets-sdk@npm:^0.1.*":
+  version: 0.1.28
+  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.28::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.28%2F09093f242fd56b73c8181f8a6c419673a065a4e7"
   dependencies:
     react: 18.2.0
     react-dom: 18.2.0
-  checksum: d031bba1a8a0b1880f150f7b1062f7e135476f98f34cba0ebdd63564f68f51815afdea60b02e5ddb13eddf5e887d177dd1b9ad45a73707eba7ecc396836f105d
+  checksum: db44c4d7e26dab5ca44bd57363c41ab6c2682b7f0ab8e9c0464004ff54ddff6eb5a7933377a0395dfcfc23ca0f44cda727931d78d2be8a7a6bc1ca48e8876723
   languageName: node
   linkType: hard
 
@@ -4776,7 +4776,7 @@ __metadata:
     "@commitlint/cli": ^13.2.1
     "@commitlint/config-conventional": ^13.2.0
     "@lhci/cli": ^0.12.0
-    "@plentymarkets/plentymarkets-sdk": 0.1.18
+    "@plentymarkets/plentymarkets-sdk": ^0.1.*
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
     babel-preset-node: ^5.1.1
