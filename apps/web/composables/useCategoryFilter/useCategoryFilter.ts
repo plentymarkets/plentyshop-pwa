@@ -40,9 +40,6 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const router = useRouter();
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
-    const { query: nQuery } = useRoute();
-    const itemsPerPage = Number.parseInt(query.itemsPerPage as string);
-
     return {
       categorySlug: route.fullPath.split('/').pop(),
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
