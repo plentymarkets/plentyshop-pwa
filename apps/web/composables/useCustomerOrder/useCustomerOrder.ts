@@ -1,5 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 import addressData from '~/composables/useCustomerOrder/adress';
+import productData from '~/composables/useCustomerOrder/product';
 import type {
   UseCustomerOrderReturn,
   UseCustomerOrderState,
@@ -22,7 +23,7 @@ const order: OrderData = {
   billingAddress: addressData,
   shippingAddress: addressData,
   status: 'Completed',
-  products: ['1'],
+  products: [productData, productData],
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
