@@ -51,12 +51,14 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app';
 import { Filter } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfAccordionItem, SfIconChevronLeft, SfListItem, SfCheckbox, SfCounter } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import { useCategoryFilter, Filters } from '~/composables';
 
+const route = useRoute();
 const { getFacetsFromURL, updateFilters } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
@@ -64,15 +66,26 @@ const filters = facetGetters.getFilters(props.facet) as Filter[];
 const models: Filters = {};
 const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
 
-for (const filter of filters) {
-  models[filter.id.toString()] = Boolean(filter.selected) ?? false;
+const updateFilter = () => {
+  for (const filter of filters) {
+    models[filter.id.toString()] = Boolean(filter.selected) ?? false;
 
-  if (currentFacets.value.includes(filter.id.toString())) {
-    models[filter.id.toString()] = true;
+    if (currentFacets.value.includes(filter.id.toString())) {
+      models[filter.id.toString()] = true;
+    }
   }
-}
+};
 
 const facetChange = () => {
   updateFilters(models);
 };
+
+updateFilter();
+
+watch(
+  () => route.query,
+  async () => {
+    updateFilter();
+  },
+);
 </script>
