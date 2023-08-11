@@ -1,5 +1,6 @@
 import { useRoute } from 'nuxt/app';
 import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import {computed} from "#build/imports";
 
 const nonFilters = new Set(['page', 'sort', 'term', 'itemsPerPage']);
 
@@ -17,9 +18,21 @@ const reduceFilters =
   };
 
 const getFiltersToUpdate = (filters: Filters): string => {
-  return Object.values(filters)
-    .filter((entry: string[]) => entry.length > 0)
+  return Object.keys(filters)
+    .filter((key) => {
+      return filters[key];
+    })
     .join(',');
+};
+
+const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
+  console.log('oldFilters', oldFilters);
+  const mergedFilters = { ...oldFilters };
+  Object.keys(filters).forEach((key) => {
+    mergedFilters[key] = filters[key];
+  });
+
+  return mergedFilters;
 };
 
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
@@ -27,14 +40,28 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const router = useRouter();
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
+    const { query: nQuery } = useRoute();
+    const itemsPerPage = Number.parseInt(query.itemsPerPage as string);
+
     return {
       categorySlug: fullPath.split('/').pop(),
       page: Number.parseInt(query.page as string) ?? defaults.DEFAULT_PAGE,
       sort: query.sort?.toString(),
-      facets: query.facets?.toString(),
-      itemsPerPage: Number.parseInt(query.itemsPerPage as string) ?? defaults.DEFAULT_ITEMS_PER_PAGE,
+      facets: nQuery.facets?.toString(),
+      itemsPerPage: Number.isInteger(itemsPerPage) ? itemsPerPage : defaults.DEFAULT_ITEMS_PER_PAGE,
       term: query.term?.toString(),
     };
+  };
+
+  const getFiltersFromUrl = (): Filters => {
+    const filters: Filters = {};
+    const facets = getFacetsFromURL().facets?.split(',') ?? [];
+
+    facets.forEach((facet: string) => {
+      filters[facet] = true;
+    });
+
+    return filters;
   };
 
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
@@ -48,7 +75,9 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateFilters = (filters: Filters): void => {
-    const filtersIds = getFiltersToUpdate(filters);
+    const currentFilters = getFiltersFromUrl();
+    const mergedFilters = mergeFilters(currentFilters, filters);
+    const filtersIds = getFiltersToUpdate(mergedFilters);
 
     if (filtersIds) {
       updateQuery({ facets: filtersIds });
