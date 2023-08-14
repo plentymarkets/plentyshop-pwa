@@ -1,8 +1,6 @@
 <template>
-  <section
-    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-20"
-    data-testid="purchase-card"
-  >
+  <section class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-20"
+    data-testid="purchase-card">
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
@@ -17,15 +15,12 @@
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="productGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <SfLink href="#customerReviewsAccordion" variant="secondary" class="ml-2 text-xs text-neutral-500">
+      <SfLink variant="secondary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ $t('showAllReviews') }}
       </SfLink>
     </div>
-    <div
-      class="mb-4 font-normal typography-text-sm"
-      data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"
-    ></div>
+    <div class="mb-4 font-normal typography-text-sm" data-testid="product-description"
+      v-html="productGetters.getShortDescription(product)"></div>
     <div class="py-4">
       <!--
       <UiTag class="w-full mb-4">
@@ -74,6 +69,10 @@ import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 defineProps<PurchaseCardProps>();
 
 const quantitySelectorValue = ref(1);
+const scrollToReviews = () => { 
+  document.getElementById('customerReviewsAccordion').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+  document.getElementById('customerReviewsClick')?.click(); 
+};
 
 </script>
 
