@@ -5,7 +5,7 @@ export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
 }
 
 export interface Filters {
-  [key: number]: string;
+  [key: string]: boolean;
 }
 
 export interface UseCategoryFiltersResponse {
