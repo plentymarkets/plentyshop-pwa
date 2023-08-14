@@ -52,6 +52,7 @@
   "filters": "Filters",
   "allProducts": "All products",
   "sortBy": "Sort by",
+  "perPage": "Per page",
   "sortType": {
     "latest": "Latest",
     "priceUp": "Price from low to high",

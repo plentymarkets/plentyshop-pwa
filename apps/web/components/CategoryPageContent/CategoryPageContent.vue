@@ -36,8 +36,7 @@
           </section>
           <CategoryEmptyState v-else />
           <UiPagination
-            v-if="totalProducts > itemsPerPage"
-            :current-page="1"
+            :current-page="getFacetsFromURL().page ?? 1"
             :total-items="totalProducts"
             :page-size="itemsPerPage"
             :max-visible-pages="maxVisiblePages"
@@ -58,6 +57,8 @@ import type { CategoryPageContentProps } from '~/components/CategoryPageContent/
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,
 });
+
+const { getFacetsFromURL } = useCategoryFilter();
 
 const { isOpen, open, close } = useDisclosure();
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
