@@ -54,10 +54,12 @@
   "sortBy": "Sort by",
   "perPage": "Per page",
   "sortType": {
-    "latest": "Latest",
-    "priceUp": "Price from low to high",
-    "priceDown": "Price from high to low",
-    "relevance": "Relevance"
+    "nameA-Z": "Name A-Z",
+    "nameZ-A": "Name A-Z",
+    "priceUp": "Price ⬆",
+    "priceDown": "Price ⬇",
+    "reviewsUp": "Item reviews ⬆",
+    "reviewsDown": "Item reviews ⬇"
   },
   "numberOfProducts": "1 Product | {count} Products",
   "prev": "Previous",
