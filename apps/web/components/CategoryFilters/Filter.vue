@@ -83,7 +83,7 @@ const facetChange = () => {
 updateFilter();
 
 watch(
-  () => route.query,
+  () => route.query.facets,
   async () => {
     updateFilter();
   },
