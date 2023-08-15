@@ -29,7 +29,7 @@
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <ShippingMethod :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
+        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="savePaymentMethod($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
@@ -64,7 +64,6 @@
 <script lang="ts" setup>
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink } from '@storefront-ui/vue';
-import { PaymentMethod } from '~/components/CheckoutPayment/types';
 
 definePageMeta({
   layout: false,
@@ -73,6 +72,7 @@ definePageMeta({
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart } = useCart();
 const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
+const { data: paymentMethods, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 await getShippingMethods();
-const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
+await fetchPaymentMethods();
 </script>
