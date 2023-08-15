@@ -35,9 +35,9 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
-import { useI18n } from 'vue-i18n';
 import { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
 defineProps<ShippingMethodProps>();
@@ -49,9 +49,9 @@ const i18n = useI18n();
 const updateShippingMethod = (shippingId: string) => {
   radioModel.value = shippingId;
   emit('update:shippingMethod', radioModel.value);
-}
+};
 
 const getShippingAmount = (amount: string) => {
-  return amount !== '0' ? i18n.n(Number(amount), 'currency') : i18n.t('shippingMethod.free');
-}
+  return amount === '0' ? i18n.t('shippingMethod.free') : i18n.n(Number(amount), 'currency');
+};
 </script>
