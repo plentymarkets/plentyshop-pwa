@@ -21,9 +21,7 @@
               "
               :value="shippingProviderGetters.getParcelServicePresetId(method)"
             />
-            <div>
-              <p>{{ shippingProviderGetters.getShippingMethodName(method) }}</p>
-            </div>
+            <p>{{ shippingProviderGetters.getShippingMethodName(method) }}</p>
             <p class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</p>
           </div>
         </SfListItem>
