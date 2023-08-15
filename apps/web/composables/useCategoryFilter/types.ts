@@ -2,8 +2,6 @@ import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/a
 
 export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
-  priceMin?: string;
-  priceMax?: string;
 }
 
 export interface Filters {

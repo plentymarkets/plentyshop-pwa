@@ -67,6 +67,11 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       .reduce(reduceFilters(route.query), {});
   };
 
+  /***
+   * Update the query string with the new parameters
+   * Remove the parameters that are null
+   * Example: { page: 1, sort: 'name', facets: null } => ?page=1&sort=name
+   ***/
   const updateQuery = (parameter?: object) => {
     const query = { ...getFiltersDataFromUrl(), ...parameter };
     const entries = Object.entries(query);
