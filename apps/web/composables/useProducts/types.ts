@@ -4,6 +4,7 @@ import type { Facet, FacetSearchCriteria } from '@plentymarkets/plentymarkets-sd
 export interface UseProductsState {
   data: Facet;
   loading: boolean;
+  productsPerPage: number;
 }
 
 export type FetchProducts = (params: FacetSearchCriteria) => Promise<Facet>;
@@ -11,9 +12,8 @@ export type FetchProducts = (params: FacetSearchCriteria) => Promise<Facet>;
 export interface UseProducts {
   data: Readonly<Ref<UseProductsState['data']>>;
   loading: Readonly<Ref<boolean>>;
+  productsPerPage: Readonly<Ref<number>>;
   fetchProducts: FetchProducts;
-  PER_PAGE_STEPS: number[];
-  DEFAULT_ITEMS_PER_PAGE: number;
 }
 
 export type UseProductsReturn = () => UseProducts;
