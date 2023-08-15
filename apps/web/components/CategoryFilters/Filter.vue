@@ -31,22 +31,22 @@
     <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'">
       <form @submit.prevent="updatePriceFilter">
         <div class="mb-3">
-          <SfInput v-model="minPrice" placeholder="Min" />
+          <SfInput v-model="minPrice" :placeholder="$t('min')" />
         </div>
         <div class="mb-3">
-          <SfInput v-model="maxPrice" placeholder="Max" />
+          <SfInput v-model="maxPrice" :placeholder="$t('max')" />
         </div>
         <SfButton type="submit" :disabled="minPrice.length === 0 && maxPrice.length === 0" variant="secondary">
           <template #prefix>
             <SfIconCheck />
           </template>
-          Apply
+          {{ $t('apply') }}
         </SfButton>
         <SfButton type="reset" @click="resetPriceFilter" class="float-right" variant="secondary">
           <template #prefix>
             <SfIconDelete />
           </template>
-          Clear
+          {{ $t('clear') }}
         </SfButton>
       </form>
     </div>
