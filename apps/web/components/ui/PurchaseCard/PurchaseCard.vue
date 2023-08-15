@@ -1,6 +1,8 @@
 <template>
-  <section class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-20"
-    data-testid="purchase-card">
+  <section
+    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-20"
+    data-testid="purchase-card"
+  >
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
@@ -8,7 +10,10 @@
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         {{ $n(actualPrice, 'currency') }}
       </span>
-      <span v-if="productGetters.getPrice(product)?.special" class="text-base font-normal text-neutral-500 line-through">
+      <span
+        v-if="productGetters.getPrice(product)?.special"
+        class="text-base font-normal text-neutral-500 line-through"
+      >
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
@@ -19,30 +24,29 @@
         {{ $t('showAllReviews') }}
       </SfLink>
     </div>
-    <div class="mb-4 font-normal typography-text-sm" data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"></div>
+    <div
+      class="mb-4 font-normal typography-text-sm"
+      data-testid="product-description"
+      v-html="productGetters.getShortDescription(product)"
+    ></div>
     <div class="py-4">
-      <!--
-      <UiTag class="w-full mb-4">
-        <SfIconShoppingCartCheckout />
-        {{ $t('numberInCart', { count: 1 }) }}
-      </UiTag> -->
-      <!--
-      <div class="flex mb-4">
-        <SfButton type="button" size="sm" variant="tertiary">
-          <SfIconFavorite size="sm" />
-          {{ $t('addToList') }}
-        </SfButton>
-      </div> -->
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
-        <UiQuantitySelector :value="quantitySelectorValue" @change-quantity="changeQuantity"
-          class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap" @click="
-          addToCart({
-            productId: Number(productGetters.getId(product)),
-            quantity: Number(quantitySelectorValue),
-          })
-          ">
+        <UiQuantitySelector
+          :value="quantitySelectorValue"
+          @change-quantity="changeQuantity"
+          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+        />
+        <SfButton
+          type="button"
+          size="lg"
+          class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+          @click="
+            addToCart({
+              productId: Number(productGetters.getId(product)),
+              quantity: Number(quantitySelectorValue),
+            })
+          "
+        >
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>
@@ -64,22 +68,36 @@ const { product } = toRefs(props);
 
 const { addToCart } = useCart();
 
+const actualPrice = computed(
+  () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,
+);
+
 const quantitySelectorValue = ref(1);
-const scrollToReviews = () => {
-  document.getElementById('customerReviewsAccordion').scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
-  document.getElementById('customerReviewsClick')?.click();
-};
 
 const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
 
-const actualPrice = computed(
-  () => productGetters.getPrice(product.value)?.special || productGetters.getPrice(product.value)?.regular || 0,
-);
+const openReviewsAccordion = () => {
+  const customerReviewsClickElement = document.querySelector('#customerReviewsClick') as HTMLElement;
+  customerReviewsClickElement?.click();
+};
+
+const scrollToReviewsAccordion = () => {
+  const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
+  const customerReviewsAccordionElementOffset = customerReviewsAccordionElement?.offsetTop ?? 0;
+
+  const headerElement = document.querySelector('header') as HTMLElement;
+  const headerElementOffset = headerElement.offsetHeight ?? 0;
+
+  window.scrollTo({
+    top: customerReviewsAccordionElementOffset - headerElementOffset,
+    behavior: 'smooth',
+  });
+};
+
+const scrollToReviews = () => {
+  openReviewsAccordion();
+  scrollToReviewsAccordion();
+};
 </script>
-
-
-
-
-

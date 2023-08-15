@@ -221,6 +221,7 @@
   "productDetails": "Product Details",
   "technicalData": "Technical data",
   "customerReviews": "Customer Reviews",
+  "customerReviewsNone": "Nobody has submitted a review for this product yet",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
