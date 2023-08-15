@@ -6,62 +6,86 @@
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
     </template>
-    <!-- TODO: implement filters -->
 
-    <!--    <ul v-if="facetGetters.getType(facet) === 'size'" class="flex flex-wrap gap-4 px-1.5">-->
-    <!--      <li v-for="{ value } in facetGetters.getFilters(facet)" :key="value">-->
-    <!--        <SfChip size="sm" :input-props="{ value: value }" v-model="selectedProxy">-->
-    <!--          <span class="leading-4">{{ value }}</span>-->
-    <!--        </SfChip>-->
-    <!--      </li>-->
-    <!--    </ul>-->
+    <div v-if="facetGetters.getType(facet) === 'feedback'">
+      <!-- <SfListItem
+        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
+        :key="index"
+        tag="label"
+        size="sm"
+        class="!items-center py-4 md:py-1 px-1.5 bg-transparent hover:bg-transparent"
+      >
+        <template #prefix>
+          <SfRadio class="flex items-center" :checked="filter.selected ?? false" />
+        </template>
+        <div class="flex flex-wrap items-center">
+          <SfRating class="-mt-px" :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" size="sm" />
+          <span :class="['mx-2 text-base md:text-sm']">{{
+            Number(filter.id.toString().replace('feedback-', ''))
+          }}</span>
+          <SfCounter size="sm">{{ filter.count }}</SfCounter>
+        </div>
+      </SfListItem> -->
+    </div>
 
-    <!--    <template v-if="facetGetters.getType(facet) === 'color'">-->
-    <!--      <SfListItem-->
-    <!--        v-for="{ value, label, productCount } in facetGetters.getFilters(facet)"-->
-    <!--        :key="value"-->
-    <!--        tag="label"-->
-    <!--        size="sm"-->
-    <!--        :class="['px-1.5 bg-transparent hover:bg-transparent', { 'font-medium': isItemActive(value) }]"-->
-    <!--        :selected="isItemActive(value)"-->
-    <!--      >-->
-    <!--        <template #prefix>-->
-    <!--          <input v-model="selectedProxy" :value="value" class="appearance-none peer" type="checkbox" />-->
-    <!--          <span-->
-    <!--            class="inline-flex items-center justify-center p-1 transition duration-300 rounded-full cursor-pointer -->
-    <!--            ring-1 ring-neutral-200 ring-inset outline-offset-2 outline-secondary-600 peer-checked:ring-2 -->
-    <!--            peer-checked:ring-primary-700 peer-hover:bg-primary-100 -->
-    <!--            peer-[&:not(:checked):hover]:ring-primary-200 peer-active:bg-primary-200 peer-active:ring-primary-300 -->
-    <!--            peer-disabled:cursor-not-allowed peer-disabled:bg-disabled-100 peer-disabled:opacity-50 -->
-    <!--            peer-disabled:ring-1 peer-disabled:ring-disabled-200 peer-disabled:hover:ring-disabled-200 -->
-    <!--            peer-checked:hover:ring-primary-700 peer-checked:active:ring-primary-700 peer-focus-visible:outline"-->
-    <!--          >-->
-    <!--            <SfThumbnail size="sm" :style="{ backgroundColor: value }" />-->
-    <!--          </span>-->
-    <!--        </template>-->
-    <!--        <p>-->
-    <!--          <span class="mr-2 typography-text-sm">{{ label }}</span>-->
-    <!--          <SfCounter size="sm">{{ productCount }}</SfCounter>-->
-    <!--        </p>-->
-    <!--      </SfListItem>-->
-    <!--    </template>-->
+    <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'"></div>
+
+    <div class="mb-4" v-else>
+      <SfListItem
+        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
+        :key="index"
+        tag="label"
+        size="sm"
+        :class="['px-1.5 bg-transparent hover:bg-transparent']"
+      >
+        <template #prefix>
+          <SfCheckbox class="flex items-center" :value="filter" v-model="models[filter.id]" @change="facetChange" />
+        </template>
+        <p>
+          <span class="mr-2 text-sm">{{ filter.name ?? '' }}</span>
+          <SfCounter size="sm">{{ filter.count ?? 0 }}</SfCounter>
+        </p>
+      </SfListItem>
+    </div>
   </SfAccordionItem>
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app';
+import { Filter } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfAccordionItem, SfIconChevronLeft } from '@storefront-ui/vue';
+import { SfAccordionItem, SfIconChevronLeft, SfListItem, SfCheckbox, SfCounter } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
+import { useCategoryFilter, Filters } from '~/composables';
 
-defineProps<FilterProps>();
-// const emit = defineEmits<FilterEmits>();
-
+const route = useRoute();
+const { getFacetsFromURL, updateFilters } = useCategoryFilter();
 const open = ref(true);
-//
-// const selectedProxy = computed({
-//   get: () => props.selected,
-//   set: (value: FilterProps['selected']) => emit('update:selected', value),
-// });
+const props = defineProps<FilterProps>();
+const filters = facetGetters.getFilters(props.facet) as Filter[];
+const models: Filters = {};
+const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
 
-// const isItemActive = (selectedValue: string) => props.selected.includes(selectedValue);
+const updateFilter = () => {
+  for (const filter of filters) {
+    models[filter.id.toString()] = Boolean(filter.selected) ?? false;
+
+    if (currentFacets.value.includes(filter.id.toString())) {
+      models[filter.id.toString()] = true;
+    }
+  }
+};
+
+const facetChange = () => {
+  updateFilters(models);
+};
+
+updateFilter();
+
+watch(
+  () => route.query.facets,
+  async () => {
+    updateFilter();
+  },
+);
 </script>

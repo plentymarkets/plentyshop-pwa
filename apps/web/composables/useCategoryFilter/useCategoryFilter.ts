@@ -17,9 +17,20 @@ const reduceFilters =
   };
 
 const getFiltersToUpdate = (filters: Filters): string => {
-  return Object.values(filters)
-    .filter((entry: string[]) => entry.length > 0)
+  return Object.keys(filters)
+    .filter((key) => {
+      return filters[key];
+    })
     .join(',');
+};
+
+const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
+  const mergedFilters = { ...oldFilters };
+  Object.keys(filters).forEach((key) => {
+    mergedFilters[key] = filters[key];
+  });
+
+  return mergedFilters;
 };
 
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
@@ -37,6 +48,17 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     };
   };
 
+  const getFiltersFromUrl = (): Filters => {
+    const filters: Filters = {};
+    const facets = getFacetsFromURL().facets?.split(',') ?? [];
+
+    facets.forEach((facet: string) => {
+      filters[facet] = true;
+    });
+
+    return filters;
+  };
+
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
     return Object.keys(route.query)
       .filter((f) => nonFilters.has(f))
@@ -48,7 +70,9 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateFilters = (filters: Filters): void => {
-    const filtersIds = getFiltersToUpdate(filters);
+    const currentFilters = getFiltersFromUrl();
+    const mergedFilters = mergeFilters(currentFilters, filters);
+    const filtersIds = getFiltersToUpdate(mergedFilters);
 
     if (filtersIds) {
       updateQuery({ facets: filtersIds });
