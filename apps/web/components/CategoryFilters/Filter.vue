@@ -28,7 +28,28 @@
       </SfListItem> -->
     </div>
 
-    <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'"></div>
+    <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'">
+      <form @submit.prevent="updatePriceFilter">
+        <div class="mb-3">
+          <SfInput v-model="minPrice" placeholder="Min" />
+        </div>
+        <div class="mb-3">
+          <SfInput v-model="maxPrice" placeholder="Max" />
+        </div>
+        <SfButton type="submit" :disabled="minPrice.length === 0 && maxPrice.length === 0" variant="secondary">
+          <template #prefix>
+            <SfIconCheck />
+          </template>
+          Apply
+        </SfButton>
+        <SfButton type="reset" @click="resetPriceFilter" class="float-right" variant="secondary">
+          <template #prefix>
+            <SfIconDelete />
+          </template>
+          Clear
+        </SfButton>
+      </form>
+    </div>
 
     <div class="mb-4" v-else>
       <SfListItem
@@ -54,17 +75,44 @@
 import { useRoute } from 'nuxt/app';
 import { Filter } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfAccordionItem, SfIconChevronLeft, SfListItem, SfCheckbox, SfCounter } from '@storefront-ui/vue';
+import {
+  SfInput,
+  SfIconCheck,
+  SfIconDelete,
+  SfButton,
+  SfAccordionItem,
+  SfIconChevronLeft,
+  SfListItem,
+  SfCheckbox,
+  SfCounter,
+} from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import { useCategoryFilter, Filters } from '~/composables';
 
 const route = useRoute();
-const { getFacetsFromURL, updateFilters } = useCategoryFilter();
+const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet) as Filter[];
 const models: Filters = {};
 const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
+
+// Price
+const minPrice = ref(getFacetsFromURL().priceMin ?? '');
+const maxPrice = ref(getFacetsFromURL().priceMax ?? '');
+
+function updatePriceFilter() {
+  const min = minPrice.value.length > 0 ? Number(minPrice.value) : Number.NaN;
+  const max = maxPrice.value.length > 0 ? Number(maxPrice.value) : Number.NaN;
+  const minValue = Number.isNaN(min) ? '' : min.toString();
+  const maxValue = Number.isNaN(max) ? '' : max.toString();
+
+  updatePrices(minValue, maxValue);
+}
+
+function resetPriceFilter() {
+  updatePrices('', '');
+}
 
 const updateFilter = () => {
   for (const filter of filters) {
@@ -83,9 +131,12 @@ const facetChange = () => {
 updateFilter();
 
 watch(
-  () => route.query.facets,
+  () => route.query,
   async () => {
     updateFilter();
+
+    minPrice.value = getFacetsFromURL().priceMin ?? '';
+    maxPrice.value = getFacetsFromURL().priceMax ?? '';
   },
 );
 </script>

@@ -52,11 +52,17 @@ function sortingChanged() {
   updateSorting(selected.value);
 }
 
+function sortQueryChanged() {
+  const facets = getFacetsFromURL();
+  selected.value = facets.sort ?? options.value[0].value;
+}
+
+sortQueryChanged();
+
 watch(
   () => route.query.sort,
-  async () => {
-    const facets = getFacetsFromURL();
-    selected.value = facets.sort ?? '';
+  () => {
+    sortQueryChanged();
   },
 );
 </script>

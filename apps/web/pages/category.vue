@@ -52,7 +52,7 @@ const categories = computed(
 watch(
   () => route.query,
   async () => {
-    fetchProducts(getFacetsFromURL());
+    await fetchProducts(getFacetsFromURL());
   },
 );
 </script>

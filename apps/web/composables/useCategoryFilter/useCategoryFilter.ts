@@ -1,7 +1,7 @@
 import { useRoute } from 'nuxt/app';
 import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
-const nonFilters = new Set(['page', 'sort', 'term', 'itemsPerPage']);
+const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
 const reduceFilters =
   (query: GetFacetsFromURLResponse) =>
@@ -45,6 +45,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       facets: route.query.facets?.toString(),
       itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
       term: route.query.term?.toString(),
+      priceMin: route.query.priceMin?.toString(),
+      priceMax: route.query.priceMax?.toString(),
     };
   };
 
@@ -66,7 +68,16 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateQuery = (parameter?: object) => {
-    router.push({ query: { ...getFiltersDataFromUrl(), ...parameter } });
+    const query = { ...getFiltersDataFromUrl(), ...parameter };
+    const entries = Object.entries(query);
+    const updateQuery: { [key: string]: string } = {};
+    entries.forEach(([key, value]) => {
+      if (value !== null) {
+        updateQuery[key] = value.toString();
+      }
+    });
+
+    router.push({ query: updateQuery });
   };
 
   const updateFilters = (filters: Filters): void => {
@@ -77,7 +88,19 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     if (filtersIds) {
       updateQuery({ facets: filtersIds });
     } else {
-      updateQuery();
+      updateQuery({ facets: null });
+    }
+  };
+
+  const updatePrices = (priceMin: string, priceMax: string): void => {
+    if (priceMin.length > 0 && priceMax.length === 0) {
+      updateQuery({ priceMin: priceMin });
+    } else if (priceMax.length > 0 && priceMin.length === 0) {
+      updateQuery({ priceMax: priceMax });
+    } else if (priceMax.length > 0 && priceMin.length > 0) {
+      updateQuery({ priceMin: priceMin, priceMax: priceMax });
+    } else {
+      updateQuery({ priceMin: null, priceMax: null });
     }
   };
 
@@ -104,6 +127,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateSearchTerm,
     updateSorting,
     updatePage,
+    updatePrices,
   };
 };
 
