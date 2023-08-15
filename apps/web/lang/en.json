@@ -32,6 +32,9 @@
   "savings": "Savings",
   "estimatedTax": "VAT",
   "apply": "Apply",
+  "clear": "Clear",
+  "min": "Min",
+  "max": "Max",
   "total": "Total",
   "goToCheckout": "Go to checkout",
   "savingsTag": "You are saving {amount} on your order today!",
@@ -55,7 +58,7 @@
   "perPage": "Per page",
   "sortType": {
     "nameA-Z": "Name A-Z",
-    "nameZ-A": "Name A-Z",
+    "nameZ-A": "Name Z-A",
     "priceUp": "Price ⬆",
     "priceDown": "Price ⬇",
     "reviewsUp": "Item reviews ⬆",
