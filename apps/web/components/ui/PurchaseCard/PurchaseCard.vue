@@ -1,6 +1,6 @@
 <template>
   <section
-    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-20"
+    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
