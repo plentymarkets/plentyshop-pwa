@@ -3,14 +3,14 @@
     <fieldset>
       <legend class="text-neutral-900 text-lg font-bold mb-4">{{ $t('checkoutPayment.heading') }}</legend>
       <div class="grid gap-4 grid-cols-2">
-        <label v-for="{ id, icon, name } in paymentMethodList" :key="id" class="relative">
+        <label v-for="{ id, icon, name, isSelectable } in paymentMethodList" :key="id" class="relative">
           <input
             type="radio"
             name="payment_method"
             class="peer sr-only"
             :value="id"
             :checked="id === selectedId"
-            :disabled="id === -1"
+            :disabled="!isSelectable"
             @change="$emit('update:activePayment', id)"
           />
           <span
