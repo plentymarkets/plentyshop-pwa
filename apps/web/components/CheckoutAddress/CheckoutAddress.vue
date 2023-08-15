@@ -2,21 +2,29 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="savedAddress" size="sm" variant="tertiary" @click="open">
+      <SfButton v-if="addresses.length > 0" size="sm" variant="tertiary" @click="edit">
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
 
-    <div v-if="savedAddress" class="mt-2 md:w-[520px]">
-      <p>{{ `${userAddressGetters.getFirstName(savedAddress)} ${userAddressGetters.getLastName(savedAddress)}` }}</p>
-      <p>{{ userAddressGetters.getPhone(savedAddress) }}</p>
-      <p>{{ userAddressGetters.getStreetName(savedAddress) }} {{ userAddressGetters.getStreetNumber(savedAddress) }}</p>
-      <p>{{ `${userAddressGetters.getProvince(savedAddress)} ${userAddressGetters.getPostCode(savedAddress)}` }}</p>
+    <div v-if="addresses.length > 0 && isAuth" class="mt-2 md:w-[520px]">
+      <SfSelect v-model="selectedAddress">
+        <option v-for="(address, index) in addresses" :key="index" :value="address.id?.toString()">
+          {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
+        </option>
+      </SfSelect>
     </div>
 
-    <div v-else class="w-full md:max-w-[520px]">
-      <p>{{ description }}</p>
-      <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="open">
+    <div v-if="addresses.length === 1 && !isAuth" class="mt-2 md:w-[520px]">
+      <p>{{ `${userAddressGetters.getFirstName(addresses[0])} ${userAddressGetters.getLastName(addresses[0])}` }}</p>
+      <p>{{ userAddressGetters.getPhone(addresses[0]) }}</p>
+      <p>{{ userAddressGetters.getStreetName(addresses[0]) }} {{ userAddressGetters.getStreetNumber(addresses[0]) }}</p>
+      <p>{{ `${userAddressGetters.getProvince(addresses[0])} ${userAddressGetters.getPostCode(addresses[0])}` }}</p>
+    </div>
+
+    <div class="w-full md:max-w-[520px]" v-if="isAuth || addresses.length === 0">
+      <p v-if="addresses.length === 0">{{ description }}</p>
+      <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
       </SfButton>
     </div>
@@ -37,17 +45,55 @@
             {{ heading }}
           </h3>
         </header>
-        <AddressForm :saved-address="savedAddress" :type="type" @on-save="close" @on-close="close" />
+        <AddressForm
+          :countries="activeShippingCountries"
+          :saved-address="
+            editMode ? addresses.find((address) => address.id?.toString() === selectedAddress) : undefined
+          "
+          :type="type"
+          @on-save="saveAddress"
+          @on-close="close"
+        />
       </SfModal>
     </UiOverlay>
   </div>
 </template>
 <script lang="ts" setup>
+import { Address, AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
+import { SfSelect, SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
 
-defineProps<CheckoutAddressProps>();
-
 const { isOpen, open, close } = useDisclosure();
+const isAuth = false;
+const { saveBillingAddress } = useBillingAddress();
+const { saveShippingAddress } = useShippingAddress();
+const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
+await getActiveShippingCountries();
+
+const props = defineProps<CheckoutAddressProps>();
+const editMode = ref(false);
+const selectedAddress = computed(() => props.addresses?.[0]?.id?.toString() || '');
+const emit = defineEmits(['on-saved']);
+
+function create() {
+  editMode.value = false;
+  open();
+}
+
+function edit() {
+  editMode.value = true;
+  open();
+}
+
+async function saveAddress(address: Address, useAsShippingAddress: boolean = false) {
+  if (props.type === AddressType.Billing) {
+    await saveBillingAddress(address);
+  }
+  if (props.type === AddressType.Shipping || useAsShippingAddress) {
+    await saveShippingAddress(address);
+  }
+  emit('on-saved');
+  close();
+}
 </script>

@@ -93,7 +93,8 @@
     "phonePlaceholder": "eg. 123 456 7890",
     "cancel": "Cancel",
     "save": "Save",
-    "edit": "Edit"
+    "edit": "Edit",
+    "clearAll": "Clear all",
   },
   "checkoutPayment": {
     "heading": "Payment method",
