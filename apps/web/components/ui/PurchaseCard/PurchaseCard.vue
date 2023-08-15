@@ -78,6 +78,13 @@ const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
 };
 
+const isReviewsAccordionOpen = () => {
+  const customerReviewsAccordionDetailsElement = document.querySelector('#customerReviewsAccordion')
+    ?.firstChild as HTMLDetailsElement;
+
+  return customerReviewsAccordionDetailsElement.open;
+};
+
 const openReviewsAccordion = () => {
   const customerReviewsClickElement = document.querySelector('#customerReviewsClick') as HTMLElement;
   customerReviewsClickElement?.click();
@@ -97,7 +104,10 @@ const scrollToReviewsAccordion = () => {
 };
 
 const scrollToReviews = () => {
-  openReviewsAccordion();
+  if (!isReviewsAccordionOpen()) {
+    openReviewsAccordion();
+  }
+
   scrollToReviewsAccordion();
 };
 </script>
