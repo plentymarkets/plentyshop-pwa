@@ -28,7 +28,7 @@
             @click="accountDropdownToggle()"
           >
             <template #prefix><SfIconPerson /></template>
-            {{ account?.firstName }}
+            {{ user?.user?.firstName }}
           </SfButton>
         </template>
         <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -95,6 +95,7 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import { useCategoryTree } from '~/composables/useCategoryTree';
+import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
@@ -104,11 +105,11 @@ defineProps<DefaultLayoutProps>();
 
 const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { getCart, data: cart } = useCart();
-const { fetchAccount, data: account } = useAccount();
+const { getSession, data: user } = useCustomer();
 
-getCategoryTree();
-getCart();
-fetchAccount();
+await getCategoryTree();
+await getCart();
+await getSession();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
