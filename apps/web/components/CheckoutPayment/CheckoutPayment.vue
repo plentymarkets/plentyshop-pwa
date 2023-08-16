@@ -20,8 +20,8 @@
               <SfIconCreditCard class="mr-2" />
               <span class="font-medium">{{ $t('checkoutPayment.creditCard') }}</span>
             </span>
-            <NuxtImg v-else :src="icon" :alt="name" width="60" height="40" />
-            <span v-if="id === -1" class="text-xs text-neutral-500">{{ $t('checkoutPayment.comingSoon') }}</span>
+            <NuxtImg v-else :src="icon" :alt="name" width="50" height="40" />
+            <p class="text-xs mt-2 text-neutral-500">{{ name }}</p>
           </span>
         </label>
       </div>
