@@ -21,7 +21,7 @@
       </div>
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <p>{{ $t('total') }}</p>
-        <p data-testid="total">{{ $n(totals, 'currency') }}</p>
+        <p data-testid="total">{{ $n(total, 'currency') }}</p>
       </div>
       <UiDivider class="my-4 w-auto" />
       <slot />
@@ -34,10 +34,11 @@ import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
-const totals = cartGetters.getTotals(props.cart).total;
-const subTotal = cartGetters.getTotals(props.cart).subtotal;
+const totals = cartGetters.getTotals(props.cart);
+const total = totals.total;
+const subTotal = totals.subtotal;
+const vatAmmount = Number(totals.vatAmount);
 const shippingPrice = cartGetters.getShippingPrice(props.cart);
-const vatAmmount = Number(cartGetters.getTotals(props.cart)?.vatAmount);
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 </script>
