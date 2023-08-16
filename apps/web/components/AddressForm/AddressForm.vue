@@ -18,7 +18,7 @@
         name="phone"
         type="tel"
         minlength="7"
-        maxlength="15"
+        maxlength="18"
         auto-complete="tel"
         v-model="defaultValues.phoneNumber"
       />
