@@ -1,3 +1,4 @@
+import type { SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import type { UseAccountReturn, UseAccountState, FetchAccount, LoginAsGuest } from '~/composables/useAccount/types';
 import { useSdk } from '~/sdk';
@@ -10,7 +11,7 @@ import { useSdk } from '~/sdk';
  */
 export const useAccount: UseAccountReturn = () => {
   const state = useState<UseAccountState>(`useAccount`, () => ({
-    data: null,
+    data: {} as SessionResult,
     loading: false,
   }));
 
@@ -22,9 +23,9 @@ export const useAccount: UseAccountReturn = () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
     useHandleError(error.value);
-    state.value.data = data.value?.data ?? null;
+    state.value.data = data?.value?.data ?? state.value.data;
     state.value.loading = false;
-    return data.value?.data;
+    return state.value.data;
   };
 
   const loginAsGuest: LoginAsGuest = async (email: string) => {

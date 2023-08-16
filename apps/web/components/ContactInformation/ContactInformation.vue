@@ -66,13 +66,11 @@ const saveContactInformation = (email: string) => {
 };
 
 const getEmailFromSession = async () => {
-  const { value } = await fetchAccount();
+  const { user } = await fetchAccount();
 
-  cart.value.customerEmail = value?.email ?? '';
+  cart.value.customerEmail = user?.guestMail ?? '';
 };
 
-onMounted(async () => {
-  await getEmailFromSession();
-  await openContactFormIfNoEmail();
-});
+await getEmailFromSession();
+await openContactFormIfNoEmail();
 </script>
