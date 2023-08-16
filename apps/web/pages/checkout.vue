@@ -27,7 +27,10 @@
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)" />
+        <ShippingMethod
+          :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)"
+          @update:shipping-method="doSaveShippingMethod($event)"
+        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -73,7 +76,10 @@ definePageMeta({
 const NuxtLink = resolveComponent('NuxtLink');
 const { isAuthorized } = useCustomer();
 const { data: cart } = useCart();
-const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
+const { data: shippingMethods, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 await getShippingMethods();
 const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
+const doSaveShippingMethod = async (shippingMethodId: string) => {
+  saveShippingMethod(Number(shippingMethodId));
+};
 </script>
