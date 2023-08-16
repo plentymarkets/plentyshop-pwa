@@ -3,3 +3,5 @@ import type { ShippingMethod } from '@plentymarkets/plentymarkets-sdk/packages/a
 export type ShippingMethodProps = {
   shippingMethods: ShippingMethod[];
 };
+
+export type CheckoutShippingEmits = (event: 'update:shippingMethod', shippingId: string) => void;
