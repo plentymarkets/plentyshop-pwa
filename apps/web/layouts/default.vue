@@ -28,7 +28,7 @@
             @click="accountDropdownToggle()"
           >
             <template #prefix><SfIconPerson /></template>
-            {{ user.user?.firstName }}
+            {{ user?.user?.firstName }}
           </SfButton>
         </template>
         <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">

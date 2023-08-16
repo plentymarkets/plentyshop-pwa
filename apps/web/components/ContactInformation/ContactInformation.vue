@@ -72,5 +72,5 @@ const getEmailFromSession = async () => {
 };
 
 await getEmailFromSession();
-await openContactFormIfNoEmail();
+openContactFormIfNoEmail();
 </script>
