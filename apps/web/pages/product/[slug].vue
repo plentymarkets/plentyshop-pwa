@@ -13,6 +13,8 @@
           <ProductProperties v-if="product" :product="product" />
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <ProductAccordion v-if="product" :product="product" />
+          <UiDivider class="mt-4 mb-2 md:mt-8" />
+          <ReviewsAccordion :product="product" />
         </section>
         <UiDivider class="mt-4 mb-2" />
       </div>

@@ -27,9 +27,12 @@
           type="shippingAddress"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)" />
+        <ShippingMethod
+          :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)"
+          @update:shipping-method="handleShippingMethodUpdate($event)"
+        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="savePaymentMethod($event)" />
+        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
@@ -71,8 +74,18 @@ definePageMeta({
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart } = useCart();
-const { data: shippingMethods, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethods, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { data: shippingMethods, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 await getShippingMethods();
 await fetchPaymentMethods();
+
+const handleShippingMethodUpdate = async (shippingMethodId: string) => {
+  await saveShippingMethod(Number(shippingMethodId));
+  await fetchPaymentMethods();
+};
+
+const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
+  await savePaymentMethod(paymentMethodId);
+  await getShippingMethods();
+};
 </script>
