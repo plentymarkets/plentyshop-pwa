@@ -28,7 +28,7 @@
             @click="accountDropdownToggle()"
           >
             <template #prefix><SfIconPerson /></template>
-            {{ account?.firstName }}
+            {{ user.user?.firstName }}
           </SfButton>
         </template>
         <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
@@ -94,6 +94,7 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import { useAccount } from '~/composables/useAccount/useAccount';
 import { useCategoryTree } from '~/composables/useCategoryTree';
 import { DefaultLayoutProps } from '~/layouts/types';
 
@@ -104,7 +105,7 @@ defineProps<DefaultLayoutProps>();
 
 const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { getCart, data: cart } = useCart();
-const { fetchAccount, data: account } = useAccount();
+const { fetchAccount, data: user } = useAccount();
 
 getCategoryTree();
 getCart();

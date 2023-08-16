@@ -38,6 +38,7 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
+import { useAccount } from '~/composables/useAccount/useAccount';
 
 const { loginAsGuest, fetchAccount } = useAccount();
 
