@@ -94,8 +94,8 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
-import { useAccount } from '~/composables/useAccount/useAccount';
 import { useCategoryTree } from '~/composables/useCategoryTree';
+import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
@@ -105,11 +105,11 @@ defineProps<DefaultLayoutProps>();
 
 const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { getCart, data: cart } = useCart();
-const { fetchAccount, data: user } = useAccount();
+const { getSession, data: user } = useCustomer();
 
-getCategoryTree();
-getCart();
-fetchAccount();
+await getCategoryTree();
+await getCart();
+await getSession();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');

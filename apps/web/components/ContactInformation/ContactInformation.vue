@@ -18,6 +18,8 @@
     <UiOverlay :visible="isOpen">
       <SfModal
         v-model="isOpen"
+        :disable-click-away="isEmailEmpty()"
+        :disable-esc="isEmailEmpty()"
         as="section"
         role="dialog"
         class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -38,10 +40,8 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
-import { useAccount } from '~/composables/useAccount/useAccount';
 
-const { loginAsGuest, fetchAccount } = useAccount();
-
+const { data, loginAsGuest, getSession } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 
 const cart = ref({
@@ -58,18 +58,17 @@ const openContactFormIfNoEmail = () => {
   }
 };
 
-const saveContactInformation = (email: string) => {
+const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
 
-  loginAsGuest(email);
+  await loginAsGuest(email);
 
   close();
 };
 
 const getEmailFromSession = async () => {
-  const { user } = await fetchAccount();
-
-  cart.value.customerEmail = user?.guestMail ?? '';
+  await getSession();
+  cart.value.customerEmail = data.value?.user?.guestMail ?? '';
 };
 
 await getEmailFromSession();
