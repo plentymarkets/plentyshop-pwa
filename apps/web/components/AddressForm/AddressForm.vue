@@ -14,7 +14,15 @@
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.phoneLabel') }}</UiFormLabel>
-      <SfInput name="phone" type="tel" auto-complete="tel" v-model="defaultValues.phoneNumber" required />
+      <SfInput
+        name="phone"
+        type="tel"
+        minlength="7"
+        maxlength="15"
+        auto-complete="tel"
+        v-model="defaultValues.phoneNumber"
+      />
+      <UiFormHelperText>{{ $t('form.optional') }}</UiFormHelperText>
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
@@ -33,12 +41,10 @@
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }}</UiFormLabel>
       <SfInput name="streetName" auto-complete="address-line1" v-model="defaultValues.streetName" required />
-      <UiFormHelperText>{{ $t('form.streetNameHelp') }}</UiFormHelperText>
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }}</UiFormLabel>
-      <SfInput name="streetNumber" v-model="defaultValues.apartment" />
-      <UiFormHelperText>{{ $t('form.streetNumberHelp') }}</UiFormHelperText>
+      <SfInput name="streetNumber" v-model="defaultValues.apartment" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.cityLabel') }}</UiFormLabel>
@@ -51,10 +57,10 @@
         name="state"
         auto-complete="address-level1"
         :placeholder="$t('form.selectPlaceholder')"
-        required
       >
         <option v-for="(state, index) in states" :key="index" :value="state.id.toString()">{{ state.name }}</option>
       </SfSelect>
+      <UiFormHelperText>{{ $t('form.optional') }}</UiFormHelperText>
     </label>
     <label>
       <UiFormLabel>{{ $t('form.postalCodeLabel') }}</UiFormLabel>
@@ -80,15 +86,16 @@
   </form>
 </template>
 <script lang="ts" setup>
-import type { Address } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { computed } from 'vue';
+import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
-import {AddressType} from "@plentymarkets/plentymarkets-sdk/packages/api-client/src";
 
+const { loading: loadBilling } = useBillingAddress();
+const { loading: loadShipping } = useShippingAddress();
 const props = defineProps<AddressFormProps>();
-
-const isCartUpdateLoading = false;
+const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 
 const { savedAddress } = toRefs(props);
 const useAsShippingAddress = ref(false);

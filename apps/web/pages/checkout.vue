@@ -64,10 +64,10 @@
 </template>
 
 <script lang="ts" setup>
-import {AddressType} from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import {shippingProviderGetters} from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import {SfButton, SfLink} from '@storefront-ui/vue';
-import {PaymentMethod} from '~/components/CheckoutPayment/types';
+import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { SfButton, SfLink } from '@storefront-ui/vue';
+import { PaymentMethod } from '~/components/CheckoutPayment/types';
 
 definePageMeta({
   layout: false,
@@ -82,11 +82,10 @@ const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const loadAddresses = async () => {
   await getBillingAddresses();
   await getShippingAddresses();
+  await getShippingMethods();
 };
 
-loadAddresses();
-
-await getShippingMethods();
+await loadAddresses();
 
 const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
 </script>
