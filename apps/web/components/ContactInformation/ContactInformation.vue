@@ -24,14 +24,14 @@
         aria-labelledby="contact-modal-title"
       >
         <header>
-          <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+          <SfButton v-if="!isEmailEmpty()" square variant="tertiary" class="absolute right-2 top-2" @click="close">
             <SfIconClose />
           </SfButton>
           <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
             {{ $t('contactInfo.heading') }}
           </h3>
         </header>
-        <ContactInformationForm @on-save="close" @on-cancel="close" />
+        <ContactInformationForm @on-save="saveContactInformation" @on-cancel="close" />
       </SfModal>
     </UiOverlay>
   </div>
@@ -39,9 +39,40 @@
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
 
+const { loginAsGuest, fetchAccount } = useAccount();
+
 const { isOpen, open, close } = useDisclosure();
 
 const cart = ref({
   customerEmail: '',
+});
+
+const isEmailEmpty = () => {
+  return cart.value.customerEmail === '';
+};
+
+const openContactFormIfNoEmail = () => {
+  if (isEmailEmpty()) {
+    open();
+  }
+};
+
+const saveContactInformation = (email: string) => {
+  cart.value.customerEmail = email;
+
+  loginAsGuest(email);
+
+  close();
+};
+
+const getEmailFromSession = async () => {
+  const { value } = await fetchAccount();
+
+  cart.value.customerEmail = value?.email ?? '';
+};
+
+onMounted(async () => {
+  await getEmailFromSession();
+  await openContactFormIfNoEmail();
 });
 </script>

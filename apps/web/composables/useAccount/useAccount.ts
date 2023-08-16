@@ -1,5 +1,6 @@
 import { toRefs } from '@vueuse/shared';
-import type { UseAccountReturn, UseAccountState, FetchAccount } from '~/composables/useAccount/types';
+import type { UseAccountReturn, UseAccountState, FetchAccount, LoginAsGuest } from '~/composables/useAccount/types';
+import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing account data
@@ -19,22 +20,25 @@ export const useAccount: UseAccountReturn = () => {
    */
   const fetchAccount: FetchAccount = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      Promise.resolve({
-        id: 'unique_id',
-        email: 'hieronim.anonim@gmail.com',
-        firstName: 'Hieronim',
-        lastName: 'Anonim',
-      }),
-    );
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data.value?.data ?? null;
     state.value.loading = false;
-    return data;
+    return data.value?.data;
+  };
+
+  const loginAsGuest: LoginAsGuest = async (email: string) => {
+    state.value.loading = true;
+
+    const { error } = await useAsyncData(() => useSdk().plentysystems.doLoginAsGuest({ email: email }));
+    useHandleError(error.value);
+
+    state.value.loading = false;
   };
 
   return {
     fetchAccount,
+    loginAsGuest,
     ...toRefs(state.value),
   };
 };

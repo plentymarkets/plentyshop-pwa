@@ -1,12 +1,12 @@
 <template>
-  <form data-testid="contact-information-form" @submit.prevent="$emit('on-save')">
+  <form data-testid="contact-information-form" @submit.prevent="$emit('on-save', cart.customerEmail)">
     <label>
       <UiFormLabel>{{ $t('contactInfo.email') }}</UiFormLabel>
       <SfInput name="email" type="email" v-model="cart.customerEmail" required />
     </label>
     <div class="mt-4 flex md:justify-end">
-      <SfButton type="reset" class="max-md:w-1/2 mr-4" variant="secondary" @click="$emit('on-cancel')">
-        {{ $t('contactInfo.cancel') }}
+      <SfButton type="reset" class="max-md:w-1/2 mr-4" variant="secondary" @click="clear()">
+        {{ $t('contactInfo.clear') }}
       </SfButton>
       <SfButton type="submit" class="max-md:w-1/2"> {{ $t('contactInfo.save') }} </SfButton>
     </div>
@@ -15,7 +15,7 @@
 <script setup>
 import { SfButton, SfInput } from '@storefront-ui/vue';
 
-defineEmits(['on-save', 'on-cancel']);
+defineEmits(['on-save']);
 const cart = ref({
   customerEmail: '',
 });
