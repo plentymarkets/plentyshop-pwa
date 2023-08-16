@@ -45,7 +45,6 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     );
     useHandleError(error.value);
     state.value.loading = false;
-    return Promise.resolve();
   };
 
   return {

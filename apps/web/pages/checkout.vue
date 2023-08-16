@@ -80,7 +80,7 @@ await getShippingMethods();
 await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value)
+const paymentMethods = computed(() => paymentMethodData.value);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));

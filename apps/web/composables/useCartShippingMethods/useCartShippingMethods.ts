@@ -37,7 +37,7 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
 
   const saveShippingMethod: SaveShippingMethod = async (shippingMethodId: number) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
+    const { error } = await useAsyncData(() =>
       useSdk().plentysystems.setShippingProvider({
         shippingId: shippingMethodId,
       }),
