@@ -4,12 +4,12 @@
       <div v-for="(cartItem, id) in cart?.items" :key="id">
         <UiCartProductCard
           :attributes="[]"
+          :cart-item="cartItem"
           :image-url="cartGetters.getItemImage(cartItem)"
           :image-alt="cartGetters.getItemImage(cartItem)"
           :name="cartGetters.getItemName(cartItem) ?? ''"
           :price="cartGetters.getItemPrice(cartItem)?.regular || 0"
           :special-price="cartGetters.getItemPrice(cartItem)?.special || 0"
-          :max-value="10"
           :min-value="1"
           :value="cartGetters.getItemQty(cartItem)"
           :slug="cartGetters.getItemName(cartItem)"
