@@ -40,7 +40,6 @@ export const useBillingAddress: UseBillingAddressReturn = () => {
   };
 
   const saveBillingAddress: SaveBillingAddress = async (address: Address) => {
-    console.log(address);
     state.value.loading = true;
     state.value.saveAddress = null;
     const { data, error } = await useAsyncData(() =>
