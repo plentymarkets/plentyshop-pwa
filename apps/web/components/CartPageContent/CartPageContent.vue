@@ -33,7 +33,7 @@ import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
 
-const { data: cart } = useCart();
+const { data: cart, getCart } = useCart();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

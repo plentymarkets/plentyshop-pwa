@@ -65,7 +65,7 @@ import type { CartProductCardProps } from '~/components/ui/CartProductCard/types
 import { useCart } from '~/composables';
 import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
-const { getCart, setCartItemQuantity, deleteCartItem } = useCart();
+const { setCartItemQuantity, deleteCartItem } = useCart();
 
 const props = defineProps<CartProductCardProps>();
 const changeQuantity = async (quantity: string) => {

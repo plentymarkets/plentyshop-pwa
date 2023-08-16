@@ -82,7 +82,7 @@ export const useCart: UseCartReturn = () => {
 
       useHandleError(error.value);
       state.value.data =
-          _.cloneDeep(migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart))) ?? state.value.data;
+        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
@@ -114,8 +114,7 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
 
       state.value.data =
-        _.cloneDeep(migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart))) ?? state.value.data;
-      // state.value.data = _.cloneDeep(data?.value?.data) ?? state.value.data;
+        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
 
       return state.value.data;
     } catch (error) {
@@ -145,7 +144,7 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
 
       state.value.data =
-          _.cloneDeep(migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart))) ?? state.value.data;
+        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);

@@ -14,14 +14,14 @@
           <p>{{ $t('estimatedTax') }}</p>
         </div>
         <div class="flex flex-col gap-2 text-right">
-          <p class="font-medium">{{ $n(subTotal, 'currency') }}</p>
+          <p class="font-medium">{{ $n(totals.subTotal, 'currency') }}</p>
           <p class="font-medium">{{ $n(shippingPrice, 'currency') }}</p>
-          <p>{{ $n(vatAmmount, 'currency') }}</p>
+          <p>{{ $n(totals.vatAmmount, 'currency') }}</p>
         </div>
       </div>
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <p>{{ $t('total') }}</p>
-        <p data-testid="total">{{ $n(total, 'currency') }}</p>
+        <p data-testid="total">{{ $n(totals.total, 'currency') }}</p>
       </div>
       <UiDivider class="my-4 w-auto" />
       <slot />
@@ -34,11 +34,19 @@ import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
-const totals = cartGetters.getTotals(props.cart);
-const total = totals.total;
-const subTotal = totals.subtotal;
-const vatAmmount = Number(totals.vatAmount);
-const shippingPrice = cartGetters.getShippingPrice(props.cart);
+
+// const { data: cartData } = useCart();
+
+const totals = computed(() => {
+  const totalsData = cartGetters.getTotals(props.cart);
+  return {
+    total: totalsData.total,
+    subTotal: totalsData.subtotal,
+    vatAmmount: Number(totalsData.vatAmount),
+  };
+});
+
+const shippingPrice = computed(() => cartGetters.getShippingPrice(props.cart));
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 </script>
