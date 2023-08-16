@@ -73,7 +73,13 @@
     </label>
 
     <div class="md:col-span-3 flex justify-end gap-4">
-      <SfButton type="button" class="max-md:w-1/2" variant="secondary" @click="clearInputs">
+      <SfButton
+        type="button"
+        class="max-md:w-1/2"
+        variant="secondary"
+        :disabled="isCartUpdateLoading"
+        @click="clearInputs"
+      >
         {{ $t('contactInfo.clearAll') }}
       </SfButton>
       <SfButton type="submit" class="w-1/2 md:w-1/6" :disabled="isCartUpdateLoading">
