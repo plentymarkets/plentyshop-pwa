@@ -19,7 +19,7 @@
       <p>{{ `${userAddressGetters.getFirstName(addresses[0])} ${userAddressGetters.getLastName(addresses[0])}` }}</p>
       <p>{{ userAddressGetters.getPhone(addresses[0]) }}</p>
       <p>{{ userAddressGetters.getStreetName(addresses[0]) }} {{ userAddressGetters.getStreetNumber(addresses[0]) }}</p>
-      <p>{{ `${userAddressGetters.getProvince(addresses[0])} ${userAddressGetters.getPostCode(addresses[0])}` }}</p>
+      <p>{{ `${userAddressGetters.getCity(addresses[0])} ${userAddressGetters.getPostCode(addresses[0])}` }}</p>
     </div>
 
     <div class="w-full md:max-w-[520px]" v-if="isAuth || addresses.length === 0">

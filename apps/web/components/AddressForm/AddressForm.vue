@@ -29,6 +29,7 @@
       <SfSelect
         name="country"
         v-model="defaultValues.country"
+        @change="defaultValues.state = ''"
         :placeholder="$t('form.selectPlaceholder')"
         auto-complete="country-name"
         required
