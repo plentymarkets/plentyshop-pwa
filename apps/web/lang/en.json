@@ -106,7 +106,8 @@
   },
   "shippingMethod": {
     "heading": "Shipping details",
-    "description": "Not available until a shipping address is provided."
+    "description": "Not available until a shipping address is provided.",
+    "free": "Free"
   },
   "validation": {
     "heading": "To complete order:",

@@ -10,7 +10,7 @@
           as="label"
           :key="shippingProviderGetters.getParcelServicePresetId(method)"
           class="border rounded-md items-start"
-          @click="radioModel = shippingProviderGetters.getParcelServicePresetId(method)"
+          @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
         >
           <div class="flex gap-2">
             <SfRadio
@@ -21,11 +21,8 @@
               "
               :value="shippingProviderGetters.getParcelServicePresetId(method)"
             />
-            <div>
-              <p>{{ shippingProviderGetters.getShippingMethodName(method) }}</p>
-              <p class="text-xs text-neutral-500">estimatedDelivery - TODO</p>
-            </div>
-            <p class="ml-auto">${{ shippingProviderGetters.getShippingAmount(method) }}</p>
+            <p>{{ shippingProviderGetters.getShippingMethodName(method) }}</p>
+            <p class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</p>
           </div>
         </SfListItem>
       </ul>
@@ -38,12 +35,23 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
-import type { ShippingMethodProps } from '~/components/ShippingMethod/types';
+import { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
 defineProps<ShippingMethodProps>();
-
+const emit = defineEmits<CheckoutShippingEmits>();
 const { data: cart } = useCart();
-const radioModel = ref(cart.value?.shippingProviderId.toString());
+const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value).toString());
+const i18n = useI18n();
+
+const updateShippingMethod = (shippingId: string) => {
+  radioModel.value = shippingId;
+  emit('update:shippingMethod', radioModel.value);
+};
+
+const getShippingAmount = (amount: string) => {
+  return amount === '0' ? i18n.t('shippingMethod.free') : i18n.n(Number(amount), 'currency');
+};
 </script>
