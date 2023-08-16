@@ -28,11 +28,11 @@
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <ShippingMethod
-          :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)"
-          @update:shipping-method="doSaveShippingMethod($event)"
+          :shipping-methods="shippingMethods"
+          @update:shipping-method="handleShippingMethodUpdate($event)"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment :active-payment="activePayment" @update:active-payment="activePayment = $event" />
+        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
@@ -67,19 +67,31 @@
 <script lang="ts" setup>
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink } from '@storefront-ui/vue';
-import { PaymentMethod } from '~/components/CheckoutPayment/types';
 
 definePageMeta({
   layout: false,
 });
 
 const NuxtLink = resolveComponent('NuxtLink');
+const { data: cart, getCart } = useCart();
 const { isAuthorized } = useCustomer();
-const { data: cart } = useCart();
-const { data: shippingMethods, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+
 await getShippingMethods();
-const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
-const doSaveShippingMethod = async (shippingMethodId: string) => {
-  saveShippingMethod(Number(shippingMethodId));
+await fetchPaymentMethods();
+
+const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
+const paymentMethods = computed(() => paymentMethodData.value);
+
+const handleShippingMethodUpdate = async (shippingMethodId: string) => {
+  await saveShippingMethod(Number(shippingMethodId));
+  await fetchPaymentMethods();
+  await getCart();
+};
+
+const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
+  await savePaymentMethod(paymentMethodId);
+  await getShippingMethods();
 };
 </script>
