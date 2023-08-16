@@ -74,6 +74,7 @@ definePageMeta({
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart, getCart } = useCart();
+const { isAuthorized } = useCustomer();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 
