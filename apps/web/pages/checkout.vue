@@ -28,7 +28,7 @@
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <ShippingMethod
-          :shipping-methods="shippingProviderGetters.getShippingProviders(shippingMethods)"
+          :shipping-methods="shippingMethods"
           @update:shipping-method="handleShippingMethodUpdate($event)"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -73,15 +73,19 @@ definePageMeta({
 });
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { data: cart } = useCart();
-const { data: paymentMethods, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { data: shippingMethods, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: cart, getCart } = useCart();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 await getShippingMethods();
 await fetchPaymentMethods();
+
+const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
+const paymentMethods = computed(() => paymentMethodData.value)
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
   await fetchPaymentMethods();
+  await getCart();
 };
 
 const handlePaymentMethodUpdate = async (paymentMethodId: number) => {

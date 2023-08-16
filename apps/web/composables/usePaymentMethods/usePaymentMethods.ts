@@ -10,7 +10,7 @@ import { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, S
  */
 
 export const usePaymentMethods: UsePaymentMethodsReturn = () => {
-  const state = useState<UsePaymentMethodsState>('useCartSippingMethods', () => ({
+  const state = useState<UsePaymentMethodsState>('usePaymentMethods', () => ({
     data: {} as PaymentProviders,
     loading: false,
   }));
@@ -44,6 +44,8 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
       }),
     );
     useHandleError(error.value);
+    state.value.loading = false;
+    return Promise.resolve();
   };
 
   return {
