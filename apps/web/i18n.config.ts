@@ -4,7 +4,7 @@ export default defineI18nConfig(() => ({
     en: {
       currency: {
         style: 'currency',
-        currency: 'EUR',
+        currency: 'GBP',
         currencyDisplay: 'symbol',
       },
     },
