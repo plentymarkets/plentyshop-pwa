@@ -107,10 +107,6 @@ const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.val
 const { savedAddress } = toRefs(props);
 const useAsShippingAddress = ref(false);
 
-// eslint-disable-next-line unicorn/expiring-todo-comments
-// TODO: find a better way for this condition.
-// eslint-disable-next-line unicorn/expiring-todo-comments
-// TODO: fix the getter for countries.
 const defaultValues = ref({
   firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
   lastName: savedAddress?.value ? userAddressGetters.getLastName(savedAddress?.value) ?? '' : '',
@@ -123,7 +119,7 @@ const defaultValues = ref({
   zipCode: savedAddress?.value ? userAddressGetters.getPostCode(savedAddress?.value) ?? '' : '',
 });
 
-function clearInputs() {
+const clearInputs = () => {
   defaultValues.value = {
     firstName: '',
     lastName: '',
@@ -135,7 +131,7 @@ function clearInputs() {
     state: '',
     zipCode: '',
   };
-}
+};
 
 const states = computed(() => {
   const selectedCountry = defaultValues.value.country;

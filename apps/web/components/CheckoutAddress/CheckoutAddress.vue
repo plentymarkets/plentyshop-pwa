@@ -7,22 +7,27 @@
       </SfButton>
     </div>
 
-    <div v-if="addresses.length > 0 && isAuth" class="mt-2 md:w-[520px]">
-      <SfSelect v-model="selectedAddress">
+    <div v-if="addresses.length > 0 && isAuthorized" class="mt-2 md:w-[520px]">
+      <SfSelect>
         <option v-for="(address, index) in addresses" :key="index" :value="address.id?.toString()">
           {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
         </option>
       </SfSelect>
     </div>
 
-    <div v-if="addresses.length === 1 && !isAuth" class="mt-2 md:w-[520px]">
-      <p>{{ `${userAddressGetters.getFirstName(addresses[0])} ${userAddressGetters.getLastName(addresses[0])}` }}</p>
-      <p>{{ userAddressGetters.getPhone(addresses[0]) }}</p>
-      <p>{{ userAddressGetters.getStreetName(addresses[0]) }} {{ userAddressGetters.getStreetNumber(addresses[0]) }}</p>
-      <p>{{ `${userAddressGetters.getCity(addresses[0])} ${userAddressGetters.getPostCode(addresses[0])}` }}</p>
+    <div v-if="selectedAddress && !isAuthorized" class="mt-2 md:w-[520px]">
+      <p>
+        {{ `${userAddressGetters.getFirstName(selectedAddress)} ${userAddressGetters.getLastName(selectedAddress)}` }}
+      </p>
+      <p>{{ userAddressGetters.getPhone(selectedAddress) }}</p>
+      <p>
+        {{ userAddressGetters.getStreetName(selectedAddress) }}
+        {{ userAddressGetters.getStreetNumber(selectedAddress) }}
+      </p>
+      <p>{{ `${userAddressGetters.getCity(selectedAddress)} ${userAddressGetters.getPostCode(selectedAddress)}` }}</p>
     </div>
 
-    <div class="w-full md:max-w-[520px]" v-if="isAuth || addresses.length === 0">
+    <div class="w-full md:max-w-[520px]" v-if="isAuthorized || addresses.length === 0">
       <p v-if="addresses.length === 0">{{ description }}</p>
       <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
@@ -48,7 +53,9 @@
         <AddressForm
           :countries="activeShippingCountries"
           :saved-address="
-            editMode ? addresses.find((address) => address.id?.toString() === selectedAddress) : undefined
+            editMode
+              ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString())
+              : undefined
           "
           :type="type"
           @on-save="saveAddress"
@@ -65,7 +72,7 @@ import { SfSelect, SfButton, SfIconClose, SfModal, useDisclosure } from '@storef
 import type { CheckoutAddressProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
-const isAuth = false;
+const { isAuthorized } = useCustomer();
 const { saveBillingAddress } = useBillingAddress();
 const { saveShippingAddress } = useShippingAddress();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
@@ -73,20 +80,20 @@ await getActiveShippingCountries();
 
 const props = defineProps<CheckoutAddressProps>();
 const editMode = ref(false);
-const selectedAddress = computed(() => props.addresses?.[0]?.id?.toString() || '');
+const selectedAddress = computed(() => props.addresses?.[0] ?? ({} as Address));
 const emit = defineEmits(['on-saved']);
 
-function create() {
+const create = () => {
   editMode.value = false;
   open();
-}
+};
 
-function edit() {
+const edit = () => {
   editMode.value = true;
   open();
-}
+};
 
-async function saveAddress(address: Address, useAsShippingAddress: boolean = false) {
+const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
   if (props.type === AddressType.Billing) {
     await saveBillingAddress(address);
   }
@@ -95,5 +102,5 @@ async function saveAddress(address: Address, useAsShippingAddress: boolean = fal
   }
   emit('on-saved');
   close();
-}
+};
 </script>
