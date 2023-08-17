@@ -80,7 +80,7 @@ export const useCart: UseCartReturn = () => {
       );
 
       useHandleError(error.value);
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
@@ -111,7 +111,7 @@ export const useCart: UseCartReturn = () => {
       );
       useHandleError(error.value);
 
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
 
       return state.value.data;
     } catch (error) {
