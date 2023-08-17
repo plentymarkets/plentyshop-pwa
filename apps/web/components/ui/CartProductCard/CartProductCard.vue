@@ -8,6 +8,7 @@
         :tag="NuxtLink"
         :to="`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`"
       >
+        <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
           :src="cartItemImage || '/images/product.webp'"
