@@ -54,7 +54,7 @@ const emit = defineEmits(['changeQuantity']);
 const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorProps>(), {
   value: 1,
   minValue: 1,
-  maxValue: 10,
+  maxValue: Number.POSITIVE_INFINITY,
 });
 
 const inputId = useId();
