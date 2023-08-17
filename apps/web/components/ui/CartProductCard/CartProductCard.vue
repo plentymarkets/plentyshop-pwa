@@ -4,7 +4,10 @@
     data-testid="cart-product-card"
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="`${paths.product}${cartGetters.getItemName(cartItem)}`">
+      <SfLink
+        :tag="NuxtLink"
+        :to="`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`"
+      >
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
           :src="cartGetters.getItemImage(cartItem) || '/images/product.webp'"
@@ -19,20 +22,20 @@
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
-        :to="`${paths.product}${cartGetters.getItemName(cartItem)}`"
+        :to="`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`"
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <!--      <div class="my-2 sm:mb-0">-->
-      <!--        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">-->
-      <!--          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">-->
-      <!--            <span class="mr-1">{{ attribute.name }}:</span>-->
-      <!--            <span class="font-medium">{{ attribute.label }}</span>-->
-      <!--          </li>-->
-      <!--        </ul>-->
-      <!--      </div>-->
+      <div class="my-2 sm:mb-0">
+        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+          <li v-for="(attribute, key) in cartGetters.getItemAttributes(cartItem)" :key="attribute">
+            <span class="mr-1">{{ key }}:</span>
+            <span class="font-medium">{{ attribute }}</span>
+          </li>
+        </ul>
+      </div>
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="cartGetters.getItemPrice(cartItem)?.special"
