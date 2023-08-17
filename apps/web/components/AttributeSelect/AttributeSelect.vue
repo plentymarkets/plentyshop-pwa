@@ -41,11 +41,11 @@ const slug = route.params.slug as string;
 const productId = slug.split('-').pop() ?? '0';
 const selectedVariation = ref(productId);
 
-const changeVariationId = (newId: String) => {
+const changeVariationId = (updatedId: String) => {
   const delimiter = '-';
-  const newLink = (slug.slice(0, Math.max(0, slug.lastIndexOf(delimiter))) + delimiter + `${newId}`) as
+  const link = (slug.slice(0, Math.max(0, slug.lastIndexOf(delimiter))) + delimiter + `${updatedId}`) as
     | RouteParamValueRaw
     | (string | number)[];
-  router.push({ name: route.name as RouteRecordName | undefined, params: { slug: newLink } });
+  router.push({ name: route.name as RouteRecordName | undefined, params: { slug: link } });
 };
 </script>
