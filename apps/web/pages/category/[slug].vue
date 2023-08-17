@@ -29,11 +29,9 @@ definePageMeta({
 
 const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
-
 const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
-const { data: categoryTree } = useCategoryTree();
+const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { t } = useI18n();
-const category = ref(undefined as CategoryTreeItem | undefined);
 
 const findCategoryBySlugs = (categories: CategoryTreeItem[], slugs: string[]): CategoryTreeItem | undefined => {
   const category = categories.find((item) => categoryTreeGetters.getSlug(item) === slugs[0]);
@@ -45,23 +43,24 @@ const findCategoryBySlugs = (categories: CategoryTreeItem[], slugs: string[]): C
 
 const generateSearchParams = () => {
   const urlParams = getFacetsFromURL();
-  category.value = findCategoryBySlugs(categoryTree.value, urlParams.categorySlugs || ['']);
-  urlParams.categoryId = category.value?.id.toString();
+  const category = findCategoryBySlugs(categoryTree.value, urlParams.categorySlugs || ['']);
+  urlParams.categoryId = category?.id?.toString();
   return urlParams;
 };
 
+await getCategoryTree();
 await fetchProducts(generateSearchParams());
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('allProducts'), link: '/category' },
 ];
-const subCategories = productsCatalog.value?.category.children ?? [];
+const subCategories = productsCatalog.value?.category?.children ?? [];
 
 const categories = computed(
   () =>
     subCategories?.map((item: Category) => ({
-      name: item?.details[0].name,
+      name: item?.details?.[0]?.name,
       count: undefined,
       href: paths.category,
     })) || [],

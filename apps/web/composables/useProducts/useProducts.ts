@@ -23,13 +23,9 @@ export const useProducts: UseProductsReturn = () => {
    * getFacet(@props: FacetSearchCriteria)
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
-    console.log('catId', params.categoryId);
-
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
     useHandleError(error.value);
-
-    console.log('data', data.value);
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
