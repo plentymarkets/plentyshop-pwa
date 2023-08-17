@@ -44,6 +44,7 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
     );
     useHandleError(error.value);
     state.value.loading = false;
+    return state.value.data;
   };
 
   return {

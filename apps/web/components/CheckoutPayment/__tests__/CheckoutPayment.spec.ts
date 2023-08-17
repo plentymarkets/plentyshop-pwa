@@ -5,7 +5,10 @@ describe('<CheckoutPayment />', () => {
   it('should render component', () => {
     const { getByTestId } = mount(CheckoutPayment, {
       props: {
-        activePayment: 'credit-card',
+        paymentMethods: {
+          list: [],
+          selected: 0
+        }
       },
     });
 

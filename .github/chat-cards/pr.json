@@ -1,0 +1,31 @@
+{
+    "cardsV2": [
+        {
+            "cardId": "${{ github.event.pull_request.id }}",
+            "card": {
+                "header": {
+                    "title": "SDK Review Required",
+                    "subtitle": "${{ github.event.pull_request.title }}"
+                },
+                "sections": [
+                    {
+                        "widgets": [
+                            {
+                                "buttonList": {
+                                    "buttons": {
+                                        "text": "Open PR",
+                                        "onClick": {
+                                            "openLink": {
+                                                "url": "https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
