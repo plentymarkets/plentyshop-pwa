@@ -15,16 +15,18 @@
           :heading="$t('billing.heading')"
           :description="$t('billing.description')"
           :button-text="$t('billing.addButton')"
-          :saved-address="cart.billingAddress"
-          type="billingAddress"
+          :addresses="billingAddresses"
+          :type="AddressType.Billing"
+          @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
           :button-text="$t('shipping.addButton')"
-          :saved-address="cart.deliveryAddress"
-          type="shippingAddress"
+          :addresses="shippingAddresses"
+          :type="AddressType.Shipping"
+          @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <ShippingMethod
@@ -65,6 +67,7 @@
 </template>
 
 <script lang="ts" setup>
+import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink } from '@storefront-ui/vue';
 
@@ -75,9 +78,18 @@ definePageMeta({
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart, getCart } = useCart();
 const { isAuthorized } = useCustomer();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
+const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 
+const loadAddresses = async () => {
+  await getBillingAddresses();
+  await getShippingAddresses();
+  await getShippingMethods();
+};
+
+await loadAddresses();
 await getShippingMethods();
 await fetchPaymentMethods();
 

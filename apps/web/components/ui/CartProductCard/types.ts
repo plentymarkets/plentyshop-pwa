@@ -1,3 +1,5 @@
+import { CartItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+
 export interface Attribute {
   label: string;
   name: string;
@@ -5,14 +7,5 @@ export interface Attribute {
 }
 
 export type CartProductCardProps = {
-  attributes: Attribute[];
-  imageUrl?: string | null;
-  imageAlt?: string | null;
-  maxValue: number;
-  minValue: number;
-  name: string;
-  price: number;
-  specialPrice: number;
-  value: number;
-  slug: string;
+  cartItem: CartItem;
 };
