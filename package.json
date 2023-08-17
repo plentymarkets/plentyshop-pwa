@@ -8,6 +8,7 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
+    "setup": "yarn && yarn build && yarn dev",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
     "dev": "turbo run dev",
