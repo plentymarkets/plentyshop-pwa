@@ -46,7 +46,7 @@
               @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
               @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             >
-              <NuxtLink :to="getCategoryLink(menuNode)">
+              <NuxtLink :to="generateCategoryLink(menuNode)">
                 <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
                 <SfIconChevronRight
                   v-if="menuNode.childCount > 0"
@@ -68,7 +68,12 @@
               <template v-for="node in activeMenu.children" :key="node.key">
                 <template v-if="node.childCount === 0">
                   <ul>
-                    <SfListItem tag="a" size="sm" :href="getCategoryLink(node)" class="typography-text-sm mb-2">
+                    <SfListItem
+                      :tag="NuxtLink"
+                      size="sm"
+                      :href="generateCategoryLink(node)"
+                      class="typography-text-sm mb-2"
+                    >
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
                   </ul>
@@ -83,9 +88,9 @@
                     <li v-for="child in node.children" :key="child.id">
                       <SfListItem
                         v-if="categoryTreeGetters.getCategoryDetails(child) !== null"
-                        tag="a"
+                        :tag="NuxtLink"
                         size="sm"
-                        :href="getCategoryLink(child)"
+                        :href="generateCategoryLink(child)"
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -131,7 +136,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" tag="a" :href="getCategoryLink(node)">
+                <SfListItem size="lg" :tag="NuxtLink" :href="generateCategoryLink(node)">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -141,7 +146,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="getCategoryLink(node)">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="generateCategoryLink(node)">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -181,6 +186,7 @@ import {
 import { unrefElement } from '@vueuse/core';
 import { MegaMenuProps } from '~/components/MegaMenu/types';
 
+const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
 const categories = computed(() => categoryTreeGetters.getTree(props.categories));
 const category = {
@@ -201,8 +207,15 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   }
 };
 
-const getCategoryLink = (node: CategoryTreeItem) => {
-  return `/category/${categoryTreeGetters.getSlug(node)}`;
+const generateCategoryLink = (node: CategoryTreeItem): string => {
+  const pathWay = categoryTreeGetters.findCategoryPathById(categories.value, node.id);
+  let path = '/category';
+
+  for (const category of pathWay) {
+    path += `/${categoryTreeGetters.getSlug(category)}`;
+  }
+
+  return path;
 };
 
 const { close, open, isOpen } = useDisclosure();
