@@ -2,9 +2,7 @@
   <div v-if="cart?.items?.length ?? 0 > 0" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
     <div class="col-span-7 mb-10 md:mb-0">
       <div v-for="(cartItem, id) in cart?.items" :key="id">
-        <UiCartProductCard
-          :cart-item="cartItem"
-        />
+        <UiCartProductCard :cart-item="cartItem" />
       </div>
     </div>
     <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
