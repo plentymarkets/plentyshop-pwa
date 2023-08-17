@@ -30,9 +30,9 @@
       </SfLink>
       <div class="my-2 sm:mb-0">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-          <li v-for="(attribute, key) in cartGetters.getItemAttributes(cartItem)" :key="attribute">
-            <span class="mr-1">{{ key }}:</span>
-            <span class="font-medium">{{ attribute }}</span>
+          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
+            <span class="mr-1">{{ attribute.name }}:</span>
+            <span class="font-medium">{{ attribute.label }}</span>
           </li>
         </ul>
       </div>
