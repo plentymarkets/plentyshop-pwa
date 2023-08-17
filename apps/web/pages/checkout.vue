@@ -78,11 +78,10 @@ definePageMeta({
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart, getCart } = useCart();
 const { isAuthorized } = useCustomer();
-const { data: shippingMethods, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -91,12 +90,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-
-const activePayment = ref<PaymentMethod>(PaymentMethod.CreditCard);
-const doSaveShippingMethod = async (shippingMethodId: string) => {
-  saveShippingMethod(Number(shippingMethodId));
-};
-
 await getShippingMethods();
 await fetchPaymentMethods();
 
