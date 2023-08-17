@@ -46,7 +46,7 @@
               @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
               @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             >
-              <NuxtLink to="#">
+              <NuxtLink :to="getCategoryLink(menuNode)">
                 <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
                 <SfIconChevronRight
                   v-if="menuNode.childCount > 0"
@@ -68,7 +68,7 @@
               <template v-for="node in activeMenu.children" :key="node.key">
                 <template v-if="node.childCount === 0">
                   <ul>
-                    <SfListItem tag="a" size="sm" href="#" class="typography-text-sm mb-2">
+                    <SfListItem tag="a" size="sm" :href="getCategoryLink(node)" class="typography-text-sm mb-2">
                       {{ categoryTreeGetters.getName(node) }}
                     </SfListItem>
                   </ul>
@@ -85,7 +85,7 @@
                         v-if="categoryTreeGetters.getCategoryDetails(child) !== null"
                         tag="a"
                         size="sm"
-                        href="#"
+                        :href="getCategoryLink(child)"
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -131,7 +131,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" tag="a" href="#">
+                <SfListItem size="lg" tag="a" :href="getCategoryLink(node)">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -141,7 +141,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" to="#">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="getCategoryLink(node)">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -199,6 +199,10 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   } else {
     return node.children?.find((child) => child.id === keys[0]) || node;
   }
+};
+
+const getCategoryLink = (node: CategoryTreeItem) => {
+  return `/category/${categoryTreeGetters.getSlug(node)}`;
 };
 
 const { close, open, isOpen } = useDisclosure();
