@@ -203,7 +203,7 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 
 const getCategoryLink = (node: CategoryTreeItem) => {
   return `/category/${categoryTreeGetters.getSlug(node)}`;
-}
+};
 
 const { close, open, isOpen } = useDisclosure();
 const { referenceRef, floatingRef, style } = useDropdown({

@@ -20,8 +20,8 @@
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
 import { Category, CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 definePageMeta({
   layout: false,
@@ -36,7 +36,10 @@ const { t } = useI18n();
 
 const searchParams = computed(() => {
   const urlParams = getFacetsFromURL();
-  const category: CategoryTreeItem | null = categoryTreeGetters.findCategoryBySlug(categoryTree.value, urlParams.categorySlug);
+  const category: CategoryTreeItem | null = categoryTreeGetters.findCategoryBySlug(
+    categoryTree.value,
+    urlParams.categorySlug,
+  );
   urlParams.categoryId = category?.id.toString();
   return urlParams;
 });
