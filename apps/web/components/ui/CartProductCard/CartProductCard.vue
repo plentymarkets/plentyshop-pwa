@@ -25,14 +25,14 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-<!--      <div class="my-2 sm:mb-0">-->
-<!--        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">-->
-<!--          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">-->
-<!--            <span class="mr-1">{{ attribute.name }}:</span>-->
-<!--            <span class="font-medium">{{ attribute.label }}</span>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </div>-->
+      <!--      <div class="my-2 sm:mb-0">-->
+      <!--        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">-->
+      <!--          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">-->
+      <!--            <span class="mr-1">{{ attribute.name }}:</span>-->
+      <!--            <span class="font-medium">{{ attribute.label }}</span>-->
+      <!--          </li>-->
+      <!--        </ul>-->
+      <!--      </div>-->
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="cartGetters.getItemPrice(cartItem)?.special"
@@ -59,8 +59,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfIconDelete } from '@storefront-ui/vue';
 import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { SfLink, SfIconDelete } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 

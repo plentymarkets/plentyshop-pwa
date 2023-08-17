@@ -35,8 +35,6 @@ import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
 
-// const { data: cartData } = useCart();
-
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
   return {
