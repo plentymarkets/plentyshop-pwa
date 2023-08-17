@@ -4,7 +4,7 @@
       "startServerCommand": "yarn start",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/category",
+        "http://localhost:3000/category/living-room",
         "http://localhost:3000/product/couch-purple-dreams-1032"
       ],
       "numberOfRuns": 3,
@@ -62,7 +62,7 @@
             }
           },
           {
-            "matchingUrlPattern": "http://localhost:3000/category$",
+            "matchingUrlPattern": "http://localhost:3000/category/$",
             "assertions": {
               "resource-summary:image:size": ["warn", { "maxNumericValue": 32000 }],
               "resource-summary:script:size": ["warn", { "maxNumericValue": 310000 }],

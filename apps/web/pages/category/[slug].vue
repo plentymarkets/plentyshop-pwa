@@ -19,7 +19,8 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { Category } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { Category, CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 definePageMeta({
@@ -30,9 +31,20 @@ const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
 
 const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
+const { data: categoryTree } = useCategoryTree();
 const { t } = useI18n();
 
-await fetchProducts(getFacetsFromURL());
+const searchParams = computed(() => {
+  const urlParams = getFacetsFromURL();
+  const category: CategoryTreeItem | null = categoryTreeGetters.findCategoryBySlug(
+    categoryTree.value,
+    urlParams.categorySlug,
+  );
+  urlParams.categoryId = category?.id.toString();
+  return urlParams;
+});
+
+await fetchProducts(searchParams.value);
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
@@ -52,7 +64,7 @@ const categories = computed(
 watch(
   () => route.query,
   async () => {
-    await fetchProducts(getFacetsFromURL());
+    await fetchProducts(searchParams.value);
   },
 );
 </script>
