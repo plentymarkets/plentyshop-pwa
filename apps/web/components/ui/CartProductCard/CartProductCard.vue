@@ -60,10 +60,9 @@
 
 <script setup lang="ts">
 import { SfLink, SfIconDelete } from '@storefront-ui/vue';
+import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
-import { useCart } from '~/composables';
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
 

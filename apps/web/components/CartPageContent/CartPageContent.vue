@@ -3,16 +3,7 @@
     <div class="col-span-7 mb-10 md:mb-0">
       <div v-for="(cartItem, id) in cart?.items" :key="id">
         <UiCartProductCard
-          :attributes="[]"
           :cart-item="cartItem"
-          :image-url="cartGetters.getItemImage(cartItem)"
-          :image-alt="cartGetters.getItemImage(cartItem)"
-          :name="cartGetters.getItemName(cartItem) ?? ''"
-          :price="cartGetters.getItemPrice(cartItem)?.regular || 0"
-          :special-price="cartGetters.getItemPrice(cartItem)?.special || 0"
-          :min-value="1"
-          :value="cartGetters.getItemQty(cartItem)"
-          :slug="cartGetters.getItemName(cartItem)"
         />
       </div>
     </div>
@@ -29,11 +20,10 @@
 </template>
 
 <script lang="ts" setup>
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
 
-const { data: cart, getCart } = useCart();
+const { data: cart } = useCart();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

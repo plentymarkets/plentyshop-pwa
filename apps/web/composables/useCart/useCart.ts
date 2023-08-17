@@ -1,11 +1,11 @@
+import { CartItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
 import { DeleteCartItem, SetCartItemQuantity } from './types';
-import _ from 'lodash';
 
-const migrateVariationData = (oldCart: Cart, nextCart: Cart): Cart => {
+const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
   if (!oldCart || !oldCart.items || !nextCart || !nextCart.items) {
     return nextCart;
   }
@@ -15,7 +15,8 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart): Cart => {
       return;
     }
 
-    const oldCartItemData = oldCart?.items?.find((oldCartItem) => oldCartItem.id === nextCartItem.id) ?? [];
+    const oldCartItemData =
+      oldCart?.items?.find((oldCartItem) => oldCartItem.id === nextCartItem.id) ?? ({} as CartItem);
 
     if (!oldCartItemData?.variation) {
       return;
@@ -51,8 +52,6 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
 
-      console.log('response get cart : ', data?.value?.data)
-
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
@@ -81,8 +80,7 @@ export const useCart: UseCartReturn = () => {
       );
 
       useHandleError(error.value);
-      state.value.data =
-        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
@@ -113,8 +111,7 @@ export const useCart: UseCartReturn = () => {
       );
       useHandleError(error.value);
 
-      state.value.data =
-        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
 
       return state.value.data;
     } catch (error) {
@@ -143,8 +140,7 @@ export const useCart: UseCartReturn = () => {
 
       useHandleError(error.value);
 
-      state.value.data =
-        migrateVariationData(state.value.data, data?.value?.data ?? ({} as Cart)) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
