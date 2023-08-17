@@ -4,6 +4,7 @@ import type {
   UseCartShippingMethodsState,
   UseCartShippingMethodsReturn,
   GetShippingMethods,
+  SaveShippingMethod,
 } from '~/composables/useCartShippingMethods/types';
 import { useSdk } from '~/sdk';
 
@@ -34,7 +35,20 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
     return state.value.data;
   };
 
+  const saveShippingMethod: SaveShippingMethod = async (shippingMethodId: number) => {
+    state.value.loading = true;
+    const { error } = await useAsyncData(() =>
+      useSdk().plentysystems.setShippingProvider({
+        shippingId: shippingMethodId,
+      }),
+    );
+    useHandleError(error.value);
+    state.value.loading = false;
+    return state.value.data;
+  };
+
   return {
+    saveShippingMethod,
     getShippingMethods,
     ...toRefs(state.value),
   };

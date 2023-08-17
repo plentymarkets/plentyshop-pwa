@@ -12,6 +12,8 @@
           <UiDivider class="mb-6" />
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <ProductAccordion v-if="product" :product="product" />
+          <UiDivider class="mt-4 mb-2 md:mt-8" />
+          <ReviewsAccordion :product="product" />
         </section>
         <UiDivider class="mt-4 mb-2" />
       </div>
@@ -34,7 +36,7 @@ const productId = slug.split('-').pop() ?? '0';
 
 const { data: product, fetchProduct } = useProduct(productId);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId)
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 await fetchProduct(productId);
 await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);

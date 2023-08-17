@@ -4,7 +4,7 @@
       {{ $t('sortBy') }}
     </h6>
     <div class="px-4">
-      <SfSelect v-model="selected" :aria-label="$t('sortBy')">
+      <SfSelect v-model="selected" :aria-label="$t('sortBy')" @change="sortingChanged">
         <option v-for="{ value, label } in options" :key="value" :value="value">
           {{ $t(`sortType.${label}`) }}
         </option>
@@ -14,25 +14,55 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app';
 import { SfSelect } from '@storefront-ui/vue';
+import { useCategoryFilter } from '~/composables';
 
+const { getFacetsFromURL, updateSorting } = useCategoryFilter();
+const route = useRoute();
 const options = ref([
   {
-    label: 'latest',
-    value: 'createdAt',
+    label: 'nameA-Z',
+    value: 'texts.name1_asc',
+  },
+  {
+    label: 'nameZ-A',
+    value: 'texts.name1_desc',
   },
   {
     label: 'priceUp',
-    value: 'price-low-to-high',
+    value: 'sorting.price.avg_asc',
   },
   {
     label: 'priceDown',
-    value: 'price-high-to-low',
+    value: 'sorting.price.avg_desc',
   },
   {
-    label: 'relevance',
-    value: 'relevant',
+    label: 'reviewsUp',
+    value: 'item.feedbackDecimal_asc',
+  },
+  {
+    label: 'reviewsDown',
+    value: 'item.feedbackDecimal_desc',
   },
 ]);
 const selected = ref(options.value[0].value);
+
+function sortingChanged() {
+  updateSorting(selected.value);
+}
+
+function sortQueryChanged() {
+  const facets = getFacetsFromURL();
+  selected.value = facets.sort ?? options.value[0].value;
+}
+
+sortQueryChanged();
+
+watch(
+  () => route.query.sort,
+  () => {
+    sortQueryChanged();
+  },
+);
 </script>

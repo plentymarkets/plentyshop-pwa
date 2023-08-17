@@ -5,10 +5,12 @@
       :title="$t('allProducts')"
       :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
+      :items-per-page="Number(productsPerPage)"
     >
       <template #sidebar>
         <CategoryTree :categories="categories" :parent="{ name: $t('allProducts'), href: paths.category }" />
         <CategorySorting />
+        <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
         <CategoryFilters :facets="productsCatalog.facets" />
       </template>
     </CategoryPageContent>
@@ -16,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'nuxt/app';
 import { Category } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
@@ -23,10 +26,13 @@ definePageMeta({
   layout: false,
 });
 
-const { fetchProducts, data: productsCatalog } = useProducts();
+const route = useRoute();
+const { getFacetsFromURL } = useCategoryFilter();
+
+const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
 const { t } = useI18n();
 
-await fetchProducts({});
+await fetchProducts(getFacetsFromURL());
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
@@ -41,5 +47,12 @@ const categories = computed(
       count: undefined,
       href: paths.category,
     })) || [],
+);
+
+watch(
+  () => route.query,
+  async () => {
+    await fetchProducts(getFacetsFromURL());
+  },
 );
 </script>

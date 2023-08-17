@@ -51,4 +51,3 @@ lib/
 .vscode
 *.code-workspace
 *.tsbuildinfo
-.yarnrc.yml

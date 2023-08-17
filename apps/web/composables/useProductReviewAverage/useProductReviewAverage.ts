@@ -1,7 +1,7 @@
+import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import { FetchProductReviewAverage, UseProductReviewAverage, UseProductReviewAverageState } from './types';
-import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 
 /**
  * @description Composable managing review average data
