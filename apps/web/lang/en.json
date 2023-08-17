@@ -15,12 +15,11 @@
     "phoneLabel": "Phone",
     "countryLabel": "Country",
     "streetNameLabel": "Street",
-    "streetNameHelp": "Street address or P.O. Box",
-    "streetNumberLabel": "Apt#, Suite, etc",
-    "streetNumberHelp": "Optional",
+    "streetNumberLabel": "Number",
+    "optional": "Optional",
     "cityLabel": "City",
     "stateLabel": "State",
-    "postalCodeLabel": "ZIP Code",
+    "postalCodeLabel": "Zip Code",
     "useAsShippingLabel": "Use as shipping address",
     "selectPlaceholder": "-- Select --"
   },
@@ -94,7 +93,8 @@
     "cancel": "Cancel",
     "clear": "Clear all",
     "save": "Save",
-    "edit": "Edit"
+    "edit": "Edit",
+    "clearAll": "Clear all",
   },
   "checkoutPayment": {
     "heading": "Payment method",

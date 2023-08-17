@@ -1,6 +1,11 @@
-import type { Address } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type {
+  Address,
+  ActiveShippingCountry,
+  AddressType,
+} from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export type AddressFormProps = {
-  type: 'billingAddress' | 'shippingAddress';
+  type: AddressType;
   savedAddress?: Address;
+  countries: ActiveShippingCountry[];
 };

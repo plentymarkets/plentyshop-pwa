@@ -1,12 +1,7 @@
-export enum PaymentMethod {
-  CreditCard = 'credit-card',
-  PayPal = 'pay-pal',
-  ApplePay = 'apple-pay',
-  GooglePay = 'google-pay',
-}
+import type { PaymentProviders } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export type CheckoutPaymentProps = {
-  activePayment: string;
+  paymentMethods: PaymentProviders;
 };
 
-export type CheckoutPaymentEmits = (event: 'update:activePayment', parameter: PaymentMethod) => void;
+export type CheckoutPaymentEmits = (event: 'update:activePayment', paymentMethodId: number) => void;
