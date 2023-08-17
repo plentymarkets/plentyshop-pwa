@@ -10,8 +10,8 @@
       >
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
-          :src="cartGetters.getItemImage(cartItem) || '/images/product.webp'"
-          :alt="cartGetters.getItemImage(cartItem) || ''"
+          :src="cartItemImage || '/images/product.webp'"
+          :alt="cartItemImage || ''"
           width="300"
           height="300"
           loading="lazy"
@@ -38,16 +38,16 @@
       <!--      </div>-->
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
-          v-if="cartGetters.getItemPrice(cartItem)?.special"
+          v-if="prices.special"
           class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ $n(cartGetters.getItemPrice(cartItem)?.special || 0, 'currency') }}
+          {{ $n(prices.special || 0, 'currency') }}
           <span class="text-neutral-500 ml-2 line-through typography-text-xs sm:typography-text-sm font-normal">
-            {{ $n(cartGetters.getItemPrice(cartItem)?.regular || 0, 'currency') }}
+            {{ $n(prices.regular || 0, 'currency') }}
           </span>
         </span>
         <span v-else class="font-bold sm:ml-auto sm:order-1 typography-text-sm sm:typography-text-lg">
-          {{ $n(cartGetters.getItemPrice(cartItem)?.regular || 0, 'currency') }}
+          {{ $n(prices.regular || 0, 'currency') }}
         </span>
         <UiQuantitySelector
           @change-quantity="debounceQuantity"
@@ -82,6 +82,15 @@ const deleteItem = async () => {
     cartItemId: props.cartItem.id,
   });
 };
+
+const prices = computed(() => {
+  return {
+    special: cartGetters.getItemPrice(props.cartItem)?.special,
+    regular: cartGetters.getItemPrice(props.cartItem)?.regular,
+  };
+});
+
+const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
 
 const debounceQuantity = _.debounce(changeQuantity, 500);
 
