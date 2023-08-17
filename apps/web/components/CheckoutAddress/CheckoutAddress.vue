@@ -2,7 +2,7 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="selectedAddress" size="sm" variant="tertiary" @click="edit">
+      <SfButton v-if="addresses.length > 0" size="sm" variant="tertiary" @click="edit">
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
