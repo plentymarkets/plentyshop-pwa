@@ -38,8 +38,13 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const router = useRouter();
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
+    const parts = route.fullPath.split('/');
+    const categoryIndex = parts.indexOf('category');
+    const categorySlugs = parts.slice(categoryIndex + 1).filter((part) => !part.includes('?'));
+
     return {
-      categorySlug: route.fullPath.split('/').pop(),
+      categorySlugs: categorySlugs,
+      categorySlug: '',
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
