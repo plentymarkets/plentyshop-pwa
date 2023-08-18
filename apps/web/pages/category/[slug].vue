@@ -2,7 +2,7 @@
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <CategoryPageContent
       v-if="productsCatalog"
-      :title="$t('allProducts')"
+      :title="categoryTreeGetters.getName(productsCatalog.category)"
       :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
       :items-per-page="Number(productsPerPage)"
@@ -29,33 +29,38 @@ definePageMeta({
 
 const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
-
 const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
-const { data: categoryTree } = useCategoryTree();
+const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { t } = useI18n();
 
-const searchParams = computed(() => {
-  const urlParams = getFacetsFromURL();
-  const category: CategoryTreeItem | null = categoryTreeGetters.findCategoryBySlug(
-    categoryTree.value,
-    urlParams.categorySlug,
-  );
-  urlParams.categoryId = category?.id.toString();
-  return urlParams;
-});
+const findCategoryBySlugs = (categories: CategoryTreeItem[], slugs: string[]): CategoryTreeItem | undefined => {
+  const category = categories.find((item) => categoryTreeGetters.getSlug(item) === slugs[0]);
+  if (category && slugs.length > 1 && category.children) {
+    return findCategoryBySlugs(category.children, slugs.slice(1));
+  }
+  return category;
+};
 
-await fetchProducts(searchParams.value);
+const generateSearchParams = () => {
+  const urlParams = getFacetsFromURL();
+  const category = findCategoryBySlugs(categoryTree.value, urlParams.categorySlugs || ['']);
+  urlParams.categoryId = category?.id?.toString();
+  return urlParams;
+};
+
+await getCategoryTree();
+await fetchProducts(generateSearchParams());
 
 const breadcrumbs: Breadcrumb[] = [
   { name: t('home'), link: '/' },
   { name: t('allProducts'), link: '/category' },
 ];
-const subCategories = productsCatalog.value?.category.children ?? [];
+const subCategories = productsCatalog.value?.category?.children ?? [];
 
 const categories = computed(
   () =>
     subCategories?.map((item: Category) => ({
-      name: item?.details[0].name,
+      name: item?.details?.[0]?.name,
       count: undefined,
       href: paths.category,
     })) || [],
@@ -64,7 +69,7 @@ const categories = computed(
 watch(
   () => route.query,
   async () => {
-    await fetchProducts(searchParams.value);
+    await fetchProducts(generateSearchParams());
   },
 );
 </script>

@@ -82,6 +82,15 @@ export default defineNuxtConfig({
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
   },
+  hooks: {
+    'pages:extend'(pages) {
+      pages.push({
+        name: 'category',
+        path: '/category/:slug/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
+        file: __dirname + '/pages/category/[slug].vue',
+      });
+    },
+  },
   pwa: {
     registerType: 'autoUpdate',
     workbox: {
