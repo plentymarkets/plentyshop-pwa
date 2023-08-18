@@ -10,7 +10,6 @@
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mb-6" />
-          <ProductProperties v-if="product" :product="product" />
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <ProductAccordion v-if="product" :product="product" />
           <UiDivider class="mt-4 mb-2 md:mt-8" />

@@ -29,6 +29,9 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
+    <div class="mb-2">
+      <AttributeSelect v-if="product" :product="product" />
+    </div>
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
