@@ -6,11 +6,11 @@
   >
     <label>
       <UiFormLabel>{{ $t('form.firstNameLabel') }}</UiFormLabel>
-      <SfInput name="firstName" auto-complete="given-name" v-model="defaultValues.firstName" required />
+      <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.lastNameLabel') }}</UiFormLabel>
-      <SfInput name="lastName" auto-complete="family-name" v-model="defaultValues.lastName" required />
+      <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastName" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.phoneLabel') }}</UiFormLabel>
@@ -19,7 +19,7 @@
         type="tel"
         minlength="7"
         maxlength="18"
-        auto-complete="tel"
+        autocomplete="tel"
         v-model="defaultValues.phoneNumber"
       />
       <UiFormHelperText>{{ $t('form.optional') }}</UiFormHelperText>
@@ -31,7 +31,7 @@
         v-model="defaultValues.country"
         @change="defaultValues.state = ''"
         :placeholder="$t('form.selectPlaceholder')"
-        auto-complete="country-name"
+        autocomplete="country-name"
         required
       >
         <option v-for="(country, index) in countries" :key="index" :value="country.id.toString()">
@@ -41,7 +41,7 @@
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }}</UiFormLabel>
-      <SfInput name="streetName" auto-complete="address-line1" v-model="defaultValues.streetName" required />
+      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.streetName" required />
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }}</UiFormLabel>
@@ -49,14 +49,14 @@
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.cityLabel') }}</UiFormLabel>
-      <SfInput name="city" auto-complete="address-level2" v-model="defaultValues.city" required />
+      <SfInput name="city" autocomplete="address-level2" v-model="defaultValues.city" required />
     </label>
     <label class="md:col-span-2" v-if="states.length > 0">
       <UiFormLabel>{{ $t('form.stateLabel') }}</UiFormLabel>
       <SfSelect
         v-model="defaultValues.state"
         name="state"
-        auto-complete="address-level1"
+        autocomplete="address-level1"
         :placeholder="$t('form.selectPlaceholder')"
       >
         <option v-for="(state, index) in states" :key="index" :value="state.id.toString()">{{ state.name }}</option>
@@ -65,7 +65,7 @@
     </label>
     <label>
       <UiFormLabel>{{ $t('form.postalCodeLabel') }}</UiFormLabel>
-      <SfInput name="postalCode" auto-complete="postal-code" v-model="defaultValues.zipCode" required />
+      <SfInput name="postalCode" autocomplete="postal-code" v-model="defaultValues.zipCode" required />
     </label>
 
     <label v-if="type === AddressType.Billing" class="md:col-span-3 flex items-center gap-2">
@@ -73,7 +73,7 @@
       {{ $t('form.useAsShippingLabel') }}
     </label>
 
-    <div class="md:col-span-3 flex justify-end gap-4">
+    <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end mt-6 gap-4">
       <SfButton
         type="button"
         class="max-md:w-1/2"
@@ -83,7 +83,7 @@
       >
         {{ $t('contactInfo.clearAll') }}
       </SfButton>
-      <SfButton type="submit" class="w-1/2 md:w-1/6" :disabled="isCartUpdateLoading">
+      <SfButton type="submit" class="min-w-[120px]" :disabled="isCartUpdateLoading">
         <SfLoaderCircular v-if="isCartUpdateLoading" class="flex justify-center items-center" size="sm" />
         <span v-else>
           {{ $t('contactInfo.save') }}

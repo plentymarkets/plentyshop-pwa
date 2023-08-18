@@ -7,7 +7,7 @@
       <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
         <SfListItem
           v-for="method in shippingMethods"
-          as="label"
+          tag="label"
           :key="shippingProviderGetters.getParcelServicePresetId(method)"
           class="border rounded-md items-start"
           @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"

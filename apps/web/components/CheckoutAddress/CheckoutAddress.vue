@@ -37,7 +37,7 @@
     <UiOverlay v-if="isOpen" :visible="isOpen">
       <SfModal
         v-model="isOpen"
-        as="section"
+        tag="section"
         role="dialog"
         class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
         aria-labelledby="address-modal-title"
@@ -68,7 +68,7 @@
 <script lang="ts" setup>
 import { Address, AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfSelect, SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
+import { SfSelect, SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
