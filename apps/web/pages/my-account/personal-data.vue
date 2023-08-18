@@ -6,7 +6,7 @@
     :button-text="$t('account.accountSettings.personalData.edit')"
     @on-click="openModal('yourName')"
   >
-    {{ userData?.firstName }} {{ userData?.lastName }}
+    {{ userData?.user?.firstName }} {{ userData?.user?.lastName }}
   </AccountData>
   <UiDivider class="w-screen -mx-4 md:col-span-3 md:w-auto md:mx-0" />
   <AccountData
@@ -15,7 +15,7 @@
     :button-text="$t('account.accountSettings.personalData.edit')"
     @on-click="openModal('contactInformation')"
   >
-    {{ userData?.email }}
+    {{ userData?.user?.email }}
   </AccountData>
   <UiDivider class="w-screen -mx-4 md:col-span-3 md:w-auto md:mx-0" />
   <AccountData
@@ -77,6 +77,6 @@ const closeModal = () => {
   lastActiveElement.value.focus();
 };
 
-const { fetchCustomer, data: userData } = useCustomer();
-fetchCustomer();
+const { getSession, data: userData } = useCustomer();
+getSession();
 </script>

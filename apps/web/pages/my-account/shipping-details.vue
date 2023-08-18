@@ -6,10 +6,19 @@
     :button-text="$t('account.accountSettings.personalData.edit')"
     @on-click="open"
   >
-    <p>{{ userShippingAddress.firstName }} {{ userShippingAddress.lastName }}</p>
-    <p>{{ userShippingAddress.phoneNumber }}</p>
-    <p>{{ userShippingAddress.address1 }} {{ userShippingAddress.address2 }}</p>
-    <p>{{ userShippingAddress.city }}, {{ userShippingAddress.state }} {{ userShippingAddress.postalCode }}</p>
+    <p>
+      {{
+        `${userAddressGetters.getFirstName(userShippingAddress)} ${userAddressGetters.getLastName(userShippingAddress)}`
+      }}
+    </p>
+    <p>{{ userAddressGetters.getPhone(userShippingAddress) }}</p>
+    <p>
+      {{ userAddressGetters.getStreetName(userShippingAddress) }}
+      {{ userAddressGetters.getStreetNumber(userShippingAddress) }}
+    </p>
+    <p>
+      {{ `${userAddressGetters.getCity(userShippingAddress)} ${userAddressGetters.getPostCode(userShippingAddress)}` }}
+    </p>
   </AccountData>
   <UiDivider class="w-screen -mx-4 md:col-span-3 md:w-auto md:mx-0" />
   <UiModal
@@ -27,29 +36,41 @@
         {{ $t('account.accountSettings.shippingDetails.shippingAddress') }}
       </h3>
     </header>
-    <AddressForm :saved-address="userShippingAddress" type="shippingAddress" @on-save="close" @on-close="close" />
+    <AddressForm
+      :countries="activeShippingCountries"
+      :saved-address="userShippingAddress"
+      :type="AddressType.Shipping"
+      @on-save="close"
+      @on-close="close"
+    />
   </UiModal>
 </template>
 
 <script setup lang="ts">
+import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import type { SfAddress } from '@vue-storefront/unified-data-model';
 
 definePageMeta({
   layout: 'account',
 });
 const { isOpen, open, close } = useDisclosure();
 
-const userShippingAddress = ref<SfAddress>({
-  firstName: 'Hieronim',
-  lastName: 'Anonim',
-  address1: 'Oak Drive',
-  address2: '3633',
-  city: 'Colonie',
-  country: 'US',
-  phoneNumber: '+1 321 765 0987',
-  postalCode: '12205',
-  state: 'NY',
-  titleCode: '',
+const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
+await getActiveShippingCountries();
+
+const userShippingAddress = ref({
+  id: 0,
+  firstName: '',
+  lastName: '',
+  streetName: '',
+  apartment: '',
+  city: '',
+  state: '',
+  country: '',
+  zipCode: '',
+  phoneNumber: '',
+  email: '',
+  primary: 1,
 });
 </script>
