@@ -62,6 +62,7 @@
     <slot />
   </main>
   <UiFooter />
+  <Cookiebar />
   <SfModal
     v-model="isSearchModalOpen"
     class="w-full h-full z-50"

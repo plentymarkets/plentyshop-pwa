@@ -1,4 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+
+import { CookieGroupFromNuxtConfig } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import cookieConfig from './cookie.config';
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: {
@@ -90,6 +94,11 @@ export default defineNuxtConfig({
         file: __dirname + '/pages/category/[slug].vue',
       });
     },
+  },
+  runtimeConfig: {
+    public: {
+      cookieGroups: cookieConfig
+    }
   },
   pwa: {
     registerType: 'autoUpdate',
