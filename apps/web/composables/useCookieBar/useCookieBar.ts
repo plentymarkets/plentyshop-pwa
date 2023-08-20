@@ -92,7 +92,7 @@ export const useCookieBar = (
   function saveCookies(cookieValue: string, useCookie: any): void {
     const minimumOfAllMinimums = 60 * 60 * 24 * getMinimumLifeSpan();
 
-    // TODO set minimum maxAge
+    // TODO: set minimum maxAge
     /* const cookie = useCookie(key, {
       path: '/',
       maxAge: minimumOfAllMinimums
@@ -131,7 +131,7 @@ export const useCookieBar = (
       });
 
       cookieJson.value[index].accepted = atLeastOneIsTrue;
-      bannerIsHidden.value = atLeastOneIsTrue ? atLeastOneIsTrue : bannerIsHidden.value;
+      bannerIsHidden.value = atLeastOneIsTrue ?? bannerIsHidden.value;
     });
   }
   // Mark default checkbox group as true
