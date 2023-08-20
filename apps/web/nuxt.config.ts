@@ -1,6 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-
-import { CookieGroupFromNuxtConfig } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
@@ -97,8 +95,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      cookieGroups: cookieConfig
-    }
+      cookieGroups: cookieConfig,
+    },
   },
   pwa: {
     registerType: 'autoUpdate',

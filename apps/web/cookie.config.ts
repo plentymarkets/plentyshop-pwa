@@ -13,29 +13,26 @@ export default {
         {
           name: 'Session',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
-          Lifespan: '1 days'
+          Lifespan: '1 days',
         },
         {
           name: 'Consent',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Session2',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
-        }
-      ]
+          Lifespan: '100 days',
+        },
+      ],
     },
     {
       id: 1,
@@ -47,32 +44,26 @@ export default {
         {
           name: 'Session',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
           Lifespan: '100 days',
-          script: [
-            'console.log(`Loaded cookie script example1`);',
-            'https://www.plentymarkets.com'
-          ]
+          script: ['console.log(`Loaded cookie script example1`);', 'https://www.plentymarkets.com'],
         },
         {
           name: 'Consent',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Session2',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
-        }
-      ]
+          Lifespan: '100 days',
+        },
+      ],
     },
     {
       id: 2,
@@ -84,28 +75,25 @@ export default {
         {
           name: 'Session',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Consent',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Session2',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
-        }
-      ]
+          Lifespan: '100 days',
+        },
+      ],
     },
     {
       id: 3,
@@ -117,28 +105,25 @@ export default {
         {
           name: 'Session',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Consent',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
+          Lifespan: '100 days',
         },
         {
           name: 'Session2',
           Provider: 'plentyShop LTS',
-          Status:
-            'The consent cookies stores the user’s state of consent for cookies on our page.',
+          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           'Privacy policy': '/PrivacyPolicy',
-          Lifespan: '100 days'
-        }
-      ]
-    }
-  ]
-}
+          Lifespan: '100 days',
+        },
+      ],
+    },
+  ],
+};

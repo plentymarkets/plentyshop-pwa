@@ -1,2 +1,2 @@
-export * from './useCookieBar'
-export * from './types'
+export * from './useCookieBar';
+export * from './types';

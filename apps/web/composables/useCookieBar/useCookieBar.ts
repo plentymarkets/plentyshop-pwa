@@ -1,4 +1,4 @@
-import { Cookie, CookieGroup, UseCookieReturn } from "./types";
+import { Cookie, CookieGroup, UseCookieReturn } from './types';
 
 function checkIfScriptIsExternal(scriptName: string): boolean {
   return scriptName.startsWith('http');
@@ -8,7 +8,7 @@ export const useCookieBar = (
   consentCookie: any,
   defaultCookieKey: string,
   initCheckboxIndex: number,
-  initialCookieJsonFromConfig: any
+  initialCookieJsonFromConfig: any,
 ): UseCookieReturn => {
   const bannerIsHidden = ref(false);
   const defaultCheckboxIndex = initCheckboxIndex;
@@ -22,9 +22,9 @@ export const useCookieBar = (
       cookies: group.cookies.map((cookie: Cookie) => ({
         ...cookie,
         accepted: false,
-        name: cookie.name
-      }))
-    }))
+        name: cookie.name,
+      })),
+    })),
   );
   const existingCookieInMemory = consentCookie;
 
@@ -37,25 +37,23 @@ export const useCookieBar = (
       cookieJson.value.forEach((cookieGroup, groupIndex) => {
         cookieGroup.cookies.forEach((cookie, cookieIndex) => {
           if (cookie.accepted) {
-            const scripts =
-              cookieJsonFromConfig.groups[groupIndex].cookies[cookieIndex]
-                .script;
+            const scripts = cookieJsonFromConfig.groups[groupIndex].cookies[cookieIndex].script;
 
-            if (scripts && scripts.length) {
+            if (scripts && scripts.length > 0) {
               scripts.forEach((script: string) => {
                 try {
                   if (checkIfScriptIsExternal(script)) {
                     fetch(script, {
                       method: 'GET',
                       mode: 'no-cors',
-                      credentials: 'same-origin'
+                      credentials: 'same-origin',
                     })
                       .then((response) => response.text())
                       .then((text) => (0, eval)(text));
                   } else {
                     (0, eval)(script);
                   }
-                } catch (error) {
+                } catch {
                   // @TODO error handling
                 }
               });
@@ -68,10 +66,10 @@ export const useCookieBar = (
   function getMinimumLifeSpan(): number {
     // expected minimum lifetime span to be in days
     const convertToDays = (daysInString: string): number => {
-      return parseInt(daysInString.split(' ')[0]);
+      return Number.parseInt(daysInString.split(' ')[0]);
     };
 
-    let minimum = 100000;
+    let minimum = 100_000;
 
     cookieJsonFromConfig.groups.forEach((group: CookieGroup) => {
       group.cookies.forEach((cookie) => {
@@ -86,26 +84,23 @@ export const useCookieBar = (
     const minimumOfAllMinimums = 60 * 60 * 24 * getMinimumLifeSpan();
 
     // TODO set minimum maxAge
-     /* const cookie = useCookie(key, {
+    /* const cookie = useCookie(key, {
       path: '/',
       maxAge: minimumOfAllMinimums
      }); */
-     useCookie.value = cookieValue;
+    useCookie.value = cookieValue;
   }
   function convertToSaveableJson(jsonList: any): any {
     let toSave = [];
 
     toSave = jsonList.map((group: any) => ({
       [group.name]: group.cookies.map((cookie: any) => ({
-        [cookie.name]: cookie.accepted
-      }))
+        [cookie.name]: cookie.accepted,
+      })),
     }));
     return toSave;
   }
-  function convertAndSaveCookies(
-    setAllCookies: boolean,
-    newStatus: boolean
-  ): void {
+  function convertAndSaveCookies(setAllCookies: boolean, newStatus: boolean): void {
     if (setAllCookies) {
       // accept all or reject all case (update cookieJson and checkboxes from ui)
       cookieJson.value.forEach((group, index) => {
@@ -129,7 +124,7 @@ export const useCookieBar = (
       const cookieGroupFromMemory = Object.values(group)[0];
       let atLeastOneIsTrue = false;
 
-      cookieGroupFromMemory.forEach((cookie:  CookieGroup, index2: number) => {
+      cookieGroupFromMemory.forEach((cookie: CookieGroup, index2: number) => {
         if (Object.values(cookie)[0]) {
           cookieJson.value[index].cookies[index2].accepted = true;
         }
@@ -137,18 +132,15 @@ export const useCookieBar = (
       });
 
       cookieJson.value[index].accepted = atLeastOneIsTrue;
-      bannerIsHidden.value = atLeastOneIsTrue
-        ? atLeastOneIsTrue
-        : bannerIsHidden.value;
+      bannerIsHidden.value = atLeastOneIsTrue ? atLeastOneIsTrue : bannerIsHidden.value;
     });
   }
   // Mark default checkbox group as true
   cookieJson.value[defaultCheckboxIndex].accepted = true;
-  cookieJson.value[defaultCheckboxIndex].cookies =
-    cookieJson.value[0].cookies.map((cookie) => ({
-      ...cookie,
-      accepted: true
-    }));
+  cookieJson.value[defaultCheckboxIndex].cookies = cookieJson.value[0].cookies.map((cookie) => ({
+    ...cookie,
+    accepted: true,
+  }));
 
   onMounted(() => {
     loadThirdPartyScripts();
@@ -160,6 +152,6 @@ export const useCookieBar = (
     setHiddenState,
     convertAndSaveCookies,
     loadThirdPartyScripts,
-    defaultCheckboxIndex
+    defaultCheckboxIndex,
   };
 };
