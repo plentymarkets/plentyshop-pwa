@@ -47,7 +47,7 @@
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
               :disabled="groupIndex === defaultCheckboxIndex"
-              @update:modelValue="setChildrenCheckboxes(cookieGroup, $event)"
+              @update:model-value="setChildrenCheckboxes(cookieGroup, $event)"
             />
             <label
               class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
@@ -65,7 +65,7 @@
                     :id="cookie.name"
                     v-model="cookie.accepted"
                     :disabled="groupIndex === defaultCheckboxIndex"
-                    @update:modelValue="updateParentCheckbox(cookieGroup)"
+                    @update:model-value="updateParentCheckbox(cookieGroup)"
                   />
                   <label
                     class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
@@ -80,7 +80,7 @@
                       {{ propKey }}
                     </div>
                     <div class="w-3/4">
-                      <template v-if="propKey === 'Privacy policy'">
+                      <template v-if="propKey === 'PrivacyPolicy'">
                         <!-- TODO -->
                         <SfLink :link="cookie.name">
                           {{ $t('CookieBar.Privacy Settings') }}
@@ -167,20 +167,16 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
-import { CookieGroup, Cookie } from '../../composables/useCookieBar/types';
+import { Cookie, CookieGroup } from 'cookie.config';
 
 const runtimeConfig = useRuntimeConfig();
-const consentCookie = useCookie('consent-cookie');
-console.log(consentCookie);
 const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defaultCheckboxIndex } = useCookieBar(
   useCookie('consent-cookie'),
-  'consent-cookie',
   0,
-  runtimeConfig.public.cookieGroups,
+  runtimeConfig.public.cookieGroups as any,
 );
 
 const hideBanner = computed(() => {
-  console.log(bannerIsHidden.value);
   return bannerIsHidden.value;
 });
 const furtherSettingsOn = ref(false);

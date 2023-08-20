@@ -1,16 +1,4 @@
-export interface Cookie {
-  name: string;
-  accepted: boolean;
-  Lifespan: string;
-  script: string[];
-}
-export interface CookieGroup {
-  name: string;
-  accepted: boolean;
-  showMore: boolean;
-  description: string;
-  cookies: Cookie[];
-}
+import { CookieGroup } from 'cookie.config';
 
 export interface UseCookieReturn {
   cookieJson: CookieGroup[];

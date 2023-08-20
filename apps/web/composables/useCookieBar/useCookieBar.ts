@@ -1,14 +1,27 @@
-import { Cookie, CookieGroup, UseCookieReturn } from './types';
+import { CookieRef } from 'nuxt/app';
+import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
+import { UseCookieReturn } from './types';
 
-function checkIfScriptIsExternal(scriptName: string): boolean {
+const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
-}
+};
+
+const convertToDays = (daysInString: string): number => {
+  return Number.parseInt(daysInString.split(' ')[0]);
+};
+
+const convertToSaveableJson = (jsonList: any): any => {
+  return jsonList.map((group: any) => ({
+    [group.name]: group.cookies.map((cookie: any) => ({
+      [cookie.name]: cookie.accepted,
+    })),
+  }));
+};
 
 export const useCookieBar = (
-  consentCookie: any,
-  defaultCookieKey: string,
+  consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,
-  initialCookieJsonFromConfig: any,
+  initialCookieJsonFromConfig: CookieGroupFromNuxtConfig,
 ): UseCookieReturn => {
   const bannerIsHidden = ref(false);
   const defaultCheckboxIndex = initCheckboxIndex;
@@ -65,10 +78,6 @@ export const useCookieBar = (
   }
   function getMinimumLifeSpan(): number {
     // expected minimum lifetime span to be in days
-    const convertToDays = (daysInString: string): number => {
-      return Number.parseInt(daysInString.split(' ')[0]);
-    };
-
     let minimum = 100_000;
 
     cookieJsonFromConfig.groups.forEach((group: CookieGroup) => {
@@ -80,7 +89,7 @@ export const useCookieBar = (
     });
     return minimum;
   }
-  function saveCookies(key: string, cookieValue: string, useCookie: any): void {
+  function saveCookies(cookieValue: string, useCookie: any): void {
     const minimumOfAllMinimums = 60 * 60 * 24 * getMinimumLifeSpan();
 
     // TODO set minimum maxAge
@@ -90,31 +99,21 @@ export const useCookieBar = (
      }); */
     useCookie.value = cookieValue;
   }
-  function convertToSaveableJson(jsonList: any): any {
-    let toSave = [];
-
-    toSave = jsonList.map((group: any) => ({
-      [group.name]: group.cookies.map((cookie: any) => ({
-        [cookie.name]: cookie.accepted,
-      })),
-    }));
-    return toSave;
-  }
-  function convertAndSaveCookies(setAllCookies: boolean, newStatus: boolean): void {
+  function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): void {
     if (setAllCookies) {
       // accept all or reject all case (update cookieJson and checkboxes from ui)
       cookieJson.value.forEach((group, index) => {
         if (index !== defaultCheckboxIndex) {
-          group.accepted = newStatus;
+          group.accepted = latestStatus;
           group.cookies.forEach((cookie) => {
-            cookie.accepted = newStatus;
+            cookie.accepted = latestStatus;
           });
         }
       });
     }
     const toSave = convertToSaveableJson(cookieJson.value);
 
-    saveCookies('consent-cookie', toSave, consentCookie);
+    saveCookies(toSave, consentCookie);
     bannerIsHidden.value = true;
     loadThirdPartyScripts();
   }
