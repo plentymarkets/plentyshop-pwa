@@ -2,7 +2,7 @@
   <client-only>
     <div
       v-if="!hideBanner"
-      class="fixed font-sf-xl z-50 w-full xl:w-3/5 text-sf-c-text font-sf-secondary font-sf-medium xl:right-2 bottom-0 xl:bottom-2 bg-sf-c-light-lighten shadow-2xl p-10 bg-white"
+      class="fixed font-sf-xl z-50 w-full xl:w-3/5  xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-10 bg-white"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -34,11 +34,11 @@
           </div>
         </div>
       </div>
-      <div v-else class="overflow-y-auto h-80 bg-sf-c-light-primary-lighten px-2 pb-2">
+      <div v-else class="overflow-y-auto h-80 px-2 pb-2">
         <div
           v-for="(cookieGroup, groupIndex) in cookieJson"
           :key="groupIndex"
-          class="bg-sf-c-light-primary mb-sf-xs p-sf-xs"
+          class="mb-2 p-2"
         >
           <div>
             <SfCheckbox
@@ -50,10 +50,10 @@
             <label class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900" :for="cookieGroup.name">
               {{ cookieGroup.name }}
             </label>
-            <div class="non-italic text-sf-normal text-sf-sm leading-6 my-2">
+            <div class="non-italic leading-6 my-2">
               {{ cookieGroup.description }}
             </div>
-            <div v-if="cookieGroup.showMore ?? false" class="font-sf-light2">
+            <div v-if="cookieGroup.showMore ?? false">
               <div
                 v-for="(cookie, cookieIndex) in cookieGroup.cookies"
                 :key="cookieIndex"
@@ -73,7 +73,7 @@
                 <div v-for="propKey in Object.keys(cookie)" :key="propKey">
                   <div
                     v-if="propKey !== 'name' && propKey !== 'accepted'"
-                    class="flex w-full mb-sf-2xs p-sf-xs bg-white"
+                    class="flex w-full mb-2 p-2 bg-white"
                   >
                     <div class="w-1/4">
                       {{ propKey }}
@@ -110,7 +110,7 @@
         </div>
       </div>
       <!-- further settings / back button -->
-      <div class="my-sf-sm text-center">
+      <div class="my-2 text-center">
         <SfButton v-if="!furtherSettingsOn" type="button" variant="secondary" @click="furtherSettingsOn = true">
           {{ $t('CookieBar.Further Settings') }}
         </SfButton>
@@ -120,10 +120,10 @@
       </div>
       <!-- action buttons -->
       <div class="w-full flex flex-col xl:flex-row mt-5 gap-2">
-        <div class="flex-1 mb-sf-xs">
+        <div class="flex-1 mb-2">
 
           <SfButton
-            class="color-sf-c-primary w-full sf-button"
+            class="w-full"
             :aria-disabled="false"
             type="button"
             aria-label="button"
@@ -134,7 +134,7 @@
         </div>
         <div class="flex-1 mb-sf-xs">
           <SfButton
-            class="color-sf-c-primary w-full sf-button"
+            class="w-full"
             :aria-disabled="false"
             type="button"
             aria-label="button"
@@ -145,7 +145,7 @@
         </div>
         <div class="flex-1 mb-sf-xs">
           <SfButton
-            class="sf-button w-full border-solid border-1 border-sf-c-primary"
+            class="w-full"
             :aria-disabled="false"
             type="button"
             @click="convertAndSaveCookies(false, false)"
@@ -159,7 +159,7 @@
     <SfButton
       v-else
       variant="secondary"
-      class="z-10 fixed bottom-sf-2xl xl:bottom-2 xl:left-auto xl:right-2 invisible xl:visible"
+      class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-2 invisible xl:visible"
       aria-label="Cookie control"
       @click="setHiddenState(false)"
     >
