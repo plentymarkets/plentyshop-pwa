@@ -95,7 +95,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      cookieGroups: cookieConfig,
+      cookieGroups: cookieConfig
     },
   },
   pwa: {

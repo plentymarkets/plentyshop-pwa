@@ -10,14 +10,6 @@ const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);
 };
 
-const convertToSaveableJson = (jsonList: any): any => {
-  return jsonList.map((group: any) => ({
-    [group.name]: group.cookies.map((cookie: any) => ({
-      [cookie.name]: cookie.accepted,
-    })),
-  }));
-};
-
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,
@@ -111,7 +103,15 @@ export const useCookieBar = (
         }
       });
     }
-    const toSave = convertToSaveableJson(cookieJson.value);
+
+    const convertToSaveableJson = (jsonList: any): any => {
+      return jsonList.map((group: any) => ({
+        [group.name]: group.cookies.map((cookie: any) => ({
+          [cookie.name]: cookie.accepted,
+        })),
+      }));
+    };
+    const toSave = convertToSaveableJson(cookieJson.value)
 
     saveCookies(toSave, consentCookie);
     bannerIsHidden.value = true;
