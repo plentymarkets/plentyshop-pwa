@@ -1,4 +1,4 @@
-import { Cookie, CookieGroup } from "./types";
+import { Cookie, CookieGroup, UseCookieReturn } from "./types";
 
 function checkIfScriptIsExternal(scriptName: string): boolean {
   return scriptName.startsWith('http');
@@ -9,14 +9,8 @@ export const useCookieBar = (
   defaultCookieKey: string,
   initCheckboxIndex: number,
   initialCookieJsonFromConfig: any
-): {
-  cookieJson: CookieGroup[];
-  bannerIsHidden: boolean;
-  convertAndSaveCookies: (setAllCookies: boolean, newStatus: boolean) => void;
-  defaultCheckboxIndex: number;
-  loadThirdPartyScripts: () => void;
-} => {
-  const bannerIsHidden = useState<boolean>('useCookieBar-bannerIsHidden', () => (false));
+): UseCookieReturn => {
+  const bannerIsHidden = ref(false);
   const defaultCheckboxIndex = initCheckboxIndex;
   const cookieJsonFromConfig = initialCookieJsonFromConfig;
   const cookieJson: Ref<CookieGroup[]> = ref(
@@ -32,8 +26,11 @@ export const useCookieBar = (
       }))
     }))
   );
-  console.log(consentCookie);
   const existingCookieInMemory = consentCookie;
+
+  function setHiddenState(state: boolean): void {
+    bannerIsHidden.value = state;
+  }
 
   function loadThirdPartyScripts(): void {
     if (!process.server) {
@@ -159,7 +156,8 @@ export const useCookieBar = (
 
   return {
     cookieJson: cookieJson.value,
-    bannerIsHidden: bannerIsHidden.value,
+    bannerIsHidden: computed(() => bannerIsHidden.value),
+    setHiddenState,
     convertAndSaveCookies,
     loadThirdPartyScripts,
     defaultCheckboxIndex

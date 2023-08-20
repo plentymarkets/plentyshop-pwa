@@ -1,8 +1,8 @@
 <template>
   <client-only>
     <div
-      v-if="!bannerIsHidden"
-      class="fixed font-sf-xl z-50 w-full xl:w-3/5 text-sf-c-text font-sf-secondary font-sf-medium xl:right-sf-sm bottom-0 xl:bottom-sf-sm bg-sf-c-light-lighten shadow-2xl p-10 bg-white"
+      v-if="!hideBanner"
+      class="fixed font-sf-xl z-50 w-full xl:w-3/5 text-sf-c-text font-sf-secondary font-sf-medium xl:right-2 bottom-0 xl:bottom-2 bg-sf-c-light-lighten shadow-2xl p-10 bg-white"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -20,16 +20,16 @@
         </div>
         <!-- checkboxes -->
         <div v-if="cookieJson" class="flex flex-col md:flex-row flex-wrap md:flex-nowrap ml-sf-xs justify-between items-center">
-          <div v-for="(cookieGroup, index) in cookieJson" :key="index" class="mr-sf-sm">
+          <div v-for="(cookieGroup, index) in cookieJson" :key="index" class="mr-sf-sm flex items-center">
             <SfCheckbox
-              id="checkbox"
+              :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
               :value="cookieGroup.accepted"
               :disabled="index === defaultCheckboxIndex"
               @change="setChildrenCheckboxes(cookieGroup, $event)"
             />
-            <label class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900" for="checkbox">
-            {{ cookieGroup.name }}
+            <label class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900" :for="cookieGroup.name">
+              {{ cookieGroup.name }}
             </label>
           </div>
         </div>
@@ -42,12 +42,14 @@
         >
           <div>
             <SfCheckbox
+              :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
               :disabled="groupIndex === defaultCheckboxIndex"
-              :name="cookieGroup.name"
-              :label="cookieGroup.name"
               @update:modelValue="setChildrenCheckboxes(cookieGroup, $event)"
             />
+            <label class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900" :for="cookieGroup.name">
+              {{ cookieGroup.name }}
+            </label>
             <div class="non-italic text-sf-normal text-sf-sm leading-6 my-2">
               {{ cookieGroup.description }}
             </div>
@@ -57,14 +59,16 @@
                 :key="cookieIndex"
                 class="mb-5"
               >
-                <div class="flex w-full mb-sf-2xs p-sf-xs bg-white">
+                <div class="flex w-full items-center">
                   <SfCheckbox
+                    :id="cookie.name"
                     v-model="cookie.accepted"
                     :disabled="groupIndex === defaultCheckboxIndex"
-                    :name="cookie.name"
-                    :label="cookie.name"
                     @update:modelValue="updateParentCheckbox(cookieGroup)"
                   />
+                  <label class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900" :for="cookieGroup.name">
+                    {{ cookie.name }}
+                  </label>
                 </div>
                 <div v-for="propKey in Object.keys(cookie)" :key="propKey">
                   <div
@@ -119,7 +123,6 @@
         <div class="flex-1 mb-sf-xs">
 
           <SfButton
-            v-e2e="'accept-all'"
             class="color-sf-c-primary w-full sf-button"
             :aria-disabled="false"
             type="button"
@@ -131,7 +134,6 @@
         </div>
         <div class="flex-1 mb-sf-xs">
           <SfButton
-            v-e2e="'reject-all'"
             class="color-sf-c-primary w-full sf-button"
             :aria-disabled="false"
             type="button"
@@ -143,7 +145,6 @@
         </div>
         <div class="flex-1 mb-sf-xs">
           <SfButton
-            v-e2e="'accept-selection'"
             class="sf-button w-full border-solid border-1 border-sf-c-primary"
             :aria-disabled="false"
             type="button"
@@ -155,31 +156,36 @@
       </div>
     </div>
     <!-- button to open cookie tab -->
-    <button
+    <SfButton
       v-else
-      v-e2e="'cookie-show-banner-button'"
-      class="color-sf-c-primary sf-button z-10 fixed bottom-sf-2xl xl:bottom-sf-xs xl:left-auto xl:right-sf-xs invisible xl:visible"
+      variant="secondary"
+      class="z-10 fixed bottom-sf-2xl xl:bottom-2 xl:left-auto xl:right-2 invisible xl:visible"
       aria-label="Cookie control"
-      @click="bannerIsHidden = false"
+      @click="setHiddenState(false)"
     >
-      <SfIcon icon="info_shield" size="xs" color="white" viewBox="0 0 24 24" :coverage="1" />
-    </button>
+      <SfIconCheckBox />
+    </SfButton>
   </client-only>
 </template>
 
 <script setup lang="ts">
 import { CookieGroup, Cookie } from '../../composables/useCookieBar/types';
-import { SfLink, SfButton, SfCheckbox } from '@storefront-ui/vue';
+import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
 
 const runtimeConfig = useRuntimeConfig();
 const consentCookie = useCookie('consent-cookie');
 console.log(consentCookie);
-const { cookieJson, bannerIsHidden, convertAndSaveCookies, defaultCheckboxIndex } = useCookieBar(
+const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defaultCheckboxIndex } = useCookieBar(
   useCookie('consent-cookie'),
   'consent-cookie',
   0,
   runtimeConfig.public.cookieGroups,
 );
+
+const hideBanner = computed(() => {
+  console.log(bannerIsHidden.value)
+  return bannerIsHidden.value;
+})
 const furtherSettingsOn = ref(false);
 const cookieGroups = ref(runtimeConfig.public.cookieGroups)
 

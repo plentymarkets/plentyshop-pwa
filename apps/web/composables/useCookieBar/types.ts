@@ -14,7 +14,8 @@ export interface Cookie {
 
   export interface UseCookieReturn {
     cookieJson: CookieGroup[];
-    bannerIsHidden: boolean;
+    bannerIsHidden: Ref<boolean>;
+    setHiddenState: (state: boolean) => void
     convertAndSaveCookies: (setAllCookies: boolean, newStatus: boolean) => void;
     defaultCheckboxIndex: number;
     loadThirdPartyScripts: () => void
