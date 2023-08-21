@@ -89,7 +89,19 @@ export const useCookieBar = (
       path: '/',
       maxAge: minimumOfAllMinimums
      }); */
+     console.log(cookieValue);
     useCookie.value = cookieValue;
+  }
+
+  function convertToSaveableJson(jsonList: any): string {
+    let toSave = [];
+
+    toSave = jsonList.map((group: any) => ({
+      [group.name]: group.cookies.map((cookie: any) => ({
+        [cookie.name]: cookie.accepted
+      }))
+    }));
+    return toSave;
   }
   function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): void {
     if (setAllCookies) {
@@ -103,14 +115,6 @@ export const useCookieBar = (
         }
       });
     }
-
-    const convertToSaveableJson = (jsonList: any): any => {
-      return jsonList.map((group: any) => ({
-        [group.name]: group.cookies.map((cookie: any) => ({
-          [cookie.name]: cookie.accepted,
-        })),
-      }));
-    };
     const toSave = convertToSaveableJson(cookieJson.value)
 
     saveCookies(toSave, consentCookie);
