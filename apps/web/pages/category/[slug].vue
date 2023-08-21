@@ -84,7 +84,7 @@ const updateTreeAndBreadcrumbs = () => {
 const handleQueryUpdate = async () => {
   await fetchProducts(generateSearchParams());
   return updateTreeAndBreadcrumbs();
-}
+};
 await getCategoryTree();
 await handleQueryUpdate();
 

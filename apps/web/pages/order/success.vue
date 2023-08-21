@@ -21,8 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 import { orderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { SfButton } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { data: orderData } = useMakeOrder();
