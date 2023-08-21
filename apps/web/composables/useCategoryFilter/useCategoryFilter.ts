@@ -40,7 +40,9 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const parts = route.fullPath.split('/');
     const categoryIndex = parts.indexOf('category');
-    const categorySlugs = parts.slice(categoryIndex + 1).filter((part) => !part.includes('?'));
+    const categorySlugs = parts
+      .slice(categoryIndex + 1)
+      .map((part) => (part.includes('?') ? part.split('?')[0] : part));
 
     return {
       categorySlugs: categorySlugs,
