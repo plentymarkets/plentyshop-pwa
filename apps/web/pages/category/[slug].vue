@@ -19,6 +19,7 @@
                     categoryTree,
                     parentCategory[parentCategory.length - 2],
                   ),
+                  count: categoryTreeGetters.getCount(parentCategory[parentCategory.length - 2]),
                 }
               : null
           "
