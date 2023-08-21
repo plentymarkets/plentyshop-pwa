@@ -26,6 +26,11 @@ jobs:
           node-version: '20'
           cache: 'yarn'
 
+      - name: Create yarnrc
+        run: |
+          cp .yarnrc.yml.example .yarnrc.yml
+          sed -i 's/<TOKEN>/${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}/' .yarnrc.yml
+
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
