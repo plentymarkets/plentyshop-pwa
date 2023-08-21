@@ -10,6 +10,14 @@ const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);
 };
 
+function convertToSaveableJson(jsonList: any): string {
+  return jsonList.map((group: any) => ({
+    [group.name]: group.cookies.map((cookie: any) => ({
+      [cookie.name]: cookie.accepted,
+    })),
+  }));
+}
+
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,
@@ -54,12 +62,16 @@ export const useCookieBar = (
                       credentials: 'same-origin',
                     })
                       .then((response) => response.text())
-                      .then((text) => (0, eval)(text));
+                      .then((text) => (0, eval)(text))
+                      .catch(() => {
+                        return;
+                      });
                   } else {
                     (0, eval)(script);
                   }
-                } catch {
+                } catch (error: any) {
                   // @TODO error handling
+                  return new Error(error);
                 }
               });
             }
@@ -84,25 +96,14 @@ export const useCookieBar = (
   function saveCookies(cookieValue: string, useCookie: any): void {
     const minimumOfAllMinimums = 60 * 60 * 24 * getMinimumLifeSpan();
 
-    // TODO: set minimum maxAge
+    // @TODO [2023-28-08]: set minimum maxAge for cookie
     /* const cookie = useCookie(key, {
       path: '/',
       maxAge: minimumOfAllMinimums
      }); */
-     console.log(cookieValue);
     useCookie.value = cookieValue;
   }
 
-  function convertToSaveableJson(jsonList: any): string {
-    let toSave = [];
-
-    toSave = jsonList.map((group: any) => ({
-      [group.name]: group.cookies.map((cookie: any) => ({
-        [cookie.name]: cookie.accepted
-      }))
-    }));
-    return toSave;
-  }
   function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): void {
     if (setAllCookies) {
       // accept all or reject all case (update cookieJson and checkboxes from ui)
@@ -115,7 +116,7 @@ export const useCookieBar = (
         }
       });
     }
-    const toSave = convertToSaveableJson(cookieJson.value)
+    const toSave = convertToSaveableJson(cookieJson.value);
 
     saveCookies(toSave, consentCookie);
     bannerIsHidden.value = true;
