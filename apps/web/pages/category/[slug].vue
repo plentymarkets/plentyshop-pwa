@@ -11,18 +11,7 @@
         <CategoryTree
           v-if="category?.children?.length || parentCategory.length > 1"
           :categories="category?.children ?? []"
-          :parent="
-            parentCategory.length > 1
-              ? {
-                  name: categoryTreeGetters.getName(parentCategory[parentCategory.length - 2]),
-                  href: categoryTreeGetters.generateCategoryLink(
-                    categoryTree,
-                    parentCategory[parentCategory.length - 2],
-                  ),
-                  count: categoryTreeGetters.getCount(parentCategory[parentCategory.length - 2]),
-                }
-              : null
-          "
+          :parent="getParentCategory()"
         />
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
@@ -55,10 +44,30 @@ const parentCategory = ref(
   categoryTreeGetters.findCategoriesPathByCategoryId(categoryTree.value, category.value?.id ?? 0),
 );
 
+const getParentCategory = () => {
+  if (parentCategory.value.length > 1) {
+    return {
+      name: categoryTreeGetters.getName(parentCategory.value[parentCategory.value.length - 2]),
+      href: categoryTreeGetters.generateCategoryLink(
+        categoryTree.value,
+        parentCategory.value[parentCategory.value.length - 2],
+      ),
+      count: categoryTreeGetters.getCount(parentCategory.value[parentCategory.value.length - 2]),
+    };
+  }
+
+  return null;
+};
+
 const generateSearchParams = () => {
   urlParams.value = getFacetsFromURL();
   category.value = categoryTreeGetters.findCategoryBySlugs(categoryTree.value, urlParams.value.categorySlugs || ['']);
   urlParams.value.categoryId = category.value?.id?.toString();
+
+  return urlParams.value;
+};
+
+const updateTreeAndBreadcrumbs = () => {
   parentCategory.value = categoryTreeGetters.findCategoriesPathByCategoryId(
     categoryTree.value,
     category.value?.id ?? 0,
@@ -69,16 +78,16 @@ const generateSearchParams = () => {
     : [{ name: t('allProducts'), link: '#' }];
 
   breadcrumbs.value.unshift({ name: t('home'), link: '/' });
-
-  return urlParams.value;
 };
 
 await getCategoryTree();
+updateTreeAndBreadcrumbs();
 await fetchProducts(generateSearchParams());
 
 watch(
   () => route.query,
   async () => {
+    updateTreeAndBreadcrumbs();
     await fetchProducts(generateSearchParams());
   },
 );

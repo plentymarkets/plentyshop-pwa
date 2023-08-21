@@ -33,19 +33,20 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
   return mergedFilters;
 };
 
+const getCategorySlugsFromPath = (path: string): string[] => {
+  const parts = path.split('/');
+  const categoryIndex = parts.indexOf('category');
+
+  return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
+};
+
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const route = useRoute();
   const router = useRouter();
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
-    const parts = route.fullPath.split('/');
-    const categoryIndex = parts.indexOf('category');
-    const categorySlugs = parts
-      .slice(categoryIndex + 1)
-      .map((part) => (part.includes('?') ? part.split('?')[0] : part));
-
     return {
-      categorySlugs: categorySlugs,
+      categorySlugs: getCategorySlugsFromPath(route.fullPath),
       categorySlug: '',
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
