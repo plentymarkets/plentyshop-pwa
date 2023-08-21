@@ -4,7 +4,6 @@ import {
   SfIconFacebook,
   SfIconHelp,
   SfIconInstagram,
-  SfIconPinterest,
   SfIconTwitter,
   SfIconYoutube,
 } from '@storefront-ui/vue';
@@ -118,27 +117,22 @@ export const categories = [
 export const socialMedia = [
   {
     label: 'Facebook',
-    link: '/',
+    link: 'https://www.facebook.com/plentymarkets',
     icon: SfIconFacebook,
   },
   {
     label: 'Twitter',
-    link: '/',
+    link: 'https://twitter.com/plentymarkets',
     icon: SfIconTwitter,
   },
   {
     label: 'Instagram',
-    link: '/',
+    link: 'https://www.instagram.com/plentysystems',
     icon: SfIconInstagram,
   },
   {
-    label: 'Pinterest',
-    link: '/',
-    icon: SfIconPinterest,
-  },
-  {
     label: 'Youtube',
-    link: '/',
+    link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg',
     icon: SfIconYoutube,
   },
 ];
@@ -172,4 +166,4 @@ export const bottomLinks = [
     link: '/',
   },
 ];
-export const companyName = `© ${new Date().getFullYear()} Vue Storefront`;
+export const companyName = `© PLENTYSYSTEMS AG ${new Date().getFullYear()}`;
