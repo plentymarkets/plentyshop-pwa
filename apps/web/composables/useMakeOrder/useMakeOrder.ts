@@ -18,7 +18,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
   /**
    * @description Function for creating an order
    * @example
-   * getShippingMethods();
+   * createOrder(params: MakeOrderParams);
    */
   const createOrder: createOrder = async (params: MakeOrderParams) => {
     state.value.loading = true;
