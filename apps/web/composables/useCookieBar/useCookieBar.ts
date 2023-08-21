@@ -131,7 +131,7 @@ export const useCookieBar = (
       });
 
       cookieJson.value[index].accepted = atLeastOneIsTrue;
-      bannerIsHidden.value = atLeastOneIsTrue ?? bannerIsHidden.value;
+      bannerIsHidden.value = atLeastOneIsTrue || bannerIsHidden.value;
     });
   }
   // Mark default checkbox group as true
