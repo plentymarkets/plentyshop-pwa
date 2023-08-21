@@ -29,7 +29,7 @@
               v-model="cookieGroup.accepted"
               :value="cookieGroup.accepted"
               :disabled="index === defaultCheckboxIndex"
-              @change="setChildrenCheckboxes(cookieGroup, $event)"
+              @update:model-value="setChildrenCheckboxes(cookieGroup, $event)"
             />
             <label
               class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
