@@ -33,6 +33,20 @@
           :shipping-methods="shippingMethods"
           @update:shipping-method="handleShippingMethodUpdate($event)"
         />
+        <label
+          v-if="selectedMethod && shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)"
+          class="md:px-4 my-6 md:col-span-3 flex items-start gap-2 cursor-pointer"
+        >
+          <SfCheckbox
+            :value="shippingPrivacyAgreement"
+            class="mt-1"
+            name="Shipping Privacy"
+            :selected="shippingPrivacyAgreement"
+            @change="changeHint"
+          />
+          {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+        </label>
+
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -78,7 +92,8 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { useAdditionalInformation } from '~/composables/useAdditionalInformation';
 
 definePageMeta({
   layout: false,
@@ -91,7 +106,10 @@ const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { shippingPrivacyAgreement, setShippingPrivacyAgreement, doAdditionalInformation } = useAdditionalInformation();
 const router = useRouter();
+
+
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -106,10 +124,25 @@ await fetchPaymentMethods();
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 
+const selectedMethod = ref(
+  shippingMethodData.value.list.find(
+    (method) => method.parcelServicePresetId === Number(shippingProviderGetters.getShippingProfileId(cart.value)),
+));
+
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
   await fetchPaymentMethods();
   await getCart();
+
+  await setShippingPrivacyAgreement(false);
+
+  const selected = shippingMethodData.value.list.find(
+    (method) => method.parcelServicePresetId === Number(shippingMethodId),
+  );
+
+  if (selected) {
+    selectedMethod.value = selected;
+  }
 };
 
 const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
@@ -120,8 +153,7 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 const order = async () => {
   const data = await createOrder({
     paymentId: paymentMethodData.value.selected,
-    // eslint-disable-next-line unicorn/expiring-todo-comments
-    shippingPrivacyHintAccepted: true, // TODO
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
   if (data?.order?.id) {
@@ -129,5 +161,13 @@ const order = async () => {
   } else {
     router.push('/order/failed');
   }
+};
+
+const parcelServiceInformation = computed(() => {
+  selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
+});
+
+const changeHint = (event: Event) => {
+  setShippingPrivacyAgreement(event.target.checked);
 };
 </script>
