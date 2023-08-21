@@ -9,12 +9,12 @@
     >
       <template #sidebar>
         <CategoryTree
-          v-if="category.children?.length || parentCategory.length > 1"
-          :categories="category.children ?? []"
+          v-if="category?.children?.length || parentCategory.length > 1"
+          :categories="category?.children ?? []"
           :parent="
             parentCategory.length > 1
               ? {
-                  name: categoryGetters.getCategoryName(parentCategory[parentCategory.length - 2]),
+                  name: categoryTreeGetters.getName(parentCategory[parentCategory.length - 2]),
                   href: categoryTreeGetters.generateCategoryLink(
                     categoryTree,
                     parentCategory[parentCategory.length - 2],
