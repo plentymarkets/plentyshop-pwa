@@ -85,9 +85,11 @@
   "backToCart": "Back to My Cart",
   "back": "Back",
   "placeOrder": "Place order and pay",
-  "termsInfo": "By placing my order, you agree to our {terms} and our {privacyPolicy}",
+  "termsInfo": "Our {terms}, {cancellation} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
+  "cancellation": "Cancellation rights",
   "privacyPolicy": "Privacy Policy",
+  "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
   "contactInfo": {
     "heading": "Contact Information",

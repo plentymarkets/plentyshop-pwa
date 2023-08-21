@@ -36,6 +36,36 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <p class="text-sm mx-4 md:pb-0">
+          <SfCheckbox v-model="termsAccepted" class="inline-block mr-2" />
+          <i18n-t keypath="termsInfo">
+            <template #terms>
+              <SfLink
+                href="#"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('termsAndConditions') }}
+              </SfLink>
+            </template>
+            <template #cancellation>
+              <SfLink
+                href="#"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('cancellation') }}
+              </SfLink>
+            </template>
+            <template #privacyPolicy>
+              <SfLink
+                href="#"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('privacyPolicy') }}
+              </SfLink>
+            </template>
+          </i18n-t>
+          <div v-if="showTermsError" class="text-red-500 text-sm mt-2">{{ $t('termsRequired') }}</div>
+        </p>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <SfButton
@@ -50,26 +80,6 @@
             {{ $t('placeOrder') }}
           </span>
         </SfButton>
-        <p class="text-sm text-center mt-4 pb-4 md:pb-0">
-          <i18n-t keypath="termsInfo">
-            <template #terms>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('termsAndConditions') }}
-              </SfLink>
-            </template>
-            <template #privacyPolicy>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('privacyPolicy') }}
-              </SfLink>
-            </template>
-          </i18n-t>
-        </p>
       </OrderSummary>
     </div>
   </NuxtLayout>
@@ -78,7 +88,7 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,
@@ -92,6 +102,9 @@ const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const router = useRouter();
+
+const termsAccepted = ref(false);
+const showTermsError = ref(false);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -118,6 +131,11 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 };
 
 const order = async () => {
+  showTermsError.value = !termsAccepted.value;
+  if (showTermsError.value) {
+      return;
+  }
+
   const data = await createOrder({
     paymentId: paymentMethodData.value.selected,
     // eslint-disable-next-line unicorn/expiring-todo-comments
