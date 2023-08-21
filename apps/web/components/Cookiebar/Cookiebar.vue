@@ -107,7 +107,7 @@
                 {{ $t('CookieBar.More information') }}
               </div>
             </SfLink>
-            <SfLink v-else type="button" size="sm" @click="cookieGroup.showMore = false" class="sf-button--text text-gray-100">
+            <SfLink v-else size="sm" @click="cookieGroup.showMore = false" class="sf-button--text text-gray-100">
               {{ $t('CookieBar.Show less') }}
             </SfLink>
           </div>
