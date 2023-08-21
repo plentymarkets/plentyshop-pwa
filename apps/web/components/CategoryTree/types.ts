@@ -5,7 +5,7 @@ export type CategoryTreeItem = {
 };
 
 export type CategoryTreeProps = {
-  parent?: CategoryTreeItem;
+  parent?: CategoryTreeItem | null;
   categories: CategoryTreeItem[];
 };
 
