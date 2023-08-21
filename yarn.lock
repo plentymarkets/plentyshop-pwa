@@ -2526,24 +2526,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/core-base@npm:9.3.0-beta.24":
-  version: 9.3.0-beta.24
-  resolution: "@intlify/core-base@npm:9.3.0-beta.24"
+"@intlify/core-base@npm:9.3.0-beta.26":
+  version: 9.3.0-beta.26
+  resolution: "@intlify/core-base@npm:9.3.0-beta.26"
   dependencies:
-    "@intlify/devtools-if": 9.3.0-beta.24
-    "@intlify/message-compiler": 9.3.0-beta.24
-    "@intlify/shared": 9.3.0-beta.24
-    "@intlify/vue-devtools": 9.3.0-beta.24
-  checksum: 4af35b7a12007386031c56a7e6ea04961dcf1387fee4fb2d78a924f3e251b7ee70fb009f7c073d95778f8d457be37361c2c72357d71831170e51a223a8ddce43
+    "@intlify/devtools-if": 9.3.0-beta.26
+    "@intlify/message-compiler": 9.3.0-beta.26
+    "@intlify/shared": 9.3.0-beta.26
+    "@intlify/vue-devtools": 9.3.0-beta.26
+  checksum: fd56a0abf7b5631ff7f5f334cfc5553881181f9c79b6e2788f4066171c48076c79399771ad36ee7c48159139453189283eab96678cf8479d342c8629b4378d15
   languageName: node
   linkType: hard
 
-"@intlify/devtools-if@npm:9.3.0-beta.24":
-  version: 9.3.0-beta.24
-  resolution: "@intlify/devtools-if@npm:9.3.0-beta.24"
+"@intlify/devtools-if@npm:9.3.0-beta.26":
+  version: 9.3.0-beta.26
+  resolution: "@intlify/devtools-if@npm:9.3.0-beta.26"
   dependencies:
-    "@intlify/shared": 9.3.0-beta.24
-  checksum: ff9c1e18c25724033211c60f6d33983d06d7edda00b34c40f8d68623e7f9a413f91dd72d1d12c2e4d00b50762c386f3313dd49b4545afcc85fc7dc7274a74da9
+    "@intlify/shared": 9.3.0-beta.26
+  checksum: de122ed7b241518baf23e24d543c7c66da7c3d1b4616edfece715591b4e7c2e21d81c7626635c6da486b08e2ab3443fa3d38d4560aacb8fa82559a68ae00bc64
   languageName: node
   linkType: hard
 
@@ -2557,6 +2557,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@intlify/message-compiler@npm:9.3.0-beta.26":
+  version: 9.3.0-beta.26
+  resolution: "@intlify/message-compiler@npm:9.3.0-beta.26"
+  dependencies:
+    "@intlify/shared": 9.3.0-beta.26
+    source-map-js: ^1.0.2
+  checksum: 95e3b27840cf0f6a6703bca461924a698a6f0088b642f927573870941d69ceb5216fc9ff5ae54edc075319fb0ce91745429a3c0d0ff64c282b0d191ccdd36356
+  languageName: node
+  linkType: hard
+
 "@intlify/shared@npm:9.3.0-beta.24":
   version: 9.3.0-beta.24
   resolution: "@intlify/shared@npm:9.3.0-beta.24"
@@ -2564,7 +2574,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/shared@npm:next":
+"@intlify/shared@npm:9.3.0-beta.26, @intlify/shared@npm:next":
   version: 9.3.0-beta.26
   resolution: "@intlify/shared@npm:9.3.0-beta.26"
   checksum: bbf0c8c461888f8794ae4610829ceb20eacff253608f9e87e0f476a1318b9f3cea3e2c46c6cbd976afdee38a9fe5291dc91ab41581cebaf6cf43cab135a474cd
@@ -2602,13 +2612,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@intlify/vue-devtools@npm:9.3.0-beta.24":
-  version: 9.3.0-beta.24
-  resolution: "@intlify/vue-devtools@npm:9.3.0-beta.24"
+"@intlify/vue-devtools@npm:9.3.0-beta.26":
+  version: 9.3.0-beta.26
+  resolution: "@intlify/vue-devtools@npm:9.3.0-beta.26"
   dependencies:
-    "@intlify/core-base": 9.3.0-beta.24
-    "@intlify/shared": 9.3.0-beta.24
-  checksum: 44adb395dba9018383a513bee4e56aaf7dfa34b61681195ed0d1af427848daf9363c449e9d2fa8ca9602ae9219086de8a9a271074ce73443b595eb351bab3840
+    "@intlify/core-base": 9.3.0-beta.26
+    "@intlify/shared": 9.3.0-beta.26
+  checksum: 96419c5b9374ce717f5c6dfd861ead0c99ba11ad235ff18525a6c3b7b01128930359cf2012b390beed3c3992beb1ff300f8b4fcc2508e80d6d9e5324f771dbc1
   languageName: node
   linkType: hard
 
@@ -3093,7 +3103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.4.1, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
+"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
   version: 3.6.5
   resolution: "@nuxt/kit@npm:3.6.5"
   dependencies:
@@ -3244,14 +3254,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/i18n@npm:8.0.0-rc.1":
-  version: 8.0.0-rc.1
-  resolution: "@nuxtjs/i18n@npm:8.0.0-rc.1"
+"@nuxtjs/i18n@npm:8.0.0-rc.3":
+  version: 8.0.0-rc.3
+  resolution: "@nuxtjs/i18n@npm:8.0.0-rc.3"
   dependencies:
-    "@intlify/shared": 9.3.0-beta.24
+    "@intlify/shared": 9.3.0-beta.26
     "@intlify/unplugin-vue-i18n": ^0.12.2
     "@mizchi/sucrase": ^4.1.0
-    "@nuxt/kit": ^3.4.1
+    "@nuxt/kit": ^3.6.5
     "@vue/compiler-sfc": ^3.3.4
     cookie-es: ^1.0.0
     debug: ^4.3.4
@@ -3267,9 +3277,9 @@ __metadata:
     ufo: ^1.1.2
     unplugin: ^1.3.2
     unstorage: ^1.5.0
-    vue-i18n: 9.3.0-beta.24
-    vue-i18n-routing: ^0.13.1
-  checksum: 1f41602bbdd6347834c1c8de172ce89b4d1efa88f041c2d22d992245aed51ed7875126bd8a66e46434e97504112b7de813d4feda8f57985f644b443f68bf351f
+    vue-i18n: 9.3.0-beta.26
+    vue-i18n-routing: ^0.13.3
+  checksum: 941ca0380421e80060aef5f4e001e26cb8ecb58edeb9701213a53babf6bf942728cdce26f3d43ff001406a5cf84166e5e3203e0f66588e2bd951de916baa55df
   languageName: node
   linkType: hard
 
@@ -3883,8 +3893,8 @@ __metadata:
   linkType: hard
 
 "@storefront-ui/vue@npm:canary":
-  version: 2.6.0-f8fc887
-  resolution: "@storefront-ui/vue@npm:2.6.0-f8fc887"
+  version: 2.6.0-d57c3cf
+  resolution: "@storefront-ui/vue@npm:2.6.0-d57c3cf"
   dependencies:
     "@floating-ui/vue": ^0.2.1
     "@storefront-ui/shared": 2.5.0
@@ -3894,7 +3904,7 @@ __metadata:
     tabbable: ^6.1.1
   peerDependencies:
     vue: ^3.2.47
-  checksum: b2c24899729d5014b47b1612588eed0fb33326a55a83f6f972619d26859eb4560d04e1cd6bcc5867247927582087c698a556243d66e01fc885aaaae2f93113fc
+  checksum: d4efa7f014806a5162a754ed899fd17a5711ee88d939fbf58e8badc0008535eb024bea28d951a780007f1256b66a34dcc83dc2ca18adc27e3c7784a40300f143
   languageName: node
   linkType: hard
 
@@ -4160,9 +4170,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^16.18.39":
-  version: 16.18.40
-  resolution: "@types/node@npm:16.18.40"
-  checksum: a683930491b4fd7cb2dc7684e32bbeedc4a83fb1949a7b15ea724fbfaa9988cec59091f169a3f1090cb91992caba8c1a7d50315b2c67c6e2579a3788bb09eec4
+  version: 16.18.41
+  resolution: "@types/node@npm:16.18.41"
+  checksum: b12650d8e4289edafcf0453c8a66c00d6397d465a48b1c683babba4f16f92a6418f678e98a85751e3fef78d23c2b07f641df8da14bf5428ad8282b57b2695243
   languageName: node
   linkType: hard
 
@@ -4653,30 +4663,30 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@volar/language-core@npm:1.10.0, @volar/language-core@npm:~1.10.0":
-  version: 1.10.0
-  resolution: "@volar/language-core@npm:1.10.0"
+"@volar/language-core@npm:1.10.1, @volar/language-core@npm:~1.10.0":
+  version: 1.10.1
+  resolution: "@volar/language-core@npm:1.10.1"
   dependencies:
-    "@volar/source-map": 1.10.0
-  checksum: 5fd5ffe5f0edad9d78a3b524851fa6012836f1fb926ae6c64dc9f2aa4bfdf0470328ccea56b5509ebbc44d8781a3740640cbdea513c2467c9abea8eb0445aa42
+    "@volar/source-map": 1.10.1
+  checksum: ff6b0f6d50fc567fcd20a4bf7459cb372735149e0bb85e3d0bc202e158ca5dada3b29d2c43bffb59a0a40e8e67932530eacfbdef209bfd12c63d354220e660e4
   languageName: node
   linkType: hard
 
-"@volar/source-map@npm:1.10.0, @volar/source-map@npm:~1.10.0":
-  version: 1.10.0
-  resolution: "@volar/source-map@npm:1.10.0"
+"@volar/source-map@npm:1.10.1, @volar/source-map@npm:~1.10.0":
+  version: 1.10.1
+  resolution: "@volar/source-map@npm:1.10.1"
   dependencies:
     muggle-string: ^0.3.1
-  checksum: 3a473aa16fb3d7de6b5ee827908b92ff5ea8286fad23e1bf6ef515999b9dbc742a8d4b425446851e0f14ae074b2a268544a386b63bbe800f50914e32407f22d8
+  checksum: a6465f72b026f70ee388d1a01665cf6a35809c1ff9ce9d837805ff2da1156885e62c9541149e4a95c64f13315501a248116a441c0878ed10b6869aecc9853359
   languageName: node
   linkType: hard
 
 "@volar/typescript@npm:~1.10.0":
-  version: 1.10.0
-  resolution: "@volar/typescript@npm:1.10.0"
+  version: 1.10.1
+  resolution: "@volar/typescript@npm:1.10.1"
   dependencies:
-    "@volar/language-core": 1.10.0
-  checksum: cd49932bca21d3d1186a9eedbfeba215372e9ca546774fa94225670f5b571e5d580b76b1dae59aba9012c006c5422c2648517206e95cd100cfb48c8a551dbe00
+    "@volar/language-core": 1.10.1
+  checksum: 337d1f490c008994f2e09168d52f0f45dfa4b00dfa1dd90353ce56f7f5f4c605f32dd62a0407fb3ca5c62578a0a181bd4d971a7d32bb2bb87b85e19e0e9125f3
   languageName: node
   linkType: hard
 
@@ -4757,20 +4767,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/middleware@npm:3.3.1":
-  version: 3.3.1
-  resolution: "@vue-storefront/middleware@npm:3.3.1"
+"@vue-storefront/middleware@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@vue-storefront/middleware@npm:3.4.0"
   dependencies:
     consola: ^2.15.3
     cookie-parser: ^1.4.6
     cors: ^2.8.5
     express: ^4.18.1
     helmet: ^5.1.1
-  checksum: ffb415d5a07897f7cebc97c7092685785ce4400e1c633caa0af04cc4a80b79b87d46ab0134b571f261ba3bb525a0d19dba8b464fc902a5c65b02cc412a69c2b6
+  checksum: 207c1a0aa142ceb58d814a13f76b3e5d8b3ca2c436c121f9deecb3053545f51dd702cd9fd41be0015a0f41975e4e67534a4ea6d1ec7ee4e8f8b917501e6d3584
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.0.1":
+"@vue-storefront/sdk@npm:^1.0.1, @vue-storefront/sdk@npm:~1.1.2":
   version: 1.1.2
   resolution: "@vue-storefront/sdk@npm:1.1.2"
   dependencies:
@@ -4780,27 +4790,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:~1.0.1":
-  version: 1.0.1
-  resolution: "@vue-storefront/sdk@npm:1.0.1"
-  checksum: 420ed48cd962f92011d9606fa42cd358ccd509cd0418180bb7af9e13f5b8f29094c182502a51b3b12bb7c2e1ecb54ec9d0a12f7036e22249821cb431dcb29539
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/storefront-boilerplate-sdk@npm:~0.1.0":
-  version: 0.1.0
-  resolution: "@vue-storefront/storefront-boilerplate-sdk@npm:0.1.0"
+"@vue-storefront/storefront-boilerplate-sdk@npm:~0.2.0":
+  version: 0.2.0
+  resolution: "@vue-storefront/storefront-boilerplate-sdk@npm:0.2.0"
   dependencies:
-    "@vue-storefront/sdk": ~1.0.1
+    "@vue-storefront/sdk": ~1.1.2
     axios: ^0.27.2
-  checksum: 6a000160727ea3d76f30b9e7b03b452552f299e60ec1cda5eb8d62409efc37ab06e8f89361b3de866e893cf55315b4ff097e4145e874bb3fe9350e7c55b9f92d
+  checksum: d1e2797ff5e44dac4b323fe56e6655db766769c2c7c09e70d6d1137ed31f432df4196e7ffd659805a729ab386bc28c5851c9f7b4f22075916cc63ea7c918ef65
   languageName: node
   linkType: hard
 
-"@vue-storefront/unified-data-model@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "@vue-storefront/unified-data-model@npm:0.3.0"
-  checksum: 5540ff5638626afc6b054399f33c52bb9eda0504b28c04d4d0241464a0c69b180f5ff5dd3c14b81e6ab5eda22e61dce73d30b8aafea8ce4a526f534f2f317a6f
+"@vue-storefront/unified-data-model@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@vue-storefront/unified-data-model@npm:0.6.0"
+  checksum: e479161866ffb22a149849df83729e7f41e6bda66969cf0fe71715023e1bba21d8c7290f97e234aba8b1e85de163d114af373e649bfc8265735031a5e3567a63
   languageName: node
   linkType: hard
 
@@ -8401,9 +8404,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.477":
-  version: 1.4.494
-  resolution: "electron-to-chromium@npm:1.4.494"
-  checksum: 95f72d22e0b7c27b79999d70a91201a4b23ad63f00c56adf89a66712a53887f0a4f153ed067d7027556354056642f44820615bf5a3bb1625795847fe58fd4e8e
+  version: 1.4.495
+  resolution: "electron-to-chromium@npm:1.4.495"
+  checksum: b076b1f5ef61f45ca03f4dce47ec280c705405b0cfd3741cc791ef0172a73122846bdf4bddddc4120dece693166e17fe0d6efc847664ecc5852fbec4df9c3153
   languageName: node
   linkType: hard
 
@@ -11766,11 +11769,11 @@ __metadata:
   linkType: hard
 
 "jiti@npm:^1.18.2, jiti@npm:^1.19.1":
-  version: 1.19.1
-  resolution: "jiti@npm:1.19.1"
+  version: 1.19.2
+  resolution: "jiti@npm:1.19.2"
   bin:
     jiti: bin/jiti.js
-  checksum: fdf55e315f9e81c04ae902416642062851d92c6cdcc17a59d5d1d35e1a0842e4e79be38da86613c5776fa18c579954542a441b93d1c347a50137dee2e558cbd0
+  checksum: 6a49757d176f3365926e082538f58fb91803ba1b789faf2fa7375f3ba7e2ae151cd2f1a736dcb8e2154539db5e7e7d94b375d36d99593d6b50833ba482a9b448
   languageName: node
   linkType: hard
 
@@ -15370,9 +15373,9 @@ __metadata:
   linkType: hard
 
 "radix3@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "radix3@npm:1.0.1"
-  checksum: 042e11588464ca444a663f78c2aad11eb35533a26d08a56a53786fd60ddb20a058c720d8f66cad4f010859493753f29ac36aaa47d122b6459675c68a3f74928a
+  version: 1.1.0
+  resolution: "radix3@npm:1.1.0"
+  checksum: e5e6ed8fcf68be4d124bca4f7da7ba0fc7c5b6f9e98bc3f4424459c45d50f1f92506c5f7f8421b5cfee5823c524a4a2cef416053e88845813ce9fc9c7086729a
   languageName: node
   linkType: hard
 
@@ -16160,15 +16163,15 @@ __metadata:
   linkType: hard
 
 "sass@npm:^1.64.1":
-  version: 1.65.1
-  resolution: "sass@npm:1.65.1"
+  version: 1.66.0
+  resolution: "sass@npm:1.66.0"
   dependencies:
     chokidar: ">=3.0.0 <4.0.0"
     immutable: ^4.0.0
     source-map-js: ">=0.6.2 <2.0.0"
   bin:
     sass: sass.js
-  checksum: 33e325fc80cd07489992e0814cd4929496f87493ffe78c423c2dbafa5746a574e6f3bde20c2a3e4ea47b16ee3d6bc5afcf1d36b405227b829d6c4c9ddcc7f8e2
+  checksum: ae292e6a41a8812c0206c528885969e2f6f35870397e6d5bc33477927fd09faffda196aefe2cfe49e0c57f1448129b522f845bb134f3b6a131b184e3be86cf92
   languageName: node
   linkType: hard
 
@@ -16325,7 +16328,7 @@ __metadata:
   resolution: "server@workspace:apps/server"
   dependencies:
     "@types/express": ^4.17.13
-    "@vue-storefront/middleware": 3.3.1
+    "@vue-storefront/middleware": 3.4.0
     consola: ^2.15.3
     nodemon: ^2.0.19
     ts-node-dev: ^2.0.0
@@ -16798,9 +16801,9 @@ __metadata:
   linkType: hard
 
 "std-env@npm:^3.3.3":
-  version: 3.3.3
-  resolution: "std-env@npm:3.3.3"
-  checksum: 6665f6d8bd63aae432d3eb9abbd7322847ad0d902603e6dce1e8051b4f42ceeb4f7f96a4faf70bb05ce65ceee2dc982502b701575c8a58b1bfad29f3dbb19f81
+  version: 3.4.0
+  resolution: "std-env@npm:3.4.0"
+  checksum: 8017251c1e82f9b0bfd519a1e29cf3fce3ae4df821c1eb170da03926e12092f033b28ade984a771534d7cac3b2ed75795949aee2ce3ef2e10988cc46ef39b530
   languageName: node
   linkType: hard
 
@@ -18954,7 +18957,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-i18n-routing@npm:^0.13.1":
+"vue-i18n-routing@npm:^0.13.3":
   version: 0.13.3
   resolution: "vue-i18n-routing@npm:0.13.3"
   dependencies:
@@ -18984,17 +18987,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-i18n@npm:9.3.0-beta.24":
-  version: 9.3.0-beta.24
-  resolution: "vue-i18n@npm:9.3.0-beta.24"
+"vue-i18n@npm:9.3.0-beta.26":
+  version: 9.3.0-beta.26
+  resolution: "vue-i18n@npm:9.3.0-beta.26"
   dependencies:
-    "@intlify/core-base": 9.3.0-beta.24
-    "@intlify/shared": 9.3.0-beta.24
-    "@intlify/vue-devtools": 9.3.0-beta.24
+    "@intlify/core-base": 9.3.0-beta.26
+    "@intlify/shared": 9.3.0-beta.26
+    "@intlify/vue-devtools": 9.3.0-beta.26
     "@vue/devtools-api": ^6.5.0
   peerDependencies:
     vue: ^3.0.0
-  checksum: 534dd13479e9a22f5670da6574ad4f0d5284ae027adf0d65de507e3fb98414f90c4ec7c7a31f57213f690e711c9286445c0405cd81c4b74e2712d1f52d4cf4cf
+  checksum: ad7f36cf29141387dfbd4a83fc1f6777142d57e098eacb7c9191c07cdc190f1baeaeff68ee9ef902147f05b3a58eccb01bb2d8b44c707d5667b01ebb71e4d096
   languageName: node
   linkType: hard
 
@@ -19085,7 +19088,7 @@ __metadata:
     "@nuxt/devtools": latest
     "@nuxt/image": ^1.0.0-rc.1
     "@nuxtjs/google-fonts": ^3.0.1
-    "@nuxtjs/i18n": 8.0.0-rc.1
+    "@nuxtjs/i18n": 8.0.0-rc.3
     "@nuxtjs/tailwindcss": ^6.8.0
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.3.1
@@ -19095,8 +19098,8 @@ __metadata:
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/sdk": ^1.0.1
-    "@vue-storefront/storefront-boilerplate-sdk": ~0.1.0
-    "@vue-storefront/unified-data-model": ^0.3.0
+    "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
+    "@vue-storefront/unified-data-model": ^0.6.0
     "@vue/test-utils": ^2.4.0
     "@vueuse/core": ^10.3.0
     happy-dom: ^9.20.3
