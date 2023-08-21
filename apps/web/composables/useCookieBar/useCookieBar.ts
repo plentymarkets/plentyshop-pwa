@@ -18,6 +18,7 @@ function convertToSaveableJson(jsonList: any): string {
   }));
 }
 
+/* eslint-disable sonarjs/cognitive-complexity */
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,
