@@ -1,8 +1,17 @@
 name: Add zip file to S3 bucket
 
 on:
-  release:
-    types: [published]
+  # release:
+    # types: [published]
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: choice
+        options:
+          - develop
+        description: 'Choose branch for release'
+        required: true
+        default: 'develop'
 
 jobs:
   install-and-build-dependencies:
