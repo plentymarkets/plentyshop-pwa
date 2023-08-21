@@ -87,7 +87,7 @@
                   <ul class="mt-2">
                     <li v-for="child in node.children" :key="child.id">
                       <SfListItem
-                        v-if="categoryTreeGetters.getCategoryDetails(child) !== null"
+                        v-if="categoryTreeGetters.getName(child)"
                         :tag="NuxtLink"
                         size="sm"
                         :href="generateCategoryLink(child)"
@@ -207,15 +207,8 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   }
 };
 
-const generateCategoryLink = (node: CategoryTreeItem): string => {
-  const pathWay = categoryTreeGetters.findCategoryPathById(categories.value, node.id);
-  let path = '/category';
-
-  for (const category of pathWay) {
-    path += `/${categoryTreeGetters.getSlug(category)}`;
-  }
-
-  return path;
+const generateCategoryLink = (category: CategoryTreeItem) => {
+  return categoryTreeGetters.generateCategoryLink(categories.value, category);
 };
 
 const { close, open, isOpen } = useDisclosure();

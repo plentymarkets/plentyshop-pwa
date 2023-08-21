@@ -2,13 +2,17 @@
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <CategoryPageContent
       v-if="productsCatalog"
-      :title="categoryTreeGetters.getName(productsCatalog.category)"
+      :title="categoryGetters.getCategoryName(productsCatalog.category)"
       :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
       :items-per-page="Number(productsPerPage)"
     >
       <template #sidebar>
-        <CategoryTree :categories="categories" :parent="{ name: $t('allProducts'), href: paths.category }" />
+        <CategoryTree
+          v-if="category?.children?.length || parentCategory.length > 1"
+          :categories="category?.children ?? []"
+          :parent="getParentCategory()"
+        />
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
         <CategoryFilters :facets="productsCatalog.facets" />
@@ -19,8 +23,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { Category, CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 definePageMeta({
@@ -32,43 +35,59 @@ const { getFacetsFromURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
 const { getCategoryTree, data: categoryTree } = useCategoryTree();
 const { t } = useI18n();
+const breadcrumbs = ref([] as Breadcrumb[]);
+const urlParams = ref(getFacetsFromURL());
+const category = ref(
+  categoryTreeGetters.findCategoryBySlugs(categoryTree.value, urlParams.value.categorySlugs || ['']),
+);
+const parentCategory = ref(
+  categoryTreeGetters.findCategoriesPathByCategoryId(categoryTree.value, category.value?.id ?? 0),
+);
 
-const findCategoryBySlugs = (categories: CategoryTreeItem[], slugs: string[]): CategoryTreeItem | undefined => {
-  const category = categories.find((item) => categoryTreeGetters.getSlug(item) === slugs[0]);
-  if (category && slugs.length > 1 && category.children) {
-    return findCategoryBySlugs(category.children, slugs.slice(1));
+const getParentCategory = () => {
+  if (parentCategory.value.length > 1) {
+    return {
+      name: categoryTreeGetters.getName(parentCategory.value[parentCategory.value.length - 2]),
+      href: categoryTreeGetters.generateCategoryLink(
+        categoryTree.value,
+        parentCategory.value[parentCategory.value.length - 2],
+      ),
+      count: categoryTreeGetters.getCount(parentCategory.value[parentCategory.value.length - 2]),
+    };
   }
-  return category;
+
+  return null;
 };
 
 const generateSearchParams = () => {
-  const urlParams = getFacetsFromURL();
-  const category = findCategoryBySlugs(categoryTree.value, urlParams.categorySlugs || ['']);
-  urlParams.categoryId = category?.id?.toString();
-  return urlParams;
+  urlParams.value = getFacetsFromURL();
+  category.value = categoryTreeGetters.findCategoryBySlugs(categoryTree.value, urlParams.value.categorySlugs || ['']);
+  urlParams.value.categoryId = category.value?.id?.toString();
+
+  return urlParams.value;
+};
+
+const updateTreeAndBreadcrumbs = () => {
+  parentCategory.value = categoryTreeGetters.findCategoriesPathByCategoryId(
+    categoryTree.value,
+    category.value?.id ?? 0,
+  );
+
+  breadcrumbs.value = category.value
+    ? categoryTreeGetters.generateBreadcrumbFromCategory(categoryTree.value, category.value)
+    : [{ name: t('allProducts'), link: '#' }];
+
+  breadcrumbs.value.unshift({ name: t('home'), link: '/' });
 };
 
 await getCategoryTree();
+updateTreeAndBreadcrumbs();
 await fetchProducts(generateSearchParams());
-
-const breadcrumbs: Breadcrumb[] = [
-  { name: t('home'), link: '/' },
-  { name: t('allProducts'), link: '/category' },
-];
-const subCategories = productsCatalog.value?.category?.children ?? [];
-
-const categories = computed(
-  () =>
-    subCategories?.map((item: Category) => ({
-      name: item?.details?.[0]?.name,
-      count: undefined,
-      href: paths.category,
-    })) || [],
-);
 
 watch(
   () => route.query,
   async () => {
+    updateTreeAndBreadcrumbs();
     await fetchProducts(generateSearchParams());
   },
 );
