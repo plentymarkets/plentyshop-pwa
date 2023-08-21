@@ -1,0 +1,72 @@
+name: Add zip file to S3 bucket
+
+on:
+  # release:
+    # types: [published]
+  workflow_dispatch:
+    inputs:
+      branch:
+        type: choice
+        options:
+          - develop
+        description: 'Choose branch for release'
+        required: true
+        default: 'develop'
+
+jobs:
+  install-and-build-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Create yarnrc
+        run: |
+          cp .yarnrc.yml.example .yarnrc.yml
+          sed -i 's/<TOKEN>/${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}/' .yarnrc.yml
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build
+        run: yarn build
+
+      - name: Compress repo to Tar
+        uses: a7ul/tar-action@v1.1.0
+        id: compress
+        with:
+         command: c
+         cwd: ./
+         files: |
+           ./
+         outPath: pwa.tar.gz
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: zipped-artifact
+          path: ${{ github.workspace }}/pwa.tar.gz
+
+  send-zip:
+    runs-on: ubuntu-latest
+    needs: install-and-build-dependencies
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: zipped-artifact
+          path: ./
+
+      - name: Upload File
+        id: upload
+        uses: JantHsueh/upload-file-action@1.0
+        with:
+          url: ${{ secrets.URL_ENDPOINT }}
+          forms: '{ "tokenName": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
+          fileForms: '{ "filename": "${{ github.workspace }}/pwa.tar.gz" }'
