@@ -1,5 +1,5 @@
 import { toRefs } from '@vueuse/shared';
-import addressData from '~/composables/useCustomerOrder/adress';
+import addressData from '~/composables/useCustomerOrder/address';
 import productData from '~/composables/useCustomerOrder/product';
 import type {
   UseCustomerOrderReturn,
