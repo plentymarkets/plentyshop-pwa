@@ -100,7 +100,7 @@
     "clear": "Clear all",
     "save": "Save",
     "edit": "Edit",
-    "clearAll": "Clear all",
+    "clearAll": "Clear all"
   },
   "checkoutPayment": {
     "heading": "Payment method",
@@ -310,7 +310,7 @@
       "status":"Status",
       "details":"Details",
       "myOrders":"My orders",
-      "noOrders": "You haven’t shopped with us yet",
+      "noOrders": "You haven't shopped with us yet",
       "continue": "Continue shopping",
       "noOrdersAltText": "No orders",
       "returnsHeading": "Returns",
