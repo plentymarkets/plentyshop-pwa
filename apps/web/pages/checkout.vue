@@ -36,7 +36,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
-        <p class="text-sm mx-4 md:pb-0">
+        <div class="text-sm mx-4 md:pb-0">
           <SfCheckbox v-model="termsAccepted" class="inline-block mr-2" />
           <i18n-t keypath="termsInfo">
             <template #terms>
@@ -65,7 +65,7 @@
             </template>
           </i18n-t>
           <div v-if="showTermsError" class="text-red-500 text-sm mt-2">{{ $t('termsRequired') }}</div>
-        </p>
+        </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <SfButton
