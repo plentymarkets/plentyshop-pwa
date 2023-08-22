@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="selectedMethod && shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)"
-    class="md:px-4 my-6 md:col-span-3 flex items-start gap-2"
+    class="my-6 md:col-span-3 flex items-start gap-2"
   >
     <SfCheckbox
       id="checkbox"
