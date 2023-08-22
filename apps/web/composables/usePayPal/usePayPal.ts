@@ -19,18 +19,15 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * loadScript(currency: string);
    */
   const loadScript: LoadScript = async (currency: string) => {
-    if (paypalGetters.getConfig()) {
-      try {
-        state.value.PayPalScript = await loadPayPalScript({
-          clientId: paypalGetters.getClientId() ?? '',
-          currency: currency,
-        });
-        return state.value.PayPalScript;
-      } catch {
-        // console.error('failed to load the PayPal JS SDK script', error);
-      }
+    try {
+      state.value.PayPalScript = await loadPayPalScript({
+        clientId: 'Ab_wQoMAfzuqCrl4gVfYvkNHmBS_s_rQKMafFJrArKJ4GZU8nbSIn53v4Q8ZZfoHR01kxnjkDF4yVLAv',
+        currency: currency,
+      });
+      return state.value.PayPalScript;
+    } catch {
+      // console.error('failed to load the PayPal JS SDK script', error);
     }
-
     return null;
   };
 
