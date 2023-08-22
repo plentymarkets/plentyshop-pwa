@@ -33,19 +33,22 @@
           :shipping-methods="shippingMethods"
           @update:shipping-method="handleShippingMethodUpdate($event)"
         />
-        <label
+        <div
           v-if="selectedMethod && shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)"
           class="md:px-4 my-6 md:col-span-3 flex items-start gap-2 cursor-pointer"
         >
           <SfCheckbox
+            id="checkbox"
             :value="shippingPrivacyAgreement"
             class="mt-1"
             name="Shipping Privacy"
             :selected="shippingPrivacyAgreement"
             @change="changeHint"
           />
-          {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
-        </label>
+            <label for="checkbox">
+                {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+            </label>
+        </div>
 
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
