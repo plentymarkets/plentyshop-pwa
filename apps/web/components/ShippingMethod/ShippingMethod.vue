@@ -32,12 +32,15 @@
         <p>{{ $t('shippingMethod.description') }}</p>
       </div>
     </div>
+
+    <ShippingPrivacy />
   </div>
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
+import ShippingPrivacy from '~/components/ShippingPrivacy/ShippingPrivacy.vue';
 import { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
 defineProps<ShippingMethodProps>();

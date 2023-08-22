@@ -1,13 +1,16 @@
-import type { ShippingProvider } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { ShippingProvider, ShippingMethod } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 
 export interface UseCartShippingMethodsState {
   data: ShippingProvider;
   loading: boolean;
+  selectedMethod: ShippingMethod | undefined;
 }
 
 export type GetShippingMethods = () => Promise<ShippingProvider>;
 
 export type SaveShippingMethod = (shippingMethodId: number) => Promise<ShippingProvider>;
+
+export type SetSelectedMethod = (shippingMethodId: number) => void;
 
 export interface UseCartShippingMethods {
   data: Readonly<Ref<UseCartShippingMethodsState['data']>>;
