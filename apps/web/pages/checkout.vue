@@ -38,8 +38,17 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <SfButton :tag="NuxtLink" :to="paths.orderSuccess" size="lg" class="w-full mb-4 md:mb-0">
-          {{ $t('placeOrder') }}
+        <SfButton
+          type="submit"
+          @click="order"
+          :disabled="createOrderLoading"
+          size="lg"
+          class="w-full mb-4 md:mb-0 cursor-pointer"
+        >
+          <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+          <span v-else>
+            {{ $t('placeOrder') }}
+          </span>
         </SfButton>
         <p class="text-sm text-center mt-4 pb-4 md:pb-0">
           <i18n-t keypath="termsInfo">
@@ -69,19 +78,20 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfLink } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,
 });
 
-const NuxtLink = resolveComponent('NuxtLink');
 const { data: cart, getCart } = useCart();
 const { isAuthorized } = useCustomer();
 const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const router = useRouter();
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -105,5 +115,19 @@ const handleShippingMethodUpdate = async (shippingMethodId: string) => {
 const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await savePaymentMethod(paymentMethodId);
   await getShippingMethods();
+};
+
+const order = async () => {
+  const data = await createOrder({
+    paymentId: paymentMethodData.value.selected,
+    // eslint-disable-next-line unicorn/expiring-todo-comments
+    shippingPrivacyHintAccepted: true, // TODO
+  });
+
+  if (data?.order?.id) {
+    router.push('/order/success');
+  } else {
+    router.push('/order/failed');
+  }
 };
 </script>

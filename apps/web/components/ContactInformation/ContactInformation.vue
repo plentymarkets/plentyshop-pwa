@@ -15,31 +15,30 @@
         {{ $t('contactInfo.add') }}
       </SfButton>
     </div>
-    <UiOverlay :visible="isOpen">
-      <SfModal
-        v-model="isOpen"
-        :disable-click-away="isEmailEmpty()"
-        :disable-esc="isEmailEmpty()"
-        as="section"
-        role="dialog"
-        class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-        aria-labelledby="contact-modal-title"
-      >
-        <header>
-          <SfButton v-if="!isEmailEmpty()" square variant="tertiary" class="absolute right-2 top-2" @click="close">
-            <SfIconClose />
-          </SfButton>
-          <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
-            {{ $t('contactInfo.heading') }}
-          </h3>
-        </header>
-        <ContactInformationForm @on-save="saveContactInformation" @on-cancel="close" />
-      </SfModal>
-    </UiOverlay>
+
+    <UiModal
+      v-model="isOpen"
+      :disable-click-away="isEmailEmpty()"
+      :disable-esc="isEmailEmpty()"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="contact-modal-title"
+    >
+      <header>
+        <SfButton v-if="!isEmailEmpty()" square variant="tertiary" class="absolute right-2 top-2" @click="close">
+          <SfIconClose />
+        </SfButton>
+        <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
+          {{ $t('contactInfo.heading') }}
+        </h3>
+      </header>
+      <ContactInformationForm @on-save="saveContactInformation" @on-cancel="close" />
+    </UiModal>
   </div>
 </template>
 <script lang="ts" setup>
-import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
 const { data, loginAsGuest, getSession } = useCustomer();
 const { isOpen, open, close } = useDisclosure();

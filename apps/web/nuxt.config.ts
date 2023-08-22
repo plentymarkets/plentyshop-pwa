@@ -88,7 +88,7 @@ export default defineNuxtConfig({
     'pages:extend'(pages) {
       pages.push({
         name: 'category',
-        path: '/category/:slug/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
+        path: '/category/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
         file: __dirname + '/pages/category/[slug].vue',
       });
     },
@@ -102,7 +102,26 @@ export default defineNuxtConfig({
     registerType: 'autoUpdate',
     workbox: {
       navigateFallback: null,
-      globPatterns: ['**/*.{js,css,html,ico}', 'icons/*'],
+      globPatterns: ['**/*.{js,json,css,html,ico,svg,png,webp,ico,woff,woff2,ttf,eit,otf}', 'icons/*'],
+      globIgnores: ['manifest**.webmanifest'],
+      additionalManifestEntries: [
+        {
+          url: '/offline',
+          revision: Math.random().toString(32),
+        },
+      ],
+      navigationPreload: true,
+      runtimeCaching: [
+        {
+          urlPattern: ({ request }) => request.mode === 'navigate',
+          handler: 'NetworkOnly',
+          options: {
+            precacheFallback: {
+              fallbackURL: '/offline',
+            },
+          },
+        },
+      ],
       cleanupOutdatedCaches: true,
     },
     manifest: {

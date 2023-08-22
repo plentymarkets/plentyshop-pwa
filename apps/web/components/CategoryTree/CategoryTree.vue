@@ -13,18 +13,20 @@
   <ul class="mt-4 mb-6 md:mt-2" data-testid="categories">
     <CategoryTreeItem
       v-for="(category, index) in categories"
-      :key="category.name"
-      :name="category.name"
-      :href="category.href"
-      :count="category.count"
-      :selected="index === 0"
+      :key="index"
+      :name="categoryTreeGetters.getName(category)"
+      :href="categoryTreeGetters.generateCategoryLink(categoryTree, category)"
+      :count="categoryTreeGetters.getCount(category)"
     />
   </ul>
 </template>
 
 <script setup lang="ts">
+import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
+
+const { data: categoryTree } = useCategoryTree();
 
 defineProps<CategoryTreeProps>();
 </script>

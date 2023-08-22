@@ -1,11 +1,13 @@
-export type CategoryTreeItem = {
+import { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+
+export type CategoryTreeListItem = {
   name: string;
   count?: number;
   href: string;
 };
 
 export type CategoryTreeProps = {
-  parent?: CategoryTreeItem;
+  parent?: CategoryTreeListItem | null;
   categories: CategoryTreeItem[];
 };
 
