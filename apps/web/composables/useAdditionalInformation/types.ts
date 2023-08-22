@@ -9,7 +9,7 @@ export interface UseAdditionalInformationState {
 
 export type DoAdditionalInformation = (params: AdditionalInformationParams) => Promise<null>;
 
-export type SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => Promise<void>;
+export type SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => void;
 
 export interface UseAdditionalInformation {
   data: Readonly<Ref<UseAdditionalInformationState['data']>>;

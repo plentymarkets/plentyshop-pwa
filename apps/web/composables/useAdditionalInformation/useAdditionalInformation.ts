@@ -53,7 +53,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
    *   shippingPrivacyAgreement: true
    * });
    */
-  const setShippingPrivacyAgreement: SetShippingPrivacyAgreement = async (shippingPrivacyAgreement: boolean) => {
+  const setShippingPrivacyAgreement: SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => {
     state.value.loading = true;
     state.value.shippingPrivacyAgreement = shippingPrivacyAgreement;
     state.value.loading = false;

@@ -79,7 +79,6 @@
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
-import { useAdditionalInformation } from '~/composables/useAdditionalInformation';
 
 definePageMeta({
   layout: false,
@@ -113,7 +112,7 @@ const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await fetchPaymentMethods();
   await getCart();
 
-  await setShippingPrivacyAgreement(false);
+  setShippingPrivacyAgreement(false);
 };
 
 const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
