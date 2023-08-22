@@ -169,6 +169,6 @@ const parcelServiceInformation = computed(() => {
 });
 
 const changeHint = (event: Event) => {
-  setShippingPrivacyAgreement(!!(<HTMLInputElement>event.target)?.checked);
+  setShippingPrivacyAgreement(!!(event.target as HTMLInputElement)?.checked);
 };
 </script>
