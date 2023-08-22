@@ -38,8 +38,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton />
+        <PayPalExpressButton v-if="selectedPaymentId === 6001" />
         <SfButton
+          v-else
           type="submit"
           @click="order"
           :disabled="createOrderLoading"
@@ -107,6 +108,7 @@ await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
+const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));

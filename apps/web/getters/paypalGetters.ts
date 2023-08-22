@@ -1,10 +1,8 @@
 import { PayPalConfig } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-
-const integrationConfigLoad = useAppConfig().integration as { payment: { paypal: PayPalConfig } };
-const integrationConfig = integrationConfigLoad.payment.paypal;
+import integrationConfig from '../integration.config';
 
 function getConfig(): PayPalConfig | null {
-  return integrationConfig ?? null;
+  return integrationConfig.payment.paypal ?? null;
 }
 
 function getClientId(): string | null {

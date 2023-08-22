@@ -24,7 +24,6 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
-    integration: integrationConfig,
     fallbackCurrency: 'GBP',
   },
   imports: {
