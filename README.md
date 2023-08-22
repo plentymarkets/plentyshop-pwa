@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
+  <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
 
   <a href="https://www.plentymarkets.com/"><img src="./plentysystems.jpg" alt="plentysystems logo" height="160px" /></a>
 
@@ -11,19 +11,19 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-Welcome to the plentysystems integration for Vue Storefront 3. For a technical overview of the repository structure, refer to the [Guide](GUIDE.md). The rest of the README details how to configure your plenty system and get started with the project.
+Welcome to the plentysystems integration for Vue Storefront 3. For a technical overview of the repository structure, refer to the [Guide](GUIDE.md). The rest of the README details how to configure your plentysystems system and get started with the project.
 
-## plenty system setup
+## plentysystems system setup
 
-To run this project, you need a plenty system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
+To run this project, you need a plentysystems system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
 
 ### Plugins
 
 > :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
 
-For the shop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
+For plentyShop PWA to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
 
-1. Log into your plenty system.
+1. Log into your plentysystems system.
 2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
     - IO
     - plentyShop LTS
@@ -32,11 +32,11 @@ For the shop to run, you have to install plugins that provide additional REST ro
     - Pay upon pickup
     - DHL Shipping (Versenden)
     - Customer feedback
-3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest.
+3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest. The priorities of all other plugins remains 0.
 
 ### System configuration
 
-1. Log into your plenty system.
+1. Log into your plentysystems system.
 2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
 3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account. If you skip this step, remove the PayPal component from the app.
 
@@ -60,42 +60,40 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Configuration
 
-- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plenty system.
-- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plenty system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
+- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plentysystems system.
+- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plentysystems system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
 - Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
 - Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
 - Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
 
 ### Starting the app
 
-1. Install all dependencies.
-2. Start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
-
-```bash
-$ yarn
-$ yarn dev
-```
+1. Open the repository in your command line interface.
+2. Run `yarn` to install all dependencies.
+3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Deployment
 
 This section describes how to deploy your app on your live domain.
 
-### plenty system
+### plentysystems system
 
-1. Log into your plenty system.
+1. Log into your plentysystems system.
 2. Go to **CMS » Deployment**.
 3. Click on :plus: to add a new application.
 4. Fill in the required information.
 5. **Create** the application.
+
+Copy the **Access key** to your clipboard. You'll need it in the next part.
 
 ### GitHub
 
 1. In your forked repository, [create 2 encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
 
     - `URL_ENDPOINT`: TODO
-    - `URL_ENDPOINT_TOKEN`: The **Access key** from the application in your plenty system.
+    - `URL_ENDPOINT_TOKEN`: The **Access key** from the previous part.
 
-2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plenty system.
+2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
 
 ## Resources
 
@@ -115,12 +113,13 @@ This section describes how to deploy your app on your live domain.
 - `i18n` localisation powered by [Nuxt-i18n](https://i18n.nuxtjs.org).
 - [Vue Storefront SDK](https://docs.vuestorefront.io/sdk/) ready - integrate headless E-commerce platform with your project easily.
 - [Vue Storefront Middleware](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
-- Maximize lighthouse score.
+- Maximized lighthouse score.
 
 ### Vue Storefront
 
 - [Introduction to learn what is Vue Storefront](https://docs.vuestorefront.io/v2/getting-started/introduction.html).
 - [Vue Storefront Documentation](https://docs.vuestorefront.io/v2/)
+- [Vue Storefront UI Documentation](https://docs.storefrontui.io/v2/vue/getting-started.html)
 - [Community Chat](http://discord.vuestorefront.io)
 
 ## License
