@@ -15,6 +15,7 @@ export type SetSelectedMethod = (shippingMethodId: number) => void;
 export interface UseCartShippingMethods {
   data: Readonly<Ref<UseCartShippingMethodsState['data']>>;
   loading: Readonly<Ref<boolean>>;
+  selectedMethod: Readonly<Ref<UseCartShippingMethodsState['selectedMethod']>>;
   getShippingMethods: GetShippingMethods;
   saveShippingMethod: SaveShippingMethod;
 }
