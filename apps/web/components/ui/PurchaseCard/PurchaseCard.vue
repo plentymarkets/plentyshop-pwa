@@ -25,7 +25,9 @@
       <AttributeSelect v-if="product" :product="product" />
     </div>
     <div>
-      <BasePrice :product="product" :content-line-first="true" />
+      <BasePrice :basePrice="productGetters.getDefaultBasePrice(product)"
+        :unitContent="productGetters.getUnitContent(product)" :unitName="productGetters.getUnitName(product)"
+        :content-line-first="true" :oneline="false" />
     </div>
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">

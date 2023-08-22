@@ -1,7 +1,7 @@
-import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-
 export type BasePriceProps = {
-  product: Product;
+  unitContent: number;
+  unitName: string;
+  basePrice: string;
   oneline: boolean;
   contentLineFirst: boolean;
 };

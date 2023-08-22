@@ -3,14 +3,16 @@
     <div :class="basePriceCss">
       <div v-if="oneline" class="flex-1" />
       <div id="basePrice">
-        {{ productGetters.getDefaultBasePrice(product) }}
+        {{ basePrice }}
+        <!-- {{ productGetters.getDefaultBasePrice(product) }} -->
       </div>
       <div v-if="oneline" id="lineSeparator">|</div>
       <div id="content">
         <span v-if="!oneline" class="font-bold"> {{ $t('Content') }}: </span>
         <span class="mr-1">
-          {{ productGetters.getUnitContent(product) }}
-          {{ productGetters.getUnitName(product) }}
+          {{ unitContent }} {{ unitName }}
+          <!-- {{ productGetters.getUnitContent(product) }} -->
+          <!-- {{ productGetters.getUnitName(product) }} -->
         </span>
       </div>
     </div>
@@ -18,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+// import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { BasePriceProps } from '~/components/BasePrice/types';
 
 const props = defineProps<BasePriceProps>();
