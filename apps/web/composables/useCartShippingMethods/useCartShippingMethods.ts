@@ -1,4 +1,5 @@
 import type { ShippingProvider, ShippingMethod } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCartShippingMethodsState,
@@ -6,10 +7,8 @@ import type {
   GetShippingMethods,
   SaveShippingMethod,
 } from '~/composables/useCartShippingMethods/types';
+import { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
 import { useSdk } from '~/sdk';
-import {SetSelectedMethod} from "~/composables/useCartShippingMethods/types";
-import {shippingProviderGetters} from "@plentymarkets/plentymarkets-sdk/packages/sdk/src";
-
 
 /**
  * @description Composable for getting shipping methods.
