@@ -47,7 +47,7 @@
         >
           <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ $t('placeOrder') }}
+            {{ $t('buy') }}
           </span>
         </SfButton>
         <p class="text-sm text-center mt-4 pb-4 md:pb-0">
