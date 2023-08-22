@@ -3463,12 +3463,12 @@ __metadata:
   linkType: hard
 
 "@plentymarkets/plentymarkets-sdk@npm:0.1.*":
-  version: 0.1.32
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.32::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.32%2F47968b708508450136b1f6eaeab4d0158ec79207"
+  version: 0.1.35
+  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.35::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.35%2F3bbb05681af46ddb7d69f39ee5c698d83b30e998"
   dependencies:
     react: 18.2.0
     react-dom: 18.2.0
-  checksum: 2ec9b11b733c2bf4f186826bb20177c5e1310f1af90a0ef767c1d5130bd70fab79640c8c108d727e4b0e377932072ceca27b1d4fa0b170b4baf476ee3ce783e1
+  checksum: cb20f6ccca23fe1566e096e06953e7088999613ecb125d6987eeb2de24ee405046b1a4eeb84facc6670f08c7237fa406bd5d0a543b82309ad3216751bf7c113f
   languageName: node
   linkType: hard
 
