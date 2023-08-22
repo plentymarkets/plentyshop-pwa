@@ -5,7 +5,7 @@ import {
   DoAdditionalInformation,
   DoAdditionalInformationReturn,
   SetShippingPrivacyAgreement,
-  UseAdditionalInformationState
+  UseAdditionalInformationState,
 } from './types';
 
 /**
