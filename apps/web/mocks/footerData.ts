@@ -7,6 +7,7 @@ import {
   SfIconTwitter,
   SfIconYoutube,
 } from '@storefront-ui/vue';
+import SfLinkedin from '~/components/ui/Icons/IconLinkedin.vue';
 
 export const categories = [
   {
@@ -124,6 +125,11 @@ export const socialMedia = [
     label: 'Twitter',
     link: 'https://twitter.com/plentymarkets',
     icon: SfIconTwitter,
+  },
+  {
+    label: 'Twitter',
+    link: 'https://twitter.com/plentymarkets',
+    icon: SfLinkedin,
   },
   {
     label: 'Instagram',
