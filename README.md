@@ -4,46 +4,108 @@
     <img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" width="400px" height="auto"/>
   </picture>
   </a>
-  <h1 align="center">Vue Storefront for Vue (Nuxt 3) Boilerplate</h1>
+  <a href="https://www.plentymarkets.com/">
+  <picture>
+    <img src="./plentysystems.jpg" alt="plentysystems logo" height="160px" />
+  </picture>
+  </a>
+  <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
 </p>
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/vuestorefront/vue-storefront?style=social)](https://github.com/vuestorefront/vue-storefront)
-[![Twitter Follow](https://img.shields.io/twitter/follow/vuestorefront?style=social)](https://twitter.com/vuestorefront)
-[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCkm1F3Cglty3CE1QwKQUhhg?style=social)](https://www.youtube.com/c/VueStorefront)
+[![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/storefront-nuxt3-boilerplate?style=social)](https://github.com/plentymarkets/storefront-nuxt3-boilerplate)
+[![Twitter Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
+[![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-## Getting Started with Vue Storefront
+Welcome to the plentysystems integration for Vue Storefront 3. For a technical overview of the repository structure, refer to the [Guide](GUIDE.md). The rest of the README details how to configure your plenty system and get started with the project.
 
-To get started, see the following guides:
+## plenty system setup
 
-- [Introduction](https://docs.vuestorefront.io/v2/getting-started/introduction.html) to learn what is Vue Storefront.
+To run this project, you need a plenty system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
 
-## Prerequisites:
+### Plugins
+
+>> :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
+
+For the shop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
+
+1. Log into your plenty system.
+2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
+    - IO
+    - plentyShop LTS
+    - PayPal
+    - Cash in advance
+    - Pay upon pickup
+    - DHL Shipping (Versenden)
+    - Customer feedback
+3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest.
+
+### System configuration
+
+1. Log into your plenty system.
+2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
+3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account. If you skip this step, remove the PayPal component from the app.
+
+## Local dev setup
+
+This section describes how to run the project locally.
+
+### Prerequisites
 
 - `Node.js` 20+
-- `Yarn`
+- `Yarn` 3
 
-### Local dev setup
+Download Node.js from the [official website](https://nodejs.org/) or use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version. For installation instructions for Yarn, refer to the [Yarn documentation](https://yarnpkg.com/getting-started/install).
 
-1. Clone the repository.
+### Repository fork
+
+We recommend working with a fork of this repository. A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
+
+1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
+
+### Configuration
+
+- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plenty system.
+- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plenty system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
+- Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
+- Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
+- Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
+
+### Starting the app
+
+1. Install all dependencies.
+2. Start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ```bash
-$ git clone git@github.com:vuestorefront/storefront-nuxt3-boilerplate.git
-```
-
-2. Install all dependencies (read here [How to install Yarn 3](https://yarnpkg.com/getting-started/install)).
-
-```bash
-$ yarn install
-```
-
-3. Run development server. App will be served with hot reload at [localhost:3000](http://localhost:3000/).
-
-```bash
+$ yarn
 $ yarn dev
 ```
 
-## Features:
+## Deployment
+
+This section describes how to deploy your app on your live domain.
+
+### plenty system
+
+1. Log into your plenty system.
+2. Go to **CMS » Deployment**.
+3. Click on :plus: to add a new application.
+4. Fill in the required information.
+5. **Create** the application.
+
+### GitHub
+
+1. In your forked repository, [create 2 encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
+
+    - `URL_ENDPOINT`: TODO
+    - `URL_ENDPOINT_TOKEN`: The **Access key** from the application in your plenty system.
+
+2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plenty system.
+
+## Resources
+
+### Features
 
 - [Turborepo](https://turbo.build/) remote cache build system, with blazingly fast execution of commands (build, lint, test etc.) on your local machine.
 - [TypeScript](https://www.typescriptlang.org/) support.
@@ -61,9 +123,11 @@ $ yarn dev
 - [Vue Storefront Middleware](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
 - Maximize lighthouse score.
 
-## Guide
+### Vue Storefront
 
-Refer to [Guide](GUIDE.md)
+- [Introduction to learn what is Vue Storefront](https://docs.vuestorefront.io/v2/getting-started/introduction.html).
+- [Vue Storefront Documentation](https://docs.vuestorefront.io/v2/)
+- [Community Chat](http://discord.vuestorefront.io)
 
 ## License
 
@@ -73,13 +137,6 @@ Distributed under the MIT License. See [LICENSE](LICENSE.md) for more informatio
 
 Please see our [contributing.md](contributing.md) for more information.
 
-## Resources
-
-- [Vue Storefront Documentation](https://docs.vuestorefront.io/v2/)
-- [Vue Storefront Enterprise Documentation](https://docs.vuestorefront.io/v2/general/enterprise.html)
-- [Storefront UI 2 Documentation](https://docs.storefrontui.io/v2/)
-- [Community Chat](http://discord.vuestorefront.io)
-
 ## Support
 
-If you have any questions about this integration we will be happy to answer them on `general-help` channel on [our Discord](http://discord.vuestorefront.io).
+If you have any questions about this integration we will be happy to answer them on the `plentymarkets` channel of the [Vue Storefront Discord](http://discord.vuestorefront.io).
