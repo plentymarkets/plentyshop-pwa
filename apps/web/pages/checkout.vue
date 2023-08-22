@@ -43,10 +43,10 @@
             class="mt-1"
             name="Shipping Privacy"
             :selected="shippingPrivacyAgreement"
-            @change="changeHint"
+            @update:model-value="changeHint"
           />
           <label for="checkbox" class="cursor-pointer">
-              {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+            {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
           </label>
         </div>
 
@@ -128,7 +128,8 @@ const paymentMethods = computed(() => paymentMethodData.value);
 const selectedMethod = ref(
   shippingMethodData.value.list.find(
     (method) => method.parcelServicePresetId === Number(shippingProviderGetters.getShippingProfileId(cart.value)),
-));
+  ),
+);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
@@ -168,7 +169,7 @@ const parcelServiceInformation = computed(() => {
   selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
 });
 
-const changeHint = (event: Event) => {
-  setShippingPrivacyAgreement(!!(event.target as HTMLInputElement)?.checked);
+const changeHint = (value: boolean) => {
+  setShippingPrivacyAgreement(value);
 };
 </script>
