@@ -7,7 +7,7 @@
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/storefront-nuxt3-boilerplate?style=social)](https://github.com/plentymarkets/storefront-nuxt3-boilerplate)
-[![Twitter Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
+[![X Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
