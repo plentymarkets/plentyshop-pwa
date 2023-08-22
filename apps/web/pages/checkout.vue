@@ -35,7 +35,7 @@
         />
         <div
           v-if="selectedMethod && shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)"
-          class="md:px-4 my-6 md:col-span-3 flex items-start gap-2 cursor-pointer"
+          class="md:px-4 my-6 md:col-span-3 flex items-start gap-2"
         >
           <SfCheckbox
             id="checkbox"
@@ -45,9 +45,9 @@
             :selected="shippingPrivacyAgreement"
             @change="changeHint"
           />
-            <label for="checkbox">
-                {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
-            </label>
+          <label for="checkbox" class="cursor-pointer">
+              {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+          </label>
         </div>
 
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
