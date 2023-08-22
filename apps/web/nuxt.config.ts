@@ -59,6 +59,10 @@ export default defineNuxtConfig({
             code: 'en',
             file: 'en.json',
           },
+          {
+            code: 'de',
+            file: 'de.json',
+          },
         ],
         lazy: true,
         langDir: 'lang',

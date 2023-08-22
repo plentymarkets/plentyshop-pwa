@@ -134,7 +134,7 @@
   "category": "Kategorie",
   "categories": {
     "howToBuy": {
-      "label": "Wie man kauft",
+      "label": "Bestellvorgang",
       "subcategories": {
         "paymentMethods": "Zahlungsarten",
         "orderPickup": "Abholung",
