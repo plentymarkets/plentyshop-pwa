@@ -1,16 +1,10 @@
-<p align="center">
-  <a href="https://https://vuestorefront.io/">
-  <picture>
-    <img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" width="400px" height="auto"/>
-  </picture>
-  </a>
-  <a href="https://www.plentymarkets.com/">
-  <picture>
-    <img src="./plentysystems.jpg" alt="plentysystems logo" height="160px" />
-  </picture>
-  </a>
+<div align="center">
+  <a href="https://https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
+
+  <a href="https://www.plentymarkets.com/"><img src="./plentysystems.jpg" alt="plentysystems logo" height="160px" /></a>
+
   <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
-</p>
+</div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/storefront-nuxt3-boilerplate?style=social)](https://github.com/plentymarkets/storefront-nuxt3-boilerplate)
 [![Twitter Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
@@ -25,7 +19,7 @@ To run this project, you need a plenty system. Get a free 30-day trial [on our w
 
 ### Plugins
 
->> :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
+> :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
 
 For the shop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
 
