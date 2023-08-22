@@ -1,9 +1,15 @@
 <template>
-  <div></div>
+  <div v-html="getHTMLTexts()" />
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: false,
+const { data, getLegalTexts } = useLegalInformation();
+
+await getLegalTexts({
+  type: 'CancellationForm',
 });
+
+const getHTMLTexts = () => {
+  return data.value.htmlText ?? '';
+};
 </script>

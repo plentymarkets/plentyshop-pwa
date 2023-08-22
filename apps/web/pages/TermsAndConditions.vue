@@ -1,26 +1,15 @@
 <template>
-  <div v-html="termsConditions" />
+  <div v-html="getHTMLTexts()" />
 </template>
 
-<script>
-import { computed } from '@nuxtjs/composition-api';
-import { onSSR } from '@vue-storefront/core';
-import { useLegalInformation, legalGetters } from '@vue-storefront/plentymarkets';
+<script setup lang="ts">
+const { data, getLegalTexts } = useLegalInformation();
 
-export default {
-  name: 'TermsAndConditions',
-  setup() {
-    const { result, load } = useLegalInformation('TermsConditions');
+await getLegalTexts({
+  type: 'TermsConditions',
+});
 
-    const termsConditions = computed(() => {
-      return legalGetters.getHtml(result.value);
-    });
-
-    onSSR(async () => {
-      await load('TermsConditions');
-    });
-
-    return { termsConditions };
-  },
+const getHTMLTexts = () => {
+  return data.value.htmlText ?? '';
 };
 </script>

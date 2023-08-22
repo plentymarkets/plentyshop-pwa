@@ -29,23 +29,23 @@ export const categories = [
     subcategories: [
       {
         key: 'termsAndConditions',
-        link: '/',
+        link: '/TermsAndConditions',
       },
       {
         key: 'cancellationRights',
-        link: '/',
+        link: '/CancellationRights',
       },
       {
         key: 'legalDisclosure',
-        link: '/',
+        link: '/LegalDisclosure',
       },
       {
         key: 'privacyPolicy',
-        link: '/',
+        link: '/PrivacyPolicy',
       },
       {
         key: 'cancellationForm',
-        link: '/',
+        link: '/CancellationForm',
       },
     ],
   },
