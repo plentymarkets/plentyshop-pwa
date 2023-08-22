@@ -133,7 +133,7 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 const order = async () => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-      return;
+    return;
   }
 
   const data = await createOrder({
