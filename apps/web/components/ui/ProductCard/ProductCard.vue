@@ -32,6 +32,9 @@
       <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
         ${{ price }}
       </span>
+      <div class="mb-2">
+        <BasePrice :basePrice="basePrice" :unitContent="unitContent" :unitName="unitName"   :content-line-first="false"  />
+      </div>
       <SfButton type="button" size="sm">
         <template #prefix>
           <SfIconShoppingCart size="sm" />

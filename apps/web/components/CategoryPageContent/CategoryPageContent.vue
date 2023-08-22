@@ -32,6 +32,9 @@
               :image-alt="productGetters.getName(product) ?? ''"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index === 0"
+              :basePrice="productGetters.getDefaultBasePrice(product)"
+              :unitContent="productGetters.getUnitContent(product)" 
+              :unitName="productGetters.getUnitName(product)"
             />
           </section>
           <CategoryEmptyState v-else />

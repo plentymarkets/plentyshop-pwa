@@ -1,18 +1,16 @@
 <template>
   <div>
     <div :class="basePriceCss">
-      <div v-if="oneline" class="flex-1" />
+      <div v-if="oneline" class="flex-1"></div>
       <div id="basePrice">
         {{ basePrice }}
-        <!-- {{ productGetters.getDefaultBasePrice(product) }} -->
       </div>
       <div v-if="oneline" id="lineSeparator">|</div>
       <div id="content">
         <span v-if="!oneline" class="font-bold"> {{ $t('Content') }}: </span>
         <span class="mr-1">
-          {{ unitContent }} {{ unitName }}
-          <!-- {{ productGetters.getUnitContent(product) }} -->
-          <!-- {{ productGetters.getUnitName(product) }} -->
+          {{ unitContent }}
+          {{ unitName }}
         </span>
       </div>
     </div>
