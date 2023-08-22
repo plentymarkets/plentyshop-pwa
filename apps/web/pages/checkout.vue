@@ -38,6 +38,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
+        <PayPalExpressButton />
         <SfButton
           type="submit"
           @click="order"
@@ -79,6 +80,7 @@
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 
 definePageMeta({
   layout: false,

@@ -1,3 +1,5 @@
+import integrationConfig from './integration.config';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -22,6 +24,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
+    integration: integrationConfig,
   },
   imports: {
     dirs: ['composables/**', 'utils/**'],
