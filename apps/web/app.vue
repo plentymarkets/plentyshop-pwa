@@ -9,7 +9,7 @@
 <script setup lang="ts">
 usePageTitle();
 
-const { getCategoryTree, data: categoryTree } = useCategoryTree();
+const { getCategoryTree } = useCategoryTree();
 const { getCart } = useCart();
 const { getSession } = useCustomer();
 
