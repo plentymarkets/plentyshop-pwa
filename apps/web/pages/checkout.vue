@@ -115,7 +115,7 @@ const router = useRouter();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
-const termsCheckbox = ref(null);
+const termsCheckbox = ref(null) as any;
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -144,8 +144,7 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 const order = async () => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-    termsCheckbox.value?.$el?.scrollIntoView({ behavior: 'smooth' });
-
+    termsCheckbox.value.$el.scrollIntoView({ behavior: 'smooth' });
     return;
   }
 
