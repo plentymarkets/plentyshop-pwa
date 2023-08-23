@@ -1,5 +1,5 @@
 <template>
-  <div v-html="getHTMLTexts()" />
+  <div class="legal-texts" v-html="getHTMLTexts()" />
 </template>
 
 <script setup lang="ts">
@@ -13,3 +13,8 @@ const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
 </script>
+<style>
+.legal-texts {
+  padding: 20px;
+}
+</style>
