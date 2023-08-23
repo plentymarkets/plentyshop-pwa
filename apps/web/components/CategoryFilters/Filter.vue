@@ -88,12 +88,13 @@ import {
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import { useCategoryFilter, Filters } from '~/composables';
+import {FilterGroup} from "@plentymarkets/plentymarkets-sdk/packages/api-client/src";
 
 const route = useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
-const filters = facetGetters.getFilters(props.facet) as Filter[];
+const filters = facetGetters.getFilters(props.facet ?? {} as FilterGroup) as Filter[];
 const models: Filters = {};
 const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
 
