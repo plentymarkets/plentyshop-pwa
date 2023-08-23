@@ -51,6 +51,7 @@ const onApprove = async (data: OnApproveData) => {
   }
 };
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 onMounted(() => {
   if (paypal) {
     const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL];
@@ -88,14 +89,6 @@ onMounted(() => {
 
             async onApprove(data) {
               await onApprove(data);
-            },
-
-            onCancel(options) {
-              console.log(options);
-            },
-
-            onError(options) {
-              console.log(options);
             },
           });
 
