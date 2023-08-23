@@ -36,6 +36,40 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <div class="text-sm mx-4 md:pb-0">
+          <div class="flex items-center">
+            <SfCheckbox v-model="termsAccepted" :invalid="showTermsError" class="terms-checkbox inline-block mr-2" />
+            <div>
+              <i18n-t keypath="termsInfo">
+                <template #terms>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('termsAndConditions') }}
+                  </SfLink>
+                </template>
+                <template #cancellation>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('cancellation') }}
+                  </SfLink>
+                </template>
+                <template #privacyPolicy>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('privacyPolicy') }}
+                  </SfLink>
+                </template>
+              </i18n-t>
+            </div>
+          </div>
+          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
+        </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <SfButton
@@ -47,29 +81,9 @@
         >
           <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ $t('placeOrder') }}
+            {{ $t('buy') }}
           </span>
         </SfButton>
-        <p class="text-sm text-center mt-4 pb-4 md:pb-0">
-          <i18n-t keypath="termsInfo">
-            <template #terms>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('termsAndConditions') }}
-              </SfLink>
-            </template>
-            <template #privacyPolicy>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('privacyPolicy') }}
-              </SfLink>
-            </template>
-          </i18n-t>
-        </p>
       </OrderSummary>
     </div>
   </NuxtLayout>
@@ -78,7 +92,7 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,
@@ -93,6 +107,9 @@ const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = useP
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
+
+const termsAccepted = ref(false);
+const showTermsError = ref(false);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -120,7 +137,27 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await getShippingMethods();
 };
 
+const scrollToTermsCheckbox = () => {
+  const termsCheckboxElement = document.querySelector('.terms-checkbox') as HTMLElement; // You'll have to add an identifying class or use another selector
+  const termsCheckboxElementOffset = termsCheckboxElement?.offsetTop ?? 0;
+
+  const headerElement = document.querySelector('header') as HTMLElement; // Assuming your header has a 'header' tag or change this to the appropriate selector
+  const headerElementOffset = headerElement.offsetHeight ?? 0;
+
+  window.scrollTo({
+    top: termsCheckboxElementOffset - headerElementOffset,
+    behavior: 'smooth',
+  });
+};
+
 const order = async () => {
+  showTermsError.value = !termsAccepted.value;
+  if (showTermsError.value) {
+    scrollToTermsCheckbox();
+
+    return;
+  }
+
   const data = await createOrder({
     paymentId: paymentMethodData.value.selected,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
