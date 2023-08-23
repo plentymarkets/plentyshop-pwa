@@ -54,9 +54,18 @@ onMounted(() => {
           const button = paypal.Buttons({
             style: {
               layout: 'vertical',
-              label: 'pay',
+              label: 'buynow',
+              color: 'blue',
             },
             fundingSource: fundingSource,
+
+            onClick() {
+
+            },
+
+            onInit(data, actions) {
+              actions.disable();
+            },
 
             async createOrder() {
               const order = await createTransaction(fundingSource);
@@ -65,6 +74,14 @@ onMounted(() => {
 
             async onApprove(data) {
               await onApprove(data);
+            },
+
+            onCancel(options) {
+              console.log(options);
+            },
+
+            onError(options) {
+              console.log(options);
             },
           });
 

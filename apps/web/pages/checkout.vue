@@ -38,7 +38,6 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        {{ selectedPaymentId }}
         <PayPalExpressButton v-if="selectedPaymentId === 6001" />
         <SfButton
           v-else
