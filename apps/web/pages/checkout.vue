@@ -38,11 +38,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
-            <SfCheckbox
-              v-model="termsAccepted"
-              :invalid="showTermsError"
-              class="terms-checkbox inline-block mr-2"
-            />
+            <SfCheckbox v-model="termsAccepted" :invalid="showTermsError" class="terms-checkbox inline-block mr-2" />
             <div>
               <i18n-t keypath="termsInfo">
                 <template #terms>
