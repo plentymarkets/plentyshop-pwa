@@ -29,7 +29,7 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div>
+      <div v-if="cartItem.variation">
         <BasePrice
           :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
