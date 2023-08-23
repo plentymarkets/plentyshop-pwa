@@ -11,6 +11,7 @@ export interface UseCustomerState {
 export type GetSession = () => Promise<SessionResult>;
 
 export type LoginAsGuest = (email: string) => Promise<void>;
+export type SetUser = (data: SessionResult) => void;
 
 export interface UseCustomer {
   data: Readonly<Ref<UseCustomerState['data']>>;
@@ -18,6 +19,7 @@ export interface UseCustomer {
   isGuest: Readonly<Ref<UseCustomerState['isGuest']>>;
 
   loading: Readonly<Ref<boolean>>;
+  setUser: SetUser;
   getSession: GetSession;
   loginAsGuest: LoginAsGuest;
 }

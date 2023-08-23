@@ -106,7 +106,7 @@ defineProps<DefaultLayoutProps>();
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user } = useCustomer();
-usePageTitle()
+usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
 

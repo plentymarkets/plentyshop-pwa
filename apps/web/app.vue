@@ -7,14 +7,10 @@
 </template>
 
 <script setup lang="ts">
-usePageTitle();
-
 const { getCategoryTree } = useCategoryTree();
-const { getCart } = useCart();
-const { getSession } = useCustomer();
+const { setInitialData } = useInitialSetup();
 
 getCategoryTree();
-getCart();
-getSession();
+setInitialData();
 usePageTitle();
 </script>

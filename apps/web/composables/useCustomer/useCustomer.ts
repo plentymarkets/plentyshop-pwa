@@ -42,6 +42,10 @@ export const useCustomer: UseCustomerReturn = () => {
     return state.value.data;
   };
 
+  const setUser = (data: SessionResult) => {
+    state.value.data = data;
+  };
+
   /** Function for login a user as guest
    * @example
    * loginAsGuest('user@example.com');
@@ -56,6 +60,7 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   return {
+    setUser,
     getSession,
     loginAsGuest,
     ...toRefs(state.value),
