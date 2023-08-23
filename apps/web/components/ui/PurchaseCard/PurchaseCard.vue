@@ -1,6 +1,8 @@
 <template>
-  <section class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
-    data-testid="purchase-card">
+  <section
+    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
+    data-testid="purchase-card"
+  >
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
@@ -8,9 +10,21 @@
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         {{ $n(actualPrice, 'currency') }}
       </span>
-      <span v-if="productGetters.getPrice(product)?.special" class="text-base font-normal text-neutral-500 line-through">
+      <span
+        v-if="productGetters.getPrice(product)?.special"
+        class="text-base font-normal text-neutral-500 line-through"
+      >
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
+    </div>
+    <div>
+      <BasePrice
+        :base-price="productGetters.getDefaultBasePrice(product)"
+        :unit-content="productGetters.getUnitContent(product)"
+        :unit-name="productGetters.getUnitName(product)"
+        :content-line-first="true"
+        :oneline="false"
+      />
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="productGetters.getAverageRating(reviewAverage)" :max="5" />
@@ -19,26 +33,32 @@
         {{ $t('showAllReviews') }}
       </SfLink>
     </div>
-    <div class="mb-4 font-normal typography-text-sm" data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"></div>
+    <div
+      class="mb-4 font-normal typography-text-sm"
+      data-testid="product-description"
+      v-html="productGetters.getShortDescription(product)"
+    ></div>
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
     </div>
-    <div>
-      <BasePrice :basePrice="productGetters.getDefaultBasePrice(product)"
-        :unitContent="productGetters.getUnitContent(product)" :unitName="productGetters.getUnitName(product)"
-        :content-line-first="true" :oneline="false" />
-    </div>
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
-        <UiQuantitySelector :value="quantitySelectorValue" @change-quantity="changeQuantity"
-          class="min-w-[145px] flex-grow flex-shrink-0 basis-0" />
-        <SfButton type="button" size="lg" class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap" @click="
-          addToCart({
-            productId: Number(productGetters.getId(product)),
-            quantity: Number(quantitySelectorValue),
-          })
-          ">
+        <UiQuantitySelector
+          :value="quantitySelectorValue"
+          @change-quantity="changeQuantity"
+          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+        />
+        <SfButton
+          type="button"
+          size="lg"
+          class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
+          @click="
+            addToCart({
+              productId: Number(productGetters.getId(product)),
+              quantity: Number(quantitySelectorValue),
+            })
+          "
+        >
           <template #prefix>
             <SfIconShoppingCart size="sm" />
           </template>

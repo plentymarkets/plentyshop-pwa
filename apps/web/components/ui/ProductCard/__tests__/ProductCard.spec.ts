@@ -7,7 +7,7 @@ describe('<ProductCard />', () => {
       props: {
         name: 'test',
         price: 100,
-        imageUrl: '/images/product.webp',
+        imageUrl: '/images/product.webp'
       },
     });
 
