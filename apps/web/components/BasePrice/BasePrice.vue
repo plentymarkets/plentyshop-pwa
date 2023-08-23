@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="basePrice">
     <div :class="basePriceCss">
       <div v-if="oneline" class="flex-1"></div>
       <div id="basePrice">
