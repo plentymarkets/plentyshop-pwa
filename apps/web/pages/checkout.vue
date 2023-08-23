@@ -37,34 +37,43 @@
         <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
-          <SfCheckbox v-model="termsAccepted" class="inline-block mr-2" />
-          <i18n-t keypath="termsInfo">
-            <template #terms>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('termsAndConditions') }}
-              </SfLink>
-            </template>
-            <template #cancellation>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('cancellation') }}
-              </SfLink>
-            </template>
-            <template #privacyPolicy>
-              <SfLink
-                href="#"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('privacyPolicy') }}
-              </SfLink>
-            </template>
-          </i18n-t>
-          <div v-if="showTermsError" class="text-red-500 text-sm mt-2">{{ $t('termsRequired') }}</div>
+          <div class="flex items-center">
+            <SfCheckbox
+              ref="termsCheckbox"
+              v-model="termsAccepted"
+              :invalid="showTermsError"
+              class="inline-block mr-2"
+            />
+            <div>
+              <i18n-t keypath="termsInfo">
+                <template #terms>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('termsAndConditions') }}
+                  </SfLink>
+                </template>
+                <template #cancellation>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('cancellation') }}
+                  </SfLink>
+                </template>
+                <template #privacyPolicy>
+                  <SfLink
+                    href="#"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('privacyPolicy') }}
+                  </SfLink>
+                </template>
+              </i18n-t>
+            </div>
+          </div>
+          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
         </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
@@ -86,6 +95,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
@@ -105,6 +115,7 @@ const router = useRouter();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
+const termsCheckbox = ref(null);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -133,6 +144,8 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 const order = async () => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
+    termsCheckbox.value.$el.scrollIntoView({ behavior: 'smooth' });
+
     return;
   }
 
