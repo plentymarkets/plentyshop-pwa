@@ -1,0 +1,360 @@
+{
+  "billing": {
+    "heading": "Rechnungsadresse",
+    "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
+    "addButton": "Rechnungsadresse hinzufügen"
+  },
+  "shipping": {
+    "heading": "Lieferadresse",
+    "description": "Fügen Sie eine Lieferadresse hinzu, um Versanddetails anzuzeigen.",
+    "addButton": "Lieferadresse hinzufügen"
+  },
+  "form": {
+    "firstNameLabel": "Vorname",
+    "lastNameLabel": "Nachname",
+    "phoneLabel": "Telefon",
+    "countryLabel": "Land",
+    "streetNameLabel": "Straße",
+    "streetNumberLabel": "Nummer",
+    "optional": "Optional",
+    "cityLabel": "Stadt",
+    "stateLabel": "Bundesland",
+    "postalCodeLabel": "Postleitzahl",
+    "useAsShippingLabel": "Als Lieferadresse verwenden",
+    "selectPlaceholder": "-- Auswählen --",
+    "emailLabel": "E-Mail",
+    "passwordLabel": "Passwort",
+    "passwordHint": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
+    "termsAndConditionsLabel": "Hiermit bestätige ich, dass ich die {terms} gelesen habe.",
+    "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
+    "asterixHint": "* markierte Zustimmungen sind erforderlich"
+  },
+  "myCart": "Mein Warenkorb",
+  "orderSummary": "Bestellübersicht",
+  "itemsInCart": "(Artikel: {count})",
+  "itemsSubtotal": "Zwischensumme der Artikel",
+  "estimatedTax": "MwSt.",
+  "apply": "Anwenden",
+  "clear": "Zurücksetzen",
+  "min": "Min.",
+  "max": "Max.",
+  "total": "Gesamt",
+  "goToCheckout": "Zur Kasse",
+  "delivery": "Versandkosten",
+  "emptyCart": "Ihr Warenkorb ist leer",
+  "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
+  "backToShopping": "Zurück zum Einkaufen",
+  "allFromCategory": "Alle {name}",
+  "listSettings": "Listeneinstellungen",
+  "closeListSettings": "Listeneinstellungen schließen",
+  "clearFilters": "Alle Filter löschen",
+  "showProducts": "Produkte anzeigen",
+  "showMore": "Mehr anzeigen",
+  "showLess": "Weniger anzeigen",
+  "filter": "Filter",
+  "allProducts": "Alle Produkte",
+  "sortBy": "Sortieren nach",
+  "perPage": "Pro Seite",
+  "sortType": {
+    "nameA-Z": "Name A-Z",
+    "nameZ-A": "Name Z-A",
+    "priceUp": "Preis ⬆",
+    "priceDown": "Preis ⬇",
+    "reviewsUp": "Kundenbewertung ⬆",
+    "reviewsDown": "Kundenbewertung ⬇"
+  },
+  "numberOfProducts": "1 Produkt | {count} Produkte",
+  "prev": "Vorherige",
+  "next": "Nächste",
+  "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
+  "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
+  "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
+  "resultsFor": "Ergebnisse für \"{phrase}\"",
+  "prevAriaLabel": "Zur vorherigen Seite",
+  "nextAriaLabel": "Zur nächsten Seite",
+  "secondPageAriaLabel": "Zweite Seite",
+  "lastPageAriaLabel": "Letzte Seite",
+  "currentPage": "Seite {page} von {totalPages}",
+  "checkout": "Kasse",
+  "backToCart": "Zurück zum Warenkorb",
+  "back": "Zurück",
+  "buy": "Kaufen",
+  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
+  "termsAndConditions": "AGB",
+  "privacyPolicy": "Datenschutzerklärung",
+  "cancellationRights": "Widerrufsrecht",
+  "contactInfo": {
+    "heading": "Kontaktinformationen",
+    "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
+    "add": "Kontaktinformationen hinzufügen",
+    "email": "E-Mail",
+    "phone": "Telefonnummer",
+    "phonePlaceholder": "z.B. 1234 567890",
+    "cancel": "Zurücksetzen",
+    "löschen": "Löschen",
+    "speichern": "Speichern",
+    "Bearbeiten": "Bearbeiten",
+    "clearAll": "Alles löschen"
+  },
+  "checkoutPayment": {
+    "heading": "Zahlungsart",
+    "comingSoon": "Bald verfügbar",
+    "creditCard": "Kreditkarte"
+  },
+  "shippingMethod": {
+    "heading": "Versandart",
+    "description": "Nicht verfügbar, solange keine Versandadresse angegeben wird.",
+    "free": "Kostenlos",
+    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+  },
+  "validation": {
+    "heading": "Um die Bestellung abzuschließen:",
+    "missingBillingAddress": "Rechnungsadresse hinzufügen",
+    "missingShippingAddress": "Lieferadresse hinzufügen",
+    "missingEmail": "E-Mail hinzufügen",
+    "missingShippingDetails": "Versandart wählen",
+    "missingPaymentMethod": "Zahlungsart wählen"
+  },
+  "addToCart": "In den Warenkorb",
+  "addToCartShort": "Hinzufügen",
+  "search": "Suche",
+  "home": "Startseite",
+  "products": "Produkte",
+  "cart": "Warenkorb",
+  "wishlist": "Wunschliste",
+  "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
+  "quantitySelector": "Mengeneingabe",
+  "quantitySelectorDecrease": "Menge reduzieren",
+  "quantitySelectorIncrease": "Menge erhöhen",
+  "scrollTop": "Nach oben scrollen",
+  "numberInCart": "{count} Produkte im Warenkorb",
+  "allProductsLinkText": "Produkte durchsuchen",
+  "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
+  "viewCart": "Warenkorb anzeigen",
+  "category": "Kategorie",
+  "categories": {
+    "howToBuy": {
+      "label": "Bestellvorgang",
+      "subcategories": {
+        "paymentMethods": "Zahlungsarten",
+        "orderPickup": "Abholung",
+        "purchaseStatus": "Bestellstatus",
+        "trackOrders": "Bestellungen verfolgen",
+        "returns": "Retouren"
+      }
+    },
+    "help": {
+      "label": "Hilfe",
+      "subcategories": {
+        "helpCenter": "Hilfezentrum",
+        "securityFraud": "Sicherheit & Missbrauch",
+        "feedback": "Feedback",
+        "Kontakt": "Kontakt"
+      }
+    },
+    "services": {
+      "label": "Services",
+      "subcategories": {
+        "giftCards": "Geschenkkarten",
+        "storeLocator": "Filialfinder",
+        "clickCollect": "Click & Collect",
+        "sameDayDelivery": "Lieferung am selben Tag",
+        "shippingDelivery": "Versand & Lieferung",
+        "couponsDiscounts": "Gutscheine & Rabatte",
+        "newsletter": "Newsletter"
+      }
+    },
+    "about": {
+      "label": "Über",
+      "subcategories": {
+        "aboutUs": "Über uns",
+        "jobs": "Jobs",
+        "pressCenter": "Presse",
+        "affiliateProgram": "Partnerprogramm",
+        "suppliers": "Lieferanten"
+      }
+    }
+  },
+  "contactOptions": {
+    "helpCenter": {
+      "label": "Hilfezentrum",
+      "details": {
+        "description": "Jederzeit online Antworten finden"
+      }
+    },
+    "liveChat": {
+      "label": "Live-Chat",
+      "details": {
+        "openingHours-1": "Mo–Fr, 5:00–22:00",
+        "openingHours-2": "Sa-So, 6:00–21:00"
+      }
+    },
+    "phone": {
+      "label": "1 234 567 8901",
+      "details": {
+        "openingHours-1": "Mo–Fr, 5:00–22:00",
+        "openingHours-2": "Sa-So, 6:00–21:00"
+      }
+    }
+  },
+  "bottomLinks": {
+    "terms": "AGB",
+    "privacyPolicy": "Datenschutzerklärung",
+  },
+  "socialLabel": "Gehe zu {label}",
+  "failedInfoHeader": "Es tut uns wirklich leid.",
+  "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
+  "successInfoHeader": "Vielen Dank!",
+  "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
+  "etaDelivery": "Voraussichtliche Lieferdauer",
+  "shippingAddress": "Lieferadresse",
+  "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
+  "orderSuccessfulImageAlt": "Bild, das erklärt das die Bestellung erfolgreich war",
+  "backToCheckout": "Zurück zur Kasse",
+  "continueShopping": "Einkauf fortsetzen",
+  "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
+  "orderNumber": "Auftrags-ID",
+  "productDetails": "Produkt-Details",
+  "technicalData": "Technische Daten",
+  "customerReviews": "Kundenrezensionen",
+  "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
+  "loadingReviews": "Kundenrezensionen werden geladen...",
+  "reviewsCount": "{Anzahl} Bewertungen",
+  "showAllReviews": "Alle Bewertungen anzeigen",
+  "moreItemsOfThisCategory": "Weitere Produkte in dieser Kategorie",
+  "outOfStock": "Nicht auf Lager",
+  "sale": "Verkauf",
+  "readMore": "Mehr lesen",
+  "readLess": "Weniger lesen",
+  "noReviews": "Keine Bewertungen",
+  "loading": "Wird geladen...",
+  "gallery": {
+    "count": "{current} von {total}",
+    "thumb": "Zu Bild {index}",
+    "prev": "Vorherige",
+    "next": "Nächste",
+    "image": "Bild {index}"
+  },
+  "review": {
+    "verifiedPurchase": "Verifizierter Kauf"
+  },
+  "account": {
+    "heading": "Mein Konto",
+    "navBarBottomHeading": "Konto",
+    "logout": "Ausloggen",
+    "back": "Zurück",
+    "accountSettings": {
+      "heading": "Kontoeinstellungen",
+      "section": {
+        "personalData": "Persönliche Daten",
+        "billingDetails": "Rechnungsadressen",
+        "shippingDetails": "Versandadressen"
+      },
+      "personalData": {
+        "yourName": "Ihr Name",
+        "firstName": "Vorname",
+        "lastName": "Nachname",
+        "edit": "Bearbeiten",
+        "change": "Ändern",
+        "contactInformation": "Kontaktinformationen",
+        "yourPassword": "Ihr Passwort",
+        "passwordChange": "Passwort ändern",
+        "newPassword": "Neues Passwort",
+        "newPasswordAgain": "Neues Passwort wiederholen",
+        "changePassword": "Passwort ändern",
+        "currentPassword": "Aktuelles Passwort",
+        "passwordHelp": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen"
+      },
+      "billingDetails": {
+        "billingAddress": "Rechnungsadresse",
+        "edit": "Bearbeiten"
+      },
+      "shippingDetails": {
+        "edit": "Bearbeiten",
+        "shippingAddress": "Lieferadresse"
+      }
+    },
+    "ordersAndReturns": {
+      "heading": "Bestellungen & Retouren",
+      "orderId":"Auftrags-ID",
+      "orderDate":"Auftragsdatum",
+      "amount":"Anzahl",
+      "status":"Status",
+      "details":"Details",
+      "myOrders":"Meine Bestellungen",
+      "noOrders": "Sie haben noch nicht bei uns eingekauft",
+      "continue": "Einkauf fortsetzen",
+      "noOrdersAltText": "Keine Bestellungen",
+      "returnsHeading": "Retouren",
+      "returnsAltText": "Keine Retouren",
+      "returnsDescription": "Sie haben noch keine Produkte zurückgeschickt",
+      "section": {
+        "myOrders": "Meine Bestellungen",
+        "returns": "Retouren"
+      },
+      "orderDetails": {
+        "heading": "Bestellübersicht",
+        "orderId": "Auftrags-ID",
+        "orderDate": "Auftragsdatum",
+        "paymentAmount": "Gesamtsumme",
+        "status": "Status",
+        "price": "Preis",
+        "quantity": "Anzahl",
+        "subtotal": "Zwischensumme",
+        "tableCaption": "Bestellübersicht",
+        "product": "Produkt",
+        "itemsSubtotal": "Produkte Zwischensumme",
+        "delivery": "Versand",
+        "estimatedTax": "MwSt.",
+        "total": "Gesamtsumme", 
+        "billingAddress": "Rechnungsadresse",
+        "paymentMethod": "Zahlungsart",
+        "shippingAddress": "Lieferadresse"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "heading": "Login",
+      "submitLabel": "Login",
+      "forgotPasswordLabel": "Passwort vergessen?",
+      "rememberMeLabel": "An mich erinnern",
+      "createAccountBanner": "Zum ersten mal hier? {0}.",
+      "createAccountLinkLabel": "Konto erstellen"
+    },
+    "signup": {
+      "heading": "Konto erstellen",
+      "createButton": "Konto erstellen",
+      "bannerText": "Sie haben bereits ein Konto? Wechseln Sie zu  {login}",
+      "modal": {
+        "heading": "Willkommen",
+        "description": "Ihr Konto wurde erstellt. Sie können jetzt {information} zu Ihrem Konto hinzufügen, damit Sie dies nicht später während Ihres Einkaufs tun müssen.",
+        "information": "Informationen",
+        "button": "Einkaufen gehen",
+        "imageAlt": "Bild zum Bestätigen der erfolgreichen Anmeldung"
+      }
+    },
+    "resetPassword": {
+      "heading":  "Passwort zurücksetzen",
+      "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts. Mit dem Link können Sie ein neues Passwort für Ihr Konto festlegen.",
+      "email":"E-Mail",
+      "continue": "Weiter",
+      "backToLogin": "Zurück zum Login",
+      "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten.",
+      "anotherEmail": "Ich muss eine andere E-Mail-Adresse ausprobieren",
+      "emailSent": "E-Mail verschickt"
+    },
+    "setNewPassword": {
+      "heading":  "Neues Passwort festlegen",
+      "button":  "Neues Passwort festlegen",
+      "password":  "Neues Passwort",
+      "repeatPassword":  "Neues Passwort wiederholen",
+      "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
+      "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten."
+    }
+  },
+  "orderConfirmation": {
+    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
+  }
+}

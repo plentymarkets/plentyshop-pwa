@@ -81,7 +81,7 @@
         >
           <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ $t('placeOrder') }}
+            {{ $t('buy') }}
           </span>
         </SfButton>
       </OrderSummary>
@@ -105,6 +105,7 @@ const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
 
 const termsAccepted = ref(false);
@@ -127,6 +128,8 @@ const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
   await fetchPaymentMethods();
   await getCart();
+
+  setShippingPrivacyAgreement(false);
 };
 
 const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
@@ -157,8 +160,7 @@ const order = async () => {
 
   const data = await createOrder({
     paymentId: paymentMethodData.value.selected,
-    // eslint-disable-next-line unicorn/expiring-todo-comments
-    shippingPrivacyHintAccepted: true, // TODO
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
   if (data?.order?.id) {
