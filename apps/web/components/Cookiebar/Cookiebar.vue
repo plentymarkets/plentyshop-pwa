@@ -168,20 +168,24 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
-import { Cookie, CookieGroup } from 'cookie.config';
+import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
 
 const runtimeConfig = useRuntimeConfig();
+const cookieGroups = ref(runtimeConfig.public.cookieGroups);
+const { getMinimumLifeSpan } = cookieBarHelper();
 const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defaultCheckboxIndex } = useCookieBar(
-  useCookie('consent-cookie'),
+  useCookie('consent-cookie', {
+    path: '/',
+    maxAge: getMinimumLifeSpan(cookieGroups.value as CookieGroupFromNuxtConfig),
+  }),
   0,
-  runtimeConfig.public.cookieGroups as any,
+  cookieGroups.value as CookieGroupFromNuxtConfig,
 );
 
 const hideBanner = computed(() => {
   return bannerIsHidden.value;
 });
 const furtherSettingsOn = ref(false);
-const cookieGroups = ref(runtimeConfig.public.cookieGroups);
 
 const setChildrenCheckboxes = (group: CookieGroup, state: unknown) => {
   group.cookies = group.cookies.map((cookie) => ({

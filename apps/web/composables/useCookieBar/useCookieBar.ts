@@ -6,10 +6,6 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
-const convertToDays = (daysInString: string): number => {
-  return Number.parseInt(daysInString.split(' ')[0]);
-};
-
 function convertToSaveableJson(jsonList: any): string {
   return jsonList.map((group: any) => ({
     [group.name]: group.cookies.map((cookie: any) => ({
@@ -81,29 +77,6 @@ export const useCookieBar = (
       });
     }
   }
-  function getMinimumLifeSpan(): number {
-    // expected minimum lifetime span to be in days
-    let minimum = 100_000;
-
-    cookieJsonFromConfig.groups.forEach((group: CookieGroup) => {
-      group.cookies.forEach((cookie) => {
-        if (minimum > convertToDays(cookie.Lifespan)) {
-          minimum = convertToDays(cookie.Lifespan);
-        }
-      });
-    });
-    return minimum;
-  }
-  function saveCookies(cookieValue: string, useCookie: any): void {
-    const minimumOfAllMinimums = 60 * 60 * 24 * getMinimumLifeSpan();
-
-    // @TODO [2023-28-08]: set minimum maxAge for cookie
-    /* const cookie = useCookie(key, {
-      path: '/',
-      maxAge: minimumOfAllMinimums
-     }); */
-    useCookie.value = cookieValue;
-  }
 
   function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): void {
     if (setAllCookies) {
@@ -117,9 +90,7 @@ export const useCookieBar = (
         }
       });
     }
-    const toSave = convertToSaveableJson(cookieJson.value);
-
-    saveCookies(toSave, consentCookie);
+    consentCookie.value = convertToSaveableJson(cookieJson.value) as any;
     bannerIsHidden.value = true;
     loadThirdPartyScripts();
   }
