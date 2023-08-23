@@ -78,10 +78,13 @@
   "checkout": "Checkout",
   "backToCart": "Back to My Cart",
   "back": "Back",
+  "placeOrder": "Place order and pay",
   "buy": "Buy",
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
+  "termsRequired": "You have to agree with the terms and conditions.",
+  "tomorrow": "Tomorrow",
   "cancellationRights": "Cancellation rights",
   "contactInfo": {
     "heading": "Contact Information",
