@@ -33,11 +33,7 @@
         ${{ price }}
       </span>
       <div class="mb-2">
-        <BasePriceInLine
-          :base-price="basePrice"
-          :unit-content="unitContent"
-          :unit-name="unitName"
-        />
+        <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton type="button" size="sm">
         <template #prefix>
