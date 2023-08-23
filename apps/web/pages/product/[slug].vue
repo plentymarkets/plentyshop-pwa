@@ -13,10 +13,6 @@
           </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mb-6" />
-          <NuxtLazyHydrate when-visible>
-            <ProductProperties v-if="product" :product="product" />
-          </NuxtLazyHydrate>
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
