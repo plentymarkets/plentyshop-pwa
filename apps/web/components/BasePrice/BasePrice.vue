@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-// import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { BasePriceProps } from '~/components/BasePrice/types';
 
 const props = defineProps<BasePriceProps>();
