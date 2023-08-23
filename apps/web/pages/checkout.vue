@@ -114,7 +114,6 @@ const router = useRouter();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
-const termsCheckbox = ref(null);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
