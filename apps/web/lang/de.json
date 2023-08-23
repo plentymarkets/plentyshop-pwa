@@ -89,9 +89,9 @@
     "add": "Kontaktinformationen hinzufügen",
     "email": "E-Mail",
     "phone": "Telefonnummer",
-    "phonePlaceholder": "z.B. 123 456 7890",
+    "phonePlaceholder": "z.B. 1234 567890",
     "cancel": "Zurücksetzen",
-    "löschen": "Alles löschen",
+    "löschen": "Löschen",
     "speichern": "Speichern",
     "Bearbeiten": "Bearbeiten",
     "clearAll": "Alles löschen"
