@@ -1,8 +1,5 @@
 <template>
-  <div class="text-sm" v-if="basePrice">
-    <div>{{ $t('Content') }}: {{ unitContent }} {{ unitName }}</div>
-    <div>{{ $t('Baseprice') }}: {{ basePrice }}</div>
-  </div>
+  <div class="text-sm mr-1" v-if="basePrice">{{ unitContent }} {{ unitName }} | {{ basePrice }}</div>
 </template>
 
 <script setup lang="ts">

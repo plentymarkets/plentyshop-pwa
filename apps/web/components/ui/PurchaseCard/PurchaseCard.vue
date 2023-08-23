@@ -22,8 +22,6 @@
         :base-price="productGetters.getDefaultBasePrice(product)"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
-        :content-line-first="true"
-        :oneline="false"
       />
     </div>
     <div class="inline-flex items-center mt-4 mb-2">

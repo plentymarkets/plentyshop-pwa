@@ -34,8 +34,6 @@
           :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
-          :content-line-first="true"
-          :oneline="false"
         />
       </div>
       <!--      <div class="my-2 sm:mb-0">-->
