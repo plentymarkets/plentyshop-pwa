@@ -27,7 +27,7 @@ const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalI
 const { selectedMethod } = useCartShippingMethods();
 
 const parcelServiceInformation = computed(() => {
-  selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
+  return shippingProviderGetters.getShippingMethodName(selectedMethod.value);
 });
 
 const changeHint = (value: boolean) => {
