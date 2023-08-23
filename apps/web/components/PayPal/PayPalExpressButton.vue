@@ -8,6 +8,7 @@ import { orderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src'
 import { v4 as uuid } from 'uuid';
 import { paypalGetters } from '~/getters/paypalGetters';
 
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const paypalButton = ref<HTMLElement | null>(null);
 const vsfCurrency = useCookie('vsf-currency').value as string;
 const fallbackCurrency = useAppConfig().fallbackCurrency as string;
@@ -26,8 +27,7 @@ const onApprove = async (data: OnApproveData) => {
 
   const order = await createOrder({
     paymentId: cart.value.methodOfPaymentId,
-    // eslint-disable-next-line unicorn/expiring-todo-comments
-    shippingPrivacyHintAccepted: true, // TODO
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
   await executeOrder({
