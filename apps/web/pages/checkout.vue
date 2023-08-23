@@ -72,7 +72,7 @@
         </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton v-if="selectedPaymentId === 6001" />
+        <PayPalExpressButton v-if="selectedPaymentId === 6001" :disabled="!termsAccepted" @on-click="validateTerms" />
         <SfButton
           v-else
           type="submit"
@@ -154,11 +154,18 @@ const scrollToTermsCheckbox = () => {
   });
 };
 
-const order = async () => {
+const validateTerms = (): boolean => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
     scrollToTermsCheckbox();
+    return false;
+  }
 
+  return true;
+};
+
+const order = async () => {
+  if (!validateTerms()) {
     return;
   }
 

@@ -19,6 +19,13 @@ const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal(
 const { createOrder } = useMakeOrder();
 const { data: cart } = useCart();
 const router = useRouter();
+const emits = defineEmits(['on-click']);
+
+const props = defineProps({
+  disabled: {
+    type: Boolean,
+  },
+});
 
 const paypal = await loadScript(currency);
 
@@ -60,11 +67,18 @@ onMounted(() => {
             fundingSource: fundingSource,
 
             onClick() {
-
+              emits('on-click');
             },
 
             onInit(data, actions) {
               actions.disable();
+              watch(props, (watchProps) => {
+                if (watchProps.disabled) {
+                  actions.disable();
+                } else {
+                  actions.enable();
+                }
+              });
             },
 
             async createOrder() {
