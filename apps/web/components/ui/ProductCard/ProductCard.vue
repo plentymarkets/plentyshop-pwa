@@ -66,11 +66,15 @@ const loading = ref(false);
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
-  await addToCart({
-    productId: productId,
-    quantity: 1,
-  });
-  loading.value = false;
+
+  try {
+    await addToCart({
+      productId: productId,
+      quantity: 1,
+    });
+  } finally {
+    loading.value = false;
+  }
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
