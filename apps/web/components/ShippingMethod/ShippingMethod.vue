@@ -32,6 +32,8 @@
         <p>{{ $t('shippingMethod.description') }}</p>
       </div>
     </div>
+
+    <ShippingPrivacy />
   </div>
 </template>
 <script lang="ts" setup>
