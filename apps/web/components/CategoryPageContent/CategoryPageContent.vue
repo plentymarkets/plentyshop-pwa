@@ -23,23 +23,17 @@
             class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
             data-testid="category-grid"
           >
-            <NuxtLazyHydrate
-              when-visible
-              v-for="(product, index) in products"
-              :key="productGetters.getId(product)"
-            >
-            <UiProductCard
-              v-for="(product, index) in products"
-              :key="productGetters.getId(product)"
-              :name="productGetters.getName(product) ?? ''"
-              :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
-              :rating="productGetters.getAverageRating({} as ReviewAverage)"
-              :price="productGetters.getPrice(product).regular ?? 0"
-              :image-url="productGetters.getCoverImage(product)"
-              :image-alt="productGetters.getName(product) ?? ''"
-              :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-              :priority="index === 0"
-            />
+            <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+              <UiProductCard
+                :name="productGetters.getName(product) ?? ''"
+                :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
+                :rating="productGetters.getAverageRating({} as ReviewAverage)"
+                :price="productGetters.getPrice(product).regular ?? 0"
+                :image-url="productGetters.getCoverImage(product)"
+                :image-alt="productGetters.getName(product) ?? ''"
+                :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
+                :priority="index === 0"
+              />
             </NuxtLazyHydrate>
           </section>
           <LazyCategoryEmptyState v-else />
@@ -49,7 +43,7 @@
               :total-items="totalProducts"
               :page-size="itemsPerPage"
               :max-visible-pages="maxVisiblePages"
-          />
+            />
           </NuxtLazyHydrate>
         </div>
       </div>
