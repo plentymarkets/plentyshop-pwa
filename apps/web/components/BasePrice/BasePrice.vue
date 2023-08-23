@@ -1,7 +1,7 @@
 <template>
   <div class="text-sm" v-if="basePrice">
-    <div>{{ $t('Content') }}: {{ unitContent }} {{ unitName }}</div>
-    <div>{{ $t('Baseprice') }}: {{ basePrice }}</div>
+    <div>{{ $t('content') }}: {{ unitContent }} {{ unitName }}</div>
+    <div>{{ $t('basePrice') }}: {{ basePrice }}</div>
   </div>
 </template>
 

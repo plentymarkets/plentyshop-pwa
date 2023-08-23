@@ -57,7 +57,6 @@
         <span v-else class="font-bold sm:ml-auto sm:order-1 typography-text-sm sm:typography-text-lg">
           {{ $n(prices.regular || 0, 'currency') }}
         </span>
-
         <UiQuantitySelector
           @change-quantity="debounceQuantity"
           :value="cartGetters.getItemQty(cartItem)"
