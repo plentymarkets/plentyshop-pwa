@@ -44,7 +44,13 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
         paymentId: paymentMethodId,
       }),
     );
+    const { data: cart } = useCart();
     useHandleError(error.value);
+
+    if (cart.value) {
+      cart.value.methodOfPaymentId = paymentMethodId;
+    }
+
     state.value.loading = false;
   };
 

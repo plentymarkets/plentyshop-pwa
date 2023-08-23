@@ -3,7 +3,7 @@ import {
   PayPalCreateOrder,
   PayPalApproveOrder,
   PayPalExecutePayment,
-  PayPalExecuteParams
+  PayPalExecuteParams,
 } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 
 export interface UsePayPalState {

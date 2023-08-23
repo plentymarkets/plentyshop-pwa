@@ -29,17 +29,19 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * loadScript(currency: string);
    */
   const loadScript: LoadScript = async (currency: string) => {
-    console.log('currency', currency);
-    try {
-      state.value.PayPalScript = await loadPayPalScript({
-        clientId: paypalGetters.getClientId() ?? '',
-        currency: currency,
-        dataPartnerAttributionId: 'plentysystemsAG_Cart_PPCP',
-      });
-      return state.value.PayPalScript;
-    } catch {
-      // console.error('failed to load the PayPal JS SDK script', error);
+    if (paypalGetters.getClientId()) {
+      try {
+        state.value.PayPalScript = await loadPayPalScript({
+          clientId: paypalGetters.getClientId() ?? '',
+          currency: currency,
+          dataPartnerAttributionId: 'plentysystemsAG_Cart_PPCP',
+        });
+        return state.value.PayPalScript;
+      } catch {
+        // console.error('failed to load the PayPal JS SDK script', error);
+      }
     }
+
     return null;
   };
 

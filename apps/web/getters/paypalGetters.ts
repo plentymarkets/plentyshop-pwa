@@ -2,7 +2,7 @@ import { PayPalConfig } from '@plentymarkets/plentymarkets-sdk/packages/api-clie
 import integrationConfig from '../integration.config';
 
 function getConfig(): PayPalConfig | null {
-  return integrationConfig.payment.paypal ?? null;
+  return integrationConfig?.payment?.paypal ?? null;
 }
 
 function getClientId(): string | null {

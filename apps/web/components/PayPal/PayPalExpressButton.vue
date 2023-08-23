@@ -13,8 +13,6 @@ const vsfCurrency = useCookie('vsf-currency').value as string;
 const fallbackCurrency = useAppConfig().fallbackCurrency as string;
 const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
 
-console.log(useAppConfig());
-
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
