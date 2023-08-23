@@ -214,7 +214,7 @@
   "backToCheckout": "Back to Checkout",
   "continueShopping": "Continue shopping",
   "orderErrorMessage": "Something went wrong. Try again later.",
-  "orderNumber": "Order-ID",
+  "orderNumber": "Order ID",
   "productDetails": "Product details",
   "technicalData": "Technical data",
   "customerReviews": "Customer Reviews",
@@ -224,17 +224,17 @@
   "showAllReviews": "Show all reviews",
   "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
-  "sale": "Verkauf",
-  "readMore": "Mehr lesen",
-  "readLess": "Weniger lesen",
-  "noReviews": "Keine Bewertungen",
-  "loading": "Laden",
+  "sale": "Sale",
+  "readMore": "Read more",
+  "readLess": "Read less",
+  "noReviews": "No reviews",
+  "loading": "Loading...",
   "gallery": {
-    "count": "{current} von {total}",
-    "thumb": "Gehe zu Bild {index}",
-    "prev": "Vorherige",
-    "next": "Nächste",
-    "image": "Bild {index}"
+    "count": "{current} of {total}",
+    "thumb": "Go to slide {index}",
+    "prev": "Previous",
+    "next": "Next",
+    "image": "Slide {index}"
   },
   "review": {
     "verifiedPurchase": "Verified purchase"
@@ -248,8 +248,8 @@
       "heading": "Account Settings",
       "section": {
         "personalData": "Personal Data",
-        "billingDetails": "Billing Addresses",
-        "shippingDetails": "Shipping Addresses"
+        "billingDetails": "Billing addresses",
+        "shippingDetails": "Shipping addresses"
       },
       "personalData": {
         "yourName": "Your name",

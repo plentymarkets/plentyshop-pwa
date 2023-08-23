@@ -36,8 +36,8 @@
   "estimatedTax": "MwSt.",
   "apply": "Anwenden",
   "clear": "Zurücksetzen",
-  "min": "Min",
-  "max": "Max",
+  "min": "Min.",
+  "max": "Max.",
   "total": "Gesamt",
   "goToCheckout": "Zur Kasse",
   "delivery": "Versandkosten",
@@ -68,10 +68,10 @@
   "next": "Nächste",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
-  "emptyStateAltText": "Bild das beschreibt, dass keine Produkte gefunden wurden",
+  "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "resultsFor": "Ergebnisse für \"{phrase}\"",
-  "prevAriaLabel": "Gehe zur vorherigen Seite",
-  "nextAriaLabel": "Gehe zur nächsten Seite",
+  "prevAriaLabel": "Zur vorherigen Seite",
+  "nextAriaLabel": "Zur nächsten Seite",
   "secondPageAriaLabel": "Zweite Seite",
   "lastPageAriaLabel": "Letzte Seite",
   "currentPage": "Seite {page} von {totalPages}",
@@ -209,8 +209,8 @@
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "etaDelivery": "Voraussichtliche Lieferdauer",
   "shippingAddress": "Lieferadresse",
-  "somethingWentWrongImageAlt": "Bild das erklärt das etwas schief gegangen ist",
-  "orderSuccessfulImageAlt": "Bild das erklärt das die Bestellung erfolgreich war",
+  "somethingWentWrongImageAlt": "Bild, das erklärt das etwas schief gegangen ist",
+  "orderSuccessfulImageAlt": "Bild, das erklärt das die Bestellung erfolgreich war",
   "backToCheckout": "Zurück zur Kasse",
   "continueShopping": "Einkauf fortsetzen",
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
@@ -224,20 +224,20 @@
   "showAllReviews": "Alle Bewertungen anzeigen",
   "moreItemsOfThisCategory": "Weitere Produkte in dieser Kategorie",
   "outOfStock": "Nicht auf Lager",
-  "sale": "Sale",
-  "readMore": "Read more",
-  "readLess": "Read less",
-  "noReviews": "No reviews",
-  "loading": "Loading",
+  "sale": "Verkauf",
+  "readMore": "Mehr lesen",
+  "readLess": "Weniger lesen",
+  "noReviews": "Keine Bewertungen",
+  "loading": "Wird geladen...",
   "gallery": {
-    "count": "{current} of {total}",
-    "thumb": "Go to slide {index}",
-    "prev": "Previous",
-    "next": "Next",
-    "image": "Slide {index}"
+    "count": "{current} von {total}",
+    "thumb": "Zu Bild {index}",
+    "prev": "Vorherige",
+    "next": "Nächste",
+    "image": "Bild {index}"
   },
   "review": {
-    "verifiedPurchase": "Verified purchase"
+    "verifiedPurchase": "Verifizierter Kauf"
   },
   "account": {
     "heading": "Mein Konto",
@@ -264,7 +264,7 @@
         "newPasswordAgain": "Neues Passwort wiederholen",
         "changePassword": "Passwort ändern",
         "currentPassword": "Aktuelles Passwort",
-        "passwordHelp": "Verwenden Sie 8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen."
+        "passwordHelp": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen"
       },
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
@@ -277,7 +277,7 @@
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
-      "orderId":"Order-ID",
+      "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
       "amount":"Anzahl",
       "status":"Status",
@@ -295,7 +295,7 @@
       },
       "orderDetails": {
         "heading": "Bestellübersicht",
-        "orderId": "Order-ID",
+        "orderId": "Auftrags-ID",
         "orderDate": "Auftragsdatum",
         "paymentAmount": "Gesamtsumme",
         "status": "Status",
@@ -330,28 +330,28 @@
       "modal": {
         "heading": "Willkommen",
         "description": "Ihr Konto wurde erstellt. Sie können jetzt {information} zu Ihrem Konto hinzufügen, damit Sie dies nicht später während Ihres Einkaufs tun müssen.",
-        "information": "Informationen hinzufügen",
+        "information": "Informationen",
         "button": "Einkaufen gehen",
-        "imageAlt": "Bild zum Bestätigen der erfolgreiche Anmeldung"
+        "imageAlt": "Bild zum Bestätigen der erfolgreichen Anmeldung"
       }
     },
     "resetPassword": {
       "heading":  "Passwort zurücksetzen",
-      "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts, mit dem Sie ein neues Passwort für Ihr Konto festlegen können.",
+      "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts. Mit dem Link können Sie ein neues Passwort für Ihr Konto festlegen.",
       "email":"E-Mail",
       "continue": "Weiter",
       "backToLogin": "Zurück zum Login",
-      "thankYou": "Danke, wenn ein Konto mit {0}, registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten.",
+      "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten.",
       "anotherEmail": "Ich muss eine andere E-Mail-Adresse ausprobieren",
-      "emailSent": "E-Mail gesendet"
+      "emailSent": "E-Mail verschickt"
     },
     "setNewPassword": {
       "heading":  "Neues Passwort festlegen",
       "button":  "Neues Passwort festlegen",
       "password":  "Neues Passwort",
       "repeatPassword":  "Neues Passwort wiederholen",
-      "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen.",
-      "description": "Erstellen Sie das neue Passwort, das Sie für die Anmeldung bei Ihrem Konto verwenden möchten."
+      "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
+      "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten."
     }
   },
   "orderConfirmation": {
