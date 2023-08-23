@@ -1,21 +1,9 @@
 <template>
   <MegaMenu :categories="categoryTree">
-    <SfButton
-      class="!px-2 mr-auto hidden lg:flex text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900"
-      type="button"
-      variant="tertiary"
-      :tag="NuxtLink"
-      :to="paths.category"
-    >
-      <template #suffix>
-        <SfIconExpandMore class="hidden lg:block" />
-      </template>
-      <span class="hidden lg:flex whitespace-nowrap">{{ $t('allProductsLinkText') }}</span>
-    </SfButton>
     <NuxtLazyHydrate when-visible>
       <UiSearch class="hidden md:block flex-1" />
     </NuxtLazyHydrate>
-    <nav class="hidden md:flex md:flex-row md:flex-nowrap">
+    <nav class="hidden ml-2 md:flex md:flex-row md:flex-nowrap">
       <NuxtLazyHydrate when-visible>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
