@@ -48,6 +48,7 @@ This section describes how to run the project locally.
 
 - `Node.js` 20+
 - `Yarn` 3
+- [Personal Access Token](https://github.com/settings/tokens/new) with the scope **read:packages**
 
 Download Node.js from the [official website](https://nodejs.org/) or use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version. For installation instructions for Yarn, refer to the [Yarn documentation](https://yarnpkg.com/getting-started/install).
 
@@ -65,6 +66,16 @@ We recommend working with a fork of this repository. A fork allows you to easily
 - Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
 - Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
 - Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
+
+### Authentication
+
+This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
+
+1. In the root directory, create a new file called `.yarnrc.yml`.
+2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
+3. In `yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
+
+Git doesn't track `yarnrc.yml`, so you don't have to worry about exposing your token.
 
 ### Starting the app
 
