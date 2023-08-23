@@ -144,7 +144,7 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 const order = async () => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-    termsCheckbox.value.$el.scrollIntoView({ behavior: 'smooth' });
+    termsCheckbox.value?.$el?.scrollIntoView({ behavior: 'smooth' });
 
     return;
   }
