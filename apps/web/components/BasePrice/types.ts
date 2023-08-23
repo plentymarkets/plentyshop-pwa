@@ -1,5 +1,5 @@
 export type BasePriceProps = {
-  unitContent?: string;
+  unitContent?: number;
   unitName?: string;
   basePrice?: string;
   oneline: boolean;
