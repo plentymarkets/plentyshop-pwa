@@ -39,10 +39,9 @@
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
             <SfCheckbox
-              ref="termsCheckbox"
               v-model="termsAccepted"
               :invalid="showTermsError"
-              class="inline-block mr-2"
+              class="terms-checkbox inline-block mr-2"
             />
             <div>
               <i18n-t keypath="termsInfo">
@@ -141,10 +140,23 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await getShippingMethods();
 };
 
+const scrollToTermsCheckbox = () => {
+  const termsCheckboxElement = document.querySelector('.terms-checkbox') as HTMLElement; // You'll have to add an identifying class or use another selector
+  const termsCheckboxElementOffset = termsCheckboxElement?.offsetTop ?? 0;
+
+  const headerElement = document.querySelector('header') as HTMLElement; // Assuming your header has a 'header' tag or change this to the appropriate selector
+  const headerElementOffset = headerElement.offsetHeight ?? 0;
+
+  window.scrollTo({
+    top: termsCheckboxElementOffset - headerElementOffset,
+    behavior: 'smooth',
+  });
+};
+
 const order = async () => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-    termsCheckbox.value?.$el?.scrollIntoView({ behavior: 'smooth' });
+    scrollToTermsCheckbox();
 
     return;
   }
