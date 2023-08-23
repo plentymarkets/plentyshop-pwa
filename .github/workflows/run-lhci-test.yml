@@ -24,7 +24,7 @@ jobs:
       - name: Create yarnrc
         run: |
           cp .yarnrc.yml.example .yarnrc.yml
-          sed -i 's/<TOKEN>/${{ secrets.ORGA_PAT_CICD1_PACKAGE_READ_ONLY }}/' .yarnrc.yml
+          sed -i 's/<TOKEN>/${{ secrets.GITHUB_TOKEN }}/' .yarnrc.yml
 
       - name: Install dependencies
         run: yarn
