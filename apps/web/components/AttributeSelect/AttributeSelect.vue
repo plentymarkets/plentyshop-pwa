@@ -27,7 +27,7 @@ const props = defineProps<AttributeSelectProps>();
 const product = props.product;
 
 const attributeGroups = computed((): ProductAttributeValue[][] => {
-  const groupsForProducts = productGetters.getAttributes([product], ['color', 'size']) as ProductAttributeValue[][][];
+  const groupsForProducts = productGetters.getAttributes([product]) as ProductAttributeValue[][][];
   return groupsForProducts[0] ?? [];
 });
 
