@@ -28,7 +28,7 @@ export class CheckoutPageObject {
   }
 
   get placeOrderButtons() {
-    return cy.getByTestId('button').contains('Place order and pay');
+    return cy.getByTestId('button').contains('Buy');
   }
 
   get displaySuccessPages() {
