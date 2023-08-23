@@ -32,7 +32,16 @@
       <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
         ${{ price }}
       </span>
-      <SfButton type="button" size="sm">
+      <SfButton
+        type="button"
+        size="sm"
+        @click="
+          addToCart({
+            productId: Number(productGetters.getId(product)),
+            quantity: 1,
+          })
+        "
+      >
         <template #prefix>
           <SfIconShoppingCart size="sm" />
         </template>
@@ -43,6 +52,7 @@
 </template>
 
 <script setup lang="ts">
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfLink, SfRating, SfCounter, SfButton, SfIconShoppingCart } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
@@ -50,6 +60,8 @@ withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
+
+const { addToCart } = useCart();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

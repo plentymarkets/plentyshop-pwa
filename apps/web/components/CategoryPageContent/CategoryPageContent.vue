@@ -23,6 +23,7 @@
           >
             <UiProductCard
               v-for="(product, index) in products"
+              :product="product"
               :key="productGetters.getId(product)"
               :name="productGetters.getName(product) ?? ''"
               :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
