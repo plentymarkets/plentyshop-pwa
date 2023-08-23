@@ -114,7 +114,8 @@
   "shippingMethod": {
     "heading": "Shipping details",
     "description": "Not available until a shipping address is provided.",
-    "free": "Free"
+    "free": "Free",
+    "ShowDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time.",
   },
   "validation": {
     "heading": "To complete order:",
@@ -344,7 +345,7 @@
         "itemsSubtotal": "Items Subtotal",
         "delivery": "Delivery",
         "estimatedTax": "Estimated Sales Tax",
-        "total": "Total", 
+        "total": "Total",
         "billingAddress": "Billing address",
         "paymentMethod": "Payment method",
         "shippingAddress": "Shipping address"
