@@ -4,7 +4,9 @@
       <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
       <div class="md:flex gap-6" data-testid="category-page-content">
         <CategorySidebar :is-open="isOpen" @close="close">
-          <slot name="sidebar" />
+          <NuxtLazyHydrate when-visible>
+            <slot name="sidebar" />
+          </NuxtLazyHydrate>
         </CategorySidebar>
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
@@ -21,6 +23,11 @@
             class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
             data-testid="category-grid"
           >
+            <NuxtLazyHydrate
+              when-visible
+              v-for="(product, index) in products"
+              :key="productGetters.getId(product)"
+            >
             <UiProductCard
               v-for="(product, index) in products"
               :key="productGetters.getId(product)"
@@ -33,14 +40,17 @@
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index === 0"
             />
+            </NuxtLazyHydrate>
           </section>
-          <CategoryEmptyState v-else />
-          <UiPagination
-            :current-page="getFacetsFromURL().page ?? 1"
-            :total-items="totalProducts"
-            :page-size="itemsPerPage"
-            :max-visible-pages="maxVisiblePages"
+          <LazyCategoryEmptyState v-else />
+          <NuxtLazyHydrate when-visible>
+            <UiPagination
+              :current-page="getFacetsFromURL().page ?? 1"
+              :total-items="totalProducts"
+              :page-size="itemsPerPage"
+              :max-visible-pages="maxVisiblePages"
           />
+          </NuxtLazyHydrate>
         </div>
       </div>
     </div>

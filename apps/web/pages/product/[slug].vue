@@ -3,22 +3,35 @@
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-          <Gallery :images="productGetters.getGallery(product)" />
+          <NuxtLazyHydrate when-idle>
+            <Gallery :images="product?.gallery ?? []" />
+          </NuxtLazyHydrate>
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
-          <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
+          <NuxtLazyHydrate when-idle>
+            <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
+          </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mb-6" />
+          <NuxtLazyHydrate when-visible>
+            <ProductProperties v-if="product" :product="product" />
+          </NuxtLazyHydrate>
           <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <ProductAccordion v-if="product" :product="product" />
+          <NuxtLazyHydrate when-visible>
+            <ProductAccordion v-if="product" :product="product" />
+          </NuxtLazyHydrate>
           <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <ReviewsAccordion :product="product" />
+          <NuxtLazyHydrate when-visible>
+            <ReviewsAccordion :product="product" />
+          </NuxtLazyHydrate>
         </section>
         <UiDivider class="mt-4 mb-2" />
       </div>
       <section class="mx-4 mt-28 mb-20">
-        <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
+        <NuxtLazyHydrate when-visible>
+          <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
+        </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
   </NuxtLayout>
