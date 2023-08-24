@@ -22,7 +22,8 @@
     "@vue-storefront/storefront-boilerplate-sdk": "~0.2.0",
     "@vueuse/core": "^10.3.0",
     "lodash-es": "^4.17.21",
-    "nuxt-lazy-hydrate": "^1.0.0"
+    "nuxt-lazy-hydrate": "^1.0.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
