@@ -17,6 +17,13 @@
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
+    <div>
+      <BasePrice
+        :base-price="productGetters.getDefaultBasePrice(product)"
+        :unit-content="productGetters.getUnitContent(product)"
+        :unit-name="productGetters.getUnitName(product)"
+      />
+    </div>
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="productGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(reviewAverage) }}</SfCounter>
@@ -49,11 +56,15 @@
               quantity: Number(quantitySelectorValue),
             })
           "
+          :disabled="loading"
         >
-          <template #prefix>
+          <template #prefix v-if="!loading">
             <SfIconShoppingCart size="sm" />
           </template>
-          {{ $t('addToCart') }}
+          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+          <span v-else>
+            {{ $t('addToCart') }}
+          </span>
         </SfButton>
       </div>
     </div>
@@ -62,14 +73,14 @@
 
 <script lang="ts" setup>
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart } from '@storefront-ui/vue';
+import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
-const { addToCart } = useCart();
+const { addToCart, loading } = useCart();
 
 const actualPrice = computed(
   () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,

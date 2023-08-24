@@ -49,6 +49,8 @@
   "closeListSettings": "Listeneinstellungen schließen",
   "clearFilters": "Alle Filter löschen",
   "showProducts": "Produkte anzeigen",
+  "content": "Inhalt",
+  "basePrice": "Grundpreis",
   "showMore": "Mehr anzeigen",
   "showLess": "Weniger anzeigen",
   "filter": "Filter",
@@ -63,7 +65,7 @@
     "reviewsUp": "Kundenbewertung ⬆",
     "reviewsDown": "Kundenbewertung ⬇"
   },
-  "numberOfProducts": "1 Produkt | {count} Produkte",
+  "numberOfProducts": "{count} Produkte von {total} Produkten",
   "prev": "Vorherige",
   "next": "Nächste",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
@@ -307,7 +309,7 @@
         "itemsSubtotal": "Produkte Zwischensumme",
         "delivery": "Versand",
         "estimatedTax": "MwSt.",
-        "total": "Gesamtsumme", 
+        "total": "Gesamtsumme",
         "billingAddress": "Rechnungsadresse",
         "paymentMethod": "Zahlungsart",
         "shippingAddress": "Lieferadresse"

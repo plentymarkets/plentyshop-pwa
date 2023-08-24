@@ -3103,7 +3103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
+"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
   version: 3.6.5
   resolution: "@nuxt/kit@npm:3.6.5"
   dependencies:
@@ -3444,6 +3444,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@paypal/paypal-js@npm:7.0.0":
+  version: 7.0.0
+  resolution: "@paypal/paypal-js@npm:7.0.0"
+  dependencies:
+    promise-polyfill: ^8.3.0
+  checksum: 64f94b2454650639a49887eb2642cd632cec1ed24ae0c4e98500c7cce3078288897f3e391b83471e07b44d546bcaab65c6a3ead2580c73e56680daaecb846569
+  languageName: node
+  linkType: hard
+
 "@phenomnomnominal/tsquery@npm:^5.0.0":
   version: 5.0.1
   resolution: "@phenomnomnominal/tsquery@npm:5.0.1"
@@ -3462,13 +3471,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/plentymarkets-sdk@npm:^0.1.38":
-  version: 0.1.38
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.38::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.38%2Ff198463a64535d001cc83c70679e6449a0325f5c"
+"@plentymarkets/plentymarkets-sdk@npm:^0.1.39":
+  version: 0.1.39
+  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.39::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.39%2F6dcf1ce9efe786be69d7557d971342b71dec3c8c"
   dependencies:
     react: 18.2.0
     react-dom: 18.2.0
-  checksum: ea3a53f89d527ae0a8211fa8987caf75683acc2211fa2a1fd7cdad04d869f326bb0b3915a5e8a34d904bbe2b277d7077aa25fb11063ad582690a61b3dc070769
+  checksum: bf6179848107024900c7e6df963091a4a704e1b642fe2e4d042e425a1df9da20d77b82dc90826cfec6fe8efc4b6a87501171fb40f2db057159c1bc7e6d9802be
   languageName: node
   linkType: hard
 
@@ -4290,6 +4299,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^9.0.2":
+  version: 9.0.2
+  resolution: "@types/uuid@npm:9.0.2"
+  checksum: 1754bcf3444e1e3aeadd6e774fc328eb53bc956665e2e8fb6ec127aa8e1f43d9a224c3d22a9a6233dca8dd81a12dc7fed4d84b8876dd5ec82d40f574f7ff8b68
+  languageName: node
+  linkType: hard
+
 "@types/web-bluetooth@npm:^0.0.16":
   version: 0.0.16
   resolution: "@types/web-bluetooth@npm:0.0.16"
@@ -4697,8 +4713,10 @@ __metadata:
     "@commitlint/cli": ^13.2.1
     "@commitlint/config-conventional": ^13.2.0
     "@lhci/cli": ^0.12.0
-    "@plentymarkets/plentymarkets-sdk": ^0.1.38
+    "@paypal/paypal-js": 7.0.0
+    "@plentymarkets/plentymarkets-sdk": ^0.1.39
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
     babel-preset-node: ^5.1.1
     commitizen: ^4.2.5
@@ -4716,6 +4734,7 @@ __metadata:
     rollup: ^2.79.0
     turbo: 1.10.12
     typescript: 5.1.6
+    uuid: ^9.0.0
     wait-on: ^7.0.1
   languageName: unknown
   linkType: soft
@@ -13789,6 +13808,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt-lazy-hydrate@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "nuxt-lazy-hydrate@npm:1.0.0"
+  dependencies:
+    "@nuxt/kit": ^3.3.2
+    vue3-lazy-hydration: ^1.2.1
+  checksum: d69f27eec2e406d8b92862fdb49a067ea7ded52e434b586661e1c0eecd20c3d97349c9c83d1c39d35fde613ddfa67485e16822f0fd4ace0451f1419989194f2f
+  languageName: node
+  linkType: hard
+
 "nuxt-vitest@npm:^0.10.1":
   version: 0.10.2
   resolution: "nuxt-vitest@npm:0.10.2"
@@ -15171,6 +15200,13 @@ __metadata:
   version: 1.0.1
   resolution: "promise-inflight@npm:1.0.1"
   checksum: 22749483091d2c594261517f4f80e05226d4d5ecc1fc917e1886929da56e22b5718b7f2a75f3807e7a7d471bc3be2907fe92e6e8f373ddf5c64bae35b5af3981
+  languageName: node
+  linkType: hard
+
+"promise-polyfill@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "promise-polyfill@npm:8.3.0"
+  checksum: 206373802076c77def0805758d0a8ece64120dfa6603f092404a1004211f8f2f67f33cadbc35953fc2a8ed0b0d38c774e88bdf01e20ce7a920723a60df84b7a5
   languageName: node
   linkType: hard
 
@@ -18480,6 +18516,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"uuid@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "uuid@npm:9.0.0"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 8dd2c83c43ddc7e1c71e36b60aea40030a6505139af6bee0f382ebcd1a56f6cd3028f7f06ffb07f8cf6ced320b76aea275284b224b002b289f89fe89c389b028
+  languageName: node
+  linkType: hard
+
 "v8-compile-cache-lib@npm:^3.0.1":
   version: 3.0.1
   resolution: "v8-compile-cache-lib@npm:3.0.1"
@@ -19037,6 +19082,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue3-lazy-hydration@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "vue3-lazy-hydration@npm:1.2.1"
+  peerDependencies:
+    vue: ">=3.0.0"
+  checksum: 59746b8883e28a9539a4c567069c996d72a3e2e636ff4c0de9f92d541e0237f5251645a12b397cf61ab7729a8b670ed240fccdf04a06e2c4c45c62c275a5a73c
+  languageName: node
+  linkType: hard
+
 "vue@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue@npm:3.3.4"
@@ -19105,8 +19159,10 @@ __metadata:
     happy-dom: ^9.20.3
     lodash-es: ^4.17.21
     nuxt: ^3.6.5
+    nuxt-lazy-hydrate: ^1.0.0
     nuxt-vitest: ^0.10.1
     sass: ^1.64.1
+    uuid: ^9.0.0
     vitest: ^0.33.0
     vue-tsc: ^1.8.6
   languageName: unknown

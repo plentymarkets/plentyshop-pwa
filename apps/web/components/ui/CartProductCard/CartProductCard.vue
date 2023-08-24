@@ -29,6 +29,13 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
+      <div v-if="cartItem.variation">
+        <BasePrice
+          :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
+          :unit-content="productGetters.getUnitContent(cartItem.variation)"
+          :unit-name="productGetters.getUnitName(cartItem.variation)"
+        />
+      </div>
       <div class="my-2 sm:mb-0">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
@@ -64,6 +71,7 @@
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfLink, SfIconDelete } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';

@@ -22,6 +22,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
+    fallbackCurrency: 'GBP',
   },
   imports: {
     dirs: ['composables/**', 'utils/**'],
@@ -72,6 +73,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vite-pwa/nuxt',
     'nuxt-vitest',
+    'nuxt-lazy-hydrate',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
