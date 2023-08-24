@@ -54,7 +54,7 @@
           <i18n-t keypath="termsInfo">
             <template #terms>
               <SfLink
-                href="#"
+                href="/TermsAndConditions"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ $t('termsAndConditions') }}
@@ -62,7 +62,7 @@
             </template>
             <template #privacyPolicy>
               <SfLink
-                href="#"
+                href="/PrivacyPolicy"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
                 {{ $t('privacyPolicy') }}
