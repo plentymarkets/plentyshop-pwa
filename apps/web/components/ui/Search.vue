@@ -30,6 +30,7 @@ const props = defineProps<{
 
 const router = useRouter();
 const { open } = useDisclosure();
+const { updateSearchTerm, getFacetsFromURL } = useCategoryFilter();
 
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
@@ -43,7 +44,8 @@ const handleReset = () => {
 };
 const handleSubmit = () => {
   props.close?.();
-  router.push({ path: paths.search, query: { search: inputModel.value } });
+  updateSearchTerm(inputModel.value);
+  router.push({ path: paths.search, query: { term: inputModel.value } });
   handleReset();
 };
 

@@ -46,6 +46,7 @@
           <LazyCategoryEmptyState v-else />
           <NuxtLazyHydrate when-visible>
             <UiPagination
+              v-if="totalProducts > 0"
               :current-page="getFacetsFromURL().page ?? 1"
               :total-items="totalProducts"
               :page-size="itemsPerPage"

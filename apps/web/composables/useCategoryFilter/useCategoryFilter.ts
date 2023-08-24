@@ -47,7 +47,6 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     return {
       categorySlugs: getCategorySlugsFromPath(route.fullPath),
-      categorySlug: '',
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
@@ -126,7 +125,17 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   const updateSearchTerm = (term: string): void => {
-    updateQuery({ term: term || undefined });
+    updateQuery({
+      term: term || undefined,
+      categorySlugs: null,
+      categorySlug: null,
+      page: null,
+      sort: null,
+      facets: null,
+      itemsPerPage: null,
+      priceMin: null,
+      priceMax: null,
+    });
   };
 
   const updateSorting = (sort: string): void => {
