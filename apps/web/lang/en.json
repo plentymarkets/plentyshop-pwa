@@ -282,7 +282,7 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters, numbers and symbols."
+        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
       },
       "billingDetails": {
         "billingAddress": "Billing address",

@@ -1,5 +1,8 @@
 <template>
-  <div class="border border-neutral-200 rounded-md hover:shadow-lg flex-auto flex-shrink-0" data-testid="product-card">
+  <div
+    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
+    data-testid="product-card"
+  >
     <div class="relative">
       <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`">
         <NuxtImg
@@ -16,7 +19,7 @@
         />
       </SfLink>
     </div>
-    <div class="p-2 border-t border-neutral-200 typography-text-sm">
+    <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
       <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
@@ -29,7 +32,7 @@
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
-      <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+      <span class="block pb-2 font-bold typography-text-sm mt-auto" data-testid="product-card-vertical-price">
         {{ $n(price, 'currency') }}
       </span>
       <div class="mb-2">
@@ -38,7 +41,7 @@
       <SfButton
         type="button"
         size="sm"
-        class="min-w-[80px]"
+        class="min-w-[80px] w-fit"
         @click="addWithLoader(Number(productGetters.getId(product)))"
         :disabled="loading"
       >
