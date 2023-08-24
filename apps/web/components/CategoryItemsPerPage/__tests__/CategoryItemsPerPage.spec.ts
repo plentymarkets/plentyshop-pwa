@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategoryItemsPerPage from '~/components/CategorySorting/CategoryItemsPerPage.vue';
+import CategoryItemsPerPage from '~/components/CategoryItemsPerPage/CategoryItemsPerPage.vue';
 
 describe('<CategoryItemsPerPage />', () => {
   it('should render component', () => {
