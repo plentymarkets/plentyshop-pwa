@@ -18,7 +18,7 @@
           <NuxtLink
             :to="paths.home"
             aria-label="Sf Homepage"
-            class="flex shrink-0 w-8 h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            class="flex shrink-0 w-full h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
             <UiVsfLogo />
           </NuxtLink>
