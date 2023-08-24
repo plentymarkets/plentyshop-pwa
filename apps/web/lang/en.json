@@ -65,7 +65,7 @@
     "reviewsUp": "Item reviews ⬆",
     "reviewsDown": "Item reviews ⬇"
   },
-  "numberOfProducts": "1 Product | {count} Products",
+  "numberOfProducts": "{count} products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
   "emptyStateText": "We no longer have products in this category.",
