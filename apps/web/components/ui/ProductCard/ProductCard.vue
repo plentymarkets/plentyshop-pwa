@@ -8,7 +8,7 @@
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
-          class="object-cover rounded-md aspect-square w-full h-full"
+          class="object-contain rounded-md aspect-square w-full h-full"
           data-testid="image-slot"
           width="190"
           height="190"
