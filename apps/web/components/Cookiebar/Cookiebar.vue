@@ -179,11 +179,11 @@ const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defau
   cookieGroups.value as CookieGroupFromNuxtConfig,
 );
 const convertAndSave = (setAllCookies, latestStatus) => {
-  const x = useCookie('consent-cookie', {
+  const consentCookie = useCookie('consent-cookie', {
     path: '/',
     maxAge: getMinimumLifeSpan(cookieJson),
   }) as any;
-  x.value = convertAndSaveCookies(setAllCookies, latestStatus);
+  consentCookie.value = convertAndSaveCookies(setAllCookies, latestStatus);
 };
 const hideBanner = computed(() => {
   return bannerIsHidden.value;
