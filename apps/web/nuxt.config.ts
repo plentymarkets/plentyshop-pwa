@@ -22,6 +22,7 @@ export default defineNuxtConfig({
   },
   appConfig: {
     titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
+    fallbackCurrency: 'GBP',
   },
   imports: {
     dirs: ['composables/**', 'utils/**'],
