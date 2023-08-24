@@ -8,7 +8,9 @@ import { SetInitialData, UseInitialSetupReturn } from './types';
  * @example
  * const { setInitialData } = useInitialSetup();
  */
+
 export const useInitialSetup: UseInitialSetupReturn = () => {
+
   /** Function for getting current customer/cart data from session
    * @example
    * setInitialData();

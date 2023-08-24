@@ -1,4 +1,4 @@
-export type SetInitialData = () => Promise<void>;
+export type SetInitialData = () => void;
 
 export interface UseInitialSetup {
   setInitialData: SetInitialData;
