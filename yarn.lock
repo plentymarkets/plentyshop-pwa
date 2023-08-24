@@ -3103,7 +3103,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
+"@nuxt/kit@npm:3.6.5, @nuxt/kit@npm:^3.2.0, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.5.3, @nuxt/kit@npm:^3.6.5":
   version: 3.6.5
   resolution: "@nuxt/kit@npm:3.6.5"
   dependencies:
@@ -3462,13 +3462,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/plentymarkets-sdk@npm:0.1.*":
-  version: 0.1.32
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.32::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.32%2F47968b708508450136b1f6eaeab4d0158ec79207"
+"@plentymarkets/plentymarkets-sdk@npm:^0.1.38":
+  version: 0.1.38
+  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.38::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.38%2Ff198463a64535d001cc83c70679e6449a0325f5c"
   dependencies:
     react: 18.2.0
     react-dom: 18.2.0
-  checksum: 2ec9b11b733c2bf4f186826bb20177c5e1310f1af90a0ef767c1d5130bd70fab79640c8c108d727e4b0e377932072ceca27b1d4fa0b170b4baf476ee3ce783e1
+  checksum: ea3a53f89d527ae0a8211fa8987caf75683acc2211fa2a1fd7cdad04d869f326bb0b3915a5e8a34d904bbe2b277d7077aa25fb11063ad582690a61b3dc070769
   languageName: node
   linkType: hard
 
@@ -4697,7 +4697,7 @@ __metadata:
     "@commitlint/cli": ^13.2.1
     "@commitlint/config-conventional": ^13.2.0
     "@lhci/cli": ^0.12.0
-    "@plentymarkets/plentymarkets-sdk": 0.1.*
+    "@plentymarkets/plentymarkets-sdk": ^0.1.38
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
     babel-preset-node: ^5.1.1
@@ -13789,6 +13789,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt-lazy-hydrate@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "nuxt-lazy-hydrate@npm:1.0.0"
+  dependencies:
+    "@nuxt/kit": ^3.3.2
+    vue3-lazy-hydration: ^1.2.1
+  checksum: d69f27eec2e406d8b92862fdb49a067ea7ded52e434b586661e1c0eecd20c3d97349c9c83d1c39d35fde613ddfa67485e16822f0fd4ace0451f1419989194f2f
+  languageName: node
+  linkType: hard
+
 "nuxt-vitest@npm:^0.10.1":
   version: 0.10.2
   resolution: "nuxt-vitest@npm:0.10.2"
@@ -19037,6 +19047,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"vue3-lazy-hydration@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "vue3-lazy-hydration@npm:1.2.1"
+  peerDependencies:
+    vue: ">=3.0.0"
+  checksum: 59746b8883e28a9539a4c567069c996d72a3e2e636ff4c0de9f92d541e0237f5251645a12b397cf61ab7729a8b670ed240fccdf04a06e2c4c45c62c275a5a73c
+  languageName: node
+  linkType: hard
+
 "vue@npm:^3.3.4":
   version: 3.3.4
   resolution: "vue@npm:3.3.4"
@@ -19105,6 +19124,7 @@ __metadata:
     happy-dom: ^9.20.3
     lodash-es: ^4.17.21
     nuxt: ^3.6.5
+    nuxt-lazy-hydrate: ^1.0.0
     nuxt-vitest: ^0.10.1
     sass: ^1.64.1
     vitest: ^0.33.0

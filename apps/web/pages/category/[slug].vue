@@ -78,17 +78,20 @@ const updateTreeAndBreadcrumbs = () => {
     : [{ name: t('allProducts'), link: '#' }];
 
   breadcrumbs.value.unshift({ name: t('home'), link: '/' });
+  return Promise.resolve();
 };
 
+const handleQueryUpdate = async () => {
+  await fetchProducts(generateSearchParams());
+  return updateTreeAndBreadcrumbs();
+};
 await getCategoryTree();
-updateTreeAndBreadcrumbs();
-await fetchProducts(generateSearchParams());
+await handleQueryUpdate();
 
 watch(
   () => route.query,
   async () => {
-    updateTreeAndBreadcrumbs();
-    await fetchProducts(generateSearchParams());
+    handleQueryUpdate();
   },
 );
 </script>

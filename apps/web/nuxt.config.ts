@@ -59,6 +59,10 @@ export default defineNuxtConfig({
             code: 'en',
             file: 'en.json',
           },
+          {
+            code: 'de',
+            file: 'de.json',
+          },
         ],
         lazy: true,
         langDir: 'lang',
@@ -68,6 +72,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vite-pwa/nuxt',
     'nuxt-vitest',
+    'nuxt-lazy-hydrate',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -86,7 +91,7 @@ export default defineNuxtConfig({
     'pages:extend'(pages) {
       pages.push({
         name: 'category',
-        path: '/category/:slug/:slug_2?/:slug_3?/:slug_4?/:slug_5?',
+        path: '/category/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
         file: __dirname + '/pages/category/[slug].vue',
       });
     },

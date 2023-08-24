@@ -33,8 +33,6 @@
   "orderSummary": "Order Summary",
   "itemsInCart": "(Items: {count})",
   "itemsSubtotal": "Items subtotal",
-  "originalPrice": "Original price",
-  "savings": "Savings",
   "estimatedTax": "VAT",
   "apply": "Apply",
   "clear": "Clear",
@@ -42,19 +40,17 @@
   "max": "Max",
   "total": "Total",
   "goToCheckout": "Go to checkout",
-  "savingsTag": "You are saving {amount} on your order today!",
-  "promoCodePlaceholder": "Enter promo code",
   "delivery": "Shipping",
-  "promoCode": "Promo Code",
-  "remove": "Remove",
   "emptyCart": "Your cart is empty",
-  "emptyCartImgAlt": "empty cart image",
+  "emptyCartImgAlt": "Image of an empty cart",
   "backToShopping": "Back To Shopping",
   "allFromCategory": "All {name}",
   "listSettings": "List settings",
   "closeListSettings": "Close list settings",
   "clearFilters": "Clear all filters",
   "showProducts": "Show products",
+  "content": "Content",
+  "basePrice": "Base price",
   "showMore": "Show more",
   "showLess": "Show less",
   "filters": "Filters",
@@ -69,12 +65,12 @@
     "reviewsUp": "Item reviews ⬆",
     "reviewsDown": "Item reviews ⬇"
   },
-  "numberOfProducts": "1 Product | {count} Products",
+  "numberOfProducts": "{count} products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
   "emptyStateText": "We no longer have products in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
-  "emptyStateAltText": "Image for no products found",
+  "emptyStateAltText": "Image that describes that no products were found",
   "resultsFor": "Results for \"{phrase}\"",
   "prevAriaLabel": "Go to previous page",
   "nextAriaLabel": "Go to next page",
@@ -85,17 +81,20 @@
   "backToCart": "Back to My Cart",
   "back": "Back",
   "placeOrder": "Place order and pay",
-  "termsInfo": "By placing my order, you agree to our {terms} and our {privacyPolicy}",
+  "buy": "Buy",
+  "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
+  "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
+  "cancellationRights": "Cancellation rights",
   "contactInfo": {
     "heading": "Contact Information",
-    "description": "Add your email and phone number to communicate with the store.",
+    "description": "Add your email.",
     "add": "Add contact information",
     "email": "Email",
     "phone": "Phone number",
-    "phonePlaceholder": "eg. 123 456 7890",
+    "phonePlaceholder": "eg. 1234 567890",
     "cancel": "Cancel",
     "clear": "Clear all",
     "save": "Save",
@@ -105,30 +104,26 @@
   "checkoutPayment": {
     "heading": "Payment method",
     "comingSoon": "Coming soon",
-    "cash": "Cash on delivery",
-    "creditCard": "Credit Card",
-    "paypalIconAlt": "Paypal Icon",
-    "applePayIconAlt": "Apple Pay Icon",
-    "googlePayIconAlt": "Google Pay icon"
+    "creditCard": "Credit Card"
   },
   "shippingMethod": {
-    "heading": "Shipping details",
+    "heading": "Shipping method",
     "description": "Not available until a shipping address is provided.",
-    "free": "Free"
+    "free": "Free",
+    "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time.",
   },
   "validation": {
     "heading": "To complete order:",
     "missingBillingAddress": "add billing address",
     "missingShippingAddress": "add shipping address",
-    "missingEmail": "add customer email",
-    "missingShippingDetails": "add shipping details",
+    "missingEmail": "add email",
+    "missingShippingDetails": "choose shipping method",
     "missingPaymentMethod": "choose payment method"
   },
-  "size": "Size",
-  "color": "Color",
   "addToCart": "Add to cart",
   "addToCartShort": "Add",
   "search": "Search",
+  "openSearchModalButtonLabel": "Click to open search modal",
   "vsfHomepage": "VSF Homepage",
   "home": "Home",
   "products": "Products",
@@ -138,21 +133,17 @@
   "quantitySelector": "Quantity Selector",
   "quantitySelectorDecrease": "Decrease value",
   "quantitySelectorIncrease": "Increase value",
-  "of": "of",
   "scrollTop": "Scroll to top",
   "numberInCart": "{count} product in cart",
-  "cardImagePlaceholder": "Card image placeholder",
-  "displayImage": "Display image",
   "allProductsLinkText": "Browse products",
   "breadcrumbsDropdownText": "Show more breadcrumbs",
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
   "viewCart": "View Cart",
-  "compare": "Compare",
-  "addToList": "Add to list",
   "category": "Category",
+  "imageOfSth": "Image of {name}",
   "categories": {
     "howToBuy": {
-      "label": "How to buy",
+      "label": "Order process",
       "subcategories": {
         "paymentMethods": "Payment methods",
         "orderPickup": "Order pickup",
@@ -226,13 +217,13 @@
   "successInfoMessage": "Your order was completed successfully.",
   "etaDelivery": "Estimated delivery time",
   "shippingAddress": "Shipping address",
-  "somethingWentWrongImageAlt": "something went wrong image",
+  "somethingWentWrongImageAlt": "Image that describes that something went wrong",
   "orderSuccessfulImageAlt": "order successful image",
   "backToCheckout": "Back to Checkout",
   "continueShopping": "Continue shopping",
   "orderErrorMessage": "Something went wrong. Try again later.",
-  "orderNumber": "Order number",
-  "productDetails": "Product Details",
+  "orderNumber": "Order ID",
+  "productDetails": "Product details",
   "technicalData": "Technical data",
   "customerReviews": "Customer Reviews",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
@@ -241,19 +232,11 @@
   "showAllReviews": "Show all reviews",
   "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
-  "additionalInfo": {
-    "shipping": "Free shipping, arrives by Thu, Apr 7. Want it faster? {addAddress} to see options",
-    "addAddress": "Add an address",
-    "pickup": "Pickup not available at Super center. {checkAvailability}",
-    "checkAvailability": "Check availability nearby",
-    "returns": "Free 30-Day returns. {details}",
-    "details": "Details"
-  },
   "sale": "Sale",
   "readMore": "Read more",
   "readLess": "Read less",
   "noReviews": "No reviews",
-  "loading": "Loading",
+  "loading": "Loading...",
   "gallery": {
     "count": "{current} of {total}",
     "thumb": "Go to slide {index}",
@@ -262,7 +245,6 @@
     "image": "Slide {index}"
   },
   "review": {
-    "reportAbuse": "Report Abuse",
     "verifiedPurchase": "Verified purchase"
   },
   "account": {
@@ -274,8 +256,8 @@
       "heading": "Account Settings",
       "section": {
         "personalData": "Personal Data",
-        "billingDetails": "Billing Details",
-        "shippingDetails": "Shipping Details"
+        "billingDetails": "Billing addresses",
+        "shippingDetails": "Shipping addresses"
       },
       "personalData": {
         "yourName": "Your name",
@@ -294,8 +276,7 @@
       },
       "billingDetails": {
         "billingAddress": "Billing address",
-        "edit": "Edit",
-        "shippingAddress": "Shipping address"
+        "edit": "Edit"
       },
       "shippingDetails": {
         "edit": "Edit",
@@ -304,18 +285,19 @@
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",
-      "orderId":"Order ID",
-      "orderDate":"Order date",
-      "amount":"Amount",
-      "status":"Status",
-      "details":"Details",
-      "myOrders":"My orders",
-      "noOrders": "You haven't shopped with us yet",
+      "orderId": "Order ID",
+      "orderDate": "Order date",
+      "amount": "Amount",
+      "status": "Status",
+      "details": "Details",
+      "myOrders": "My orders",
+      "noOrders": "You haven’t shopped with us yet",
       "continue": "Continue shopping",
       "noOrdersAltText": "No orders",
       "returnsHeading": "Returns",
       "returnsAltText": "No returns",
       "returnsDescription": "You haven't returned products yet",
+      "listOfOrders": "List of orders",
       "section": {
         "myOrders": "My Orders",
         "returns": "Returns"
@@ -324,7 +306,7 @@
         "heading": "Order details",
         "orderId": "Order ID",
         "orderDate": "Order date",
-        "paymentAmount": "Payment amount",
+        "paymentAmount": "Total",
         "status": "Status",
         "price": "Price",
         "quantity": "Quantity",
@@ -334,7 +316,7 @@
         "itemsSubtotal": "Items Subtotal",
         "delivery": "Delivery",
         "estimatedTax": "Estimated Sales Tax",
-        "total": "Total", 
+        "total": "Total",
         "billingAddress": "Billing address",
         "paymentMethod": "Payment method",
         "shippingAddress": "Shipping address"
@@ -359,26 +341,29 @@
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",
         "information": "add information",
         "button": "Go Shopping",
-        "imageAlt": "Signup successful"
+        "imageAlt": "Image to confirm successful signup"
       }
     },
     "resetPassword": {
-      "heading":  "Reset password",
+      "heading": "Reset password",
       "info": "Enter the email address you used to sign up. We will send you a password reset link, that you’ll be able to use to set a new password for your account.",
-      "email":"Email",
+      "email": "Email",
       "continue": "Continue",
       "backToLogin": "Back to Login",
-      "thankYou": "Thank you, if there is an account registered with {0}, you should receive the password reset link in your inbox right away.",
+      "thankYou": "Thank you, if there is an account registered with {0}, you should receive the password reset link in your inbox.",
       "anotherEmail": "I need to try another email address",
       "emailSent": "Email sent"
     },
     "setNewPassword": {
-      "heading":  "Set new password",
-      "button":  "Set new password",
-      "password":  "New password",
-      "repeatPassword":  "Repeat new password",
+      "heading": "Set new password",
+      "button": "Set new password",
+      "password": "New password",
+      "repeatPassword": "Repeat new password",
       "help": "8 or more characters with a mix of letters, numbers and symbols.",
       "description": "Create the new password you want to use to log in to your account."
     }
+  },
+  "orderConfirmation": {
+    "confirmationSendTo": "A confirmation with all details has been sent to {email}"
   }
 }
