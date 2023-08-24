@@ -7,7 +7,7 @@ import { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, S
  * @description Composable for getting payment methods.
  * @example
  * const { data, loading, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
- * TODO: Remove .selected
+ * TODO: Remove .selected attribute from PaymentProviders
  */
 
 export const usePaymentMethods: UsePaymentMethodsReturn = () => {
