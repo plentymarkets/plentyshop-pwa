@@ -130,7 +130,7 @@
             :aria-disabled="false"
             type="button"
             aria-label="button"
-            @click="convertAndSaveCookies(true, true)"
+            @click="convertAndSave(true, true)"
           >
             {{ $t('CookieBar.Accept All') }}
           </SfButton>
@@ -141,13 +141,13 @@
             :aria-disabled="false"
             type="button"
             aria-label="button"
-            @click="convertAndSaveCookies(true, false)"
+            @click="convertAndSave(true, false)"
           >
             {{ $t('CookieBar.Reject All') }}
           </SfButton>
         </div>
         <div class="flex-1 mb-sf-xs">
-          <SfButton class="w-full" :aria-disabled="false" type="button" @click="convertAndSaveCookies(false, false)">
+          <SfButton class="w-full" :aria-disabled="false" type="button" @click="convertAndSave(false, false)">
             {{ $t('CookieBar.Accept Selection') }}
           </SfButton>
         </div>
@@ -174,14 +174,17 @@ const runtimeConfig = useRuntimeConfig();
 const cookieGroups = ref(runtimeConfig.public.cookieGroups);
 const { getMinimumLifeSpan } = cookieBarHelper();
 const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defaultCheckboxIndex } = useCookieBar(
-  useCookie('consent-cookie', {
-    path: '/',
-    maxAge: getMinimumLifeSpan(cookieGroups.value as CookieGroupFromNuxtConfig),
-  }),
+  useCookie('consent-cookie'),
   0,
   cookieGroups.value as CookieGroupFromNuxtConfig,
 );
-
+const convertAndSave = (setAllCookies, latestStatus) => {
+  const x = useCookie('consent-cookie', {
+    path: '/',
+    maxAge: getMinimumLifeSpan(cookieJson),
+  }) as any;
+  x.value = convertAndSaveCookies(setAllCookies, latestStatus);
+};
 const hideBanner = computed(() => {
   return bannerIsHidden.value;
 });

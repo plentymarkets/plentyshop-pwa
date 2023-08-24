@@ -1,15 +1,16 @@
-import { CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
+import { CookieGroup } from 'cookie.config';
 
 const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);
 };
 
-const getMinimumLifeSpan = (cookieJsonFromConfig: CookieGroupFromNuxtConfig): number => {
+const getMinimumLifeSpan = (cookieJsonFromConfig: any): number => {
   // expected minimum lifetime span to be in days
-  let minimum = 100_000;
+  let minimum = 999_999 as number;
 
-  cookieJsonFromConfig.groups.forEach((group: CookieGroup) => {
-    group.cookies.forEach((cookie) => {
+  cookieJsonFromConfig.forEach((group: CookieGroup) => {
+    const accepted = group.cookies.filter((cookie) => cookie.accepted);
+    accepted.forEach((cookie) => {
       if (minimum > convertToDays(cookie.Lifespan)) {
         minimum = convertToDays(cookie.Lifespan);
       }

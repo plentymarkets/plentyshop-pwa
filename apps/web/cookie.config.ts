@@ -39,7 +39,7 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
-          Lifespan: '1 days',
+          Lifespan: '100 days',
         },
         {
           name: 'Consent',
@@ -69,7 +69,7 @@ export default {
           Provider: 'plentyShop LTS',
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
+          Lifespan: '2 days',
           script: ['console.log(`Loaded cookie script example1`);', 'https://www.plentymarkets.com'],
         },
         {
@@ -100,7 +100,7 @@ export default {
           Provider: 'plentyShop LTS',
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
+          Lifespan: '4 days',
         },
         {
           name: 'Consent',

@@ -78,7 +78,7 @@ export const useCookieBar = (
     }
   }
 
-  function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): void {
+  function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): any {
     if (setAllCookies) {
       // accept all or reject all case (update cookieJson and checkboxes from ui)
       cookieJson.value.forEach((group, index) => {
@@ -90,9 +90,9 @@ export const useCookieBar = (
         }
       });
     }
-    consentCookie.value = convertToSaveableJson(cookieJson.value) as any;
     bannerIsHidden.value = true;
     loadThirdPartyScripts();
+    return convertToSaveableJson(cookieJson.value);
   }
   // initiate cookieJson based from previouly saved cookies
   if (existingCookieInMemory.value) {
