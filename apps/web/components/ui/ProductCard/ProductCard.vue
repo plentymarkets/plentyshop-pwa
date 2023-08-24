@@ -35,7 +35,7 @@
       <span class="block pb-2 font-bold typography-text-sm mt-auto" data-testid="product-card-vertical-price">
         {{ $n(price, 'currency') }}
       </span>
-      <div class="mb-2">
+      <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton
