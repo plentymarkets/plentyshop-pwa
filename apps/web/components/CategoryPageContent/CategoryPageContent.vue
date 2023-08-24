@@ -33,6 +33,9 @@
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"
+                :base-price="productGetters.getDefaultBasePrice(product)"
+                :unit-content="productGetters.getUnitContent(product)"
+                :unit-name="productGetters.getUnitName(product)"
               />
             </NuxtLazyHydrate>
           </section>
