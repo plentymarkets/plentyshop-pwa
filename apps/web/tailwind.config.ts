@@ -7,6 +7,34 @@ export default {
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
+      colors: {
+        primary: {
+          '50': '#ecffff',
+          '100': '#cefbff',
+          '200': '#a4f7fd',
+          '300': '#65edfb',
+          '400': '#20dbf0',
+          '500': '#04bed6',
+          '600': '#0697b4',
+          '700': '#0c7992',
+          '800': '#146276',
+          '900': '#155064',
+          '950': '#073342',
+        },
+        secondary: {
+          '50': '#fffde7',
+          '100': '#fffcc1',
+          '200': '#fff787',
+          '300': '#ffea42',
+          '400': '#ffd90f',
+          '500': '#f1c002',
+          '600': '#cf9400',
+          '700': '#a56903',
+          '800': '#88520b',
+          '900': '#74430f',
+          '950': '#442204',
+        },
+      },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],
       },
