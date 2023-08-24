@@ -34,7 +34,7 @@
           {{ $n(price, 'currency') }}
         </span>
         <span
-          v-if="productGetters.getPrice(product)?.special"
+          v-if="productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
           class="text-base font-normal text-neutral-500 line-through ml-3 pb-2"
         >
           {{ $n(productGetters.getRegularPrice(product), 'currency') }}
