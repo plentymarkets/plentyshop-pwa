@@ -19,26 +19,27 @@ import type {
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
-    PayPalScript: null,
+    paypalScript: null,
     order: null,
   }));
 
   /**
-   * @description Function for fetching the category tree.
+   * @description Function for get the paypal sdk script.
    * @example
-   * loadScript(currency: string);
+   * loadScript('EUR');
    */
   const loadScript: LoadScript = async (currency: string) => {
     if (paypalGetters.getClientId()) {
       try {
-        state.value.PayPalScript = await loadPayPalScript({
+        state.value.paypalScript = await loadPayPalScript({
           clientId: paypalGetters.getClientId() ?? '',
           currency: currency,
           dataPartnerAttributionId: 'plentysystemsAG_Cart_PPCP',
         });
-        return state.value.PayPalScript;
+        return state.value.paypalScript;
       } catch {
-        // console.error('failed to load the PayPal JS SDK script', error);
+        // eslint-disable-next-line unicorn/expiring-todo-comments
+        // TODO: Handle error (not loading sdk)
       }
     }
 
@@ -48,7 +49,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   /**
    * @description Function for creating a PayPal transaction.
    * @example
-   * createOrder(fundingSource: string);
+   * createTransaction(fundingSource: string);
    */
   const createTransaction: createTransaction = async (fundingSource: string) => {
     const { data, error } = await useAsyncData(() =>
@@ -63,9 +64,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   };
 
   /**
-   * @description Function for fetching the category tree.
+   * @description Function for approving a PayPal transaction.
    * @example
-   * loadScript(currency: string);
+   * approveOrder(orderID: string, payerID: string);
    */
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const approveOrder: approveOrder = async (orderID: string, payerID: string) => {
@@ -81,9 +82,14 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   };
 
   /**
-   * @description Function for fetching the category tree.
+   * @description Function for executing a PayPal transaction.
    * @example
-   * loadScript(currency: string);
+   * executeOrder({
+   *   mode: 'paypal',
+   *   plentyOrderId: 1234;
+   *   paypalTransactionId: 'UHIhhur3h2rh2';
+   *   paypalMerchantId: 'U3713H123';
+   * });
    */
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const executeOrder: executeOrder = async (params: PayPalExecuteParams) => {

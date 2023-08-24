@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { OnApproveData } from '@paypal/paypal-js';
+import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { orderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { v4 as uuid } from 'uuid';
 import { paypalGetters } from '~/getters/paypalGetters';
@@ -29,6 +29,17 @@ const props = defineProps({
 
 const paypal = await loadScript(currency);
 
+const onInit = (actions: OnInitActions) => {
+  actions.disable();
+  watch(props, (watchProps) => {
+    if (watchProps.disabled) {
+      actions.disable();
+    } else {
+      actions.enable();
+    }
+  });
+};
+
 const onApprove = async (data: OnApproveData) => {
   await approveOrder(data.orderID, data.payerID ?? '');
 
@@ -51,55 +62,44 @@ const onApprove = async (data: OnApproveData) => {
   }
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 onMounted(() => {
   if (paypal) {
     const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL];
 
-    try {
-      FUNDING_SOURCES.forEach((fundingSource) => {
-        if (paypal.Buttons && fundingSource) {
-          const button = paypal.Buttons({
-            style: {
-              layout: 'vertical',
-              label: 'buynow',
-              color: 'blue',
-            },
-            fundingSource: fundingSource,
+    FUNDING_SOURCES.forEach((fundingSource) => {
+      if (paypal.Buttons && fundingSource) {
+        const button = paypal.Buttons({
+          style: {
+            layout: 'vertical',
+            label: 'buynow',
+            color: 'blue',
+          },
+          fundingSource: fundingSource,
+          onClick() {
+            emits('on-click');
+          },
+          onInit(data, actions) {
+            onInit(actions);
+          },
+          // eslint-disable-next-line no-unused-vars
+          onError(error) {
+            // eslint-disable-next-line unicorn/expiring-todo-comments
+            // TODO: handle error
+          },
+          async createOrder() {
+            const order = await createTransaction(fundingSource);
+            return order?.id ?? '';
+          },
+          async onApprove(data) {
+            await onApprove(data);
+          },
+        });
 
-            onClick() {
-              emits('on-click');
-            },
-
-            onInit(data, actions) {
-              actions.disable();
-              watch(props, (watchProps) => {
-                if (watchProps.disabled) {
-                  actions.disable();
-                } else {
-                  actions.enable();
-                }
-              });
-            },
-
-            async createOrder() {
-              const order = await createTransaction(fundingSource);
-              return order?.id ?? '';
-            },
-
-            async onApprove(data) {
-              await onApprove(data);
-            },
-          });
-
-          if (button.isEligible() && paypalButton.value) {
-            button.render('#' + paypalButton.value?.id);
-          }
+        if (button.isEligible() && paypalButton.value) {
+          button.render('#' + paypalButton.value?.id);
         }
-      });
-    } catch {
-      // console.error('failed to render the PayPal Buttons', error);
-    }
+      }
+    });
   }
 });
 </script>

@@ -7,7 +7,7 @@ import {
 } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 
 export interface UsePayPalState {
-  PayPalScript: PayPalNamespace | null;
+  paypalScript: PayPalNamespace | null;
   order: PayPalCreateOrder | null;
 }
 
