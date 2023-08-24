@@ -19,9 +19,18 @@ export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
   }));
 
   /**
-   * @description Function for fetching the category tree.
+   * @description Function for legal information of the given type.
+   * @param LegalTextsParams Type of the legal information
    * @example
-   * getCategoryTree();
+   * getLegalTexts({type: 'CancellationForm',});
+   * @example
+   * getLegalTexts({type: 'CancellationRights',});
+   * @example
+   * getLegalTexts({type: 'LegalDisclosure',});
+   * @example
+   * getLegalTexts({type: 'PrivacyPolicy',});
+   * @example
+   * getLegalTexts({type: 'TermsConditions',});
    */
   const getLegalTexts: GetLegalInformation = async (params: LegalTextsParams) => {
     state.value.loading = true;
