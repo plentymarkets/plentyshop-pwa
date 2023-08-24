@@ -358,5 +358,15 @@
   },
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
+  },
+  "legal": {
+    "label": "Rechtliches",
+    "subcategories": {
+      "cancellationForm": "Widerrufsformular",
+      "cancellationRights": "Widerrufsbelehrung",
+      "legalDisclosure": "Impressum",
+      "privacyPolicy": "Datenschutzerklärung",
+      "termsAndConditions": "AGB"
+    }
   }
 }

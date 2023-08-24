@@ -182,6 +182,16 @@
         "affiliateProgram": "Affiliate program",
         "suppliers": "Suppliers"
       }
+    },
+    "legal": {
+      "label": "Legal",
+      "subcategories": {
+        "cancellationForm": "Cancellation form",
+        "cancellationRights": "Cancellation rights",
+        "legalDisclosure": "Legal disclosure",
+        "privacyPolicy": "Privacy policy",
+        "termsAndConditions": "Terms and conditions"
+      }
     }
   },
   "contactOptions": {
