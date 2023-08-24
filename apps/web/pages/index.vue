@@ -113,16 +113,14 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton } from '@storefront-ui/vue';
 
-const productId = '1063';
+const { data: categoryTree } = useCategoryTree();
+const defaultCategory = categoryTree.value[0];
 
-const { data: product, fetchProduct } = useProduct(productId);
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(String(defaultCategory.id));
 
-await fetchProduct(productId);
-await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);
+await fetchProductRecommended(defaultCategory.id.toString());
 
 const displayDetails = [
   {
