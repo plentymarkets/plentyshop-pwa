@@ -49,6 +49,8 @@
   "closeListSettings": "Close list settings",
   "clearFilters": "Clear all filters",
   "showProducts": "Show products",
+  "content": "Content",
+  "basePrice": "Base price",
   "showMore": "Show more",
   "showLess": "Show less",
   "filters": "Filters",
@@ -63,7 +65,7 @@
     "reviewsUp": "Item reviews ⬆",
     "reviewsDown": "Item reviews ⬇"
   },
-  "numberOfProducts": "1 Product | {count} Products",
+  "numberOfProducts": "{count} products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
   "emptyStateText": "We no longer have products in this category.",

@@ -10,7 +10,9 @@
         </CategorySidebar>
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
-            <span class="font-bold font-headings md:text-lg"> {{ $t('numberOfProducts') }} {{ totalProducts }} </span>
+            <span class="font-bold font-headings md:text-lg">
+              {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
+            </span>
             <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
               <template #prefix>
                 <SfIconTune />
@@ -25,14 +27,18 @@
           >
             <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
               <UiProductCard
+                :product="product"
                 :name="productGetters.getName(product) ?? ''"
                 :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
                 :rating="productGetters.getAverageRating({} as ReviewAverage)"
-                :price="productGetters.getPrice(product).regular ?? 0"
+                :price="productGetters.getPrice(product)?.special ?? productGetters.getPrice(product)?.regular ?? 0"
                 :image-url="productGetters.getCoverImage(product)"
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"
+                :base-price="productGetters.getDefaultBasePrice(product)"
+                :unit-content="productGetters.getUnitContent(product)"
+                :unit-name="productGetters.getUnitName(product)"
               />
             </NuxtLazyHydrate>
           </section>

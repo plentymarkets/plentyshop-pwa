@@ -17,6 +17,13 @@
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
+    <div>
+      <BasePrice
+        :base-price="productGetters.getDefaultBasePrice(product)"
+        :unit-content="productGetters.getUnitContent(product)"
+        :unit-name="productGetters.getUnitName(product)"
+      />
+    </div>
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="productGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(reviewAverage) }}</SfCounter>
