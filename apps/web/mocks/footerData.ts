@@ -128,7 +128,7 @@ export const socialMedia = [
   },
   {
     label: 'Linkedin',
-    link: 'https://www.linkedin.com/company/plentysystems/mycompany/',
+    link: 'https://www.linkedin.com/company/plentysystems',
     icon: SfLinkedin,
   },
   {
