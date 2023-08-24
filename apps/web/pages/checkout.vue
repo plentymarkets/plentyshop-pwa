@@ -72,7 +72,9 @@
         </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
+        <PayPalExpressButton v-if="selectedPaymentId === 6001" :disabled="!termsAccepted" @on-click="validateTerms" />
         <SfButton
+          v-else
           type="submit"
           @click="order"
           :disabled="createOrderLoading"
@@ -93,6 +95,7 @@
 import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 
 definePageMeta({
   layout: false,
@@ -123,6 +126,7 @@ await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
+const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
@@ -150,11 +154,18 @@ const scrollToTermsCheckbox = () => {
   });
 };
 
-const order = async () => {
+const validateTerms = (): boolean => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
     scrollToTermsCheckbox();
+    return false;
+  }
 
+  return true;
+};
+
+const order = async () => {
+  if (!validateTerms()) {
     return;
   }
 
