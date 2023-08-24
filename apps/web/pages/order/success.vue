@@ -6,7 +6,7 @@
       <NuxtImg src="/images/order-success.svg" :alt="$t('orderSuccessfulImageAlt')" width="192" height="192" />
       <h1 class="mt-6 mb-1 text-2xl">{{ $t('successInfoHeader') }}</h1>
       <span class="font-medium">{{ $t('successInfoMessage') }}</span>
-      <span v-if="orderData.order.deliveryAddress.options.length > 0" class="font-medium">{{
+      <span v-if="orderData.order.deliveryAddress.options.length > 0" class="font-medium text-center">{{
         $t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(orderData) })
       }}</span>
       <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
