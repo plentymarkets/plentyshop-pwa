@@ -4,10 +4,10 @@ import { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSea
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable for managing products.
- * @returns {@link UseProducts}
+ * @description Composable for managing products search.
+ * @returns {@link UseSearchReturn}
  * @example
- * const { data, loading, fetchProducts } = useProducts();
+ * const { data, loading, getSearch } = useSearch();
  */
 export const useSearch: UseSearchReturn = () => {
   const state = useState<UseSearchState>('search', () => ({
@@ -17,9 +17,9 @@ export const useSearch: UseSearchReturn = () => {
   }));
 
   /**
-   * @description Function for fetching products.
+   * @description Function for searching products.
    * @example
-   * getFacet(@props: FacetSearchCriteria)
+   * getSearch(@props: ItemSearchParams)
    */
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     state.value.loading = true;
