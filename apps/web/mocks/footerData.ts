@@ -127,8 +127,8 @@ export const socialMedia = [
     icon: SfIconTwitter,
   },
   {
-    label: 'Twitter',
-    link: 'https://twitter.com/plentymarkets',
+    label: 'Linkedin',
+    link: 'https://www.linkedin.com/company/plentysystems/mycompany/',
     icon: SfLinkedin,
   },
   {
