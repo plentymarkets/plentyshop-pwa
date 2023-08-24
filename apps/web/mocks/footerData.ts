@@ -36,85 +36,32 @@ export const categories = [
     ],
   },
   {
-    key: 'help',
+    key: 'legal',
     subcategories: [
       {
-        key: 'helpCenter',
-        link: '/',
+        key: 'termsAndConditions',
+        link: '/TermsAndConditions',
       },
       {
-        key: 'securityFraud',
-        link: '/',
+        key: 'cancellationRights',
+        link: '/CancellationRights',
       },
       {
-        key: 'feedback',
-        link: '/',
+        key: 'legalDisclosure',
+        link: '/LegalDisclosure',
       },
       {
-        key: 'contact',
-        link: '/',
-      },
-    ],
-  },
-  {
-    key: 'services',
-    subcategories: [
-      {
-        key: 'giftCards',
-        link: '/',
+        key: 'privacyPolicy',
+        link: '/PrivacyPolicy',
       },
       {
-        key: 'storeLocator',
-        link: '/',
-      },
-      {
-        key: 'clickCollect',
-        link: '/',
-      },
-      {
-        key: 'sameDayDelivery',
-        link: '/',
-      },
-      {
-        key: 'shippingDelivery',
-        link: '/',
-      },
-      {
-        key: 'couponsDiscounts',
-        link: '/',
-      },
-      {
-        key: 'newsletter',
-        link: '/',
-      },
-    ],
-  },
-  {
-    key: 'about',
-    subcategories: [
-      {
-        key: 'aboutUs',
-        link: '/',
-      },
-      {
-        key: 'jobs',
-        link: '/',
-      },
-      {
-        key: 'pressCenter',
-        link: '/',
-      },
-      {
-        key: 'affiliateProgram',
-        link: '/',
-      },
-      {
-        key: 'suppliers',
-        link: '/',
+        key: 'cancellationForm',
+        link: '/CancellationForm',
       },
     ],
   },
 ];
+
 export const socialMedia = [
   {
     label: 'Facebook',
