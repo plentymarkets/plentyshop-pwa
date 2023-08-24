@@ -31,6 +31,7 @@
       </SfLink>
       <div v-if="cartItem.variation">
         <BasePrice
+          v-if="productGetters.showPricePerUnit(cartItem.variation)"
           :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
