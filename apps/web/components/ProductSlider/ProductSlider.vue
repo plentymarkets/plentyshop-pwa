@@ -7,6 +7,7 @@
   >
     <UiProductCard
       v-for="product in items"
+      :product="product"
       :key="productGetters.getId(product)"
       class="max-w-[192px]"
       :name="productGetters.getName(product)"
