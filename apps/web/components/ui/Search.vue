@@ -30,7 +30,7 @@ const props = defineProps<{
 
 const router = useRouter();
 const { open } = useDisclosure();
-const { updateSearchTerm, getFacetsFromURL } = useCategoryFilter();
+const { updateSearchTerm } = useCategoryFilter();
 
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
