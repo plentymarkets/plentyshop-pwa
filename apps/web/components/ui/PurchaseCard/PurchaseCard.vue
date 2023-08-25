@@ -18,7 +18,7 @@
       </span>
     </div>
     <LowestPrice :product="product" />
-    <div>
+    <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
         :base-price="productGetters.getDefaultBasePrice(product)"
         :unit-content="productGetters.getUnitContent(product)"

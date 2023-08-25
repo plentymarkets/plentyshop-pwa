@@ -15,4 +15,5 @@ export type ProductCardProps = {
   unitContent?: number;
   unitName?: string;
   basePrice?: string;
+  showBasePrice?: boolean;
 };

@@ -33,7 +33,7 @@
         {{ $n(price, 'currency') }}
       </span>
       <LowestPrice :product="product" />
-      <div class="mb-2">
+      <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton

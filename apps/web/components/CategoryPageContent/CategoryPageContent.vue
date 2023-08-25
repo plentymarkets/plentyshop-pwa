@@ -39,6 +39,7 @@
                 :base-price="productGetters.getDefaultBasePrice(product)"
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
+                :show-base-price="productGetters.showPricePerUnit(product)"
               />
             </NuxtLazyHydrate>
           </section>
