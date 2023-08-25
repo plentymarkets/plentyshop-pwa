@@ -17,8 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-
 definePageMeta({
   layout: false,
 });
