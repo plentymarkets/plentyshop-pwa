@@ -32,6 +32,7 @@
       <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
         {{ $n(price, 'currency') }}
       </span>
+      <LowestPrice :product="product" />
       <div class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
