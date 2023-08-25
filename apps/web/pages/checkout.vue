@@ -99,6 +99,7 @@ import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 
 definePageMeta({
   layout: false,
+  layoutName: 'checkout',
 });
 
 const { data: cart, getCart } = useCart();

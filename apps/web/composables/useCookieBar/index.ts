@@ -1,3 +1,3 @@
 export * from './useCookieBar';
 export * from './types';
-export * from './cookieBar.helper';
+export * from './cookieBarHelper';
