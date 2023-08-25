@@ -72,7 +72,7 @@
         </div>
       </div>
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton v-if="selectedPaymentId === 6001" :disabled="!termsAccepted" @on-click="validateTerms" />
+        <PayPalExpressButton v-if="selectedPaymentId === paypalGetters.getPaymentId()" :disabled="!termsAccepted" @on-click="validateTerms" />
         <SfButton
           v-else
           type="submit"
@@ -96,6 +96,7 @@ import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-clien
 import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
+import {paypalGetters} from "~/getters/paypalGetters";
 
 definePageMeta({
   layout: false,
