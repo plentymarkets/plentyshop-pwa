@@ -21,35 +21,64 @@
         {{ name }}
       </SfLink>
       <div class="flex items-center pt-1">
-        <SfRating size="xs" :value="rating ?? 0" :max="5" />
+        <!-- <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfLink to="#" variant="secondary" :tag="NuxtLink" class="ml-1 no-underline">
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
-        </SfLink>
+        </SfLink> -->
       </div>
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
       <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-        ${{ price }}
+        {{ $n(price, 'currency') }}
       </span>
-      <SfButton type="button" size="sm">
-        <template #prefix>
+      <div v-if="showBasePrice" class="mb-2">
+        <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
+      </div>
+      <SfButton
+        type="button"
+        size="sm"
+        class="min-w-[80px]"
+        @click="addWithLoader(Number(productGetters.getId(product)))"
+        :disabled="loading"
+      >
+        <template #prefix v-if="!loading">
           <SfIconShoppingCart size="sm" />
         </template>
-        {{ $t('addToCartShort') }}
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+        <span v-else>
+          {{ $t('addToCartShort') }}
+        </span>
       </SfButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfRating, SfCounter, SfButton, SfIconShoppingCart } from '@storefront-ui/vue';
+import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
+
+const { addToCart } = useCart();
+const loading = ref(false);
+
+const addWithLoader = async (productId: number) => {
+  loading.value = true;
+
+  try {
+    await addToCart({
+      productId: productId,
+      quantity: 1,
+    });
+  } finally {
+    loading.value = false;
+  }
+};
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

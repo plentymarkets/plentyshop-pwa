@@ -13,7 +13,7 @@
         @update:model-value="changeHint"
       />
       <label for="checkbox" class="cursor-pointer">
-        {{ $t('shippingMethod.ShowDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+        {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
       </label>
     </div>
   </ClientOnly>
@@ -27,7 +27,7 @@ const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalI
 const { selectedMethod } = useCartShippingMethods();
 
 const parcelServiceInformation = computed(() => {
-  selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
+  return selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
 });
 
 const changeHint = (value: boolean) => {

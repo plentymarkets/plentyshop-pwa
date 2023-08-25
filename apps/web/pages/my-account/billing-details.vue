@@ -1,5 +1,5 @@
 <template>
-  <UiDivider class="w-screen -mx-4 md:col-span-3 md:w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="$t('account.accountSettings.billingDetails.billingAddress')"
@@ -20,7 +20,7 @@
       {{ `${userAddressGetters.getCity(userShippingAddress)} ${userAddressGetters.getPostCode(userShippingAddress)}` }}
     </p>
   </AccountData>
-  <UiDivider class="w-screen -mx-4 md:col-span-3 md:w-auto md:mx-0" />
+  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
 
   <UiModal
     v-model="isOpen"

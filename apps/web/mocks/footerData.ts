@@ -4,10 +4,10 @@ import {
   SfIconFacebook,
   SfIconHelp,
   SfIconInstagram,
-  SfIconPinterest,
   SfIconTwitter,
   SfIconYoutube,
 } from '@storefront-ui/vue';
+import SfLinkedin from '~/components/ui/Icons/IconLinkedin.vue';
 
 export const categories = [
   {
@@ -36,109 +36,56 @@ export const categories = [
     ],
   },
   {
-    key: 'help',
+    key: 'legal',
     subcategories: [
       {
-        key: 'helpCenter',
-        link: '/',
+        key: 'termsAndConditions',
+        link: '/TermsAndConditions',
       },
       {
-        key: 'securityFraud',
-        link: '/',
+        key: 'cancellationRights',
+        link: '/CancellationRights',
       },
       {
-        key: 'feedback',
-        link: '/',
+        key: 'legalDisclosure',
+        link: '/LegalDisclosure',
       },
       {
-        key: 'contact',
-        link: '/',
-      },
-    ],
-  },
-  {
-    key: 'services',
-    subcategories: [
-      {
-        key: 'giftCards',
-        link: '/',
+        key: 'privacyPolicy',
+        link: '/PrivacyPolicy',
       },
       {
-        key: 'storeLocator',
-        link: '/',
-      },
-      {
-        key: 'clickCollect',
-        link: '/',
-      },
-      {
-        key: 'sameDayDelivery',
-        link: '/',
-      },
-      {
-        key: 'shippingDelivery',
-        link: '/',
-      },
-      {
-        key: 'couponsDiscounts',
-        link: '/',
-      },
-      {
-        key: 'newsletter',
-        link: '/',
-      },
-    ],
-  },
-  {
-    key: 'about',
-    subcategories: [
-      {
-        key: 'aboutUs',
-        link: '/',
-      },
-      {
-        key: 'jobs',
-        link: '/',
-      },
-      {
-        key: 'pressCenter',
-        link: '/',
-      },
-      {
-        key: 'affiliateProgram',
-        link: '/',
-      },
-      {
-        key: 'suppliers',
-        link: '/',
+        key: 'cancellationForm',
+        link: '/CancellationForm',
       },
     ],
   },
 ];
+
 export const socialMedia = [
   {
     label: 'Facebook',
-    link: '/',
+    link: 'https://www.facebook.com/plentymarkets',
     icon: SfIconFacebook,
   },
   {
     label: 'Twitter',
-    link: '/',
+    link: 'https://twitter.com/plentymarkets',
     icon: SfIconTwitter,
   },
   {
+    label: 'Linkedin',
+    link: 'https://www.linkedin.com/company/plentysystems',
+    icon: SfLinkedin,
+  },
+  {
     label: 'Instagram',
-    link: '/',
+    link: 'https://www.instagram.com/plentysystems',
     icon: SfIconInstagram,
   },
   {
-    label: 'Pinterest',
-    link: '/',
-    icon: SfIconPinterest,
-  },
-  {
     label: 'Youtube',
-    link: '/',
+    link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg',
     icon: SfIconYoutube,
   },
 ];
@@ -172,4 +119,4 @@ export const bottomLinks = [
     link: '/',
   },
 ];
-export const companyName = `© ${new Date().getFullYear()} Vue Storefront`;
+export const companyName = `© PLENTYSYSTEMS AG ${new Date().getFullYear()}`;
