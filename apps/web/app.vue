@@ -11,7 +11,7 @@ const { getCategoryTree } = useCategoryTree();
 const { setInitialData } = useInitialSetup();
 const route = useRoute();
 
-if (route.layoutName !== 'checkout') {
+if (route?.meta.layoutName !== 'checkout') {
   setInitialData();
 }
 
