@@ -3,7 +3,7 @@
     v-if="lowestPrice && productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
     class="text-sm mb-2"
   >
-    {{ $t('lowestPrice', {price: $n(lowestPrice, 'currency')}) }}
+    {{ $t('lowestPrice', { price: $n(lowestPrice, 'currency') }) }}
   </div>
 </template>
 
