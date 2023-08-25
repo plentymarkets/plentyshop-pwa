@@ -4,7 +4,7 @@
       v-for="(attributeGroup, index) in attributeGroups"
       :key="index"
       class="mb-2"
-      @update:modelValue="changeVariationId"
+      @update:model-value="changeVariationId"
       v-model="selectedVariation"
       size="sm"
       placeholder="-- Select --"

@@ -1,10 +1,5 @@
 <template>
-  <SfScrollable
-    buttons-placement="floating"
-    class="items-center pb-4"
-    :wrapper-class="wrapperClass"
-    data-testid="product-slider"
-  >
+  <SfScrollable buttons-placement="floating" class="pb-4" :wrapper-class="wrapperClass" data-testid="product-slider">
     <UiProductCard
       v-for="product in items"
       :product="product"
