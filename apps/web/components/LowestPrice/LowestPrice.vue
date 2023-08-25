@@ -8,14 +8,9 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import type { LowestPriceProps } from '~/components/LowestPrice/types';
 
-const getLowestPrice = (product: Product): number | null => {
-  return product.prices?.default?.lowestPrice?.value ?? null;
-};
-
 const props = defineProps<LowestPriceProps>();
-const lowestPrice = computed(() => getLowestPrice(props.product));
+const lowestPrice = computed(() => productGetters.getLowestPrice(props.product));
 </script>
