@@ -33,7 +33,8 @@ definePageMeta({
 const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
-const { getCategoryTree, data: categoryTree } = useCategoryTree();
+const { data: categoryTree } = useCategoryTree();
+
 const { t } = useI18n();
 const breadcrumbs = ref([] as Breadcrumb[]);
 const urlParams = ref(getFacetsFromURL());
@@ -85,7 +86,6 @@ const handleQueryUpdate = async () => {
   await fetchProducts(generateSearchParams());
   return updateTreeAndBreadcrumbs();
 };
-await getCategoryTree();
 await handleQueryUpdate();
 
 watch(

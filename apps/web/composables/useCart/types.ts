@@ -13,6 +13,8 @@ export interface UseCartState {
 
 export type GetCart = () => Promise<Cart>;
 
+export type SetCart = (data: Cart) => void;
+
 export type AddToCart = (params: DoAddItemParams) => Promise<Cart>;
 
 export type DeleteCartItem = (params: DeleteCartItemParams) => Promise<Cart>;
@@ -26,6 +28,7 @@ export interface UseCart {
   addToCart: AddToCart;
   deleteCartItem: DeleteCartItem;
   setCartItemQuantity: SetCartItemQuantity;
+  setCart: SetCart;
 }
 
 export type UseCartReturn = () => UseCart;
