@@ -30,7 +30,6 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;
 
-    // Filter PayPal out of payment methods, if no settings are available
     if (paypalGetters.getConfig() === null || paypalGetters.getPaymentId() === -1) {
       state.value.data.list = state.value.data.list.filter((paymentMethod) => paymentMethod.name !== 'PayPal');
     }
