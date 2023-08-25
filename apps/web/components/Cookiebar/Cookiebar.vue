@@ -178,7 +178,7 @@ const { cookieJson, bannerIsHidden, convertAndSaveCookies, setHiddenState, defau
   0,
   cookieGroups.value as CookieGroupFromNuxtConfig,
 );
-const convertAndSave = (setAllCookies, latestStatus) => {
+const convertAndSave = (setAllCookies: boolean, latestStatus: boolean) => {
   const consentCookie = useCookie('consent-cookie', {
     path: '/',
     maxAge: getMinimumLifeSpan(cookieJson),

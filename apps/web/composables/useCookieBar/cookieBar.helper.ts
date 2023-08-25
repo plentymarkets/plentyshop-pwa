@@ -4,7 +4,7 @@ const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);
 };
 
-const getMinimumLifeSpan = (cookieJsonFromConfig: any): number => {
+const getMinimumLifeSpan = (cookieJsonFromConfig: CookieGroup[]): number => {
   // expected minimum lifetime span to be in days
   let minimum = 999_999 as number;
 
