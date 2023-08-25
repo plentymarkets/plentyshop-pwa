@@ -29,6 +29,16 @@
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
+  "CookieBar": {
+    "Privacy Settings": "Privacy Settings",
+    "More information": "More information",
+    "Further Settings": "Further Settings",
+    "Back": "Back",
+    "Show less": "Show less",
+    "Accept All": "Accept All",
+    "Reject All": "Reject All",
+    "Accept Selection": "Accept Selection"
+  },
   "myCart": "My Cart",
   "orderSummary": "Order Summary",
   "itemsInCart": "(Items: {count})",
