@@ -17,6 +17,6 @@ import config from '../middleware.config';
   });
 
   app.listen(port, host, () => {
-    consola.success(`Middleware started: ${host}:${port}`);
+    consola.success(`API server listening on http://${host}:${port}`);
   });
 })();
