@@ -83,7 +83,6 @@ const canBeAddedToCart = computed(() => {
     props.product &&
     props.product.filter &&
     props.product.filter.isSalable &&
-    // !props.product.filter.hasChildren &&
     !(
       props.product.variation.minimumOrderQuantity !== 1 || (props.product.variation.intervalOrderQuantity || 1) !== 1
     ) &&
