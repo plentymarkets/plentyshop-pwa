@@ -60,6 +60,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
+  <UiNotifications />
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -123,9 +124,18 @@ defineProps<DefaultLayoutProps>();
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user } = useCustomer();
+const { send } = useNotification();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+send({message: 'Test alert neutral', type: 'neutral', persist: true});
+send({message: 'Test alert positive', type: 'positive', persist: true});
+send({message: 'Test alert secondary', type: 'secondary', persist: true});
+send({message: 'Test alert warning', type: 'warning', persist: true});
+send({message: 'Test alert error', type: 'error', persist: true});
+
+
 
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
