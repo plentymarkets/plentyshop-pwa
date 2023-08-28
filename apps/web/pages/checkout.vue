@@ -103,7 +103,6 @@ import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
-  layout: false,
   layoutName: 'checkout',
 });
 
