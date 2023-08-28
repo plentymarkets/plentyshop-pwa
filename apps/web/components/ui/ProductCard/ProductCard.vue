@@ -40,6 +40,7 @@
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton
+        v-if="canBeAddedToCart"
         type="button"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -54,22 +55,43 @@
           {{ $t('addToCartShort') }}
         </span>
       </SfButton>
+      <SfButton v-else type="button" :tag="NuxtLink" :to="`${paths.product}${slug}`" size="sm" class="w-fit">
+        <span>{{ $t('showArticle') }}</span>
+        <template #prefix>
+          <SfIconChevronRight size="sm" />
+        </template>
+      </SfButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
-withDefaults(defineProps<ProductCardProps>(), {
+const props = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
 
 const { addToCart } = useCart();
 const loading = ref(false);
+
+const canBeAddedToCart = computed(() => {
+  return (
+    props.product &&
+    props.product.filter &&
+    props.product.filter.isSalable &&
+    // !props.product.filter.hasChildren &&
+    !(
+      props.product.variation.minimumOrderQuantity !== 1 || (props.product.variation.intervalOrderQuantity || 1) !== 1
+    ) &&
+    !(props.product.hasOrderProperties || props.product.hasRequiredOrderProperty) &&
+    !(props.product.item.itemType === 'set') &&
+    props.product.images.variation.length === 0
+  );
+});
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;

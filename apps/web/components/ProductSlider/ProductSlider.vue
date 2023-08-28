@@ -6,7 +6,7 @@
       :key="productGetters.getId(product)"
       class="max-w-[192px]"
       :name="productGetters.getName(product)"
-      :slug="productGetters.getSlug(product)"
+      :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
       :image-url="productGetters.getCoverImage(product)"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
