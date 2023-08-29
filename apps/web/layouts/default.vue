@@ -133,7 +133,10 @@ send({message: 'Test alert neutral', type: 'neutral', persist: true});
 send({message: 'Test alert positive', type: 'positive', persist: true});
 send({message: 'Test alert secondary', type: 'secondary', persist: true});
 send({message: 'Test alert warning', type: 'warning', persist: true});
-send({message: 'Test alert error', type: 'error', persist: true});
+send({message: 'Test alert error', type: 'negative', persist: true, action: {
+  text: 'alert',
+  onClick: (() => alert('test alert action'))
+}});
 
 
 

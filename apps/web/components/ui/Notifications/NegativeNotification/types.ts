@@ -1,6 +1,6 @@
 import { Notification } from "composables/useNotification";
 
-export interface ErrorNotificationProps {
+export interface NegativeNotificationProps {
     notification: Notification;
   }
   

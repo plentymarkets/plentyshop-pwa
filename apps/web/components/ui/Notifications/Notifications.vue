@@ -7,7 +7,7 @@
 </template>
 <script setup lang="ts">
 import PositiveNotification from './PositiveNotification/PositiveNotification.vue';
-import ErrorNotification from './ErrorNotification/ErrorNotification.vue';
+import NegativeNotification from './NegativeNotification/NegativeNotification.vue';
 import WarningNotification from './WarningNotification/WarningNotification.vue';
 import NeutralNotification from './NeutralNotification/NeutralNotification.vue';
 import SecondaryNotification from './SecondaryNotification/SecondaryNotification.vue';
@@ -17,8 +17,8 @@ const getComponentByType = (type: string) => {
     switch (type) {
         case 'positive':
             return PositiveNotification
-        case 'error':
-            return ErrorNotification
+        case 'negative':
+            return NegativeNotification
         case 'secondary':
             return SecondaryNotification
         case 'neutral':
