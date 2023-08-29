@@ -26,7 +26,7 @@
               :disabled="index === defaultCheckboxIndex"
               @update:model-value="setChildrenCheckboxes(cookieGroup, $event)"
             />
-            <label class="ml-3 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
+            <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
               {{ cookieGroup.name }}
             </label>
           </div>
@@ -41,7 +41,10 @@
             :disabled="groupIndex === defaultCheckboxIndex"
             @update:model-value="setChildrenCheckboxes(cookieGroup, $event)"
           />
-          <label class="ml-3 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom" :for="cookieGroup.name">
+          <label
+            class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
+            :for="cookieGroup.name"
+          >
             {{ cookieGroup.name }}
           </label>
           <div class="leading-6 my-2">
@@ -57,7 +60,7 @@
                   :disabled="groupIndex === defaultCheckboxIndex"
                   @update:model-value="updateParentCheckbox(cookieGroup)"
                 />
-                <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
+                <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookieGroup.name">
                   {{ cookie.name }}
                 </label>
               </div>
