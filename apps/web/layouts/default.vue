@@ -71,6 +71,9 @@
   <NuxtLazyHydrate when-idle>
     <UiNavbarBottom />
   </NuxtLazyHydrate>
+  <NuxtLazyHydrate when-idle>
+    <Cookiebar />
+  </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
     <UiFooter />
   </NuxtLazyHydrate>
@@ -117,13 +120,9 @@ const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClos
 
 defineProps<DefaultLayoutProps>();
 
-const { getCategoryTree, data: categoryTree } = useCategoryTree();
-const { getCart, data: cart } = useCart();
-const { getSession, data: user } = useCustomer();
-
-await getCategoryTree();
-await getCart();
-await getSession();
+const { data: categoryTree } = useCategoryTree();
+const { data: cart } = useCart();
+const { data: user } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');

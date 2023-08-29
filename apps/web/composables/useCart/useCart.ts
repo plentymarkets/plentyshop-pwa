@@ -60,6 +60,10 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  const setCart = (data: Cart) => {
+    state.value.data = data;
+  };
+
   /**
    * @description Function for adding cart items.
    * @param params
@@ -150,6 +154,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   return {
+    setCart,
     setCartItemQuantity,
     addToCart,
     deleteCartItem,

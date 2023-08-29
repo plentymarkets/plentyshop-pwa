@@ -3471,13 +3471,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/plentymarkets-sdk@npm:^0.1.40":
-  version: 0.1.40
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.40::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.40%2F9a4415fad88eb8c42c5adf271316a29288e1c054"
+"@plentymarkets/plentymarkets-sdk@npm:^0.1.42":
+  version: 0.1.42
+  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.42::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.42%2F1357197405a9b5b0f163d5bc09b22d10005bf731"
   dependencies:
     react: 18.2.0
     react-dom: 18.2.0
-  checksum: 2b002562a2e37a92fb62db67d63fef1f610545030fe0a578187f3d434fc53f04da4ffc92563cb7b70ac6958cdde0cd02afa66508a04ae6d13c99b5737c4d7ed0
+  checksum: e0354446bdf55eb0a862d1343d704a3b3de9bd00129ea65b2fc4fa49dfd06af08f8909fb83960a3bf26a091361bfda716b2cfaeea5eb8a65e2515746c671aad9
   languageName: node
   linkType: hard
 
@@ -4714,7 +4714,7 @@ __metadata:
     "@commitlint/config-conventional": ^13.2.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/plentymarkets-sdk": ^0.1.40
+    "@plentymarkets/plentymarkets-sdk": ^0.1.42
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7

@@ -29,6 +29,16 @@
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
+  "CookieBar": {
+    "Privacy Settings": "Privacy Settings",
+    "More information": "More information",
+    "Further Settings": "Further Settings",
+    "Back": "Back",
+    "Show less": "Show less",
+    "Accept All": "Accept All",
+    "Reject All": "Reject All",
+    "Accept Selection": "Accept Selection"
+  },
   "myCart": "My Cart",
   "orderSummary": "Order Summary",
   "itemsInCart": "(Items: {count})",
@@ -65,7 +75,7 @@
     "reviewsUp": "Item reviews ⬆",
     "reviewsDown": "Item reviews ⬇"
   },
-  "numberOfProducts": "{count} products out of {total} Products",
+  "numberOfProducts": "{count} Products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
   "emptyStateText": "We no longer have products in this category.",
@@ -110,7 +120,7 @@
     "heading": "Shipping method",
     "description": "Not available until a shipping address is provided.",
     "free": "Free",
-    "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time.",
+    "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
   },
   "validation": {
     "heading": "To complete order:",
@@ -282,7 +292,7 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters, numbers and symbols."
+        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
       },
       "billingDetails": {
         "billingAddress": "Billing address",
@@ -375,5 +385,6 @@
   },
   "orderConfirmation": {
     "confirmationSendTo": "A confirmation with all details has been sent to {email}"
-  }
+  },
+  "lowestPrice": "Lowest price of the last 30 days: {price}"
 }

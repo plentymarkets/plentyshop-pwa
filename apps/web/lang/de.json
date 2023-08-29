@@ -266,7 +266,7 @@
         "newPasswordAgain": "Neues Passwort wiederholen",
         "changePassword": "Passwort ändern",
         "currentPassword": "Aktuelles Passwort",
-        "passwordHelp": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen"
+        "passwordHelp": "Benutzen Sie 8 oder mehr Zeichen mit einer Mischung aus Buchstaben und Zahlen"
       },
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
@@ -359,6 +359,7 @@
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
   },
+  "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "legal": {
     "label": "Rechtliches",
     "subcategories": {

@@ -26,7 +26,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
+          <ProductRecommendedProducts :product="product"></ProductRecommendedProducts>
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -44,11 +44,9 @@ const slug = route.params.slug as string;
 const productId = slug.split('-').pop() ?? '0';
 
 const { data: product, fetchProduct } = useProduct(productId);
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 await fetchProduct(productId);
-await fetchProductRecommended(productGetters.getCategoryIds(product.value)[0]);
 await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();

@@ -14,6 +14,7 @@
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
+    <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
         :base-price="productGetters.getDefaultBasePrice(product)"

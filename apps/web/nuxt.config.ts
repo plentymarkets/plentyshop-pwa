@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import cookieConfig from './cookie.config';
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: {
@@ -95,6 +97,11 @@ export default defineNuxtConfig({
         path: '/category/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
         file: __dirname + '/pages/category/[slug].vue',
       });
+    },
+  },
+  runtimeConfig: {
+    public: {
+      cookieGroups: cookieConfig,
     },
   },
   pwa: {

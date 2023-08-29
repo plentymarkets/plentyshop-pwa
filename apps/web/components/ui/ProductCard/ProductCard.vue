@@ -1,11 +1,14 @@
 <template>
-  <div class="border border-neutral-200 rounded-md hover:shadow-lg flex-auto flex-shrink-0" data-testid="product-card">
+  <div
+    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
+    data-testid="product-card"
+  >
     <div class="relative">
       <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`">
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
-          class="object-cover rounded-md aspect-square w-full h-full"
+          class="object-contain rounded-md aspect-square w-full h-full"
           data-testid="image-slot"
           width="190"
           height="190"
@@ -16,7 +19,7 @@
         />
       </SfLink>
     </div>
-    <div class="p-2 border-t border-neutral-200 typography-text-sm">
+    <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
       <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
@@ -40,16 +43,17 @@
           {{ $n(productGetters.getRegularPrice(product), 'currency') }}
         </span>
       </div>
-      <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+      <span class="block pb-2 font-bold typography-text-sm mt-auto" data-testid="product-card-vertical-price">
         {{ $n(price, 'currency') }}
       </span>
+      <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton
         type="button"
         size="sm"
-        class="min-w-[80px]"
+        class="min-w-[80px] w-fit"
         @click="addWithLoader(Number(productGetters.getId(product)))"
         :disabled="loading"
       >
