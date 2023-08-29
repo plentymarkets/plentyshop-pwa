@@ -369,5 +369,9 @@
       "privacyPolicy": "Datenschutzerklärung",
       "termsAndConditions": "AGB"
     }
-  }
+  },
+  "asterisk": "*",
+  "itemExclVAT": "inkl. ges. MwSt",
+  "itemInclVAT": "zzgl. ges. MwSt.",
+  "excludedShipping": "zzgl. Versandkosten"
 }

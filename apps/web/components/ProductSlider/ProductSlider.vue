@@ -14,6 +14,12 @@
       :rating="productGetters.getAverageRating({} as ReviewAverage)"
     />
   </SfScrollable>
+  <div class="mt-4 typography-text-xs flex gap-1">
+    <span>{{ $t('asterisk') }}</span>
+    <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+    <span v-else>{{ $t('itemInclVAT') }}</span>
+    <span>{{ $t('excludedShipping') }}</span>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +27,9 @@ import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-cli
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 defineProps<ProductSliderProps>();
 </script>

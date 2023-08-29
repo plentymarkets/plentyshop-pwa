@@ -34,6 +34,7 @@
       </p>
       <span class="block pb-2 font-bold typography-text-sm mt-auto" data-testid="product-card-vertical-price">
         {{ $n(price, 'currency') }}
+        <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
       </span>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
@@ -70,6 +71,9 @@ withDefaults(defineProps<ProductCardProps>(), {
 
 const { addToCart } = useCart();
 const loading = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;

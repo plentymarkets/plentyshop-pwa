@@ -386,5 +386,9 @@
   "orderConfirmation": {
     "confirmationSendTo": "A confirmation with all details has been sent to {email}"
   },
-  "lowestPrice": "Lowest price of the last 30 days: {price}"
+  "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "asterisk": "*",
+  "itemExclVAT": "Excl. VAT",
+  "itemInclVAT": "Incl. VAT",
+  "excludedShipping": "excl. Shipping"
 }
