@@ -19,7 +19,7 @@ const { price } = props;
 
 const actualPrice = computed(() => {
   if (price && (price.special || price.regular)) {
-    return price.special ? price.special : price.regular;
+    return price.special ?? price.regular ?? 0;
   }
   return 0;
 });
