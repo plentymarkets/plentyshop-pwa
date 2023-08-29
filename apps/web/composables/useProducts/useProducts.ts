@@ -32,6 +32,7 @@ export const useProducts: UseProductsReturn = () => {
     if (data.value) data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
 
     state.value.data = data.value?.data ?? state.value.data;
+    state.value.data.facets = state.value.data.facets.filter((facet) => facet.id !== 'feedback');
 
     state.value.loading = false;
     return state.value.data;
