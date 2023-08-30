@@ -7,7 +7,27 @@ const state = useState<UseNotificationState>(`useNotification`, () => ({
 const maxVisibleNotifications = 5;
 const timeToLive = 3000;
 
+
+/**
+ * @description Composable to display ui notifications
+ * @example
+ * const { send } = useNotification();
+ */
 export const useNotification: UseNotificationReturn = () => {
+
+  /**
+   * @description method to display a ui notification
+   * @example
+   *  send({
+        message: 'Test alert error with a longer message',
+        type: 'negative',
+        persist: true,
+        action: {
+          text: 'action',
+          onClick: () => {},
+        },
+      });
+   */
   const send = (notification: Notification) => {
     const id = Symbol();
 
