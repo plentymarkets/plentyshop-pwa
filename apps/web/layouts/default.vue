@@ -48,6 +48,15 @@
             </li>
           </ul>
         </SfDropdown>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          tag="router-link"
+          to="/login"
+          variant="tertiary"
+          square
+        >
+          <SfIconPerson />
+        </SfButton>
       </NuxtLazyHydrate>
     </nav>
     <SfButton

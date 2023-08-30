@@ -1,6 +1,9 @@
 <template>
-  <NuxtLayout name="auth" :heading="$t('auth.login.heading')">
+  <NuxtLayout name="auth">
     <form @submit.prevent="login" class="border-neutral-200 md:border flex flex-col gap-4 md:p-6 rounded-md">
+      <div class="text-lg font-medium	">
+        {{$t('auth.login.heading')}}
+      </div>
       <label>
         <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
         <SfInput name="email" type="email" autocomplete="email" v-model="email" required />
@@ -11,10 +14,10 @@
         <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
       </label>
 
-      <label class="mt-2 flex items-center gap-2">
+      <!-- <label class="mt-2 flex items-center gap-2">
         <SfCheckbox name="rememberMe" v-model="rememberMe" />
         {{ $t('auth.login.rememberMeLabel') }}
-      </label>
+      </label> -->
 
       <SfButton type="submit" class="mt-2" :disabled="isLoading">
         <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="base" />
@@ -22,18 +25,16 @@
           {{ $t('auth.login.submitLabel') }}
         </span>
       </SfButton>
-      <SfButton :tag="NuxtLink" to="/reset-password" variant="tertiary">
-        {{ $t('auth.login.forgotPasswordLabel') }}
-      </SfButton>
-    </form>
-
-    <UiAlert class="mt-6 w-full p-4 md:p-6 !justify-start typography-text-base" variant="neutral">
-      <i18n-t tag="span" keypath="auth.login.createAccountBanner">
+      <div align="center" class="mt-5">
+        <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
+          {{ $t('auth.login.forgotPasswordLabel') }}
+        </SfLink>
+        <div class="my-10 font-bold">{{ $t('auth.login.createAccount') }}</div>
         <SfLink :tag="NuxtLink" :to="paths.authSignup" variant="primary">
           {{ $t('auth.login.createAccountLinkLabel') }}
         </SfLink>
-      </i18n-t>
-    </UiAlert>
+      </div>
+    </form>
   </NuxtLayout>
 </template>
 
