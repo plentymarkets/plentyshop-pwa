@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout name="auth">
-    <form @submit.prevent="login" class="border-neutral-200 md:border flex flex-col gap-4 md:p-6 rounded-md">
-      <div class="text-lg font-medium	">
-        {{$t('auth.login.heading')}}
+    <form @submit.prevent="loginUser" class="border-neutral-200 md:border flex flex-col gap-4 md:p-6 rounded-md">
+      <div class="text-lg font-medium">
+        {{ $t('auth.login.heading') }}
       </div>
       <label>
         <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
@@ -25,11 +25,11 @@
           {{ $t('auth.login.submitLabel') }}
         </span>
       </SfButton>
-      <div align="center" class="mt-5">
-        <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
+      <div align="center">
+        <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
           {{ $t('auth.login.forgotPasswordLabel') }}
-        </SfLink>
-        <div class="my-10 font-bold">{{ $t('auth.login.createAccount') }}</div>
+        </SfLink> -->
+        <div class="my-5 font-bold">{{ $t('auth.login.createAccount') }}</div>
         <SfLink :tag="NuxtLink" :to="paths.authSignup" variant="primary">
           {{ $t('auth.login.createAccountLinkLabel') }}
         </SfLink>
@@ -39,7 +39,9 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfLink, SfCheckbox, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { useCustomer } from '~/composables/useCustomer';
+const { login } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -48,17 +50,15 @@ definePageMeta({
 const NuxtLink = resolveComponent('NuxtLink');
 
 const router = useRouter();
-
 const email = ref('');
 const password = ref('');
-const rememberMe = ref<boolean>();
+// const rememberMe = ref<boolean>();
 const isLoading = ref<boolean>();
 
-const login = () => {
-  isLoading.value = true;
+const loginUser = () => {
+  // isLoading.value = true;
+  login(email.value, password.value);
   // mimics waiting an async api call
-  setTimeout(() => {
-    void router.push('/').then(() => (isLoading.value = false));
-  }, 4000);
+  router.push('/');
 };
 </script>

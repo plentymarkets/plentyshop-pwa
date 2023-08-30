@@ -1,6 +1,6 @@
 import type { SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
-import type { UseCustomerReturn, UseCustomerState, GetSession, LoginAsGuest } from '~/composables/useCustomer/types';
+import type { UseCustomerReturn, UseCustomerState, GetSession, LoginAsGuest, Login } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
 /**
@@ -59,9 +59,16 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.loading = false;
   };
 
+  const login: Login = async (email: string, password: string) => {
+    state.value.loading = true;
+    state.value.isAuthorized = true;
+    state.value.loading = false;
+  };
+
   return {
     setUser,
     getSession,
+    login,
     loginAsGuest,
     ...toRefs(state.value),
   };

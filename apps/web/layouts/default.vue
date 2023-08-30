@@ -24,7 +24,7 @@
         </SfButton>
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-visible>
-        <SfDropdown v-model="isAccountDropdownOpen" placement="bottom-end">
+        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
           <template #trigger>
             <SfButton
               variant="tertiary"
@@ -49,6 +49,7 @@
           </ul>
         </SfDropdown>
         <SfButton
+          v-else
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           tag="router-link"
           to="/login"
@@ -126,12 +127,11 @@ import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
-
 defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
-const { data: user } = useCustomer();
+const { data: user, isAuthorized } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
