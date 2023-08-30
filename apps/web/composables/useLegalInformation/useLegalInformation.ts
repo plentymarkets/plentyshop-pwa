@@ -1,7 +1,4 @@
-import type {
-  LegalInformationResponse,
-  LegalTextsParams,
-} from '@plentymarkets/shop-api';
+import type { LegalInformationResponse, LegalTextsParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseLegalInformationState, UseLegalInformationMethodsReturn, GetLegalInformation } from './types';
