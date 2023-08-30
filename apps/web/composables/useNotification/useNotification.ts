@@ -1,8 +1,8 @@
 import { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
 const state = useState<UseNotificationState>(`useNotification`, () => ({
-    data: []
-  }));
+  data: [],
+}));
 
 const maxVisibleNotifications = 5;
 const timeToLive = 3000;
@@ -12,18 +12,18 @@ export const useNotification: UseNotificationReturn = () => {
     const id = Symbol();
 
     const dismiss = () => {
-      const index = state.value.data.findIndex(notification => notification.id === id);
+      const index = state.value.data.findIndex((notification) => notification.id === id);
 
       if (index !== -1) state.value.data.splice(index, 1);
     };
 
-    const newNotification = {
+    const dismissableNotification = {
       ...notification,
       id,
-      dismiss
+      dismiss,
     };
 
-    state.value.data.push(newNotification);
+    state.value.data.push(dismissableNotification);
     if (state.value.data.length > maxVisibleNotifications) state.value.data.shift();
 
     if (!notification.persist) {
@@ -33,7 +33,6 @@ export const useNotification: UseNotificationReturn = () => {
 
   return {
     send,
-    ...toRefs(state.value)
+    ...toRefs(state.value),
   };
 };
-

@@ -1,6 +1,5 @@
-import { Notification } from "composables/useNotification";
+import { Notification } from 'composables/useNotification';
 
 export interface PositiveNotificationProps {
-    notification: Notification;
-  }
-  
+  notification: Notification;
+}

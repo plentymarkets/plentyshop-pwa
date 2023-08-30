@@ -1,21 +1,22 @@
 <template>
- <div
+  <div
     role="alert"
-    :class="`flex items-start md:items-center max-w-[600px] shadow-md bg-negative-100 pr-2 pl-4 ring-1 ring-negative-300 typography-text-sm md:typography-text-base py-1 rounded-md`"
+    class="flex items-start md:items-center max-w-[600px] shadow-md pr-2 pl-4 ring-1 typography-text-sm md:typography-text-base py-1 rounded-md bg-negative-100 ring-negative-300"
   >
     <p class="py-2 mr-2">{{ notification.message }}</p>
     <button
       v-if="notification?.action?.onClick"
       type="button"
-      :class="`py-1.5 px-3 md:py-2 md:px-4 rounded-md text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900 ml-auto font-medium focus-visible:outline focus-visible:outline-offset`"
+      class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900"
     >
       {{ notification?.action?.text }}
     </button>
     <button
       type="button"
       @click="notification.dismiss"
-      :class="`p-1.5 md:p-2 ml-2 rounded-md text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900 focus-visible:outline focus-visible:outline-offset`"
-      aria-label="Close error alert"
+      class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900"
+      :class="{ 'ml-auto': !notification?.action?.text }"
+      aria-label="Close negative alert"
     >
       <SfIconClose class="hidden md:block" />
       <SfIconClose size="sm" class="block md:hidden" />
@@ -26,6 +27,5 @@
 import { SfIconClose } from '@storefront-ui/vue';
 import { NegativeNotificationProps } from './types';
 
-const props = defineProps<NegativeNotificationProps>();
-const type = props.notification.type;
+defineProps<NegativeNotificationProps>();
 </script>

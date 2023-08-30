@@ -1,14 +1,33 @@
 <template>
-    <div
+  <div
     role="alert"
-    class="flex items-center max-w-[600px] shadow-md bg-secondary-100 pr-2 pl-4 ring-1 ring-secondary-200 typography-text-sm md:typography-text-base py-1 rounded-md"
+    class="flex items-start md:items-center max-w-[600px] shadow-md pr-2 pl-4 ring-1 typography-text-sm md:typography-text-base py-1 rounded-md bg-secondary-100 ring-secondary-300"
   >
     <SfIconInfo class="mr-2 text-secondary-700 shrink-0" />
-    <p class="py-2">{{ notification.message }}</p>
+
+    <p class="py-2 mr-2">{{ notification.message }}</p>
+    <button
+      v-if="notification?.action?.onClick"
+      type="button"
+      class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900"
+    >
+      {{ notification?.action?.text }}
+    </button>
+    <button
+      type="button"
+      @click="notification.dismiss"
+      class="p-1.5 md:p-2 ml-2 rounded-md focus-visible:outline focus-visible:outline-offset text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900"
+      :class="{ 'ml-auto': !notification?.action?.text }"
+      aria-label="Close secondary alert"
+    >
+      <SfIconClose class="hidden md:block" />
+      <SfIconClose size="sm" class="block md:hidden" />
+    </button>
   </div>
 </template>
 <script setup lang="ts">
-import { SfIconInfo } from '@storefront-ui/vue';
+import { SfIconClose, SfIconInfo } from '@storefront-ui/vue';
 import { SecondaryNotificationProps } from './types';
+
 defineProps<SecondaryNotificationProps>();
 </script>
