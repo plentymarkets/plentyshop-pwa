@@ -1,6 +1,7 @@
 <template>
   <div
     role="alert"
+    data-testid="NeutralNotification"
     class="flex items-start md:items-center max-w-[600px] shadow-md pr-2 pl-4 ring-1 typography-text-sm md:typography-text-base py-1 rounded-md bg-neutral-100 ring-neutral-300"
   >
     <p class="py-2 mr-2">{{ notification.message }}</p>
