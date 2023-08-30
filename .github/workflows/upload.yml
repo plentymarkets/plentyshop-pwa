@@ -13,6 +13,10 @@ on:
         required: true
         default: 'develop'
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   install-and-build-dependencies:
     runs-on: ubuntu-latest

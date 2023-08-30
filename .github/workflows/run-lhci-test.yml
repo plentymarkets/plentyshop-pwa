@@ -6,6 +6,10 @@ on:
       - 'apps/web/**'
       - 'lighthouserc.json'
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   lighthouse:
     name: Performance Tests

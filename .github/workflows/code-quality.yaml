@@ -6,6 +6,11 @@ on:
 #      - develop
 #  pull_request:
 #    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   sonarcloud-server:
     runs-on: ubuntu-latest

@@ -3,6 +3,10 @@ on:
   pull_request:
     types: ['opened', 'edited', 'reopened', 'synchronize']
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   lint:
     name: Validate PR Title
