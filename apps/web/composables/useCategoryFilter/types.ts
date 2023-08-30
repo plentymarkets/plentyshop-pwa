@@ -2,7 +2,7 @@ import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/a
 
 export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
-  categorySlugs?: string[];
+  categoryUrlPath?: string;
 }
 
 export interface Filters {

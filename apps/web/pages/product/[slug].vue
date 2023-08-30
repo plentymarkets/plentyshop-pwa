@@ -35,8 +35,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
+import { categoryTreeGetters, productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+
+const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -51,15 +52,19 @@ await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();
 
-const breadcrumbs: Breadcrumb[] = [
-  { name: t('home'), link: '/' },
-  { name: t('category'), link: '/category' },
-];
+const breadcrumbs = computed(() => {
+  const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
+    categoryTree.value,
+    Number(productGetters.getCategoryIds(product.value)?.[0] ?? 0),
+  );
+  breadcrumb.unshift({ name: t('home'), link: '/' });
+  breadcrumb.push({ name: productGetters.getName(product.value), link: `#` });
+
+  return breadcrumb;
+});
 
 if (product.value) {
   const productName = productGetters.getName(product.value);
-
-  breadcrumbs.push({ name: productName, link: `#` });
 
   const title = computed(() => productName);
 
