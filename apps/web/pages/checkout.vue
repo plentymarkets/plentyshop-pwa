@@ -31,10 +31,15 @@
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <ShippingMethod
           :shipping-methods="shippingMethods"
+          :disabled="disableShippingPayment"
           @update:shipping-method="handleShippingMethodUpdate($event)"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
+        <CheckoutPayment
+          :payment-methods="paymentMethods"
+          :disabled="disableShippingPayment"
+          @update:active-payment="handlePaymentMethodUpdate($event)"
+        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
@@ -74,14 +79,14 @@
       <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <PayPalExpressButton
           v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-          :disabled="!termsAccepted"
+          :disabled="!termsAccepted || disableShippingPayment"
           @on-click="validateTerms"
         />
         <SfButton
           v-else
           type="submit"
           @click="order"
-          :disabled="createOrderLoading"
+          :disabled="createOrderLoading || disableShippingPayment"
           size="lg"
           class="w-full mb-4 md:mb-0 cursor-pointer"
         >
@@ -109,16 +114,22 @@ definePageMeta({
 
 const { data: cart, getCart } = useCart();
 const { isAuthorized } = useCustomer();
-const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const {
+  loading: loadShipping,
+  data: shippingMethodData,
+  getShippingMethods,
+  saveShippingMethod,
+} = useCartShippingMethods();
+const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
+const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 
 const loadAddresses = async () => {
   await getBillingAddresses();

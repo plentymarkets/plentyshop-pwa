@@ -10,7 +10,7 @@
             class="peer sr-only"
             :value="id"
             :checked="id === selectedId"
-            :disabled="!isSelectable"
+            :disabled="!isSelectable || disabled"
             @change="$emit('update:activePayment', id)"
           />
           <span
@@ -33,7 +33,9 @@
 import { SfIconCreditCard } from '@storefront-ui/vue';
 import { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
-const props = defineProps<CheckoutPaymentProps>();
+const props = withDefaults(defineProps<CheckoutPaymentProps>(), {
+  disabled: false,
+});
 const { data: cart } = useCart();
 const selectedId = cart.value.methodOfPaymentId;
 defineEmits<CheckoutPaymentEmits>();
