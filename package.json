@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
-    "update:api": "yarn up @plentymarkets/shop-api && yarn up @plentymarkets/shop-sdk",
+    "update:sdk": "yarn up @plentymarkets/shop-api && yarn up @plentymarkets/shop-sdk",
     "setup": "yarn && yarn build && yarn dev",
     "build": "turbo run build",
     "build:analyze": "turbo run build:analyze",
