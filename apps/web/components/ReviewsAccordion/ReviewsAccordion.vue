@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { reviewGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();

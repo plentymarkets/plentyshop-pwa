@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();

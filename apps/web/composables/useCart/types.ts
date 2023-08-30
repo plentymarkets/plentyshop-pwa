@@ -4,7 +4,7 @@ import type {
   DoAddItemParams,
   DeleteCartItemParams,
   SetCartItemQuantityParams,
-} from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+} from '@plentymarkets/shop-api';
 
 export interface UseCartState {
   data: Cart;

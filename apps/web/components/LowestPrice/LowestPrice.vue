@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import type { LowestPriceProps } from '~/components/LowestPrice/types';
 
 const props = defineProps<LowestPriceProps>();
