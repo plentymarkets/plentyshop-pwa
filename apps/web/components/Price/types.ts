@@ -1,4 +1,4 @@
-import { AgnosticPrice } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/getters/agnostic.types';
+import { AgnosticPrice } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 
 export type PriceProps = {
   price: AgnosticPrice;
