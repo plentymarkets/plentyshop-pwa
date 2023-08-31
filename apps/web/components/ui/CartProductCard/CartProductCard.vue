@@ -11,7 +11,7 @@
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
-          :src="cartItemImage || '/images/product.webp'"
+          :src="cartItemImage || '/images/placeholder.png'"
           :alt="cartItemImage || ''"
           width="300"
           height="300"
