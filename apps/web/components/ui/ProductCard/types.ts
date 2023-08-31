@@ -3,8 +3,6 @@ import { Product } from '@plentymarkets/shop-api';
 export type ProductCardProps = {
   product: Product;
   name: string;
-  imageUrl: string;
-  imageAlt?: string;
   description?: string;
   rating?: number;
   ratingCount?: number;
