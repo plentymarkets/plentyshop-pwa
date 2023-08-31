@@ -75,7 +75,7 @@
   <UiModal
     v-model="isLoginOpen"
     tag="section"
-    class="h-full md:w-[400px] md:h-fit m-0 p-0"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0"
     aria-labelledby="login-modal"
   >
     <header>

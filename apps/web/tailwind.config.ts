@@ -55,9 +55,6 @@ export default {
         xs: '376px',
         '2xs': '360px',
       },
-      width: {
-        '400': '400px',
-      },
     },
   },
   plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
