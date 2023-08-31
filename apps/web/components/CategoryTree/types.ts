@@ -1,4 +1,4 @@
-import { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export type CategoryTreeListItem = {
   name: string;

@@ -12,6 +12,7 @@
       </template>
       <div v-html="productGetters.getDescription(product)"></div>
     </UiAccordionItem>
+    <UiDivider v-if="productDetailsOpen" class="mb-2 mt-2" />
     <UiAccordionItem
       v-if="productGetters.getTechnicalData(product)?.length"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center"
@@ -24,12 +25,12 @@
       </template>
       <div v-html="productGetters.getTechnicalData(product)"></div>
     </UiAccordionItem>
-    <UiDivider class="my-4" />
+    <UiDivider v-if="technicalDataOpen" class="mb-2 mt-2" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();
