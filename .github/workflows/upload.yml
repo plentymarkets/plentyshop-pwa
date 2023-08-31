@@ -36,10 +36,17 @@ jobs:
           yarn set version stable
           yarn set version 3.6.1
 
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
+      - name: Setup .yarnrc.yml
+        run: |
+            yarn config set nodeLinker node-modules
+            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
 
       - name: Build
         run: yarn build
