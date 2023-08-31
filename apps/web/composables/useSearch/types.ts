@@ -1,5 +1,5 @@
 import { Ref } from 'vue';
-import type { ItemSearchResult, ItemSearchParams } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { ItemSearchResult, ItemSearchParams } from '@plentymarkets/shop-api';
 
 export interface UseSearchState {
   data: ItemSearchResult;

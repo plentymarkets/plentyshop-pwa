@@ -1,4 +1,4 @@
-import { PlentysystemsModuleType, plentysystemsModule } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
+import { PlentysystemsModuleType, plentysystemsModule } from '@plentymarkets/shop-sdk';
 import { initSDK, buildModule } from '@vue-storefront/sdk';
 import { createSharedComposable } from '@vueuse/core';
 
