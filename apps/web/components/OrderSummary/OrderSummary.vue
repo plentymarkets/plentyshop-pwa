@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { cartGetters } from '@plentymarkets/shop-sdk';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();

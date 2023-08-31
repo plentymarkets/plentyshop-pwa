@@ -66,9 +66,9 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
-import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { productGetters } from '@plentymarkets/shop-sdk';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
+import type { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '~/components/ui/ProductCard/types';
 
 const props = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,

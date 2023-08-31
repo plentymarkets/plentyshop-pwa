@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { ReviewAverage } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 

@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { orderGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
 import { paypalGetters } from '~/getters/paypalGetters';
 
