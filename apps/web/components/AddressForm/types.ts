@@ -1,8 +1,4 @@
-import type {
-  Address,
-  ActiveShippingCountry,
-  AddressType,
-} from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Address, ActiveShippingCountry, AddressType } from '@plentymarkets/shop-api';
 
 export type AddressFormProps = {
   type: AddressType;

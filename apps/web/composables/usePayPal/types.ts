@@ -4,7 +4,7 @@ import {
   PayPalApproveOrder,
   PayPalExecutePayment,
   PayPalExecuteParams,
-} from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+} from '@plentymarkets/shop-api';
 
 export interface UsePayPalState {
   paypalScript: PayPalNamespace | null;

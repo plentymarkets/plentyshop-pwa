@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 const route = useRoute();
