@@ -11,10 +11,7 @@
         {{ $n(actualPrice, 'currency') }}
         <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
       </span>
-      <span
-        v-if="productGetters.getPrice(product)?.special"
-        class="text-base font-normal text-neutral-500 line-through"
-      >
+      <span v-if="showCrossPrice" class="text-base font-normal text-neutral-500 line-through">
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
@@ -95,6 +92,9 @@ const { addToCart, loading } = useCart();
 
 const actualPrice = computed(
   () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,
+);
+const showCrossPrice = computed(
+  () => productGetters.getPrice(product.value)?.special && productGetters.getRegularPrice(product.value) > 0,
 );
 
 const quantitySelectorValue = ref(1);
