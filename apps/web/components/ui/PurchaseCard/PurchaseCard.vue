@@ -11,7 +11,7 @@
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
-        :base-price="productGetters.getDefaultBasePrice(product)"
+        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />

@@ -14,6 +14,6 @@ export type ProductCardProps = {
   lazy?: boolean;
   unitContent?: number;
   unitName?: string;
-  basePrice?: string;
+  basePrice?: number;
   showBasePrice?: boolean;
 };
