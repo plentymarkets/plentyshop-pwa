@@ -104,7 +104,7 @@ const props = defineProps<AddressFormProps>();
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 
 const { savedAddress } = toRefs(props);
-const useAsShippingAddress = ref(false);
+const useAsShippingAddress = ref(true);
 
 const defaultValues = ref({
   firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
