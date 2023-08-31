@@ -7,31 +7,21 @@
       <NuxtLazyHydrate when-visible>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :to="paths.cart"
-          :aria-label="$t('numberInCart', cartItemsCount)"
-          variant="tertiary"
-          square
-        >
+          :tag="NuxtLink" :to="paths.cart" :aria-label="$t('numberInCart', cartItemsCount)" variant="tertiary" square>
           <template #prefix>
             <SfIconShoppingCart />
-            <SfBadge
-              :content="cartItemsCount"
+            <SfBadge :content="cartItemsCount"
               class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-              data-testid="cart-badge"
-            />
+              data-testid="cart-badge" />
           </template>
         </SfButton>
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-visible>
         <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
           <template #trigger>
-            <SfButton
-              variant="tertiary"
+            <SfButton variant="tertiary"
               class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-              @click="accountDropdownToggle()"
-            >
+              :class="{ 'bg-primary-900': isAccountDropdownOpen }" @click="accountDropdownToggle()">
               <template #prefix>
                 <SfIconPerson />
               </template>
@@ -50,34 +40,29 @@
             </li>
           </ul>
         </SfDropdown>
-        <SfButton
-          v-else
-          @click="toggleLogin"
+        <SfButton v-else @click="openLogin"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          variant="tertiary"
-          square
-        >
+          variant="tertiary" square>
           <SfIconPerson />
         </SfButton>
       </NuxtLazyHydrate>
     </nav>
-    <SfButton
-      variant="tertiary"
+    <SfButton variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
-      :aria-label="$t('openSearchModalButtonLabel')"
-    >
+      square @click="searchModalOpen" :aria-label="$t('openSearchModalButtonLabel')">
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
 
-  <UiModal
-    v-model="isLoginOpen"
-    tag="section"
-    class="h-full md:w-[400px] md:h-fit m-0 p-0"
-    aria-labelledby="login-modal"
-  >
+  <UiModal v-model="isLoginOpen" tag="section" class="h-full md:w-[400px] md:h-fit m-0 p-0" aria-labelledby="login-modal">
+    <header>
+      <div class="text-lg font-medium ml-5">
+        {{ $t('auth.login.heading') }}
+      </div>
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">
+        <SfIconClose />
+      </SfButton>
+    </header>
     <login />
   </UiModal>
 
@@ -99,13 +84,8 @@
     <UiFooter />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-idle>
-    <SfModal
-      v-model="isSearchModalOpen"
-      class="w-full h-full z-50"
-      tag="section"
-      role="dialog"
-      aria-labelledby="search-modal-title"
-    >
+    <SfModal v-model="isSearchModalOpen" class="w-full h-full z-50" tag="section" role="dialog"
+      aria-labelledby="search-modal-title">
       <header class="mb-4">
         <SfButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
           <SfIconClose class="text-neutral-500" />
@@ -137,7 +117,7 @@ import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
-const { isOpen: isLoginOpen, toggle: toggleLogin } = useDisclosure({ initialValue: false });
+const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
