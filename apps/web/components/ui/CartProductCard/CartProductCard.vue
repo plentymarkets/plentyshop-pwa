@@ -11,7 +11,7 @@
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
-          :src="cartItemImage || '/images/product.webp'"
+          :src="cartItemImage || '/images/placeholder.png'"
           :alt="cartItemImage || ''"
           width="300"
           height="300"
@@ -32,7 +32,7 @@
       <div v-if="cartItem.variation">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
-          :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
+          :base-price="productGetters.getDefaultBaseSinglePrice(cartItem.variation)"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
         />
