@@ -4,7 +4,7 @@ dotenv.config();
 const config = {
   integrations: {
     plentysystems: {
-      location: '@plentymarkets/plentymarkets-sdk/packages/api-client/server',
+      location: '@plentymarkets/shop-api/server',
       configuration: {
         api: {
           url: 'https://mevofvd5omld.c01-14.plentymarkets.com'

@@ -73,9 +73,9 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { Filter } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-import { FilterGroup } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { facetGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { Filter } from '@plentymarkets/shop-api';
+import { FilterGroup } from '@plentymarkets/shop-api';
+import { facetGetters } from '@plentymarkets/shop-sdk';
 import {
   SfInput,
   SfIconCheck,

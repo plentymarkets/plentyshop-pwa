@@ -1,4 +1,4 @@
-import { Address, AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { Address, AddressType } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import {

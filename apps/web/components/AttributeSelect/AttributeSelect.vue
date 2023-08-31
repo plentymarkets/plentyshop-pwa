@@ -18,8 +18,8 @@
 
 <script setup lang="ts">
 import { RouteRecordName, RouteParamValueRaw } from 'vue-router';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { ProductAttributeValue } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/getters/agnostic.types';
+import { productGetters } from '@plentymarkets/shop-sdk';
+import { ProductAttributeValue } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 import { SfSelect } from '@storefront-ui/vue';
 import { AttributeSelectProps } from '~/components/AttributeSelect/types';
 

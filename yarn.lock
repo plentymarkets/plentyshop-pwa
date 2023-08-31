@@ -3471,13 +3471,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/plentymarkets-sdk@npm:^0.1.42":
-  version: 0.1.42
-  resolution: "@plentymarkets/plentymarkets-sdk@npm:0.1.42::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fplentymarkets-sdk%2F0.1.42%2F1357197405a9b5b0f163d5bc09b22d10005bf731"
+"@plentymarkets/shop-api@npm:0.3.0":
+  version: 0.3.0
+  resolution: "@plentymarkets/shop-api@npm:0.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.3.0%2F5f5c2d216ed52224f80c27bd754f2cfdadf33512"
   dependencies:
-    react: 18.2.0
-    react-dom: 18.2.0
-  checksum: e0354446bdf55eb0a862d1343d704a3b3de9bd00129ea65b2fc4fa49dfd06af08f8909fb83960a3bf26a091361bfda716b2cfaeea5eb8a65e2515746c671aad9
+    "@vue-storefront/middleware": 3.0.0-rc.2
+    axios: ^0.21.1
+    consola: ^3.0.0
+  checksum: 904c1f6e606f98d1b2d688bfb33d16bd65d9e423fcf0675367771aed6861619edd519c82a5030e699defdc203573fe8bf86cefe4fe1e72a9d8dd07fe0ae79baa
+  languageName: node
+  linkType: hard
+
+"@plentymarkets/shop-sdk@npm:0.4.0":
+  version: 0.4.0
+  resolution: "@plentymarkets/shop-sdk@npm:0.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.4.0%2Fa55f192cd82366974b91522f51c418641978500e"
+  dependencies:
+    axios: ^0.27.2
+  checksum: 27c61d6dcecbea2b16ab927c7fd87509acd0301ffa20eb791ba6f6ac9d9265ae969059257d61319876746d26eadf22f2b5953ef6709d68b28d62ad5b87869570
   languageName: node
   linkType: hard
 
@@ -4714,7 +4724,8 @@ __metadata:
     "@commitlint/config-conventional": ^13.2.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/plentymarkets-sdk": ^0.1.42
+    "@plentymarkets/shop-api": 0.3.0
+    "@plentymarkets/shop-sdk": 0.4.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
@@ -4783,6 +4794,20 @@ __metadata:
   peerDependencies:
     eslint: ">= 8"
   checksum: f6f1cc16ccda88e31ca12edfda91b2cc80c6b558466506d4495e12fb5c4405f593585765316b6c5060ec637460cac4913eea0d597b320fee6be8815c0b9c4b9d
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/middleware@npm:3.0.0-rc.2":
+  version: 3.0.0-rc.2
+  resolution: "@vue-storefront/middleware@npm:3.0.0-rc.2"
+  dependencies:
+    consola: ^2.15.3
+    cookie-parser: ^1.4.6
+    cors: ^2.8.5
+    express: ^4.18.1
+    helmet: ^5.1.1
+    rimraf: ^4.1.2
+  checksum: 38f4a5e535d9bae356c590cca2a0b153f9a565e7195f2ddc785a96f29dbc6207793f960d92bccb769f31b9fff770f16dc4a4232eeab8484d1fd89bb45844cbd4
   languageName: node
   linkType: hard
 
@@ -5717,6 +5742,15 @@ __metadata:
   version: 4.6.3
   resolution: "axe-core@npm:4.6.3"
   checksum: d0c46be92b9707c48b88a53cd5f471b155a2bfc8bf6beffb514ecd14e30b4863e340b5fc4f496d82a3c562048088c1f3ff5b93b9b3b026cb9c3bfacfd535da10
+  languageName: node
+  linkType: hard
+
+"axios@npm:^0.21.1":
+  version: 0.21.4
+  resolution: "axios@npm:0.21.4"
+  dependencies:
+    follow-redirects: ^1.14.0
+  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
   languageName: node
   linkType: hard
 
@@ -7251,7 +7285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"consola@npm:^3.1.0, consola@npm:^3.2.2, consola@npm:^3.2.3":
+"consola@npm:^3.0.0, consola@npm:^3.1.0, consola@npm:^3.2.2, consola@npm:^3.2.3":
   version: 3.2.3
   resolution: "consola@npm:3.2.3"
   checksum: 32ec70e177dd2385c42e38078958cc7397be91db21af90c6f9faa0b16168b49b1c61d689338604bbb2d64370b9347a35f42a9197663a913d3a405bb0ce728499
@@ -9821,7 +9855,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.9":
+"follow-redirects@npm:^1.0.0, follow-redirects@npm:^1.14.0, follow-redirects@npm:^1.14.9":
   version: 1.15.2
   resolution: "follow-redirects@npm:1.15.2"
   peerDependenciesMeta:
@@ -10321,6 +10355,18 @@ __metadata:
     minimatch: ^5.0.1
     once: ^1.3.0
   checksum: 92fbea3221a7d12075f26f0227abac435de868dd0736a17170663783296d0dd8d3d532a5672b4488a439bf5d7fb85cdd07c11185d6cd39184f0385cbdfb86a47
+  languageName: node
+  linkType: hard
+
+"glob@npm:^9.2.0":
+  version: 9.3.5
+  resolution: "glob@npm:9.3.5"
+  dependencies:
+    fs.realpath: ^1.0.0
+    minimatch: ^8.0.2
+    minipass: ^4.2.4
+    path-scurry: ^1.6.1
+  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
   languageName: node
   linkType: hard
 
@@ -12643,7 +12689,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.0.0, loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.0.0, loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -13063,6 +13109,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^8.0.2":
+  version: 8.0.4
+  resolution: "minimatch@npm:8.0.4"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^9.0.0, minimatch@npm:^9.0.1":
   version: 9.0.3
   resolution: "minimatch@npm:9.0.3"
@@ -13173,6 +13228,13 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: a30d083c8054cee83cdcdc97f97e4641a3f58ae743970457b1489ce38ee1167b3aaf7d815cd39ec7a99b9c40397fd4f686e83750e73e652b21cb516f6d845e48
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^4.2.4":
+  version: 4.2.8
+  resolution: "minipass@npm:4.2.8"
+  checksum: 7f4914d5295a9a30807cae5227a37a926e6d910c03f315930fde52332cf0575dfbc20295318f91f0baf0e6bb11a6f668e30cde8027dea7a11b9d159867a3c830
   languageName: node
   linkType: hard
 
@@ -14413,7 +14475,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-scurry@npm:^1.10.1":
+"path-scurry@npm:^1.10.1, path-scurry@npm:^1.6.1":
   version: 1.10.1
   resolution: "path-scurry@npm:1.10.1"
   dependencies:
@@ -15475,18 +15537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-    scheduler: ^0.23.0
-  peerDependencies:
-    react: ^18.2.0
-  checksum: 7d323310bea3a91be2965f9468d552f201b1c27891e45ddc2d6b8f717680c95a75ae0bc1e3f5cf41472446a2589a75aed4483aee8169287909fcd59ad149e8cc
-  languageName: node
-  linkType: hard
-
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -15498,15 +15548,6 @@ __metadata:
   version: 18.2.0
   resolution: "react-is@npm:18.2.0"
   checksum: e72d0ba81b5922759e4aff17e0252bd29988f9642ed817f56b25a3e217e13eea8a7f2322af99a06edb779da12d5d636e9fda473d620df9a3da0df2a74141d53e
-  languageName: node
-  linkType: hard
-
-"react@npm:18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: 88e38092da8839b830cda6feef2e8505dec8ace60579e46aa5490fc3dc9bba0bd50336507dc166f43e3afc1c42939c09fe33b25fae889d6f402721dcd78fca1b
   languageName: node
   linkType: hard
 
@@ -16032,6 +16073,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rimraf@npm:^4.1.2":
+  version: 4.4.1
+  resolution: "rimraf@npm:4.4.1"
+  dependencies:
+    glob: ^9.2.0
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
+  languageName: node
+  linkType: hard
+
 "robots-parser@npm:^3.0.0":
   version: 3.0.1
   resolution: "robots-parser@npm:3.0.1"
@@ -16215,15 +16267,6 @@ __metadata:
   bin:
     sass: sass.js
   checksum: ae292e6a41a8812c0206c528885969e2f6f35870397e6d5bc33477927fd09faffda196aefe2cfe49e0c57f1448129b522f845bb134f3b6a131b184e3be86cf92
-  languageName: node
-  linkType: hard
-
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: ^1.1.0
-  checksum: d79192eeaa12abef860c195ea45d37cbf2bbf5f66e3c4dcd16f54a7da53b17788a70d109ee3d3dde1a0fd50e6a8fc171f4300356c5aee4fc0171de526bf35f8a
   languageName: node
   linkType: hard
 
