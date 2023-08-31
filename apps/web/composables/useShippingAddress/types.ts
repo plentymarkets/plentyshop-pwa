@@ -1,4 +1,4 @@
-import type { Address } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Address } from '@plentymarkets/shop-api';
 
 export interface UseShippingAddressMethodsState {
   data: Address[];

@@ -1,10 +1,7 @@
 <template>
   <SfListItem
     size="lg"
-    :class="[
-      'md:sf-list-item-sm md:py-1.5 sf-list-item',
-      { 'bg-primary-100 hover:bg-primary-100 active:bg-primary-100 font-medium': selected },
-    ]"
+    :class="['md:py-1.5', { 'bg-primary-100 hover:bg-primary-100 active:bg-primary-100 font-medium': selected }]"
     data-testid="category-tree-item"
     v-if="name.length > 0"
   >

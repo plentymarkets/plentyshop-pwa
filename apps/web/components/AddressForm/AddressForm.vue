@@ -93,8 +93,8 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { AddressType } from '@plentymarkets/shop-api';
+import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
 
