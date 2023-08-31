@@ -1,4 +1,4 @@
-import type { Review } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Review } from '@plentymarkets/shop-api';
 export const mockProductReviews: Review = {
   feedbacks: [
     {

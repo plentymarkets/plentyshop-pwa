@@ -3,6 +3,10 @@ on:
   pull_request:
     types: ['opened', 'edited', 'reopened', 'synchronize']
 
+permissions:
+  contents: read
+  packages: read
+
 jobs:
   lint:
     name: Validate PR Title
@@ -14,15 +18,25 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: './.github/.node-version'
+          node-version: '20'
           cache: 'yarn'
+          registry-url: "https://npm.pkg.github.com"
 
-      - name: Create yarnrc
+      - name: Set yarn version
         run: |
-          cp .yarnrc.yml.example .yarnrc.yml
-          sed -i 's/<TOKEN>/${{ secrets.GITHUB_TOKEN }}/' .yarnrc.yml
+          yarn set version stable
+          yarn set version 3.6.1
 
-      - name: Install dependencies
+      - name: Setup .yarnrc.yml
+        run: |
+            yarn config set nodeLinker node-modules
+            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
         run: yarn --frozen-lockfile
 
       - name: Validate PR title

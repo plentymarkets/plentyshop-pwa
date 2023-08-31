@@ -17,12 +17,10 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion :product="product" />
           </NuxtLazyHydrate>
         </section>
-        <UiDivider class="mt-4 mb-2" />
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
@@ -35,7 +33,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 const route = useRoute();
