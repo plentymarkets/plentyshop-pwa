@@ -79,7 +79,7 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <div class="text-lg font-medium ml-5">
+      <div class="text-lg font-medium ml-8">
         {{ $t('auth.login.heading') }}
       </div>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">

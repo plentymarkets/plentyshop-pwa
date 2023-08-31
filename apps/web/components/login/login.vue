@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center my-1">
-    <form @submit.prevent="loginUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full">
+    <form @submit.prevent="loginUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-400">
       <label>
         <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
         <SfInput name="email" type="email" autocomplete="email" v-model="email" required />
