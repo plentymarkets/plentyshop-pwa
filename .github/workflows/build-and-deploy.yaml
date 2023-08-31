@@ -32,10 +32,6 @@ jobs:
           echo "target-url=$TARGET_URL" >> $GITHUB_OUTPUT
           echo "project-name=$PROJECT_NAME" >> $GITHUB_OUTPUT
           echo "region=$REGION" >> $GITHUB_OUTPUT
-      - name: Create yarnrc
-        run: |
-          cp .yarnrc.yml.example .yarnrc.yml
-          sed -i 's/<TOKEN>/${{ secrets.GITHUB_TOKEN }}/' .yarnrc.yml
 
   build:
     name: Build

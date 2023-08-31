@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 

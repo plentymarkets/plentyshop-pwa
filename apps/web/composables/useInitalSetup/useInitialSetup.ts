@@ -1,4 +1,4 @@
-import { Cart, SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+import { Cart, SessionResult } from '@plentymarkets/shop-api';
 import { useSdk } from '~/sdk';
 import { SetInitialData, UseInitialSetupReturn } from './types';
 

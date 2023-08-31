@@ -1,5 +1,5 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import { PayPalExecuteParams } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+import { PayPalExecuteParams } from '@plentymarkets/shop-api';
 import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {

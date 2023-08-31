@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 
 definePageMeta({
   layout: false,
