@@ -1,4 +1,4 @@
-import type { ActiveShippingCountry } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { ActiveShippingCountry } from '@plentymarkets/shop-api';
 
 export interface UseActiveShippingCountriesState {
   data: ActiveShippingCountry[];

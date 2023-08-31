@@ -60,6 +60,7 @@
 </template>
 
 <script setup lang="ts">
+
 import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
 import { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';

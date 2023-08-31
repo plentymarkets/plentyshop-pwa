@@ -41,10 +41,7 @@
 
       <div class="flex items-center">
         <SfCheckbox id="terms" v-model="termsAndConditionsModel" value="value" class="peer" required />
-        <label
-          class="ml-3 text-base text-neutral-900 cursor-pointer font-body peer-disabled:text-disabled-900"
-          for="terms"
-        >
+        <label class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900" for="terms">
           *
           <i18n-t keypath="form.termsAndConditionsLabel">
             <template #terms>
@@ -62,7 +59,7 @@
       <div class="flex mb-2">
         <SfCheckbox id="subscription" v-model="subscriptionsModel" value="value" class="peer mt-0.5" />
         <label
-          class="ml-3 text-base text-neutral-900 cursor-pointer font-body peer-disabled:text-disabled-900"
+          class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900"
           for="subscription"
         >
           {{ $t('form.subscriptionLabel') }}

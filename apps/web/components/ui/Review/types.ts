@@ -1,4 +1,4 @@
-import type { ReviewItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 
 export type ReviewProps = {
   reviewItem: ReviewItem;

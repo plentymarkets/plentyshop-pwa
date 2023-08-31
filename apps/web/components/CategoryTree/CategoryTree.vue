@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 import type { CategoryTreeProps } from '~/components/CategoryTree/types';
 
