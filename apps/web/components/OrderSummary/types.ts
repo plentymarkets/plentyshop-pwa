@@ -1,4 +1,4 @@
-import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Cart } from '@plentymarkets/shop-api';
 
 export type OrderSummaryPropsType = {
   cart: Cart;

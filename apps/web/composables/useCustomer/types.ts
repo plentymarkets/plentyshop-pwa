@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { SessionResult } from '@plentymarkets/shop-api';
 
 export interface UseCustomerState {
   data: SessionResult;

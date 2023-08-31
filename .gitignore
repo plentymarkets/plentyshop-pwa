@@ -12,6 +12,7 @@ node_modules
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.yarnrc.yml
 
 # nuxt dev/build outputs
 .output
@@ -27,7 +28,6 @@ coverage
 .DS_Store
 .idea
 *.pem
-.yarnrc.yml
 
 # debug
 npm-debug.log*

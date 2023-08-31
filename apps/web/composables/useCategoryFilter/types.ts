@@ -1,4 +1,4 @@
-import { FacetSearchCriteria } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { FacetSearchCriteria } from '@plentymarkets/shop-api';
 
 export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
