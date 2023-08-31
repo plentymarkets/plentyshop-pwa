@@ -6,8 +6,8 @@
     <div class="relative">
       <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`">
         <NuxtImg
-          :src="imageUrl"
-          :alt="imageAlt"
+          :src="firstImage.url"
+          :alt="firstImage.alt ?? ''"
           class="object-contain rounded-md aspect-square w-full h-full"
           data-testid="image-slot"
           width="190"
@@ -71,13 +71,15 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
-withDefaults(defineProps<ProductCardProps>(), {
+const props = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
 
 const { addToCart } = useCart();
 const loading = ref(false);
+
+const firstImage = productGetters.getFirstImage(props.product);
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
