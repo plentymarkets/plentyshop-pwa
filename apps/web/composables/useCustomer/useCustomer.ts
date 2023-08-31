@@ -1,6 +1,12 @@
 import type { SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
 import { toRefs } from '@vueuse/shared';
-import type { UseCustomerReturn, UseCustomerState, GetSession, LoginAsGuest, Login } from '~/composables/useCustomer/types';
+import type {
+  UseCustomerReturn,
+  UseCustomerState,
+  GetSession,
+  LoginAsGuest,
+  Login,
+} from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
 /**

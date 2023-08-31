@@ -32,7 +32,9 @@
               :class="{ 'bg-primary-900': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
             >
-              <template #prefix><SfIconPerson /></template>
+              <template #prefix>
+                <SfIconPerson />
+              </template>
               {{ user.user?.firstName }}
             </SfButton>
           </template>
@@ -50,9 +52,8 @@
         </SfDropdown>
         <SfButton
           v-else
+          @click="toggleLogin"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          tag="router-link"
-          to="/login"
           variant="tertiary"
           square
         >
@@ -70,6 +71,16 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
+
+  <UiModal
+    v-model="isLoginOpen"
+    tag="section"
+    class="h-full md:w-[400px] md:h-fit m-0 p-0"
+    aria-labelledby="login-modal"
+  >
+    <login />
+  </UiModal>
+
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -126,6 +137,7 @@ import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const { isOpen: isLoginOpen, toggle: toggleLogin } = useDisclosure({ initialValue: false });
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
