@@ -36,7 +36,7 @@
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"
-                :base-price="productGetters.getDefaultBasePrice(product)"
+                :base-price="productGetters.getDefaultBaseSinglePrice(product)"
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
                 :show-base-price="productGetters.showPricePerUnit(product)"
@@ -60,8 +60,8 @@
 </template>
 
 <script setup lang="ts">
-import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { ReviewAverage } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';

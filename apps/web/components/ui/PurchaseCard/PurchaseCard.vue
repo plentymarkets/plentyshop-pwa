@@ -10,17 +10,14 @@
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         {{ $n(actualPrice, 'currency') }}
       </span>
-      <span
-        v-if="productGetters.getPrice(product)?.special"
-        class="text-base font-normal text-neutral-500 line-through"
-      >
+      <span v-if="showCrossPrice" class="text-base font-normal text-neutral-500 line-through">
         {{ $n(productGetters.getRegularPrice(product), 'currency') }}
       </span>
     </div>
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
-        :base-price="productGetters.getDefaultBasePrice(product)"
+        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />
@@ -73,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
@@ -85,6 +82,9 @@ const { addToCart, loading } = useCart();
 
 const actualPrice = computed(
   () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,
+);
+const showCrossPrice = computed(
+  () => productGetters.getPrice(product.value)?.special && productGetters.getRegularPrice(product.value) > 0,
 );
 
 const quantitySelectorValue = ref(1);

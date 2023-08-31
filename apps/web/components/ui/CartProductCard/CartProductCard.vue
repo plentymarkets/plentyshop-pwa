@@ -32,7 +32,7 @@
       <div v-if="cartItem.variation">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
-          :base-price="productGetters.getDefaultBasePrice(cartItem.variation)"
+          :base-price="productGetters.getDefaultBaseSinglePrice(cartItem.variation)"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
         />
@@ -71,8 +71,8 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { cartGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconDelete } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';

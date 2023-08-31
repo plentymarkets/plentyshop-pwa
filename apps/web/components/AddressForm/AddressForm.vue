@@ -93,8 +93,8 @@
   </form>
 </template>
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { userAddressGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { AddressType } from '@plentymarkets/shop-api';
+import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
 
@@ -104,7 +104,7 @@ const props = defineProps<AddressFormProps>();
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 
 const { savedAddress } = toRefs(props);
-const useAsShippingAddress = ref(false);
+const useAsShippingAddress = ref(true);
 
 const defaultValues = ref({
   firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
