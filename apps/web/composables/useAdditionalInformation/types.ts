@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { AdditionalInformationParams } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
 
 export interface UseAdditionalInformationState {
   data: null;

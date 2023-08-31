@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 

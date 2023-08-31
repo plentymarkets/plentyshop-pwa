@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Product } from '@plentymarkets/shop-api';
 
 export interface UseProductState {
   data: Product;

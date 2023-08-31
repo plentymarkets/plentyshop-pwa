@@ -1,4 +1,4 @@
-import type { PaymentProviders } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { PaymentProviders } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';

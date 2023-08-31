@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import AddressForm from '~/components/AddressForm/AddressForm.vue';
-import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { AddressType } from '@plentymarkets/shop-api';
 
 describe('<AddressForm />', () => {
   it('should render component', () => {
