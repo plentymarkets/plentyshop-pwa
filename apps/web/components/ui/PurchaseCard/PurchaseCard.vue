@@ -6,14 +6,8 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <div class="my-1">
-      <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        {{ $n(actualPrice, 'currency') }}
-      </span>
-      <span v-if="showCrossPrice" class="text-base font-normal text-neutral-500 line-through">
-        {{ $n(productGetters.getRegularPrice(product), 'currency') }}
-      </span>
-    </div>
+    <Price :price="productGetters.getPrice(product)" />
+    <!-- {{ product }} -->
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
@@ -79,13 +73,6 @@ const props = defineProps<PurchaseCardProps>();
 const { product } = toRefs(props);
 
 const { addToCart, loading } = useCart();
-
-const actualPrice = computed(
-  () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,
-);
-const showCrossPrice = computed(
-  () => productGetters.getPrice(product.value)?.special && productGetters.getRegularPrice(product.value) > 0,
-);
 
 const quantitySelectorValue = ref(1);
 
