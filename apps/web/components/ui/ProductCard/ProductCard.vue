@@ -38,7 +38,7 @@
       </div>
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-          {{ $n(price, 'currency') }}
+          {{ $n(actualPrice(productGetters.getPrice(product)), 'currency') }}
         </span>
         <span
           v-if="productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
+import { AgnosticPrice } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
@@ -91,6 +92,17 @@ const addWithLoader = async (productId: number) => {
     loading.value = false;
   }
 };
+
+const actualPrice = ((price: AgnosticPrice) => {
+  if (price && (price.special !== null || price.regular !== null)) {
+    let result = price.special ?? 0;
+    if (price.regular) {
+      result = price.regular;
+    }
+    return result;
+  }
+  return 0;
+});
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

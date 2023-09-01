@@ -4,7 +4,7 @@
       <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
         {{ $n(actualPrice, 'currency') }}
       </span>
-      <span v-if="price.special && regularPrice" class="text-base font-normal text-neutral-500 line-through">
+      <span v-if="price.special" class="text-base font-normal text-neutral-500 line-through">
         {{ $n(regularPrice, 'currency') }}
       </span>
     </div>
@@ -19,7 +19,11 @@ const { price } = props;
 
 const actualPrice = computed(() => {
   if (price && (price.special !== null || price.regular !== null)) {
-    return price.special ?? price.regular ?? 0;
+    let result = price.special ?? 0;
+    if (price.regular) {
+      result = price.regular;
+    }
+    return result;
   }
   return 0;
 });
