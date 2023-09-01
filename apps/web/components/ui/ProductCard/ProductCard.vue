@@ -93,7 +93,7 @@ const addWithLoader = async (productId: number) => {
   }
 };
 
-const actualPrice = ((price: AgnosticPrice) => {
+const actualPrice = (price: AgnosticPrice) => {
   if (price && (price.special !== null || price.regular !== null)) {
     let result = price.special ?? 0;
     if (price.regular) {
@@ -102,7 +102,7 @@ const actualPrice = ((price: AgnosticPrice) => {
     return result;
   }
   return 0;
-});
+};
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
