@@ -151,38 +151,11 @@ defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
-const { send } = useNotification();
 const { data: user, isAuthorized } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-onMounted(() => {
-  send({ message: 'Test alert neutral', type: 'neutral', persist: true });
-  send({
-    message: 'Test alert positive',
-    type: 'positive',
-    persist: true,
-    action: {
-      text: 'action',
-      onClick: () => {},
-    },
-  });
-  send({ message: 'Test alert secondary', type: 'secondary', persist: true });
-  send({ message: 'Test alert warning', type: 'warning', persist: true });
-  send({
-    message: 'Test alert error with a longer message',
-    type: 'negative',
-    persist: true,
-    action: {
-      text: 'action',
-      onClick: () => {},
-    },
-  });
-});
-
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
-
 const accountDropdown = [
   {
     label: 'account.heading',
