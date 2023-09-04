@@ -31,12 +31,12 @@
                 :name="productGetters.getName(product) ?? ''"
                 :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
                 :rating="productGetters.getAverageRating({} as ReviewAverage)"
-                :price="productGetters.getPrice(product)?.special ?? productGetters.getPrice(product)?.regular ?? 0"
+                :price="actualPrice(product)"
                 :image-url="productGetters.getCoverImagePreview(product)"
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"
-                :base-price="productGetters.getDefaultBasePrice(product)"
+                :base-price="productGetters.getDefaultBaseSinglePrice(product)"
                 :unit-content="productGetters.getUnitContent(product)"
                 :unit-name="productGetters.getUnitName(product)"
                 :show-base-price="productGetters.showPricePerUnit(product)"
@@ -61,6 +61,7 @@
 
 <script setup lang="ts">
 import { ReviewAverage } from '@plentymarkets/shop-api';
+import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
@@ -86,4 +87,12 @@ watch(isTabletScreen, (value) => {
     close();
   }
 });
+
+const actualPrice = (product: Product): number => {
+  const price = productGetters.getPrice(product);
+  if (price && (price.special || price.regular)) {
+    return price.special ?? price.regular ?? 0;
+  }
+  return 0;
+};
 </script>

@@ -32,12 +32,20 @@
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
-      <span class="block pb-2 font-bold typography-text-sm mt-auto" data-testid="product-card-vertical-price">
-        {{ $n(price, 'currency') }}
-      </span>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
+      </div>
+      <div class="flex items-center mt-auto">
+        <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+          {{ $n(price, 'currency') }}
+        </span>
+        <span
+          v-if="productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
+          class="text-base typography-text-sm text-neutral-500 line-through ml-3 pb-2"
+        >
+          {{ $n(productGetters.getRegularPrice(product), 'currency') }}
+        </span>
       </div>
       <SfButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
