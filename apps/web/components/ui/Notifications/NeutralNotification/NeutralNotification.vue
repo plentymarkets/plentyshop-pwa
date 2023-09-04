@@ -7,6 +7,7 @@
     <p class="py-2 mr-2">{{ notification.message }}</p>
     <button
       v-if="notification?.action?.onClick"
+      @click="notification?.action?.onClick"
       type="button"
       class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900"
     >

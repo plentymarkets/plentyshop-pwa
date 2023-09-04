@@ -9,6 +9,7 @@
     <p class="py-2 mr-2">{{ notification.message }}</p>
     <button
       v-if="notification?.action?.onClick"
+      @click="notification?.action?.onClick"
       type="button"
       class="py-1.5 px-3 md:py-2 md:px-4 rounded-md ml-auto font-medium focus-visible:outline focus-visible:outline-offset text-warning-700 hover:bg-warning-200 active:bg-warning-300 hover:text-warning-800 active:text-warning-900"
     >
