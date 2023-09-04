@@ -48,6 +48,7 @@
         </span>
       </div>
       <SfButton
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         type="button"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -62,14 +63,20 @@
           {{ $t('addToCartShort') }}
         </span>
       </SfButton>
+      <SfButton v-else type="button" :tag="NuxtLink" :to="`${paths.product}${slug}`" size="sm" class="w-fit">
+        <span>{{ $t('showArticle') }}</span>
+        <template #prefix>
+          <SfIconChevronRight size="sm" />
+        </template>
+      </SfButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
-import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
+import { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,

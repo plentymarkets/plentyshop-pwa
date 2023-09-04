@@ -29,7 +29,8 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div v-if="cartItem.variation">
+      <div v-if="currentSinglePrice">{{ $n(currentSinglePrice, 'currency') }}</div>
+      <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
           :base-price="productGetters.getDefaultBaseSinglePrice(cartItem.variation)"
@@ -37,7 +38,7 @@
           :unit-name="productGetters.getUnitName(cartItem.variation)"
         />
       </div>
-      <div class="my-2 sm:mb-0">
+      <div class="my-2">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
             <span class="mr-1">{{ attribute.label }}:</span>
@@ -47,16 +48,10 @@
       </div>
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
-          v-if="prices.special"
+          v-if="currentFullPrice"
           class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ $n(prices.special || 0, 'currency') }}
-          <span class="text-neutral-500 ml-2 line-through typography-text-xs sm:typography-text-sm font-normal">
-            {{ $n(prices.regular || 0, 'currency') }}
-          </span>
-        </span>
-        <span v-else class="font-bold sm:ml-auto sm:order-1 typography-text-sm sm:typography-text-lg">
-          {{ $n(prices.regular || 0, 'currency') }}
+          {{ $n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
           @change-quantity="debounceQuantity"
@@ -98,6 +93,14 @@ const prices = computed(() => {
     special: cartGetters.getItemPrice(props.cartItem)?.special,
     regular: cartGetters.getItemPrice(props.cartItem)?.regular,
   };
+});
+
+const currentSinglePrice = computed(() => {
+  return prices.value ? prices.value.special || prices.value.regular : 0;
+});
+
+const currentFullPrice = computed(() => {
+  return (currentSinglePrice.value ?? 0) * cartGetters.getItemQty(props.cartItem);
 });
 
 const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
