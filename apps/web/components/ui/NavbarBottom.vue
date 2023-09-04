@@ -10,7 +10,7 @@
       ]"
       size="sm"
       :tag="NuxtLink"
-      :to="link"
+      :to="label === 'Account' && !isAuthorized ? '/login' : link"
     >
       <template #prefix>
         <div class="relative">
@@ -29,10 +29,11 @@
 
 <script setup lang="ts">
 import { SfButton, SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson } from '@storefront-ui/vue';
+import { useCustomer } from '~/composables/useCustomer';
 
 const { t } = useI18n();
 const { data: cart } = useCart();
-
+const { isAuthorized } = useCustomer();
 const items = [
   {
     label: t('home'),

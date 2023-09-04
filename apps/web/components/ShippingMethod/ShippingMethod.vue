@@ -11,6 +11,7 @@
           :key="shippingProviderGetters.getParcelServicePresetId(method)"
           class="border rounded-md items-start"
           @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
+          :disabled="disabled"
         >
           <div class="flex gap-2">
             <SfRadio
@@ -42,7 +43,9 @@ import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
-defineProps<ShippingMethodProps>();
+withDefaults(defineProps<ShippingMethodProps>(), {
+  disabled: false,
+});
 const emit = defineEmits<CheckoutShippingEmits>();
 const { data: cart } = useCart();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value).toString());

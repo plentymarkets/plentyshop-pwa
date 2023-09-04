@@ -24,7 +24,7 @@
         </SfButton>
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-visible>
-        <SfDropdown v-model="isAccountDropdownOpen" placement="bottom-end">
+        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
           <template #trigger>
             <SfButton
               variant="tertiary"
@@ -32,7 +32,9 @@
               :class="{ 'bg-primary-900': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
             >
-              <template #prefix><SfIconPerson /></template>
+              <template #prefix>
+                <SfIconPerson />
+              </template>
               {{ user.user?.firstName }}
             </SfButton>
           </template>
@@ -48,6 +50,15 @@
             </li>
           </ul>
         </SfDropdown>
+        <SfButton
+          v-else
+          @click="openLogin"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          variant="tertiary"
+          square
+        >
+          <SfIconPerson />
+        </SfButton>
       </NuxtLazyHydrate>
     </nav>
     <SfButton
@@ -61,6 +72,23 @@
     </SfButton>
   </MegaMenu>
   <UiNotifications />
+  <UiModal
+    v-model="isLoginOpen"
+    tag="section"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    aria-labelledby="login-modal"
+  >
+    <header>
+      <div class="text-lg font-medium ml-8">
+        {{ $t('auth.login.heading') }}
+      </div>
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">
+        <SfIconClose />
+      </SfButton>
+    </header>
+    <login />
+  </UiModal>
+
   <NarrowContainer v-if="breadcrumbs">
     <div class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -117,14 +145,14 @@ import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
+const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
-
 defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
-const { data: user } = useCustomer();
 const { send } = useNotification();
+const { data: user, isAuthorized } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
