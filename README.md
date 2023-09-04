@@ -66,7 +66,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 - Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
 - Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
 - Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
-- Open [`integration.config.ts`](./apps/web/integration.config.ts) to enter your PayPal `merchantId`.
+- Open [`integration.config.ts`](./apps/web/integration.config.ts) to enter your PayPal `merchantId` and `clientId`, as well as the `paymentId` from your plentysystems system(**Setup » Orders » Payment » Method**; find the **PayPal** entry with a :white_check_mark: in the **Back end activated** column).
 
 ### Authentication
 
