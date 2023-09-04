@@ -1,4 +1,4 @@
-import { CartItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
+import { CartItem } from '@plentymarkets/shop-api';
 
 export interface Attribute {
   label: string;

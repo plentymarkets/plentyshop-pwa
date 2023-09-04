@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import type { SessionResult } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { SessionResult } from '@plentymarkets/shop-api';
 
 export interface UseCustomerState {
   data: SessionResult;
@@ -11,6 +11,7 @@ export interface UseCustomerState {
 export type GetSession = () => Promise<SessionResult>;
 
 export type LoginAsGuest = (email: string) => Promise<void>;
+export type Login = (email: string, password: string) => void;
 export type SetUser = (data: SessionResult) => void;
 
 export interface UseCustomer {
@@ -21,6 +22,7 @@ export interface UseCustomer {
   loading: Readonly<Ref<boolean>>;
   setUser: SetUser;
   getSession: GetSession;
+  login: Login;
   loginAsGuest: LoginAsGuest;
 }
 

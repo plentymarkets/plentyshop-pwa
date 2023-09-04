@@ -1,5 +1,5 @@
-import { ReviewAverage } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { ReviewAverage } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 
 export type PurchaseCardProps = {
   product: Product;

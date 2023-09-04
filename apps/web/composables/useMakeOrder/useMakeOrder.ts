@@ -1,4 +1,4 @@
-import type { Order, MakeOrderParams } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseMakeOrderState, UseMakeOrderReturn, createOrder } from '~/composables/useMakeOrder/types';
 import { useSdk } from '~/sdk';

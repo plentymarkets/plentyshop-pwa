@@ -1,4 +1,4 @@
-import type { CategoryTreeItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree } from './types';

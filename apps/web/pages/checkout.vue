@@ -96,14 +96,13 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
-import { shippingProviderGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { AddressType } from '@plentymarkets/shop-api';
+import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
-  layout: false,
   layoutName: 'checkout',
 });
 

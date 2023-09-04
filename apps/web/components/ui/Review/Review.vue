@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reviewGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src/index';
+import { reviewGetters } from '@plentymarkets/shop-sdk';
 import { SfRating, SfIconCheck } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 

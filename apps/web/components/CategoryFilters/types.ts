@@ -1,4 +1,4 @@
-import { FilterGroup } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { FilterGroup } from '@plentymarkets/shop-api';
 
 export type CategoryFiltersProps = {
   facets: FilterGroup[];

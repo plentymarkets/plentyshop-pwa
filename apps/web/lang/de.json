@@ -318,12 +318,12 @@
   },
   "auth": {
     "login": {
-      "heading": "Login",
-      "submitLabel": "Login",
+      "heading": "In ihr Konto einloggen",
+      "submitLabel": "Anmelden",
       "forgotPasswordLabel": "Passwort vergessen?",
       "rememberMeLabel": "An mich erinnern",
-      "createAccountBanner": "Zum ersten mal hier? {0}.",
-      "createAccountLinkLabel": "Konto erstellen"
+      "createAccount": "Sie haben noch kein Konto?",
+      "createAccountLinkLabel": "Jetzt anmelden!"
     },
     "signup": {
       "heading": "Konto erstellen",
