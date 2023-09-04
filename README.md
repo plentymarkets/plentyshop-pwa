@@ -38,7 +38,7 @@ For plentyShop PWA to run, you have to install plugins that provide additional R
 
 1. Log into your plentysystems system.
 2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
-3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account. If you skip this step, remove the PayPal component from the app.
+3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.
 
 ## Local dev setup
 
@@ -66,6 +66,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 - Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
 - Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
 - Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
+- Open [`integration.config.ts`](./apps/web/integration.config.ts) to enter your PayPal [`merchantId`](https://www.paypal.com/us/cshelp/article/how-do-i-find-my-secure-merchant-id-on-my-paypal-account-help538) and [`clientId`](https://developer.paypal.com/api/rest/#link-getclientidandclientsecret), as well as the `paymentId` from your plentysystems system(**Setup » Orders » Payment » Method**; find the **PayPal** entry with a :white_check_mark: in the **Back end activated** column).
 
 ### Authentication
 
