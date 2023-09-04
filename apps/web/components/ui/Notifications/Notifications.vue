@@ -1,11 +1,7 @@
 <template>
   <div data-testid="notifications" class="z-50 absolute w-50 right-2 top-2 max-w-[600px]">
-    <div v-for="notification of notifications" class="my-2">
-      <Component
-        :key="notification.id"
-        :notification="notification"
-        :is="getNotificationComponentByType(notification.type)"
-      ></Component>
+    <div v-for="notification of notifications" class="my-2" :key="notification.id">
+      <Component :notification="notification" :is="getNotificationComponentByType(notification.type)"></Component>
     </div>
   </div>
 </template>
