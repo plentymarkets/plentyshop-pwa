@@ -1,5 +1,5 @@
-import { CartItem } from '@plentymarkets/plentymarkets-sdk/packages/api-client/server';
-import type { Cart } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { CartItem } from '@plentymarkets/shop-api';
+import type { Cart } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';

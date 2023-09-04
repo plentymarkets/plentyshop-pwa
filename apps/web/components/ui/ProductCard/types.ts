@@ -1,4 +1,4 @@
-import { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import { Product } from '@plentymarkets/shop-api';
 
 export type ProductCardProps = {
   product: Product;
@@ -14,6 +14,6 @@ export type ProductCardProps = {
   lazy?: boolean;
   unitContent?: number;
   unitName?: string;
-  basePrice?: string;
+  basePrice?: number;
   showBasePrice?: boolean;
 };

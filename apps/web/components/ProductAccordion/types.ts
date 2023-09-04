@@ -1,4 +1,4 @@
-import type { Product } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { Product } from '@plentymarkets/shop-api';
 
 export type ProductAccordionPropsType = {
   product: Product;

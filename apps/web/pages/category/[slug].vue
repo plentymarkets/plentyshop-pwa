@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/plentymarkets-sdk/packages/sdk/src';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import type { Breadcrumb } from '~/components/ui/Breadcrumbs/types';
 
 definePageMeta({

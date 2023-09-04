@@ -1,4 +1,4 @@
-import type { ShippingMethod } from '@plentymarkets/plentymarkets-sdk/packages/api-client/src';
+import type { ShippingMethod } from '@plentymarkets/shop-api';
 
 export type ShippingMethodProps = {
   shippingMethods: ShippingMethod[];
