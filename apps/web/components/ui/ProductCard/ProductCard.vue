@@ -40,7 +40,7 @@
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <SfButton
-        v-if="canBeAddedToCart"
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         type="button"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -67,30 +67,16 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
-import type { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '~/components/ui/ProductCard/types';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
+import { ProductCardProps } from '~/components/ui/ProductCard/types';
 
-const props = withDefaults(defineProps<ProductCardProps>(), {
+withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
 
 const { addToCart } = useCart();
 const loading = ref(false);
-
-const canBeAddedToCart = computed(() => {
-  return (
-    props.product &&
-    props.product.filter &&
-    props.product.filter.isSalable &&
-    !(
-      props.product.variation.minimumOrderQuantity !== 1 || (props.product.variation.intervalOrderQuantity || 1) !== 1
-    ) &&
-    !(props.product.hasOrderProperties || props.product.hasRequiredOrderProperty) &&
-    !(props.product.item.itemType === 'set') &&
-    props.product.images.variation.length === 0
-  );
-});
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;

@@ -75,7 +75,7 @@ const updateTreeAndBreadcrumbs = () => {
   );
 
   breadcrumbs.value = category.value
-    ? categoryTreeGetters.generateBreadcrumbFromCategory(categoryTree.value, category.value)
+    ? categoryTreeGetters.generateBreadcrumbFromCategory(categoryTree.value, category.value?.id ?? 0)
     : [{ name: t('allProducts'), link: '#' }];
 
   breadcrumbs.value.unshift({ name: t('home'), link: '/' });

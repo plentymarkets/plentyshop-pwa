@@ -32,7 +32,7 @@
                 :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
                 :rating="productGetters.getAverageRating({} as ReviewAverage)"
                 :price="productGetters.getPrice(product)?.special ?? productGetters.getPrice(product)?.regular ?? 0"
-                :image-url="productGetters.getCoverImage(product)"
+                :image-url="productGetters.getCoverImagePreview(product)"
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"
