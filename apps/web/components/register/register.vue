@@ -16,8 +16,8 @@
         {{ $t('auth.login.rememberMeLabel') }}
       </label> -->
 
-      <SfButton type="submit" class="mt-2" :disabled="isLoading">
-        <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="base" />
+      <SfButton type="submit" class="mt-2" :disabled="loading">
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ $t('auth.signup.submitLabel') }}
         </span>
@@ -36,30 +36,36 @@
 </template>
 
 <script lang="ts" setup>
-import {SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
-import { useCustomer } from '~/composables/useCustomer';
+import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
-const { register, getSession } = useCustomer();
+const { register, loading } = useCustomer();
+const { send } = useNotification();
 
 definePageMeta({
   layout: false,
 });
+const emits = defineEmits(['registered', 'change-view']);
 
 const NuxtLink = resolveComponent('NuxtLink');
-
 const router = useRouter();
 const email = ref('');
 const password = ref('');
 // const rememberMe = ref<boolean>();
-const isLoading = ref<boolean>();
 
 const registerUser = async () => {
-  // isLoading.value = true;
   await register({ email: email.value, password: password.value });
 
-  await getSession();
+  send({
+    message: 'Registered successfully',
+    type: 'positive',
+    persist: true,
+    action: {
+      text: 'action',
+      onClick: () => {},
+    },
+  });
 
-  // mimics waiting an async api call
+  emits('registered');
   router.push('/');
 };
 </script>

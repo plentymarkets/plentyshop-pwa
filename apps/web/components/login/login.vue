@@ -36,16 +36,15 @@
 </template>
 
 <script lang="ts" setup>
-import {SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
-import { LoginEmits } from '~/components/login/types';
+import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { login, loading } = useCustomer();
 
 definePageMeta({
   layout: false,
 });
+const emits = defineEmits(['loggedIn', 'change-view']);
 
-const emits = defineEmits<LoginEmits>();
 const NuxtLink = resolveComponent('NuxtLink');
 const router = useRouter();
 const email = ref('');

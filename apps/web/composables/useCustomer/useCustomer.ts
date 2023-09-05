@@ -127,8 +127,8 @@ export const useCustomer: UseCustomerReturn = () => {
     );
 
     useHandleError(error.value);
-
     state.value.loading = false;
+    await getSession();
   };
 
   return {

@@ -89,31 +89,17 @@
   >
     <header>
       <div class="text-lg font-medium ml-8">
-        {{ $t('auth.login.heading') }}
+        <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
+        <span v-else>{{ $t('auth.signup.heading') }}</span>
       </div>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">
         <SfIconClose />
       </SfButton>
     </header>
-    <login @change-view="changeView" @logged-in="closeLogin" />
-  </UiModal>
 
-  <UiModal
-    v-model="isRegisterOpen"
-    tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0"
-    aria-labelledby="login-modal"
-  >
-    <header>
-      <div class="text-lg font-medium ml-8">
-        {{ $t('auth.signup.heading') }}
-      </div>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeRegister">
-        <SfIconClose />
-      </SfButton>
-    </header>
+    <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeLogin" />
 
-    <register />
+    <register v-else @registered="closeLogin" @change-view="isLogin = true" />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
@@ -174,7 +160,6 @@ import { DefaultLayoutProps } from '~/layouts/types';
 const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
-const { isOpen: isRegisterOpen, open: openRegister, close: closeRegister } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
@@ -182,6 +167,8 @@ const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
 usePageTitle();
+
+const isLogin = ref(true)
 
 const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
@@ -209,9 +196,4 @@ const accountDropdown = [
     link: '/',
   },
 ];
-
-const changeView = () => {
-  closeLogin()
-  openRegister()
-};
 </script>

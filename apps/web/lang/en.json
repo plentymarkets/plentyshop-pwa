@@ -355,7 +355,7 @@
     },
     "signup": {
       "heading": "Sign up",
-      "createButton": "Sign up",
+      "submitLabel": "Sign up",
       "alreadyHaveAccount": "Already have an account?",
       "logInLinkLabel": "Log in instead",
       "modal": {

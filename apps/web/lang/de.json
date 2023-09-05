@@ -328,7 +328,7 @@
     },
     "signup": {
       "heading": "Account erstellen",
-      "createButton": "Account erstellen",
+      "submitLabel": "Account erstellen",
       "alreadyHaveAccount": "Du hast schon ein Konto?",
       "logInLinkLabel": "Stattdessen einloggen",
       "modal": {
