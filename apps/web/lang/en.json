@@ -95,9 +95,9 @@
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
+  "cancellationRights": "Cancellation rights",
   "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
-  "cancellationRights": "Cancellation rights",
   "contactInfo": {
     "heading": "Contact Information",
     "description": "Add your email.",

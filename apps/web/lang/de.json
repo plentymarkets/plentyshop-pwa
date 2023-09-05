@@ -29,6 +29,16 @@
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
+  "CookieBar": {
+    "Privacy Settings": "Datenschutzeinstellungen",
+    "More information": "Weitere Informationen",
+    "Further Settings": "Weitere Einstellungen",
+    "Back": "Zurück",
+    "Show less": "Weniger anzeigen",
+    "Accept All": "Alle akzeptieren",
+    "Reject All": "Alle ablehnen",
+    "Accept Selection": "Auswahl akzeptieren"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
@@ -53,7 +63,7 @@
   "basePrice": "Grundpreis",
   "showMore": "Mehr anzeigen",
   "showLess": "Weniger anzeigen",
-  "filter": "Filter",
+  "filters": "Filter",
   "allProducts": "Alle Produkte",
   "sortBy": "Sortieren nach",
   "perPage": "Pro Seite",
@@ -80,11 +90,14 @@
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
+  "placeOrder": "Bestellung aufgeben",
   "buy": "Kaufen",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "cancellationRights": "Widerrufsrecht",
+  "termsRequired": "Sie müssen den AGB zustimmen.",
+  "tomorrow": "morgen",
   "contactInfo": {
     "heading": "Kontaktinformationen",
     "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
@@ -93,9 +106,9 @@
     "phone": "Telefonnummer",
     "phonePlaceholder": "z.B. 1234 567890",
     "cancel": "Zurücksetzen",
-    "löschen": "Löschen",
-    "speichern": "Speichern",
-    "Bearbeiten": "Bearbeiten",
+    "clear": "Löschen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
     "clearAll": "Alles löschen"
   },
   "checkoutPayment": {
@@ -121,6 +134,8 @@
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
   "search": "Suche",
+  "openSearchModalButtonLabel": "Suche öffnen",
+  "vsfHomepage": "VSF Homepage",
   "home": "Startseite",
   "products": "Produkte",
   "cart": "Warenkorb",
@@ -136,6 +151,7 @@
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "viewCart": "Warenkorb anzeigen",
   "category": "Kategorie",
+  "imageOfSth": "Bild von {name}",
   "categories": {
     "howToBuy": {
       "label": "Bestellvorgang",
@@ -153,7 +169,7 @@
         "helpCenter": "Hilfezentrum",
         "securityFraud": "Sicherheit & Missbrauch",
         "feedback": "Feedback",
-        "Kontakt": "Kontakt"
+        "contact": "Kontakt"
       }
     },
     "services": {
@@ -176,6 +192,16 @@
         "pressCenter": "Presse",
         "affiliateProgram": "Partnerprogramm",
         "suppliers": "Lieferanten"
+      }
+    },
+    "legal": {
+      "label": "Rechtliches",
+      "subcategories": {
+        "cancellationForm": "Widerrufsformular",
+        "cancellationRights": "Widerrufsbelehrung",
+        "legalDisclosure": "Impressum",
+        "privacyPolicy": "Datenschutzerklärung",
+        "termsAndConditions": "AGB"
       }
     }
   },
@@ -203,7 +229,7 @@
   },
   "bottomLinks": {
     "terms": "AGB",
-    "privacyPolicy": "Datenschutzerklärung",
+    "privacyPolicy": "Datenschutzerklärung"
   },
   "socialLabel": "Gehe zu {label}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
@@ -292,6 +318,7 @@
       "returnsHeading": "Retouren",
       "returnsAltText": "Keine Retouren",
       "returnsDescription": "Sie haben noch keine Produkte zurückgeschickt",
+      "listOfOrders": "Auftragsliste",
       "section": {
         "myOrders": "Meine Bestellungen",
         "returns": "Retouren"
@@ -360,15 +387,5 @@
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
   },
-  "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
-  "legal": {
-    "label": "Rechtliches",
-    "subcategories": {
-      "cancellationForm": "Widerrufsformular",
-      "cancellationRights": "Widerrufsbelehrung",
-      "legalDisclosure": "Impressum",
-      "privacyPolicy": "Datenschutzerklärung",
-      "termsAndConditions": "AGB"
-    }
-  }
+  "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}"
 }
