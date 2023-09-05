@@ -118,6 +118,10 @@ export const useCustomer: UseCustomerReturn = () => {
     checkUserState();
   };
 
+  /** Function for registering a user.
+   * @example
+   * register({ email: 'example', password: 'example' });
+   */
   const register: Register = async (params) => {
     const { send } = useNotification();
 

@@ -26,7 +26,7 @@
     "passwordLabel": "Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
-    "privacyPolicyLabel": "Please select the checkbox for the {privacyPolicy}.",
+    "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
@@ -96,7 +96,7 @@
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
-  "privacyPolicyRequired": "Please select the checkbox for the privacy policy",
+  "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
   "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
   "cancellationRights": "Cancellation rights",
