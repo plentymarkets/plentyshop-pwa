@@ -3482,12 +3482,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.6.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.6.0%2F1711c57ea325fdc5d15a531053bbe289a9cd6850"
+"@plentymarkets/shop-sdk@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@plentymarkets/shop-sdk@npm:0.7.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.7.0%2F11773cc77110ca4eb5786d53bd58797686459b4d"
   dependencies:
     axios: ^0.27.2
-  checksum: 298052847e60fd911cb6e1188c56cd13c2656799474461add3ee03ad5ab9988659c1c3bd87cacc73e5bc7b849ad7bbf7bf07fde87760e042a74b57f97a2e0611
+  checksum: e4965b02c3d49d89ca5a2e5fd20c4157d6b98d9634da2733d9692033ea8841c6623543b42622155b94c21738704511bab740af55ca4f1c328cb0a9c2f0a7ceef
   languageName: node
   linkType: hard
 
@@ -4725,7 +4725,7 @@ __metadata:
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
     "@plentymarkets/shop-api": ^0.4.0
-    "@plentymarkets/shop-sdk": ^0.6.0
+    "@plentymarkets/shop-sdk": ^0.7.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7

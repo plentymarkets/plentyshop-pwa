@@ -3,11 +3,7 @@ import CategoryTree from '~/components/CategoryTree/CategoryTree.vue';
 
 describe('<CategoryTree/>', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(CategoryTree, {
-      props: {
-        categories: [],
-      },
-    });
+    const { getByTestId } = mount(CategoryTree, {});
 
     expect(getByTestId('category-tree'));
   });
