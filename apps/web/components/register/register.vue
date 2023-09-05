@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-center my-1">
-    <form @submit.prevent="loginUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
+    <form @submit.prevent="registerUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
         <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
         <SfInput name="email" type="email" autocomplete="email" v-model="email" required />
@@ -39,7 +39,7 @@
 import {SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
 
-const { login } = useCustomer();
+const { register } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -53,9 +53,9 @@ const password = ref('');
 // const rememberMe = ref<boolean>();
 const isLoading = ref<boolean>();
 
-const loginUser = () => {
+const registerUser = () => {
   // isLoading.value = true;
-  login(email.value, password.value);
+  register({ email: email.value, password: password.value });
   // mimics waiting an async api call
   router.push('/');
 };

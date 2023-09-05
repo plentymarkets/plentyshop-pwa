@@ -6,6 +6,7 @@ import type {
   GetSession,
   LoginAsGuest,
   Login,
+  Register,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
@@ -71,10 +72,26 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.loading = false;
   };
 
+  const register: Register = async (params) => {
+    state.value.loading = true;
+
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doRegisterUser({
+        email: params.email,
+        password: params.password,
+      }),
+    );
+
+    useHandleError(error.value);
+
+    state.value.loading = false;
+  };
+
   return {
     setUser,
     getSession,
     login,
+    register,
     loginAsGuest,
     ...toRefs(state.value),
   };
