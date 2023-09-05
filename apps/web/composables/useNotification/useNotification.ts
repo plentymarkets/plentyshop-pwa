@@ -1,9 +1,5 @@
 import { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
-const state = useState<UseNotificationState>(`useNotification`, () => ({
-  data: [],
-}));
-
 const maxVisibleNotifications = 5;
 const timeToLive = 3000;
 
@@ -13,6 +9,10 @@ const timeToLive = 3000;
  * const { send } = useNotification();
  */
 export const useNotification: UseNotificationReturn = () => {
+  const state = useState<UseNotificationState>(`useNotification`, () => ({
+    data: [],
+  }));
+
   /**
    * @description method to display a ui notification
    * @example
