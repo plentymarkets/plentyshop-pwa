@@ -53,8 +53,8 @@ const password = ref('');
 // const rememberMe = ref<boolean>();
 
 const loginUser = async () => {
-  const bSuccess = await login(email.value, password.value);
-  if (bSuccess) {
+  const success = await login(email.value, password.value);
+  if (success) {
     emits('loggedIn');
     router.push('/');
   }
