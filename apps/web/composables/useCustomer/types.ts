@@ -12,6 +12,7 @@ export type GetSession = () => Promise<SessionResult>;
 
 export type LoginAsGuest = (email: string) => Promise<void>;
 export type Login = (email: string, password: string) => void;
+export type Logout = () => void;
 export type Register = (params: RegisterParams) => void;
 export type SetUser = (data: SessionResult) => void;
 
@@ -24,6 +25,7 @@ export interface UseCustomer {
   setUser: SetUser;
   getSession: GetSession;
   login: Login;
+  logout: Logout;
   register: Register;
   loginAsGuest: LoginAsGuest;
 }

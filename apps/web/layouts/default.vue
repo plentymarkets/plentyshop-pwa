@@ -42,7 +42,7 @@
             <li v-for="{ label, link } in accountDropdown" :key="label">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" @click="accountDropdownToggle()">{{ $t(label) }}</SfListItem>
+                <SfListItem tag="button" class="text-left" @click="logout">{{ $t(label) }}</SfListItem>
               </template>
               <SfListItem v-else :tag="NuxtLink" :to="link" :class="{ 'bg-neutral-200': $route.path === link }">
                 {{ $t(label) }}
@@ -86,7 +86,7 @@
         <SfIconClose />
       </SfButton>
     </header>
-    <login @change-view="openRegister" />
+    <login @change-view="changeView" />
   </UiModal>
 
   <UiModal
@@ -195,4 +195,9 @@ const accountDropdown = [
     link: '/',
   },
 ];
+
+const changeView = () => {
+  closeLogin()
+  openRegister()
+};
 </script>

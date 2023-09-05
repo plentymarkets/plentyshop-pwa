@@ -39,7 +39,7 @@
 import {SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
 
-const { register } = useCustomer();
+const { register, getSession } = useCustomer();
 
 definePageMeta({
   layout: false,
@@ -53,9 +53,12 @@ const password = ref('');
 // const rememberMe = ref<boolean>();
 const isLoading = ref<boolean>();
 
-const registerUser = () => {
+const registerUser = async () => {
   // isLoading.value = true;
-  register({ email: email.value, password: password.value });
+  await register({ email: email.value, password: password.value });
+
+  await getSession();
+
   // mimics waiting an async api call
   router.push('/');
 };

@@ -6,7 +6,7 @@ import type {
   GetSession,
   LoginAsGuest,
   Login,
-  Register,
+  Register, Logout,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
@@ -72,6 +72,14 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.loading = false;
   };
 
+  const logout: Logout = async () => {
+    state.value.loading = true;
+
+    await useAsyncData(() => useSdk().plentysystems.doLogoutUser());
+
+    state.value.loading = false;
+  };
+
   const register: Register = async (params) => {
     state.value.loading = true;
 
@@ -91,6 +99,7 @@ export const useCustomer: UseCustomerReturn = () => {
     setUser,
     getSession,
     login,
+    logout,
     register,
     loginAsGuest,
     ...toRefs(state.value),
