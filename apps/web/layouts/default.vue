@@ -31,6 +31,7 @@
               class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
               :class="{ 'bg-primary-900': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
+              data-testid="account-dropdown-button"
             >
               <template #prefix>
                 <SfIconPerson />
@@ -42,9 +43,17 @@
             <li v-for="{ label, link } in accountDropdown" :key="label">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" @click="logOut()">{{ $t(label) }}</SfListItem>
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">{{
+                  $t(label)
+                }}</SfListItem>
               </template>
-              <SfListItem v-else :tag="NuxtLink" :to="link" :class="{ 'bg-neutral-200': $route.path === link }">
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': $route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
                 {{ $t(label) }}
               </SfListItem>
             </li>
