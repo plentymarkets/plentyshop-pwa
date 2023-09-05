@@ -11,8 +11,8 @@ export interface UseCustomerState {
 export type GetSession = () => Promise<SessionResult>;
 
 export type LoginAsGuest = (email: string) => Promise<void>;
-export type Login = (email: string, password: string) => void;
-export type Logout = () => void;
+export type Login = (email: string, password: string) => Promise<boolean>;
+export type Logout = () => Promise<void>;
 export type Register = (params: RegisterParams) => void;
 export type SetUser = (data: SessionResult) => void;
 

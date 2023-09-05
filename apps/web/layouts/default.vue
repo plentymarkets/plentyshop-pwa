@@ -31,6 +31,7 @@
               class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
               :class="{ 'bg-primary-900': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
+              data-testid="account-dropdown-button"
             >
               <template #prefix>
                 <SfIconPerson />
@@ -42,9 +43,17 @@
             <li v-for="{ label, link } in accountDropdown" :key="label">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" @click="logout">{{ $t(label) }}</SfListItem>
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">{{
+                  $t(label)
+                }}</SfListItem>
               </template>
-              <SfListItem v-else :tag="NuxtLink" :to="link" :class="{ 'bg-neutral-200': $route.path === link }">
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': $route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
                 {{ $t(label) }}
               </SfListItem>
             </li>
@@ -71,7 +80,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
-
+  <UiNotifications />
   <UiModal
     v-model="isLoginOpen"
     tag="section"
@@ -86,7 +95,7 @@
         <SfIconClose />
       </SfButton>
     </header>
-    <login @change-view="changeView" />
+    <login @change-view="changeView" @logged-in="closeLogin" />
   </UiModal>
 
   <UiModal
@@ -162,6 +171,7 @@ import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
+const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
 const { isOpen: isRegisterOpen, open: openRegister, close: closeRegister } = useDisclosure();
@@ -170,12 +180,16 @@ defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
-const { data: user, isAuthorized } = useCustomer();
+const { data: user, isAuthorized, logout } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const logOut = async () => {
+  await logout();
+  accountDropdownToggle();
+  router.push('/');
+};
 
 const accountDropdown = [
   {
