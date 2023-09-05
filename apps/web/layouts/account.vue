@@ -60,8 +60,7 @@
               <UiDivider />
               <ul>
                 <SfListItem
-                  :tag="NuxtLink"
-                  :to="paths.home"
+                  @click="logOut"
                   class="py-4 md:py-2 mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
                 >
                   <template #prefix><SfIconBase /></template>
@@ -92,6 +91,7 @@ import { useMediaQuery } from '@vueuse/core';
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
 const { t } = useI18n();
 const router = useRouter();
+const { isAuthorized, logout } = useCustomer();
 const sections = [
     {
         title: t('account.accountSettings.heading'),
@@ -142,4 +142,13 @@ const breadcrumbs = computed(() => [
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+if (!isAuthorized.value) {
+  router.push(paths.home);
+}
+
+const logOut = async () => {
+  await logout();
+  router.push('/');
+};
 </script>

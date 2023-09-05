@@ -16,8 +16,8 @@
         {{ $t('auth.login.rememberMeLabel') }}
       </label> -->
 
-      <SfButton type="submit" class="mt-2" :disabled="isLoading">
-        <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="base" />
+      <SfButton type="submit" class="mt-2" :disabled="loading">
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ $t('auth.login.submitLabel') }}
         </span>
@@ -37,26 +37,26 @@
 
 <script lang="ts" setup>
 import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { useCustomer } from '~/composables/useCustomer';
+import { LoginEmits } from '~/components/login/types';
 
-const { login } = useCustomer();
+const { login, loading } = useCustomer();
 
 definePageMeta({
   layout: false,
 });
 
+const emits = defineEmits<LoginEmits>();
 const NuxtLink = resolveComponent('NuxtLink');
-
 const router = useRouter();
 const email = ref('');
 const password = ref('');
 // const rememberMe = ref<boolean>();
-const isLoading = ref<boolean>();
 
-const loginUser = () => {
-  // isLoading.value = true;
-  login(email.value, password.value);
-  // mimics waiting an async api call
-  router.push('/');
+const loginUser = async () => {
+  const success = await login(email.value, password.value);
+  if (success) {
+    emits('loggedIn');
+    router.push('/');
+  }
 };
 </script>
