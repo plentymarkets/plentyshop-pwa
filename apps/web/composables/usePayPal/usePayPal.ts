@@ -34,7 +34,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
         state.value.paypalScript = await loadPayPalScript({
           clientId: paypalGetters.getClientId() ?? '',
           currency: currency,
-          dataPartnerAttributionId: 'plentysystemsAG_Cart_PPCP',
+          dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
         });
         return state.value.paypalScript;
       } catch {
