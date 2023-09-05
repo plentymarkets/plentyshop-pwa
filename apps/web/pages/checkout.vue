@@ -191,8 +191,6 @@ const order = async () => {
 
   if (data?.order?.id) {
     router.push('/order/success');
-  } else {
-    router.push('/order/failed');
   }
 };
 </script>
