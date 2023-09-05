@@ -71,7 +71,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
-
+  <UiNotifications />
   <UiModal
     v-model="isLoginOpen"
     tag="section"
@@ -155,9 +155,7 @@ const { data: user, isAuthorized } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
-
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
-
 const accountDropdown = [
   {
     label: 'account.heading',
