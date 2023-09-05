@@ -46,7 +46,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
 
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     return {
-      categorySlugs: getCategorySlugsFromPath(route.fullPath),
+      categoryUrlPath: getCategorySlugsFromPath(route.fullPath).join('/'),
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
