@@ -8,8 +8,8 @@
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
-        <UiDivider v-if="!isAuthorized" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ContactInformation v-if="!isAuthorized" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           :heading="$t('billing.heading')"
@@ -112,7 +112,6 @@ definePageMeta({
 });
 
 const { data: cart, getCart } = useCart();
-const { isAuthorized } = useCustomer();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const {

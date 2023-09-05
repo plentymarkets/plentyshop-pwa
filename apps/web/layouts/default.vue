@@ -42,7 +42,7 @@
             <li v-for="{ label, link } in accountDropdown" :key="label">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" @click="accountDropdownToggle()">{{ $t(label) }}</SfListItem>
+                <SfListItem tag="button" class="text-left" @click="logOut()">{{ $t(label) }}</SfListItem>
               </template>
               <SfListItem v-else :tag="NuxtLink" :to="link" :class="{ 'bg-neutral-200': $route.path === link }">
                 {{ $t(label) }}
@@ -86,7 +86,7 @@
         <SfIconClose />
       </SfButton>
     </header>
-    <login />
+    <login @logged-in="closeLogin" />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
@@ -144,6 +144,7 @@ import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
+const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
@@ -151,11 +152,17 @@ defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
-const { data: user, isAuthorized } = useCustomer();
+const { data: user, isAuthorized, logout } = useCustomer();
 usePageTitle();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const logOut = async () => {
+  await logout();
+  accountDropdownToggle();
+  router.push('/');
+};
+
 const accountDropdown = [
   {
     label: 'account.heading',

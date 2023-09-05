@@ -92,6 +92,7 @@ import { useMediaQuery } from '@vueuse/core';
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
 const { t } = useI18n();
 const router = useRouter();
+const { isAuthorized } = useCustomer();
 const sections = [
     {
         title: t('account.accountSettings.heading'),
@@ -142,4 +143,8 @@ const breadcrumbs = computed(() => [
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+if (!isAuthorized.value) {
+  router.push(paths.home);
+}
 </script>
