@@ -18,6 +18,7 @@ export const useHandleError: UseHandleError = (error) => {
   const { send } = useNotification();
 
   if (error) {
+    console.error(error);
     send({
       type: 'negative',
       message: error.message ?? defaultError.message ?? 'An error occurred',
