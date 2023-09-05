@@ -19,16 +19,16 @@
       <SfButton type="submit" class="mt-2" :disabled="isLoading">
         <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
-          {{ $t('auth.login.submitLabel') }}
+          {{ $t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
       <div align="center">
         <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
           {{ $t('auth.login.forgotPasswordLabel') }}
         </SfLink> -->
-        <div class="my-5 font-bold">{{ $t('auth.login.createAccount') }}</div>
+        <div class="my-5 font-bold">{{ $t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
-          {{ $t('auth.login.createAccountLinkLabel') }}
+          {{ $t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
     </form>

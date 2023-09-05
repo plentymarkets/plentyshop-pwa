@@ -354,9 +354,10 @@
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Create Account",
-      "createButton": "Create Account",
-      "bannerText": "Already have an account? Switch to {login}",
+      "heading": "Sign up",
+      "createButton": "Sign up",
+      "alreadyHaveAccount": "Already have an account?",
+      "logInLinkLabel": "Log in instead",
       "modal": {
         "heading": "Welcome",
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",

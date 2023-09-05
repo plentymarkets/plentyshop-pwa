@@ -86,7 +86,25 @@
         <SfIconClose />
       </SfButton>
     </header>
-    <login />
+    <login @change-view="openRegister" />
+  </UiModal>
+
+  <UiModal
+    v-model="isRegisterOpen"
+    tag="section"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    aria-labelledby="login-modal"
+  >
+    <header>
+      <div class="text-lg font-medium ml-8">
+        {{ $t('auth.signup.heading') }}
+      </div>
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeRegister">
+        <SfIconClose />
+      </SfButton>
+    </header>
+
+    <register />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
@@ -146,6 +164,7 @@ import { DefaultLayoutProps } from '~/layouts/types';
 
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
+const { isOpen: isRegisterOpen, open: openRegister, close: closeRegister } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
