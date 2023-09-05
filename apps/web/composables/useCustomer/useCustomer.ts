@@ -8,6 +8,7 @@ import type {
   Login,
   Register,
   Logout,
+  SetPrivacyPolicy,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
@@ -23,6 +24,7 @@ export const useCustomer: UseCustomerReturn = () => {
     loading: false,
     isAuthorized: false,
     isGuest: false,
+    privacyPolicy: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -117,6 +119,8 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   const register: Register = async (params) => {
+    const { send } = useNotification();
+
     state.value.loading = true;
 
     const { data, error } = await useAsyncData(() =>
@@ -131,6 +135,19 @@ export const useCustomer: UseCustomerReturn = () => {
     await getSession();
   };
 
+  /**
+   * @description Function for setting the privacy policy.
+   * @example
+   * setPrivacyPolicy({
+   *   privacyPolicy: true
+   * });
+   */
+  const setPrivacyPolicy: SetPrivacyPolicy = (privacyPolicy: boolean) => {
+    state.value.loading = true;
+    state.value.privacyPolicy = privacyPolicy;
+    state.value.loading = false;
+  };
+
   return {
     setUser,
     getSession,
@@ -138,6 +155,7 @@ export const useCustomer: UseCustomerReturn = () => {
     logout,
     register,
     loginAsGuest,
+    setPrivacyPolicy,
     ...toRefs(state.value),
   };
 };

@@ -16,6 +16,36 @@
         {{ $t('auth.login.rememberMeLabel') }}
       </label> -->
 
+      <div class="flex items-center">
+        <SfCheckbox
+          id="privacyPolicy"
+          :selected="privacyPolicy"
+          @update:model-value="changePrivacy"
+          value="value"
+          class="peer"
+          required
+        />
+        <label
+          class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900"
+          for="privacyPolicy"
+        >
+          <i18n-t keypath="form.privacyPolicyLabel">
+            <template #privacyPolicy>
+              <SfLink
+                href="/PrivacyPolicy"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('privacyPolicy') }}
+              </SfLink>
+            </template>
+          </i18n-t>
+          *
+        </label>
+      </div>
+
+      <div v-if="invalidPrivacyPolicy" class="text-negative-700 text-sm">{{ $t('privacyPolicyRequired') }}</div>
+
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
@@ -36,36 +66,37 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfInput, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
 
-const { register, loading } = useCustomer();
-const { send } = useNotification();
+const { register, loading, setPrivacyPolicy, privacyPolicy } = useCustomer();
 
 definePageMeta({
   layout: false,
 });
+
 const emits = defineEmits(['registered', 'change-view']);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const router = useRouter();
 const email = ref('');
 const password = ref('');
+const invalidPrivacyPolicy = ref(false);
 // const rememberMe = ref<boolean>();
 
 const registerUser = async () => {
-  await register({ email: email.value, password: password.value });
+  if (!privacyPolicy.value) {
+    invalidPrivacyPolicy.value = true;
+    return;
+  }
 
-  send({
-    message: 'Registered successfully',
-    type: 'positive',
-    persist: true,
-    action: {
-      text: 'action',
-      onClick: () => {},
-    },
-  });
+  await register({ email: email.value, password: password.value });
 
   emits('registered');
   router.push('/');
+};
+
+const changePrivacy = (value: boolean) => {
+  invalidPrivacyPolicy.value = false;
+  setPrivacyPolicy(value);
 };
 </script>

@@ -49,22 +49,25 @@
                 <template #terms>
                   <SfLink
                     href="/TermsAndConditions"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('termsAndConditions') }}
                   </SfLink>
                 </template>
-                <template #cancellation>
+                <template #cancellationRights>
                   <SfLink
-                    href="#"
+                    href="/CancellationRights"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('cancellation') }}
+                    {{ $t('cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
                   <SfLink
                     href="/PrivacyPolicy"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('privacyPolicy') }}

@@ -3,7 +3,7 @@
     <NuxtLazyHydrate when-visible>
       <UiSearch class="hidden md:block flex-1" />
     </NuxtLazyHydrate>
-    <nav class="hidden ml-2 md:flex md:flex-row md:flex-nowrap">
+    <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
       <NuxtLazyHydrate when-visible>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
@@ -61,7 +61,7 @@
         </SfDropdown>
         <SfButton
           v-else
-          @click="openLogin"
+          @click="openAuthentication"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           square
@@ -82,7 +82,7 @@
   </MegaMenu>
   <UiNotifications />
   <UiModal
-    v-model="isLoginOpen"
+    v-model="isAuthenticationOpen"
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
     aria-labelledby="login-modal"
@@ -92,14 +92,14 @@
         <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
         <span v-else>{{ $t('auth.signup.heading') }}</span>
       </div>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
       </SfButton>
     </header>
 
-    <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeLogin" />
+    <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
 
-    <register v-else @registered="closeLogin" @change-view="isLogin = true" />
+    <register v-else @registered="closeAuthentication" @change-view="isLogin = true" />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
@@ -159,7 +159,7 @@ import { DefaultLayoutProps } from '~/layouts/types';
 
 const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
-const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
+const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
@@ -168,7 +168,7 @@ const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
 usePageTitle();
 
-const isLogin = ref(true)
+const isLogin = ref(true);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
@@ -196,4 +196,11 @@ const accountDropdown = [
     link: '/',
   },
 ];
+
+watch(
+  () => isAuthenticationOpen.value,
+  async () => {
+    isLogin.value = true;
+  },
+);
 </script>

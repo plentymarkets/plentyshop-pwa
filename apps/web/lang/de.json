@@ -26,6 +26,7 @@
     "passwordLabel": "Passwort",
     "passwordHint": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
     "termsAndConditionsLabel": "Hiermit bestätige ich, dass ich die {terms} gelesen habe.",
+    "privacyPolicyLabel": "Bitte die Checkbox zur {privacyPolicy} bestätigen.",
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
@@ -203,7 +204,7 @@
   },
   "bottomLinks": {
     "terms": "AGB",
-    "privacyPolicy": "Datenschutzerklärung",
+    "privacyPolicy": "Datenschutzerklärung"
   },
   "socialLabel": "Gehe zu {label}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
