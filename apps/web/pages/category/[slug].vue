@@ -8,7 +8,7 @@
       :items-per-page="Number(productsPerPage)"
     >
       <template #sidebar>
-        <CategoryTree />
+        <CategoryTree :category="category" />
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
         <CategoryFilters :facets="productsCatalog.facets" />
@@ -37,10 +37,12 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate();
 
+const category = ref(productsCatalog.value.category);
+
 const breadcrumbs = computed(() => {
   const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
     categoryTree.value,
-    productsCatalog.value.category.id,
+    categoryGetters.getId(category.value),
   );
   breadcrumb.unshift({ name: t('home'), link: '/' });
 

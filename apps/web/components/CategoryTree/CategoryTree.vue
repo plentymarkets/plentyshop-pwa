@@ -31,14 +31,17 @@
 </template>
 
 <script setup lang="ts">
-import { categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfIconArrowBack } from '@storefront-ui/vue';
+import { type CategoryTreeProps } from '~/components/CategoryTree/types';
+
+const props = defineProps<CategoryTreeProps>();
 
 const { data: categoryTree } = useCategoryTree();
-const { data: productsCatalog } = useProducts();
 
-const category = ref(productsCatalog.value.category);
-
-const categoryTreeItem = categoryTreeGetters.findCategoryById(categoryTree.value, category.value.id);
-const parent = categoryTreeGetters.findCategoryById(categoryTree.value, category.value.parentCategoryId);
+const categoryTreeItem = categoryTreeGetters.findCategoryById(
+  categoryTree.value,
+  categoryGetters.getId(props.category),
+);
+const parent = categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getParentId(props.category));
 </script>
