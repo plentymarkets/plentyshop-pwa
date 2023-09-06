@@ -1,5 +1,4 @@
 import { toRefs } from '@vueuse/shared';
-import type { OrderData } from 'composables/useCustomerOrder/types';
 import type {
   UseCustomerOrdersReturn,
   UseCustomerOrdersState,

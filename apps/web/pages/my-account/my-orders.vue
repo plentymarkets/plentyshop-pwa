@@ -119,7 +119,6 @@ const { fetchCustomerOrders, data } = useCustomerOrders();
 const handleQueryUpdate = async () => {
   await fetchCustomerOrders({
     page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
-    itemsPerPage: defaults.DEFAULT_ORDERS_PER_PAGE,
   });
 };
 
