@@ -99,7 +99,7 @@
 
     <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
 
-    <register v-else @registered="closeAuthentication" @change-view="isLogin = true" />
+    <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
