@@ -6,7 +6,9 @@ import type {
   GetSession,
   LoginAsGuest,
   Login,
+  Register,
   Logout,
+  SetPrivacyPolicy,
   ChangePassword,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
@@ -23,6 +25,7 @@ export const useCustomer: UseCustomerReturn = () => {
     loading: false,
     isAuthorized: false,
     isGuest: false,
+    privacyPolicy: false,
   }));
 
   /** Function for checking if user is guest or authorized
@@ -116,6 +119,40 @@ export const useCustomer: UseCustomerReturn = () => {
     checkUserState();
   };
 
+  /** Function for registering a user.
+   * @example
+   * register({ email: 'example', password: 'example' });
+   */
+  const register: Register = async (params) => {
+    const { send } = useNotification();
+
+    state.value.loading = true;
+
+    const { data, error } = await useAsyncData(() =>
+      useSdk().plentysystems.doRegisterUser({
+        email: params.email,
+        password: params.password,
+      }),
+    );
+
+    useHandleError(error.value);
+    state.value.loading = false;
+    await getSession();
+  };
+
+  /**
+   * @description Function for setting the privacy policy.
+   * @example
+   * setPrivacyPolicy({
+   *   privacyPolicy: true
+   * });
+   */
+  const setPrivacyPolicy: SetPrivacyPolicy = (privacyPolicy: boolean) => {
+    state.value.loading = true;
+    state.value.privacyPolicy = privacyPolicy;
+    state.value.loading = false;
+  };
+
   /** Function for changing the user password
    * @example
    * changePassword({
@@ -138,8 +175,10 @@ export const useCustomer: UseCustomerReturn = () => {
     setUser,
     getSession,
     login,
-    loginAsGuest,
     logout,
+    register,
+    loginAsGuest,
+    setPrivacyPolicy,
     changePassword,
     ...toRefs(state.value),
   };

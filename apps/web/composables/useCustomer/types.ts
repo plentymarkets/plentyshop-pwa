@@ -1,11 +1,12 @@
 import type { Ref } from 'vue';
-import type { SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import type { SessionResult, UserChangePasswordParams, RegisterParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerState {
   data: SessionResult;
   loading: boolean;
   isAuthorized: boolean;
   isGuest: boolean;
+  privacyPolicy: boolean;
 }
 
 export type GetSession = () => Promise<SessionResult>;
@@ -14,7 +15,9 @@ export type ChangePassword = (params: UserChangePasswordParams) => Promise<boole
 export type LoginAsGuest = (email: string) => Promise<void>;
 export type Login = (email: string, password: string) => Promise<boolean>;
 export type Logout = () => Promise<void>;
+export type Register = (params: RegisterParams) => void;
 export type SetUser = (data: SessionResult) => void;
+export type SetPrivacyPolicy = (privacyPolicy: boolean) => void;
 
 export interface UseCustomer {
   data: Readonly<Ref<UseCustomerState['data']>>;
@@ -25,8 +28,11 @@ export interface UseCustomer {
   setUser: SetUser;
   getSession: GetSession;
   login: Login;
-  loginAsGuest: LoginAsGuest;
   logout: Logout;
+  register: Register;
+  loginAsGuest: LoginAsGuest;
+  privacyPolicy: Readonly<Ref<boolean>>;
+  setPrivacyPolicy: SetPrivacyPolicy;
   changePassword: ChangePassword;
 }
 
