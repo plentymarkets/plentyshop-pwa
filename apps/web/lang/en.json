@@ -301,7 +301,9 @@
       },
       "billingDetails": {
         "billingAddress": "Billing address",
-        "edit": "Edit"
+        "edit": "Edit",
+        "delete": "Delete",
+        "make-default": "Make default"
       },
       "shippingDetails": {
         "edit": "Edit",

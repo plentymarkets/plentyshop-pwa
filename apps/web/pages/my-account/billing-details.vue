@@ -1,25 +1,11 @@
 <template>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-  <AccountData
+  <Address
+    v-for="billingAddress in billingAddresses"
+    :address="billingAddress"
     class="col-span-3"
-    :header="$t('account.accountSettings.billingDetails.billingAddress')"
-    :button-text="$t('account.accountSettings.billingDetails.edit')"
-    @on-click="open"
-  >
-    <p>
-      {{
-        `${userAddressGetters.getFirstName(userShippingAddress)} ${userAddressGetters.getLastName(userShippingAddress)}`
-      }}
-    </p>
-    <p>{{ userAddressGetters.getPhone(userShippingAddress) }}</p>
-    <p>
-      {{ userAddressGetters.getStreetName(userShippingAddress) }}
-      {{ userAddressGetters.getStreetNumber(userShippingAddress) }}
-    </p>
-    <p>
-      {{ `${userAddressGetters.getCity(userShippingAddress)} ${userAddressGetters.getPostCode(userShippingAddress)}` }}
-    </p>
-  </AccountData>
+    @on-click="editAddress(billingAddress)"
+  />
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
 
   <UiModal
@@ -39,7 +25,7 @@
     </header>
     <AddressForm
       :countries="activeShippingCountries"
-      :saved-address="userShippingAddress"
+      :saved-address="selectedAddress"
       :type="AddressType.Billing"
       @on-save="close"
       @on-close="close"
@@ -49,8 +35,9 @@
 
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import type { Address } from '@plentymarkets/shop-api';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { useBillingAddress } from '~/composables/useBillingAddress';
 
 definePageMeta({
   layout: 'account',
@@ -58,20 +45,14 @@ definePageMeta({
 const { isOpen, open, close } = useDisclosure();
 
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
+const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 await getActiveShippingCountries();
+await getBillingAddresses();
 
-const userShippingAddress = ref({
-  id: 0,
-  firstName: '',
-  lastName: '',
-  streetName: '',
-  apartment: '',
-  city: '',
-  state: '',
-  country: '',
-  zipCode: '',
-  phoneNumber: '',
-  email: '',
-  primary: 1,
-});
+const selectedAddress = ref();
+
+const editAddress = (address: Address) => {
+  selectedAddress.value = address;
+  open();
+};
 </script>
