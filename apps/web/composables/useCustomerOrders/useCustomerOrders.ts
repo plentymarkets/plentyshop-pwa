@@ -5,12 +5,8 @@ import type {
   UseCustomerOrdersState,
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
+import { useSdk } from "~/sdk";
 
-const order: Pick<OrderData, 'id' | 'date' | 'paymentAmount'> = {
-  id: '0e4fec5a-61e6-48b8-94cc-d5f77687e2b0',
-  date: '2022-08-11',
-  paymentAmount: 295.87,
-};
 /**
  * @description Composable managing customer orders data
  * @returns {@link UseCustomerOrdersReturn}
@@ -27,20 +23,15 @@ export const useCustomerOrders: UseCustomerOrdersReturn = () => {
    * @example
    * fetchCustomerOrders();
    */
-  const fetchCustomerOrders: FetchCustomerOrders = async () => {
+  const fetchCustomerOrders: FetchCustomerOrders = async (params) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      Promise.resolve([
-        { ...order, status: 'Completed' },
-        { ...order, status: 'Shipped' },
-        { ...order, status: 'Open' },
-        { ...order, status: 'Cancelled' },
-      ] as OrderData[]),
+    const { data, error } = await useAsyncData((params.page ?? 1).toString(), () =>
+      useSdk().plentysystems.getOrders(params),
     );
     useHandleError(error.value);
-    state.value.data = data.value;
+    state.value.data = data.value?.data ?? null;
     state.value.loading = false;
-    return data;
+    return state.value.data;
   };
 
   return {

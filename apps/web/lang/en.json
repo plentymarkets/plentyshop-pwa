@@ -312,6 +312,7 @@
       "heading": "Orders & Returns",
       "orderId": "Order ID",
       "orderDate": "Order date",
+      "shippingDate": "Shipping date",
       "amount": "Amount",
       "status": "Status",
       "details": "Details",
