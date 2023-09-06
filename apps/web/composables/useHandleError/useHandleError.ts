@@ -15,12 +15,14 @@ const defaultError: ErrorParams = {
  * useHandleError(error.value);
  */
 export const useHandleError: UseHandleError = (error) => {
+  const { send } = useNotification();
+
   if (error) {
-    throw createError({
-      statusCode: error.status || defaultError.status,
-      message: error.message ?? defaultError.message,
-      statusMessage: error.message ?? defaultError.statusMessage,
-      fatal: true,
+    console.error(error);
+    send({
+      type: 'negative',
+      message: error.message ?? defaultError.message ?? 'An error occurred',
+      persist: true,
     });
   }
 };

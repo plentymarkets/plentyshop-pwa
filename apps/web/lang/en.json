@@ -26,6 +26,7 @@
     "passwordLabel": "Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
+    "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
@@ -95,7 +96,9 @@
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
+  "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
   "termsRequired": "You have to agree with the terms and conditions.",
+  "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "cancellationRights": "Cancellation rights",
   "contactInfo": {
@@ -293,7 +296,8 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
+        "passwordHelp": "At least 8 characters long and must contain at least one letter and one number",
+        "passwordsDoNotMatch": "The passwords do not match."
       },
       "billingDetails": {
         "billingAddress": "Billing address",
@@ -354,9 +358,10 @@
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Create Account",
-      "createButton": "Create Account",
-      "bannerText": "Already have an account? Switch to {login}",
+      "heading": "Sign up",
+      "submitLabel": "Sign up",
+      "alreadyHaveAccount": "Already have an account?",
+      "logInLinkLabel": "Log in instead",
       "modal": {
         "heading": "Welcome",
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",

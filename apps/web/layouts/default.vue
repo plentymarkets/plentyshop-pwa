@@ -3,7 +3,7 @@
     <NuxtLazyHydrate when-visible>
       <UiSearch class="hidden md:block flex-1" />
     </NuxtLazyHydrate>
-    <nav class="hidden ml-2 md:flex md:flex-row md:flex-nowrap">
+    <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
       <NuxtLazyHydrate when-visible>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
@@ -31,6 +31,7 @@
               class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
               :class="{ 'bg-primary-900': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
+              data-testid="account-dropdown-button"
             >
               <template #prefix>
                 <SfIconPerson />
@@ -42,9 +43,17 @@
             <li v-for="{ label, link } in accountDropdown" :key="label">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" @click="logOut()">{{ $t(label) }}</SfListItem>
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">{{
+                  $t(label)
+                }}</SfListItem>
               </template>
-              <SfListItem v-else :tag="NuxtLink" :to="link" :class="{ 'bg-neutral-200': $route.path === link }">
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': $route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
                 {{ $t(label) }}
               </SfListItem>
             </li>
@@ -52,7 +61,7 @@
         </SfDropdown>
         <SfButton
           v-else
-          @click="openLogin"
+          @click="openAuthentication"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           square
@@ -73,20 +82,24 @@
   </MegaMenu>
   <UiNotifications />
   <UiModal
-    v-model="isLoginOpen"
+    v-model="isAuthenticationOpen"
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
     aria-labelledby="login-modal"
   >
     <header>
       <div class="text-lg font-medium ml-8">
-        {{ $t('auth.login.heading') }}
+        <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
+        <span v-else>{{ $t('auth.signup.heading') }}</span>
       </div>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeLogin">
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
       </SfButton>
     </header>
-    <login @logged-in="closeLogin" />
+
+    <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
+
+    <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
   <NarrowContainer v-if="breadcrumbs">
@@ -146,7 +159,7 @@ import { DefaultLayoutProps } from '~/layouts/types';
 
 const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
-const { isOpen: isLoginOpen, open: openLogin, close: closeLogin } = useDisclosure();
+const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 defineProps<DefaultLayoutProps>();
 
@@ -154,6 +167,8 @@ const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
 usePageTitle();
+
+const isLogin = ref(true);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
@@ -181,4 +196,11 @@ const accountDropdown = [
     link: '/',
   },
 ];
+
+watch(
+  () => isAuthenticationOpen.value,
+  async () => {
+    isLogin.value = true;
+  },
+);
 </script>
