@@ -1,4 +1,4 @@
-import type { SessionResult } from '@plentymarkets/shop-api';
+import type { SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
@@ -6,7 +6,7 @@ import type {
   GetSession,
   LoginAsGuest,
   Login,
-  Logout,
+  Logout, ChangePassword,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
@@ -115,12 +115,27 @@ export const useCustomer: UseCustomerReturn = () => {
     checkUserState();
   };
 
+  /** Function for changing the user password
+   * @example
+   * changePassword();
+   */
+  const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
+    state.value.loading = true;
+
+    const { error } = await useAsyncData(() => useSdk().plentysystems.doChangeUserPassword(params));
+    state.value.loading = false;
+    useHandleError(error.value);
+
+    return !error.value;
+  };
+
   return {
     setUser,
     getSession,
     login,
     loginAsGuest,
     logout,
+    changePassword,
     ...toRefs(state.value),
   };
 };
