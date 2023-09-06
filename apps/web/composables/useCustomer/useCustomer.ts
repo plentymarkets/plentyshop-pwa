@@ -118,7 +118,11 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /** Function for changing the user password
    * @example
-   * changePassword();
+   * changePassword({
+   *   oldPassword: 'oldPassword',
+   *   password: 'newPassword',
+   *   password2: 'newPassword',
+   * });
    */
   const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
     state.value.loading = true;
