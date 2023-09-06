@@ -2,7 +2,7 @@
   <div data-testid="contact-information" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ $t('contactInfo.heading') }}</h2>
-      <SfButton v-if="cart.customerEmail" size="sm" variant="tertiary" @click="open">
+      <SfButton v-if="cart.customerEmail && !isAuthorized" size="sm" variant="tertiary" @click="open">
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
-const { data, loginAsGuest, getSession } = useCustomer();
+const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 
 const cart = ref({
@@ -52,7 +52,7 @@ const isEmailEmpty = () => {
 };
 
 const openContactFormIfNoEmail = () => {
-  if (isEmailEmpty()) {
+  if (isEmailEmpty() && !isAuthorized.value) {
     open();
   }
 };
@@ -67,7 +67,7 @@ const saveContactInformation = async (email: string) => {
 
 const getEmailFromSession = async () => {
   await getSession();
-  cart.value.customerEmail = data.value?.user?.guestMail ?? '';
+  cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
 };
 
 await getEmailFromSession();

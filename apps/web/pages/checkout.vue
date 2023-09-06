@@ -8,8 +8,8 @@
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
-        <UiDivider v-if="!isAuthorized" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ContactInformation v-if="!isAuthorized" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           :heading="$t('billing.heading')"
@@ -49,22 +49,25 @@
                 <template #terms>
                   <SfLink
                     href="/TermsAndConditions"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('termsAndConditions') }}
                   </SfLink>
                 </template>
-                <template #cancellation>
+                <template #cancellationRights>
                   <SfLink
-                    href="#"
+                    href="/CancellationRights"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('cancellation') }}
+                    {{ $t('cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
                   <SfLink
                     href="/PrivacyPolicy"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('privacyPolicy') }}
@@ -112,7 +115,6 @@ definePageMeta({
 });
 
 const { data: cart, getCart } = useCart();
-const { isAuthorized } = useCustomer();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
 const {
@@ -192,8 +194,6 @@ const order = async () => {
 
   if (data?.order?.id) {
     router.push('/order/success');
-  } else {
-    router.push('/order/failed');
   }
 };
 </script>
