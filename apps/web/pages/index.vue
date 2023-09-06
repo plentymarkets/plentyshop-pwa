@@ -106,6 +106,7 @@
     </div>
     <section class="mx-4 mt-28 mb-20 overflow-hidden">
       <NuxtLazyHydrate when-visible>
+        <p data-testid="recommended-products" class="my-4 typography-text-lg">{{ $t('moreItemsOfThisCategory') }}</p>
         <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
       </NuxtLazyHydrate>
     </section>
