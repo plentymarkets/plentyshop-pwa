@@ -76,26 +76,31 @@
           <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
         </div>
       </div>
-      <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton
-          v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-          :disabled="!termsAccepted || disableShippingPayment"
-          @on-click="validateTerms"
-        />
-        <SfButton
-          v-else
-          type="submit"
-          @click="order"
-          :disabled="createOrderLoading || disableShippingPayment"
-          size="lg"
-          class="w-full mb-4 md:mb-0 cursor-pointer"
-        >
-          <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ $t('buy') }}
-          </span>
-        </SfButton>
-      </OrderSummary>
+      <div class="col-span-5">
+        <div v-for="cartItem in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" />
+        </div>
+        <OrderSummary v-if="cart" :cart="cart" class="md:sticky mt-4 md:top-20 h-fit">
+          <PayPalExpressButton
+            v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+            :disabled="!termsAccepted || disableShippingPayment"
+            @on-click="validateTerms"
+          />
+          <SfButton
+            v-else
+            type="submit"
+            @click="order"
+            :disabled="createOrderLoading || disableShippingPayment"
+            size="lg"
+            class="w-full mb-4 md:mb-0 cursor-pointer"
+          >
+            <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+            <span v-else>
+              {{ $t('buy') }}
+            </span>
+          </SfButton>
+        </OrderSummary>
+      </div>
     </div>
   </NuxtLayout>
 </template>
