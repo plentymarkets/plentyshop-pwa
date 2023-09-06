@@ -11,11 +11,6 @@
         <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
       </label>
 
-      <!-- <label class="mt-2 flex items-center gap-2">
-        <SfCheckbox name="rememberMe" v-model="rememberMe" />
-        {{ $t('auth.login.rememberMeLabel') }}
-      </label> -->
-
       <div class="flex items-center">
         <SfCheckbox
           id="privacyPolicy"
@@ -53,9 +48,6 @@
         </span>
       </SfButton>
       <div align="center">
-        <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
-          {{ $t('auth.login.forgotPasswordLabel') }}
-        </SfLink> -->
         <div class="my-5 font-bold">{{ $t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
           {{ $t('auth.signup.logInLinkLabel') }}
@@ -76,12 +68,10 @@ definePageMeta({
 
 const emits = defineEmits(['registered', 'change-view']);
 
-const NuxtLink = resolveComponent('NuxtLink');
 const router = useRouter();
 const email = ref('');
 const password = ref('');
 const invalidPrivacyPolicy = ref(false);
-// const rememberMe = ref<boolean>();
 
 const registerUser = async () => {
   if (!privacyPolicy.value) {

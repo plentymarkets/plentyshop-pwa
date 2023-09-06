@@ -45,7 +45,6 @@ definePageMeta({
 });
 const emits = defineEmits(['loggedIn', 'change-view']);
 
-const NuxtLink = resolveComponent('NuxtLink');
 const router = useRouter();
 const email = ref('');
 const password = ref('');

@@ -1,6 +1,5 @@
 import type { Ref } from 'vue';
-import type { SessionResult, RegisterParams, UserChangeResponse } from '@plentymarkets/shop-api';
-import {DoAdditionalInformation, SetShippingPrivacyAgreement} from "~/composables/useAdditionalInformation/types";
+import type { SessionResult, RegisterParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerState {
   data: SessionResult;
