@@ -188,7 +188,7 @@ import { MegaMenuProps } from '~/components/MegaMenu/types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
-const categoryTree = categoryTreeGetters.getTree(props.categories)
+const categoryTree = categoryTreeGetters.getTree(props.categories);
 const category = {
   id: 0,
   type: 'root',
