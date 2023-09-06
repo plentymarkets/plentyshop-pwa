@@ -23,6 +23,7 @@
         v-model="userPasswords.firstNewPassword"
         required
         minlength="8"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
       >
         <template #suffix>
           <button type="button" @click="firstNewPasswordVisible = !firstNewPasswordVisible">
@@ -40,6 +41,7 @@
         v-model="userPasswords.secondNewPassword"
         required
         minlength="8"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
       >
         <template #suffix>
           <button type="button" @click="secondNewPasswordVisible = !secondNewPasswordVisible">
