@@ -12,7 +12,7 @@ import config from '../middleware.config';
   const corsMiddleware = app._router.stack.find((middleware: any) => middleware.name === CORS_MIDDLEWARE_NAME);
 
   corsMiddleware.handle = cors({
-    origin: ['http://localhost:3000', 'https://fcsgmt0e4z97.c14-01.plentymarkets.com',  ...(process.env.MIDDLEWARE_ALLOWED_ORIGINS?.split(',') ?? [])],
+    origin: ['http://localhost:3000', ...(process.env.MIDDLEWARE_ALLOWED_ORIGINS?.split(',') ?? [])],
     credentials: true,
   });
 
