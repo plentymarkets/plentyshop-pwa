@@ -293,7 +293,8 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
+        "passwordHelp": "At least 8 characters long and must contain at least one letter and one number",
+        "passwordsDoNotMatch": "The passwords do not match."
       },
       "billingDetails": {
         "billingAddress": "Billing address",
