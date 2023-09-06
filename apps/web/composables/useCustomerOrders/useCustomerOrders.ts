@@ -4,7 +4,7 @@ import type {
   UseCustomerOrdersState,
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
-import { useSdk } from "~/sdk";
+import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing customer orders data
