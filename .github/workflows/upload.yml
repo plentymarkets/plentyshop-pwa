@@ -6,9 +6,6 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        type: choice
-        options:
-          - develop
         description: 'Choose branch for release'
         required: true
         default: 'develop'
