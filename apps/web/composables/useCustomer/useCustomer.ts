@@ -6,7 +6,8 @@ import type {
   GetSession,
   LoginAsGuest,
   Login,
-  Logout, ChangePassword,
+  Logout,
+  ChangePassword,
 } from '~/composables/useCustomer/types';
 import { useSdk } from '~/sdk';
 
