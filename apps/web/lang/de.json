@@ -270,7 +270,8 @@
         "newPasswordAgain": "Neues Passwort wiederholen",
         "changePassword": "Passwort ändern",
         "currentPassword": "Aktuelles Passwort",
-        "passwordHelp": "Benutzen Sie 8 oder mehr Zeichen mit einer Mischung aus Buchstaben und Zahlen"
+        "passwordHelp": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten",
+        "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein."
       },
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
