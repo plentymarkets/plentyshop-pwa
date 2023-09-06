@@ -38,7 +38,7 @@
             }
           "
         >
-          <li v-for="(menuNode, index) in categories" :key="menuNode.id">
+          <li v-for="(menuNode, index) in categoryTree" :key="menuNode.id">
             <SfButton
               ref="triggerReference"
               variant="tertiary"
@@ -188,14 +188,14 @@ import { MegaMenuProps } from '~/components/MegaMenu/types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
-const categories = computed(() => categoryTreeGetters.getTree(props.categories));
+const categoryTree = categoryTreeGetters.getTree(props.categories);
 const category = {
   id: 0,
   type: 'root',
   itemCount: [],
-  childCount: categories.value.length,
+  childCount: categoryTree.length,
   details: [],
-  children: categories.value,
+  children: categoryTree,
 } as CategoryTreeItem;
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
@@ -208,7 +208,7 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 };
 
 const generateCategoryLink = (category: CategoryTreeItem) => {
-  return categoryTreeGetters.generateCategoryLink(categories.value, category);
+  return categoryTreeGetters.generateCategoryLink(categoryTree, category);
 };
 
 const { close, open, isOpen } = useDisclosure();
