@@ -8,7 +8,14 @@
 
       <label>
         <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
-        <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
+        <UiFormPasswordInput
+          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
+          :title="$t('invalidPassword')"
+          name="password"
+          autocomplete="current-password"
+          v-model="password"
+          required
+        />
       </label>
 
       <div class="flex items-center">
