@@ -6,7 +6,7 @@
   <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
 </div>
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/storefront-nuxt3-boilerplate?style=social)](https://github.com/plentymarkets/storefront-nuxt3-boilerplate)
+[![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
 [![X Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
@@ -61,12 +61,15 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Configuration
 
-- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plentysystems system.
-- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plentysystems system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
-- Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
-- Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
-- Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
-- Open [`integration.config.ts`](./apps/web/integration.config.ts) to enter your PayPal [`merchantId`](https://www.paypal.com/us/cshelp/article/how-do-i-find-my-secure-merchant-id-on-my-paypal-account-help538) and [`clientId`](https://developer.paypal.com/api/rest/#link-getclientidandclientsecret), as well as the `paymentId` from your plentysystems system(**Setup » Orders » Payment » Method**; find the **PayPal** entry with a :white_check_mark: in the **Back end activated** column).
+Follow the links below for configuration instructions.
+
+- [Middleware](./docs/config/middleware.md) (required)
+- [I18N](./docs/config/i18n.md) (required)
+- [Integrations](./docs/config/integrations.md) (required)
+  - **Note**: Currently, the app only supports PayPal as additional payment provider.
+- [PWA](./docs/config/pwa.md) (optional)
+- [Theme](./docs/config/theme.md) (optional)
+- [Cookies](./docs/config/cookies.md) (optional)
 
 ### Authentication
 

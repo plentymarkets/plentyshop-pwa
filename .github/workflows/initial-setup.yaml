@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   init-setup:
-    if: github.run_number == 1 && github.event.repository.name != 'storefront-nuxt3-boilerplate'
+    if: github.run_number == 1 && github.event.repository.name != 'plentyshop-pwa'
 
     runs-on: ubuntu-latest
 
