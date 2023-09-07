@@ -77,6 +77,7 @@
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
 import { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { useNotification } from '../../../composables/useNotification/useNotification';
 
 withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
@@ -84,6 +85,8 @@ withDefaults(defineProps<ProductCardProps>(), {
 });
 
 const { addToCart } = useCart();
+const { send } = useNotification();
+const { t } = useI18n();
 const loading = ref(false);
 
 const addWithLoader = async (productId: number) => {
@@ -94,6 +97,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
+    send({ message: t('addedToCart'), type: 'positive'});
   } finally {
     loading.value = false;
   }
