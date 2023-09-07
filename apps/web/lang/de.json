@@ -86,6 +86,9 @@
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
+  "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
+  "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
+  "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
   "cancellationRights": "Widerrufsrecht",
   "contactInfo": {
