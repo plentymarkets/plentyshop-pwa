@@ -4831,23 +4831,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.0.1, @vue-storefront/sdk@npm:~1.1.2":
+"@vue-storefront/sdk@npm:^1.0.1":
   version: 1.1.2
   resolution: "@vue-storefront/sdk@npm:1.1.2"
   dependencies:
     "@changesets/changelog-github": ^0.4.8
     "@changesets/cli": ^2.26.1
   checksum: c4616b878f26b12815829aa5cda62eca4142695a7ca557f05e5023981d7e7de27da080918c563d681c0118267fd4d96ad456d7c749f00cba0b1035a28ec625fd
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/storefront-boilerplate-sdk@npm:~0.2.0":
-  version: 0.2.0
-  resolution: "@vue-storefront/storefront-boilerplate-sdk@npm:0.2.0"
-  dependencies:
-    "@vue-storefront/sdk": ~1.1.2
-    axios: ^0.27.2
-  checksum: d1e2797ff5e44dac4b323fe56e6655db766769c2c7c09e70d6d1137ed31f432df4196e7ffd659805a729ab386bc28c5851c9f7b4f22075916cc63ea7c918ef65
   languageName: node
   linkType: hard
 
@@ -19230,7 +19220,6 @@ __metadata:
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/sdk": ^1.0.1
-    "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
     "@vue-storefront/unified-data-model": ^0.6.0
     "@vue/test-utils": ^2.4.0
     "@vueuse/core": ^10.3.0
