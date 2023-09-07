@@ -286,6 +286,7 @@
       "heading": "Bestellungen & Retouren",
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
+      "returnDate": "Retourendatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",

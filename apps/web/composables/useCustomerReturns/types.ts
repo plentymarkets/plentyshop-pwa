@@ -1,12 +1,12 @@
 import type { Ref } from 'vue';
-import { Maybe } from '@vue-storefront/unified-data-model';
+import { Order, PaginatedResult } from '@plentymarkets/shop-api';
 
 export interface UseCustomerReturnsState {
-  data: Maybe<unknown[]>;
+  data: PaginatedResult<Order>;
   loading: boolean;
 }
 
-export type FetchCustomerReturns = () => Promise<Ref<unknown[] | null>>;
+export type FetchCustomerReturns = () => Promise<PaginatedResult<Order>>;
 
 export interface UseCustomerReturns {
   data: Readonly<Ref<UseCustomerReturnsState['data']>>;
