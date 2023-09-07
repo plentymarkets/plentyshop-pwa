@@ -5,7 +5,7 @@ import {
   UseBillingAddressReturn,
   GetBillingAddresses,
   SaveBillingAddress,
-  UseBillingAddressMethodsState, SetDefault,
+  UseBillingAddressMethodsState,
 } from './types';
 
 /**
@@ -52,41 +52,12 @@ export const useBillingAddress: UseBillingAddressReturn = () => {
     state.value.saveAddress = data.value?.data ?? state.value.saveAddress;
     state.value.loading = false;
 
-    await getBillingAddresses();
-    return state.value.saveAddress;
-  };
-
-  const setDefault: SetDefault = async (addressId: number) => {
-    state.value.loading = true;
-    const { data } = await useSdk().plentysystems.setAddressAsDefault({
-      typeId: AddressType.Billing,
-      addressId: addressId,
-    });
-
-    state.value.loading = false;
-
-    await getBillingAddresses();
-    return state.value.saveAddress;
-  };
-
-  const deleteAddress: SetDefault = async (addressId: number) => {
-    state.value.loading = true;
-    await useSdk().plentysystems.deleteAddress({
-      typeId: AddressType.Billing,
-      addressId: addressId,
-    });
-
-    state.value.loading = false;
-
-    await getBillingAddresses();
     return state.value.saveAddress;
   };
 
   return {
     getBillingAddresses,
     saveBillingAddress,
-    setDefault,
-    deleteAddress,
     ...toRefs(state.value),
   };
 };
