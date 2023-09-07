@@ -61,7 +61,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Configuration
 
-- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plentysystems system.
+- Open [`middleware-config-setup.md`](./docs/middleware-config-setup.md) guide to configure api endpoint (optional).
 - Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plentysystems system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
 - Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
 - Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
