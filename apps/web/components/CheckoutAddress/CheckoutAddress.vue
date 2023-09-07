@@ -61,8 +61,8 @@ import type { CheckoutAddressProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
-const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
-const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
+const { saveBillingAddress } = useBillingAddress();
+const { saveShippingAddress } = useShippingAddress();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 await getActiveShippingCountries();
 
