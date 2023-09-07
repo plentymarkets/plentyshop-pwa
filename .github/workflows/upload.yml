@@ -5,13 +5,9 @@ on:
     # types: [published]
   workflow_dispatch:
     inputs:
-      branch:
-        type: choice
-        options:
-          - develop
-        description: 'Choose branch for release'
-        required: true
-        default: 'develop'
+      tag-version:
+        description: "The tag version, branch name or SHA to checkout"
+        required: true      
 
 permissions:
   contents: read
@@ -23,11 +19,13 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag-version }}
 
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '20.5'
           cache: 'yarn'
           registry-url: "https://npm.pkg.github.com"
 
