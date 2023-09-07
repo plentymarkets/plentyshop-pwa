@@ -19,7 +19,6 @@ export const useShippingAddress: UseShippingAddressReturn = () => {
     data: [] as Address[],
     saveAddress: null,
     loading: false,
-    defaultAddressId: 0,
   }));
 
   /**
@@ -36,7 +35,6 @@ export const useShippingAddress: UseShippingAddressReturn = () => {
     );
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
-
     state.value.loading = false;
     return state.value.data;
   };
@@ -53,8 +51,6 @@ export const useShippingAddress: UseShippingAddressReturn = () => {
     useHandleError(error.value);
     state.value.saveAddress = data.value?.data ?? state.value.saveAddress;
     state.value.loading = false;
-
-    await getShippingAddresses();
     return state.value.saveAddress;
   };
 
