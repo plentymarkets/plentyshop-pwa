@@ -40,6 +40,7 @@
       <AddressForm
         :countries="activeShippingCountries"
         :saved-address="selectedAddress"
+        :loading="loading"
         :type="type"
         @on-save="onSave"
         @on-close="close"

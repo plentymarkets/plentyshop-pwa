@@ -98,10 +98,10 @@ import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from './types';
 
-const { loading: loadBilling } = useAddress(AddressType.Billing);
-const { loading: loadShipping } = useAddress(AddressType.Shipping);
+const { loading: loadBilling } = useBillingAddress();
+const { loading: loadShipping } = useShippingAddress();
 const props = defineProps<AddressFormProps>();
-const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
+const isCartUpdateLoading = computed(() => props.loading || loadBilling.value || loadShipping.value);
 
 const { savedAddress } = toRefs(props);
 const useAsShippingAddress = ref(false);
