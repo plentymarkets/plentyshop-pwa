@@ -51,7 +51,6 @@ export const useBillingAddress: UseBillingAddressReturn = () => {
     useHandleError(error.value);
     state.value.saveAddress = data.value?.data ?? state.value.saveAddress;
     state.value.loading = false;
-
     return state.value.saveAddress;
   };
 
