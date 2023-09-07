@@ -17,3 +17,5 @@ api: {
     url: process.env.API_ENDPOINT ? `${process.env.API_ENDPOINT}` : 'https://mevofvd5omld.c01-14.plentymarkets.com'
 };
 ```
+
+In the local development environment, the app connects to the provided URL. In production, it connects to the plentysystems system that hosts the app.
