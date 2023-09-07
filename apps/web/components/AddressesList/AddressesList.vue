@@ -72,7 +72,7 @@ const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 await getActiveShippingCountries();
 await getAddresses();
 
-const selectedAddress = ref({});
+const selectedAddress = ref();
 
 const editAddress = (address: Address) => {
   selectedAddress.value = address;
