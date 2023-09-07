@@ -74,9 +74,9 @@ This project queries data from plentysystems by using other NPM packages as midd
 
 1. In the root directory, create a new file called `.yarnrc.yml`.
 2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
-3. In `yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
+3. In `.yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
 
-Git doesn't track `yarnrc.yml`, so you don't have to worry about exposing your token.
+Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
 
 ### Starting the app
 
