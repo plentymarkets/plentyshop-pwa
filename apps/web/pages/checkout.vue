@@ -106,7 +106,7 @@
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
@@ -115,8 +115,8 @@ definePageMeta({
 });
 
 const { data: cart, getCart } = useCart();
-const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
-const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const {
   loading: loadShipping,
   data: shippingMethodData,

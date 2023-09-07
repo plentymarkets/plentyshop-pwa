@@ -60,13 +60,13 @@ const { isOpen, open, close } = useDisclosure();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const {
   data: shippingAddresses,
-  getShippingAddresses,
-  saveShippingAddress,
+  getAddresses: getShippingAddresses,
+  saveAddress: saveShippingAddress,
   setDefault,
   deleteAddress,
   defaultAddressId,
   loading,
-} = useShippingAddress();
+} = useAddress(AddressType.Shipping);
 await getActiveShippingCountries();
 await getShippingAddresses();
 

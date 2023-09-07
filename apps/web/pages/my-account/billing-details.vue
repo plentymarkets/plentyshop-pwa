@@ -47,11 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
 import type { Address } from '@plentymarkets/shop-api';
+import { AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { useBillingAddress } from '~/composables/useBillingAddress';
 
 definePageMeta({
   layout: 'account',
@@ -61,14 +60,14 @@ const { isOpen, open, close } = useDisclosure();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const {
   data: billingAddresses,
-  getBillingAddresses,
-  saveBillingAddress,
+  getAddresses: getBillingAddresses,
+  saveAddress: saveBillingAddress,
   setDefault,
   deleteAddress,
   defaultAddressId,
   loading,
-} = useBillingAddress();
-const { saveShippingAddress } = useShippingAddress();
+} = useAddress(AddressType.Billing);
+const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 await getActiveShippingCountries();
 await getBillingAddresses();
 
