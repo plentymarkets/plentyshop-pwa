@@ -85,6 +85,7 @@
       </table>
 
       <UiPagination
+        :disabled="loading"
         :current-page="data.data.page"
         :total-items="data.data.totalsCount"
         :page-size="data.data.itemsPerPage"
@@ -113,7 +114,7 @@ const route = useRoute();
 watch(isWideScreen, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isWideScreen.value));
 
-const { fetchCustomerOrders, data } = useCustomerOrders();
+const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 // const NuxtLink = resolveComponent('NuxtLink');
 
 const handleQueryUpdate = async () => {

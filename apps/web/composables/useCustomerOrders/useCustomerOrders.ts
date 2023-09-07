@@ -20,7 +20,9 @@ export const useCustomerOrders: UseCustomerOrdersReturn = () => {
 
   /** Function for fetching customer orders data
    * @example
-   * fetchCustomerOrders();
+   * fetchCustomerOrders({
+   *   page: 1,
+   * });
    */
   const fetchCustomerOrders: FetchCustomerOrders = async (params) => {
     state.value.loading = true;

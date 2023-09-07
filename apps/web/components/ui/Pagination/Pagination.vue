@@ -9,7 +9,7 @@
       type="button"
       size="lg"
       :aria-label="$t('prevAriaLabel')"
-      :disabled="pagination.selectedPage <= 1"
+      :disabled="pagination.selectedPage <= 1 || disabled"
       variant="tertiary"
       class="gap-3"
       @click="previousPage"
@@ -29,8 +29,13 @@
         >
           <button
             type="button"
-            class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
-            :aria-current="pagination.selectedPage === 1"
+            :class="[
+              'px-4 py-3 md:w-12 rounded-md text-neutral-500',
+              {
+                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+              },
+            ]"
+            :aria-current="pagination.selectedPage === 1 || disabled"
             @click="setPage(1)"
           >
             1
@@ -48,9 +53,15 @@
         <div class="flex pt-1 border-t-4 border-transparent">
           <button
             type="button"
-            class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
+            :class="[
+              'px-4 py-3 md:w-12 rounded-md text-neutral-500',
+              {
+                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+              },
+            ]"
             :aria-current="pagination.endPage - 1 === pagination.selectedPage"
             @click="setPage(pagination.endPage - 1)"
+            :disabled="disabled"
           >
             {{ pagination.endPage - 1 }}
           </button>
@@ -66,13 +77,17 @@
           <button
             type="button"
             :class="[
-              'px-4 py-3 md:w-12 text-neutral-500 rounded-md hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900',
+              'px-4 py-3 md:w-12 text-neutral-500 rounded-md',
+              {
+                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+              },
               {
                 '!text-neutral-900 hover:!text-primary-800 active:!text-primary-900': pagination.selectedPage === page,
               },
             ]"
             :aria-label="$t('currentPage', { page, totalPages: pagination.totalPages })"
             :aria-current="pagination.selectedPage === page"
+            :disabled="disabled"
             @click="setPage(page)"
           >
             {{ page }}
@@ -83,9 +98,15 @@
         <div class="flex pt-1 border-t-4 border-transparent">
           <button
             type="button"
-            class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
+            :class="[
+              'px-4 py-3 md:w-12 rounded-md text-neutral-500',
+              {
+                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+              },
+            ]"
             :aria-label="$t('secondPageAriaLabel')"
             @click="setPage(2)"
+            :disabled="disabled"
           >
             2
           </button>
@@ -107,9 +128,15 @@
         >
           <button
             type="button"
-            class="px-4 py-3 md:w-12 rounded-md text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900"
+            :class="[
+              'px-4 py-3 md:w-12 rounded-md text-neutral-500',
+              {
+                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+              },
+            ]"
             :aria-current="pagination.totalPages === pagination.selectedPage"
             @click="setPage(pagination.totalPages)"
+            :disabled="disabled"
           >
             {{ pagination.totalPages }}
           </button>
@@ -120,7 +147,7 @@
       type="button"
       size="lg"
       :aria-label="$t('nextAriaLabel')"
-      :disabled="pagination.selectedPage >= pagination.totalPages"
+      :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
       variant="tertiary"
       class="gap-3"
       @click="nextPage"
@@ -139,7 +166,9 @@ import { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
 
-const props = defineProps<PaginationProps>();
+const props = withDefaults(defineProps<PaginationProps>(), {
+  disabled: false,
+});
 const { currentPage, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = toRefs(props);
 
 const pagination = computed(() =>
