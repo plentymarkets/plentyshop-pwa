@@ -96,13 +96,13 @@ This section describes how to deploy your app on your live domain.
 4. Fill in the required information.
 5. **Create** the application.
 
-Copy the **Access key** to your clipboard. You'll need it in the next part.
+You need the generated **Upload Endpoint** and **Access key** in the next part.
 
 ### GitHub
 
 1. In your forked repository, [create 2 encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
 
-    - `URL_ENDPOINT`: TODO
+    - `URL_ENDPOINT`: The **Upload Endpoint** from the previous part.
     - `URL_ENDPOINT_TOKEN`: The **Access key** from the previous part.
 
 2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
