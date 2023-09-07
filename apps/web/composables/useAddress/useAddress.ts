@@ -1,7 +1,7 @@
 import { Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { toRefs } from '@vueuse/shared';
-import { SetDefault } from '~/composables/useAddress/types';
+import { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
 import { useSdk } from '~/sdk';
 import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
@@ -99,7 +99,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
    * @description Delete an address.
    * @param addressId
    */
-  const deleteAddress: SetDefault = async (addressId: number) => {
+  const deleteAddress: DeleteAddress = async (addressId: number) => {
     state.value.loading = true;
     await useSdk().plentysystems.deleteAddress({
       typeId: type,
