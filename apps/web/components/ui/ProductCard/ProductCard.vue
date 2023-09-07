@@ -96,7 +96,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-    send({ message: t('addedToCart'), type: 'positive'});
+    send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
   }
