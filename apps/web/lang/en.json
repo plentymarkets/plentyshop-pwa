@@ -98,6 +98,8 @@
   "privacyPolicy": "Privacy Policy",
   "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
   "termsRequired": "You have to agree with the terms and conditions.",
+  "billingAddressRequired": "Please select a billing address.",
+  "shippingAddressRequired": "Please select a shipping address.",
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "cancellationRights": "Cancellation rights",
