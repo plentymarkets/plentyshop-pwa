@@ -61,12 +61,15 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Configuration
 
-- Open [`middleware-config-setup.md`](./docs/middleware-config-setup.md) guide to configure api endpoint (optional).
-- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plentysystems system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
-- Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
-- Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
-- Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
-- Open [`integration.config.ts`](./apps/web/integration.config.ts) to enter your PayPal [`merchantId`](https://www.paypal.com/us/cshelp/article/how-do-i-find-my-secure-merchant-id-on-my-paypal-account-help538) and [`clientId`](https://developer.paypal.com/api/rest/#link-getclientidandclientsecret), as well as the `paymentId` from your plentysystems system(**Setup » Orders » Payment » Method**; find the **PayPal** entry with a :white_check_mark: in the **Back end activated** column).
+Follow the links below for configuration instructions.
+
+- [Middleware](./docs/config/middleware.md) (required)
+- [I18N](./docs/config/i18n.md) (required)
+- [Integrations](./docs/config/integrations.md) (required)
+  - **Note**: Currently, the app only supports PayPal as additional payment provider.
+- [PWA](./docs/config/pwa.md) (optional)
+- [Theme](./docs/config/theme.md) (optional)
+- [Cookies](./docs/config/cookies.md) (optional)
 
 ### Authentication
 
