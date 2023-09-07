@@ -35,7 +35,7 @@
       </SfButton>
     </div>
 
-    <UiDivider v-if="!isDefault" class="col-span-3 -mx-4 !w-auto md:mx-0 mt-4 mb-4" />
+    <UiDivider v-if="!isDefault" class="col-span-3 mx-4 !w-auto md:mx-0 mt-1 mb-4" />
   </div>
 </template>
 <script lang="ts" setup>
