@@ -1,33 +1,37 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
-      <NuxtLazyHydrate>
+      <NuxtLazyHydrate when-visible>
         <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
-          <h1
-            v-if="isRoot || isTabletScreen"
-            class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
-          >
-            {{ $t('account.heading') }}
-          </h1>
-          <div v-else class="flex justify-start items-center mb-10 mt-4">
-            <div v-for="({ subsections }, i) in sections" :key="i">
-              <div v-for="{ label, link } in subsections" :key="label" class="font-bold typography-headline-3">
-                <h1 v-if="currentPath === link">{{ label }}</h1>
-              </div>
-            </div>
-            <SfButton
-              :tag="NuxtLink"
-              :to="paths.account"
-              class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
-              size="sm"
-              variant="tertiary"
+          <ClientOnly>
+            <h1
+              v-if="isRoot || isTabletScreen"
+              class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
             >
-              <template #prefix>
-                <SfIconArrowBack />
-              </template>
-              {{ $t('account.back') }}
-            </SfButton>
-          </div>
+              {{ $t('account.heading') }}
+            </h1>
+
+            <div v-else class="flex justify-start items-center mb-10 mt-4">
+              <div v-for="({ subsections }, i) in sections" :key="i">
+                <div v-for="{ label, link } in subsections" :key="label" class="font-bold typography-headline-3">
+                  <h1 v-if="currentPath === link">{{ label }}</h1>
+                </div>
+              </div>
+
+              <SfButton
+                :tag="NuxtLink"
+                :to="paths.account"
+                class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
+                size="sm"
+                variant="tertiary"
+              >
+                <template #prefix>
+                  <SfIconArrowBack />
+                </template>
+                {{ $t('account.back') }}
+              </SfButton>
+            </div>
+          </ClientOnly>
           <div class="md:flex gap-10" data-testid="account-page-sidebar">
             <div>
               <div

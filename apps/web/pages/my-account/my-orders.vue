@@ -1,5 +1,5 @@
 <template>
-  <NuxtLazyHydrate>
+  <ClientOnly>
     <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
     <h2 class="hidden md:block typography-headline-4 font-bold mx-4 capitalize col-span-3">
       {{ $t('account.ordersAndReturns.myOrders') }}
@@ -92,8 +92,9 @@
         :max-visible-pages="maxVisiblePages"
       />
     </div>
-  </NuxtLazyHydrate>
-  <NuxtPage />
+
+    <NuxtPage />
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
