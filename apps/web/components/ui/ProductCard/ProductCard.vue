@@ -77,7 +77,6 @@
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
 import { ProductCardProps } from '~/components/ui/ProductCard/types';
-import { useNotification } from '../../../composables/useNotification/useNotification';
 
 withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
