@@ -118,9 +118,11 @@ import { SfButton } from '@storefront-ui/vue';
 const { data: categoryTree } = useCategoryTree();
 const defaultCategory = categoryTree.value[0];
 
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(String(defaultCategory.id));
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(String(defaultCategory?.id || 0));
 
-await fetchProductRecommended(defaultCategory.id.toString());
+if (defaultCategory?.id) {
+  await fetchProductRecommended(defaultCategory.id.toString());
+}
 
 const displayDetails = [
   {
