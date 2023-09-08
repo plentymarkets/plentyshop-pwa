@@ -290,6 +290,7 @@
       "heading": "Bestellungen & Retouren",
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
+      "shippingDate": "Lieferdatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",
