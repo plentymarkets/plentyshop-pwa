@@ -12,6 +12,7 @@
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
+          id="billing-address"
           :heading="$t('billing.heading')"
           :description="$t('billing.description')"
           :button-text="$t('billing.addButton')"
@@ -21,6 +22,7 @@
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
+          id="shipping-address"
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
           :button-text="$t('shipping.addButton')"
@@ -43,7 +45,13 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
-            <SfCheckbox v-model="termsAccepted" :invalid="showTermsError" class="terms-checkbox inline-block mr-2" />
+            <SfCheckbox
+              v-model="termsAccepted"
+              :invalid="showTermsError"
+              @change="showTermsError = false"
+              id="terms-checkbox"
+              class="inline-block mr-2"
+            />
             <div>
               <i18n-t keypath="termsInfo">
                 <template #terms>
@@ -79,26 +87,31 @@
           <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
         </div>
       </div>
-      <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton
-          v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-          :disabled="!termsAccepted || disableShippingPayment"
-          @on-click="validateTerms"
-        />
-        <SfButton
-          v-else
-          type="submit"
-          @click="order"
-          :disabled="createOrderLoading || disableShippingPayment"
-          size="lg"
-          class="w-full mb-4 md:mb-0 cursor-pointer"
-        >
-          <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ $t('buy') }}
-          </span>
-        </SfButton>
-      </OrderSummary>
+      <div class="col-span-5">
+        <div v-for="cartItem in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" />
+        </div>
+        <OrderSummary v-if="cart" :cart="cart" class="md:sticky mt-4 md:top-20 h-fit">
+          <PayPalExpressButton
+            v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+            :disabled="!termsAccepted || disableShippingPayment"
+            @on-click="validateTerms"
+          />
+          <SfButton
+            v-else
+            type="submit"
+            @click="order"
+            :disabled="createOrderLoading || disableShippingPayment"
+            size="lg"
+            class="w-full mb-4 md:mb-0 cursor-pointer"
+          >
+            <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+            <span v-else>
+              {{ $t('buy') }}
+            </span>
+          </SfButton>
+        </OrderSummary>
+      </div>
     </div>
   </NuxtLayout>
 </template>
@@ -114,6 +127,11 @@ definePageMeta({
   layoutName: 'checkout',
 });
 
+const ID_CHECKBOX = '#terms-checkbox';
+const ID_BILLING_ADDRESS = '#billing-address';
+const ID_SHIPPING_ADDRESS = '#shipping-address';
+
+const { send } = useNotification();
 const { data: cart, getCart } = useCart();
 const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
 const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
@@ -127,6 +145,7 @@ const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, save
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
+const i18n = useI18n();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
@@ -159,15 +178,15 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await getShippingMethods();
 };
 
-const scrollToTermsCheckbox = () => {
-  const termsCheckboxElement = document.querySelector('.terms-checkbox') as HTMLElement; // You'll have to add an identifying class or use another selector
-  const termsCheckboxElementOffset = termsCheckboxElement?.offsetTop ?? 0;
+const scrollToHTMLObject = (object: string) => {
+  const element = document.querySelector(object) as HTMLElement;
+  const elementOffset = element?.offsetTop ?? 0;
 
-  const headerElement = document.querySelector('header') as HTMLElement; // Assuming your header has a 'header' tag or change this to the appropriate selector
+  const headerElement = document.querySelector('header') as HTMLElement;
   const headerElementOffset = headerElement.offsetHeight ?? 0;
 
   window.scrollTo({
-    top: termsCheckboxElementOffset - headerElementOffset,
+    top: elementOffset - headerElementOffset,
     behavior: 'smooth',
   });
 };
@@ -175,7 +194,29 @@ const scrollToTermsCheckbox = () => {
 const validateTerms = (): boolean => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-    scrollToTermsCheckbox();
+    scrollToHTMLObject(ID_CHECKBOX);
+    return false;
+  }
+
+  return true;
+};
+
+const validateAddresses = () => {
+  if (billingAddresses.value.length === 0) {
+    send({
+      type: 'negative',
+      message: i18n.t('billingAddressRequired'),
+    });
+    scrollToHTMLObject(ID_BILLING_ADDRESS);
+    return false;
+  }
+
+  if (shippingAddresses.value.length === 0) {
+    send({
+      type: 'negative',
+      message: i18n.t('shippingAddressRequired'),
+    });
+    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
     return false;
   }
 
@@ -183,7 +224,7 @@ const validateTerms = (): boolean => {
 };
 
 const order = async () => {
-  if (!validateTerms()) {
+  if (!validateAddresses() || !validateTerms()) {
     return;
   }
 

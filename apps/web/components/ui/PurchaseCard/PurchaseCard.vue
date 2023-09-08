@@ -42,12 +42,7 @@
           type="button"
           size="lg"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-          @click="
-            addToCart({
-              productId: Number(productGetters.getId(product)),
-              quantity: Number(quantitySelectorValue),
-            })
-          "
+          @click="handleAddToCart"
           :disabled="loading"
         >
           <template #prefix v-if="!loading">
@@ -72,9 +67,20 @@ const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
+const { send } = useNotification();
 const { addToCart, loading } = useCart();
+const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
+
+const handleAddToCart = async () => {
+  await addToCart({
+    productId: Number(productGetters.getId(product.value)),
+    quantity: Number(quantitySelectorValue.value),
+  });
+
+  send({ message: t('addedToCart'), type: 'positive' });
+};
 
 const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);
