@@ -26,6 +26,7 @@
     "passwordLabel": "Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
+    "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
@@ -96,7 +97,11 @@
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
   "cancellationRights": "Cancellation rights",
+  "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
   "termsRequired": "You have to agree with the terms and conditions.",
+  "billingAddressRequired": "Please select a billing address.",
+  "shippingAddressRequired": "Please select a shipping address.",
+  "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "contactInfo": {
     "heading": "Contact Information",
@@ -133,6 +138,7 @@
   "addToCart": "Add to cart",
   "showArticle": "Show article",
   "addToCartShort": "Add",
+  "addedToCart": "Item added to Cart",
   "search": "Search",
   "openSearchModalButtonLabel": "Click to open search modal",
   "vsfHomepage": "VSF Homepage",
@@ -293,7 +299,8 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
+        "passwordHelp": "At least 8 characters long and must contain at least one letter and one number",
+        "passwordsDoNotMatch": "The passwords do not match."
       },
       "billingDetails": {
         "billingAddress": "Billing address",
@@ -354,9 +361,10 @@
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Create Account",
-      "createButton": "Create Account",
-      "bannerText": "Already have an account? Switch to {login}",
+      "heading": "Sign up",
+      "submitLabel": "Sign up",
+      "alreadyHaveAccount": "Already have an account?",
+      "logInLinkLabel": "Log in instead",
       "modal": {
         "heading": "Welcome",
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",
