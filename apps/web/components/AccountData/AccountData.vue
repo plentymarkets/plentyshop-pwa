@@ -9,7 +9,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { SfButton } from '@storefront-ui/vue';
 import { AccountDataProps } from './types';
 
 defineProps<AccountDataProps>();
