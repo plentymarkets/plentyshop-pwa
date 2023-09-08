@@ -26,6 +26,7 @@
     "passwordLabel": "Passwort",
     "passwordHint": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
     "termsAndConditionsLabel": "Hiermit bestätige ich, dass ich die {terms} gelesen habe.",
+    "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
@@ -84,6 +85,11 @@
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
+  "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
+  "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
+  "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
+  "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
+  "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
   "cancellationRights": "Widerrufsrecht",
   "contactInfo": {
     "heading": "Kontaktinformationen",
@@ -120,6 +126,7 @@
   "addToCart": "In den Warenkorb",
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
+  "addedToCart": "Artikel zum Warenkorb hinzugefügt",
   "search": "Suche",
   "home": "Startseite",
   "products": "Produkte",
@@ -203,7 +210,7 @@
   },
   "bottomLinks": {
     "terms": "AGB",
-    "privacyPolicy": "Datenschutzerklärung",
+    "privacyPolicy": "Datenschutzerklärung"
   },
   "socialLabel": "Gehe zu {label}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
@@ -267,7 +274,8 @@
         "newPasswordAgain": "Neues Passwort wiederholen",
         "changePassword": "Passwort ändern",
         "currentPassword": "Aktuelles Passwort",
-        "passwordHelp": "Benutzen Sie 8 oder mehr Zeichen mit einer Mischung aus Buchstaben und Zahlen"
+        "passwordHelp": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten",
+        "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein."
       },
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
@@ -282,6 +290,7 @@
       "heading": "Bestellungen & Retouren",
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
+      "shippingDate": "Lieferdatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",
@@ -327,9 +336,10 @@
       "createAccountLinkLabel": "Jetzt anmelden!"
     },
     "signup": {
-      "heading": "Konto erstellen",
-      "createButton": "Konto erstellen",
-      "bannerText": "Sie haben bereits ein Konto? Wechseln Sie zu  {login}",
+      "heading": "Account erstellen",
+      "submitLabel": "Account erstellen",
+      "alreadyHaveAccount": "Du hast schon ein Konto?",
+      "logInLinkLabel": "Stattdessen einloggen",
       "modal": {
         "heading": "Willkommen",
         "description": "Ihr Konto wurde erstellt. Sie können jetzt {information} zu Ihrem Konto hinzufügen, damit Sie dies nicht später während Ihres Einkaufs tun müssen.",

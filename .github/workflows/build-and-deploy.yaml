@@ -2,12 +2,12 @@ name: Deploy
 on:
   push:
     branches:
-      - develop
+      - main
       - force/*
 
 jobs:
   configure:
-    if: github.event.repository.name == 'storefront-nuxt3-boilerplate'
+    if: github.event.repository.name == 'plentyshop-pwa'
     name: Configure
     runs-on: ubuntu-latest
     outputs:

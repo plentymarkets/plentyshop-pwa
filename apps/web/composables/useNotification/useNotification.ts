@@ -1,9 +1,5 @@
 import { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
-const state = useState<UseNotificationState>(`useNotification`, () => ({
-  data: [],
-}));
-
 const maxVisibleNotifications = 5;
 const timeToLive = 3000;
 
@@ -13,6 +9,10 @@ const timeToLive = 3000;
  * const { send } = useNotification();
  */
 export const useNotification: UseNotificationReturn = () => {
+  const state = useState<UseNotificationState>(`useNotification`, () => ({
+    data: [],
+  }));
+
   /**
    * @description method to display a ui notification
    * @example
@@ -44,7 +44,7 @@ export const useNotification: UseNotificationReturn = () => {
     state.value.data.push(dismissableNotification);
     if (state.value.data.length > maxVisibleNotifications) state.value.data.shift();
 
-    if (!notification.persist) {
+    if (!notification.persist && notification.type !== 'negative') {
       setTimeout(dismiss, timeToLive);
     }
   };
