@@ -4,5 +4,5 @@ export type AddressFormProps = {
   type: AddressType;
   savedAddress?: Address;
   countries: ActiveShippingCountry[];
-  loading?: boolean;
+  useAsShippingDefault?: boolean;
 };

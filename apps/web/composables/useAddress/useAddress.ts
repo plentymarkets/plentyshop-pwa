@@ -12,7 +12,7 @@ import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } f
  */
 
 export const useAddress: UseAddressReturn = (type: AddressType) => {
-  const state = useState<UseAddressMethodsState>('useAddress-' + type, () => ({
+  const state = useState<UseAddressMethodsState>(`useAddress-${type}`, () => ({
     data: [] as Address[],
     savedAddress: {} as Address,
     loading: false,
@@ -45,7 +45,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
    */
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
+    const { data, error } = await useAsyncData(type.toString(), () =>
       useSdk().plentysystems.getAddresses({
         typeId: type,
       }),
@@ -65,7 +65,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
    */
   const saveAddress: SaveAddress = async (address: Address) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
+    const { data, error } = await useAsyncData(type.toString(), () =>
       useSdk().plentysystems.doSaveAddress({
         typeId: type,
         addressData: address,
