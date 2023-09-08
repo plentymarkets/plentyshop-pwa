@@ -3471,6 +3471,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@plentymarkets/plentyshop-pwa@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@plentymarkets/plentyshop-pwa@workspace:."
+  dependencies:
+    "@commitlint/cli": ^13.2.1
+    "@commitlint/config-conventional": ^13.2.0
+    "@lhci/cli": ^0.12.0
+    "@paypal/paypal-js": 7.0.0
+    "@plentymarkets/shop-api": ^0.4.0
+    "@plentymarkets/shop-sdk": ^0.7.0
+    "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/uuid": ^9.0.2
+    "@vue-storefront/eslint-config": ~2.0.0-rc.7
+    babel-preset-node: ^5.1.1
+    commitizen: ^4.2.5
+    concurrently: ^8.2.0
+    cross-env: ^7.0.3
+    dotenv: ^16.0.3
+    eslint: ^8.38.0
+    husky: ^7.0.4
+    is-ci: ^1.0.0
+    lint-staged: ^13.2.1
+    prettier: ^2.8.8
+    rimraf: ^3.0.2
+    rollup: ^2.79.0
+    turbo: 1.10.12
+    typescript: 5.1.6
+    uuid: ^9.0.0
+    wait-on: ^7.0.1
+  languageName: unknown
+  linkType: soft
+
 "@plentymarkets/shop-api@npm:^0.4.0":
   version: 0.4.0
   resolution: "@plentymarkets/shop-api@npm:0.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.4.0%2Fee6e4dae4cf804b0bb13894dc2df9b52240298e4"
@@ -4725,38 +4757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vsf/nuxt3-boilerplate@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@vsf/nuxt3-boilerplate@workspace:."
-  dependencies:
-    "@commitlint/cli": ^13.2.1
-    "@commitlint/config-conventional": ^13.2.0
-    "@lhci/cli": ^0.12.0
-    "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.4.0
-    "@plentymarkets/shop-sdk": ^0.7.0
-    "@trivago/prettier-plugin-sort-imports": ^4.1.1
-    "@types/uuid": ^9.0.2
-    "@vue-storefront/eslint-config": ~2.0.0-rc.7
-    babel-preset-node: ^5.1.1
-    commitizen: ^4.2.5
-    concurrently: ^8.2.0
-    cross-env: ^7.0.3
-    dotenv: ^16.0.3
-    eslint: ^8.38.0
-    husky: ^7.0.4
-    is-ci: ^1.0.0
-    lint-staged: ^13.2.1
-    prettier: ^2.8.8
-    rimraf: ^3.0.2
-    rollup: ^2.79.0
-    turbo: 1.10.12
-    typescript: 5.1.6
-    uuid: ^9.0.0
-    wait-on: ^7.0.1
-  languageName: unknown
-  linkType: soft
-
 "@vue-macros/common@npm:^1.3.1":
   version: 1.7.0
   resolution: "@vue-macros/common@npm:1.7.0"
@@ -4831,23 +4831,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.0.1, @vue-storefront/sdk@npm:~1.1.2":
+"@vue-storefront/sdk@npm:^1.0.1":
   version: 1.1.2
   resolution: "@vue-storefront/sdk@npm:1.1.2"
   dependencies:
     "@changesets/changelog-github": ^0.4.8
     "@changesets/cli": ^2.26.1
   checksum: c4616b878f26b12815829aa5cda62eca4142695a7ca557f05e5023981d7e7de27da080918c563d681c0118267fd4d96ad456d7c749f00cba0b1035a28ec625fd
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/storefront-boilerplate-sdk@npm:~0.2.0":
-  version: 0.2.0
-  resolution: "@vue-storefront/storefront-boilerplate-sdk@npm:0.2.0"
-  dependencies:
-    "@vue-storefront/sdk": ~1.1.2
-    axios: ^0.27.2
-  checksum: d1e2797ff5e44dac4b323fe56e6655db766769c2c7c09e70d6d1137ed31f432df4196e7ffd659805a729ab386bc28c5851c9f7b4f22075916cc63ea7c918ef65
   languageName: node
   linkType: hard
 
@@ -19230,7 +19220,6 @@ __metadata:
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/sdk": ^1.0.1
-    "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
     "@vue-storefront/unified-data-model": ^0.6.0
     "@vue/test-utils": ^2.4.0
     "@vueuse/core": ^10.3.0
