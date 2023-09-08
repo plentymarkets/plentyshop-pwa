@@ -84,6 +84,8 @@ withDefaults(defineProps<ProductCardProps>(), {
 });
 
 const { addToCart } = useCart();
+const { send } = useNotification();
+const { t } = useI18n();
 const loading = ref(false);
 
 const addWithLoader = async (productId: number) => {
@@ -94,6 +96,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
+    send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
   }
