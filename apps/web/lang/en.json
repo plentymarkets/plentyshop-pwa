@@ -40,6 +40,22 @@
     "Reject All": "Reject All",
     "Accept Selection": "Accept Selection"
   },
+  "documents" : {
+    "correctionDocuments": "Correction Documents",
+    "Credit Note": "Credit Note",
+    "Delivery Note": "Delivery Note",
+    "Dunning Letter": "Dunning Letter",
+    "Invoice External": "External invoice",
+    "Invoice": "Invoice",
+    "Offer": "Offer",
+    "Order Confirmation": "Order Confirmation",
+    "Pickup Delivery": "Pickup Delivery",
+    "Pro Forma Invoice": "Pro Forma Invoice",
+    "Receipt": "Receipt",
+    "Return Note": "Return Note",
+    "Success Confirmation": "Success Confirmation",
+    "Reversal Document": "Reversal Document"
+  },
   "myCart": "My Cart",
   "orderSummary": "Order Summary",
   "itemsInCart": "(Items: {count})",

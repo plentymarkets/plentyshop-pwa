@@ -30,6 +30,22 @@
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
+  "documents" : {
+    "correctionDocuments": "Korrekturbeleg",
+    "Credit Note": "Gutschrift",
+    "Delivery Note": "Lieferschein",
+    "Dunning Letter": "Mahnung",
+    "Invoice External": "Externe Rechnung",
+    "Invoice": "Rechnung",
+    "Offer": "Angebot",
+    "Order Confirmation": "Auftragsbestätigung",
+    "Pickup Delivery": "Abhollieferung",
+    "Pro Forma Invoice": "Proformarechnung",
+    "Receipt": "Kassenbeleg",
+    "Return Note": "Rücksendeschein",
+    "Success Confirmation": "Stornobeleg",
+    "Reversal Document": "Stornobeleg"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
