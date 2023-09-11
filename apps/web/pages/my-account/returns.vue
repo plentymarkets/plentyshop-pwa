@@ -3,7 +3,7 @@
   <h2 class="hidden md:block col-span-3 typography-headline-4 mb-4 font-bold mx-4 capitalize">
     {{ $t('account.ordersAndReturns.returnsHeading') }}
   </h2>
-  <!-- <div v-if="!data?.length" class="col-span-3 text-center">
+  <div v-if="!data?.entries.length" class="col-span-3 text-center">
     <NuxtImg
       src="/images/returns.png"
       :alt="$t('account.ordersAndReturns.returnsAltText')"
@@ -14,7 +14,7 @@
     <h3 class="typography-headline-3 font-bold mt-6 mb-4">
       {{ $t('account.ordersAndReturns.noOrders') }}
     </h3>
-  </div> -->
+  </div>
   <div class="col-span-3">
     <table class="hidden md:block text-left typography-text-sm mx-4">
       <caption class="hidden">
@@ -37,14 +37,37 @@
         </tr>
       </tbody>
     </table>
+    <UiPagination
+      v-if="data.entries.length > 0"
+      :current-page="getFacetsFromURL().page ?? 1"
+      :total-items="data.entries.length"
+      :page-size="20"
+      :max-visible-pages="maxVisiblePages"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
+import { useDisclosure } from '@storefront-ui/vue';
+import { useMediaQuery } from '@vueuse/core';
+
 definePageMeta({
   layout: 'account',
 });
+const { isOpen, close } = useDisclosure();
+const { getFacetsFromURL } = useCategoryFilter();
+const isTabletScreen = useMediaQuery(mediaQueries.tablet);
+const isWideScreen = useMediaQuery(mediaQueries.desktop);
+const maxVisiblePages = ref(1);
+const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 
+watch(isWideScreen, (value) => setMaxVisiblePages(value));
+onMounted(() => setMaxVisiblePages(isWideScreen.value));
+watch(isTabletScreen, (value) => {
+  if (value && isOpen.value) {
+    close();
+  }
+});
 const { fetchCustomerReturns, data } = useCustomerReturns();
 await fetchCustomerReturns();
 </script>
