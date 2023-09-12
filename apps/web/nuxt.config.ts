@@ -2,6 +2,7 @@
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,
@@ -102,6 +103,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cookieGroups: cookieConfig,
+      API_ENDPOINT: process.env.API_ENDPOINT
     },
   },
   pwa: {
