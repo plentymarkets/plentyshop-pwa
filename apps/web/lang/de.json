@@ -101,9 +101,8 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
-  "tomorrow": "Morgen",
   "cancellationRights": "Widerrufsrecht",
-  "tomorrow": "morgen",
+  "tomorrow": "Morgen",
   "contactInfo": {
     "heading": "Kontaktinformationen",
     "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
@@ -311,7 +310,6 @@
         "newAddress": "Neue Rechnungsadresse"
       },
       "shippingDetails": {
-        "edit": "Bearbeiten",
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
       }
