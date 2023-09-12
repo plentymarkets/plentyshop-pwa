@@ -351,12 +351,12 @@
         "shippingAddress": "Shipping address"
       },
       "shippingSummary": {
-        "heading": "Shipping summary",
+        "heading": "Shipping Summary",
         "shipTo": "Ship to",
         "shippingMethod": "Shipping method"
       },
       "paymentSummary": {
-        "heading": "Payment summary"
+        "heading": "Payment Summary"
       }
     }
   },

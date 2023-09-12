@@ -30,6 +30,16 @@
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
+  "CookieBar": {
+    "Privacy Settings": "Datenschutzeinstellungen",
+    "More information": "Mehr Informationen",
+    "Further Settings": "Weitere Einstellungen",
+    "Back": "Zurück",
+    "Show less": "Weniger anzeigen",
+    "Accept All": "Alles akzeptieren",
+    "Reject All": "Alles ablehnen",
+    "Accept Selection": "Auswahl akzeptieren"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
@@ -81,6 +91,7 @@
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
+  "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
@@ -90,6 +101,7 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
+  "tomorrow": "Morgen",
   "cancellationRights": "Widerrufsrecht",
   "contactInfo": {
     "heading": "Kontaktinformationen",
@@ -323,6 +335,14 @@
         "billingAddress": "Rechnungsadresse",
         "paymentMethod": "Zahlungsart",
         "shippingAddress": "Lieferadresse"
+      },
+      "shippingSummary": {
+        "heading": "Versandübersicht",
+        "shipTo": "Versand nach",
+        "shippingMethod": "Versandart"
+      },
+      "paymentSummary": {
+        "heading": "Zahlungsübersicht"
       }
     }
   },
@@ -368,7 +388,12 @@
     }
   },
   "orderConfirmation": {
-    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
+    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
+    "sameAsShippingAddress": "Entspricht der Lieferadresse",
+    "subTotal": "Zwischensumme",
+    "shipping": "Lieferkosten",
+    "vat": "MwSt.",
+    "total": "Summe"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "legal": {
