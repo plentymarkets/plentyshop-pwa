@@ -349,6 +349,14 @@
         "billingAddress": "Billing address",
         "paymentMethod": "Payment method",
         "shippingAddress": "Shipping address"
+      },
+      "shippingSummary": {
+        "heading": "Shipping summary",
+        "shipTo": "Ship to",
+        "shippingMethod": "Shipping method"
+      },
+      "paymentSummary": {
+        "heading": "Payment summary"
       }
     }
   },
@@ -394,7 +402,12 @@
     }
   },
   "orderConfirmation": {
-    "confirmationSendTo": "A confirmation with all details has been sent to {email}"
+    "confirmationSendTo": "A confirmation with all details has been sent to {email}",
+    "sameAsShippingAddress": "Same as shipping address",
+    "subTotal": "Subtotal",
+    "shipping": "Shipping",
+    "vat": "VAT",
+    "total": "Total"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}"
 }
