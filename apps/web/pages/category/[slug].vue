@@ -1,25 +1,29 @@
 <template>
-  <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <CategoryPageContent
-      v-if="productsCatalog"
-      :title="categoryGetters.getCategoryName(productsCatalog.category)"
-      :total-products="productsCatalog.pagination.totals"
-      :products="productsCatalog.products"
-      :items-per-page="Number(productsPerPage)"
-    >
-      <template #sidebar>
-        <CategoryTree :category="category" />
-        <CategorySorting />
-        <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-        <CategoryFilters :facets="productsCatalog.facets" />
-      </template>
-    </CategoryPageContent>
-  </NuxtLayout>
+  <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
+    <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
+      <SfLoaderCircular v-if="loading" class="absolute top-[10%] right-0 left-0 m-auto z-[999]" size="lg" />
+      <CategoryPageContent
+        v-if="productsCatalog"
+        :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :total-products="productsCatalog.pagination.totals"
+        :products="productsCatalog.products"
+        :items-per-page="Number(productsPerPage)"
+      >
+        <template #sidebar>
+          <CategoryTree :category="category" />
+          <CategorySorting />
+          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+          <CategoryFilters :facets="productsCatalog.facets" />
+        </template>
+      </CategoryPageContent>
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,
@@ -28,7 +32,7 @@ definePageMeta({
 const { t } = useI18n();
 const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage } = useProducts();
+const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 
 const handleQueryUpdate = async () => {
