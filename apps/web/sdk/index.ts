@@ -4,6 +4,9 @@ import { createSharedComposable } from '@vueuse/core';
 
 export const useSdk = createSharedComposable(() => {
   const config = useRuntimeConfig();
+
+  console.log(config.public);
+
   const sdkConfig = {
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
       apiUrl: config.public.API_ENDPOINT
