@@ -42,10 +42,15 @@ jobs:
               run: yarn --immutable
 
             - name: Start server
-              run: pushd apps/server && yarn start && popd
+              run: |
+                pushd apps/server
+                yarn start &
+                popd
 
             - name: Run vitest
-              run: pushd apps/web && yarn test:coverage
+              run: |
+                pushd apps/web
+                yarn test:coverage
 
             - name: Report Coverage
               if: always()
