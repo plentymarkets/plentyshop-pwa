@@ -1,15 +1,12 @@
 import type { Ref } from 'vue';
-import type { Maybe } from '@vue-storefront/unified-data-model';
-import type { OrderData } from '~/composables/useCustomerOrder/types';
-
-export type OrdersData = Pick<OrderData, 'id' | 'date' | 'paymentAmount' | 'status'>[];
+import { GetOrdersResponse, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerOrdersState {
-  data: Maybe<OrdersData>;
+  data: GetOrdersResponse | null;
   loading: boolean;
 }
 
-export type FetchCustomerOrders = () => Promise<Ref<Maybe<OrdersData>>>;
+export type FetchCustomerOrders = (params: UseUserOrderSearchParams) => Promise<GetOrdersResponse | null>;
 
 export interface UseCustomerOrders {
   data: Readonly<Ref<UseCustomerOrdersState['data']>>;
