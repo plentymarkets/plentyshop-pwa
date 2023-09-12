@@ -102,7 +102,6 @@
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
   "cancellationRights": "Widerrufsrecht",
-  "termsRequired": "Sie müssen den AGB zustimmen.",
   "tomorrow": "morgen",
   "contactInfo": {
     "heading": "Kontaktinformationen",
