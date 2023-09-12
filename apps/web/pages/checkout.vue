@@ -133,8 +133,8 @@ const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const { send } = useNotification();
 const { data: cart, getCart } = useCart();
-const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
-const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const {
   loading: loadShipping,
   data: shippingMethodData,
