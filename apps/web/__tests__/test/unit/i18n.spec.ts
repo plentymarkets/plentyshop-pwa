@@ -3,7 +3,7 @@ import de from '../../../lang/de.json';
 import en from '../../../lang/en.json';
 
 describe('i18n', () => {
-    it('has the same keys in English and German', () => {        
+    it('has the same keys in English and German', () => {
         haveEqualStructure(en, de);
     });
     
