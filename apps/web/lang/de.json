@@ -20,7 +20,7 @@
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
-    "useAsShippingLabel": "Als Lieferadresse verwenden",
+    "useAsShippingLabel": "Als Lieferadresse nutzen",
     "selectPlaceholder": "-- Auswählen --",
     "emailLabel": "E-Mail",
     "passwordLabel": "Passwort",
@@ -289,13 +289,17 @@
         "passwordHelp": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten",
         "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein."
       },
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "makeDefault": "Als Standard festlegen",
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
-        "edit": "Bearbeiten"
+        "newAddress": "Neue Rechnungsadresse"
       },
       "shippingDetails": {
         "edit": "Bearbeiten",
-        "shippingAddress": "Lieferadresse"
+        "shippingAddress": "Lieferadresse",
+        "newAddress": "Neue Lieferadresse"
       }
     },
     "ordersAndReturns": {

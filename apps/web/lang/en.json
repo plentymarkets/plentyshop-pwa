@@ -302,12 +302,15 @@
         "passwordHelp": "At least 8 characters long and must contain at least one letter and one number",
         "passwordsDoNotMatch": "The passwords do not match."
       },
+      "edit": "Edit",
+      "delete": "Delete",
+      "makeDefault": "Make default",
       "billingDetails": {
         "billingAddress": "Billing address",
-        "edit": "Edit"
+        "newAddress": "New Billing Address"
       },
       "shippingDetails": {
-        "edit": "Edit",
+        "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
       }
     },
