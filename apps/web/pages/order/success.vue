@@ -5,8 +5,8 @@
       <h1 class="mt-6 mb-1 text-2xl">{{ $t('successInfoHeader') }}</h1>
       <span class="font-medium">{{ $t('successInfoMessage') }}</span>
       <span v-if="orderData.order.deliveryAddress.options.length > 0" class="font-medium text-center">{{
-          $t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(orderData) })
-        }}</span>
+        $t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(orderData) })
+      }}</span>
     </div>
 
     <div class="flex flex-col md:flex-row w-full md:w-3/4 flex-wrap gap-x-6">
