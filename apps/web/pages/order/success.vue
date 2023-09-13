@@ -15,7 +15,7 @@
           <OrderDetails :order="orderData" />
         </div>
 
-        <div id="scrollable" class="my-4">
+        <div id="order-items" class="my-4">
           <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
             <div class="w-full" v-for="item in orderGetters.getItems(orderData)" :key="item.id">
               <OrderSummaryProductCard :order-item="item" />
@@ -56,7 +56,7 @@ if (!orderData.value.order) {
 
 <style lang="scss">
 :root {
-  #scrollable {
+  #order-items {
     .flex-col {
       width: 100%;
     }

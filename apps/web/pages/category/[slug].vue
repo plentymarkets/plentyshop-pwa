@@ -42,7 +42,7 @@ const category = ref(productsCatalog.value.category);
 const breadcrumbs = computed(() => {
   const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
     categoryTree.value,
-    categoryGetters.getId(category.value) ?? 16,
+    categoryGetters.getId(category.value),
   );
   breadcrumb.unshift({ name: t('home'), link: '/' });
 

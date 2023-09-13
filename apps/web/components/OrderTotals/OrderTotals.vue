@@ -5,7 +5,7 @@
   </div>
   <div class="grid grid-cols-2 mb-2">
     <p class="font-medium text-base">{{ $t('orderConfirmation.shipping') }}:</p>
-    <p class="text-right">{{ $n(orderGetters.getShippingCost(order) ?? 0, 'currency') }}</p>
+    <p class="text-right">{{ getShippingAmount(orderGetters.getShippingCost(order) ?? 0) }}</p>
   </div>
   <div class="grid grid-cols-2 mb-2">
     <p class="font-medium text-base">
@@ -25,4 +25,9 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
 import { OrderTotalsPropsType } from './types';
 
 defineProps<OrderTotalsPropsType>();
+const i18n = useI18n();
+
+const getShippingAmount = (amount: number) => {
+  return amount === 0 ? i18n.t('shippingMethod.free') : i18n.n(Number(amount), 'currency');
+};
 </script>
