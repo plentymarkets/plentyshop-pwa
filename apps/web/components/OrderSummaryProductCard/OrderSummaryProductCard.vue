@@ -21,7 +21,7 @@
         />
       </SfLink>
     </div> -->
-    <div class="flex flex-col pl-4 min-w-[180px] flex-1">
+    <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
         :to="`${paths.product}${orderGetters.getItemName(orderItem)}-${orderGetters.getItemVariationId(orderItem)}`"
