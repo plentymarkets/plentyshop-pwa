@@ -1,7 +1,7 @@
 <template>
-  <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-    <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
-      <SfLoaderCircular v-if="loading" class="absolute top-[10%] right-0 left-0 m-auto z-[999]" size="lg" />
+  <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
+    <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
+      <SfLoaderCircular v-if="loading" class="absolute top-[10%] right-0 left-0 m-auto z-[99999]" size="lg" />
       <CategoryPageContent
         v-if="productsCatalog"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -16,8 +16,8 @@
           <CategoryFilters :facets="productsCatalog.facets" />
         </template>
       </CategoryPageContent>
-    </NuxtLayout>
-  </div>
+    </div>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
