@@ -1,8 +1,8 @@
+import { OrderDocument } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn } from './types';
-import { GetDocument } from "./types";
-import { OrderDocument } from "@plentymarkets/shop-api";
+import { GetDocument } from './types';
 
 /**
  * @description Composable for getting the legal information.
@@ -21,7 +21,7 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
     try {
       const { data } = await useSdk().plentysystems.getOrderDocument({ document, accessKey });
 
-      state.value.data = data.data ?? state.value.data;
+      state.value.data = data ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);

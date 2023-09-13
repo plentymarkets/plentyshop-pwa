@@ -6,7 +6,7 @@
       :tag="NuxtLink"
       target="_blank"
       @click="downloadFile(document, accessKey)"
-      class="mt-4 w-full"
+      class="mt-4 w-full cursor-pointer"
       variant="secondary"
     >
       {{ getTypeName(orderDocumentGetters.getType(document)) }}
@@ -38,8 +38,6 @@ const download = (bufferArray: number[], name: string, type: string) => {
 
 const { data, getDocument } = useOrderDocument();
 
-await getDocument(document: OrderDocument, accessKey: string);
-
 const i18n = useI18n();
 
 const translations = {
@@ -63,8 +61,12 @@ const getTypeName = (type: string) => {
   return translations[type as keyof typeof translations];
 };
 
-const downloadFile = () => {
-  download(data.value, 'test.pdf', 'application/pdf')
+const downloadFile = async (document: OrderDocument, accessKey: string) => {
+  await getDocument(document, accessKey);
+
+  const name = document.path.replaceAll('/', '_');
+
+  download(data.value, name, 'application/pdf');
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
