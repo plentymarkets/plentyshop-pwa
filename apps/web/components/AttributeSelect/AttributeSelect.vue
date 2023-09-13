@@ -7,7 +7,7 @@
       @update:model-value="changeVariationId"
       v-model="selectedVariation"
       size="sm"
-      placeholder="-- Select --"
+      placeholder="Please select"
     >
       <option v-for="{ value, label } in mapValueAndLabel(attributeGroup)" :key="value" :value="value">
         {{ label }}
@@ -40,6 +40,29 @@ const route = useRoute();
 const slug = route.params.slug as string;
 const productId = slug.split('-').pop() ?? '0';
 const selectedVariation = ref(productId);
+
+const preselectVariation = () => {
+  if (product.value && product.value.variations) {
+    const defaultVariation = product.value.variations.find((variation) => variation.isDefault);
+    if (defaultVariation) {
+      selectedVariation.value = defaultVariation.id;
+    } else if (product.value.variations.length > 0) {
+      selectedVariation.value = product.value.variations[0].id;
+    }
+  }
+};
+
+watch(
+  product,
+  () => {
+    if (product.value) {
+      preselectVariation();
+    }
+  },
+  { immediate: true },
+);
+
+preselectVariation();
 
 const changeVariationId = (updatedId: String) => {
   const delimiter = '-';
