@@ -234,7 +234,7 @@ const order = async () => {
   });
 
   if (data?.order?.id) {
-    router.push('/order/success');
+    router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
   }
 };
 </script>
