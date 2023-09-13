@@ -12,11 +12,9 @@ export const useSdk = createSharedComposable(() => {
     }),
   };
 
-
   client.interceptors.request.use(
     (config) => {
-
-      if(process.server) {
+      if (process.server) {
         if (!config.headers) {
           config.headers = {};
         }
@@ -24,7 +22,7 @@ export const useSdk = createSharedComposable(() => {
       }
       return config;
     },
-    (error) => { 
+    (error) => {
       // Do something with request error
       return Promise.reject(error);
     },
