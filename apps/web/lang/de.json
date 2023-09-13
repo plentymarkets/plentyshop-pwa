@@ -20,7 +20,7 @@
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
-    "useAsShippingLabel": "Als Lieferadresse verwenden",
+    "useAsShippingLabel": "Als Lieferadresse nutzen",
     "selectPlaceholder": "-- Auswählen --",
     "emailLabel": "E-Mail",
     "passwordLabel": "Passwort",
@@ -29,6 +29,16 @@
     "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
+  },
+  "CookieBar": {
+    "Privacy Settings": "Datenschutzeinstellungen",
+    "More information": "Mehr Informationen",
+    "Further Settings": "Weitere Einstellungen",
+    "Back": "Zurück",
+    "Show less": "Weniger anzeigen",
+    "Accept All": "Alles akzeptieren",
+    "Reject All": "Alles ablehnen",
+    "Accept Selection": "Auswahl akzeptieren"
   },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
@@ -81,12 +91,17 @@
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
+  "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
+  "termsRequired": "Bitte die Checkbox zu AGB, Widerrufsrecht und Datenschutzerklärung bestätigen.",
+  "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
+  "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
+  "tomorrow": "Morgen",
   "cancellationRights": "Widerrufsrecht",
   "contactInfo": {
     "heading": "Kontaktinformationen",
@@ -123,6 +138,7 @@
   "addToCart": "In den Warenkorb",
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
+  "addedToCart": "Artikel zum Warenkorb hinzugefügt",
   "search": "Suche",
   "home": "Startseite",
   "products": "Produkte",
@@ -273,19 +289,24 @@
         "passwordHelp": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten",
         "passwordsDoNotMatch": "Die Passwörter stimmen nicht überein."
       },
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "makeDefault": "Als Standard festlegen",
       "billingDetails": {
         "billingAddress": "Rechnungsadresse",
-        "edit": "Bearbeiten"
+        "newAddress": "Neue Rechnungsadresse"
       },
       "shippingDetails": {
         "edit": "Bearbeiten",
-        "shippingAddress": "Lieferadresse"
+        "shippingAddress": "Lieferadresse",
+        "newAddress": "Neue Lieferadresse"
       }
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
+      "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
       "amount":"Anzahl",
       "status":"Status",
@@ -319,6 +340,14 @@
         "billingAddress": "Rechnungsadresse",
         "paymentMethod": "Zahlungsart",
         "shippingAddress": "Lieferadresse"
+      },
+      "shippingSummary": {
+        "heading": "Versandübersicht",
+        "shipTo": "Versand nach",
+        "shippingMethod": "Versandart"
+      },
+      "paymentSummary": {
+        "heading": "Zahlungsübersicht"
       }
     }
   },
@@ -364,7 +393,12 @@
     }
   },
   "orderConfirmation": {
-    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
+    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
+    "sameAsShippingAddress": "Entspricht der Lieferadresse",
+    "subTotal": "Zwischensumme",
+    "shipping": "Lieferkosten",
+    "vat": "MwSt.",
+    "total": "Summe"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "legal": {

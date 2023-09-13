@@ -3,10 +3,10 @@ name: Linting (Lint)
 on:
   push:
     branches:
-      - develop
+      - main
   pull_request:
     branches:
-      - develop
+      - main
 
 permissions:
   contents: read
@@ -30,7 +30,7 @@ jobs:
       - name: Set yarn version
         run: |
           yarn set version stable
-          yarn set version 3.6.1
+          yarn set version 3.6.3
 
       - name: Setup .yarnrc.yml
         run: |

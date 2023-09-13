@@ -13,7 +13,7 @@ export default defineNuxtConfig({
         lang: 'en',
       },
       meta: [
-        { name: 'description', content: 'VSF x Nuxt3 (Boilerplate)' },
+        { name: 'description', content: 'plentyshop PWA' },
         { name: 'theme-color', content: '#018937' },
       ],
       link: [
@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     },
   },
   appConfig: {
-    titleSuffix: 'Vue Storefront Nuxt3 Boilerplate',
+    titleSuffix: 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
@@ -131,8 +131,8 @@ export default defineNuxtConfig({
       cleanupOutdatedCaches: true,
     },
     manifest: {
-      name: 'VSF x Nuxt3 (Boilerplate)',
-      short_name: 'VSFNuxt3Boilerplate',
+      name: 'plentyshop PWA',
+      short_name: 'plentyshopPWA',
       theme_color: '#018937',
       icons: [
         {
