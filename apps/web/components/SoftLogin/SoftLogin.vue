@@ -18,7 +18,7 @@
       <div class="text-lg text-center mt-2 font-medium">
         {{ $t('softLogin.titleFullName') }}
       </div>
-      <SoftLoginInput type="fullName" :title="$t('softLogin.fullName')" @submit="submitToParent" />
+      <SoftLoginInput type="name" :title="$t('softLogin.fullName')" @submit="submitToParent" />
     </div>
   </div>
 </template>
@@ -32,7 +32,7 @@ const errorType = computed(() => props.error?.error?.data?.authType ?? props.err
 
 const TYPE_LOGIN = 'login';
 const TYPE_POSTCODE = 'postcode';
-const TYPE_FULL_NAME = 'fullName';
+const TYPE_FULL_NAME = 'name';
 
 const submitToParent = (type: string, value?: string) => {
   emits('submit', type, value);
