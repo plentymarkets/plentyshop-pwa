@@ -307,6 +307,7 @@
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
       "shippingDate": "Lieferdatum",
+      "returnDate": "Retourendatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",
