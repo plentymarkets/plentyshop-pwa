@@ -22,14 +22,20 @@
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
           Feel the music
         </p>
-        <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          New Wireless Pro
+        <h1 class="typography-display-2 md:typography-display-1 text-4xl md:leading-[67.5px] font-bold mt-2 mb-4">
+          {{ productGetters.getName(product) }}
         </h1>
         <p class="typography-text-base md:typography-text-lg">
           Spatial audio. Adjustable ear cups. On-device controls. All-day battery.
         </p>
+        <p class="font-bold text-3xl">
+          {{ $n(productGetters.getSpecialPrice(product), 'currency') }}
+        </p>
+        <p class="line-through text-2xl">
+          {{ $n(productGetters.getRegularPrice(product), 'currency') }}
+        </p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg"> Order now </SfButton>
+          <SfButton tag="a" :href="'/product/' + productGetters.getSlug(product) + `-${productGetters.getId(product)}`" size="lg"> Order now </SfButton>
           <SfButton size="lg" variant="secondary" class="bg-white"> Show more </SfButton>
         </div>
       </div>
@@ -106,7 +112,7 @@
     </div>
     <section class="mx-4 mt-28 mb-20 overflow-hidden">
       <NuxtLazyHydrate when-visible>
-        <p data-testid="recommended-products" v-if="recommendedProducts" class="my-4 typography-text-lg">
+        <p data-testid="recommended-products" v-if="recommendedProducts" class="font-bold my-10 text-2xl">
           {{ $t('moreItemsOfThisCategory') }}
         </p>
         <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
@@ -116,17 +122,21 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton } from '@storefront-ui/vue';
+import { SfButton, SfLink } from '@storefront-ui/vue';
+import { productGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('homepage');
-const firstCategoryId = categoryTree.value?.[0]?.id;
+const firstCategoryId = '73';
 
-onMounted(async () => {
-  if (firstCategoryId) {
-    await fetchProductRecommended(firstCategoryId.toString());
-  }
-});
+
+const { data: product, fetchProduct } = useProduct('1100');
+
+await fetchProduct('1100');
+
+if (firstCategoryId) {
+  await fetchProductRecommended(firstCategoryId.toString());
+} 
 
 const displayDetails = [
   {
