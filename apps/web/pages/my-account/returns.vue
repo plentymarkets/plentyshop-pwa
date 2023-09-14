@@ -33,9 +33,9 @@
       </thead>
       <tbody>
         <tr v-for="orderReturn in data.entries" :key="orderReturn.order.id" class="border-b border-neutral-200">
-          <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderReturn.order.id }}</td>
-          <td class="lg:p-4 p-2">{{ $d(new Date(orderReturn.order.dates[1].date)) }}</td>
-          <td class="lg:p-4 p-2">{{ orderReturn.paymentMethodName }}</td>
+          <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getId(orderReturn) }}</td>
+          <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn) }}</td>
+          <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
         </tr>
       </tbody>
     </table>
@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import { orderGetters } from '@plentymarkets/shop-sdk';
 import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 
