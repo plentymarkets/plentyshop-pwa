@@ -7,7 +7,7 @@
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
     >
-      {{ getTypeName(orderDocumentGetters.getType(document)) }}
+      {{ getDocumentName(document) }}
     </SfButton>
   </div>
 </template>
@@ -45,6 +45,10 @@ const translations = {
 
 const getTypeName = (type: string) => {
   return translations[type as keyof typeof translations];
+};
+
+const getDocumentName = (document: OrderDocument) => {
+  return getTypeName(orderDocumentGetters.getType(document)) ?? orderDocumentGetters.getNumberWithPrefix(document);
 };
 
 const downloadPDF = async (document: OrderDocument, accessKey: string) => {
