@@ -2,7 +2,8 @@
   <form ref="referenceRef" role="search" class="relative" @submit.prevent="handleSubmit">
     <SfInput ref="inputReference" v-model="inputModel" aria-label="Search" placeholder="Search" @focus="open">
       <template #prefix>
-        <SfIconSearch />
+        <SfLoaderCircular v-if="loading" />
+        <SfIconSearch v-else />
       </template>
       <template #suffix>
         <button
@@ -21,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { SfIconCancel, SfIconSearch, SfInput, useDisclosure } from '@storefront-ui/vue';
+import { SfIconCancel, SfIconSearch, SfInput, useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 
 const props = defineProps<{
@@ -31,6 +32,7 @@ const props = defineProps<{
 const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
+const { loading } = useSearch();
 
 const inputModel = ref('');
 const inputReference = ref<HTMLSpanElement>();
