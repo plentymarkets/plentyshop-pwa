@@ -31,17 +31,24 @@
           @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod
-          :shipping-methods="shippingMethods"
-          :disabled="disableShippingPayment"
-          @update:shipping-method="handleShippingMethodUpdate($event)"
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment
-          :payment-methods="paymentMethods"
-          :disabled="disableShippingPayment"
-          @update:active-payment="handlePaymentMethodUpdate($event)"
-        />
+        <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
+          <ShippingMethod
+            :shipping-methods="shippingMethods"
+            :disabled="disableShippingPayment"
+            @update:shipping-method="handleShippingMethodUpdate($event)"
+          />
+          <SfLoaderCircular
+            v-if="disableShippingPayment"
+            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            size="2xl"
+          />
+          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <CheckoutPayment
+            :payment-methods="paymentMethods"
+            :disabled="disableShippingPayment"
+            @update:active-payment="handlePaymentMethodUpdate($event)"
+          />
+        </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
@@ -91,9 +98,9 @@
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" />
         </div>
-        <div class="relative" :class="{ 'pointer-events-none opacity-50': cartLoading }">
-          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="lg" />
-          <OrderSummary v-if="cart" :cart="cart" class="md:sticky mt-4 md:top-20 h-fit">
+        <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+          <OrderSummary v-if="cart" :cart="cart">
             <PayPalExpressButton
               v-if="selectedPaymentId === paypalGetters.getPaymentId()"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"

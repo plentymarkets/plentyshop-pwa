@@ -19,7 +19,7 @@
         </SfButton>
       </div>
       <div v-else class="col-span-3">
-        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="lg" />
+        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
         <ul class="md:hidden my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
           <li>
             <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.orderId') }}</p>

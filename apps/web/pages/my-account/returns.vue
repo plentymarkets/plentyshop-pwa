@@ -1,6 +1,6 @@
 <template>
   <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-    <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="lg" />
+    <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
     <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
     <h2 class="hidden md:block col-span-3 typography-headline-4 mb-4 font-bold mx-4 capitalize">
       {{ $t('account.ordersAndReturns.returnsHeading') }}
