@@ -31,17 +31,24 @@
           @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod
-          :shipping-methods="shippingMethods"
-          :disabled="disableShippingPayment"
-          @update:shipping-method="handleShippingMethodUpdate($event)"
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment
-          :payment-methods="paymentMethods"
-          :disabled="disableShippingPayment"
-          @update:active-payment="handlePaymentMethodUpdate($event)"
-        />
+        <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
+          <ShippingMethod
+            :shipping-methods="shippingMethods"
+            :disabled="disableShippingPayment"
+            @update:shipping-method="handleShippingMethodUpdate($event)"
+          />
+          <SfLoaderCircular
+            v-if="disableShippingPayment"
+            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            size="2xl"
+          />
+          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <CheckoutPayment
+            :payment-methods="paymentMethods"
+            :disabled="disableShippingPayment"
+            @update:active-payment="handlePaymentMethodUpdate($event)"
+          />
+        </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
@@ -91,26 +98,29 @@
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" />
         </div>
-        <OrderSummary v-if="cart" :cart="cart" class="md:sticky mt-4 md:top-20 h-fit">
-          <PayPalExpressButton
-            v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-            :disabled="!termsAccepted || disableShippingPayment"
-            @on-click="validateTerms"
-          />
-          <SfButton
-            v-else
-            type="submit"
-            @click="order"
-            :disabled="createOrderLoading || disableShippingPayment"
-            size="lg"
-            class="w-full mb-4 md:mb-0 cursor-pointer"
-          >
-            <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ $t('buy') }}
-            </span>
-          </SfButton>
-        </OrderSummary>
+        <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+          <OrderSummary v-if="cart" :cart="cart">
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+            />
+            <SfButton
+              v-else
+              type="submit"
+              @click="order"
+              :disabled="createOrderLoading || disableShippingPayment || cartLoading"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer"
+            >
+              <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+              <span v-else>
+                {{ $t('buy') }}
+              </span>
+            </SfButton>
+          </OrderSummary>
+        </div>
       </div>
     </div>
   </NuxtLayout>
@@ -132,7 +142,7 @@ const ID_BILLING_ADDRESS = '#billing-address';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const { send } = useNotification();
-const { data: cart, getCart } = useCart();
+const { data: cart, getCart, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const {
