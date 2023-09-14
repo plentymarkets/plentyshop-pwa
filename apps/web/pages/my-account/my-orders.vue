@@ -83,8 +83,8 @@
           </tr>
         </tbody>
       </table>
-
       <UiPagination
+        v-if="data.data.entries.length > data.data.itemsPerPage"
         :disabled="loading"
         :current-page="data.data.page"
         :total-items="data.data.totalsCount"
