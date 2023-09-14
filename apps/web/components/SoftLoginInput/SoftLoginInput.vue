@@ -7,7 +7,9 @@
 
     <SfButton type="submit" class="mt-2" :disabled="loading">
       <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-      <span v-if="!loading"> Check </span>
+      <span v-if="!loading">
+        {{ $t('softLogin.check') }}
+      </span>
     </SfButton>
   </form>
 </template>

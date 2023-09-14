@@ -47,6 +47,9 @@ import { SfButton, SfScrollable } from '@storefront-ui/vue';
 import { ConfirmationPageContentProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
+const { getActiveShippingCountries } = useActiveShippingCountries();
+
+await getActiveShippingCountries();
 
 defineProps<ConfirmationPageContentProps>();
 </script>

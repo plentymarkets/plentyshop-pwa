@@ -10,30 +10,34 @@ const route = useRoute();
 const { data, error, fetchOrder } = useCustomerOrder('soft-login');
 const { send } = useNotification();
 
-fetchOrder({
-  orderId: route.query.orderId as string,
-  accessKey: route.query.accessKey as string,
-});
+if (error.value) {
+  send({
+    type: 'negative',
+    message: error.value.error.message,
+  });
+}
 
 watch(
   () => error.value,
   (value) => {
     if (value) {
       send({
-        type: 'negative',
+        type: 'warning',
         message: value.error.message,
       });
     }
   },
 );
 
-const loadOrder = (type: string, value?: string) => {
-  const object = type === 'login' ? {} : { [type]: value };
+const loadOrder = async (type?: string, value?: string) => {
+  const object = type === undefined || type === '' ? {} : { [type]: value };
 
-  fetchOrder({
+  await fetchOrder({
     orderId: route.query.orderId as string,
     accessKey: route.query.accessKey as string,
     ...object,
   });
 };
+
+await loadOrder();
 </script>
