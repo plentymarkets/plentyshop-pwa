@@ -233,6 +233,8 @@ const order = async () => {
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
+  await getCart();
+
   if (data?.order?.id) {
     router.push('/order/success');
   }
