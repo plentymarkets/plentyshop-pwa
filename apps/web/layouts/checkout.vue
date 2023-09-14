@@ -24,7 +24,7 @@
           </SfButton>
         </div>
         <span class="!flex justify-center my-40 h-24" v-if="isLoading && !cart">
-          <SfLoaderCircular size="3xl" />
+          <SfLoaderCircular size="2xl" />
         </span>
         <slot v-else />
       </div>
