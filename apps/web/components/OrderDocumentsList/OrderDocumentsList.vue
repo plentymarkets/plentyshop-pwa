@@ -3,9 +3,7 @@
     <SfButton
       v-for="(document, key) in documents"
       :key="key"
-      :tag="NuxtLink"
-      target="_blank"
-      @click="downloadFile(document, accessKey)"
+      @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
     >
@@ -16,27 +14,15 @@
 
 <script setup lang="ts">
 import { OrderDocument } from '@plentymarkets/shop-api';
-import { orderDocumentGetters } from '@plentymarkets/shop-sdk';
+import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import type { DocumentsListProps } from './types';
 
-defineProps<DocumentsListProps>();
+const props = defineProps<DocumentsListProps>();
 
-const download = (bufferArray: number[], name: string, type: string) => {
-  const base64PDF = window.btoa(String.fromCharCode.apply(null, bufferArray));
+const documents = computed(() => orderGetters.getDocuments(props.order));
 
-  let link = document.createElement('a');
-  link.href = `data:${type};base64,${base64PDF}`;
-  link.download = name;
-  link.click();
-
-  setTimeout(() => {
-    link.remove();
-    window.URL.revokeObjectURL(link.href);
-  }, 200);
-};
-
-const { data, getDocument } = useOrderDocument();
+const { data, getDocument, downloadFile } = useOrderDocument();
 
 const i18n = useI18n();
 
@@ -61,13 +47,11 @@ const getTypeName = (type: string) => {
   return translations[type as keyof typeof translations];
 };
 
-const downloadFile = async (document: OrderDocument, accessKey: string) => {
+const downloadPDF = async (document: OrderDocument, accessKey: string) => {
   await getDocument(document, accessKey);
 
-  const name = document.path.replaceAll('/', '_');
+  const name = document.path.split('/').join('_');
 
-  download(data.value, name, 'application/pdf');
+  downloadFile(data.value, name, 'application/pdf');
 };
-
-const NuxtLink = resolveComponent('NuxtLink');
 </script>

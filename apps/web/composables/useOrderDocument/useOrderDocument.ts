@@ -2,7 +2,7 @@ import { OrderDocument } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn } from './types';
-import { GetDocument } from './types';
+import { DownloadFile, GetDocument } from './types';
 
 /**
  * @description Composable for getting the legal information.
@@ -30,8 +30,23 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
     }
   };
 
+  const downloadFile: DownloadFile = (bufferArray: number[], name: string, type: string) => {
+    const base64PDF = window.btoa(String.fromCharCode.apply(null, bufferArray));
+
+    const link = document.createElement('a');
+    link.href = `data:${type};base64,${base64PDF}`;
+    link.download = name;
+    link.click();
+
+    setTimeout(() => {
+      link.remove();
+      window.URL.revokeObjectURL(link.href);
+    }, 200);
+  };
+
   return {
     getDocument,
+    downloadFile,
     ...toRefs(state.value),
   };
 };
