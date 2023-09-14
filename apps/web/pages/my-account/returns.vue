@@ -16,7 +16,7 @@
     </h3>
   </div>
 
-  <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
+  <div v-else class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
     <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
     <table class="hidden md:block text-left typography-text-sm mx-4">
       <caption class="hidden">
