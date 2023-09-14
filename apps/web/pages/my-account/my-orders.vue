@@ -13,7 +13,7 @@
         class="mx-auto"
       />
       <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ $t('account.ordersAndReturns.noOrders') }}</h3>
-      <SfButton variant="secondary" class="!ring-neutral-200">
+      <SfButton :tag="NuxtLink" :to="paths.category" variant="secondary" class="!ring-neutral-200">
         {{ $t('account.ordersAndReturns.continue') }}
       </SfButton>
     </div>
@@ -84,7 +84,7 @@
         </tbody>
       </table>
       <UiPagination
-        v-if="data.data.entries.length > data.data.itemsPerPage"
+        v-if="data.data.lastPageNumber > 1"
         :disabled="loading"
         :current-page="data.data.page"
         :total-items="data.data.totalsCount"
@@ -106,6 +106,7 @@ definePageMeta({
   layout: 'account',
 });
 
+const NuxtLink = resolveComponent('NuxtLink');
 const isWideScreen = useMediaQuery(mediaQueries.desktop);
 const maxVisiblePages = ref(1);
 
