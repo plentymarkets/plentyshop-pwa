@@ -5,14 +5,14 @@
         <UiCartProductCard :cart-item="cartItem" />
       </div>
     </div>
-    <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-      <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-[-300%] right-0 left-0 m-auto z-[99999]" size="lg" />
+    <div class="relative col-span-5" :class="{ 'pointer-events-none opacity-50': loading }">
+      <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="lg" />
+      <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
         <SfButton :tag="NuxtLink" :to="paths.checkout" size="lg" class="w-full mb-4 md:mb-0">
           {{ $t('goToCheckout') }}
         </SfButton>
-      </div>
-    </OrderSummary>
+      </OrderSummary>
+    </div>
   </div>
   <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
     <NuxtImg src="/images/empty-cart.svg" :alt="$t('emptyCartImgAlt')" width="192" height="192" />

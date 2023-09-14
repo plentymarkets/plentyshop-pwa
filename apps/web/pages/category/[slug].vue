@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-      <SfLoaderCircular v-if="loading" class="absolute top-[10%] right-0 left-0 m-auto z-[99999]" size="lg" />
+      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="lg" />
       <CategoryPageContent
         v-if="productsCatalog"
         :title="categoryGetters.getCategoryName(productsCatalog.category)"
