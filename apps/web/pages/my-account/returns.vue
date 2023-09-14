@@ -15,7 +15,7 @@
       {{ $t('account.ordersAndReturns.noOrders') }}
     </h3>
   </div>
-  <div class="col-span-3">
+  <div v-else class="col-span-3">
     <table class="hidden md:block text-left typography-text-sm mx-4">
       <caption class="hidden">
         {{
@@ -26,7 +26,7 @@
         <tr>
           <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">{{ $t('account.ordersAndReturns.orderId') }}</th>
           <th class="lg:p-4 p-2 font-medium lg:whitespace-nowrap">{{ $t('account.ordersAndReturns.returnDate') }}</th>
-          <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.orderDetails.paymentMethod') }}</th>
+          <th class="lg:p-4 p-2 font-medium w-full">{{ $t('account.ordersAndReturns.orderDetails.paymentMethod') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +38,7 @@
       </tbody>
     </table>
     <UiPagination
-      v-if="data.entries.length > 0"
+      v-if="data.lastPageNumber > 1"
       :current-page="getFacetsFromURL().page ?? 1"
       :total-items="data.entries.length"
       :page-size="20"
