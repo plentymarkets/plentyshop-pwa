@@ -5,7 +5,7 @@
       <h2 class="hidden md:block typography-headline-4 font-bold mx-4 capitalize col-span-3">
         {{ $t('account.ordersAndReturns.myOrders') }}
       </h2>
-      <div v-if="!data" class="col-span-3 text-center mt-8">
+      <div v-if="!data || data.data.entries.length === 0" class="col-span-3 text-center mt-8">
         <NuxtImg
           src="/images/empty-cart.svg"
           :alt="$t('account.ordersAndReturns.noOrdersAltText')"
@@ -14,7 +14,7 @@
           class="mx-auto"
         />
         <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ $t('account.ordersAndReturns.noOrders') }}</h3>
-        <SfButton variant="secondary" class="!ring-neutral-200">
+        <SfButton :tag="NuxtLink" :to="paths.category" variant="secondary" class="!ring-neutral-200">
           {{ $t('account.ordersAndReturns.continue') }}
         </SfButton>
       </div>
@@ -87,6 +87,7 @@
         </table>
 
         <UiPagination
+          v-if="data.data.lastPageNumber > 1"
           :disabled="loading"
           :current-page="data.data.page"
           :total-items="data.data.totalsCount"
@@ -116,6 +117,7 @@ const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
 
+const NuxtLink = resolveComponent('NuxtLink');
 watch(isWideScreen, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isWideScreen.value));
 
