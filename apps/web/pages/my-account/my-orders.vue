@@ -1,6 +1,6 @@
 <template>
-  <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-    <ClientOnly>
+  <ClientOnly>
+    <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
       <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
       <h2 class="hidden md:block typography-headline-4 font-bold mx-4 capitalize col-span-3">
         {{ $t('account.ordersAndReturns.myOrders') }}
@@ -96,8 +96,8 @@
       </div>
 
       <NuxtPage />
-    </ClientOnly>
-  </div>
+    </div>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">
