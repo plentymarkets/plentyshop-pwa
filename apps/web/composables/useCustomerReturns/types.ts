@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import {Order, PaginatedResult, UseUserOrderSearchParams} from '@plentymarkets/shop-api';
+import { Order, PaginatedResult, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerReturnsState {
   data: PaginatedResult<Order>;
