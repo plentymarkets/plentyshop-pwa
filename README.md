@@ -6,7 +6,7 @@
   <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
 </div>
 
-[![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/storefront-nuxt3-boilerplate?style=social)](https://github.com/plentymarkets/storefront-nuxt3-boilerplate)
+[![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
 [![X Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
@@ -38,7 +38,7 @@ For plentyShop PWA to run, you have to install plugins that provide additional R
 
 1. Log into your plentysystems system.
 2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
-3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account. If you skip this step, remove the PayPal component from the app.
+3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.
 
 ## Local dev setup
 
@@ -61,11 +61,15 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Configuration
 
-- Open [`middleware.config.ts`](./apps/server/middleware.config.ts) and replace `url` with the URL of your plentysystems system.
-- Open [`i18n.config.ts`](./apps/web/i18n.config.ts) and [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to update the locales. The locale settings have to match the plentysystems system settings. The `fallbackLocale` and `defaultLocale` have to match the system default language.
-- Open [`nuxt.config.ts`](./apps/web/nuxt.config.ts) to manage your `pwa.workbox` settings. [Workbox](https://developer.chrome.com/docs/workbox/) provides libraries and tools for Progressive Web App functionality.
-- Open [`tailwind.config.ts`](./apps/web/tailwind.config.ts) to update your theme.
-- Open [`cookie.config.ts`](./apps/web/cookie.config.ts) to manage your consent cookies.
+Follow the links below for configuration instructions.
+
+- [Middleware](./docs/config/middleware.md) (required)
+- [I18N](./docs/config/i18n.md) (required)
+- [Integrations](./docs/config/integrations.md) (required)
+  - **Note**: Currently, the app only supports PayPal as additional payment provider.
+- [PWA](./docs/config/pwa.md) (optional)
+- [Theme](./docs/config/theme.md) (optional)
+- [Cookies](./docs/config/cookies.md) (optional)
 
 ### Authentication
 
@@ -73,9 +77,9 @@ This project queries data from plentysystems by using other NPM packages as midd
 
 1. In the root directory, create a new file called `.yarnrc.yml`.
 2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
-3. In `yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
+3. In `.yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
 
-Git doesn't track `yarnrc.yml`, so you don't have to worry about exposing your token.
+Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
 
 ### Starting the app
 
@@ -95,13 +99,13 @@ This section describes how to deploy your app on your live domain.
 4. Fill in the required information.
 5. **Create** the application.
 
-Copy the **Access key** to your clipboard. You'll need it in the next part.
+You need the generated **Upload Endpoint** and **Access key** in the next part.
 
 ### GitHub
 
 1. In your forked repository, [create 2 encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
 
-    - `URL_ENDPOINT`: TODO
+    - `URL_ENDPOINT`: The **Upload Endpoint** from the previous part.
     - `URL_ENDPOINT_TOKEN`: The **Access key** from the previous part.
 
 2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.

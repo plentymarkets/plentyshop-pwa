@@ -48,6 +48,7 @@
         </span>
       </div>
       <SfButton
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         type="button"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -62,12 +63,19 @@
           {{ $t('addToCartShort') }}
         </span>
       </SfButton>
+      <SfButton v-else type="button" :tag="NuxtLink" :to="`${paths.product}${slug}`" size="sm" class="w-fit">
+        <span>{{ $t('showArticle') }}</span>
+        <template #prefix>
+          <SfIconChevronRight size="sm" />
+        </template>
+      </SfButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
+
 import { AgnosticPrice } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
@@ -78,6 +86,8 @@ withDefaults(defineProps<ProductCardProps>(), {
 });
 
 const { addToCart } = useCart();
+const { send } = useNotification();
+const { t } = useI18n();
 const loading = ref(false);
 
 const addWithLoader = async (productId: number) => {
@@ -88,6 +98,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
+    send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
   }

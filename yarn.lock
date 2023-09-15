@@ -3471,23 +3471,55 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-api@npm:0.3.0":
-  version: 0.3.0
-  resolution: "@plentymarkets/shop-api@npm:0.3.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.3.0%2F5f5c2d216ed52224f80c27bd754f2cfdadf33512"
+"@plentymarkets/plentyshop-pwa@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@plentymarkets/plentyshop-pwa@workspace:."
+  dependencies:
+    "@commitlint/cli": ^13.2.1
+    "@commitlint/config-conventional": ^13.2.0
+    "@lhci/cli": ^0.12.0
+    "@paypal/paypal-js": 7.0.0
+    "@plentymarkets/shop-api": ^0.5.1
+    "@plentymarkets/shop-sdk": ^0.10.1
+    "@trivago/prettier-plugin-sort-imports": ^4.1.1
+    "@types/uuid": ^9.0.2
+    "@vue-storefront/eslint-config": ~2.0.0-rc.7
+    babel-preset-node: ^5.1.1
+    commitizen: ^4.2.5
+    concurrently: ^8.2.0
+    cross-env: ^7.0.3
+    dotenv: ^16.0.3
+    eslint: ^8.38.0
+    husky: ^7.0.4
+    is-ci: ^1.0.0
+    lint-staged: ^13.2.1
+    prettier: ^2.8.8
+    rimraf: ^3.0.2
+    rollup: ^2.79.0
+    turbo: 1.10.12
+    typescript: 5.1.6
+    uuid: ^9.0.0
+    wait-on: ^7.0.1
+  languageName: unknown
+  linkType: soft
+
+"@plentymarkets/shop-api@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "@plentymarkets/shop-api@npm:0.5.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.5.1%2Fbca675aaa43e49cbf8d4a4759070a564cce7f7ed"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^0.21.1
     consola: ^3.0.0
-  checksum: 904c1f6e606f98d1b2d688bfb33d16bd65d9e423fcf0675367771aed6861619edd519c82a5030e699defdc203573fe8bf86cefe4fe1e72a9d8dd07fe0ae79baa
+  checksum: f208798acf5ea25896642572369933860d028b590ff3174cae0cfe9ec24c76d783c581a2a0c3f4b8a2fcf914293d653f1c3fef88ccd91b047ff9cc1e413a8986
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:0.4.0":
-  version: 0.4.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.4.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.4.0%2Fa55f192cd82366974b91522f51c418641978500e"
+"@plentymarkets/shop-sdk@npm:^0.10.1":
+  version: 0.10.1
+  resolution: "@plentymarkets/shop-sdk@npm:0.10.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.10.1%2F7d99d68c762d5b74adac5088fb1022bb9becdbfc"
   dependencies:
     axios: ^0.27.2
-  checksum: 27c61d6dcecbea2b16ab927c7fd87509acd0301ffa20eb791ba6f6ac9d9265ae969059257d61319876746d26eadf22f2b5953ef6709d68b28d62ad5b87869570
+  checksum: 5753ae555f2c0a4d80b7a28749dac7cb4ed834378f691e672e07239310f12e504adb20fc6c3746771dc516f138c094aba1e3731620a2d22085e66c4d2613e2a6
   languageName: node
   linkType: hard
 
@@ -4050,6 +4082,15 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: fe81351470f2d3165e8b12ce33542eef89ea893e36dd62e8f7d72566dfb7e448376ae962f9f3ea888547ce8b55a40020ca0e01d637fab5d99567673084542641
+  languageName: node
+  linkType: hard
+
+"@types/cors@npm:^2.8.13":
+  version: 2.8.13
+  resolution: "@types/cors@npm:2.8.13"
+  dependencies:
+    "@types/node": "*"
+  checksum: 7ef197ea19d2e5bf1313b8416baa6f3fd6dd887fd70191da1f804f557395357dafd8bc8bed0ac60686923406489262a7c8a525b55748f7b2b8afa686700de907
   languageName: node
   linkType: hard
 
@@ -4716,40 +4757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vsf/nuxt3-boilerplate@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@vsf/nuxt3-boilerplate@workspace:."
-  dependencies:
-    "@commitlint/cli": ^13.2.1
-    "@commitlint/config-conventional": ^13.2.0
-    "@lhci/cli": ^0.12.0
-    "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": 0.3.0
-    "@plentymarkets/shop-sdk": 0.4.0
-    "@trivago/prettier-plugin-sort-imports": ^4.1.1
-    "@types/uuid": ^9.0.2
-    "@vue-storefront/eslint-config": ~2.0.0-rc.7
-    babel-preset-node: ^5.1.1
-    commitizen: ^4.2.5
-    concurrently: ^8.2.0
-    cross-env: ^7.0.3
-    cypress: ^12.12.0
-    cypress-wait-until: ^2.0.0
-    dotenv: ^16.0.3
-    eslint: ^8.38.0
-    husky: ^7.0.4
-    is-ci: ^1.0.0
-    lint-staged: ^13.2.1
-    prettier: ^2.8.8
-    rimraf: ^3.0.2
-    rollup: ^2.79.0
-    turbo: 1.10.12
-    typescript: 5.1.6
-    uuid: ^9.0.0
-    wait-on: ^7.0.1
-  languageName: unknown
-  linkType: soft
-
 "@vue-macros/common@npm:^1.3.1":
   version: 1.7.0
   resolution: "@vue-macros/common@npm:1.7.0"
@@ -4824,23 +4831,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.0.1, @vue-storefront/sdk@npm:~1.1.2":
+"@vue-storefront/sdk@npm:^1.0.1":
   version: 1.1.2
   resolution: "@vue-storefront/sdk@npm:1.1.2"
   dependencies:
     "@changesets/changelog-github": ^0.4.8
     "@changesets/cli": ^2.26.1
   checksum: c4616b878f26b12815829aa5cda62eca4142695a7ca557f05e5023981d7e7de27da080918c563d681c0118267fd4d96ad456d7c749f00cba0b1035a28ec625fd
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/storefront-boilerplate-sdk@npm:~0.2.0":
-  version: 0.2.0
-  resolution: "@vue-storefront/storefront-boilerplate-sdk@npm:0.2.0"
-  dependencies:
-    "@vue-storefront/sdk": ~1.1.2
-    axios: ^0.27.2
-  checksum: d1e2797ff5e44dac4b323fe56e6655db766769c2c7c09e70d6d1137ed31f432df4196e7ffd659805a729ab386bc28c5851c9f7b4f22075916cc63ea7c918ef65
   languageName: node
   linkType: hard
 
@@ -7793,6 +7790,17 @@ __metadata:
   version: 0.2.2
   resolution: "cuint@npm:0.2.2"
   checksum: b8127a93a7f16ce120ffcb22108014327c9808b258ee20e7dbb4c6740d7cb0f0c12d18a054eb716b0f2470090666abaae8a082d3cd5ef0e94fa447dd155842c4
+  languageName: node
+  linkType: hard
+
+"cypress-real-events@npm:^1.10.0":
+  version: 1.10.0
+  resolution: "cypress-real-events@npm:1.10.0"
+  dependencies:
+    prettier: ^3.0.0
+  peerDependencies:
+    cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x
+  checksum: 917cf0458f0073452462bd1468ea3e9d77382c0c7991555314cec9e1e39a82668f8185e6fbbd4e0303576ddf3cbe410fcdb1dec8237f68e1ef18d05e41d7d537
   languageName: node
   linkType: hard
 
@@ -15212,6 +15220,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:^3.0.0":
+  version: 3.0.2
+  resolution: "prettier@npm:3.0.2"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 118b59ddb6c80abe2315ab6d0f4dd1b253be5cfdb20622fa5b65bb1573dcd362e6dd3dcf2711dd3ebfe64aecf7bdc75de8a69dc2422dcd35bdde7610586b677a
+  languageName: node
+  linkType: hard
+
 "pretty-bytes@npm:^5.3.0, pretty-bytes@npm:^5.6.0":
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
@@ -16413,6 +16430,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "server@workspace:apps/server"
   dependencies:
+    "@types/cors": ^2.8.13
     "@types/express": ^4.17.13
     "@vue-storefront/middleware": 3.4.0
     consola: ^2.15.3
@@ -19202,10 +19220,12 @@ __metadata:
     "@vite-pwa/nuxt": ^0.1.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/sdk": ^1.0.1
-    "@vue-storefront/storefront-boilerplate-sdk": ~0.2.0
     "@vue-storefront/unified-data-model": ^0.6.0
     "@vue/test-utils": ^2.4.0
     "@vueuse/core": ^10.3.0
+    cypress: ^12.12.0
+    cypress-real-events: ^1.10.0
+    cypress-wait-until: ^2.0.0
     happy-dom: ^9.20.3
     lodash-es: ^4.17.21
     nuxt: ^3.6.5

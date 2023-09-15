@@ -1,5 +1,5 @@
 <template>
-  <Body class="font-body" />
+  <Body class="font-body" :class="bodyClass" />
   <VitePwaManifest />
   <NuxtLayout>
     <NuxtPage />
@@ -17,4 +17,10 @@ if (route?.meta.layoutName !== 'checkout') {
 
 getCategoryTree();
 usePageTitle();
+
+const bodyClass = ref('');
+onMounted(() => {
+  // Need this class for cypress testing
+  bodyClass.value = 'hydrated';
+});
 </script>

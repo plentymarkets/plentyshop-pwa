@@ -18,14 +18,14 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v3
         with:
-          node-version: '20'
+          node-version: '20.5'
           cache: 'yarn'
           registry-url: "https://npm.pkg.github.com"
 
       - name: Set yarn version
         run: |
           yarn set version stable
-          yarn set version 3.6.1
+          yarn set version 3.6.3
 
       - name: Setup .yarnrc.yml
         run: |

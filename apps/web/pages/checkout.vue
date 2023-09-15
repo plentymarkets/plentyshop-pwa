@@ -8,10 +8,11 @@
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
-        <UiDivider v-if="!isAuthorized" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ContactInformation v-if="!isAuthorized" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
+          id="billing-address"
           :heading="$t('billing.heading')"
           :description="$t('billing.description')"
           :button-text="$t('billing.addButton')"
@@ -21,6 +22,7 @@
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
+          id="shipping-address"
           :heading="$t('shipping.heading')"
           :description="$t('shipping.description')"
           :button-text="$t('shipping.addButton')"
@@ -29,37 +31,58 @@
           @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ShippingMethod
-          :shipping-methods="shippingMethods"
-          @update:shipping-method="handleShippingMethodUpdate($event)"
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutPayment :payment-methods="paymentMethods" @update:active-payment="handlePaymentMethodUpdate($event)" />
+        <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
+          <ShippingMethod
+            :shipping-methods="shippingMethods"
+            :disabled="disableShippingPayment"
+            @update:shipping-method="handleShippingMethodUpdate($event)"
+          />
+          <SfLoaderCircular
+            v-if="disableShippingPayment"
+            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            size="2xl"
+          />
+          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+          <CheckoutPayment
+            :payment-methods="paymentMethods"
+            :disabled="disableShippingPayment"
+            @update:active-payment="handlePaymentMethodUpdate($event)"
+          />
+        </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
-            <SfCheckbox v-model="termsAccepted" :invalid="showTermsError" class="terms-checkbox inline-block mr-2" />
+            <SfCheckbox
+              v-model="termsAccepted"
+              :invalid="showTermsError"
+              @change="showTermsError = false"
+              id="terms-checkbox"
+              class="inline-block mr-2"
+            />
             <div>
               <i18n-t keypath="termsInfo">
                 <template #terms>
                   <SfLink
                     href="/TermsAndConditions"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('termsAndConditions') }}
                   </SfLink>
                 </template>
-                <template #cancellation>
+                <template #cancellationRights>
                   <SfLink
-                    href="#"
+                    href="/CancellationRights"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('cancellation') }}
+                    {{ $t('cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
                   <SfLink
                     href="/PrivacyPolicy"
+                    target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
                     {{ $t('privacyPolicy') }}
@@ -71,26 +94,34 @@
           <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
         </div>
       </div>
-      <OrderSummary v-if="cart" :cart="cart" class="col-span-5 md:sticky md:top-20 h-fit">
-        <PayPalExpressButton
-          v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-          :disabled="!termsAccepted"
-          @on-click="validateTerms"
-        />
-        <SfButton
-          v-else
-          type="submit"
-          @click="order"
-          :disabled="createOrderLoading"
-          size="lg"
-          class="w-full mb-4 md:mb-0 cursor-pointer"
-        >
-          <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ $t('buy') }}
-          </span>
-        </SfButton>
-      </OrderSummary>
+      <div class="col-span-5">
+        <div v-for="cartItem in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" />
+        </div>
+        <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+          <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+          <OrderSummary v-if="cart" :cart="cart">
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+            />
+            <SfButton
+              v-else
+              type="submit"
+              @click="order"
+              :disabled="createOrderLoading || disableShippingPayment || cartLoading"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer"
+            >
+              <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+              <span v-else>
+                {{ $t('buy') }}
+              </span>
+            </SfButton>
+          </OrderSummary>
+        </div>
+      </div>
     </div>
   </NuxtLayout>
 </template>
@@ -106,18 +137,29 @@ definePageMeta({
   layoutName: 'checkout',
 });
 
-const { data: cart, getCart } = useCart();
-const { isAuthorized } = useCustomer();
-const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
-const { data: billingAddresses, getBillingAddresses } = useBillingAddress();
-const { data: shippingAddresses, getShippingAddresses } = useShippingAddress();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const ID_CHECKBOX = '#terms-checkbox';
+const ID_BILLING_ADDRESS = '#billing-address';
+const ID_SHIPPING_ADDRESS = '#shipping-address';
+
+const { send } = useNotification();
+const { data: cart, getCart, loading: cartLoading } = useCart();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const {
+  loading: loadShipping,
+  data: shippingMethodData,
+  getShippingMethods,
+  saveShippingMethod,
+} = useCartShippingMethods();
+const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
+const i18n = useI18n();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
+const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -146,15 +188,15 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await getShippingMethods();
 };
 
-const scrollToTermsCheckbox = () => {
-  const termsCheckboxElement = document.querySelector('.terms-checkbox') as HTMLElement; // You'll have to add an identifying class or use another selector
-  const termsCheckboxElementOffset = termsCheckboxElement?.offsetTop ?? 0;
+const scrollToHTMLObject = (object: string) => {
+  const element = document.querySelector(object) as HTMLElement;
+  const elementOffset = element?.offsetTop ?? 0;
 
-  const headerElement = document.querySelector('header') as HTMLElement; // Assuming your header has a 'header' tag or change this to the appropriate selector
+  const headerElement = document.querySelector('header') as HTMLElement;
   const headerElementOffset = headerElement.offsetHeight ?? 0;
 
   window.scrollTo({
-    top: termsCheckboxElementOffset - headerElementOffset,
+    top: elementOffset - headerElementOffset,
     behavior: 'smooth',
   });
 };
@@ -162,7 +204,29 @@ const scrollToTermsCheckbox = () => {
 const validateTerms = (): boolean => {
   showTermsError.value = !termsAccepted.value;
   if (showTermsError.value) {
-    scrollToTermsCheckbox();
+    scrollToHTMLObject(ID_CHECKBOX);
+    return false;
+  }
+
+  return true;
+};
+
+const validateAddresses = () => {
+  if (billingAddresses.value.length === 0) {
+    send({
+      type: 'negative',
+      message: i18n.t('billingAddressRequired'),
+    });
+    scrollToHTMLObject(ID_BILLING_ADDRESS);
+    return false;
+  }
+
+  if (shippingAddresses.value.length === 0) {
+    send({
+      type: 'negative',
+      message: i18n.t('shippingAddressRequired'),
+    });
+    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
     return false;
   }
 
@@ -170,7 +234,7 @@ const validateTerms = (): boolean => {
 };
 
 const order = async () => {
-  if (!validateTerms()) {
+  if (!validateAddresses() || !validateTerms()) {
     return;
   }
 
@@ -181,8 +245,6 @@ const order = async () => {
 
   if (data?.order?.id) {
     router.push('/order/success');
-  } else {
-    router.push('/order/failed');
   }
 };
 </script>
