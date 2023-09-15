@@ -61,20 +61,22 @@
         />
       </div>
     </div>
-    <SfIconDelete class="cursor-pointer" @click="deleteItem" />
+    <SfLoaderCircular v-if="deleteLoading" />
+    <SfIconDelete v-else class="cursor-pointer" @click="deleteItem" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-sdk';
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconDelete } from '@storefront-ui/vue';
+import { SfLink, SfIconDelete, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
 
 const props = defineProps<CartProductCardProps>();
+const deleteLoading = ref(false);
 const changeQuantity = async (quantity: string) => {
   await setCartItemQuantity({
     quantity: Number(quantity),
@@ -83,9 +85,11 @@ const changeQuantity = async (quantity: string) => {
   });
 };
 const deleteItem = async () => {
+  deleteLoading.value = true;
   await deleteCartItem({
     cartItemId: props.cartItem.id,
   });
+  deleteLoading.value = false;
 };
 
 const prices = computed(() => {
