@@ -136,6 +136,7 @@
     "missingPaymentMethod": "choose payment method"
   },
   "addToCart": "Add to cart",
+  "itemNotAvailable": "This item is not available.",
   "showArticle": "Show article",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",

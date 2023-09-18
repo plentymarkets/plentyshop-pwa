@@ -38,21 +38,28 @@
           @change-quantity="changeQuantity"
           class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
         />
-        <SfButton
-          type="button"
-          size="lg"
+        <SfTooltip
+          show-arrow
+          placement="top"
+          :label="isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-          @click="handleAddToCart"
-          :disabled="loading"
         >
-          <template #prefix v-if="!loading">
-            <SfIconShoppingCart size="sm" />
-          </template>
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ $t('addToCart') }}
-          </span>
-        </SfButton>
+          <SfButton
+            type="button"
+            size="lg"
+            class="w-full"
+            @click="handleAddToCart"
+            :disabled="loading || !productGetters.isSalable(product)"
+          >
+            <template #prefix v-if="!loading">
+              <SfIconShoppingCart size="sm" />
+            </template>
+            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+            <span v-else>
+              {{ $t('addToCart') }}
+            </span>
+          </SfButton>
+        </SfTooltip>
       </div>
     </div>
   </section>
@@ -62,6 +69,7 @@
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import { SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<PurchaseCardProps>();
 
@@ -110,6 +118,8 @@ const scrollToReviewsAccordion = () => {
     behavior: 'smooth',
   });
 };
+
+const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
