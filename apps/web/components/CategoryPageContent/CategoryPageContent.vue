@@ -90,9 +90,11 @@ watch(isTabletScreen, (value) => {
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);
-  if (price && (price.special || price.regular)) {
-    return price.special ?? price.regular ?? 0;
-  }
+  if (!price) return 0;
+
+  if (price.special) return price.special;
+  if (price.regular) return price.regular;
+
   return 0;
 };
 </script>
