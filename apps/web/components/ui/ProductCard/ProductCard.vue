@@ -38,13 +38,13 @@
       </div>
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-          {{ $n(actualPrice(productGetters.getPrice(product)), 'currency') }}
+          {{ $n(mainPrice, 'currency') }}
         </span>
         <span
-          v-if="productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
+          v-if="oldPrice && oldPrice !== mainPrice"
           class="text-base typography-text-sm text-neutral-500 line-through ml-3 pb-2"
         >
-          {{ $n(productGetters.getRegularPrice(product), 'currency') }}
+          {{ $n(oldPrice, 'currency') }}
         </span>
       </div>
       <SfButton
@@ -75,12 +75,10 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-
-import { AgnosticPrice } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
-withDefaults(defineProps<ProductCardProps>(), {
+const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
@@ -103,17 +101,15 @@ const addWithLoader = async (productId: number) => {
     loading.value = false;
   }
 };
+const mainPrice = computed(() => {
+  const price = productGetters.getPrice(product);
+  if (!price) return 0;
 
-const actualPrice = (price: AgnosticPrice) => {
-  if (price && (price.special !== null || price.regular !== null)) {
-    let result = price.special ?? 0;
-    if (price.regular) {
-      result = price.regular;
-    }
-    return result;
-  }
+  if (price.special) return price.special;
+  if (price.regular) return price.regular;
+
   return 0;
-};
-
+});
+const oldPrice = productGetters.getRegularPrice(product);
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
