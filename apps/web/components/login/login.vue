@@ -69,12 +69,10 @@ const loginUser = async () => {
   if (success) {
     emits('loggedIn');
     if (!props.isSoftLogin) {
-      router.push('/');
-    }
-    
-    const currentURL = window.location.href;
-    if (currentURL.includes(paths.checkout)) {
-      await loadAddresses();
+      const currentURL = window.location.href;
+      if (currentURL.includes(paths.checkout)) {
+        await loadAddresses();
+      }
     }
   }
 };
