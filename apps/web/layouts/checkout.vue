@@ -1,5 +1,4 @@
 <template>
-  <UiNavbarTop />
   <main data-testid="checkout-layout">
     <NarrowContainer>
       <div class="px-4 md:px-0 mb-20">
@@ -25,13 +24,12 @@
           </SfButton>
         </div>
         <span class="!flex justify-center my-40 h-24" v-if="isLoading && !cart">
-          <SfLoaderCircular size="3xl" />
+          <SfLoaderCircular size="2xl" />
         </span>
         <slot v-else />
       </div>
     </NarrowContainer>
   </main>
-  <UiFooter />
 </template>
 
 <script setup lang="ts">

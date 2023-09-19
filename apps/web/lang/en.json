@@ -26,6 +26,7 @@
     "passwordLabel": "Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
+    "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
     "asterixHint": "* marked consents are required"
   },
@@ -95,7 +96,11 @@
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
+  "privacyPolicyRequired": "Please select the checkbox for the privacy policy.",
   "termsRequired": "You have to agree with the terms and conditions.",
+  "billingAddressRequired": "Please select a billing address.",
+  "shippingAddressRequired": "Please select a shipping address.",
+  "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "cancellationRights": "Cancellation rights",
   "contactInfo": {
@@ -131,7 +136,9 @@
     "missingPaymentMethod": "choose payment method"
   },
   "addToCart": "Add to cart",
+  "showArticle": "Show article",
   "addToCartShort": "Add",
+  "addedToCart": "Item added to Cart",
   "search": "Search",
   "openSearchModalButtonLabel": "Click to open search modal",
   "vsfHomepage": "VSF Homepage",
@@ -292,14 +299,18 @@
         "newPasswordAgain": "Repeat new password",
         "changePassword": "Change password",
         "currentPassword": "Current password",
-        "passwordHelp": "Use 8 or more characters with a mix of letters and numbers"
+        "passwordHelp": "At least 8 characters long and must contain at least one letter and one number",
+        "passwordsDoNotMatch": "The passwords do not match."
       },
+      "edit": "Edit",
+      "delete": "Delete",
+      "makeDefault": "Make default",
       "billingDetails": {
         "billingAddress": "Billing address",
-        "edit": "Edit"
+        "newAddress": "New Billing Address"
       },
       "shippingDetails": {
-        "edit": "Edit",
+        "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
       }
     },
@@ -307,6 +318,8 @@
       "heading": "Orders & Returns",
       "orderId": "Order ID",
       "orderDate": "Order date",
+      "shippingDate": "Shipping date",
+      "returnDate": "Return date",
       "amount": "Amount",
       "status": "Status",
       "details": "Details",
@@ -340,22 +353,31 @@
         "billingAddress": "Billing address",
         "paymentMethod": "Payment method",
         "shippingAddress": "Shipping address"
+      },
+      "shippingSummary": {
+        "heading": "Shipping Summary",
+        "shipTo": "Ship to",
+        "shippingMethod": "Shipping method"
+      },
+      "paymentSummary": {
+        "heading": "Payment Summary"
       }
     }
   },
   "auth": {
     "login": {
-      "heading": "Log in",
+      "heading": "Log in to your account",
       "submitLabel": "Log in",
-      "forgotPasswordLabel": "Forgot your password?",
+      "forgotPasswordLabel": "Forgotten your password?",
       "rememberMeLabel": "Remember me",
-      "createAccountBanner": "First time here? {0}.",
-      "createAccountLinkLabel": "Create Account"
+      "createAccount": "Don't have an account yet?",
+      "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Create Account",
-      "createButton": "Create Account",
-      "bannerText": "Already have an account? Switch to {login}",
+      "heading": "Sign up",
+      "submitLabel": "Sign up",
+      "alreadyHaveAccount": "Already have an account?",
+      "logInLinkLabel": "Log in instead",
       "modal": {
         "heading": "Welcome",
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",
@@ -384,7 +406,12 @@
     }
   },
   "orderConfirmation": {
-    "confirmationSendTo": "A confirmation with all details has been sent to {email}"
+    "confirmationSendTo": "A confirmation with all details has been sent to {email}",
+    "sameAsShippingAddress": "Same as shipping address",
+    "subTotal": "Subtotal",
+    "shipping": "Shipping",
+    "vat": "VAT",
+    "total": "Total"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "asterisk": "*",

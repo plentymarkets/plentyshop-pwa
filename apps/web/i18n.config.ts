@@ -1,5 +1,6 @@
 export default defineI18nConfig(() => ({
   fallbackLocale: 'en',
+  detectBrowserLanguage: false,
   numberFormats: {
     en: {
       currency: {

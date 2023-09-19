@@ -3,4 +3,5 @@ export type PaginationProps = {
   pageSize: number;
   totalItems: number;
   maxVisiblePages: number;
+  disabled?: boolean;
 };

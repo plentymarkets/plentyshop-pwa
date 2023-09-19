@@ -6,19 +6,11 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <div class="my-1">
-      <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
-        {{ $n(actualPrice, 'currency') }}
-        <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
-      </span>
-      <span v-if="showCrossPrice" class="text-base font-normal text-neutral-500 line-through">
-        {{ $n(productGetters.getRegularPrice(product), 'currency') }}
-      </span>
-    </div>
+    <Price :price="productGetters.getPrice(product)" />
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
-        :base-price="productGetters.getDefaultBasePrice(product)"
+        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />
@@ -49,12 +41,7 @@
           type="button"
           size="lg"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-          @click="
-            addToCart({
-              productId: Number(productGetters.getId(product)),
-              quantity: Number(quantitySelectorValue),
-            })
-          "
+          @click="handleAddToCart"
           :disabled="loading"
         >
           <template #prefix v-if="!loading">
@@ -88,16 +75,20 @@ const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
+const { send } = useNotification();
 const { addToCart, loading } = useCart();
-
-const actualPrice = computed(
-  () => productGetters.getPrice(product.value)?.special ?? productGetters.getPrice(product.value)?.regular ?? 0,
-);
-const showCrossPrice = computed(
-  () => productGetters.getPrice(product.value)?.special && productGetters.getRegularPrice(product.value) > 0,
-);
+const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
+
+const handleAddToCart = async () => {
+  await addToCart({
+    productId: Number(productGetters.getId(product.value)),
+    quantity: Number(quantitySelectorValue.value),
+  });
+
+  send({ message: t('addedToCart'), type: 'positive' });
+};
 
 const changeQuantity = (quantity: string) => {
   quantitySelectorValue.value = Number(quantity);

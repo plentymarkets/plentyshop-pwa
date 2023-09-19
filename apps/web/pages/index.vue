@@ -106,6 +106,9 @@
     </div>
     <section class="mx-4 mt-28 mb-20 overflow-hidden">
       <NuxtLazyHydrate when-visible>
+        <p data-testid="recommended-products" v-if="recommendedProducts" class="my-4 typography-text-lg">
+          {{ $t('moreItemsOfThisCategory') }}
+        </p>
         <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
       </NuxtLazyHydrate>
     </section>
@@ -116,11 +119,14 @@
 import { SfButton } from '@storefront-ui/vue';
 
 const { data: categoryTree } = useCategoryTree();
-const defaultCategory = categoryTree.value[0];
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('homepage');
+const firstCategoryId = categoryTree.value?.[0]?.id;
 
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(String(defaultCategory.id));
-
-await fetchProductRecommended(defaultCategory.id.toString());
+onMounted(async () => {
+  if (firstCategoryId) {
+    await fetchProductRecommended(firstCategoryId.toString());
+  }
+});
 
 const displayDetails = [
   {

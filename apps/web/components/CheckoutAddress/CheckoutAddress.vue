@@ -7,15 +7,7 @@
       </SfButton>
     </div>
 
-    <div v-if="addresses.length > 0 && isAuthorized" class="mt-2 md:w-[520px]">
-      <SfSelect>
-        <option v-for="(address, index) in addresses" :key="index" :value="address.id?.toString()">
-          {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
-        </option>
-      </SfSelect>
-    </div>
-
-    <div v-if="selectedAddress && !isAuthorized" class="mt-2 md:w-[520px]">
+    <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
       <p>
         {{ `${userAddressGetters.getFirstName(selectedAddress)} ${userAddressGetters.getLastName(selectedAddress)}` }}
       </p>
@@ -64,13 +56,13 @@
 <script lang="ts" setup>
 import { Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
-import { SfSelect, SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from './types';
 
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
-const { saveBillingAddress } = useBillingAddress();
-const { saveShippingAddress } = useShippingAddress();
+const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
+const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 await getActiveShippingCountries();
 
