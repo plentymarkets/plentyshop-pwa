@@ -1,24 +1,24 @@
 <template>
   <ClientOnly>
-    <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-      <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-      <h2 class="hidden md:block typography-headline-4 font-bold mx-4 capitalize col-span-3">
-        {{ $t('account.ordersAndReturns.myOrders') }}
-      </h2>
-      <div v-if="!data || data.data.entries.length === 0" class="col-span-3 text-center mt-8">
-        <NuxtImg
-          src="/images/empty-cart.svg"
-          :alt="$t('account.ordersAndReturns.noOrdersAltText')"
-          width="192"
-          height="192"
-          class="mx-auto"
-        />
-        <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ $t('account.ordersAndReturns.noOrders') }}</h3>
-        <SfButton :tag="NuxtLink" :to="paths.category" variant="secondary" class="!ring-neutral-200">
-          {{ $t('account.ordersAndReturns.continue') }}
-        </SfButton>
-      </div>
-      <div v-else class="col-span-3">
+    <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+    <h2 class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize">
+      {{ $t('account.ordersAndReturns.myOrders') }}
+    </h2>
+    <div v-if="!data || data.data.entries.length === 0" class="col-span-3 text-center mt-8">
+      <NuxtImg
+        src="/images/empty-cart.svg"
+        :alt="$t('account.ordersAndReturns.noOrdersAltText')"
+        width="192"
+        height="192"
+        class="mx-auto"
+      />
+      <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ $t('account.ordersAndReturns.noOrders') }}</h3>
+      <SfButton :tag="NuxtLink" :to="paths.category" variant="secondary" class="!ring-neutral-200">
+        {{ $t('account.ordersAndReturns.continue') }}
+      </SfButton>
+    </div>
+    <div v-else class="col-span-3">
+      <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
         <ul class="md:hidden my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
           <li>
@@ -95,9 +95,8 @@
           :max-visible-pages="maxVisiblePages"
         />
       </div>
-
-      <NuxtPage />
     </div>
+    <NuxtPage />
   </ClientOnly>
 </template>
 

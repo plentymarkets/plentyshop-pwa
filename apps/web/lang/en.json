@@ -335,6 +335,7 @@
       "orderId": "Order ID",
       "orderDate": "Order date",
       "shippingDate": "Shipping date",
+      "returnDate": "Return date",
       "amount": "Amount",
       "status": "Status",
       "details": "Details",
