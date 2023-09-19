@@ -124,11 +124,9 @@ export const useCustomer: UseCustomerReturn = () => {
    * register({ email: 'example', password: 'example' });
    */
   const register: Register = async (params) => {
-    const { send } = useNotification();
-
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(() =>
+    const { error } = await useAsyncData(() =>
       useSdk().plentysystems.doRegisterUser({
         email: params.email,
         password: params.password,
