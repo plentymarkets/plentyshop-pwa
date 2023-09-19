@@ -14,7 +14,7 @@
           @click="toggleLanguageSelector"
         >
           <template #prefix>
-            <SfIconLanguage class="relative"/>
+            <SfIconLanguage class="relative" />
           </template>
         </SfButton>
         <SfButton
@@ -88,7 +88,7 @@
       square
       @click="toggleLanguageSelector"
     >
-      <SfIconLanguage/>
+      <SfIconLanguage />
     </SfButton>
     <SfButton
       variant="tertiary"
@@ -100,7 +100,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
-  <LanguageSelector v-if="showLanguageSelector"/>
+  <LanguageSelector v-if="showLanguageSelector" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -175,10 +175,10 @@ import {
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
-import LanguageSelector from "~/components/LanguageSelector/LanguageSelector.vue";
 
 const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
@@ -224,8 +224,7 @@ let showLanguageSelector = ref(false);
 
 const toggleLanguageSelector = () => {
   showLanguageSelector.value = !showLanguageSelector.value;
-  console.log(showLanguageSelector)
-}
+};
 
 watch(
   () => isAuthenticationOpen.value,
