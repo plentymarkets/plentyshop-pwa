@@ -48,7 +48,7 @@ const getTypeName = (type: string) => {
 };
 
 const getDocumentName = (document: OrderDocument) => {
-  return getTypeName(orderDocumentGetters.getType(document)) ?? orderDocumentGetters.getNumberWithPrefix(document);
+  return getTypeName(orderDocumentGetters.getType(document)) || orderDocumentGetters.getNumberWithPrefix(document);
 };
 
 const downloadPDF = async (document: OrderDocument, accessKey: string) => {
