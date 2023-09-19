@@ -67,8 +67,15 @@
 
 <script lang="ts" setup>
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
-import { SfTooltip } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfCounter,
+  SfLink,
+  SfRating,
+  SfIconShoppingCart,
+  SfLoaderCircular,
+  SfTooltip,
+} from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const props = defineProps<PurchaseCardProps>();
