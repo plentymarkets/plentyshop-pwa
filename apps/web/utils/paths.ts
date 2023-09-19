@@ -5,7 +5,7 @@ export const paths = {
   cart: '/cart',
   checkout: '/checkout',
   search: '/search',
-  account: '/my-account',
+  account: '/my-account/personal-data',
   orderSuccess: '/order/success',
   orderFailed: '/order/failed',
   accountPersonalData: '/my-account/personal-data',

@@ -17,7 +17,7 @@ const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
-const { data: cart } = useCart();
+const { data: cart, clearCartItems } = useCart();
 const router = useRouter();
 const emits = defineEmits(['on-click']);
 
@@ -55,10 +55,10 @@ const onApprove = async (data: OnApproveData) => {
     paypalMerchantId: paypalGetters.getMerchantId() ?? '',
   });
 
+  clearCartItems();
+
   if (order?.order?.id) {
-    router.push('/order/success');
-  } else {
-    router.push('/order/failed');
+    router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
   }
 };
 
