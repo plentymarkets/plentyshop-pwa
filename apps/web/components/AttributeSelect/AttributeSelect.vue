@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { RouteRecordName, RouteParamValueRaw } from 'vue-router';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { ProductAttributeValue } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 import { SfSelect } from '@storefront-ui/vue';
@@ -36,16 +35,12 @@ const mapValueAndLabel = (attributeGroup: ProductAttributeValue[]) => {
 };
 
 const router = useRouter();
-const route = useRoute();
-const slug = route.params.slug as string;
-const productId = slug.split('-').pop() ?? '0';
-const selectedVariation = ref(productId);
 
-const changeVariationId = (updatedId: String) => {
-  const delimiter = '-';
-  const link = (slug.slice(0, Math.max(0, slug.lastIndexOf(delimiter))) + delimiter + `${updatedId}`) as
-    | RouteParamValueRaw
-    | (string | number)[];
-  router.push({ name: route.name as RouteRecordName | undefined, params: { slug: link } });
+const selectedVariation = ref(product.variation.id.toString());
+
+const changeVariationId = (updatedId: string) => {
+  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}_${updatedId}`;
+
+  router.push(productSlug);
 };
 </script>
