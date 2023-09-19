@@ -36,10 +36,10 @@
 </template>
 
 <script lang="ts" setup>
+import { AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { LoginProps } from './types';
 
-import { AddressType } from '@plentymarkets/shop-api';
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getShippingMethods } = useCartShippingMethods();
