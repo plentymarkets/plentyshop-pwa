@@ -46,6 +46,7 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
    * @example downloadFile(bufferArray, 'test.pdf', 'application/pdf');
    */
   const downloadFile: DownloadFile = (bufferArray: number[], name: string, type: string) => {
+    state.value.loading = true;
     const base64 = window.btoa(String.fromCharCode.apply(null, bufferArray));
 
     const link = document.createElement('a');
@@ -57,6 +58,7 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
       link.remove();
       window.URL.revokeObjectURL(link.href);
     }, 200);
+    state.value.loading = false;
   };
 
   return {
