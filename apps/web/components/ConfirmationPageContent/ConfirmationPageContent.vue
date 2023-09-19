@@ -32,6 +32,8 @@
           <OrderShippingSummary :order="order" />
           <OrderPaymentSummary :order="order" />
         </div>
+
+        <OrderDocumentsList :order="order" />
       </div>
     </div>
 
