@@ -414,5 +414,12 @@
     "vat": "VAT",
     "total": "Total"
   },
-  "lowestPrice": "Lowest price of the last 30 days: {price}"
+  "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "softLogin": {
+    "titleLogin": "Log in to your account to access your order",
+    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
+    "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
+    "fullName": "Last name or company name",
+    "check": "Check"
+  }
 }
