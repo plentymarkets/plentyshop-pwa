@@ -142,7 +142,7 @@ const ID_BILLING_ADDRESS = '#billing-address';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const { send } = useNotification();
-const { data: cart, getCart, loading: cartLoading } = useCart();
+const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const {
@@ -242,6 +242,8 @@ const order = async () => {
     paymentId: paymentMethodData.value.selected,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
+
+  clearCartItems();
 
   if (data?.order?.id) {
     router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
