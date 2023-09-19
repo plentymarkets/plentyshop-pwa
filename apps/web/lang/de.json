@@ -410,5 +410,9 @@
       "privacyPolicy": "Datenschutzerklärung",
       "termsAndConditions": "AGB"
     }
+  },
+  "lang": {
+    "en": "Englisch",
+    "de":"Deutsch"
   }
 }
