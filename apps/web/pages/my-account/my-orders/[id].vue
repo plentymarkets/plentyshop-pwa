@@ -2,6 +2,7 @@
   <UiOverlay visible>
     <UiModal
       v-model="isOpen"
+      v-if="data"
       as="section"
       role="dialog"
       class="h-full w-full overflow-auto !p-4 md:!p-10 md:max-w-[770px] md:h-fit"
@@ -24,22 +25,23 @@
         <ul class="bg-neutral-100 p-4 rounded-md md:columns-2 mb-6">
           <li>
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.orderId') }}</p>
-            <span>{{ data?.id }}</span>
+            <span>{{ orderGetters.getId(data) }}</span>
           </li>
           <li class="my-4 md:mb-0">
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.orderDate') }}</p>
-            <span>{{ data?.date }}</span>
+            <span>{{ orderGetters.getDate(data) }}</span>
           </li>
           <li>
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.paymentAmount') }}</p>
-            <span>${{ data?.paymentAmount }}</span>
+            <span>{{ $n(orderGetters.getTotal(data.totals), 'currency') }}</span>
           </li>
           <li class="mt-4">
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.status') }}</p>
-            <span>{{ data?.status }}</span>
+            <span>{{ orderGetters.getStatus(data) }}</span>
           </li>
         </ul>
-        <div v-for="(product, i) in data?.products" :key="i" class="md:hidden border-t border-neutral-200">
+        <div v-for="(variation, i) in data.variations" :key="i" class="md:hidden border-t border-neutral-200">
+          <!--
           <UiProductCardHorizontal :product="product" />
           <ul class="flex">
             <li class="flex-grow pr-4 py-4">
@@ -55,6 +57,7 @@
               <span>${{ product.price?.regularPrice.precisionAmount }}</span>
             </li>
           </ul>
+          -->
         </div>
         <table class="hidden md:table w-full text-left typography-text-sm mx-4 md:mx-0">
           <caption class="hidden">
@@ -73,6 +76,7 @@
             </tr>
           </thead>
           <tbody>
+            <!--
             <tr v-for="(product, i) in data?.products" :key="i" class="border-b border-neutral-200 align-top">
               <td class="pb-4 pr-4 lg:whitespace-nowrap typography-text-base">
                 <UiProductCardHorizontal :product="product" />
@@ -81,25 +85,27 @@
               <td class="p-4 typography-text-base">{{ product.quantity }}</td>
               <td class="p-4 typography-text-base">${{ product.price?.regularPrice.precisionAmount }}</td>
             </tr>
+            -->
           </tbody>
         </table>
 
         <div class="flex justify-between pt-4 border-t border-neutral-200 md:border-0">
           <p>{{ $t('account.ordersAndReturns.orderDetails.itemsSubtotal') }}</p>
-          <span>${{ data?.summary.subtotal }}</span>
+          <span>${{ orderGetters.getSubTotal(data.totals) }}</span>
         </div>
         <div class="flex justify-between my-2">
           <p>{{ $t('account.ordersAndReturns.orderDetails.delivery') }}</p>
-          <span>{{ data?.summary.delivery }}</span>
+          <span>{{ orderGetters.getShippingCost(data) }}</span>
         </div>
         <div class="flex justify-between border-b pb-4 border-neutral-200">
           <p>{{ $t('account.ordersAndReturns.orderDetails.estimatedTax') }}</p>
-          <span>${{ data?.summary.estimatedTax }}</span>
+          <span>${{ orderGetters.getVatAmount(data.totals) }}</span>
         </div>
         <div class="flex justify-between border-b py-4 border-neutral-200 typography-text-lg font-medium">
           <p>{{ $t('account.ordersAndReturns.orderDetails.total') }}</p>
-          <span>${{ data?.summary.total }}</span>
+          <span>${{ orderGetters.getTotal(data.totals) }}</span>
         </div>
+        <!--
         <ul class="md:columns-2 mt-6">
           <li class="mb-4">
             <p class="typography-text-sm font-medium mb-2">
@@ -138,6 +144,7 @@
             <span>{{ data?.shipping }}</span>
           </li>
         </ul>
+        -->
       </main>
     </UiModal>
   </UiOverlay>
@@ -145,6 +152,7 @@
 </template>
 
 <script setup lang="ts">
+import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
 const route = useRoute();
@@ -152,11 +160,13 @@ const router = useRouter();
 
 const { isOpen } = useDisclosure({ initialValue: true });
 
-const { fetchCustomerOrder, data } = useCustomerOrder(route.params.id as string);
+const { fetchOrder, data } = useCustomerOrder(route.params.id as string);
 onMounted(async () => {
   // without nextTick data on first click does not load data
   await nextTick();
-  await fetchCustomerOrder(route.params.id as string);
+  await fetchOrder({
+    orderId: route.params.id as string,
+  });
 });
 
 watch(

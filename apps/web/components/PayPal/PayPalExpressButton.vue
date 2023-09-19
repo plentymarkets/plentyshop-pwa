@@ -58,9 +58,7 @@ const onApprove = async (data: OnApproveData) => {
   await getCart();
 
   if (order?.order?.id) {
-    router.push('/order/success');
-  } else {
-    router.push('/order/failed');
+    router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
   }
 };
 
