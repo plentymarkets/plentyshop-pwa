@@ -136,6 +136,7 @@
     "missingPaymentMethod": "choose payment method"
   },
   "addToCart": "Add to cart",
+  "itemNotAvailable": "This item is not available.",
   "showArticle": "Show article",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
@@ -417,5 +418,12 @@
   "lang": {
     "en": "English",
     "de":"German"
+  },
+  "softLogin": {
+    "titleLogin": "Log in to your account to access your order",
+    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
+    "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
+    "fullName": "Last name or company name",
+    "check": "Check"
   }
 }
