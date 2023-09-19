@@ -37,6 +37,10 @@
 
 <script lang="ts" setup>
 import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { AddressType } from '@plentymarkets/shop-api';
+const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { getShippingMethods } = useCartShippingMethods();
 
 const { login, loading } = useCustomer();
 
@@ -45,7 +49,12 @@ definePageMeta({
 });
 const emits = defineEmits(['loggedIn', 'change-view']);
 
-const router = useRouter();
+const loadAddresses = async () => {
+  await getBillingAddresses();
+  await getShippingAddresses();
+  await getShippingMethods();
+};
+
 const email = ref('');
 const password = ref('');
 // const rememberMe = ref<boolean>();
@@ -54,7 +63,10 @@ const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
     emits('loggedIn');
-    router.push('/');
+    const currentURL = window.location.href;
+    if (currentURL.includes(paths.checkout)) {
+      await loadAddresses();
+    }
   }
 };
 </script>
