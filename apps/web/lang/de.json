@@ -410,5 +410,12 @@
       "privacyPolicy": "Datenschutzerklärung",
       "termsAndConditions": "AGB"
     }
+  },
+  "softLogin": {
+    "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
+    "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "fullName": "Nachname oder Firmenname",
+    "check": "Prüfen"
   }
 }
