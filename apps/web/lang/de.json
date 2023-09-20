@@ -434,5 +434,13 @@
     "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
     "fullName": "Nachname oder Firmenname",
     "check": "Prüfen"
+  },
+  "paypal": {
+    "unbrandedCardNumber": "Kartennummer",
+    "unbrandedExpirationDate": "Ablaufdatum",
+    "unbrandedCvv": "Kartenprüfnummer",
+    "unbrandedNameOnCard": "Karteninhaber",
+    "unbrandedPay": "Bezahlen",
+    "unbrandedCancel": "Abbrechen"
   }
 }

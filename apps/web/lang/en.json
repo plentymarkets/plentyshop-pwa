@@ -40,7 +40,7 @@
     "Reject All": "Reject All",
     "Accept Selection": "Accept Selection"
   },
-  "documents" : {
+  "documents": {
     "correctionDocuments": "Correction Documents",
     "Credit Note": "Credit Note",
     "Delivery Note": "Delivery Note",
@@ -437,5 +437,13 @@
     "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
     "fullName": "Last name or company name",
     "check": "Check"
+  },
+  "paypal": {
+    "unbrandedCardNumber": "Card number",
+    "unbrandedExpirationDate": "Expiration date",
+    "unbrandedCvv": "CVV",
+    "unbrandedNameOnCard": "Name on card",
+    "unbrandedPay": "Pay",
+    "unbrandedCancel": "Cancel"
   }
 }
