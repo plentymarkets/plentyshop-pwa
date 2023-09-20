@@ -4,7 +4,7 @@
       <SfButton
         type="button"
         variant="tertiary"
-        :disabled="count <= minValue"
+        :disabled="disabled || (count <= minValue)"
         square
         class="rounded-r-none"
         :aria-controls="inputId"
@@ -25,11 +25,12 @@
         data-testid="quantity-selector-input"
         :aria-label="$t('quantitySelector')"
         @input="handleOnChange"
+        :disabled="disabled"
       />
       <SfButton
         type="button"
         variant="tertiary"
-        :disabled="count >= maxValue"
+        :disabled="disabled || (count >= maxValue)"
         square
         class="rounded-l-none"
         :aria-controls="inputId"
@@ -55,6 +56,7 @@ const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorP
   value: 1,
   minValue: 1,
   maxValue: Number.POSITIVE_INFINITY,
+  disabled: false,
 });
 
 const inputId = useId();

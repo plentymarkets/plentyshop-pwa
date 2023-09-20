@@ -5,10 +5,12 @@ import {
   PayPalExecutePayment,
   PayPalExecuteParams,
 } from '@plentymarkets/shop-api';
+import {Ref} from "vue";
 
 export interface UsePayPalState {
   paypalScript: PayPalNamespace | null;
   order: PayPalCreateOrder | null;
+  loading: boolean;
 }
 
 export type LoadScript = (currency: string) => Promise<PayPalNamespace | null>;
@@ -17,6 +19,7 @@ export type approveOrder = (orderID: string, payerID: string) => Promise<PayPalA
 export type executeOrder = (params: PayPalExecuteParams) => Promise<PayPalExecutePayment | null>;
 
 export interface UsePayPalMethods {
+  loading: Readonly<Ref<boolean>>;
   loadScript: LoadScript;
   createTransaction: createTransaction;
   approveOrder: approveOrder;

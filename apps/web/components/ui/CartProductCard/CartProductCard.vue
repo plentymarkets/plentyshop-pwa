@@ -54,6 +54,7 @@
           {{ $n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
+          :disabled="disabled"
           @change-quantity="debounceQuantity"
           :value="cartGetters.getItemQty(cartItem)"
           :min-value="1"
@@ -62,7 +63,7 @@
       </div>
     </div>
     <SfLoaderCircular v-if="deleteLoading" />
-    <SfIconDelete v-else class="cursor-pointer" @click="deleteItem" />
+    <SfIconDelete v-else-if="!disabled" class="cursor-pointer" @click="deleteItem" />
   </div>
 </template>
 
@@ -75,7 +76,9 @@ import type { CartProductCardProps } from '~/components/ui/CartProductCard/types
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
 
-const props = defineProps<CartProductCardProps>();
+const props = withDefaults(defineProps<CartProductCardProps>(), {
+  disabled: false
+});
 const deleteLoading = ref(false);
 const changeQuantity = async (quantity: string) => {
   await setCartItemQuantity({

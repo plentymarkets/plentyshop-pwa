@@ -2,7 +2,7 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="addresses.length > 0" size="sm" variant="tertiary" @click="edit">
+      <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
@@ -19,7 +19,7 @@
       <p>{{ `${userAddressGetters.getCity(selectedAddress)} ${userAddressGetters.getPostCode(selectedAddress)}` }}</p>
     </div>
 
-    <div class="w-full md:max-w-[520px]" v-if="isAuthorized || addresses.length === 0">
+    <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addresses.length === 0)">
       <p v-if="addresses.length === 0">{{ description }}</p>
       <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
@@ -27,6 +27,7 @@
     </div>
 
     <UiModal
+      v-if="!disabled"
       v-model="isOpen"
       tag="section"
       role="dialog"
@@ -66,7 +67,9 @@ const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 await getActiveShippingCountries();
 
-const props = defineProps<CheckoutAddressProps>();
+const props = withDefaults(defineProps<CheckoutAddressProps>(), {
+  disabled: false
+});
 const editMode = ref(false);
 const selectedAddress = computed(() => props.addresses?.[0] ?? ({} as Address));
 const emit = defineEmits(['on-saved']);
