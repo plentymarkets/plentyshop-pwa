@@ -74,8 +74,8 @@
 </template>
 
 <script setup lang="ts">
-import {categoryTreeGetters, productGetters} from '@plentymarkets/shop-sdk';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
+import { productGetters } from '@plentymarkets/shop-sdk';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const { product } = withDefaults(defineProps<ProductCardProps>(), {
@@ -116,7 +116,7 @@ const oldPrice = productGetters.getRegularPrice(product);
 
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
 
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}_${productGetters.getId(product)}`)
+const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
