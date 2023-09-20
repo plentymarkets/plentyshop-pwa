@@ -22,6 +22,7 @@
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.yourPassword')"
     :button-text="$t('account.accountSettings.personalData.change')"
+    :show-edit-button="true"
     @on-click="openModal('passwordChange')"
   >
     ******

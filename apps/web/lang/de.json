@@ -30,6 +30,32 @@
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
+  "CookieBar": {
+    "Privacy Settings": "Datenschutzeinstellungen",
+    "More information": "Mehr Informationen",
+    "Further Settings": "Weitere Einstellungen",
+    "Back": "Zurück",
+    "Show less": "Weniger anzeigen",
+    "Accept All": "Alles akzeptieren",
+    "Reject All": "Alles ablehnen",
+    "Accept Selection": "Auswahl akzeptieren"
+  },
+  "documents" : {
+    "correctionDocuments": "Korrekturbeleg",
+    "Credit Note": "Gutschrift",
+    "Delivery Note": "Lieferschein",
+    "Dunning Letter": "Mahnung",
+    "Invoice External": "Externe Rechnung",
+    "Invoice": "Rechnung",
+    "Offer": "Angebot",
+    "Order Confirmation": "Auftragsbestätigung",
+    "Pickup Delivery": "Abhollieferung",
+    "Pro Forma Invoice": "Proformarechnung",
+    "Receipt": "Kassenbeleg",
+    "Return Note": "Rücksendeschein",
+    "Success Confirmation": "Gelangensbestätigung",
+    "Reversal Document": "Stornobeleg"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
@@ -81,6 +107,7 @@
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
+  "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
@@ -90,6 +117,7 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
+  "tomorrow": "Morgen",
   "cancellationRights": "Widerrufsrecht",
   "contactInfo": {
     "heading": "Kontaktinformationen",
@@ -124,6 +152,7 @@
     "missingPaymentMethod": "Zahlungsart wählen"
   },
   "addToCart": "In den Warenkorb",
+  "itemNotAvailable": "Der Artikel ist nicht verfügbar",
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
@@ -295,6 +324,7 @@
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
       "shippingDate": "Lieferdatum",
+      "returnDate": "Retourendatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",
@@ -327,6 +357,14 @@
         "billingAddress": "Rechnungsadresse",
         "paymentMethod": "Zahlungsart",
         "shippingAddress": "Lieferadresse"
+      },
+      "shippingSummary": {
+        "heading": "Versandübersicht",
+        "shipTo": "Versand nach",
+        "shippingMethod": "Versandart"
+      },
+      "paymentSummary": {
+        "heading": "Zahlungsübersicht"
       }
     }
   },
@@ -372,7 +410,12 @@
     }
   },
   "orderConfirmation": {
-    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet"
+    "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
+    "sameAsShippingAddress": "Entspricht der Lieferadresse",
+    "subTotal": "Zwischensumme",
+    "shipping": "Lieferkosten",
+    "vat": "MwSt.",
+    "total": "Summe"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "legal": {
@@ -384,5 +427,12 @@
       "privacyPolicy": "Datenschutzerklärung",
       "termsAndConditions": "AGB"
     }
+  },
+  "softLogin": {
+    "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
+    "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "fullName": "Nachname oder Firmenname",
+    "check": "Prüfen"
   }
 }

@@ -22,7 +22,7 @@
           {{ $t('auth.login.submitLabel') }}
         </span>
       </SfButton>
-      <div align="center">
+      <div align="center" v-if="!isSoftLogin">
         <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
           {{ $t('auth.login.forgotPasswordLabel') }}
         </SfLink> -->
