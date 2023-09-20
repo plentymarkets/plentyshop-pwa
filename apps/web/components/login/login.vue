@@ -36,14 +36,29 @@
 </template>
 
 <script lang="ts" setup>
+import { AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { LoginProps } from './types';
+
+const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { getShippingMethods } = useCartShippingMethods();
 
 const { login, loading } = useCustomer();
 
 definePageMeta({
   layout: false,
 });
+const props = withDefaults(defineProps<LoginProps>(), {
+  isSoftLogin: false,
+});
 const emits = defineEmits(['loggedIn', 'change-view']);
+
+const loadAddresses = async () => {
+  await getBillingAddresses();
+  await getShippingAddresses();
+  await getShippingMethods();
+};
 
 const router = useRouter();
 const email = ref('');
@@ -54,7 +69,12 @@ const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
     emits('loggedIn');
-    router.push('/');
+    if (!props.isSoftLogin) {
+      const currentURL = window.location.href;
+      if (currentURL.includes(paths.checkout)) {
+        await loadAddresses();
+      }
+    }
   }
 };
 </script>
