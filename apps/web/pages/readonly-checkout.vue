@@ -123,8 +123,8 @@
 <script lang="ts" setup>
 import { AddressType, PaymentMethod } from '@plentymarkets/shop-api';
 import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
-import { paypalGetters } from '~/getters/paypalGetters';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
   layoutName: 'checkout',
