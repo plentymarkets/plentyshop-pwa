@@ -1,132 +1,159 @@
 <template>
-  <pre></pre>
-  <SfSelect
-    v-for="(attribute, index) in transformedProduct.attributes"
-    :key="index"
-    class="mb-2"
-    @update:model-value="changeVariationId($event, index)"
-    v-model="selectedVariations[index]"
-    size="sm"
-    placeholder="Select"
-  >
-    <option
-      v-for="value in attribute.values"
-      :key="value.attributeValueId"
-      :value="value.attributeValueId"
-      :disabled="value.disabled"
+  <div>
+    <SfSelect
+      v-for="(attribute, index) in transformedProduct.attributes"
+      :key="index"
+      class="mb-2"
+      @update:model-value="changeVariationId($event, index)"
+      v-model="selectedVariations[index]"
+      size="sm"
+      placeholder="Please Select"
     >
-      {{ value.name }}
-    </option>
-  </SfSelect>
-  <button @click="resetAttributes">RESET</button>
+      <option :value="null">Please Select</option>
+      <option
+        v-for="value in attribute.values"
+        :key="value.attributeValueId"
+        :value="value.attributeValueId"
+        :disabled="value.disabled"
+      >
+        {{ value.name }}
+      </option>
+    </SfSelect>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { useRouter, useRoute } from 'vue-router';
 import { SfSelect } from '@storefront-ui/vue';
 import { AttributeSelectProps } from '~/components/AttributeSelect/types';
 
 const props = defineProps<AttributeSelectProps>();
-const product = props.product;
+const product = props.product ?? { variationAttributeMap: { attributes: [], variations: [] } };
+
+const router = useRouter();
+const route = useRoute();
 
 const transformProductData = (product: any) => {
   const { attributes, variations } = product.variationAttributeMap;
 
-  const transformedAttributes = attributes.map(({ attributeId, name, values }) => ({
-    attributeId,
-    name,
-    values: values.map(({ attributeValueId, name }) => ({
-      attributeValueId,
-      name,
-      disabled: false, // Assuming all values are initially available
-    })),
-  }));
-
-  const transformedCombinations = variations.map(({ variationId, isSalable, attributes }) => ({
-    variationId,
-    isSalable,
-    attributeCombination: attributes,
-  }));
-
   return {
-    attributes: transformedAttributes,
-    combinations: transformedCombinations,
+    attributes: attributes.map(({ attributeId, name, values }) => ({
+      attributeId,
+      name,
+      values: values.map(({ attributeValueId, name }) => ({
+        attributeValueId,
+        name,
+        disabled: false,
+      })),
+    })),
+    combinations: variations.map(({ variationId, isSalable, attributes }) => ({
+      variationId,
+      isSalable,
+      attributeCombination: attributes,
+    })),
   };
 };
 
-const transformedProduct = computed(() => transformProductData(product));
+const transformedProduct = reactive(transformProductData(product));
 
-let selectedVariations = ref(Array.from({ length: transformedProduct.value.attributes.length }).fill(null));
+const currentVariationId = computed(() => {
+  const parts = route.params.slug?.toString().split('-');
+  return parts?.length ? Number(parts[parts.length - 1]) : null;
+});
 
-const changeVariationId = (selectedValue, index) => {
-  selectedVariations.value[index] = Number.parseInt(selectedValue);
-
-  if (selectedVariations.value.every((value) => value !== null)) {
-    // Check if all attributes are selected
-    for (const combination of transformedProduct.value.combinations) {
-      const match = combination.attributeCombination.every(
-        (attribute, index_) =>
-          selectedVariations.value[index_] === null || attribute.attributeValueId === selectedVariations.value[index_],
-      );
-
-      if (match && combination.isSalable) {
-        console.log(combination.variationId);
-        // If you want to obtain the variationId, you can use combination.variationId here.
-        // For instance, you can emit this value to the parent or store it in a ref variable.
-        break;
-      }
+const setInitialSelectedVariations = () => {
+  if (currentVariationId.value) {
+    const currentCombination = transformedProduct.combinations.find(
+      (combo) => combo.variationId === currentVariationId.value,
+    );
+    if (currentCombination) {
+      return transformedProduct.attributes.map((attribute) => {
+        const attInCombination = currentCombination.attributeCombination.find(
+          (att) => att.attributeId === attribute.attributeId,
+        );
+        return attInCombination ? attInCombination.attributeValueId : null;
+      });
     }
   }
-
-  updateAvailableOptions();
+  return Array.from({ length: transformedProduct.attributes.length }).fill(null);
 };
 
-const updateAvailableOptions = () => {
-  for (const attribute of transformedProduct.value.attributes) {
+let selectedVariations = ref(setInitialSelectedVariations());
+
+const resetDisabledStatus = () => {
+  for (const attribute of transformedProduct.attributes) {
     for (const value of attribute.values) {
-      value.disabled = !isOptionAvailable(attribute.attributeId, value.attributeValueId, selectedVariations.value);
+      value.disabled = false;
     }
   }
 };
 
-const isOptionAvailable = (attributeId, valueId, currentSelections) => {
-  // Iterate through each product combination
-  for (const combination of transformedProduct.value.combinations) {
-    if (!combination.isSalable) {
-      continue; // Skip if this combination is not salable
-    }
+const isOptionAvailableForCurrentSelection = (attributeId, valueId, temporarySelectedVariations) => {
+  return transformedProduct.combinations.some((combination) => {
+    if (!combination.isSalable) return false;
+
+    const matchesSelected = combination.attributeCombination.every((attribute, index) => {
+      return (
+        temporarySelectedVariations[index] === null || temporarySelectedVariations[index] === attribute.attributeValueId
+      );
+    });
+
+    if (!matchesSelected) return false;
 
     const attributeInCombination = combination.attributeCombination.find(
       (attribute) => attribute.attributeId === attributeId,
     );
+    return attributeInCombination && attributeInCombination.attributeValueId === valueId;
+  });
+};
 
-    // If the combination doesn't have the attribute or the value, skip
-    if (!attributeInCombination || attributeInCombination.attributeValueId !== valueId) {
-      continue;
-    }
-
-    const isValidCombination = currentSelections.every((selectedValue, index) => {
-      // If the selection is null, then it is considered valid since it hasn't been chosen yet
-      if (selectedValue === null) return true;
-
-      // If the current attribute value is part of the combination, it is valid
-      const attributeInCurrentCombination = combination.attributeCombination[index];
-      return attributeInCurrentCombination.attributeValueId === selectedValue;
-    });
-
-    if (isValidCombination) {
-      return true; // Found a valid combination with the attribute value
+const updateAvailableOptions = () => {
+  for (const [index, attribute] of transformedProduct.attributes.entries()) {
+    for (const value of attribute.values) {
+      const temporarySelectedVariations = [...selectedVariations.value];
+      temporarySelectedVariations[index] = value.attributeValueId;
+      value.disabled = !isOptionAvailableForCurrentSelection(
+        attribute.attributeId,
+        value.attributeValueId,
+        temporarySelectedVariations,
+      );
     }
   }
-
-  return false; // No valid combinations found for this attribute value
 };
 
-const resetAttributes = () => {
-  selectedVariations.value = Array.from({ length: transformedProduct.value.attributes.length }).fill(null);
-  updateAvailableOptions(); // Update available options after resetting
+const getSelectedVariationId = () => {
+  const matchingCombination = transformedProduct.combinations.find((combination) => {
+    if (!combination.isSalable) return false;
+
+    return combination.attributeCombination.every((attribute, index) => {
+      return selectedVariations.value[index] === attribute.attributeValueId;
+    });
+  });
+
+  return matchingCombination ? matchingCombination.variationId : null;
 };
 
-// Initialize available options
+const changeVariationId = (selectedValue, index) => {
+  if (selectedValue === null) {
+    selectedVariations.value = Array.from({ length: transformedProduct.attributes.length }).fill(null);
+    resetDisabledStatus();
+  } else {
+    selectedVariations.value[index] = Number(selectedValue);
+  }
+
+  updateAvailableOptions();
+
+  const variationId = getSelectedVariationId();
+  if (variationId) {
+    const delimiter = '-';
+    const slugParts = route.params.slug?.toString().split(delimiter);
+    if (!slugParts) return;
+
+    const link = `${slugParts.slice(0, -1).join(delimiter)}${delimiter}${variationId}`;
+    router.push({ name: route.name, params: { slug: link } });
+  }
+};
+
 watchEffect(() => {
   updateAvailableOptions();
 });
