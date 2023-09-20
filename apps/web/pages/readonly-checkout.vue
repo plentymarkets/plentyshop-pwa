@@ -106,7 +106,8 @@
             >
               <SfLoaderCircular
                 v-if="createOrderLoading || cartLoading || executeOrderLoading"
-                class="flex justify-center items-center" size="sm"
+                class="flex justify-center items-center"
+                size="sm"
               />
               <span v-else>
                 {{ $t('buy') }}
@@ -211,7 +212,7 @@ const order = async () => {
   await executeOrder({
     mode: 'paypal',
     plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-    paypalTransactionId: route.query.orderId.toString(),
+    paypalTransactionId: route?.query?.orderId?.toString() ?? '',
     paypalMerchantId: paypalGetters.getMerchantId() ?? '',
   });
 
