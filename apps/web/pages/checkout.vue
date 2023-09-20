@@ -152,12 +152,7 @@ const {
   getShippingMethods,
   saveShippingMethod,
 } = useCartShippingMethods();
-const {
-  loading: loadPayment,
-  data: paymentMethodData,
-  fetchPaymentMethods,
-  savePaymentMethod,
-} = usePaymentMethods();
+const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();

@@ -77,7 +77,7 @@ import type { CartProductCardProps } from '~/components/ui/CartProductCard/types
 const { setCartItemQuantity, deleteCartItem } = useCart();
 
 const props = withDefaults(defineProps<CartProductCardProps>(), {
-  disabled: false
+  disabled: false,
 });
 const deleteLoading = ref(false);
 const changeQuantity = async (quantity: string) => {

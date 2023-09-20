@@ -1,3 +1,4 @@
+import { Ref } from 'vue';
 import { PayPalNamespace } from '@paypal/paypal-js';
 import {
   PayPalCreateOrder,
@@ -5,7 +6,6 @@ import {
   PayPalExecutePayment,
   PayPalExecuteParams,
 } from '@plentymarkets/shop-api';
-import {Ref} from "vue";
 
 export interface UsePayPalState {
   paypalScript: PayPalNamespace | null;

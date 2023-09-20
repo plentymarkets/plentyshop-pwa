@@ -68,7 +68,7 @@ const { data: activeShippingCountries, getActiveShippingCountries } = useActiveS
 await getActiveShippingCountries();
 
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
-  disabled: false
+  disabled: false,
 });
 const editMode = ref(false);
 const selectedAddress = computed(() => props.addresses?.[0] ?? ({} as Address));

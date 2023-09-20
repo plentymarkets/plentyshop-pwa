@@ -1,5 +1,6 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import { PayPalExecuteParams } from '@plentymarkets/shop-api';
+import { toRefs } from '@vueuse/shared';
 import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {
@@ -10,7 +11,6 @@ import type {
   UsePayPalState,
   approveOrder,
 } from './types';
-import { toRefs } from "@vueuse/shared";
 
 /**
  * @description Composable for paypal.

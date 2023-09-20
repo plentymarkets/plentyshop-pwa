@@ -48,6 +48,15 @@ const onInit = (actions: OnInitActions) => {
   }
 };
 
+const onClick = async () => {
+  if (props.type === TypeSingleItem && props.value) {
+    await addToCart({
+      productId: Number(productGetters.getId(props.value.product)),
+      quantity: props.value.quantity,
+    });
+  }
+};
+
 const onApprove = async (data: OnApproveData) => {
   const res = await approveOrder(data.orderID, data.payerID ?? '');
 
@@ -90,13 +99,7 @@ onMounted(() => {
           },
           fundingSource: fundingSource,
           async onClick() {
-            if (props.type === TypeSingleItem && props.value) {
-              await addToCart({
-                productId: Number(productGetters.getId(props.value.product)),
-                quantity: props.value.quantity,
-              });
-            }
-
+            await onClick();
             emits('on-click');
           },
           onInit(data, actions) {

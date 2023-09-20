@@ -4,7 +4,7 @@
       <SfButton
         type="button"
         variant="tertiary"
-        :disabled="disabled || (count <= minValue)"
+        :disabled="disabled || count <= minValue"
         square
         class="rounded-r-none"
         :aria-controls="inputId"
@@ -30,7 +30,7 @@
       <SfButton
         type="button"
         variant="tertiary"
-        :disabled="disabled || (count >= maxValue)"
+        :disabled="disabled || count >= maxValue"
         square
         class="rounded-l-none"
         :aria-controls="inputId"
