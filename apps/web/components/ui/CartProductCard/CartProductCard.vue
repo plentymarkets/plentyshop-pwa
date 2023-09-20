@@ -29,7 +29,7 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div v-if="currentSinglePrice">{{ $n(currentSinglePrice, 'currency') }}</div>
+      <div>{{ $n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -92,19 +92,8 @@ const deleteItem = async () => {
   deleteLoading.value = false;
 };
 
-const prices = computed(() => {
-  return {
-    special: cartGetters.getItemPrice(props.cartItem)?.special,
-    regular: cartGetters.getItemPrice(props.cartItem)?.regular,
-  };
-});
-
-const currentSinglePrice = computed(() => {
-  return prices.value ? prices.value.special || prices.value.regular : 0;
-});
-
 const currentFullPrice = computed(() => {
-  return (currentSinglePrice.value ?? 0) * cartGetters.getItemQty(props.cartItem);
+  return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
 
 const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
