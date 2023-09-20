@@ -60,7 +60,6 @@ const loadAddresses = async () => {
   await getShippingMethods();
 };
 
-const router = useRouter();
 const email = ref('');
 const password = ref('');
 // const rememberMe = ref<boolean>();
