@@ -6,6 +6,7 @@ export const paths = {
   checkout: '/checkout',
   search: '/search',
   account: '/my-account/personal-data',
+  thankYou: '/thank-you',
   orderSuccess: '/order/success',
   orderFailed: '/order/failed',
   accountPersonalData: '/my-account/personal-data',
