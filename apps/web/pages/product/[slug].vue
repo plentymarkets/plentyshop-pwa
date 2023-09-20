@@ -42,7 +42,10 @@ const route = useRoute();
 const { fetchProducts, data, selectVariation } = useProducts();
 
 if (!data?.value?.products) {
-  await fetchProducts({});
+  const path = route.fullPath.split('/');
+  path.pop();
+
+  await fetchProducts({ categoryUrlPath: path.join('/') });
 }
 
 const productPieces = (route.params.itemId as string).split('_');
