@@ -39,7 +39,7 @@ import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
-const { fetchProducts, data } = useProducts();
+const { fetchProducts, data, selectVariation } = useProducts();
 
 if (!data?.value?.products) {
   await fetchProducts({});
@@ -58,6 +58,7 @@ const { data: product, fetchProduct } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 await fetchProduct(productId);
+selectVariation(productPieces[1] ? product.value : ({} as Product));
 await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();

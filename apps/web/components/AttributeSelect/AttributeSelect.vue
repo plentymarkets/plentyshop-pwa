@@ -5,7 +5,7 @@
       :key="index"
       class="mb-2"
       @update:model-value="changeVariationId"
-      v-model="selectedVariation"
+      v-model="selected"
       size="sm"
       placeholder="-- Select --"
     >
@@ -25,8 +25,22 @@ import { AttributeSelectProps } from '~/components/AttributeSelect/types';
 const props = defineProps<AttributeSelectProps>();
 const product = props.product;
 
+const i18n = useI18n();
+const { selectedVariation } = useProducts();
+
 const attributeGroups = computed((): ProductAttributeValue[][] => {
   const groupsForProducts = productGetters.getAttributes([product]) as ProductAttributeValue[][][];
+
+  if (groupsForProducts?.[0]?.[0]) {
+    groupsForProducts[0][0].unshift({
+      type: 'dropdown',
+      value: i18n.t('pleaseSelect'),
+      label: i18n.t('pleaseSelect'),
+      id: '',
+      variationId: 0,
+    });
+  }
+
   return groupsForProducts[0] ?? [];
 });
 
@@ -36,10 +50,12 @@ const mapValueAndLabel = (attributeGroup: ProductAttributeValue[]) => {
 
 const router = useRouter();
 
-const selectedVariation = ref(product.variation.id.toString());
+const selected = ref(selectedVariation?.value?.variation?.id.toString() || '0');
 
 const changeVariationId = (updatedId: string) => {
-  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}_${updatedId}`;
+  const variation = Number(updatedId) ? `_${updatedId}` : '';
+
+  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}${variation}`;
 
   router.push(productSlug);
 };

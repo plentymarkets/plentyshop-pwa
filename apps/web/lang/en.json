@@ -151,6 +151,7 @@
     "missingShippingDetails": "choose shipping method",
     "missingPaymentMethod": "choose payment method"
   },
+  "pleaseSelect": "Please Select",
   "addToCart": "Add to cart",
   "itemNotAvailable": "This item is not available.",
   "showArticle": "Show article",
