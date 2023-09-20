@@ -5,7 +5,7 @@ import config from '../middleware.config';
 
 (async () => {
   const app = await createServer({ integrations: config.integrations });
-  const host = process.argv[2] ?? '0.0.0.0';
+  const host = 'https://ceres-demo.plentymarkets-cloud01.com'; //process.argv[2] ?? '0.0.0.0';
   const port = Number(process.argv[3]) || 8181;
   const CORS_MIDDLEWARE_NAME = 'corsMiddleware';
 

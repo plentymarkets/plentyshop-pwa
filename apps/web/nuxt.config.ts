@@ -103,7 +103,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cookieGroups: cookieConfig,
-      API_ENDPOINT: process.env.API_ENDPOINT
+      API_ENDPOINT: 'https://ceres-demo.plentymarkets-cloud01.com',
     },
   },
   pwa: {
