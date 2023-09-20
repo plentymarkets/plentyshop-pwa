@@ -6,12 +6,12 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <Price :price="productGetters.getPrice(product)" />
+    <Price :price="currentActualPrice" :old-price="productGetters.getPrice(product).regular ?? 0" />
     <!-- {{ product }} -->
     <LowestPrice :product="product" />
-    <div v-if="productGetters.showPricePerUnit(product)">
+    <div v-if="productGetters.showPricePerUnit(product) || true">
       <BasePrice
-        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+        :base-price="basePriceSingleValue"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />
@@ -30,6 +30,14 @@
     ></div>
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
+    </div>
+    <div class="mb-2" v-if="productGetters.getGraduatedPrices(product).length > 0">
+      <h2 class="font-bold">Graduated Prices</h2>
+      <div class="grid grid-cols-3" v-for="(price, index) in productGetters.getGraduatedPrices(product)" :key="index">
+        <div>minimumOrderQuantity: {{ price.minimumOrderQuantity }}</div>
+        <div>Price: {{ $n(price.price.value ?? 0, 'currency') }}</div>
+        <div></div>
+      </div>
     </div>
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -87,6 +95,18 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
+const currentActualPrice = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+    productGetters.getPrice(product.value)?.special ??
+    productGetters.getPrice(product.value)?.regular ??
+    0,
+);
+const basePriceSingleValue = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
+    productGetters.getDefaultBaseSinglePrice(product.value),
+);
 
 const handleAddToCart = async () => {
   await addToCart({
