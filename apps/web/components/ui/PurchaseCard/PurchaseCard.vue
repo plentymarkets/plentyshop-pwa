@@ -32,12 +32,27 @@
       <AttributeSelect v-if="product" :product="product" />
     </div>
     <div class="mb-2" v-if="productGetters.getGraduatedPrices(product).length > 0">
-      <h2 class="font-bold">Graduated Prices</h2>
-      <div class="grid grid-cols-3" v-for="(price, index) in productGetters.getGraduatedPrices(product)" :key="index">
-        <div>minimumOrderQuantity: {{ price.minimumOrderQuantity }}</div>
-        <div>Price: {{ $n(price.price.value ?? 0, 'currency') }}</div>
-        <div></div>
-      </div>
+      <div class="typography-text-sm font-bold">Buy more, pay less</div>
+      <table class="hidden md:block text-left typography-text-sm">
+        <thead class="border-b-2 border-neutral-200">
+          <tr class="w-full">
+            <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">Price</th>
+            <th class="lg:p-4 p-2 font-medium lg:whitespace-nowrap">Quantity</th>
+            <th class="lg:p-4 p-2 font-medium">Discount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(price, index) in productGetters.getGraduatedPrices(product)"
+            :key="index"
+            class="border-b border-neutral-200"
+          >
+            <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ $n(price.price.value ?? 0, 'currency') }}</td>
+            <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ price.minimumOrderQuantity }}</td>
+            <td class="lg:p-4 p-2">10 %</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -74,7 +89,7 @@
 </template>
 
 <script lang="ts" setup>
-import { productGetters } from '@plentymarkets/shop-sdk';
+import {orderGetters, productGetters} from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,
