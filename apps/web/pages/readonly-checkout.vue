@@ -32,18 +32,10 @@
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
-          <ShippingMethod
-            :shipping-methods="shippingMethods"
-            disabled
-            @update:shipping-method="handleShippingMethodUpdate($event)"
-          />
+          <ShippingMethod :shipping-methods="shippingMethods" disabled />
 
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment
-            :payment-methods="paymentMethods"
-            disabled
-            @update:active-payment="handlePaymentMethodUpdate($event)"
-          />
+          <CheckoutPayment :payment-methods="paymentMethods" disabled />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
@@ -132,13 +124,13 @@ definePageMeta({
 
 const ID_CHECKBOX = '#terms-checkbox';
 
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
+const { data: cart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const route = useRoute();
@@ -162,19 +154,6 @@ await savePaymentMethod(
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
-
-const handleShippingMethodUpdate = async (shippingMethodId: string) => {
-  await saveShippingMethod(Number(shippingMethodId));
-  await fetchPaymentMethods();
-  await getCart();
-
-  setShippingPrivacyAgreement(false);
-};
-
-const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
-  await savePaymentMethod(paymentMethodId);
-  await getShippingMethods();
-};
 
 const scrollToHTMLObject = (object: string) => {
   const element = document.querySelector(object) as HTMLElement;
