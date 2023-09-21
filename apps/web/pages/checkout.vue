@@ -75,57 +75,15 @@
         </div>
       </div>
     </div>
-    <div v-if="paypalCardDialog">
-      <div class="payment-container" id="pay-container">
-        <!-- Advanced credit and debit card payments form -->
-        <div class="card_container">
-          <form id="card-form">
-            <div class="row">
-              <div class="col-12">
-                <label class="hosted-fields--label" for="card-number">{{ $t("paypal.unbrandedCardNumber") }}</label>
-                <div id="card-number" class="hosted-field form-control"></div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-6">
-                <label class="hosted-fields--label" for="expiration-date">{{ $t("paypal.unbrandedExpirationDate") }}</label>
-                <div id="expiration-date" class="hosted-field form-control"></div>
-              </div>
-              <div class="col-6">
-                <label class="hosted-fields--label" for="cvv">{{ $t("paypal.unbrandedCvv") }}</label>
-                <div id="cvv" class="hosted-field form-control"></div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12">
-                <label class="hosted-fields--label" for="card-holder-name">{{ $t("paypal.unbrandedNameOnCard") }}</label>
-                <input class="hosted-field form-control" type="text" id="card-holder-name" name="card-holder-name"
-                  autocomplete="off" :placeholder="$t('paypal.unbrandedNameOnCard')" />
-              </div>
-            </div>
-
-            <div class="row pt-3">
-              <div class="col-12">
-                <div class="pull-left">
-                  <button type="button" onclick="confirmCancel()" data-dismiss="modal" class="btn btn-block btn-default"
-                    id="paypal_unbranded_card_cancel">{{ $t("paypal.unbrandedCancel") }}</button>
-                </div>
-                <div class="pull-right">
-                  <button type="submit" class="btn btn-block btn-primary btn-large" id="paypal_unbranded_card_submit">{{ $t("paypal.unbrandedPay") }}</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <UiModal v-model="paypalCardDialog" class="h-full w-full overflow-auto md:w-[600px] md:h-fit" tag="section"
+      role="paypal" disable-click-away>
+      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" @confirm-payment="finalizeOrder" />
+    </UiModal>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
-import "../assets/smartPaymentScript.min.js";
+import { keyBy } from 'lodash'
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
@@ -238,24 +196,12 @@ const order = async () => {
   if (!validateAddresses() || !validateTerms()) {
     return;
   }
+  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id')
 
-  if (selectedPaymentId.value === 6009) {
-    // open popup
-    // load scripts //
-    var script = document.createElement("script");
-    script.type = "module";
-    script.id = "paypal-smart-payment-script";
-    script.src = "{{ plugin_path('PayPal') }}/js/smartPaymentScript.min.js";
-    script.setAttribute("data-client-id", "{{ clientId }}");
-    script.setAttribute("data-currency", "{{ currency }}");
-    script.setAttribute("data-client-token", "{{ clientToken }}");
-    script.setAttribute("data-append-trailing-slash", "{{ appendTrailingSlash }}");
-    script.setAttribute("data-locale", "{{ locale }}");
-    document.body.appendChild(script);
-
+  if (paymentMethodsById[selectedPaymentId.value].key === "plentyPayPal") {
     paypalCardDialog.value = true
   } else {
-    finalizeOrder()
+    finalizeOrder();
   }
 };
 
