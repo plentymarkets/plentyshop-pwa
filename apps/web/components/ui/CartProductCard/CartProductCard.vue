@@ -102,9 +102,10 @@ const debounceQuantity = _.debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-const basePriceSingleValue = computed(
-  () =>
-    productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(props.cartItem.variation),
+const basePriceSingleValue = computed(() =>
+  props.cartItem?.variation
+    ? productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
+      productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
+    : 0,
 );
 </script>
