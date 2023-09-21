@@ -47,12 +47,14 @@ const cart = ref({
   customerEmail: '',
 });
 
-const isEmailEmpty = () => {
+const isEmailEmpty = async () => {
+  await getSession();
+  cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
   return cart.value.customerEmail === '';
 };
 
-const openContactFormIfNoEmail = () => {
-  if (isEmailEmpty() && !isAuthorized.value) {
+const openContactFormIfNoEmail = async () => {
+  if ((await isEmailEmpty()) && !isAuthorized.value) {
     open();
   }
 };

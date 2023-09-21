@@ -37,7 +37,7 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import { LoginProps } from './types';
 
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
@@ -45,6 +45,7 @@ const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getShippingMethods } = useCartShippingMethods();
 
 const { login, loading } = useCustomer();
+const { close } = useDisclosure();
 
 definePageMeta({
   layout: false,
@@ -75,5 +76,6 @@ const loginUser = async () => {
       }
     }
   }
+  close();
 };
 </script>
