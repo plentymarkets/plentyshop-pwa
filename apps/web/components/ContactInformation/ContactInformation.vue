@@ -39,13 +39,13 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { ContactInformationProps } from "~/components/ContactInformation/types";
+import { ContactInformationProps } from '~/components/ContactInformation/types';
 
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 
 withDefaults(defineProps<ContactInformationProps>(), {
-  disabled: false
+  disabled: false,
 });
 
 const cart = ref({
