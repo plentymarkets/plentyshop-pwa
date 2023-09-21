@@ -40,6 +40,22 @@
     "Reject All": "Alles ablehnen",
     "Accept Selection": "Auswahl akzeptieren"
   },
+  "documents" : {
+    "correctionDocuments": "Korrekturbeleg",
+    "Credit Note": "Gutschrift",
+    "Delivery Note": "Lieferschein",
+    "Dunning Letter": "Mahnung",
+    "Invoice External": "Externe Rechnung",
+    "Invoice": "Rechnung",
+    "Offer": "Angebot",
+    "Order Confirmation": "Auftragsbestätigung",
+    "Pickup Delivery": "Abhollieferung",
+    "Pro Forma Invoice": "Proformarechnung",
+    "Receipt": "Kassenbeleg",
+    "Return Note": "Rücksendeschein",
+    "Success Confirmation": "Gelangensbestätigung",
+    "Reversal Document": "Stornobeleg"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
