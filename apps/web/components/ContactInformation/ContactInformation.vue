@@ -47,23 +47,21 @@ const cart = ref({
   customerEmail: '',
 });
 
-const isEmailEmpty = async () => {
-  await getSession();
+const isEmailEmpty = () => {
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
   return cart.value.customerEmail === '';
 };
 
-const openContactFormIfNoEmail = async () => {
-  if ((await isEmailEmpty()) && !isAuthorized.value) {
+const openContactFormIfNoEmail = () => {
+  if (isEmailEmpty() && !isAuthorized.value) {
     open();
   }
 };
 
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
-
   await loginAsGuest(email);
-
+  await getSession();
   close();
 };
 
@@ -72,6 +70,7 @@ const getEmailFromSession = async () => {
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
 };
 
+await getSession();
 await getEmailFromSession();
 openContactFormIfNoEmail();
 </script>
