@@ -1,6 +1,6 @@
 export const paths = {
   home: '/',
-  category: '/category',
+  category: '/',
   product: '/product/',
   cart: '/cart',
   checkout: '/checkout',
