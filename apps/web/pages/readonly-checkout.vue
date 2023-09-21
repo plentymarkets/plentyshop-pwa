@@ -9,7 +9,7 @@
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ContactInformation />
+        <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           id="billing-address"

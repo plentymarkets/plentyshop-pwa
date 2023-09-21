@@ -2,7 +2,7 @@
   <div data-testid="contact-information" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ $t('contactInfo.heading') }}</h2>
-      <SfButton v-if="cart.customerEmail && !isAuthorized" size="sm" variant="tertiary" @click="open">
+      <SfButton v-if="!disabled && cart.customerEmail && !isAuthorized" size="sm" variant="tertiary" @click="open">
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
@@ -11,7 +11,7 @@
     </div>
     <div v-else class="w-full md:max-w-[520px]">
       <p>{{ $t('contactInfo.description') }}</p>
-      <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="open">
+      <SfButton v-if="!disabled" class="mt-4 w-full md:w-auto" variant="secondary" @click="open">
         {{ $t('contactInfo.add') }}
       </SfButton>
     </div>
@@ -39,9 +39,14 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { ContactInformationProps } from "~/components/ContactInformation/types";
 
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
+
+withDefaults(defineProps<ContactInformationProps>(), {
+  disabled: false
+});
 
 const cart = ref({
   customerEmail: '',
