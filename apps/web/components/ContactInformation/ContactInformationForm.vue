@@ -5,7 +5,7 @@
       <SfInput name="email" type="email" v-model="cart.customerEmail" required />
     </label>
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
-      <SfButton type="reset" class="md:mr-4" variant="secondary" @click="clear()">
+      <SfButton type="reset" class="md:mr-4" variant="secondary">
         {{ $t('contactInfo.clear') }}
       </SfButton>
 
