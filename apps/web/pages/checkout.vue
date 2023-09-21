@@ -1,50 +1,90 @@
 <template>
-  <NuxtLayout name="checkout" :back-href="paths.cart" :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')" :heading="$t('checkout')">
+  <NuxtLayout
+    name="checkout"
+    :back-href="paths.cart"
+    :back-label-desktop="$t('backToCart')"
+    :back-label-mobile="$t('back')"
+    :heading="$t('checkout')"
+  >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress id="billing-address" :heading="$t('billing.heading')" :description="$t('billing.description')"
-          :button-text="$t('billing.addButton')" :addresses="billingAddresses" :type="AddressType.Billing"
-          @on-saved="loadAddresses" />
+        <CheckoutAddress
+          id="billing-address"
+          :heading="$t('billing.heading')"
+          :description="$t('billing.description')"
+          :button-text="$t('billing.addButton')"
+          :addresses="billingAddresses"
+          :type="AddressType.Billing"
+          @on-saved="loadAddresses"
+        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress id="shipping-address" :heading="$t('shipping.heading')" :description="$t('shipping.description')"
-          :button-text="$t('shipping.addButton')" :addresses="shippingAddresses" :type="AddressType.Shipping"
-          @on-saved="loadAddresses" />
+        <CheckoutAddress
+          id="shipping-address"
+          :heading="$t('shipping.heading')"
+          :description="$t('shipping.description')"
+          :button-text="$t('shipping.addButton')"
+          :addresses="shippingAddresses"
+          :type="AddressType.Shipping"
+          @on-saved="loadAddresses"
+        />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
-          <ShippingMethod :shipping-methods="shippingMethods" :disabled="disableShippingPayment"
-            @update:shipping-method="handleShippingMethodUpdate($event)" />
-          <SfLoaderCircular v-if="disableShippingPayment" class="absolute mt-5 right-0 left-0 m-auto z-[999]"
-            size="2xl" />
+          <ShippingMethod
+            :shipping-methods="shippingMethods"
+            :disabled="disableShippingPayment"
+            @update:shipping-method="handleShippingMethodUpdate($event)"
+          />
+          <SfLoaderCircular
+            v-if="disableShippingPayment"
+            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
+            size="2xl"
+          />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment :payment-methods="paymentMethods" :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate($event)" />
+          <CheckoutPayment
+            :payment-methods="paymentMethods"
+            :disabled="disableShippingPayment"
+            @update:active-payment="handlePaymentMethodUpdate($event)"
+          />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
           <div class="flex items-center">
-            <SfCheckbox v-model="termsAccepted" :invalid="showTermsError" @change="showTermsError = false"
-              id="terms-checkbox" class="inline-block mr-2" />
+            <SfCheckbox
+              v-model="termsAccepted"
+              :invalid="showTermsError"
+              @change="showTermsError = false"
+              id="terms-checkbox"
+              class="inline-block mr-2"
+            />
             <div>
               <i18n-t keypath="termsInfo">
                 <template #terms>
-                  <SfLink href="/TermsAndConditions" target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded">
+                  <SfLink
+                    href="/TermsAndConditions"
+                    target="_blank"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
                     {{ $t('termsAndConditions') }}
                   </SfLink>
                 </template>
                 <template #cancellationRights>
-                  <SfLink href="/CancellationRights" target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded">
+                  <SfLink
+                    href="/CancellationRights"
+                    target="_blank"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
                     {{ $t('cancellationRights') }}
                   </SfLink>
                 </template>
                 <template #privacyPolicy>
-                  <SfLink href="/PrivacyPolicy" target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded">
+                  <SfLink
+                    href="/PrivacyPolicy"
+                    target="_blank"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
                     {{ $t('privacyPolicy') }}
                   </SfLink>
                 </template>
@@ -61,11 +101,19 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
-            <PayPalExpressButton v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading" @on-click="validateTerms" />
-            <SfButton v-else type="submit" @click="order"
-              :disabled="createOrderLoading || disableShippingPayment || cartLoading" size="lg"
-              class="w-full mb-4 md:mb-0 cursor-pointer">
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+            />
+            <SfButton
+              v-else
+              type="submit"
+              @click="order"
+              :disabled="createOrderLoading || disableShippingPayment || cartLoading"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer"
+            >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
                 {{ $t('buy') }}
@@ -75,18 +123,23 @@
         </div>
       </div>
     </div>
-    <UiModal v-model="paypalCardDialog" class="h-full w-full overflow-auto md:w-[600px] md:h-fit" tag="section"
-      role="paypal" disable-click-away>
+    <UiModal
+      v-model="paypalCardDialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      tag="section"
+      role="paypal"
+      disable-click-away
+    >
       <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" @confirm-payment="finalizeOrder" />
     </UiModal>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
-import { keyBy } from 'lodash'
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
@@ -190,16 +243,16 @@ const validateAddresses = () => {
   return true;
 };
 
-const paypalCardDialog = ref(false)
+const paypalCardDialog = ref(false);
 
 const order = async () => {
   if (!validateAddresses() || !validateTerms()) {
     return;
   }
-  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id')
+  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
-  if (paymentMethodsById[selectedPaymentId.value].key === "plentyPayPal") {
-    paypalCardDialog.value = true
+  if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
+    paypalCardDialog.value = true;
   } else {
     finalizeOrder();
   }
@@ -216,5 +269,5 @@ const finalizeOrder = async () => {
   if (data?.order?.id) {
     router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
   }
-}
+};
 </script>
