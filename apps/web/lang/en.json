@@ -431,6 +431,10 @@
     "total": "Total"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "lang": {
+    "en": "English",
+    "de":"German"
+  },
   "softLogin": {
     "titleLogin": "Log in to your account to access your order",
     "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
