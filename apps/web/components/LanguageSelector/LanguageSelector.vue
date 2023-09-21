@@ -32,8 +32,11 @@ const localeObj = locales as unknown as LocaleObject[];
 const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
 
+const props = defineProps(['toggleMethod']);
+
 const switchLocale = (language: any) => {
   setLocaleCookie(language);
   router.push(switchLocalePath(language));
+  props.toggleMethod();
 };
 </script>

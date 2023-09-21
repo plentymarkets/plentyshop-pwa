@@ -100,7 +100,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
-  <LanguageSelector v-if="showLanguageSelector" />
+  <LanguageSelector v-if="showLanguageSelector" :toggleMethod="toggleLanguageSelector"/>
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -232,4 +232,5 @@ watch(
     isLogin.value = true;
   },
 );
+
 </script>
