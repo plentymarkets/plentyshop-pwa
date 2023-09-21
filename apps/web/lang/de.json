@@ -151,6 +151,7 @@
     "missingShippingDetails": "Versandart wählen",
     "missingPaymentMethod": "Zahlungsart wählen"
   },
+  "pleaseSelect": "Bitte wählen",
   "addToCart": "In den Warenkorb",
   "itemNotAvailable": "Der Artikel ist nicht verfügbar",
   "showArticle": "Artikel anzeigen",
@@ -427,6 +428,10 @@
       "privacyPolicy": "Datenschutzerklärung",
       "termsAndConditions": "AGB"
     }
+  },
+  "lang": {
+    "en": "Englisch",
+    "de":"Deutsch"
   },
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",

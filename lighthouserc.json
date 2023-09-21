@@ -4,8 +4,8 @@
       "startServerCommand": "yarn start",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/category/living-room",
-        "http://localhost:3000/product/couch-purple-dreams-1032"
+        "http://localhost:3000/living-room",
+        "http://localhost:3000/living-room/sofas/couch-purple-dreams_134"
       ],
       "numberOfRuns": 3,
       "assert": {
@@ -62,16 +62,7 @@
             }
           },
           {
-            "matchingUrlPattern": "http://localhost:3000/category/$",
-            "assertions": {
-              "resource-summary:image:size": ["warn", { "maxNumericValue": 32000 }],
-              "resource-summary:script:size": ["warn", { "maxNumericValue": 310000 }],
-              "resource-summary:document:size": ["warn", { "maxNumericValue": 28000 }],
-              "resource-summary:font:size": ["warn", { "maxNumericValue": 85000 }]
-            }
-          },
-          {
-            "matchingUrlPattern": "http://localhost:3000/product/athletic-mens-walking-sneakers",
+            "matchingUrlPattern": "http://localhost:3000/living-room/sofas/couch-purple-dreams_134",
             "assertions": {
               "resource-summary:image:size": ["warn", { "maxNumericValue": 20000 }],
               "resource-summary:script:size": ["warn", { "maxNumericValue": 330000 }],
