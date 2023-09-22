@@ -33,7 +33,7 @@
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
-          :base-price="productGetters.getDefaultBaseSinglePrice(cartItem.variation)"
+          :base-price="basePriceSingleValue"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
         />
@@ -104,4 +104,11 @@ const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
 const debounceQuantity = _.debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+const basePriceSingleValue = computed(() =>
+  props.cartItem?.variation
+    ? productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
+      productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
+    : 0,
+);
 </script>
