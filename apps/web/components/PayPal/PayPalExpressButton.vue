@@ -4,8 +4,9 @@
 
 <script setup lang="ts">
 import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, productGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
+import { PaypalButtonPropsType } from '~/components/PayPal/types';
 import { paypalGetters } from '~/getters/paypalGetters';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -17,48 +18,70 @@ const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
-const { data: cart, clearCartItems } = useCart();
+const { data: cart, clearCartItems, addToCart } = useCart();
 const router = useRouter();
 const emits = defineEmits(['on-click']);
 
-const props = defineProps({
-  disabled: {
-    type: Boolean,
-  },
+const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
+  disabled: false,
 });
+
+const TypeCartPreview = 'CartPreview';
+const TypeSingleItem = 'SingleItem';
+const TypeCheckout = 'Checkout';
 
 const paypal = await loadScript(currency);
 
 const onInit = (actions: OnInitActions) => {
-  actions.disable();
-  watch(props, (watchProps) => {
-    if (watchProps.disabled) {
-      actions.disable();
-    } else {
-      actions.enable();
-    }
-  });
+  if (props.type === TypeCheckout) {
+    actions.disable();
+
+    watch(props, (watchProps) => {
+      if (watchProps.disabled) {
+        actions.disable();
+      } else {
+        actions.enable();
+      }
+    });
+  } else {
+    actions.enable();
+  }
+};
+
+const onClick = async () => {
+  if (props.type === TypeSingleItem && props.value) {
+    await addToCart({
+      productId: Number(productGetters.getId(props.value.product)),
+      quantity: props.value.quantity,
+    });
+  }
 };
 
 const onApprove = async (data: OnApproveData) => {
-  await approveOrder(data.orderID, data.payerID ?? '');
+  const res = await approveOrder(data.orderID, data.payerID ?? '');
 
-  const order = await createOrder({
-    paymentId: cart.value.methodOfPaymentId,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
+  if (res?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
+    router.push(`/readonly-checkout/?payerId=${data.payerID}&orderId=${data.orderID}`);
+  }
 
-  await executeOrder({
-    mode: 'paypal',
-    plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-    paypalTransactionId: data.orderID,
-    paypalMerchantId: paypalGetters.getMerchantId() ?? '',
-  });
+  if (props.type === TypeCheckout) {
+    const order = await createOrder({
+      paymentId: cart.value.methodOfPaymentId,
+      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    });
 
-  clearCartItems();
+    await executeOrder({
+      mode: 'paypal',
+      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+      paypalTransactionId: data.orderID,
+      paypalMerchantId: paypalGetters.getMerchantId() ?? '',
+    });
 
-  if (order?.order?.id) {
-    router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+    clearCartItems();
+
+    if (order?.order?.id) {
+      router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+    }
   }
 };
 
@@ -71,11 +94,12 @@ onMounted(() => {
         const button = paypal.Buttons({
           style: {
             layout: 'vertical',
-            label: 'buynow',
+            label: props.type === TypeCartPreview ? 'checkout' : 'buynow',
             color: 'blue',
           },
           fundingSource: fundingSource,
-          onClick() {
+          async onClick() {
+            await onClick();
             emits('on-click');
           },
           onInit(data, actions) {

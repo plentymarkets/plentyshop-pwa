@@ -61,6 +61,12 @@
           </SfButton>
         </SfTooltip>
       </div>
+
+      <PayPalExpressButton
+        class="mt-4"
+        type="SingleItem"
+        :value="{ product: product, quantity: quantitySelectorValue }"
+      />
     </div>
   </section>
 </template>

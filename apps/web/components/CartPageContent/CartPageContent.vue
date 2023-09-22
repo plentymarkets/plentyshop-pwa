@@ -11,6 +11,8 @@
         <SfButton :tag="NuxtLink" :to="paths.checkout" size="lg" class="w-full mb-4 md:mb-0">
           {{ $t('goToCheckout') }}
         </SfButton>
+
+        <PayPalExpressButton class="mt-4" type="CartPreview" />
       </OrderSummary>
     </div>
   </div>
