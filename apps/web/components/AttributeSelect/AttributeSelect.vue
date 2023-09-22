@@ -1,24 +1,28 @@
 <template>
   <div>
-    <SfSelect
-      v-for="(attribute, index) in transformedProduct.attributes"
-      :key="index"
-      class="mb-2"
-      @update:model-value="changeVariationId($event, index)"
-      v-model="selectedVariations[index]"
-      size="sm"
-      placeholder="Please Select"
-    >
-      <option :value="null">Please Select</option>
-      <option
-        v-for="value in attribute.values"
-        :key="value.attributeValueId"
-        :value="value.attributeValueId"
-        :disabled="value.disabled"
+    <div v-for="(attribute, index) in transformedProduct.attributes" :key="index">
+      <label :for="'attribute-' + attribute.attributeId" class="capitalize text-xs text-neutral-500">
+        {{ attribute.name }}
+      </label>
+      <SfSelect
+        :id="'attribute-' + attribute.attributeId"
+        class="mb-2"
+        @update:model-value="changeVariationId($event, index)"
+        v-model="selectedVariations[index]"
+        size="sm"
+        placeholder="Please Select"
       >
-        {{ value.name }}
-      </option>
-    </SfSelect>
+        <option :value="null">Please Select</option>
+        <option
+          v-for="value in attribute.values"
+          :key="value.attributeValueId"
+          :value="value.attributeValueId"
+          :disabled="value.disabled"
+        >
+          {{ value.name }}
+        </option>
+      </SfSelect>
+    </div>
   </div>
 </template>
 
