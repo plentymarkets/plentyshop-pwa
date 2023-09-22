@@ -33,8 +33,10 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
       try {
         state.value.paypalScript = await loadPayPalScript({
           clientId: paypalGetters.getClientId() ?? '',
+          dataClientToken: 'sandbox_A3nu7vLSbEg7MDUw5pJ1J0N3ifBEANwpKORede0hoX9DGdeRnqH70A40',
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
+          components: 'messages,buttons,funding-eligibility,hosted-fields,payment-fields,marks&enable-funding=paylater',
         });
         return state.value.paypalScript;
       } catch {

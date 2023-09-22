@@ -109,7 +109,7 @@
             <SfButton
               v-else
               type="submit"
-              @click="order"
+              @click="paypalCardDialog = true"
               :disabled="createOrderLoading || disableShippingPayment || cartLoading"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
