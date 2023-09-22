@@ -44,7 +44,7 @@ const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getShippingMethods } = useCartShippingMethods();
 
-const { login, loading } = useCustomer();
+const { login, loading, getSession } = useCustomer();
 const { close } = useDisclosure();
 
 definePageMeta({
@@ -73,6 +73,7 @@ const loginUser = async () => {
       const currentURL = window.location.href;
       if (currentURL.includes(paths.checkout)) {
         await loadAddresses();
+        await getSession();
       }
     }
   }

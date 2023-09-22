@@ -66,11 +66,9 @@ const saveContactInformation = async (email: string) => {
 };
 
 const getEmailFromSession = async () => {
-  await getSession();
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
 };
 
-await getSession();
 await getEmailFromSession();
 openContactFormIfNoEmail();
 </script>
