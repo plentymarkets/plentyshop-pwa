@@ -442,5 +442,11 @@
     "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
     "fullName": "Last name or company name",
     "check": "Check"
+  },
+  "graduatedPrices": {
+    "title": "Buy more, pay less",
+    "price": "PRICE",
+    "quantity": "QUANTITY",
+    "discount": "DISCOUNT"
   }
 }
