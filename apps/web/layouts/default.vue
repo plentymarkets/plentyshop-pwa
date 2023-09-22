@@ -8,6 +8,18 @@
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
+          :aria-label="$t('numberInCart', cartItemsCount)"
+          variant="tertiary"
+          square
+          @click="toggleLanguageSelector"
+        >
+          <template #prefix>
+            <SfIconLanguage class="relative" />
+          </template>
+        </SfButton>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
           :to="paths.cart"
           :aria-label="$t('numberInCart', cartItemsCount)"
           variant="tertiary"
@@ -74,12 +86,21 @@
       variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
       square
+      @click="toggleLanguageSelector"
+    >
+      <SfIconLanguage />
+    </SfButton>
+    <SfButton
+      variant="tertiary"
+      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+      square
       @click="searchModalOpen"
       :aria-label="$t('openSearchModalButtonLabel')"
     >
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
+  <LanguageSelector v-if="showLanguageSelector" :toggle-method="toggleLanguageSelector" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -148,11 +169,13 @@ import {
   SfIconClose,
   SfIconSearch,
   SfIconPerson,
+  SfIconLanguage,
   SfDropdown,
   SfListItem,
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
@@ -196,6 +219,12 @@ const accountDropdown = [
     link: '/',
   },
 ];
+
+let showLanguageSelector = ref(false);
+
+const toggleLanguageSelector = () => {
+  showLanguageSelector.value = !showLanguageSelector.value;
+};
 
 watch(
   () => isAuthenticationOpen.value,

@@ -63,6 +63,7 @@ const transformedProduct = reactive(transformProductData(product));
 const currentVariationId = computed(() => {
   const parts = route.params.slug?.toString().split('-');
   return parts?.length ? Number(parts[parts.length - 1]) : null;
+
 });
 
 const setInitialSelectedVariations = () => {

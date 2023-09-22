@@ -29,7 +29,7 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div v-if="currentSinglePrice">{{ $n(currentSinglePrice, 'currency') }}</div>
+      <div>{{ $n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -61,20 +61,22 @@
         />
       </div>
     </div>
-    <SfIconDelete class="cursor-pointer" @click="deleteItem" />
+    <SfLoaderCircular v-if="deleteLoading" />
+    <SfIconDelete v-else class="cursor-pointer" @click="deleteItem" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-sdk';
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconDelete } from '@storefront-ui/vue';
+import { SfLink, SfIconDelete, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
 
 const props = defineProps<CartProductCardProps>();
+const deleteLoading = ref(false);
 const changeQuantity = async (quantity: string) => {
   await setCartItemQuantity({
     quantity: Number(quantity),
@@ -83,24 +85,15 @@ const changeQuantity = async (quantity: string) => {
   });
 };
 const deleteItem = async () => {
+  deleteLoading.value = true;
   await deleteCartItem({
     cartItemId: props.cartItem.id,
   });
+  deleteLoading.value = false;
 };
 
-const prices = computed(() => {
-  return {
-    special: cartGetters.getItemPrice(props.cartItem)?.special,
-    regular: cartGetters.getItemPrice(props.cartItem)?.regular,
-  };
-});
-
-const currentSinglePrice = computed(() => {
-  return prices.value ? prices.value.special || prices.value.regular : 0;
-});
-
 const currentFullPrice = computed(() => {
-  return (currentSinglePrice.value ?? 0) * cartGetters.getItemQty(props.cartItem);
+  return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
 
 const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));

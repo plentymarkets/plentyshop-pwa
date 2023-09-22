@@ -2,7 +2,7 @@
   <client-only>
     <div
       v-if="!hideBanner"
-      class="fixed z-50 w-full xl:w-3/5 xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-3 bg-white rounded"
+      class="fixed z-50 w-full xl:w-3/5 xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -17,8 +17,8 @@
           </SfLink>
         </div>
         <!-- checkboxes -->
-        <div v-if="cookieJson" class="flex flex-col md:flex-row flex-wrap md:flex-nowrap justify-between items-center">
-          <div v-for="(cookieGroup, index) in cookieJson" :key="index" class="mb-5 flex items-center">
+        <div v-if="cookieJson" class="flex flex-wrap justify-between">
+          <div v-for="(cookieGroup, index) in cookieJson" :key="index" class="sm:mb-5 mb-2 pr-2 flex items-center">
             <SfCheckbox
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
@@ -93,7 +93,7 @@
         </div>
       </div>
       <!-- further settings / back button -->
-      <div class="text-center mt-5">
+      <div class="text-center mt-2">
         <SfLink v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
           {{ $t('CookieBar.Further Settings') }}
         </SfLink>
