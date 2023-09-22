@@ -439,5 +439,11 @@
     "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
     "fullName": "Nachname oder Firmenname",
     "check": "Prüfen"
+  },
+  "graduatedPrices": {
+    "title": "Mehr kaufen, weniger bezahlen",
+    "price": "PREIS",
+    "quantity": "ANZAHL",
+    "discount": "RABATT"
   }
 }
