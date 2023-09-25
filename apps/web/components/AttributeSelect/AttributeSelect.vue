@@ -8,7 +8,7 @@
         :id="'attribute-' + attribute.attributeId"
         class="mb-2"
         @update:model-value="changeVariationId($event, index)"
-        v-model="selectedVariations[index]"
+        v-model="selectedVariationsAsString[index]"
         size="sm"
         placeholder="Please Select"
       >
@@ -29,7 +29,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router';
 import { SfSelect } from '@storefront-ui/vue';
-import { AttributeSelectProps } from '~/components/AttributeSelect/types';
+import { AttributeSelectProps, Attribute, Variation, TransformedProduct } from '~/components/AttributeSelect/types';
 
 const props = defineProps<AttributeSelectProps>();
 const product = props.product ?? { variationAttributeMap: { attributes: [], variations: [] } };
@@ -41,7 +41,7 @@ const transformProductData = (product: any) => {
   const { attributes, variations } = product.variationAttributeMap;
 
   return {
-    attributes: attributes.map(({ attributeId, name, values }) => ({
+    attributes: attributes.map(({ attributeId, name, values }: Attribute) => ({
       attributeId,
       name,
       values: values.map(({ attributeValueId, name }) => ({
@@ -50,7 +50,7 @@ const transformProductData = (product: any) => {
         disabled: false,
       })),
     })),
-    combinations: variations.map(({ variationId, isSalable, attributes }) => ({
+    combinations: variations.map(({ variationId, isSalable, attributes }: Variation) => ({
       variationId,
       isSalable,
       attributeCombination: attributes,
@@ -58,15 +58,15 @@ const transformProductData = (product: any) => {
   };
 };
 
-const transformedProduct = reactive(transformProductData(product));
+const transformedProduct = reactive<TransformedProduct>(transformProductData(product));
 
 const currentVariationId = computed(() => {
-  const parts = route.params.slug?.toString().split('-');
-  return parts?.length ? Number(parts[parts.length - 1]) : null;
-
+  // Extract the variationId from the fullPath using regex
+  const match = route.fullPath.match(/_(\d+)$/);
+  return match ? Number(match[1]) : null;
 });
 
-const setInitialSelectedVariations = () => {
+const setInitialSelectedVariations = (): (number | null)[] => {
   if (currentVariationId.value) {
     const currentCombination = transformedProduct.combinations.find(
       (combo) => combo.variationId === currentVariationId.value,
@@ -80,10 +80,17 @@ const setInitialSelectedVariations = () => {
       });
     }
   }
-  return Array.from({ length: transformedProduct.attributes.length }).fill(null);
+  return Array.from({ length: transformedProduct.attributes.length }).fill(null) as (number | null)[];
 };
 
 let selectedVariations = ref(setInitialSelectedVariations());
+
+const selectedVariationsAsString = computed<string[]>({
+  get: () => selectedVariations.value.map((value) => (value === null ? '' : value.toString())),
+  set: (values) => {
+    selectedVariations.value = values.map((value) => (value === '' ? null : Number(value)));
+  },
+});
 
 const resetDisabledStatus = () => {
   for (const attribute of transformedProduct.attributes) {
@@ -93,7 +100,11 @@ const resetDisabledStatus = () => {
   }
 };
 
-const isOptionAvailableForCurrentSelection = (attributeId, valueId, temporarySelectedVariations) => {
+const isOptionAvailableForCurrentSelection = (
+  attributeId: number,
+  valueId: number,
+  temporarySelectedVariations: (number | null)[],
+): boolean => {
   return transformedProduct.combinations.some((combination) => {
     if (!combination.isSalable) return false;
 
@@ -138,9 +149,34 @@ const getSelectedVariationId = () => {
   return matchingCombination ? matchingCombination.variationId : null;
 };
 
-const changeVariationId = (selectedValue, index) => {
+function updateURLPathForVariation(currentPath: string, itemId: string | number, variationId: string | number) {
+  const pathSegments = currentPath.split('/');
+  let lastSegment = pathSegments[pathSegments.length - 1];
+  const lastSegmentParts = lastSegment.split('_');
+
+  itemId = String(itemId);
+  variationId = String(variationId);
+
+  const itemIdPosition = lastSegmentParts.length - 1;
+
+  if (lastSegmentParts[itemIdPosition] === itemId) {
+    lastSegmentParts.push(variationId);
+  } else {
+    lastSegmentParts[lastSegmentParts.length - 1] = variationId;
+  }
+
+  lastSegment = lastSegmentParts.join('_');
+  pathSegments[pathSegments.length - 1] = lastSegment;
+
+  return pathSegments.join('/');
+}
+
+const changeVariationId = (selectedValue: string | number | null, index: number): void => {
   if (selectedValue === null) {
-    selectedVariations.value = Array.from({ length: transformedProduct.attributes.length }).fill(null);
+    selectedVariations.value = Array.from({ length: transformedProduct.attributes.length }).fill(null) as (
+      | number
+      | null
+    )[];
     resetDisabledStatus();
   } else {
     selectedVariations.value[index] = Number(selectedValue);
@@ -149,13 +185,11 @@ const changeVariationId = (selectedValue, index) => {
   updateAvailableOptions();
 
   const variationId = getSelectedVariationId();
-  if (variationId) {
-    const delimiter = '-';
-    const slugParts = route.params.slug?.toString().split(delimiter);
-    if (!slugParts) return;
 
-    const link = `${slugParts.slice(0, -1).join(delimiter)}${delimiter}${variationId}`;
-    router.push({ name: route.name, params: { slug: link } });
+  if (variationId) {
+    const currentFullPath = route.fullPath;
+    const updatedPath = updateURLPathForVariation(currentFullPath, String(route.params.itemId), variationId);
+    router.replace({ path: updatedPath });
   }
 };
 
