@@ -13,7 +13,7 @@
         class="mx-auto"
       />
       <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ $t('account.ordersAndReturns.noOrders') }}</h3>
-      <SfButton :tag="NuxtLink" :to="paths.category" variant="secondary" class="!ring-neutral-200">
+      <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
         {{ $t('account.ordersAndReturns.continue') }}
       </SfButton>
     </div>
@@ -44,7 +44,7 @@
               {{ $t('account.ordersAndReturns.status') }}
             </p>
             <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-            <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
+            <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
               {{ $t('account.ordersAndReturns.details') }}
             </SfButton>
           </li>
@@ -76,7 +76,7 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
-                <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
+                <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
                   {{ $t('account.ordersAndReturns.details') }}
                 </SfButton>
               </td>
@@ -108,6 +108,8 @@ import { useMediaQuery } from '@vueuse/core';
 definePageMeta({
   layout: 'account',
 });
+
+const localePath = useLocalePath();
 
 const isWideScreen = useMediaQuery(mediaQueries.desktop);
 const maxVisiblePages = ref(1);

@@ -24,7 +24,11 @@
     <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
-        :to="`${paths.product}${orderGetters.getItemName(orderItem)}-${orderGetters.getItemVariationId(orderItem)}`"
+        :to="
+          localePath(
+            `${paths.product}${orderGetters.getItemName(orderItem)}-${orderGetters.getItemVariationId(orderItem)}`,
+          )
+        "
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
@@ -66,6 +70,8 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
+
+const localePath = useLocalePath();
 
 defineProps<OrderSummaryProductCardProps>();
 const NuxtLink = resolveComponent('NuxtLink');

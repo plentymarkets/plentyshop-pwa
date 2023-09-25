@@ -77,6 +77,13 @@ export default defineNuxtConfig({
     'nuxt-vitest',
     'nuxt-lazy-hydrate',
   ],
+  i18n: {
+    detectBrowserLanguage: false,
+    locales: [
+      {code: 'en', label: 'English', file: 'en.json', iso: 'ens'},
+      {code: 'de', label: 'German', file: 'de.json', iso: 'des'}
+    ]
+  },
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
@@ -95,7 +102,7 @@ export default defineNuxtConfig({
       pages.push(
         {
           name: 'category',
-          path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
+          path: '/c/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
           file: __dirname + '/pages/category/[slug].vue',
         },
         {

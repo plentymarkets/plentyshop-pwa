@@ -6,7 +6,7 @@
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink
         :tag="NuxtLink"
-        :to="`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`"
+        :to="localePath(`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`)"
       >
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
@@ -23,7 +23,7 @@
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
-        :to="`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`"
+        :to="localePath(`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`)"
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
@@ -75,6 +75,7 @@ import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
+const localePath = useLocalePath();
 
 const props = withDefaults(defineProps<CartProductCardProps>(), {
   disabled: false,
