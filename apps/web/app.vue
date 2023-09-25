@@ -30,8 +30,10 @@ onMounted(() => {
 
 watch(
   () => locale.value,
-  async (asd: any) => {
-    vsfLocale.value = asd;
+  async (locale: any) => {
+    vsfLocale.value = locale;
+
+    await getCategoryTree();
   },
 );
 </script>

@@ -38,7 +38,7 @@
             }
           "
         >
-          <li v-for="(menuNode, index) in categoryTree" :key="menuNode.id">
+          <li v-for="(menuNode, index) in categoryTree" :key="index">
             <SfButton
               ref="triggerReference"
               variant="tertiary"
@@ -71,7 +71,7 @@
                     <SfListItem
                       :tag="NuxtLink"
                       size="sm"
-                      :href="generateCategoryLink(node)"
+                      :href="localePath(generateCategoryLink(node))"
                       class="typography-text-sm mb-2"
                     >
                       {{ categoryTreeGetters.getName(node) }}
@@ -190,14 +190,14 @@ const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
-const categoryTree = categoryTreeGetters.getTree(props.categories);
+const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const category = {
   id: 0,
   type: 'root',
   itemCount: [],
-  childCount: categoryTree.length,
+  childCount: categoryTree.value.length,
   details: [],
-  children: categoryTree,
+  children: categoryTree.value,
 } as CategoryTreeItem;
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
@@ -210,7 +210,7 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 };
 
 const generateCategoryLink = (category: CategoryTreeItem) => {
-  return categoryTreeGetters.generateCategoryLink(categoryTree, category);
+  return categoryTreeGetters.generateCategoryLink(categoryTree.value, category);
 };
 
 const { close, open, isOpen } = useDisclosure();
@@ -255,4 +255,11 @@ const goNext = (key: number) => {
 const focusTrigger = (index: number) => {
   unrefElement(triggerReference.value[index]).focus();
 };
+
+watch(
+    () => props.categories,
+    async (categories: any) => {
+      categoryTree.value = categories
+    },
+);
 </script>
