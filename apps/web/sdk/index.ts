@@ -21,6 +21,8 @@ export const useSdk = () => {
     client.interceptors.request.eject(interceptorId);
   }
 
+  // Add cookie header to every request that is called during the ssr render process.
+  // This ensures that the session is established and other required cookies are sent to the server.
   interceptorId = client.interceptors.request.use(
     (config) => {
       if (process.server) {
