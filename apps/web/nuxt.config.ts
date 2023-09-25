@@ -102,6 +102,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cookieGroups: cookieConfig,
+      // hardcode "process.env.API_ENDPOINT"
+      API_ENDPOINT: process.env.API_ENDPOINT
     },
   },
   pwa: {
