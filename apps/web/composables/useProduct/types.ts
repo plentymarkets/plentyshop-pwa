@@ -7,7 +7,7 @@ export interface UseProductState {
   loading: boolean;
 }
 
-export type FetchProduct = (slug: ProductParams) => Promise<Product>;
+export type FetchProduct = (params: ProductParams) => Promise<Product>;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
