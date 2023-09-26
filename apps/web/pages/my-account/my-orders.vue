@@ -76,7 +76,12 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
-                <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+                <SfButton
+                  :tag="NuxtLink"
+                  size="sm"
+                  variant="tertiary"
+                  :to="localePath(generateOrderDetailsLink(order))"
+                >
                   {{ $t('account.ordersAndReturns.details') }}
                 </SfButton>
               </td>

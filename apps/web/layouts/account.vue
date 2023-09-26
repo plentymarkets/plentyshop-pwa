@@ -94,6 +94,7 @@ import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfI
 import { useMediaQuery } from '@vueuse/core';
 
 const localePath = useLocalePath();
+
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
 const { t } = useI18n();
 const router = useRouter();
