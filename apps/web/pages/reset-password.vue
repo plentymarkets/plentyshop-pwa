@@ -9,7 +9,7 @@
         <SfInput name="email" type="email" v-model="customerEmail" required />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
-        <SfButton :tag="NuxtLink" :to="paths.authLogin" class="flex-1" variant="tertiary">
+        <SfButton :tag="NuxtLink" :to="localePath(paths.authLogin)" class="flex-1" variant="tertiary">
           {{ $t('auth.resetPassword.backToLogin') }}
         </SfButton>
         <SfButton type="submit" class="flex-1"> {{ $t('auth.resetPassword.continue') }} </SfButton>
@@ -20,6 +20,8 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput } from '@storefront-ui/vue';
+
+const localePath = useLocalePath();
 
 definePageMeta({
   layout: false,

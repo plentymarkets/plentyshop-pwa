@@ -35,8 +35,9 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
 
 const getCategorySlugsFromPath = (path: string): string[] => {
   const parts = path.split('/');
+  const categoryIndex = parts.indexOf('c');
 
-  return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part));
+  return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
 };
 
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
