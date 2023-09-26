@@ -30,7 +30,4 @@ const mainPrice = computed<number>(() => {
   return 0;
 });
 const oldPrice = computed<number>(() => price.regular ?? 0);
-
-defineProps<PriceProps>();
-
 </script>
