@@ -415,7 +415,7 @@
   "asterisk": "*",
   "itemExclVAT": "inkl. ges. MwSt",
   "itemInclVAT": "zzgl. ges. MwSt.",
-  "excludedShipping": "zzgl. Versandkosten"
+  "excludedShipping": "zzgl. Versandkosten",
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
     "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",

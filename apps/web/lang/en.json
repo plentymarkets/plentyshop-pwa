@@ -418,7 +418,7 @@
   "asterisk": "*",
   "itemExclVAT": "Excl. VAT",
   "itemInclVAT": "Incl. VAT",
-  "excludedShipping": "excl. Shipping"
+  "excludedShipping": "excl. Shipping",
   "softLogin": {
     "titleLogin": "Log in to your account to access your order",
     "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
