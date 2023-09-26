@@ -44,11 +44,10 @@
               {{ $t('account.ordersAndReturns.status') }}
             </p>
             <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-            <!--
-          <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="`${paths.accountMyOrders}/${order.order.id}`">
-            {{ $t('account.ordersAndReturns.details') }}
-          </SfButton>
-          --></li>
+            <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
+              {{ $t('account.ordersAndReturns.details') }}
+            </SfButton>
+          </li>
           <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
         </ul>
         <table class="hidden md:block text-left typography-text-sm mx-4">
@@ -76,13 +75,12 @@
               <td class="lg:p-4 p-2">{{ $n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <!--
-            <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
-              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="`${paths.accountMyOrders}/${index}`">
-                {{ $t('account.ordersAndReturns.details') }}
-              </SfButton>
-            </td>
-            --></tr>
+              <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
+                <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="generateOrderDetailsLink(order)">
+                  {{ $t('account.ordersAndReturns.details') }}
+                </SfButton>
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -101,6 +99,7 @@
 </template>
 
 <script setup lang="ts">
+import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import { SfLoaderCircular } from '@storefront-ui/vue';
@@ -122,6 +121,10 @@ onMounted(() => setMaxVisiblePages(isWideScreen.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 // const NuxtLink = resolveComponent('NuxtLink');
+
+const generateOrderDetailsLink = (order: Order) => {
+  return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+};
 
 const handleQueryUpdate = async () => {
   await fetchCustomerOrders({

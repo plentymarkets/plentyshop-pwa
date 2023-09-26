@@ -5,7 +5,7 @@
         {{ $n(mainPrice, 'currency') }}
         <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
       </span>
-      <span v-if="oldPrice && oldPrice !== mainPrice" class="text-base font-normal text-neutral-500 line-through">
+      <span v-if="oldPrice && oldPrice !== price" class="text-base font-normal text-neutral-500 line-through">
         {{ $n(oldPrice, 'currency') }}
       </span>
     </div>
@@ -30,4 +30,7 @@ const mainPrice = computed<number>(() => {
   return 0;
 });
 const oldPrice = computed<number>(() => price.regular ?? 0);
+
+defineProps<PriceProps>();
+
 </script>
