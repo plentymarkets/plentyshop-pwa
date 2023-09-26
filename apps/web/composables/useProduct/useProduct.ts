@@ -1,4 +1,4 @@
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseProductReturn, UseProductState, FetchProduct } from './types';
@@ -17,13 +17,13 @@ export const useProduct: UseProductReturn = (slug) => {
   }));
 
   /** Function for fetching product data
-   * @param {string} slug Product slug
    * @example
    * fetchProduct('product-slug');
+   * @param params
    */
-  const fetchProduct: FetchProduct = async (slug) => {
+  const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct({ id: slug }));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct(params));
     useHandleError(error.value);
 
     state.value.data = data.value?.data ?? state.value.data;

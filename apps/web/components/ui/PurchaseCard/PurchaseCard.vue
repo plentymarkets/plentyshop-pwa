@@ -6,12 +6,11 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <Price :price="productGetters.getPrice(product)" />
-    <!-- {{ product }} -->
+    <Price :price="currentActualPrice" :old-price="productGetters.getPrice(product).regular ?? 0" />
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
-        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+        :base-price="basePriceSingleValue"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />
@@ -31,6 +30,7 @@
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
     </div>
+    <GraduatedPriceList v-if="product" :product="product" />
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
@@ -38,29 +38,50 @@
           @change-quantity="changeQuantity"
           class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
         />
-        <SfButton
-          type="button"
-          size="lg"
+        <SfTooltip
+          show-arrow
+          placement="top"
+          :label="isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-          @click="handleAddToCart"
-          :disabled="loading"
         >
-          <template #prefix v-if="!loading">
-            <SfIconShoppingCart size="sm" />
-          </template>
-          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-          <span v-else>
-            {{ $t('addToCart') }}
-          </span>
-        </SfButton>
+          <SfButton
+            type="button"
+            size="lg"
+            class="w-full"
+            @click="handleAddToCart"
+            :disabled="loading || !productGetters.isSalable(product)"
+          >
+            <template #prefix v-if="!loading">
+              <SfIconShoppingCart size="sm" />
+            </template>
+            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+            <span v-else>
+              {{ $t('addToCart') }}
+            </span>
+          </SfButton>
+        </SfTooltip>
       </div>
+
+      <PayPalExpressButton
+        class="mt-4"
+        type="SingleItem"
+        :value="{ product: product, quantity: quantitySelectorValue }"
+      />
     </div>
   </section>
 </template>
 
 <script lang="ts" setup>
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfCounter, SfLink, SfRating, SfIconShoppingCart, SfLoaderCircular } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfCounter,
+  SfLink,
+  SfRating,
+  SfIconShoppingCart,
+  SfLoaderCircular,
+  SfTooltip,
+} from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const props = defineProps<PurchaseCardProps>();
@@ -72,6 +93,18 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
+const currentActualPrice = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+    productGetters.getPrice(product.value)?.special ??
+    productGetters.getPrice(product.value)?.regular ??
+    0,
+);
+const basePriceSingleValue = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
+    productGetters.getDefaultBaseSinglePrice(product.value),
+);
 
 const handleAddToCart = async () => {
   await addToCart({
@@ -110,6 +143,8 @@ const scrollToReviewsAccordion = () => {
     behavior: 'smooth',
   });
 };
+
+const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

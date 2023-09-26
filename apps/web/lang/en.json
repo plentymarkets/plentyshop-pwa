@@ -40,6 +40,22 @@
     "Reject All": "Reject All",
     "Accept Selection": "Accept Selection"
   },
+  "documents" : {
+    "correctionDocuments": "Correction Documents",
+    "Credit Note": "Credit Note",
+    "Delivery Note": "Delivery Note",
+    "Dunning Letter": "Dunning Letter",
+    "Invoice External": "External invoice",
+    "Invoice": "Invoice",
+    "Offer": "Offer",
+    "Order Confirmation": "Order Confirmation",
+    "Pickup Delivery": "Pickup Delivery",
+    "Pro Forma Invoice": "Pro Forma Invoice",
+    "Receipt": "Receipt",
+    "Return Note": "Return Note",
+    "Success Confirmation": "Success Confirmation",
+    "Reversal Document": "Reversal Document"
+  },
   "myCart": "My Cart",
   "orderSummary": "Order Summary",
   "itemsInCart": "(Items: {count})",
@@ -135,7 +151,9 @@
     "missingShippingDetails": "choose shipping method",
     "missingPaymentMethod": "choose payment method"
   },
+  "pleaseSelect": "Please Select",
   "addToCart": "Add to cart",
+  "itemNotAvailable": "This item is not available.",
   "showArticle": "Show article",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
@@ -319,6 +337,7 @@
       "orderId": "Order ID",
       "orderDate": "Order date",
       "shippingDate": "Shipping date",
+      "returnDate": "Return date",
       "amount": "Amount",
       "status": "Status",
       "details": "Details",
@@ -412,5 +431,22 @@
     "vat": "VAT",
     "total": "Total"
   },
-  "lowestPrice": "Lowest price of the last 30 days: {price}"
+  "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "lang": {
+    "en": "English",
+    "de":"German"
+  },
+  "softLogin": {
+    "titleLogin": "Log in to your account to access your order",
+    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
+    "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
+    "fullName": "Last name or company name",
+    "check": "Check"
+  },
+  "graduatedPrices": {
+    "title": "Buy more, pay less",
+    "price": "PRICE",
+    "quantity": "QUANTITY",
+    "discount": "DISCOUNT"
+  }
 }

@@ -50,6 +50,7 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
         paymentId: paymentMethodId,
       }),
     );
+
     const { data: cart } = useCart();
     useHandleError(error.value);
 

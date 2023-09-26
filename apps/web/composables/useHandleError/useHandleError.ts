@@ -15,9 +15,9 @@ const defaultError: ErrorParams = {
  * useHandleError(error.value);
  */
 export const useHandleError: UseHandleError = (error) => {
-  const { send } = useNotification();
+  if (error && process.client) {
+    const { send } = useNotification();
 
-  if (error) {
     console.error(error);
     send({
       type: 'negative',

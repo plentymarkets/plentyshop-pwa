@@ -33,19 +33,34 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
-const slug = route.params.slug as string;
+const { selectVariation } = useProducts();
 
-const productId = slug.split('-').pop() ?? '0';
+const productPieces = (route.params.itemId as string).split('_');
+
+const productId = productPieces[0];
+let productParams: ProductParams = {
+  id: productId,
+};
+
+if (productPieces[1]) {
+  productParams.variationId = productPieces[1];
+}
 
 const { data: product, fetchProduct } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-await fetchProduct(productId);
+await fetchProduct(productParams);
+
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
+  product?.value?.variation?.id?.toString() ?? '',
+);
+
+selectVariation(productPieces[1] ? product.value : ({} as Product));
 await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();
