@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
@@ -30,10 +29,12 @@ definePageMeta({
 });
 
 const { t } = useI18n();
-const route = useRoute();
+const router = useRouter();
 const { getFacetsFromURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
+const { locale } = useI18n();
+const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
@@ -54,9 +55,9 @@ const breadcrumbs = computed(() => {
 });
 
 watch(
-  () => route.query,
-  async () => {
-    handleQueryUpdate();
+  () => locale.value,
+  async (changedLocale: any) => {
+    router.push(localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`));
   },
 );
 </script>
