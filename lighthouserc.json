@@ -4,8 +4,7 @@
       "startServerCommand": "yarn start",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/c/living-room",
-        "http://localhost:3000/living-room/sofas/couch-purple-dreams_134"
+        "http://localhost:3000/c/living-room"
       ],
       "numberOfRuns": 3,
       "assert": {

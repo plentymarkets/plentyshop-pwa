@@ -259,7 +259,7 @@ const focusTrigger = (index: number) => {
 watch(
   () => props.categories,
   async (categories: any) => {
-    categoryTree.value = categories
+    categoryTree.value = categories;
   },
 );
 </script>

@@ -1,4 +1,3 @@
-import { useRoute } from 'nuxt/app';
 import { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import type { Facet } from '@plentymarkets/shop-api';
 import { defaults, SelectVariation } from '~/composables';
