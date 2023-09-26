@@ -12,8 +12,8 @@ export default {
   payment: {
     paypal: {
       paymentId: 6001,
-      clientId: 'Ab_wQoMAfzuqCrl4gVfYvkNHmBS_s_rQKMafFJrArKJ4GZU8nbSIn53v4Q8ZZfoHR01kxnjkDF4yVLAv',
-      merchantId: '999JUBU6WMRWU',
+      clientId: 'AW6yq0sv_F3N_ADx892v7dZe_sW97-Ndh1S-PvR8IdpscLgZuqevJnQqUnvo4FeeNtJ-CJyU3-eLffJj',
+      merchantId: 'G3B6KHDK6UFM2',
     },
   },
 } as IntegrationConfig;

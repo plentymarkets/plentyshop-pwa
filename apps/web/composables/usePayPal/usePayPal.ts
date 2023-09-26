@@ -1,5 +1,6 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import { PayPalExecuteParams } from '@plentymarkets/shop-api';
+import { toRefs } from '@vueuse/shared';
 import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {
@@ -19,6 +20,7 @@ import type {
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
+    loading: false,
     paypalScript: null,
     order: null,
   }));
@@ -93,9 +95,12 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    */
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const executeOrder: executeOrder = async (params: PayPalExecuteParams) => {
+    state.value.loading = true;
+
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getExecutePayPalOrder(params));
     useHandleError(error.value);
 
+    state.value.loading = false;
     return data.value?.data ?? null;
   };
 
@@ -105,5 +110,6 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     createTransaction,
     executeOrder,
     loadScript,
+    ...toRefs(state.value),
   };
 };

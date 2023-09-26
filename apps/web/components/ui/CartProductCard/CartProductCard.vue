@@ -29,11 +29,11 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div v-if="currentSinglePrice">{{ $n(currentSinglePrice, 'currency') }}</div>
+      <div>{{ $n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
-          :base-price="productGetters.getDefaultBaseSinglePrice(cartItem.variation)"
+          :base-price="basePriceSingleValue"
           :unit-content="productGetters.getUnitContent(cartItem.variation)"
           :unit-name="productGetters.getUnitName(cartItem.variation)"
         />
@@ -54,6 +54,7 @@
           {{ $n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
+          :disabled="disabled"
           @change-quantity="debounceQuantity"
           :value="cartGetters.getItemQty(cartItem)"
           :min-value="1"
@@ -62,7 +63,7 @@
       </div>
     </div>
     <SfLoaderCircular v-if="deleteLoading" />
-    <SfIconDelete v-else class="cursor-pointer" @click="deleteItem" />
+    <SfIconDelete v-else-if="!disabled" class="cursor-pointer" @click="deleteItem" />
   </div>
 </template>
 
@@ -75,7 +76,9 @@ import type { CartProductCardProps } from '~/components/ui/CartProductCard/types
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
 
-const props = defineProps<CartProductCardProps>();
+const props = withDefaults(defineProps<CartProductCardProps>(), {
+  disabled: false,
+});
 const deleteLoading = ref(false);
 const changeQuantity = async (quantity: string) => {
   await setCartItemQuantity({
@@ -92,19 +95,8 @@ const deleteItem = async () => {
   deleteLoading.value = false;
 };
 
-const prices = computed(() => {
-  return {
-    special: cartGetters.getItemPrice(props.cartItem)?.special,
-    regular: cartGetters.getItemPrice(props.cartItem)?.regular,
-  };
-});
-
-const currentSinglePrice = computed(() => {
-  return prices.value ? prices.value.special || prices.value.regular : 0;
-});
-
 const currentFullPrice = computed(() => {
-  return (currentSinglePrice.value ?? 0) * cartGetters.getItemQty(props.cartItem);
+  return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
 
 const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
@@ -112,4 +104,11 @@ const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
 const debounceQuantity = _.debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
+
+const basePriceSingleValue = computed(() =>
+  props.cartItem?.variation
+    ? productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
+      productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
+    : 0,
+);
 </script>
