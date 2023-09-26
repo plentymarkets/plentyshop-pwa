@@ -21,7 +21,7 @@ const { price } = props;
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
-const mainPrice = computed<number>(() => {
+const mainPrice = computed(() => {
   if (!price) return 0;
 
   if (price.special) return price.special;
