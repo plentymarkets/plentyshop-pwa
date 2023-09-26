@@ -93,8 +93,8 @@
 import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfIconArrowBack, SfIconChevronRight } from '@storefront-ui/vue';
 import { useMediaQuery } from '@vueuse/core';
 
-const localePath = useLocalePath();
 
+const localePath = useLocalePath();
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
 const { t } = useI18n();
 const router = useRouter();
