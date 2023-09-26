@@ -1,8 +1,10 @@
-name: Add zip file to S3 bucket
+name: Deploy PWA
 
 on:
   # release:
     # types: [published]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
     inputs:
       tag-version:
@@ -46,10 +48,10 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
+      - name: Setup environment
         run: |
-          API_ENDPOINT=${{ secrets.SYSTEM_DOMAIN }}
-          yarn build
+          touch apps/web/.env
+          echo NUXT_PUBLIC_API_URL=${{ vars.API_URL }} >> apps/web/.env
 
       - name: Compress repo to Tar
         uses: a7ul/tar-action@v1.1.0
