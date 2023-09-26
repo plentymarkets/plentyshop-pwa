@@ -90,7 +90,7 @@
                         v-if="categoryTreeGetters.getName(child)"
                         :tag="NuxtLink"
                         size="sm"
-                        :href="generateCategoryLink(child)"
+                        :href="localePath(generateCategoryLink(child))"
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -136,7 +136,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" :tag="NuxtLink" :href="generateCategoryLink(node)">
+                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
