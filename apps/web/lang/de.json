@@ -429,6 +429,10 @@
       "termsAndConditions": "AGB"
     }
   },
+  "asterisk": "*",
+  "itemExclVAT": "inkl. ges. MwSt",
+  "itemInclVAT": "zzgl. ges. MwSt.",
+  "excludedShipping": "zzgl. Versandkosten",
   "lang": {
     "en": "Englisch",
     "de":"Deutsch"
@@ -448,5 +452,11 @@
     "unbrandedPay": "Bezahlen",
     "unbrandedCancel": "Abbrechen",
     "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum."
+  },
+  "graduatedPrices": {
+    "title": "Mehr kaufen, weniger bezahlen",
+    "price": "PREIS",
+    "quantity": "ANZAHL",
+    "discount": "RABATT"
   }
 }

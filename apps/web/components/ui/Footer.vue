@@ -18,7 +18,7 @@
               :tag="NuxtLink"
               class="no-underline text-neutral-600 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
               variant="secondary"
-              :to="link"
+              :to="localePath(link)"
             >
               {{ $t(`categories.${key}.subcategories.${subcategoryKey}`) }}
             </SfLink>
@@ -40,6 +40,8 @@
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories, companyName } from '~/mocks';
+
+const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

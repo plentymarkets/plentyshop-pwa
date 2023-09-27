@@ -95,7 +95,7 @@ export default defineNuxtConfig({
       pages.push(
         {
           name: 'category',
-          path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
+          path: '/c/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
           file: __dirname + '/pages/category/[slug].vue',
         },
         {
@@ -109,6 +109,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cookieGroups: cookieConfig,
+      showNetPrices: true,
     },
   },
   pwa: {

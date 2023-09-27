@@ -432,6 +432,10 @@
     "total": "Total"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "asterisk": "*",
+  "itemExclVAT": "Excl. VAT",
+  "itemInclVAT": "Incl. VAT",
+  "excludedShipping": "excl. Shipping",
   "lang": {
     "en": "English",
     "de":"German"
@@ -451,5 +455,11 @@
     "unbrandedPay": "Pay",
     "unbrandedCancel": "Cancel",
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date."
+  },
+  "graduatedPrices": {
+    "title": "Buy more, pay less",
+    "price": "PRICE",
+    "quantity": "QUANTITY",
+    "discount": "DISCOUNT"
   }
 }

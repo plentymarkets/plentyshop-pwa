@@ -6,12 +6,11 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <Price :price="productGetters.getPrice(product)" />
-    <!-- {{ product }} -->
+    <Price :price="currentActualPrice" :old-price="productGetters.getPrice(product).regular ?? 0" />
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
-        :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+        :base-price="basePriceSingleValue"
         :unit-content="productGetters.getUnitContent(product)"
         :unit-name="productGetters.getUnitName(product)"
       />
@@ -31,6 +30,7 @@
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
     </div>
+    <GraduatedPriceList v-if="product" :product="product" />
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
@@ -61,6 +61,17 @@
           </SfButton>
         </SfTooltip>
       </div>
+      <div class="mt-4 typography-text-xs flex gap-1">
+        <span>{{ $t('asterisk') }}</span>
+        <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+        <span v-else>{{ $t('itemInclVAT') }}</span>
+        <span>{{ $t('excludedShipping') }}</span>
+      </div>
+      <PayPalExpressButton
+        class="mt-4"
+        type="SingleItem"
+        :value="{ product: product, quantity: quantitySelectorValue }"
+      />
     </div>
   </section>
 </template>
@@ -78,6 +89,9 @@ import {
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
+
 const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
@@ -87,6 +101,18 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
+const currentActualPrice = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+    productGetters.getPrice(product.value)?.special ??
+    productGetters.getPrice(product.value)?.regular ??
+    0,
+);
+const basePriceSingleValue = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
+    productGetters.getDefaultBaseSinglePrice(product.value),
+);
 
 const handleAddToCart = async () => {
   await addToCart({
