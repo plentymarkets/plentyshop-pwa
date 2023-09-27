@@ -45,6 +45,12 @@
           </section>
           <LazyCategoryEmptyState v-else />
           <NuxtLazyHydrate when-visible>
+            <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+              <span>{{ $t('asterisk') }}</span>
+              <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+              <span v-else>{{ $t('itemInclVAT') }}</span>
+              <span>{{ $t('excludedShipping') }}</span>
+            </div>
             <UiPagination
               v-if="totalProducts > 0"
               :current-page="getFacetsFromURL().page ?? 1"
@@ -72,6 +78,9 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 });
 
 const { getFacetsFromURL } = useCategoryFilter();
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const { isOpen, open, close } = useDisclosure();
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);

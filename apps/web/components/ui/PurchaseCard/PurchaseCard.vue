@@ -61,7 +61,12 @@
           </SfButton>
         </SfTooltip>
       </div>
-
+      <div class="mt-4 typography-text-xs flex gap-1">
+        <span>{{ $t('asterisk') }}</span>
+        <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+        <span v-else>{{ $t('itemInclVAT') }}</span>
+        <span>{{ $t('excludedShipping') }}</span>
+      </div>
       <PayPalExpressButton
         class="mt-4"
         type="SingleItem"
@@ -83,6 +88,9 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const props = defineProps<PurchaseCardProps>();
 
