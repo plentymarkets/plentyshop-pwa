@@ -39,6 +39,7 @@
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
           {{ $n(mainPrice, 'currency') }}
+          <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
         </span>
         <span
           v-if="oldPrice && oldPrice !== mainPrice"
@@ -90,6 +91,9 @@ const { addToCart } = useCart();
 const { send } = useNotification();
 const { t } = useI18n();
 const loading = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
