@@ -1,4 +1,3 @@
-import { useRoute } from 'nuxt/app';
 import { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import type { Facet } from '@plentymarkets/shop-api';
 import { defaults, SelectVariation } from '~/composables';
@@ -26,17 +25,7 @@ export const useProducts: UseProductsReturn = () => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
-
-    if (error.value) {
-      const route = useRoute();
-
-      throw createError({
-        statusCode: 404,
-        message: `Page Not Found: ${route.fullPath}`,
-        fatal: true,
-      });
-    }
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 

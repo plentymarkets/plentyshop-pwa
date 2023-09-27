@@ -6,7 +6,7 @@
     >
       <div v-for="item in items" :key="item.name" class="mr-2 md:mr-6 group">
         <NuxtLink
-          :to="item.slug"
+          :to="localePath(item.slug)"
           class="w-full h-full z-1 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-md"
         >
           <div
@@ -36,6 +36,8 @@
 
 <script setup lang="ts">
 import type { CategoryCardProps } from '~/components/ui/CategoryCard/types';
+
+const localePath = useLocalePath();
 
 defineProps<CategoryCardProps>();
 </script>
