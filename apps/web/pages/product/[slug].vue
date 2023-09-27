@@ -99,7 +99,9 @@ watch(
     if (value !== oldValue) {
       await fetchProduct(productParams);
 
-      router.push(localePath(`/${product.value.texts.urlPath}_${product.value.item.id}`));
+      router.push(
+        localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+      );
     }
   },
 );
