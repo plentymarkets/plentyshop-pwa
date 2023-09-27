@@ -8,4 +8,5 @@ export interface Attribute {
 
 export type CartProductCardProps = {
   cartItem: CartItem;
+  disabled?: boolean;
 };

@@ -9,7 +9,7 @@
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <ContactInformation />
+        <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           id="billing-address"
@@ -18,7 +18,7 @@
           :button-text="$t('billing.addButton')"
           :addresses="billingAddresses"
           :type="AddressType.Billing"
-          @on-saved="loadAddresses"
+          disabled
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
@@ -28,26 +28,14 @@
           :button-text="$t('shipping.addButton')"
           :addresses="shippingAddresses"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
+          disabled
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
-        <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
-          <ShippingMethod
-            :shipping-methods="shippingMethods"
-            :disabled="disableShippingPayment"
-            @update:shipping-method="handleShippingMethodUpdate($event)"
-          />
-          <SfLoaderCircular
-            v-if="disableShippingPayment"
-            class="absolute mt-5 right-0 left-0 m-auto z-[999]"
-            size="2xl"
-          />
+        <div class="relative">
+          <ShippingMethod :shipping-methods="shippingMethods" disabled />
+
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment
-            :payment-methods="paymentMethods"
-            :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate($event)"
-          />
+          <CheckoutPayment :payment-methods="paymentMethods" disabled />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
@@ -96,26 +84,23 @@
       </div>
       <div class="col-span-5">
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
-          <UiCartProductCard :cart-item="cartItem" />
+          <UiCartProductCard disabled :cart-item="cartItem" />
         </div>
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
-            <PayPalExpressButton
-              type="Checkout"
-              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="validateTerms"
-            />
             <SfButton
-              v-else
               type="submit"
               @click="order"
-              :disabled="createOrderLoading || disableShippingPayment || cartLoading"
+              :disabled="createOrderLoading || cartLoading || executeOrderLoading"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+              <SfLoaderCircular
+                v-if="createOrderLoading || cartLoading || executeOrderLoading"
+                class="flex justify-center items-center"
+                size="sm"
+              />
               <span v-else>
                 {{ $t('buy') }}
               </span>
@@ -128,10 +113,9 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { AddressType, PaymentMethod } from '@plentymarkets/shop-api';
+import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
-import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
@@ -139,28 +123,20 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const ID_BILLING_ADDRESS = '#billing-address';
-const ID_SHIPPING_ADDRESS = '#shipping-address';
 
-const { send } = useNotification();
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
+const { data: cart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const {
-  loading: loadShipping,
-  data: shippingMethodData,
-  getShippingMethods,
-  saveShippingMethod,
-} = useCartShippingMethods();
-const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
-const i18n = useI18n();
+const { loading: executeOrderLoading, executeOrder } = usePayPal();
+const route = useRoute();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
-const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -172,22 +148,12 @@ await loadAddresses();
 await getShippingMethods();
 await fetchPaymentMethods();
 
+await savePaymentMethod(
+  paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id ?? 0,
+);
+
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
-const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
-
-const handleShippingMethodUpdate = async (shippingMethodId: string) => {
-  await saveShippingMethod(Number(shippingMethodId));
-  await fetchPaymentMethods();
-  await getCart();
-
-  setShippingPrivacyAgreement(false);
-};
-
-const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
-  await savePaymentMethod(paymentMethodId);
-  await getShippingMethods();
-};
 
 const scrollToHTMLObject = (object: string) => {
   const element = document.querySelector(object) as HTMLElement;
@@ -212,36 +178,21 @@ const validateTerms = (): boolean => {
   return true;
 };
 
-const validateAddresses = () => {
-  if (billingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: i18n.t('billingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_BILLING_ADDRESS);
-    return false;
-  }
-
-  if (shippingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: i18n.t('shippingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-    return false;
-  }
-
-  return true;
-};
-
 const order = async () => {
-  if (!validateAddresses() || !validateTerms()) {
+  if (!validateTerms()) {
     return;
   }
 
   const data = await createOrder({
     paymentId: cart.value.methodOfPaymentId,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+  });
+
+  await executeOrder({
+    mode: 'paypal',
+    plentyOrderId: Number.parseInt(orderGetters.getId(data)),
+    paypalTransactionId: route?.query?.orderId?.toString() ?? '',
+    paypalMerchantId: paypalGetters.getMerchantId() ?? '',
   });
 
   clearCartItems();

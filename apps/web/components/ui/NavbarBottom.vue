@@ -10,7 +10,7 @@
       ]"
       size="sm"
       :tag="NuxtLink"
-      :to="label === 'Account' && !isAuthorized ? '/login' : link"
+      :to="localePath(label === 'Account' && !isAuthorized ? '/login' : link)"
     >
       <template #prefix>
         <div class="relative">
@@ -31,6 +31,7 @@
 import { SfButton, SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson } from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
 
+const localePath = useLocalePath();
 const { t } = useI18n();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();

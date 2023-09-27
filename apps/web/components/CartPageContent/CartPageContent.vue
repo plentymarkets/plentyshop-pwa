@@ -8,9 +8,11 @@
     <div class="relative col-span-5 md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
       <OrderSummary v-if="cart" :cart="cart">
-        <SfButton :tag="NuxtLink" :to="paths.checkout" size="lg" class="w-full mb-4 md:mb-0">
+        <SfButton :tag="NuxtLink" :to="localePath(paths.checkout)" size="lg" class="w-full mb-4 md:mb-0">
           {{ $t('goToCheckout') }}
         </SfButton>
+
+        <PayPalExpressButton class="mt-4" type="CartPreview" />
       </OrderSummary>
     </div>
   </div>
@@ -24,6 +26,8 @@
 import { SfButton } from '@storefront-ui/vue';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
+
+const localePath = useLocalePath();
 
 const { data: cart, loading } = useCart();
 
