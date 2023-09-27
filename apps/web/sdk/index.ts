@@ -25,10 +25,11 @@ export const useSdk = () => {
   // This ensures that the session is established and other required cookies are sent to the server.
   interceptorId = client.interceptors.request.use(
     (config) => {
-      if (process.server) {
+      if (process.server && config.baseURL?.includes('/plentysystems')) {
         if (!config.headers) {
           config.headers = {};
         }
+
         config.headers.cookie = headers.cookie ?? '';
       }
 
