@@ -429,6 +429,10 @@
       "termsAndConditions": "AGB"
     }
   },
+  "asterisk": "*",
+  "itemExclVAT": "inkl. ges. MwSt",
+  "itemInclVAT": "zzgl. ges. MwSt.",
+  "excludedShipping": "zzgl. Versandkosten",
   "lang": {
     "en": "Englisch",
     "de":"Deutsch"
