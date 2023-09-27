@@ -10,6 +10,10 @@
 const { getCategoryTree } = useCategoryTree();
 const { setInitialData } = useInitialSetup();
 const route = useRoute();
+const { locale } = useI18n();
+const vsfLocale = useCookie('vsf-locale');
+
+vsfLocale.value = locale.value;
 
 if (route?.meta.layoutName !== 'checkout') {
   setInitialData();
@@ -23,4 +27,13 @@ onMounted(() => {
   // Need this class for cypress testing
   bodyClass.value = 'hydrated';
 });
+
+watch(
+  () => locale.value,
+  async (locale: any) => {
+    vsfLocale.value = locale;
+
+    await getCategoryTree();
+  },
+);
 </script>

@@ -17,7 +17,7 @@
         <span class="font-medium">{{ email }}</span>
       </i18n-t>
       <SfButton
-        :to="paths.authResetPassword"
+        :to="localePath(paths.authResetPassword)"
         :tag="NuxtLink"
         variant="tertiary"
         data-testid="reset-password-page-reset-button"
@@ -33,6 +33,8 @@ import { SfButton } from '@storefront-ui/vue';
 definePageMeta({
   layout: false,
 });
+
+const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const email = ref('hieronim.anonim@gmail.com');

@@ -15,7 +15,7 @@
           square
           variant="tertiary"
           :tag="NuxtLink"
-          :to="paths.accountMyOrders"
+          :to="localePath(paths.accountMyOrders)"
           class="md:absolute md:top-2 md:right-2"
         >
           <SfIconClose class="text-neutral-500" />
@@ -157,6 +157,7 @@ import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
 const route = useRoute();
 const router = useRouter();
+const localePath = useLocalePath();
 
 const { isOpen } = useDisclosure({ initialValue: true });
 

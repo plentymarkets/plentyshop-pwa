@@ -26,7 +26,7 @@
               <li v-for="item in breadcrumbs" :key="item.name" class="py-2 last-of-type:hidden">
                 <SfLink
                   :tag="NuxtLink"
-                  :to="item.link"
+                  :to="localePath(item.link)"
                   variant="secondary"
                   class="leading-5 no-underline text-inherit hover:underline active:underline whitespace-nowrap outline-secondary-600"
                 >
@@ -45,7 +45,7 @@
         <SfLink
           v-if="index < breadcrumbs.length - 1"
           :tag="NuxtLink"
-          :to="item.link"
+          :to="localePath(item.link)"
           variant="secondary"
           class="leading-5 no-underline hover:underline active:underline whitespace-nowrap outline-secondary-600 text-inherit"
         >
@@ -64,6 +64,8 @@ import { SfDropdown, SfButton, SfLink, SfIconMoreHoriz } from '@storefront-ui/vu
 import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();
+
+const localePath = useLocalePath();
 
 const dropdownOpened = ref(false);
 const close = () => {

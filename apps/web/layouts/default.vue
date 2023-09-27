@@ -20,7 +20,7 @@
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
-          :to="paths.cart"
+          :to="localePath(paths.cart)"
           :aria-label="$t('numberInCart', cartItemsCount)"
           variant="tertiary"
           square
@@ -62,7 +62,7 @@
               <SfListItem
                 v-else
                 :tag="NuxtLink"
-                :to="link"
+                :to="localePath(link)"
                 :class="{ 'bg-neutral-200': $route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
@@ -189,6 +189,7 @@ defineProps<DefaultLayoutProps>();
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
+const localePath = useLocalePath();
 usePageTitle();
 
 const isLogin = ref(true);

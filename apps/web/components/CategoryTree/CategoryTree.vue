@@ -12,7 +12,7 @@
     <template v-if="parent">
       <CategoryTreeItem
         :name="categoryTreeGetters.getName(parent)"
-        :href="categoryTreeGetters.generateCategoryLink(categoryTree, parent)"
+        :href="localePath(categoryTreeGetters.generateCategoryLink(categoryTree, parent))"
         :count="categoryTreeGetters.getCount(parent)"
       >
         <SfIconArrowBack size="sm" class="text-neutral-500 mr-2" />
@@ -23,7 +23,7 @@
         v-for="(categoryItem, index) in categoryTreeGetters.getItems(categoryTreeItem)"
         :key="index"
         :name="categoryTreeGetters.getName(categoryItem)"
-        :href="categoryTreeGetters.generateCategoryLink(categoryTree, categoryItem)"
+        :href="localePath(categoryTreeGetters.generateCategoryLink(categoryTree, categoryItem))"
         :count="categoryTreeGetters.getCount(categoryItem)"
       />
     </ul>
@@ -38,6 +38,7 @@ import { type CategoryTreeProps } from '~/components/CategoryTree/types';
 const props = defineProps<CategoryTreeProps>();
 
 const { data: categoryTree } = useCategoryTree();
+const localePath = useLocalePath();
 
 const categoryTreeItem = categoryTreeGetters.findCategoryById(
   categoryTree.value,
