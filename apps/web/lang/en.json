@@ -432,6 +432,10 @@
     "total": "Total"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
+  "asterisk": "*",
+  "itemExclVAT": "Excl. VAT",
+  "itemInclVAT": "Incl. VAT",
+  "excludedShipping": "excl. Shipping",
   "lang": {
     "en": "English",
     "de":"German"

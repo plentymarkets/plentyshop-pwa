@@ -22,10 +22,16 @@
         </h1>
         <p class="typography-text-base md:typography-text-lg">{{ description }}</p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg" :tag="NuxtLink" :to="primaryButtonLink">
+          <SfButton size="lg" :tag="NuxtLink" :to="localePath(primaryButtonLink)">
             {{ primaryButtonText }}
           </SfButton>
-          <SfButton size="lg" :tag="NuxtLink" :to="secondaryButtonLink" class="bg-white" variant="secondary">
+          <SfButton
+            size="lg"
+            :tag="NuxtLink"
+            :to="localePath(secondaryButtonLink)"
+            class="bg-white"
+            variant="secondary"
+          >
             {{ secondaryButtonText }}
           </SfButton>
         </div>
@@ -39,6 +45,8 @@ import { SfButton } from '@storefront-ui/vue';
 import type { HeroProps } from '~/components/ui/Hero/types';
 
 defineProps<HeroProps>();
+
+const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

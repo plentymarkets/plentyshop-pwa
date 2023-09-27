@@ -26,7 +26,7 @@
               {{ item.title }}
             </h2>
             <p class="typography-text-base block text-center md:text-left mb-4">{{ item.description }}</p>
-            <SfButton class="!bg-black" :tag="NuxtLink" :to="paths.category">
+            <SfButton class="!bg-black" :tag="NuxtLink" :to="localePath(paths.category)">
               {{ item.buttonText }}
             </SfButton>
           </div>
@@ -50,6 +50,8 @@ import { SfButton } from '@storefront-ui/vue';
 import type { DisplayProps } from '~/components/ui/Display/types';
 
 defineProps<DisplayProps>();
+
+const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
