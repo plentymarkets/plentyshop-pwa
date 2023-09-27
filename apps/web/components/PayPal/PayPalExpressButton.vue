@@ -18,7 +18,7 @@ const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
-const { data: cart, clearCartItems } = useCart();
+const { data: cart, addToCart, clearCartItems } = useCart();
 const router = useRouter();
 const emits = defineEmits(['on-click']);
 
@@ -34,7 +34,11 @@ const paypal = await loadScript(currency);
 
 const onInit = (actions: OnInitActions) => {
   if (props.type === TypeCheckout) {
-    actions.disable();
+    if (props.disabled) {
+      actions.disable();
+    } else {
+      actions.enable();
+    }
 
     watch(props, (watchProps) => {
       if (watchProps.disabled) {
@@ -58,9 +62,9 @@ const onClick = async () => {
 };
 
 const onApprove = async (data: OnApproveData) => {
-  const res = await approveOrder(data.orderID, data.payerID ?? '');
+  const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if (res?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
+  if (result?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
     router.push(`/readonly-checkout/?payerId=${data.payerID}&orderId=${data.orderID}`);
   } else if (props.type === TypeCheckout) {
     const order = await createOrder({
