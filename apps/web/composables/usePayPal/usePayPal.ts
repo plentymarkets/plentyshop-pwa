@@ -1,5 +1,5 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import { PayPalExecuteParams } from '@plentymarkets/shop-api';
+import { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
 import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {
@@ -9,6 +9,8 @@ import type {
   LoadScript,
   UsePayPalState,
   approveOrder,
+  createCreditCardTransaction,
+  captureOrder, loadConfig,
 } from './types';
 
 /**
@@ -21,7 +23,21 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
     paypalScript: null,
     order: null,
+    config: null,
   }));
+
+  /**
+   * @description Function to get the paypal config.
+   * @example
+   * loadScript('EUR');
+   */
+  const loadConfig: loadConfig = async () => {
+    if (!state.value.config) {
+      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalDataClientToken());
+      useHandleError(error.value);
+      state.value.config = data.value?.data ?? null;
+    }
+  };
 
   /**
    * @description Function for get the paypal sdk script.
@@ -29,11 +45,12 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * loadScript('EUR');
    */
   const loadScript: LoadScript = async (currency: string) => {
-    if (paypalGetters.getClientId()) {
+    await loadConfig();
+    if (paypalGetters.getClientId() && state.value.config) {
       try {
         state.value.paypalScript = await loadPayPalScript({
           clientId: paypalGetters.getClientId() ?? '',
-          dataClientToken: 'sandbox_A3nu7vLSbEg7MDUw5pJ1J0N3ifBEANwpKORede0hoX9DGdeRnqH70A40',
+          dataClientToken: state.value.config.client_token,
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components: 'messages,buttons,funding-eligibility,hosted-fields,payment-fields,marks&enable-funding=paylater',
@@ -101,11 +118,40 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     return data.value?.data ?? null;
   };
 
+  const createCreditCardTransaction: createCreditCardTransaction = async () => {
+    await useAsyncData(() =>
+      useSdk().plentysystems.doAdditionalInformation({
+        orderContactWish: null,
+        orderCustomerSign: null,
+        shippingPrivacyHintAccepted: true,
+        templateType: 'checkout',
+      }),
+    );
+
+    const { error: preparePaymentError } = await useAsyncData(() => useSdk().plentysystems.doPreparePayment());
+    useHandleError(preparePaymentError.value);
+
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePayPalCreditCardTransaction());
+    useHandleError(error.value);
+
+    return data.value?.data ?? null;
+  };
+
+  const captureOrder: captureOrder = async (params: PayPalCaptureOrderParams) => {
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrder(params));
+    useHandleError(error.value);
+
+    return data.value?.data ?? null;
+  };
+
   return {
     state,
     approveOrder,
     createTransaction,
     executeOrder,
+    loadConfig,
     loadScript,
+    createCreditCardTransaction,
+    captureOrder,
   };
 };

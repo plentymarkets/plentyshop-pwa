@@ -8,7 +8,6 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
 import { paypalGetters } from '~/getters/paypalGetters';
 
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const paypalButton = ref<HTMLElement | null>(null);
 const vsfCurrency = useCookie('vsf-currency').value as string;
 const fallbackCurrency = useAppConfig().fallbackCurrency as string;
@@ -17,6 +16,7 @@ const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
 const router = useRouter();
 const emits = defineEmits(['on-click']);
@@ -30,7 +30,12 @@ const props = defineProps({
 const paypal = await loadScript(currency);
 
 const onInit = (actions: OnInitActions) => {
-  actions.disable();
+  if (props.disabled) {
+    actions.disable();
+  } else {
+    actions.enable();
+  }
+
   watch(props, (watchProps) => {
     if (watchProps.disabled) {
       actions.disable();
@@ -47,6 +52,7 @@ const onApprove = async (data: OnApproveData) => {
     paymentId: cart.value.methodOfPaymentId,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
+  console.log('order', order);
 
   await executeOrder({
     mode: 'paypal',

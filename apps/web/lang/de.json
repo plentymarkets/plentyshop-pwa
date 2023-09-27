@@ -446,6 +446,7 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedNameOnCard": "Karteninhaber",
     "unbrandedPay": "Bezahlen",
-    "unbrandedCancel": "Abbrechen"
+    "unbrandedCancel": "Abbrechen",
+    "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum."
   }
 }

@@ -107,9 +107,21 @@
               @on-click="validateTerms"
             />
             <SfButton
+              v-else-if="selectedPaymentId === 6008"
+              type="submit"
+              @click="openPayPalCardDialog"
+              :disabled="createOrderLoading || disableShippingPayment || cartLoading || paypalCardDialog"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer"
+            >
+              <span>
+                {{ $t('buy') }}
+              </span>
+            </SfButton>
+            <SfButton
               v-else
               type="submit"
-              @click="paypalCardDialog = true"
+              @click="order"
               :disabled="createOrderLoading || disableShippingPayment || cartLoading"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
@@ -130,7 +142,7 @@
       role="paypal"
       disable-click-away
     >
-      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" @confirm-payment="finalizeOrder" />
+      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
     </UiModal>
   </NuxtLayout>
 </template>
@@ -245,6 +257,14 @@ const validateAddresses = () => {
 
 const paypalCardDialog = ref(false);
 
+const openPayPalCardDialog = () => {
+  if (!validateAddresses() || !validateTerms()) {
+    return;
+  }
+
+  paypalCardDialog.value = true;
+};
+
 const order = async () => {
   if (!validateAddresses() || !validateTerms()) {
     return;
@@ -254,20 +274,16 @@ const order = async () => {
   if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
     paypalCardDialog.value = true;
   } else {
-    finalizeOrder();
-  }
-};
+    const data = await createOrder({
+      paymentId: paymentMethodData.value.selected,
+      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    });
 
-const finalizeOrder = async () => {
-  const data = await createOrder({
-    paymentId: paymentMethodData.value.selected,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
+    clearCartItems();
 
-  clearCartItems();
-
-  if (data?.order?.id) {
-    router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+    if (data?.order?.id) {
+      router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+    }
   }
 };
 </script>

@@ -449,6 +449,7 @@
     "unbrandedCvv": "CVV",
     "unbrandedNameOnCard": "Name on card",
     "unbrandedPay": "Pay",
-    "unbrandedCancel": "Cancel"
+    "unbrandedCancel": "Cancel",
+    "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date."
   }
 }
