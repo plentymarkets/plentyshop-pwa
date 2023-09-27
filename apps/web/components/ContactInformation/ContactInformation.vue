@@ -53,6 +53,7 @@ const cart = ref({
 });
 
 const isEmailEmpty = () => {
+  cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
   return cart.value.customerEmail === '';
 };
 
@@ -64,14 +65,12 @@ const openContactFormIfNoEmail = () => {
 
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
-
   await loginAsGuest(email);
-
+  await getSession();
   close();
 };
 
 const getEmailFromSession = async () => {
-  await getSession();
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
 };
 

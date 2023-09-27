@@ -110,6 +110,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: 'http://localhost:8181',
       cookieGroups: cookieConfig,
+      showNetPrices: true,
     },
   },
   pwa: {
