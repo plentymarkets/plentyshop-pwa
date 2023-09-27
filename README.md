@@ -89,26 +89,9 @@ Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your 
 
 ## Deployment
 
-This section describes how to deploy your app on your live domain.
+The app uses GitHub Actions to deploy to the plentysystems system.
 
-### plentysystems system
-
-1. Log into your plentysystems system.
-2. Go to **CMS » Deployment**.
-3. Click on :plus: to add a new application.
-4. Fill in the required information.
-5. **Create** the application.
-
-You need the generated **Upload Endpoint** and **Access key** in the next part.
-
-### GitHub
-
-1. In your forked repository, [create 2 encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository):
-
-    - `URL_ENDPOINT`: The **Upload Endpoint** from the previous part.
-    - `URL_ENDPOINT_TOKEN`: The **Access key** from the previous part.
-
-2. In your forked repository, enable the GitHub Action `Add zip file to S3 bucket` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
+For detailed setup instructions, refer to the [deployment guide](./docs/deployment/deployment.md).
 
 ## Resources
 
