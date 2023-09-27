@@ -39,7 +39,10 @@ import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
+const router = useRouter();
+const { locale } = useI18n();
 const { selectVariation } = useProducts();
+const localePath = useLocalePath();
 
 const productPieces = (route.params.itemId as string).split('_');
 
@@ -89,4 +92,17 @@ if (product.value) {
 definePageMeta({
   layout: false,
 });
+
+watch(
+  () => locale.value,
+  async (value, oldValue) => {
+    if (value !== oldValue) {
+      await fetchProduct(productParams);
+
+      router.push(
+        localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+      );
+    }
+  },
+);
 </script>
