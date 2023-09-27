@@ -109,6 +109,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       cookieGroups: cookieConfig,
+      showNetPrices: true,
     },
   },
   pwa: {
