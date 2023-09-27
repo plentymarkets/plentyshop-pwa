@@ -95,10 +95,12 @@ definePageMeta({
 
 watch(
   () => locale.value,
-  async () => {
-    await fetchProduct(productParams);
+  async (value, oldValue) => {
+    if (value !== oldValue) {
+      await fetchProduct(productParams);
 
-    router.push(localePath(`/${product.value.texts.urlPath}_${product.value.item.id}`));
+      router.push(localePath(`/${product.value.texts.urlPath}_${product.value.item.id}`));
+    }
   },
 );
 </script>
