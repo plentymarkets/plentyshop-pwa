@@ -107,8 +107,7 @@ onMounted(() => {
           onInit(data, actions) {
             onInit(actions);
           },
-          // eslint-disable-next-line no-unused-vars
-          onError(error) {
+          onError() {
             // eslint-disable-next-line unicorn/expiring-todo-comments
             // TODO: handle error
           },
