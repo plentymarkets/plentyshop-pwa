@@ -93,6 +93,11 @@ definePageMeta({
   layout: false,
 });
 
+// eslint-disable-next-line unicorn/expiring-todo-comments
+/* TODO: This should only be temporary.
+ *  It changes the url of the product page while on the page and switching the locale.
+ *  Should be removed when the item search is refactored.
+ */
 watch(
   () => locale.value,
   async (value, oldValue) => {
