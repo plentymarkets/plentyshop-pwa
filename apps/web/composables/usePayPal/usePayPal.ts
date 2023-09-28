@@ -10,14 +10,15 @@ import type {
   UsePayPalState,
   approveOrder,
   createCreditCardTransaction,
-  captureOrder, loadConfig,
+  captureOrder,
+  loadConfig,
 } from './types';
 
 /**
  * @description Composable for paypal.
  * @returns {@link UsePayPalMethodsReturn}
  * @example
- * const { loadScript } = usePayPal();
+ * const { loadScript, loadConfig, createTransaction,  } = usePayPal();
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
@@ -28,9 +29,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   }));
 
   /**
-   * @description Function to get the paypal config.
+   * @description Function to get the PayPal config.
    * @example
-   * loadScript('EUR');
+   * loadConfig();
    */
   const loadConfig: loadConfig = async () => {
     if (!state.value.config) {
@@ -122,6 +123,12 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     return data.value?.data ?? null;
   };
 
+  /**
+   * @description Function for creating a PayPal credit card transaction.
+   * @example
+   * createCreditCardTransaction();
+   */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const createCreditCardTransaction: createCreditCardTransaction = async () => {
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
@@ -141,6 +148,16 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     return data.value?.data ?? null;
   };
 
+  /**
+   * @description Function for (re-)capturing a PayPal order.
+   * @example
+   * captureOrder({
+   *    paypalOrderId: string;
+   *    paypalPayerId: string;
+   *    plentyOrderId?: number; // optional, if set the order will be recaptured
+   * });
+   */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const captureOrder: captureOrder = async (params: PayPalCaptureOrderParams) => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrder(params));
     useHandleError(error.value);

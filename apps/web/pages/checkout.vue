@@ -111,7 +111,7 @@
               v-else-if="selectedPaymentId === 6008"
               type="submit"
               @click="openPayPalCardDialog"
-              :disabled="createOrderLoading || disableShippingPayment || cartLoading || paypalCardDialog"
+              :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >

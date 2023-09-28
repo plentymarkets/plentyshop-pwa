@@ -41,7 +41,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const paymentValue = preparePaymentData.value?.data.value || '""';
 
     switch (paymentType) {
-      case 'continue': {
+      case 'continue' || 'htmlContent': {
         const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
         useHandleError(error.value);
         if (error.value) {
