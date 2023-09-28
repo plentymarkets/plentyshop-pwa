@@ -5,11 +5,10 @@ import { initSDK, buildModule } from '@vue-storefront/sdk';
 let interceptorId: number | null = null;
 
 export const useSdk = () => {
+  const config = useRuntimeConfig();
   const sdkConfig = {
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
-      apiUrl: process.env.API_ENDPOINT
-        ? `${process.env.API_ENDPOINT}/plentysystems`
-        : 'http://localhost:8181/plentysystems',
+      apiUrl: `${config.public.apiUrl}/plentysystems`,
     }),
   };
 

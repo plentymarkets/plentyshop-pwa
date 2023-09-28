@@ -39,7 +39,10 @@ import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
+const router = useRouter();
+const { locale } = useI18n();
 const { selectVariation } = useProducts();
+const localePath = useLocalePath();
 
 const productPieces = (route.params.itemId as string).split('_');
 
@@ -89,4 +92,22 @@ if (product.value) {
 definePageMeta({
   layout: false,
 });
+
+// eslint-disable-next-line unicorn/expiring-todo-comments
+/* TODO: This should only be temporary.
+ *  It changes the url of the product page while on the page and switching the locale.
+ *  Should be removed when the item search is refactored.
+ */
+watch(
+  () => locale.value,
+  async (value, oldValue) => {
+    if (value !== oldValue) {
+      await fetchProduct(productParams);
+
+      router.push(
+        localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+      );
+    }
+  },
+);
 </script>
