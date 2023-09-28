@@ -1,9 +1,7 @@
 import integrationConfig from '../integration.config';
 
 interface PayPalConfig {
-  paymentId: number;
   clientId: string;
-  creditCardPaymentId: number;
   merchantId: string;
 }
 
