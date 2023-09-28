@@ -15,10 +15,10 @@ import type {
 } from './types';
 
 /**
- * @description Composable for paypal.
+ * @description Composable for PayPal.
  * @returns {@link UsePayPalMethodsReturn}
  * @example
- * const { loadScript, loadConfig, createTransaction,  } = usePayPal();
+ * const { loadScript, loadConfig, createTransaction, approveOrder } = usePayPal();
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
@@ -154,7 +154,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * captureOrder({
    *    paypalOrderId: string;
    *    paypalPayerId: string;
-   *    plentyOrderId?: number; // optional, if set the order will be recaptured
+   *    plentyOrderId?: number; // optional: the order will be recaptured
    * });
    */
   // eslint-disable-next-line unicorn/consistent-function-scoping
