@@ -9,7 +9,6 @@ import { v4 as uuid } from 'uuid';
 import { PaypalButtonPropsType } from '~/components/PayPal/types';
 import { paypalGetters } from '~/getters/paypalGetters';
 
-const { shippingPrivacyAgreement } = useAdditionalInformation();
 const paypalButton = ref<HTMLElement | null>(null);
 const vsfCurrency = useCookie('vsf-currency').value as string;
 const fallbackCurrency = useAppConfig().fallbackCurrency as string;
@@ -18,7 +17,8 @@ const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
-const { data: cart, clearCartItems, addToCart } = useCart();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { data: cart, addToCart, clearCartItems } = useCart();
 const router = useRouter();
 const emits = defineEmits(['on-click']);
 
@@ -34,7 +34,11 @@ const paypal = await loadScript(currency);
 
 const onInit = (actions: OnInitActions) => {
   if (props.type === TypeCheckout) {
-    actions.disable();
+    if (props.disabled) {
+      actions.disable();
+    } else {
+      actions.enable();
+    }
 
     watch(props, (watchProps) => {
       if (watchProps.disabled) {
@@ -58,13 +62,11 @@ const onClick = async () => {
 };
 
 const onApprove = async (data: OnApproveData) => {
-  const res = await approveOrder(data.orderID, data.payerID ?? '');
+  const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if (res?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
+  if (result?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
     router.push(`/readonly-checkout/?payerId=${data.payerID}&orderId=${data.orderID}`);
-  }
-
-  if (props.type === TypeCheckout) {
+  } else if (props.type === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -105,8 +107,7 @@ onMounted(() => {
           onInit(data, actions) {
             onInit(actions);
           },
-          // eslint-disable-next-line no-unused-vars
-          onError(error) {
+          onError() {
             // eslint-disable-next-line unicorn/expiring-todo-comments
             // TODO: handle error
           },

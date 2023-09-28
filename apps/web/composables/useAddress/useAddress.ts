@@ -9,8 +9,16 @@ import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } f
  * @description Composable for getting  addresses from the current user session.
  * @param type {@link AddressType}
  * @example
- * const { data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault } = useAddress(AddressType.Billing);
- * const { data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault } = useAddress(AddressType.Shipping);
+ * const {
+ * data, loading,
+ * getAddresses, defaultAddressId,
+ * saveAddress, deleteAddress,
+ * setDefault } = useAddress(AddressType.Billing);
+ *
+ * const { data, loading,
+ * getAddresses, defaultAddressId,
+ * saveAddress, deleteAddress,
+ * setDefault } = useAddress(AddressType.Shipping);
  */
 
 export const useAddress: UseAddressReturn = (type: AddressType) => {

@@ -103,10 +103,22 @@
           <OrderSummary v-if="cart" :cart="cart">
             <PayPalExpressButton
               type="Checkout"
-              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+              v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
               @on-click="validateTerms"
             />
+            <SfButton
+              v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
+              type="submit"
+              @click="openPayPalCardDialog"
+              :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer"
+            >
+              <span>
+                {{ $t('buy') }}
+              </span>
+            </SfButton>
             <SfButton
               v-else
               type="submit"
@@ -124,15 +136,24 @@
         </div>
       </div>
     </div>
+    <UiModal
+      v-model="paypalCardDialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      tag="section"
+      disable-click-away
+    >
+      <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
+    </UiModal>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { paypalGetters } from '~/getters/paypalGetters';
+import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 
 definePageMeta({
   layoutName: 'checkout',
@@ -157,10 +178,16 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
 const i18n = useI18n();
-
+const paypalCardDialog = ref(false);
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const paypalPaymentId = computed(() =>
+  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
+);
+const paypalCreditCardPaymentId = computed(() =>
+  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
+);
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -234,20 +261,33 @@ const validateAddresses = () => {
   return true;
 };
 
-const order = async () => {
+const openPayPalCardDialog = () => {
   if (!validateAddresses() || !validateTerms()) {
     return;
   }
 
-  const data = await createOrder({
-    paymentId: cart.value.methodOfPaymentId,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
+  paypalCardDialog.value = true;
+};
 
-  clearCartItems();
+const order = async () => {
+  if (!validateAddresses() || !validateTerms()) {
+    return;
+  }
+  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
-  if (data?.order?.id) {
-    router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+  if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
+    paypalCardDialog.value = true;
+  } else {
+    const data = await createOrder({
+      paymentId: paymentMethodData.value.selected,
+      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    });
+
+    clearCartItems();
+
+    if (data?.order?.id) {
+      router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+    }
   }
 };
 </script>

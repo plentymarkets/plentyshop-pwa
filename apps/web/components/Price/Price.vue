@@ -15,8 +15,7 @@
 <script setup lang="ts">
 import { PriceProps } from '~/components/Price/types';
 
-const props = defineProps<PriceProps>();
-const { price, oldPrice } = props;
+defineProps<PriceProps>();
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;

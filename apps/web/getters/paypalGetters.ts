@@ -1,7 +1,6 @@
 import integrationConfig from '../integration.config';
 
 interface PayPalConfig {
-  paymentId: number;
   clientId: string;
   merchantId: string;
 }
@@ -22,15 +21,8 @@ function getMerchantId(): string | null {
   return config?.merchantId ?? null;
 }
 
-function getPaymentId(): number {
-  const config = getConfig();
-
-  return config?.paymentId ?? -1;
-}
-
 export const paypalGetters = {
   getConfig,
   getClientId,
   getMerchantId,
-  getPaymentId,
 };

@@ -444,6 +444,15 @@
     "fullName": "Nachname oder Firmenname",
     "check": "Prüfen"
   },
+  "paypal": {
+    "unbrandedCardNumber": "Kartennummer",
+    "unbrandedExpirationDate": "Ablaufdatum",
+    "unbrandedCvv": "Kartenprüfnummer",
+    "unbrandedNameOnCard": "Karteninhaber",
+    "unbrandedPay": "Bezahlen",
+    "unbrandedCancel": "Abbrechen",
+    "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum."
+  },
   "graduatedPrices": {
     "title": "Mehr kaufen, weniger bezahlen",
     "price": "PREIS",
