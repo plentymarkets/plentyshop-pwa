@@ -3,6 +3,7 @@ import integrationConfig from '../integration.config';
 interface PayPalConfig {
   paymentId: number;
   clientId: string;
+  creditCardPaymentId: number;
   merchantId: string;
 }
 
@@ -14,6 +15,12 @@ function getClientId(): string | null {
   const config = getConfig();
 
   return config?.clientId ?? null;
+}
+
+function getCreditCardPaymentId(): number {
+  const config = getConfig();
+
+  return config?.creditCardPaymentId ?? -1;
 }
 
 function getMerchantId(): string | null {
@@ -33,4 +40,5 @@ export const paypalGetters = {
   getClientId,
   getMerchantId,
   getPaymentId,
+  getCreditCardPaymentId,
 };

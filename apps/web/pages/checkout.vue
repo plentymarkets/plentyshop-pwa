@@ -108,7 +108,7 @@
               @on-click="validateTerms"
             />
             <SfButton
-              v-else-if="selectedPaymentId === 6008"
+              v-else-if="selectedPaymentId === paypalGetters.getCreditCardPaymentId()"
               type="submit"
               @click="openPayPalCardDialog"
               :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
