@@ -1,4 +1,12 @@
 <template>
+  <header>
+    <SfButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="$emit('confirmCancel')">
+      <SfIconClose />
+    </SfButton>
+    <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
+      {{ $t('checkoutPayment.creditCard') }}
+    </h3>
+  </header>
   <div class="payment-container" id="pay-container">
     <form ref="form" id="card-form">
       <div class="row">
@@ -60,7 +68,7 @@
 
 <script lang="ts" setup>
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { paypalGetters } from '~/getters/paypalGetters';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();

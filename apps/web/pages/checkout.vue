@@ -140,7 +140,6 @@
       v-model="paypalCardDialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       tag="section"
-      role="paypal"
       disable-click-away
     >
       <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
@@ -179,7 +178,7 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const router = useRouter();
 const i18n = useI18n();
-
+const paypalCardDialog = ref(false);
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
@@ -255,8 +254,6 @@ const validateAddresses = () => {
 
   return true;
 };
-
-const paypalCardDialog = ref(false);
 
 const openPayPalCardDialog = () => {
   if (!validateAddresses() || !validateTerms()) {
