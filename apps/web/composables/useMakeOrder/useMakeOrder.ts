@@ -41,7 +41,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const paymentValue = preparePaymentData.value?.data.value || '""';
 
     switch (paymentType) {
-      case 'continue' || 'htmlContent': {
+      case 'continue':
+      case 'htmlContent': {
         const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
         useHandleError(error.value);
         if (error.value) {
@@ -66,9 +67,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
       case 'externalContentUrl': {
         // show external content in iframe
-        break;
-      }
-      case 'htmlContent': {
         break;
       }
 
