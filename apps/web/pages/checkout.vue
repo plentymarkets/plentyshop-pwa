@@ -103,12 +103,12 @@
           <OrderSummary v-if="cart" :cart="cart">
             <PayPalExpressButton
               type="Checkout"
-              v-if="selectedPaymentId === paypalGetters.getPaymentId()"
+              v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
               @on-click="validateTerms"
             />
             <SfButton
-              v-else-if="selectedPaymentId === paypalGetters.getCreditCardPaymentId()"
+              v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
               @click="openPayPalCardDialog"
               :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
@@ -149,11 +149,11 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { paypalGetters } from '~/getters/paypalGetters';
+import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 
 definePageMeta({
   layoutName: 'checkout',
@@ -182,6 +182,12 @@ const paypalCardDialog = ref(false);
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const paypalPaymentId = computed(() =>
+  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
+);
+const paypalCreditCardPaymentId = computed(() =>
+  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
+);
 
 const loadAddresses = async () => {
   await getBillingAddresses();

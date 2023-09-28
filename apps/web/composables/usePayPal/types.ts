@@ -10,6 +10,9 @@ import {
   PayPalConfigResponse,
 } from '@plentymarkets/shop-api';
 
+export const PayPalPaymentKey = 'PAYPAL';
+export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
+
 export interface UsePayPalState {
   paypalScript: PayPalNamespace | null;
   order: PayPalCreateOrder | null;

@@ -1,6 +1,7 @@
 import type { PaymentProviders } from '@plentymarkets/shop-api';
+import { paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { toRefs } from '@vueuse/shared';
-import { paypalGetters } from '~/getters/paypalGetters';
+import {PayPalCreditCardPaymentKey, PayPalPaymentKey} from '~/composables/usePayPal/types';
 import { useSdk } from '~/sdk';
 import { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
 
@@ -29,10 +30,6 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;
-
-    if (paypalGetters.getConfig() === null || paypalGetters.getPaymentId() === -1) {
-      state.value.data.list = state.value.data.list.filter((paymentMethod) => paymentMethod.name !== 'PayPal');
-    }
 
     return state.value.data;
   };

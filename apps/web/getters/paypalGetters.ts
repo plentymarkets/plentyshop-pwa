@@ -17,28 +17,14 @@ function getClientId(): string | null {
   return config?.clientId ?? null;
 }
 
-function getCreditCardPaymentId(): number {
-  const config = getConfig();
-
-  return config?.creditCardPaymentId ?? -1;
-}
-
 function getMerchantId(): string | null {
   const config = getConfig();
 
   return config?.merchantId ?? null;
 }
 
-function getPaymentId(): number {
-  const config = getConfig();
-
-  return config?.paymentId ?? -1;
-}
-
 export const paypalGetters = {
   getConfig,
   getClientId,
   getMerchantId,
-  getPaymentId,
-  getCreditCardPaymentId,
 };
