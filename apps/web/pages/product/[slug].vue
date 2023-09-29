@@ -99,7 +99,7 @@ definePageMeta({
  */
 watch(
   () => product.value.texts.urlPath,
-  (value: any, oldValue: any) => {
+  (value, oldValue) => {
     if (value !== oldValue) {
       router.push(
         localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
