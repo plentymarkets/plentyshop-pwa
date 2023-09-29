@@ -35,13 +35,11 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-import { watchPostEffect } from 'vue'
 
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
 const router = useRouter();
-const { locale } = useI18n();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
 
@@ -59,8 +57,6 @@ if (productPieces[1]) {
 const { data: product, fetchProduct } = useProduct(productId);
 
 await fetchProduct(productParams);
-
-console.log('rpdic: ', product.value)
 
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
   product?.value?.variation?.id?.toString() ?? '',
