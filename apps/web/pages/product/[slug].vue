@@ -35,6 +35,7 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { watchPostEffect } from 'vue'
 
 const { data: categoryTree } = useCategoryTree();
 
@@ -58,6 +59,8 @@ if (productPieces[1]) {
 const { data: product, fetchProduct } = useProduct(productId);
 
 await fetchProduct(productParams);
+
+console.log('rpdic: ', product.value)
 
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
   product?.value?.variation?.id?.toString() ?? '',
@@ -99,11 +102,9 @@ definePageMeta({
  *  Should be removed when the item search is refactored.
  */
 watch(
-  () => locale.value,
-  async (value, oldValue) => {
+  () => product.value.texts.urlPath,
+  (value: any, oldValue: any) => {
     if (value !== oldValue) {
-      await fetchProduct(productParams);
-
       router.push(
         localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
       );
