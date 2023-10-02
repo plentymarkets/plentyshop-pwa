@@ -40,7 +40,6 @@ const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
 const router = useRouter();
-const { locale } = useI18n();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
 
@@ -99,11 +98,9 @@ definePageMeta({
  *  Should be removed when the item search is refactored.
  */
 watch(
-  () => locale.value,
-  async (value, oldValue) => {
+  () => product.value.texts.urlPath,
+  (value, oldValue) => {
     if (value !== oldValue) {
-      await fetchProduct(productParams);
-
       router.push(
         localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
       );
