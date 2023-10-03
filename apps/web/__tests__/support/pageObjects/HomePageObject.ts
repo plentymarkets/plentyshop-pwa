@@ -63,12 +63,12 @@ export class HomePageObject {
   }
 
   checkHeaderCategory() {
-    cy.get(`[data-testid="category-button"]`).first().should('be.visible');
+    cy.getByTestId('category-button').first().should('be.visible');
     return this;
   }
 
   goToCategory() {
-    cy.get(`[data-testid="category-button"]`).first().click();
+    cy.getByTestId('category-button').first().click();
     return this;
   }
 }
