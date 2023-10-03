@@ -21,7 +21,7 @@
 
     <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addresses.length === 0)">
       <p v-if="addresses.length === 0">{{ description }}</p>
-      <SfButton class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
+      <SfButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
       </SfButton>
     </div>

@@ -68,4 +68,9 @@ export class ProductListPageObject {
     });
     return this;
   }
+
+  addToCart() {
+    this.products.first().find(`[data-testid="button"]`).click();
+    return this;
+  }
 }

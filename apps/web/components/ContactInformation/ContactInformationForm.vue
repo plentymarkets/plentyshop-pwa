@@ -9,7 +9,7 @@
         {{ $t('contactInfo.clear') }}
       </SfButton>
 
-      <SfButton type="submit" class="min-w-[120px] mb-4 md:mb-0" :disabled="loading">
+      <SfButton data-testid="contact-information-save-button" type="submit" class="min-w-[120px] mb-4 md:mb-0" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
         <span v-else>
           {{ $t('contactInfo.save') }}
