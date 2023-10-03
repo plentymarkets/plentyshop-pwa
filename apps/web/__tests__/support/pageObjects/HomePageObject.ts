@@ -63,8 +63,7 @@ export class HomePageObject {
   }
 
   checkHeaderCategory() {
-    // this.headerButton.should('have.text', 'Browse products').click();
-    cy.url().should('eq', `${this.baseUrl}/c/`);
+    cy.get(`[data-testid="category-button"]`).first().should('be.visible');
     return this;
   }
 
