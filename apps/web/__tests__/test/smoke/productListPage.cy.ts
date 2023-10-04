@@ -1,29 +1,19 @@
 import { paths } from '../../../utils/paths';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { HomePageObject } from "../../support/pageObjects/HomePageObject";
 
+const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
 beforeEach(() => {
-  cy.visitAndHydrate(paths.category);
+  cy.visitAndHydrate(paths.home);
 });
 
 describe('Smoke: Product List Page', function () {
-  // context('Displaying products and categories', () => {
-  //   it('[smoke] User should be able to see the products as list and grid', () => {
-  //     // ASSERT - list view can be as grid view
-  //     productListPage.assertGridView();
-  //   });
-  //
-  //   it('[smoke] User should be able to see the list of the categories available', () => {
-  //     // ASSERT -
-  //     productListPage.openFirstCategory();
-  //   });
-  // });
-  //
-  // context('Product details and actions', () => {
-  //   it('[smoke] User should see the product information', () => {
-  //     // ASSERT - product details are displayed
-  //     productListPage.assertProductListElements().assertFirstProduct();
-  //   });
-  // });
+  it('[smoke] User should be able to see the products as list and grid', () => {
+    homePage.goToCategory();
+
+    // ASSERT - list view can be as grid view
+    productListPage.assertGridView();
+  });
 });
