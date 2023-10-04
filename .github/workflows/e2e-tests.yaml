@@ -1,9 +1,12 @@
 name: e2e-tests
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
   pull_request:
-    types: [ opened, synchronize, reopened, ready_for_review ]
+    branches:
+      - main
 
 permissions:
   contents: read
