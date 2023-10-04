@@ -2,7 +2,7 @@ import { Product } from '../types/types';
 
 export class ProductDetailPageObject {
   get addToCartButton() {
-    return cy.getByTestId('button').contains('Add to cart');
+    return cy.getByTestId('add-to-cart');
   }
 
   get productTitle() {
