@@ -44,7 +44,7 @@ export class CheckoutPageObject {
   }
 
   get thankYouBanner() {
-    return cy.contains('Thank you!');
+    return cy.getByTestId('success-header');
   }
 
   get firstNameInput() {
@@ -117,7 +117,7 @@ export class CheckoutPageObject {
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
-    this.thankYouBanner;
+    this.thankYouBanner.should('be.visible');
     return this;
   }
 
