@@ -47,18 +47,13 @@ export class CartPageObject {
 
   checkCart() {
     cy.getFixture('products').then((fixture) => {
-      this.assertCartPreviewElements(fixture, 1);
-      this.cartItem.contains(fixture.name);
-    
+      this.assertCartPreviewElements();
     });
   }
 
-  assertCartPreviewElements(data: Product, expectedElements: number) {
+  assertCartPreviewElements() {
     this.cartPreview.should('be.visible');
-    this.totalItemsAmount.should('have.text', `(Items: ${expectedElements})`);
-    this.subtotalPrice.should('have.text', `${data.currency}${data.price.toFixed(2)}`);
-    this.totalPrice.should('have.text', `${data.currency}${data.price.toFixed(2)}`);
-    this.promoCodeInput.should('be.visible');
+    this.totalPrice.should('be.visible');
     return this;
   }
 

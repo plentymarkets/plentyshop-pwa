@@ -2,8 +2,8 @@ name: e2e-tests
 
 on:
   workflow_dispatch:
-  # pull_request:
-  #   types: [opened, synchronize, reopened, ready_for_review]
+  pull_request:
+    types: [ opened, synchronize, reopened, ready_for_review ]
 
 permissions:
   contents: read
@@ -37,6 +37,9 @@ jobs:
             yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_BASE_URL: 'http://${{ env.ip_address }}:3000'
+          PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
+          PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
 
       - name: Install Dependencies
         run: yarn --frozen-lockfile

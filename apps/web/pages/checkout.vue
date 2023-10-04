@@ -58,6 +58,7 @@
               @change="showTermsError = false"
               id="terms-checkbox"
               class="inline-block mr-2"
+              data-testid="checkout-terms-checkbox"
             />
             <div>
               <i18n-t keypath="termsInfo">
@@ -125,6 +126,7 @@
               @click="order"
               :disabled="createOrderLoading || disableShippingPayment || cartLoading"
               size="lg"
+              data-testid="place-order-button"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />

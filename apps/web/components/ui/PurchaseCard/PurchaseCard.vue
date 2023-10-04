@@ -45,6 +45,7 @@
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
+            data-testid="add-to-cart"
             type="button"
             size="lg"
             class="w-full"
