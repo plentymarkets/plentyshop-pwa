@@ -107,38 +107,38 @@ const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
 
 const sections = [
-    {
-        title: t('account.accountSettings.heading'),
-        icon: SfIconPerson,
-        subsections: [
-            {
-                label: t('account.accountSettings.section.personalData'),
-                link: paths.accountPersonalData,
-            },
-            {
-                label: t('account.accountSettings.section.billingDetails'),
-                link: paths.accountBillingDetails,
-            },
-            {
-                label: t('account.accountSettings.section.shippingDetails'),
-                link: paths.accountShippingDetails,
-            },
-        ],
-    },
-    {
-        title: t('account.ordersAndReturns.heading'),
-        icon: SfIconShoppingCart,
-        subsections: [
-            {
-                label: t('account.ordersAndReturns.section.myOrders'),
-                link: paths.accountMyOrders,
-            },
-            {
-                label: t('account.ordersAndReturns.section.returns'),
-                link: paths.accountReturns,
-            },
-        ],
-    },
+  {
+    title: t('account.accountSettings.heading'),
+    icon: SfIconPerson,
+    subsections: [
+      {
+        label: t('account.accountSettings.section.personalData'),
+        link: paths.accountPersonalData,
+      },
+      {
+        label: t('account.accountSettings.section.billingDetails'),
+        link: paths.accountBillingDetails,
+      },
+      {
+        label: t('account.accountSettings.section.shippingDetails'),
+        link: paths.accountShippingDetails,
+      },
+    ],
+  },
+  {
+    title: t('account.ordersAndReturns.heading'),
+    icon: SfIconShoppingCart,
+    subsections: [
+      {
+        label: t('account.ordersAndReturns.section.myOrders'),
+        link: paths.accountMyOrders,
+      },
+      {
+        label: t('account.ordersAndReturns.section.returns'),
+        link: paths.accountReturns,
+      },
+    ],
+  },
 ];
 
 const currentPath = computed(() => router.currentRoute.value.path);
@@ -146,12 +146,12 @@ const currentPath = computed(() => router.currentRoute.value.path);
 const rootPathRegex = new RegExp(`^${paths.account}/?$`);
 const isRoot = computed(() => rootPathRegex.test(currentPath.value));
 const findCurrentPage = computed(() =>
-    sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
+  sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
 const breadcrumbs = computed(() => [
-    { name: t('home'), link: paths.home },
-    { name: t('account.heading'), link: paths.account },
-    ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
+  { name: t('home'), link: paths.home },
+  { name: t('account.heading'), link: paths.account },
+  ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
