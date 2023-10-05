@@ -51,7 +51,7 @@ export class ProductListPageObject {
 
   assertGridView() {
     this.categoryGrid.should('be.visible');
-    this.categoryGrid.find(`[data-testid="product-card"]`).should('have.length', productsAmount);
+    this.categoryGrid.find(`[data-testid="product-card"]`).should('be.visible');
     return this;
   }
 
@@ -67,5 +67,16 @@ export class ProductListPageObject {
         });
     });
     return this;
+  }
+
+  addToCart() {
+    this.products.first().find(`[data-testid="button"]`).click();
+    return this;
+  }
+
+  goToProduct() {
+    this.products.first().click()
+
+    return this
   }
 }

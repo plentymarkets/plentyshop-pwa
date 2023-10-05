@@ -20,7 +20,7 @@
 
               <SfButton
                 :tag="NuxtLink"
-                :to="paths.account"
+                :to="localePath(paths.account)"
                 class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
                 size="sm"
                 variant="tertiary"
@@ -48,7 +48,7 @@
                   <li v-for="{ label, link } in subsections" :key="label">
                     <SfListItem
                       :tag="NuxtLink"
-                      :to="link"
+                      :to="localePath(link)"
                       :class="[
                         'first-of-type:py-4 md:first-of-type:px-4 md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
                         {
@@ -94,6 +94,7 @@ import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfI
 import { useMediaQuery } from '@vueuse/core';
 
 
+const localePath = useLocalePath();
 const isTabletScreen = useMediaQuery(mediaQueries.tablet);
 const { t } = useI18n();
 const router = useRouter();

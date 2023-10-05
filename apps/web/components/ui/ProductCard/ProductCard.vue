@@ -4,7 +4,7 @@
     data-testid="product-card"
   >
     <div class="relative">
-      <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`">
+      <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)">
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
@@ -20,7 +20,7 @@
       </SfLink>
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
-      <SfLink :tag="NuxtLink" :to="`${paths.product}${slug}`" class="no-underline" variant="secondary">
+      <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
       <div class="flex items-center pt-1">
@@ -38,13 +38,14 @@
       </div>
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-          {{ $n(price, 'currency') }}
+          {{ $n(mainPrice, 'currency') }}
+          <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
         </span>
         <span
-          v-if="productGetters.getPrice(product)?.special && productGetters.getRegularPrice(product) > 0"
+          v-if="oldPrice && oldPrice !== mainPrice"
           class="text-base typography-text-sm text-neutral-500 line-through ml-3 pb-2"
         >
-          {{ $n(productGetters.getRegularPrice(product), 'currency') }}
+          {{ $n(oldPrice, 'currency') }}
         </span>
       </div>
       <SfButton
@@ -63,7 +64,7 @@
           {{ $t('addToCartShort') }}
         </span>
       </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="`${paths.product}${slug}`" size="sm" class="w-fit">
+      <SfButton v-else type="button" :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" size="sm" class="w-fit">
         <span>{{ $t('showArticle') }}</span>
         <template #prefix>
           <SfIconChevronRight size="sm" />
@@ -76,17 +77,23 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
-import { ProductCardProps } from '~/components/ui/ProductCard/types';
+import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
-withDefaults(defineProps<ProductCardProps>(), {
+const localePath = useLocalePath();
+const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
 });
+
+const { data: categoryTree } = useCategoryTree();
 
 const { addToCart } = useCart();
 const { send } = useNotification();
 const { t } = useI18n();
 const loading = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
@@ -101,6 +108,20 @@ const addWithLoader = async (productId: number) => {
     loading.value = false;
   }
 };
+const mainPrice = computed(() => {
+  const price = productGetters.getPrice(product);
+  if (!price) return 0;
+
+  if (price.special) return price.special;
+  if (price.regular) return price.regular;
+
+  return 0;
+});
+const oldPrice = productGetters.getRegularPrice(product);
+
+const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
+
+const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

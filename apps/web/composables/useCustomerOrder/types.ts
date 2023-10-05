@@ -1,40 +1,19 @@
-import type { Ref } from 'vue';
-import type { Maybe, SfAddress, SfProduct } from '@vue-storefront/unified-data-model';
-
-export type OrderData = {
-  id: string;
-  date: string; //probably should be number in ms
-  paymentAmount: number;
-  status: 'Completed' | 'Shipped' | 'Open' | 'Cancelled';
-  products: Array<
-    Omit<
-      SfProduct,
-      'id' | 'sku' | 'slug' | 'description' | 'primaryImage' | 'rating' | 'variants' | 'quantityLimit'
-    > & { quantity: number }
-  >;
-  summary: {
-    subtotal: number;
-    delivery: number;
-    estimatedTax: number;
-    total: number;
-  };
-  billingAddress: Partial<SfAddress>;
-  shippingAddress: Partial<SfAddress>;
-  paymentMethod: string;
-  shipping: string;
-};
+import { Ref } from 'vue';
+import type { Order, OrderSearchParams, GetOrderError } from '@plentymarkets/shop-api';
 
 export interface UseCustomerOrderState {
-  data: Maybe<OrderData>;
+  data: Order | null;
   loading: boolean;
+  error: GetOrderError | null;
 }
 
-export type FetchCustomerOrder = (id: string) => Promise<Ref<Maybe<OrderData>>>;
+export type FetchOrder = (params: OrderSearchParams) => Promise<Order | null>;
 
 export interface UseCustomerOrder {
   data: Readonly<Ref<UseCustomerOrderState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  fetchCustomerOrder: FetchCustomerOrder;
+  fetchOrder: FetchOrder;
+  error: Readonly<Ref<UseCustomerOrderState['error']>>;
 }
 
 export type UseCustomerOrderReturn = (id: string) => UseCustomerOrder;

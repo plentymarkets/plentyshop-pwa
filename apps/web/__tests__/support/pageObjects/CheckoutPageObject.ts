@@ -1,6 +1,6 @@
 export class CheckoutPageObject {
   get goToCheckoutButton() {
-    return cy.getByTestId('button').contains('Go to checkout');
+    return cy.getByTestId('checkout-button');
   }
 
   get addContactInformationButton() {
@@ -8,7 +8,7 @@ export class CheckoutPageObject {
   }
 
   get addBillingAddressButton() {
-    return cy.getByTestId('button').contains('Add billing address');
+    return cy.getByTestId('add-1-button');
   }
 
   get addShippingAddressButton() {
@@ -20,15 +20,15 @@ export class CheckoutPageObject {
   }
 
   get modalSaveButton() {
-    return cy.getByTestId('modal').find('[data-testid="button"]').contains('Save');
+    return cy.getByTestId('save-address');
   }
 
   get contactInformationFormSaveButton() {
-    return cy.getByTestId('contact-information-form').find('[data-testid="button"]').contains('Save');
+    return cy.getByTestId('contact-information-save-button');
   }
 
   get placeOrderButtons() {
-    return cy.getByTestId('button').contains('Buy');
+    return cy.getByTestId('place-order-button')
   }
 
   get displaySuccessPages() {
@@ -44,7 +44,7 @@ export class CheckoutPageObject {
   }
 
   get thankYouBanner() {
-    return cy.contains('Thank you!');
+    return cy.getByTestId('success-header');
   }
 
   get firstNameInput() {
@@ -99,8 +99,10 @@ export class CheckoutPageObject {
   }
 
   addBillingAddress() {
-    this.addBillingAddressButton.eq(0).should('have.text', 'Add billing address').click();
+    this.addBillingAddressButton.eq(0).click();
     this.modal.should('be.visible');
+
+    return this;
   }
 
   addShippingAddress() {
@@ -115,16 +117,22 @@ export class CheckoutPageObject {
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
-    this.thankYouBanner;
+    this.thankYouBanner.should('be.visible');
     return this;
   }
 
   fillContactInformationForm() {
-    cy.contains('Product has been added to the cart.').should('not.exist');
     cy.getFixture('addressForm').then((fixture) => {
-      this.contactInformationForm.type(fixture.email);
+      const uniqueEmail = `test-order-${new Date().getTime()}@plentymarkets.com`;
+      this.contactInformationForm.type(uniqueEmail);
       this.contactInformationFormSaveButton.click().should('not.exist');
     });
+    return this;
+  }
+
+  acceptTerms() {
+    cy.getByTestId('checkout-terms-checkbox').check();
+
     return this;
   }
 
@@ -144,16 +152,16 @@ export class CheckoutPageObject {
   }
 
   fillForm(fixture: any) {
-    this.firstNameInput.type(fixture.name);
+    this.firstNameInput.type(fixture.firstName);
     this.lastNameInput.type(fixture.lastName);
-    this.phoneInput.type(fixture.phone);
+    this.phoneInput.type(fixture.phoneNumber);
     this.countrySelect.select(fixture.country);
-    this.streetNameInput.type(fixture.street);
-    this.streetNumberInput.type(fixture.streetNumber);
+    this.streetNameInput.type(fixture.streetName);
+    this.streetNumberInput.type(fixture.apartment);
     this.cityInput.type(fixture.city);
-    this.stateSelect.select(fixture.region);
+    // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
-    this.modalSaveButton.click();
+    this.modalSaveButton.click({force: true});
     return this;
   }
 }

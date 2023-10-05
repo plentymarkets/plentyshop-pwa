@@ -3,7 +3,7 @@
     <fieldset>
       <legend class="text-neutral-900 text-lg font-bold mb-4">{{ $t('checkoutPayment.heading') }}</legend>
       <div class="grid gap-4 grid-cols-2">
-        <label v-for="{ id, icon, name, isSelectable } in paymentMethodList" :key="id" class="relative">
+        <label v-for="{ id, icon, name, isSelectable } in paymentMethods.list" :key="id" class="relative">
           <input
             type="radio"
             name="payment_method"
@@ -33,26 +33,10 @@
 import { SfIconCreditCard } from '@storefront-ui/vue';
 import { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
-const props = withDefaults(defineProps<CheckoutPaymentProps>(), {
+withDefaults(defineProps<CheckoutPaymentProps>(), {
   disabled: false,
 });
 const { data: cart } = useCart();
 const selectedId = cart.value.methodOfPaymentId;
 defineEmits<CheckoutPaymentEmits>();
-
-const paymentMethodList = computed(() => {
-  return [
-    ...props.paymentMethods.list,
-    {
-      id: -1,
-      name: 'CreditCard',
-      fee: 0,
-      icon: '',
-      description: '',
-      sourceUrl: '',
-      isSelectable: false,
-      key: '',
-    },
-  ];
-});
 </script>

@@ -9,6 +9,7 @@ export default defineConfig({
   screenshotOnRunFailure: true,
   screenshotsFolder: '__tests__/report/screenshots',
   video: false,
+  chromeWebSecurity: false,
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here

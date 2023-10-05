@@ -3,6 +3,7 @@
     <header ref="referenceRef" class="relative">
       <div
         class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+        data-testid="navbar-top"
       >
         <div class="flex items-center">
           <SfButton
@@ -16,7 +17,7 @@
           </SfButton>
 
           <NuxtLink
-            :to="paths.home"
+            :to="localePath(paths.home)"
             aria-label="Sf Homepage"
             class="flex shrink-0 w-full h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
           >
@@ -38,15 +39,16 @@
             }
           "
         >
-          <li v-for="(menuNode, index) in categoryTree" :key="menuNode.id">
+          <li v-for="(menuNode, index) in categoryTree" :key="index">
             <SfButton
               ref="triggerReference"
               variant="tertiary"
+              data-testid="category-button"
               class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
               @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
               @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             >
-              <NuxtLink :to="generateCategoryLink(menuNode)">
+              <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
                 <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
                 <SfIconChevronRight
                   v-if="menuNode.childCount > 0"
@@ -71,7 +73,7 @@
                     <SfListItem
                       :tag="NuxtLink"
                       size="sm"
-                      :href="generateCategoryLink(node)"
+                      :href="localePath(generateCategoryLink(node))"
                       class="typography-text-sm mb-2"
                     >
                       {{ categoryTreeGetters.getName(node) }}
@@ -90,7 +92,7 @@
                         v-if="categoryTreeGetters.getName(child)"
                         :tag="NuxtLink"
                         size="sm"
-                        :href="generateCategoryLink(child)"
+                        :href="localePath(generateCategoryLink(child))"
                         class="typography-text-sm py-1.5"
                       >
                         {{ categoryTreeGetters.getName(child) }}
@@ -136,7 +138,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" :tag="NuxtLink" :href="generateCategoryLink(node)">
+                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -146,7 +148,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="generateCategoryLink(node)">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -186,16 +188,18 @@ import {
 import { unrefElement } from '@vueuse/core';
 import { MegaMenuProps } from '~/components/MegaMenu/types';
 
+const localePath = useLocalePath();
+
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
-const categoryTree = categoryTreeGetters.getTree(props.categories);
+const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const category = {
   id: 0,
   type: 'root',
   itemCount: [],
-  childCount: categoryTree.length,
+  childCount: categoryTree.value.length,
   details: [],
-  children: categoryTree,
+  children: categoryTree.value,
 } as CategoryTreeItem;
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
@@ -208,7 +212,7 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 };
 
 const generateCategoryLink = (category: CategoryTreeItem) => {
-  return categoryTreeGetters.generateCategoryLink(categoryTree, category);
+  return categoryTreeGetters.generateCategoryLink(categoryTree.value, category);
 };
 
 const { close, open, isOpen } = useDisclosure();
@@ -253,4 +257,11 @@ const goNext = (key: number) => {
 const focusTrigger = (index: number) => {
   unrefElement(triggerReference.value[index]).focus();
 };
+
+watch(
+  () => props.categories,
+  async (categories: any) => {
+    categoryTree.value = categories;
+  },
+);
 </script>

@@ -22,7 +22,7 @@
           {{ $t('auth.login.submitLabel') }}
         </span>
       </SfButton>
-      <div align="center">
+      <div align="center" v-if="!isSoftLogin">
         <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
           {{ $t('auth.login.forgotPasswordLabel') }}
         </SfLink> -->
@@ -36,16 +36,31 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { AddressType } from '@plentymarkets/shop-api';
+import { SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { LoginProps } from './types';
 
-const { login, loading } = useCustomer();
+const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { getShippingMethods } = useCartShippingMethods();
+
+const { login, loading, getSession } = useCustomer();
+const { close } = useDisclosure();
 
 definePageMeta({
   layout: false,
 });
+const props = withDefaults(defineProps<LoginProps>(), {
+  isSoftLogin: false,
+});
 const emits = defineEmits(['loggedIn', 'change-view']);
 
-const router = useRouter();
+const loadAddresses = async () => {
+  await getBillingAddresses();
+  await getShippingAddresses();
+  await getShippingMethods();
+};
+
 const email = ref('');
 const password = ref('');
 // const rememberMe = ref<boolean>();
@@ -54,7 +69,14 @@ const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
     emits('loggedIn');
-    router.push('/');
+    if (!props.isSoftLogin) {
+      const currentURL = window.location.href;
+      if (currentURL.includes(paths.checkout)) {
+        await loadAddresses();
+        await getSession();
+      }
+    }
   }
+  close();
 };
 </script>
