@@ -153,9 +153,9 @@
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import _ from 'lodash';
 
 definePageMeta({
   layoutName: 'checkout',
