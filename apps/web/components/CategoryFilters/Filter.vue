@@ -97,7 +97,11 @@ const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models: Filters = {};
 const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
+const { fetchProducts } = useProducts();
 
+const handleQueryUpdate = async () => {
+  await fetchProducts(getFacetsFromURL());
+};
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
 const maxPrice = ref(getFacetsFromURL().priceMax ?? '');
@@ -115,7 +119,7 @@ function resetPriceFilter() {
   updatePrices('', '');
 }
 
-const updateFilter = () => {
+const updateFilter = async () => {
   for (const filter of filters) {
     models[filter.id.toString()] = Boolean(filter.selected) ?? false;
 
@@ -123,6 +127,7 @@ const updateFilter = () => {
       models[filter.id.toString()] = true;
     }
   }
+  await handleQueryUpdate();
 };
 
 const facetChange = () => {
