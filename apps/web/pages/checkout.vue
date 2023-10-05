@@ -153,9 +153,9 @@
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
-import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import _ from 'lodash';
 
 definePageMeta({
   layoutName: 'checkout',
@@ -275,7 +275,7 @@ const order = async () => {
   if (!validateAddresses() || !validateTerms()) {
     return;
   }
-  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
+  const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
     paypalCardDialog.value = true;
