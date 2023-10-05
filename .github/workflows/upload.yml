@@ -53,6 +53,9 @@ jobs:
           touch apps/web/.env
           echo NUXT_PUBLIC_API_URL=${{ vars.API_URL }} >> apps/web/.env
 
+      - name: Build
+        run: yarn build
+
       - name: Compress repo to Tar
         uses: a7ul/tar-action@v1.1.0
         id: compress
