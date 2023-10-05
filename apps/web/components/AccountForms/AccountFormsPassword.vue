@@ -3,33 +3,33 @@
     <label class="block">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.currentPassword') }}</UiFormLabel>
       <UiFormPasswordInput
-          name="password"
-          autocomplete="current-password"
-          v-model="userPasswords.oldPassword"
-          required
+        name="password"
+        autocomplete="current-password"
+        v-model="userPasswords.oldPassword"
+        required
       />
     </label>
     <label class="block my-4">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.newPassword') }}</UiFormLabel>
       <UiFormPasswordInput
-          name="password"
-          autocomplete="new-password"
-          v-model="userPasswords.firstNewPassword"
-          required
-          minlength="8"
-          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
+        name="password"
+        autocomplete="new-password"
+        v-model="userPasswords.firstNewPassword"
+        required
+        minlength="8"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
       />
       <UiFormHelperText class="block"> {{ $t('account.accountSettings.personalData.passwordHelp') }}</UiFormHelperText>
     </label>
     <label class="block">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.newPasswordAgain') }}</UiFormLabel>
       <UiFormPasswordInput
-          name="password"
-          autocomplete="new-password"
-          v-model="userPasswords.secondNewPassword"
-          required
-          minlength="8"
-          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
+        name="password"
+        autocomplete="new-password"
+        v-model="userPasswords.secondNewPassword"
+        required
+        minlength="8"
+        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
       />
     </label>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
@@ -46,7 +46,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { SfButton, SfInput, SfIconVisibility, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
 
 const { send } = useNotification();
