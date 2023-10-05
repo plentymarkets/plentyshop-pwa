@@ -1,4 +1,5 @@
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
+import { paths } from '../../../utils/paths';
 
 const homePage = new HomePageObject();
 
