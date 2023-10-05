@@ -46,7 +46,6 @@
         >
           <SfButton
             data-testid="add-to-cart"
-            type="button"
             size="lg"
             class="w-full"
             @click="handleAddToCart"
@@ -77,7 +76,7 @@
   </section>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,

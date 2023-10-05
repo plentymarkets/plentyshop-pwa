@@ -1,4 +1,3 @@
-import { paths } from '../../../utils/paths';
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';

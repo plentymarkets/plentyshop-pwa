@@ -50,7 +50,6 @@
       </div>
       <SfButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
-        type="button"
         size="sm"
         class="min-w-[80px] w-fit"
         @click="addWithLoader(Number(productGetters.getId(product)))"

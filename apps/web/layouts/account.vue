@@ -5,7 +5,7 @@
         <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
           <ClientOnly>
             <h1
-              v-if="isRoot || isTabletScreen"
+              v-if="isRoot || isTablet"
               class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
             >
               {{ $t('account.heading') }}
@@ -90,15 +90,22 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfIconArrowBack, SfIconChevronRight } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
-
+import {
+  SfIconBase,
+  SfIconPerson,
+  SfIconShoppingCart,
+  SfListItem,
+  SfButton,
+  SfIconArrowBack,
+  SfIconChevronRight,
+} from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
+const { isTablet } = useBreakpoints();
 const { t } = useI18n();
 const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
+
 const sections = [
     {
         title: t('account.accountSettings.heading'),
@@ -141,7 +148,6 @@ const isRoot = computed(() => rootPathRegex.test(currentPath.value));
 const findCurrentPage = computed(() =>
     sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
-
 const breadcrumbs = computed(() => [
     { name: t('home'), link: paths.home },
     { name: t('account.heading'), link: paths.account },

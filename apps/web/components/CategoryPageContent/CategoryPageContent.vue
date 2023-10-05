@@ -70,7 +70,7 @@ import { ReviewAverage } from '@plentymarkets/shop-api';
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
+import { whenever } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
@@ -83,19 +83,11 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const { isOpen, open, close } = useDisclosure();
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
-const isWideScreen = useMediaQuery(mediaQueries.desktop);
-const maxVisiblePages = ref(1);
+const { isTablet, isDesktop } = useBreakpoints();
 
-const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
+const maxVisiblePages = computed(() => (isDesktop.value ? 5 : 1));
 
-watch(isWideScreen, (value) => setMaxVisiblePages(value));
-onMounted(() => setMaxVisiblePages(isWideScreen.value));
-watch(isTabletScreen, (value) => {
-  if (value && isOpen.value) {
-    close();
-  }
-});
+whenever(isTablet, close);
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

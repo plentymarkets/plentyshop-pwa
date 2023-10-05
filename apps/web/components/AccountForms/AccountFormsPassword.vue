@@ -63,7 +63,7 @@
     </div>
   </form>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts">
 import { SfButton, SfInput, SfIconVisibility, SfLoaderCircular } from '@storefront-ui/vue';
 import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
 

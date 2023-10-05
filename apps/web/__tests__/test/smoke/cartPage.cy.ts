@@ -1,4 +1,3 @@
-import { paths } from '../../../utils/paths';
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
@@ -9,7 +8,7 @@ const productListPage = new ProductListPageObject();
 
 describe('Smoke: Cart Page', () => {
   it('[smoke] Add items to cart and display it', () => {
-    cy.visitAndHydrate(paths.home);
+    cy.visit('/');
 
     homePage.goToCategory();
     productListPage.addToCart()

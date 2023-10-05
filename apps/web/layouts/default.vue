@@ -194,7 +194,6 @@ usePageTitle();
 
 const isLogin = ref(true);
 
-const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const logOut = async () => {
   await logout();
@@ -233,4 +232,6 @@ watch(
     isLogin.value = true;
   },
 );
+
+const NuxtLink = resolveComponent('NuxtLink');
 </script>
