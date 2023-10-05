@@ -1,6 +1,7 @@
 import { Cart, SessionResult } from '@plentymarkets/shop-api';
 import { useSdk } from '~/sdk';
 import { SetInitialData, UseInitialSetupReturn } from './types';
+import { getCurrentInstance } from 'vue';
 
 /** Function for getting current customer/cart data from session
  * @example
@@ -15,6 +16,18 @@ const setInitialData: SetInitialData = async () => {
 
   const { setCart } = useCart();
   setCart(data.value?.data.basket as Cart);
+
+  const csrf = data.value?.data.csrf;
+
+  const appInstance = getCurrentInstance();
+  interface CsrfObject {
+    updateCSRFToken: (token: string) => void;
+  }
+
+  if (appInstance && appInstance.appContext.config.globalProperties.$csrf) {
+    appInstance.appContext.config.globalProperties.$csrf.updateCSRFToken(csrf);
+  }
+  console.log('csrf:' + csrf);
 };
 
 /**
