@@ -2,53 +2,35 @@
   <form @submit.prevent="submitChangePassword" data-testid="account-forms-password">
     <label class="block">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.currentPassword') }}</UiFormLabel>
-      <SfInput
-        name="password"
-        :type="passwordVisible ? 'text' : 'password'"
-        v-model="userPasswords.oldPassword"
-        required
-      >
-        <template #suffix>
-          <button type="button" @click="passwordVisible = !passwordVisible">
-            <SfIconVisibility />
-          </button>
-        </template>
-      </SfInput>
+      <UiFormPasswordInput
+          name="password"
+          autocomplete="current-password"
+          v-model="userPasswords.oldPassword"
+          required
+      />
     </label>
     <label class="block my-4">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.newPassword') }}</UiFormLabel>
-      <SfInput
-        name="password"
-        :type="firstNewPasswordVisible ? 'text' : 'password'"
-        v-model="userPasswords.firstNewPassword"
-        required
-        minlength="8"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
-      >
-        <template #suffix>
-          <button type="button" @click="firstNewPasswordVisible = !firstNewPasswordVisible">
-            <SfIconVisibility />
-          </button>
-        </template>
-      </SfInput>
+      <UiFormPasswordInput
+          name="password"
+          autocomplete="new-password"
+          v-model="userPasswords.firstNewPassword"
+          required
+          minlength="8"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
+      />
       <UiFormHelperText class="block"> {{ $t('account.accountSettings.personalData.passwordHelp') }}</UiFormHelperText>
     </label>
     <label class="block">
       <UiFormLabel>{{ $t('account.accountSettings.personalData.newPasswordAgain') }}</UiFormLabel>
-      <SfInput
-        name="password"
-        :type="secondNewPasswordVisible ? 'text' : 'password'"
-        v-model="userPasswords.secondNewPassword"
-        required
-        minlength="8"
-        pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
-      >
-        <template #suffix>
-          <button type="button" @click="secondNewPasswordVisible = !secondNewPasswordVisible">
-            <SfIconVisibility />
-          </button>
-        </template>
-      </SfInput>
+      <UiFormPasswordInput
+          name="password"
+          autocomplete="new-password"
+          v-model="userPasswords.secondNewPassword"
+          required
+          minlength="8"
+          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
+      />
     </label>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
       <SfButton type="reset" variant="secondary" @click="$emit('on-cancel')">
@@ -79,10 +61,6 @@ const userPasswords = ref({
   firstNewPassword: firstNewPassword?.value ?? '',
   secondNewPassword: secondNewPassword?.value ?? '',
 });
-
-const passwordVisible = ref(false);
-const firstNewPasswordVisible = ref(false);
-const secondNewPasswordVisible = ref(false);
 
 const submitChangePassword = async () => {
   if (userPasswords.value.firstNewPassword !== userPasswords.value.secondNewPassword) {

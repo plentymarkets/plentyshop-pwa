@@ -1,5 +1,5 @@
 <template>
-  <SfInput :type="isPasswordVisible ? 'text' : 'password'">
+  <SfInput :type="isPasswordVisible ? 'text' : 'password'" :minlength="minlength" :pattern="pattern">
     <template #suffix>
       <button type="button" @click="isPasswordVisible = !isPasswordVisible">
         <component :is="isPasswordVisible ? SfIconVisibilityOff : SfIconVisibility" />
@@ -10,6 +10,9 @@
 
 <script setup lang="ts">
 import { SfInput, SfIconVisibility, SfIconVisibilityOff } from '@storefront-ui/vue';
+import type { FormPasswordProps } from '~/components/ui/Form/types';
+
+defineProps<FormPasswordProps>();
 
 const isPasswordVisible = ref<boolean>();
 </script>

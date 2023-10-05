@@ -57,7 +57,6 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
 
 definePageMeta({
   layout: 'account',
@@ -65,15 +64,16 @@ definePageMeta({
 
 const { data, fetchCustomerReturns, loading } = useCustomerReturns();
 const { isOpen, close } = useDisclosure();
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
-const isWideScreen = useMediaQuery(mediaQueries.desktop);
+
+const { isTablet, isDesktop } = useBreakpoints();
+
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 
-watch(isWideScreen, (value) => setMaxVisiblePages(value));
-onMounted(() => setMaxVisiblePages(isWideScreen.value));
-watch(isTabletScreen, (value) => {
+watch(isDesktop, (value) => setMaxVisiblePages(value));
+onMounted(() => setMaxVisiblePages(isDesktop.value));
+watch(isTablet, (value) => {
   if (value && isOpen.value) {
     close();
   }
