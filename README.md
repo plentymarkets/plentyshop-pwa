@@ -95,6 +95,9 @@ For detailed setup instructions, refer to the [deployment guide](./docs/deployme
 
 ## Resources
 
+### Changelog
+[English](./docs/changelog/changelog_en.md) | [German](./docs/changelog/changelog_de.md)
+
 ### Features
 
 - [Turborepo](https://turbo.build/) remote cache build system, with blazingly fast execution of commands (build, lint, test etc.) on your local machine.
