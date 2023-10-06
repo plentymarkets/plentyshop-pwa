@@ -78,7 +78,7 @@ const toggle = () => {
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
 const items = route.path.split('/');
-let itemListElement = [] as Array<Any>;
+let itemListElement = [] as Array<any>;
 let name = '';
 items.forEach((item, index) => {
   name += item;
@@ -104,7 +104,7 @@ items.forEach((item, index) => {
 });
 
 const structuredData = {
-  '@context': 'http://schema.org',
+  '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement,
 };
