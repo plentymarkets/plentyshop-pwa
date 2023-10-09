@@ -57,6 +57,7 @@
         :key="index"
         tag="label"
         size="sm"
+        :data-testid="'category-filter-' + index"
         :class="['px-1.5 bg-transparent hover:bg-transparent']"
       >
         <template #prefix>

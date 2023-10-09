@@ -30,6 +30,7 @@ definePageMeta({
 
 const { t } = useI18n();
 const router = useRouter();
+const route = useRoute();
 const { getFacetsFromURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
@@ -58,6 +59,12 @@ watch(
   () => locale.value,
   async (changedLocale: any) => {
     router.push(localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`));
+  },
+);
+watch(
+  () => route.query,
+  async () => {
+    handleQueryUpdate();
   },
 );
 </script>
