@@ -164,4 +164,5 @@ export default defineNuxtConfig({
     },
     registerWebManifestInRouteRules: true,
   },
+  plugins: ['~/plugins/csrf.js'],
 });
