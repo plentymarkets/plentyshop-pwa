@@ -108,7 +108,6 @@ import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
 
 definePageMeta({
   layout: 'account',
@@ -116,15 +115,15 @@ definePageMeta({
 
 const localePath = useLocalePath();
 
-const isWideScreen = useMediaQuery(mediaQueries.desktop);
+const { isDesktop } = useBreakpoints();
 const maxVisiblePages = ref(1);
 
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
 
 const NuxtLink = resolveComponent('NuxtLink');
-watch(isWideScreen, (value) => setMaxVisiblePages(value));
-onMounted(() => setMaxVisiblePages(isWideScreen.value));
+watch(isDesktop, (value) => setMaxVisiblePages(value));
+onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 // const NuxtLink = resolveComponent('NuxtLink');

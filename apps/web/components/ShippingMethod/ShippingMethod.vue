@@ -37,7 +37,7 @@
     <ShippingPrivacy />
   </div>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
