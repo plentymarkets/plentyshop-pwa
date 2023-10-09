@@ -1,8 +1,8 @@
-import { paths } from '../../../utils/paths';
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { paths } from '../../../utils/paths';
 
 const checkout = new CheckoutPageObject();
 const cart = new CartPageObject();

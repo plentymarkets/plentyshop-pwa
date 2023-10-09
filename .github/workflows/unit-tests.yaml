@@ -1,21 +1,17 @@
-name: Linting (Lint)
+name: unit-tests
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-permissions:
-  contents: read
-  packages: read
+  workflow_dispatch:
+#  push:
+#    branches:
+#      - develop
+#  pull_request:
+#    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
-  lint:
-    name: Lint
+  unit-tests:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,10 +30,10 @@ jobs:
 
       - name: Setup .yarnrc.yml
         run: |
-            yarn config set nodeLinker node-modules
-            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -47,5 +43,5 @@ jobs:
       - name: Build packages
         run: yarn build
 
-      - name: Run linter
-        run: yarn lint
+      - name: Run tests
+        run: yarn test
