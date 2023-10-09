@@ -149,7 +149,7 @@
   </NuxtLayout>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';

@@ -14,5 +14,6 @@
 import { CategoryFiltersProps } from '~/components/CategoryFilters/types';
 
 const props = defineProps<CategoryFiltersProps>();
+
 const { facets } = toRefs(props);
 </script>
