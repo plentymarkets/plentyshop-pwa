@@ -6,7 +6,6 @@
     data-testid="pagination"
   >
     <SfButton
-      type="button"
       size="lg"
       :aria-label="$t('prevAriaLabel')"
       :disabled="pagination.selectedPage <= 1 || disabled"
@@ -144,7 +143,6 @@
       </li>
     </ul>
     <SfButton
-      type="button"
       size="lg"
       :aria-label="$t('nextAriaLabel')"
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
@@ -162,7 +160,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
-import { PaginationProps } from '~/components/ui/Pagination/types';
+import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
 

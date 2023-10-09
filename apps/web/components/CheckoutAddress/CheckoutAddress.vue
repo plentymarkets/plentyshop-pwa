@@ -54,11 +54,11 @@
     </UiModal>
   </div>
 </template>
-<script lang="ts" setup>
+<script setup lang="ts">
 import { Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import type { CheckoutAddressProps } from './types';
+import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
