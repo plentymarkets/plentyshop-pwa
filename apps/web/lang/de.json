@@ -372,6 +372,7 @@
   "auth": {
     "login": {
       "heading": "In ihr Konto einloggen",
+      "success": "Sie wurden erfolgreich eingeloggt.",
       "submitLabel": "Anmelden",
       "forgotPasswordLabel": "Passwort vergessen?",
       "rememberMeLabel": "An mich erinnern",

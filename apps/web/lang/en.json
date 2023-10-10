@@ -385,6 +385,7 @@
   "auth": {
     "login": {
       "heading": "Log in to your account",
+      "success": "You have been logged in successfully",
       "submitLabel": "Log in",
       "forgotPasswordLabel": "Forgotten your password?",
       "rememberMeLabel": "Remember me",
