@@ -37,18 +37,16 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfLink, SfInput, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { LoginProps } from './types';
-import { useRouter } from 'vue-router';
 
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getShippingMethods } = useCartShippingMethods();
 
 const { login, loading, getSession } = useCustomer();
-const { close } = useDisclosure();
-const router = useRouter();
-
+const { send } = useNotification();
+const { t } = useI18n();
 definePageMeta({
   layout: false,
 });
@@ -71,6 +69,7 @@ const password = ref('');
 const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
+    send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
     if (!props.isSoftLogin) {
       const currentURL = window.location.href;
@@ -79,11 +78,6 @@ const loginUser = async () => {
         await getSession();
       }
     }
-  }
-  if (props.returnToPreviousPage) {
-    router.go(-1);
-  } else {
-    close();
   }
 };
 </script>
