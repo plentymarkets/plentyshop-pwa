@@ -5,8 +5,9 @@ const timeToLive = 3000;
 
 /**
  * @description Composable to display ui notifications
+ * @return UseNotificationReturn
  * @example
- * const { send } = useNotification();
+ * const { data, send } = useNotification();
  */
 export const useNotification: UseNotificationReturn = () => {
   const state = useState<UseNotificationState>(`useNotification`, () => ({
@@ -15,6 +16,7 @@ export const useNotification: UseNotificationReturn = () => {
 
   /**
    * @description method to display a ui notification
+   * @param notification { Notification }
    * @example
    *  send({
         message: 'Test alert error with a longer message',

@@ -3,6 +3,7 @@ import { useSdk } from '~/sdk';
 import { SetInitialData, UseInitialSetupReturn } from './types';
 
 /** Function for getting current customer/cart data from session
+ * @return SetInitialData
  * @example
  * setInitialData();
  */
@@ -19,7 +20,7 @@ const setInitialData: SetInitialData = async () => {
 
 /**
  * @description Composable to get initial customer and cart data
- * @returns {@link UseInitialSetupReturn}
+ * @returns UseInitialSetupReturn
  * @example
  * const { setInitialData } = useInitialSetup();
  */

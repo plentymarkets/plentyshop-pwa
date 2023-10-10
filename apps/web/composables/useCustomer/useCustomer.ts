@@ -1,4 +1,4 @@
-import type { SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
@@ -15,9 +15,11 @@ import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing Customer data
- * @returns {@link UseCustomerReturn}
+ * @returns UseCustomerReturn
  * @example
- * const { data, loading, fetchCustomer } = useCustomer();
+ * const {
+ * data, loading, isAuthorized, isGuest, privacyPolicy, setUser, getSession, login, logout, register, loginAsGuest,
+ * setPrivacyPolicy, changePassword } = useCustomer();
  */
 export const useCustomer: UseCustomerReturn = () => {
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
@@ -61,7 +63,7 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for setting user data
-   * In like getCart there is the user data available, so we need less requests
+   * @param data { SessionResult }
    * @example
    * setUser(data: SessionResult);
    */
@@ -71,6 +73,8 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for login a user as guest
+   * @param email
+   * @return LoginAsGuest
    * @example
    * loginAsGuest('user@example.com');
    */
@@ -84,7 +88,10 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.loading = false;
   };
 
-  /** Function for login a user
+  /** Function for user login.
+   * @param email
+   * @param password
+   * @return Login
    * @example
    * login('user@example.com', 'password');
    */
@@ -104,7 +111,8 @@ export const useCustomer: UseCustomerReturn = () => {
     return state.value.isAuthorized;
   };
 
-  /** Function for logout a user
+  /** Function for user logout.
+   * @return Logout
    * @example
    * logout();
    */
@@ -120,10 +128,12 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for registering a user.
+   * @param params { RegisterParams }
+   * @return Register
    * @example
    * register({ email: 'example', password: 'example' });
    */
-  const register: Register = async (params) => {
+  const register: Register = async (params: RegisterParams) => {
     state.value.loading = true;
 
     const { error } = await useAsyncData(() =>
@@ -140,6 +150,8 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /**
    * @description Function for setting the privacy policy.
+   * @param privacyPolicy
+   * @return SetPrivacyPolicy
    * @example
    * setPrivacyPolicy({
    *   privacyPolicy: true
@@ -152,6 +164,8 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for changing the user password
+   * @param params { UserChangePasswordParams }
+   * @return ChangePassword
    * @example
    * changePassword({
    *   oldPassword: 'oldPassword',

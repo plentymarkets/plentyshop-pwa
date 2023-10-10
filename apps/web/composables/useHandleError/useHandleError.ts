@@ -8,13 +8,15 @@ const defaultError: ErrorParams = {
 
 /**
  * @description Composable for handling errors.
- * @param error {@link ErrorParams}
+ * @param error { ErrorParams }
  * @returns Throws an error if there is one.
  * @example
- * const { data, error } = await fetch(data);
- * useHandleError(error.value);
+ * const { data, error } = useHandleError({
+ *   status: ''
+ *   statusText: ''
+ * });
  */
-export const useHandleError: UseHandleError = (error) => {
+export const useHandleError: UseHandleError = (error: ErrorParams) => {
   if (error && process.client) {
     const { send } = useNotification();
 

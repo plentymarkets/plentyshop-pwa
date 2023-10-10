@@ -16,7 +16,7 @@ export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () =
   }));
 
   /**
-   * @description Function for get all active shipping countries.
+   * @description Function to get all active shipping countries.
    * @example
    * getActiveShippingCountries();
    */

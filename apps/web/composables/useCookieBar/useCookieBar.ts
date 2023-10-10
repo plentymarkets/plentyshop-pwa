@@ -14,6 +14,14 @@ function convertToSaveableJson(jsonList: any): string {
   }));
 }
 
+/**
+ * @description Composable for managing cookie bar.
+ * @returns UseCookieReturn
+ * @example
+ * const {
+ * cookieJson, bannerIsHidden, setHiddenState, convertAndSaveCookies, loadThirdPartyScripts, defaultCheckboxIndex
+ * } = useCookieBar(consentCookie, initCheckboxIndex, initialCookieJsonFromConfig);
+ */
 /* eslint-disable sonarjs/cognitive-complexity */
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
@@ -38,10 +46,23 @@ export const useCookieBar = (
   );
   const existingCookieInMemory = consentCookie;
 
+  /**
+   * @description Function for setting the hidden state for the banner.
+   * @param state
+   * @return void
+   * @example
+   * setHiddenState(true);
+   */
   function setHiddenState(state: boolean): void {
     bannerIsHidden.value = state;
   }
 
+  /**
+   * @description Function for loading third party scripts.
+   * @return void
+   * @example
+   * loadThirdPartyScripts();
+   */
   function loadThirdPartyScripts(): void {
     if (!process.server) {
       cookieJson.value.forEach((cookieGroup, groupIndex) => {
@@ -78,7 +99,15 @@ export const useCookieBar = (
     }
   }
 
-  function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): any {
+  /**
+   * @description Function for saving the cookies.
+   * @param setAllCookies
+   * @param latestStatus
+   * @return string
+   * @example
+   * convertAndSaveCookies(true, true);
+   */
+  function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): string {
     if (setAllCookies) {
       // accept all or reject all case (update cookieJson and checkboxes from ui)
       cookieJson.value.forEach((group, index) => {

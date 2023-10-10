@@ -4,12 +4,11 @@ import { useSdk } from '~/sdk';
 import { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
 
 /**
- * @description Composable for getting payment methods.
+ * @description Composable for managing payment methods.
  * @example
  * const { data, loading, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
  * TODO: Remove .selected attribute from PaymentProviders
  */
-
 export const usePaymentMethods: UsePaymentMethodsReturn = () => {
   const state = useState<UsePaymentMethodsState>('usePaymentMethods', () => ({
     data: {} as PaymentProviders,
@@ -18,10 +17,10 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
 
   /**
    * @description Function for fetching payment methods.
+   * @return FetchPaymentMethods
    * @example
    * fetchPaymentMethods();
    */
-
   const fetchPaymentMethods: FetchPaymentMethods = async () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPaymentProviders());
@@ -34,10 +33,11 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
 
   /**
    * @description Function to set payment method id.
+   * @param paymentMethodId
+   * @return SavePaymentMethod
    * @example
    * savePaymentMethod(1);
    */
-
   const savePaymentMethod: SavePaymentMethod = async (paymentMethodId: number) => {
     state.value.loading = true;
     const { error } = await useAsyncData(() =>

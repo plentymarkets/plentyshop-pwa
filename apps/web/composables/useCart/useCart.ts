@@ -1,5 +1,5 @@
 import { CartItem } from '@plentymarkets/shop-api';
-import type { Cart } from '@plentymarkets/shop-api';
+import type { Cart, DoAddItemParams, SetCartItemQuantityParams, DeleteCartItemParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
@@ -30,9 +30,11 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
 
 /**
  * @description Composable for managing cart.
- * @returns {@link UseCartReturn}
+ * @returns UseCartReturn
  * @example
- * const { data, loading } = useCart();
+ * const {
+ * data, loading, getCart, setCart, clearCartItems, addToCart, setCartItemQuantity, deleteCartItem
+ * } = useCart();
  */
 export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
@@ -60,24 +62,31 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  /**
+   * @description Function for setting the cart.
+   * @param data { Cart }
+   */
   const setCart = (data: Cart) => {
     state.value.data = data;
   };
 
+  /**
+   * @description Function for clearing cart items.
+   */
   const clearCartItems = () => {
     state.value.data.items = [];
   };
 
   /**
    * @description Function for adding cart items.
-   * @param params
+   * @param params { DoAddItemParams }
    * @example
    * addToCart({
    *     productId: 1,
    *     quantity: 1,
    * });
    */
-  const addToCart: AddToCart = async (params) => {
+  const addToCart: AddToCart = async (params: DoAddItemParams) => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() =>
@@ -99,7 +108,7 @@ export const useCart: UseCartReturn = () => {
 
   /**
    * @description Function for updating cart item quantity.
-   * @param params
+   * @param params { SetCartItemQuantityParams }
    * @example
    * setCartItemQuantity({
    *     productId: 1,
@@ -107,7 +116,7 @@ export const useCart: UseCartReturn = () => {
    *     cartItemId: 1,
    * });
    */
-  const setCartItemQuantity: SetCartItemQuantity = async (params) => {
+  const setCartItemQuantity: SetCartItemQuantity = async (params: SetCartItemQuantityParams) => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() =>
@@ -131,13 +140,13 @@ export const useCart: UseCartReturn = () => {
 
   /**
    * @description Function for removing cart items.
-   * @param params
+   * @param params { DeleteCartItemParams }
    * @example
    * deleteCartItem({
    *     cartItemId: 1
    * });
    */
-  const deleteCartItem: DeleteCartItem = async (params) => {
+  const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
     state.value.loading = true;
     try {
       const { data, error } = await useAsyncData(() =>

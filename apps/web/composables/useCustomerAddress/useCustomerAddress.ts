@@ -7,7 +7,7 @@ import type {
 
 /**
  * @description Composable managing address data
- * @returns {@link UseCustomerAddressReturn}
+ * @returns UseCustomerAddressReturn
  * @example
  * const { data, loading, fetchCustomerAddress } = useCustomerAddress();
  */
@@ -17,7 +17,8 @@ export const useCustomerAddress: UseCustomerAddressReturn = () => {
     loading: false,
   }));
 
-  /** Function for fetching address data
+  /** Function for fetching customer address data
+   * @return FetchCustomerAddress
    * @example
    * fetchCustomerAddress();
    */

@@ -4,10 +4,10 @@ import { useSdk } from '~/sdk';
 import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree } from './types';
 
 /**
- * @description Composable for getting the category tree.
- * @returns {@link UseCategoryTreeMethodsReturn}
+ * @description Composable for managing the category tree.
+ * @returns UseCategoryTreeMethodsReturn
  * @example
- * const { data, loading } = useCategoryTree();
+ * const { data, loading, getCategoryTree } = useCategoryTree();
  */
 export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   const state = useState<UseCategoryTreeState>('useCategoryTree', () => ({

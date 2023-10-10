@@ -2,7 +2,6 @@ import { createSharedComposable, syncRefs, useBreakpoints as useBreakpointsVueUs
 
 /**
  * @description Composable that prepares breakpoints-dependent refs
- * @returns {@link ReturnType<typeof useBreakpoints>}
  * @example
  * const { isTablet, isDesktop } = useBreakpoints();
  */

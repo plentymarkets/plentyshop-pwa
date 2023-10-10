@@ -10,9 +10,10 @@ import {
 
 /**
  * @description Composable for setting additional information.
- * @returns {@link DoAdditionalInformationReturn}
+ * @returns DoAdditionalInformationReturn
  * @example
- * const { data, loading, shippingPrivacyAgreement } = useAdditionalInformation();
+ * const { data, loading, shippingPrivacyAgreement, setShippingPrivacyAgreement, doAdditionalInformation }
+ * = useAdditionalInformation();
  */
 export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const state = useState<UseAdditionalInformationState>('useAdditionalInformation', () => ({
@@ -47,7 +48,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   };
 
   /**
-   * @description Function for setting the additional information.
+   * @description Function for setting the shipping privacy agreement value.
    * @example
    * setShippingPrivacyAgreement({
    *   shippingPrivacyAgreement: true

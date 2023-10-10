@@ -5,8 +5,8 @@ import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn } from './typ
 import { DownloadFile, GetDocument } from './types';
 
 /**
- * @description Composable for getting the order document.
- * @returns {@link UseOrderDocumentMethodsReturn}
+ * @description Composable for managing the order documents.
+ * @returns UseOrderDocumentMethodsReturn
  * @example
  * const { data, loading, getDocument, downloadFile } = UseOrderDocument();
  */
@@ -18,9 +18,12 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
 
   /**
    * @description Function for getting the order document array buffer.
-   *
-   * @param document
+   * @param document { OrderDocument }
    * @param accessKey
+   * @return GetDocument
+   *
+   * @example
+   * getDocument(document, accessKey)
    */
   const getDocument: GetDocument = async (document: OrderDocument, accessKey: string) => {
     state.value.loading = true;
@@ -38,10 +41,10 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
 
   /**
    * @description Function for downloading an array buffer file.
-   *
    * @param bufferArray
    * @param name
    * @param type
+   * @return DownloadFile
    *
    * @example downloadFile(bufferArray, 'test.pdf', 'application/pdf');
    */
