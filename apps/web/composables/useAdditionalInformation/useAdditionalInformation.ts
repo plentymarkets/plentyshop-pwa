@@ -12,8 +12,9 @@ import {
  * @description Composable for setting additional information.
  * @returns DoAdditionalInformationReturn
  * @example
- * const { data, loading, shippingPrivacyAgreement, setShippingPrivacyAgreement, doAdditionalInformation }
- * = useAdditionalInformation();
+ * const {
+ * data, loading, shippingPrivacyAgreement, setShippingPrivacyAgreement, doAdditionalInformation
+ * } = useAdditionalInformation();
  */
 export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const state = useState<UseAdditionalInformationState>('useAdditionalInformation', () => ({
