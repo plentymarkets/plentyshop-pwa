@@ -52,7 +52,6 @@ definePageMeta({
 });
 const props = withDefaults(defineProps<LoginProps>(), {
   isSoftLogin: false,
-  returnToPreviousPage: false,
 });
 const emits = defineEmits(['loggedIn', 'change-view']);
 
