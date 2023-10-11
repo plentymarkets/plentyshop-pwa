@@ -1,4 +1,4 @@
-import { Order, PaginatedResult } from '@plentymarkets/shop-api';
+import { Order, PaginatedResult, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturnsReturn,
@@ -8,10 +8,12 @@ import type {
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable managing returns data
- * @returns {@link UseCustomerReturnsReturn}
+ * @description Composable managing order returns data
+ * @returns UseCustomerReturnsReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchCustomerReturns } = useCustomerReturns();
+ * ```
  */
 export const useCustomerReturns: UseCustomerReturnsReturn = () => {
   const state = useState<UseCustomerReturnsState>(`useCustomerReturns`, () => ({
@@ -19,11 +21,17 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     loading: false,
   }));
 
-  /** Function for fetching returns data
+  /** Function for fetching order returns data
+   * @param params { UseUserOrderSearchParams }
+   * @return FetchCustomerReturns
    * @example
-   * fetchCustomerReturns();
+   * ``` ts
+   * fetchCustomerReturns({
+   *    page: 1,
+   * });
+   * ```
    */
-  const fetchCustomerReturns: FetchCustomerReturns = async (params) => {
+  const fetchCustomerReturns: FetchCustomerReturns = async (params: UseUserOrderSearchParams) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData((params.page ?? 1).toString(), () =>
       useSdk().plentysystems.getReturns(params),

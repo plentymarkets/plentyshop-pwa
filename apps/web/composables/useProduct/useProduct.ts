@@ -5,10 +5,12 @@ import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing product data
- * @param {string} slug Product slug
- * @returns {@link UseProductReturn}
+ * @param slug Product slug
+ * @returns UseProductReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchProduct } = useProduct('product-slug');
+ * ```
  */
 export const useProduct: UseProductReturn = (slug) => {
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
@@ -16,10 +18,16 @@ export const useProduct: UseProductReturn = (slug) => {
     loading: false,
   }));
 
-  /** Function for fetching product data
+  /** Function for fetching product data.
+   * @param params { ProductParams }
+   * @return FetchProduct
    * @example
-   * fetchProduct('product-slug');
-   * @param params
+   * ``` ts
+   * fetchProduct({
+   *   id: 1,
+   *   variationId: 1
+   * });
+   * ```
    */
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;

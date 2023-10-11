@@ -3,10 +3,13 @@ import { FetchOrder, UseCustomerOrderReturn, UseCustomerOrderState } from '~/com
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable for get an order.
- * @returns {@link UseCustomerOrderReturn}
+ * @description Composable for managing customer order.
+ * @returns UseCustomerOrderReturn
+ * @param id
  * @example
+ * ``` ts
  * const { data, loading, error, fetchOrder } = useCustomerOrder();
+ * ```
  */
 export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
   const state = useState<UseCustomerOrderState>('useCustomerOrder-' + id, () => ({
@@ -17,8 +20,21 @@ export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
 
   /**
    * @description Function for fetching an order.
+   * @param params { OrderSearchParams }
+   * @return FetchOrder
    * @example
-   * getOrder(@props: OrderSearchParams)
+   * ``` ts
+   * fetchOrder({
+   *   orderId: '';
+   *   accessKey: '';
+   *   name: '';
+   *   postcode: '';
+   * })
+   *
+   * fetchOrder({
+   *   orderId: '';
+   * })
+   * ```
    */
   const fetchOrder: FetchOrder = async (params: OrderSearchParams) => {
     state.value.loading = true;
