@@ -6,12 +6,12 @@ export interface UseMakeOrderState {
   loading: boolean;
 }
 
-export type createOrder = (params: MakeOrderParams) => Promise<Order>;
+export type CreateOrder = (params: MakeOrderParams) => Promise<Order>;
 
 export interface UseMakeOrder {
   data: Readonly<Ref<UseMakeOrderState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  createOrder: createOrder;
+  createOrder: CreateOrder;
 }
 
 export type UseMakeOrderReturn = () => UseMakeOrder;

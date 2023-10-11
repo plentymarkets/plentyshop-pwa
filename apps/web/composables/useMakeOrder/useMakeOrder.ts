@@ -1,14 +1,16 @@
 import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import type { UseMakeOrderState, UseMakeOrderReturn, createOrder } from '~/composables/useMakeOrder/types';
+import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable for creating an order
+ * @description Composable for managing order creation.
+ * @return UseMakeOrderReturn
  * @example
+ * ``` ts
  * const { data, loading, createOrder } = useMakeOrder();
+ * ```
  */
-
 export const useMakeOrder: UseMakeOrderReturn = () => {
   const state = useState<UseMakeOrderState>('useMakeOrder', () => ({
     data: {} as Order,
@@ -17,10 +19,17 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
   /**
    * @description Function for creating an order
+   * @param params { MakeOrderParams }
+   * @return CreateOrder
    * @example
-   * createOrder(params: MakeOrderParams);
+   * ``` ts
+   * createOrder({
+   *    paymentId: 1, // Method of payment
+   *    shippingPrivacyHintAccepted: true,
+   * });
+   * ```
    */
-  const createOrder: createOrder = async (params: MakeOrderParams) => {
+  const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     state.value.loading = true;
 
     await useAsyncData(() =>

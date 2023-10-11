@@ -4,21 +4,25 @@ import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {
   UsePayPalMethodsReturn,
-  createTransaction,
-  executeOrder,
+  CreateTransaction,
+  ExecuteOrder,
   LoadScript,
   UsePayPalState,
-  approveOrder,
-  createCreditCardTransaction,
-  captureOrder,
-  loadConfig,
+  ApproveOrder,
+  CreateCreditCardTransaction,
+  CaptureOrder,
+  LoadConfig,
 } from './types';
 
 /**
- * @description Composable for PayPal.
- * @returns {@link UsePayPalMethodsReturn}
+ * @description Composable for managing PayPal interaction.
+ * @returns UsePayPalMethodsReturn
  * @example
- * const { loadScript, loadConfig, createTransaction, approveOrder } = usePayPal();
+ * ``` ts
+ * const {
+ * loading, paypalScript, order, config, loadScript, loadConfig, createTransaction, approveOrder, executeOrder,
+ * createCreditCardTransaction, captureOrder } = usePayPal();
+ * ```
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
@@ -30,10 +34,13 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
 
   /**
    * @description Function to get the PayPal config.
+   * @return LoadConfig
    * @example
+   * ``` ts
    * loadConfig();
+   * ```
    */
-  const loadConfig: loadConfig = async () => {
+  const loadConfig: LoadConfig = async () => {
     if (!state.value.config) {
       const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalDataClientToken());
       useHandleError(error.value);
@@ -42,9 +49,13 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   };
 
   /**
-   * @description Function for get the paypal sdk script.
+   * @description Function for get the PayPal sdk script.
+   * @param currency
+   * @return LoadScript
    * @example
+   * ``` ts
    * loadScript('EUR');
+   * ```
    */
   const loadScript: LoadScript = async (currency: string) => {
     await loadConfig();
@@ -69,10 +80,14 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
 
   /**
    * @description Function for creating a PayPal transaction.
+   * @param fundingSource
+   * @return CreateTransaction
    * @example
+   * ``` ts
    * createTransaction(fundingSource: string);
+   * ```
    */
-  const createTransaction: createTransaction = async (fundingSource: string) => {
+  const createTransaction: CreateTransaction = async (fundingSource: string) => {
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doCreatePayPalTransaction({
         fundingSource: fundingSource,
@@ -86,11 +101,16 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
 
   /**
    * @description Function for approving a PayPal transaction.
+   * @param orderID
+   * @param payerID
+   * @return ApproveOrder
    * @example
-   * approveOrder(orderID: string, payerID: string);
+   * ``` ts
+   * approveOrder('1', '1');
+   * ```
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const approveOrder: approveOrder = async (orderID: string, payerID: string) => {
+  const approveOrder: ApproveOrder = async (orderID: string, payerID: string) => {
+    state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doApprovePayPalTransaction({
         transactionId: orderID,
@@ -99,21 +119,25 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     );
     useHandleError(error.value);
 
+    state.value.loading = false;
     return data.value?.data ?? null;
   };
 
   /**
    * @description Function for executing a PayPal transaction.
+   * @param params { PayPalExecuteParams }
+   * @return ExecuteOrder
    * @example
+   * ``` ts
    * executeOrder({
    *   mode: 'paypal',
    *   plentyOrderId: 1234;
    *   paypalTransactionId: 'UHIhhur3h2rh2';
    *   paypalMerchantId: 'U3713H123';
    * });
+   * ```
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const executeOrder: executeOrder = async (params: PayPalExecuteParams) => {
+  const executeOrder: ExecuteOrder = async (params: PayPalExecuteParams) => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getExecutePayPalOrder(params));
@@ -125,11 +149,14 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
 
   /**
    * @description Function for creating a PayPal credit card transaction.
+   * @return CreateCreditCardTransaction
    * @example
+   * ``` ts
    * createCreditCardTransaction();
+   * ```
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const createCreditCardTransaction: createCreditCardTransaction = async () => {
+  const createCreditCardTransaction: CreateCreditCardTransaction = async () => {
+    state.value.loading = true;
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
         orderContactWish: null,
@@ -145,23 +172,29 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCreatePayPalCreditCardTransaction());
     useHandleError(error.value);
 
+    state.value.loading = false;
     return data.value?.data ?? null;
   };
 
   /**
    * @description Function for (re-)capturing a PayPal order.
+   * @param params { PayPalCaptureOrderParams }
+   * @return CaptureOrder
    * @example
+   * ``` ts
    * captureOrder({
-   *    paypalOrderId: string;
-   *    paypalPayerId: string;
-   *    plentyOrderId?: number; // optional: the order will be recaptured
+   *    paypalOrderId: '1';
+   *    paypalPayerId: '1';
+   *    plentyOrderId: 1; // optional: the order will be recaptured
    * });
+   * ```
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const captureOrder: captureOrder = async (params: PayPalCaptureOrderParams) => {
+  const captureOrder: CaptureOrder = async (params: PayPalCaptureOrderParams) => {
+    state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.doCapturePayPalOrder(params));
     useHandleError(error.value);
 
+    state.value.loading = false;
     return data.value?.data ?? null;
   };
 

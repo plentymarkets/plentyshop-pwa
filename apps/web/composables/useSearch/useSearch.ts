@@ -5,9 +5,11 @@ import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing products search.
- * @returns {@link UseSearchReturn}
+ * @returns UseSearchReturn
  * @example
- * const { data, loading, getSearch } = useSearch();
+ * ``` ts
+ * const { data, loading, productsPerPage, getSearch } = useSearch();
+ * ```
  */
 export const useSearch: UseSearchReturn = () => {
   const state = useState<UseSearchState>('search', () => ({
@@ -18,8 +20,14 @@ export const useSearch: UseSearchReturn = () => {
 
   /**
    * @description Function for searching products.
+   * @param params { ItemSearchParams }
+   * @return GetSearch
    * @example
-   * getSearch(@props: ItemSearchParams)
+   * ``` ts
+   * getSearch({
+   *   term: ''
+   * })
+   * ```
    */
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     state.value.loading = true;
