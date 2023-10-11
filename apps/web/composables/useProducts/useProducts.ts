@@ -27,7 +27,8 @@ export const useProducts: UseProductsReturn = () => {
    * @example
    * ``` ts
    *  fetchProducts({
-   *     page: 1
+   *     page: 1,
+   *     categoryUrlPath: '/living-room'
    *  });
    * ```
    */
