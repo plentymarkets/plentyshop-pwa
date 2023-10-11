@@ -68,7 +68,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   /**
-   * @description Function for setting the cart.
+   * @description Function for setting the cart state.
    * @param data { Cart }
    * @example
    * ``` ts
