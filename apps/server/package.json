@@ -7,18 +7,22 @@
     "dev": "nodemon",
     "start": "nodemon",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "build": "tsup --minify"
   },
   "dependencies": {
+    "@types/cors": "^2.8.13",
     "@vue-storefront/middleware": "3.5.1",
     "consola": "^3.0.0",
-    "nodemon": "^3.0.0",
-    "ts-node-dev": "^2.0.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.13",
     "@types/express": "^4.17.13",
     "eslint": "^8.50.0",
-    "eslint-plugin-prettier": "5.0.0"
+    "eslint-plugin-prettier": "5.0.0",
+    "nodemon": "^3.0.0",
+    "ts-node-dev": "^2.0.0",
+    "tsup": "^7.2.0"
   }
 }
