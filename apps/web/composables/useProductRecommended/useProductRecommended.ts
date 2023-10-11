@@ -7,8 +7,13 @@ import type {
 import { useSdk } from '~/sdk';
 
 /**
- * Composable for getting recommended products data
- * @param {string} slug Product slug
+ * Composable for managing recommended products data
+ * @param categoryId Product slug
+ * @return UseProductRecommendedReturn
+ * @example
+ * ``` ts
+ * const { data, loading, fetchProductRecommended } = useProductRecommended('1');
+ * ```
  */
 export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
   const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
@@ -17,9 +22,12 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
   }));
 
   /** Function for fetching product recommended data
-   * @example
-   * fetchProductRecommended('product-slug');
    * @param categoryId
+   * @return FetchProductRecommended
+   * @example
+   * ``` ts
+   * fetchProductRecommended('1');
+   * ```
    */
   const fetchProductRecommended: FetchProductRecommended = async (categoryId: string) => {
     state.value.loading = true;
