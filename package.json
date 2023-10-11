@@ -27,6 +27,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
+    "@plentymarkets/shop-api": "^0.10.1",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3"
   },
@@ -35,7 +36,6 @@
     "@commitlint/config-conventional": "^17.0.0",
     "@lhci/cli": "^0.12.0",
     "@paypal/paypal-js": "7.0.0",
-    "@plentymarkets/shop-api": "^0.10.1",
     "@plentymarkets/shop-sdk": "^0.16.0",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/uuid": "^9.0.2",
@@ -57,7 +57,7 @@
     "yarn": ">=3.6.1",
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@3.6.3",
+  "packageManager": "yarn@3.6.1",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog",
