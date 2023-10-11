@@ -6,7 +6,9 @@ import { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, S
 /**
  * @description Composable for managing payment methods.
  * @example
+ * ``` ts
  * const { data, loading, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+ * ```
  * TODO: Remove .selected attribute from PaymentProviders
  */
 export const usePaymentMethods: UsePaymentMethodsReturn = () => {
@@ -19,7 +21,9 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    * @description Function for fetching payment methods.
    * @return FetchPaymentMethods
    * @example
+   * ``` ts
    * fetchPaymentMethods();
+   * ```
    */
   const fetchPaymentMethods: FetchPaymentMethods = async () => {
     state.value.loading = true;
@@ -36,7 +40,9 @@ export const usePaymentMethods: UsePaymentMethodsReturn = () => {
    * @param paymentMethodId
    * @return SavePaymentMethod
    * @example
+   * ``` ts
    * savePaymentMethod(1);
+   * ```
    */
   const savePaymentMethod: SavePaymentMethod = async (paymentMethodId: number) => {
     state.value.loading = true;

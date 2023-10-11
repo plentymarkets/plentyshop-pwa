@@ -11,7 +11,9 @@ import { useSdk } from '~/sdk';
  * @description Composable managing order returns data
  * @returns UseCustomerReturnsReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchCustomerReturns } = useCustomerReturns();
+ * ```
  */
 export const useCustomerReturns: UseCustomerReturnsReturn = () => {
   const state = useState<UseCustomerReturnsState>(`useCustomerReturns`, () => ({
@@ -23,9 +25,11 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
    * @param params { UseUserOrderSearchParams }
    * @return FetchCustomerReturns
    * @example
+   * ``` ts
    * fetchCustomerReturns({
    *    page: 1,
    * });
+   * ```
    */
   const fetchCustomerReturns: FetchCustomerReturns = async (params: UseUserOrderSearchParams) => {
     state.value.loading = true;

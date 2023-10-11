@@ -7,7 +7,9 @@ import type { UseLegalInformationState, UseLegalInformationMethodsReturn, GetLeg
  * @description Composable for managing the legal information.
  * @returns UseLegalInformationMethodsReturn
  * @example
+ * ``` ts
  * const { data, loading, getLegalTexts } = useLegalInformation();
+ * ```
  */
 export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
   const state = useState<UseLegalInformationState>('useLegalInformation', () => ({
@@ -20,15 +22,25 @@ export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
    * @param params { LegalTextsParams } Type of the legal information
    * @return GetLegalInformation
    * @example
+   * ``` ts
    * getLegalTexts({ type: 'CancellationForm' });
+   * ```
    * @example
+   * ``` ts
    * getLegalTexts({ type: 'CancellationRights' });
+   * ```
    * @example
+   * ``` ts
    * getLegalTexts({ type: 'LegalDisclosure' });
+   * ```
    * @example
+   * ``` ts
    * getLegalTexts({ type: 'PrivacyPolicy' });
+   * ```
    * @example
+   * ``` ts
    * getLegalTexts({ type: 'TermsConditions' });
+   * ```
    */
   const getLegalTexts: GetLegalInformation = async (params: LegalTextsParams) => {
     state.value.loading = true;

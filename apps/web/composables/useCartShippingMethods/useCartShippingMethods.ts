@@ -13,7 +13,9 @@ import { useSdk } from '~/sdk';
 /**
  * @description Composable for managing shipping methods.
  * @example
+ * ``` ts
  * const { data, loading, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+ * ```
  */
 export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   const state = useState<UseCartShippingMethodsState>('useCartSippingMethods', () => ({
@@ -31,7 +33,9 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   /**
    * @description Function for fetching shipping methods.
    * @example
+   * ``` ts
    * getShippingMethods();
+   * ```
    */
   const getShippingMethods: GetShippingMethods = async () => {
     state.value.loading = true;
@@ -52,7 +56,9 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
    * @description Function for selecting shipping method.
    * @param shippingMethodId
    * @example
+   * ``` ts
    * saveShippingMethod(1);
+   * ```
    */
   const saveShippingMethod: SaveShippingMethod = async (shippingMethodId: number) => {
     state.value.loading = true;

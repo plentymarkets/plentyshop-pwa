@@ -7,7 +7,9 @@ import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTre
  * @description Composable for managing the category tree.
  * @returns UseCategoryTreeMethodsReturn
  * @example
+ * ``` ts
  * const { data, loading, getCategoryTree } = useCategoryTree();
+ * ```
  */
 export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   const state = useState<UseCategoryTreeState>('useCategoryTree', () => ({
@@ -18,7 +20,9 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   /**
    * @description Function for fetching the category tree.
    * @example
+   * ``` ts
    * getCategoryTree();
+   * ```
    */
   const getCategoryTree: GetCategoryTree = async () => {
     state.value.loading = true;

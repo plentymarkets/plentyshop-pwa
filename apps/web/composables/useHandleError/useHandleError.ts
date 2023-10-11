@@ -11,10 +11,12 @@ const defaultError: ErrorParams = {
  * @param error { ErrorParams }
  * @returns Throws an error if there is one.
  * @example
+ * ``` ts
  * const { data, error } = useHandleError({
  *   status: ''
  *   statusText: ''
  * });
+ * ```
  */
 export const useHandleError: UseHandleError = (error: ErrorParams) => {
   if (error && process.client) {

@@ -9,7 +9,9 @@ import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } f
  * @param itemId
  * @returns UseProductReviews
  * @example
+ * ``` ts
  * const { data, loading, fetchProductReviews } = useProductReviews(1, 1);
+ * ```
  */
 export const useProductReviews: UseProductReviews = (variationId: string | number, itemId: number) => {
   const state = useState<UseProductReviewsState>(`useProductReviews-${variationId}-${itemId}`, () => ({
@@ -20,7 +22,9 @@ export const useProductReviews: UseProductReviews = (variationId: string | numbe
   /** Function for fetching product reviews data
    * @return FetchProductReviews
    * @example
+   * ``` ts
    * fetchProductReviews(1, 1);
+   * ```
    */
   const fetchProductReviews: FetchProductReviews = async (variationId: string | number, itemId: number) => {
     state.value.loading = true;

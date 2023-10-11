@@ -32,9 +32,11 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
  * @description Composable for managing cart.
  * @returns UseCartReturn
  * @example
+ * ``` ts
  * const {
  * data, loading, getCart, setCart, clearCartItems, addToCart, setCartItemQuantity, deleteCartItem
  * } = useCart();
+ * ```
  */
 export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
@@ -44,8 +46,11 @@ export const useCart: UseCartReturn = () => {
 
   /**
    * @description Function for fetching the cart.
+   * @return GetCart
    * @example
+   * ``` ts
    * getCart();
+   * ```
    */
   const getCart: GetCart = async () => {
     state.value.loading = true;
@@ -65,6 +70,10 @@ export const useCart: UseCartReturn = () => {
   /**
    * @description Function for setting the cart.
    * @param data { Cart }
+   * @example
+   * ``` ts
+   * setCart(data)
+   * ```
    */
   const setCart = (data: Cart) => {
     state.value.data = data;
@@ -72,6 +81,10 @@ export const useCart: UseCartReturn = () => {
 
   /**
    * @description Function for clearing cart items.
+   * @example
+   * ``` ts
+   * clearCartItems()
+   * ```
    */
   const clearCartItems = () => {
     state.value.data.items = [];
@@ -81,10 +94,12 @@ export const useCart: UseCartReturn = () => {
    * @description Function for adding cart items.
    * @param params { DoAddItemParams }
    * @example
+   * ``` ts
    * addToCart({
    *     productId: 1,
    *     quantity: 1,
    * });
+   * ```
    */
   const addToCart: AddToCart = async (params: DoAddItemParams) => {
     state.value.loading = true;
@@ -110,11 +125,13 @@ export const useCart: UseCartReturn = () => {
    * @description Function for updating cart item quantity.
    * @param params { SetCartItemQuantityParams }
    * @example
+   * ``` ts
    * setCartItemQuantity({
    *     productId: 1,
    *     quantity: 1,
    *     cartItemId: 1,
    * });
+   * ```
    */
   const setCartItemQuantity: SetCartItemQuantity = async (params: SetCartItemQuantityParams) => {
     state.value.loading = true;
@@ -142,9 +159,11 @@ export const useCart: UseCartReturn = () => {
    * @description Function for removing cart items.
    * @param params { DeleteCartItemParams }
    * @example
+   * ``` ts
    * deleteCartItem({
    *     cartItemId: 1
    * });
+   * ```
    */
   const deleteCartItem: DeleteCartItem = async (params: DeleteCartItemParams) => {
     state.value.loading = true;

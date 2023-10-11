@@ -7,7 +7,9 @@ import { useSdk } from '~/sdk';
  * @description Composable for managing products search.
  * @returns UseSearchReturn
  * @example
+ * ``` ts
  * const { data, loading, productsPerPage, getSearch } = useSearch();
+ * ```
  */
 export const useSearch: UseSearchReturn = () => {
   const state = useState<UseSearchState>('search', () => ({
@@ -21,9 +23,11 @@ export const useSearch: UseSearchReturn = () => {
    * @param params { ItemSearchParams }
    * @return GetSearch
    * @example
+   * ``` ts
    * getSearch({
    *   term: ''
    * })
+   * ```
    */
   const getSearch: GetSearch = async (params: ItemSearchParams) => {
     state.value.loading = true;

@@ -8,7 +8,9 @@ import { DownloadFile, GetDocument } from './types';
  * @description Composable for managing the order documents.
  * @returns UseOrderDocumentMethodsReturn
  * @example
+ * ``` ts
  * const { data, loading, getDocument, downloadFile } = UseOrderDocument();
+ * ```
  */
 export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
   const state = useState<UseOrderDocumentState>('useOrderDocument', () => ({
@@ -23,7 +25,9 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
    * @return GetDocument
    *
    * @example
+   * ``` ts
    * getDocument(document, accessKey)
+   * ```
    */
   const getDocument: GetDocument = async (document: OrderDocument, accessKey: string) => {
     state.value.loading = true;
@@ -46,7 +50,10 @@ export const useOrderDocument: UseOrderDocumentMethodsReturn = () => {
    * @param type
    * @return DownloadFile
    *
-   * @example downloadFile(bufferArray, 'test.pdf', 'application/pdf');
+   * @example
+   * ``` ts
+   * downloadFile(bufferArray, 'test.pdf', 'application/pdf');
+   * ```
    */
   const downloadFile: DownloadFile = (bufferArray: number[], name: string, type: string) => {
     state.value.loading = true;

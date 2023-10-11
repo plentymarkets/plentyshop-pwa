@@ -9,7 +9,9 @@ import type {
  * @description Composable managing address data
  * @returns UseCustomerAddressReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchCustomerAddress } = useCustomerAddress();
+ * ```
  */
 export const useCustomerAddress: UseCustomerAddressReturn = () => {
   const state = useState<UseCustomerAddressState>(`useCustomerAddress`, () => ({
@@ -20,7 +22,9 @@ export const useCustomerAddress: UseCustomerAddressReturn = () => {
   /** Function for fetching customer address data
    * @return FetchCustomerAddress
    * @example
+   * ``` ts
    * fetchCustomerAddress();
+   * ```
    */
   const fetchCustomerAddress: FetchCustomerAddress = async () => {
     state.value.loading = true;

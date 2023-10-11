@@ -6,7 +6,9 @@ import { UseActiveShippingCountriesReturn, UseActiveShippingCountriesState, GetA
 /**
  * @description Composable for getting all active shipping countries.
  * @example
+ * ``` ts
  * const { data, loading, getActiveShippingCountries } = useActiveShippingCountries();
+ * ```
  */
 
 export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () => {
@@ -18,7 +20,9 @@ export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () =
   /**
    * @description Function to get all active shipping countries.
    * @example
+   * ``` ts
    * getActiveShippingCountries();
+   * ```
    */
   const getActiveShippingCountries: GetActiveShippingCountries = async () => {
     state.value.loading = true;

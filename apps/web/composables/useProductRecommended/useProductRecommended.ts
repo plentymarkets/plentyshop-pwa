@@ -11,7 +11,9 @@ import { useSdk } from '~/sdk';
  * @param categoryId Product slug
  * @return UseProductRecommendedReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchProductRecommended } = useProductRecommended('1');
+ * ```
  */
 export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
   const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
@@ -23,7 +25,9 @@ export const useProductRecommended: UseProductRecommendedReturn = (categoryId: s
    * @param categoryId
    * @return FetchProductRecommended
    * @example
+   * ``` ts
    * fetchProductRecommended('1');
+   * ```
    */
   const fetchProductRecommended: FetchProductRecommended = async (categoryId: string) => {
     state.value.loading = true;

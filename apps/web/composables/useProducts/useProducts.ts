@@ -8,7 +8,9 @@ import { useSdk } from '~/sdk';
  * @description Composable for managing products.
  * @returns UseProductsReturn
  * @example
+ * ``` ts
  * const { data, loading, productsPerPage, selectedVariation, fetchProducts, selectVariation } = useProducts();
+ * ```
  */
 export const useProducts: UseProductsReturn = () => {
   const state = useState<UseProductsState>('products', () => ({
@@ -23,9 +25,11 @@ export const useProducts: UseProductsReturn = () => {
    * @param params { FacetSearchCriteria }
    * @return FetchProducts
    * @example
+   * ``` ts
    *  fetchProducts({
    *     page: 1
    *  });
+   * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
@@ -50,7 +54,9 @@ export const useProducts: UseProductsReturn = () => {
    * @param product { Product }
    * @return SelectVariation
    * @example
+   * ``` ts
    *  selectVariation({} as Product)
+   * ```
    */
   const selectVariation: SelectVariation = async (product: Product) => {
     state.value.loading = true;

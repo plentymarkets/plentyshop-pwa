@@ -18,9 +18,11 @@ function convertToSaveableJson(jsonList: any): string {
  * @description Composable for managing cookie bar.
  * @returns UseCookieReturn
  * @example
+ * ``` ts
  * const {
  * cookieJson, bannerIsHidden, setHiddenState, convertAndSaveCookies, loadThirdPartyScripts, defaultCheckboxIndex
  * } = useCookieBar(consentCookie, initCheckboxIndex, initialCookieJsonFromConfig);
+ * ```
  */
 /* eslint-disable sonarjs/cognitive-complexity */
 export const useCookieBar = (
@@ -51,7 +53,9 @@ export const useCookieBar = (
    * @param state
    * @return void
    * @example
+   * ``` ts
    * setHiddenState(true);
+   * ```
    */
   function setHiddenState(state: boolean): void {
     bannerIsHidden.value = state;
@@ -61,7 +65,9 @@ export const useCookieBar = (
    * @description Function for loading third party scripts.
    * @return void
    * @example
+   * ``` ts
    * loadThirdPartyScripts();
+   * ```
    */
   function loadThirdPartyScripts(): void {
     if (!process.server) {
@@ -105,7 +111,9 @@ export const useCookieBar = (
    * @param latestStatus
    * @return string
    * @example
+   * ``` ts
    * convertAndSaveCookies(true, true);
+   * ```
    */
   function convertAndSaveCookies(setAllCookies: boolean, latestStatus: boolean): string {
     if (setAllCookies) {

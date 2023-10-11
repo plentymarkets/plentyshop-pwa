@@ -18,9 +18,11 @@ import type {
  * @description Composable for managing PayPal interaction.
  * @returns UsePayPalMethodsReturn
  * @example
+ * ``` ts
  * const {
  * loading, paypalScript, order, config, loadScript, loadConfig, createTransaction, approveOrder, executeOrder,
  * createCreditCardTransaction, captureOrder } = usePayPal();
+ * ```
  */
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
@@ -34,7 +36,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @description Function to get the PayPal config.
    * @return LoadConfig
    * @example
+   * ``` ts
    * loadConfig();
+   * ```
    */
   const loadConfig: LoadConfig = async () => {
     if (!state.value.config) {
@@ -49,7 +53,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @param currency
    * @return LoadScript
    * @example
+   * ``` ts
    * loadScript('EUR');
+   * ```
    */
   const loadScript: LoadScript = async (currency: string) => {
     await loadConfig();
@@ -77,7 +83,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @param fundingSource
    * @return CreateTransaction
    * @example
+   * ``` ts
    * createTransaction(fundingSource: string);
+   * ```
    */
   const createTransaction: CreateTransaction = async (fundingSource: string) => {
     const { data, error } = await useAsyncData(() =>
@@ -97,7 +105,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @param payerID
    * @return ApproveOrder
    * @example
+   * ``` ts
    * approveOrder('1', '1');
+   * ```
    */
   const approveOrder: ApproveOrder = async (orderID: string, payerID: string) => {
     state.value.loading = true;
@@ -118,12 +128,14 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @param params { PayPalExecuteParams }
    * @return ExecuteOrder
    * @example
+   * ``` ts
    * executeOrder({
    *   mode: 'paypal',
    *   plentyOrderId: 1234;
    *   paypalTransactionId: 'UHIhhur3h2rh2';
    *   paypalMerchantId: 'U3713H123';
    * });
+   * ```
    */
   const executeOrder: ExecuteOrder = async (params: PayPalExecuteParams) => {
     state.value.loading = true;
@@ -139,7 +151,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @description Function for creating a PayPal credit card transaction.
    * @return CreateCreditCardTransaction
    * @example
+   * ``` ts
    * createCreditCardTransaction();
+   * ```
    */
   const createCreditCardTransaction: CreateCreditCardTransaction = async () => {
     state.value.loading = true;
@@ -167,11 +181,13 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * @param params { PayPalCaptureOrderParams }
    * @return CaptureOrder
    * @example
+   * ``` ts
    * captureOrder({
    *    paypalOrderId: '1';
    *    paypalPayerId: '1';
    *    plentyOrderId: 1; // optional: the order will be recaptured
    * });
+   * ```
    */
   const captureOrder: CaptureOrder = async (params: PayPalCaptureOrderParams) => {
     state.value.loading = true;

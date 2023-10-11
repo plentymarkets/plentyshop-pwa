@@ -7,7 +7,9 @@ import { useSdk } from '~/sdk';
  * @description Composable for managing order creation.
  * @return UseMakeOrderReturn
  * @example
+ * ``` ts
  * const { data, loading, createOrder } = useMakeOrder();
+ * ```
  */
 export const useMakeOrder: UseMakeOrderReturn = () => {
   const state = useState<UseMakeOrderState>('useMakeOrder', () => ({
@@ -20,10 +22,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * @param params { MakeOrderParams }
    * @return CreateOrder
    * @example
+   * ``` ts
    * createOrder({
    *    paymentId: 1, // Method of payment
    *    shippingPrivacyHintAccepted: true,
    * });
+   * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     state.value.loading = true;
