@@ -58,7 +58,7 @@ jobs:
         run: yarn build
 
       - name: Build middleware
-        run: cd ./apps/server && yarn
+        run: cd ./apps/server && yarn build
 
       - name: Install productive dependencies for server
         run: yarn workspaces focus --production
