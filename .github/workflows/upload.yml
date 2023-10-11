@@ -69,12 +69,6 @@ jobs:
           cp -r node_modules middleware
           cp -r apps/server middleware
 
-      - name: Create run command
-        run: |
-          touch middleware/run.sh
-          echo #!/bin/bash >> middleware/run.sh
-          echo "cd $1/middleware && node server/dist/index.js & node $1/apps/web/.output/server/index.mjs" >> middleware/run.sh
-
       - name: Compress repo to Tar
         uses: a7ul/tar-action@v1.1.0
         id: compress
