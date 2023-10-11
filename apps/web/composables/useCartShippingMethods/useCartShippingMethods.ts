@@ -11,11 +11,12 @@ import { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable for getting shipping methods.
+ * @description Composable for managing shipping methods.
  * @example
- * const { data, loading, getShippingMethods } = useCartShippingMethods();
+ * ``` ts
+ * const { data, loading, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+ * ```
  */
-
 export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   const state = useState<UseCartShippingMethodsState>('useCartSippingMethods', () => ({
     data: {} as ShippingProvider,
@@ -32,7 +33,9 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   /**
    * @description Function for fetching shipping methods.
    * @example
+   * ``` ts
    * getShippingMethods();
+   * ```
    */
   const getShippingMethods: GetShippingMethods = async () => {
     state.value.loading = true;
@@ -49,6 +52,14 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
     return state.value.data;
   };
 
+  /**
+   * @description Function for selecting shipping method.
+   * @param shippingMethodId
+   * @example
+   * ``` ts
+   * saveShippingMethod(1);
+   * ```
+   */
   const saveShippingMethod: SaveShippingMethod = async (shippingMethodId: number) => {
     state.value.loading = true;
     const { error } = await useAsyncData(() =>

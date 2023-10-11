@@ -58,9 +58,13 @@ const breadcrumbs = computed(() => {
 watch(
   () => locale.value,
   async (changedLocale: any) => {
-    router.push(localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`));
+    router.push({
+      path: localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`),
+      query: route.query,
+    });
   },
 );
+
 watch(
   () => route.query,
   async () => {
