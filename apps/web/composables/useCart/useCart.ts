@@ -80,7 +80,7 @@ export const useCart: UseCartReturn = () => {
   };
 
   /**
-   * @description Function for clearing cart items.
+   * @description Function for clearing cart items from state.
    * @example
    * ``` ts
    * clearCartItems()
