@@ -1,5 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 // import { useSdk } from '~/sdk';
+import type { UseCanonicalState, UseCanonicalReturn } from '~/composables/useCanonical/types';
 
 /**
  * @description Composable managing canonical data
