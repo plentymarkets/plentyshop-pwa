@@ -37,8 +37,35 @@ const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
 const localePath = useLocalePath();
 
+const setCanonical = () => {
+  const runtimeConfig = useRuntimeConfig();
+  const base = `${runtimeConfig.public.baseUrl}/c`;
+  if (productsCatalog.value.languageUrls) {
+    const xdefault = productsCatalog.value.languageUrls['x-default'];
+    useHead({
+      link: [
+        {
+          rel: 'canonical',
+          href: `${base}${xdefault}`,
+        },
+      ],
+    });
+    Object.keys(productsCatalog.value.languageUrls).forEach((key) => {
+      const link = productsCatalog.value.languageUrls[key];
+      useHead({
+        link: [
+          {
+            rel: 'alternate',
+            href: `${base}${link}`,
+          },
+        ],
+      });
+    });
+  }
+};
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
+  setCanonical();
 };
 
 await handleQueryUpdate();
