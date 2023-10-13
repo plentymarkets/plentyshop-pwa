@@ -13,5 +13,6 @@
 <script setup lang="ts">
 definePageMeta({
   layoutName: 'checkout',
+  pageType: 'static',
 });
 </script>
