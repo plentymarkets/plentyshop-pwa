@@ -7,16 +7,16 @@
 ### New
 
 - Added PayPal Express Checkout
-- Added PayPal Credit Card payment option
-- MyAccount: The Creation and editing of shipping and billing addresses is now possilbe
-- MyAccount: The order history displays the latest orders of the logged in customer
-- MyAccount: The return history displays the latest returns of the logged in customer
-- Thank you page / Order-Confirmation now displays all relevant data of the order
-- Thank you page / Order-Confirmation now displays buttons to download order documents
-- Thank you page / Order-Confirmation can be accessed via a link after authentication
-- Thank you page / Order-Confirmation now also accessible via the order history
+- Added PayPal payment option for credit cards
+- MyAccount: The creation and editing of shipping and billing addresses is now possilbe
+- MyAccount: The order history shows the latest orders of the logged-in customer
+- MyAccount: The return history shows the latest returns of the logged-in customer
+- The order confirmation now shows all relevant data of the order
+- The order confirmation now displays buttons to download order documents
+- The order confirmation can now be accessed via a link after authentication
+- The order confirmation is now also accessible via the order history
 - None saleable items are marked as such
-- Added display of bulk/graduate prices on item-pages
+- Added display of bulk and graduated prices on item pages
 - Added more default notifications for a variaty of interactions in the PWA
 - Added loading animations where applicable
 - Display of net/gross prices depending on the configuration
@@ -30,6 +30,6 @@
 
 ### Fixed
 
-- After login the user was wrongfully forwared to the homepage. The user stays on the current page now.
+- After login the user was wrongfully forwared to the homepage. The user now stays on the current page.
 
 ## v1.0.0 (28.09.2023) First release
