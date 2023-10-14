@@ -9,15 +9,15 @@
 - PayPal Express Checkout hinzugefügt
 - PayPal-Kreditkarten-Zahlungsoption hinzugefügt
 - Mein Konto: Die Erstellung und Bearbeitung von Versand- und Rechnungsadressen ist jetzt möglich
-- Mein Konto: Die Bestellhistorie zeigt die letzten Bestellungen des eingeloggten Kunden an
-- Mein Konto: Die Retourenhistorie zeigt die letzten Retouren des eingeloggten Kunden an
-- Bestellbestätigung zeigt jetzt alle relevanten Daten der Bestellung an
-- Bestellbestätigung zeigt jetzt Buttons zum Download von Auftragsdokumenten an
-- Bestellbestätigung kann nach der Authentifizierung über einen Link aufgerufen werden
-- Bestellbestätigung jetzt auch über die Bestellhistorie erreichbar
+- Mein Konto: Die Auftragshistorie zeigt die letzten Bestellungen von eingeloggten Kund:innen an
+- Mein Konto: Die Retourenhistorie zeigt die letzten Retouren von eingeloggten Kund:innen an
+- Die Bestellbestätigung zeigt jetzt alle relevanten Daten der Bestellung an
+- Die Bestellbestätigung zeigt jetzt Schaltflächen zum Download von Auftragsdokumenten an
+- Die Bestellbestätigung kann nach der Authentifizierung über einen Link aufgerufen werden
+- Die Bestellbestätigung ist jetzt auch über die Auftragshistorie erreichbar
 - Nicht verkäufliche Artikel werden als solche gekennzeichnet
-- Anzeige von Mengen-/Staffelpreisen auf Artikel-Seiten hinzugefügt
-- Weitere Standard-Benachrichtigungen für eine Vielzahl von Interaktionen in der PWA hinzugefügt
+- Die Anzeige von Mengen-/Staffelpreisen auf Artikelseiten wurde hinzugefügt
+- Weitere Standardbenachrichtigungen für eine Vielzahl von Interaktionen in der PWA hinzugefügt
 - Ladeanimationen hinzugefügt
 - Anzeige von Netto-/Bruttopreisen je nach Konfiguration
 - Menü im Header hinzugefügt, um zwischen verschiedenen Sprachversionen der PWA zu wechseln
