@@ -60,6 +60,7 @@ import { unrefElement } from '@vueuse/core';
 
 definePageMeta({
   layout: 'account',
+  pageType: 'static',
 });
 const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();

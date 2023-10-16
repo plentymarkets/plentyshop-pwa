@@ -5,6 +5,10 @@
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
 
+definePageMeta({
+  pageType: 'static',
+});
+
 await getLegalTexts({
   type: 'PrivacyPolicy',
 });

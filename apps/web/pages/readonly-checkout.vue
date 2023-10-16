@@ -120,6 +120,7 @@ import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
   layoutName: 'checkout',
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';

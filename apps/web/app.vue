@@ -12,11 +12,16 @@ const { setInitialData } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
 const vsfLocale = useCookie('vsf-locale');
+const { setStaticPageMeta } = useCanonical();
 
 vsfLocale.value = locale.value;
 
 if (route?.meta.layoutName !== 'checkout') {
   setInitialData();
+}
+
+if (route?.meta.pageType === 'static') {
+  setStaticPageMeta();
 }
 
 getCategoryTree();

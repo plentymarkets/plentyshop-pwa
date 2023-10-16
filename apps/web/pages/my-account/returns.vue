@@ -79,6 +79,7 @@ import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: 'account',
+  pageType: 'static',
 });
 
 const { data, fetchCustomerReturns, loading } = useCustomerReturns();
