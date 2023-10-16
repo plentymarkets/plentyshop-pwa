@@ -22,6 +22,7 @@
 - Display of net/gross prices depending on the configuration
 - Added menu to header to switch between different language versions of the PWA
 - Multilingual URLs are now used for different language versions of the PWA
+- Added composable that sets canonical url metadata for static pages.
 
 ### Changed
 
