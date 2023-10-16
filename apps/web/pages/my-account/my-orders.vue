@@ -111,6 +111,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: 'account',
+  pageType: 'static',
 });
 
 const localePath = useLocalePath();
