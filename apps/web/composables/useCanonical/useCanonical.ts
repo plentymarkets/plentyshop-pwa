@@ -1,7 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseCanonicalReturn } from './types';
 import { StaticPageMeta, UseCanonicalState } from './types';
-import {LocaleType} from "@nuxtjs/i18n/dist/module";
 
 /**
  * @description Composable managing canonical data
@@ -16,6 +15,14 @@ export const useCanonical: UseCanonicalReturn = () => {
     loading: false,
   }));
 
+  /**
+   * @description Function for setting static page metas.
+   * @returns StaticPageMeta
+   * @example
+   * ``` ts
+   * setStaticPageMeta()
+   * ```
+   */
   const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
