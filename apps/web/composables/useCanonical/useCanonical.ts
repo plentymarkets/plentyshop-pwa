@@ -1,16 +1,14 @@
 import { toRefs } from '@vueuse/shared';
-// import { useSdk } from '~/sdk';
 import type { UseCanonicalReturn } from './types';
-import { UseCanonicalState } from './types';
-import {GetCart} from "~/composables/useCart/types";
+import { StaticPageMeta, UseCanonicalState } from './types';
+import {LocaleType} from "@nuxtjs/i18n/dist/module";
 
 /**
  * @description Composable managing canonical data
- * @param url Canonical slug
  * @returns UseCanonicalReturn
  * @example
  * ``` ts
- * const { data, loading, fetchCanonical } = useCanonical('canonical-slug');
+ * const { data, loading, setStaticPageMeta } = useCanonical();
  * ```
  */
 export const useCanonical: UseCanonicalReturn = () => {
@@ -18,7 +16,7 @@ export const useCanonical: UseCanonicalReturn = () => {
     loading: false,
   }));
 
-  const setStaticPageMeta: GetCart = async () => {
+  const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
     const route = useRoute();
@@ -26,7 +24,7 @@ export const useCanonical: UseCanonicalReturn = () => {
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
 
-    const alternateLocales = locales.value.map((item) => {
+    const alternateLocales = locales.value.map((item: any) => {
       return {
         rel: 'alternate',
         hreflang: item.code,
