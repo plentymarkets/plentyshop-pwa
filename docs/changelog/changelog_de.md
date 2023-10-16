@@ -22,6 +22,7 @@
 - Anzeige von Netto-/Bruttopreisen je nach Konfiguration
 - Menü im Header hinzugefügt, um zwischen verschiedenen Sprachversionen der PWA zu wechseln
 - Mehrsprachige URLs werden nun für verschiedene Sprachversionen der PWA verwendet
+- Composable hinzugefügt, das kanonische URL-Metadaten für statische Seiten festlegt.
 
 ### Geändert
 
