@@ -159,6 +159,7 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 
 definePageMeta({
   layoutName: 'checkout',
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
