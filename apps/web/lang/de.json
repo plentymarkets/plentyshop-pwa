@@ -433,16 +433,6 @@
     "total": "Summe"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
-  "legal": {
-    "label": "Rechtliches",
-    "subcategories": {
-      "cancellationForm": "Widerrufsformular",
-      "cancellationRights": "Widerrufsbelehrung",
-      "legalDisclosure": "Impressum",
-      "privacyPolicy": "Datenschutzerklärung",
-      "termsAndConditions": "AGB"
-    }
-  },
   "asterisk": "*",
   "itemExclVAT": "inkl. ges. MwSt",
   "itemInclVAT": "zzgl. ges. MwSt.",
