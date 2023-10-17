@@ -52,9 +52,9 @@ jobs:
           pushd apps/web
           yarn test:coverage i18n.spec.ts
 
-      - name: Report Coverage
-        if: always()
-        uses:  davelosert/vitest-coverage-report-action@v2
-        with:
-          file-coverage-mode: all
-          name: Unit Test Coverage
+#      - name: Report Coverage
+#        if: always()
+#        uses:  davelosert/vitest-coverage-report-action@v2
+#        with:
+#          file-coverage-mode: all
+#          name: Unit Test Coverage
