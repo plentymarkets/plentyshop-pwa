@@ -11,7 +11,7 @@
           :aria-label="$t('numberInCart', cartItemsCount)"
           variant="tertiary"
           square
-          @click="toggleLanguageSelector"
+          @click="toggleLanguageSelect"
         >
           <template #prefix>
             <SfIconLanguage class="relative" />
@@ -86,7 +86,7 @@
       variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
       square
-      @click="toggleLanguageSelector"
+      @click="toggleLanguageSelect"
     >
       <SfIconLanguage />
     </SfButton>
@@ -100,7 +100,7 @@
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
-  <LanguageSelector v-if="showLanguageSelector" :toggle-method="toggleLanguageSelector" />
+  <LanguageSelector v-if="isLanguageSelectOpen" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -184,6 +184,8 @@ const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
+const { isOpen: isLanguageSelectOpen, toggle: toggleLanguageSelect } = useLanguageSelect();
+
 defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
@@ -220,11 +222,6 @@ const accountDropdown = [
   },
 ];
 
-let showLanguageSelector = ref(false);
-
-const toggleLanguageSelector = () => {
-  showLanguageSelector.value = !showLanguageSelector.value;
-};
 
 watch(
   () => isAuthenticationOpen.value,
