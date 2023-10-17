@@ -41,6 +41,9 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
+      - name: Build packages
+        run: yarn build
+
       - name: Start server
         run: |
           pushd apps/server
@@ -50,7 +53,7 @@ jobs:
       - name: Run vitest
         run: |
           pushd apps/web
-          yarn test i18n.spec.ts
+          yarn test:coverage i18n.spec.ts
 
       - name: Report Coverage
         if: always()
