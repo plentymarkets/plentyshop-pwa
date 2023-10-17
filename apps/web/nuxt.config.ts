@@ -110,8 +110,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: process.env.NUXT_PUBLIC_API_URL ?? 'http://localhost:8181',
       cookieGroups: cookieConfig,
-      showNetPrices: true,
-      baseUrl: 'https://mevofvd5omld.c01-14.plentymarkets.com',
+      showNetPrices: true
     },
   },
   pwa: {

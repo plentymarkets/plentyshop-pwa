@@ -38,16 +38,15 @@ const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
 const localePath = useLocalePath();
 
-const setCanonical = () => {
+const setCategoryCanonical = () => {
   const runtimeConfig = useRuntimeConfig();
-  const base = `${runtimeConfig.public.baseUrl}/c`;
   if (productsCatalog.value.languageUrls) {
     const xdefault = productsCatalog.value.languageUrls['x-default'];
     useHead({
       link: [
         {
           rel: 'canonical',
-          href: `${base}${xdefault}`,
+          href: `${runtimeConfig.public.apiUrl}/c${xdefault}`,
         },
       ],
     });
@@ -57,7 +56,7 @@ const setCanonical = () => {
         link: [
           {
             rel: 'alternate',
-            href: `${base}${link}`,
+            href: `${runtimeConfig.public.apiUrl}/c${link}`,
           },
         ],
       });
@@ -66,7 +65,7 @@ const setCanonical = () => {
 };
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
-  setCanonical();
+  setCategoryCanonical();
 };
 
 await handleQueryUpdate();
