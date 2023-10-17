@@ -41,21 +41,26 @@ const localePath = useLocalePath();
 const setCategoryCanonical = () => {
   const runtimeConfig = useRuntimeConfig();
   if (productsCatalog.value.languageUrls) {
-    const xdefault = productsCatalog.value.languageUrls['x-default'];
+    let xdefault = productsCatalog.value.languageUrls['x-default'];
+    xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
     useHead({
       link: [
         {
           rel: 'canonical',
-          href: `${runtimeConfig.public.apiUrl}/c${xdefault}`,
+          href: getFacetsFromURL().facets
+            ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${getFacetsFromURL().facets}`
+            : `${runtimeConfig.public.apiUrl}/c${xdefault}`,
         },
       ],
     });
     Object.keys(productsCatalog.value.languageUrls).forEach((key) => {
-      const link = productsCatalog.value.languageUrls[key];
+      let link = productsCatalog.value.languageUrls[key];
+      link = link[link.length - 1] === '/' ? link.slice(0, Math.max(0, link.length - 1)) : link;
       useHead({
         link: [
           {
             rel: 'alternate',
+            hreflang: key,
             href: `${runtimeConfig.public.apiUrl}/c${link}`,
           },
         ],
