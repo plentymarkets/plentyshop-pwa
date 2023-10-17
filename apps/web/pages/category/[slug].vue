@@ -3,13 +3,9 @@
     <Breadcrumbs />
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-      <CategoryPageContent
-        v-if="productsCatalog"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
+      <CategoryPageContent v-if="productsCatalog" :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :total-products="productsCatalog.pagination.totals" :products="productsCatalog.products"
+        :items-per-page="Number(productsPerPage)">
         <template #sidebar>
           <CategoryTree :category="category" />
           <CategorySorting />
@@ -43,13 +39,14 @@ const setCategoryCanonical = () => {
   if (productsCatalog.value.languageUrls) {
     let xdefault = productsCatalog.value.languageUrls['x-default'];
     xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
+    const canonicalLink = getFacetsFromURL().facets
+      ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${getFacetsFromURL().facets}`
+      : `${runtimeConfig.public.apiUrl}/c${xdefault}`;
     useHead({
       link: [
         {
           rel: 'canonical',
-          href: getFacetsFromURL().facets
-            ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${getFacetsFromURL().facets}`
-            : `${runtimeConfig.public.apiUrl}/c${xdefault}`,
+          href: canonicalLink
         },
       ],
     });
@@ -66,6 +63,39 @@ const setCategoryCanonical = () => {
         ],
       });
     });
+    const facetsFromUrl = getFacetsFromURL();
+    if (facetsFromUrl) {
+      if (facetsFromUrl.page === 2) {
+        useHead({
+          link: [
+            {
+              rel: 'prev',
+              href: canonicalLink,
+            },
+          ],
+        });
+      }
+      if (facetsFromUrl.page > 2) {
+        useHead({
+          link: [
+            {
+              rel: 'prev',
+              href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+            },
+          ],
+        });
+      }
+      if (facetsFromUrl.page < productsCatalog.value.pagination.totals / facetsFromUrl.itemsPerPage) {
+        useHead({
+          link: [
+            {
+              rel: 'next',
+              href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+            },
+          ],
+        });
+      }
+    }
   }
 };
 const handleQueryUpdate = async () => {
