@@ -3,9 +3,13 @@
     <Breadcrumbs />
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-      <CategoryPageContent v-if="productsCatalog" :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals" :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)">
+      <CategoryPageContent
+        v-if="productsCatalog"
+        :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :total-products="productsCatalog.pagination.totals"
+        :products="productsCatalog.products"
+        :items-per-page="Number(productsPerPage)"
+      >
         <template #sidebar>
           <CategoryTree :category="category" />
           <CategorySorting />
@@ -46,7 +50,7 @@ const setCategoryCanonical = () => {
       link: [
         {
           rel: 'canonical',
-          href: canonicalLink
+          href: canonicalLink,
         },
       ],
     });
@@ -64,7 +68,7 @@ const setCategoryCanonical = () => {
       });
     });
     const facetsFromUrl = getFacetsFromURL();
-    if (facetsFromUrl) {
+    if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
       if (facetsFromUrl.page === 2) {
         useHead({
           link: [
