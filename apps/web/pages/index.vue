@@ -120,6 +120,11 @@ import { SfButton } from '@storefront-ui/vue';
 
 const { data: categoryTree } = useCategoryTree();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('homepage');
+
+definePageMeta({
+  pageType: 'static',
+});
+
 const firstCategoryId = categoryTree.value?.[0]?.id;
 
 onMounted(async () => {
