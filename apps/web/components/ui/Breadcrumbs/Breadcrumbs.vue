@@ -75,4 +75,44 @@ const toggle = () => {
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
+const route = useRoute();
+const items = route.path.split('/');
+let itemListElement = [] as Array<any>;
+let name = '';
+items.forEach((item, index) => {
+  name += item;
+  if (index === 0) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@id': '/',
+        name: 'Home',
+      },
+    });
+  } else {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: index,
+      item: {
+        '@id': `/${name}/`,
+        name: `${item}`,
+      },
+    });
+  }
+});
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement,
+};
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(structuredData),
+    },
+  ],
+});
 </script>
