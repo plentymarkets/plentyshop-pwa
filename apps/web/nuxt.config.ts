@@ -110,7 +110,7 @@ export default defineNuxtConfig({
     public: {
       apiUrl: process.env.NUXT_PUBLIC_API_URL ?? 'http://localhost:8181',
       cookieGroups: cookieConfig,
-      showNetPrices: true
+      showNetPrices: true,
     },
   },
   pwa: {
