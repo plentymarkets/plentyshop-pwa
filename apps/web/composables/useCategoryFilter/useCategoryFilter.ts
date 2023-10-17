@@ -40,10 +40,28 @@ const getCategorySlugsFromPath = (path: string): string[] => {
   return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
 };
 
+/**
+ * @description Composable for managing category filter.
+ * @returns UseCategoryFiltersResponse
+ * @example
+ * ``` ts
+ * const {
+ * getFacetsFromURL, updateFilters, updateItemsPerPage, updateSearchTerm, updateSorting, updatePage, updatePrices
+ * } = useCategoryFilter();
+ * ```
+ */
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const route = useRoute();
   const router = useRouter();
 
+  /**
+   * @description Function for getting facets from url.
+   * @return GetFacetsFromURLResponse
+   * @example
+   * ``` ts
+   * getFacetsFromURL();
+   * ```
+   */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     return {
       categoryUrlPath: getCategorySlugsFromPath(route.fullPath).join('/'),
@@ -57,6 +75,14 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     };
   };
 
+  /**
+   * @description Function for getting filters from url.
+   * @return Filters
+   * @example
+   * ``` ts
+   * getFiltersFromUrl();
+   * ```
+   */
   const getFiltersFromUrl = (): Filters => {
     const filters: Filters = {};
     const facets = getFacetsFromURL().facets?.split(',') ?? [];
@@ -68,6 +94,14 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     return filters;
   };
 
+  /**
+   * @description Function for getting filters data from url.
+   * @return GetFacetsFromURLResponse
+   * @example
+   * ``` ts
+   * getFiltersDataFromUrl();
+   * ```
+   */
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
     return Object.keys(route.query)
       .filter((f) => nonFilters.has(f))
@@ -92,6 +126,15 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     router.push({ query: updateQuery });
   };
 
+  /**
+   * @description Function for updating filters.
+   * @param filters { Filters }
+   * @return void
+   * @example
+   * ``` ts
+   * updateFilters(filters);
+   * ```
+   */
   const updateFilters = (filters: Filters): void => {
     const currentFilters = getFiltersFromUrl();
     const mergedFilters = mergeFilters(currentFilters, filters);
@@ -104,6 +147,16 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     }
   };
 
+  /**
+   * @description Function for updating prices.
+   * @param priceMin
+   * @param priceMax
+   * @return void
+   * @example
+   * ``` ts
+   * updatePrices('1', '1');
+   * ```
+   */
   const updatePrices = (priceMin: string, priceMax: string): void => {
     if (priceMin.length > 0 && priceMax.length === 0) {
       updateQuery({ priceMin: priceMin });
@@ -116,14 +169,41 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     }
   };
 
+  /**
+   * @description Function for updating items per page.
+   * @param itemsPerPage
+   * @return void
+   * @example
+   * ``` ts
+   * updateItemsPerPage(1);
+   * ```
+   */
   const updateItemsPerPage = (itemsPerPage: number): void => {
     updateQuery({ itemsPerPage: itemsPerPage, page: 1 });
   };
 
+  /**
+   * @description Function for updating the page.
+   * @param page
+   * @return void
+   * @example
+   * ``` ts
+   * updatePage('1');
+   * ```
+   */
   const updatePage = (page: string): void => {
     updateQuery({ page: page });
   };
 
+  /**
+   * @description Function for updating the search term.
+   * @param term
+   * @return void
+   * @example
+   * ``` ts
+   * updateSearchTerm('1');
+   * ```
+   */
   const updateSearchTerm = (term: string): void => {
     updateQuery({
       term: term || undefined,
@@ -138,6 +218,15 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     });
   };
 
+  /**
+   * @description Function for updating the sorting.
+   * @param sort
+   * @return void
+   * @example
+   * ``` ts
+   * updateSorting('1');
+   * ```
+   */
   const updateSorting = (sort: string): void => {
     router.push({ query: { ...route.query, sort } });
   };

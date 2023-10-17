@@ -3,8 +3,11 @@ import { useSdk } from '~/sdk';
 import { SetInitialData, UseInitialSetupReturn } from './types';
 
 /** Function for getting current customer/cart data from session
+ * @return SetInitialData
  * @example
+ * ``` ts
  * setInitialData();
+ * ```
  */
 const setInitialData: SetInitialData = async () => {
   const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
@@ -19,11 +22,12 @@ const setInitialData: SetInitialData = async () => {
 
 /**
  * @description Composable to get initial customer and cart data
- * @returns {@link UseInitialSetupReturn}
+ * @returns UseInitialSetupReturn
  * @example
+ * ``` ts
  * const { setInitialData } = useInitialSetup();
+ * ```
  */
-
 export const useInitialSetup: UseInitialSetupReturn = () => {
   return {
     setInitialData,

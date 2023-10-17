@@ -102,9 +102,10 @@ watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
-      router.push(
-        localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
-      );
+      router.push({
+        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        query: route.query,
+      });
     }
   },
 );
