@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest'
-import de from '../../../lang/de.json';
-import en from '../../../lang/en.json';
+
+const en = require('../../../lang/en.json')
+const de = require('../../../lang/de.json')
 
 describe('i18n', () => {
     it('has the same keys in English and German', () => {
         haveEqualStructure(en, de);
     });
-    
+
     it('has values for all English keys', () => {
         const valuesEn = Object.values(en);
 
@@ -29,36 +30,45 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
     hasAllKeys(lang2, lang1);
 }
 
-const hasAllKeys = (obj1: object, obj2: object) => {
-    const object1Keys = Object.keys(obj1);
+function hasAllKeys (obj1: object, obj2: object)  {
+    const objectCombined = mergeDeep(obj1, obj2);
 
-    object1Keys.forEach(key => {
-        const nestedKey = obj1[key as keyof Object];
+    expect(objectCombined).toEqual(obj2);
+}
 
-        if (isObject(nestedKey)) {
-            hasAllKeys(nestedKey, obj2[key as keyof Object]);
-        }
+function isObject(item: any) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
+}
 
-        expect(obj2).toHaveProperty(key);
-    });
+function mergeDeep(...objects: any) {
+    return objects.reduce((prev: any, obj: any) => {
+        Object.keys(obj).forEach(key => {
+            const pVal = prev[key];
+            const oVal = obj[key];
+
+            if (Array.isArray(pVal) && Array.isArray(oVal)) {
+                prev[key] = pVal.concat(...oVal);
+            }
+            else if (isObject(pVal) && isObject(oVal)) {
+                prev[key] = mergeDeep(pVal, oVal);
+            }
+            else {
+                prev[key] = oVal;
+            }
+        });
+
+        return prev;
+    }, {});
 }
 
 const hasText = (value: string | object) => {
     if (isObject(value)) {
         expect(JSON.stringify(value)).not.toEqual('{}');
-        
+
         Object.values(value).forEach(childValue => {
             hasText(childValue);
         })
     }
-    
+
     expect(value).not.toEqual('');
-}
-
-const isObject = (property: unknown) => {
-    if (typeof property === 'object' && property !== null) {
-        return true;
-    }
-
-    return false;
 }
