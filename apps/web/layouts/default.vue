@@ -222,7 +222,6 @@ const accountDropdown = [
   },
 ];
 
-
 watch(
   () => isAuthenticationOpen.value,
   async () => {
