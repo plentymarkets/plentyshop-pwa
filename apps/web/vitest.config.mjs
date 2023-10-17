@@ -3,7 +3,7 @@ import { defineVitestConfig } from 'nuxt-vitest/config';
 export default defineVitestConfig({
   test: {
     coverage: {
-      reporter: ['text', 'html', 'json-summary', 'json'],
+      reporter: ['text', 'html', 'apps/web/json-summary', 'json'],
     },
     environment: 'nuxt',
     clearMocks: true,
