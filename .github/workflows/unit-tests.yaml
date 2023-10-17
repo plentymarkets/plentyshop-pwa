@@ -53,6 +53,7 @@ jobs:
       - name: Run vitest
         run: |
           pushd apps/web
+          ls -al
           yarn test:coverage i18n.spec.ts
 
       - name: Report Coverage
