@@ -3,7 +3,7 @@
     <SfButton
       v-for="locale in localeCodes"
       :key="locale"
-      :variant="buttonType(locale)"
+      :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
       :aria-label="$t('lang.' + locale)"
       @click="switchLocale(locale)"
@@ -14,7 +14,7 @@
     <SfButton
       v-for="locale in localeCodes"
       :key="locale"
-      :variant="buttonType(locale)"
+      :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
       class="ml-3"
       :aria-label="$t('lang.' + locale)"
@@ -31,10 +31,6 @@ const route = useRoute();
 const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
 const { toggle } = useLanguageSelect();
-
-const buttonType = (localeCode: string) => {
-  return localeCode === currentLocale.value ? 'primary' : 'tertiary';
-};
 
 const switchLocale = (language: string) => {
   setLocaleCookie(language);
