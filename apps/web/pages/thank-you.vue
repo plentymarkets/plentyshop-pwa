@@ -10,6 +10,10 @@ const route = useRoute();
 const { data, error, fetchOrder } = useCustomerOrder('soft-login');
 const { send } = useNotification();
 
+definePageMeta({
+  pageType: 'static',
+});
+
 if (error.value) {
   send({
     type: 'negative',
