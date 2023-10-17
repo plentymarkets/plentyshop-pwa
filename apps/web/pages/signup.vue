@@ -5,7 +5,7 @@
         <template #login>
           <SfLink
             :tag="NuxtLink"
-            :to="paths.authLogin"
+            :to="localePath(paths.authLogin)"
             class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             data-testid="signup-page-login-button"
           >
@@ -100,7 +100,7 @@
           <template #information>
             <SfLink
               :tag="NuxtLink"
-              :to="paths.account"
+              :to="localePath(paths.account)"
               class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
             >
               {{ $t('auth.signup.modal.information') }}
@@ -110,7 +110,7 @@
       </UiAlert>
 
       <footer class="flex justify-end">
-        <SfButton type="button" :tag="NuxtLink" :to="paths.home" class="w-full">
+        <SfButton :tag="NuxtLink" :to="localePath(paths.home)" class="w-full">
           {{ $t('auth.signup.modal.button') }}
         </SfButton>
       </footer>
@@ -125,13 +125,15 @@ definePageMeta({
   layout: false,
 });
 
+const localePath = useLocalePath();
+
+const { isOpen, open } = useDisclosure();
+
 const firstNameModel = ref('');
 const lastNameModel = ref('');
 const emailModel = ref('');
 const passwordModel = ref('');
 const termsAndConditionsModel = ref<boolean>();
 const subscriptionsModel = ref<boolean>();
-
 const NuxtLink = resolveComponent('NuxtLink');
-const { isOpen, open } = useDisclosure();
 </script>

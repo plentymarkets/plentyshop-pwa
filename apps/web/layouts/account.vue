@@ -5,7 +5,7 @@
         <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
           <ClientOnly>
             <h1
-              v-if="isRoot || isTabletScreen"
+              v-if="isRoot || isTablet"
               class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
             >
               {{ $t('account.heading') }}
@@ -20,7 +20,7 @@
 
               <SfButton
                 :tag="NuxtLink"
-                :to="paths.account"
+                :to="localePath(paths.account)"
                 class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
                 size="sm"
                 variant="tertiary"
@@ -48,7 +48,7 @@
                   <li v-for="{ label, link } in subsections" :key="label">
                     <SfListItem
                       :tag="NuxtLink"
-                      :to="link"
+                      :to="localePath(link)"
                       :class="[
                         'first-of-type:py-4 md:first-of-type:px-4 md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
                         {
@@ -90,47 +90,55 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconBase, SfIconPerson, SfIconShoppingCart, SfListItem, SfButton, SfIconArrowBack, SfIconChevronRight } from '@storefront-ui/vue';
-import { useMediaQuery } from '@vueuse/core';
+import {
+  SfIconBase,
+  SfIconPerson,
+  SfIconShoppingCart,
+  SfListItem,
+  SfButton,
+  SfIconArrowBack,
+  SfIconChevronRight,
+} from '@storefront-ui/vue';
 
-
-const isTabletScreen = useMediaQuery(mediaQueries.tablet);
+const localePath = useLocalePath();
+const { isTablet } = useBreakpoints();
 const { t } = useI18n();
 const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
+
 const sections = [
-    {
-        title: t('account.accountSettings.heading'),
-        icon: SfIconPerson,
-        subsections: [
-            {
-                label: t('account.accountSettings.section.personalData'),
-                link: paths.accountPersonalData,
-            },
-            {
-                label: t('account.accountSettings.section.billingDetails'),
-                link: paths.accountBillingDetails,
-            },
-            {
-                label: t('account.accountSettings.section.shippingDetails'),
-                link: paths.accountShippingDetails,
-            },
-        ],
-    },
-    {
-        title: t('account.ordersAndReturns.heading'),
-        icon: SfIconShoppingCart,
-        subsections: [
-            {
-                label: t('account.ordersAndReturns.section.myOrders'),
-                link: paths.accountMyOrders,
-            },
-            {
-                label: t('account.ordersAndReturns.section.returns'),
-                link: paths.accountReturns,
-            },
-        ],
-    },
+  {
+    title: t('account.accountSettings.heading'),
+    icon: SfIconPerson,
+    subsections: [
+      {
+        label: t('account.accountSettings.section.personalData'),
+        link: paths.accountPersonalData,
+      },
+      {
+        label: t('account.accountSettings.section.billingDetails'),
+        link: paths.accountBillingDetails,
+      },
+      {
+        label: t('account.accountSettings.section.shippingDetails'),
+        link: paths.accountShippingDetails,
+      },
+    ],
+  },
+  {
+    title: t('account.ordersAndReturns.heading'),
+    icon: SfIconShoppingCart,
+    subsections: [
+      {
+        label: t('account.ordersAndReturns.section.myOrders'),
+        link: paths.accountMyOrders,
+      },
+      {
+        label: t('account.ordersAndReturns.section.returns'),
+        link: paths.accountReturns,
+      },
+    ],
+  },
 ];
 
 const currentPath = computed(() => router.currentRoute.value.path);
@@ -138,13 +146,12 @@ const currentPath = computed(() => router.currentRoute.value.path);
 const rootPathRegex = new RegExp(`^${paths.account}/?$`);
 const isRoot = computed(() => rootPathRegex.test(currentPath.value));
 const findCurrentPage = computed(() =>
-    sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
+  sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
-
 const breadcrumbs = computed(() => [
-    { name: t('home'), link: paths.home },
-    { name: t('account.heading'), link: paths.account },
-    ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
+  { name: t('home'), link: paths.home },
+  { name: t('account.heading'), link: paths.account },
+  ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');

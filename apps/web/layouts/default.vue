@@ -8,7 +8,19 @@
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
-          :to="paths.cart"
+          :aria-label="$t('numberInCart', cartItemsCount)"
+          variant="tertiary"
+          square
+          @click="toggleLanguageSelector"
+        >
+          <template #prefix>
+            <SfIconLanguage class="relative" />
+          </template>
+        </SfButton>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="localePath(paths.cart)"
           :aria-label="$t('numberInCart', cartItemsCount)"
           variant="tertiary"
           square
@@ -50,7 +62,7 @@
               <SfListItem
                 v-else
                 :tag="NuxtLink"
-                :to="link"
+                :to="localePath(link)"
                 :class="{ 'bg-neutral-200': $route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
@@ -74,12 +86,21 @@
       variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
       square
+      @click="toggleLanguageSelector"
+    >
+      <SfIconLanguage />
+    </SfButton>
+    <SfButton
+      variant="tertiary"
+      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+      square
       @click="searchModalOpen"
       :aria-label="$t('openSearchModalButtonLabel')"
     >
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
+  <LanguageSelector v-if="showLanguageSelector" :toggle-method="toggleLanguageSelector" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -148,11 +169,13 @@ import {
   SfIconClose,
   SfIconSearch,
   SfIconPerson,
+  SfIconLanguage,
   SfDropdown,
   SfListItem,
   SfModal,
   useDisclosure,
 } from '@storefront-ui/vue';
+import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
@@ -166,11 +189,11 @@ defineProps<DefaultLayoutProps>();
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
+const localePath = useLocalePath();
 usePageTitle();
 
 const isLogin = ref(true);
 
-const NuxtLink = resolveComponent('NuxtLink');
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const logOut = async () => {
   await logout();
@@ -197,10 +220,18 @@ const accountDropdown = [
   },
 ];
 
+let showLanguageSelector = ref(false);
+
+const toggleLanguageSelector = () => {
+  showLanguageSelector.value = !showLanguageSelector.value;
+};
+
 watch(
   () => isAuthenticationOpen.value,
   async () => {
     isLogin.value = true;
   },
 );
+
+const NuxtLink = resolveComponent('NuxtLink');
 </script>

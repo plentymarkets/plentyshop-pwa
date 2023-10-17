@@ -1,7 +1,6 @@
 interface IntegrationConfig {
   payment?: {
     paypal?: {
-      paymentId: number;
       clientId: string;
       merchantId: string;
     };
@@ -11,9 +10,8 @@ interface IntegrationConfig {
 export default {
   payment: {
     paypal: {
-      paymentId: 6001,
-      clientId: 'Ab_wQoMAfzuqCrl4gVfYvkNHmBS_s_rQKMafFJrArKJ4GZU8nbSIn53v4Q8ZZfoHR01kxnjkDF4yVLAv',
-      merchantId: '999JUBU6WMRWU',
+      clientId: 'ARl3fqscBzWV2tBlUm8bZscYTCKigkQXUoCGWlPNyhcD0FUXaTaigTVRTn2CdkQeojm2g2Ovkvyt82T7',
+      merchantId: 'G3B6KHDK6UFM2',
     },
   },
 } as IntegrationConfig;

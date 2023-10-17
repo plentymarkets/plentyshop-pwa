@@ -8,7 +8,6 @@
               <SfButton
                 class="relative w-5 h-5 !p-0 rounded-sm outline-secondary-600 hover:bg-transparent active:bg-transparent"
                 :aria-label="$t('breadcrumbsDropdownText')"
-                type="button"
                 variant="tertiary"
                 square
                 @click="toggle"
@@ -26,7 +25,7 @@
               <li v-for="item in breadcrumbs" :key="item.name" class="py-2 last-of-type:hidden">
                 <SfLink
                   :tag="NuxtLink"
-                  :to="item.link"
+                  :to="localePath(item.link)"
                   variant="secondary"
                   class="leading-5 no-underline text-inherit hover:underline active:underline whitespace-nowrap outline-secondary-600"
                 >
@@ -45,7 +44,7 @@
         <SfLink
           v-if="index < breadcrumbs.length - 1"
           :tag="NuxtLink"
-          :to="item.link"
+          :to="localePath(item.link)"
           variant="secondary"
           class="leading-5 no-underline hover:underline active:underline whitespace-nowrap outline-secondary-600 text-inherit"
         >
@@ -65,6 +64,8 @@ import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();
 
+const localePath = useLocalePath();
+
 const dropdownOpened = ref(false);
 const close = () => {
   dropdownOpened.value = false;
@@ -74,4 +75,44 @@ const toggle = () => {
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
+const route = useRoute();
+const items = route.path.split('/');
+let itemListElement = [] as Array<any>;
+let name = '';
+items.forEach((item, index) => {
+  name += item;
+  if (index === 0) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 1,
+      item: {
+        '@id': '/',
+        name: 'Home',
+      },
+    });
+  } else {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: index,
+      item: {
+        '@id': `/${name}/`,
+        name: `${item}`,
+      },
+    });
+  }
+});
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement,
+};
+useHead({
+  script: [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(structuredData),
+    },
+  ],
+});
 </script>

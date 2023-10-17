@@ -6,11 +6,18 @@ import { useSdk } from '~/sdk';
 import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
 /**
- * @description Composable for getting  addresses from the current user session.
+ * @description Composable for getting addresses from the current user session.
  * @param type {@link AddressType}
  * @example
- * const { data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault } = useAddress(AddressType.Billing);
- * const { data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault } = useAddress(AddressType.Shipping);
+ * ``` ts
+ * const {
+ * data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault
+ * } = useAddress(AddressType.Billing);
+ *
+ * const {
+ * data, loading, getAddresses, defaultAddressId, saveAddress, deleteAddress, setDefault
+ * } = useAddress(AddressType.Shipping);
+ * ```
  */
 
 export const useAddress: UseAddressReturn = (type: AddressType) => {
@@ -23,6 +30,10 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
 
   /**
    * @description Get the default address.
+   * @example
+   * ``` ts
+   * getDefaultAddress()
+   * ```
    */
   const getDefaultAddress = (): void => {
     state.value.loading = true;
@@ -43,7 +54,9 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
   /**
    * @description Function for fetching addresses based on type.
    * @example
+   * ``` ts
    * getAddresses();
+   * ```
    */
   const getAddresses: GetAddresses = async () => {
     state.value.loading = true;
@@ -63,7 +76,11 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
 
   /**
    * @description Save an address.
-   * @param address
+   * @param address { Address }
+   * @example
+   * ``` ts
+   * saveAddress(address);
+   * ```
    */
   const saveAddress: SaveAddress = async (address: Address) => {
     state.value.loading = true;
@@ -84,6 +101,10 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
   /**
    * @description Set the default address.
    * @param addressId
+   * @example
+   * ``` ts
+   * setDefault(1);
+   * ```
    */
   const setDefault: SetDefault = async (addressId: number) => {
     state.value.loading = true;
@@ -100,6 +121,10 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
   /**
    * @description Delete an address.
    * @param addressId
+   * @example
+   * ``` ts
+   * deleteAddress(1);
+   * ```
    */
   const deleteAddress: DeleteAddress = async (addressId: number) => {
     state.value.loading = true;

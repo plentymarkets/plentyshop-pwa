@@ -1,8 +1,10 @@
-name: Add zip file to S3 bucket
+name: Deploy PWA
 
 on:
   # release:
     # types: [published]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
     inputs:
       tag-version:
@@ -40,14 +42,32 @@ jobs:
             yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
             yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
             yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+            yarn plugin import workspace-tools
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
+      - name: Setup environment
+        run: |
+          touch apps/web/.env
+          echo NUXT_PUBLIC_API_URL=${{ vars.API_URL }} >> apps/web/.env
+
       - name: Build
         run: yarn build
+
+      - name: Build middleware
+        run: cd ./apps/server && yarn build
+
+      - name: Install productive dependencies for server
+        run: yarn workspaces focus --production
+      
+      - name: Copy Middleware Server
+        run: |
+          mkdir middleware
+          cp -r node_modules middleware
+          cp -r apps/server middleware
 
       - name: Compress repo to Tar
         uses: a7ul/tar-action@v1.1.0
@@ -56,7 +76,8 @@ jobs:
          command: c
          cwd: ./
          files: |
-           ./
+           ./apps/web/.output
+           ./middleware
          outPath: pwa.tar.gz
 
       - name: Upload Artifact

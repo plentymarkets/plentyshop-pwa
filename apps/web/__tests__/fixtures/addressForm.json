@@ -1,14 +1,11 @@
 {
-    "email": "test@vuestorefront.io",
-    "name": "Test",
-    "lastName": "Testerson",
-    "phone": 700880880,
-    "country": "US",
-    "street": "Testevej",
-    "streetNumber": 2,
-    "city": "Testcity",
-    "region": "California",
-    "zipCode": 45678
-  }
-  
-  
+  "firstName": "Ulysses",
+  "lastName": "Boyer",
+  "phoneNumber": "+1 (693) 765-7188",
+  "country": "12",
+  "streetName": "Penelope Freeman",
+  "apartment": "331",
+  "city": "Aut tempore facilis",
+  "state": "",
+  "zipCode": "Rem modi in fugiat "
+}

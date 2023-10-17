@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
+      <Breadcrumbs />
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
@@ -33,19 +34,36 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
+import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 
 const route = useRoute();
-const slug = route.params.slug as string;
+const router = useRouter();
+const { selectVariation } = useProducts();
+const localePath = useLocalePath();
 
-const productId = slug.split('-').pop() ?? '0';
+const productPieces = (route.params.itemId as string).split('_');
+
+const productId = productPieces[0];
+let productParams: ProductParams = {
+  id: productId,
+};
+
+if (productPieces[1]) {
+  productParams.variationId = productPieces[1];
+}
 
 const { data: product, fetchProduct } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-await fetchProduct(productId);
+await fetchProduct(productParams);
+
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
+  product?.value?.variation?.id?.toString() ?? '',
+);
+
+selectVariation(productPieces[1] ? product.value : ({} as Product));
 await fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();
@@ -74,4 +92,21 @@ if (product.value) {
 definePageMeta({
   layout: false,
 });
+
+// eslint-disable-next-line unicorn/expiring-todo-comments
+/* TODO: This should only be temporary.
+ *  It changes the url of the product page while on the page and switching the locale.
+ *  Should be removed when the item search is refactored.
+ */
+watch(
+  () => product.value.texts.urlPath,
+  (value, oldValue) => {
+    if (value !== oldValue) {
+      router.push({
+        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        query: route.query,
+      });
+    }
+  },
+);
 </script>

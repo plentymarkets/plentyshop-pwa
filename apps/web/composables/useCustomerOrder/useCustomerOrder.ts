@@ -1,61 +1,58 @@
-import { toRefs } from '@vueuse/shared';
-import addressData from '~/composables/useCustomerOrder/address';
-import productData from '~/composables/useCustomerOrder/product';
-import type {
-  UseCustomerOrderReturn,
-  UseCustomerOrderState,
-  FetchCustomerOrder,
-  OrderData,
-} from '~/composables/useCustomerOrder/types';
-
-const order: OrderData = {
-  id: '0e4fec5a-61e6-48b8-94cc-d5f77687e2b0',
-  date: '2022-08-11',
-  paymentAmount: 295.87,
-  paymentMethod: 'Credit Card',
-  shipping: 'Standard (FREE)',
-  summary: {
-    subtotal: 7037.99,
-    delivery: 0,
-    estimatedTax: 457.47,
-    total: 295.87,
-  },
-  billingAddress: addressData,
-  shippingAddress: addressData,
-  status: 'Completed',
-  products: [productData, productData],
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
-const getCustomerOrder = (id: string) => order;
+import type { OrderSearchParams, Order, GetOrderError } from '@plentymarkets/shop-api';
+import { FetchOrder, UseCustomerOrderReturn, UseCustomerOrderState } from '~/composables/useCustomerOrder/types';
+import { useSdk } from '~/sdk';
 
 /**
- * @description Composable managing customer order data
- * @returns {@link UseCustomerOrderReturn}
+ * @description Composable for managing customer order.
+ * @returns UseCustomerOrderReturn
+ * @param id
  * @example
- * const { data, loading, fetchCustomerOrder } = useCustomerOrder();
+ * ``` ts
+ * const { data, loading, error, fetchOrder } = useCustomerOrder();
+ * ```
  */
-export const useCustomerOrder: UseCustomerOrderReturn = (id) => {
-  const state = useState<UseCustomerOrderState>(`useCustomerOrder-${id}`, () => ({
+export const useCustomerOrder: UseCustomerOrderReturn = (id: string) => {
+  const state = useState<UseCustomerOrderState>('useCustomerOrder-' + id, () => ({
     data: null,
     loading: false,
+    error: null,
   }));
 
-  /** Function for fetching customer order data
+  /**
+   * @description Function for fetching an order.
+   * @param params { OrderSearchParams }
+   * @return FetchOrder
    * @example
-   * fetchCustomerOrder();
+   * ``` ts
+   * fetchOrder({
+   *   orderId: '';
+   *   accessKey: '';
+   *   name: '';
+   *   postcode: '';
+   * })
+   *
+   * fetchOrder({
+   *   orderId: '';
+   * })
+   * ```
    */
-  const fetchCustomerOrder: FetchCustomerOrder = async (id) => {
+  const fetchOrder: FetchOrder = async (params: OrderSearchParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => Promise.resolve(getCustomerOrder(id)));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getOrder(params));
     useHandleError(error.value);
-    state.value.data = data.value;
+
+    const orderData = data.value?.data as Order;
+    const errorData = data.value?.data as GetOrderError;
+
+    state.value.data = orderData?.order ? orderData : null;
+    state.value.error = errorData?.error ? errorData : null;
+
     state.value.loading = false;
-    return data;
+    return state.value.data;
   };
 
   return {
-    fetchCustomerOrder,
+    fetchOrder,
     ...toRefs(state.value),
   };
 };

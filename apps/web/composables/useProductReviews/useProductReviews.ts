@@ -5,23 +5,28 @@ import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } f
 
 /**
  * @description Composable managing product reviews data
- * @returns {@link UseProductReturn}
- * @example
- * const { data, loading, fetchProductReviews } = useProductReviews('product-slug');
- * @param productId
+ * @param variationId
  * @param itemId
+ * @returns UseProductReviews
+ * @example
+ * ``` ts
+ * const { data, loading, fetchProductReviews } = useProductReviews(1, 1);
+ * ```
  */
-export const useProductReviews: UseProductReviews = (productId: string | number, itemId: number) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${productId}-${itemId}`, () => ({
+export const useProductReviews: UseProductReviews = (variationId: string | number, itemId: number) => {
+  const state = useState<UseProductReviewsState>(`useProductReviews-${variationId}-${itemId}`, () => ({
     data: {} as Review,
     loading: false,
   }));
 
   /** Function for fetching product reviews data
+   * @return FetchProductReviews
    * @example
-   * fetchProductReviews('product-slug');
+   * ``` ts
+   * fetchProductReviews(1, 1);
+   * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (productId: string | number, itemId: number) => {
+  const fetchProductReviews: FetchProductReviews = async (variationId: string | number, itemId: number) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.getReview({

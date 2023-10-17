@@ -1,4 +1,4 @@
-import type { UseHandleError, ErrorParams } from './types';
+import type { UseHandleError, ErrorParams } from '~/composables/useHandleError/types';
 
 const defaultError: ErrorParams = {
   status: 500,
@@ -8,16 +8,20 @@ const defaultError: ErrorParams = {
 
 /**
  * @description Composable for handling errors.
- * @param error {@link ErrorParams}
+ * @param error { ErrorParams }
  * @returns Throws an error if there is one.
  * @example
- * const { data, error } = await fetch(data);
- * useHandleError(error.value);
+ * ``` ts
+ * const { data, error } = useHandleError({
+ *   status: ''
+ *   statusText: ''
+ * });
+ * ```
  */
-export const useHandleError: UseHandleError = (error) => {
-  const { send } = useNotification();
+export const useHandleError: UseHandleError = (error: ErrorParams) => {
+  if (error && process.client) {
+    const { send } = useNotification();
 
-  if (error) {
     console.error(error);
     send({
       type: 'negative',

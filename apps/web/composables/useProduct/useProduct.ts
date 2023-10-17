@@ -1,14 +1,16 @@
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
+import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 import { useSdk } from '~/sdk';
-import type { UseProductReturn, UseProductState, FetchProduct } from './types';
 
 /**
  * @description Composable managing product data
- * @param {string} slug Product slug
- * @returns {@link UseProductReturn}
+ * @param slug Product slug
+ * @returns UseProductReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchProduct } = useProduct('product-slug');
+ * ```
  */
 export const useProduct: UseProductReturn = (slug) => {
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
@@ -16,14 +18,20 @@ export const useProduct: UseProductReturn = (slug) => {
     loading: false,
   }));
 
-  /** Function for fetching product data
-   * @param {string} slug Product slug
+  /** Function for fetching product data.
+   * @param params { ProductParams }
+   * @return FetchProduct
    * @example
-   * fetchProduct('product-slug');
+   * ``` ts
+   * fetchProduct({
+   *   id: 1,
+   *   variationId: 1
+   * });
+   * ```
    */
-  const fetchProduct: FetchProduct = async (slug) => {
+  const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct({ id: slug }));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct(params));
     useHandleError(error.value);
 
     state.value.data = data.value?.data ?? state.value.data;

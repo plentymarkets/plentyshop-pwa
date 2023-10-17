@@ -22,6 +22,7 @@
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.yourPassword')"
     :button-text="$t('account.accountSettings.personalData.change')"
+    :show-edit-button="true"
     @on-click="openModal('passwordChange')"
   >
     ******
@@ -59,6 +60,7 @@ import { unrefElement } from '@vueuse/core';
 
 definePageMeta({
   layout: 'account',
+  pageType: 'static',
 });
 const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();

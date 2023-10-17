@@ -1,31 +1,40 @@
-import { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import type { Facet } from '@plentymarkets/shop-api';
-import { defaults } from '~/composables';
+import { defaults, SelectVariation } from '~/composables';
 import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing products.
- * @returns {@link UseProducts}
+ * @returns UseProductsReturn
  * @example
- * const { data, loading, fetchProducts } = useProducts();
+ * ``` ts
+ * const { data, loading, productsPerPage, selectedVariation, fetchProducts, selectVariation } = useProducts();
+ * ```
  */
 export const useProducts: UseProductsReturn = () => {
   const state = useState<UseProductsState>('products', () => ({
     data: {} as Facet,
     loading: false,
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
+    selectedVariation: {} as Product,
   }));
 
   /**
    * @description Function for fetching products.
+   * @param params { FacetSearchCriteria }
+   * @return FetchProducts
    * @example
-   * getFacet(@props: FacetSearchCriteria)
+   * ``` ts
+   *  fetchProducts({
+   *     page: 1,
+   *     categoryUrlPath: '/living-room'
+   *  });
+   * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
-    useHandleError(error.value);
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
@@ -41,8 +50,26 @@ export const useProducts: UseProductsReturn = () => {
     return state.value.data;
   };
 
+  /**
+   * @description Function for selecting a variation.
+   * @param product { Product }
+   * @return SelectVariation
+   * @example
+   * ``` ts
+   *  selectVariation({} as Product)
+   * ```
+   */
+  const selectVariation: SelectVariation = async (product: Product) => {
+    state.value.loading = true;
+
+    state.value.selectedVariation = product;
+
+    state.value.loading = false;
+  };
+
   return {
     fetchProducts,
+    selectVariation,
     ...toRefs(state.value),
   };
 };

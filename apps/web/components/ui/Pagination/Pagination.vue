@@ -6,7 +6,6 @@
     data-testid="pagination"
   >
     <SfButton
-      type="button"
       size="lg"
       :aria-label="$t('prevAriaLabel')"
       :disabled="pagination.selectedPage <= 1 || disabled"
@@ -144,7 +143,6 @@
       </li>
     </ul>
     <SfButton
-      type="button"
       size="lg"
       :aria-label="$t('nextAriaLabel')"
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
@@ -162,7 +160,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
-import { PaginationProps } from '~/components/ui/Pagination/types';
+import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
 
@@ -195,4 +193,27 @@ const nextPage = () => {
   pagination.value.next;
   setPage(pagination.value.selectedPage + 1);
 };
+
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+const base = runtimeConfig.public.apiUrl;
+const baseSegments = route.path.split('/c/');
+const categorySegments = baseSegments.length > 1 ? baseSegments[1].split('?')[0] : '';
+const currentCategory = categorySegments.endsWith('/') ? categorySegments.slice(0, -1) : categorySegments;
+
+const currentPageUrl = computed(() => {
+  if (pagination.value.selectedPage === 1) {
+    return `${base}/c/${currentCategory}/`;
+  }
+  return `${base}/c/${currentCategory}/?page=${pagination.value.selectedPage}`;
+});
+
+useHead({
+  link: [
+    {
+      rel: 'canonical',
+      href: currentPageUrl.value,
+    },
+  ],
+});
 </script>

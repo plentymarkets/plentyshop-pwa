@@ -4,10 +4,12 @@ import { useSdk } from '~/sdk';
 import type { UseLegalInformationState, UseLegalInformationMethodsReturn, GetLegalInformation } from './types';
 
 /**
- * @description Composable for getting the legal information.
- * @returns {@link UseLegalInformationMethodsReturn}
+ * @description Composable for managing the legal information.
+ * @returns UseLegalInformationMethodsReturn
  * @example
- * const { data, loading } = useLegalInformation();
+ * ``` ts
+ * const { data, loading, getLegalTexts } = useLegalInformation();
+ * ```
  */
 export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
   const state = useState<UseLegalInformationState>('useLegalInformation', () => ({
@@ -17,17 +19,28 @@ export const useLegalInformation: UseLegalInformationMethodsReturn = () => {
 
   /**
    * @description Function for legal information of the given type.
-   * @param LegalTextsParams Type of the legal information
+   * @param params { LegalTextsParams } Type of the legal information
+   * @return GetLegalInformation
    * @example
-   * getLegalTexts({type: 'CancellationForm',});
+   * ``` ts
+   * getLegalTexts({ type: 'CancellationForm' });
+   * ```
    * @example
-   * getLegalTexts({type: 'CancellationRights',});
+   * ``` ts
+   * getLegalTexts({ type: 'CancellationRights' });
+   * ```
    * @example
-   * getLegalTexts({type: 'LegalDisclosure',});
+   * ``` ts
+   * getLegalTexts({ type: 'LegalDisclosure' });
+   * ```
    * @example
-   * getLegalTexts({type: 'PrivacyPolicy',});
+   * ``` ts
+   * getLegalTexts({ type: 'PrivacyPolicy' });
+   * ```
    * @example
-   * getLegalTexts({type: 'TermsConditions',});
+   * ``` ts
+   * getLegalTexts({ type: 'TermsConditions' });
+   * ```
    */
   const getLegalTexts: GetLegalInformation = async (params: LegalTextsParams) => {
     state.value.loading = true;

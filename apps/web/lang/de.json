@@ -40,6 +40,22 @@
     "Reject All": "Alles ablehnen",
     "Accept Selection": "Auswahl akzeptieren"
   },
+  "documents" : {
+    "correctionDocuments": "Korrekturbeleg",
+    "Credit Note": "Gutschrift",
+    "Delivery Note": "Lieferschein",
+    "Dunning Letter": "Mahnung",
+    "Invoice External": "Externe Rechnung",
+    "Invoice": "Rechnung",
+    "Offer": "Angebot",
+    "Order Confirmation": "Auftragsbestätigung",
+    "Pickup Delivery": "Abhollieferung",
+    "Pro Forma Invoice": "Proformarechnung",
+    "Receipt": "Kassenbeleg",
+    "Return Note": "Rücksendeschein",
+    "Success Confirmation": "Gelangensbestätigung",
+    "Reversal Document": "Stornobeleg"
+  },
   "myCart": "Mein Warenkorb",
   "orderSummary": "Bestellübersicht",
   "itemsInCart": "(Artikel: {count})",
@@ -135,7 +151,9 @@
     "missingShippingDetails": "Versandart wählen",
     "missingPaymentMethod": "Zahlungsart wählen"
   },
+  "pleaseSelect": "Bitte wählen",
   "addToCart": "In den Warenkorb",
+  "itemNotAvailable": "Der Artikel ist nicht verfügbar",
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
@@ -319,6 +337,7 @@
       "orderId":"Auftrags-ID",
       "orderDate":"Auftragsdatum",
       "shippingDate": "Lieferdatum",
+      "returnDate": "Retourendatum",
       "amount":"Anzahl",
       "status":"Status",
       "details":"Details",
@@ -366,6 +385,7 @@
   "auth": {
     "login": {
       "heading": "In ihr Konto einloggen",
+      "success": "Sie wurden erfolgreich eingeloggt.",
       "submitLabel": "Anmelden",
       "forgotPasswordLabel": "Passwort vergessen?",
       "rememberMeLabel": "An mich erinnern",
@@ -412,5 +432,45 @@
     "vat": "MwSt.",
     "total": "Summe"
   },
-  "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}"
+  "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
+  "legal": {
+    "label": "Rechtliches",
+    "subcategories": {
+      "cancellationForm": "Widerrufsformular",
+      "cancellationRights": "Widerrufsbelehrung",
+      "legalDisclosure": "Impressum",
+      "privacyPolicy": "Datenschutzerklärung",
+      "termsAndConditions": "AGB"
+    }
+  },
+  "asterisk": "*",
+  "itemExclVAT": "inkl. ges. MwSt",
+  "itemInclVAT": "zzgl. ges. MwSt.",
+  "excludedShipping": "zzgl. Versandkosten",
+  "lang": {
+    "en": "Englisch",
+    "de":"Deutsch"
+  },
+  "softLogin": {
+    "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
+    "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "titleFullName": "Bitte geben Sie den Nachnamen oder den Firmennamen ein, der am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
+    "fullName": "Nachname oder Firmenname",
+    "check": "Prüfen"
+  },
+  "paypal": {
+    "unbrandedCardNumber": "Kartennummer",
+    "unbrandedExpirationDate": "Ablaufdatum",
+    "unbrandedCvv": "Kartenprüfnummer",
+    "unbrandedNameOnCard": "Karteninhaber",
+    "unbrandedPay": "Bezahlen",
+    "unbrandedCancel": "Abbrechen",
+    "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum."
+  },
+  "graduatedPrices": {
+    "title": "Mehr kaufen, weniger bezahlen",
+    "price": "PREIS",
+    "quantity": "ANZAHL",
+    "discount": "RABATT"
+  }
 }

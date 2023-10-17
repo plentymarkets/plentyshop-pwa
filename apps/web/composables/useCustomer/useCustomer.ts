@@ -1,4 +1,4 @@
-import type { SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
@@ -15,9 +15,13 @@ import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing Customer data
- * @returns {@link UseCustomerReturn}
+ * @returns UseCustomerReturn
  * @example
- * const { data, loading, fetchCustomer } = useCustomer();
+ * ``` ts
+ * const {
+ * data, loading, isAuthorized, isGuest, privacyPolicy, setUser, getSession, login, logout, register, loginAsGuest,
+ * setPrivacyPolicy, changePassword } = useCustomer();
+ * ```
  */
 export const useCustomer: UseCustomerReturn = () => {
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
@@ -30,7 +34,9 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /** Function for checking if user is guest or authorized
    * @example
+   * ``` ts
    * checkUserState();
+   * ```
    */
   const checkUserState = () => {
     if (state.value.data?.user?.guestMail) {
@@ -47,7 +53,9 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /** Function for getting current user/cart data from session
    * @example
+   * ``` ts
    * getSession();
+   * ```
    */
   const getSession: GetSession = async () => {
     state.value.loading = true;
@@ -61,9 +69,11 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for setting user data
-   * In like getCart there is the user data available, so we need less requests
+   * @param data { SessionResult }
    * @example
+   * ``` ts
    * setUser(data: SessionResult);
+   * ```
    */
   const setUser = (data: SessionResult) => {
     state.value.data = data;
@@ -71,8 +81,12 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for login a user as guest
+   * @param email
+   * @return LoginAsGuest
    * @example
+   * ``` ts
    * loginAsGuest('user@example.com');
+   * ```
    */
   const loginAsGuest: LoginAsGuest = async (email: string) => {
     state.value.loading = true;
@@ -84,9 +98,14 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.loading = false;
   };
 
-  /** Function for login a user
+  /** Function for user login.
+   * @param email
+   * @param password
+   * @return Login
    * @example
+   * ``` ts
    * login('user@example.com', 'password');
+   * ```
    */
   const login: Login = async (email: string, password: string) => {
     state.value.loading = true;
@@ -104,9 +123,12 @@ export const useCustomer: UseCustomerReturn = () => {
     return state.value.isAuthorized;
   };
 
-  /** Function for logout a user
+  /** Function for user logout.
+   * @return Logout
    * @example
+   * ``` ts
    * logout();
+   * ```
    */
   const logout: Logout = async () => {
     state.value.loading = true;
@@ -120,15 +142,17 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for registering a user.
+   * @param params { RegisterParams }
+   * @return Register
    * @example
+   * ``` ts
    * register({ email: 'example', password: 'example' });
+   * ```
    */
-  const register: Register = async (params) => {
-    const { send } = useNotification();
-
+  const register: Register = async (params: RegisterParams) => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(() =>
+    const { error } = await useAsyncData(() =>
       useSdk().plentysystems.doRegisterUser({
         email: params.email,
         password: params.password,
@@ -142,10 +166,14 @@ export const useCustomer: UseCustomerReturn = () => {
 
   /**
    * @description Function for setting the privacy policy.
+   * @param privacyPolicy
+   * @return SetPrivacyPolicy
    * @example
+   * ``` ts
    * setPrivacyPolicy({
    *   privacyPolicy: true
    * });
+   * ```
    */
   const setPrivacyPolicy: SetPrivacyPolicy = (privacyPolicy: boolean) => {
     state.value.loading = true;
@@ -154,12 +182,16 @@ export const useCustomer: UseCustomerReturn = () => {
   };
 
   /** Function for changing the user password
+   * @param params { UserChangePasswordParams }
+   * @return ChangePassword
    * @example
+   * ``` ts
    * changePassword({
    *   oldPassword: 'oldPassword',
    *   password: 'newPassword',
    *   password2: 'newPassword',
    * });
+   * ```
    */
   const changePassword: ChangePassword = async (params: UserChangePasswordParams) => {
     state.value.loading = true;

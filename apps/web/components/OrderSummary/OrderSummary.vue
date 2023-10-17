@@ -15,7 +15,7 @@
         </div>
         <div class="flex flex-col gap-2 text-right">
           <p class="font-medium">{{ $n(totals.subTotal, 'currency') }}</p>
-          <p class="font-medium">{{ $n(shippingPrice, 'currency') }}</p>
+          <p class="font-medium">{{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}</p>
           <p>{{ $n(totals.vatAmmount, 'currency') }}</p>
         </div>
       </div>
@@ -34,6 +34,7 @@ import { cartGetters } from '@plentymarkets/shop-sdk';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();
+const i18n = useI18n();
 
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(props.cart);
@@ -44,7 +45,9 @@ const totals = computed(() => {
   };
 });
 
-const shippingPrice = computed(() => cartGetters.getShippingPrice(props.cart));
+const getShippingAmount = (amount: number) => {
+  return amount === 0 ? i18n.t('shippingMethod.free') : i18n.n(Number(amount), 'currency');
+};
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 </script>
