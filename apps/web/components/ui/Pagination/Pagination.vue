@@ -196,7 +196,7 @@ const nextPage = () => {
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
-const base = runtimeConfig.public.baseUrl;
+const base = runtimeConfig.public.apiUrl;
 const baseSegments = route.path.split('/c/');
 const categorySegments = baseSegments.length > 1 ? baseSegments[1].split('?')[0] : '';
 const currentCategory = categorySegments.endsWith('/') ? categorySegments.slice(0, -1) : categorySegments;
