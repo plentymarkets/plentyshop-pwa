@@ -30,13 +30,13 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
     hasAllKeys(lang2, lang1);
 }
 
-function hasAllKeys (obj1: object, obj2: object)  {
+const hasAllKeys = (obj1: object, obj2: object)  => {
     const objectCombined = mergeDeep(obj1, obj2);
 
     expect(objectCombined).toEqual(obj2);
 }
 
-function mergeDeep(...objects: any) {
+const mergeDeep = (...objects: any) => {
     return objects.reduce((prev: any, obj: any) => {
         Object.keys(obj).forEach(key => {
             const pVal = prev[key];
@@ -53,7 +53,7 @@ function mergeDeep(...objects: any) {
     }, {});
 }
 
-function isObject(item: any) {
+const isObject = (item: any) => {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
