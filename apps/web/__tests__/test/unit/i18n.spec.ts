@@ -9,7 +9,7 @@ describe('i18n', () => {
     });
 
     it('has values for all English keys', () => {
-        const valuesEn = Object.values(en);
+        const valuesEn: Array<string | object> = Object.values(en);
 
         valuesEn.forEach(value => {
             hasText(value);
@@ -17,7 +17,7 @@ describe('i18n', () => {
     });
 
     it('has values for all German keys', () => {
-        const valuesDe = Object.values(de);
+        const valuesDe: Array<string | object> = Object.values(de);
 
         valuesDe.forEach(value => {
             hasText(value);
