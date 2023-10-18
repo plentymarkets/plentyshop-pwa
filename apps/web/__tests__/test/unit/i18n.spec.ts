@@ -36,10 +36,6 @@ function hasAllKeys (obj1: object, obj2: object)  {
     expect(objectCombined).toEqual(obj2);
 }
 
-function isObject(item: any) {
-    return (item && typeof item === 'object' && !Array.isArray(item));
-}
-
 function mergeDeep(...objects: any) {
     return objects.reduce((prev: any, obj: any) => {
         Object.keys(obj).forEach(key => {
@@ -55,6 +51,10 @@ function mergeDeep(...objects: any) {
 
         return prev;
     }, {});
+}
+
+function isObject(item: any) {
+    return (item && typeof item === 'object' && !Array.isArray(item));
 }
 
 const hasText = (value: string | object) => {
