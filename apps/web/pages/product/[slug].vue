@@ -109,4 +109,88 @@ watch(
     }
   },
 );
+const setMeta = () => {
+  const manufacturer = product.value.item.manufacturer as { name: string };
+  const metaObject = {
+    "@context": "http://schema.org/",
+    "@type": "Product",
+    "@id": productParams.id,
+    "name": productGetters.getName(product.value),
+    "category": categoryTreeGetters.getName(categoryTree.value[0]),
+    "releaseDate": "",
+    "image": productGetters.getCoverImagePreview(product.value),
+    "identifier": productParams.id,
+    "description": product.value.texts.description,
+    "disambiguatingDescription": "",
+    "manufacturer": {
+      "@type": "Organization",
+      "name": manufacturer.name
+    },
+    "sku": productParams.id,
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": product.value.prices?.default.currency,
+      "price": product.value.prices?.default.price.value,
+      "priceValidUntil": null,
+      "url": null,
+      "priceSpecification": [
+        {
+          "@type": "UnitPriceSpecification",
+          "price": product.value.prices?.default.price.value,
+          "priceCurrency": product.value.prices?.default.currency,
+          "priceType": "SalePrice",
+          "referenceQuantity": {
+            "@type": "QuantitativeValue",
+            "value": product.value.unit.content,
+            "unitCode": product.value.unit.unitOfMeasurement
+          }
+        }
+
+      ],
+      "availability": product.value.variation.availability,
+      "itemCondition": null
+    },
+    "depth": {
+      "@type": "QuantitativeValue",
+      "value": product.value.variation.lengthMM
+    },
+    "width": {
+      "@type": "QuantitativeValue",
+      "value": product.value.variation.widthMM
+    },
+    "height": {
+      "@type": "QuantitativeValue",
+      "value": product.value.variation.heightMM
+    },
+    "weight": {
+      "@type": "QuantitativeValue",
+      "value": product.value.variation.weightG
+    }
+  }
+
+  if (product.value.prices?.rrp) {
+    metaObject.offers.priceSpecification.push(
+      {
+        "@type": "UnitPriceSpecification",
+        "price": product.value.prices?.rrp.price.value,
+        "priceCurrency": product.value.prices?.rrp.currency,
+        "priceType": "ListPrice",
+        "referenceQuantity": {
+          "@type": "QuantitativeValue",
+          "value": product.value.unit.content,
+          "unitCode": product.value.unit.unitOfMeasurement
+        }
+      }
+    );
+  }
+  useHead({
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(metaObject),
+      },
+    ],
+  });
+};
+setMeta();
 </script>
