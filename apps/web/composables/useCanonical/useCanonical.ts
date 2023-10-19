@@ -11,6 +11,42 @@ import { FacetSearchCriteria } from '@plentymarkets/shop-api';
  * const { data, loading, setStaticPageMeta } = useCanonical();
  * ```
  */
+
+const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria, canonicalLink: string) => {
+  if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
+    if (facetsFromUrl.page === 2) {
+      useHead({
+        link: [
+          {
+            rel: 'prev',
+            href: canonicalLink,
+          },
+        ],
+      });
+    }
+    if (facetsFromUrl.page > 2) {
+      useHead({
+        link: [
+          {
+            rel: 'prev',
+            href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+          },
+        ],
+      });
+    }
+    if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
+      useHead({
+        link: [
+          {
+            rel: 'next',
+            href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+          },
+        ],
+      });
+    }
+  }
+};
+
 export const useCanonical: UseCanonicalReturn = () => {
   const state = useState<UseCanonicalState>(`useCanonical`, () => ({
     loading: false,
@@ -94,38 +130,7 @@ export const useCanonical: UseCanonicalReturn = () => {
         });
       });
 
-      if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
-        if (facetsFromUrl.page === 2) {
-          useHead({
-            link: [
-              {
-                rel: 'prev',
-                href: canonicalLink,
-              },
-            ],
-          });
-        }
-        if (facetsFromUrl.page > 2) {
-          useHead({
-            link: [
-              {
-                rel: 'prev',
-                href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
-              },
-            ],
-          });
-        }
-        if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
-          useHead({
-            link: [
-              {
-                rel: 'next',
-                href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
-              },
-            ],
-          });
-        }
-      }
+      setPreviousAndNextLink(productsCatalog, facetsFromUrl, canonicalLink);
     }
     state.value.loading = false;
   };
