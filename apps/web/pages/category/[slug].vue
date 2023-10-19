@@ -38,12 +38,9 @@ const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
 const localePath = useLocalePath();
 
-const setCategoryCanonical = () => {
-  setCategoriesPageMeta(productsCatalog, getFacetsFromURL());
-};
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
-  setCategoryCanonical();
+  setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 };
 
 await handleQueryUpdate();

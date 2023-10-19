@@ -1,7 +1,8 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseCanonicalReturn } from './types';
 import { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
-
+import type { Facet } from '@plentymarkets/shop-api';
+import { FacetSearchCriteria } from '@plentymarkets/shop-api';
 /**
  * @description Composable managing canonical data
  * @returns UseCanonicalReturn
@@ -54,12 +55,19 @@ export const useCanonical: UseCanonicalReturn = () => {
     state.value.loading = false;
   };
 
-  const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: any, facetsFromUrl: any) => {
+  /**
+   * @description Function for setting categories page metas.
+   * @returns CategoriesPageMeta
+   * @example
+   * ``` ts
+   * setCategoriesPageMeta()
+   * ```
+   */
+  const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
     const runtimeConfig = useRuntimeConfig();
-    if (productsCatalog.value.languageUrls) {
-      // const facetsFromUrl = getFacetsFromURL();
-      let xdefault = productsCatalog.value.languageUrls['x-default'];
+    if (productsCatalog.languageUrls) {
+      let xdefault = productsCatalog.languageUrls['x-default'];
       xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
       const canonicalLink = facetsFromUrl.facets
         ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${facetsFromUrl.facets}`
@@ -72,8 +80,8 @@ export const useCanonical: UseCanonicalReturn = () => {
           },
         ],
       });
-      Object.keys(productsCatalog.value.languageUrls).forEach((key) => {
-        let link = productsCatalog.value.languageUrls[key];
+      Object.keys(productsCatalog.languageUrls).forEach((key) => {
+        let link = productsCatalog.languageUrls[key];
         link = link[link.length - 1] === '/' ? link.slice(0, Math.max(0, link.length - 1)) : link;
         useHead({
           link: [
@@ -85,7 +93,7 @@ export const useCanonical: UseCanonicalReturn = () => {
           ],
         });
       });
- 
+
       if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
         if (facetsFromUrl.page === 2) {
           useHead({
@@ -107,7 +115,7 @@ export const useCanonical: UseCanonicalReturn = () => {
             ],
           });
         }
-        if (facetsFromUrl.page < productsCatalog.value.pagination.totals / facetsFromUrl.itemsPerPage) {
+        if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
           useHead({
             link: [
               {
