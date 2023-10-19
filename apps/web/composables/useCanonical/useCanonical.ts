@@ -1,7 +1,8 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseCanonicalReturn } from './types';
-import { StaticPageMeta, UseCanonicalState } from './types';
-
+import { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
+import type { Facet } from '@plentymarkets/shop-api';
+import { FacetSearchCriteria } from '@plentymarkets/shop-api';
 /**
  * @description Composable managing canonical data
  * @returns UseCanonicalReturn
@@ -10,6 +11,42 @@ import { StaticPageMeta, UseCanonicalState } from './types';
  * const { data, loading, setStaticPageMeta } = useCanonical();
  * ```
  */
+
+const setPreviousAndNextLink = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria, canonicalLink: string) => {
+  if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
+    if (facetsFromUrl.page === 2) {
+      useHead({
+        link: [
+          {
+            rel: 'prev',
+            href: canonicalLink,
+          },
+        ],
+      });
+    }
+    if (facetsFromUrl.page > 2) {
+      useHead({
+        link: [
+          {
+            rel: 'prev',
+            href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
+          },
+        ],
+      });
+    }
+    if (facetsFromUrl.page < productsCatalog.pagination.totals / facetsFromUrl.itemsPerPage) {
+      useHead({
+        link: [
+          {
+            rel: 'next',
+            href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
+          },
+        ],
+      });
+    }
+  }
+};
+
 export const useCanonical: UseCanonicalReturn = () => {
   const state = useState<UseCanonicalState>(`useCanonical`, () => ({
     loading: false,
@@ -54,8 +91,53 @@ export const useCanonical: UseCanonicalReturn = () => {
     state.value.loading = false;
   };
 
+  /**
+   * @description Function for setting categories page metas.
+   * @returns CategoriesPageMeta
+   * @example
+   * ``` ts
+   * setCategoriesPageMeta()
+   * ```
+   */
+  const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
+    state.value.loading = true;
+    const runtimeConfig = useRuntimeConfig();
+    if (productsCatalog.languageUrls) {
+      let xdefault = productsCatalog.languageUrls['x-default'];
+      xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
+      const canonicalLink = facetsFromUrl.facets
+        ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${facetsFromUrl.facets}`
+        : `${runtimeConfig.public.apiUrl}/c${xdefault}`;
+      useHead({
+        link: [
+          {
+            rel: 'canonical',
+            href: canonicalLink,
+          },
+        ],
+      });
+      Object.keys(productsCatalog.languageUrls).forEach((key) => {
+        let link = productsCatalog.languageUrls[key];
+        link = link[link.length - 1] === '/' ? link.slice(0, Math.max(0, link.length - 1)) : link;
+        useHead({
+          link: [
+            {
+              rel: 'alternate',
+              hreflang: key,
+              href: `${runtimeConfig.public.apiUrl}/c${link}`,
+            },
+          ],
+        });
+      });
+
+      setPreviousAndNextLink(productsCatalog, facetsFromUrl, canonicalLink);
+    }
+    state.value.loading = false;
+  };
+
   return {
     setStaticPageMeta,
+    setCategoriesPageMeta,
     ...toRefs(state.value),
   };
 };
