@@ -31,27 +31,27 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
 }
 
 const hasAllKeys = (obj1: object, obj2: object)  => {
-    const objectCombined = mergeDeep(obj1, obj2);
+    const obj1WorkingCopy = structuredClone(obj1)
+    const obj2WorkingCopy = structuredClone(obj2)
+    
+    const obj1Skeleton = setValuesToEmptyString(obj1WorkingCopy);
+    const obj2Skeleton = setValuesToEmptyString(obj2WorkingCopy);
 
-    expect(objectCombined).toEqual(obj2);
+    expect(obj1Skeleton).toEqual(obj2Skeleton);
 }
 
-const mergeDeep = (...objects: any) => {
-    return objects.reduce((prev: any, obj: any) => {
-        Object.keys(obj).forEach(key => {
-            const pVal = prev[key];
-            const oVal = obj[key];
+const setValuesToEmptyString = (obj: Record<string, any>) => {
+    Object.keys(obj).forEach((key) => {
+        if (isObject(obj[key]) && obj[key] !== null) {
+            setValuesToEmptyString(obj[key]);
+        }
+        if (typeof obj[key] === 'string') {
+            obj[key] = '';
+        }
+    });
 
-            if (isObject(pVal) && isObject(oVal)) {
-                prev[key] = mergeDeep(pVal, oVal);
-            } else {
-                prev[key] = oVal;
-            }
-        });
-
-        return prev;
-    }, {});
-}
+    return obj;
+  }
 
 const isObject = (item: any) => {
     return (item && typeof item === 'object' && !Array.isArray(item));
