@@ -1,11 +1,12 @@
 import type { Ref } from 'vue';
-
+import type { Facet } from '@plentymarkets/shop-api';
+import { FacetSearchCriteria } from '@plentymarkets/shop-api';
 export interface UseCanonicalState {
   loading: boolean;
 }
 
 export type StaticPageMeta = () => void;
-export type CategoriesPageMeta = (productsCatalog: any, facetsFromUrl: any) => void;
+export type CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => void;
 
 export interface UseCanonical {
   loading: Readonly<Ref<boolean>>;
