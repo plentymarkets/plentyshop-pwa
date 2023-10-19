@@ -7,44 +7,31 @@
       <NuxtLazyHydrate when-visible>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :aria-label="$t('numberInCart', cartItemsCount)"
-          variant="tertiary"
-          square
-          @click="toggleLanguageSelector"
-        >
+          :tag="NuxtLink" :aria-label="$t('numberInCart', cartItemsCount)" variant="tertiary" square
+          @click="toggleLanguageSelector">
           <template #prefix>
             <SfIconLanguage class="relative" />
           </template>
         </SfButton>
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :to="localePath(paths.cart)"
-          :aria-label="$t('numberInCart', cartItemsCount)"
-          variant="tertiary"
-          square
-        >
+          :tag="NuxtLink" :to="localePath(paths.cart)" :aria-label="$t('numberInCart', cartItemsCount)" variant="tertiary"
+          square>
           <template #prefix>
             <SfIconShoppingCart />
-            <SfBadge
-              :content="cartItemsCount"
+            <SfBadge :content="cartItemsCount"
               class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-              data-testid="cart-badge"
-            />
+              data-testid="cart-badge" />
           </template>
         </SfButton>
       </NuxtLazyHydrate>
       <NuxtLazyHydrate when-visible>
         <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
           <template #trigger>
-            <SfButton
-              variant="tertiary"
+            <SfButton variant="tertiary"
               class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-              @click="accountDropdownToggle()"
-              data-testid="account-dropdown-button"
-            >
+              :class="{ 'bg-primary-900': isAccountDropdownOpen }" @click="accountDropdownToggle()"
+              data-testid="account-dropdown-button">
               <template #prefix>
                 <SfIconPerson />
               </template>
@@ -59,55 +46,35 @@
                   $t(label)
                 }}</SfListItem>
               </template>
-              <SfListItem
-                v-else
-                :tag="NuxtLink"
-                :to="localePath(link)"
-                :class="{ 'bg-neutral-200': $route.path === link }"
-                data-testid="account-dropdown-list-item"
-              >
+              <SfListItem v-else :tag="NuxtLink" :to="localePath(link)"
+                :class="{ 'bg-neutral-200': $route.path === link }" data-testid="account-dropdown-list-item">
                 {{ $t(label) }}
               </SfListItem>
             </li>
           </ul>
         </SfDropdown>
-        <SfButton
-          v-else
-          @click="openAuthentication"
+        <SfButton v-else @click="openAuthentication"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          variant="tertiary"
-          square
-        >
+          variant="tertiary" square>
           <SfIconPerson />
         </SfButton>
       </NuxtLazyHydrate>
     </nav>
-    <SfButton
-      variant="tertiary"
+    <SfButton variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="toggleLanguageSelector"
-    >
+      square @click="toggleLanguageSelector">
       <SfIconLanguage />
     </SfButton>
-    <SfButton
-      variant="tertiary"
+    <SfButton variant="tertiary"
       class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
-      :aria-label="$t('openSearchModalButtonLabel')"
-    >
+      square @click="searchModalOpen" :aria-label="$t('openSearchModalButtonLabel')">
       <SfIconSearch />
     </SfButton>
   </MegaMenu>
   <LanguageSelector v-if="showLanguageSelector" :toggle-method="toggleLanguageSelector" />
   <UiNotifications />
-  <UiModal
-    v-model="isAuthenticationOpen"
-    tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0"
-    aria-labelledby="login-modal"
-  >
+  <UiModal v-model="isAuthenticationOpen" tag="section" class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    aria-labelledby="login-modal">
     <header>
       <div class="text-lg font-medium ml-8">
         <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
@@ -141,13 +108,8 @@
     <UiFooter />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-idle>
-    <SfModal
-      v-model="isSearchModalOpen"
-      class="w-full h-full z-50"
-      tag="section"
-      role="dialog"
-      aria-labelledby="search-modal-title"
-    >
+    <SfModal v-model="isSearchModalOpen" class="w-full h-full z-50" tag="section" role="dialog"
+      aria-labelledby="search-modal-title">
       <header class="mb-4">
         <SfButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
           <SfIconClose class="text-neutral-500" />
@@ -232,6 +194,25 @@ watch(
     isLogin.value = true;
   },
 );
+const setLogoMeta = () => {
+  const runtimeConfig = useRuntimeConfig();
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    'url': runtimeConfig.public.apiUrl,
+    'logo': runtimeConfig.public.logoUrl
+  };
+  useHead({
+    script: [
+      {
+        type: 'application/ld+json',
+        innerHTML: JSON.stringify(structuredData),
+      },
+    ],
+  });
+};
+
+setLogoMeta();
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
