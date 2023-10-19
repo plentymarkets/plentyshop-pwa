@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-
+const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({
   layout: false,
 });
@@ -39,68 +39,7 @@ const { locale } = useI18n();
 const localePath = useLocalePath();
 
 const setCategoryCanonical = () => {
-  const runtimeConfig = useRuntimeConfig();
-  if (productsCatalog.value.languageUrls) {
-    let xdefault = productsCatalog.value.languageUrls['x-default'];
-    xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
-    const canonicalLink = getFacetsFromURL().facets
-      ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${getFacetsFromURL().facets}`
-      : `${runtimeConfig.public.apiUrl}/c${xdefault}`;
-    useHead({
-      link: [
-        {
-          rel: 'canonical',
-          href: canonicalLink,
-        },
-      ],
-    });
-    Object.keys(productsCatalog.value.languageUrls).forEach((key) => {
-      let link = productsCatalog.value.languageUrls[key];
-      link = link[link.length - 1] === '/' ? link.slice(0, Math.max(0, link.length - 1)) : link;
-      useHead({
-        link: [
-          {
-            rel: 'alternate',
-            hreflang: key,
-            href: `${runtimeConfig.public.apiUrl}/c${link}`,
-          },
-        ],
-      });
-    });
-    const facetsFromUrl = getFacetsFromURL();
-    if (facetsFromUrl && facetsFromUrl.itemsPerPage && facetsFromUrl.page) {
-      if (facetsFromUrl.page === 2) {
-        useHead({
-          link: [
-            {
-              rel: 'prev',
-              href: canonicalLink,
-            },
-          ],
-        });
-      }
-      if (facetsFromUrl.page > 2) {
-        useHead({
-          link: [
-            {
-              rel: 'prev',
-              href: `${canonicalLink}?page=${facetsFromUrl.page - 1}`,
-            },
-          ],
-        });
-      }
-      if (facetsFromUrl.page < productsCatalog.value.pagination.totals / facetsFromUrl.itemsPerPage) {
-        useHead({
-          link: [
-            {
-              rel: 'next',
-              href: `${canonicalLink}?page=${facetsFromUrl.page + 1}`,
-            },
-          ],
-        });
-      }
-    }
-  }
+  setCategoriesPageMeta(productsCatalog, getFacetsFromURL());
 };
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
