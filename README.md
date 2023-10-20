@@ -65,8 +65,6 @@ Follow the links below for configuration instructions.
 
 - [Middleware](./docs/config/middleware.md) (required)
 - [I18N](./docs/config/i18n.md) (required)
-- [Integrations](./docs/config/integrations.md) (required)
-  - **Note**: Currently, the app only supports PayPal as additional payment provider.
 - [PWA](./docs/config/pwa.md) (optional)
 - [Theme](./docs/config/theme.md) (optional)
 - [Cookies](./docs/config/cookies.md) (optional)

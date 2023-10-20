@@ -4,21 +4,17 @@
 
 <script setup lang="ts">
 import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, productGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
 import { PaypalButtonPropsType } from '~/components/PayPal/types';
-import { paypalGetters } from '~/getters/paypalGetters';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const vsfCurrency = useCookie('vsf-currency').value as string;
-const fallbackCurrency = useAppConfig().fallbackCurrency as string;
-const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
-
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, addToCart, clearCartItems } = useCart();
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const router = useRouter();
 const emits = defineEmits(['on-click']);
 
@@ -30,7 +26,7 @@ const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
-const paypal = await loadScript(currency);
+const paypal = await loadScript(currency.value);
 
 const onInit = (actions: OnInitActions) => {
   if (props.type === TypeCheckout) {
@@ -76,7 +72,6 @@ const onApprove = async (data: OnApproveData) => {
       mode: 'paypal',
       plentyOrderId: Number.parseInt(orderGetters.getId(order)),
       paypalTransactionId: data.orderID,
-      paypalMerchantId: paypalGetters.getMerchantId() ?? '',
     });
 
     clearCartItems();
@@ -87,16 +82,17 @@ const onApprove = async (data: OnApproveData) => {
   }
 };
 
-onMounted(() => {
+// eslint-disable-next-line sonarjs/cognitive-complexity
+const renderButton = () => {
   if (paypal) {
     const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL];
 
     FUNDING_SOURCES.forEach((fundingSource) => {
-      if (paypal.Buttons && fundingSource) {
+      if (paypal?.Buttons && fundingSource) {
         const button = paypal.Buttons({
           style: {
             layout: 'vertical',
-            label: props.type === TypeCartPreview ? 'checkout' : 'buynow',
+            label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
             color: 'blue',
           },
           fundingSource: fundingSource,
@@ -126,5 +122,9 @@ onMounted(() => {
       }
     });
   }
+};
+
+onMounted(() => {
+  renderButton();
 });
 </script>
