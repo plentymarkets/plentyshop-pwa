@@ -166,7 +166,7 @@ const redirectBack = () => {
       message: t('emptyCart'),
     });
 
-    router.go(-1);
+    router.back();
     return true;
   }
   return false;
