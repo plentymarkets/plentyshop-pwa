@@ -136,11 +136,11 @@ const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods(
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
-const router = useRouter();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
+const localePath = useLocalePath();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
@@ -152,8 +152,7 @@ const loadAddresses = async () => {
   if (shippingAddresses.value.length === 0 && billingAddresses.value.length > 0) {
     await saveShippingAddress(billingAddresses.value[0]);
   } else if (shippingAddresses.value.length === 0 && billingAddresses.value.length === 0) {
-    const router = useRouter();
-    router.go(-1);
+    navigateTo(localePath(paths.cart));
   }
 
   await getShippingMethods();
@@ -166,7 +165,7 @@ const redirectBack = () => {
       message: t('emptyCart'),
     });
 
-    router.back();
+    navigateTo(localePath(paths.cart));
     return true;
   }
   return false;
@@ -227,7 +226,7 @@ const order = async () => {
   clearCartItems();
 
   if (data?.order?.id) {
-    router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+    navigateTo(localePath('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
   }
 };
 </script>
