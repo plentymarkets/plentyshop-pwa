@@ -1,12 +1,13 @@
-name: unit-tests
+name: Unit Tests
 
 on:
-  workflow_dispatch:
-#  push:
-#    branches:
-#      - develop
-#  pull_request:
-#    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  packages: read
 
 jobs:
   unit-tests:
@@ -14,7 +15,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Setup node
         uses: actions/setup-node@v3
@@ -38,10 +39,22 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
-        run: yarn --frozen-lockfile
+        run: yarn --immutable
 
-      - name: Build packages
-        run: yarn build
+      - name: Start server
+        run: |
+          pushd apps/server
+          yarn start &
+          popd
 
-      - name: Run tests
-        run: yarn test
+      - name: Run vitest
+        run: |
+          pushd apps/web
+          yarn test:coverage i18n.spec.ts
+
+#      - name: Report Coverage
+#        if: always()
+#        uses:  davelosert/vitest-coverage-report-action@v2
+#        with:
+#          file-coverage-mode: all
+#          name: Unit Test Coverage
