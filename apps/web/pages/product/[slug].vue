@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-    <Breadcrumbs />
     <NarrowContainer>
+      <Breadcrumbs />
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
