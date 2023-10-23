@@ -17,10 +17,12 @@ export interface UsePayPalState {
   paypalScript: PayPalNamespace | null;
   order: PayPalCreateOrder | null;
   config: PayPalConfigResponse | null;
+  loadedConfig: boolean;
   loading: boolean;
 }
 
 export type LoadConfig = () => Promise<void>;
+export type GetLocale = (locale: string) => string;
 export type LoadScript = (currency: string) => Promise<PayPalNamespace | null>;
 export type CreateTransaction = (fundingSource: string) => Promise<PayPalCreateOrder | null>;
 export type ApproveOrder = (orderID: string, payerID: string) => Promise<PayPalApproveOrder | null>;
