@@ -32,7 +32,7 @@ export class CheckoutPageObject {
   }
 
   get displaySuccessPages() {
-    return cy.getByTestId('order-success-page');
+    return cy.getByTestId('order-success-page', { timeout: 60000 });
   }
 
   get inputField() {
@@ -120,7 +120,7 @@ export class CheckoutPageObject {
   }
 
   displaySuccessPage() {
-    this.displaySuccessPages.should('be.visible', { timeout: 60000 });
+    this.displaySuccessPages.should('be.visible');
     this.thankYouBanner.should('be.visible');
     return this;
   }
