@@ -10,7 +10,7 @@ const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
 describe('Smoke: Cart Page', () => {
-  it('[smoke] Check if status on order gets updated', () => {
+  it('[smoke] Check if status on order gets updated when paying with paypal', () => {
     cy.visitAndHydrate(paths.home);
 
     homePage.goToCategory();
@@ -24,6 +24,7 @@ describe('Smoke: Cart Page', () => {
         .fillBillingAddressForm()
         .acceptTerms()
         .placeOrderButton()
-        .displaySuccessPage();
+        .displaySuccessPage()
+        .displayFullPayed();
   });
 });

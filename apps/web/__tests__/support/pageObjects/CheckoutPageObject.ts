@@ -47,6 +47,10 @@ export class CheckoutPageObject {
     return cy.getByTestId('success-header');
   }
 
+  get orderPaymentStatus() {
+    return cy.getByTestId('order-payment-status');
+  }
+
   get firstNameInput() {
     return cy.getByTestId('input').find('input[name="firstName"]');
   }
@@ -121,6 +125,11 @@ export class CheckoutPageObject {
     return this;
   }
 
+  displayFullPayed() {
+    this.orderPaymentStatus.contains('fully paid')
+    return this;
+  }
+  
   fillContactInformationForm() {
     cy.getFixture('addressForm').then((fixture) => {
       const uniqueEmail = `test-order-${new Date().getTime()}@plentymarkets.com`;
