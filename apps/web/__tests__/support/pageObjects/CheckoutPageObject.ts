@@ -149,8 +149,28 @@ export class CheckoutPageObject {
     return this.fillAddressForm();
   }
   
+  fillCreditCardForm() {
+    const getIframeBody = () => {
+      // get the iframe > document > body
+      // and retry until the body element is not empty
+      return cy
+      .get('iframe[data-cy="braintree-hosted-field-number"]')
+      .its('0.contentDocument.body').should('not.be.empty')
+      // wraps "body" DOM element to allow
+      // chaining more Cypress commands, like ".find(...)"
+      // https://on.cypress.io/wrap
+      .then(cy.wrap)
+    }
+    // cy.getFixture('addressForm').then((fixture) => {
+    //   this.fillForm(fixture);
+    // });
+    // cy.wait(3000);
+    getIframeBody().get('#credit-card-number').type('4868719460707704');
+    return this;
+  }
+  
   checkCreditCard() {
-    cy.get('payment-method--1').click();
+    cy.getByTestId('payment-method-6008').check({ force : true })
     return this;
   }
 

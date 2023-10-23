@@ -43,7 +43,7 @@
       <div class="row mt-5">
         <label class="hosted-fields--label">
           <span class="text-sm font-medium">{{ $t('paypal.unbrandedNameOnCard') }}</span>
-          <SfInput v-model="cardHolder" class="hosted-field" />
+          <SfInput data-testid="credit-card-name" v-model="cardHolder" class="hosted-field" />
         </label>
       </div>
 

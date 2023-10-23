@@ -111,6 +111,7 @@
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
+              data-testid="place-order-button"
               @click="openPayPalCardDialog"
               :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
               size="lg"
