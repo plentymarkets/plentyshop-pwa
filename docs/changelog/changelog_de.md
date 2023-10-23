@@ -8,6 +8,7 @@
 
 - PayPal Express Checkout hinzugefügt
 - PayPal-Kreditkarten-Zahlungsoption hinzugefügt
+- PayPal: Die "integration.config"-Datei wird nicht mehr benötigt
 - Mein Konto: Die Erstellung und Bearbeitung von Versand- und Rechnungsadressen ist jetzt möglich
 - Mein Konto: Die Auftragshistorie zeigt die letzten Bestellungen von eingeloggten Kund:innen an
 - Mein Konto: Die Retourenhistorie zeigt die letzten Retouren von eingeloggten Kund:innen an

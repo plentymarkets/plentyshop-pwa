@@ -20,7 +20,7 @@ export type SetCartItemQuantity = (params: SetCartItemQuantityParams) => Promise
 
 export interface UseCart {
   data: Readonly<Ref<UseCartState['data']>>;
-  loading: Readonly<Ref<boolean>>;
+  loading: Ref<boolean>;
   getCart: GetCart;
   addToCart: AddToCart;
   deleteCartItem: DeleteCartItem;
