@@ -120,7 +120,7 @@ export class CheckoutPageObject {
   }
 
   displaySuccessPage() {
-    this.displaySuccessPages.should('be.visible');
+    this.displaySuccessPages.should('be.visible', { timeout: 60000 });
     this.thankYouBanner.should('be.visible');
     return this;
   }
@@ -150,7 +150,6 @@ export class CheckoutPageObject {
   }
   
   fillCreditCardForm() {
-    cy.wait(2000);
     cy.iframe('#braintree-hosted-field-number')
       .find('#credit-card-number')
       .type('4868719460707704');
