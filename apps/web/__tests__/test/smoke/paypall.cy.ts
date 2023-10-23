@@ -22,6 +22,7 @@ describe('Smoke: Cart Page', () => {
         .fillContactInformationForm()
         .addBillingAddress()
         .fillBillingAddressForm()
+        .checkCreditCard()
         .acceptTerms()
         .placeOrderButton()
         .displaySuccessPage()
