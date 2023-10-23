@@ -29,8 +29,9 @@ describe('Smoke: Cart Page', () => {
         .acceptTerms()
         .checkCreditCard()
         .placeOrderButton()
-        .fillCreditCardForm();
-        // .displaySuccessPage()
-        // .displayFullPayed();
+        .fillCreditCardForm()
+        .payCreditCard()
+        .displaySuccessPage()
+        .displayFullPayed();
   });
 });

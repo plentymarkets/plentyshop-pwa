@@ -3449,6 +3449,7 @@ __metadata:
     commitizen: ^4.2.5
     concurrently: ^8.2.0
     cross-env: ^7.0.3
+    cypress-iframe: ^1.0.1
     dotenv: ^16.0.3
     husky: ^8.0.0
     is-ci: ^3.0.0
@@ -7755,6 +7756,15 @@ __metadata:
   version: 0.2.2
   resolution: "cuint@npm:0.2.2"
   checksum: b8127a93a7f16ce120ffcb22108014327c9808b258ee20e7dbb4c6740d7cb0f0c12d18a054eb716b0f2470090666abaae8a082d3cd5ef0e94fa447dd155842c4
+  languageName: node
+  linkType: hard
+
+"cypress-iframe@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "cypress-iframe@npm:1.0.1"
+  peerDependencies:
+    "@types/cypress": ^1.1.0
+  checksum: 98f3322c49949234e86c7915bbcac413e50a804c6e0b630b1273ebdacf4146f231f03a54e34fae5adf6387b086fb9c6d0d1a2347ac7da5981376ee5553f31ec0
   languageName: node
   linkType: hard
 
