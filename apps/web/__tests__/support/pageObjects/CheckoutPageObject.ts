@@ -126,7 +126,7 @@ export class CheckoutPageObject {
   }
 
   displayFullPayed() {
-    this.orderPaymentStatus.contains('fully paid')
+    this.orderPaymentStatus.contains('fullyPaid')
     return this;
   }
   
@@ -148,6 +148,12 @@ export class CheckoutPageObject {
   fillBillingAddressForm() {
     return this.fillAddressForm();
   }
+  
+  checkCreditCard() {
+    cy.get('payment-method--1').click();
+    return this;
+  }
+
 
   fillShippingAddressForm() {
     return this.fillAddressForm();
