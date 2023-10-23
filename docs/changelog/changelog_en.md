@@ -8,6 +8,7 @@
 
 - Added PayPal Express Checkout
 - Added PayPal payment option for credit cards
+- PayPal: The "integration.config"-file is no longer required
 - MyAccount: The creation and editing of shipping and billing addresses is now possilbe
 - MyAccount: The order history shows the latest orders of the logged-in customer
 - MyAccount: The return history shows the latest returns of the logged-in customer
