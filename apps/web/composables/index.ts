@@ -5,5 +5,6 @@ export * from './useCategoryFilter';
 export * from './useHandleError';
 export * from './useProduct';
 export * from './useProducts';
+export * from './useSeoMeta';
 export * from './useCanonical';
 export * from './useProductReviewAverage';

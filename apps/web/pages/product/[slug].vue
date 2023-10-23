@@ -36,8 +36,8 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-
 const { data: categoryTree } = useCategoryTree();
+const { setSingleItemMeta } = useSeoMeta();
 
 const route = useRoute();
 const router = useRouter();
@@ -109,80 +109,6 @@ watch(
     }
   },
 );
-const setMeta = () => {
-  const manufacturer = product.value.item.manufacturer as { name: string };
-  const metaObject = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    '@id': productParams.id,
-    name: productGetters.getName(product.value),
-    category: categoryTreeGetters.getName(categoryTree.value[0]),
-    releaseDate: '',
-    image: productGetters.getCoverImagePreview(product.value),
-    identifier: productParams.id,
-    description: product.value.texts.description,
-    disambiguatingDescription: '',
-    manufacturer: {
-      '@type': 'Organization',
-      name: manufacturer.name,
-    },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: product.value.prices?.default.currency,
-      price: product.value.prices?.default.price.value,
-      priceValidUntil: null,
-      url: null,
-      priceSpecification: [
-        {
-          '@type': 'UnitPriceSpecification',
-          price: product.value.prices?.default.price.value,
-          priceCurrency: product.value.prices?.default.currency,
-          priceType: 'SalePrice',
-          referenceQuantity: {
-            '@type': 'QuantitativeValue',
-          },
-        },
-      ],
-      availability: product.value.variation.availability,
-      itemCondition: null,
-    },
-    depth: {
-      '@type': 'QuantitativeValue',
-      value: product.value.variation.lengthMM,
-    },
-    width: {
-      '@type': 'QuantitativeValue',
-      value: product.value.variation.widthMM,
-    },
-    height: {
-      '@type': 'QuantitativeValue',
-      value: product.value.variation.heightMM,
-    },
-    weight: {
-      '@type': 'QuantitativeValue',
-      value: product.value.variation.weightG,
-    },
-  };
 
-  if (product.value.prices?.rrp) {
-    metaObject.offers.priceSpecification.push({
-      '@type': 'UnitPriceSpecification',
-      price: product.value.prices?.rrp.price.value,
-      priceCurrency: product.value.prices?.rrp.currency,
-      priceType: 'ListPrice',
-      referenceQuantity: {
-        '@type': 'QuantitativeValue',
-      },
-    });
-  }
-  useHead({
-    script: [
-      {
-        type: 'application/ld+json',
-        innerHTML: JSON.stringify(metaObject),
-      },
-    ],
-  });
-};
-setMeta();
+setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
 </script>
