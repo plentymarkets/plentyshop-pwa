@@ -78,7 +78,9 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: productGetters.isSalable(product) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        availability: productGetters.isSalable(product)
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
         itemCondition: null,
       },
       depth: {
