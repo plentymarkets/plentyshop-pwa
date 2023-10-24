@@ -1,19 +1,19 @@
 import { toRefs } from '@vueuse/shared';
-import type { UseSeoMetaReturn } from './types';
-import { SingleItemMeta, UseMetaState } from './types';
+import type { useStructuredDataReturn } from './types';
+import { SingleItemMeta, UseStructuredDataState } from './types';
 import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 /**
  * @description Composable managing meta data
- * @returns UseSeoMetaReturn
+ * @returns useStructuredDataReturn
  * @example
  * ``` ts
  * const { data, loading, setStaticPageMeta } = useMeta();
  * ```
  */
-export const useSeoMeta: UseSeoMetaReturn = () => {
-  const state = useState<UseMetaState>(`useMeta`, () => ({
+export const useStructuredData: useStructuredDataReturn = () => {
+  const state = useState<UseStructuredDataState>(`useMeta`, () => ({
     loading: false,
   }));
 
@@ -31,7 +31,7 @@ export const useSeoMeta: UseSeoMetaReturn = () => {
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      '@id': variationId,
+      sku: variationId,
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
@@ -43,6 +43,24 @@ export const useSeoMeta: UseSeoMetaReturn = () => {
         '@type': 'Organization',
         name: manufacturer.name,
       },
+      // optional
+      // "review": {
+      //   "@type": "Review",
+      //   "reviewRating": {
+      //     "@type": "Rating",
+      //     "ratingValue": 4,
+      //     "bestRating": 5
+      //   },
+      //   "author": {
+      //     "@type": "Person",
+      //     "name": "Fred Benson"
+      //   }
+      // },
+      // "aggregateRating": {
+      //   "@type": "AggregateRating",
+      //   "ratingValue": 4.4,
+      //   "reviewCount": 89
+      // },
       offers: {
         '@type': 'Offer',
         priceCurrency: product.prices?.default.currency,
