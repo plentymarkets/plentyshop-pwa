@@ -31,7 +31,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      sku: variationId,
+      // sku: sku,
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
@@ -65,7 +65,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Offer',
         priceCurrency: product.prices?.default.currency,
         price: product.prices?.default.price.value,
-        priceValidUntil: null,
+        priceValidUntil: product.variation?.availableUntil,
         url: null,
         priceSpecification: [
           {
@@ -78,7 +78,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: product.variation.availability,
+        availability: productGetters.isSalable(product) ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
         itemCondition: null,
       },
       depth: {
