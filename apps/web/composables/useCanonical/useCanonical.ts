@@ -101,13 +101,15 @@ export const useCanonical: UseCanonicalReturn = () => {
    */
   const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
+    const route = useRoute();
+    const prefix = route.fullPath.split('/c')[0];
     const runtimeConfig = useRuntimeConfig();
     if (productsCatalog.languageUrls) {
       let xdefault = productsCatalog.languageUrls['x-default'];
       xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
       const canonicalLink = facetsFromUrl.facets
-        ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${facetsFromUrl.facets}`
-        : `${runtimeConfig.public.apiUrl}/c${xdefault}`;
+        ? `${runtimeConfig.public.apiUrl}${prefix}/c${xdefault}?=${facetsFromUrl.facets}`
+        : `${runtimeConfig.public.apiUrl}${prefix}/c${xdefault}`;
       useHead({
         link: [
           {
@@ -124,7 +126,7 @@ export const useCanonical: UseCanonicalReturn = () => {
             {
               rel: 'alternate',
               hreflang: key,
-              href: `${runtimeConfig.public.apiUrl}/c${link}`,
+              href: `${runtimeConfig.public.apiUrl}${prefix}/c${link}`,
             },
           ],
         });
