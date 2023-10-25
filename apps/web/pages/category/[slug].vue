@@ -39,7 +39,6 @@ const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
-  setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 };
 
 await handleQueryUpdate();
@@ -72,4 +71,5 @@ watch(
     handleQueryUpdate();
   },
 );
+setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 </script>
