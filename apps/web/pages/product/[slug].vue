@@ -35,8 +35,8 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-
 const { data: categoryTree } = useCategoryTree();
+const { setSingleItemMeta } = useStructuredData();
 
 const route = useRoute();
 const router = useRouter();
@@ -108,4 +108,6 @@ watch(
     }
   },
 );
+
+setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
 </script>
