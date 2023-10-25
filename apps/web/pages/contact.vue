@@ -103,7 +103,6 @@ import {
   SfIconEmail
 } from '@storefront-ui/vue';
 
-
 definePageMeta({
   layout: false,
 });
@@ -113,7 +112,7 @@ const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact(
 const showPrivacyError = ref(false);
 const privacyPolicy = ref<boolean>(false);
 
-const contact = ref({
+const defaultContact = ref({
   name: '',
   email: '',
   subject: '',
@@ -121,14 +120,10 @@ const contact = ref({
   message: '',
 });
 
+const contact = ref({ ...defaultContact.value });
+
 const clearInputs = () => {
-  contact.value = {
-    name: '',
-    email: '',
-    subject: '',
-    orderId: '',
-    message: '',
-  };
+  contact.value = { ...defaultContact.value };
 
   privacyPolicy.value = false;
 };
