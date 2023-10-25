@@ -1,6 +1,5 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
-import { paypalGetters } from '~/getters/paypalGetters';
 import { useSdk } from '~/sdk';
 import type {
   UsePayPalMethodsReturn,
@@ -12,7 +11,21 @@ import type {
   CreateCreditCardTransaction,
   CaptureOrder,
   LoadConfig,
+  GetLocale,
 } from './types';
+import { paypalGetters } from '@plentymarkets/shop-sdk';
+
+const getLocaleForPayPal: GetLocale = (locale: string) => {
+  // eslint-disable-next-line sonarjs/no-small-switch
+  switch (locale) {
+    case 'de': {
+      return 'de_DE';
+    }
+    default: {
+      return 'en_US';
+    }
+  }
+};
 
 /**
  * @description Composable for managing PayPal interaction.
@@ -30,6 +43,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     paypalScript: null,
     order: null,
     config: null,
+    loadedConfig: false,
   }));
 
   /**
@@ -41,10 +55,10 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * ```
    */
   const loadConfig: LoadConfig = async () => {
-    if (!state.value.config) {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalDataClientToken());
-      useHandleError(error.value);
+    if (!state.value.loadedConfig) {
+      const { data } = await useAsyncData('paypalLoadConfig', () => useSdk().plentysystems.getPayPalDataClientToken());
       state.value.config = data.value?.data ?? null;
+      state.value.loadedConfig = true;
     }
   };
 
@@ -58,15 +72,19 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * ```
    */
   const loadScript: LoadScript = async (currency: string) => {
+    const { locale } = useI18n();
+    const localePayPal = getLocaleForPayPal(locale.value);
+
     await loadConfig();
-    if (paypalGetters.getClientId() && state.value.config) {
+    if (state.value.config && paypalGetters.getClientId(state.value.config)) {
       try {
         state.value.paypalScript = await loadPayPalScript({
-          clientId: paypalGetters.getClientId() ?? '',
-          dataClientToken: state.value.config.client_token,
+          clientId: paypalGetters.getClientId(state.value.config),
+          dataClientToken: paypalGetters.getClientToken(state.value.config),
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components: 'messages,buttons,funding-eligibility,hosted-fields,payment-fields,marks&enable-funding=paylater',
+          locale: localePayPal,
         });
         return state.value.paypalScript;
       } catch {
@@ -131,9 +149,8 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * ``` ts
    * executeOrder({
    *   mode: 'paypal',
-   *   plentyOrderId: 1234;
-   *   paypalTransactionId: 'UHIhhur3h2rh2';
-   *   paypalMerchantId: 'U3713H123';
+   *   plentyOrderId: 1234,
+   *   paypalTransactionId: 'UHIhhur3h2rh2',
    * });
    * ```
    */

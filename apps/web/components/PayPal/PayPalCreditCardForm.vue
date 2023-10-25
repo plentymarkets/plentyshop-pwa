@@ -67,9 +67,8 @@
 </template>
 
 <script lang="ts" setup>
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { paypalGetters } from '~/getters/paypalGetters';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -81,10 +80,8 @@ const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const router = useRouter();
 const i18n = useI18n();
 
-const vsfCurrency = useCookie('vsf-currency').value as string;
-const fallbackCurrency = useAppConfig().fallbackCurrency as string;
-const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
-const paypal = await loadScript(currency);
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const paypal = await loadScript(currency.value);
 const form = ref<HTMLElement | null>(null);
 const cardHolder = ref('');
 const sandbox = true;
@@ -172,7 +169,6 @@ onMounted(() => {
                 mode: 'paypal',
                 plentyOrderId: Number.parseInt(orderGetters.getId(order)),
                 paypalTransactionId: paypalOrderId,
-                paypalMerchantId: paypalGetters.getMerchantId() ?? '',
               });
 
               clearCartItems();

@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-
+const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({
   layout: false,
 });
@@ -40,6 +40,7 @@ const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
+  setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 };
 
 await handleQueryUpdate();
