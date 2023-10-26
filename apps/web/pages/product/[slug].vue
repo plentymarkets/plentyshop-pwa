@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
-      <Breadcrumbs />
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
@@ -36,8 +35,8 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-
 const { data: categoryTree } = useCategoryTree();
+const { setSingleItemMeta } = useStructuredData();
 
 const route = useRoute();
 const router = useRouter();
@@ -109,4 +108,6 @@ watch(
     }
   },
 );
+
+setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
 </script>
