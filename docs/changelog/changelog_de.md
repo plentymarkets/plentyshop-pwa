@@ -29,6 +29,7 @@
 
 - Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Überarbeitete Logik für Artikel mit mehreren Attributen
+- Aktueller Staffelpreis wird jetzt auf Artikelseite markiert
 
 ### Behoben
 
