@@ -31,7 +31,7 @@ definePageMeta({
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const { getFacetsFromURL } = useCategoryFilter();
+const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
@@ -39,6 +39,7 @@ const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
+  checkFiltersInURL();
 };
 
 await handleQueryUpdate();
