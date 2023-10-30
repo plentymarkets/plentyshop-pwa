@@ -227,6 +227,12 @@
         "privacyPolicy": "Datenschutzerklärung",
         "termsAndConditions": "AGB"
       }
+    },
+    "contact": {
+      "label": "Kontakt",
+      "subcategories": {
+        "contact": "Kontakt"
+      }
     }
   },
   "contactOptions": {

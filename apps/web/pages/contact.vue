@@ -1,5 +1,6 @@
 <template>
   <NuxtLayout name="default">
+    <!-- TODO: remove this code when the re-captcha/back-end call is working -->
     <div v-if="true" class="h-[500px] flex items-center justify-center">
       <h1>{{ $t('coming-soon') }}</h1>
     </div>
