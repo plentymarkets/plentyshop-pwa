@@ -18,7 +18,7 @@
         <label>
           <UiFormLabel class="mb-1">{{ $t('contact.form.emailLabel') }} *</UiFormLabel>
 
-          <SfInput name="email" type="email" autocomplete="email" v-model="contact.email" required >
+          <SfInput name="email" type="email" autocomplete="email" v-model="contact.email" required>
             <template #prefix>
               <SfIconEmail />
             </template>
@@ -94,15 +94,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfButton,
-  SfInput,
-  SfCheckbox,
-  SfLink,
-  SfTextarea,
-  SfLoaderCircular,
-  SfIconEmail
-} from '@storefront-ui/vue';
+import { SfButton, SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,
