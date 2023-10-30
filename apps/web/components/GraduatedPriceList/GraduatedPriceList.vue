@@ -11,10 +11,20 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(list, index) in graduatedList" :key="index" class="border-b border-neutral-200">
-        <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ $n(list.price, 'currency') }}</td>
-        <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ list.quantity }}</td>
-        <td class="lg:p-4 p-2">{{ list.discount }} %</td>
+      <tr
+        v-for="(list, index) in graduatedList"
+        :key="index"
+        class="border-b border-neutral-200"
+        :class="{ 'bg-gray-200': list.price === selectedList?.price.value }"
+      >
+        <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap h-[38px]">{{ $n(list.price, 'currency') }}</td>
+        <td class="lg:p-4 p-2 lg:whitespace-nowrap h-[38px]">{{ list.quantity }}</td>
+        <td class="lg:p-4 p-2 flex h-[38px]">
+          <div>{{ list.discount }} %</div>
+          <div class="ml-auto text-primary-600" v-if="selectedList && list.price === selectedList.price.value">
+            <SfIconCheck />
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -23,7 +33,11 @@
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
+import { SfIconCheck } from '@storefront-ui/vue';
 
-const { product } = defineProps<GraduatedPriceListProps>();
-const graduatedList = computed(() => productGetters.getGraduatedList(product));
+const props = withDefaults(defineProps<GraduatedPriceListProps>(), {
+  count: 0,
+});
+const graduatedList = computed(() => productGetters.getGraduatedList(props.product));
+const selectedList = computed(() => productGetters.getGraduatedPriceByQuantity(props.product, props.count));
 </script>
