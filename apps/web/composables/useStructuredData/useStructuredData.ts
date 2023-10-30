@@ -2,8 +2,8 @@ import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
 import { SingleItemMeta, UseStructuredDataState } from './types';
 import type { Product } from '@plentymarkets/shop-api';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import type { CategoryTreeItem, Review, ReviewAverage } from '@plentymarkets/shop-api';
 /**
  * @description Composable managing meta data
  * @returns useStructuredDataReturn
@@ -25,7 +25,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * setSigleItemMeta()
    * ```
    */
-  const setSingleItemMeta: SingleItemMeta = (product: Product, variationId: string, categoryTree: CategoryTreeItem) => {
+  const setSingleItemMeta: SingleItemMeta = (product: Product, variationId: string, categoryTree: CategoryTreeItem, productReviews: Review, reviewAverage: ReviewAverage) => {
     state.value.loading = true;
     const manufacturer = product.item.manufacturer as { name: string };
     const metaObject = {
@@ -43,24 +43,12 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Organization',
         name: manufacturer.name,
       },
-      // optional
-      // "review": {
-      //   "@type": "Review",
-      //   "reviewRating": {
-      //     "@type": "Rating",
-      //     "ratingValue": 4,
-      //     "bestRating": 5
-      //   },
-      //   "author": {
-      //     "@type": "Person",
-      //     "name": "Fred Benson"
-      //   }
-      // },
-      // "aggregateRating": {
-      //   "@type": "AggregateRating",
-      //   "ratingValue": 4.4,
-      //   "reviewCount": 89
-      // },
+      "review": [],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": productGetters.getAverageRating(reviewAverage),
+        "reviewCount": productGetters.getTotalReviews(reviewAverage)
+      },
       offers: {
         '@type': 'Offer',
         priceCurrency: product.prices?.default.currency,
@@ -100,6 +88,21 @@ export const useStructuredData: useStructuredDataReturn = () => {
         value: product.variation.weightG,
       },
     };
+    if (reviewAverage) {
+      reviewGetters.getItems(productReviews).forEach(reviewItem => {
+        metaObject.review.push({
+          "@type": "Review",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": reviewGetters.getReviewRating(reviewItem) ?? undefined
+          },
+          "author": {
+            "@type": "Person",
+            "name": reviewGetters.getReviewAuthor(reviewItem)
+          }
+        });
+      });
+    }
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',

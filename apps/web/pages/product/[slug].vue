@@ -61,7 +61,6 @@ await fetchProduct(productParams);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
   product?.value?.variation?.id?.toString() ?? '',
 );
-
 selectVariation(productPieces[1] ? product.value : ({} as Product));
 await fetchProductReviewAverage(product.value.item.id);
 
@@ -109,5 +108,10 @@ watch(
   },
 );
 
-setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
+const { data: productReviews, fetchProductReviews } = useProductReviews(
+  product.value.variation.id,
+  product.value.item.id,
+);
+await fetchProductReviews(product.value.variation.id, product.value.item.id);
+setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0], productReviews.value, productReviewAverage.value);
 </script>
