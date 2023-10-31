@@ -157,6 +157,7 @@
   "showArticle": "Show article",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
+  "deletedFromCart": "Item removed from shopping cart",
   "search": "Search",
   "openSearchModalButtonLabel": "Click to open search modal",
   "vsfHomepage": "VSF Homepage",
@@ -226,6 +227,12 @@
         "legalDisclosure": "Legal disclosure",
         "privacyPolicy": "Privacy policy",
         "termsAndConditions": "Terms and conditions"
+      }
+    },
+    "contact": {
+      "label": "Contact",
+      "subcategories": {
+        "contact": "Contact"
       }
     }
   },
@@ -462,5 +469,22 @@
     "price": "PRICE",
     "quantity": "QUANTITY",
     "discount": "DISCOUNT"
+  },
+  "coming-soon": "Coming Soon",
+  "contact": {
+    "contact": "Contact",
+    "contactShopMessage": "You have a question or a request? Please do not hesitate to contact us. Simply fill out the form and we will respond to your request as soon as possible.",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "Email",
+      "subjectLabel": "Subject",
+      "order-id": "Order ID",
+      "message": "Message",
+      "message-placeholder": "Your message",
+      "asterixHint": "marked fields are required"
+    },
+    "contactSend": "Send request",
+    "clearAll": "Clear all",
+    "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
   }
 }
