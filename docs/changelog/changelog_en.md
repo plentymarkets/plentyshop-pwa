@@ -30,6 +30,7 @@
 
 - Updated URL structure to be more similar to plentyShop LTS
 - Reworked logic of items with multiple attributes
+- Current bulk price is now marked on item pages
 - Changed position of notifications
 
 ### Fixed
