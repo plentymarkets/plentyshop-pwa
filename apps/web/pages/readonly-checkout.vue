@@ -69,7 +69,7 @@
                 </template>
                 <template #privacyPolicy>
                   <SfLink
-                    href="/PrivacyPolicy"
+                    :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
