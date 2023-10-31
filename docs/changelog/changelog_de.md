@@ -35,5 +35,6 @@
 ### Behoben
 
 - Nach dem Login wurde der Benutzer fälschlicherweise auf die Startseite weitergeleitet. Der Benutzer bleibt nun auf der aktuellen Seite.
+- Filterung: Nicht mehr vorhandene Filteroptionen werden aus der URL entfernt
 
 ## v1.0.0 (28.09.2023) Erster Release

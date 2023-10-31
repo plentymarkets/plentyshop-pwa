@@ -17,4 +17,6 @@ export interface UseCategoryFiltersResponse {
   updateSearchTerm(term: string): void;
   updateSorting(sort: string): void;
   updatePage(page: string): void;
+  updateQuery(parameter?: object): void;
+  checkFiltersInURL(): void;
 }
