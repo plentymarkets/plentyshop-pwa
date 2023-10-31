@@ -231,6 +231,35 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     router.push({ query: { ...route.query, sort } });
   };
 
+  /**
+   * @description Function for validating selected filters in the url.
+   * @return void
+   * @example
+   * ``` ts
+   * checkFiltersInURL();
+   * ```
+   */
+  const checkFiltersInURL = (): void => {
+    const { data: productsCatalog } = useProducts();
+    const facetsFromUrl = getFacetsFromURL();
+    const facetsFromResponse = productsCatalog.value.facets;
+
+    if (facetsFromUrl.facets) {
+      const facets = facetsFromUrl.facets.split(',');
+
+      const updatedFacets = facets.filter((facet) => {
+        return facetsFromResponse.some((facetItem) => {
+          if (facetItem.values) {
+            return facetItem.values.some((facetValue) => facetValue.id.toString() === facet);
+          }
+          return false;
+        });
+      });
+
+      updateQuery({ facets: updatedFacets.join(',') });
+    }
+  };
+
   return {
     getFacetsFromURL,
     updateFilters,
@@ -239,6 +268,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateSorting,
     updatePage,
     updatePrices,
+    updateQuery,
+    checkFiltersInURL,
   };
 };
 

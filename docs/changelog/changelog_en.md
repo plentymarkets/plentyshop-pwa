@@ -24,15 +24,18 @@
 - Added menu to header to switch between different language versions of the PWA
 - Multilingual URLs are now used for different language versions of the PWA
 - Added composable that sets canonical url metadata for static pages.
+- Added notification for deleting an item from the cart
 
 ### Changed
 
 - Updated URL structure to be more similar to plentyShop LTS
 - Reworked logic of items with multiple attributes
 - Current bulk price is now marked on item pages
+- Changed position of notifications
 
 ### Fixed
 
 - After login the user was wrongfully forwared to the homepage. The user now stays on the current page.
+- Filtering: No longer available filters are removed from the URL
 
 ## v1.0.0 (28.09.2023) First release
