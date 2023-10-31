@@ -4,7 +4,7 @@
 
 ### TODO
 
-- [Middleware](./docs/config/middleware.md) API_ENDPOINT muss nun über eine .env Datei unter apps/server geflegt werden.
+- [Middleware](./docs/config/middleware.md) `API_ENDPOINT` muss nun über eine `.env`-Datei unter `apps/server` gepflegt werden.
 
 ### Hinzugefügt
 
