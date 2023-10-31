@@ -52,13 +52,10 @@ jobs:
       - name: Setup environment
         run: |
           touch apps/web/.env
-          echo NUXT_PUBLIC_API_URL=${{ vars.API_URL }} >> apps/web/.env
+          echo API_URL=${{ vars.API_URL }} >> apps/web/.env
 
       - name: Build
         run: yarn build
-
-      - name: Build middleware
-        run: cd ./apps/server && yarn build
 
       - name: Install productive dependencies for server
         run: yarn workspaces focus --production
