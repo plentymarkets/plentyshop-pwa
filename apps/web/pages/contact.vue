@@ -57,7 +57,7 @@
             <i18n-t keypath="contact.privacyPolicy">
               <template #privacyPolicy>
                 <SfLink
-                  href="/PrivacyPolicy"
+                  :href="localePath(paths.privacyPolicy)"
                   target="_blank"
                   class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                 >
@@ -101,6 +101,7 @@ definePageMeta({
 });
 
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
+const localePath = useLocalePath();
 
 const showPrivacyError = ref(false);
 const privacyPolicy = ref<boolean>(false);
