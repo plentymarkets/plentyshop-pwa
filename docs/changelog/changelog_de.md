@@ -33,5 +33,5 @@
 ### Behoben
 
 - Nach dem Login wurde der Benutzer fälschlicherweise auf die Startseite weitergeleitet. Der Benutzer bleibt nun auf der aktuellen Seite.
-
+- Bewertungen und AggregateRating zu SEO-strukturierten Daten hinzugefügt
 ## v1.0.0 (28.09.2023) Erster Release

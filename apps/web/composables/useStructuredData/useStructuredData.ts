@@ -1,9 +1,11 @@
 import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
 import { SingleItemMeta, UseStructuredDataState } from './types';
-import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
-import type { CategoryTreeItem, Review, ReviewAverage } from '@plentymarkets/shop-api';
+import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
+import { useProductReviews } from '../useProductReviews';
+import { useProductReviewAverage } from '../useProductReviewAverage';
+
 /**
  * @description Composable managing meta data
  * @returns useStructuredDataReturn
@@ -25,9 +27,33 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * setSigleItemMeta()
    * ```
    */
-  const setSingleItemMeta: SingleItemMeta = (product: Product, variationId: string, categoryTree: CategoryTreeItem, productReviews: Review, reviewAverage: ReviewAverage) => {
+  const setSingleItemMeta: SingleItemMeta = async (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
+
+    const { data: productReviews, fetchProductReviews } = useProductReviews(product.variation.id, product.item.id);
+    await fetchProductReviews(product.variation.id, product.item.id);
+
+    const { data: reviewAverage, fetchProductReviewAverage } = useProductReviewAverage(product.variation.id.toString());
+    await fetchProductReviewAverage(product.item.id);
+
     const manufacturer = product.item.manufacturer as { name: string };
+    let reviews = null;
+    if (reviewAverage.value) {
+      reviews = [];
+      reviewGetters.getItems(productReviews.value).forEach((reviewItem) => {
+        reviews.push({
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: reviewGetters.getReviewRating(reviewItem),
+          },
+          author: {
+            '@type': 'Person',
+            name: reviewGetters.getReviewAuthor(reviewItem),
+          },
+        });
+      });
+    }
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
@@ -36,18 +62,18 @@ export const useStructuredData: useStructuredDataReturn = () => {
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
       image: productGetters.getCoverImagePreview(product),
-      identifier: variationId,
+      identifier: product.variation.id,
       description: product.texts.description,
       disambiguatingDescription: '',
       manufacturer: {
         '@type': 'Organization',
         name: manufacturer.name,
       },
-      "review": [],
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": productGetters.getAverageRating(reviewAverage),
-        "reviewCount": productGetters.getTotalReviews(reviewAverage)
+      review: reviews,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: productGetters.getAverageRating(reviewAverage.value),
+        reviewCount: productGetters.getTotalReviews(reviewAverage.value),
       },
       offers: {
         '@type': 'Offer',
@@ -88,21 +114,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         value: product.variation.weightG,
       },
     };
-    if (reviewAverage) {
-      reviewGetters.getItems(productReviews).forEach(reviewItem => {
-        metaObject.review.push({
-          "@type": "Review",
-          "reviewRating": {
-            "@type": "Rating",
-            "ratingValue": reviewGetters.getReviewRating(reviewItem) ?? undefined
-          },
-          "author": {
-            "@type": "Person",
-            "name": reviewGetters.getReviewAuthor(reviewItem)
-          }
-        });
-      });
-    }
+
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',

@@ -107,11 +107,5 @@ watch(
     }
   },
 );
-
-const { data: productReviews, fetchProductReviews } = useProductReviews(
-  product.value.variation.id,
-  product.value.item.id,
-);
-await fetchProductReviews(product.value.variation.id, product.value.item.id);
-setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0], productReviews.value, productReviewAverage.value);
+setSingleItemMeta(product.value, categoryTree.value[0]);
 </script>
