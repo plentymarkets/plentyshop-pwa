@@ -60,6 +60,15 @@ export const categories = [
       },
     ],
   },
+  {
+    key: 'contact',
+    subcategories: [
+      {
+        key: 'contact',
+        link: '/contact',
+      },
+    ],
+  },
 ];
 
 export const socialMedia = [

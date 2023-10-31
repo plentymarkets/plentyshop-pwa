@@ -227,6 +227,12 @@
         "privacyPolicy": "Datenschutzerklärung",
         "termsAndConditions": "AGB"
       }
+    },
+    "contact": {
+      "label": "Kontakt",
+      "subcategories": {
+        "contact": "Kontakt"
+      }
     }
   },
   "contactOptions": {
@@ -462,5 +468,22 @@
     "price": "PREIS",
     "quantity": "ANZAHL",
     "discount": "RABATT"
+  },
+  "coming-soon": "Demnächst",
+  "contact": {
+    "contact": "Kontakt",
+    "contactShopMessage": "Sie haben eine Frage oder ein Anliegen? Dann nehmen Sie mit uns Kontakt auf. Füllen Sie einfach das Formular aus und wir werden Ihre Anfrage schnellstmöglich bearbeiten.",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail",
+      "subjectLabel": "Betreff",
+      "order-id": "Auftrags-ID",
+      "message": "Nachricht",
+      "message-placeholder": "Ihre Nachricht",
+      "asterixHint": "markierte Felder sind erforderlich"
+    },
+    "contactSend": "Anfrage senden",
+    "clearAll": "Alles löschen",
+    "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
   }
 }
