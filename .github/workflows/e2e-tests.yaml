@@ -44,6 +44,11 @@ jobs:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
 
+      - name: Setup middleware env
+        run: |
+            touch apps/server/.env
+            echo API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com >> apps/server/.env
+
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
