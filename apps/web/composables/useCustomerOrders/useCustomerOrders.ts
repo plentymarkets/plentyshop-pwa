@@ -5,12 +5,15 @@ import type {
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
 import { useSdk } from '~/sdk';
+import { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing customer orders data
- * @returns {@link UseCustomerOrdersReturn}
+ * @returns UseCustomerOrdersReturn
  * @example
+ * ``` ts
  * const { data, loading, fetchCustomerOrders } = useCustomerOrders();
+ * ```
  */
 export const useCustomerOrders: UseCustomerOrdersReturn = () => {
   const state = useState<UseCustomerOrdersState>('useCustomerOrders', () => ({
@@ -19,12 +22,16 @@ export const useCustomerOrders: UseCustomerOrdersReturn = () => {
   }));
 
   /** Function for fetching customer orders data
+   * @param params { UseUserOrderSearchParams }
+   * @return FetchCustomerOrders
    * @example
+   * ``` ts
    * fetchCustomerOrders({
    *   page: 1,
    * });
+   * ```
    */
-  const fetchCustomerOrders: FetchCustomerOrders = async (params) => {
+  const fetchCustomerOrders: FetchCustomerOrders = async (params: UseUserOrderSearchParams) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData((params.page ?? 1).toString(), () =>
       useSdk().plentysystems.getOrders(params),

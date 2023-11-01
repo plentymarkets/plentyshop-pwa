@@ -82,7 +82,7 @@
                 </template>
                 <template #privacyPolicy>
                   <SfLink
-                    href="/PrivacyPolicy"
+                    :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
@@ -159,12 +159,14 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 
 definePageMeta({
   layoutName: 'checkout',
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
 const ID_BILLING_ADDRESS = '#billing-address';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 
+const localePath = useLocalePath();
 const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
@@ -198,7 +200,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await getShippingMethods();
 await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));

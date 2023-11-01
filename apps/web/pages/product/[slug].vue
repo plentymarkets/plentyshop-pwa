@@ -35,8 +35,8 @@
 import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-
 const { data: categoryTree } = useCategoryTree();
+const { setSingleItemMeta } = useStructuredData();
 
 const route = useRoute();
 const router = useRouter();
@@ -101,10 +101,13 @@ watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
-      router.push(
-        localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
-      );
+      router.push({
+        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        query: route.query,
+      });
     }
   },
 );
+
+setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
 </script>

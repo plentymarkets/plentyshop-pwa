@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-
+const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({
   layout: false,
 });
@@ -31,7 +31,7 @@ definePageMeta({
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
-const { getFacetsFromURL } = useCategoryFilter();
+const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
@@ -39,6 +39,7 @@ const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
+  checkFiltersInURL();
 };
 
 await handleQueryUpdate();
@@ -58,13 +59,18 @@ const breadcrumbs = computed(() => {
 watch(
   () => locale.value,
   async (changedLocale: any) => {
-    router.push(localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`));
+    router.push({
+      path: localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`),
+      query: route.query,
+    });
   },
 );
+
 watch(
   () => route.query,
   async () => {
     handleQueryUpdate();
   },
 );
+setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 </script>

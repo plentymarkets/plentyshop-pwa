@@ -69,7 +69,7 @@
                 </template>
                 <template #privacyPolicy>
                   <SfLink
-                    href="/PrivacyPolicy"
+                    :href="localePath(paths.privacyPolicy)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
@@ -116,24 +116,31 @@
 import { AddressType, PaymentMethod } from '@plentymarkets/shop-api';
 import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
-import { paypalGetters } from '~/getters/paypalGetters';
 
 definePageMeta({
   layoutName: 'checkout',
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
 
+const { getSession } = useCustomer();
 const { data: cart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const {
+  data: shippingAddresses,
+  getAddresses: getShippingAddresses,
+  saveAddress: saveShippingAddress,
+} = useAddress(AddressType.Shipping);
 const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
-const router = useRouter();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const route = useRoute();
+const { send } = useNotification();
+const { t } = useI18n();
+const localePath = useLocalePath();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
@@ -141,9 +148,31 @@ const showTermsError = ref(false);
 const loadAddresses = async () => {
   await getBillingAddresses();
   await getShippingAddresses();
+
+  if (shippingAddresses.value.length === 0 && billingAddresses.value.length > 0) {
+    await saveShippingAddress(billingAddresses.value[0]);
+  } else if (shippingAddresses.value.length === 0 && billingAddresses.value.length === 0) {
+    navigateTo(localePath(paths.cart));
+  }
+
   await getShippingMethods();
 };
 
+const redirectBack = () => {
+  if (cart.value.items?.length === 0) {
+    send({
+      type: 'neutral',
+      message: t('emptyCart'),
+    });
+
+    navigateTo(localePath(paths.cart));
+    return true;
+  }
+  return false;
+};
+
+await getSession();
+redirectBack();
 await loadAddresses();
 await getShippingMethods();
 await fetchPaymentMethods();
@@ -179,7 +208,7 @@ const validateTerms = (): boolean => {
 };
 
 const order = async () => {
-  if (!validateTerms()) {
+  if (redirectBack() || !validateTerms()) {
     return;
   }
 
@@ -192,13 +221,12 @@ const order = async () => {
     mode: 'paypal',
     plentyOrderId: Number.parseInt(orderGetters.getId(data)),
     paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-    paypalMerchantId: paypalGetters.getMerchantId() ?? '',
   });
 
   clearCartItems();
 
   if (data?.order?.id) {
-    router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+    navigateTo(localePath('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
   }
 };
 </script>
