@@ -64,6 +64,14 @@ export const useCustomer: UseCustomerReturn = () => {
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
 
+    const csrfToken = data.value?.data.csrf;
+
+    const { setCsrf } = useCsrf();
+
+    if (csrfToken) {
+      setCsrf(csrfToken);
+    }
+
     state.value.loading = false;
     return state.value.data;
   };
