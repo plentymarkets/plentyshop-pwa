@@ -29,16 +29,16 @@ export default defineNuxtPlugin((nuxt) => {
     };
 
     // Store the original fetch function
-    const originalFetch = window.fetch;
+    //const originalFetch = window.fetch;
 
-    // Override the fetch function
+    /* // Override the fetch function
     window.fetch = async (url, options = {}) => {
         if (['POST', 'PUT', 'DELETE'].includes(options.method.toUpperCase())) {
             options.headers = options.headers || {};
             options.headers['X-CSRF-Token'] = CSRFtoken.value;
         }
         return originalFetch(url, options);
-    };
+    }; */
 
     // Register the global property
     nuxt.provide('$csrf', csrfRef);

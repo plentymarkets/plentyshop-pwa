@@ -13,6 +13,7 @@ import { getCurrentInstance } from 'vue';
 const setInitialData: SetInitialData = async () => {
   const { setUser } = useCustomer();
   const { setCart, loading: cartLoading } = useCart();
+  const { setCsrf } = useCsrf();
 
   cartLoading.value = true;
   const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
@@ -21,17 +22,11 @@ const setInitialData: SetInitialData = async () => {
   setUser(data.value?.data as SessionResult);
   setCart(data.value?.data.basket as Cart);
 
-  const csrf = data.value?.data.csrf;
+  const csrfToken = data.value?.data.csrf;
 
-  const appInstance = getCurrentInstance();
-  interface CsrfObject {
-    updateCSRFToken: (token: string) => void;
+  if (csrfToken) {
+    setCsrf(csrfToken);
   }
-
-  if (appInstance && appInstance.appContext.config.globalProperties.$csrf) {
-    appInstance.appContext.config.globalProperties.$csrf.updateCSRFToken(csrf);
-  }
-  console.log('csrf:' + csrf);
 
   cartLoading.value = false;
 

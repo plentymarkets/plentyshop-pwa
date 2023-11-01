@@ -6,6 +6,7 @@ let interceptorId: number | null = null;
 
 export const useSdk = () => {
   const config = useRuntimeConfig();
+  const { setCsrfHeader } = useCsrf();
   const sdkConfig = {
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
       apiUrl: `${config.public.apiUrl}/plentysystems`,
@@ -24,18 +25,23 @@ export const useSdk = () => {
   // This ensures that the session is established and other required cookies are sent to the server.
   interceptorId = client.interceptors.request.use(
     (config) => {
-      if (process.server && config.baseURL?.includes('/plentysystems')) {
-        if (!config.headers) {
-          config.headers = {};
+      if (config.baseURL?.includes('/plentysystems')) {
+        if (process.server) {
+          if (!config.headers) {
+            config.headers = {};
+          }
+
+          config.headers.cookie = headers.cookie ?? '';
+        }
+        else {
+          config = setCsrfHeader(config);
         }
 
-        config.headers.cookie = headers.cookie ?? '';
       }
 
       return config;
     },
     (error) => {
-      // Do something with request error
       return Promise.reject(error);
     },
   );
