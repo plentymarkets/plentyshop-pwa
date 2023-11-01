@@ -63,7 +63,8 @@ const { data: productReviewAverage, fetchProductReviewAverage } = useProductRevi
 );
 
 selectVariation(productPieces[1] ? product.value : ({} as Product));
-await fetchProductReviewAverage(product.value.item.id);
+
+fetchProductReviewAverage(product.value.item.id);
 
 const { t } = useI18n();
 
