@@ -10,9 +10,9 @@
         @update:model-value="changeVariationId($event, index)"
         v-model="selectedVariationsAsString[index]"
         size="sm"
-        placeholder="Please Select"
+        :placeholder="$t('pleaseSelect')"
       >
-        <option :value="null">Please Select</option>
+        <option :value="null">{{ $t('pleaseSelect') }}</option>
         <option
           v-for="value in attribute.values"
           :key="value.attributeValueId"
