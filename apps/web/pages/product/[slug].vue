@@ -53,6 +53,7 @@ await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
+setSingleItemMeta(product.value, categoryTree.value[0]);
 
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
@@ -71,5 +72,4 @@ watch(
   },
 );
 
-setSingleItemMeta(product.value, categoryTree.value[0]);
 </script>
