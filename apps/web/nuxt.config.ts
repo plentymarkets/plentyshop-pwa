@@ -108,10 +108,10 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_PUBLIC_API_URL ?? 'http://localhost:8181',
+      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      logoUrl: (process.env.NUXT_PUBLIC_API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+      logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
     },
   },
   pwa: {

@@ -75,6 +75,8 @@ import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
+const { send } = useNotification();
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const props = withDefaults(defineProps<CartProductCardProps>(), {
@@ -93,6 +95,7 @@ const deleteItem = async () => {
   await deleteCartItem({
     cartItemId: props.cartItem.id,
   });
+  send({ message: t('deletedFromCart'), type: 'positive' });
   deleteLoading.value = false;
 };
 
