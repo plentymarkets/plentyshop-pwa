@@ -3,23 +3,22 @@
 layout: home
 
 hero:
-  name: "plentyShop PWA Docs"
-  text: "Documentation of plentyShop PWA"
-  tagline: My great project tagline
+  name: "plentyShop PWA"
+  tagline: Composables documentation
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting started
+      link: /composables/
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: API
+      link: /composables/exports
 
 features:
-  - title: Feature A
+  - title: Interfaces
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
+  - title: Types
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
+  - title: Functions
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
