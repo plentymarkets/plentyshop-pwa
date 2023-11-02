@@ -25,7 +25,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * setSigleItemMeta()
    * ```
    */
-  const setSingleItemMeta: SingleItemMeta = (product: Product, variationId: string, categoryTree: CategoryTreeItem) => {
+  const setSingleItemMeta: SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
     const manufacturer = product.item.manufacturer as { name: string };
     const metaObject = {
@@ -36,7 +36,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
       image: productGetters.getCoverImagePreview(product),
-      identifier: variationId,
+      identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
       manufacturer: {
