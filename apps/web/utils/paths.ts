@@ -17,4 +17,6 @@ export const paths = {
   authResetPasswordSuccess: '/reset-password-success',
   authLogin: '/login',
   privacyPolicy: '/PrivacyPolicy',
+  termsAndConditions: '/TermsAndConditions',
+  cancellationRights: '/CancellationRights',
 };
