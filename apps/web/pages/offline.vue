@@ -118,8 +118,8 @@
 <script setup lang="ts">
 import { useOnline, whenever } from '@vueuse/core';
 
-const router = useRouter();
+const localePath = useLocalePath();
 const isOnline = useOnline();
 
-whenever(isOnline, () => router.push('/'), { immediate: true });
+whenever(isOnline, () => navigateTo(localePath(paths.home)), { immediate: true });
 </script>

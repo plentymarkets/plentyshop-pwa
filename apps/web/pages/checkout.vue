@@ -180,7 +180,6 @@ const {
 const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
-const router = useRouter();
 const i18n = useI18n();
 const paypalCardDialog = ref(false);
 const termsAccepted = ref(false);
@@ -289,7 +288,7 @@ const order = async () => {
     clearCartItems();
 
     if (data?.order?.id) {
-      router.push('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey);
+      navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
     }
   }
 };

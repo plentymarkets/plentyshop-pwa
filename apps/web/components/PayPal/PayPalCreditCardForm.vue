@@ -77,7 +77,7 @@ const { loadScript, createCreditCardTransaction, captureOrder, executeOrder } = 
 const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
-const router = useRouter();
+const localePath = useLocalePath();
 const i18n = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
@@ -174,7 +174,9 @@ onMounted(() => {
               clearCartItems();
 
               if (order?.order?.id) {
-                router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+                navigateTo(
+                  localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey),
+                );
               }
 
               loading.value = false;

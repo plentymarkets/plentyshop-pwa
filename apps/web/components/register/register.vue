@@ -67,6 +67,7 @@
 <script lang="ts" setup>
 import { SfButton, SfLink, SfInput, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
 
+const localePath = useLocalePath();
 const { register, loading, setPrivacyPolicy, privacyPolicy } = useCustomer();
 
 definePageMeta({
@@ -75,7 +76,6 @@ definePageMeta({
 
 const emits = defineEmits(['registered', 'change-view']);
 
-const router = useRouter();
 const email = ref('');
 const password = ref('');
 const invalidPrivacyPolicy = ref(false);
@@ -89,7 +89,7 @@ const registerUser = async () => {
   await register({ email: email.value, password: password.value });
 
   emits('registered');
-  router.push('/');
+  navigateTo(localePath(paths.home));
 };
 
 const changePrivacy = (value: boolean) => {
