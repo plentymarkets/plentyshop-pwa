@@ -60,9 +60,7 @@ const { data: productReviewAverage, fetchProductReviewAverage } = useProductRevi
 
 await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))])
 
-selectVariation(productPieces[1] ? product.value : ({} as Product));
-
-
+selectVariation(productParams.variationId ? product.value : ({} as Product));
 
 
 const breadcrumbs = computed(() => {
@@ -107,5 +105,5 @@ watch(
   },
 );
 
-setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
+setSingleItemMeta(product.value, categoryTree.value[0]);
 </script>
