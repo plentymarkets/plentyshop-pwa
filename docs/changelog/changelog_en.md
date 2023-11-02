@@ -34,6 +34,7 @@
 - Reworked logic of items with multiple attributes
 - Current bulk price is now marked on item pages
 - Changed position of notifications
+- For items with different prices, the cheapest price is displayed as "from price" on the category page
 
 ### Fixed
 
