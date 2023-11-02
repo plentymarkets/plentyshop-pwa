@@ -32,64 +32,27 @@
 </template>
 
 <script setup lang="ts">
-import { Product, ProductParams } from '@plentymarkets/shop-api';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { Product } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 const { setSingleItemMeta } = useStructuredData();
 const route = useRoute();
 const router = useRouter();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
-const { t } = useI18n();
+definePageMeta({
+  layout: false,
+});
 
-const createProductParamsFromUrl = () => {
-  const productPieces = (route.params.itemId as string).split('_');
-
-  let productParams: ProductParams = {
-    id: productPieces[0],
-  };
-
-  if (productPieces[1]) {
-    productParams.variationId = productPieces[1];
-  }
-
-  return productParams;
-};
-
-const productParams = createProductParamsFromUrl();
-const productId = productParams.id.toString();
-
-const { data: product, fetchProduct } = useProduct(productId);
+const { productParams, productId } = createProductParams(route.params);
+const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
 
 selectVariation(productParams.variationId ? product.value : ({} as Product));
-
-const breadcrumbs = computed(() => {
-  const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
-    categoryTree.value,
-    Number(productGetters.getCategoryIds(product.value)?.[0] ?? 0),
-  );
-  breadcrumb.unshift({ name: t('home'), link: '/' });
-  breadcrumb.push({ name: productGetters.getName(product.value), link: `#` });
-
-  return breadcrumb;
-});
-
-if (product.value) {
-  const productName = productGetters.getName(product.value);
-
-  const title = computed(() => productName);
-
-  useHead({
-    title,
-  });
-}
-
-definePageMeta({
-  layout: false,
-});
+setTitle();
+generateBreadcrumbs();
 
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
