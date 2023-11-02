@@ -59,13 +59,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
-const localePath = useLocalePath();
-
-const props = defineProps<OrderSummaryProductCardProps>();
-const NuxtLink = resolveComponent('NuxtLink');
-
-console.log(props.orderItem);
+defineProps<OrderSummaryProductCardProps>();
 </script>

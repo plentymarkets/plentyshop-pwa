@@ -72,7 +72,6 @@ import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
 const { setCartItemQuantity, deleteCartItem } = useCart();
-const { data: categoryTree } = useCategoryTree();
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
