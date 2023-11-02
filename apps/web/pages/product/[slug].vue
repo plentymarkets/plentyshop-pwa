@@ -32,16 +32,15 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import { Product, ProductParams } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 const { setSingleItemMeta } = useStructuredData();
-
 const route = useRoute();
 const router = useRouter();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
+const { t } = useI18n();
 
 const productPieces = (route.params.itemId as string).split('_');
 
@@ -55,17 +54,16 @@ if (productPieces[1]) {
 }
 
 const { data: product, fetchProduct } = useProduct(productId);
-
-await fetchProduct(productParams);
-
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
-  product?.value?.variation?.id?.toString() ?? '',
+  productId ?? '',
 );
 
-selectVariation(productPieces[1] ? product.value : ({} as Product));
-await fetchProductReviewAverage(product.value.item.id);
+await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))])
 
-const { t } = useI18n();
+selectVariation(productPieces[1] ? product.value : ({} as Product));
+
+
+
 
 const breadcrumbs = computed(() => {
   const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
