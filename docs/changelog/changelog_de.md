@@ -34,6 +34,7 @@
 - Überarbeitete Logik für Artikel mit mehreren Attributen
 - Aktueller Staffelpreis wird jetzt auf Artikelseite markiert
 - Die Position der Benachrichtungen wurde geändert
+- Bei Artikeln mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
 
 ### Behoben
 
