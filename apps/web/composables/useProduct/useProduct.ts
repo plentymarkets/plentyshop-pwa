@@ -17,7 +17,7 @@ export const useProduct: UseProductReturn = (slug) => {
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
     loading: false,
-    breadcrumbs: []
+    breadcrumbs: [],
   }));
 
   /** Function for fetching product data.
@@ -64,11 +64,9 @@ export const useProduct: UseProductReturn = (slug) => {
     const title = productGetters.getName(state.value.data);
 
     useHead({
-      title
+      title,
     });
   };
-
-  
 
   return {
     setTitle,
