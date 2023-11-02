@@ -42,26 +42,29 @@ const { selectVariation } = useProducts();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const productPieces = (route.params.itemId as string).split('_');
+const createProductParamsFromUrl = () => {
+  const productPieces = (route.params.itemId as string).split('_');
 
-const productId = productPieces[0];
-let productParams: ProductParams = {
-  id: productId,
+  let productParams: ProductParams = {
+    id: productPieces[0],
+  };
+
+  if (productPieces[1]) {
+    productParams.variationId = productPieces[1];
+  }
+
+  return productParams;
 };
 
-if (productPieces[1]) {
-  productParams.variationId = productPieces[1];
-}
+const productParams = createProductParamsFromUrl();
+const productId = productParams.id.toString();
 
 const { data: product, fetchProduct } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
-  productId ?? '',
-);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))])
+await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
 
 selectVariation(productParams.variationId ? product.value : ({} as Product));
-
 
 const breadcrumbs = computed(() => {
   const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
