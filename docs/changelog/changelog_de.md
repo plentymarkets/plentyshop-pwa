@@ -20,22 +20,21 @@
 - Die Bestellbestätigung ist jetzt auch über die Auftragshistorie erreichbar
 - Nicht verkäufliche Produkte werden als solche gekennzeichnet
 - Die Anzeige von Mengen-/Staffelpreisen auf Produktseiten wurde hinzugefügt
-- Weitere Standardbenachrichtigungen für eine Vielzahl von Interaktionen in der PWA hinzugefügt
-- Ladeanimationen hinzugefügt
 - Anzeige von Netto-/Bruttopreisen je nach Konfiguration
 - Menü im Header hinzugefügt, um zwischen verschiedenen Sprachversionen der PWA zu wechseln
 - Mehrsprachige URLs werden nun für verschiedene Sprachversionen der PWA verwendet
-- Composable hinzugefügt, das kanonische URL-Metadaten für statische Seiten setzt.
-- Benachrichtigung für das Löschen eines Produkts aus dem Warenkorb
 - Strukturierte Daten für Breadcrumbs, Logo, Kategorien und Produkte hinzugefügt
+- Composable hinzugefügt, das kanonische URL-Metadaten für statische Seiten setzt.
+- Weitere Standardbenachrichtigungen für eine Vielzahl von Interaktionen in der PWA hinzugefügt
+- Ladeanimationen hinzugefügt
 
 ### Geändert
 
-- Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Überarbeitete Logik für Produkte mit mehreren Attributen
 - Aktueller Staffelpreis wird jetzt auf Produktseite markiert
-- Die Position der Benachrichtungen wurde geändert
 - Bei Produkten mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
+- Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
+- Die Position der Benachrichtungen wurde geändert
 
 ### Behoben
 

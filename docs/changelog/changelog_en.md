@@ -20,22 +20,21 @@
 - The order confirmation is now also accessible via the order history
 - None saleable products are marked as such
 - Added display of bulk and graduated prices on product pages
-- Added more default notifications for a variaty of interactions in the PWA
-- Added loading animations where applicable
 - Display of net/gross prices depending on the configuration
 - Added menu to header to switch between different language versions of the PWA
 - Multilingual URLs are now used for different language versions of the PWA
-- Added composable that sets canonical url metadata for static pages.
-- Added notification for deleting a product from the cart
 - Added structured data for breadcrumbs, categories, products and logo
+- Added composable that sets canonical url metadata for static pages.
+- Added more default notifications for a variaty of interactions in the PWA
+- Added loading animations where applicable
 
 ### Changed
 
-- Updated URL structure to be more similar to plentyShop LTS
 - Reworked logic of products with multiple attributes
 - Current bulk price is now marked on product pages
-- Changed position of notifications
 - For products with different prices, the cheapest price is displayed as "from price" on the category page
+- Updated URL structure to be more similar to plentyShop LTS
+- Changed position of notifications
 
 ### Fixed
 
