@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.1.0 (2023-11-01) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO
 
@@ -10,8 +10,8 @@
 
 - Added PayPal Express Checkout
 - Added PayPal payment option for credit cards
-- PayPal: The "integration.config"-file is no longer required
-- MyAccount: The creation and editing of shipping and billing addresses is now possilbe
+- PayPal: The `integration.config` file is no longer required
+- MyAccount: The creation and editing of shipping and billing addresses is now possible
 - MyAccount: The order history shows the latest orders of the logged-in customer
 - MyAccount: The return history shows the latest returns of the logged-in customer
 - The order confirmation now shows all relevant data of the order
@@ -27,6 +27,7 @@
 - Multilingual URLs are now used for different language versions of the PWA
 - Added composable that sets canonical url metadata for static pages.
 - Added notification for deleting an item from the cart
+- Added structured data for breadcrumbs, categories, items and logo
 
 ### Changed
 

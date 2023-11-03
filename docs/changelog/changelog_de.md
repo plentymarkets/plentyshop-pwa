@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.1.0 (01.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+## v1.1.0 (03.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### TODO
 
@@ -10,7 +10,7 @@
 
 - PayPal Express Checkout hinzugefügt
 - PayPal-Kreditkarten-Zahlungsoption hinzugefügt
-- PayPal: Die "integration.config"-Datei wird nicht mehr benötigt
+- PayPal: Die Datei `integration.config` wird nicht mehr benötigt
 - Mein Konto: Die Erstellung und Bearbeitung von Versand- und Rechnungsadressen ist jetzt möglich
 - Mein Konto: Die Auftragshistorie zeigt die letzten Bestellungen von eingeloggten Kund:innen an
 - Mein Konto: Die Retourenhistorie zeigt die letzten Retouren von eingeloggten Kund:innen an
@@ -27,6 +27,7 @@
 - Mehrsprachige URLs werden nun für verschiedene Sprachversionen der PWA verwendet
 - Composable hinzugefügt, das kanonische URL-Metadaten für statische Seiten setzt.
 - Benachrichtigung für das Löschen eines Artikels aus dem Warenkorb
+- Strukturierte Daten für Artikel, Breadcrumbs, Logo und Kategorien hinzugefügt
 
 ### Geändert
 
