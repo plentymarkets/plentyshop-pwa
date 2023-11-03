@@ -367,6 +367,7 @@
         "paymentAmount": "Total",
         "status": "Status",
         "price": "Price",
+        "priceFrom": "from",
         "quantity": "Quantity",
         "subtotal": "Subtotal",
         "tableCaption": "Order details",
