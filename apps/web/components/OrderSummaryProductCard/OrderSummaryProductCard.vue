@@ -5,10 +5,10 @@
     v-if="orderItem.typeId !== 6"
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
-      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getVariationPath(order, orderItem) ?? '/#')">
+      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
         <NuxtImg
           class="h-auto border rounded-md border-neutral-200"
-          :src="orderGetters.getVariationImage(order, orderItem) || '/images/placeholder.png'"
+          :src="orderGetters.getOrderVariationImage(order, orderItem) || '/images/placeholder.png'"
           :alt="'' || ''"
           width="300"
           height="300"
@@ -20,7 +20,7 @@
     <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
-        :to="localePath(orderGetters.getVariationPath(order, orderItem) ?? '/#')"
+        :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
