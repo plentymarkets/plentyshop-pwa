@@ -5,6 +5,7 @@ import { initSDK, buildModule } from '@vue-storefront/sdk';
 let interceptorId: number | null = null;
 
 export const useSdk = () => {
+  const { ssrLocale } = useInitialSetup();
   const config = useRuntimeConfig();
   const sdkConfig = {
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
@@ -29,6 +30,9 @@ export const useSdk = () => {
           config.headers = {};
         }
 
+        if (ssrLocale.value && headers.cookie?.includes('vsf-locale')) {
+          headers.cookie = headers.cookie.replace(/vsf-locale=[a-z]{2};/, `vsf-locale=${ssrLocale.value};`);
+        }
         config.headers.cookie = headers.cookie ?? '';
       }
 
