@@ -6,7 +6,7 @@ export interface UseStructuredDataState {
   loading: boolean;
 }
 
-export type SingleItemMeta = (product: Product, variationId: string, categoryTree: CategoryTreeItem) => void;
+export type SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => void;
 
 export interface UseStructuredData {
   loading: Readonly<Ref<boolean>>;
