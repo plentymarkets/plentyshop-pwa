@@ -4,6 +4,7 @@ import { initSDK, buildModule } from '@vue-storefront/sdk';
 // Maintain a reference to the interceptor
 let interceptorId: number | null = null;
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 export const useSdk = () => {
   const { ssrLocale } = useInitialSetup();
   const config = useRuntimeConfig();
