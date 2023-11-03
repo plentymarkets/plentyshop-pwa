@@ -29,12 +29,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
    */
   const setSingleItemMeta: SingleItemMeta = async (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
-
-    const { data: productReviews, fetchProductReviews } = useProductReviews(product.variation.id, product.item.id);
-    await fetchProductReviews(product.variation.id, product.item.id);
-
-    const { data: reviewAverage, fetchProductReviewAverage } = useProductReviewAverage(product.variation.id.toString());
-    await fetchProductReviewAverage(product.item.id);
+    const { data: productReviews } = useProductReviews(product.variation.id, product.item.id);
+    const { data: reviewAverage } = useProductReviewAverage(product.variation.id.toString());
 
     const manufacturer = product.item.manufacturer as { name: string };
     let reviews = null;

@@ -33,9 +33,8 @@ const props = defineProps<ProductAccordionPropsType>();
 const { product } = toRefs(props);
 const reviewsOpen = ref(false);
 
-const { data: productReviews, fetchProductReviews } = useProductReviews(
+const { data: productReviews } = useProductReviews(
   product.value.variation.id,
   product.value.item.id,
 );
-fetchProductReviews(product.value.variation.id, product.value.item.id);
 </script>

@@ -15,7 +15,7 @@
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
+            <ProductAccordion v-if="product && productReviews" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion :product="product" />
@@ -48,14 +48,13 @@ definePageMeta({
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
-
 await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
-
+const { fetchProductReviews, data:productReviews } = useProductReviews(product.value.variation.id, product.value.item.id);
+await fetchProductReviews(product.value.variation.id, product.value.item.id)
+setSingleItemMeta(product.value, categoryTree.value[0]);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
-setSingleItemMeta(product.value, categoryTree.value[0]);
-
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
@@ -73,6 +72,6 @@ watch(
   },
 );
 
-setSingleItemMeta(product.value, categoryTree.value[0]);
+
 
 </script>
