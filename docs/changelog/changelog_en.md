@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.1.0 (XX.XX.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.0.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO
 
@@ -10,31 +10,31 @@
 
 - Added PayPal Express Checkout
 - Added PayPal payment option for credit cards
-- PayPal: The "integration.config"-file is no longer required
-- MyAccount: The creation and editing of shipping and billing addresses is now possilbe
+- PayPal: The `integration.config` file is no longer required
+- MyAccount: The creation and editing of shipping and billing addresses is now possible
 - MyAccount: The order history shows the latest orders of the logged-in customer
 - MyAccount: The return history shows the latest returns of the logged-in customer
 - The order confirmation now shows all relevant data of the order
 - The order confirmation now displays buttons to download order documents
 - The order confirmation can now be accessed via a link after authentication
 - The order confirmation is now also accessible via the order history
-- None saleable items are marked as such
-- Added display of bulk and graduated prices on item pages
-- Added more default notifications for a variaty of interactions in the PWA
-- Added loading animations where applicable
+- None saleable products are marked as such
+- Added display of bulk and graduated prices on product pages
 - Display of net/gross prices depending on the configuration
 - Added menu to header to switch between different language versions of the PWA
 - Multilingual URLs are now used for different language versions of the PWA
+- Added structured data for breadcrumbs, categories, products and logo
 - Added composable that sets canonical url metadata for static pages.
-- Added notification for deleting an item from the cart
+- Added more default notifications for a variaty of interactions in the PWA
+- Added loading animations where applicable
 
 ### Changed
 
+- Reworked logic of products with multiple attributes
+- Current bulk price is now marked on product pages
+- For products with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
-- Reworked logic of items with multiple attributes
-- Current bulk price is now marked on item pages
 - Changed position of notifications
-- For items with different prices, the cheapest price is displayed as "from price" on the category page
 
 ### Fixed
 
