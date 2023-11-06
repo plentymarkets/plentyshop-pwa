@@ -29,7 +29,6 @@ definePageMeta({
 });
 
 const { t } = useI18n();
-const router = useRouter();
 const route = useRoute();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
@@ -59,7 +58,7 @@ const breadcrumbs = computed(() => {
 watch(
   () => locale.value,
   async (changedLocale: any) => {
-    router.push({
+    navigateTo({
       path: localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
     });

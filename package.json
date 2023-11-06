@@ -43,6 +43,7 @@
     "babel-preset-node": "^5.1.1",
     "commitizen": "^4.2.5",
     "concurrently": "^8.2.0",
+    "cypress-iframe": "^1.0.1",
     "husky": "^8.0.0",
     "is-ci": "^3.0.0",
     "lint-staged": "^14.0.0",
