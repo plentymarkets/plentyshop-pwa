@@ -69,8 +69,8 @@ The workflow takes several minutes to complete. You can monitor the progress in 
 
 1. Log into your plentysystems system.
 2. Go to **CMS » Deployment**.
-3. Click  the three dots under "Actions" on the configured instance
-4. Click "Activate application" from the menu
+3. For the configured domain, open the further actions menu (three dots).
+4. Click on **Activate application**.
 
 ## Preview
 
