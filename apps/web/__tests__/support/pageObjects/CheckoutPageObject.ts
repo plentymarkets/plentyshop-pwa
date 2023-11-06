@@ -32,7 +32,7 @@ export class CheckoutPageObject {
   }
 
   get displaySuccessPages() {
-    return cy.getByTestId('order-success-page');
+    return cy.getByTestId('order-success-page', { timeout: 60000 });
   }
 
   get inputField() {
@@ -45,6 +45,10 @@ export class CheckoutPageObject {
 
   get thankYouBanner() {
     return cy.getByTestId('success-header');
+  }
+
+  get orderPaymentStatus() {
+    return cy.getByTestId('order-payment-status');
   }
 
   get firstNameInput() {
@@ -121,6 +125,11 @@ export class CheckoutPageObject {
     return this;
   }
 
+  displayFullyPaid() {
+    this.orderPaymentStatus.contains('fullyPaid')
+    return this;
+  }
+  
   fillContactInformationForm() {
     cy.getFixture('addressForm').then((fixture) => {
       const uniqueEmail = `test-order-${new Date().getTime()}@plentymarkets.com`;
@@ -139,6 +148,34 @@ export class CheckoutPageObject {
   fillBillingAddressForm() {
     return this.fillAddressForm();
   }
+  
+  fillCreditCardForm() {
+    cy.iframe('#braintree-hosted-field-number')
+      .find('#credit-card-number')
+      .type('4868719460707704');
+
+    cy.iframe('#braintree-hosted-field-expirationDate')
+      .find('.expirationDate')
+      .type('12/27');
+
+    cy.iframe('#braintree-hosted-field-cvv')
+      .find('.cvv')
+      .type('123');
+
+    cy.get('#credit-card-name').focus().type('John Doe');
+    return this;
+  }
+
+  payCreditCard() {
+    cy.getByTestId('pay-creditcard-button').click();
+    return this;
+  }
+  
+  checkCreditCard() {
+    cy.getByTestId('payment-method-6008').check({ force : true })
+    return this;
+  }
+
 
   fillShippingAddressForm() {
     return this.fillAddressForm();
