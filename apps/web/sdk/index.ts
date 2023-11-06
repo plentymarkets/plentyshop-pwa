@@ -31,11 +31,13 @@ export const useSdk = () => {
           config.headers = {};
         }
 
+        /*
         if (ssrLocale.value) {
           headers.cookie = headers.cookie?.includes('vsf-locale')
             ? headers.cookie.replaceAll(/vsf-locale=[^;]+/g, `vsf-locale=${ssrLocale.value}`)
             : `${headers.cookie ?? ''} vsf-locale=${ssrLocale.value};`;
         }
+         */
         config.headers.cookie = headers.cookie ?? '';
       }
 
