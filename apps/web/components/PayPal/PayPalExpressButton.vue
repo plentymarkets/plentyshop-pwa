@@ -15,7 +15,7 @@ const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, addToCart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-const router = useRouter();
+const localePath = useLocalePath();
 const emits = defineEmits(['on-click']);
 
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
@@ -61,7 +61,7 @@ const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
   if (result?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
-    router.push(`/readonly-checkout/?payerId=${data.payerID}&orderId=${data.orderID}`);
+    navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
   } else if (props.type === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
@@ -77,7 +77,7 @@ const onApprove = async (data: OnApproveData) => {
     clearCartItems();
 
     if (order?.order?.id) {
-      router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+      navigateTo(localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey));
     }
   }
 };

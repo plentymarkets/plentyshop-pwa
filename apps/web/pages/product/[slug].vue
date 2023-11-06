@@ -37,7 +37,6 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
 const { setSingleItemMeta } = useStructuredData();
 const route = useRoute();
-const router = useRouter();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
 
@@ -68,7 +67,7 @@ watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
-      router.push({
+      navigateTo({
         path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
         query: route.query,
       });
