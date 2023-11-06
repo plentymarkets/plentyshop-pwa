@@ -15,10 +15,13 @@
         <section class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product && productReviews" :product="product" />
+            <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" />
+            <ReviewsAccordion
+              :product="product"
+              :nr-of-comments="productGetters.getTotalReviews(productReviewAverage)"
+            />
           </NuxtLazyHydrate>
         </section>
       </div>
@@ -47,14 +50,18 @@ definePageMeta({
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
-const { fetchProductReviews, data: productReviews } = useProductReviews(Number(productId));
-await Promise.all([
-  fetchProduct(productParams),
-  fetchProductReviewAverage(Number(productId)),
-  fetchProductReviews(Number(productId)),
-]);
+const { fetchProductReviews } = useProductReviews(Number(productId));
+await (process.server
+  ? Promise.all([
+      fetchProduct(productParams),
+      fetchProductReviewAverage(Number(productId)),
+      fetchProductReviews(Number(productId)),
+    ])
+  : Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]));
 
-setProductMetaData(product.value, categoryTree.value[0]);
+if (process.server) {
+  setProductMetaData(product.value, categoryTree.value[0]);
+}
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
