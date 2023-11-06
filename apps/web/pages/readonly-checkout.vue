@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="paths.cart"
+    :back-href="localePath(paths.cart)"
     :back-label-desktop="$t('backToCart')"
     :back-label-mobile="$t('back')"
     :heading="$t('checkout')"
@@ -51,7 +51,7 @@
               <i18n-t keypath="termsInfo">
                 <template #terms>
                   <SfLink
-                    href="/TermsAndConditions"
+                    :href="localePath(paths.termsAndConditions)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
@@ -60,7 +60,7 @@
                 </template>
                 <template #cancellationRights>
                   <SfLink
-                    href="/CancellationRights"
+                    :href="localePath(paths.cancellationRights)"
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
