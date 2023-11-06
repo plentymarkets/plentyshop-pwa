@@ -32,6 +32,6 @@ describe('Smoke: PayPal credit card order', () => {
         .fillCreditCardForm()
         .payCreditCard()
         .displaySuccessPage()
-        .displayFullPayed();
+        .displayFullyPaid();
   });
 });

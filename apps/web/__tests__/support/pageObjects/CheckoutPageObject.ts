@@ -125,7 +125,7 @@ export class CheckoutPageObject {
     return this;
   }
 
-  displayFullPayed() {
+  displayFullyPaid() {
     this.orderPaymentStatus.contains('fullyPaid')
     return this;
   }
