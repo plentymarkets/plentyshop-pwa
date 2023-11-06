@@ -72,6 +72,10 @@ The workflow takes several minutes to complete. You can monitor the progress in 
 3. For the configured domain, open the further actions menu (three dots).
 4. Click on **Activate application**.
 
+The activation makes the application reachable on the configured domain.
+It can take up to 1 hour for the changes to take effect.
+
+
 ## Preview
 
 1. Log into your plentysystems system.
