@@ -62,6 +62,17 @@ export class HomePageObject {
     return this;
   }
 
+  checkLanguage(locale: string) {
+    const categoryString = locale === 'de' ? 'Wohnzimmer' : 'Living Room';
+    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
+
+    const categories = cy.getByTestId('category-button');
+    categories.should('have.length.greaterThan', 4);
+    categories.eq(3).should('have.text', categoryString);
+
+    return this;
+  }
+
   checkHeaderCategory() {
     cy.getByTestId('category-button').first().should('be.visible');
     return this;
