@@ -35,7 +35,7 @@
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
-const { setSingleItemMeta } = useStructuredData();
+const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
@@ -54,7 +54,7 @@ await Promise.all([
   fetchProductReviews(Number(productId)),
 ]);
 
-setSingleItemMeta(product.value, categoryTree.value[0]);
+setProductMetaData(product.value, categoryTree.value[0]);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();

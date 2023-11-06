@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reviewGetters } from '@plentymarkets/shop-sdk';
+import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();
@@ -33,5 +33,5 @@ const props = defineProps<ProductAccordionPropsType>();
 const { product } = toRefs(props);
 const reviewsOpen = ref(false);
 
-const { data: productReviews } = useProductReviews(product.value.item.id);
+const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product.value)));
 </script>
