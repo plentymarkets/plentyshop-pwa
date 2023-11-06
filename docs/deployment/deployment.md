@@ -65,6 +65,13 @@ To deploy a preview to your plentysystems system, carry out the following steps:
 
 The workflow takes several minutes to complete. You can monitor the progress in the **Actions** menu.
 
+## Activation
+
+1. Log into your plentysystems system.
+2. Go to **CMS » Deployment**.
+3. Click  the three dots under "Actions" on the configured instance
+4. Click "Activate application" from the menu
+
 ## Preview
 
 1. Log into your plentysystems system.
