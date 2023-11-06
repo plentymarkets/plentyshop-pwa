@@ -1,4 +1,5 @@
 import 'cypress-wait-until';
+import 'cypress-iframe';
 
 declare global {
   namespace Cypress {
@@ -15,8 +16,8 @@ declare global {
   }
 }
 
-Cypress.Commands.add('getByTestId', (testId: string) => {
-  cy.get(`[data-testid="${testId}"]`);
+Cypress.Commands.add('getByTestId', (testId: string, options?: Partial<Cypress.Loggable & Cypress.Timeoutable & Cypress.Withinable & Cypress.Shadow> | undefined) => {
+  cy.get(`[data-testid="${testId}"]`, options);
 });
 
 Cypress.Commands.add('getByComponent', (Component: string) => {
