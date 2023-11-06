@@ -12,7 +12,7 @@
         <div class="leading-relaxed pb-5">
           {{ cookieGroups.barDescription }}
 
-          <SfLink href="/PrivacyPolicy">
+          <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
             {{ $t('CookieBar.Privacy Settings') }}
           </SfLink>
         </div>
@@ -72,7 +72,7 @@
                   <div class="w-3/4">
                     <template v-if="propKey === 'PrivacyPolicy'">
                       <!-- TODO -->
-                      <SfLink :link="cookie.name">
+                      <SfLink :tag="NuxtLink" :link="localePath(paths.privacyPolicy)">
                         {{ $t('CookieBar.Privacy Settings') }}
                       </SfLink>
                     </template>
@@ -149,6 +149,8 @@
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
 import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
 
+const NuxtLink = resolveComponent('NuxtLink');
+const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const cookieGroups = ref(runtimeConfig.public.cookieGroups);
 const { getMinimumLifeSpan } = cookieBarHelper();

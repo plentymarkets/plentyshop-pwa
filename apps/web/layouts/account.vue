@@ -52,7 +52,7 @@
                       :class="[
                         'first-of-type:py-4 md:first-of-type:px-4 md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
                         {
-                          'font-medium bg-primary-100': router.currentRoute.value.path === link,
+                          'font-medium bg-primary-100': router.currentRoute.value.path === localePath(link),
                         },
                       ]"
                     >
@@ -149,19 +149,19 @@ const findCurrentPage = computed(() =>
   sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
 const breadcrumbs = computed(() => [
-  { name: t('home'), link: paths.home },
-  { name: t('account.heading'), link: paths.account },
+  { name: t('home'), link: localePath(paths.home) },
+  { name: t('account.heading'), link: localePath(paths.account) },
   ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
 if (!isAuthorized.value) {
-  router.push(paths.home);
+  navigateTo(localePath(paths.home));
 }
 
 const logOut = async () => {
   await logout();
-  router.push('/');
+  navigateTo(localePath(paths.home));
 };
 </script>

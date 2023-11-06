@@ -180,7 +180,6 @@ import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
-const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
@@ -198,7 +197,7 @@ const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quanti
 const logOut = async () => {
   await logout();
   accountDropdownToggle();
-  router.push('/');
+  navigateTo(localePath(paths.home));
 };
 
 const accountDropdown = [

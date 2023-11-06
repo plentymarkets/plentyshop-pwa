@@ -30,14 +30,13 @@ import type { LocaleObject } from 'vue-i18n-routing';
 const { locales, setLocaleCookie } = useI18n();
 const localeObj = locales as unknown as LocaleObject[];
 const route = useRoute();
-const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
 
 const props = defineProps(['toggleMethod']);
 
 const switchLocale = (language: any) => {
   setLocaleCookie(language);
-  router.push({ path: switchLocalePath(language), query: route.query });
+  navigateTo({ path: switchLocalePath(language), query: route.query });
   props.toggleMethod();
 };
 </script>
