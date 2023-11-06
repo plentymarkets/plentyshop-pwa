@@ -33,7 +33,7 @@ export const useSdk = () => {
 
         if (ssrLocale.value) {
           headers.cookie = headers.cookie?.includes('vsf-locale')
-            ? headers.cookie.replace(/vsf-locale=[A-Za-z-]+;/, `vsf-locale=${ssrLocale.value};`)
+            ? headers.cookie.replaceAll(/vsf-locale=[^;]+/g, `vsf-locale=${ssrLocale.value}`)
             : `${headers.cookie ?? ''} vsf-locale=${ssrLocale.value};`;
         }
         config.headers.cookie = headers.cookie ?? '';
