@@ -193,27 +193,4 @@ const nextPage = () => {
   pagination.value.next;
   setPage(pagination.value.selectedPage + 1);
 };
-
-const route = useRoute();
-const runtimeConfig = useRuntimeConfig();
-const base = runtimeConfig.public.apiUrl;
-const baseSegments = route.path.split('/c/');
-const categorySegments = baseSegments.length > 1 ? baseSegments[1].split('?')[0] : '';
-const currentCategory = categorySegments.endsWith('/') ? categorySegments.slice(0, -1) : categorySegments;
-
-const currentPageUrl = computed(() => {
-  if (pagination.value.selectedPage === 1) {
-    return `${base}/c/${currentCategory}/`;
-  }
-  return `${base}/c/${currentCategory}/?page=${pagination.value.selectedPage}`;
-});
-
-useHead({
-  link: [
-    {
-      rel: 'canonical',
-      href: currentPageUrl.value,
-    },
-  ],
-});
 </script>

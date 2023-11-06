@@ -101,37 +101,37 @@ export const useCanonical: UseCanonicalReturn = () => {
    */
   const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
+    const route = useRoute();
+    const localePath = useLocalePath();
+    const { defaultLocale } = useI18n();
     const runtimeConfig = useRuntimeConfig();
+
+    const canonicalLink = `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, defaultLocale)}`;
+    useHead({
+      link: [
+        {
+          rel: 'canonical',
+          href: canonicalLink,
+        },
+      ],
+    });
     if (productsCatalog.languageUrls) {
-      let xdefault = productsCatalog.languageUrls['x-default'];
-      xdefault = xdefault[xdefault.length - 1] === '/' ? xdefault.slice(0, Math.max(0, xdefault.length - 1)) : xdefault;
-      const canonicalLink = facetsFromUrl.facets
-        ? `${runtimeConfig.public.apiUrl}/c${xdefault}?=${facetsFromUrl.facets}`
-        : `${runtimeConfig.public.apiUrl}/c${xdefault}`;
-      useHead({
-        link: [
-          {
-            rel: 'canonical',
-            href: canonicalLink,
-          },
-        ],
-      });
       Object.keys(productsCatalog.languageUrls).forEach((key) => {
-        let link = productsCatalog.languageUrls[key];
-        link = link[link.length - 1] === '/' ? link.slice(0, Math.max(0, link.length - 1)) : link;
         useHead({
           link: [
             {
               rel: 'alternate',
               hreflang: key,
-              href: `${runtimeConfig.public.apiUrl}/c${link}`,
+              href:
+                key === `x-default`
+                  ? `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, defaultLocale)}`
+                  : `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, key)}`,
             },
           ],
         });
       });
-
-      setPreviousAndNextLink(productsCatalog, facetsFromUrl, canonicalLink);
     }
+    setPreviousAndNextLink(productsCatalog, facetsFromUrl, canonicalLink);
     state.value.loading = false;
   };
 
