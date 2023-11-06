@@ -33,5 +33,5 @@ const props = defineProps<ProductAccordionPropsType>();
 const { product } = toRefs(props);
 const reviewsOpen = ref(false);
 
-const { data: productReviews } = useProductReviews(product.value.variation.id, product.value.item.id);
+const { data: productReviews } = useProductReviews(product.value.item.id);
 </script>

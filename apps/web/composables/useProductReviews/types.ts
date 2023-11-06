@@ -5,7 +5,7 @@ export interface UseProductReviewsState {
   loading: boolean;
 }
 
-export type FetchProductReviews = (variationId: string | number, itemId: number) => Promise<Review>;
+export type FetchProductReviews = (itemId: number) => Promise<Review>;
 
 export interface UseProductReviewsReturn {
   data: Readonly<Ref<UseProductReviewsState['data']>>;
@@ -13,4 +13,4 @@ export interface UseProductReviewsReturn {
   fetchProductReviews: FetchProductReviews;
 }
 
-export type UseProductReviews = (variationId: string | number, itemId: number) => UseProductReviewsReturn;
+export type UseProductReviews = (itemId: number) => UseProductReviewsReturn;

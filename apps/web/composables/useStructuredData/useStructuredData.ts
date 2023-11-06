@@ -29,7 +29,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
    */
   const setSingleItemMeta: SingleItemMeta = async (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
-    const { data: productReviews } = useProductReviews(product.variation.id, product.item.id);
+    const { data: productReviews } = useProductReviews(product.item.id);
     const { data: reviewAverage } = useProductReviewAverage(product.variation.id.toString());
 
     const manufacturer = product.item.manufacturer as { name: string };
