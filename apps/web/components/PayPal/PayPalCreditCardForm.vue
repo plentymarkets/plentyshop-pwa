@@ -43,7 +43,7 @@
       <div class="row mt-5">
         <label class="hosted-fields--label">
           <span class="text-sm font-medium">{{ $t('paypal.unbrandedNameOnCard') }}</span>
-          <SfInput v-model="cardHolder" class="hosted-field" />
+          <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
         </label>
       </div>
 
@@ -54,7 +54,7 @@
           }}</SfButton>
         </div>
         <div>
-          <SfButton type="submit" :disabled="loading">
+          <SfButton type="submit" :disabled="loading" data-testid="pay-creditcard-button">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ $t('paypal.unbrandedPay') }}
