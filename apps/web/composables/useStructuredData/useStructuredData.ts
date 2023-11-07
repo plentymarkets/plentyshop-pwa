@@ -74,13 +74,13 @@ export const useStructuredData: useStructuredDataReturn = () => {
       offers: {
         '@type': 'Offer',
         priceCurrency: product.prices?.default.currency,
-        price: product.prices?.default.price.value,
+        price: productGetters.getPrice(product).special,
         priceValidUntil: product.variation?.availableUntil,
         url: null,
         priceSpecification: [
           {
             '@type': 'UnitPriceSpecification',
-            price: product.prices?.default.price.value,
+            price: productGetters.getPrice(product).special,
             priceCurrency: product.prices?.default.currency,
             priceType: 'SalePrice',
             referenceQuantity: {
@@ -114,7 +114,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
-        price: product.prices?.rrp.price.value,
+        price: productGetters.getRegularPrice(product),
         priceCurrency: product.prices?.rrp.currency,
         priceType: 'ListPrice',
         referenceQuantity: {
