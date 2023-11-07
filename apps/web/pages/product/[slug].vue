@@ -20,7 +20,7 @@
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion
               :product="product"
-              :nr-of-comments="productGetters.getTotalReviews(productReviewAverage)"
+              :total-reviews="productGetters.getTotalReviews(productReviewAverage)"
             />
           </NuxtLazyHydrate>
         </section>
@@ -51,17 +51,19 @@ const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
-await (process.server
-  ? Promise.all([
-      fetchProduct(productParams),
-      fetchProductReviewAverage(Number(productId)),
-      fetchProductReviews(Number(productId)),
-    ])
-  : Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]));
-
 if (process.server) {
+  await Promise.all([
+    fetchProduct(productParams),
+    fetchProductReviewAverage(Number(productId)),
+    fetchProductReviews(Number(productId)),
+  ]);
   setProductMetaData(product.value, categoryTree.value[0]);
-}
+} else {
+  await Promise.all([
+   fetchProduct(productParams), 
+   fetchProductReviewAverage(Number(productId))
+  ]);
+} 
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();

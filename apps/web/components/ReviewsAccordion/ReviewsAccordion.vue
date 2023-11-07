@@ -1,7 +1,7 @@
 <template>
   <div data-testid="reviews-accordion" id="customerReviewsAccordion">
     <UiAccordionItem
-      v-if="nrOfComments"
+      v-if="totalReviews"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center"
       v-model="reviewsOpen"
     >
@@ -32,7 +32,7 @@ import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/ty
 
 const props = defineProps<ProductAccordionPropsType>();
 
-const { product, nrOfComments } = toRefs(props);
+const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);
 const {
   data: productReviews,
@@ -42,7 +42,7 @@ const {
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) {
+    if (value && reviewGetters.getItems(productReviews.value).length === 0) {
       fetchProductReviews(Number(productGetters.getItemId(product.value)));
     }
   },
