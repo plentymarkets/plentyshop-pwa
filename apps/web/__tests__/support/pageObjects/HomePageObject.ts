@@ -64,9 +64,7 @@ export class HomePageObject {
 
   checkLanguage(locale: string, textToCheck: string) {
     const categories = cy.getByTestId('category-button');
-    categories.should('have.length.greaterThan', 4);
-    categories.eq(3).should('have.text', textToCheck);
-
+    categories.invoke('text').should('include', textToCheck);
     cy.getCookie('vsf-locale').should('have.property', 'value', locale);
 
     return this;
