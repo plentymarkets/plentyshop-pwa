@@ -32,7 +32,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
     const { data: reviewAverage } = useProductReviewAverage(productGetters.getId(product).toString());
 
-    const manufacturer = product.item.manufacturer as { name: string };
+    const manufacturer = productGetters.getItemManufacturerExternalName(product);
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
