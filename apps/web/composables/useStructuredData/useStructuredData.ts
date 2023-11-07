@@ -30,7 +30,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setProductMetaData: SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
     const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
-    const { data: reviewAverage } = useProductReviewAverage(product.variation.id.toString());
+    const { data: reviewAverage } = useProductReviewAverage(productGetters.getId(product).toString());
 
     const manufacturer = product.item.manufacturer as { name: string };
     let reviews = null;
@@ -73,15 +73,15 @@ export const useStructuredData: useStructuredDataReturn = () => {
       },
       offers: {
         '@type': 'Offer',
-        priceCurrency: product.prices?.default.currency,
+        priceCurrency: productGetters.getSpecialPriceCurrency(product),
         price: productGetters.getPrice(product).special,
-        priceValidUntil: product.variation?.availableUntil,
+        priceValidUntil: productGetters.getVariationAvailableUntil(product),
         url: null,
         priceSpecification: [
           {
             '@type': 'UnitPriceSpecification',
             price: productGetters.getPrice(product).special,
-            priceCurrency: product.prices?.default.currency,
+            priceCurrency: productGetters.getSpecialPriceCurrency(product),
             priceType: 'SalePrice',
             referenceQuantity: {
               '@type': 'QuantitativeValue',
@@ -95,19 +95,19 @@ export const useStructuredData: useStructuredDataReturn = () => {
       },
       depth: {
         '@type': 'QuantitativeValue',
-        value: product.variation.lengthMM,
+        value: productGetters.getLengthMM(product),
       },
       width: {
         '@type': 'QuantitativeValue',
-        value: product.variation.widthMM,
+        value: productGetters.getWidthMM(product),
       },
       height: {
         '@type': 'QuantitativeValue',
-        value: product.variation.heightMM,
+        value: productGetters.getHeightMM(product),
       },
       weight: {
         '@type': 'QuantitativeValue',
-        value: product.variation.weightG,
+        value: productGetters.getWeightG(product),
       },
     };
 
@@ -115,7 +115,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
         price: productGetters.getRegularPrice(product),
-        priceCurrency: product.prices?.rrp.currency,
+        priceCurrency: productGetters.getRegularPrice(product),
         priceType: 'ListPrice',
         referenceQuantity: {
           '@type': 'QuantitativeValue',
