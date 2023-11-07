@@ -4050,7 +4050,7 @@ __metadata:
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
     "@plentymarkets/shop-api": ^0.12.0
-    "@plentymarkets/shop-sdk": ^0.19.0
+    "@plentymarkets/shop-sdk": ^0.21.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
@@ -4058,6 +4058,7 @@ __metadata:
     commitizen: ^4.2.5
     concurrently: ^8.2.0
     cross-env: ^7.0.3
+    cypress-iframe: ^1.0.1
     dotenv: ^16.0.3
     husky: ^8.0.0
     is-ci: ^3.0.0
@@ -4082,12 +4083,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.19.0":
-  version: 0.19.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.19.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.19.0%2F3960a48541d1f3585de4d33ad63bb1e0723be558"
+"@plentymarkets/shop-sdk@npm:^0.21.0":
+  version: 0.21.0
+  resolution: "@plentymarkets/shop-sdk@npm:0.21.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.21.0%2Fe7aa961bcc3d44bf1b754362e9ce4719446d7de0"
   dependencies:
     axios: ^0.27.2
-  checksum: 03a34b273c0ce9c31cf775492a736c7c2a2f53ac581cd32d23bf00c212dfe1ac3608c4fafdc0cd285c9ea9ecae2b44de49290553f3d3a7cfc7e12d823f8561d4
+  checksum: 03319cf981dc863e6abd1d1f0524f2ab8eeeb693fa75006bad1190ebff0d4f64366386ed07d0c5c4c52563ba1d0df0eb943df891e0b29b608c75f46a7c99df8b
   languageName: node
   linkType: hard
 
@@ -4679,14 +4680,14 @@ __metadata:
   linkType: hard
 
 "@types/express@npm:^4.17.13":
-  version: 4.17.19
-  resolution: "@types/express@npm:4.17.19"
+  version: 4.17.20
+  resolution: "@types/express@npm:4.17.20"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.33
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: 3d39d0655eb0825d96fec100985a38737767ddd6da2dbda1e330a3adf36c98a9b7cd8d9539db32876d1fbb47a09343cad7b38c30c8dd7c291271fcb9b85cb21b
+  checksum: bf8a97d283128e5129f9ccabbeef728ff3f0484465e0ae74a304bd0588fa6cb715ae68845650caba9a641944b7791ba125d02ddbd47a7e62aaefdd036570c6c5
   languageName: node
   linkType: hard
 
@@ -4756,11 +4757,11 @@ __metadata:
   linkType: hard
 
 "@types/lodash-es@npm:^4.17.7":
-  version: 4.17.9
-  resolution: "@types/lodash-es@npm:4.17.9"
+  version: 4.17.10
+  resolution: "@types/lodash-es@npm:4.17.10"
   dependencies:
     "@types/lodash": "*"
-  checksum: a2c7ab8da13892f89ab86b61dd9a0125c767b9db7b9bdaac7fd8508c9fa884bbb19a9760dbdc1e7e698e3322b7a8ba03daa80832371da32a8bd42da0920be838
+  checksum: 129e9dde830815a72f9bd17c3a7b7ffb10a9cf76d65c7bb4f14df13b38411ed3ebe9ebbc2f9059c4e61198e784d499e48d0a281e27a4defbbba748dd8a4cfd9d
   languageName: node
   linkType: hard
 
@@ -4826,11 +4827,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 20.8.6
-  resolution: "@types/node@npm:20.8.6"
+  version: 20.8.7
+  resolution: "@types/node@npm:20.8.7"
   dependencies:
     undici-types: ~5.25.1
-  checksum: ccfb7ac482c5a96edeb239893c5c099f5257fcc2ed9ae62fefdfbc782b79e16dbc2af9a85b379665237bf759904b44ca2be68e75d239e0297882aad42f61905c
+  checksum: 2173c0c03daefcb60c03a61b1371b28c8fe412e7a40dc6646458b809d14a85fbc7aeb369d957d57f0aaaafd99964e77436f29b3b579232d8f2b20c58abbd1d25
   languageName: node
   linkType: hard
 
@@ -4856,9 +4857,9 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:^18":
-  version: 18.18.5
-  resolution: "@types/node@npm:18.18.5"
-  checksum: fc8c9b2bf226270cf9085a7dac76ce09dd7c3519ec9b687ee2b50385954ab3709c45ca82d002d1536e24286803cd194d7ab7008acebdcd6681b8b19d4277fa5c
+  version: 18.18.6
+  resolution: "@types/node@npm:18.18.6"
+  checksum: a847639b8455fd3dfa6dbc2917274c82c9db789f1d41aaf69f94ac6c9e54c3c1dd29be6e1e1ccd7c17e54db3d78d7011bc4e70544c6447ceca253dccc0a187e1
   languageName: node
   linkType: hard
 
@@ -8994,6 +8995,15 @@ __metadata:
   version: 0.2.2
   resolution: "cuint@npm:0.2.2"
   checksum: b8127a93a7f16ce120ffcb22108014327c9808b258ee20e7dbb4c6740d7cb0f0c12d18a054eb716b0f2470090666abaae8a082d3cd5ef0e94fa447dd155842c4
+  languageName: node
+  linkType: hard
+
+"cypress-iframe@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "cypress-iframe@npm:1.0.1"
+  peerDependencies:
+    "@types/cypress": ^1.1.0
+  checksum: 98f3322c49949234e86c7915bbcac413e50a804c6e0b630b1273ebdacf4146f231f03a54e34fae5adf6387b086fb9c6d0d1a2347ac7da5981376ee5553f31ec0
   languageName: node
   linkType: hard
 

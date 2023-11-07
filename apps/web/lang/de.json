@@ -367,6 +367,7 @@
         "paymentAmount": "Gesamtsumme",
         "status": "Status",
         "price": "Preis",
+        "priceFrom": "ab",
         "quantity": "Anzahl",
         "subtotal": "Zwischensumme",
         "tableCaption": "Bestellübersicht",

@@ -156,7 +156,6 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
 const route = useRoute();
-const router = useRouter();
 const localePath = useLocalePath();
 
 const { isOpen } = useDisclosure({ initialValue: true });
@@ -173,7 +172,7 @@ onMounted(async () => {
 watch(
   isOpen,
   (isOpen) => {
-    if (!isOpen) router.push(paths.accountMyOrders);
+    if (!isOpen) navigateTo(localePath(paths.accountMyOrders));
   },
   { immediate: true },
 );

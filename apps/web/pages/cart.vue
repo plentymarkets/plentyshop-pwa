@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="paths.category"
+    :back-href="localePath(paths.category)"
     :back-label-desktop="$t('backToShopping')"
     :back-label-mobile="$t('back')"
     :heading="$t('myCart')"
@@ -15,4 +15,6 @@ definePageMeta({
   layoutName: 'checkout',
   pageType: 'static',
 });
+
+const localePath = useLocalePath();
 </script>
