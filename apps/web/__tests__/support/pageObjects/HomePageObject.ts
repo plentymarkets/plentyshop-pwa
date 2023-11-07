@@ -68,6 +68,8 @@ export class HomePageObject {
     categories.should('have.length.greaterThan', 4);
     categories.eq(3).should('have.text', categoryString);
 
+    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
+
     return this;
   }
 
