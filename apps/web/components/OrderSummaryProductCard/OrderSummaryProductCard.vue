@@ -1,18 +1,14 @@
 <template>
   <div
-    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg p-4 last:mb-0 w-full"
+    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
     data-testid="cart-product-card"
     v-if="orderItem.typeId !== 6"
   >
-    <!--
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink
-        :tag="NuxtLink"
-        :to="`${paths.product}${orderGetters.getItemName(orderItem)}-${orderGetters.getItemVariationId(orderItem)}`"
-      >
+    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
+      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
         <NuxtImg
           class="h-auto border rounded-md border-neutral-200"
-          :src="'' || '/images/placeholder.png'"
+          :src="orderGetters.getOrderVariationImage(order, orderItem) || '/images/placeholder.png'"
           :alt="'' || ''"
           width="300"
           height="300"
@@ -20,11 +16,16 @@
           format="webp"
         />
       </SfLink>
-    </div> -->
+    </div>
     <div class="flex flex-col min-w-[180px] flex-1">
-      <div class="no-underline typography-text-sm sm:typography-text-lg">
+      <SfLink
+        :tag="NuxtLink"
+        :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+        variant="secondary"
+        class="no-underline typography-text-sm sm:typography-text-lg"
+      >
         {{ orderGetters.getItemName(orderItem) }}
-      </div>
+      </SfLink>
       <div class="my-2">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
@@ -59,7 +60,11 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
+import { SfLink } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
+
+const localePath = useLocalePath();
+const NuxtLink = resolveComponent('NuxtLink');
 
 defineProps<OrderSummaryProductCardProps>();
 </script>
