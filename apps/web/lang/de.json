@@ -80,7 +80,7 @@
   "basePrice": "Grundpreis",
   "showMore": "Mehr anzeigen",
   "showLess": "Weniger anzeigen",
-  "filter": "Filter",
+  "filters": "Filter",
   "allProducts": "Alle Produkte",
   "sortBy": "Sortieren nach",
   "perPage": "Pro Seite",
@@ -117,8 +117,8 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
-  "tomorrow": "Morgen",
   "cancellationRights": "Widerrufsrecht",
+  "tomorrow": "Morgen",
   "contactInfo": {
     "heading": "Kontaktinformationen",
     "description": "Fügen Sie Ihre E-Mail-Adresse hinzu.",
@@ -127,9 +127,9 @@
     "phone": "Telefonnummer",
     "phonePlaceholder": "z.B. 1234 567890",
     "cancel": "Zurücksetzen",
-    "löschen": "Löschen",
-    "speichern": "Speichern",
-    "Bearbeiten": "Bearbeiten",
+    "clear": "Löschen",
+    "save": "Speichern",
+    "edit": "Bearbeiten",
     "clearAll": "Alles löschen"
   },
   "checkoutPayment": {
@@ -157,7 +157,10 @@
   "showArticle": "Artikel anzeigen",
   "addToCartShort": "Hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
+  "deletedFromCart": "Artikel aus dem Warenkorb entfernt",
   "search": "Suche",
+  "openSearchModalButtonLabel": "Suche öffnen",
+  "vsfHomepage": "VSF Homepage",
   "home": "Startseite",
   "products": "Produkte",
   "cart": "Warenkorb",
@@ -173,6 +176,7 @@
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "viewCart": "Warenkorb anzeigen",
   "category": "Kategorie",
+  "imageOfSth": "Bild von {name}",
   "categories": {
     "howToBuy": {
       "label": "Bestellvorgang",
@@ -190,7 +194,7 @@
         "helpCenter": "Hilfezentrum",
         "securityFraud": "Sicherheit & Missbrauch",
         "feedback": "Feedback",
-        "Kontakt": "Kontakt"
+        "contact": "Kontakt"
       }
     },
     "services": {
@@ -213,6 +217,22 @@
         "pressCenter": "Presse",
         "affiliateProgram": "Partnerprogramm",
         "suppliers": "Lieferanten"
+      }
+    },
+    "legal": {
+      "label": "Rechtliches",
+      "subcategories": {
+        "cancellationForm": "Widerrufsformular",
+        "cancellationRights": "Widerrufsbelehrung",
+        "legalDisclosure": "Impressum",
+        "privacyPolicy": "Datenschutzerklärung",
+        "termsAndConditions": "AGB"
+      }
+    },
+    "contact": {
+      "label": "Kontakt",
+      "subcategories": {
+        "contact": "Kontakt"
       }
     }
   },
@@ -315,7 +335,6 @@
         "newAddress": "Neue Rechnungsadresse"
       },
       "shippingDetails": {
-        "edit": "Bearbeiten",
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
       }
@@ -336,6 +355,7 @@
       "returnsHeading": "Retouren",
       "returnsAltText": "Keine Retouren",
       "returnsDescription": "Sie haben noch keine Produkte zurückgeschickt",
+      "listOfOrders": "Auftragsliste",
       "section": {
         "myOrders": "Meine Bestellungen",
         "returns": "Retouren"
@@ -347,6 +367,7 @@
         "paymentAmount": "Gesamtsumme",
         "status": "Status",
         "price": "Preis",
+        "priceFrom": "ab",
         "quantity": "Anzahl",
         "subtotal": "Zwischensumme",
         "tableCaption": "Bestellübersicht",
@@ -420,16 +441,6 @@
     "total": "Summe"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
-  "legal": {
-    "label": "Rechtliches",
-    "subcategories": {
-      "cancellationForm": "Widerrufsformular",
-      "cancellationRights": "Widerrufsbelehrung",
-      "legalDisclosure": "Impressum",
-      "privacyPolicy": "Datenschutzerklärung",
-      "termsAndConditions": "AGB"
-    }
-  },
   "asterisk": "*",
   "itemExclVAT": "inkl. ges. MwSt",
   "itemInclVAT": "zzgl. ges. MwSt.",
@@ -459,5 +470,22 @@
     "price": "PREIS",
     "quantity": "ANZAHL",
     "discount": "RABATT"
+  },
+  "coming-soon": "Demnächst",
+  "contact": {
+    "contact": "Kontakt",
+    "contactShopMessage": "Sie haben eine Frage oder ein Anliegen? Dann nehmen Sie mit uns Kontakt auf. Füllen Sie einfach das Formular aus und wir werden Ihre Anfrage schnellstmöglich bearbeiten.",
+    "form": {
+      "nameLabel": "Name",
+      "emailLabel": "E-Mail",
+      "subjectLabel": "Betreff",
+      "order-id": "Auftrags-ID",
+      "message": "Nachricht",
+      "message-placeholder": "Ihre Nachricht",
+      "asterixHint": "markierte Felder sind erforderlich"
+    },
+    "contactSend": "Anfrage senden",
+    "clearAll": "Alles löschen",
+    "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
   }
 }

@@ -9,6 +9,7 @@
             name="payment_method"
             class="peer sr-only"
             :value="id"
+            :data-testid="'payment-method-' + id"
             :checked="id === selectedId"
             :disabled="!isSelectable || disabled"
             @change="$emit('update:activePayment', id)"

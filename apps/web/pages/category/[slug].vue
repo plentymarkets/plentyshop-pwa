@@ -1,6 +1,5 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
-    <Breadcrumbs />
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
       <CategoryPageContent
@@ -24,15 +23,14 @@
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-
+const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({
   layout: false,
 });
 
 const { t } = useI18n();
-const router = useRouter();
 const route = useRoute();
-const { getFacetsFromURL } = useCategoryFilter();
+const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { locale } = useI18n();
@@ -40,6 +38,7 @@ const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
+  checkFiltersInURL();
 };
 
 await handleQueryUpdate();
@@ -59,7 +58,7 @@ const breadcrumbs = computed(() => {
 watch(
   () => locale.value,
   async (changedLocale: any) => {
-    router.push({
+    navigateTo({
       path: localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
     });
@@ -72,4 +71,5 @@ watch(
     handleQueryUpdate();
   },
 );
+setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 </script>

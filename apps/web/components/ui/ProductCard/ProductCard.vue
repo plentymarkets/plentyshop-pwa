@@ -38,7 +38,10 @@
       </div>
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-          {{ $n(mainPrice, 'currency') }}
+          <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product) || cheapestPrice" class="mr-1"
+            >{{ $t('account.ordersAndReturns.orderDetails.priceFrom') }}
+          </span>
+          <span>{{ $n(cheapestPrice ?? mainPrice, 'currency') }}</span>
           <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
         </span>
         <span
@@ -115,6 +118,13 @@ const mainPrice = computed(() => {
   if (price.regular) return price.regular;
 
   return 0;
+});
+const cheapestPrice = computed(() => {
+  const price = productGetters.getCheapestGraduatedPrice(product);
+  if (price && price < mainPrice.value) {
+    return price;
+  }
+  return null;
 });
 const oldPrice = productGetters.getRegularPrice(product);
 

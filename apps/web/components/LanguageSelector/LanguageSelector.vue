@@ -28,13 +28,12 @@ import { SfButton } from '@storefront-ui/vue';
 
 const { setLocaleCookie, localeCodes, locale: currentLocale } = useI18n();
 const route = useRoute();
-const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
 const { toggle } = useLanguageSelect();
 
 const switchLocale = (language: string) => {
   setLocaleCookie(language);
-  router.push({ path: switchLocalePath(language), query: route.query });
+  navigateTo({ path: switchLocalePath(language), query: route.query });
   toggle();
 };
 </script>

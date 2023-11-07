@@ -10,9 +10,9 @@
         @update:model-value="changeVariationId($event, index)"
         v-model="selectedVariationsAsString[index]"
         size="sm"
-        placeholder="Please Select"
+        :placeholder="$t('pleaseSelect')"
       >
-        <option :value="null">Please Select</option>
+        <option :value="null">{{ $t('pleaseSelect') }}</option>
         <option
           v-for="value in attribute.values"
           :key="value.attributeValueId"
@@ -178,6 +178,7 @@ const changeVariationId = (selectedValue: string | number | null, index: number)
       | null
     )[];
     resetDisabledStatus();
+    removeVariationIdFromUrl(); // Remove variation ID from the URL
   } else {
     selectedVariations.value[index] = Number(selectedValue);
   }
@@ -192,6 +193,16 @@ const changeVariationId = (selectedValue: string | number | null, index: number)
     router.replace({ path: updatedPath });
   }
 };
+
+function removeVariationIdFromUrl() {
+  const currentFullPath = route.fullPath;
+  const segments = currentFullPath.split('_');
+  if (segments.length > 2) {
+    segments.pop();
+    const pathWithoutVariation = segments.join('_');
+    router.replace({ path: pathWithoutVariation });
+  }
+}
 
 watchEffect(() => {
   updateAvailableOptions();

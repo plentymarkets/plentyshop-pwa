@@ -43,7 +43,7 @@
       <div class="row mt-5">
         <label class="hosted-fields--label">
           <span class="text-sm font-medium">{{ $t('paypal.unbrandedNameOnCard') }}</span>
-          <SfInput v-model="cardHolder" class="hosted-field" />
+          <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
         </label>
       </div>
 
@@ -54,7 +54,7 @@
           }}</SfButton>
         </div>
         <div>
-          <SfButton type="submit" :disabled="loading">
+          <SfButton type="submit" :disabled="loading" data-testid="pay-creditcard-button">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ $t('paypal.unbrandedPay') }}
@@ -67,9 +67,8 @@
 </template>
 
 <script lang="ts" setup>
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { paypalGetters } from '~/getters/paypalGetters';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -78,13 +77,11 @@ const { loadScript, createCreditCardTransaction, captureOrder, executeOrder } = 
 const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
-const router = useRouter();
+const localePath = useLocalePath();
 const i18n = useI18n();
 
-const vsfCurrency = useCookie('vsf-currency').value as string;
-const fallbackCurrency = useAppConfig().fallbackCurrency as string;
-const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
-const paypal = await loadScript(currency);
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const paypal = await loadScript(currency.value);
 const form = ref<HTMLElement | null>(null);
 const cardHolder = ref('');
 const sandbox = true;
@@ -172,13 +169,14 @@ onMounted(() => {
                 mode: 'paypal',
                 plentyOrderId: Number.parseInt(orderGetters.getId(order)),
                 paypalTransactionId: paypalOrderId,
-                paypalMerchantId: paypalGetters.getMerchantId() ?? '',
               });
 
               clearCartItems();
 
               if (order?.order?.id) {
-                router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+                navigateTo(
+                  localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey),
+                );
               }
 
               loading.value = false;

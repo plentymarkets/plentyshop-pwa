@@ -30,7 +30,7 @@
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
     </div>
-    <GraduatedPriceList v-if="product" :product="product" />
+    <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector

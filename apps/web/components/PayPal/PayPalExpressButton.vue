@@ -4,22 +4,18 @@
 
 <script setup lang="ts">
 import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, productGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
 import { PaypalButtonPropsType } from '~/components/PayPal/types';
-import { paypalGetters } from '~/getters/paypalGetters';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const vsfCurrency = useCookie('vsf-currency').value as string;
-const fallbackCurrency = useAppConfig().fallbackCurrency as string;
-const currency = vsfCurrency?.length > 0 ? vsfCurrency : fallbackCurrency;
-
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, addToCart, clearCartItems } = useCart();
-const router = useRouter();
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const localePath = useLocalePath();
 const emits = defineEmits(['on-click']);
 
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
@@ -30,7 +26,7 @@ const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
-const paypal = await loadScript(currency);
+const paypal = await loadScript(currency.value);
 
 const onInit = (actions: OnInitActions) => {
   if (props.type === TypeCheckout) {
@@ -65,7 +61,7 @@ const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
   if (result?.url && (props.type === TypeCartPreview || props.type === TypeSingleItem)) {
-    router.push(`/readonly-checkout/?payerId=${data.payerID}&orderId=${data.orderID}`);
+    navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
   } else if (props.type === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
@@ -76,27 +72,27 @@ const onApprove = async (data: OnApproveData) => {
       mode: 'paypal',
       plentyOrderId: Number.parseInt(orderGetters.getId(order)),
       paypalTransactionId: data.orderID,
-      paypalMerchantId: paypalGetters.getMerchantId() ?? '',
     });
 
     clearCartItems();
 
     if (order?.order?.id) {
-      router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+      navigateTo(localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey));
     }
   }
 };
 
-onMounted(() => {
+// eslint-disable-next-line sonarjs/cognitive-complexity
+const renderButton = () => {
   if (paypal) {
     const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL];
 
     FUNDING_SOURCES.forEach((fundingSource) => {
-      if (paypal.Buttons && fundingSource) {
+      if (paypal?.Buttons && fundingSource) {
         const button = paypal.Buttons({
           style: {
             layout: 'vertical',
-            label: props.type === TypeCartPreview ? 'checkout' : 'buynow',
+            label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
             color: 'blue',
           },
           fundingSource: fundingSource,
@@ -126,5 +122,9 @@ onMounted(() => {
       }
     });
   }
+};
+
+onMounted(() => {
+  renderButton();
 });
 </script>
