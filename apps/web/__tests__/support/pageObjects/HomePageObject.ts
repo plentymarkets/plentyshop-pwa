@@ -62,11 +62,10 @@ export class HomePageObject {
     return this;
   }
 
-  checkLanguage(locale: string) {
-    const categoryString = locale === 'de' ? 'Wohnzimmer' : 'Living Room';
+  checkLanguage(locale: string, textToCheck: string) {
     const categories = cy.getByTestId('category-button');
     categories.should('have.length.greaterThan', 4);
-    categories.eq(3).should('have.text', categoryString);
+    categories.eq(3).should('have.text', textToCheck);
 
     cy.getCookie('vsf-locale').should('have.property', 'value', locale);
 
