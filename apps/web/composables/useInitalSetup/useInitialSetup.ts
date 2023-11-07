@@ -1,6 +1,6 @@
 import { Cart, SessionResult } from '@plentymarkets/shop-api';
 import { useSdk } from '~/sdk';
-import { SetInitialData, UseInitialSetupReturn } from './types';
+import { SetInitialData, UseInitialSetupReturn, UseInitialSetupState } from './types';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData
@@ -34,7 +34,12 @@ const setInitialData: SetInitialData = async () => {
  * ```
  */
 export const useInitialSetup: UseInitialSetupReturn = () => {
+  const state = useState<UseInitialSetupState>('useInitialSetup', () => ({
+    ssrLocale: '',
+  }));
+
   return {
     setInitialData,
+    ...toRefs(state.value),
   };
 };

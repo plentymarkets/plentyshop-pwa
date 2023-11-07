@@ -62,6 +62,14 @@ export class HomePageObject {
     return this;
   }
 
+  checkLanguage(locale: string, textToCheck: string) {
+    const categories = cy.getByTestId('category-button');
+    categories.invoke('text').should('include', textToCheck);
+    cy.getCookie('vsf-locale').should('have.property', 'value', locale);
+
+    return this;
+  }
+
   checkHeaderCategory() {
     cy.getByTestId('category-button').first().should('be.visible');
     return this;
