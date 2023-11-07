@@ -8,6 +8,7 @@ const locale_en = 'en';
 
 beforeEach(() => {
   cy.visitAndHydrate(paths.home);
+  cy.clearCookies();
 });
 
 describe('Smoke: Homepage', () => {
@@ -17,15 +18,11 @@ describe('Smoke: Homepage', () => {
   });
 
   it('[smoke] Check if DE on SSR works ', () => {
-    cy.setCookie(cookieName, locale_de);
-    cy.setCookie('i18n_redirected', locale_de);
-    cy.visitAndHydrate(paths.home);
+    cy.visitAndHydrate(paths.home + '/de');
     homePage.checkLanguage(locale_de);
   });
 
   it('[smoke] Check if EN on SSR works ', () => {
-    cy.setCookie(cookieName, locale_en);
-    cy.setCookie('i18n_redirected', locale_en);
     cy.visitAndHydrate(paths.home);
     homePage.checkLanguage(locale_en);
   });
