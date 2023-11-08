@@ -26,7 +26,7 @@
             <SfCheckbox
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
-              @update:modelValue="triggerGroupConsent(cookieGroup)"
+              @update:model-value="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaultCheckboxIndex"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
@@ -41,7 +41,7 @@
             class="align-text-top"
             :id="cookieGroup.name"
             v-model="cookieGroup.accepted"
-            @update:modelValue="triggerGroupConsent(cookieGroup)"
+            @update:model-value="triggerGroupConsent(cookieGroup)"
             :disabled="groupIndex === defaultCheckboxIndex"
           />
           <label
@@ -60,7 +60,7 @@
                   class="ml-1"
                   :id="cookie.name"
                   v-model="cookie.accepted"
-                  @update:modelValue="triggerCookieConsent(cookieGroup)"
+                  @update:model-value="triggerCookieConsent(cookieGroup)"
                   :disabled="groupIndex === defaultCheckboxIndex"
                 />
                 <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
