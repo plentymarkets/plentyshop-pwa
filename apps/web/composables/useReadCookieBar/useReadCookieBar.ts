@@ -3,8 +3,6 @@ import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
 import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
 import { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 
-const defaultCheckboxIndex = 0;
-
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
@@ -136,7 +134,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
    */
   const setAllCookiesState: SetAllCookiesState = (accepted: boolean) => {
     state.value.data.groups.forEach((group: CookieGroup, index: number) => {
-      if (index !== defaultCheckboxIndex) {
+      if (index !== defaults.ESSENTIAL_COOKIES_INDEX) {
         group.accepted = accepted;
         group.cookies.forEach((cookie: Cookie) => (cookie.accepted = accepted));
       }

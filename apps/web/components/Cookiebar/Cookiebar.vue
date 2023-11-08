@@ -27,7 +27,7 @@
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
               @update:model-value="triggerGroupConsent(cookieGroup)"
-              :disabled="index === defaultCheckboxIndex"
+              :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
               {{ cookieGroup.name }}
@@ -42,7 +42,7 @@
             :id="cookieGroup.name"
             v-model="cookieGroup.accepted"
             @update:model-value="triggerGroupConsent(cookieGroup)"
-            :disabled="groupIndex === defaultCheckboxIndex"
+            :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
           />
           <label
             class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
@@ -61,7 +61,7 @@
                   :id="cookie.name"
                   v-model="cookie.accepted"
                   @update:model-value="triggerCookieConsent(cookieGroup)"
-                  :disabled="groupIndex === defaultCheckboxIndex"
+                  :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
                 />
                 <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
                   {{ cookie.name }}
@@ -167,8 +167,6 @@ const {
 } = useReadCookieBar();
 
 initializeCookies();
-
-const defaultCheckboxIndex = 0;
 
 const furtherSettingsOn = ref(false);
 
