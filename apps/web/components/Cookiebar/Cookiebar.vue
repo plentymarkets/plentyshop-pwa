@@ -150,7 +150,7 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
-import { Cookie, CookieGroup } from "~/cookie.config";
+import { Cookie, CookieGroup } from '~/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
@@ -173,7 +173,7 @@ const defaultCheckboxIndex = 0;
 const furtherSettingsOn = ref(false);
 
 const triggerCookieConsent = (group: CookieGroup) => {
-  group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted)
+  group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
 };
 
 const triggerGroupConsent = (group: CookieGroup) => {
