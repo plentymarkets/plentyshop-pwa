@@ -32,7 +32,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
     const { data: reviewAverage } = useProductReviewAverage(productGetters.getId(product).toString());
 
-    const manufacturer = productGetters.getItemManufacturerExternalName(product);
+    const manufacturerExternalName = productGetters.getItemManufacturerExternalName(product);
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -63,7 +63,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       disambiguatingDescription: '',
       manufacturer: {
         '@type': 'Organization',
-        name: manufacturer.name,
+        name: manufacturerExternalName,
       },
       review: reviews,
       aggregateRating: {
@@ -115,7 +115,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
         price: productGetters.getRegularPrice(product),
-        priceCurrency: productGetters.getRegularPrice(product),
+        priceCurrency: productGetters.getRegularPriceCurrency(product),
         priceType: 'ListPrice',
         referenceQuantity: {
           '@type': 'QuantitativeValue',
