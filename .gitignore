@@ -18,6 +18,8 @@ node_modules
 .nuxt
 .nitro
 .cache
+cache
+.temp
 dist
 
 # testing
@@ -46,6 +48,10 @@ yarn-error.log*
 
 # build
 lib/
+
+# docs build
+apps/web/docs/composables/typedoc-sidebar.json
+apps/web/docs/composables/**/*.md
 
 .vscode
 *.code-workspace

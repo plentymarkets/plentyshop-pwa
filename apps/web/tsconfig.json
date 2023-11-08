@@ -3,5 +3,12 @@
   "compilerOptions": {
     "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk"]
   },
-  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"]
+  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
+  "typedocOptions": {
+      "entryPoints": ["composables/index.ts"],
+      "out": "docs/composables",
+      "excludeExternals": true,
+      "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
+      "githubPages": false
+  }
 }
