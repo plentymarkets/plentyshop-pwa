@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "plentyShop PWA Docs",
   description: "A VitePress Site",
+  base: "/plentyshop-pwa-docs/",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
