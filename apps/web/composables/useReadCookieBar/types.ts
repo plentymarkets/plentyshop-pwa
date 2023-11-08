@@ -1,19 +1,25 @@
 import type { Ref } from 'vue';
-import { CookieGroup } from 'cookie.config';
+import { CookieGroupFromNuxtConfig } from 'cookie.config';
 
 export interface UseReadCookieBarState {
-  data: CookieGroup[];
+  data: CookieGroupFromNuxtConfig;
   loading: boolean;
   visible: boolean;
 }
 
-// export type GetLegalInformation = (params: LegalTextsParams) => Promise<LegalInformationResponse>;
+export type ChangeVisibilityState = () => void;
+export type SetConsent = () => void;
+export type InitializeCookies = () => void;
+export type SetAllCookiesState = (accepted: boolean) => void;
 
 export interface UseReadCookieBar {
   data: Readonly<Ref<UseReadCookieBarState['data']>>;
   loading: Readonly<Ref<boolean>>;
   visible: Readonly<Ref<boolean>>;
-  changeVisibilityState: Readonly<void>;
+  changeVisibilityState: ChangeVisibilityState;
+  setConsent: SetConsent;
+  initializeCookies: InitializeCookies;
+  setAllCookiesState: SetAllCookiesState;
 }
 
 export type UseReadCookieBarReturn = () => UseReadCookieBar;

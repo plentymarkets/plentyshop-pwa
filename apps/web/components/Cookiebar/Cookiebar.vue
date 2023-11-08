@@ -18,11 +18,15 @@
         </div>
         <!-- checkboxes -->
         <div v-if="cookieJson" class="flex flex-wrap justify-between">
-          <div v-for="(cookieGroup, index) in cookieJson.groups" :key="index" class="sm:mb-5 mb-2 pr-2 flex items-center">
+          <div
+            v-for="(cookieGroup, index) in cookieJson.groups"
+            :key="index"
+            class="sm:mb-5 mb-2 pr-2 flex items-center"
+          >
             <SfCheckbox
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
-              :value="cookieGroup.accepted"
+              @update:modelValue="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaultCheckboxIndex"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
@@ -37,6 +41,7 @@
             class="align-text-top"
             :id="cookieGroup.name"
             v-model="cookieGroup.accepted"
+            @update:modelValue="triggerGroupConsent(cookieGroup)"
             :disabled="groupIndex === defaultCheckboxIndex"
           />
           <label
@@ -55,9 +60,10 @@
                   class="ml-1"
                   :id="cookie.name"
                   v-model="cookie.accepted"
+                  @update:modelValue="triggerCookieConsent(cookieGroup)"
                   :disabled="groupIndex === defaultCheckboxIndex"
                 />
-                <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookieGroup.name">
+                <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
                   {{ cookie.name }}
                 </label>
               </div>
@@ -123,7 +129,7 @@
           </SfButton>
         </div>
         <div class="flex-1">
-          <SfButton class="w-full" :aria-disabled="false" type="button" @click="setConsent()">
+          <SfButton variant="secondary" class="w-full" :aria-disabled="false" type="button" @click="setConsent()">
             {{ $t('CookieBar.Accept Selection') }}
           </SfButton>
         </div>
@@ -135,7 +141,7 @@
       variant="secondary"
       class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-2 bg-white"
       aria-label="Cookie control"
-      @click="changeVisibilityState()"
+      @click="changeVisibilityState"
     >
       <SfIconCheckBox />
     </SfButton>
@@ -144,16 +150,35 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
+import { Cookie, CookieGroup } from "~/cookie.config";
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const cookieGroups = ref(runtimeConfig.public.cookieGroups);
 
-const { setCookies, data: cookieJson, visible, setConsent, setAllCookiesState, changeVisibilityState } = useReadCookieBar();
-setCookies();
+const {
+  initializeCookies,
+  data: cookieJson,
+  visible,
+  setConsent,
+  setAllCookiesState,
+  changeVisibilityState,
+} = useReadCookieBar();
+
+initializeCookies();
 
 const defaultCheckboxIndex = 0;
 
 const furtherSettingsOn = ref(false);
+
+const triggerCookieConsent = (group: CookieGroup) => {
+  group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted)
+};
+
+const triggerGroupConsent = (group: CookieGroup) => {
+  group.cookies.forEach((cookie: Cookie) => {
+    cookie.accepted = group.accepted;
+  });
+};
 </script>

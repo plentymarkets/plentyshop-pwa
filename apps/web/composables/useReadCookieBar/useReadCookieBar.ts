@@ -1,77 +1,119 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import { CookieGroup } from 'cookie.config';
+import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
+import { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 
 const defaultCheckboxIndex = 0;
 
+const checkIfScriptIsExternal = (scriptName: string): boolean => {
+  return scriptName.startsWith('http');
+};
+
+const fetchScripts = (scripts: string[]) => {
+  scripts.forEach((script: string) => {
+    try {
+      if (checkIfScriptIsExternal(script)) {
+        fetch(script, { method: 'GET', mode: 'no-cors', credentials: 'same-origin' })
+          .then((response) => response.text())
+          .then((text) => eval(text))
+          .catch(() => {
+            return;
+          });
+      } else {
+        eval(script);
+      }
+    } catch (error: any) {
+      console.error(error);
+    }
+  });
+};
+
 /**
- * @description Composable for managing cookie bar.
+ * @description Composable for managing cookie consent bar.
  * @returns UseReadCookieBarReturn
  * @example
  * ``` ts
- * const { data, loading } = useReadCookieBar();
+ * const {
+ *   data, visible, loading, changeVisibilityState, setConsent, initializeCookies, setAllCookiesState
+ * } = useReadCookieBar();
  * ```
  */
 export const useReadCookieBar: UseReadCookieBarReturn = () => {
   const state = useState<UseReadCookieBarState>('useReadCookieBar', () => ({
-    data: [] as CookieGroup[],
+    data: {} as CookieGroupFromNuxtConfig,
     visible: false,
     loading: false,
   }));
 
-  const changeVisibilityState = (): void => {
+  const runtimeConfig = useRuntimeConfig();
+  const initialCookies = runtimeConfig.public.cookieGroups as CookieGroupFromNuxtConfig;
+
+  const changeVisibilityState: ChangeVisibilityState = () => {
     state.value.visible = !state.value.visible;
   };
 
-  const setCookies = (): void => {
-    // TODO: set initial cookies to consider browser cookies
-    const runtimeConfig = useRuntimeConfig();
+  const loadThirdPartyScripts = (): void => {
+    if (!process.server) {
+      state.value.data.groups.forEach((cookieGroup: CookieGroup, groupIndex: number) => {
+        cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
+          if (cookie.accepted) {
+            const scripts = initialCookies.groups[groupIndex].cookies?.[cookieIndex]?.script;
 
-    const initialCookies = runtimeConfig.public.cookieGroups;
-    const res = { ...initialCookies };
-
-    const browserCookies = useCookie('consent-cookie');
-    console.log('initialCookies: ', initialCookies);
-
-    // res.groups[0].cookies[0].accepted = true;
-
-    // res.groups.forEach((group) => {
-    //   group.cookies.forEach((cookie) => {
-    //
-    //     const temp = { ...cookie }
-    //     temp.accepted = true
-    //     cookie = {...cookie, ...temp}
-    //
-    //     // cookie.accepted = browserCookies?.[group.name]?.[cookie.name] || false;
-    //   });
-    // });
-
-    // browserCookies.forEach((group, index) => {
-    //
-    // })
-
-    console.log('initialCookies:', res);
-
-    state.value.data = runtimeConfig.public.cookieGroups;
+            if (scripts && scripts.length > 0) {
+              fetchScripts(scripts);
+            }
+          }
+        });
+      });
+    }
   };
 
-  const setConsent = (): void => {
-    const { getMinimumLifeSpan } = cookieBarHelper();
+  /**
+   * @description Function for initializing cookies.
+   * @returns InitializeCookies
+   * @example
+   * ``` ts
+   * initializeCookies();
+   * ```
+   */
+  const initializeCookies: InitializeCookies = () => {
+    const cookies = JSON.parse(JSON.stringify(initialCookies));
 
-    const jsonCookie = {};
+    const browserCookies = useCookie('consent-cookie');
 
-    // TODO: cleanup
-    state.value.data.groups.forEach((group) => {
-      const children = group.cookies;
-
-      const childrenObject = {};
-
-      children.forEach((child) => {
-        childrenObject[child.name] = child.accepted;
+    cookies.groups.slice(1).forEach((group: CookieGroup) => {
+      group.cookies.forEach((cookie: Cookie) => {
+        cookie.accepted = !!browserCookies.value?.[group.name as any]?.[cookie.name as any] || false;
       });
 
-      jsonCookie[group.name] = childrenObject;
+      group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
     });
+
+    state.value.data = cookies;
+
+    loadThirdPartyScripts();
+  };
+
+  /**
+   * @description Function for updating consent data.
+   * @returns SetConsent
+   * @example
+   * ``` ts
+   * setConsent();
+   * ```
+   */
+  const setConsent: SetConsent = () => {
+    const { getMinimumLifeSpan } = cookieBarHelper();
+    const router = useRouter();
+
+    const jsonCookie = state.value.data.groups.reduce((accumulator: any, group: CookieGroup) => {
+      accumulator[group.name] = group.cookies.reduce((childAccumulator: any, cookie: Cookie) => {
+        childAccumulator[cookie.name] = cookie.accepted;
+        return childAccumulator;
+      }, {});
+
+      return accumulator;
+    }, {});
 
     const consentCookie = useCookie('consent-cookie', {
       path: '/',
@@ -81,15 +123,22 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     consentCookie.value = jsonCookie;
 
     changeVisibilityState();
+    router.go(0);
   };
 
-  const setAllCookiesState = (accepted: boolean): void => {
-    state.value.data.groups.forEach((group, index) => {
+  /**
+   * @description Function for managing acceptance/rejection of all cookies.
+   * @returns SetAllCookiesState
+   * @example
+   * ``` ts
+   * setAllCookiesState();
+   * ```
+   */
+  const setAllCookiesState: SetAllCookiesState = (accepted: boolean) => {
+    state.value.data.groups.forEach((group: CookieGroup, index: number) => {
       if (index !== defaultCheckboxIndex) {
         group.accepted = accepted;
-        group.cookies.forEach((cookie) => {
-          cookie.accepted = accepted;
-        });
+        group.cookies.forEach((cookie: Cookie) => (cookie.accepted = accepted));
       }
     });
 
@@ -100,7 +149,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     ...toRefs(state.value),
     changeVisibilityState,
     setConsent,
-    setCookies,
+    initializeCookies,
     setAllCookiesState,
   };
 };

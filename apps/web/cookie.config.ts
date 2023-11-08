@@ -29,7 +29,7 @@ export default {
     {
       id: 0,
       name: 'Essentials',
-      accepted: false,
+      accepted: true,
       showMore: false,
       description:
         'Essential cookies enable basic functions and are necessary for the proper functioning of the website.',
@@ -41,7 +41,7 @@ export default {
           PrivacyPolicy: '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
           Lifespan: '100 days',
-          accepted: false,
+          accepted: true,
         },
         {
           name: 'Consent',
@@ -49,7 +49,7 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
+          accepted: true,
         },
         {
           name: 'Session2',
@@ -57,7 +57,7 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
+          accepted: true,
         },
       ],
     },
