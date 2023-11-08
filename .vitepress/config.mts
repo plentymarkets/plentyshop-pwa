@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import typedocSidebarComposables from '../reference/composables/typedoc-sidebar.json';
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -9,7 +10,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/markdown-examples' },
+      { text: 'Composables', link: '/reference/composables/'}
     ],
 
     sidebar: [
@@ -19,6 +21,10 @@ export default defineConfig({
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]
+      },
+      {
+        text: 'Composables',
+        items: typedocSidebarComposables
       }
     ],
 

@@ -7,21 +7,67 @@ on:
 
 permissions:
   contents: read
-  pages: write
   id-token: write
+  pages: write
+  packages: read
 
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
+  get-pwa:
     runs-on: ubuntu-latest
     steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            repository: 'plentymarkets/plentyshop-pwa'
+  
+        - name: Setup node
+          uses: actions/setup-node@v3
+          with:
+            node-version: '20.5'
+            cache: 'yarn'
+            registry-url: "https://npm.pkg.github.com"
+  
+        - name: Set yarn version
+          run: |
+            yarn set version stable
+            yarn set version 3.6.4
+  
+        - name: Setup .yarnrc.yml
+          run: |
+              yarn config set nodeLinker node-modules
+              yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+              yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+              yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
+        - name: Install Dependencies
+          run: yarn --frozen-lockfile
+  
+        - name: Build typedoc
+          run: cd apps/web && yarn publish-typedoc
+  
+        - name: Upload artifact
+          uses: actions/upload-artifact@v3
+          with:
+            name: pwa-docs
+            path: ${{ github.workspace }}/apps/web/docs/composables/
+
+  build:
+    runs-on: ubuntu-latest
+    needs: get-pwa
+    steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+      - name: Download pwa-docs
+        uses: actions/download-artifact@v3
         with:
-          fetch-depth: 0
+            name: pwa-docs
+            path: ${{ github.workflow }}/reference/composables/
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
