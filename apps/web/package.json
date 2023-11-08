@@ -8,6 +8,10 @@
     "dev": "nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
+    "docs:dev": "yarn publish-typedoc && vitepress dev docs",
+    "docs:build": "yarn publish-typedoc && vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "publish-typedoc": "yarn typedoc",
     "lint": "nuxt typecheck && eslint --ext .vue,.js,.ts .",
     "lint:fix": "eslint --ext .vue,.js,.ts . --fix",
     "preview": "nuxt preview",
@@ -49,7 +53,12 @@
     "nuxt": "^3.6.5",
     "nuxt-vitest": "^0.10.1",
     "sass": "^1.64.1",
+    "typedoc": "^0.25.3",
+    "typedoc-plugin-markdown": "next",
+    "typedoc-vitepress-theme": "1.0.0-next.3",
+    "vitepress": "^1.0.0-rc.24",
     "vitest": "^0.33.0",
-    "vue-tsc": "^1.8.6"
+    "vue-tsc": "^1.8.6",
+    "vuepress": "next"
   }
 }
