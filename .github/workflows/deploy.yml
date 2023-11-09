@@ -67,7 +67,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
             name: pwa-docs
-            path: ${{ github.workflow }}/reference/composables/
+            path: ${{ github.workspace }}/reference/composables/
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
