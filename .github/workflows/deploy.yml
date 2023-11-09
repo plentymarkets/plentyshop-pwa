@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   get-pwa:
+    name: Get PWA documentation
     runs-on: ubuntu-latest
     steps:
         - name: Checkout
@@ -56,13 +57,51 @@ jobs:
           with:
             name: pwa-docs
             path: ${{ github.workspace }}/apps/web/docs/composables/
+  
+  get-sdk:
+    name: Get SDK documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+            repository: 'plentymarkets/plentymarkets-sdk'
+            token: ${{ secrets.ORGA_PAT_CICD1_FULL_REPO_AND_PACKAGES }}
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+
+      - run: |
+          yarn set version stable
+          yarn set version 3.6.1
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build typedoc
+        run: yarn publish-typedoc
+    
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sdk-docs
+          path: ${{ github.workspace }}/docs/reference/
 
   build:
+    name: Build & publish site
     runs-on: ubuntu-latest
-    needs: get-pwa
+    needs: [get-pwa, get-sdk]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Download sdk-docs
+        uses: actions/download-artifact@v3
+        with:
+            name: sdk-docs
+            path: ${{ github.workspace }}/reference/
       - name: Download pwa-docs
         uses: actions/download-artifact@v3
         with:
