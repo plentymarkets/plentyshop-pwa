@@ -59,11 +59,8 @@ if (process.server) {
   ]);
   setProductMetaData(product.value, categoryTree.value[0]);
 } else {
-  await Promise.all([
-   fetchProduct(productParams), 
-   fetchProductReviewAverage(Number(productId))
-  ]);
-} 
+  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
+}
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
