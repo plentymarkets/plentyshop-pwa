@@ -1,15 +1,16 @@
 import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
-import { SingleItemMeta, UseStructuredDataState } from './types';
+import { SetLogoMeta, SingleItemMeta, UseStructuredDataState } from './types';
 import type { Product } from '@plentymarkets/shop-api';
 import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+
 /**
  * @description Composable managing meta data
  * @returns useStructuredDataReturn
  * @example
  * ``` ts
- * const { data, loading, setStaticPageMeta } = useMeta();
+ * const { data, loading, setLogoMeta, setStaticPageMeta } = useMeta();
  * ```
  */
 export const useStructuredData: useStructuredDataReturn = () => {
@@ -18,11 +19,44 @@ export const useStructuredData: useStructuredDataReturn = () => {
   }));
 
   /**
-   * @description Function for Setting page Meta
+   * @description Function for Setting Logo Metadata.
+   * @returns SetLogoMeta
+   * @example
+   * ``` ts
+   * setLogoMeta()
+   * ```
+   */
+  const setLogoMeta: SetLogoMeta = () => {
+    state.value.loading = true;
+
+    const runtimeConfig = useRuntimeConfig();
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      url: runtimeConfig.public.apiUrl,
+      logo: runtimeConfig.public.logoUrl,
+    };
+    useHead({
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(structuredData),
+        },
+      ],
+    });
+
+    state.value.loading = false;
+  };
+
+  /**
+   * @description Function for Setting Single Item Meta
    * @returns SingleItemMeta
    * @example
    * ``` ts
-   * setSigleItemMeta()
+   * setSingleItemMeta({
+   *  product: Product,
+   *  categoryTree: CategoryTreeItem
+   * })
    * ```
    */
   const setSingleItemMeta: SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => {
@@ -124,6 +158,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
   return {
     setSingleItemMeta,
+    setLogoMeta,
     ...toRefs(state.value),
   };
 };

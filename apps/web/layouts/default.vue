@@ -192,6 +192,7 @@ defineProps<DefaultLayoutProps>();
 const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
+const { setLogoMeta } = useStructuredData();
 const localePath = useLocalePath();
 usePageTitle();
 
@@ -229,23 +230,6 @@ watch(
     isLogin.value = true;
   },
 );
-const setLogoMeta = () => {
-  const runtimeConfig = useRuntimeConfig();
-  const structuredData = {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    url: runtimeConfig.public.apiUrl,
-    logo: runtimeConfig.public.logoUrl,
-  };
-  useHead({
-    script: [
-      {
-        type: 'application/ld+json',
-        innerHTML: JSON.stringify(structuredData),
-      },
-    ],
-  });
-};
 
 setLogoMeta();
 
