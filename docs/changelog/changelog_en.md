@@ -39,6 +39,7 @@
 ### Fixed
 
 - After login the user was wrongfully forwared to the homepage. The user now stays on the current page.
+- Added reviews and AggregateRating to seo structured data
 - Filtering: No longer available filters are removed from the URL
 
 ## v1.0.0 (28.09.2023) First release
