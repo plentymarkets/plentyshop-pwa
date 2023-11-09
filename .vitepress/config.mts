@@ -19,27 +19,32 @@ export default defineConfig({
       { text: 'API', link: '/reference/api/'}
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
-      },
-      {
-        text: 'Composables',
-        items: typedocSidebarComposables
-      },
-      {
-        text: 'SDK',
-        items: typedocSidebarSdk
-      },
-      {
-        text: 'API',
-        items: typedocSidebarApi
-      }
-    ],
+    sidebar: {
+      '/guide/': [
+        {
+          text: 'Examples',
+          items: [
+            { text: 'Markdown Examples', link: '/markdown-examples' },
+            { text: 'Runtime API Examples', link: '/api-examples' }
+          ]
+        }
+      ],
+
+      '/reference/': [
+        {
+          text: 'Composables',
+          items: typedocSidebarComposables
+        },
+        {
+          text: 'SDK',
+          items: typedocSidebarSdk
+        },
+        {
+          text: 'API',
+          items: typedocSidebarApi
+        }
+      ]
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
