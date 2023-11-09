@@ -50,8 +50,8 @@ yarn-error.log*
 lib/
 
 # docs build
-apps/web/docs/composables/typedoc-sidebar.json
-apps/web/docs/composables/**/*.md
+apps/web/docs/reference/composables/typedoc-sidebar.json
+apps/web/docs/reference/**/*.md
 
 .vscode
 *.code-workspace
