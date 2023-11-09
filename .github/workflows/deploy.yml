@@ -56,7 +56,7 @@ jobs:
           uses: actions/upload-artifact@v3
           with:
             name: pwa-docs
-            path: ${{ github.workspace }}/apps/web/docs/composables/
+            path: ${{ github.workspace }}/apps/web/docs/reference/
   
   get-sdk:
     name: Get SDK documentation
@@ -109,7 +109,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
             name: pwa-docs
-            path: ${{ github.workspace }}/reference/composables/
+            path: ${{ github.workspace }}/reference/
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
