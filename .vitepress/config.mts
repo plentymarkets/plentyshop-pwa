@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import sidebarSetup from '../guide/setup/sidebar.json';
 import typedocSidebarComposables from '../reference/composables/typedoc-sidebar.json';
 import typedocSidebarSdk from '../reference/sdk/typedoc-sidebar.json';
 import typedocSidebarApi from '../reference/api/typedoc-sidebar.json';
@@ -16,6 +17,7 @@ export default defineConfig({
       {
         text: 'Guide',
         items: [
+          { text: 'Setup', link: '/guide/setup/index' },
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]
@@ -27,17 +29,14 @@ export default defineConfig({
           { text: 'SDK', link: '/reference/sdk/' },
           { text: 'API', link: '/reference/api/' }
         ]
-      },
+      }
     ],
 
     sidebar: {
       '/guide/': [
         {
-          text: 'Examples',
-          items: [
-            { text: 'Markdown Examples', link: '/markdown-examples' },
-            { text: 'Runtime API Examples', link: '/api-examples' }
-          ]
+          text: 'Setup',
+          items: sidebarSetup
         }
       ],
 

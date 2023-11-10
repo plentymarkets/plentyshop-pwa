@@ -1,0 +1,26 @@
+# plentysystems system setup
+
+To run this project, you need a plentysystems system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
+
+## Plugins
+
+> :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
+
+For plentyShop PWA to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
+
+1. Log into your plentysystems system.
+2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
+    - IO
+    - plentyShop LTS
+    - PayPal
+    - Cash in advance
+    - Pay upon pickup
+    - DHL Shipping (Versenden)
+    - Customer feedback
+3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest. The priority of all other plugins remains 0.
+
+## System configuration
+
+1. Log into your plentysystems system.
+2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
+3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.

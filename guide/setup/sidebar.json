@@ -1,0 +1,18 @@
+[
+    {
+        "text": "Introduction",
+        "link": "/guide/setup/index.md"
+    },
+    {
+        "text": "plentysystems setup",
+        "link": "/guide/setup/system.md"
+    },
+    {
+        "text": "Local setup",
+        "link": "/guide/setup/local.md"
+    },
+    {
+        "text": "Deployment",
+        "link": "/guide/setup/deployment.md"
+    }
+]
