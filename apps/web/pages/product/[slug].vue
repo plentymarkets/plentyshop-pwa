@@ -18,7 +18,10 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" />
+            <ReviewsAccordion
+              :product="product"
+              :total-reviews="productGetters.getTotalReviews(productReviewAverage)"
+            />
           </NuxtLazyHydrate>
         </section>
       </div>
@@ -35,10 +38,11 @@
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
-const { setSingleItemMeta } = useStructuredData();
+const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
+
 definePageMeta({
   layout: false,
 });
@@ -46,14 +50,20 @@ definePageMeta({
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
-
-await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
-
+const { fetchProductReviews } = useProductReviews(Number(productId));
+if (process.server) {
+  await Promise.all([
+    fetchProduct(productParams),
+    fetchProductReviewAverage(Number(productId)),
+    fetchProductReviews(Number(productId)),
+  ]);
+  setProductMetaData(product.value, categoryTree.value[0]);
+} else {
+  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
+}
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
-setSingleItemMeta(product.value, categoryTree.value[0]);
-
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
