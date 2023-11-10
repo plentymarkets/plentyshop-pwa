@@ -50,50 +50,7 @@
           />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
-        <div class="text-sm mx-4 md:pb-0">
-          <div class="flex items-center">
-            <SfCheckbox
-              v-model="termsAccepted"
-              :invalid="showTermsError"
-              @change="showTermsError = false"
-              id="terms-checkbox"
-              class="inline-block mr-2"
-              data-testid="checkout-terms-checkbox"
-            />
-            <div>
-              <i18n-t keypath="termsInfo">
-                <template #terms>
-                  <SfLink
-                    :href="localePath(paths.termsAndConditions)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ $t('termsAndConditions') }}
-                  </SfLink>
-                </template>
-                <template #cancellationRights>
-                  <SfLink
-                    :href="localePath(paths.cancellationRights)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ $t('cancellationRights') }}
-                  </SfLink>
-                </template>
-                <template #privacyPolicy>
-                  <SfLink
-                    :href="localePath(paths.privacyPolicy)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ $t('privacyPolicy') }}
-                  </SfLink>
-                </template>
-              </i18n-t>
-            </div>
-          </div>
-          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
-        </div>
+        <CheckoutGeneralTerms />
       </div>
       <div class="col-span-5">
         <div v-for="cartItem in cart?.items" :key="cartItem.id">
@@ -153,7 +110,7 @@
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
 import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
@@ -172,6 +129,7 @@ const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { checkboxValue, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,
   data: shippingMethodData,
@@ -184,7 +142,6 @@ const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalI
 const i18n = useI18n();
 const paypalCardDialog = ref(false);
 const termsAccepted = ref(false);
-const showTermsError = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const paypalPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
@@ -233,8 +190,9 @@ const scrollToHTMLObject = (object: string) => {
 };
 
 const validateTerms = (): boolean => {
-  showTermsError.value = !termsAccepted.value;
-  if (showTermsError.value) {
+  setShowErrors(!checkboxValue.value);
+
+  if (!checkboxValue.value) {
     scrollToHTMLObject(ID_CHECKBOX);
     return false;
   }
