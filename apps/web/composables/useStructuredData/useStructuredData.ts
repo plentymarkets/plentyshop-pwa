@@ -1,9 +1,10 @@
 import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
-import { SetLogoMeta, SingleItemMeta, UseStructuredDataState } from './types';
-import type { Product } from '@plentymarkets/shop-api';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
+import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
+import { useProductReviews } from '../useProductReviews';
+import { useProductReviewAverage } from '../useProductReviewAverage';
 
 /**
  * @description Composable managing meta data
@@ -59,9 +60,29 @@ export const useStructuredData: useStructuredDataReturn = () => {
    * })
    * ```
    */
-  const setSingleItemMeta: SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => {
+  const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
+    const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
+    const { data: reviewAverage } = useProductReviewAverage(productGetters.getItemId(product));
+
     const manufacturer = product.item.manufacturer as { name: string };
+    let reviews = null;
+    if (reviewAverage.value) {
+      reviews = [];
+      reviewGetters.getItems(productReviews.value).forEach((reviewItem) => {
+        reviews.push({
+          '@type': 'Review',
+          reviewRating: {
+            '@type': 'Rating',
+            ratingValue: reviewGetters.getReviewRating(reviewItem),
+          },
+          author: {
+            '@type': 'Person',
+            name: reviewGetters.getReviewAuthor(reviewItem),
+          },
+        });
+      });
+    }
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
@@ -77,35 +98,23 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Organization',
         name: manufacturer.name,
       },
-      // optional
-      // "review": {
-      //   "@type": "Review",
-      //   "reviewRating": {
-      //     "@type": "Rating",
-      //     "ratingValue": 4,
-      //     "bestRating": 5
-      //   },
-      //   "author": {
-      //     "@type": "Person",
-      //     "name": "Fred Benson"
-      //   }
-      // },
-      // "aggregateRating": {
-      //   "@type": "AggregateRating",
-      //   "ratingValue": 4.4,
-      //   "reviewCount": 89
-      // },
+      review: reviews,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: productGetters.getAverageRating(reviewAverage.value),
+        reviewCount: productGetters.getTotalReviews(reviewAverage.value),
+      },
       offers: {
         '@type': 'Offer',
-        priceCurrency: product.prices?.default.currency,
-        price: product.prices?.default.price.value,
-        priceValidUntil: product.variation?.availableUntil,
+        priceCurrency: productGetters.getSpecialPriceCurrency(product),
+        price: productGetters.getPrice(product).special,
+        priceValidUntil: productGetters.getVariationAvailableUntil(product),
         url: null,
         priceSpecification: [
           {
             '@type': 'UnitPriceSpecification',
-            price: product.prices?.default.price.value,
-            priceCurrency: product.prices?.default.currency,
+            price: productGetters.getPrice(product).special,
+            priceCurrency: productGetters.getSpecialPriceCurrency(product),
             priceType: 'SalePrice',
             referenceQuantity: {
               '@type': 'QuantitativeValue',
@@ -119,26 +128,27 @@ export const useStructuredData: useStructuredDataReturn = () => {
       },
       depth: {
         '@type': 'QuantitativeValue',
-        value: product.variation.lengthMM,
+        value: productGetters.getLengthMM(product),
       },
       width: {
         '@type': 'QuantitativeValue',
-        value: product.variation.widthMM,
+        value: productGetters.getWidthMM(product),
       },
       height: {
         '@type': 'QuantitativeValue',
-        value: product.variation.heightMM,
+        value: productGetters.getHeightMM(product),
       },
       weight: {
         '@type': 'QuantitativeValue',
-        value: product.variation.weightG,
+        value: productGetters.getWeightG(product),
       },
     };
+
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
-        price: product.prices?.rrp.price.value,
-        priceCurrency: product.prices?.rrp.currency,
+        price: productGetters.getRegularPrice(product),
+        priceCurrency: productGetters.getRegularPriceCurrency(product),
         priceType: 'ListPrice',
         referenceQuantity: {
           '@type': 'QuantitativeValue',
@@ -157,8 +167,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
   };
 
   return {
-    setSingleItemMeta,
     setLogoMeta,
+    setProductMetaData,
     ...toRefs(state.value),
   };
 };
