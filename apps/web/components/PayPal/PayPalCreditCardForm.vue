@@ -43,7 +43,7 @@
       <div class="row mt-5">
         <label class="hosted-fields--label">
           <span class="text-sm font-medium">{{ $t('paypal.unbrandedNameOnCard') }}</span>
-          <SfInput v-model="cardHolder" class="hosted-field" />
+          <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
         </label>
       </div>
 
@@ -54,7 +54,7 @@
           }}</SfButton>
         </div>
         <div>
-          <SfButton type="submit" :disabled="loading">
+          <SfButton type="submit" :disabled="loading" data-testid="pay-creditcard-button">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ $t('paypal.unbrandedPay') }}
@@ -77,7 +77,7 @@ const { loadScript, createCreditCardTransaction, captureOrder, executeOrder } = 
 const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
-const router = useRouter();
+const localePath = useLocalePath();
 const i18n = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
@@ -174,7 +174,9 @@ onMounted(() => {
               clearCartItems();
 
               if (order?.order?.id) {
-                router.push('/thank-you/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey);
+                navigateTo(
+                  localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey),
+                );
               }
 
               loading.value = false;

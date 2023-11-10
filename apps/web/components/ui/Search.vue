@@ -29,7 +29,7 @@ const props = defineProps<{
   close?: () => boolean;
 }>();
 
-const router = useRouter();
+const localePath = useLocalePath();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
@@ -47,7 +47,7 @@ const handleReset = () => {
 const handleSubmit = () => {
   props.close?.();
   updateSearchTerm(inputModel.value);
-  router.push({ path: paths.search, query: { term: inputModel.value } });
+  navigateTo({ path: localePath(paths.search), query: { term: inputModel.value } });
   handleReset();
 };
 

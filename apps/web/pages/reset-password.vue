@@ -27,9 +27,7 @@ definePageMeta({
   layout: false,
 });
 
-const router = useRouter();
-
 const customerEmail = ref('');
-const resetPassword = () => router.push(paths.authResetPasswordSuccess);
+const resetPassword = () => navigateTo(localePath(paths.authResetPasswordSuccess));
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

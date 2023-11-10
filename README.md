@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
 
-  <a href="https://www.plentymarkets.com/"><img src="./plentysystems.jpg" alt="plentysystems logo" height="160px" /></a>
+  <a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
 
   <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
 </div>

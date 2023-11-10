@@ -6,12 +6,11 @@
     <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
       <NuxtLazyHydrate when-visible>
         <SfButton
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-          :tag="NuxtLink"
-          :aria-label="$t('numberInCart', cartItemsCount)"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          :aria-label="$t('languageSelector')"
           variant="tertiary"
           square
-          @click="toggleLanguageSelector"
+          @click="toggleLanguageSelect"
         >
           <template #prefix>
             <SfIconLanguage class="relative" />
@@ -82,25 +81,28 @@
         </SfButton>
       </NuxtLazyHydrate>
     </nav>
-    <SfButton
-      variant="tertiary"
-      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="toggleLanguageSelector"
-    >
-      <SfIconLanguage />
-    </SfButton>
-    <SfButton
-      variant="tertiary"
-      class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
-      square
-      @click="searchModalOpen"
-      :aria-label="$t('openSearchModalButtonLabel')"
-    >
-      <SfIconSearch />
-    </SfButton>
+    <div>
+      <SfButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        square
+        @click="toggleLanguageSelect"
+        :aria-label="$t('languageSelector')"
+      >
+        <SfIconLanguage />
+      </SfButton>
+      <SfButton
+        variant="tertiary"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        square
+        @click="searchModalOpen"
+        :aria-label="$t('openSearchModalButtonLabel')"
+      >
+        <SfIconSearch />
+      </SfButton>
+    </div>
   </MegaMenu>
-  <LanguageSelector v-if="showLanguageSelector" :toggle-method="toggleLanguageSelector" />
+  <LanguageSelector v-if="isLanguageSelectOpen" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
@@ -180,10 +182,11 @@ import { useCategoryTree } from '~/composables/useCategoryTree';
 import { useCustomer } from '~/composables/useCustomer';
 import { DefaultLayoutProps } from '~/layouts/types';
 
-const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
+const { isOpen: isLanguageSelectOpen, toggle: toggleLanguageSelect } = useLanguageSelect();
+
 defineProps<DefaultLayoutProps>();
 
 const { data: categoryTree } = useCategoryTree();
@@ -198,7 +201,7 @@ const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quanti
 const logOut = async () => {
   await logout();
   accountDropdownToggle();
-  router.push('/');
+  navigateTo(localePath(paths.home));
 };
 
 const accountDropdown = [
@@ -219,12 +222,6 @@ const accountDropdown = [
     link: '/',
   },
 ];
-
-let showLanguageSelector = ref(false);
-
-const toggleLanguageSelector = () => {
-  showLanguageSelector.value = !showLanguageSelector.value;
-};
 
 watch(
   () => isAuthenticationOpen.value,

@@ -18,7 +18,7 @@
         <div id="order-items" v-if="order?.order" class="my-4">
           <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
             <div class="w-full" v-for="item in orderGetters.getItems(order)" :key="item.id">
-              <OrderSummaryProductCard :order-item="item" />
+              <OrderSummaryProductCard :order="order" :order-item="item" />
             </div>
           </SfScrollable>
         </div>

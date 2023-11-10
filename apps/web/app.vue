@@ -8,13 +8,14 @@
 
 <script setup lang="ts">
 const { getCategoryTree } = useCategoryTree();
-const { setInitialData } = useInitialSetup();
+const { setInitialData, ssrLocale } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
 const vsfLocale = useCookie('vsf-locale');
 const { setStaticPageMeta } = useCanonical();
 
 vsfLocale.value = locale.value;
+ssrLocale.value = locale.value;
 
 if (route?.meta.layoutName !== 'checkout') {
   setInitialData();

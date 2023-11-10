@@ -18,7 +18,10 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" />
+            <ReviewsAccordion
+              :product="product"
+              :total-reviews="productGetters.getTotalReviews(productReviewAverage)"
+            />
           </NuxtLazyHydrate>
         </section>
       </div>
@@ -32,66 +35,35 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { Product, ProductParams } from '@plentymarkets/shop-api';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { Product } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-sdk';
 const { data: categoryTree } = useCategoryTree();
-const { setSingleItemMeta } = useStructuredData();
-
+const { setProductMetaData } = useStructuredData();
 const route = useRoute();
-const router = useRouter();
 const { selectVariation } = useProducts();
 const localePath = useLocalePath();
-
-const productPieces = (route.params.itemId as string).split('_');
-
-const productId = productPieces[0];
-let productParams: ProductParams = {
-  id: productId,
-};
-
-if (productPieces[1]) {
-  productParams.variationId = productPieces[1];
-}
-
-const { data: product, fetchProduct } = useProduct(productId);
-
-await fetchProduct(productParams);
-
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(
-  product?.value?.variation?.id?.toString() ?? '',
-);
-
-selectVariation(productPieces[1] ? product.value : ({} as Product));
-await fetchProductReviewAverage(product.value.item.id);
-
-const { t } = useI18n();
-
-const breadcrumbs = computed(() => {
-  const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
-    categoryTree.value,
-    Number(productGetters.getCategoryIds(product.value)?.[0] ?? 0),
-  );
-  breadcrumb.unshift({ name: t('home'), link: '/' });
-  breadcrumb.push({ name: productGetters.getName(product.value), link: `#` });
-
-  return breadcrumb;
-});
-
-if (product.value) {
-  const productName = productGetters.getName(product.value);
-
-  const title = computed(() => productName);
-
-  useHead({
-    title,
-  });
-}
 
 definePageMeta({
   layout: false,
 });
 
+const { productParams, productId } = createProductParams(route.params);
+const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { fetchProductReviews } = useProductReviews(Number(productId));
+if (process.server) {
+  await Promise.all([
+    fetchProduct(productParams),
+    fetchProductReviewAverage(Number(productId)),
+    fetchProductReviews(Number(productId)),
+  ]);
+  setProductMetaData(product.value, categoryTree.value[0]);
+} else {
+  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
+}
+selectVariation(productParams.variationId ? product.value : ({} as Product));
+setTitle();
+generateBreadcrumbs();
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
@@ -101,13 +73,11 @@ watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
-      router.push({
+      navigateTo({
         path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
         query: route.query,
       });
     }
   },
 );
-
-setSingleItemMeta(product.value, productPieces[1], categoryTree.value[0]);
 </script>

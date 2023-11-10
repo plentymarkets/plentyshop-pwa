@@ -1,43 +1,39 @@
 <template>
-  <div class="w-full bg-white flex items-center justify-center flex-col shadow-xl md:hidden">
+  <div class="w-full bg-white flex items-center py-10 justify-center flex-col shadow-xl md:hidden">
     <SfButton
-      v-for="locale in localeObj"
+      v-for="locale in localeCodes"
       :key="locale"
-      variant="tertiary"
+      :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
-      :aria-label="$t('lang.' + locale.code?.toString())"
-      class="py-3 cursor-pointer"
-      @click="switchLocale(locale.code?.toString())"
-      >{{ $t('lang.' + locale.code.toString()) }}</SfButton
+      :aria-label="$t('lang.' + locale)"
+      @click="switchLocale(locale)"
+      >{{ $t('lang.' + locale) }}</SfButton
     >
   </div>
-  <div class="hidden md:flex w-full bg-white items-center justify-center absolute z-[99999] top-[10%] shadow-xl">
+  <div class="hidden md:flex w-full bg-white items-center py-10 justify-center absolute z-[99999] top-[10%] shadow-xl">
     <SfButton
-      v-for="locale in localeObj"
+      v-for="locale in localeCodes"
       :key="locale"
-      variant="tertiary"
+      :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
-      :aria-label="$t('lang.' + locale.code?.toString())"
-      class="px-10 py-10 cursor-pointer"
-      @click="switchLocale(locale.code?.toString())"
-      >{{ $t('lang.' + locale.code?.toString()) }}</SfButton
+      class="ml-3"
+      :aria-label="$t('lang.' + locale)"
+      @click="switchLocale(locale)"
+      >{{ $t('lang.' + locale) }}</SfButton
     >
   </div>
 </template>
 <script setup lang="ts">
-import type { LocaleObject } from 'vue-i18n-routing';
+import { SfButton } from '@storefront-ui/vue';
 
-const { locales, setLocaleCookie } = useI18n();
-const localeObj = locales as unknown as LocaleObject[];
+const { setLocaleCookie, localeCodes, locale: currentLocale } = useI18n();
 const route = useRoute();
-const router = useRouter();
 const switchLocalePath = useSwitchLocalePath();
+const { toggle } = useLanguageSelect();
 
-const props = defineProps(['toggleMethod']);
-
-const switchLocale = (language: any) => {
+const switchLocale = (language: string) => {
   setLocaleCookie(language);
-  router.push({ path: switchLocalePath(language), query: route.query });
-  props.toggleMethod();
+  navigateTo({ path: switchLocalePath(language), query: route.query });
+  toggle();
 };
 </script>

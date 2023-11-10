@@ -4,10 +4,7 @@
     data-testid="cart-product-card"
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink
-        :tag="NuxtLink"
-        :to="localePath(`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`)"
-      >
+      <SfLink :tag="NuxtLink" :to="path">
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
@@ -23,7 +20,7 @@
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
-        :to="localePath(`${paths.product}${cartGetters.getItemName(cartItem)}-${cartGetters.getVariationId(cartItem)}`)"
+        :to="path"
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
@@ -115,4 +112,6 @@ const basePriceSingleValue = computed(() =>
       productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
     : 0,
 );
+
+const path = computed(() => localePath('/' + cartGetters.getProductPath(props.cartItem)));
 </script>

@@ -13,8 +13,8 @@ import type { FetchProductReviews, UseProductReviews, UseProductReviewsState } f
  * const { data, loading, fetchProductReviews } = useProductReviews(1, 1);
  * ```
  */
-export const useProductReviews: UseProductReviews = (variationId: string | number, itemId: number) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${variationId}-${itemId}`, () => ({
+export const useProductReviews: UseProductReviews = (itemId: number) => {
+  const state = useState<UseProductReviewsState>(`useProductReviews-${itemId}`, () => ({
     data: {} as Review,
     loading: false,
   }));
@@ -26,7 +26,7 @@ export const useProductReviews: UseProductReviews = (variationId: string | numbe
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (variationId: string | number, itemId: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.getReview({
