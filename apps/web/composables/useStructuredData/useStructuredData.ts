@@ -51,7 +51,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
 
   /**
    * @description Function for Setting Single Item Meta
-   * @returns SingleItemMeta
    * @example
    * ``` ts
    * setSingleItemMeta({
