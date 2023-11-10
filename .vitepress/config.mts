@@ -64,6 +64,10 @@ export default defineConfig({
       { icon: 'instagram', link: 'https://www.instagram.com/plentysystems' },
       { icon: 'youtube', link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg' },
       { icon: 'twitter', link: 'https://twitter.com/plentymarkets'}
-    ]
+    ],
+
+    search: {
+      provider: 'local'
+    }
   }
 })
