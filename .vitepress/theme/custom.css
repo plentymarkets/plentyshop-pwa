@@ -1,0 +1,24 @@
+/* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
+:root {
+    --vp-c-gray-1: #839BA8;
+    --vp-c-gray-2: #AEC5D0;
+    --vp-c-gray-3: #D8E4EB;
+    --vp-c-gray-soft: rgba(43, 59, 63, 0.14);
+
+    --vp-c-brand-1: #073342;
+    --vp-c-brand-2: #054E63;
+    --vp-c-brand-3: #02809E;
+    --vp-c-brand-soft: rgba(0, 153, 190, 0.14);
+}
+
+.dark {
+    --vp-c-gray-1: #5F767F;
+    --vp-c-gray-2: #374D55;
+    --vp-c-gray-3: #2B3B3F;
+    --vp-c-gray-soft: rgba(216, 228, 235, 0.16);
+
+    --vp-c-brand-1: #AFDEF8;
+    --vp-c-brand-2: #5DC3F0;
+    --vp-c-brand-3: #008EBD;
+    --vp-c-brand-soft: rgba(1, 46, 53, 0.16);
+}
