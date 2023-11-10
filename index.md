@@ -3,23 +3,22 @@
 layout: home
 
 hero:
-  name: "plentyShop PWA Docs"
-  text: "A VitePress Site"
-  tagline: My great project tagline
+  name: "plentyShop PWA"
+  text: "Documentation"
+  tagline: Your virtual shop window
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting Started
+      link: /guide/setup/system
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: SDK
+      link: /reference/sdk/
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Progressive Web App
+    details: Offer your shop as a downloadable app with offline functionality
+  - title: State-of-the-Art Development
+    details: Built with VueJS 3, NuxtJS 3, TailwindCSS, and Vue Storefront UI 2
+  - title: Lightning-Fast Online Shop
+    details: Provide the best online shopping experience with optimised web vitals and server-side rendering
 ---
-
