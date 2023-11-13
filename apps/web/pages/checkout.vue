@@ -151,24 +151,14 @@ const paypalCreditCardPaymentId = computed(() =>
 );
 
 const loadAddresses = async () => {
-  await getBillingAddresses();
-  await getShippingAddresses();
-  await getShippingMethods();
+  await Promise.all([getBillingAddresses(), getShippingAddresses(), getShippingMethods()]);
 };
 
-await loadAddresses();
-await fetchPaymentMethods();
+const promiseAll = async () => {
+  await Promise.all([loadAddresses(), fetchPaymentMethods()]);
+};
 
-// const promiseAll = async () => {
-//   await Promise.all([loadAddresses(), fetchPaymentMethods()]);
-// };
-
-// try {
-//   promiseAll();
-// } catch {
-//   // eslint-disable-next-line unicorn/expiring-todo-comments
-//   // TODO: Handle error
-// }
+promiseAll();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
