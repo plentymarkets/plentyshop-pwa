@@ -12,7 +12,6 @@ import { SetInitialData, UseInitialSetupReturn, UseInitialSetupState } from './t
 const setInitialData: SetInitialData = async () => {
   const { setUser } = useCustomer();
   const { setCart, loading: cartLoading } = useCart();
-  const { setCsrf } = useCsrf();
 
   cartLoading.value = true;
   const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
@@ -20,12 +19,6 @@ const setInitialData: SetInitialData = async () => {
 
   setUser(data.value?.data as SessionResult);
   setCart(data.value?.data.basket as Cart);
-
-  const csrfToken = data.value?.data.csrf;
-
-  if (csrfToken) {
-    setCsrf(csrfToken);
-  }
 
   cartLoading.value = false;
 

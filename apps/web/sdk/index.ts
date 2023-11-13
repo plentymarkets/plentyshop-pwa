@@ -7,7 +7,6 @@ let interceptorId: number | null = null;
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const useSdk = () => {
   const config = useRuntimeConfig();
-  const { setCsrfHeader } = useCsrf();
   const { ssrLocale } = useInitialSetup();
   const sdkConfig = {
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
@@ -35,9 +34,6 @@ export const useSdk = () => {
 
           config.headers.cookie = headers.cookie ?? '';
         }
-        else {
-          config = setCsrfHeader(config);
-        }
 
         if (ssrLocale.value) {
           headers.cookie = headers.cookie?.includes('vsf-locale')
@@ -45,7 +41,9 @@ export const useSdk = () => {
             : `${headers.cookie ?? ''};vsf-locale=${ssrLocale.value};`;
         }
 
-        config.headers.cookie = headers.cookie ?? '';
+        if (config.headers) {
+          config.headers.cookie = headers.cookie ?? '';
+        }
       }
 
       return config;
