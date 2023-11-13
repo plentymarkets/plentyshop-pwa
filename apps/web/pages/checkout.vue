@@ -156,8 +156,16 @@ const loadAddresses = async () => {
   await getShippingMethods();
 };
 
-await loadAddresses();
-await fetchPaymentMethods();
+const promiseAll = async () => {
+  await Promise.all([loadAddresses(), fetchPaymentMethods()]);
+};
+
+try {
+  promiseAll();
+} catch {
+  // eslint-disable-next-line unicorn/expiring-todo-comments
+  // TODO: Handle error
+}
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
