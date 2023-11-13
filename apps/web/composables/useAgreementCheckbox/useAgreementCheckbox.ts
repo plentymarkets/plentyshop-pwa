@@ -1,12 +1,13 @@
 import type { SetCheckboxValue, SetShowErrors, UseAgreementCheckboxReturn, UseAgreementCheckboxState } from './types';
 
 /**
- * @description Composable for getting the general terms checkbox.
+ * @description Composable for managing agreement checkboxes.
  * @param source string
+ * @returns UseAgreementCheckboxReturn
  * @example
  * ``` ts
  * const {
- * checkboxValue, showErrors, loading, setCheckboxValue, showErrors
+ * checkboxValue, showErrors, loading, setCheckboxValue, setShowErrors
  * } = useAgreementCheckbox('checkoutGeneralTerms');
  * ```
  */
@@ -18,7 +19,7 @@ export const useAgreementCheckbox: UseAgreementCheckboxReturn = (source: string)
   }));
 
   /**
-   * @description Set if the errors should be displayed.
+   * @description Set checkbox errors visibility.
    * @param value boolean
    * @returns SetShowErrors
    * @example

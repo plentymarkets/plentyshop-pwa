@@ -156,16 +156,19 @@ const loadAddresses = async () => {
   await getShippingMethods();
 };
 
-const promiseAll = async () => {
-  await Promise.all([loadAddresses(), fetchPaymentMethods()]);
-};
+await loadAddresses();
+await fetchPaymentMethods();
 
-try {
-  promiseAll();
-} catch {
-  // eslint-disable-next-line unicorn/expiring-todo-comments
-  // TODO: Handle error
-}
+// const promiseAll = async () => {
+//   await Promise.all([loadAddresses(), fetchPaymentMethods()]);
+// };
+
+// try {
+//   promiseAll();
+// } catch {
+//   // eslint-disable-next-line unicorn/expiring-todo-comments
+//   // TODO: Handle error
+// }
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
