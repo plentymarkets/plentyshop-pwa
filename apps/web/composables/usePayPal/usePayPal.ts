@@ -79,7 +79,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     if (state.value.config && paypalGetters.getClientId(state.value.config)) {
       try {
         state.value.paypalScript = await loadPayPalScript({
-          clientId: paypalGetters.getClientId(state.value.config),
+          clientId: 'AW6yq0sv_F3N_ADx892v7dZe_sW97-Ndh1S-PvR8IdpscLgZuqevJnQqUnvo4FeeNtJ-CJyU3-eLffJj',
           dataClientToken: paypalGetters.getClientToken(state.value.config),
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
