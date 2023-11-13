@@ -1,6 +1,6 @@
 import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
-import { SingleItemMeta, UseStructuredDataState } from './types';
+import { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
@@ -11,7 +11,7 @@ import { useProductReviewAverage } from '../useProductReviewAverage';
  * @returns useStructuredDataReturn
  * @example
  * ``` ts
- * const { data, loading, setStaticPageMeta } = useMeta();
+ * const { data, loading, setLogoMeta, setStaticPageMeta } = useMeta();
  * ```
  */
 export const useStructuredData: useStructuredDataReturn = () => {
@@ -20,14 +20,46 @@ export const useStructuredData: useStructuredDataReturn = () => {
   }));
 
   /**
-   * @description Function for Setting page Meta
-   * @returns SingleItemMeta
+   * @description Function for Setting Logo Metadata.
+   * @returns SetLogoMeta
    * @example
    * ``` ts
-   * setSigleItemMeta()
+   * setLogoMeta()
    * ```
    */
-  const setProductMetaData: SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => {
+  const setLogoMeta: SetLogoMeta = () => {
+    state.value.loading = true;
+
+    const runtimeConfig = useRuntimeConfig();
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      url: runtimeConfig.public.apiUrl,
+      logo: runtimeConfig.public.logoUrl,
+    };
+    useHead({
+      script: [
+        {
+          type: 'application/ld+json',
+          innerHTML: JSON.stringify(structuredData),
+        },
+      ],
+    });
+
+    state.value.loading = false;
+  };
+
+  /**
+   * @description Function for Setting Single Item Meta
+   * @example
+   * ``` ts
+   * setSingleItemMeta({
+   *  product: Product,
+   *  categoryTree: CategoryTreeItem
+   * })
+   * ```
+   */
+  const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
     const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
     const { data: reviewAverage } = useProductReviewAverage(productGetters.getItemId(product));
@@ -134,6 +166,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   };
 
   return {
+    setLogoMeta,
     setProductMetaData,
     ...toRefs(state.value),
   };
