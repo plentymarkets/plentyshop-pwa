@@ -1,11 +1,9 @@
-import { CookieRef } from 'nuxt/app';
-import { Cookie } from 'cookie.config';
 import { UseCookieReturn } from './types';
 
-export const usePreviewMode = (cookie: CookieRef<Cookie[]>): UseCookieReturn => {
+export const usePreviewMode = (cookieKey: string): UseCookieReturn => {
   const bannerIsHidden = ref(true);
 
-  const existingCookieInMemory = cookie;
+  console.log(cookieKey);
 
   /**
    * @description Function for setting the hidden state for the banner.

@@ -32,7 +32,8 @@
 </template>
 
 <script setup lang="ts">
-const { bannerIsHidden, setHiddenState } = usePreviewMode(useCookie('consent-cookie'));
+import { SfButton, SfIconCheckBox } from '@storefront-ui/vue';
+const { bannerIsHidden, setHiddenState } = usePreviewMode('consent-cookie');
 
 const hideBanner = computed(() => {
   return bannerIsHidden.value;
