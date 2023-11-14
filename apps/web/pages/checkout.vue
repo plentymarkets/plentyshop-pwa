@@ -154,11 +154,8 @@ const loadAddresses = async () => {
   await Promise.all([getBillingAddresses(), getShippingAddresses(), getShippingMethods()]);
 };
 
-const promiseAll = async () => {
-  await Promise.all([loadAddresses(), fetchPaymentMethods()]);
-};
-
-promiseAll();
+await loadAddresses();
+await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
