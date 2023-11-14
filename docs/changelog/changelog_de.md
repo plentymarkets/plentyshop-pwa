@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## Upcoming release
+## Bevorstehender Release
 
 ### Changed
 
