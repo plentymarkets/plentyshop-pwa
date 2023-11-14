@@ -2,7 +2,7 @@
 
 ## Bevorstehender Release
 
-### Changed
+### Geändert
 
 - Die Cookiebar Logik wurde überarbeitet.
 
