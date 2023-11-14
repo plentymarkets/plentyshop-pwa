@@ -1,6 +1,6 @@
 <template>
   <main data-testid="checkout-layout">
-    <NuxtLazyHydrate>
+    <NuxtLazyHydrate when-visible>
       <NarrowContainer>
         <div class="px-4 md:px-0 mb-20">
           <div class="flex justify-between mt-8 mb-10 px-4 md:px-0">
