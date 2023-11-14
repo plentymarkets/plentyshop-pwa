@@ -64,7 +64,6 @@ export default {
     {
       id: 1,
       name: 'External Media',
-      accepted: false,
       showMore: false,
       description:
         'Content by video platforms and social media platforms are blocked by default. If you accept cookies by external media, access to these contents requires no further consent.',
@@ -76,7 +75,6 @@ export default {
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '2 days',
           script: ['console.log(`Loaded cookie script example1`);', 'https://www.plentymarkets.com'],
-          accepted: false,
         },
         {
           name: 'Consent',
@@ -84,7 +82,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
         {
           name: 'Session2',
@@ -92,14 +89,12 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
       ],
     },
     {
       id: 2,
       name: 'Functional',
-      accepted: false,
       showMore: false,
       description:
         'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
@@ -110,7 +105,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '4 days',
-          accepted: false,
         },
         {
           name: 'Consent',
@@ -118,7 +112,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
         {
           name: 'Session2',
@@ -126,14 +119,12 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
       ],
     },
     {
       id: 3,
       name: 'Marketing',
-      accepted: false,
       showMore: false,
       description:
         'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
@@ -144,7 +135,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
         {
           name: 'Consent',
@@ -152,7 +142,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
         {
           name: 'Session2',
@@ -160,7 +149,6 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
-          accepted: false,
         },
       ],
     },

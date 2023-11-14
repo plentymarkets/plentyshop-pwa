@@ -89,6 +89,10 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
     state.value.data = cookies;
 
+    if (!browserCookies.value) {
+      state.value.visible = true;
+    }
+
     loadThirdPartyScripts();
   };
 
