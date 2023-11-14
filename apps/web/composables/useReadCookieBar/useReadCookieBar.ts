@@ -122,10 +122,15 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
       maxAge: getMinimumLifeSpan(state.value.data.groups),
     });
 
+    const alreadySetCookie = Boolean(consentCookie.value);
+
     consentCookie.value = jsonCookie;
 
     changeVisibilityState();
-    router.go(0);
+
+    if (alreadySetCookie) {
+      router.go(0);
+    }
   };
 
   /**
