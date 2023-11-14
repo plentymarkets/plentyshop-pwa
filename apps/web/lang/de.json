@@ -40,6 +40,9 @@
     "Reject All": "Alles ablehnen",
     "Accept Selection": "Auswahl akzeptieren"
   },
+  "PreviewModeBar": {
+    "Deactivate PWA preview": "plentyShop PWA Vorschau beenden"
+  },
   "documents" : {
     "correctionDocuments": "Korrekturbeleg",
     "Credit Note": "Gutschrift",
