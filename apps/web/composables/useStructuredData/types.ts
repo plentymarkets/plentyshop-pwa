@@ -4,11 +4,13 @@ export interface UseStructuredDataState {
   loading: boolean;
 }
 
-export type SingleItemMeta = (product: Product, categoryTree: CategoryTreeItem) => void;
+export type SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => void;
+export type SetLogoMeta = () => void;
 
 export interface UseStructuredData {
   loading: Readonly<Ref<boolean>>;
-  setProductMetaData: SingleItemMeta;
+  setLogoMeta: SetLogoMeta;
+  setProductMetaData: SetProductMetaData;
 }
 
 export type useStructuredDataReturn = () => UseStructuredData;
