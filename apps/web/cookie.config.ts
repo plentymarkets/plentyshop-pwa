@@ -29,7 +29,8 @@ export default {
     {
       id: 0,
       name: 'Essentials',
-      accepted: false,
+      accepted: true,
+      showMore: false,
       description:
         'Essential cookies enable basic functions and are necessary for the proper functioning of the website.',
       cookies: [
@@ -40,6 +41,7 @@ export default {
           PrivacyPolicy: '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
           Lifespan: '100 days',
+          accepted: true,
         },
         {
           name: 'Consent',
@@ -47,6 +49,7 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
+          accepted: true,
         },
         {
           name: 'Session2',
@@ -54,13 +57,14 @@ export default {
           Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
+          accepted: true,
         },
       ],
     },
     {
       id: 1,
       name: 'External Media',
-      accepted: false,
+      showMore: false,
       description:
         'Content by video platforms and social media platforms are blocked by default. If you accept cookies by external media, access to these contents requires no further consent.',
       cookies: [
@@ -91,7 +95,7 @@ export default {
     {
       id: 2,
       name: 'Functional',
-      accepted: false,
+      showMore: false,
       description:
         'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
       cookies: [
@@ -121,7 +125,7 @@ export default {
     {
       id: 3,
       name: 'Marketing',
-      accepted: false,
+      showMore: false,
       description:
         'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
       cookies: [
