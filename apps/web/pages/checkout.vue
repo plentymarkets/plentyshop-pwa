@@ -129,7 +129,7 @@ const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { checkboxValue, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,
   data: shippingMethodData,
@@ -141,7 +141,6 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const i18n = useI18n();
 const paypalCardDialog = ref(false);
-const termsAccepted = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const paypalPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
@@ -188,9 +187,9 @@ const scrollToHTMLObject = (object: string) => {
 };
 
 const validateTerms = (): boolean => {
-  setShowErrors(!checkboxValue.value);
+  setShowErrors(!termsAccepted.value);
 
-  if (!checkboxValue.value) {
+  if (!termsAccepted.value) {
     scrollToHTMLObject(ID_CHECKBOX);
     return false;
   }

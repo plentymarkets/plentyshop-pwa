@@ -7,7 +7,7 @@ import type { SetCheckboxValue, SetShowErrors, UseAgreementCheckboxReturn, UseAg
  * @example
  * ``` ts
  * const {
- * checkboxValue, showErrors, loading, setCheckboxValue, setShowErrors
+ * checkboxValue, showErrors, setCheckboxValue, setShowErrors
  * } = useAgreementCheckbox('checkoutGeneralTerms');
  * ```
  */
@@ -15,7 +15,6 @@ export const useAgreementCheckbox: UseAgreementCheckboxReturn = (source: string)
   const state = useState<UseAgreementCheckboxState>(`useAgreementCheckbox-${source}`, () => ({
     checkboxValue: false,
     showErrors: false,
-    loading: false,
   }));
 
   /**
