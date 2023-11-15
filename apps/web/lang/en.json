@@ -171,7 +171,7 @@
   "quantitySelectorIncrease": "Increase value",
   "scrollTop": "Scroll to top",
   "numberInCart": "{count} product in cart",
-  "languageSelector": "Language selection",
+  "languageSelector": "Click to open languageSelector modal",
   "allProductsLinkText": "Browse products",
   "breadcrumbsDropdownText": "Show more breadcrumbs",
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
@@ -450,9 +450,13 @@
     "en": "English",
     "de":"German"
   },
+  "flags": {
+    "en": "US",
+    "de":"DE"
+  },
   "softLogin": {
     "titleLogin": "Log in to your account to access your order",
-    "titlePostcode": "Please enter the postcode of an address stored for the order to view the order details.",
+    "titlePostcode": "Please enter the postcode of an address stored fore the order to view the order details.",
     "titleFullName": "Please enter the last name or company name attached to the order to view the order details.",
     "fullName": "Last name or company name",
     "check": "Check"

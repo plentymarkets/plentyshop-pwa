@@ -171,7 +171,7 @@
   "quantitySelectorIncrease": "Menge erhöhen",
   "scrollTop": "Nach oben scrollen",
   "numberInCart": "{count} Produkte im Warenkorb",
-  "languageSelector": "Sprachauswahl",
+  "languageSelector": "Klicken Sie hier, um den modalen LanguageSelector zu öffnen",
   "allProductsLinkText": "Produkte durchsuchen",
   "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
@@ -449,6 +449,10 @@
   "lang": {
     "en": "Englisch",
     "de":"Deutsch"
+  },
+  "flags": {
+    "en": "US",
+    "de":"DE"
   },
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
