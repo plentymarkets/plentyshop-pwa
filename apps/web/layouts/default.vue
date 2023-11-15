@@ -140,7 +140,7 @@
     <Cookiebar />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-idle>
-    <PreviewMode />
+    <PreviewMode v-if="foundlookupCookies()" />
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
     <UiFooter />
@@ -189,6 +189,7 @@ const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisc
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { isOpen: isSearchModalOpen, open: searchModalOpen, close: searchModalClose } = useDisclosure();
 const { isOpen: isLanguageSelectOpen, toggle: toggleLanguageSelect } = useLanguageSelect();
+const { foundlookupCookies } = usePreviewMode();
 
 defineProps<DefaultLayoutProps>();
 

@@ -41,7 +41,7 @@
     "Accept Selection": "Auswahl akzeptieren"
   },
   "PreviewModeBar": {
-    "Deactivate PWA preview": "plentyShop PWA Vorschau beenden"
+    "pwa": "plentyShop PWA Vorschau beenden"
   },
   "documents" : {
     "correctionDocuments": "Korrekturbeleg",

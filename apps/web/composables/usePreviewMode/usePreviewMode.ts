@@ -1,25 +1,29 @@
-import { UseCookieReturn } from './types';
+import { SetHiddenState, UsePreviewModeReturn, UsePreviewModeState, TargetCookies } from './types';
 
-export const usePreviewMode = (cookieKey: string): UseCookieReturn => {
-  const bannerIsHidden = ref(true);
+export const usePreviewMode: UsePreviewModeReturn = () => {
+  const state = useState<UsePreviewModeState>('usePreviewModeState', () => ({
+    bannerIsHidden: true,
+    foundCookies: TargetCookies.filter((item) => !!useCookie(item).value),
+  }));
 
-  console.log(cookieKey);
-
-  /**
-   * @description Function for setting the hidden state for the banner.
-   * @param state
-   * @return void
-   * @example
-   * ``` ts
-   * setHiddenState(true);
-   * ```
-   */
-  function setHiddenState(state: boolean): void {
-    bannerIsHidden.value = state;
+  function foundlookupCookies() {
+    return state.value.foundCookies.length > 0;
   }
 
+  function removeLookupCookie(index: number) {
+    useCookie(state.value.foundCookies[index]).value = null;
+    state.value.foundCookies.splice(index, 1);
+    state.value.bannerIsHidden = true;
+  }
+
+  const setHiddenState: SetHiddenState = (value: boolean) => {
+    state.value.bannerIsHidden = value;
+  };
+
   return {
-    bannerIsHidden: computed(() => bannerIsHidden.value),
+    foundlookupCookies,
+    removeLookupCookie,
     setHiddenState,
+    ...toRefs(state.value),
   };
 };

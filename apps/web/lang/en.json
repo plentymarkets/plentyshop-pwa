@@ -41,7 +41,7 @@
     "Accept Selection": "Accept Selection"
   },
   "PreviewModeBar": {
-    "Deactivate PWA preview": "Deactivate plentyShop PWA preview"
+    "pwa": "Deactivate plentyShop PWA preview"
   },
   "documents": {
     "correctionDocuments": "Correction Documents",
