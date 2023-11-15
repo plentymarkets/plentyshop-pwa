@@ -4,21 +4,19 @@
       v-if="!bannerIsHidden"
       class="fixed z-50 w-full xl:w-auto xl:right-2 bottom-0 xl:bottom-14 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
     >
-      <div class="w-full flex flex-col xl:flex-row">
-        <div class="flex-1">
-          <SfButton
-            v-for="(cookie, index) in foundCookies"
-            :key="index"
-            class="w-full"
-            :class="{ 'mt-2': foundCookies.length > 1 && index !== 0 }"
-            :aria-disabled="false"
-            type="button"
-            aria-label="button"
-            @click="removeLookupCookie(index)"
-          >
-            {{ $t(`PreviewModeBar.${cookie}`) }}
-          </SfButton>
-        </div>
+      <div class="w-full flex flex-col">
+        <SfButton
+          v-for="(cookie, index) in foundCookies"
+          :key="index"
+          class="w-full"
+          :class="{ 'mt-2': foundCookies.length > 1 && index !== 0 }"
+          :aria-disabled="false"
+          type="button"
+          aria-label="button"
+          @click="removeLookupCookie(index)"
+        >
+          {{ $t(`PreviewModeBar.${cookie}`) }}
+        </SfButton>
       </div>
     </div>
 
