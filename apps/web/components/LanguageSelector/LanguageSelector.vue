@@ -1,5 +1,5 @@
 <template>
-  <div :class="isDesktop ? 'desktopFlagLayout' : 'mobileFlagLayout'">
+  <div data-testid="languageSelectList" :class="isDesktop ? 'desktopFlagLayout' : 'mobileFlagLayout'">
     <SfButton
       v-for="locale in localeCodes"
       :key="locale"
@@ -7,6 +7,7 @@
       square
       class="ml-3"
       :aria-label="$t('lang.' + locale)"
+      :data-testid="`languageOption-${locale}`"
       @click="switchLocale(locale)"
     >
       <div :class="isDesktop ? 'desktopCountryFlags' : 'mobileCountryFlags'" v-html="flagList[locale]"></div>
