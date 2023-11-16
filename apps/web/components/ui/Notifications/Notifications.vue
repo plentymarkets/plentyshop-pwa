@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="notifications" class="sticky ml-auto w-50 right-2 max-w-[450px] z-[51] top-[10px]">
+  <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0">
     <div v-for="notification of notifications" class="my-2" :key="notification.id">
       <Component
         :notification="notification"
@@ -8,6 +8,7 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import NegativeNotification from './NegativeNotification/NegativeNotification.vue';
 import NeutralNotification from './NeutralNotification/NeutralNotification.vue';
