@@ -450,10 +450,6 @@
     "en": "English",
     "de":"German"
   },
-  "flags": {
-    "en": "US",
-    "de":"DE"
-  },
   "softLogin": {
     "titleLogin": "Log in to your account to access your order",
     "titlePostcode": "Please enter the postcode of an address stored fore the order to view the order details.",

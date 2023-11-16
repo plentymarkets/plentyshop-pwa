@@ -450,10 +450,6 @@
     "en": "Englisch",
     "de":"Deutsch"
   },
-  "flags": {
-    "en": "US",
-    "de":"DE"
-  },
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
     "titlePostcode": "Bitte geben Sie die Postleitzahl einer Adresse ein, die am Auftrag hinterlegt ist, um die Auftragsdetails einzusehen.",
