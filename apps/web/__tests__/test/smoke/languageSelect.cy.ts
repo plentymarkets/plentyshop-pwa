@@ -2,10 +2,6 @@ import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectOb
 import { paths } from '../../../utils/paths';
 
 const languageSelect = new LanguageSelectObject();
-const locale_de = 'de';
-const locale_en = 'en';
-const text_de = 'Wohnzimmer';
-const text_en = 'Living Room';
 
 beforeEach(() => {
   cy.visitAndHydrate(paths.home);
@@ -18,5 +14,7 @@ describe('Smoke: Language Selector', () => {
     languageSelect.openModal();
     languageSelect.checkIfModalIsOpen();
     languageSelect.checkOptions();
+    languageSelect.selectOption('de');
+    languageSelect.checkLanguageSelected('de');
   });
 });

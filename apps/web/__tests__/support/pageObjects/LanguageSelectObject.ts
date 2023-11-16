@@ -1,19 +1,13 @@
 export class LanguageSelectObject {
-  languageListNotEmpty() {
-    // this.banners.should('be.visible');
-    return this;
-  }
-
-
   checkIfModalIsOpen() {
     cy.getByTestId('languageSelectList').first().should('be.visible');
     return this;
   }
 
   checkOptions() {
-    // should also check for flags svg present ?
     cy.getByTestId('languageOption-en').should('be.visible');
     cy.getByTestId('languageOption-de').should('be.visible');
+    // for consistency should also check for flags svg present
     return this;
   }
 
@@ -28,4 +22,8 @@ export class LanguageSelectObject {
     return this;
   }
 
+  selectOption(option: string) {
+    cy.getByTestId(`languageOption-${option}`).first().click();;
+    return this;
+  }
 }
