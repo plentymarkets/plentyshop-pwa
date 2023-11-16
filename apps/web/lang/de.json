@@ -41,6 +41,7 @@
     "Accept Selection": "Auswahl akzeptieren"
   },
   "PreviewModeBar": {
+    "label": "Steuerung des Vorschaumodus",
     "pwa": "plentyShop PWA Vorschau beenden"
   },
   "documents" : {
