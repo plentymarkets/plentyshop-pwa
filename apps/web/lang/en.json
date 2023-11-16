@@ -40,6 +40,10 @@
     "Reject All": "Reject All",
     "Accept Selection": "Accept Selection"
   },
+  "PreviewModeBar": {
+    "label": "Preview mode control",
+    "pwa": "Deactivate plentyShop PWA preview"
+  },
   "documents": {
     "correctionDocuments": "Correction Documents",
     "Credit Note": "Credit Note",
