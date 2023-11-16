@@ -1,7 +1,7 @@
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
-import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree } from './types';
+import type {UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree, SetCategoryTree} from './types';
 
 /**
  * @description Composable for managing the category tree.
@@ -38,8 +38,20 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
     }
   };
 
+  /**
+   * @description Function for setting the category tree data.
+   * @example
+   * ``` ts
+   * setCategoryTree();
+   * ```
+   */
+  const setCategoryTree: SetCategoryTree = (data: CategoryTreeItem[]) => {
+    state.value.data = data;
+  };
+
   return {
     getCategoryTree,
+    setCategoryTree,
     ...toRefs(state.value),
   };
 };

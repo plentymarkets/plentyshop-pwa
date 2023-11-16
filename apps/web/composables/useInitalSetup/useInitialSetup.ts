@@ -11,14 +11,15 @@ import { SetInitialData, UseInitialSetupReturn, UseInitialSetupState } from './t
  */
 const setInitialData: SetInitialData = async () => {
   const { setUser } = useCustomer();
+  const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
 
   cartLoading.value = true;
-  const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
+  const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSetup());
   useHandleError(error.value);
 
-  setUser(data.value?.data as SessionResult);
-  setCart(data.value?.data.basket as Cart);
+  // setUser(data.value. as SessionResult);
+  // setCart(data.value?.data.basket as Cart);
 
   cartLoading.value = false;
 
