@@ -488,5 +488,10 @@
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
+  },
+  "coupon": {
+    "title": "Haben sie einen Gutscheincode?",
+    "enterCode": "Code eingeben",
+    "apply": "Anwenden"
   }
 }

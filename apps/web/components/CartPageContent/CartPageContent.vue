@@ -4,10 +4,12 @@
       <div v-for="cartItem in cart?.items" :key="cartItem.id">
         <UiCartProductCard :cart-item="cartItem" />
       </div>
+      <Voucher v-if="!isDesktop" />
     </div>
     <div class="relative col-span-5 md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
       <OrderSummary v-if="cart" :cart="cart">
+        <Voucher v-if="isDesktop" />
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
@@ -17,7 +19,6 @@
         >
           {{ $t('goToCheckout') }}
         </SfButton>
-
         <PayPalExpressButton class="mt-4" type="CartPreview" />
       </OrderSummary>
     </div>
@@ -32,6 +33,7 @@
 import { SfButton } from '@storefront-ui/vue';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
+const { isDesktop } = useBreakpoints();
 const { setInitialData } = useInitialSetup();
 
 const localePath = useLocalePath();

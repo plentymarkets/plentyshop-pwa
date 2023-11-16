@@ -488,5 +488,10 @@
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
+  },
+  "coupon": {
+    "title": "Have a coupon code?",
+    "enterCode": "Enter code",
+    "apply": "Apply"
   }
 }
