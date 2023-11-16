@@ -25,7 +25,6 @@ const switchLocalePath = useSwitchLocalePath();
 const { toggle } = useLanguageSelect();
 
 const flagList: { [key: string]: string } = {};
-
 const dynamicFlagImport = async () => {
   for (const local of localeCodes.value) {
     const localLang = flagImports[local];
