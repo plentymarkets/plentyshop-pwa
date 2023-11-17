@@ -1,10 +1,7 @@
 <template>
   <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0">
     <div v-for="notification of notifications" class="my-2" :key="notification.id">
-      <Component
-        :notification="notification"
-        :is="componentsMapper[notification.type] || PositiveNotification"
-      ></Component>
+      <Component :notification="notification" :is="componentsMapper[notification.type] || PositiveNotification" />
     </div>
   </div>
 </template>
