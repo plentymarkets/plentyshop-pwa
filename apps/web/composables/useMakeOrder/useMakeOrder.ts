@@ -68,9 +68,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
           paymentId: params.paymentId,
         }),
       );
-
-      state.value.loading = false;
-      return state.value.data;
     };
 
     switch (paymentType) {
