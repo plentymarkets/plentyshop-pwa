@@ -17,7 +17,9 @@ const { setStaticPageMeta } = useCanonical();
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
-if (route?.meta.layoutName !== 'checkout') {
+if (route?.meta.layoutName === 'checkout') {
+  getCategoryTree();
+} else {
   setInitialData();
 }
 
@@ -25,7 +27,6 @@ if (route?.meta.pageType === 'static') {
   setStaticPageMeta();
 }
 
-getCategoryTree();
 usePageTitle();
 
 const bodyClass = ref('');

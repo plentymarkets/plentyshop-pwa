@@ -18,8 +18,11 @@ const setInitialData: SetInitialData = async () => {
   const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSetup());
   useHandleError(error.value);
 
-  // setUser(data.value. as SessionResult);
-  // setCart(data.value?.data.basket as Cart);
+  if (data.value?.data) {
+    setUser(data.value?.data.session);
+    setCart(data.value?.data.session.basket);
+    setCategoryTree(data.value.data.categories);
+  }
 
   cartLoading.value = false;
 
