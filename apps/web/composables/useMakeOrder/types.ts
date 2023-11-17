@@ -8,6 +8,10 @@ export interface UseMakeOrderState {
 
 export type CreateOrder = (params: MakeOrderParams) => Promise<Order>;
 
+export interface ErrorMapper {
+  [key: string]: () => void;
+}
+
 export interface UseMakeOrder {
   data: Readonly<Ref<UseMakeOrderState['data']>>;
   loading: Readonly<Ref<boolean>>;
