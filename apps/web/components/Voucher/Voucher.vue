@@ -20,7 +20,7 @@
         <div class="flex-grow mr-2">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
         </div>
-        <SfButton @click="applied = true" class="ml-2" type="reset" variant="primary">
+        <SfButton @click="applyVoucher()" class="ml-2" type="reset" variant="primary">
           {{ $t('coupon.apply') }}
         </SfButton>
       </div>
@@ -40,13 +40,25 @@
 <script setup lang="ts">
 import { SfAccordionItem, SfIconChevronLeft, SfInput, SfButton, SfIconDelete } from '@storefront-ui/vue';
 import { ref } from 'vue';
-
+const { t } = useI18n();
+const { send } = useNotification();
 const openedVoucher = ref(false);
 const applied = ref(false);
 const couponCode = ref('');
 const couponType = ref('10 % discount');
+const applyVoucher = () => {
+  applied.value = true;
+  // neede methods
+  // 1. check if voucher is vaid
+  // 2. add voucher to order
+  // 3. remove voucher from order
+  // get voucher and typeof voucher from order
+  // send({ message: t('coupon.voucherApplied'), type: 'positive' });
+  // send({ message: t('coupon.voucherInvalid'), type: 'negative' });
+};
 const resetVoucher = () => {
   applied.value = false;
   couponCode.value = '';
+  send({ message: t('coupon.voucherRemoved'), type: 'positive' });
 };
 </script>

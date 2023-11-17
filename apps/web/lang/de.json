@@ -492,6 +492,9 @@
   "coupon": {
     "title": "Haben sie einen Gutscheincode?",
     "enterCode": "Code eingeben",
-    "apply": "Anwenden"
+    "apply": "Anwenden",
+    "voucherApplied": "Gutschein angewendet",
+    "voucherRemoved": "Gutschein entfernt",
+    "voucherInvalid": "Nicht anwendbarer Gutschein"
   }
 }

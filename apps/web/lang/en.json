@@ -492,6 +492,9 @@
   "coupon": {
     "title": "Have a coupon code?",
     "enterCode": "Enter code",
-    "apply": "Apply"
+    "apply": "Apply",
+    "voucherApplied": "Voucher applied",
+    "voucherRemoved": "Voucher removed",
+    "voucherInvalid": "Non applicable voucher"
   }
 }
