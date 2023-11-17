@@ -1,16 +1,25 @@
 <template>
-  <div data-testid="languageSelectList" :class="isDesktop ? 'desktopFlagLayout' : 'mobileFlagLayout'">
+  <div
+    data-testid="languageSelectList"
+    :class="[
+      {
+        'hidden md:flex w-full bg-white items-center py-10 justify-center absolute z-[99999] top-[10%] shadow-xl':
+          isDesktop,
+      },
+      { 'w-full bg-white flex items-center py-10 justify-center flex-col shadow-xl md:hidden': !isDesktop },
+    ]"
+  >
     <SfButton
       v-for="locale in localeCodes"
       :key="locale"
       :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
-      class="ml-3"
+      class="ml-3 mb-2"
       :aria-label="$t('lang.' + locale)"
       :data-testid="`languageOption-${locale}`"
       @click="switchLocale(locale)"
     >
-      <div :class="isDesktop ? 'desktopCountryFlags' : 'mobileCountryFlags'" v-html="flagList[locale]"></div>
+      <div :class="[{ 'w-6': isDesktop }, { 'w-8': !isDesktop }]" v-html="flagList[locale]"></div>
       {{ $t('lang.' + locale) }}</SfButton
     >
   </div>
@@ -41,18 +50,3 @@ const switchLocale = (language: string) => {
   toggle();
 };
 </script>
-
-<style>
-.desktopCountryFlags {
-  width: 2vw;
-}
-.mobileCountryFlags {
-  width: 10vw;
-}
-.desktopFlagLayout {
-  @apply hidden md:flex w-full bg-white items-center py-10 justify-center absolute z-[99999] top-[10%] shadow-xl;
-}
-.mobileFlagLayout {
-  @apply w-full bg-white flex items-center py-10 justify-center flex-col shadow-xl md:hidden;
-}
-</style>
