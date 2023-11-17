@@ -15,13 +15,15 @@
       :variant="locale === currentLocale ? 'primary' : 'tertiary'"
       square
       class="ml-3 mb-2"
-      :aria-label="$t('lang.' + locale)"
+      :aria-label="$t(`lang.${locale}`)"
       :data-testid="`languageOption-${locale}`"
       @click="switchLocale(locale)"
     >
       <div :class="[{ 'w-6': isDesktop }, { 'w-8': !isDesktop }]" v-html="flagList[locale]"></div>
-      {{ $t('lang.' + locale) }}</SfButton
-    >
+      <div>
+        {{ $t(`lang.${locale}`) }}
+      </div>
+    </SfButton>
   </div>
 </template>
 <script setup lang="ts">
