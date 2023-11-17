@@ -3,10 +3,9 @@
     data-testid="languageSelectList"
     :class="[
       {
-        'hidden md:flex w-full bg-white items-center py-10 justify-center absolute z-[99999] top-[10%] shadow-xl':
-          isDesktop,
+        'flex w-full bg-white items-center py-10 justify-center top-[10%]': isDesktop,
       },
-      { 'w-full bg-white flex items-center py-10 justify-center flex-col shadow-xl md:hidden': !isDesktop },
+      { 'w-full bg-white flex items-center py-10 justify-center flex-col': !isDesktop },
     ]"
   >
     <SfButton
