@@ -141,6 +141,9 @@
   <NuxtLazyHydrate when-idle>
     <Cookiebar />
   </NuxtLazyHydrate>
+  <NuxtLazyHydrate when-idle>
+    <PreviewMode />
+  </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
     <UiFooter />
   </NuxtLazyHydrate>

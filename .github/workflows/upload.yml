@@ -9,7 +9,7 @@ on:
     inputs:
       tag-version:
         description: "The tag version, branch name or SHA to checkout"
-        required: true      
+        required: true
 
 permissions:
   contents: read
@@ -34,7 +34,7 @@ jobs:
       - name: Set yarn version
         run: |
           yarn set version stable
-          yarn set version 3.6.3
+          yarn set version 3.6.4
 
       - name: Setup .yarnrc.yml
         run: |
@@ -59,7 +59,7 @@ jobs:
 
       - name: Install productive dependencies for server
         run: yarn workspaces focus --production
-      
+
       - name: Copy Middleware Server
         run: |
           mkdir middleware
