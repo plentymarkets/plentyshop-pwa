@@ -1,15 +1,15 @@
 <template>
   <div v-if="cart?.items?.length ?? 0 > 0" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
-    <div class="col-span-7 mb-10 md:mb-0">
+    <div class="col-span-7 mb-2 md:mb-0">
       <div v-for="cartItem in cart?.items" :key="cartItem.id">
         <UiCartProductCard :cart-item="cartItem" />
       </div>
-      <Voucher v-if="!isDesktop" />
+      <Voucher class="mb-2" v-if="!isDesktop" />
     </div>
-    <div class="relative col-span-5 md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
+    <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
       <OrderSummary v-if="cart" :cart="cart">
-        <Voucher v-if="isDesktop" />
+        <Voucher v-if="isDesktop" class="mb-5" />
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
