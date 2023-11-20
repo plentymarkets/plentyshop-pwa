@@ -1,12 +1,8 @@
 <template>
   <div
     data-testid="languageSelectList"
-    :class="[
-      {
-        'flex w-full bg-white items-center py-10 justify-center top-[10%]': isDesktop,
-      },
-      { 'w-full bg-white flex items-center py-10 justify-center flex-col': !isDesktop },
-    ]"
+    class="w-full bg-white items-center py-10 justify-center flex"
+    :class="{ 'top-[10%]': isDesktop, 'flex-col': !isDesktop }"
   >
     <SfButton
       v-for="locale in localeCodes"
@@ -28,6 +24,7 @@
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
 import { flagImports } from './flags';
+
 const { isDesktop } = useBreakpoints();
 const { setLocaleCookie, localeCodes, locale: currentLocale } = useI18n();
 const route = useRoute();
