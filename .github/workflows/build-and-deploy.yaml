@@ -1,9 +1,10 @@
 name: Deploy
 on:
-  push:
-    branches:
-      - main
-      - force/*
+  # push:
+  #   branches:
+  #     - main
+  #     - force/*
+  workflow_dispatch:
 
 jobs:
   configure:
