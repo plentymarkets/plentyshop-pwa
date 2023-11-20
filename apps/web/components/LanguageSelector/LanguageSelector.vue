@@ -14,7 +14,7 @@
       :data-testid="`languageOption-${locale}`"
       @click="switchLocale(locale)"
     >
-      <div :class="[{ 'w-6': isDesktop }, { 'w-8': !isDesktop }]" v-html="flagList[locale]"></div>
+      <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" v-html="flagList[locale]"></div>
       <div>
         {{ $t(`lang.${locale}`) }}
       </div>
