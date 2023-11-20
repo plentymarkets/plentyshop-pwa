@@ -490,11 +490,12 @@
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
   },
   "coupon": {
+    "name": "Coupon",
     "title": "Have a coupon code?",
     "enterCode": "Enter code",
     "apply": "Apply",
-    "voucherApplied": "Voucher applied",
-    "voucherRemoved": "Voucher removed",
-    "voucherInvalid": "Non applicable voucher"
+    "voucherApplied": "The coupon has been added successfully",
+    "voucherRemoved": "The coupon has been removed successfully.",
+    "voucherInvalid": "The coupon has already been used or is invalid."
   }
 }

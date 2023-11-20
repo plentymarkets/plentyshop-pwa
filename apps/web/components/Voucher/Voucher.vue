@@ -3,7 +3,6 @@
     <SfAccordionItem v-model="openedVoucher">
       <template #summary>
         <div
-          v-if="!applied"
           :class="
             !openedVoucher
               ? 'flex justify-between pt-2 pb-3 font-medium'
@@ -16,7 +15,7 @@
           />
         </div>
       </template>
-      <div v-if="!applied" class="flex mb-2">
+      <div v-if="!cartGetters.getCouponDiscount(cart)" class="flex mb-2">
         <div class="flex-grow mr-2">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
         </div>
@@ -25,7 +24,7 @@
         </SfButton>
       </div>
       <div v-else class="flex justify-between mb-3 mt-2">
-        <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }} - {{ couponType }}</div>
+        <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }}</div>
         <div>
           <SfButton @click="resetVoucher()" variant="tertiary" class="text-stone-800">
             <span class="underline"> Remove </span>
@@ -38,27 +37,34 @@
 </template>
 
 <script setup lang="ts">
+import { cartGetters } from '@plentymarkets/shop-sdk';
 import { SfAccordionItem, SfIconChevronLeft, SfInput, SfButton, SfIconDelete } from '@storefront-ui/vue';
-import { ref } from 'vue';
-const { t } = useI18n();
-const { send } = useNotification();
+import { ref, onMounted } from 'vue';
+import { useCart } from '~/composables';
 const openedVoucher = ref(false);
 const applied = ref(false);
-const couponCode = ref('');
-const couponType = ref('10 % discount');
-const applyVoucher = () => {
-  applied.value = true;
-  // neede methods
-  // 1. check if voucher is vaid
-  // 2. add voucher to order
-  // 3. remove voucher from order
-  // get voucher and typeof voucher from order
-  // send({ message: t('coupon.voucherApplied'), type: 'positive' });
-  // send({ message: t('coupon.voucherInvalid'), type: 'negative' });
+const couponCode = ref('NCL5D5');
+const { doAddCoupon, deleteCoupon } = useVoucher();
+const { data: cart, getCart } = useCart();
+const { t } = useI18n();
+const { send } = useNotification();
+onMounted(() => {
+  openedVoucher.value = cartGetters.getCouponDiscount(cart.value) !== 0;
+});
+const applyVoucher = async () => {
+  try {
+    await doAddCoupon({ couponCode: couponCode.value });
+    applied.value = true;
+    getCart();
+    send({ message: t('coupon.voucherApplied'), type: 'positive' });
+  } catch {
+    send({ message: t('coupon.voucherInvalid'), type: 'negative' });
+  }
 };
-const resetVoucher = () => {
-  applied.value = false;
-  couponCode.value = '';
+const resetVoucher = async () => {
+  await deleteCoupon({ couponCode: couponCode.value });
+  applied.value = true;
+  getCart();
   send({ message: t('coupon.voucherRemoved'), type: 'positive' });
 };
 </script>

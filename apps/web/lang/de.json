@@ -490,11 +490,12 @@
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
   },
   "coupon": {
+    "name": "Gutschein",
     "title": "Haben sie einen Gutscheincode?",
-    "enterCode": "Code eingeben",
-    "apply": "Anwenden",
-    "voucherApplied": "Gutschein angewendet",
-    "voucherRemoved": "Gutschein entfernt",
-    "voucherInvalid": "Nicht anwendbarer Gutschein"
+    "enterCode": "Gutschein-Code eingeben",
+    "apply": "Einlösen",
+    "voucherApplied": "Der Gutschein wurde erfolgreich eingelöst.",
+    "voucherRemoved": "Der Gutschein wurde erfolgreich entfernt.",
+    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
   }
 }
