@@ -24,6 +24,9 @@ jobs:
         with:
           ref: ${{ inputs.tag-version }}
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
