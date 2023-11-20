@@ -1,23 +1,25 @@
 <template>
-  <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
-    <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-      <CategoryPageContent
-        v-if="productsCatalog"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
-        <template #sidebar>
-          <CategoryTree :category="category" />
-          <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters :facets="productsCatalog.facets" />
-        </template>
-      </CategoryPageContent>
-    </div>
-  </NuxtLayout>
+  <div>
+    <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
+      <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
+        <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+        <CategoryPageContent
+          v-if="productsCatalog"
+          :title="categoryGetters.getCategoryName(productsCatalog.category)"
+          :total-products="productsCatalog.pagination.totals"
+          :products="productsCatalog.products"
+          :items-per-page="Number(productsPerPage)"
+        >
+          <template #sidebar>
+            <CategoryTree :category="category" />
+            <CategorySorting />
+            <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+            <CategoryFilters :facets="productsCatalog.facets" />
+          </template>
+        </CategoryPageContent>
+      </div>
+    </NuxtLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +44,11 @@ const handleQueryUpdate = async () => {
 };
 
 await handleQueryUpdate();
+
+// onMounted(async () => {
+//   await handleQueryUpdate();
+//   // setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
+// });
 
 const category = ref(productsCatalog.value.category);
 
@@ -71,5 +78,6 @@ watch(
     handleQueryUpdate();
   },
 );
+
 setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
 </script>
