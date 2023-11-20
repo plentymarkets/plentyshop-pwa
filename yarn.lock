@@ -4057,6 +4057,7 @@ __metadata:
     babel-preset-node: ^5.1.1
     commitizen: ^4.2.5
     concurrently: ^8.2.0
+    country-flag-icons: ^1.5.7
     cross-env: ^7.0.3
     cypress-iframe: ^1.0.1
     dotenv: ^16.0.3
@@ -8704,6 +8705,13 @@ __metadata:
     parse-json: ^5.0.0
     path-type: ^4.0.0
   checksum: 836d5d8efa750f3fb17b03d6ca74cd3154ed025dffd045304b3ef59637f662bde1e5dc88f8830080d180ec60841719cf4ea2ce73fb21ec694b16865c478ff297
+  languageName: node
+  linkType: hard
+
+"country-flag-icons@npm:^1.5.7":
+  version: 1.5.7
+  resolution: "country-flag-icons@npm:1.5.7"
+  checksum: b2512623ec7fa5a7b3d875b173469637f8782bb160d6054cd281223847b434316b22a736488a441168fc278fc9ee4b0b5e84a0b6164ab0a371a7afb1c2d50ca5
   languageName: node
   linkType: hard
 
