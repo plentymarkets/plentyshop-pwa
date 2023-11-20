@@ -32,5 +32,7 @@ module.exports = {
     'unicorn/filename-case': 'off',
     'no-undef': 'off',
     'vue/no-setup-props-destructure': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/max-attributes-per-line': 'off',
   },
 };
