@@ -31,6 +31,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     state.value.loading = true;
+    const { t } = useI18n();
 
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
@@ -89,15 +90,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
-        //TODO: NotificationService.error(paymentValue);
         useHandleError({ message: paymentValue });
         break;
       }
 
       default: {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
-        //TODO: NotificationService.error("Unknown response from payment provider: " + paymentType);
+        useHandleError({ message: t('orderErrorProvider', paymentType) });
         break;
       }
     }

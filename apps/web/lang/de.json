@@ -279,6 +279,7 @@
   "backToCheckout": "Zurück zur Kasse",
   "continueShopping": "Einkauf fortsetzen",
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
+  "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
   "orderNumber": "Auftrags-ID",
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",
