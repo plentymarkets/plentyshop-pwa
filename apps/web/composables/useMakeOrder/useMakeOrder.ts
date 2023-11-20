@@ -30,8 +30,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
+    const { $i18n } = useNuxtApp();
     state.value.loading = true;
-    const { t } = useI18n();
 
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
@@ -95,7 +95,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       default: {
-        useHandleError({ message: t('orderErrorProvider', paymentType) });
+        useHandleError({ message: $i18n.t('orderErrorProvider', { paymentType: paymentType }) });
         break;
       }
     }
