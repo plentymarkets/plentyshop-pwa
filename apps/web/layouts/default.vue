@@ -10,6 +10,7 @@
           :aria-label="$t('languageSelector')"
           variant="tertiary"
           square
+          data-testid="open-languageselect-button"
           @click="toggleLanguageSelect"
         >
           <template #prefix>
@@ -86,6 +87,7 @@
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
         square
+        data-testid="open-languageselect-button"
         @click="toggleLanguageSelect"
         :aria-label="$t('languageSelector')"
       >
