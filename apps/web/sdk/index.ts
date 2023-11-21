@@ -29,19 +29,19 @@ export const useSdk = () => {
   }
 
   interceptorIdRes = client.interceptors.response.use((response) => {
-    // TODO: Check for plentysystems path
-    if (process.server) {
-      const cookie = useCookie('plentyID');
-      // Parse plentyID from set-cookie header
-      const plentyId = response.headers['set-cookie']?.find((cookie) => cookie.includes('plentyID'))?.split(';')[0];
-      if (plentyId) {
-        const value = plentyId.split('=')[1];
-        cookie.value = decodeURIComponent(value);
+    if (response.config.baseURL?.includes('/plentysystems')) {
+      if (process.server) {
+        const cookie = useCookie('plentyID');
+        const plentyId = response.headers['set-cookie']?.find((cookie) => cookie.includes('plentyID'))?.split(';')[0];
+        if (plentyId) {
+          const value = plentyId.split('=')[1];
+          cookie.value = decodeURIComponent(value);
+        }
       }
-    }
 
-    if (response.headers['x-csrf-token'] && response.headers['x-csrf-token'].length > 0) {
-      token.value = response.headers['x-csrf-token'];
+      if (response.headers['x-csrf-token'] && response.headers['x-csrf-token'].length > 0) {
+        token.value = response.headers['x-csrf-token'];
+      }
     }
 
     return response;
@@ -57,13 +57,11 @@ export const useSdk = () => {
         }
 
         if (process.server) {
-          /*
           if (ssrLocale.value) {
             headers.cookie = headers.cookie?.includes('vsf-locale')
               ? headers.cookie.replaceAll(/vsf-locale=[^;]+/g, `vsf-locale=${ssrLocale.value}`)
               : `${headers.cookie ?? ''};vsf-locale=${ssrLocale.value};`;
           }
-          */
 
           config.headers.cookie = headers.cookie ?? '';
         }

@@ -4049,8 +4049,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.12.0
-    "@plentymarkets/shop-sdk": ^0.23.0
+    "@plentymarkets/shop-api": /Users/fabiangerke/workspace/plentymarkets-sdk/packages/api-client
+    "@plentymarkets/shop-sdk": /Users/fabiangerke/workspace/plentymarkets-sdk/packages/sdk
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
@@ -4072,23 +4072,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "@plentymarkets/shop-api@npm:0.12.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.12.0%2F44d8cebb610b13ea78ee9311f0f68f83c2ec6501"
+"@plentymarkets/shop-api@file:/Users/fabiangerke/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
+  version: 0.13.0
+  resolution: "@plentymarkets/shop-api@file:/Users/fabiangerke/workspace/plentymarkets-sdk/packages/api-client#/Users/fabiangerke/workspace/plentymarkets-sdk/packages/api-client::hash=217ce1&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^0.21.1
     consola: ^3.0.0
-  checksum: 1bea493daf12329450beddfc1ed700208697a85fb42948fba5d78095d10166eef8f71cc97c281e97880bddea6e309968a1b946ce37d9a8d25412c66fb5b7b07e
+  checksum: 2fe545a80b0a57524dac061091c399d82c3a47881e3f3cb698de0acc1813da8d312de8111ed4dee505a521eacb669416e8bd9c78aba839d07201660b9b38d8bd
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.23.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.23.0%2F3f07608fced76738ab067583e5dea9f8a2a22092"
+"@plentymarkets/shop-sdk@file:/Users/fabiangerke/workspace/plentymarkets-sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
+  version: 0.23.1
+  resolution: "@plentymarkets/shop-sdk@file:/Users/fabiangerke/workspace/plentymarkets-sdk/packages/sdk#/Users/fabiangerke/workspace/plentymarkets-sdk/packages/sdk::hash=c5ef12&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     axios: ^0.27.2
-  checksum: 81c557e079ffb05d841ae8977d33caeeec6465be53e49bb939a185ba5ac118c54975691d4520b43dd4c97c26988774755e853e5aa6b5ad9bbe32b4d78fd8c788
+  checksum: 536922463ec178ceac92fb9ffa0455e392c8423565916149126bc515237ae9770b5489766d9ff4e86fe069c79f68a34259dd93c583c8d6a7ea597673f83bac2d
   languageName: node
   linkType: hard
 
