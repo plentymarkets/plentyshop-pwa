@@ -30,6 +30,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
+    const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
     await useAsyncData(() =>
@@ -44,47 +45,57 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
       useSdk().plentysystems.doPreparePayment(),
     );
+
     useHandleError(preparePaymentError.value);
 
     const paymentType = preparePaymentData.value?.data.type || 'errorCode';
     const paymentValue = preparePaymentData.value?.data.value || '""';
 
+    const continueOrHtmlContent = async () => {
+      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
+
+      useHandleError(error.value);
+
+      if (error.value) {
+        state.value.loading = false;
+        return {} as Order;
+      }
+
+      state.value.data = data.value?.data ?? state.value.data;
+
+      await useAsyncData(() =>
+        useSdk().plentysystems.doExecutePayment({
+          orderId: state.value.data.order.id,
+          paymentId: params.paymentId,
+        }),
+      );
+    };
+
     switch (paymentType) {
       case 'continue':
       case 'htmlContent': {
-        const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
-        useHandleError(error.value);
-        if (error.value) {
-          state.value.loading = false;
-          return {} as Order;
-        }
-
-        state.value.data = data.value?.data ?? state.value.data;
-
-        await useAsyncData(() =>
-          useSdk().plentysystems.doExecutePayment({
-            orderId: state.value.data.order.id,
-            paymentId: params.paymentId,
-          }),
-        );
+        await continueOrHtmlContent();
         break;
       }
+
       case 'redirectUrl': {
         // redirect to given payment provider
         window.location.assign(paymentValue);
         break;
       }
+
       case 'externalContentUrl': {
         // show external content in iframe
         break;
       }
 
       case 'errorCode': {
-        // NotificationService.error(paymentValue);
+        useHandleError({ message: paymentValue });
         break;
       }
+
       default: {
-        // NotificationService.error("Unknown response from payment provider: " + paymentType);
+        useHandleError({ message: $i18n.t('orderErrorProvider', { paymentType: paymentType }) });
         break;
       }
     }
