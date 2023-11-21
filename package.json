@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@plentymarkets/shop-api": "/Users/fabiangerke/workspace/plentymarkets-sdk/packages/api-client",
+    "country-flag-icons": "^1.5.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3"
   },
