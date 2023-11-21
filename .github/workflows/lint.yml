@@ -47,5 +47,8 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
+      - name: Run prettier
+        run: yarn prettier --check "apps/web/**/*.{js,ts,vue}"
+
       - name: Run linter
         run: yarn lint
