@@ -64,6 +64,9 @@ export const useSdk = () => {
           }
 
           config.headers.cookie = headers.cookie ?? '';
+          if (config.headers.cookie.length > 0 && config.headers.cookie.endsWith('')) {
+            config.headers.cookie += ';';
+          }
         }
 
         if (token.value) {

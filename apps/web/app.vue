@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 const { getCategoryTree } = useCategoryTree();
-const { setInitialData, ssrLocale } = useInitialSetup();
+const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
 const vsfLocale = useCookie('vsf-locale');
@@ -20,7 +20,7 @@ ssrLocale.value = locale.value;
 if (route?.meta.layoutName === 'checkout') {
   getCategoryTree();
 } else {
-  setInitialData();
+  setInitialDataSSR();
 }
 
 if (route?.meta.pageType === 'static') {
@@ -37,7 +37,7 @@ onMounted(() => {
 
 watch(
   () => locale.value,
-  async (locale: any) => {
+  async (locale: string) => {
     vsfLocale.value = locale;
 
     await getCategoryTree();
