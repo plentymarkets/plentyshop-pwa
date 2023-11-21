@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ['@vue-storefront/eslint-config', '@vue-storefront/eslint-config/vue3'],
+  extends: ['@vue-storefront/eslint-config', '@vue-storefront/eslint-config/vue3', 'prettier'],
   parserOptions: {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
