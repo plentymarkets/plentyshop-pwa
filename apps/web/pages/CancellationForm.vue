@@ -10,7 +10,7 @@ definePageMeta({
 });
 
 await getLegalTexts({
-  type: 'CancellationForm',
+  type: 'WithdrawalForm',
 });
 
 const getHTMLTexts = () => {
