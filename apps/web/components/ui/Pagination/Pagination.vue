@@ -50,9 +50,7 @@
             </button>
           </div>
         </li>
-        <li
-          v-if="maxVisiblePages === 1 && pagination.totalPages > 1 && pagination.selectedPage === pagination.totalPages"
-        >
+        <li v-if="shouldDisplayPreviousLink">
           <div class="flex pt-1 border-t-4 border-transparent">
             <button
               type="button"
@@ -100,7 +98,7 @@
             </button>
           </div>
         </li>
-        <li v-if="maxVisiblePages === 1 && pagination.totalPages > 1 && pagination.selectedPage === 1">
+        <li v-if="shouldDisplayNextLink">
           <div class="flex pt-1 border-t-4 border-transparent">
             <button
               type="button"
@@ -177,6 +175,7 @@ const { updatePage } = useCategoryFilter();
 const props = withDefaults(defineProps<PaginationProps>(), {
   disabled: false,
 });
+
 const { currentPage, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = toRefs(props);
 
 const pagination = computed(() =>
@@ -199,8 +198,17 @@ const previousPage = () => {
   pagination.value.prev;
   setPage(pagination.value.selectedPage - 1);
 };
+
 const nextPage = () => {
   pagination.value.next;
   setPage(pagination.value.selectedPage + 1);
 };
+
+const shouldDisplayPreviousLink: boolean =
+  maxVisiblePagesProperty.value === 1 &&
+  pagination.value.totalPages > 1 &&
+  pagination.value.selectedPage === pagination.value.totalPages;
+
+const shouldDisplayNextLink: boolean =
+  maxVisiblePagesProperty.value === 1 && pagination.value.totalPages > 1 && pagination.value.selectedPage === 1;
 </script>
