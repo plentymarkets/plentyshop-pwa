@@ -7,10 +7,10 @@ const config = {
       location: '@plentymarkets/shop-api/server',
       configuration: {
         api: {
-          url: process.env.API_ENDPOINT
-        }
+          url: process.env.API_ENDPOINT,
+        },
       },
-    }
+    },
   },
 };
 

@@ -48,7 +48,7 @@ jobs:
         run: yarn --frozen-lockfile
 
       - name: Run prettier
-        run: yarn prettier --check "apps/web/**/*.{js,ts,vue}"
+        run: yarn format
 
       - name: Run linter
         run: yarn lint

@@ -139,7 +139,7 @@ Naming convention:
 - each composables should be prefixed with `use` keyword (`useProduct`)
 - composable should follow `Camel case` pattern (`useProductReviews`)
 
-We are using internal [Nuxt.js state management](https://nuxt.com/docs/getting-started/state-management) to lock the data responsibility along with the composition functions (composables). State connected to the certain composable is read-only and modified by the internal modifiers (functions). You can check the `useCart.ts` composable as a reference. 
+We are using internal [Nuxt.js state management](https://nuxt.com/docs/getting-started/state-management) to lock the data responsibility along with the composition functions (composables). State connected to the certain composable is read-only and modified by the internal modifiers (functions). You can check the `useCart.ts` composable as a reference.
 
 ### Components
 
@@ -191,7 +191,7 @@ Naming convention:
 
 The data fetching process is handled seamlessly by integrating VSF SDK, which acts as a robust communication layer between the application and the VSF Middleware. The SDK provides a set of convenient and optimized methods to fetch data from various APIs and services.
 
-To simplify the implementation and management of data fetching we're using native Nuxt's composables for [useAsyncData](https://nuxt.com/docs/api/composables/use-async-data) and [useState](https://nuxt.com/docs/getting-started/state-management).  It seamlessly integrates with VSF SDK and simplifies the process of caching, synchronizing, and managing the application's data. These functions provide an elegant and efficient way to handle asynchronous data fetching, automatically managing data caching, refetching, and background updates.
+To simplify the implementation and management of data fetching we're using native Nuxt's composables for [useAsyncData](https://nuxt.com/docs/api/composables/use-async-data) and [useState](https://nuxt.com/docs/getting-started/state-management). It seamlessly integrates with VSF SDK and simplifies the process of caching, synchronizing, and managing the application's data. These functions provide an elegant and efficient way to handle asynchronous data fetching, automatically managing data caching, refetching, and background updates.
 
 By combining VSF SDK with Nuxt's composables, this project ensures a reliable and performant data fetching experience for the application. Developers can easily fetch, update, and maintain data using composition declarative approach, while the VSF SDK handles the underlying communication and data retrieval tasks.
 
@@ -244,7 +244,7 @@ In order to optimize and enhance the performance of the application, several per
 > **Note**
 > To analyze your app bundles run `npx nuxi analyze` command.
 
-*You can use bundle analyzer to check the whole application structure along with server, or simply jump into the `apps/web` folder to analyze your web application.*
+_You can use bundle analyzer to check the whole application structure along with server, or simply jump into the `apps/web` folder to analyze your web application._
 
 #### Web performance automated testing
 
