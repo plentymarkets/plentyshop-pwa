@@ -42,7 +42,6 @@ import { SfAccordionItem, SfIconChevronLeft, SfInput, SfButton, SfIconDelete } f
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
 const openedVoucher = ref(false);
-const applied = ref(false);
 const couponCode = ref('NCL5D5');
 const { doAddCoupon, deleteCoupon } = useVoucher();
 const { data: cart, getCart } = useCart();
@@ -52,19 +51,17 @@ onMounted(() => {
   openedVoucher.value = cartGetters.getCouponDiscount(cart.value) !== 0;
 });
 const applyVoucher = async () => {
-  try {
-    await doAddCoupon({ couponCode: couponCode.value });
-    applied.value = true;
+  const cartWithCoupon = await doAddCoupon({ couponCode: couponCode.value });
+  if (cartWithCoupon) {
     getCart();
     send({ message: t('coupon.voucherApplied'), type: 'positive' });
-  } catch {
-    send({ message: t('coupon.voucherInvalid'), type: 'negative' });
   }
 };
 const resetVoucher = async () => {
-  await deleteCoupon({ couponCode: couponCode.value });
-  applied.value = true;
-  getCart();
-  send({ message: t('coupon.voucherRemoved'), type: 'positive' });
+  const cartWithoutCoupon = await deleteCoupon({ couponCode: couponCode.value });
+  if (cartWithoutCoupon) {
+    getCart();
+    send({ message: t('coupon.voucherRemoved'), type: 'positive' });
+  }
 };
 </script>

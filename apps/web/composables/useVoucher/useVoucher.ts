@@ -27,8 +27,19 @@ export const useVoucher: UseVoucherReturn = () => {
    */
   const doAddCoupon: DoAddCoupon = async (params: DoAddCouponParams) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
-    return data.value.data;
+    const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
+
+    if (response.data.value.error) {
+      // should do some mapping here to get translated error
+      const error = {
+        status: 500,
+        message: response.data.value.error?.message,
+        statusMessage: 'An error occured',
+      };
+
+      useHandleError(error);
+    }
+    return response.data.value.data;
   };
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
