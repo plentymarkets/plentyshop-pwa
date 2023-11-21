@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="default" :breadcrumbs="breadcrumbs" class="pointer-events-none opacity-50">
+    <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
       <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
         <CategoryPageContent
@@ -45,11 +45,6 @@ const handleQueryUpdate = async () => {
 
 await handleQueryUpdate();
 
-// onMounted(async () => {
-//   await handleQueryUpdate();
-//   // setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
-// });
-
 const category = ref(productsCatalog.value.category);
 
 const breadcrumbs = computed(() => {
@@ -75,7 +70,7 @@ watch(
 watch(
   () => route.query,
   async () => {
-    handleQueryUpdate();
+    await handleQueryUpdate();
   },
 );
 
