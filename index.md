@@ -6,6 +6,9 @@ hero:
   name: "plentyShop PWA"
   text: "Documentation"
   tagline: Your virtual shop window
+  image:
+    src: /logo.svg
+    alt: plentyShop PWA
   actions:
     - theme: brand
       text: Getting Started
