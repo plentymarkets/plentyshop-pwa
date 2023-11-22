@@ -38,7 +38,6 @@ jobs:
             yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
             yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
-          CYPRESS_BASE_URL: 'http://${{ env.ip_address }}:3000'
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
