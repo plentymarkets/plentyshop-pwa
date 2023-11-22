@@ -1,4 +1,4 @@
-name: e2e-tests
+name: tests
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
   packages: read
 
 jobs:
-  e2e-tests:
+  tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,20 +43,18 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
-      - name: Setup middleware env
+      - name: Unit tests
         run: |
           touch apps/server/.env
           echo API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com >> apps/server/.env
-
-      - name: Run vitest
-        run: |
           pushd ${{ github.workspace }}/apps/server/
           yarn start &
           pushd ${{ github.workspace }}/apps/web/
           yarn test:coverage i18n.spec.ts
           pushd -0 && dirs -c
 
-      - uses: cypress-io/github-action@v5
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
         with:
           build: yarn build
           command: yarn test:cypress
