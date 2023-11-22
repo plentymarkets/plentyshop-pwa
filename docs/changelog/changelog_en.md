@@ -2,9 +2,22 @@
 
 ## Upcoming release
 
+### New
+
+- Added getters to show variation properties.
+- Added a frontend toggle to disable the pwa preview mode.
+
 ### Changed
 
 - Reworked logic of cookie bar.
+- The language select has been refactored and is now showing country flags.
+
+
+### Fixed
+
+- CancellationForm page not loading.
+- Failing minimum buy price setting was not show as error.
+- Notifications were causing a layout shift for the user, this has been fixed.
 
 ## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
