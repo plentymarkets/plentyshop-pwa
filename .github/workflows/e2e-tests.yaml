@@ -38,8 +38,6 @@ jobs:
             yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
             yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
-          PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
-          PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Install Dependencies
@@ -63,6 +61,9 @@ jobs:
           build: yarn build
           command: yarn test:cypress
           install: false
+        env:
+          PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
+          PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
 
       - uses: actions/upload-artifact@v3
         if: failure()
