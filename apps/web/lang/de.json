@@ -496,6 +496,9 @@
     "apply": "Einlösen",
     "voucherApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "voucherRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
+    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
+    "error": {
+      "1070": "Coupon code is not valid."
+    }
   }
 }

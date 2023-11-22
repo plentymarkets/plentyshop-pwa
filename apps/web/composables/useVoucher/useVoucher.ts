@@ -28,12 +28,12 @@ export const useVoucher: UseVoucherReturn = () => {
   const doAddCoupon: DoAddCoupon = async (params: DoAddCouponParams) => {
     state.value.loading = true;
     const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
-
+    state.value.loading = false;
     if (response.data.value.error) {
-      // should do some mapping here to get translated error
+      const { $i18n } = useNuxtApp();
       const error = {
         status: 500,
-        message: response.data.value.error?.message,
+        message: $i18n.t(`coupon.error.${response.data.value.error?.code}`),
         statusMessage: 'An error occured',
       };
 
@@ -44,8 +44,19 @@ export const useVoucher: UseVoucherReturn = () => {
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
-    return data.value.data.value;
+    const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
+    state.value.loading = false;
+    if (response.data.value.error) {
+      const { $i18n } = useNuxtApp();
+      const error = {
+        status: 500,
+        message: $i18n.t(`coupon.error.${response.data.value.error?.code}`),
+        statusMessage: 'An error occured',
+      };
+
+      useHandleError(error);
+    }
+    return response.data.value.data;
   };
 
   return {

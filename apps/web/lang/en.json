@@ -496,6 +496,9 @@
     "apply": "Apply",
     "voucherApplied": "The coupon has been added successfully",
     "voucherRemoved": "The coupon has been removed successfully.",
-    "voucherInvalid": "The coupon has already been used or is invalid."
+    "voucherInvalid": "The coupon has already been used or is invalid.",
+    "error": {
+      "1070": "Coupon code is not valid."
+    }
   }
 }
