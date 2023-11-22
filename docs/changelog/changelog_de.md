@@ -6,17 +6,24 @@
 
 - Getter hinzugefügt, um Variationseigenschaften anzuzeigen.
 - Es wurde ein Toggle hinzugefügt, um im frontend den PWA-Vorschaumodus zu deaktivieren.
+- Strukturierte Daten für Bewertungen (Rezensionen) hinzugefügt.
+- Es wurden End-to-End tests für PayPal-Kreditkarte hinzugefügt.
+- Artikelbilder werden jetzt auf der Bestellbestätigungsseite angezeigt.
 
 ### Geändert
 
 - Die Cookiebar Logik wurde überarbeitet.
 - Die Sprachauswahl wurde überarbeitet und zeigt jetzt Länderflaggen an.
+- Die Checkout-Seite wurde überarbeitet, um weniger Daten zu laden.
 
 ### Behoben
 
 - Die Seite Widerrufsformular wurde nicht korrekt geladen.
 - Beim unterschreiten der Mindestkaufpreisanforderung wurde beim Bezahlvorgang kein fehler ausgegeben.
 - UI Benachrichtigungen führten zu einer Layoutverschiebung für den Benutzer.
+- Kategorien wurden in der falschen Sprache geladen, wenn die Website zum ersten Mal mit SSR gerendert wurde.
+– Die Variationsauswahl hat die Variation nicht aus der URL entfernt, wenn die Basisvariation ausgewählt wurde.
+- Produkte auf der Bestellbestätigungsseite haben nicht auf das korrekte Produkt verlinkt.
 
 ## v1.1.0 (03.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
