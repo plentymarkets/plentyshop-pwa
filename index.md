@@ -11,11 +11,17 @@ hero:
     alt: plentyShop PWA
   actions:
     - theme: brand
-      text: Getting Started
+      text: Setup
       link: /guide/setup/system
+    - theme: alt
+      text: Composables
+      link: /reference/composables/
     - theme: alt
       text: SDK
       link: /reference/sdk/
+    - theme: alt
+      text: API Client
+      link: /reference/api/
 
 features:
   - title: Progressive Web App

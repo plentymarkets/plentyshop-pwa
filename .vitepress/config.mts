@@ -14,11 +14,11 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
+      { text: 'Introduction', link: '/guide/setup/' },
       {
         text: 'Guide',
         items: [
-          { text: 'Setup', link: '/guide/setup/index' },
+          { text: 'Setup', link: '/guide/setup/system' },
           { text: 'Markdown Examples', link: '/markdown-examples' },
           { text: 'Runtime API Examples', link: '/api-examples' }
         ]
@@ -28,7 +28,7 @@ export default defineConfig({
         items: [
           { text: 'Composables', link: '/reference/composables/' },
           { text: 'SDK', link: '/reference/sdk/' },
-          { text: 'API', link: '/reference/api/' }
+          { text: 'API Client', link: '/reference/api/' }
         ]
       }
     ],
