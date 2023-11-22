@@ -51,12 +51,11 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build application
-        run: yarn build
-
       - uses: cypress-io/github-action@v5
         with:
+          build: yarn build
           command: yarn test:cypress
+          
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
