@@ -26,6 +26,9 @@ jobs:
           uses: actions/checkout@v4
           with:
             repository: 'plentymarkets/plentyshop-pwa'
+
+        - name: Enable corepack
+          run: corepack enable
   
         - name: Setup node
           uses: actions/setup-node@v3
