@@ -7,6 +7,13 @@
 </template>
 
 <script setup lang="ts">
+const bodyClass = ref('');
+
+onMounted(() => {
+  // Need this class for cypress testing
+  bodyClass.value = 'hydrated';
+});
+
 const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const route = useRoute();
@@ -26,14 +33,7 @@ if (route?.meta.layoutName === 'checkout') {
 if (route?.meta.pageType === 'static') {
   setStaticPageMeta();
 }
-
 usePageTitle();
-
-const bodyClass = ref('');
-onMounted(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
 
 watch(
   () => locale.value,
