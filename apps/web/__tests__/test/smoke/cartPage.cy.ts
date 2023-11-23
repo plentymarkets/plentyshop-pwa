@@ -13,7 +13,7 @@ describe('Smoke: Cart Page', () => {
   
 
   it('[smoke] Add items to cart and display it', () => {
-    cy.visitAndHydrate('/c/living-room');
+    cy.visitAndHydrate('/c/gear');
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
 
     productListPage.addToCart();
