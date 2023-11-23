@@ -70,7 +70,7 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/plentymarkets/plentyshop-pwa' },
-      { icon: 'linkedin', link: 'https://www.linkedin.com/company/plentysystems/mycompany/' },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/company/plentysystems/' },
       { icon: 'facebook', link: 'https://www.facebook.com/plentymarkets' },
       { icon: 'instagram', link: 'https://www.instagram.com/plentysystems' },
       { icon: 'youtube', link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg' },
