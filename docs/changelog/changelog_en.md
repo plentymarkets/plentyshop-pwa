@@ -9,13 +9,11 @@
 - Added structured data for ratings (reviews).
 - Added item images on the order confirmation (thank you) page.
 
-
 ### Changed
 
 - Reworked logic of cookie bar.
 - The language select has been refactored and is now showing country flags.
 - Refactored the checkout page to load less data.
-
 
 ### Fixed
 
