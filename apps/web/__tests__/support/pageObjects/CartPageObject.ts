@@ -61,4 +61,28 @@ export class CartPageObject {
     this.cartIcon.click();
     return this;
   }
+
+  openVoucherAccordion() {
+    cy.getByTestId('voucherZone').click();
+    return this;
+  }
+  addVoucher(voucherCode: string) {
+    cy.getByTestId('voucherCode').focus().type(voucherCode);
+    cy.getByTestId('voucherAdd').click();
+    return this;
+  }
+  orderSummayAfterVoucherApplyed() {
+    //total should be 119.99
+    // coupon label should be there
+    // coupon value shoulld be there
+  }
+  removeVoucher(voucherCode: string) {
+    cy.getByTestId('voucherRemove').click();
+    return this;
+  }
+  orderSummayAfterVoucherRemoved() {
+    // total should be 119.99
+    // coupon label should be there
+    // coupon value shoulld be there
+  }
 }

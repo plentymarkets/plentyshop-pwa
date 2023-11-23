@@ -1,6 +1,6 @@
 <template>
   <div class="border-b border-neutral-200">
-    <SfAccordionItem v-model="openedVoucher">
+    <SfAccordionItem data-testid="voucherZone" v-model="openedVoucher">
       <template #summary>
         <div
           :class="
@@ -17,16 +17,22 @@
       </template>
       <div v-if="!cartGetters.getCouponDiscount(cart)" class="flex mb-2">
         <div class="flex-grow mr-2">
-          <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
+          <SfInput
+            data-testid="voucherCode"
+            :placeholder="$t('coupon.enterCode')"
+            type="text"
+            v-model="couponCode"
+            required
+          />
         </div>
-        <SfButton @click="applyVoucher()" class="ml-2" type="reset" variant="primary">
+        <SfButton data-testid="voucherAdd" @click="applyVoucher()" class="ml-2" type="reset" variant="primary">
           {{ $t('coupon.apply') }}
         </SfButton>
       </div>
       <div v-else class="flex justify-between mb-3 mt-2">
         <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }}</div>
         <div>
-          <SfButton @click="resetVoucher()" variant="tertiary" class="text-stone-800">
+          <SfButton data-testid="voucherRemove" @click="resetVoucher()" variant="tertiary" class="text-stone-800">
             <span class="underline"> Remove </span>
             <SfIconDelete></SfIconDelete>
           </SfButton>
@@ -42,7 +48,7 @@ import { SfAccordionItem, SfIconChevronLeft, SfInput, SfButton, SfIconDelete } f
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
 const openedVoucher = ref(false);
-const couponCode = ref('NCL5D5');
+const couponCode = ref('KB82AZ');
 const { doAddCoupon, deleteCoupon } = useVoucher();
 const { data: cart, getCart } = useCart();
 const { t } = useI18n();
