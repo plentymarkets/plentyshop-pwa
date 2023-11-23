@@ -19,7 +19,7 @@
 ### Behoben
 
 - Die Seite Widerrufsformular wurde nicht korrekt geladen.
-- Beim unterschreiten der Mindestkaufpreisanforderung wurde beim Bezahlvorgang kein fehler ausgegeben.
+- Beim Unterschreiten der Mindestkaufpreisanforderung wurde beim Bezahlvorgang kein Fehler ausgegeben.
 - UI Benachrichtigungen führten zu einer Layoutverschiebung für den Benutzer.
 - Kategorien wurden in der falschen Sprache geladen, wenn die Website zum ersten Mal mit SSR gerendert wurde.
 – Die Variationsauswahl hat die Variation nicht aus der URL entfernt, wenn die Basisvariation ausgewählt wurde.
