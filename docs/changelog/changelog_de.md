@@ -1,13 +1,13 @@
 # Changelog plentyshopPWA
 
-## Bevorstehender Release
+## v1.2.0 (23.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Hinzugefügt
 
 - Getter hinzugefügt, um Variationseigenschaften anzuzeigen.
 - Es wurde ein Toggle hinzugefügt, um im Frontend den PWA-Vorschaumodus zu deaktivieren.
 - Strukturierte Daten für Bewertungen (Rezensionen) hinzugefügt.
-- Es wurden End-to-End tests für PayPal-Kreditkarte hinzugefügt.
+- Es wurden End-to-End Tests für PayPal-Kreditkarte hinzugefügt.
 - Artikelbilder werden jetzt auf der Bestellbestätigungsseite angezeigt.
 
 ### Geändert
