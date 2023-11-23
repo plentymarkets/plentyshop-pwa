@@ -1,10 +1,10 @@
 [
     {
-        "text": "plentysystems setup",
+        "text": "plentysystems",
         "link": "/guide/setup/system.md"
     },
     {
-        "text": "Local setup",
+        "text": "Local",
         "link": "/guide/setup/local.md"
     },
     {

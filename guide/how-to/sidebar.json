@@ -4,6 +4,14 @@
         "link": "/guide/how-to/i18n.md"
     },
     {
+        "text": "Theme",
+        "link": "/guide/how-to/theme.md"
+    },
+    {
+        "text": "PWA",
+        "link": "/guide/how-to/pwa.md"
+    },
+    {
         "text": "Cookie consent",
         "link": "/guide/how-to/cookie.md"
     }
