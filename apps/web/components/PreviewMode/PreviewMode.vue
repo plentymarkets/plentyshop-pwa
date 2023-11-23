@@ -3,7 +3,7 @@
     <div v-if="foundCookies.length > 0">
       <div
         v-if="!bannerIsHidden"
-        class="fixed z-50 w-full xl:w-auto xl:right-2 bottom-0 xl:bottom-14 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
+        class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
         <div class="w-full flex flex-col">
           <SfButton
@@ -23,7 +23,7 @@
 
       <SfButton
         variant="secondary"
-        class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-20 bg-white !py-1"
+        class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
         :aria-label="$t('PreviewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >

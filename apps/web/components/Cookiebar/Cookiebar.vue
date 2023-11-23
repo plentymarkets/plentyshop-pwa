@@ -139,7 +139,7 @@
     <SfButton
       v-else
       variant="secondary"
-      class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-2 bg-white"
+      class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2 bg-white !px-3"
       aria-label="Cookie control"
       @click="changeVisibilityState"
     >
