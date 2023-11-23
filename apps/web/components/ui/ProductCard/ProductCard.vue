@@ -55,6 +55,7 @@
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
+        data-testid="add-to-basket-short"
         @click="addWithLoader(Number(productGetters.getId(product)))"
         :disabled="loading"
       >

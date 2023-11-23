@@ -1,19 +1,24 @@
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
-import { paths } from '../../../utils/paths';
 
 const cart = new CartPageObject();
-const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
 describe('Smoke: Cart Page', () => {
+
+  beforeEach(() => {
+    cy.setCookie('vsf-locale', 'en');
+    cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}')
+  });
+  
+
   it('[smoke] Add items to cart and display it', () => {
-    cy.visitAndHydrate(paths.home);
+    cy.visitAndHydrate('/c/living-room');
+    cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
 
-    homePage.goToCategory();
-    productListPage.addToCart()
-
+    productListPage.addToCart();
+    cy.wait('@doAddCartItem');
+    
     cart.openCart().checkCart();
   });
 });
