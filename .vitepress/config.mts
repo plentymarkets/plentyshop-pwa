@@ -16,6 +16,13 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       {
+        text: 'Product',
+        items: [
+          { text: 'Introduction', link: '/guide/product/' },
+          { text: 'Changelog', link: 'https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/changelog/changelog_en.md'}
+        ]
+      },
+      {
         text: 'Guide',
         items: [
           { text: 'Setup', link: '/guide/setup/system' },
@@ -31,13 +38,6 @@ export default defineConfig({
           { text: 'API Client', link: '/reference/api/' }
         ]
       },
-      {
-        text: 'Product',
-        items: [
-          { text: 'Introduction', link: '/guide/setup/' },
-          { text: 'Changelog', link: 'https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/changelog/changelog_en.md'}
-        ]
-      }
     ],
 
     sidebar: {
