@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import sidebarProduct from '../guide/product/sidebar.json';
 import sidebarSetup from '../guide/setup/sidebar.json';
 import typedocSidebarComposables from '../reference/composables/typedoc-sidebar.json';
 import typedocSidebarSdk from '../reference/sdk/typedoc-sidebar.json';
@@ -14,7 +15,6 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Introduction', link: '/guide/setup/' },
       {
         text: 'Guide',
         items: [
@@ -30,11 +30,22 @@ export default defineConfig({
           { text: 'SDK', link: '/reference/sdk/' },
           { text: 'API Client', link: '/reference/api/' }
         ]
+      },
+      {
+        text: 'Product',
+        items: [
+          { text: 'Introduction', link: '/guide/setup/' },
+          { text: 'Changelog', link: 'https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/changelog/changelog_en.md'}
+        ]
       }
     ],
 
     sidebar: {
       '/guide/': [
+        {
+          text: 'Product',
+          items: sidebarProduct
+        },
         {
           text: 'Setup',
           items: sidebarSetup

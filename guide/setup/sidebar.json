@@ -1,9 +1,5 @@
 [
     {
-        "text": "Introduction",
-        "link": "/guide/setup/index.md"
-    },
-    {
         "text": "plentysystems setup",
         "link": "/guide/setup/system.md"
     },

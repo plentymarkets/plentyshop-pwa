@@ -1,0 +1,10 @@
+[
+    {
+        "text": "Introduction",
+        "link": "/product/index.md"
+    },
+    {
+        "text": "Changelog",
+        "link": "https://github.com/plentymarkets/plentyshop-pwa/blob/main/docs/changelog/changelog_en.md"
+    }
+]
