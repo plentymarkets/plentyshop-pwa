@@ -7,7 +7,6 @@
 - Added getters to show variation properties.
 - Added a frontend toggle to disable the pwa preview mode.
 - Added structured data for ratings (reviews).
-- Added e2e tests for paypal credit card.
 - Added item images on the order confirmation (thank you) page.
 
 

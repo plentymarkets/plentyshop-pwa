@@ -7,7 +7,6 @@
 - Getter hinzugefügt, um Variationseigenschaften anzuzeigen.
 - Es wurde ein Toggle hinzugefügt, um im Frontend den PWA-Vorschaumodus zu deaktivieren.
 - Strukturierte Daten für Bewertungen (Rezensionen) hinzugefügt.
-- Es wurden End-to-End Tests für PayPal-Kreditkarte hinzugefügt.
 - Artikelbilder werden jetzt auf der Bestellbestätigungsseite angezeigt.
 
 ### Geändert
