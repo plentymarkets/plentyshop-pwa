@@ -7,6 +7,7 @@
       />
       <img
         src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/hero-bg-mobile.png"
+        alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
     </picture>
