@@ -7,6 +7,13 @@
 </template>
 
 <script setup lang="ts">
+const bodyClass = ref('');
+
+onMounted(() => {
+  // Need this class for cypress testing
+  bodyClass.value = 'hydrated';
+});
+
 const { getCategoryTree } = useCategoryTree();
 const { setInitialData, ssrLocale } = useInitialSetup();
 const route = useRoute();
@@ -18,21 +25,15 @@ vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
 if (route?.meta.layoutName !== 'checkout') {
-  setInitialData();
+  await setInitialData();
 }
 
 if (route?.meta.pageType === 'static') {
   setStaticPageMeta();
 }
 
-getCategoryTree();
+await getCategoryTree();
 usePageTitle();
-
-const bodyClass = ref('');
-onMounted(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
 
 watch(
   () => locale.value,
