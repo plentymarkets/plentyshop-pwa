@@ -2,8 +2,8 @@ import { PlentysystemsModuleType, plentysystemsModule, client } from '@plentymar
 import { initSDK, buildModule } from '@vue-storefront/sdk';
 
 // Maintain a reference to the interceptor
-let interceptorIdReq: number | null = null;
-let interceptorIdRes: number | null = null;
+let interceptorIdRequest: number | null = null;
+let interceptorIdResponse: number | null = null;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const useSdk = () => {
@@ -20,15 +20,15 @@ export const useSdk = () => {
 
   // If an interceptor is already set, eject it to remove it
   // this prevents headers being shared across instances
-  if (interceptorIdReq !== null) {
-    client.interceptors.request.eject(interceptorIdReq);
+  if (interceptorIdRequest !== null) {
+    client.interceptors.request.eject(interceptorIdRequest);
   }
 
-  if (interceptorIdRes !== null) {
-    client.interceptors.response.eject(interceptorIdRes);
+  if (interceptorIdResponse !== null) {
+    client.interceptors.response.eject(interceptorIdResponse);
   }
 
-  interceptorIdRes = client.interceptors.response.use((response) => {
+  interceptorIdResponse = client.interceptors.response.use((response) => {
     if (response.config.baseURL?.includes('/plentysystems')) {
       if (process.server) {
         const cookie = useCookie('plentyID');
@@ -49,7 +49,7 @@ export const useSdk = () => {
 
   // Add cookie header to every request that is called during the ssr render process.
   // This ensures that the session is established and other required cookies are sent to the server.
-  interceptorIdReq = client.interceptors.request.use(
+  interceptorIdRequest = client.interceptors.request.use(
     (config) => {
       if (config.baseURL?.includes('/plentysystems')) {
         if (!config.headers) {
