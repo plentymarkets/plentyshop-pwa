@@ -70,7 +70,7 @@ export class ProductListPageObject {
   }
 
   addToCart() {
-    this.products.first().find(`[data-testid="button"]`).click();
+    this.products.find(`[data-testid="add-to-basket-short"]`).first().click();
     return this;
   }
 
