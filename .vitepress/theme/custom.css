@@ -22,3 +22,13 @@
     --vp-c-brand-3: #008EBD;
     --vp-c-brand-soft: rgba(1, 46, 53, 0.16);
 }
+
+/*
+    Hides the caret icon on collapsible sections without child items.
+    Required because TypeDoc doesn't cover this use case in its auto-generated sidebar.
+*/
+.VPSidebarItem.collapsible.is-link {
+    .caret-icon {
+        display: none
+    }
+}
