@@ -10,7 +10,7 @@
       ]"
       size="sm"
       :tag="NuxtLink"
-      :to="localePath(label === 'Account' && !isAuthorized ? '/login' : link)"
+      :to="localePath(label === $t('account.navBarBottomHeading') && !isAuthorized ? '/login' : link)"
     >
       <template #prefix>
         <div class="relative">

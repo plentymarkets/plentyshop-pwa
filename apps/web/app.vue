@@ -15,7 +15,7 @@ onMounted(() => {
 });
 
 const { getCategoryTree } = useCategoryTree();
-const { setInitialData, ssrLocale } = useInitialSetup();
+const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
 const vsfLocale = useCookie('vsf-locale');
@@ -24,20 +24,20 @@ const { setStaticPageMeta } = useCanonical();
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
-if (route?.meta.layoutName !== 'checkout') {
-  await setInitialData();
+if (route?.meta.layoutName === 'checkout') {
+  getCategoryTree();
+} else {
+  setInitialDataSSR();
 }
 
 if (route?.meta.pageType === 'static') {
   setStaticPageMeta();
 }
-
-await getCategoryTree();
 usePageTitle();
 
 watch(
   () => locale.value,
-  async (locale: any) => {
+  async (locale: string) => {
     vsfLocale.value = locale;
 
     await getCategoryTree();
