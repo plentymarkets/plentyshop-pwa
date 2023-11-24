@@ -6,6 +6,7 @@ export interface UseInitialSetupState {
 
 export interface UseInitialSetup {
   setInitialData: SetInitialData;
+  setInitialDataSSR: SetInitialData;
   ssrLocale: Ref<UseInitialSetupState['ssrLocale']>;
 }
 
