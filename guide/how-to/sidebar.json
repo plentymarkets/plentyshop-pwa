@@ -1,5 +1,9 @@
 [
     {
+        "text": "Middleware",
+        "link": "/guide/how-to/middleware.md"
+    },
+    {
         "text": "i18n",
         "link": "/guide/how-to/i18n.md"
     },
@@ -8,11 +12,11 @@
         "link": "/guide/how-to/theme.md"
     },
     {
-        "text": "PWA",
-        "link": "/guide/how-to/pwa.md"
-    },
-    {
         "text": "Cookie consent",
         "link": "/guide/how-to/cookie.md"
+    },
+    {
+        "text": "PWA",
+        "link": "/guide/how-to/pwa.md"
     }
 ]

@@ -12,20 +12,10 @@ Download Node.js from the [official website](https://nodejs.org/) or use [nvm](h
 
 ## Repository fork
 
-We recommend working with a fork of this repository. A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
+We recommend working with a fork of the [app repository](https://github.com/plentymarkets/plentyshop-pwa). A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
 
 1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-
-## Configuration
-
-Follow the links below for configuration instructions.
-
-- [Middleware](./docs/config/middleware.md) (required)
-- [I18N](./docs/config/i18n.md) (required)
-- [PWA](./docs/config/pwa.md) (optional)
-- [Theme](./docs/config/theme.md) (optional)
-- [Cookies](./docs/config/cookies.md) (optional)
 
 ## Authentication
 
@@ -35,10 +25,23 @@ This project queries data from plentysystems by using other NPM packages as midd
 2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
 3. In `.yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
 
-Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
+The `.gitignore` doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
+
+::: tip
+You can enable [push protection](https://docs.github.com/en/code-security/secret-scanning/push-protection-for-users) in your GitHub account for an additional layer of security.
+:::
 
 ## Starting the app
 
 1. Open the repository in your command line interface.
 2. Run `yarn` to install all dependencies.
 3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+
+## Custom configuration
+
+By default, the app connects to a demo shop. The demo shop uses English as the default locale and German as a second locale. To connect to your own plentysystems system, you have to update the API endpoint in the middleware and match the locale configuration in system and app.
+
+For details, refer to the following guides:
+
+* [Middleware](/guide/how-to/middleware.md)
+* [Locales](/guide/how-to/i18n.md)
