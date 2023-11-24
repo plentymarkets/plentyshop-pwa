@@ -28,9 +28,8 @@ export default defineConfig({
         text: 'Guide',
         items: [
           { text: 'Setup', link: '/guide/setup/system' },
-          { text: 'How-To', link: '/guide/how-to/index' },
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          { text: 'How-To', link: '/guide/how-to/' },
+          { text: 'Concept', link: '/guide/concept/' }
         ]
       },
       {
@@ -90,6 +89,8 @@ export default defineConfig({
 
     search: {
       provider: 'local'
-    }
+    },
+
+    externalLinkIcon: true,
   }
 })

@@ -12,7 +12,7 @@ The following sections describe the steps in detail.
 
 1. Log into your plentysystems system.
 2. Go to **CMS » Deployment**.
-3. Click on :plus: to add a new application.
+3. Click on :heavy_plus_sign: to add a new application.
 4. Fill in the required information.
 5. **Create** the application.
 
