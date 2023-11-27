@@ -501,7 +501,7 @@
     "apply": "Apply",
     "voucherApplied": "The coupon has been added successfully",
     "voucherRemoved": "The coupon has been removed successfully.",
-    "voucherInvalid": "The coupon has already been used or is invalid.",
+    "voucherInvalid": "The coupon has already been used or is invalid."
   },
   "error": {
     "GUI_EXCEPTION_MIN_ORDER_VALUE_NOT_REACHED": "The minimum order value has not been reached.",
