@@ -40,6 +40,10 @@
     "Reject All": "Alles ablehnen",
     "Accept Selection": "Auswahl akzeptieren"
   },
+  "PreviewModeBar": {
+    "label": "Steuerung des Vorschaumodus",
+    "pwa": "plentyShop PWA Vorschau beenden"
+  },
   "documents" : {
     "correctionDocuments": "Korrekturbeleg",
     "Credit Note": "Gutschrift",
@@ -171,7 +175,7 @@
   "quantitySelectorIncrease": "Menge erhöhen",
   "scrollTop": "Nach oben scrollen",
   "numberInCart": "{count} Produkte im Warenkorb",
-  "languageSelector": "Sprachauswahl",
+  "languageSelector": "Sprachauswahl öffnen",
   "allProductsLinkText": "Produkte durchsuchen",
   "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
@@ -275,6 +279,7 @@
   "backToCheckout": "Zurück zur Kasse",
   "continueShopping": "Einkauf fortsetzen",
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
+  "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
   "orderNumber": "Auftrags-ID",
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",

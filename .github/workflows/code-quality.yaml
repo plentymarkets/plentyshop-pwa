@@ -44,7 +44,7 @@ jobs:
       - name: Set yarn version
         run: |
           yarn set version stable
-          yarn set version 3.6.3
+          yarn set version 3.6.4
 
       - name: Setup .yarnrc.yml
         run: |
