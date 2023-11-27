@@ -5,6 +5,7 @@
 ### Changed
 
 - Reworked logic of cookie bar.
+- Added label translations for cookie bar buttons
 
 ## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

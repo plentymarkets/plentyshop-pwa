@@ -5,6 +5,7 @@
 ### Geändert
 
 - Die Cookiebar Logik wurde überarbeitet.
+- Beschriftungsübersetzungen für Cookiebar schaltflächen hinzugefügt
 
 ## v1.1.0 (03.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
