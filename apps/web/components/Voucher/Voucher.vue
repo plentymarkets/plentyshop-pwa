@@ -25,14 +25,25 @@
             required
           />
         </div>
-        <SfButton data-testid="voucherAdd" @click="applyVoucher()" class="ml-2" type="reset" variant="primary">
+        <SfButton
+          data-testid="voucherAdd"
+          @click="doAddCoupon({ couponCode })"
+          class="ml-2"
+          type="reset"
+          variant="primary"
+        >
           {{ $t('coupon.apply') }}
         </SfButton>
       </div>
       <div v-else class="flex justify-between mb-3 mt-2">
         <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }}</div>
         <div>
-          <SfButton data-testid="voucherRemove" @click="resetVoucher()" variant="tertiary" class="text-stone-800">
+          <SfButton
+            data-testid="voucherRemove"
+            @click="deleteCoupon({ couponCode })"
+            variant="tertiary"
+            class="text-stone-800"
+          >
             <span class="underline"> Remove </span>
             <SfIconDelete></SfIconDelete>
           </SfButton>
@@ -50,24 +61,8 @@ import { useCart } from '~/composables';
 const openedVoucher = ref(false);
 const couponCode = ref('KB82AZ');
 const { doAddCoupon, deleteCoupon } = useVoucher();
-const { data: cart, getCart } = useCart();
-const { t } = useI18n();
-const { send } = useNotification();
+const { data: cart } = useCart();
 onMounted(() => {
   openedVoucher.value = cartGetters.getCouponDiscount(cart.value) !== 0;
 });
-const applyVoucher = async () => {
-  const cartWithCoupon = await doAddCoupon({ couponCode: couponCode.value });
-  if (cartWithCoupon) {
-    getCart();
-    send({ message: t('coupon.voucherApplied'), type: 'positive' });
-  }
-};
-const resetVoucher = async () => {
-  const cartWithoutCoupon = await deleteCoupon({ couponCode: couponCode.value });
-  if (cartWithoutCoupon) {
-    getCart();
-    send({ message: t('coupon.voucherRemoved'), type: 'positive' });
-  }
-};
 </script>

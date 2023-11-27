@@ -44,7 +44,7 @@
     "label": "Steuerung des Vorschaumodus",
     "pwa": "plentyShop PWA Vorschau beenden"
   },
-  "documents" : {
+  "documents": {
     "correctionDocuments": "Korrekturbeleg",
     "Credit Note": "Gutschrift",
     "Delivery Note": "Lieferschein",
@@ -347,14 +347,14 @@
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
-      "orderId":"Auftrags-ID",
-      "orderDate":"Auftragsdatum",
+      "orderId": "Auftrags-ID",
+      "orderDate": "Auftragsdatum",
       "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
-      "amount":"Anzahl",
-      "status":"Status",
-      "details":"Details",
-      "myOrders":"Meine Bestellungen",
+      "amount": "Anzahl",
+      "status": "Status",
+      "details": "Details",
+      "myOrders": "Meine Bestellungen",
       "noOrders": "Sie haben noch nicht bei uns eingekauft",
       "continue": "Einkauf fortsetzen",
       "noOrdersAltText": "Keine Bestellungen",
@@ -420,9 +420,9 @@
       }
     },
     "resetPassword": {
-      "heading":  "Passwort zurücksetzen",
+      "heading": "Passwort zurücksetzen",
       "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts. Mit dem Link können Sie ein neues Passwort für Ihr Konto festlegen.",
-      "email":"E-Mail",
+      "email": "E-Mail",
       "continue": "Weiter",
       "backToLogin": "Zurück zum Login",
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten.",
@@ -430,10 +430,10 @@
       "emailSent": "E-Mail verschickt"
     },
     "setNewPassword": {
-      "heading":  "Neues Passwort festlegen",
-      "button":  "Neues Passwort festlegen",
-      "password":  "Neues Passwort",
-      "repeatPassword":  "Neues Passwort wiederholen",
+      "heading": "Neues Passwort festlegen",
+      "button": "Neues Passwort festlegen",
+      "password": "Neues Passwort",
+      "repeatPassword": "Neues Passwort wiederholen",
       "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
       "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten."
     }
@@ -453,7 +453,7 @@
   "excludedShipping": "zzgl. Versandkosten",
   "lang": {
     "en": "Englisch",
-    "de":"Deutsch"
+    "de": "Deutsch"
   },
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
@@ -501,9 +501,30 @@
     "apply": "Einlösen",
     "voucherApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "voucherRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
-    "error": {
-      "1070": "Coupon code is not valid."
-    }
+    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
+  },
+  "error": {
+    "GUI_EXCEPTION_MIN_ORDER_VALUE_NOT_REACHED": "Der Mindestbestellwert wurde nicht erreicht.",
+    "GUI_EXCEPTION_NOT_USABLE_FOR_SPECIAL_OFFER": "Der Gutschein kann nicht für Sonderangebote verwendet werden.",
+    "GUI_EXCEPTION_ALREADY_USED_OR_INVALID_COUPON_CODE": "Der Gutschein wurde bereits eingelöst oder ist ungültig.",
+    "GUI_EXCEPTION_CAMPAIGN_EXPIRED": "Die Kampagne ist abgelaufen.",
+    "GUI_EXCEPTION_NO_MATCHING_ITEM_IN_BASKET": "Der Gutschein ist nicht gültig für die ausgewählten Artikel.",
+    "GUI_EXCEPTION_COUPON_ONLY_SUBSCRIPTION": "Der Gutschein ist nur für Abonnement-Artikel gültig.",
+    "GUI_EXCEPTION_COUPON_ONLY_SINGLE_USAGE": "Der Gutschein ist nicht für Abonnement-Artikel gültig.",
+    "GUI_EXCEPTION_NO_OPEN_AMOUNT": "Der Gutschein wurde vollständig eingelöst.",
+    "GUI_EXCEPTION_EXPIRED": "Der Gutschein ist abgelaufen.",
+    "GUI_EXCEPTION_COUPON_ONLY_FOR_NEW_CUSTOMERS": "Der Gutschein ist nur für Neukunden gültig.",
+    "GUI_EXCEPTION_COUPON_ONLY_FOR_EXISTING_CUSTOMERS": "Der Gutschein ist nur für bestehende Kunden gültig.",
+    "GUI_EXCEPTION_COUPON_WRONG_CUSTOMER_GROUP": "Der Gutschein ist ungültig für die Kundenklasse.",
+    "GUI_EXCEPTION_COUPON_WRONG_CUSTOMER_TYPE": "Der Gutschein ist ungültig für den Kundentyp.",
+    "GUI_EXCEPTION_COUPON_NO_CUSTOMER_TYPE_PROVIDED": "Kein Kundentyp angegeben.",
+    "GUI_EXCEPTION_COUPON_NO_CUSTOMER_TYPE_ACTIVATED": "Der Gutschein wurde nicht für den Kundentyp aktiviert.",
+    "GUI_EXCEPTION_COUPON_NO_CUSTOMER_GROUP_ACTIVATED": "Der Gutschein wurde nicht für eine Kundenklasse aktiviert.",
+    "GUI_EXCEPTION_CAMPAIGN_NO_WEBSTORE_ACTIVATED": "Der Gutschein wurde nicht für einen Webstore aktiviert.",
+    "GUI_EXCEPTION_CAMPAIGN_WRONG_WEBSTORE_ID": "Falsche Webstore-ID.",
+    "GUI_EXCEPTION_CAMPAIGN_NO_WEBSTORE_ID_GIVEN": "Keine Webstore-ID angegeben.",
+    "GUI_EXCEPTION_NO_REDEMTION_FOR_CODE": "Bestellwert bereits erreicht. Geschenkkarte nicht eingelöst.",
+    "GUT_EXCEPTION_TOO_MANY_PROMOTION_CODES": "Zu viele Aktionscodes",
+    "GUI_EXCEPTION_GENERAL_ERROR": "Gutscheincode ist ungültig."
   }
 }
