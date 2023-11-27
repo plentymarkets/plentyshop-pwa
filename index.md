@@ -11,7 +11,7 @@ hero:
     alt: plentyShop PWA
   actions:
     - theme: brand
-      text: Setup
+      text: Get started
       link: /guide/setup/system
     - theme: alt
       text: Composables
