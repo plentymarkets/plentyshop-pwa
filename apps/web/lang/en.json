@@ -503,7 +503,7 @@
     "voucherRemoved": "The coupon has been removed successfully.",
     "voucherInvalid": "The coupon has already been used or is invalid.",
   },
-  "errorCodeMessages": {
+  "error": {
     "GUI_EXCEPTION_MIN_ORDER_VALUE_NOT_REACHED": "The minimum order value has not been reached.",
     "GUI_EXCEPTION_NOT_USABLE_FOR_SPECIAL_OFFER": "The coupon cannot be used for special offers.",
     "GUI_EXCEPTION_ALREADY_USED_OR_INVALID_COUPON_CODE": "The coupon has already been redeemed or is invalid.",
