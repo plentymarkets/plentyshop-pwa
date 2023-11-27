@@ -19,5 +19,4 @@ export const paths = {
   privacyPolicy: '/PrivacyPolicy',
   termsAndConditions: '/TermsAndConditions',
   cancellationRights: '/CancellationRights',
-  productWithCoupon: '/study-room-office/office-chair/design-chair-brookhaven-leather-black_105_1003',
 };

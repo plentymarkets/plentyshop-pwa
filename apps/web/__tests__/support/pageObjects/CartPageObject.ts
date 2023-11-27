@@ -71,18 +71,17 @@ export class CartPageObject {
     cy.getByTestId('voucherAdd').click();
     return this;
   }
-  orderSummayAfterVoucherApplyed() {
-    //total should be 119.99
-    // coupon label should be there
-    // coupon value shoulld be there
+  orderSummayAfterVoucherApplyed(discount: string, total: string) {
+    cy.getByTestId('coupon-label').should('be.visible');
+    cy.getByTestId('coupon-value').contains(discount);
+    cy.getByTestId('total').contains(total);
   }
-  removeVoucher(voucherCode: string) {
+  removeVoucher() {
     cy.getByTestId('voucherRemove').click();
     return this;
   }
-  orderSummayAfterVoucherRemoved() {
-    // total should be 119.99
-    // coupon label should be there
-    // coupon value shoulld be there
+  orderSummayAfterVoucherRemoved(total: string) {
+    cy.getByTestId('coupon-label').should('not.exist');
+    cy.getByTestId('total').contains(total);
   }
 }

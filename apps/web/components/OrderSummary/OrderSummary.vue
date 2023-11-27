@@ -11,13 +11,13 @@
         <div class="flex flex-col gap-2 grow pr-2">
           <p>{{ $t('itemsSubtotal') }}</p>
           <p>{{ $t('delivery') }}</p>
-          <p v-if="cartGetters.getCouponDiscount(props.cart)">{{ $t('coupon.name') }}</p>
+          <p v-if="cartGetters.getCouponDiscount(props.cart)" data-testid="coupon-label">{{ $t('coupon.name') }}</p>
           <p>{{ $t('estimatedTax') }}</p>
         </div>
         <div class="flex flex-col gap-2 text-right">
           <p class="font-medium">{{ $n(totals.subTotal, 'currency') }}</p>
           <p class="font-medium">{{ getShippingAmount(cartGetters.getShippingPrice(props.cart)) }}</p>
-          <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium">
+          <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
             {{ $n(cartGetters.getCouponDiscount(props.cart), 'currency') }}
           </p>
           <p>{{ $n(totals.vatAmmount, 'currency') }}</p>
