@@ -59,7 +59,7 @@ import { SfAccordionItem, SfIconChevronLeft, SfInput, SfButton, SfIconDelete } f
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
 const openedVoucher = ref(false);
-const couponCode = ref('KB82AZ');
+const couponCode = ref('');
 const { doAddCoupon, deleteCoupon } = useVoucher();
 const { data: cart } = useCart();
 onMounted(() => {
