@@ -38,9 +38,4 @@ export class ProductDetailPageObject {
     this.addToCartButton.should('be.visible');
     return this;
   }
-
-  addToCart() {
-    cy.getByTestId('add-to-cart').realHover().click();
-    return this;
-  }
 }

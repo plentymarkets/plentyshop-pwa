@@ -66,20 +66,24 @@ export class CartPageObject {
     cy.getByTestId('voucherZone').click();
     return this;
   }
+
   addVoucher(voucherCode: string) {
     cy.getByTestId('voucherCode').focus().type(voucherCode);
     cy.getByTestId('voucherAdd').click();
     return this;
   }
+
   orderSummayAfterVoucherApplyed(discount: string, total: string) {
     cy.getByTestId('coupon-label').should('be.visible');
     cy.getByTestId('coupon-value').contains(discount);
     cy.getByTestId('total').contains(total);
   }
+
   removeVoucher() {
     cy.getByTestId('voucherRemove').click();
     return this;
   }
+  
   orderSummayAfterVoucherRemoved(total: string) {
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('total').contains(total);
