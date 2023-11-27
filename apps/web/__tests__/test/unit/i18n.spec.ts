@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-const en = require('../../../lang/en.json')
-const de = require('../../../lang/de.json')
+const en = require("../../../lang/en.json")
+const de = require("../../../lang/de.json")
 
 describe('i18n', () => {
     it('has the same keys in English and German', () => {
