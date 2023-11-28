@@ -8,6 +8,7 @@
 - Added a frontend toggle to disable the pwa preview mode.
 - Added structured data for ratings (reviews).
 - Added item images on the order confirmation (thank you) page.
+- Added protection against CSRF attacks.
 
 ### Changed
 
