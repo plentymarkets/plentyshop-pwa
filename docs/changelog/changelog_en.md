@@ -1,10 +1,29 @@
 # Changelog plentyshopPWA
 
-## Upcoming release
+## v1.2.0 (2023-11-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Added getters to show variation properties.
+- Added a frontend toggle to disable the pwa preview mode.
+- Added structured data for ratings (reviews).
+- Added item images on the order confirmation (thank you) page.
+- Added protection against CSRF attacks.
 
 ### Changed
 
 - Reworked logic of cookie bar.
+- The language select has been refactored and is now showing country flags.
+- Refactored the checkout page to load less data.
+
+### Fixed
+
+- CancellationForm page not loading.
+- Failing minimum buy price setting was not shown as error.
+- Notifications were causing a layout shift for the user, this has been fixed.
+- Categories loading in the wrong language when the site was rendered with SSR for the first time.
+- The variation select didn't remove the variation from the URL when the base variation was selected.
+- Products on the order confirmation didn't link to the correct product.
 
 ## v1.1.0 (2023-11-03) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
