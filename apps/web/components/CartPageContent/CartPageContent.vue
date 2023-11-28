@@ -30,16 +30,13 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
 const { isDesktop } = useBreakpoints();
-const { setInitialData } = useInitialSetup();
 
 const localePath = useLocalePath();
 
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
 
-await setInitialData();
 </script>

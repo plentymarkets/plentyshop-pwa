@@ -38,8 +38,8 @@ export const useVoucher: UseVoucherReturn = () => {
     } else if (response.data.value.error) {
       const error = {
         status: 500,
-        message: $i18n.t(`error.${getErrorCode(341)}`),
-        statusMessage: $i18n.t(`error.${getErrorCode(341)}`),
+        message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
+        statusMessage: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
       };
       useHandleError(error);
     }
@@ -60,8 +60,8 @@ export const useVoucher: UseVoucherReturn = () => {
     } else if (response.data.value.error) {
       const error = {
         status: 500,
-        message: $i18n.t(`error.${getErrorCode(341)}`),
-        statusMessage: $i18n.t(`error.${getErrorCode(341)}`),
+        message: $i18n.t(`error.${getErrorCode("341")}`),
+        statusMessage: $i18n.t(`error.${getErrorCode("341")}`),
       };
 
       useHandleError(error);
