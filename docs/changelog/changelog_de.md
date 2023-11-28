@@ -8,7 +8,7 @@
 - Es wurde ein Toggle hinzugefügt, um im Frontend den PWA-Vorschaumodus zu deaktivieren.
 - Strukturierte Daten für Bewertungen (Rezensionen) hinzugefügt.
 - Artikelbilder werden jetzt auf der Bestellbestätigungsseite angezeigt.
-- Die App ist nun vor CSRF Angriffen geschützt.
+- Die App ist nun gegen CSRF-Attacken geschützt.
 
 ### Geändert
 
