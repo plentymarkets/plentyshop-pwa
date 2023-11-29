@@ -66,7 +66,6 @@
 </template>
 
 <script setup lang="ts">
-import { ReviewAverage } from '@plentymarkets/shop-api';
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';

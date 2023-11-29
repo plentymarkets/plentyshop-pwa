@@ -4074,21 +4074,21 @@ __metadata:
 
 "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.13.0
-  resolution: "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client#/Users/luisahaase/PWA/sdk/packages/api-client::hash=2140a1&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client#/Users/luisahaase/PWA/sdk/packages/api-client::hash=4c9537&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^0.21.1
     consola: ^3.0.0
-  checksum: 5c648e38347524ac671d411145b58e481baa629b3937ae5d840ac32191c7a1c41852ad2c92faacf82354981ad87ea5c7d5b23347dd0734c7b4bcd46613ae2b46
+  checksum: aea15c8d223ae0750e827a9013a379b7916cff7431689f9404d167413655d3bd4df1feda7c24501b58a050d24f500a3b9e28ed56ea6c6b1421c4a2e2f2b843e1
   languageName: node
   linkType: hard
 
 "@plentymarkets/shop-sdk@file:/Users/luisahaase/PWA/sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.23.1
-  resolution: "@plentymarkets/shop-sdk@file:/Users/luisahaase/PWA/sdk/packages/sdk#/Users/luisahaase/PWA/sdk/packages/sdk::hash=1e4476&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-sdk@file:/Users/luisahaase/PWA/sdk/packages/sdk#/Users/luisahaase/PWA/sdk/packages/sdk::hash=109781&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     axios: ^0.27.2
-  checksum: 1fe0c5981d473a62f2828238d025de6f2333ea0297bcec7ec6b8ffcc40851ac462b9bd9295030d54d69fbcec09b0f7d8f0bcd1fe4b2e819d51d4403d00d85714
+  checksum: 050ed718f807c62ac8a10467b808acd4c7b99a8d05e5d25e85b1e90079e095304e939625fa1dd53c05acd509e2c4ed329f7d5fb789ba12672929d3ebeb4168d7
   languageName: node
   linkType: hard
 
