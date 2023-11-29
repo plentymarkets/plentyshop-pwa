@@ -24,7 +24,6 @@ const { setStaticPageMeta } = useCanonical();
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
-
 await setInitialDataSSR();
 
 if (route?.meta.pageType === 'static') {

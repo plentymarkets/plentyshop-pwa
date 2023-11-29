@@ -5,13 +5,13 @@ export interface UseVoucherState {
   loading: boolean;
 }
 
-export type DoAddCoupon = (params: DoAddCouponParams) => Promise<Cart>;
-export type DeleteCoupon = (params: DoAddCouponParams) => Promise<Cart>;
+export type AddVoucher = (params: DoAddCouponParams) => Promise<Cart>;
+export type DeleteVoucher = (params: DoAddCouponParams) => Promise<Cart>;
 
 export interface UseVoucher {
   loading: Readonly<Ref<boolean>>;
-  doAddCoupon: DoAddCoupon;
-  deleteCoupon: DeleteCoupon;
+  addVoucher: AddVoucher;
+  deleteVoucher: DeleteVoucher;
 }
 
 export type UseVoucherReturn = () => UseVoucher;

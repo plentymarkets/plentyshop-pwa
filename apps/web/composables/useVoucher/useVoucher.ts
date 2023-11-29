@@ -1,4 +1,4 @@
-import { UseVoucherReturn, UseVoucherState, DoAddCoupon, DeleteCoupon } from './types';
+import { UseVoucherReturn, UseVoucherState, AddVoucher, DeleteVoucher } from './types';
 import { useSdk } from '~/sdk';
 import { DoAddCouponParams } from '@plentymarkets/shop-api';
 /**
@@ -6,7 +6,7 @@ import { DoAddCouponParams } from '@plentymarkets/shop-api';
  * @returns UseVoucherReturn
  * @example
  * ``` ts
- * const { doAddCoupon, deleteCoupon, loading } = useVoucher();
+ * const { addVoucher, deleteVoucher, loading } = useVoucher();
  * ```
  */
 export const useVoucher: UseVoucherReturn = () => {
@@ -20,12 +20,12 @@ export const useVoucher: UseVoucherReturn = () => {
    * @return Cart
    * @example
    * ``` ts
-   * doAddCoupon({
+   * addVoucher({
       couponCode: 'KB82AZ'
     })
    * ```
    */
-  const doAddCoupon: DoAddCoupon = async (params: DoAddCouponParams) => {
+  const addVoucher: AddVoucher = async (params: DoAddCouponParams) => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const { getCart } = useCart();
@@ -46,7 +46,7 @@ export const useVoucher: UseVoucherReturn = () => {
     return response.data.value.data;
   };
 
-  const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
+  const deleteVoucher: DeleteVoucher = async (params: DoAddCouponParams) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
@@ -60,8 +60,8 @@ export const useVoucher: UseVoucherReturn = () => {
     } else if (response.data.value.error) {
       const error = {
         status: 500,
-        message: $i18n.t(`error.${getErrorCode("341")}`),
-        statusMessage: $i18n.t(`error.${getErrorCode("341")}`),
+        message: $i18n.t(`error.errorActionIsNotExecuted`),
+        statusMessage: $i18n.t(`error.errorActionIsNotExecuted`),
       };
 
       useHandleError(error);
@@ -70,8 +70,8 @@ export const useVoucher: UseVoucherReturn = () => {
   };
 
   return {
-    doAddCoupon,
-    deleteCoupon,
+    addVoucher,
+    deleteVoucher,
     ...toRefs(state.value),
   };
 };

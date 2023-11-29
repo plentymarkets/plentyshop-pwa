@@ -38,5 +38,4 @@ const localePath = useLocalePath();
 
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
-
 </script>
