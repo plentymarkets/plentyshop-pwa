@@ -13,4 +13,5 @@ The following pages are available:
 - [i18n](/guide/how-to/i18n.md)
 - [Theme](/guide/how-to/theme.md)
 - [Cookie consent](/guide/how-to/cookie.md)
+- [Variation Property](/guide/how-to/variation-property.md)
 - [PWA](/guide/how-to/pwa.md)
