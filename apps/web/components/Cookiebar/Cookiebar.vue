@@ -111,7 +111,7 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            aria-label="button"
+            :aria-label="$t('CookieBar.Accept All')"
             @click="setAllCookiesState(true)"
           >
             {{ $t('CookieBar.Accept All') }}
@@ -122,14 +122,21 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            aria-label="button"
+            :aria-label="$t('CookieBar.Reject All')"
             @click="setAllCookiesState(false)"
           >
             {{ $t('CookieBar.Reject All') }}
           </SfButton>
         </div>
         <div class="flex-1">
-          <SfButton variant="secondary" class="w-full" :aria-disabled="false" type="button" @click="setConsent()">
+          <SfButton
+            variant="secondary"
+            class="w-full"
+            :aria-disabled="false"
+            type="button"
+            :aria-label="$t('CookieBar.Accept Selection')"
+            @click="setConsent()"
+          >
             {{ $t('CookieBar.Accept Selection') }}
           </SfButton>
         </div>
@@ -140,7 +147,7 @@
       v-else
       variant="secondary"
       class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-2 bg-white"
-      aria-label="Cookie control"
+      :aria-label="$t('CookieBar.Cookie Settings')"
       @click="changeVisibilityState"
     >
       <SfIconCheckBox />
