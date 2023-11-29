@@ -39,12 +39,12 @@ import { RemoveLookupCookie } from './types';
 
 const bannerIsHidden = ref(true);
 
-const foundCookies = computed(() => defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(cookie).value));
+const foundCookies = defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(cookie).value);
 
-const useClassFor = (index: number): boolean => foundCookies.value.length > 1 && index !== 0;
+const useClassFor = (index: number): boolean => foundCookies.length > 1 && index !== 0;
 
 const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
-  useCookie(foundCookies.value[index]).value = null;
+  useCookie(foundCookies[index]).value = null;
   bannerIsHidden.value = true;
 };
 </script>
