@@ -20,7 +20,7 @@
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion
               :product="product"
-              :total-reviews="productGetters.getTotalReviews(productReviewAverage)"
+              :total-reviews="productGetters.getTotalReviews(product)"
             />
           </NuxtLazyHydrate>
         </section>
