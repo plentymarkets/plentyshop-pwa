@@ -13,6 +13,7 @@
 ### Geändert
 
 - Die Cookiebar Logik wurde überarbeitet.
+- Die ARIA-Labels von Schaltflächen der Cookiebar wurden übersetzt.
 - Die Sprachauswahl wurde überarbeitet und zeigt jetzt Länderflaggen an.
 - Die Checkout-Seite wurde überarbeitet, um weniger Daten zu laden.
 
@@ -22,7 +23,7 @@
 - Beim Unterschreiten der Mindestkaufpreisanforderung wurde beim Bezahlvorgang kein Fehler ausgegeben.
 - UI Benachrichtigungen führten zu einer Layoutverschiebung für den Benutzer.
 - Kategorien wurden in der falschen Sprache geladen, wenn die Website zum ersten Mal mit SSR gerendert wurde.
-– Die Variationsauswahl hat die Variation nicht aus der URL entfernt, wenn die Basisvariation ausgewählt wurde.
+  – Die Variationsauswahl hat die Variation nicht aus der URL entfernt, wenn die Basisvariation ausgewählt wurde.
 - Produkte auf der Bestellbestätigungsseite haben nicht auf das korrekte Produkt verlinkt.
 
 ## v1.1.0 (03.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.0.0...v1.1.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
