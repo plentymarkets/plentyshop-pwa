@@ -147,7 +147,7 @@
       v-else
       variant="secondary"
       class="z-10 fixed bottom-2 xl:bottom-2 xl:left-auto xl:right-2 bg-white"
-      :aria-label="$t('CookieBar.Cookie Control')"
+      :aria-label="$t('CookieBar.Cookie Settings')"
       @click="changeVisibilityState"
     >
       <SfIconCheckBox />

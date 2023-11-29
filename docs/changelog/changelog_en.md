@@ -13,7 +13,7 @@
 ### Changed
 
 - Reworked logic of cookie bar.
-- Added label translations for cookie bar buttons
+- Added ARIA label translations for cookie bar buttons.
 - The language select has been refactored and is now showing country flags.
 - Refactored the checkout page to load less data.
 
