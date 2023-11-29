@@ -30,13 +30,11 @@
       <div
         v-for="{ title, image } in categories"
         :key="title"
+        role="img"
+        :aria-label="title"
+        :aria-labelledby="`image-${title}`"
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
-        <a
-          class="absolute w-full h-full z-1 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-md"
-          href="#"
-          :aria-label="title"
-        />
         <img
           class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           :src="image"
@@ -44,12 +42,12 @@
           width="360"
           height="360"
         />
-        <div class="flex justify-center">
-          <a
-            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:underline group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
+        <div :id="`image-${title}`" class="flex justify-center">
+          <div
+            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
           >
             {{ title }}
-          </a>
+          </div>
         </div>
       </div>
     </div>
