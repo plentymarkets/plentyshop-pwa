@@ -2,7 +2,11 @@
   <div class="relative min-h-[600px]">
     <picture>
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
-      <img src="/images/homepage-hero-bg-mobile.webp" class="absolute w-full h-full z-[-1] md:object-cover" />
+      <img
+        src="/images/homepage-hero-bg-mobile.webp"
+        alt="Hero mobile background"
+        class="absolute w-full h-full z-[-1] md:object-cover"
+      />
     </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
@@ -30,13 +34,11 @@
       <div
         v-for="{ title, image } in categories"
         :key="title"
+        role="img"
+        :aria-label="title"
+        :aria-labelledby="`image-${title}`"
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
-        <a
-          class="absolute w-full h-full z-1 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-md"
-          href="#"
-          :aria-label="title"
-        />
         <img
           class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           :src="image"
@@ -44,12 +46,12 @@
           width="360"
           height="360"
         />
-        <div class="flex justify-center">
-          <a
-            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:underline group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
+        <div :id="`image-${title}`" class="flex justify-center">
+          <div
+            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
           >
             {{ title }}
-          </a>
+          </div>
         </div>
       </div>
     </div>
