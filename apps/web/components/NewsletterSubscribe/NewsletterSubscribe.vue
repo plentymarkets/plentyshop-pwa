@@ -14,7 +14,7 @@
         <NuxtTurnstile
           v-model="turnstile"
           ref="turnstileElement"
-          :options="{ theme: 'light', language: currentLocale }"
+          :options="{ theme: 'light' }"
         />
         <SfButton type="submit" size="lg" :disabled="loading || turnstile === ''">
           <SfLoaderCircular v-if="loading" />
@@ -33,7 +33,6 @@
 import { ref } from 'vue';
 import { SfButton, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 
-const { locale: currentLocale } = useI18n();
 const { subscribe, loading } = useNewsletter();
 const inputValue = ref('');
 const turnstile = ref('');
