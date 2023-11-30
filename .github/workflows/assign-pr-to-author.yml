@@ -1,11 +1,11 @@
 name: PR to Author
 on:
   pull_request:
-    types: [opened, ready_for_review, edited, synchronize]
+    types: [opened]
 
 jobs:
   assignAuthor:
-    name: Assing
+    name: Assign
     runs-on: ubuntu-latest
     steps:
       - uses: samspills/assign-pr-to-author@v1.0
