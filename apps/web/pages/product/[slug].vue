@@ -18,10 +18,7 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion
-              :product="product"
-              :total-reviews="productGetters.getTotalReviews(product)"
-            />
+            <ReviewsAccordion :product="product" :total-reviews="productGetters.getTotalReviews(product)" />
           </NuxtLazyHydrate>
         </section>
       </div>
