@@ -1,5 +1,5 @@
 <template>
   <picture>
-    <img src="/images/plentyShopPWA.svg" alt="plentyShop PWA Logo" class="w-100 h-6" />
+    <img src="/images/plentyShopPWA.svg" alt="plentyShop PWA Logo" class="w-100 h-6 m-2" />
   </picture>
 </template>
