@@ -39,4 +39,5 @@ export * from './useProductReviewAverage';
 export * from './useProductReviews';
 export * from './useProducts';
 export * from './useSearch';
+export * from './useCoupon';
 export * from './useStructuredData';
