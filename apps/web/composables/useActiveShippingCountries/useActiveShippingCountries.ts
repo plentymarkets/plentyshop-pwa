@@ -4,10 +4,15 @@ import { useSdk } from '~/sdk';
 import { UseActiveShippingCountriesReturn, UseActiveShippingCountriesState, GetActiveShippingCountries } from './types';
 
 /**
- * @description Composable for getting all active shipping countries.
+ * @description Composable for getting an array of `ActiveShippingCountry`.
  * @example
  * ``` ts
- * const { data, loading, getActiveShippingCountries } = useActiveShippingCountries();
+ * const {
+ *  data,
+ *  loading,
+ *  getActiveShippingCountries
+ * } = useActiveShippingCountries();
+ * getActiveShippingCountries();
  * ```
  */
 
@@ -17,13 +22,6 @@ export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () =
     loading: false,
   }));
 
-  /**
-   * @description Function to get all active shipping countries.
-   * @example
-   * ``` ts
-   * getActiveShippingCountries();
-   * ```
-   */
   const getActiveShippingCountries: GetActiveShippingCountries = async () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData('getActiveShippingCountries', () =>
