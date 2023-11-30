@@ -14,11 +14,7 @@
       </template>
       <div class="flex mb-2">
         <div class="flex-grow mr-2" data-testid="voucherCode">
-          <SfInput
-            :placeholder="$t('coupon.enterCode')"
-            type="text"
-            v-model="couponCode"
-            required/>
+          <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
         </div>
         <SfButton
           data-testid="voucherAdd"
