@@ -46,5 +46,6 @@ const useClassFor = (index: number): boolean => foundCookies.length > 1 && index
 const removeLookupCookie: RemoveLookupCookie = (index: number): void => {
   useCookie(foundCookies[index]).value = null;
   bannerIsHidden.value = true;
+  foundCookies.splice(index, 1);
 };
 </script>
