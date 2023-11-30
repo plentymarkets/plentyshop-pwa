@@ -68,7 +68,7 @@ export class CartPageObject {
   }
 
   addVoucher(voucherCode: string) {
-    cy.getByTestId('voucherCode').focus().type(voucherCode);
+    cy.getByTestId('voucherCode').find('[data-testid="input-field"]').type(voucherCode);
     cy.getByTestId('voucherAdd').click();
     return this;
   }

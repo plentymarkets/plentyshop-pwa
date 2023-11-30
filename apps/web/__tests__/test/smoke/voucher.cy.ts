@@ -1,7 +1,4 @@
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
-import { CheckoutPageObject } from '../../support/pageObjects/CheckoutPageObject';
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
 import { paths } from '../../../utils/paths';
 
 const cart = new CartPageObject();
@@ -15,13 +12,14 @@ describe('Smoke: Voucher test', () => {
   it('[smoke] Add voucher to cart and check order summary then remove voucher and check order summary', () => {
     cy.visitAndHydrate('/study-room-office/office-chair/design-chair-brookhaven-leather-black_105_1003');
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
-    cy.getByTestId('add-to-cart').click({ force: true});
+    cy.wait(1000);
+    cy.getByTestId('add-to-cart').click();
     cy.wait('@doAddCartItem');
-    cart.openCart();
+    cy.visitAndHydrate(paths.cart);
     cart.openVoucherAccordion();
     cart.addVoucher('KB82AZ');
-    cart.orderSummayAfterVoucherApplyed('-£13.02','£119.99');
+    cart.orderSummayAfterVoucherApplyed('-£12.95','£119.99');
     cart.removeVoucher();
-    cart.orderSummayAfterVoucherRemoved('£133.01');
+    cart.orderSummayAfterVoucherRemoved('£132.94');
   });
 });

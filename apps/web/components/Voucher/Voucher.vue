@@ -13,14 +13,12 @@
         </div>
       </template>
       <div class="flex mb-2">
-        <div class="flex-grow mr-2">
+        <div class="flex-grow mr-2" data-testid="voucherCode">
           <SfInput
-            data-testid="voucherCode"
             :placeholder="$t('coupon.enterCode')"
             type="text"
             v-model="couponCode"
-            required
-          />
+            required/>
         </div>
         <SfButton
           data-testid="voucherAdd"
