@@ -26,7 +26,7 @@
       <div class="flex items-center pt-1">
         <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfLink to="#" variant="secondary" :tag="NuxtLink" class="ml-1 no-underline">
-          <SfCounter size="xs">({{ ratingCount }})</SfCounter>
+          <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
@@ -86,6 +86,7 @@ import {
   SfLoaderCircular,
   SfIconChevronRight,
   SfRating,
+  SfCounter,
 } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 

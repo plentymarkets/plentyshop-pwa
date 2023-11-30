@@ -16,8 +16,8 @@
       />
     </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="productGetters.getAverageRating(product)" :max="5" />
-      <SfCounter class="ml-1" size="xs">{{ productGetters.getTotalReviews(product) }}</SfCounter>
+      <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
+      <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
       <SfLink variant="secondary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ $t('showAllReviews') }}
       </SfLink>
@@ -77,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,

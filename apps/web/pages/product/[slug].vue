@@ -34,6 +34,7 @@
 <script setup lang="ts">
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
+
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
