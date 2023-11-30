@@ -7,10 +7,10 @@
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
         <div class="font-medium text-center">
-          {{ cookieGroups?.barTitle }}
+          {{ $t(cookieGroups?.barTitle) }}
         </div>
         <div class="leading-relaxed pb-5">
-          {{ cookieGroups.barDescription }}
+          {{ $t(cookieGroups.barDescription) }}
 
           <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
             {{ $t('CookieBar.Privacy Settings') }}
@@ -30,7 +30,7 @@
               :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
-              {{ cookieGroup.name }}
+              {{ $t(cookieGroup.name) }}
             </label>
           </div>
         </div>
@@ -48,10 +48,10 @@
             class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
             :for="cookieGroup.name"
           >
-            {{ cookieGroup.name }}
+            {{ $t(cookieGroup.name) }}
           </label>
           <div class="leading-6 my-2">
-            {{ cookieGroup.description }}
+            {{ $t(cookieGroup.description) }}
           </div>
           <div v-if="cookieGroup.showMore ?? false">
             <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
