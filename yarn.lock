@@ -10216,6 +10216,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-prettier@npm:^9.0.0":
+  version: 9.0.0
+  resolution: "eslint-config-prettier@npm:9.0.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 362e991b6cb343f79362bada2d97c202e5303e6865888918a7445c555fb75e4c078b01278e90be98aa98ae22f8597d8e93d48314bec6824f540f7efcab3ce451
+  languageName: node
+  linkType: hard
+
 "eslint-etc@npm:^5.1.0":
   version: 5.2.1
   resolution: "eslint-etc@npm:5.2.1"
@@ -21319,7 +21330,7 @@ __metadata:
     cypress-real-events: ^1.10.0
     cypress-wait-until: ^2.0.0
     eslint: ^8.50.0
-    eslint-plugin-prettier: 5.0.1
+    eslint-config-prettier: ^9.0.0
     happy-dom: ^12.0.0
     lodash-es: ^4.17.21
     nuxt: ^3.6.5
