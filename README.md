@@ -1,7 +1,7 @@
 <div align="center">
   <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
 
-  <a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
+<a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
 
   <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
 </div>
@@ -25,20 +25,20 @@ For plentyShop PWA to run, you have to install plugins that provide additional R
 
 1. Log into your plentysystems system.
 2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
-    - IO
-    - plentyShop LTS
-    - PayPal
-    - Cash in advance
-    - Pay upon pickup
-    - DHL Shipping (Versenden)
-    - Customer feedback
+   - IO
+   - plentyShop LTS
+   - PayPal
+   - Cash in advance
+   - Pay upon pickup
+   - DHL Shipping (Versenden)
+   - Customer feedback
 3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest. The priorities of all other plugins remains 0.
 
 ### System configuration
 
 1. Log into your plentysystems system.
 2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
-3. *Optional:* Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.
+3. _Optional:_ Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.
 
 ## Local dev setup
 
@@ -94,6 +94,7 @@ For detailed setup instructions, refer to the [deployment guide](./docs/deployme
 ## Resources
 
 ### Changelog
+
 [English](./docs/changelog/changelog_en.md) | [German](./docs/changelog/changelog_de.md)
 
 ### Features

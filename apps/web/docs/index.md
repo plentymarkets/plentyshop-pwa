@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "plentyShop PWA"
+  name: 'plentyShop PWA'
   tagline: Composables documentation
   actions:
     - theme: brand
@@ -21,4 +21,3 @@ features:
   - title: Functions
     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
-

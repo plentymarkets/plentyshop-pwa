@@ -61,4 +61,31 @@ export class CartPageObject {
     this.cartIcon.click();
     return this;
   }
+
+  openCouponAccordion() {
+    cy.getByTestId('couponZone').click();
+    return this;
+  }
+
+  addCoupon(couponCode: string) {
+    cy.getByTestId('couponCode').find('[data-testid="input-field"]').type(couponCode);
+    cy.getByTestId('couponAdd').click();
+    return this;
+  }
+
+  orderSummayAfterCouponApplyed(discount: string, total: string) {
+    cy.getByTestId('coupon-label').should('be.visible');
+    cy.getByTestId('coupon-value').contains(discount);
+    cy.getByTestId('total').contains(total);
+  }
+
+  removeCoupon() {
+    cy.getByTestId('couponRemove').click();
+    return this;
+  }
+  
+  orderSummayAfterCouponRemoved(total: string) {
+    cy.getByTestId('coupon-label').should('not.exist');
+    cy.getByTestId('total').contains(total);
+  }
 }
