@@ -58,7 +58,7 @@
         </div>
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-          <Voucher class="my-5"></Voucher>
+          <Coupon class="my-5"/>
           <OrderSummary v-if="cart" :cart="cart">
             <PayPalExpressButton
               type="Checkout"

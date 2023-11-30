@@ -4,12 +4,12 @@
       <div v-for="cartItem in cart?.items" :key="cartItem.id">
         <UiCartProductCard :cart-item="cartItem" />
       </div>
-      <Voucher class="mb-2" v-if="!isDesktop" />
+      <Coupon class="mb-2" v-if="!isDesktop" />
     </div>
     <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
       <OrderSummary v-if="cart" :cart="cart">
-        <Voucher v-if="isDesktop" class="mb-5" />
+        <Coupon v-if="isDesktop" class="mb-5" />
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"

@@ -499,9 +499,9 @@
     "title": "Haben sie einen Gutscheincode?",
     "enterCode": "Gutschein-Code eingeben",
     "apply": "Einlösen",
-    "voucherApplied": "Der Gutschein wurde erfolgreich eingelöst.",
-    "voucherRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "voucherInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
+    "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
+    "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
+    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
   },
   "error": {
     "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",

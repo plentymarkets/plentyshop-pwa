@@ -1,31 +1,31 @@
-import { UseVoucherReturn, UseVoucherState, AddVoucher, DeleteVoucher } from './types';
+import { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
 import { useSdk } from '~/sdk';
 import { DoAddCouponParams } from '@plentymarkets/shop-api';
 /**
- * @description Composable for managing vouchers.
- * @returns UseVoucherReturn
+ * @description Composable for managing coupons.
+ * @returns UseCouponReturn
  * @example
  * ``` ts
- * const { addVoucher, deleteVoucher, loading } = useVoucher();
+ * const { addCoupon, deleteCoupon, loading } = useCoupon();
  * ```
  */
-export const useVoucher: UseVoucherReturn = () => {
-  const state = useState<UseVoucherState>('voucher', () => ({
+export const useCoupon: UseCouponReturn = () => {
+  const state = useState<UseCouponState>('coupon', () => ({
     loading: false,
   }));
 
   /**
-   * @description Function for adding a voucher to curent cart.
+   * @description Function for adding a coupon to curent cart.
    * @param params { DoAddCouponParams }
    * @return Cart
    * @example
    * ``` ts
-   * addVoucher({
+   * addCoupon({
       couponCode: 'KB82AZ'
     })
    * ```
    */
-  const addVoucher: AddVoucher = async (params: DoAddCouponParams) => {
+  const addCoupon: AddCoupon = async (params: DoAddCouponParams) => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const { getCart } = useCart();
@@ -34,7 +34,7 @@ export const useVoucher: UseVoucherReturn = () => {
     state.value.loading = false;
     if (response.data.value.data) {
       getCart();
-      send({ message: $i18n.t('coupon.voucherApplied'), type: 'positive' });
+      send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
     } else if (response.data.value.error) {
       const error = {
         status: 500,
@@ -46,7 +46,7 @@ export const useVoucher: UseVoucherReturn = () => {
     return response.data.value.data;
   };
 
-  const deleteVoucher: DeleteVoucher = async (params: DoAddCouponParams) => {
+  const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
     state.value.loading = true;
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
@@ -56,7 +56,7 @@ export const useVoucher: UseVoucherReturn = () => {
     state.value.loading = false;
     if (response.data.value.data) {
       getCart();
-      send({ message: $i18n.t('coupon.voucherRemoved'), type: 'positive' });
+      send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
     } else if (response.data.value.error) {
       const error = {
         status: 500,
@@ -70,8 +70,8 @@ export const useVoucher: UseVoucherReturn = () => {
   };
 
   return {
-    addVoucher,
-    deleteVoucher,
+    addCoupon,
+    deleteCoupon,
     ...toRefs(state.value),
   };
 };

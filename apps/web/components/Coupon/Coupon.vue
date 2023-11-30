@@ -1,24 +1,24 @@
 <template>
   <div class="border-b border-neutral-200">
-    <SfAccordionItem v-if="!cartGetters.getCouponDiscount(cart)" data-testid="voucherZone" v-model="openedVoucher">
+    <SfAccordionItem v-if="!cartGetters.getCouponDiscount(cart)" data-testid="couponZone" v-model="openedCoupon">
       <template #summary>
         <div
           class="flex justify-between font-medium p-3 border-2 border-solid border-transparent"
-          :class="{ 'mb-3 bg-gray-100 !border-dashed !border-red-200': openedVoucher }"
+          :class="{ 'mb-3 bg-gray-100 !border-dashed !border-red-200': openedCoupon }"
         >
           <p class="pl-3">{{ $t('coupon.title') }}</p>
           <SfIconChevronLeft
-            :class="['text-neutral-500', { 'rotate-90': openedVoucher, '-rotate-90': !openedVoucher }]"
+            :class="['text-neutral-500', { 'rotate-90': openedCoupon, '-rotate-90': !openedCoupon }]"
           />
         </div>
       </template>
       <div class="flex mb-2">
-        <div class="flex-grow mr-2" data-testid="voucherCode">
+        <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
         </div>
         <SfButton
-          data-testid="voucherAdd"
-          @click="addVoucher({ couponCode })"
+          data-testid="couponAdd"
+          @click="addCoupon({ couponCode })"
           class="ml-2"
           type="reset"
           variant="primary"
@@ -35,8 +35,8 @@
       <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }}</div>
       <div>
         <SfButton
-          data-testid="voucherRemove"
-          @click="handleDeleteVoucher"
+          data-testid="couponRemove"
+          @click="handleDeleteCoupon"
           variant="tertiary"
           class="text-stone-800"
           :disabled="loading"
@@ -64,18 +64,18 @@ import {
 } from '@storefront-ui/vue';
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
-const openedVoucher = ref(false);
+const openedCoupon = ref(false);
 const couponCode = ref('');
-const { addVoucher, deleteVoucher, loading } = useVoucher();
+const { addCoupon, deleteCoupon, loading } = useCoupon();
 const { data: cart } = useCart();
 
-const handleDeleteVoucher = async () => {
-  await deleteVoucher({ couponCode: couponCode.value });
+const handleDeleteCoupon = async () => {
+  await deleteCoupon({ couponCode: couponCode.value });
   couponCode.value = '';
 };
 
 onMounted(() => {
   couponCode.value = cartGetters.getCouponCode(cart.value);
-  openedVoucher.value = cartGetters.getCouponDiscount(cart.value) !== 0;
+  openedCoupon.value = cartGetters.getCouponDiscount(cart.value) !== 0;
 });
 </script>

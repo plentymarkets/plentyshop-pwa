@@ -62,29 +62,29 @@ export class CartPageObject {
     return this;
   }
 
-  openVoucherAccordion() {
-    cy.getByTestId('voucherZone').click();
+  openCouponAccordion() {
+    cy.getByTestId('couponZone').click();
     return this;
   }
 
-  addVoucher(voucherCode: string) {
-    cy.getByTestId('voucherCode').find('[data-testid="input-field"]').type(voucherCode);
-    cy.getByTestId('voucherAdd').click();
+  addCoupon(couponCode: string) {
+    cy.getByTestId('couponCode').find('[data-testid="input-field"]').type(couponCode);
+    cy.getByTestId('couponAdd').click();
     return this;
   }
 
-  orderSummayAfterVoucherApplyed(discount: string, total: string) {
+  orderSummayAfterCouponApplyed(discount: string, total: string) {
     cy.getByTestId('coupon-label').should('be.visible');
     cy.getByTestId('coupon-value').contains(discount);
     cy.getByTestId('total').contains(total);
   }
 
-  removeVoucher() {
-    cy.getByTestId('voucherRemove').click();
+  removeCoupon() {
+    cy.getByTestId('couponRemove').click();
     return this;
   }
   
-  orderSummayAfterVoucherRemoved(total: string) {
+  orderSummayAfterCouponRemoved(total: string) {
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('total').contains(total);
   }
