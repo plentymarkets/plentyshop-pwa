@@ -1,3 +1,13 @@
+/**
+ * Composables for plentyShop PWA.
+ *
+ * @remarks
+ * This section provides a reference of composables available in plentyShop PWA.
+ * It includes the available functions and interfaces.
+ *
+ * @packageDocumentation
+ */
+
 export * from './defaults';
 export * from './useActiveShippingCountries';
 export * from './useAdditionalInformation';
