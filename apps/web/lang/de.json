@@ -31,6 +31,7 @@
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
   "CookieBar": {
+    "Cookie Settings": "Cookie-Einstellungen",
     "Privacy Settings": "Datenschutzeinstellungen",
     "More information": "Mehr Informationen",
     "Further Settings": "Weitere Einstellungen",
@@ -175,7 +176,7 @@
   "quantitySelectorIncrease": "Menge erhöhen",
   "scrollTop": "Nach oben scrollen",
   "numberInCart": "{count} Produkte im Warenkorb",
-  "languageSelector": "Sprachauswahl",
+  "languageSelector": "Sprachauswahl öffnen",
   "allProductsLinkText": "Produkte durchsuchen",
   "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
@@ -279,6 +280,7 @@
   "backToCheckout": "Zurück zur Kasse",
   "continueShopping": "Einkauf fortsetzen",
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
+  "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
   "orderNumber": "Auftrags-ID",
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",

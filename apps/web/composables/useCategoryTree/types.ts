@@ -7,11 +7,13 @@ export interface UseCategoryTreeState {
 }
 
 export type GetCategoryTree = () => Promise<CategoryTreeItem[]>;
+export type SetCategoryTree = (data: CategoryTreeItem[]) => void;
 
 export interface UseCategoryTreeMethods {
   data: Readonly<Ref<UseCategoryTreeState['data']>>;
   loading: Readonly<Ref<boolean>>;
   getCategoryTree: GetCategoryTree;
+  setCategoryTree: SetCategoryTree;
 }
 
 export type UseCategoryTreeMethodsReturn = () => UseCategoryTreeMethods;

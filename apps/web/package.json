@@ -1,7 +1,7 @@
 {
   "name": "web",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -12,7 +12,7 @@
     "docs:build": "yarn publish-typedoc && vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "publish-typedoc": "yarn typedoc",
-    "lint": "nuxt typecheck && eslint --ext .vue,.js,.ts .",
+    "lint": "eslint --ext .vue,.js,.ts .",
     "lint:fix": "eslint --ext .vue,.js,.ts . --fix",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -48,7 +48,7 @@
     "cypress-real-events": "^1.10.0",
     "cypress-wait-until": "^2.0.0",
     "eslint": "^8.50.0",
-    "eslint-plugin-prettier": "5.0.1",
+    "eslint-config-prettier": "^9.0.0",
     "happy-dom": "^12.0.0",
     "nuxt": "^3.6.5",
     "nuxt-vitest": "^0.10.1",

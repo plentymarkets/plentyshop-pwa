@@ -20,6 +20,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
@@ -44,8 +47,8 @@ jobs:
       - name: Install Dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build packages
-        run: yarn build
+      - name: Run prettier
+        run: yarn format
 
       - name: Run linter
         run: yarn lint

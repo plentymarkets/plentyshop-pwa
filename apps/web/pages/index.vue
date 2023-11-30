@@ -1,22 +1,16 @@
 <template>
   <div class="relative min-h-[600px]">
     <picture>
-      <source
-        srcset="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/hero-bg.png"
-        media="(min-width: 768px)"
-      />
+      <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
       <img
-        src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/hero-bg-mobile.png"
+        src="/images/homepage-hero-bg-mobile.webp"
+        alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
     </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <img
-          src="https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/hero-headphones.png"
-          alt="Headphones"
-          class="h-full object-cover object-left"
-        />
+        <img src="/images/homepage-hero-headphones.webp" alt="Headphones" class="h-full object-cover object-left" />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
@@ -40,26 +34,24 @@
       <div
         v-for="{ title, image } in categories"
         :key="title"
-        class="relative flex-col min-w-[140px] max-w-[240px] justify-center group"
+        role="img"
+        :aria-label="title"
+        :aria-labelledby="`image-${title}`"
+        class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
-        <a
-          class="absolute w-full h-full z-1 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-md"
-          href="#"
-          :aria-label="title"
-        />
         <img
           class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           :src="image"
           :alt="title"
-          width="240"
-          height="240"
+          width="360"
+          height="360"
         />
-        <div class="flex justify-center">
-          <a
-            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:underline group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
+        <div :id="`image-${title}`" class="flex justify-center">
+          <div
+            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
           >
             {{ title }}
-          </a>
+          </div>
         </div>
       </div>
     </div>
@@ -135,7 +127,7 @@ onMounted(async () => {
 
 const displayDetails = [
   {
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/display.png',
+    image: '/images/homepage-display-1.webp',
     title: 'Sunny Days Ahead',
     subtitle: 'Be inspired',
     description: 'Step out in style with our sunglasses collection',
@@ -147,7 +139,7 @@ const displayDetails = [
     descriptionClass: 'md:typography-text-lg',
   },
   {
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/display-2.png',
+    image: '/images/homepage-display-2.webp',
     title: 'Pack it Up',
     subtitle: 'Be active',
     description: 'Explore the great outdoors with our backpacks',
@@ -156,7 +148,7 @@ const displayDetails = [
     backgroundColor: 'bg-warning-200',
   },
   {
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/display-3.png',
+    image: '/images/homepage-display-3.webp',
     title: 'Fresh and Bold',
     subtitle: 'New collection',
     description: 'Add a pop up color to your outfit',
@@ -169,15 +161,15 @@ const displayDetails = [
 const categories = [
   {
     title: `Women`,
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/women_category.png',
+    image: '/images/homepage-women-category.webp',
   },
   {
     title: `Men`,
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/men_category.png',
+    image: '/images/homepage-men-category.webp',
   },
   {
     title: `Kid`,
-    image: 'https://storage.googleapis.com/sfui_docs_artifacts_bucket_public/production/kid_category.png',
+    image: '/images/homepage-kid-category.webp',
   },
 ];
 </script>

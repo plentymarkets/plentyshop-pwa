@@ -14,11 +14,42 @@ const setInitialData: SetInitialData = async () => {
   const { setCart, loading: cartLoading } = useCart();
 
   cartLoading.value = true;
+
   const { data, error } = await useAsyncData(() => useSdk().plentysystems.getSession());
   useHandleError(error.value);
 
-  setUser(data.value?.data as SessionResult);
-  setCart(data.value?.data.basket as Cart);
+  if (data.value?.data) {
+    setUser(data.value?.data as SessionResult);
+    setCart(data.value?.data.basket as Cart);
+  }
+
+  cartLoading.value = false;
+
+  return true;
+};
+
+/** Function for getting category tree and current customer/cart data from session
+ * @return SetInitialData
+ * @example
+ * ``` ts
+ * setInitialDataSSR();
+ * ```
+ */
+const setInitialDataSSR: SetInitialData = async () => {
+  const { setUser } = useCustomer();
+  const { setCategoryTree } = useCategoryTree();
+  const { setCart, loading: cartLoading } = useCart();
+
+  cartLoading.value = true;
+
+  const { data, error } = await useAsyncData(() => useSdk().plentysystems.getInit());
+  useHandleError(error.value);
+
+  if (data.value?.data) {
+    setUser(data.value?.data.session as SessionResult);
+    setCart(data.value?.data.session.basket as Cart);
+    setCategoryTree(data.value.data.categories);
+  }
 
   cartLoading.value = false;
 
@@ -40,6 +71,7 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
 
   return {
     setInitialData,
+    setInitialDataSSR,
     ...toRefs(state.value),
   };
 };

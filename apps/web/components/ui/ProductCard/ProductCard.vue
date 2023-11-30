@@ -38,7 +38,7 @@
       </div>
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
-          <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product) || cheapestPrice" class="mr-1"
+          <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1"
             >{{ $t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
           <span>{{ $n(cheapestPrice ?? mainPrice, 'currency') }}</span>
@@ -55,6 +55,7 @@
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
+        data-testid="add-to-basket-short"
         @click="addWithLoader(Number(productGetters.getId(product)))"
         :disabled="loading"
       >
@@ -119,18 +120,10 @@ const mainPrice = computed(() => {
 
   return 0;
 });
-const cheapestPrice = computed(() => {
-  const price = productGetters.getCheapestGraduatedPrice(product);
-  if (price && price < mainPrice.value) {
-    return price;
-  }
-  return null;
-});
+
+const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
-
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

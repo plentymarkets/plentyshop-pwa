@@ -31,6 +31,7 @@
     "asterixHint": "* marked consents are required"
   },
   "CookieBar": {
+    "Cookie Settings": "Cookie Settings",
     "Privacy Settings": "Privacy Settings",
     "More information": "More information",
     "Further Settings": "Further Settings",
@@ -163,7 +164,7 @@
   "addedToCart": "Item added to Cart",
   "deletedFromCart": "Item removed from shopping cart",
   "search": "Search",
-  "openSearchModalButtonLabel": "Click to open search modal",
+  "openSearchModalButtonLabel": "Open item search",
   "vsfHomepage": "VSF Homepage",
   "home": "Home",
   "products": "Products",
@@ -175,7 +176,7 @@
   "quantitySelectorIncrease": "Increase value",
   "scrollTop": "Scroll to top",
   "numberInCart": "{count} product in cart",
-  "languageSelector": "Language selection",
+  "languageSelector": "Open language select",
   "allProductsLinkText": "Browse products",
   "breadcrumbsDropdownText": "Show more breadcrumbs",
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
@@ -279,6 +280,7 @@
   "backToCheckout": "Back to Checkout",
   "continueShopping": "Continue shopping",
   "orderErrorMessage": "Something went wrong. Try again later.",
+  "orderErrorProvider": "Unknown response from payment provider: {paymentType}",
   "orderNumber": "Order ID",
   "productDetails": "Product details",
   "technicalData": "Technical data",

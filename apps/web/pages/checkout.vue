@@ -227,25 +227,26 @@ const openPayPalCardDialog = () => {
   paypalCardDialog.value = true;
 };
 
-const order = async () => {
-  if (!validateAddresses() || !validateTerms()) {
-    return;
+const handleRegularOrder = async () => {
+  const data = await createOrder({
+    paymentId: paymentMethodData.value.selected,
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+  });
+
+  clearCartItems();
+
+  if (data?.order?.id) {
+    navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
   }
+};
+
+const order = async () => {
+  if (!validateAddresses() || !validateTerms()) return;
+
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
-  if (paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal') {
-    paypalCardDialog.value = true;
-  } else {
-    const data = await createOrder({
-      paymentId: paymentMethodData.value.selected,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-    });
-
-    clearCartItems();
-
-    if (data?.order?.id) {
-      navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
-    }
-  }
+  paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
+    ? (paypalCardDialog.value = true)
+    : await handleRegularOrder();
 };
 </script>
