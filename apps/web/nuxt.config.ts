@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxtjs/turnstile',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -84,6 +85,9 @@ export default defineNuxtConfig({
       crawlLinks: false,
     },
     compressPublicAssets: true,
+  },
+  turnstile: {
+    siteKey: '0x4AAAAAAANx3aXDh7UR35x0',
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },

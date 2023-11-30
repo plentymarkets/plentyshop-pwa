@@ -35,6 +35,7 @@
     "@nuxtjs/google-fonts": "^3.0.1",
     "@nuxtjs/i18n": "8.0.0-rc.3",
     "@nuxtjs/tailwindcss": "^6.8.0",
+    "@nuxtjs/turnstile": "^0.6.3",
     "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
     "@storefront-ui/typography": "^2.3.1",
     "@storefront-ui/vue": "canary",
