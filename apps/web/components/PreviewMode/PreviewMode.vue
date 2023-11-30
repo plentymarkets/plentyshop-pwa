@@ -27,14 +27,14 @@
         :aria-label="$t('PreviewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
-        <SfRadio class="my-1.5" />
+        <SfIconVisibility class="my-1" />
       </SfButton>
     </div>
   </client-only>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfRadio } from '@storefront-ui/vue';
+import { SfButton, SfIconVisibility } from '@storefront-ui/vue';
 import { RemoveLookupCookie } from './types';
 
 const bannerIsHidden = ref(true);
