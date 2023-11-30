@@ -11,7 +11,7 @@ describe('Smoke: Cart Page', () => {
   });
   
 
-  it('[smoke] Add coupon to cart and check order summary then remove coupon and check order summary', () => {
+  it('[smoke] Add coupon to cart, check the totals, then remove coupon and check totals again', () => {
     cy.visitAndHydrate('/study-room-office/office-chair/design-chair-brookhaven-leather-black_105_1003');
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.wait(1000);
