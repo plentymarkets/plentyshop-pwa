@@ -6,11 +6,5 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "printWidth": 120,
-  "jsxSingleQuote": false,
-  "importOrder": [
-    "^vue",
-    "^(nuxt/(.*)$)|^(nuxt$)",
-    "<THIRD_PARTY_MODULES>",
-    "^[./]"
-  ]
+  "jsxSingleQuote": false
 }
