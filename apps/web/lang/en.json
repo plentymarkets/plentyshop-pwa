@@ -493,5 +493,10 @@
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
+  },
+  "newsletter": {
+    "heading": "Subscribe to our Newsletter",
+    "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
+    "subscribe": "Subscribe"
   }
 }

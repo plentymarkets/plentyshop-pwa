@@ -493,5 +493,10 @@
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
+  },
+  "newsletter": {
+    "heading": "Abonnieren Sie unseren Newsletter",
+    "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
+    "subscribe": "Abonnieren"
   }
 }
