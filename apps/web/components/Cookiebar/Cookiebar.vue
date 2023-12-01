@@ -80,7 +80,7 @@
                       </SfLink>
                     </template>
                     <template v-else>
-                      {{ cookie.name }}
+                      {{ cookie[propKey as keyof Cookie] }}
                     </template>
                   </div>
                 </div>
