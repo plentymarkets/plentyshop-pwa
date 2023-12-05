@@ -58,7 +58,13 @@
             </SfButton>
 
             <div
-              v-if="isOpen && activeNode.length === 1 && activeNode[0] === menuNode.id && menuNode.childCount > 0"
+              v-if="
+                isOpen &&
+                activeMenu &&
+                activeNode.length === 1 &&
+                activeNode[0] === menuNode.id &&
+                menuNode.childCount > 0
+              "
               :key="activeMenu.id"
               ref="megaMenuReference"
               :style="style"
@@ -121,7 +127,7 @@
               <SfIconClose class="text-neutral-500" />
             </SfButton>
           </div>
-          <ul class="mt-2 mb-6">
+          <ul class="mt-2 mb-6" v-if="activeMenu">
             <li v-if="activeMenu.id !== 0">
               <SfListItem
                 size="lg"
@@ -193,14 +199,18 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
-const category = {
-  id: 0,
-  type: 'root',
-  itemCount: [],
-  childCount: categoryTree.value.length,
-  details: [],
-  children: categoryTree.value,
-} as CategoryTreeItem;
+const category = ref<CategoryTreeItem | null>(null);
+
+const setCategory = () => {
+  category.value = {
+    id: 0,
+    type: 'root',
+    itemCount: [],
+    childCount: categoryTree.value.length,
+    details: [],
+    children: categoryTree.value,
+  };
+};
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -228,7 +238,7 @@ const megaMenuReference = ref();
 const triggerReference = ref();
 const activeNode = ref<number[]>([]);
 
-const activeMenu = computed(() => findNode(activeNode.value, category));
+const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
 
 const trapFocusOptions = {
   activeState: isOpen,
@@ -258,10 +268,13 @@ const focusTrigger = (index: number) => {
   unrefElement(triggerReference.value[index]).focus();
 };
 
+setCategory();
+
 watch(
   () => props.categories,
-  async (categories: any) => {
-    categoryTree.value = categories;
+  async (categories: CategoryTreeItem[]) => {
+    categoryTree.value = categoryTreeGetters.getTree(categories);
+    setCategory();
   },
 );
 </script>
