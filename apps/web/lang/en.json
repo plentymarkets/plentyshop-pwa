@@ -498,7 +498,8 @@
   "newsletter": {
     "heading": "Subscribe to our Newsletter",
     "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
-    "subscribe": "Subscribe"
+    "subscribe": "Subscribe To Newsletter",
+    "info": "Be aware of upcoming sales and events. Receive gifts and special offers!"
   },
   "coupon": {
     "name": "Coupon",

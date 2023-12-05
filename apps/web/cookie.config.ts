@@ -59,6 +59,14 @@ export default {
           Lifespan: '100 days',
           accepted: true,
         },
+        {
+          name: 'Cloudflare Turnstile',
+          Provider: 'Cloudflare',
+          Status: 'Necessary for Cloudflare’s Turnstile service.',
+          PrivacyPolicy: '/PrivacyPolicy',
+          Lifespan: '100 days',
+          accepted: true,
+        },
       ],
     },
     {

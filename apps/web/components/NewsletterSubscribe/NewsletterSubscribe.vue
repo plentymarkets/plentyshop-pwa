@@ -4,6 +4,9 @@
       <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
         {{ $t('newsletter.heading') }}
       </p>
+      <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
+        {{ $t('newsletter.info') }}
+      </p>
       <form class="mb-4 flex flex-col gap-2 max-w-[550px] mx-auto items-center" @submit.prevent="subscribeNewsletter()">
         <!-- <div class="w-full flex flex-col sm:flex-row gap-2">
           <SfInput
@@ -23,16 +26,11 @@
               :placeholder="$t('auth.resetPassword.email')"
             />
           </div>
-          <SfButton
-            class="ml-0 h-[40px] flex-shrink-0 mt-2 sm:mt-0 sm:ml-2"
-            type="submit"
-            size="lg"
-            :disabled="loading || turnstile === ''"
-          >
-            <SfLoaderCircular v-if="loading" />
-            <span v-else>{{ $t('newsletter.subscribe') }}</span>
-          </SfButton>
         </div>
+        <SfButton type="submit" size="lg" :disabled="loading || !turnstile">
+          <SfLoaderCircular v-if="loading" />
+          <span v-else>{{ $t('newsletter.subscribe') }}</span>
+        </SfButton>
         <NuxtTurnstile v-model="turnstile" ref="turnstileElement" :options="{ theme: 'light' }" />
       </form>
       <div class="typography-text-xs text-neutral-600">

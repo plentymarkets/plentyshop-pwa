@@ -498,7 +498,8 @@
   "newsletter": {
     "heading": "Abonnieren Sie unseren Newsletter",
     "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
-    "subscribe": "Abonnieren"
+    "subscribe": "Newsletter abonnieren",
+    "info": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
   },
   "coupon": {
     "name": "Gutschein",
