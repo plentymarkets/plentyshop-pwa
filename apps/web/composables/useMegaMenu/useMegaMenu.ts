@@ -5,6 +5,7 @@ export const useMegaMenu: UseMegaMenuReturn = () => {
   const state = useState<UseMegaMenuState>('useMegaMenu', () => ({
     isOpen: false,
     activeNode: [],
+    category: null,
   }));
 
   const open = () => {
