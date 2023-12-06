@@ -57,7 +57,9 @@ import { ref } from 'vue';
 import { SfButton, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { subscribe, loading } = useNewsletter();
+const { send } = useNotification();
 const localePath = useLocalePath();
+const { t } = useI18n();
 const emailValue = ref('');
 // const firstNameValue = ref('');
 // const lastNameValue = ref('');
@@ -75,6 +77,10 @@ const subscribeNewsletter = async () => {
       // lastName: lastNameValue.value,
     })
   ) {
+    send({
+      type: 'positive',
+      message: t('newsletter.success'),
+    });
     emailValue.value = '';
     // firstNameValue.value = '';
     // lastNameValue.value = '';
