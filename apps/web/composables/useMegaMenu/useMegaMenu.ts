@@ -1,4 +1,5 @@
 import { UseMegaMenuReturn, UseMegaMenuState } from '~/composables';
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export const useMegaMenu: UseMegaMenuReturn = () => {
   // const { close, open, isOpen } = useDisclosure();
@@ -16,9 +17,21 @@ export const useMegaMenu: UseMegaMenuReturn = () => {
     state.value.isOpen = false;
   };
 
+  const setCategory = (categoryTree: CategoryTreeItem[]) => {
+    state.value.category = {
+      id: 0,
+      type: 'root',
+      itemCount: [],
+      childCount: categoryTree.length,
+      details: [],
+      children: categoryTree,
+    };
+  };
+
   return {
     ...toRefs(state.value),
     open,
     close,
+    setCategory,
   };
 };

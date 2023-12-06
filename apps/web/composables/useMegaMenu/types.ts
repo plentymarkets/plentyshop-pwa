@@ -10,6 +10,7 @@ export interface UseMegaMenuState {
 // export type GetLegalInformation = (params: LegalTextsParams) => Promise<LegalInformationResponse>;
 export type OpenMegaMenu = () => void;
 export type CloseMegaMenu = () => void;
+export type SetCategory = (categoryTree: CategoryTreeItem[]) => void;
 
 export interface UseMegaMenuMethods {
   isOpen: Readonly<Ref<UseMegaMenuState['isOpen']>>;
@@ -17,6 +18,7 @@ export interface UseMegaMenuMethods {
   category: Ref<UseMegaMenuState['category']>;
   open: OpenMegaMenu;
   close: CloseMegaMenu;
+  setCategory: SetCategory;
 }
 
 export type UseMegaMenuReturn = () => UseMegaMenuMethods;

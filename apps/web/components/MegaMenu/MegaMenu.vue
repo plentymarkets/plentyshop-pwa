@@ -196,20 +196,8 @@ import { MegaMenuProps } from '~/components/MegaMenu/types';
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
-const { close, open, isOpen, activeNode, category } = useMegaMenu();
-
+const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
-
-const setCategory = () => {
-  category.value = {
-    id: 0,
-    type: 'root',
-    itemCount: [],
-    childCount: categoryTree.value.length,
-    details: [],
-    children: categoryTree.value,
-  };
-};
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
@@ -265,13 +253,13 @@ const focusTrigger = (index: number) => {
   unrefElement(triggerReference.value[index]).focus();
 };
 
-setCategory();
+setCategory(categoryTree.value);
 
 watch(
   () => props.categories,
   async (categories: CategoryTreeItem[]) => {
     categoryTree.value = categoryTreeGetters.getTree(categories);
-    setCategory();
+    setCategory(categoryTree.value);
   },
 );
 </script>
