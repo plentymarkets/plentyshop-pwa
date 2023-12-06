@@ -7,7 +7,6 @@ export interface UseMegaMenuState {
   category: CategoryTreeItem | null;
 }
 
-// export type GetLegalInformation = (params: LegalTextsParams) => Promise<LegalInformationResponse>;
 export type OpenMegaMenu = () => void;
 export type CloseMegaMenu = () => void;
 export type SetCategory = (categoryTree: CategoryTreeItem[]) => void;
