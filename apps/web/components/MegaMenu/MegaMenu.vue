@@ -197,6 +197,12 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
 const { close, open, isOpen, activeNode, category, setCategory } = useMegaMenu();
+const { referenceRef, floatingRef, style } = useDropdown({
+  isOpen,
+  onClose: close,
+  placement: 'bottom-start',
+  middleware: [],
+});
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
@@ -211,13 +217,6 @@ const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
 const generateCategoryLink = (category: CategoryTreeItem) => {
   return categoryTreeGetters.generateCategoryLink(categoryTree.value, category);
 };
-
-const { referenceRef, floatingRef, style } = useDropdown({
-  isOpen,
-  onClose: close,
-  placement: 'bottom-start',
-  middleware: [],
-});
 
 const drawerReference = ref();
 const megaMenuReference = ref();
