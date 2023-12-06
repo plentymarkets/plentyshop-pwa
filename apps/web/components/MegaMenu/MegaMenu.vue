@@ -144,7 +144,7 @@
             </li>
             <template v-for="node in activeMenu.children" :key="node.id">
               <li v-if="node.childCount === 0">
-                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))">
+                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))" @click="close()">
                   <div class="flex items-center">
                     <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                     <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -154,7 +154,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
@@ -187,7 +187,6 @@ import {
   SfCounter,
   SfIconArrowBack,
   SfIconMenu,
-  useDisclosure,
   useTrapFocus,
   useDropdown,
 } from '@storefront-ui/vue';
@@ -195,9 +194,9 @@ import { unrefElement } from '@vueuse/core';
 import { MegaMenuProps } from '~/components/MegaMenu/types';
 
 const localePath = useLocalePath();
-
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<MegaMenuProps>();
+
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 const category = ref<CategoryTreeItem | null>(null);
 
@@ -225,7 +224,7 @@ const generateCategoryLink = (category: CategoryTreeItem) => {
   return categoryTreeGetters.generateCategoryLink(categoryTree.value, category);
 };
 
-const { close, open, isOpen } = useDisclosure();
+const { close, open, isOpen, activeNode } = useMegaMenu();
 const { referenceRef, floatingRef, style } = useDropdown({
   isOpen,
   onClose: close,
@@ -236,7 +235,6 @@ const { referenceRef, floatingRef, style } = useDropdown({
 const drawerReference = ref();
 const megaMenuReference = ref();
 const triggerReference = ref();
-const activeNode = ref<number[]>([]);
 
 const activeMenu = computed(() => (category.value ? findNode(activeNode.value, category.value) : null));
 

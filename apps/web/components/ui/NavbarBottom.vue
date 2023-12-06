@@ -35,6 +35,7 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
+
 const items = [
   {
     label: t('home'),
