@@ -34,7 +34,7 @@
         </div>
       </div>
       <div v-else class="overflow-y-auto h-80 pb-2">
-        <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex" >
+        <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex">
           <div v-if="cookieGroup?.cookies?.length" class="mb-2 bg-gray-100 p-2">
             <SfCheckbox
               class="align-text-top"
