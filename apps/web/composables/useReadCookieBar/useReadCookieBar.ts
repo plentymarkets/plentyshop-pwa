@@ -18,10 +18,8 @@ const fetchScripts = (scripts: string[]) => {
           .catch(() => {
             return;
           });
-      } else {
-        if (cookieScripts[script]) {
-          cookieScripts[script]();
-        }
+      } else if (cookieScripts[script]) {
+        cookieScripts[script]();
       }
     } catch (error: any) {
       console.error(error);
