@@ -1,4 +1,6 @@
 # Bot protection
+Implementing Bot Protection makes sense as it safeguards against automated spamming activities, such as inundating contact forms with unwanted and irrelevant messages, ensuring a streamlined and efficient communication process for genuine users.
+By deploying Bot Protection, you can enhance the overall user experience, maintain data integrity, and mitigate the risk of fraudulent or malicious activities that can compromise the security and functionality of your shop.
 
 ## Cloudflare Turnstile
 
