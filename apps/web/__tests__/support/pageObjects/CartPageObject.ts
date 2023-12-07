@@ -83,7 +83,7 @@ export class CartPageObject {
     cy.getByTestId('couponRemove').click();
     return this;
   }
-  
+
   orderSummayAfterCouponRemoved(total: string) {
     cy.getByTestId('coupon-label').should('not.exist');
     cy.getByTestId('total').contains(total);

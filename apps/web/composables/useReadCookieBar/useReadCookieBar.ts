@@ -2,6 +2,7 @@ import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
 import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
 import { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
+import cookieScripts from '~/cookie-scripts.config';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
@@ -17,8 +18,8 @@ const fetchScripts = (scripts: string[]) => {
           .catch(() => {
             return;
           });
-      } else {
-        eval(script);
+      } else if (cookieScripts[script]) {
+        cookieScripts[script]();
       }
     } catch (error: any) {
       console.error(error);
@@ -127,6 +128,8 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     consentCookie.value = jsonCookie;
 
     changeVisibilityState();
+
+    loadThirdPartyScripts();
 
     if (alreadySetCookie) {
       router.go(0);
