@@ -4049,8 +4049,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.14.0
-    "@plentymarkets/shop-sdk": ^0.24.0
+    "@plentymarkets/shop-api": ^0.16.0
+    "@plentymarkets/shop-sdk": ^0.26.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
@@ -4073,23 +4073,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.14.0":
-  version: 0.14.0
-  resolution: "@plentymarkets/shop-api@npm:0.14.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.14.0%2F548d236f577ac04105440bc8e2c3a3515a877237"
+"@plentymarkets/shop-api@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "@plentymarkets/shop-api@npm:0.16.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.16.0%2F9a14cf811aa3974cec9ce3308dc878b1301d61ad"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^0.21.1
     consola: ^3.0.0
-  checksum: 7ba5f2050391d17e23ea309710b8a972e794a53e6687421c2c67b4937d40de1a6198f85a44b78db02b2954c4212f676797b5ff5ce6f0773527d896e8d1a25c6f
+  checksum: ce03bc4ba3c23cc3bb36aa9c88073c278a9ec6edaf7bc07d4fa4172ba9cf0e9bd6743e40e400a0f93a0961c83896b5fe328fe173a31b9999f51c8ddf297df625
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.24.0":
-  version: 0.24.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.24.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.24.0%2Fb3e4a69d20a969ff594394cf9c8aa65b68a8c2e6"
+"@plentymarkets/shop-sdk@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "@plentymarkets/shop-sdk@npm:0.26.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.26.0%2F476be2d7b74a5666de81cf4e2f43f0fcda8c401b"
   dependencies:
     axios: ^0.27.2
-  checksum: 10f2b1918b9d6a1f5916b60a35b0d1a434dae0bcfe97afda83d0e8a9374a49add978d4f3e4b7468428c6dcf72de99476a4e959b6903dc3416b22c25744cce083
+  checksum: a1602f4eac03a235c81ad872f81474f0b982be32f865055cc336a1fcff3ab532155f8a6f528ccd127215a814b545341688eb3b6b4332c5fde81952111ce62331
   languageName: node
   linkType: hard
 
@@ -4681,14 +4681,14 @@ __metadata:
   linkType: hard
 
 "@types/express@npm:^4.17.13":
-  version: 4.17.20
-  resolution: "@types/express@npm:4.17.20"
+  version: 4.17.21
+  resolution: "@types/express@npm:4.17.21"
   dependencies:
     "@types/body-parser": "*"
     "@types/express-serve-static-core": ^4.17.33
     "@types/qs": "*"
     "@types/serve-static": "*"
-  checksum: bf8a97d283128e5129f9ccabbeef728ff3f0484465e0ae74a304bd0588fa6cb715ae68845650caba9a641944b7791ba125d02ddbd47a7e62aaefdd036570c6c5
+  checksum: fb238298630370a7392c7abdc80f495ae6c716723e114705d7e3fb67e3850b3859bbfd29391463a3fb8c0b32051847935933d99e719c0478710f8098ee7091c5
   languageName: node
   linkType: hard
 
@@ -4758,11 +4758,11 @@ __metadata:
   linkType: hard
 
 "@types/lodash-es@npm:^4.17.7":
-  version: 4.17.10
-  resolution: "@types/lodash-es@npm:4.17.10"
+  version: 4.17.11
+  resolution: "@types/lodash-es@npm:4.17.11"
   dependencies:
     "@types/lodash": "*"
-  checksum: 129e9dde830815a72f9bd17c3a7b7ffb10a9cf76d65c7bb4f14df13b38411ed3ebe9ebbc2f9059c4e61198e784d499e48d0a281e27a4defbbba748dd8a4cfd9d
+  checksum: bd8f3cd65fb1b2b54f18269a44847b159bbb8dd0a3ff33d26f06b68fca727d4cc079cf734e1d5dbf140563cc00e11f91c5a9d6c36ac1e66087875ae090b60b06
   languageName: node
   linkType: hard
 
@@ -4828,11 +4828,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*, @types/node@npm:^20.0.0":
-  version: 20.8.10
-  resolution: "@types/node@npm:20.8.10"
+  version: 20.9.0
+  resolution: "@types/node@npm:20.9.0"
   dependencies:
     undici-types: ~5.26.4
-  checksum: 7c61190e43e8074a1b571e52ff14c880bc67a0447f2fe5ed0e1a023eb8a23d5f815658edb98890f7578afe0f090433c4a635c7c87311762544e20dd78723e515
+  checksum: bfd927da6bff8a32051fa44bb47ca32a56d2c8bc8ba0170770f181cc1fa3c0b05863c9b930f0ba8604a48d5eb0d319166601709ca53bf2deae0025d8b6c6b8a3
   languageName: node
   linkType: hard
 
