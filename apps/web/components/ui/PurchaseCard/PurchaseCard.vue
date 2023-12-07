@@ -27,6 +27,9 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
+
+    <OrderProperties v-if="product" :product="product" />
+
     <div class="mb-2">
       <AttributeSelect v-if="product" :product="product" />
     </div>
