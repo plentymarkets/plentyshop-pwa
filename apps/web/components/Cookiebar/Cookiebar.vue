@@ -17,83 +17,83 @@
           </SfLink>
         </div>
         <!-- checkboxes -->
-        <div v-if="cookieJson" class="flex flex-wrap justify-between">
-          <div
-            v-for="(cookieGroup, index) in cookieJson.groups"
-            :key="index"
-            class="sm:mb-5 mb-2 pr-2 flex items-center"
-          >
-            <SfCheckbox
-              :id="cookieGroup.name"
-              v-model="cookieGroup.accepted"
-              @update:model-value="triggerGroupConsent(cookieGroup)"
-              :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
-            />
-            <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
-              {{ $t(cookieGroup.name) }}
-            </label>
-          </div>
+        <div v-if="cookieJson" class="grid sm:grid-cols-4 xs:grid-cols-3">
+          <template v-for="(cookieGroup, index) in cookieJson.groups" :key="index">
+            <div v-if="cookieGroup?.cookies?.length" class="sm:mb-5 mb-2 pr-2 flex items-center">
+              <SfCheckbox
+                :id="cookieGroup.name"
+                v-model="cookieGroup.accepted"
+                @update:model-value="triggerGroupConsent(cookieGroup)"
+                :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
+              />
+              <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
+                {{ $t(cookieGroup.name) }}
+              </label>
+            </div>
+          </template>
         </div>
       </div>
       <div v-else class="overflow-y-auto h-80 pb-2">
-        <div v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex" class="mb-2 bg-gray-100 p-2">
-          <SfCheckbox
-            class="align-text-top"
-            :id="cookieGroup.name"
-            v-model="cookieGroup.accepted"
-            @update:model-value="triggerGroupConsent(cookieGroup)"
-            :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
-          />
-          <label
-            class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
-            :for="cookieGroup.name"
-          >
-            {{ $t(cookieGroup.name) }}
-          </label>
-          <div class="leading-6 my-2">
-            {{ $t(cookieGroup.description) }}
-          </div>
-          <div v-if="cookieGroup.showMore ?? false">
-            <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
-              <div class="flex w-full items-center bg-white mb-1 p-2">
-                <SfCheckbox
-                  class="ml-1"
-                  :id="cookie.name"
-                  v-model="cookie.accepted"
-                  @update:model-value="triggerCookieConsent(cookieGroup)"
-                  :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
-                />
-                <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
-                  {{ cookie.name }}
-                </label>
-              </div>
-              <div v-for="propKey in Object.keys(cookie)" :key="propKey">
-                <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex w-full mb-1 p-2 bg-white">
-                  <div class="w-1/4">
-                    {{ propKey }}
-                  </div>
-                  <div class="w-3/4">
-                    <template v-if="propKey === 'PrivacyPolicy'">
-                      <!-- TODO -->
-                      <SfLink :tag="NuxtLink" :link="localePath(paths.privacyPolicy)">
-                        {{ $t('CookieBar.Privacy Settings') }}
-                      </SfLink>
-                    </template>
-                    <template v-else>
-                      {{ cookie[propKey as keyof Cookie] }}
-                    </template>
+        <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex" >
+          <div v-if="cookieGroup?.cookies?.length" class="mb-2 bg-gray-100 p-2">
+            <SfCheckbox
+              class="align-text-top"
+              :id="cookieGroup.name"
+              v-model="cookieGroup.accepted"
+              @update:model-value="triggerGroupConsent(cookieGroup)"
+              :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
+            />
+            <label
+              class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
+              :for="cookieGroup.name"
+            >
+              {{ $t(cookieGroup.name) }}
+            </label>
+            <div class="leading-6 my-2">
+              {{ $t(cookieGroup.description) }}
+            </div>
+            <div v-if="cookieGroup.showMore ?? false">
+              <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
+                <div class="flex w-full items-center bg-white mb-1 p-2">
+                  <SfCheckbox
+                    class="ml-1"
+                    :id="cookie.name"
+                    v-model="cookie.accepted"
+                    @update:model-value="triggerCookieConsent(cookieGroup)"
+                    :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
+                  />
+                  <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
+                    {{ cookie.name }}
+                  </label>
+                </div>
+                <div v-for="propKey in Object.keys(cookie)" :key="propKey">
+                  <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex w-full mb-1 p-2 bg-white">
+                    <div class="w-1/4">
+                      {{ propKey }}
+                    </div>
+                    <div class="w-3/4">
+                      <template v-if="propKey === 'PrivacyPolicy'">
+                        <!-- TODO -->
+                        <SfLink :tag="NuxtLink" :link="localePath(paths.privacyPolicy)">
+                          {{ $t('CookieBar.Privacy Settings') }}
+                        </SfLink>
+                      </template>
+                      <template v-else>
+                        {{ cookie[propKey as keyof Cookie] }}
+                      </template>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+            <SfLink v-if="!cookieGroup.showMore ?? false" href="#" size="sm" @click="cookieGroup.showMore = true">
+              {{ $t('CookieBar.More information') }}
+            </SfLink>
+            <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">
+              {{ $t('CookieBar.Show less') }}
+            </SfLink>
           </div>
-          <SfLink v-if="!cookieGroup.showMore ?? false" href="#" size="sm" @click="cookieGroup.showMore = true">
-            {{ $t('CookieBar.More information') }}
-          </SfLink>
-          <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">
-            {{ $t('CookieBar.Show less') }}
-          </SfLink>
-        </div>
+        </template>
       </div>
       <!-- further settings / back button -->
       <div class="text-center mt-2">

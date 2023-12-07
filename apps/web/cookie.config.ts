@@ -78,6 +78,7 @@ export default {
           Status: 'CookieBar.functional.cookies.scriptDemo.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
+          script: ['loadExampleScript'],
         },
       ],
     },
