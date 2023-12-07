@@ -37,7 +37,24 @@
     },
     "essentials": {
       "label": "Essenziell",
-      "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich."
+      "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich.",
+      "cookies": {
+        "plentyId": {
+          "name": "plentyID",
+          "provider": "plentysystems AG",
+          "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
+        },
+        "vsfLocale": {
+          "name": "vsf-locale",
+          "provider": "plentysystems AG",
+          "status": "Speichert die Anzeigesprache."
+        },
+        "consentCookie": {
+          "name": "consent-cookie",
+          "provider": "plentysystems AG",
+          "status": "Speichert die Einwilligungsauswahl."
+        }
+      }
     },
     "externalMedia": {
       "label": "Externe Medien",
@@ -45,7 +62,14 @@
     },
     "functional": {
       "label": "Funktional",
-      "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können."
+      "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
+      "cookies": {
+        "scriptDemo": {
+          "name": "Script-Demo",
+          "provider": "plentysystems AG",
+          "status": "Anwendungsbeispiel zum Laden eines Skripts nach Einwilligung."
+        }
+      }
     },
     "marketing": {
       "label": "Marketing",

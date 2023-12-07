@@ -67,7 +67,7 @@
         "scriptDemo": {
           "name": "Script demo",
           "provider": "plentysystems AG",
-          "status": "Example cookie that loads a hello world script if accepted."
+          "status": "Usage example for loading a script after consent."
         }
       }
     },
