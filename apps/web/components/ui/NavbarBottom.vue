@@ -10,7 +10,8 @@
       ]"
       size="sm"
       :tag="NuxtLink"
-      :to="localePath(label === $t('account.navBarBottomHeading') && !isAuthorized ? '/login' : link)"
+      :to="localePath(label === $t('account.navBarBottomHeading') && !isAuthorized ? paths.authLogin : link)"
+      @click="label === $t('products') && open()"
     >
       <template #prefix>
         <div class="relative">
@@ -35,6 +36,8 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
+const { open } = useMegaMenu();
+
 const items = [
   {
     label: t('home'),
@@ -44,7 +47,7 @@ const items = [
   {
     label: t('products'),
     icon: SfIconMenu,
-    link: paths.category,
+    link: '#',
   },
   {
     label: t('cart'),
