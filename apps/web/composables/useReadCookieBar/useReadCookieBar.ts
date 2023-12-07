@@ -21,7 +21,9 @@ const fetchScripts = (scripts: string[]) => {
       } else {
         const method = toRef(cookieScripts, script);
 
-        method.value();
+        if (method.value) {
+          method.value();
+        }
       }
     } catch (error: any) {
       console.error(error);
