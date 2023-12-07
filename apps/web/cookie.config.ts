@@ -22,39 +22,37 @@ export interface CookieGroupFromNuxtConfig {
 }
 
 export default {
-  barTitle: 'We value your privacy',
-  barDescription:
-    'We use cookies and similar technologies on our website and process personal data of visitors to our website (e.g. IP address), e.g. to personalise content and advertisements, to integrate media from third-party providers or to analyse access to our website. Data processing only takes place when cookies are set. We share this data with third parties that we name in the settings. Data processing may be carried out with consent or on the basis of a legitimate interest. Consent can be given or refused. There is a right not to consent and to change or withdraw consent at a later date. We provide more information about the use of personal data and the services in our',
+  barTitle: 'CookieBar.about.label',
+  barDescription: 'CookieBar.about.description',
   groups: [
     {
       id: 0,
-      name: 'Essentials',
+      name: 'CookieBar.essentials.label',
       accepted: true,
       showMore: false,
-      description:
-        'Essential cookies enable basic functions and are necessary for the proper functioning of the website.',
+      description: 'CookieBar.essentials.description',
       cookies: [
         {
-          name: 'Session',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
+          name: 'CookieBar.essentials.cookies.plentyId.name',
+          Provider: 'CookieBar.essentials.cookies.plentyId.provider',
+          Status: 'CookieBar.essentials.cookies.plentyId.status',
           PrivacyPolicy: '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
-          Lifespan: '100 days',
+          Lifespan: 'Session',
           accepted: true,
         },
         {
-          name: 'Consent',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
+          name: 'CookieBar.essentials.cookies.vsfLocale.name',
+          Provider: 'CookieBar.essentials.cookies.vsfLocale.provider',
+          Status: 'CookieBar.essentials.cookies.vsfLocale.status',
           PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
+          Lifespan: 'Session',
           accepted: true,
         },
         {
-          name: 'Session2',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
+          name: 'CookieBar.essentials.cookies.consentCookie.name',
+          Provider: 'CookieBar.essentials.cookies.consentCookie.provider',
+          Status: 'CookieBar.essentials.cookies.consentCookie.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
           accepted: true,
@@ -63,94 +61,33 @@ export default {
     },
     {
       id: 1,
-      name: 'External Media',
+      name: 'CookieBar.externalMedia.label',
       showMore: false,
-      description:
-        'Content by video platforms and social media platforms are blocked by default. If you accept cookies by external media, access to these contents requires no further consent.',
-      cookies: [
-        {
-          name: 'Session',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '2 days',
-          script: ['console.log(`Loaded cookie script example1`);', 'https://www.plentymarkets.com'],
-        },
-        {
-          name: 'Consent',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-        {
-          name: 'Session2',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-      ],
+      description: 'CookieBar.externalMedia.description',
+      cookies: [],
     },
     {
       id: 2,
-      name: 'Functional',
+      name: 'CookieBar.functional.label',
       showMore: false,
-      description:
-        'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
+      description: 'CookieBar.functional.description',
       cookies: [
         {
-          name: 'Session',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
+          name: 'CookieBar.functional.cookies.scriptDemo.name',
+          Provider: 'CookieBar.functional.cookies.scriptDemo.provider',
+          Status: 'CookieBar.functional.cookies.scriptDemo.status',
           PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '4 days',
-        },
-        {
-          name: 'Consent',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-        {
-          name: 'Session2',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
+          Lifespan: 'Session',
+          script: ['loadExampleScript'],
         },
       ],
     },
     {
       id: 3,
-      name: 'Marketing',
+      name: 'CookieBar.marketing.label',
       showMore: false,
-      description:
-        'Marketing cookies are used by third parties and publishers to display personalised advertisements by following users across websites.',
-      cookies: [
-        {
-          name: 'Session',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-        {
-          name: 'Consent',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-        {
-          name: 'Session2',
-          Provider: 'plentyShop LTS',
-          Status: 'The consent cookies stores the user’s state of consent for cookies on our page.',
-          PrivacyPolicy: '/PrivacyPolicy',
-          Lifespan: '100 days',
-        },
-      ],
+      description: 'CookieBar.marketing.description',
+      cookies: [],
     },
   ],
 };
