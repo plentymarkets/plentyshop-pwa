@@ -29,8 +29,8 @@
               <UiProductCard
                 :product="product"
                 :name="productGetters.getName(product) ?? ''"
-                :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
-                :rating="productGetters.getAverageRating({} as ReviewAverage)"
+                :rating-count="productGetters.getTotalReviews(product)"
+                :rating="productGetters.getAverageRating(product)"
                 :price="actualPrice(product)"
                 :image-url="productGetters.getCoverImagePreview(product)"
                 :image-alt="productGetters.getName(product) ?? ''"
@@ -66,7 +66,6 @@
 </template>
 
 <script setup lang="ts">
-import { ReviewAverage } from '@plentymarkets/shop-api';
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';

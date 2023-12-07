@@ -24,10 +24,10 @@
         {{ name }}
       </SfLink>
       <div class="flex items-center pt-1">
-        <!-- <SfRating size="xs" :value="rating ?? 0" :max="5" />
+        <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfLink to="#" variant="secondary" :tag="NuxtLink" class="ml-1 no-underline">
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
-        </SfLink> -->
+        </SfLink>
       </div>
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
@@ -79,7 +79,15 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfIconChevronRight } from '@storefront-ui/vue';
+import {
+  SfLink,
+  SfButton,
+  SfIconShoppingCart,
+  SfLoaderCircular,
+  SfIconChevronRight,
+  SfRating,
+  SfCounter,
+} from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();

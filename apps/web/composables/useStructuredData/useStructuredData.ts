@@ -100,8 +100,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
       review: reviews,
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: productGetters.getAverageRating(reviewAverage.value),
-        reviewCount: productGetters.getTotalReviews(reviewAverage.value),
+        ratingValue: productGetters.getAverageRating(product),
+        reviewCount: productGetters.getTotalReviews(product),
       },
       offers: {
         '@type': 'Offer',

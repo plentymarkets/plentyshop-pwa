@@ -10,8 +10,8 @@
       :image-url="productGetters.getCoverImagePreview(product)"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
-      :rating-count="productGetters.getTotalReviews({} as ReviewAverage)"
-      :rating="productGetters.getAverageRating({} as ReviewAverage)"
+      :rating-count="productGetters.getTotalReviews(product)"
+      :rating="productGetters.getAverageRating(product)"
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
@@ -23,7 +23,6 @@
 </template>
 
 <script setup lang="ts">
-import { ReviewAverage } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';

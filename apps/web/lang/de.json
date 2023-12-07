@@ -65,7 +65,7 @@
     "label": "Steuerung des Vorschaumodus",
     "pwa": "plentyShop PWA Vorschau beenden"
   },
-  "documents" : {
+  "documents": {
     "correctionDocuments": "Korrekturbeleg",
     "Credit Note": "Gutschrift",
     "Delivery Note": "Lieferschein",
@@ -368,14 +368,14 @@
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
-      "orderId":"Auftrags-ID",
-      "orderDate":"Auftragsdatum",
+      "orderId": "Auftrags-ID",
+      "orderDate": "Auftragsdatum",
       "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
-      "amount":"Anzahl",
-      "status":"Status",
-      "details":"Details",
-      "myOrders":"Meine Bestellungen",
+      "amount": "Anzahl",
+      "status": "Status",
+      "details": "Details",
+      "myOrders": "Meine Bestellungen",
       "noOrders": "Sie haben noch nicht bei uns eingekauft",
       "continue": "Einkauf fortsetzen",
       "noOrdersAltText": "Keine Bestellungen",
@@ -441,9 +441,9 @@
       }
     },
     "resetPassword": {
-      "heading":  "Passwort zurücksetzen",
+      "heading": "Passwort zurücksetzen",
       "info": "Geben Sie die E-Mail-Adresse ein, die Sie bei der Anmeldung verwendet haben. Wir senden Ihnen einen Link zum Zurücksetzen des Passworts. Mit dem Link können Sie ein neues Passwort für Ihr Konto festlegen.",
-      "email":"E-Mail",
+      "email": "E-Mail",
       "continue": "Weiter",
       "backToLogin": "Zurück zum Login",
       "thankYou": "Danke, wenn ein Konto mit {0} registriert ist, sollten Sie den Link zum Zurücksetzen des Passworts in Ihrem Posteingang erhalten.",
@@ -451,10 +451,10 @@
       "emailSent": "E-Mail verschickt"
     },
     "setNewPassword": {
-      "heading":  "Neues Passwort festlegen",
-      "button":  "Neues Passwort festlegen",
-      "password":  "Neues Passwort",
-      "repeatPassword":  "Neues Passwort wiederholen",
+      "heading": "Neues Passwort festlegen",
+      "button": "Neues Passwort festlegen",
+      "password": "Neues Passwort",
+      "repeatPassword": "Neues Passwort wiederholen",
       "help": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
       "description": "Geben Sie das Passwort ein, das Sie zukünftig für das Anmelden mit Ihrem Konto verwenden möchten."
     }
@@ -474,7 +474,7 @@
   "excludedShipping": "zzgl. Versandkosten",
   "lang": {
     "en": "Englisch",
-    "de":"Deutsch"
+    "de": "Deutsch"
   },
   "softLogin": {
     "titleLogin": "Melden Sie sich bei Ihrem Konto an, um auf Ihre Bestellung zuzugreifen",
@@ -514,5 +514,69 @@
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
+  },
+  "coupon": {
+    "name": "Gutschein",
+    "title": "Haben sie einen Gutscheincode?",
+    "enterCode": "Gutschein-Code eingeben",
+    "apply": "Einlösen",
+    "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
+    "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
+    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
+  },
+  "error": {
+    "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",
+    "notificationsItemNotAdded": "Der Artikel konnte nicht hinzugefügt werden",
+    "notificationsNotEnoughStockItem": "Die gewählte Menge konnte nicht in den Warenkorb gelegt werden, da sie den verfügbaren Warenbestand übersteigt. :stock sind zur Zeit auf Lager.",
+    "notificationsInvalidResetPasswordUrl": "Die angegebene URL ist ungültig oder abgelaufen.",
+    "notificationsCheckPassword": "Die Passwörter stimmen nicht überein.",
+    "notificationsItemBundleSplitted": "Artikelpaket wurde aufgeteilt.",
+    "notificationsItemOutOfStock": "Kein ausreichender Warenbestand vorhanden",
+    "newsletterOptOutSuccessMessage": "Die Abmeldung vom Newsletter war erfolgreich.",
+    "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
+    "notificationsBasketItemsRemoved": "Es wurden Artikel aus Ihrem Warenkorb entfernt, da diese aktuell nicht verfügbar sind.",
+    "notificationsBasketItemsRemovedForLanguage": "Es wurden Artikel aus Ihrem Warenkorb entfernt, da diese nicht in der ausgewählten Sprache verfügbar sind.",
+    "notificationsNoEmailEntered": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+    "notificationsWarningOverselling": "Die gewählte Menge übersteigt den verfügbaren Warenbestand. :stock sind zur Zeit auf Lager; :oversellingAmount werden nachgeliefert.",
+    "consentReCaptchaCookieNotSet": "Das reCAPTCHA-Script wurde nicht akzeptiert. reCAPTCHA kann nicht ausgeführt werden. Dadurch können ggf. Formulare nicht versendet werden.",
+    "notificationsBasketItemsRemovedForCurrency": "Es wurden Artikel aus Ihrem Warenkorb entfernt, da diese nicht in der ausgewählten Währung verfügbar sind.",
+    "notificationsBasketItemsRemovedForShippingCountry": "Es wurden Artikel aus Ihrem Warenkorb entfernt, da diese nicht für das ausgewählte Lieferland verfügbar sind.",
+    "notificationsBasketItemsRemovedForContactClass": "Es wurden Artikel aus Ihrem Warenkorb entfernt, da diese nicht für dieses Kundenkonto verfügbar sind.",
+    "errorBasketItemVariationNotFound": "Die Variante ist nicht verfügbar.",
+    "errorBasketItemNotEnoughStockForVariation": "Die gewählte Menge konnte nicht in den Warenkorb gelegt werden, da sie den verfügbaren Warenbestand übersteigt. :stock sind zur Zeit auf Lager.",
+    "errorBasketItemMaximumQuantityReachedForItem": "Die maximale Bestellmenge dieses Artikels wurde überschritten.",
+    "errorBasketItemMaximumQuantityReachedForVariation": "Die maximale Bestellmenge dieser Variante wurde überschritten.",
+    "errorBasketItemMinimumQuantityNotReachedForVariation": "Die Mindestbestellmenge dieser Variante wurde nicht erreicht.",
+    "errorCreateOrderRetryTimeNotReached": "Beim Anlegen des Auftrags ist ein Fehler aufgetreten. Bitte versuchen sie es in 30 Sekunden erneut.",
+    "errorVatService": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Bitte wenden Sie sich an den Shop-Betreiber.",
+    "errorVatNumberValidation": "Die Umsatzsteuer-Identifikationsnummer ist ungültig. Bitte entfernen Sie alle Leer- und Sonderzeichen.",
+    "errorVatServiceFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft.",
+    "notificationRemoveCouponMinimumOrderValueIsNotReached": "Der eingelöste Gutschein wurde entfernt. Der Mindestbestellwert wird nicht mehr erreicht.",
+    "couponNoMatchingItemInBasket": "Der Gutschein wurde leider wieder entfernt, da kein Artikel im Warenkorb für diesen Gutschein freigeschaltet wurde.",
+    "notificationsCalculateShippingFailed": "Bei der Versandkostenberechnung kam es zu einem Fehler. Bitte benachrichtigen Sie den Betreiber.",
+    "couponPromotionRequired": "Die Variante des Artikels kann nur gekauft werden, wenn ein Aktionsgutschein eingelöst wird.",
+    "errorGiftCardReturnQuantity": "Retoure konnte nicht angelegt werden. Alle im Auftrag enthaltenen Gutscheine müssen gemeinsam retourniert werden.",
+    "couponMinOrderValueNotReached": "Der Gutschein wurde leider wieder entfernt, da der hierfür nötige Warenwert unterschritten wurde. Bitte geben Sie den Code erneut ein, wenn der geforderte Warenwert erreicht ist.",
+    "couponnotUsableForSpecialOffer": "Der Gutschein konnte nicht eingelöst werden. Gutscheine können nicht für Sonderangebotsartikel verwendet werden.",
+    "couponAlreadyUsedOrInvalidCouponCode": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
+    "couponCampaignExpired": "Der Gutschein ist leider abgelaufen.",
+    "couponOnlySubscription": "Der Gutschein kann nur für Abo-Artikel eingelöst werden.",
+    "couponOnlySingleUsage": "Diesen Gutschein kann nicht für Abo-Artikel eingelöst werden.",
+    "couponNoOpenAmount": "Der Gutschein wurde bereits vollständig eingelöst.",
+    "couponExpired": "Der Gutschein ist leider abgelaufen.",
+    "couponOnlyForNewCustomers": "Der Gutschein kann nur von Neukunden eingelöst werden.",
+    "couponOnlyForExistingCustomers": "Der Gutschein kann nur von Bestandskunden eingelöst werden.",
+    "couponWrongCustomerGroup": "Der Gutschein kann nur von Kunden mit einer anderen Kundenklasse eingelöst werden.",
+    "couponWrongCustomerType": "Der Gutschein kann nur von Kunden mit einem anderen Kundentyp eingelöst werden.",
+    "couponNoCustomerTypeProvided": "Der Gutschein konnte nicht eingelöst werden. Kundentyp nicht übergeben.",
+    "couponNoCustomerTypeActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Kundentyp aktiviert.",
+    "couponNoCustomerGroupActivated": "Der Gutschein konnte nicht eingelöst werden. Keine Kundenklasse aktiviert.",
+    "couponCampaignNoWebstoreActivated": "Der Gutschein konnte nicht eingelöst werden. Kein Mandant aktiviert.",
+    "couponCampaignWrongWebstoreId": "Der Gutschein konnte nicht eingelöst werden. Falscher Mandant.",
+    "couponCampaignNoWebstoreIdGiven": "Der Gutschein konnte nicht eingelöst werden. Keine Mandant-ID übergeben.",
+    "csrfTokenMismatch": "Sie wurden aus Sicherheitsgründen abgemeldet. Sie werden zur Login-Seite weitergeleitet.",
+    "accessKeyMailSent": "E-Mail wurde versandt.",
+    "accessKeyMailFailed": "Die E-Mail konnte nicht versendet werden, bitte kontaktieren Sie den Shopbetreiber.",
+    "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
   }
 }
