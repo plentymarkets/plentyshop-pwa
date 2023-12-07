@@ -500,7 +500,8 @@
     "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
     "subscribe": "Subscribe To Newsletter",
     "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
-    "success": "Newsletter successfully subscribed"
+    "success": "Newsletter successfully subscribed",
+    "termsRequired": "You must accept the terms and conditions."
   },
   "coupon": {
     "name": "Coupon",

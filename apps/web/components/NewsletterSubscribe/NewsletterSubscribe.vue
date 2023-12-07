@@ -33,22 +33,33 @@
           <SfLoaderCircular v-if="loading" />
           <span v-else>{{ $t('newsletter.subscribe') }}</span>
         </SfButton>
-        <NuxtTurnstile v-model="turnstile" ref="turnstileElement" :options="{ theme: 'light' }" />
+        <NuxtTurnstile v-model="turnstile" ref="turnstileElement" :options="{ theme: 'light' }" class="mt-4" />
       </form>
-      <div class="typography-text-xs text-neutral-600">
-        <label class="ml-3 text-base text-neutral-900 peer-disabled:text-disabled-900" for="privacyPolicy">
-          <i18n-t keypath="newsletter.policy">
-            <template #privacyPolicy>
-              <SfLink
-                :href="localePath(paths.privacyPolicy)"
-                target="_blank"
-                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-              >
-                {{ $t('privacyPolicy') }}
-              </SfLink>
-            </template>
-          </i18n-t>
-        </label>
+      <div class="text-base text-neutral-900 peer-disabled:text-disabled-900">
+        <div class="flex justify-center items-center">
+          <SfCheckbox
+            :model-value="checkboxValue"
+            @update:model-value="(event) => setCheckboxValue(event)"
+            :invalid="showErrors"
+            id="terms-checkbox"
+            class="inline-block mr-2"
+            data-testid="checkout-terms-checkbox"
+          />
+          <div class="text-left">
+            <i18n-t keypath="newsletter.policy">
+              <template #privacyPolicy>
+                <SfLink
+                  :href="localePath(paths.privacyPolicy)"
+                  target="_blank"
+                  class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                >
+                  {{ $t('privacyPolicy') }}
+                </SfLink>
+              </template>
+            </i18n-t>
+          </div>
+        </div>
+        <div v-if="showErrors" class="text-negative-700 text-sm mt-2">{{ $t('newsletter.termsRequired') }}</div>
       </div>
     </div>
   </div>
@@ -56,8 +67,9 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { SfButton, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 
+const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('newsletterSubscribeTerms');
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
@@ -70,6 +82,11 @@ const turnstile = ref('');
 const turnstileElement = ref();
 
 const subscribeNewsletter = async () => {
+  if (checkboxValue.value === false) {
+    setCheckboxValue(false);
+    return;
+  }
+
   if (
     await subscribe({
       email: emailValue.value,
