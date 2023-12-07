@@ -1,4 +1,4 @@
-import { toRefs, toRef } from '@vueuse/shared';
+import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
 import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
 import { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
