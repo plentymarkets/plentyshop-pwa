@@ -1,5 +1,5 @@
 type CookieScripts = {
-  [key: string]: () => void; // Assuming the functions have a void return type
+  [key: string]: () => void;
 };
 
 const cookieScripts: CookieScripts = {
