@@ -2,7 +2,6 @@ import { UseMegaMenuReturn, UseMegaMenuState } from '~/composables';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export const useMegaMenu: UseMegaMenuReturn = () => {
-  // const { close, open, isOpen } = useDisclosure();
   const state = useState<UseMegaMenuState>('useMegaMenu', () => ({
     isOpen: false,
     activeNode: [],
