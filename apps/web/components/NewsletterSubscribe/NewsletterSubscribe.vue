@@ -22,6 +22,8 @@
             <SfInput
               v-model="emailValue"
               type="email"
+              autocomplete="email"
+              required
               wrapper-class="grow"
               :placeholder="$t('auth.resetPassword.email')"
             />
