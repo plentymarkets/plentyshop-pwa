@@ -1,10 +1,12 @@
-# Cloudflare Turnstile
+# Bot protection
+
+## Cloudflare Turnstile
 
 The Cloudflare Turnstile CAPTCHA serves as an elective functionality, presenting visitors to your website with a CAPTCHA challenge.
 By doing so, it safeguards your website against spam and abuse, facilitating the smooth passage of genuine users.
 Opting not to implement this feature will not impede the normal functioning of your website.
 
-## How it works
+### How it works
 
 Cloudflare Turnstile is a CAPTCHA widget that automatically challenges visitors. There are three modes configurable in the Cloudflare dashboard:
 - **Managed** (Cloudflare will use information from the visitor to decide if an interactive challenge should be used. If they show an interaction, the user will be prompted to check a box (no images or text to decipher).)
@@ -13,7 +15,7 @@ Cloudflare Turnstile is a CAPTCHA widget that automatically challenges visitors.
 
 For more information check: https://developers.cloudflare.com/turnstile/
 
-## How to enable Cloudflare Turnstile
+### How to enable Cloudflare Turnstile
 
 1. Create a cloudflare account
 2. Go to **Turnstile » Add site**, add your website with your domain(s) and click **Create**
