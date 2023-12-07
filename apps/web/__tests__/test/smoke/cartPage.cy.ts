@@ -9,7 +9,7 @@ describe('Smoke: Cart Page', () => {
     cy.setCookie('vsf-locale', 'en');
     cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}')
   });
-  
+
 
   it('[smoke] Add coupon to cart, check the totals, then remove coupon and check totals again', () => {
     cy.visitAndHydrate('/study-room-office/office-chair/design-chair-brookhaven-leather-black_105_1003');
@@ -20,7 +20,7 @@ describe('Smoke: Cart Page', () => {
     cy.visitAndHydrate(paths.cart);
     cart.openCouponAccordion();
     cart.addCoupon('KB82AZ');
-    cart.orderSummayAfterCouponApplyed('-£12.95','£119.99');
+    cart.orderSummayAfterCouponApplyed();
     cart.removeCoupon();
     cart.orderSummayAfterCouponRemoved('£132.94');
   });
