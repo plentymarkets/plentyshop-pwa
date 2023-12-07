@@ -2,33 +2,74 @@
 
 ## Introduction
 
-In the context of e-commerce, Variation Properties play a crucial role in enhancing product descriptions. These properties enable sellers to add custom details, thereby offering potential buyers more comprehensive information about the products. This additional information can range from ethical considerations like fair trade to multimedia enhancements such as product demonstration videos. Such details can significantly influence customer purchasing decisions.
+In the context of e-commerce, Variation Properties play a crucial role in enhancing product descriptions. These
+properties enable sellers to add custom details, thereby offering potential buyers more comprehensive information about
+the products. This additional information can range from ethical considerations like fair trade to multimedia
+enhancements such as product demonstration videos. Such details can significantly influence customer purchasing
+decisions.
 
 ## Use Cases
 
-Variation Properties allow for a high degree of customization in product descriptions. Each product variation can be associated with specific groups, and properties within these groups are editable at the item level. This flexibility supports various use cases:
+Variation Properties allow for a high degree of customization in product descriptions. Each product variation can be
+associated with specific groups, and properties within these groups are editable at the item level. This flexibility
+supports various use cases:
 
-- Custom Badges and Labels: Sellers can create unique badges and labels for different product variations, aiding in marketing and branding efforts.
-- Custom Sections: Enables the creation of distinct sections within product descriptions, allowing for better organization and presentation of information.
-- Custom Content: Supports various content types, including HTML, files, and text, offering a rich medium for product description.
+- Custom Badges and Labels: Sellers can create unique badges and labels for different product variations, aiding in
+  marketing and branding efforts.
+- Custom Sections: Enables the creation of distinct sections within product descriptions, allowing for better
+  organization and presentation of information.
+- Custom Content: Supports various content types, including HTML, files, and text, offering a rich medium for product
+  description.
 
 ## How to Use Variation Property
 
-1. Import the productPropertyGetters:
+#### Detailed Example: Extracting and Using a 'PDF URL' from Variation Properties
+
+In this example, we will demonstrate how to extract a specific property - in this case, a 'PDF URL' -
+from `variationProperties`.
+
+
+**Step 1: Import Necessary Helpers**
+
+First, import the helpers from the `@plentymarkets/shop-sdk` package:
+
 ```javascript
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 ```
 
-2. Use them as desired:
+
+**Step 2: Define a Function to Extract the PDF URL**
+
+Create a function that iterates through the variation properties, checks for the desired property using the helper
+functions, and returns the PDF URL.
+
 ```javascript
-const property = computed(() => productPropertyGetters.getProperty(product));
+function getPDFUrlFromVariationProperties(variationProperties) {
+  for (let variation of variationProperties) {
+    for (let property of variation.properties) {
+      if (
+              productPropertyGetters.getPropertyName(property) === 'PDF URL' &&
+              productPropertyGetters.getPropertyCast(property) === 'text'
+      ) {
+        return productPropertyGetters.getPropertyValue(property);
+      }
+    }
+  }
+  return null;
+}
 ```
 
-   [This section needs to be completed with a full detailed example.]
+This function performs the following actions:
+
+- Iterates through each variation and its properties.
+- Uses `productPropertyGetters.getPropertyName` and `productPropertyGetters.getPropertyCast` to identify the property
+  with the name 'PDF URL' and the cast type 'text'.
+- Once found, `productPropertyGetters.getPropertyValue` is used to retrieve the URL.
 
 ## Helpers
 
-To facilitate the use and management of Variation Properties, several helper functions are provided. These helpers are categorized into three main types:
+To facilitate the use and management of Variation Properties, several helper functions are provided. These helpers are
+categorized into three main types:
 
 ### Property Types
 
