@@ -74,7 +74,7 @@ const subscribeNewsletter = async () => {
     await subscribe({
       email: emailValue.value,
       'cf-turnstile-response': turnstile.value,
-      // emailFolder: 1,
+      emailFolder: 1,
       // firstName: firstNameValue.value,
       // lastName: lastNameValue.value,
     })
