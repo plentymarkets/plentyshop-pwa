@@ -78,7 +78,7 @@ export default {
           Status: 'Example cookie that loads a hello world script if accepted.',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
-          script: ['loadPaypalScript'],
+          script: ['loadExampleScript'],
         },
       ],
     },
