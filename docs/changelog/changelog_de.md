@@ -1,5 +1,15 @@
 # Changelog plentyshopPWA
 
+## v1.3.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Ab jetzt kannst du in der Datei `cookie-scripts.config.ts` konfigurieren, welche Skripte nach Akzeptieren eines bestimmten Cookies geladen werden.
+
+### Fixed
+
+- Das Cookie-Consent-Banner wird jetzt sowohl auf Englisch als auch auf Deutsch in der richtigen Sprache angezeigt.
+
 ## v1.2.0 (28.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Hinzugefügt
