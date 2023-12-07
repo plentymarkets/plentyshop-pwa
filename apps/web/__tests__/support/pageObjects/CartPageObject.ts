@@ -75,8 +75,8 @@ export class CartPageObject {
 
   orderSummayAfterCouponApplyed() {
     cy.getByTestId('coupon-label').should('be.visible');
-    cy.getByTestId('coupon-value').should('be.a', 'string');
-    cy.getByTestId('total').should('be.a', 'string')
+    cy.getByTestId('coupon-value').should('be.visible');
+    cy.getByTestId('total').should('be.visible')
   }
 
   removeCoupon() {
