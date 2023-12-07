@@ -73,10 +73,10 @@ export class CartPageObject {
     return this;
   }
 
-  orderSummayAfterCouponApplyed() {
+  orderSummayAfterCouponApplyed(discount: string, total: string) {
     cy.getByTestId('coupon-label').should('be.visible');
-    cy.getByTestId('coupon-value').should('be.visible');
-    cy.getByTestId('total').should('be.visible')
+    cy.getByTestId('coupon-value').contains(discount);
+    cy.getByTestId('total').contains(total);
   }
 
   removeCoupon() {

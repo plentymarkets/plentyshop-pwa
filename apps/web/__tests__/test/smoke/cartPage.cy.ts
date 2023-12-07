@@ -16,12 +16,12 @@ describe('Smoke: Cart Page', () => {
     cy.intercept('/plentysystems/doAddCartItem').as('doAddCartItem');
     cy.wait(1000);
     cy.getByTestId('add-to-cart').click();
-    cy.wait('@doAddCartItem');
+    cy.wait(5000);
     cy.visitAndHydrate(paths.cart);
     cart.openCouponAccordion();
     cart.addCoupon('KB82AZ');
-    cart.orderSummayAfterCouponApplyed();
+    cart.orderSummayAfterCouponApplyed('-£12.85','£119.99');
     cart.removeCoupon();
-    cart.orderSummayAfterCouponRemoved('£132.94');
+    cart.orderSummayAfterCouponRemoved('£132.84');
   });
 });
