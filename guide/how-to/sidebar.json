@@ -22,5 +22,9 @@
     {
         "text": "PWA",
         "link": "/guide/how-to/pwa.md"
+    },
+    {
+        "text": "Cloudflare turnstile",
+        "link": "/guide/how-to/cloudflare-turnstile.md"
     }
 ]
