@@ -1,8 +1,12 @@
-const loadExampleScript = async () => {
-  // eslint-disable-next-line no-console
-  console.log('This is an example.');
+type CookieScripts = {
+  [key: string]: () => void; // Assuming the functions have a void return type
 };
 
-export default {
-  loadExampleScript,
+const cookieScripts: CookieScripts = {
+  loadExampleScript: () => {
+    // Implementation of loadExampleScript
+  },
+  // Add other scripts if needed
 };
+
+export default cookieScripts;

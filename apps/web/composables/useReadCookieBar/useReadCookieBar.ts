@@ -19,10 +19,8 @@ const fetchScripts = (scripts: string[]) => {
             return;
           });
       } else {
-        const method = toRef(cookieScripts, script);
-
-        if (method.value) {
-          method.value();
+        if (cookieScripts[script]) {
+          cookieScripts[script]();
         }
       }
     } catch (error: any) {
