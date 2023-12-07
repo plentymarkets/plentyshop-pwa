@@ -33,26 +33,26 @@ export default {
       description: 'CookieBar.essentials.description',
       cookies: [
         {
-          name: 'plentyID',
-          Provider: 'plentysystems AG',
-          Status: 'Stores information about the current session, for example if the user is logged in.',
+          name: 'CookieBar.essentials.cookies.plentyId.name',
+          Provider: 'CookieBar.essentials.cookies.plentyId.provider',
+          Status: 'CookieBar.essentials.cookies.plentyId.status',
           PrivacyPolicy: '/PrivacyPolicy',
           // Lifespan must respect this format, currently only accepts days.
           Lifespan: 'Session',
           accepted: true,
         },
         {
-          name: 'vsf-locale',
-          Provider: 'plentysystems AG',
-          Status: 'Stores the display language.',
+          name: 'CookieBar.essentials.cookies.vsfLocale.name',
+          Provider: 'CookieBar.essentials.cookies.vsfLocale.provider',
+          Status: 'CookieBar.essentials.cookies.vsfLocale.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
           accepted: true,
         },
         {
-          name: 'consent-cookie',
-          Provider: 'plentysystems AG',
-          Status: 'Stores consent selection.',
+          name: 'CookieBar.essentials.cookies.consentCookie.name',
+          Provider: 'CookieBar.essentials.cookies.consentCookie.provider',
+          Status: 'CookieBar.essentials.cookies.consentCookie.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
           accepted: true,
@@ -73,9 +73,9 @@ export default {
       description: 'CookieBar.functional.description',
       cookies: [
         {
-          name: 'Script demo',
-          Provider: 'plentysystems AG',
-          Status: 'Example cookie that loads a hello world script if accepted.',
+          name: 'CookieBar.functional.cookies.scriptDemo.name',
+          Provider: 'CookieBar.functional.cookies.scriptDemo.provider',
+          Status: 'CookieBar.functional.cookies.scriptDemo.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
         },

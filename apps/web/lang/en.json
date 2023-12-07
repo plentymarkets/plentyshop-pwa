@@ -37,7 +37,24 @@
     },
     "essentials": {
       "label": "Essentials",
-      "description": "Essential cookies enable basic functions and are necessary for the proper functioning of the website."
+      "description": "Essential cookies enable basic functions and are necessary for the proper functioning of the website.",
+      "cookies": {
+        "plentyId": {
+          "name": "plentyID",
+          "provider": "plentysystems AG",
+          "status": "Stores information about the current session, for example if the user is logged in."
+        },
+        "vsfLocale": {
+          "name": "vsf-locale",
+          "provider": "plentysystems AG",
+          "status": "Stores the display language."
+        },
+        "consentCookie": {
+          "name": "consent-cookie",
+          "provider": "plentysystems AG",
+          "status": "Stores consent selection."
+        }
+      }
     },
     "externalMedia": {
       "label": "External media",
@@ -45,7 +62,14 @@
     },
     "functional": {
       "label": "Functional",
-      "description": "These cookies are used to store preferred settings and certain options selected by the user."
+      "description": "These cookies are used to store preferred settings and certain options selected by the user.",
+      "cookies": {
+        "scriptDemo": {
+          "name": "Script demo",
+          "provider": "plentysystems AG",
+          "status": "Example cookie that loads a hello world script if accepted."
+        }
+      }
     },
     "marketing": {
       "label": "Marketing",
