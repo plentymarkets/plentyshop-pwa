@@ -1,52 +1,59 @@
+# Cookie consent
 
-# General CookieBar Information
+Data protection and privacy regulation in the EU [requires websites](https://europa.eu/youreurope/business/dealing-with-customers/data-protection/online-privacy/index_en.htm) to get user consent before collecting the user's data. This includes not just regular tracking services like Google Analytics. It may also apply to any user data you transmit to external service providers.
 
-1. Cookies are set from the **cookie.config.ts** file.
-2. CookieBar is visible on the initial load of the website.
-3. For a better user experience, the page is not reloaded the first time a user selects the consent. Any interaction with the CookieBar action buttons after that will result in page reload.
-4. The consent in the browser will be saved in the browser cookies section in the format:
+For you, this means that you need a way of asking for user consent and allow or block functionality depending on the user's choices.
 
-**Name: consent-cookie**
-**Value**:
+## Cookie bar appearance
+
+The cookie bar provides the user with information about consent options and a way to allow all cookies, allow a selection of cookies or deny all cookies that aren't essential to running the website. You can customise the appearance of the cookie bar in `Cookiebar.vue`.
+
+:::warning
+If you customise the cookie bar, make sure your new design is legally compliant.
+:::
+
+When the website loads for the first time in a session, the cookie bar is visible. The first time the user selects a setting, the site updates the consents without reloading. When the user changes the settings, the page reloads automatically to update the consents.
+
+The browser saves consents in the browser cookies in the following format:
+
 ```
 {
-  "Group1:": {
-    "Children1": true,
-    "Children2": false
-  },
-  "Group2:": {
-    "Children1": false,
-    "Children2": false
+  "CookieGroup": {
+    "Cookie-1": true,
+    "Cookie-2": false
   }
 }
 ```
 
-# Importing external scripts.
+## Cookie configuration
 
-1. In the cookie.config.ts file we can set the **script** attribute for any cookie. This attribute will take an array of strings.
-   **example**:  `script: ['https://www.plentymarkets.com']`.
-2. On every interaction with the CookieBar action buttons, this script attribute will compute again and only load for the cookies that have accepted consent.
-3. If an element of the array does not start with **http** then it will treat it as a javascript script that needs to be evaluated.
-   **example**: `script: ['console.log("Loaded cookie script example1")']`
+Edit `cookie.config.ts` to configure cookies and cookie groups. Refer to the interfaces `Cookie` and `CookieGroup` for all available properties.
 
-# Using cookie consent
+### External scripts
 
-For the first interaction of the user with the consent bar, because we are not reloading the page, we need to watch for the change in consent and initialise the scripts. For the subsequent interactions, we will check for consent on page load.
-**The script below will take care of both of these scenarios:**
+A common use case is to load additional scripts depending on the user's consent. To set up which scripts are loaded for which cookie, edit `cookie.config.ts` and `cookie-scripts.config.ts`.
 
+In `cookie.config.ts`, add the `script` property to the cookie. The property accepts an array of strings. The strings serve as identifiers for functions in `cookie-scripts.config.ts`. The implementation of the function in the scripts configuration determines what happens when the user accepts the cookie.
 
-```
-const browserCookies = useCookie('consent-cookie');
+```ts
+// cookie.config.ts
 
-watch(
-  () => browserCookies.value,
-  (cookies: any) => {
-    /*
-        if (cookies.Group1.Children1) {
-          loadScript()
-        }
-    */
+cookies: [
+  {
+    name: 'CookieBar.functional.cookies.scriptDemo.name',
+    Provider: 'CookieBar.functional.cookies.scriptDemo.provider',
+    Status: 'CookieBar.functional.cookies.scriptDemo.status',
+    PrivacyPolicy: '/PrivacyPolicy',
+    Lifespan: 'Session',
+    script: ['loadExampleScript'],
   },
-  { immediate: true },
-);
+],
+```
+
+```ts
+// cookie-scripts.config.ts
+
+loadExampleScript: () => {
+  console.log('Hello World!')
+},
 ```
