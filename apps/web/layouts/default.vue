@@ -8,7 +8,7 @@
         <NuxtLazyHydrate when-visible>
           <SfButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="$t('languageSelector')"
+            :aria-label="i18n.t('languageSelector')"
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
@@ -22,7 +22,7 @@
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.cart)"
-            :aria-label="$t('numberInCart', cartItemsCount)"
+            :aria-label="i18n.t('numberInCart', { count: cartItemsCount })"
             variant="tertiary"
             square
           >
@@ -61,7 +61,7 @@
                     class="text-left"
                     data-testid="account-dropdown-list-item"
                     @click="logOut()"
-                    >{{ $t(label) }}</SfListItem
+                    >{{ i18n.t(label) }}</SfListItem
                   >
                 </template>
                 <SfListItem
@@ -71,7 +71,7 @@
                   :class="{ 'bg-neutral-200': $route.path === link }"
                   data-testid="account-dropdown-list-item"
                 >
-                  {{ $t(label) }}
+                  {{ i18n.t(label) }}
                 </SfListItem>
               </li>
             </ul>
@@ -94,7 +94,7 @@
           square
           data-testid="open-languageselect-button"
           @click="toggleLanguageSelect"
-          :aria-label="$t('languageSelector')"
+          :aria-label="i18n.t('languageSelector')"
         >
           <SfIconLanguage />
         </SfButton>
@@ -103,7 +103,7 @@
           class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
           square
           @click="searchModalOpen"
-          :aria-label="$t('openSearchModalButtonLabel')"
+          :aria-label="i18n.t('openSearchModalButtonLabel')"
         >
           <SfIconSearch />
         </SfButton>
@@ -119,8 +119,8 @@
     >
       <header>
         <div class="text-lg font-medium ml-8">
-          <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
-          <span v-else>{{ $t('auth.signup.heading') }}</span>
+          <span v-if="isLogin">{{ i18n.t('auth.login.heading') }}</span>
+          <span v-else>{{ i18n.t('auth.signup.heading') }}</span>
         </div>
         <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
           <SfIconClose />
@@ -165,7 +165,7 @@
             <SfIconClose class="text-neutral-500" />
           </SfButton>
           <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
-            {{ $t('search') }}
+            {{ i18n.t('search') }}
           </h3>
         </header>
         <UiSearch :close="searchModalClose" />
@@ -204,7 +204,9 @@ const { data: categoryTree } = useCategoryTree();
 const { data: cart } = useCart();
 const { data: user, isAuthorized, logout } = useCustomer();
 const { setLogoMeta } = useStructuredData();
+const i18n = useI18n();
 const localePath = useLocalePath();
+const router = useRouter();
 usePageTitle();
 
 const isLogin = ref(true);
@@ -212,8 +214,9 @@ const isLogin = ref(true);
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const logOut = async () => {
   await logout();
+
   accountDropdownToggle();
-  navigateTo(localePath(paths.home));
+  router.push(localePath({ path: paths.home }));
 };
 
 const accountDropdown = [

@@ -47,9 +47,7 @@ const { getShippingMethods } = useCartShippingMethods();
 const { login, loading, getSession } = useCustomer();
 const { send } = useNotification();
 const { t } = useI18n();
-definePageMeta({
-  layout: false,
-});
+
 const props = withDefaults(defineProps<LoginProps>(), {
   isSoftLogin: false,
 });

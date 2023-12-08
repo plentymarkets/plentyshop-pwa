@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout name="login">
+  <NuxtLayout name="auth" :heading="''">
     <div class="text-lg text-center mt-2 font-medium">
       {{ $t('auth.login.heading') }}
     </div>
