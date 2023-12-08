@@ -1,5 +1,6 @@
 ---
 outline: deep
+search: false
 ---
 
 # Runtime API Examples
