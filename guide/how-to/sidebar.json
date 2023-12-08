@@ -1,30 +1,42 @@
 [
     {
-        "text": "Middleware",
-        "link": "/guide/how-to/middleware.md"
+        "text": "App configuration",
+        "collapsed": true,
+        "items": [
+            {
+                "text": "Middleware",
+                "link": "/guide/how-to/middleware.md"
+            },
+            {
+                "text": "i18n",
+                "link": "/guide/how-to/i18n.md"
+            },
+            {
+                "text": "Theme",
+                "link": "/guide/how-to/theme.md"
+            },
+            {
+                "text": "PWA",
+                "link": "/guide/how-to/pwa.md"
+            },
+            {
+                "text": "Cookie consent",
+                "link": "/guide/how-to/cookie.md"
+            },
+            {
+                "text": "Bot protection",
+                "link": "/guide/how-to/bot-protection.md"
+            }
+        ]
     },
     {
-        "text": "i18n",
-        "link": "/guide/how-to/i18n.md"
-    },
-    {
-        "text": "Theme",
-        "link": "/guide/how-to/theme.md"
-    },
-    {
-        "text": "Cookie consent",
-        "link": "/guide/how-to/cookie.md"
-    },
-    {
-        "text": "Variation properties",
-        "link": "/guide/how-to/variation-property.md"
-    },
-    {
-        "text": "PWA",
-        "link": "/guide/how-to/pwa.md"
-    },
-    {
-        "text": "Bot Protection",
-        "link": "/guide/how-to/bot-protection.md"
+        "text": "Cookbook",
+        "collapsed": true,
+        "items": [
+            {
+                "text": "Variation properties",
+                "link": "/guide/how-to/variation-property.md"
+            }
+        ]
     }
 ]
