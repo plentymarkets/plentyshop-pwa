@@ -27,7 +27,7 @@ export default defineConfig({
       {
         text: 'Guide',
         items: [
-          { text: 'Setup', link: '/guide/setup/system' },
+          { text: 'Get started', link: '/guide/setup/system' },
           { text: 'How-To', link: '/guide/how-to/' },
           { text: 'Concept', link: '/guide/concept/' }
         ]
@@ -49,7 +49,7 @@ export default defineConfig({
           items: sidebarProduct
         },
         {
-          text: 'Setup',
+          text: 'Get started',
           items: sidebarSetup
         },
         {
