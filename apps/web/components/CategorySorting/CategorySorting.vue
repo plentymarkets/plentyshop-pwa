@@ -4,7 +4,7 @@
       {{ $t('sortBy') }}
     </h6>
     <div class="px-4">
-      <SfSelect v-model="selected" :aria-label="$t('sortBy')" @change="sortingChanged">
+      <SfSelect v-model="selected" :aria-label="$t('sortBy')" id="sortBy" @change="sortingChanged">
         <option v-for="{ value, label } in options" :key="value" :value="value">
           {{ $t(`sortType.${label}`) }}
         </option>

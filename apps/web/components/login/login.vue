@@ -11,11 +11,6 @@
         <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
       </label>
 
-      <!-- <label class="mt-2 flex items-center gap-2">
-        <SfCheckbox name="rememberMe" v-model="rememberMe" />
-        {{ $t('auth.login.rememberMeLabel') }}
-      </label> -->
-
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
@@ -23,9 +18,6 @@
         </span>
       </SfButton>
       <div align="center" v-if="!isSoftLogin">
-        <!-- <SfLink class="mt-2" :tag="NuxtLink" to="/reset-password" variant="primary">
-          {{ $t('auth.login.forgotPasswordLabel') }}
-        </SfLink> -->
         <div class="my-5 font-bold">{{ $t('auth.login.createAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
           {{ $t('auth.login.createAccountLinkLabel') }}
@@ -61,7 +53,6 @@ const loadAddresses = async () => {
 
 const email = ref('');
 const password = ref('');
-// const rememberMe = ref<boolean>();
 
 const loginUser = async () => {
   const success = await login(email.value, password.value);

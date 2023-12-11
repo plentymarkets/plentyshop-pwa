@@ -4,7 +4,7 @@
     data-testid="product-card"
   >
     <div class="relative">
-      <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)">
+      <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
@@ -12,9 +12,9 @@
           data-testid="image-slot"
           width="190"
           height="190"
-          :loading="lazy && !priority ? 'lazy' : undefined"
+          :loading="lazy && !priority ? 'lazy' : ''"
           :fetchpriority="priority ? 'high' : undefined"
-          :preload="priority"
+          :preload="priority || false"
           format="webp"
         />
       </SfLink>
@@ -39,16 +39,16 @@
       <div class="flex items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1"
-            >{{ $t('account.ordersAndReturns.orderDetails.priceFrom') }}
+            >{{ i18n.t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ $n(cheapestPrice ?? mainPrice, 'currency') }}</span>
-          <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
+          <span>{{ i18n.n(cheapestPrice ?? mainPrice, 'currency') }}</span>
+          <span v-if="showNetPrices">{{ i18n.t('asterisk') }} </span>
         </span>
         <span
           v-if="oldPrice && oldPrice !== mainPrice"
-          class="text-base typography-text-sm text-neutral-500 line-through ml-3 pb-2"
+          class="typography-text-sm text-neutral-500 line-through ml-3 pb-2"
         >
-          {{ $n(oldPrice, 'currency') }}
+          {{ i18n.n(oldPrice, 'currency') }}
         </span>
       </div>
       <SfButton
@@ -64,11 +64,11 @@
         </template>
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
         <span v-else>
-          {{ $t('addToCartShort') }}
+          {{ i18n.t('addToCartShort') }}
         </span>
       </SfButton>
       <SfButton v-else type="button" :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" size="sm" class="w-fit">
-        <span>{{ $t('showArticle') }}</span>
+        <span>{{ i18n.t('showArticle') }}</span>
         <template #prefix>
           <SfIconChevronRight size="sm" />
         </template>
@@ -91,6 +91,7 @@ import {
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
+const i18n = useI18n();
 const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
