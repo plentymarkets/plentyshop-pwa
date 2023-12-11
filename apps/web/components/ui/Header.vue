@@ -3,7 +3,6 @@
     <MegaMenu :categories="categoryTree">
       <NuxtLazyHydrate when-visible>
         <UiSearch class="hidden md:block flex-1" />
-
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <SfButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
@@ -17,7 +16,6 @@
               <SfIconLanguage class="relative" />
             </template>
           </SfButton>
-
           <SfButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
@@ -35,7 +33,6 @@
               />
             </template>
           </SfButton>
-
           <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
             <template #trigger>
               <SfButton
@@ -51,7 +48,6 @@
                 {{ user.user?.firstName }}
               </SfButton>
             </template>
-
             <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
               <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
                 <template v-if="label === 'account.logout'">
@@ -64,7 +60,6 @@
                     >{{ i18n.t(label) }}</SfListItem
                   >
                 </template>
-
                 <SfListItem
                   v-else
                   :tag="NuxtLink"
@@ -77,7 +72,6 @@
               </li>
             </ul>
           </SfDropdown>
-
           <SfButton
             v-else
             @click="openAuthentication"
@@ -89,7 +83,6 @@
           </SfButton>
         </nav>
       </NuxtLazyHydrate>
-
       <div>
         <SfButton
           variant="tertiary"
@@ -101,7 +94,6 @@
         >
           <SfIconLanguage />
         </SfButton>
-
         <SfButton
           variant="tertiary"
           class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
@@ -113,10 +105,8 @@
         </SfButton>
       </div>
     </MegaMenu>
-
     <LanguageSelector v-if="isLanguageSelectOpen" />
     <UiNotifications />
-
     <UiModal
       v-model="isAuthenticationOpen"
       tag="section"
@@ -132,7 +122,6 @@
           <SfIconClose />
         </SfButton>
       </header>
-
       <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
       <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
     </UiModal>
