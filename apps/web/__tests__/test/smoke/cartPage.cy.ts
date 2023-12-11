@@ -4,10 +4,12 @@ import { paths } from '../../../utils/paths';
 const cart = new CartPageObject();
 
 describe('Smoke: Cart Page', () => {
-
   beforeEach(() => {
     cy.setCookie('vsf-locale', 'en');
-    cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}')
+    cy.setCookie(
+      'consent-cookie',
+      '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}',
+    );
   });
 
   it('[smoke] Add coupon to cart, check the totals, then remove coupon and check totals again', () => {
@@ -19,7 +21,7 @@ describe('Smoke: Cart Page', () => {
     cy.visitAndHydrate(paths.cart);
     cart.openCouponAccordion();
     cart.addCoupon('KB82AZ');
-    cart.orderSummayAfterCouponApplyed('-£12.85','£119.99');
+    cart.orderSummayAfterCouponApplyed('-£12.87', '£119.99');
     cart.removeCoupon();
     cart.orderSummayAfterCouponRemoved('£132.84');
   });
