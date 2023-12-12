@@ -122,7 +122,7 @@
           <SfIconClose />
         </SfButton>
       </header>
-      <login v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
+      <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
       <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
     </UiModal>
   </div>
