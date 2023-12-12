@@ -42,3 +42,4 @@ export * from './useSearch';
 export * from './useCoupon';
 export * from './useStructuredData';
 export * from './useMegaMenu';
+export * from './useOrderPropertiesMatrix';

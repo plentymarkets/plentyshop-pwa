@@ -25,6 +25,9 @@
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
 import { SfCheckbox } from '@storefront-ui/vue';
+const { testingContext } = useOrderPropertiesMatrix();
+
+console.log(testingContext());
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
