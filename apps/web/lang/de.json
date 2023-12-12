@@ -31,6 +31,50 @@
     "asterixHint": "* markierte Zustimmungen sind erforderlich"
   },
   "CookieBar": {
+    "about": {
+      "label": "Ihre Privatsphäre ist uns wichtig",
+      "description": "Wir verwenden Cookies und ähnliche Technologien auf unserer Website und verarbeiten personenbezogene Daten von Besucher:innen unserer Webseite (z.B. IP-Adresse), um z.B. Inhalte und Anzeigen zu personalisieren, Medien von Drittanbietern einzubinden oder Zugriffe auf unsere Website zu analysieren. Die Datenverarbeitung erfolgt erst durch gesetzte Cookies. Wir teilen diese Daten mit Dritten, die wir in den Einstellungen benennen. Die Datenverarbeitung kann mit Einwilligung oder aufgrund eines berechtigten Interesses erfolgen. Die Zustimmung kann erteilt oder abgelehnt werden. Es besteht das Recht, nicht einzuwilligen und die Einwilligung zu einem späteren Zeitpunkt zu ändern oder zu widerrufen. Weitere Informationen zur Verwendung personenbezogener Daten und den Diensten erklären wir in unserer"
+    },
+    "essentials": {
+      "label": "Essenziell",
+      "description": "Essenzielle Cookies ermöglichen grundlegende Funktionen und sind für die einwandfreie Funktion der Website erforderlich.",
+      "cookies": {
+        "plentyId": {
+          "name": "plentyID",
+          "provider": "plentysystems AG",
+          "status": "Speichert Informationen zur aktuellen Session, z.B. ob der User eingeloggt ist."
+        },
+        "vsfLocale": {
+          "name": "vsf-locale",
+          "provider": "plentysystems AG",
+          "status": "Speichert die Anzeigesprache."
+        },
+        "consentCookie": {
+          "name": "consent-cookie",
+          "provider": "plentysystems AG",
+          "status": "Speichert die Einwilligungsauswahl."
+        }
+      }
+    },
+    "externalMedia": {
+      "label": "Externe Medien",
+      "description": "Inhalte von Videoplattformen und Social Media Plattformen werden standardmäßig blockiert. Wenn Cookies von externen Medien akzeptiert werden, bedarf der Zugriff auf diese Inhalte keiner manuellen Zustimmung mehr."
+    },
+    "functional": {
+      "label": "Funktional",
+      "description": "Diese Cookies ermöglichen, dass die von Nutzern getroffenen Auswahlmöglichkeiten und bevorzugte Einstellungen (z.B. das Deaktivieren der Sprachweiterleitung) gespeichert werden können.",
+      "cookies": {
+        "scriptDemo": {
+          "name": "Script-Demo",
+          "provider": "plentysystems AG",
+          "status": "Anwendungsbeispiel zum Laden eines Skripts nach Einwilligung."
+        }
+      }
+    },
+    "marketing": {
+      "label": "Marketing",
+      "description": "Marketing-Cookies werden von Drittanbietern und Publishern verwendet, um personalisierte Werbung anzuzeigen. Sie tun dies, indem sie Besucher über Websites hinweg verfolgen."
+    },
     "Cookie Settings": "Cookie-Einstellungen",
     "Privacy Settings": "Datenschutzeinstellungen",
     "More information": "Mehr Informationen",
