@@ -12,7 +12,7 @@
           data-testid="image-slot"
           width="190"
           height="190"
-          :loading="lazy && !priority ? 'lazy' : ''"
+          :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
           :preload="priority || false"
           format="webp"
