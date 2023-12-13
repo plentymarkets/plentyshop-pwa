@@ -45,12 +45,11 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 
 ### plentyShop PWA
 
-Paste the sitekey in the PWA `nuxt.config.ts` file in the `turnstile` section:
+If not already existing, create a `.env` file in the `apps/web/` folder of your plentyShop PWA project.
+Paste the sitekey in the PWA `.env` file:
 
-```ts
-turnstile: {
-    siteKey: '0x4AAAZACDNx3aXDh7UR35x9'
-}
+```
+CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0"
 ```
 
 ## Disabling Cloudflare Turnstile
@@ -68,12 +67,10 @@ This disables the CAPTCHA validation.
 
 ### plentyShop PWA
 
-Remove the sitekey from the PWA `nuxt.config.ts` file in the `turnstile` section. This removes the widget in the PWA:
+Remove the sitekey from the PWA `.env` file in the `apps/web/` folder. This removes the widget in the PWA:
 
-```ts
-turnstile: {
-    siteKey: ''
-}
+```
+CLOUDFLARE_TURNSTILE_SITE_KEY=""
 ```
 
 ## CAPTCHA protected features
