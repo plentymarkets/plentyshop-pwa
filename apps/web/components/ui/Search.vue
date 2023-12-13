@@ -1,6 +1,13 @@
 <template>
   <form ref="referenceRef" role="search" class="relative" @submit.prevent="handleSubmit">
-    <SfInput ref="inputReference" v-model="inputModel" aria-label="Search" placeholder="Search" @focus="open">
+    <SfInput
+      ref="inputReference"
+      v-model="inputModel"
+      :aria-label="i18n.t('search')"
+      id="search"
+      :placeholder="i18n.t('search')"
+      @focus="open"
+    >
       <template #prefix>
         <SfLoaderCircular v-if="loading" />
         <SfIconSearch v-else />
@@ -30,6 +37,8 @@ const props = defineProps<{
 }>();
 
 const localePath = useLocalePath();
+const i18n = useI18n();
+const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();
 const { loading } = useSearch();
@@ -47,7 +56,7 @@ const handleReset = () => {
 const handleSubmit = () => {
   props.close?.();
   updateSearchTerm(inputModel.value);
-  navigateTo({ path: localePath(paths.search), query: { term: inputModel.value } });
+  router.push({ path: localePath(paths.search), query: { term: inputModel.value } });
   handleReset();
 };
 

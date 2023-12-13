@@ -31,10 +31,10 @@
     <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'">
       <form @submit.prevent="updatePriceFilter">
         <div class="mb-3">
-          <SfInput v-model="minPrice" :placeholder="$t('min')" />
+          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
         </div>
         <div class="mb-3">
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" />
+          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
         </div>
         <SfButton type="submit" :disabled="minPrice.length === 0 && maxPrice.length === 0" variant="secondary">
           <template #prefix>
@@ -61,7 +61,13 @@
         :class="['px-1.5 bg-transparent hover:bg-transparent']"
       >
         <template #prefix>
-          <SfCheckbox class="flex items-center" :value="filter" v-model="models[filter.id]" @change="facetChange" />
+          <SfCheckbox
+            class="flex items-center"
+            :value="filter"
+            v-model="models[filter.id]"
+            :id="filter.name"
+            @change="facetChange"
+          />
         </template>
         <p>
           <span class="mr-2 text-sm">{{ filter.name ?? '' }}</span>
@@ -118,10 +124,12 @@ function resetPriceFilter() {
 
 const updateFilter = () => {
   for (const filter of filters) {
-    models[filter.id.toString()] = Boolean(filter.selected) ?? false;
+    const filterId = typeof filter.id === 'string' ? filter.id : filter.id.toString();
 
-    if (currentFacets.value.includes(filter.id.toString())) {
-      models[filter.id.toString()] = true;
+    models[filterId] = Boolean(filter.selected) ?? false;
+
+    if (currentFacets.value.includes(filterId)) {
+      models[filterId] = true;
     }
   }
 };
