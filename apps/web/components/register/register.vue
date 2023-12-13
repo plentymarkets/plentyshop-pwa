@@ -68,11 +68,8 @@
 import { SfButton, SfLink, SfInput, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
+const router = useRouter();
 const { register, loading, setPrivacyPolicy, privacyPolicy } = useCustomer();
-
-definePageMeta({
-  layout: false,
-});
 
 const emits = defineEmits(['registered', 'change-view']);
 
@@ -89,7 +86,7 @@ const registerUser = async () => {
   await register({ email: email.value, password: password.value });
 
   emits('registered');
-  navigateTo(localePath(paths.home));
+  router.push(localePath({ path: paths.home }));
 };
 
 const changePrivacy = (value: boolean) => {
