@@ -45,8 +45,9 @@ jobs:
 
       - name: Unit tests
         run: |
-          touch apps/server/.env
-          echo API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com >> apps/server/.env
+          touch apps/web/.env
+          echo API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com >> apps/web/.env
+          echo CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
           pushd ${{ github.workspace }}/apps/server/
           yarn start &
           pushd ${{ github.workspace }}/apps/web/

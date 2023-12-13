@@ -1,5 +1,8 @@
 import dotenv from 'dotenv';
-dotenv.config();
+import * as path from "path";
+dotenv.config({
+  path: path.resolve(__dirname, '../web/.env'),
+});
 
 const config = {
   integrations: {
