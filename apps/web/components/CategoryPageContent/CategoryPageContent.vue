@@ -11,7 +11,7 @@
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
             <span class="font-bold font-headings md:text-lg">
-              {{ i18n.t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
+              {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
             </span>
             <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
               <template #prefix>
@@ -77,7 +77,7 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 });
 
 const { getFacetsFromURL } = useCategoryFilter();
-const i18n = useI18n();
+
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
