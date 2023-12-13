@@ -4,7 +4,7 @@
       <div class="text-lg text-center mt-2 font-medium">
         {{ $t('softLogin.titleLogin') }}
       </div>
-      <login :is-soft-login="true" @logged-in="$emit('submit', 'login')" />
+      <LoginComponent :is-soft-login="true" @logged-in="$emit('submit', 'login')" />
     </div>
 
     <div v-if="errorType === TYPE_POSTCODE" class="flex items-center justify-center flex-col">
