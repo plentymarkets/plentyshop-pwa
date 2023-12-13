@@ -87,7 +87,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
   turnstile: {
-    siteKey: '0x4AAAAAAANx3aXDh7UR35x0',
+    siteKey: process.env.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
