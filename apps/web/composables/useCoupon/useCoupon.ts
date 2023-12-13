@@ -32,13 +32,10 @@ export const useCoupon: UseCouponReturn = () => {
     state.value.loading = true;
     const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
-
     if (response.data.value.data) {
       await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
-    }
-
-    if (response.data.value.error) {
+    } else if (response.data.value.error) {
       const error = {
         status: 500,
         message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
@@ -46,7 +43,6 @@ export const useCoupon: UseCouponReturn = () => {
       };
       useHandleError(error);
     }
-
     return response.data.value.data;
   };
 
@@ -58,13 +54,10 @@ export const useCoupon: UseCouponReturn = () => {
 
     const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
-
     if (response.data.value.data) {
       await getCart();
       send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
-    }
-
-    if (response.data.value.error) {
+    } else if (response.data.value.error) {
       const error = {
         status: 500,
         message: $i18n.t(`error.errorActionIsNotExecuted`),
@@ -73,7 +66,6 @@ export const useCoupon: UseCouponReturn = () => {
 
       useHandleError(error);
     }
-
     return response.data.value.data;
   };
 
