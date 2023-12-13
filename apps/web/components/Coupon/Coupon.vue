@@ -43,7 +43,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else class="underline">
-            {{ $t('Remove') }}
+            {{ $t('coupon.remove') }}
             <SfIconDelete />
           </span>
         </SfButton>
