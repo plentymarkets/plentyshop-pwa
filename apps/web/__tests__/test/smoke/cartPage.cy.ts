@@ -1,9 +1,9 @@
 import { CartPageObject } from '../../support/pageObjects/CartPageObject';
 
-const cart: CartPageObject = new CartPageObject();
+const cart = new CartPageObject();
 
 describe('Smoke: Cart Page', () => {
-  it('[smoke] Add coupon to cart, check the totals, then remove coupon and check totals again', { retries: 3 }, () => {
+  it('[smoke] Add coupon to cart, check the totals, then remove coupon and check totals again', () => {
     cy.visitAndHydrate('/study-room-office/office-chair/design-chair-brookhaven-leather-black_105_1003');
 
     cy.wait(1000)

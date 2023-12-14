@@ -5,7 +5,9 @@ export type Address = {
   state: string;
   country: string;
   zipcode: string;
+  zipCode: string;
   phone: string;
+  phoneNumber: string;
 };
 
 type CardType =
