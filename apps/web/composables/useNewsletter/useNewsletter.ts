@@ -3,11 +3,11 @@ import { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composable
 import { useSdk } from '~/sdk';
 
 /**
- * @description Composable for managing products search.
- * @returns UseSearchReturn
+ * @description Composable for subscribing/unsubscribing to newsletter.
+ * @returns UseNewsletterReturn
  * @example
  * ``` ts
- * const { data, loading, productsPerPage, getSearch } = useSearch();
+ * const { loading, subscribe } = useNewsletter();
  * ```
  */
 export const useNewsletter: UseNewsletterReturn = () => {
@@ -16,13 +16,14 @@ export const useNewsletter: UseNewsletterReturn = () => {
   }));
 
   /**
-   * @description Function for searching products.
-   * @param params { ItemSearchParams }
-   * @return GetSearch
+   * @description Function for subscribing to newsletter.
+   * @param params { NewsletterParams }
+   * @return Promise<boolean>
    * @example
    * ``` ts
-   * getSearch({
-   *   term: ''
+   * subscribe({
+   *   email: 'test@test.de',
+   *   emailFolder: 1,
    * })
    * ```
    */
