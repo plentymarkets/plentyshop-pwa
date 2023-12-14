@@ -34,19 +34,20 @@
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
 import { SfCheckbox } from '@storefront-ui/vue';
-import { ref } from 'vue';
+import { ref, Ref } from 'vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 
-const checkedOrderProperties = ref([]);
+const checkedOrderProperties: Ref<number[]> = ref([]);
 
 const preCheckProperties = () => {
-  // const properties = Object.values(productOrderPropertyGroups)[0];
-  // checkedOrderProperties.value = properties
-  //   .filter((property) => productPropertyGetters.alreadyChecked(property.property))
-  //   .map((property) => property.property.id);
+  if (productOrderPropertyGroups[0]) {
+    checkedOrderProperties.value = productOrderPropertyGroups[0]
+      .filter((property) => productPropertyGetters.alreadyChecked(property.property))
+      .map((property) => property.property.id);
+  }
 };
 
 preCheckProperties();
