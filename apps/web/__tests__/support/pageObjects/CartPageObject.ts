@@ -66,21 +66,15 @@ export class CartPageObject {
   }
 
   addCoupon(couponCode: string) {
-    cy.getByTestId('couponCode').find('[data-testid="input-field"]').type(couponCode).getByTestId('couponAdd').click();
-
+    cy.getByTestId('couponCode').find('[data-testid="input-field"]').type(couponCode);
+    cy.getByTestId('couponAdd').click();
     return this;
   }
 
   orderSummayAfterCouponApplyed(discount: string, total: string) {
-    cy.getByTestId('coupon-label')
-      .should('be.visible')
-      .getByTestId('coupon-value')
-      .should('be.visible')
-      .and('contain', discount)
-      .getByTestId('total')
-      .should('be.visible')
-      .and('contain', total);
-
+    cy.getByTestId('coupon-label').should('be.visible');
+    cy.getByTestId('coupon-value').contains(discount);
+    cy.getByTestId('total').contains(total);
     return this;
   }
 
@@ -90,6 +84,7 @@ export class CartPageObject {
   }
 
   orderSummayAfterCouponRemoved(total: string) {
-    cy.getByTestId('coupon-label').should('not.exist').getByTestId('total').should('be.visible').and('contain', total);
+    cy.getByTestId('coupon-label').should('not.exist');
+    cy.getByTestId('total').contains(total);
   }
 }
