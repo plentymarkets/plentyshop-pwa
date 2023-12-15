@@ -110,8 +110,8 @@ const subscribeNewsletter = async () => {
       message: t('newsletter.success'),
     });
     emailValue.value = '';
-    // firstNameValue.value = '';
-    // lastNameValue.value = '';
+    firstNameValue.value = '';
+    lastNameValue.value = '';
   }
   turnstile.value = '';
   turnstileElement.value?.reset();
