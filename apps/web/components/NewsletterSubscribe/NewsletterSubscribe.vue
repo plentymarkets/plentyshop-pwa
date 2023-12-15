@@ -11,11 +11,11 @@
         <!-- <div class="w-full flex flex-col sm:flex-row gap-2">
           <SfInput
             v-model="firstNameValue"
-            type="email"
+            type="text"
             wrapper-class="grow"
-            :placeholder="$t('form.firstNameLabel')"
+            :placeholder="$t('newsletter.firstName')"
           />
-          <SfInput v-model="lastNameValue" type="email" wrapper-class="grow" :placeholder="$t('form.lastNameLabel')" />
+          <SfInput v-model="lastNameValue" type="text" wrapper-class="grow" :placeholder="$t('newsletter.lastName')" />
         </div> -->
         <div class="w-full flex flex-col sm:flex-row">
           <div class="w-full">
@@ -25,7 +25,7 @@
               autocomplete="email"
               required
               wrapper-class="grow"
-              :placeholder="$t('auth.resetPassword.email')"
+              :placeholder="$t('newsletter.email')"
             />
           </div>
         </div>

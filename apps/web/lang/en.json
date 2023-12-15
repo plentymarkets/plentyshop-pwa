@@ -545,7 +545,10 @@
     "subscribe": "Subscribe To Newsletter",
     "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
     "success": "Newsletter successfully subscribed",
-    "termsRequired": "You must accept the terms and conditions."
+    "termsRequired": "You must accept the terms and conditions.",
+    "firstName": "Firstname",
+    "lastName": "Lastname",
+    "email": "Email"
   },
   "coupon": {
     "name": "Coupon",

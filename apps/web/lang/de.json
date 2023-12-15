@@ -555,7 +555,10 @@
     "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
+    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail"
   },
   "error": {
     "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",
