@@ -30,9 +30,9 @@ Creating the application adds a new table entry. In the next part, you'll need t
 4. Click on **New repository secret**.
 5. Fill in the information according to the table below.
 
-| Name                 | Value               |
-| -------------------- | ------------------- |
-| `URL_ENDPOINT_TOKEN` | **Access key**      |
+| Name                 | Value          |
+| -------------------- | -------------- |
+| `URL_ENDPOINT_TOKEN` | **Access key** |
 
 ### System URL
 
