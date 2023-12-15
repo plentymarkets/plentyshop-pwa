@@ -51,7 +51,7 @@
             class="inline-block mr-2"
             data-testid="checkout-terms-checkbox"
           />
-          <div class="text-left">
+          <label for="terms-checkbox" class="text-left">
             <i18n-t keypath="newsletter.policy">
               <template #privacyPolicy>
                 <SfLink
@@ -63,7 +63,7 @@
                 </SfLink>
               </template>
             </i18n-t>
-          </div>
+          </label>
         </div>
         <div v-if="showErrors" class="text-negative-700 text-sm mt-2">{{ $t('newsletter.termsRequired') }}</div>
       </div>
