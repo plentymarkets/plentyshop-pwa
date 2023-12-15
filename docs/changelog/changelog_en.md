@@ -5,6 +5,7 @@
 ### New
 
 - You can now use `cookie-scripts.config.ts` to configure which scripts to load when a user accepts a consent cookie.
+- You can now use Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
 
 ### Fixed
 

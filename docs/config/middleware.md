@@ -10,7 +10,7 @@ This repository is set up to connect to a plentysystems demo system by default. 
 
 ## Setting the API endpoint
 
-Create a `.env` file in the `apps/server` directory with the following content:
+Create a `.env` file in the `apps/web` directory with the following content:
 
 ```
 API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
