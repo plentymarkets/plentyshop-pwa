@@ -51,7 +51,7 @@
             class="inline-block mr-2"
             data-testid="checkout-terms-checkbox"
           />
-          <label for="terms-checkbox" class="text-left">
+          <label for="terms-checkbox" class="text-left leading-4">
             <i18n-t keypath="newsletter.policy">
               <template #privacyPolicy>
                 <SfLink
