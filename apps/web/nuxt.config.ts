@@ -117,6 +117,7 @@ export default defineNuxtConfig({
       showNetPrices: true,
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
     },
   },
   pwa: {

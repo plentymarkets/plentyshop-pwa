@@ -8,7 +8,7 @@
         {{ $t('newsletter.info') }}
       </p>
       <form class="mb-4 flex flex-col gap-2 max-w-[550px] mx-auto items-center" @submit.prevent="subscribeNewsletter()">
-        <!-- <div class="w-full flex flex-col sm:flex-row gap-2">
+        <div class="w-full flex flex-col sm:flex-row gap-2" v-if="showNewsletterNameForms">
           <SfInput
             v-model="firstNameValue"
             type="text"
@@ -16,7 +16,7 @@
             :placeholder="$t('newsletter.firstName')"
           />
           <SfInput v-model="lastNameValue" type="text" wrapper-class="grow" :placeholder="$t('newsletter.lastName')" />
-        </div> -->
+        </div>
         <div class="w-full flex flex-col sm:flex-row">
           <div class="w-full">
             <SfInput
@@ -82,9 +82,10 @@ const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 const emailValue = ref('');
-// const firstNameValue = ref('');
-// const lastNameValue = ref('');
+const firstNameValue = ref('');
+const lastNameValue = ref('');
 
+const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstile = ref('');
 const turnstileElement = ref();
@@ -100,8 +101,8 @@ const subscribeNewsletter = async () => {
       email: emailValue.value,
       'cf-turnstile-response': turnstile.value,
       emailFolder: 1,
-      // firstName: firstNameValue.value,
-      // lastName: lastNameValue.value,
+      firstName: firstNameValue.value,
+      lastName: lastNameValue.value,
     })
   ) {
     send({
