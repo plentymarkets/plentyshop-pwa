@@ -9,17 +9,17 @@ describe('Smoke: Cart Page', () => {
     cy.wait(1000)
       .intercept('/plentysystems/doAddCartItem')
       .as('doAddCartItem')
-      .wait(1000)
       .getByTestId('add-to-cart')
       .click()
       .wait('@doAddCartItem');
 
     cart
       .openCart()
+      .hasOrderSummary()
       .openCouponAccordion()
       .addCoupon('KB82AZ')
-      .orderSummayAfterCouponApplyed()
+      .orderSummaryAfterCouponApplyed()
       .removeCoupon()
-      .orderSummayAfterCouponRemoved();
+      .orderSummaryAfterCouponRemoved();
   });
 });
