@@ -77,18 +77,18 @@ export class CartPageObject {
   }
 
   hasOrderSummary() {
-    cy.getByTestId('subtotal-label').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('subtotal').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('shipping-label').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('shipping').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('vat-label').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('vat').invoke('text').should('have.length.gt', 0);
-    cy.getByTestId('total-label').invoke('text').should('have.length.gt', 0);
+    cy.getByTestId('subtotal-label').should('be.visible');
+    cy.getByTestId('subtotal').should('be.visible');
+    cy.getByTestId('shipping-label').should('be.visible');
+    cy.getByTestId('shipping').should('be.visible');
+    cy.getByTestId('vat-label').should('be.visible');
+    cy.getByTestId('vat').should('be.visible');
+    cy.getByTestId('total-label').should('be.visible');
     cy.getByTestId('total').invoke('text').should('have.length.gt', 0);
     return this;
   }
 
-  orderSummaryAfterCouponApplyed() {
+  orderSummaryAfterCouponApplied() {
     this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('be.visible');
     cy.getByTestId('coupon-value').should('be.visible');
