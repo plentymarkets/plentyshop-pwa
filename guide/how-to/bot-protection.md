@@ -45,12 +45,14 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 
 ### plentyShop PWA
 
-If not already existing, create a `.env` file in the `apps/web/` folder of your plentyShop PWA project.
-Paste the sitekey in the PWA `.env` file:
+Paste the sitekey in the PWA's `apps/web/.env` file:
 
 ```
 CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0"
+NEWSLETTER_FORM_SHOW_NAMES=1
 ```
+
+`NEWSLETTER_FORM_SHOW_NAMES=1` is optional. If set, the newsletter signup form displays input fields for first and last name.
 
 ## Disabling Cloudflare Turnstile
 
@@ -67,11 +69,7 @@ This disables the CAPTCHA validation.
 
 ### plentyShop PWA
 
-Remove the sitekey from the PWA `.env` file in the `apps/web/` folder. This removes the widget in the PWA:
-
-```
-CLOUDFLARE_TURNSTILE_SITE_KEY=""
-```
+Remove the sitekey from the PWA's `apps/web/.env` file. This removes the widget in the PWA.
 
 ## CAPTCHA protected features
 
