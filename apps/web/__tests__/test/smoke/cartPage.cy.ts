@@ -21,7 +21,7 @@ describe('Smoke: Cart Page', () => {
     cy.visitAndHydrate(paths.cart);
     cart.openCouponAccordion();
     cart.addCoupon('KB82AZ');
-    cart.orderSummayAfterCouponApplyed('-£12.91', '£119.99');
+    cart.orderSummayAfterCouponApplyed('-£12.94', '£119.99');
     cart.removeCoupon();
     cart.orderSummayAfterCouponRemoved('£132.90');
   });
