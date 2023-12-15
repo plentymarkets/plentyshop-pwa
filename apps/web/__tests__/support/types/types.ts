@@ -4,8 +4,8 @@ export type Address = {
   city: string;
   state: string;
   country: string;
-  zipcode: string;
-  phone: string;
+  zipCode: string;
+  phoneNumber: string;
 };
 
 type CardType =

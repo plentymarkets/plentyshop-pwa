@@ -14,7 +14,7 @@
       </template>
       <div class="flex mb-2">
         <div class="flex-grow mr-2" data-testid="couponCode">
-          <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" required />
+          <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
         </div>
         <SfButton
           data-testid="couponAdd"
@@ -43,7 +43,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else class="underline">
-            {{ $t('Remove') }}
+            {{ $t('coupon.remove') }}
             <SfIconDelete />
           </span>
         </SfButton>

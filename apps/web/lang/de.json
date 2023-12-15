@@ -552,6 +552,7 @@
     "title": "Haben sie einen Gutscheincode?",
     "enterCode": "Gutschein-Code eingeben",
     "apply": "Einlösen",
+    "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
     "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
