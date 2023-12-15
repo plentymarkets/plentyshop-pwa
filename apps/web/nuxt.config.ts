@@ -87,7 +87,7 @@ export default defineNuxtConfig({
     compressPublicAssets: true,
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '0x00',
+    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
@@ -116,6 +116,7 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       showNetPrices: true,
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
     },
   },
   pwa: {

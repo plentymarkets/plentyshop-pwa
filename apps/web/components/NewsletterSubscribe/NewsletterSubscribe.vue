@@ -33,7 +33,13 @@
           <SfLoaderCircular v-if="loading" />
           <span v-else>{{ $t('newsletter.subscribe') }}</span>
         </SfButton>
-        <NuxtTurnstile v-model="turnstile" ref="turnstileElement" :options="{ theme: 'light' }" class="mt-4" />
+        <NuxtTurnstile
+          v-if="$config?.turnstileSiteKey"
+          v-model="turnstile"
+          ref="turnstileElement"
+          :options="{ theme: 'light' }"
+          class="mt-4"
+        />
       </form>
       <div class="text-base text-neutral-900 peer-disabled:text-disabled-900">
         <div class="flex justify-center items-center">
