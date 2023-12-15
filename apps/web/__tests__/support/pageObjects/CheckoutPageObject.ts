@@ -28,11 +28,11 @@ export class CheckoutPageObject {
   }
 
   get placeOrderButtons() {
-    return cy.getByTestId('place-order-button')
+    return cy.getByTestId('place-order-button');
   }
 
   get displaySuccessPages() {
-    return cy.getByTestId('order-success-page', { timeout: 60000 });
+    return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
   }
 
   get inputField() {
@@ -126,12 +126,12 @@ export class CheckoutPageObject {
   }
 
   displayFullyPaid() {
-    this.orderPaymentStatus.contains('fullyPaid')
+    this.orderPaymentStatus.contains('fullyPaid');
     return this;
   }
-  
+
   fillContactInformationForm() {
-    cy.getFixture('addressForm').then((fixture) => {
+    cy.getFixture('addressForm').then(() => {
       const uniqueEmail = `test-order-${new Date().getTime()}@plentymarkets.com`;
       this.contactInformationForm.type(uniqueEmail);
       this.contactInformationFormSaveButton.click().should('not.exist');
@@ -148,19 +148,13 @@ export class CheckoutPageObject {
   fillBillingAddressForm() {
     return this.fillAddressForm();
   }
-  
+
   fillCreditCardForm() {
-    cy.iframe('#braintree-hosted-field-number')
-      .find('#credit-card-number')
-      .type('4868719460707704');
+    cy.iframe('#braintree-hosted-field-number').find('#credit-card-number').type('4868719460707704');
 
-    cy.iframe('#braintree-hosted-field-expirationDate')
-      .find('.expirationDate')
-      .type('12/27');
+    cy.iframe('#braintree-hosted-field-expirationDate').find('.expirationDate').type('12/27');
 
-    cy.iframe('#braintree-hosted-field-cvv')
-      .find('.cvv')
-      .type('123');
+    cy.iframe('#braintree-hosted-field-cvv').find('.cvv').type('123');
 
     cy.get('#credit-card-name').focus().type('John Doe');
     return this;
@@ -170,12 +164,11 @@ export class CheckoutPageObject {
     cy.getByTestId('pay-creditcard-button').click();
     return this;
   }
-  
+
   checkCreditCard() {
-    cy.getByTestId('payment-method-6008').check({ force : true })
+    cy.getByTestId('payment-method-6008').check({ force: true });
     return this;
   }
-
 
   fillShippingAddressForm() {
     return this.fillAddressForm();
@@ -198,7 +191,7 @@ export class CheckoutPageObject {
     this.cityInput.type(fixture.city);
     // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
-    this.modalSaveButton.click({force: true});
+    this.modalSaveButton.click({ force: true });
     return this;
   }
 }

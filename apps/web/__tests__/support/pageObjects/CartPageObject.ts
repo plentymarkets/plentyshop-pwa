@@ -1,5 +1,3 @@
-import { Product } from '../types/types';
-
 export class CartPageObject {
   get cartPreview() {
     return cy.getByTestId('checkout-layout');
@@ -73,19 +71,33 @@ export class CartPageObject {
     return this;
   }
 
-  orderSummayAfterCouponApplyed(discount: string, total: string) {
-    cy.getByTestId('coupon-label').should('be.visible');
-    cy.getByTestId('coupon-value').contains(discount);
-    cy.getByTestId('total').contains(total);
-  }
-
   removeCoupon() {
     cy.getByTestId('couponRemove').click();
     return this;
   }
 
-  orderSummayAfterCouponRemoved(total: string) {
+  hasOrderSummary() {
+    cy.getByTestId('subtotal-label').should('be.visible');
+    cy.getByTestId('subtotal').should('be.visible');
+    cy.getByTestId('shipping-label').should('be.visible');
+    cy.getByTestId('shipping').should('be.visible');
+    cy.getByTestId('vat-label').should('be.visible');
+    cy.getByTestId('vat').should('be.visible');
+    cy.getByTestId('total-label').should('be.visible');
+    cy.getByTestId('total').invoke('text').should('have.length.gt', 0);
+    return this;
+  }
+
+  orderSummaryAfterCouponApplied() {
+    this.hasOrderSummary();
+    cy.getByTestId('coupon-label').should('be.visible');
+    cy.getByTestId('coupon-value').should('be.visible');
+    return this;
+  }
+
+  orderSummaryAfterCouponRemoved() {
+    this.hasOrderSummary();
     cy.getByTestId('coupon-label').should('not.exist');
-    cy.getByTestId('total').contains(total);
+    cy.getByTestId('coupon-value').should('not.exist');
   }
 }

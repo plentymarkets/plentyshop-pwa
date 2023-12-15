@@ -544,6 +544,7 @@
     "title": "Have a coupon code?",
     "enterCode": "Enter code",
     "apply": "Apply",
+    "remove": "Remove",
     "couponApplied": "The coupon has been added successfully",
     "couponRemoved": "The coupon has been removed successfully.",
     "couponInvalid": "The coupon has already been used or is invalid."
