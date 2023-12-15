@@ -545,7 +545,10 @@
     "subscribe": "Newsletter abonnieren",
     "info": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!",
     "success": "Newsletter erfolgreich abonniert",
-    "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen"
+    "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail"
   },
   "coupon": {
     "name": "Gutschein",
@@ -555,10 +558,7 @@
     "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig.",
-    "firstName": "Vorname",
-    "lastName": "Nachname",
-    "email": "E-Mail"
+    "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
   },
   "error": {
     "errorActionIsNotExecuted": "Die Aktion konnte nicht ausgeführt werden.",
