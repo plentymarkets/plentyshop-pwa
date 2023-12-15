@@ -34,7 +34,7 @@
           <span v-else>{{ $t('newsletter.subscribe') }}</span>
         </SfButton>
         <NuxtTurnstile
-          v-if="$config?.turnstileSiteKey"
+          v-if="turnstileSiteKey"
           v-model="turnstile"
           ref="turnstileElement"
           :options="{ theme: 'light' }"
@@ -76,6 +76,7 @@ import { ref } from 'vue';
 import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { checkboxValue, setCheckboxValue, showErrors } = useAgreementCheckbox('newsletterSubscribeTerms');
+const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
@@ -84,6 +85,7 @@ const emailValue = ref('');
 // const firstNameValue = ref('');
 // const lastNameValue = ref('');
 
+const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstile = ref('');
 const turnstileElement = ref();
 
