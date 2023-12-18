@@ -1,24 +1,25 @@
 <template>
-  <div v-for="(propertiesGroup, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
-    <div v-for="(groupProperty, propIndex) in propertiesGroup" :key="`group-prop-${propIndex}`">
-      <template v-if="propIndex === 0">
-        <div class="font-semibold">
-          {{ groupProperty?.group?.names.name }}
-        </div>
+  <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
+    <div class="font-semibold">
+      {{ group.name }}
+    </div>
 
-        <div v-if="groupProperty?.group?.names.description" class="font-normal typography-text-sm">
-          {{ groupProperty?.group?.names.description }}
-        </div>
-      </template>
-      <div v-if="!productPropertyGetters.isHidden(groupProperty.property)" class="mt-4 flex items-center">
+    <div v-if="group.description" class="font-normal typography-text-sm">
+      {{ group.description }}
+    </div>
+
+    <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
+      <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
         <SfCheckbox
-          v-if="productPropertyGetters.isCheckBox(groupProperty.property)"
-          v-model="checkedOrderProperties"
-          :value="groupProperty.property.id"
-          :id="`prop-${groupProperty.property.id}`"
+          v-if="productPropertyGetters.isCheckBox(productProperty.property)"
+          :value="productPropertyGetters.getOrderPropertyId(productProperty.property)"
+          :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
         />
-        <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="`prop-${groupProperty.property.id}`">
-          {{ groupProperty.property.names.name }}
+        <label
+          class="ml-2 cursor-pointer peer-disabled:text-disabled-900"
+          :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
+        >
+          {{ productPropertyGetters.getOrderPropertyName(productProperty.property) }}
         </label>
       </div>
     </div>
@@ -29,22 +30,21 @@
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
 import { SfCheckbox } from '@storefront-ui/vue';
-import { ref, Ref } from 'vue';
+// import { ref, Ref } from 'vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 
-const checkedOrderProperties: Ref<number[]> = ref([]);
+// const checkedOrderProperties: Ref<number[]> = ref([]);
 
-const preCheckProperties = () => {
-  if (Object.values(productOrderPropertyGroups)[0]) {
-    checkedOrderProperties.value = Object.values(productOrderPropertyGroups)[0]
-      .filter((property) => productPropertyGetters.isChecked(property.property))
-      .map((property) => property.property.id);
-  }
-};
+// const preCheckProperties = () => {
+//   if (Object.values(productOrderPropertyGroups)[0]) {
+//     checkedOrderProperties.value = Object.values(productOrderPropertyGroups)[0]
+//       .filter((property) => productPropertyGetters.isChecked(property.property))
+//       .map((property) => property.property.id);
+//   }
+// };
 
-preCheckProperties();
 // preCheckProperties();
 </script>
