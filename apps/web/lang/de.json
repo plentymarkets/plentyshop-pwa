@@ -158,7 +158,7 @@
   "back": "Zurück",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
-  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
+  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und unsere {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
