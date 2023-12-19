@@ -25,6 +25,8 @@
       </span>
       {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
     </label>
+
+    <slot />
   </div>
 </template>
 
