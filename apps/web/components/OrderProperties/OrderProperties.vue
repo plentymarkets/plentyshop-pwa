@@ -10,33 +10,10 @@
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
       <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
-        <SfCheckbox
+        <OrderPropertyCheckbox
           v-if="productPropertyGetters.isCheckBox(productProperty.property)"
-          v-model="checkedOrderProperties"
-          :value="productPropertyGetters.getOrderPropertyId(productProperty.property)"
-          :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
-          class="mr-2"
+          :product-property="productProperty.property"
         />
-        <label
-          class="cursor-pointer peer-disabled:text-disabled-900"
-          :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
-        >
-          {{ productPropertyGetters.getOrderPropertyName(productProperty.property) }}
-          <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty.property).surchargeType">
-            ({{ productPropertyGetters.getOrderPropertyLabel(productProperty.property).surchargeType }}
-            {{ $n(productProperty.property.surcharge, 'currency') }})
-          </span>
-          {{ productPropertyGetters.getOrderPropertyLabel(productProperty.property).surchargeIndicator }}
-          <span
-            v-if="
-              productPropertyGetters.getOrderPropertyLabel(productProperty.property).surchargeIndicator &&
-              productPropertyGetters.getOrderPropertyLabel(productProperty.property).requiredIndicator
-            "
-          >
-            ,
-          </span>
-          {{ productPropertyGetters.getOrderPropertyLabel(productProperty.property).requiredIndicator }}
-        </label>
       </div>
     </div>
   </div>
@@ -45,21 +22,7 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
-import { SfCheckbox } from '@storefront-ui/vue';
-import { ref, Ref } from 'vue';
-
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-
-const checkedOrderProperties: Ref<number[]> = ref([]);
-
-const preCheckProperties = () => {
-  checkedOrderProperties.value = Object.values(productOrderPropertyGroups)
-    .flatMap((x) => x.orderProperties)
-    .filter((property) => productPropertyGetters.isPreselected(property.property))
-    .map((property) => property.property.id);
-};
-
-preCheckProperties();
 </script>
