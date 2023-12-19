@@ -55,7 +55,9 @@ const checkedOrderProperties: Ref<number[]> = ref([]);
 
 const preCheckProperties = () => {
   if (Object.values(productOrderPropertyGroups)[0]) {
-    checkedOrderProperties.value = Object.values(productOrderPropertyGroups)[0].orderProperties.filter((property) => productPropertyGetters.isChecked(property.property)).map((property) => property.property.id);
+    checkedOrderProperties.value = Object.values(productOrderPropertyGroups)[0]
+      .orderProperties.filter((property) => productPropertyGetters.isChecked(property.property))
+      .map((property) => property.property.id);
   }
 };
 
