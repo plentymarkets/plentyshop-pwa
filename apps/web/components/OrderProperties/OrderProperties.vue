@@ -1,21 +1,19 @@
 <template>
-  <div v-for="(propertiesGroup, groupIndex) in orderPropertiesGroups" :key="`group-${groupIndex}`">
-    <div v-for="(groupProperty, propIndex) in propertiesGroup" :key="`group-prop-${propIndex}`">
-      <template v-if="propIndex === 0">
-        <div class="font-semibold">
-          {{ groupProperty?.group?.names.name }}
-        </div>
+  <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
+    <div class="font-semibold">
+      {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
+    </div>
 
-        <div v-if="groupProperty?.group?.names.description" class="font-normal typography-text-sm">
-          {{ groupProperty?.group?.names.description }}
-        </div>
-      </template>
+    <div class="font-normal typography-text-sm">
+      {{ productPropertyGetters.getOrderPropertyGroupDescription(group) }}
+    </div>
 
-      <div class="mt-4 flex items-center">
-        <SfCheckbox :id="`prop-${groupProperty.property.id}`" />
-        <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="`prop-${groupProperty.property.id}`">
-          {{ groupProperty.property.names.name }}
-        </label>
+    <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
+      <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
+        <OrderPropertyCheckbox
+          v-if="productPropertyGetters.isCheckBox(productProperty.property)"
+          :product-property="productProperty.property"
+        />
       </div>
     </div>
   </div>
@@ -24,9 +22,7 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
-import { SfCheckbox } from '@storefront-ui/vue';
-
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
-const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
+const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 </script>
