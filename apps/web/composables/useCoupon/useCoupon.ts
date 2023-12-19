@@ -33,7 +33,7 @@ export const useCoupon: UseCouponReturn = () => {
     const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
     if (response.data.value.data) {
-      getCart();
+      await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
     } else if (response.data.value.error) {
       const error = {
@@ -55,7 +55,7 @@ export const useCoupon: UseCouponReturn = () => {
     const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
     if (response.data.value.data) {
-      getCart();
+      await getCart();
       send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
     } else if (response.data.value.error) {
       const error = {

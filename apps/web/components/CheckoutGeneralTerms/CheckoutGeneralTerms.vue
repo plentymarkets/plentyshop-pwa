@@ -9,7 +9,6 @@
         class="inline-block mr-2"
         data-testid="checkout-terms-checkbox"
       />
-
       <div>
         <i18n-t keypath="termsInfo">
           <template #terms>

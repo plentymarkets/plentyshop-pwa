@@ -5,6 +5,7 @@
 ### New
 
 - Ab jetzt kannst du in der Datei `cookie-scripts.config.ts` konfigurieren, welche Skripte nach Akzeptieren eines bestimmten Cookies geladen werden.
+- Ab jetzt kannst du Formulare mit Cloudflare Turnstile gegen Bots schützen. Informationen zur Konfiguration findest du [in der Dokumentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
 
 ### Fixed
 

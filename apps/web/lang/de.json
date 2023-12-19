@@ -158,7 +158,7 @@
   "back": "Zurück",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
-  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
+  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und unsere {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",
@@ -539,11 +539,23 @@
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
   },
+  "newsletter": {
+    "heading": "Abonnieren Sie unseren Newsletter",
+    "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
+    "subscribe": "Newsletter abonnieren",
+    "info": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!",
+    "success": "Newsletter erfolgreich abonniert",
+    "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail"
+  },
   "coupon": {
     "name": "Gutschein",
     "title": "Haben sie einen Gutscheincode?",
     "enterCode": "Gutschein-Code eingeben",
     "apply": "Einlösen",
+    "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
     "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."

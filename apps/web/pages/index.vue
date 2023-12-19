@@ -96,6 +96,9 @@
         </div>
       </div>
     </div>
+    <NuxtLazyHydrate when-visible>
+      <NewsletterSubscribe class="mt-5" />
+    </NuxtLazyHydrate>
     <section class="mx-4 mt-28 mb-20 overflow-hidden">
       <NuxtLazyHydrate when-visible>
         <p data-testid="recommended-products" v-if="recommendedProducts" class="my-4 typography-text-lg">

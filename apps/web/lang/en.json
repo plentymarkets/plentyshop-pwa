@@ -539,11 +539,23 @@
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
   },
+  "newsletter": {
+    "heading": "Subscribe to our Newsletter",
+    "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
+    "subscribe": "Subscribe To Newsletter",
+    "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
+    "success": "Newsletter successfully subscribed",
+    "termsRequired": "You must accept the terms and conditions.",
+    "firstName": "Firstname",
+    "lastName": "Lastname",
+    "email": "Email"
+  },
   "coupon": {
     "name": "Coupon",
     "title": "Have a coupon code?",
     "enterCode": "Enter code",
     "apply": "Apply",
+    "remove": "Remove",
     "couponApplied": "The coupon has been added successfully",
     "couponRemoved": "The coupon has been removed successfully.",
     "couponInvalid": "The coupon has already been used or is invalid."
