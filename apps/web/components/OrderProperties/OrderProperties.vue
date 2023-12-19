@@ -15,9 +15,10 @@
           v-model="checkedOrderProperties"
           :value="productPropertyGetters.getOrderPropertyId(productProperty.property)"
           :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
+          class="mr-2"
         />
         <label
-          class="ml-2 cursor-pointer peer-disabled:text-disabled-900"
+          class="cursor-pointer peer-disabled:text-disabled-900"
           :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
         >
           {{ productPropertyGetters.getOrderPropertyName(productProperty.property) }}
