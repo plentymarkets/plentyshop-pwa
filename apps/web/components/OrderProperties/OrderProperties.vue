@@ -1,11 +1,11 @@
 <template>
   <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
     <div class="font-semibold">
-      {{ productPropertyGetters.getGroupName(group) }}
+      {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
 
     <div class="font-normal typography-text-sm">
-      {{ productPropertyGetters.getGroupDescription(group) }}
+      {{ productPropertyGetters.getOrderPropertyGroupDescription(group) }}
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
@@ -56,7 +56,7 @@ const checkedOrderProperties: Ref<number[]> = ref([]);
 const preCheckProperties = () => {
   checkedOrderProperties.value = Object.values(productOrderPropertyGroups)
     .flatMap((x) => x.orderProperties)
-    .filter((property) => productPropertyGetters.isChecked(property.property))
+    .filter((property) => productPropertyGetters.isPreselected(property.property))
     .map((property) => property.property.id);
 };
 
