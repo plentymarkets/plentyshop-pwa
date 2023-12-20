@@ -6,7 +6,11 @@
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
       {{ productGetters.getName(product) }}
     </h1>
-    <Price :price="currentActualPrice" :old-price="productGetters.getPrice(product).regular ?? 0" />
+    <Price
+      :price="currentActualPrice"
+      :normal-price="normalPrice"
+      :old-price="productGetters.getPrice(product).regular ?? 0"
+    />
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
@@ -101,16 +105,22 @@ const { product } = toRefs(props);
 
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
+const { getPropertiesPrice } = useProductOrderProperties();
 const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
 const currentActualPrice = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
-    productGetters.getPrice(product.value)?.special ??
-    productGetters.getPrice(product.value)?.regular ??
-    0,
+    (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+      productGetters.getPrice(product.value)?.special ??
+      productGetters.getPrice(product.value)?.regular ??
+      0) + getPropertiesPrice(product.value),
 );
+const normalPrice =
+  productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+  productGetters.getPrice(product.value)?.special ??
+  productGetters.getPrice(product.value)?.regular ??
+  0;
 const basePriceSingleValue = computed(
   () =>
     productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
@@ -118,12 +128,16 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
-  await addToCart({
+  const { getPropertiesForCart } = useProductOrderProperties();
+  const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
-  });
+    basketItemOrderParams: getPropertiesForCart(),
+  };
 
-  send({ message: t('addedToCart'), type: 'positive' });
+  if (await addToCart(params)) {
+    send({ message: t('addedToCart'), type: 'positive' });
+  }
 };
 
 const changeQuantity = (quantity: string) => {

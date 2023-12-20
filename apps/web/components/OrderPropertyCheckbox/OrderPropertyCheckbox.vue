@@ -1,18 +1,18 @@
 <template>
   <div>
     <SfCheckbox
-      :value="productPropertyGetters.getOrderPropertyId(productProperty)"
-      :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+      :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
+      v-model="value"
       class="mr-2"
     />
     <label
       class="cursor-pointer peer-disabled:text-disabled-900"
-      :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+      :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
     >
-      {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
+      {{ productPropertyGetters.getOrderPropertyName(productProperty.property) }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
-        ({{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType }}
-        {{ $n(productProperty.surcharge, 'currency') }})
+        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
+        {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
       </span>
       {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
       <span
@@ -30,9 +30,26 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyChecboxProps } from '~/components/OrderPropertyCheckbox/types';
+import { OrderPropertyCheckboxProps } from '~/components/OrderPropertyCheckbox/types';
 import { SfCheckbox } from '@storefront-ui/vue';
 
-const props = defineProps<OrderPropertyChecboxProps>();
+const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
+const { getPropertyById } = useProductOrderProperties();
+
+const property = getPropertyById(productProperty.property.id);
+const value = ref<boolean>(productProperty.property.isPreSelected);
+
+if (property?.property) {
+  property.property.value = productProperty.property.isPreSelected ? 'true' : null;
+}
+
+watch(
+  () => value.value,
+  (updatedValue) => {
+    if (property) {
+      property.property.value = updatedValue ? 'true' : null;
+    }
+  },
+);
 </script>

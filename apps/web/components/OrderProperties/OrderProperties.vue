@@ -12,7 +12,7 @@
       <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
         <OrderPropertyCheckbox
           v-if="productPropertyGetters.isCheckBox(productProperty.property)"
-          :product-property="productProperty.property"
+          :product-property="productProperty"
         />
       </div>
     </div>
@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
+
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
