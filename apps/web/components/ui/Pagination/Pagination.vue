@@ -3,7 +3,7 @@
     <nav
       class="flex justify-between items-end border-t border-neutral-200"
       role="navigation"
-      aria-label="pagination"
+      :aria-label="t('pagination')"
       data-testid="pagination"
     >
       <SfButton
@@ -37,6 +37,7 @@
                 },
               ]"
               :aria-current="pagination.selectedPage === 1 || disabled"
+              :aria-label="getAriaLabel(pagination.selectedPage === 1 || disabled, 1)"
               @click="setPage(1)"
             >
               1
@@ -62,6 +63,7 @@
                 },
               ]"
               :aria-current="pagination.endPage - 1 === pagination.selectedPage"
+              :aria-label="getAriaLabel(pagination.endPage - 1 === pagination.selectedPage, pagination.endPage - 1)"
               @click="setPage(pagination.endPage - 1)"
               :disabled="disabled"
             >
@@ -89,8 +91,8 @@
                     pagination.selectedPage === page,
                 },
               ]"
-              :aria-label="$t('currentPage', { page, totalPages: pagination.totalPages })"
               :aria-current="pagination.selectedPage === page"
+              :aria-label="getAriaLabel(pagination.selectedPage === page, page)"
               :disabled="disabled"
               @click="setPage(page)"
             >
@@ -109,7 +111,7 @@
                     !disabled,
                 },
               ]"
-              :aria-label="$t('secondPageAriaLabel')"
+              :aria-label="t('goToPage', { page: 2 })"
               @click="setPage(2)"
               :disabled="disabled"
             >
@@ -141,6 +143,7 @@
                 },
               ]"
               :aria-current="pagination.totalPages === pagination.selectedPage"
+              :aria-label="getAriaLabel(pagination.totalPages === pagination.selectedPage, pagination.selectedPage)"
               @click="setPage(pagination.totalPages)"
               :disabled="disabled"
             >
@@ -171,6 +174,7 @@ import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '
 import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<PaginationProps>(), {
   disabled: false,
@@ -189,18 +193,20 @@ const pagination = computed(() =>
   ),
 );
 
+const getAriaLabel = (isCurrent: boolean, page: number) => {
+  return t(isCurrent ? 'currentPage' : 'goToPage', { page });
+};
+
 const setPage = (page: number) => {
   updatePage(page.toString());
   pagination.value.setPage(page);
 };
 
 const previousPage = () => {
-  pagination.value.prev;
   setPage(pagination.value.selectedPage - 1);
 };
 
 const nextPage = () => {
-  pagination.value.next;
   setPage(pagination.value.selectedPage + 1);
 };
 
