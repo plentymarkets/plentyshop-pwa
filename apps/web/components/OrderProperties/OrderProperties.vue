@@ -14,6 +14,10 @@
           v-if="productPropertyGetters.isCheckBox(productProperty.property)"
           :product-property="productProperty.property"
         />
+        <OrderPropertyInput
+          v-if="productPropertyGetters.isOrderPropertyInput(productProperty.property)"
+          :product-property="productProperty.property"
+        />
       </div>
     </div>
   </div>

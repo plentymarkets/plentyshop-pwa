@@ -1,5 +1,5 @@
 import type { ProductPropertyDetails } from '@plentymarkets/shop-api';
 
-export type OrderPropertyCheckboxProps = {
+export type OrderPropertyInputProps = {
   productProperty: ProductPropertyDetails;
 };
