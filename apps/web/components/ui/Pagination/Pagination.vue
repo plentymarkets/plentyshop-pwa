@@ -3,7 +3,7 @@
     <nav
       class="flex justify-between items-end border-t border-neutral-200"
       role="navigation"
-      :aria-label="$t('pagination')"
+      :aria-label="t('pagination')"
       data-testid="pagination"
     >
       <SfButton
@@ -111,7 +111,7 @@
                     !disabled,
                 },
               ]"
-              :aria-label="$t('goToPage', { page: 2 })"
+              :aria-label="t('goToPage', { page: 2 })"
               @click="setPage(2)"
               :disabled="disabled"
             >
@@ -203,12 +203,10 @@ const setPage = (page: number) => {
 };
 
 const previousPage = () => {
-  pagination.value.prev;
   setPage(pagination.value.selectedPage - 1);
 };
 
 const nextPage = () => {
-  pagination.value.next;
   setPage(pagination.value.selectedPage + 1);
 };
 
