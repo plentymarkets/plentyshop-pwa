@@ -10,10 +10,25 @@
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
       <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
-        <Component
-          :product-property="productProperty.property"
-          :is="componentsMapper[productProperty.property.valueType]"
-        />
+        <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
+        <ClientOnly>
+          <Component
+            :class="[productPropertyGetters.hasOrderPropertiesGroupTooltips(group) ? '' : '']"
+            :product-property="productProperty.property"
+            :is="componentsMapper[productProperty.property.valueType]"
+          >
+            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty.property)">
+              <SfTooltip
+                :label="productPropertyGetters.getOrderPropertyDescription(productProperty.property)"
+                :placement="'bottom'"
+                :show-arrow="true"
+                class="ml-2"
+              >
+                <SfIconInfo :size="'sm'" />
+              </SfTooltip>
+            </template>
+          </Component>
+        </ClientOnly>
       </div>
     </div>
   </div>
@@ -24,6 +39,7 @@ import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from '~/components/OrderProperties/types';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
 import { ComponentsMapper } from './types';
+import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
