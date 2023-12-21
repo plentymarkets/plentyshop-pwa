@@ -1,13 +1,19 @@
 <template>
-  <div>
-    <label>
-      <span class="text-sm font-medium">
-        {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-      </span>
-      <SfInput :id="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`"></SfInput>
+  <div class="flex flex-col">
+    <label :for="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+      <UiFormLabel>{{ productPropertyGetters.getOrderPropertyName(productProperty) }}</UiFormLabel>
     </label>
 
-    <slot />
+    <div class="flex items-center">
+      <SfInput
+        :id="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+        :wrapper-class="'w-full'"
+      />
+
+      <div v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,4 +24,5 @@ import { OrderPropertyInputProps } from '~/components/OrderPropertyInput/types';
 
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
+const hasTooltip = props.hasTooltip;
 </script>

@@ -9,16 +9,16 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-4 flex items-center">
+      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-4 w-full">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component
             v-if="productPropertyGetters.hasResolvedOrderPropertyComponent(productProperty)"
-            :class="[hasOrderPropertiesTooltips ? '' : '']"
+            :has-tooltip="hasOrderPropertiesTooltips"
             :product-property="productProperty"
             :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
           >
-            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)">
+            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
               <SfTooltip
                 :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
                 :placement="'bottom'"

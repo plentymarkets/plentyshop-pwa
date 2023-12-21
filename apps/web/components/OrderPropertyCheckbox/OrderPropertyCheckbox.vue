@@ -1,32 +1,39 @@
 <template>
-  <div>
+  <div class="flex items-center">
     <SfCheckbox
       :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
       v-model="value"
       class="mr-2"
     />
-    <label
-      class="cursor-pointer peer-disabled:text-disabled-900"
-      :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
-    >
-      {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-      <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
-        ({{ t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
-        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
-      <span
-        v-if="
-          productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
-          productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
-        "
-      >
-        ,
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
-    </label>
 
-    <slot />
+    <div class="flex items-center">
+      <label
+        class="cursor-pointer peer-disabled:text-disabled-900"
+        :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+      >
+        {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
+        <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
+          ({{
+            t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType)
+          }}
+          {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+        </span>
+        {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
+        <span
+          v-if="
+            productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
+            productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
+          "
+        >
+          ,
+        </span>
+        {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
+      </label>
+
+      <div v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -38,6 +45,7 @@ const { t, n } = useI18n();
 
 const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
+const hasTooltip = props.hasTooltip;
 const { getPropertyById } = useProductOrderProperties();
 
 const property = getPropertyById(productProperty.property.id);
