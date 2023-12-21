@@ -614,5 +614,11 @@
     "accessKeyMailSent": "E-Mail wurde versandt.",
     "accessKeyMailFailed": "Die E-Mail konnte nicht versendet werden, bitte kontaktieren Sie den Shopbetreiber.",
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
+  },
+  "orderProperties": {
+    "vat": {
+      "incl": "inkl.",
+      "plus": "zzgl."
+    }
   }
 }
