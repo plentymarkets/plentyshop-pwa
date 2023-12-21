@@ -28,7 +28,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.18.0",
+    "@plentymarkets/shop-api": "^0.18.1",
     "country-flag-icons": "^1.5.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3"
@@ -38,7 +38,7 @@
     "@commitlint/config-conventional": "^17.0.0",
     "@lhci/cli": "^0.12.0",
     "@paypal/paypal-js": "7.0.0",
-    "@plentymarkets/shop-sdk": "^0.28.0",
+    "@plentymarkets/shop-sdk": "^0.28.1",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/uuid": "^9.0.2",
     "@vue-storefront/eslint-config": "~2.0.0-rc.7",
