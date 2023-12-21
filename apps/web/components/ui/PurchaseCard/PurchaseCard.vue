@@ -77,7 +77,7 @@
       <PayPalExpressButton
         class="mt-4"
         type="SingleItem"
-        :value="{ product: product, quantity: quantitySelectorValue }"
+        :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
       />
     </div>
   </section>
@@ -103,6 +103,7 @@ const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
+const { getPropertiesForCart } = useProductOrderProperties();
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { getPropertiesPrice } = useProductOrderProperties();
@@ -128,7 +129,6 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
-  const { getPropertiesForCart } = useProductOrderProperties();
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
