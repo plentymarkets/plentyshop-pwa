@@ -1,11 +1,11 @@
 import type { Ref } from 'vue';
-import type { BasketItemOrderParamsProperty, ProductProperties, Product } from '@plentymarkets/shop-api';
+import type { BasketItemOrderParamsProperty, ProductProperty, Product } from '@plentymarkets/shop-api';
 
 export interface UseProductOrderPropertiesState {
   data: BasketItemOrderParamsProperty[];
 }
 
-export type SetProperties = (productProperties: ProductProperties[]) => void;
+export type SetProperties = (productProperties: ProductProperty[]) => void;
 export type GetPropertiesPrice = (product: Product) => number;
 
 export interface UseProductOrderProperties {
