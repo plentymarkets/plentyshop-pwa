@@ -5,9 +5,11 @@
   >
     <div class="relative">
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
-        <NuxtImg
+        <!-- <NuxtPicture
           :src="imageUrl"
           :alt="imageAlt"
+          :srcset="imageUrl + '.webp'"
+          format="webp"
           class="object-contain rounded-md aspect-square w-full h-full"
           data-testid="image-slot"
           width="190"
@@ -15,8 +17,15 @@
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
           :preload="priority || false"
-          format="webp"
-        />
+        /> -->
+        <UiPicture
+          :src="imageUrl"
+          :sources="[{srcset: imageUrl + '.webp', format: 'webp'}]"
+          :alt="imageAlt"
+          height="190"
+          width="190"
+          css-class="object-contain rounded-md aspect-square w-full h-full"
+        ></UiPicture>
       </SfLink>
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
