@@ -1,15 +1,15 @@
 <template>
   <div>
     <SfCheckbox
-      :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
+      :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
       v-model="value"
       class="mr-2"
     />
     <label
       class="cursor-pointer peer-disabled:text-disabled-900"
-      :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty.property)}`"
+      :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
     >
-      {{ productPropertyGetters.getOrderPropertyName(productProperty.property) }}
+      {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
         ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
         {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
