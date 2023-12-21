@@ -14,12 +14,12 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   const setProperties: SetProperties = (productProperties) => {
     state.value.data = [];
     productProperties.forEach((property) => {
-      if (property.property.isOderProperty) {
+      if (productPropertyGetters.isOrderProperty(property)) {
         state.value.data.push({
           property: {
-            id: property.property.id,
+            id: productPropertyGetters.getOrderPropertyId(property),
             names: {
-              name: property.property.names.name,
+              name: productPropertyGetters.getOrderPropertyName(property),
             },
             valueType: property.property.valueType,
             value: null,
