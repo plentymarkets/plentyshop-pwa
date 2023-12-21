@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
+  <div v-for="(group, groupIndex) in orderPropertyGroups" :key="`group-${groupIndex}`">
     <div class="font-semibold">
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
@@ -44,8 +44,8 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
-const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-const hasOrderPropertiesTooltips = productPropertyGetters.hasOrderPropertiesGroupsTooltips(productOrderPropertyGroups);
+const orderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
+const hasOrderPropertiesTooltips = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertyGroups);
 
 const componentsMapper: ComponentsMapper = {
   empty: OrderPropertyCheckbox,
