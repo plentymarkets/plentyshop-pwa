@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`">
+  <div v-for="(group, groupIndex) in productOrderPropertyGroups" :key="`group-${groupIndex}`" class="mt-5">
     <div class="font-semibold">
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
@@ -9,7 +9,7 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-4 flex items-center">
+      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-1 flex items-center">
         <OrderPropertyCheckbox
           v-if="productPropertyGetters.isOrderPropertyCheckbox(productProperty)"
           :product-property="productProperty"
