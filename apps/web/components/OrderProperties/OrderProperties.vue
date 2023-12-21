@@ -14,7 +14,7 @@
         <ClientOnly>
           <Component
             v-if="productPropertyGetters.hasResolvedOrderPropertyComponent(productProperty)"
-            :class="[hasOrderPropertiesGroupsTooltips ? '' : '']"
+            :class="[hasOrderPropertiesTooltips ? '' : '']"
             :product-property="productProperty"
             :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
           >
@@ -45,8 +45,7 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const productOrderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-const hasOrderPropertiesGroupsTooltips =
-  productPropertyGetters.hasOrderPropertiesGroupsTooltips(productOrderPropertyGroups);
+const hasOrderPropertiesTooltips = productPropertyGetters.hasOrderPropertiesGroupsTooltips(productOrderPropertyGroups);
 
 const componentsMapper: ComponentsMapper = {
   empty: OrderPropertyCheckbox,
