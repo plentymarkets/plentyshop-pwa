@@ -32,9 +32,9 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyChecboxProps } from '~/components/OrderPropertyCheckbox/types';
+import { OrderPropertyCheckboxProps } from '~/components/OrderPropertyCheckbox/types';
 import { SfCheckbox } from '@storefront-ui/vue';
 
-const props = defineProps<OrderPropertyChecboxProps>();
+const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
 </script>
