@@ -9,7 +9,7 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
+      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-4 flex items-center">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component
@@ -17,9 +17,9 @@
             :product-property="productProperty.property"
             :is="componentsMapper[productProperty.property.valueType]"
           >
-            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty.property)">
+            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)">
               <SfTooltip
-                :label="productPropertyGetters.getOrderPropertyDescription(productProperty.property)"
+                :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
                 :placement="'bottom'"
                 :show-arrow="true"
                 class="ml-2"
