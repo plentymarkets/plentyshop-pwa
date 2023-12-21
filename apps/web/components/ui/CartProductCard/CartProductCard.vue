@@ -8,7 +8,7 @@
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
-          :src="cartItemImage || '/images/placeholder.png'"
+          :src="getWebpUrl(cartItemImage) || '/images/placeholder.png'"
           :alt="cartItemImage || ''"
           width="300"
           height="300"
@@ -71,6 +71,7 @@ import { SfLink, SfIconDelete, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
+const { getWebpUrl } = useImageUrl();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t } = useI18n();

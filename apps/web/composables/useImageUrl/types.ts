@@ -1,10 +1,12 @@
+import { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
 
 
 export type GetWebpUrl = (url: string | undefined) => string
-
+export type GetWebpForAgnosticImages = (images: AgnosticImage[]) => AgnosticImage[]
 
 export interface UseImageUrl {
-    getWebpUrl: GetWebpUrl
+    getWebpUrl: GetWebpUrl,
+    getWebpForAgnosticImages: GetWebpForAgnosticImages
 }
 
 
