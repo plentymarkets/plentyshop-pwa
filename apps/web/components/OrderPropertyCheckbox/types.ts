@@ -1,5 +1,5 @@
-import type { ProductPropertyDetails } from '@plentymarkets/shop-api';
+import type { ProductProperty } from '@plentymarkets/shop-api';
 
 export type OrderPropertyCheckboxProps = {
-  productProperty: ProductPropertyDetails;
+  productProperty: ProductProperty;
 };
