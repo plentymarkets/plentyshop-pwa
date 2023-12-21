@@ -15,7 +15,11 @@
           :product-property="productProperty.property"
         />
         <OrderPropertyInput
-          v-if="productPropertyGetters.isOrderPropertyInput(productProperty.property)"
+          v-if="
+            productPropertyGetters.isOrderPropertyInt(productProperty.property) ||
+            productPropertyGetters.isOrderPropertyText(productProperty.property) ||
+            productPropertyGetters.isOrderPropertyFloat(productProperty.property)
+          "
           :product-property="productProperty.property"
         />
       </div>
