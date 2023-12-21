@@ -8,8 +8,6 @@
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
-          :srcset="imageUrl"
-          format="webp"
           class="object-contain rounded-md aspect-square w-full h-full"
           data-testid="image-slot"
           width="190"
@@ -17,6 +15,7 @@
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
           :preload="priority || false"
+          format="webp"
         />
       </SfLink>
     </div>
