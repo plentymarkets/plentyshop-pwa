@@ -12,7 +12,7 @@
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
         ({{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType }}
-        {{ $n(productProperty.surcharge, 'currency') }})
+        {{ n(productProperty.surcharge, 'currency') }})
       </span>
       {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
       <span
@@ -34,6 +34,7 @@
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyCheckboxProps } from '~/components/OrderPropertyCheckbox/types';
 import { SfCheckbox } from '@storefront-ui/vue';
+const { n } = useI18n();
 
 const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;

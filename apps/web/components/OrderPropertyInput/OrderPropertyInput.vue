@@ -6,6 +6,8 @@
       </span>
       <SfInput :id="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`"></SfInput>
     </label>
+
+    <slot />
   </div>
 </template>
 
