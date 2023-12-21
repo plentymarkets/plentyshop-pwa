@@ -14,6 +14,7 @@ import { useSdk } from '~/sdk';
  * ```
  */
 export const useProduct: UseProductReturn = (slug) => {
+  const properties = useProductOrderProperties();
   const state = useState<UseProductState>(`useProduct-${slug}`, () => ({
     data: {} as Product,
     loading: false,
@@ -36,6 +37,7 @@ export const useProduct: UseProductReturn = (slug) => {
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct(params));
     useHandleError(error.value);
 
+    properties.setProperties(data.value?.data.properties ?? []);
     state.value.data = data.value?.data ?? state.value.data;
     state.value.loading = false;
     return state.value.data;
@@ -73,5 +75,6 @@ export const useProduct: UseProductReturn = (slug) => {
     generateBreadcrumbs,
     fetchProduct,
     ...toRefs(state.value),
+    properties,
   };
 };

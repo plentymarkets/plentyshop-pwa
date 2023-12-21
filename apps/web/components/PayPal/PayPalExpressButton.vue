@@ -53,6 +53,7 @@ const onClick = async () => {
     await addToCart({
       productId: Number(productGetters.getId(props.value.product)),
       quantity: props.value.quantity,
+      basketItemOrderParams: props.value.basketItemOrderParams,
     });
   }
 };
