@@ -9,10 +9,18 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div v-if="!productPropertyGetters.isHidden(productProperty.property)" class="mt-4 flex items-center">
+      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-4 flex items-center">
         <OrderPropertyCheckbox
-          v-if="productPropertyGetters.isCheckBox(productProperty.property)"
-          :product-property="productProperty.property"
+          v-if="productPropertyGetters.isOrderPropertyCheckbox(productProperty)"
+          :product-property="productProperty"
+        />
+        <OrderPropertyInput
+          v-if="
+            productPropertyGetters.isOrderPropertyInt(productProperty) ||
+            productPropertyGetters.isOrderPropertyText(productProperty) ||
+            productPropertyGetters.isOrderPropertyFloat(productProperty)
+          "
+          :product-property="productProperty"
         />
       </div>
     </div>
