@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="flex items-center">
     <SfCheckbox
       :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
       v-model="value"
