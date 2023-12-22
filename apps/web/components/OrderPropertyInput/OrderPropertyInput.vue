@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label :for="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
         ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
@@ -20,7 +20,7 @@
 
     <div class="flex items-center">
       <SfInput
-        :id="`prod-input-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+        :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
         v-model="value"
         :wrapper-class="'w-full'"
       />

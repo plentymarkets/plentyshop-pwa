@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { ComponentsMapper, OrderPropertiesProps } from '~/components/OrderProperties/types';
+import { ComponentsMapper, OrderPropertiesProps } from './types';
 import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
