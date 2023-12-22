@@ -21,7 +21,7 @@
         </OrderPropertyCheckbox>
 
         <OrderPropertyInput
-          v-if="isOrderPropertyInput(productProperty)"
+          v-if="productPropertyGetters.isOrderPropertyInput(productProperty)"
           :has-tooltip="hasTooltip"
           :product-property="productProperty"
         >
@@ -37,15 +37,9 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertiesProps } from './types';
-import { ProductProperty } from '@plentymarkets/shop-api';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 const hasTooltip = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertiesGroups);
-
-const isOrderPropertyInput = (productProperty: ProductProperty): boolean =>
-  productPropertyGetters.isOrderPropertyInt(productProperty) ||
-  productPropertyGetters.isOrderPropertyText(productProperty) ||
-  productPropertyGetters.isOrderPropertyFloat(productProperty);
 </script>
