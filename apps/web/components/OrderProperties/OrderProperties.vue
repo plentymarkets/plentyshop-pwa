@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in orderPropertyGroups" :key="`group-${groupIndex}`" class="mt-5">
+  <div v-for="(group, groupIndex) in orderPropertiesGroups" :key="`group-${groupIndex}`" class="mt-5">
     <div class="font-semibold">
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
@@ -14,7 +14,7 @@
         <ClientOnly>
           <Component
             v-if="productPropertyGetters.hasResolvedOrderPropertyComponent(productProperty)"
-            :has-tooltip="hasOrderPropertiesTooltips"
+            :has-tooltip="hasTooltip"
             :product-property="productProperty"
             :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
           >
@@ -44,8 +44,8 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
-const orderPropertyGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-const hasOrderPropertiesTooltips = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertyGroups);
+const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
+const hasTooltip = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertiesGroups);
 
 const componentsMapper: ComponentsMapper = {
   empty: OrderPropertyCheckbox,
