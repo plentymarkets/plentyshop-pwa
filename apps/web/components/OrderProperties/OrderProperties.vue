@@ -9,11 +9,11 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)" class="mt-1 flex items-center">
+      <div class="mt-1 flex items-center">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component
-            v-if="productPropertyGetters.hasResolvedOrderPropertyComponent(productProperty)"
+            v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
             :has-tooltip="hasTooltip"
             :product-property="productProperty"
             :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
@@ -39,6 +39,7 @@
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { ComponentsMapper, OrderPropertiesProps } from './types';
 import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
+import OrderPropertySelect from '~/components/OrderPropertySelect/OrderPropertySelect.vue';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
@@ -52,5 +53,6 @@ const componentsMapper: ComponentsMapper = {
   int: OrderPropertyInput,
   text: OrderPropertyInput,
   float: OrderPropertyInput,
+  selection: OrderPropertySelect,
 };
 </script>
