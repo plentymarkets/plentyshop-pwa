@@ -1,6 +1,7 @@
 import type { Ref } from 'vue';
 import type { Breadcrumb, Product } from '@plentymarkets/shop-api';
 import { ProductParams } from '@plentymarkets/shop-api';
+import { UseProductOrderProperties } from '~/composables/useProductOrderProperties';
 
 export interface UseProductState {
   data: Product;
@@ -18,6 +19,7 @@ export interface UseProduct {
   fetchProduct: FetchProduct;
   generateBreadcrumbs: GenerateBreadcrumb;
   setTitle: () => void;
+  properties: UseProductOrderProperties;
 }
 
 export type UseProductReturn = (slug: string) => UseProduct;
