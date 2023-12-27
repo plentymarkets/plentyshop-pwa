@@ -26,7 +26,7 @@ export * from './useCustomerOrder';
 export * from './useCustomerOrders';
 export * from './useCustomerReturns';
 export * from './useHandleError';
-export * from './useImageUrl'
+export * from './useImageUrl';
 export * from './useInitalSetup';
 export * from './useLegalInformation';
 export * from './useMakeOrder';

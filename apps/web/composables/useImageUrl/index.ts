@@ -1,3 +1,3 @@
-export * from './useImageUrl'
+export * from './useImageUrl';
 
-export * from './types'
+export * from './types';
