@@ -8,7 +8,7 @@
           <slot name="tooltip" />
         </span>
       </div>
-      <SfSelect v-model="selectedProperty" size="sm" placeholder="-- Select --">
+      <SfSelect v-model="value" size="sm" placeholder="-- Select --">
         <option v-for="{ value, label } in options" :key="value" :value="value">
           {{ label }}
         </option>
@@ -23,10 +23,11 @@ import { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { Ref, ref } from 'vue';
+const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const selectedProperty: Ref<string> = ref('');
+const value: Ref<string> = ref('');
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
@@ -35,6 +36,16 @@ const options = Object.values(productProperty.property.selectionValues).map(
   }),
 );
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
-  selectedProperty.value = String(Object.values(options)[0].value);
+  value.value = String(Object.values(options)[0].value);
 }
+const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
+
+watch(
+  () => value.value,
+  (updatedValue) => {
+    if (property) {
+      property.property.value = updatedValue.trim() === '' ? null : updatedValue;
+    }
+  },
+);
 </script>

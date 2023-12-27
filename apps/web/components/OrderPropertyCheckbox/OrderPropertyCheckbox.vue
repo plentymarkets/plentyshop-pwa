@@ -1,6 +1,7 @@
 <template>
   <div class="flex items-center">
     <SfCheckbox
+      v-if="!productPropertyGetters.isOrderPropertyHidden(productProperty)"
       :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
       v-model="value"
       class="mr-2"
