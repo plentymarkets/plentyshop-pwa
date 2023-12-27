@@ -1,9 +1,11 @@
 import { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
+import { SfImage } from '@vue-storefront/unified-data-model';
 import { UseImageUrlReturn } from './types';
 
 export const useImageUrl: UseImageUrlReturn = () => {
     const useWebp = useRuntimeConfig().public.useWebp;
-    const getWebpUrl = (url: string | undefined) => {
+
+    const addWebpExtension = (url: string | undefined) => {
 
         if(useWebp) {
             return url ? `${url}.webp` : '';
@@ -11,7 +13,7 @@ export const useImageUrl: UseImageUrlReturn = () => {
         return url ?? '';
     } 
 
-    const getWebpForAgnosticImages = (images: AgnosticImage[]) => {
+    const addWebpExtensionForSfImages = (images: SfImage[]) => {
         
         if(useWebp) {
             return images.map((image: AgnosticImage) => {
@@ -26,7 +28,7 @@ export const useImageUrl: UseImageUrlReturn = () => {
     }
 
     return {
-        getWebpUrl,
-        getWebpForAgnosticImages
+        addWebpExtension,
+        addWebpExtensionForSfImages
     }
 };

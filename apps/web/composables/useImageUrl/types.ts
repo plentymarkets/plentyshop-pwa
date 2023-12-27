@@ -1,12 +1,12 @@
-import { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
+import { SfImage } from "@vue-storefront/unified-data-model";
 
 
-export type GetWebpUrl = (url: string | undefined) => string
-export type GetWebpForAgnosticImages = (images: AgnosticImage[]) => AgnosticImage[]
+export type AddWebpExtension = (url: string | undefined) => string
+export type AddWebpExtensionForSfImages = (images: SfImage[]) => SfImage[]
 
 export interface UseImageUrl {
-    getWebpUrl: GetWebpUrl,
-    getWebpForAgnosticImages: GetWebpForAgnosticImages
+    addWebpExtension: AddWebpExtension,
+    addWebpExtensionForSfImages: AddWebpExtensionForSfImages
 }
 
 
