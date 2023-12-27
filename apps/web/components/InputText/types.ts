@@ -1,5 +1,5 @@
 export type InputTextProps = {
-  name: string,
-  type?: string,
-  rules?: any[],
+  name: string;
+  type?: string;
+  rules?: any[];
 };

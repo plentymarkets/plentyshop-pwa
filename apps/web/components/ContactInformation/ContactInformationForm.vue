@@ -2,7 +2,7 @@
   <form data-testid="contact-information-form" @submit.prevent="onSubmit" novalidate>
     <label>
       <UiFormLabel>{{ $t('contactInfo.email') }}</UiFormLabel>
-      <InputText name="email" type="email"/>
+      <InputText name="email" type="email" />
     </label>
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
       <SfButton type="reset" class="md:mr-4" variant="secondary" @click="resetForm()">
@@ -30,7 +30,7 @@ import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 
 const emit = defineEmits(['on-save']);
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 const { loading } = useCustomer();
 
@@ -40,7 +40,7 @@ const { meta, handleSubmit, resetForm } = useForm({
   }),
 });
 
-const onSubmit = handleSubmit(formValues => {
-  emit('on-save', formValues.email)
+const onSubmit = handleSubmit((formValues) => {
+  emit('on-save', formValues.email);
 });
 </script>
