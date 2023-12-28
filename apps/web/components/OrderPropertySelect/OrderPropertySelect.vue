@@ -22,7 +22,7 @@ import { SfSelect } from '@storefront-ui/vue';
 import { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
-import { Ref, ref } from 'vue';
+import { ref } from 'vue';
 const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
