@@ -27,7 +27,7 @@ const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const value: Ref<string> = ref('');
+const value = ref('');
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
