@@ -616,6 +616,8 @@
     "couponRemoveFailure": "The coupon could not be removed."
   },
   "orderProperties": {
+    "noSelection": "No selection",
+    "select": "Select",
     "vat": {
       "incl": "incl.",
       "plus": "plus"

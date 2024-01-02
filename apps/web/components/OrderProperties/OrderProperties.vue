@@ -9,7 +9,7 @@
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div class="mt-1 flex items-center">
+      <div class="mt-2 flex items-center">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component

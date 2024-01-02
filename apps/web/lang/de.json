@@ -616,6 +616,8 @@
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
   },
   "orderProperties": {
+    "noSelection": "Keine Auswahl",
+    "select": "Auswählen",
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
