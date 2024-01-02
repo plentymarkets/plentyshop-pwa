@@ -1,4 +1,4 @@
-import { Product } from '@plentymarkets/shop-api';
+import { BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 export type PaypalButtonPropsType = {
   type: string;
@@ -6,5 +6,6 @@ export type PaypalButtonPropsType = {
   value?: {
     product: Product;
     quantity: number;
+    basketItemOrderParams?: BasketItemOrderParamsProperty[];
   };
 };

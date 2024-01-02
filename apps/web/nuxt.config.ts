@@ -44,6 +44,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxtjs/turnstile',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -85,6 +86,9 @@ export default defineNuxtConfig({
     },
     compressPublicAssets: true,
   },
+  turnstile: {
+    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
@@ -112,6 +116,8 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       showNetPrices: true,
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
     },
   },
   pwa: {

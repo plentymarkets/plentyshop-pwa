@@ -148,11 +148,11 @@
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "resultsFor": "Ergebnisse für \"{phrase}\"",
-  "prevAriaLabel": "Zur vorherigen Seite",
-  "nextAriaLabel": "Zur nächsten Seite",
-  "secondPageAriaLabel": "Zweite Seite",
-  "lastPageAriaLabel": "Letzte Seite",
-  "currentPage": "Seite {page} von {totalPages}",
+  "pagination": "Paginierte Navigation",
+  "prevAriaLabel": "Zur vorherigen Seite navigieren",
+  "nextAriaLabel": "Zur nächsten Seite navigieren",
+  "currentPage": "Die aktuelle Seite ist {page}",
+  "goToPage": "Zur Seite navigieren {page}",
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
@@ -539,11 +539,23 @@
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
   },
+  "newsletter": {
+    "heading": "Abonnieren Sie unseren Newsletter",
+    "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
+    "subscribe": "Newsletter abonnieren",
+    "info": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!",
+    "success": "Newsletter erfolgreich abonniert",
+    "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "email": "E-Mail"
+  },
   "coupon": {
     "name": "Gutschein",
     "title": "Haben sie einen Gutscheincode?",
     "enterCode": "Gutschein-Code eingeben",
     "apply": "Einlösen",
+    "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
     "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
@@ -602,5 +614,11 @@
     "accessKeyMailSent": "E-Mail wurde versandt.",
     "accessKeyMailFailed": "Die E-Mail konnte nicht versendet werden, bitte kontaktieren Sie den Shopbetreiber.",
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
+  },
+  "orderProperties": {
+    "vat": {
+      "incl": "inkl.",
+      "plus": "zzgl."
+    }
   }
 }
