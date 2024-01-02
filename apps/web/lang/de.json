@@ -148,11 +148,11 @@
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "resultsFor": "Ergebnisse für \"{phrase}\"",
-  "prevAriaLabel": "Zur vorherigen Seite",
-  "nextAriaLabel": "Zur nächsten Seite",
-  "secondPageAriaLabel": "Zweite Seite",
-  "lastPageAriaLabel": "Letzte Seite",
-  "currentPage": "Seite {page} von {totalPages}",
+  "pagination": "Paginierte Navigation",
+  "prevAriaLabel": "Zur vorherigen Seite navigieren",
+  "nextAriaLabel": "Zur nächsten Seite navigieren",
+  "currentPage": "Die aktuelle Seite ist {page}",
+  "goToPage": "Zur Seite navigieren {page}",
   "checkout": "Kasse",
   "backToCart": "Zurück zum Warenkorb",
   "back": "Zurück",
@@ -614,5 +614,11 @@
     "accessKeyMailSent": "E-Mail wurde versandt.",
     "accessKeyMailFailed": "Die E-Mail konnte nicht versendet werden, bitte kontaktieren Sie den Shopbetreiber.",
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
+  },
+  "orderProperties": {
+    "vat": {
+      "incl": "inkl.",
+      "plus": "zzgl."
+    }
   }
 }
