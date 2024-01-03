@@ -35,10 +35,10 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyInputProps } from './types';
+import { OrderPropertyTypesProps } from '~/components/OrderProperties/types';
 
 const { getPropertyById } = useProductOrderProperties();
-const props = defineProps<OrderPropertyInputProps>();
+const props = defineProps<OrderPropertyTypesProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
