@@ -1,5 +1,6 @@
 import type { ProductProperty } from '@plentymarkets/shop-api';
 
-export type OrderPropertyTooltipProps = {
+export type OrderPropertyCheckboxProps = {
+  hasTooltip: boolean;
   productProperty: ProductProperty;
 };

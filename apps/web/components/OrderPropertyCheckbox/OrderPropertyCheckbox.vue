@@ -40,10 +40,10 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyTypesProps } from '~/components/OrderProperties/types';
+import { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
 
-const props = defineProps<OrderPropertyTypesProps>();
+const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { getPropertyById } = useProductOrderProperties();
