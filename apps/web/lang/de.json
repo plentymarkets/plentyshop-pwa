@@ -623,8 +623,8 @@
   },
   "errorMessages": {
     "email": {
-      "email": "This field needs to be a valid email.",
-      "required": "Email is required."
+      "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
+      "required": "E-Mail ist erforderlich."
     }
   }
 }

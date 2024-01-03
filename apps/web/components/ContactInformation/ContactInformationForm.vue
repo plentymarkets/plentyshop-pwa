@@ -1,12 +1,21 @@
 <template>
   <form data-testid="contact-information-form" @submit.prevent="onSubmit" novalidate>
     <label>
-      <UiFormLabel>{{ $t('contactInfo.email') }}</UiFormLabel>
-      <InputText name="email" type="email" />
+      <UiFormLabel>{{ t('contactInfo.email') }}</UiFormLabel>
+      <SfInput
+        v-model="customerEmail"
+        v-bind="emailAttributes"
+        :invalid="Boolean(errors['cart.customerEmail'])"
+        name="customerEmail"
+        type="email"
+        autocomplete="email"
+      />
+      <ErrorMessage v-if="errors['cart.customerEmail']" :message="errors['cart.customerEmail']" />
     </label>
+
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
       <SfButton type="reset" class="md:mr-4" variant="secondary" @click="resetForm()">
-        {{ $t('contactInfo.clear') }}
+        {{ t('contactInfo.clear') }}
       </SfButton>
 
       <SfButton
@@ -17,30 +26,41 @@
       >
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
         <span v-else>
-          {{ $t('contactInfo.save') }}
+          {{ t('contactInfo.save') }}
         </span>
       </SfButton>
     </div>
   </form>
 </template>
-<script setup>
-import * as yup from 'yup';
+
+<script setup lang="ts">
 import { useForm } from 'vee-validate';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { object, string } from 'yup';
+import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const emit = defineEmits(['on-save']);
 
 const { t } = useI18n();
-
 const { loading } = useCustomer();
 
-const { meta, handleSubmit, resetForm } = useForm({
-  validationSchema: yup.object({
-    email: yup.string().required(t('errorMessages.email.required')).email(t('errorMessages.email.email')),
+const schema = toTypedSchema(
+  object({
+    cart: object({
+      customerEmail: string()
+        .email(t('errorMessages.email.valid'))
+        .required(t('errorMessages.email.required'))
+        .default(''),
+    }),
   }),
+);
+
+const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
+  validationSchema: schema,
 });
 
-const onSubmit = handleSubmit((formValues) => {
-  emit('on-save', formValues.email);
+const onSubmit = handleSubmit((values) => {
+  emit('on-save', values.cart.customerEmail);
 });
+
+const [customerEmail, emailAttributes] = defineField('cart.customerEmail');
 </script>

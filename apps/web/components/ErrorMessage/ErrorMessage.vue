@@ -1,11 +1,11 @@
 <template>
-  <div v-if="message" class="text-negative-700 text-sm mt-2">
+  <span class="flex text-negative-700 text-sm mt-2">
     {{ message }}
-  </div>
+  </span>
 </template>
 
-<script setup>
+<script setup lang="ts">
 defineProps({
-  message: String,
+  message: { type: String, required: true },
 });
 </script>
