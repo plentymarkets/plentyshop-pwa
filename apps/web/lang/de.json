@@ -618,6 +618,7 @@
   "orderProperties": {
     "noSelection": "Keine Auswahl",
     "select": "Auswählen",
+    "hasRequiredFields": "Hierbei handelt es sich um ein Pflichtfeld.",
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
