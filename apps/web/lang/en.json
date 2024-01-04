@@ -619,6 +619,16 @@
     "vat": {
       "incl": "incl.",
       "plus": "plus"
+    },
+    "upload": {
+      "orderPropertyTypeFile":"Order Property - Type File",
+      "uploading": "uploading",
+      "uploaded": "uploaded",
+      "orderProperty":"Order Property",
+      "dragAndDropFileHereOr":"Drag and drop file here or",
+      "uploadFile": "Upload File",
+      "acceptedFormats": "Accepted formats",
+      "maximumFileSize":"Maximum filesize"
     }
   }
 }

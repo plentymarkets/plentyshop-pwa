@@ -619,6 +619,16 @@
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
+    },
+    "upload": {
+      "orderPropertyTypeFile":"Order-Eigenschaft – Typ Datei",
+      "uploading": "hochladen",
+      "uploaded": "hochgeladen",
+      "orderProperty":"Eigentum bestellen",
+      "dragAndDropFileHereOr": "Datei hierher ziehen und ablegen oder",
+      "uploadFile": "Datei hochladen",
+      "acceptedFormats": "Akzeptiere Dateiformate",
+      "maximumFileSize":"Erlaubte Dateigröße"
     }
   }
 }
