@@ -14,20 +14,18 @@
     </label>
 
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
-      <SfButton type="reset" class="md:mr-4" variant="secondary" @click="resetForm()">
+      <SfButton @click="resetForm()" type="reset" class="md:mr-4" variant="secondary">
         {{ t('contactInfo.clear') }}
       </SfButton>
 
       <SfButton
-        data-testid="contact-information-save-button"
         type="submit"
+        data-testid="contact-information-save-button"
         class="min-w-[120px] mb-4 md:mb-0"
         :disabled="loading || !meta.valid"
       >
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-        <span v-else>
-          {{ t('contactInfo.save') }}
-        </span>
+        <template v-else>{{ t('contactInfo.save') }}</template>
       </SfButton>
     </div>
   </form>
