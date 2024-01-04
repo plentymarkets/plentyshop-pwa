@@ -1,10 +1,10 @@
 <template>
-  <form data-testid="contact-information-form" @submit.prevent="onSubmit" novalidate>
+  <form @submit.prevent="onSubmit" data-testid="contact-information-form" novalidate>
     <label>
       <UiFormLabel>{{ t('contactInfo.email') }}</UiFormLabel>
       <SfInput
         v-model="customerEmail"
-        v-bind="emailAttributes"
+        v-bind="customerEmailAttributes"
         :invalid="Boolean(errors['cart.customerEmail'])"
         name="customerEmail"
         type="email"
@@ -43,7 +43,7 @@ const emit = defineEmits(['on-save']);
 const { t } = useI18n();
 const { loading } = useCustomer();
 
-const schema = toTypedSchema(
+const validationSchema = toTypedSchema(
   object({
     cart: object({
       customerEmail: string()
@@ -55,12 +55,12 @@ const schema = toTypedSchema(
 );
 
 const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-  validationSchema: schema,
+  validationSchema: validationSchema,
 });
 
 const onSubmit = handleSubmit((values) => {
   emit('on-save', values.cart.customerEmail);
 });
 
-const [customerEmail, emailAttributes] = defineField('cart.customerEmail');
+const [customerEmail, customerEmailAttributes] = defineField('cart.customerEmail');
 </script>
