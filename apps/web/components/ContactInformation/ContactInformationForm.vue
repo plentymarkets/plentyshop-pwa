@@ -34,12 +34,11 @@
 </template>
 
 <script setup lang="ts">
+import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const emit = defineEmits(['on-save']);
-
 const { t } = useI18n();
 const { loading } = useCustomer();
 
@@ -58,9 +57,6 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
   validationSchema: validationSchema,
 });
 
-const onSubmit = handleSubmit((values) => {
-  emit('on-save', values.cart.customerEmail);
-});
-
+const onSubmit = handleSubmit((values) => emit('on-save', values.cart.customerEmail));
 const [customerEmail, customerEmailAttributes] = defineField('cart.customerEmail');
 </script>
