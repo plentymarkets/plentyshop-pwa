@@ -10,7 +10,7 @@
         type="email"
         autocomplete="email"
       />
-      <ErrorMessage v-if="errors['cart.customerEmail']" :message="errors['cart.customerEmail']" />
+      <VeeErrorMessage as="span" name="cart.customerEmail" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
