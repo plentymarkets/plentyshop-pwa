@@ -29,9 +29,15 @@
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.18.3",
+    "@vue-storefront/nuxt": "~3.0.0",
+    "@vue-storefront/sdk": "^1.0.1",
+    "@vue-storefront/storefront-boilerplate-sdk": "~0.2.0",
+    "@vueuse/core": "^10.3.0",
     "country-flag-icons": "^1.5.7",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "lodash-es": "^4.17.21",
+    "nuxt-lazy-hydrate": "^1.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.0",
