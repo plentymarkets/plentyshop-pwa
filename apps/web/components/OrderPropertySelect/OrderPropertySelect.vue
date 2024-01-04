@@ -1,19 +1,39 @@
 <template>
-  <div class="flex flex-col gap-y-6 font-body">
-    <label>
-      <div class="pb-1 text-sm font-medium text-neutral-900">
-        {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-        <span v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"> * </span>
-        <span v-if="hasTooltip" class="w-[28px]">
-          <slot name="tooltip" />
-        </span>
-      </div>
-      <SfSelect v-model="value" size="sm" placeholder="-- Select --">
-        <option v-for="{ value, label } in options" :key="value" :value="value">
-          {{ label }}
-        </option>
-      </SfSelect>
+  <div class="w-full">
+    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+      {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
+      <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
+        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
+        {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+      </span>
+      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
+      <span
+        v-if="
+          productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
+          productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
+        "
+      >
+        ,
+      </span>
+      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
     </label>
+    <div class="flex items-center w-full">
+      <div class="w-full">
+        <SfSelect
+          :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+          v-model="selectedValue"
+          :placeholder="`-- ${$t('orderProperties.select')} --`"
+        >
+          <option value="">{{ $t('orderProperties.noSelection') }}</option>
+          <option v-for="{ value, label } in options" :key="value" :value="value">
+            {{ label }}
+          </option>
+        </SfSelect>
+      </div>
+      <span v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </span>
+    </div>
   </div>
 </template>
 
@@ -23,11 +43,12 @@ import { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { ref } from 'vue';
+
 const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const value = ref('');
+const selectedValue = ref('');
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
@@ -36,12 +57,12 @@ const options = Object.values(productProperty.property.selectionValues).map(
   }),
 );
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
-  value.value = String(Object.values(options)[0].value);
+  selectedValue.value = String(Object.values(options)[0].value);
 }
 const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
 
 watch(
-  () => value.value,
+  () => selectedValue.value,
   (updatedValue) => {
     if (property) {
       property.property.value = updatedValue.trim() === '' ? null : updatedValue;
