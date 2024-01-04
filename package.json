@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "@plentymarkets/shop-api": "^0.18.3",
+    "@vee-validate/nuxt": "^4.12.4",
+    "@vee-validate/yup": "^4.12.4",
     "country-flag-icons": "^1.5.7",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3"

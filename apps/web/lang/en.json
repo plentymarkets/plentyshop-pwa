@@ -623,5 +623,11 @@
       "incl": "incl.",
       "plus": "plus"
     }
+  },
+  "errorMessages": {
+    "email": {
+      "valid": "This field needs to be a valid email.",
+      "required": "Email is required."
+    }
   }
 }
