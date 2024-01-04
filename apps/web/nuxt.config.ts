@@ -73,6 +73,18 @@ export default defineNuxtConfig({
         defaultLocale: 'en',
       },
     ],
+    [
+      '@vee-validate/nuxt',
+      {
+        autoImports: true,
+        componentNames: {
+          Form: 'VeeForm',
+          Field: 'VeeField',
+          FieldArray: 'VeeFieldArray',
+          ErrorMessage: 'VeeErrorMessage',
+        },
+      },
+    ],
     '@nuxt/image',
     '@vite-pwa/nuxt',
     'nuxt-vitest',
