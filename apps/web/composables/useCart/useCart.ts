@@ -1,7 +1,7 @@
 import { CartItem } from '@plentymarkets/shop-api';
 import type { Cart, DoAddItemParams, SetCartItemQuantityParams, DeleteCartItemParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
 import { toRefs } from '@vueuse/shared';
+import { useSdk } from '~/sdk';
 import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
 import { DeleteCartItem, SetCartItemQuantity } from './types';
 
