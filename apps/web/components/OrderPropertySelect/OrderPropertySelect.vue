@@ -56,10 +56,16 @@ const options = Object.values(productProperty.property.selectionValues).map(
     value: String(selection.id),
   }),
 );
+
+const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
+
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
   selectedValue.value = String(Object.values(options)[0].value);
+
+  if (property) {
+    property.property.value = Object.values(options)[0].value;
+  }
 }
-const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
 
 watch(
   () => selectedValue.value,
