@@ -7,9 +7,7 @@
         {{ $n(productPropertyGetters.getOrderPropertySurcharge(property), 'currency') }})</span
       >
     </span>
-    <span v-if="productPropertyGetters.getOrderPropertyValueType(property) !== 'empty'"
-      >: {{ value }}</span
-    >
+    <span v-if="productPropertyGetters.getOrderPropertyValueType(property) !== 'empty'">: {{ value }}</span>
   </div>
 </template>
 
