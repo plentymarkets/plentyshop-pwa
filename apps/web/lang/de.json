@@ -216,8 +216,8 @@
   "wishlist": "Wunschliste",
   "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
   "wishlistInteraction": {
-    "delete": "Item was deleted from the wishlist",
-    "add": "Item was added to the wishlist",
+    "delete": "Der Artikel wurde von der Wunschliste entfernt.",
+    "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
   },
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
@@ -620,9 +620,18 @@
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
   },
   "orderProperties": {
+    "noSelection": "Keine Auswahl",
+    "select": "Auswählen",
+    "hasRequiredFields": "Hierbei handelt es sich um ein Pflichtfeld.",
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
+    }
+  },
+  "errorMessages": {
+    "email": {
+      "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
+      "required": "E-Mail ist erforderlich."
     }
   }
 }

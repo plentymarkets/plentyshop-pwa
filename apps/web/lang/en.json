@@ -216,8 +216,8 @@
   "wishlist": "Wishlist",
   "addProductToWishlist": "Add {label} to wishlist",
   "wishlistInteraction": {
-    "delete": "Item was deleted from the wishlist",
-    "add": "Item was added to the wishlist",
+    "delete": "The item was removed from your wish list.",
+    "add": "The item was added to your wish list.",
   },
   "quantitySelector": "Quantity Selector",
   "quantitySelectorDecrease": "Decrease value",
@@ -620,9 +620,18 @@
     "couponRemoveFailure": "The coupon could not be removed."
   },
   "orderProperties": {
+    "noSelection": "No selection",
+    "select": "Select",
+    "hasRequiredFields": "This is a mandatory field.",
     "vat": {
       "incl": "incl.",
       "plus": "plus"
+    }
+  },
+  "errorMessages": {
+    "email": {
+      "valid": "This field needs to be a valid email.",
+      "required": "Email is required."
     }
   }
 }
