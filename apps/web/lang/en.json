@@ -216,7 +216,7 @@
   "wishlist": "Wishlist",
   "addProductToWishlist": "Add {label} to wishlist",
   "wishlistInteraction": {
-    "delete": "Item was deleted from the wishlist",
+    "delete": "The item was removed from your wish list.",
     "add": "Item was added to the wishlist",
   },
   "quantitySelector": "Quantity Selector",
