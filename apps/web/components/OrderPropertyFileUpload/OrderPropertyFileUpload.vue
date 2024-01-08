@@ -70,11 +70,9 @@ import { Ref, ref } from 'vue';
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-// const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
+const value: Ref<Blob | null> = ref(null);
 
-const value: Ref<string | ArrayBuffer | null> = ref(null);
-
-const uploadForm = ref('');
+const uploadForm: Ref<HTMLInputElement | null> = ref(null);
 const loading = ref(false);
 const loaded = ref(false);
 const loadingValue = ref(25);
@@ -100,24 +98,31 @@ const suportedFormats = [
   'svg',
 ];
 
-const intermediaryFile = ref(null);
-const handleFileUpload = (event) => {
-  intermediaryFile.value = event.target.files[0];
-  const reader = new FileReader();
-  reader.addEventListener('load', (e) => {
-    fileName.value = intermediaryFile.value.name;
-    value.value = new Blob([e.target.result], { type: intermediaryFile.value.type });
-    // validation of type if required on frontend (parse and check)
-    loaded.value = true;
-  });
-  reader.readAsArrayBuffer(event.target.files[0]);
+const loadedFile: Ref<File | null> = ref(null);
+
+const handleFileUpload = (event: Event) => {
+  const target = event.target as HTMLInputElement;
+  if (target && target.files && target.files.length > 0) {
+    loadedFile.value = target.files[0];
+    const reader = new FileReader();
+    reader.addEventListener('load', (e) => {
+      if (loadedFile.value) {
+        fileName.value = loadedFile.value.name;
+        if (e && e.target && e.target.result) {
+          value.value = new Blob([e.target.result], { type: loadedFile.value.type });
+          loaded.value = true;
+        }
+      }
+    });
+    reader.readAsArrayBuffer(target.files[0]);
+  }
 };
 const clearUploadedFile = () => {
   value.value = null;
   loaded.value = false;
 };
 const openUploadModal = () => {
-  uploadForm.value.click();
+  (uploadForm.value as HTMLInputElement).click();
 };
 </script>
 
