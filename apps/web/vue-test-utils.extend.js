@@ -39,3 +39,15 @@ config.global.stubs = {
   NuxtImg: true,
   'i18n-t': true,
 };
+
+
+import { mockComponent } from '@nuxt/test-utils/runtime'
+
+mockComponent('./app.vue', {
+  template: `
+  <Body class="font-body" :class="bodyClass" />
+  <VitePwaManifest />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>`,
+})
