@@ -8,7 +8,7 @@
     <div v-if="!loaded && !loading" class="flex items-center">
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
-        <SfButton class="uploadArea" variant="tertiary" @click="openUploadModal">
+        <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
           <div align="center">
             <div>
               <img src="/images/file-upload.svg" />
@@ -22,11 +22,11 @@
         <div>
           <div class="mr-5">
             <span> {{ $t('orderProperties.upload.acceptedFormats') }}: </span>
-            <span v-for="(suportedFormat, i) in suportedFormats" :key="suportedFormat" class="m-0 p-0">
+            <span v-for="(suportedFormat, i) in supportedFormats" :key="suportedFormat" class="m-0 p-0">
               <span>
                 {{ suportedFormat }}
               </span>
-              <span v-if="i < suportedFormats.length - 1">,</span>
+              <span v-if="i < supportedFormats.length - 1">,</span>
             </span>
           </div>
           <span> {{ $t('orderProperties.upload.maximumFileSize') }}: 10mb </span>
@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div v-if="loading" class="uploadArea">
+    <div v-if="loading" class="w-full border-dashed border-2">
       <div align="center" class="m-5">
         <SfProgressCircular size="3xl" :value="loadingValue">
           <text
@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfIconClose } from '@storefront-ui/vue';
+import { SfButton, SfInput, SfIconClose, SfProgressCircular } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
 import { Ref, ref } from 'vue';
@@ -78,7 +78,7 @@ const loaded = ref(false);
 const loadingValue = ref(25);
 const fileName = ref('');
 
-const suportedFormats = [
+const supportedFormats = [
   'doc',
   'docx',
   'pdf',
@@ -125,10 +125,3 @@ const openUploadModal = () => {
   (uploadForm.value as HTMLInputElement).click();
 };
 </script>
-
-<style scoped>
-.uploadArea {
-  border: 1px dashed black;
-  width: 100%;
-}
-</style>

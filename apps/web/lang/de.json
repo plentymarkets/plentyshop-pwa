@@ -624,14 +624,13 @@
       "plus": "zzgl."
     },
     "upload": {
-      "orderPropertyTypeFile":"Order-Eigenschaft – Typ Datei",
-      "uploading": "hochladen",
-      "uploaded": "hochgeladen",
-      "orderProperty":"Eigentum bestellen",
+      "orderPropertyTypeFile":"Order Property - Type File",
+      "uploading": "uploading",
+      "uploaded": "uploaded",
       "dragAndDropFileHereOr": "Datei hierher ziehen und ablegen oder",
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
-      "maximumFileSize":"Erlaubte Dateigröße"
+      "maximumFileSize": "Erlaubte Dateigröße"
     }
   },
   "errorMessages": {
