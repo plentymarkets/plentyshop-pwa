@@ -17,11 +17,18 @@
       </span>
       {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
     </label>
-    <SfInput
-      :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
-      v-model="value"
-      class="w-full"
-    />
+
+    <div class="flex items-center">
+      <SfInput
+        :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+        v-model="value"
+        :wrapper-class="'w-full'"
+      />
+
+      <div v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +40,7 @@ import { OrderPropertyInputProps } from './types';
 const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
+const hasTooltip = props.hasTooltip;
 const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
 
 const value = ref('');
