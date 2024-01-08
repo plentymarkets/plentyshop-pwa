@@ -1,38 +1,33 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+    <label :for="`prop-${orderPropertyId}`">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-      <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
-        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
-        {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
-      <span
-        v-if="
-          productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
-          productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
-        "
-      >
-        ,
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
+      <template v-if="orderPropertyLabel.surchargeType">
+        ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+      </template>
+      {{ orderPropertyLabel.surchargeIndicator }}
+      <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
+      {{ orderPropertyLabel.requiredIndicator }}
     </label>
+
     <div class="flex items-center w-full">
       <div class="w-full">
         <SfSelect
-          :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+          :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
-          :placeholder="`-- ${$t('orderProperties.select')} --`"
+          :placeholder="`-- ${t('orderProperties.select')} --`"
         >
-          <option value="">{{ $t('orderProperties.noSelection') }}</option>
+          <option value="">{{ t('orderProperties.noSelection') }}</option>
           <option v-for="{ value, label } in options" :key="value" :value="value">
             {{ label }}
           </option>
         </SfSelect>
       </div>
-      <span v-if="hasTooltip" class="w-[28px]">
+
+      <div v-if="hasTooltip" class="w-[28px]">
         <slot name="tooltip" />
-      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -44,10 +39,14 @@ import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { ref } from 'vue';
 
-const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
+const { t, n } = useI18n();
+const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
+const { getPropertyById } = useProductOrderProperties();
+const property = getPropertyById(orderPropertyId);
+const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 const selectedValue = ref('');
 
 const options = Object.values(productProperty.property.selectionValues).map(
@@ -56,10 +55,10 @@ const options = Object.values(productProperty.property.selectionValues).map(
     value: String(selection.id),
   }),
 );
+
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
   selectedValue.value = String(Object.values(options)[0].value);
 }
-const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
 
 watch(
   () => selectedValue.value,

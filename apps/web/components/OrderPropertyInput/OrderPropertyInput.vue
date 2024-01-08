@@ -1,29 +1,18 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+    <label :for="`prop-${orderPropertyId}`">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-      <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
-        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
-        {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
-      <span
-        v-if="
-          productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
-          productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
-        "
-      >
-        ,
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
+      <template v-if="orderPropertyLabel.surchargeType">
+        ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+      </template>
+      {{ orderPropertyLabel.surchargeIndicator }}
+      <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
+      {{ orderPropertyLabel.requiredIndicator }}
     </label>
 
     <div class="flex items-center">
-      <SfInput
-        :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
-        v-model="value"
-        :wrapper-class="'w-full'"
-      />
+      <SfInput :id="`prop-${orderPropertyId}`" v-model="value" :wrapper-class="'w-full'" />
 
       <div v-if="hasTooltip" class="w-[28px]">
         <slot name="tooltip" />
@@ -37,11 +26,14 @@ import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
 
-const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
+const { t, n } = useI18n();
+const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
+const { getPropertyById } = useProductOrderProperties();
+const property = getPropertyById(orderPropertyId);
+const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 
 const value = ref('');
 
