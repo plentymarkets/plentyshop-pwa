@@ -215,6 +215,10 @@
   "cart": "Warenkorb",
   "wishlist": "Wunschliste",
   "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
+  "wishlistInteraction": {
+    "delete": "Item was deleted from the wishlist",
+    "add": "Item was added to the wishlist",
+  },
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
   "quantitySelectorIncrease": "Menge erhöhen",

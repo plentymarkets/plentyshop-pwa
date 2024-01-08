@@ -4,7 +4,7 @@
     data-testid="purchase-card"
   >
     <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
-      {{ productGetters.getName(product) }}
+      {{ productName }}
     </h1>
     <Price
       :price="currentActualPrice"
@@ -68,6 +68,22 @@
           </SfButton>
         </SfTooltip>
       </div>
+      <div class="flex justify-end mt-4 gap-x-4">
+        <SfButton
+          variant="tertiary"
+          size="sm"
+          :aria-label="t('addProductToWishlist', productName)"
+          :disabled="wishlistLoading"
+          @click="onWishlistClick()"
+        >
+          <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
+          <template v-else>
+            <SfIconFavoriteFilled v-if="isWishlistItem(variationId)" size="sm" />
+            <SfIconFavorite v-else size="sm" />
+            {{ t('addProductToWishlist') }}
+          </template>
+        </SfButton>
+      </div>
       <div class="mt-4 typography-text-xs flex gap-1">
         <span>{{ $t('asterisk') }}</span>
         <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
@@ -93,6 +109,8 @@ import {
   SfIconShoppingCart,
   SfLoaderCircular,
   SfTooltip,
+  SfIconFavorite,
+  SfIconFavoriteFilled,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
@@ -108,8 +126,11 @@ const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { getPropertiesPrice } = useProductOrderProperties();
 const { t } = useI18n();
+const { isWishlistItem, interactWithWishlist } = useWishlist();
 
 const quantitySelectorValue = ref(1);
+const wishlistLoading = ref(false);
+
 const currentActualPrice = computed(
   () =>
     (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
@@ -170,6 +191,15 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+
+const productName = computed(() => productGetters.getName(product.value));
+const variationId = computed(() => productGetters.getVariationId(product.value));
+
+const onWishlistClick = async () => {
+  wishlistLoading.value = true;
+  await interactWithWishlist(variationId.value, quantitySelectorValue.value);
+  wishlistLoading.value = false;
+};
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
