@@ -616,6 +616,9 @@
     "couponRemoveFailure": "Der Gutschein konnte nicht entfernt werden."
   },
   "orderProperties": {
+    "noSelection": "Keine Auswahl",
+    "select": "Auswählen",
+    "hasRequiredFields": "Hierbei handelt es sich um ein Pflichtfeld.",
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
@@ -629,6 +632,12 @@
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
       "maximumFileSize":"Erlaubte Dateigröße"
+    }
+  },
+  "errorMessages": {
+    "email": {
+      "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
+      "required": "E-Mail ist erforderlich."
     }
   }
 }
