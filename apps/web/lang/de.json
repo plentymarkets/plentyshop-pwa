@@ -217,7 +217,7 @@
   "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
   "wishlistInteraction": {
     "delete": "Item was deleted from the wishlist",
-    "add": "Item was added to the wishlist",
+    "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
   },
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
