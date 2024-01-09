@@ -3,8 +3,8 @@ import ContactInformation from '~/components/ContactInformation/ContactInformati
 
 describe('<ContactInformation />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(ContactInformation);
+    const wrapper = mount(ContactInformation);
 
-    expect(getByTestId('contact-information'));    
+    expect(wrapper.getByTestId('contact-information'));    
   });
 });

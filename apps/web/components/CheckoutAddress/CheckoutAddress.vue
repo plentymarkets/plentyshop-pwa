@@ -67,6 +67,8 @@ const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 await getActiveShippingCountries();
 
+console.log(activeShippingCountries.value);
+
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });

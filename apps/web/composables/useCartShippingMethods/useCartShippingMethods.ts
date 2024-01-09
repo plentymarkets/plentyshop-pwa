@@ -1,3 +1,4 @@
+
 import type { ShippingProvider, ShippingMethod } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { toRefs } from '@vueuse/shared';
@@ -25,7 +26,7 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
   }));
 
   const setSelectedMethod: SetSelectedMethod = (shippingMethodId: number) => {
-    state.value.selectedMethod = state.value.data.list.find(
+    state.value.selectedMethod = state.value.data.list?.find(
       (method) => method.parcelServicePresetId === Number(shippingMethodId),
     );
   };

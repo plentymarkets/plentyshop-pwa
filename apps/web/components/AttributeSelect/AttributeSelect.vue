@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="transformedProduct?.attributes" data-testid="product-attributes">
     <div v-for="(attribute, index) in transformedProduct.attributes" :key="index">
       <label :for="'attribute-' + attribute.attributeId" class="capitalize text-xs text-neutral-500">
         {{ attribute.name }}
@@ -27,9 +27,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter, useRoute } from 'vue-router';
 import { SfSelect } from '@storefront-ui/vue';
-import { AttributeSelectProps, Attribute, Variation, TransformedProduct } from '~/components/AttributeSelect/types';
+import { AttributeSelectProps, TransformedProduct } from '~/components/AttributeSelect/types';
+import { Product } from '@plentymarkets/shop-api';
 
 const props = defineProps<AttributeSelectProps>();
 const product = props.product ?? { variationAttributeMap: { attributes: [], variations: [] } };
@@ -37,11 +37,9 @@ const product = props.product ?? { variationAttributeMap: { attributes: [], vari
 const router = useRouter();
 const route = useRoute();
 
-const transformProductData = (product: any) => {
-  const { attributes, variations } = product.variationAttributeMap;
+const transformProductData = (product: Product): TransformedProduct => {
 
-  return {
-    attributes: attributes.map(({ attributeId, name, values }: Attribute) => ({
+  const attributes = product?.variationAttributeMap?.attributes.map(({ attributeId, name, values }) => ({
       attributeId,
       name,
       values: values.map(({ attributeValueId, name }) => ({
@@ -49,21 +47,34 @@ const transformProductData = (product: any) => {
         name,
         disabled: false,
       })),
-    })),
-    combinations: variations.map(({ variationId, isSalable, attributes }: Variation) => ({
+    }));
+
+  const combinations = product?.variationAttributeMap?.variations.map(({ variationId, isSalable, attributes }) => ({
       variationId,
       isSalable,
-      attributeCombination: attributes,
-    })),
-  };
+      attributes: attributes ?? [],
+      attributeCombination: attributes ?? [],
+    }));
+
+  return {
+    attributes: attributes ?? [],
+    combinations: combinations ?? [] 
+  }
 };
+
+const extractVariationIdFromPath = () => {
+  if (!route?.fullPath) {
+    return null;
+  }
+  
+  const match = route.fullPath.match(/_(\d+)$/);
+  return match ? Number(match[1]) : null;
+}
 
 const transformedProduct = reactive<TransformedProduct>(transformProductData(product));
 
 const currentVariationId = computed(() => {
-  // Extract the variationId from the fullPath using regex
-  const match = route.fullPath.match(/_(\d+)$/);
-  return match ? Number(match[1]) : null;
+  return extractVariationIdFromPath();
 });
 
 const setInitialSelectedVariations = (): (number | null)[] => {

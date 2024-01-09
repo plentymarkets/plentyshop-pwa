@@ -40,8 +40,9 @@ config.global.stubs = {
   'i18n-t': true,
 };
 
-
-import { mockComponent } from '@nuxt/test-utils/runtime'
+import { mockComponent } from '@nuxt/test-utils/runtime';
+import { CategoryTreeMock } from './__tests__/fixtures/category-tree.mock';
+import { ShippingCountriesMock } from './__tests__/fixtures/shipping-countries.mock';
 
 mockComponent('./app.vue', {
   template: `
@@ -50,4 +51,28 @@ mockComponent('./app.vue', {
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>`,
-})
+});
+
+mockComponent('ClientOnly', {
+  template: `<div> <slot/> </div>`,
+});
+
+mockNuxtImport('useCategoryTree', () => {
+  return () => {
+    return { data: computed(() => CategoryTreeMock) };
+  };
+});
+
+mockNuxtImport('useActiveShippingCountries', () => {
+  return () => {
+    return {
+      data: computed(() => ShippingCountriesMock.data),
+      getActiveShippingCountries: () => {
+        console.log('hallo');
+        return vi.fn().mockResolvedValue(ShippingCountriesMock.data);
+      },
+    };
+  };
+});
+
+vi.resetModules();
