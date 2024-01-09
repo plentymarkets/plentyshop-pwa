@@ -4362,8 +4362,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.20.0
-    "@plentymarkets/shop-sdk": ^0.33.0
+    "@plentymarkets/shop-api": ^0.20.1
+    "@plentymarkets/shop-sdk": ^0.33.1
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vee-validate/nuxt": ^4.12.4
@@ -4388,23 +4388,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.20.0":
-  version: 0.20.0
-  resolution: "@plentymarkets/shop-api@npm:0.20.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.20.0%2Fece40bb69d6e83ef9125f01cf4fa1bd61c691893"
+"@plentymarkets/shop-api@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "@plentymarkets/shop-api@npm:0.20.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.20.1%2F9a357ac8d0c2c4a0e72557c8cc235c0c1bd2dd69"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 16a46ac84ca3f81b8df1c784b72fc8e4b8d7b575e8da8300bc9f4bea58246cc240c744cd8306eda722850e2d09048a0e71e98f07418e15a66d3b0216934c3782
+  checksum: f99a7b4e1cee2373e0ad9bd9d214fe3c58e9347cdf58f52298f7e6ac612debf7a07c211a5edd8214caf0809fd42364e26f3e323da16dcf136e84291cada2fbb2
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.33.0":
-  version: 0.33.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.33.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.33.0%2Ffeca259583aea15f1e8d1ce8129335909a021901"
+"@plentymarkets/shop-sdk@npm:^0.33.1":
+  version: 0.33.1
+  resolution: "@plentymarkets/shop-sdk@npm:0.33.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.33.1%2Fdadefa084c1a9e7292a32a561fb08b8c85ac3a36"
   dependencies:
     axios: ^1.6.3
-  checksum: 351924db5f0f7200c6a8fe8aba09b97144f8da500f3fba06d083b698bf606c20d5b6d50de6a82e98236c9b5d23e7b3250355fca3c62dca1351bc80e5bec43c18
+  checksum: 028db721e8aba63dac788f13a29e95b008b71ac3937e71951940373adc08201ea63d9b53259034f395367fbaf7b60458bfcfdf96055b695c23dc250f705ffc98
   languageName: node
   linkType: hard
 
@@ -7275,13 +7275,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.6.3":
-  version: 1.6.5
-  resolution: "axios@npm:1.6.5"
+  version: 1.6.4
+  resolution: "axios@npm:1.6.4"
   dependencies:
     follow-redirects: ^1.15.4
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: e28d67b2d9134cb4608c44d8068b0678cfdccc652742e619006f27264a30c7aba13b2cd19c6f1f52ae195b5232734925928fb192d5c85feea7edd2f273df206d
+  checksum: 48d8af8488ac7402fae312437c0189b3b609a472fca2f7fc796129c804d98520589b6317096eba8509711d49f855a3f620b6a24ff23acd73ac26433d0383b8f9
   languageName: node
   linkType: hard
 
