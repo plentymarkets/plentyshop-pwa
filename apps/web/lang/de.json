@@ -627,7 +627,7 @@
       "orderPropertyTypeFile": "Typ: Datei",
       "uploading": "uploading",
       "uploaded": "uploaded",
-      "dragAndDropFileHereOr": "Datei hierher ziehen und ablegen oder",
+      "dragAndDropFileHereOrUpload": "Datei hierher ziehen und ablegen oder {uploadFile}",
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
       "maximumFileSize": "Erlaubte Dateigröße",

@@ -627,7 +627,7 @@
       "orderPropertyTypeFile": "Type: File",
       "uploading": "uploading",
       "uploaded": "uploaded",
-      "dragAndDropFileHereOr":"Drag and drop file here or",
+      "dragAndDropFileHereOrUpload": "Drag and drop file here or {uploadFile}",
       "uploadFile": "Upload File",
       "acceptedFormats": "Accepted formats",
       "maximumFileSize": "Maximum filesize",

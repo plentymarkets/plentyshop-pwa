@@ -14,10 +14,13 @@
             <div>
               <img src="/images/file-upload.svg" />
             </div>
-            <div class="text-black">{{ $t('orderProperties.upload.dragAndDropFileHereOr') }}</div>
-            <div class="underline">
-              {{ $t('orderProperties.upload.uploadFile') }}
-            </div>
+            <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
+              <template #uploadFile>
+                <div class="underline">
+                  {{ $t('orderProperties.upload.uploadFile') }}
+                </div>
+              </template>
+            </i18n-t>
           </div>
         </SfButton>
         <div>
