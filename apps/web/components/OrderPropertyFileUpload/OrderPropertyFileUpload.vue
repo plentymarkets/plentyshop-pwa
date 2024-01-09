@@ -22,11 +22,11 @@
         <div>
           <div class="mr-5">
             <span> {{ $t('orderProperties.upload.acceptedFormats') }}: </span>
-            <span v-for="(suportedFormat, i) in supportedFormats" :key="suportedFormat" class="m-0 p-0">
+            <span v-for="(suportedFormat, i) in Object.keys(supportedFormats)" :key="suportedFormat" class="m-0 p-0">
               <span>
                 {{ suportedFormat }}
               </span>
-              <span v-if="i < supportedFormats.length - 1">,</span>
+              <span v-if="i < Object.keys(supportedFormats).length - 1">,</span>
             </span>
           </div>
           <span> {{ $t('orderProperties.upload.maximumFileSize') }}: 10mb </span>
@@ -77,26 +77,28 @@ const loading = ref(false);
 const loaded = ref(false);
 const loadingValue = ref(25);
 const fileName = ref('');
+const { send } = useNotification();
+const i18n = useI18n();
 
-const supportedFormats = [
-  'doc',
-  'docx',
-  'pdf',
-  'txt',
-  'obj',
-  'eps',
-  'ps',
-  'psd',
-  'sla',
-  'stp',
-  'step',
-  '3mf',
-  '3ds',
-  'max',
-  'jpg',
-  'png',
-  'svg',
-];
+const supportedFormats = {
+  doc: 'application/msword',
+  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  pdf: 'application/pdf',
+  txt: 'text/plain',
+  obj: 'application/x-tgif',
+  eps: 'application/postscript',
+  ps: 'application/postscript',
+  psd: 'image/vnd.adobe.photoshop',
+  sla: 'application/vnd.scribus',
+  stp: 'application/step',
+  step: 'application/step',
+  '3mf': 'model/3mf',
+  '3ds': 'image/x-3ds',
+  max: 'application/x-3ds',
+  jpg: 'image/jpeg',
+  png: 'image/png',
+  svg: 'image/svg+xml',
+};
 
 const loadedFile: Ref<File | null> = ref(null);
 
@@ -106,12 +108,17 @@ const handleFileUpload = (event: Event) => {
     loadedFile.value = target.files[0];
     const reader = new FileReader();
     reader.addEventListener('load', (e) => {
-      if (loadedFile.value) {
+      if (loadedFile.value && Object.values(supportedFormats).filter((x) => x === loadedFile.value?.type).length > 0) {
         fileName.value = loadedFile.value.name;
         if (e && e.target && e.target.result) {
           value.value = new Blob([e.target.result], { type: loadedFile.value.type });
           loaded.value = true;
         }
+      } else {
+        send({
+          type: 'negative',
+          message: i18n.t('orderProperties.upload.unSupportedFileType'),
+        });
       }
     });
     reader.readAsArrayBuffer(target.files[0]);

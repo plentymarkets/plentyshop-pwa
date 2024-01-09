@@ -630,7 +630,8 @@
       "dragAndDropFileHereOr":"Drag and drop file here or",
       "uploadFile": "Upload File",
       "acceptedFormats": "Accepted formats",
-      "maximumFileSize": "Maximum filesize"
+      "maximumFileSize": "Maximum filesize",
+      "unSupportedFileType": "Uploaded file is not supported"
     }
   },
   "errorMessages": {

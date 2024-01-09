@@ -630,7 +630,8 @@
       "dragAndDropFileHereOr": "Datei hierher ziehen und ablegen oder",
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
-      "maximumFileSize": "Erlaubte Dateigröße"
+      "maximumFileSize": "Erlaubte Dateigröße",
+      "unSupportedFileType": "Die hochgeladene Datei wird nicht unterstützt"
     }
   },
   "errorMessages": {
