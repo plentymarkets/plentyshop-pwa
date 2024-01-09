@@ -624,7 +624,8 @@
     "vat": {
       "incl": "incl.",
       "plus": "plus"
-    }
+    },
+    "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
     "email": {
