@@ -633,6 +633,7 @@
       "maximumFileSize": "Maximum filesize",
       "unSupportedFileType": "Uploaded file is not supported"
     }
+    "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
     "email": {

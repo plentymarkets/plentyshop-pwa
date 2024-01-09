@@ -633,6 +633,7 @@
       "maximumFileSize": "Erlaubte Dateigröße",
       "unSupportedFileType": "Die hochgeladene Datei wird nicht unterstützt"
     }
+    "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
   "errorMessages": {
     "email": {
