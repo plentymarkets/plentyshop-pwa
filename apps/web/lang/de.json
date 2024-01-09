@@ -625,8 +625,8 @@
     },
     "upload": {
       "orderPropertyTypeFile": "Typ: Datei",
-      "uploading": "uploading",
-      "uploaded": "uploaded",
+      "uploading": "lädt hoch",
+      "uploaded": "hochgeladen",
       "dragAndDropFileHereOrUpload": "Datei hierher ziehen und ablegen oder {uploadFile}",
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
