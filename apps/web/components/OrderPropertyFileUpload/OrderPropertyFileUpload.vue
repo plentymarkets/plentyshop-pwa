@@ -30,7 +30,7 @@
               <span>
                 {{ supportedFormat }}
               </span>
-              <span v-if="i < Object.keys(supportedFormats).length - 1">,</span>
+              <span v-if="i < Object.keys(supportedFormats).length - 1">, </span>
             </span>
           </div>
           <span> {{ $t('orderProperties.upload.maximumFileSize') }}: 10mb </span>
