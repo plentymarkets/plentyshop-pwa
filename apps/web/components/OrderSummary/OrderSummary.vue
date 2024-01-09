@@ -12,13 +12,13 @@
         <div
           class="flex justify-between typography-text-base w-full"
           v-for="property in orderPropertiesWithVatAdditionalCosts"
-          :key="property.propertyId"
+          :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
         >
           <div class="flex flex-col gap-2 grow pr-2">
-            <p>{{ property.name }}</p>
+            <p>{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           </div>
           <div class="flex flex-col gap-2 text-right">
-            <p>{{ n(property.price, 'currency') }}</p>
+            <p>{{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}</p>
           </div>
         </div>
 
@@ -53,13 +53,13 @@
         <div
           class="flex justify-between typography-text-base w-full"
           v-for="property in orderPropertiesWithoutVat"
-          :key="property.propertyId"
+          :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
         >
           <div class="flex flex-col gap-2 grow pr-2">
-            <p>{{ property.name }}</p>
+            <p>{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           </div>
           <div class="flex flex-col gap-2 text-right">
-            <p>{{ n(property.price, 'currency') }}</p>
+            <p>{{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}</p>
           </div>
         </div>
         <UiDivider class="mt-4 w-auto" />

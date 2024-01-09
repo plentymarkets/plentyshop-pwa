@@ -8,21 +8,19 @@
     </div>
     <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-      <client-only>
-        <OrderSummary v-if="cart" :cart="cart">
-          <Coupon v-if="isDesktop" class="mb-5" />
-          <SfButton
-            data-testid="checkout-button"
-            :tag="NuxtLink"
-            :to="localePath(paths.checkout)"
-            size="lg"
-            class="w-full mb-4 md:mb-0"
-          >
-            {{ $t('goToCheckout') }}
-          </SfButton>
-          <PayPalExpressButton class="mt-4" type="CartPreview" />
-        </OrderSummary>
-      </client-only>
+      <OrderSummary v-if="cart" :cart="cart">
+        <Coupon v-if="isDesktop" class="mb-5" />
+        <SfButton
+          data-testid="checkout-button"
+          :tag="NuxtLink"
+          :to="localePath(paths.checkout)"
+          size="lg"
+          class="w-full mb-4 md:mb-0"
+        >
+          {{ $t('goToCheckout') }}
+        </SfButton>
+        <PayPalExpressButton class="mt-4" type="CartPreview" />
+      </OrderSummary>
     </div>
   </div>
   <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
