@@ -16,6 +16,8 @@
         <SfSelect
           :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
+          v-bind="selectedValueAttributes"
+          :invalid="Boolean(errors['selectedValue'])"
           :placeholder="`-- ${t('orderProperties.select')} --`"
         >
           <option value="">{{ t('orderProperties.noSelection') }}</option>
@@ -29,6 +31,7 @@
         <slot name="tooltip" />
       </div>
     </div>
+    <VeeErrorMessage as="span" name="selectedValue" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -37,17 +40,19 @@ import { SfSelect } from '@storefront-ui/vue';
 import { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
-import { ref } from 'vue';
+import { object, string } from 'yup';
+import { useForm } from 'vee-validate';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
+const { invalidFields, registerValidator } = useValidatorAggregatorProperties();
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
-const selectedValue = ref('');
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
@@ -55,6 +60,33 @@ const options = Object.values(productProperty.property.selectionValues).map(
     value: String(selection.id),
   }),
 );
+
+const validationSchema = toTypedSchema(
+  object({
+    selectedValue: string().required(t('errorMessages.requiredField')).default(''),
+  }),
+);
+
+const { errors, defineField, validate, meta } = useForm({
+  validationSchema: validationSchema,
+});
+
+// const addValidator = inject(AddValidatorKey, () => {
+//   throw new Error(t('errorMessages.missingValidationAggregator'));
+// });
+
+registerValidator(validate);
+
+watch(
+  () => meta.value,
+  () => {
+    meta.value.valid
+      ? invalidFields.value.splice(invalidFields.value.findIndex((field) => field['selectedValue']))
+      : invalidFields.value.push({ selectedValue: true });
+  },
+);
+
+const [selectedValue, selectedValueAttributes] = defineField('selectedValue');
 
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
   selectedValue.value = String(Object.values(options)[0].value);
@@ -64,8 +96,9 @@ watch(
   () => selectedValue.value,
   (updatedValue) => {
     if (property) {
-      property.property.value = updatedValue.trim() === '' ? null : updatedValue;
+      property.property.value = updatedValue === undefined || updatedValue.trim() === '' ? null : updatedValue;
     }
   },
+  { immediate: true },
 );
 </script>
