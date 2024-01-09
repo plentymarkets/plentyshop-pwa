@@ -26,9 +26,9 @@
         <div>
           <div class="mr-5">
             <span> {{ $t('orderProperties.upload.acceptedFormats') }}: </span>
-            <span v-for="(suportedFormat, i) in Object.keys(supportedFormats)" :key="suportedFormat" class="m-0 p-0">
+            <span v-for="(supportedFormat, i) in Object.keys(supportedFormats)" :key="supportedFormat" class="m-0 p-0">
               <span>
-                {{ suportedFormat }}
+                {{ supportedFormat }}
               </span>
               <span v-if="i < Object.keys(supportedFormats).length - 1">,</span>
             </span>
