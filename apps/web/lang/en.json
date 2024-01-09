@@ -215,6 +215,10 @@
   "cart": "Cart",
   "wishlist": "Wishlist",
   "addProductToWishlist": "Add {label} to wishlist",
+  "wishlistInteraction": {
+    "delete": "The item was removed from your wish list.",
+    "add": "The item was added to your wish list."
+  },
   "quantitySelector": "Quantity Selector",
   "quantitySelectorDecrease": "Decrease value",
   "quantitySelectorIncrease": "Increase value",
