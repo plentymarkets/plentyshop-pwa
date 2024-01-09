@@ -71,6 +71,7 @@ import { SfButton, SfInput, SfIconClose, SfProgressCircular } from '@storefront-
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
 import { Ref, ref } from 'vue';
+
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
