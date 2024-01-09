@@ -624,7 +624,7 @@
       "plus": "zzgl."
     },
     "upload": {
-      "orderPropertyTypeFile":"Order Property - Type File",
+      "orderPropertyTypeFile": "Typ: Datei",
       "uploading": "uploading",
       "uploaded": "uploaded",
       "dragAndDropFileHereOr": "Datei hierher ziehen und ablegen oder",

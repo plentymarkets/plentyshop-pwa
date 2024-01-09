@@ -1,6 +1,7 @@
 <template>
   <div class="w-full">
     <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+      {{ productPropertyGetters.getOrderPropertyName(productProperty) }} -
       {{ $t('orderProperties.upload.orderPropertyTypeFile') }}
       <span v-if="loading"> {{ $t('orderProperties.upload.uploading') }} </span>
       <span v-if="loaded"> {{ $t('orderProperties.upload.uploaded') }} </span>
