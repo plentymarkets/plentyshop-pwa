@@ -4362,8 +4362,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.18.3
-    "@plentymarkets/shop-sdk": ^0.31.0
+    "@plentymarkets/shop-api": ^0.20.1
+    "@plentymarkets/shop-sdk": ^0.33.1
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vee-validate/nuxt": ^4.12.4
@@ -4388,23 +4388,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.18.3":
-  version: 0.18.3
-  resolution: "@plentymarkets/shop-api@npm:0.18.3::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.18.3%2F2846c6f309c7173203d8ce7df14e507cd9dd68c5"
+"@plentymarkets/shop-api@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "@plentymarkets/shop-api@npm:0.20.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.20.1%2F9a357ac8d0c2c4a0e72557c8cc235c0c1bd2dd69"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
-    axios: ^0.21.1
+    axios: ^1.6.3
     consola: ^3.0.0
-  checksum: ea9a258e4c3fd08352a31dc33e874c9cb7db4417a5b6c381be870c33bc09bb488e10ff5660a58540984ba0b5a14c617605a578188dac0aff427e0f11c1b93236
+  checksum: f99a7b4e1cee2373e0ad9bd9d214fe3c58e9347cdf58f52298f7e6ac612debf7a07c211a5edd8214caf0809fd42364e26f3e323da16dcf136e84291cada2fbb2
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.31.0":
-  version: 0.31.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.31.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.31.0%2F456dbc4868b3323cc3ed9d5755a6e13cbb2ab050"
+"@plentymarkets/shop-sdk@npm:^0.33.1":
+  version: 0.33.1
+  resolution: "@plentymarkets/shop-sdk@npm:0.33.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.33.1%2Fdadefa084c1a9e7292a32a561fb08b8c85ac3a36"
   dependencies:
-    axios: ^0.27.2
-  checksum: 2726a3f03cc323de19c55443bdadf5cae28f89cde9bbcf6e8093ba14bdd2fb3ec3c3b3f41072525d9f5a9c33977eff5a2f5cc647f85d6e4dde82eabf1d6f53b1
+    axios: ^1.6.3
+  checksum: 028db721e8aba63dac788f13a29e95b008b71ac3937e71951940373adc08201ea63d9b53259034f395367fbaf7b60458bfcfdf96055b695c23dc250f705ffc98
   languageName: node
   linkType: hard
 
@@ -7264,15 +7264,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.1":
-  version: 0.21.4
-  resolution: "axios@npm:0.21.4"
-  dependencies:
-    follow-redirects: ^1.14.0
-  checksum: 44245f24ac971e7458f3120c92f9d66d1fc695e8b97019139de5b0cc65d9b8104647db01e5f46917728edfc0cfd88eb30fc4c55e6053eef4ace76768ce95ff3c
-  languageName: node
-  linkType: hard
-
 "axios@npm:^0.27.2":
   version: 0.27.2
   resolution: "axios@npm:0.27.2"
@@ -7280,6 +7271,17 @@ __metadata:
     follow-redirects: ^1.14.9
     form-data: ^4.0.0
   checksum: 38cb7540465fe8c4102850c4368053c21683af85c5fdf0ea619f9628abbcb59415d1e22ebc8a6390d2bbc9b58a9806c874f139767389c862ec9b772235f06854
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.3":
+  version: 1.6.5
+  resolution: "axios@npm:1.6.5"
+  dependencies:
+    follow-redirects: ^1.15.4
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: e28d67b2d9134cb4608c44d8068b0678cfdccc652742e619006f27264a30c7aba13b2cd19c6f1f52ae195b5232734925928fb192d5c85feea7edd2f273df206d
   languageName: node
   linkType: hard
 
@@ -11699,13 +11701,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"follow-redirects@npm:^1.14.0":
-  version: 1.15.3
-  resolution: "follow-redirects@npm:1.15.3"
+"follow-redirects@npm:^1.15.4":
+  version: 1.15.4
+  resolution: "follow-redirects@npm:1.15.4"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: 584da22ec5420c837bd096559ebfb8fe69d82512d5585004e36a3b4a6ef6d5905780e0c74508c7b72f907d1fa2b7bd339e613859e9c304d0dc96af2027fd0231
+  checksum: e178d1deff8b23d5d24ec3f7a94cde6e47d74d0dc649c35fc9857041267c12ec5d44650a0c5597ef83056ada9ea6ca0c30e7c4f97dbf07d035086be9e6a5b7b6
   languageName: node
   linkType: hard
 
@@ -17599,7 +17601,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"proxy-from-env@npm:1.1.0":
+"proxy-from-env@npm:1.1.0, proxy-from-env@npm:^1.1.0":
   version: 1.1.0
   resolution: "proxy-from-env@npm:1.1.0"
   checksum: ed7fcc2ba0a33404958e34d95d18638249a68c430e30fcb6c478497d72739ba64ce9810a24f53a7d921d0c065e5b78e3822759800698167256b04659366ca4d4
