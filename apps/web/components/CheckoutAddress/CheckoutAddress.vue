@@ -65,16 +65,14 @@ const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
-await getActiveShippingCountries();
-
-console.log(activeShippingCountries.value);
-
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
 const editMode = ref(false);
 const selectedAddress = computed(() => props.addresses?.[0] ?? ({} as Address));
 const emit = defineEmits(['on-saved']);
+
+getActiveShippingCountries();
 
 const create = () => {
   editMode.value = false;
