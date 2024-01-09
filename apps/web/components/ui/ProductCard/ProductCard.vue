@@ -18,21 +18,11 @@
           format="webp"
         />
       </SfLink>
-      <SfButton
-        variant="tertiary"
-        size="sm"
+      <WishlistButton
         square
         class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
-        :aria-label="t('addProductToWishlist', productName)"
-        :disabled="wishlistLoading"
-        @click="onWishlistClick()"
-      >
-        <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
-        <template v-else>
-          <SfIconFavoriteFilled v-if="isWishlistItem(variationId)" size="sm" />
-          <SfIconFavorite v-else size="sm" />
-        </template>
-      </SfButton>
+        :product="product"
+      />
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
       <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
@@ -102,8 +92,6 @@ import {
   SfIconChevronRight,
   SfRating,
   SfCounter,
-  SfIconFavorite,
-  SfIconFavoriteFilled,
 } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
@@ -115,13 +103,11 @@ const { product } = withDefaults(defineProps<ProductCardProps>(), {
 });
 
 const { data: categoryTree } = useCategoryTree();
-const { isWishlistItem, interactWithWishlist } = useWishlist();
 
 const { addToCart } = useCart();
 const { send } = useNotification();
 const { t } = useI18n();
 const loading = ref(false);
-const wishlistLoading = ref(false);
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -153,14 +139,6 @@ const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-const productName = computed(() => productGetters.getName(product));
-const variationId = computed(() => productGetters.getVariationId(product));
-
-const onWishlistClick = async () => {
-  wishlistLoading.value = true;
-  await interactWithWishlist(variationId.value, 1);
-  wishlistLoading.value = false;
-};
 
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
