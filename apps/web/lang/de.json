@@ -622,7 +622,8 @@
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
-    }
+    },
+    "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
   "errorMessages": {
     "email": {

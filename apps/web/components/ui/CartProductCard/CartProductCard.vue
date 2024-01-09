@@ -42,7 +42,23 @@
             <span class="font-medium">{{ attribute.value }}</span>
           </li>
         </ul>
+
+        <div
+          class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+          v-if="cartItem.basketItemOrderParams.length > 0"
+        >
+          <div class="text-[15px]">{{ $t('orderProperties.additionalCostsPerItem') }}:</div>
+          <ul>
+            <CartOrderProperty
+              v-for="property in cartItem.basketItemOrderParams"
+              :key="property.propertyId"
+              :cart-item="cartItem"
+              :basket-item-order-param="property"
+            />
+          </ul>
+        </div>
       </div>
+
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
