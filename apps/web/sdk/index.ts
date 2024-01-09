@@ -1,5 +1,6 @@
 import { PlentysystemsModuleType, plentysystemsModule, client } from '@plentymarkets/shop-sdk';
 import { initSDK, buildModule } from '@vue-storefront/sdk';
+import { AxiosRequestHeaders } from 'axios';
 
 // Maintain a reference to the interceptor
 let interceptorIdRequest: number | null = null;
@@ -53,7 +54,7 @@ export const useSdk = () => {
     (config) => {
       if (config.baseURL?.includes('/plentysystems')) {
         if (!config.headers) {
-          config.headers = {};
+          config.headers = {} as AxiosRequestHeaders;
         }
 
         if (process.server) {

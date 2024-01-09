@@ -6,13 +6,33 @@
         {{ t('itemsInCart', cartItemsCount) }}
       </p>
     </div>
+
     <div class="px-4 pb-4 mt-3 md:px-6 md:pb-6 md:mt-0">
+      <div v-if="orderPropertiesWithVatAdditionalCosts.length > 0" class="mb-4">
+        <div
+          class="flex justify-between typography-text-base w-full"
+          v-for="property in orderPropertiesWithVatAdditionalCosts"
+          :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
+        >
+          <div class="flex flex-col gap-2 grow pr-2">
+            <p>{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
+          </div>
+          <div class="flex flex-col gap-2 text-right">
+            <p>{{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}</p>
+          </div>
+        </div>
+
+        <UiDivider class="mt-4 w-auto" />
+      </div>
+
       <div class="flex justify-between typography-text-base pb-4">
         <div class="flex flex-col gap-2 grow pr-2">
           <p data-testid="subtotal-label">{{ t('itemsSubtotal') }}</p>
           <p data-testid="shipping-label">{{ t('delivery') }}</p>
           <p v-if="cartGetters.getCouponDiscount(props.cart)" data-testid="coupon-label">{{ t('coupon.name') }}</p>
-          <p data-testid="vat-label">{{ t('estimatedTax') }}</p>
+          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat-label">
+            {{ t('estimatedTax') }} {{ cartGetters.getTotalVatValue(vat) }}%
+          </p>
         </div>
         <div class="flex flex-col gap-2 text-right">
           <p data-testid="subtotal" class="font-medium">{{ n(totals.subTotal, 'currency') }}</p>
@@ -22,14 +42,34 @@
           <p v-if="cartGetters.getCouponDiscount(props.cart)" class="font-medium" data-testid="coupon-value">
             {{ n(cartGetters.getCouponDiscount(props.cart), 'currency') }}
           </p>
-          <p data-testid="vat">{{ n(totals.vatAmmount, 'currency') }}</p>
+          <p v-for="(vat, index) in totals.vats" :key="index" data-testid="vat">
+            {{ n(cartGetters.getTotalVatAmount(vat), 'currency') }}
+          </p>
         </div>
       </div>
+
+      <div v-if="orderPropertiesWithoutVat.length > 0" class="mb-4">
+        <UiDivider class="mb-4" />
+        <div
+          class="flex justify-between typography-text-base w-full"
+          v-for="property in orderPropertiesWithoutVat"
+          :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
+        >
+          <div class="flex flex-col gap-2 grow pr-2">
+            <p>{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
+          </div>
+          <div class="flex flex-col gap-2 text-right">
+            <p>{{ n(cartGetters.getBasketItemOrderParamPrice(property), 'currency') }}</p>
+          </div>
+        </div>
+        <UiDivider class="mt-4 w-auto" />
+      </div>
+
       <div class="flex justify-between typography-headline-4 md:typography-headline-3 font-bold pb-4 mb-4">
         <p data-testid="total-label">{{ t('total') }}</p>
         <p data-testid="total">{{ n(totals.total, 'currency') }}</p>
       </div>
-      <UiDivider class="my-4 w-auto" />
+      <UiDivider class="w-auto" />
       <slot />
     </div>
   </div>
@@ -47,7 +87,7 @@ const totals = computed(() => {
   return {
     total: totalsData.total,
     subTotal: totalsData.subtotal,
-    vatAmmount: Number(totalsData.vatAmount),
+    vats: totalsData.totalVats,
   };
 });
 
@@ -56,4 +96,8 @@ const getShippingAmount = (amount: number) => {
 };
 
 const cartItemsCount = computed(() => props.cart?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const orderPropertiesWithoutVat = computed(() => cartGetters.getOrderPropertiesWithoutVat(props.cart));
+const orderPropertiesWithVatAdditionalCosts = computed(() =>
+  cartGetters.getOrderPropertiesAdditionalCostsWithVat(props.cart),
+);
 </script>
