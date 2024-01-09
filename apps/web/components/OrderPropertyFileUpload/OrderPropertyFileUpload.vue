@@ -12,7 +12,7 @@
         <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
           <div align="center">
             <div>
-              <img src="/images/file-upload.svg" />
+              <img src="/images/file-upload.svg" :alt="$t('orderProperties.upload.uploadFile')" />
             </div>
             <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
               <template #uploadFile>
