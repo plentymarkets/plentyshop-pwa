@@ -17,7 +17,7 @@
           :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
           v-bind="selectedValueAttributes"
-          :invalid="Boolean(errors['selectedValue'])"
+          :invalid="productPropertyGetters.isOrderPropertyRequired(productProperty) && Boolean(errors['selectedValue'])"
           :placeholder="`-- ${t('orderProperties.select')} --`"
         >
           <option value="">{{ t('orderProperties.noSelection') }}</option>
@@ -31,7 +31,13 @@
         <slot name="tooltip" />
       </div>
     </div>
-    <VeeErrorMessage as="span" name="selectedValue" class="flex text-negative-700 text-sm mt-2" />
+
+    <VeeErrorMessage
+      v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"
+      as="span"
+      name="selectedValue"
+      class="flex text-negative-700 text-sm mt-2"
+    />
   </div>
 </template>
 
@@ -48,7 +54,7 @@ const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
-const { invalidFields, registerValidator } = useValidatorAggregatorProperties();
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
@@ -71,26 +77,24 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-// const addValidator = inject(AddValidatorKey, () => {
-//   throw new Error(t('errorMessages.missingValidationAggregator'));
-// });
-
-registerValidator(validate);
-
-watch(
-  () => meta.value,
-  () => {
-    meta.value.valid
-      ? invalidFields.value.splice(invalidFields.value.findIndex((field) => field['selectedValue']))
-      : invalidFields.value.push({ selectedValue: true });
-  },
-);
+if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+  registerValidator(validate);
+}
 
 const [selectedValue, selectedValueAttributes] = defineField('selectedValue');
 
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
   selectedValue.value = String(Object.values(options)[0].value);
 }
+
+watch(
+  () => meta.value,
+  () => {
+    if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+    }
+  },
+);
 
 watch(
   () => selectedValue.value,

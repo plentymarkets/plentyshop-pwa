@@ -4,9 +4,7 @@ export interface ValidatorMethodObject {
   valid: boolean;
 }
 
-export interface ValidatorInvalidFields {
-  [key: string]: boolean;
-}
+export type ValidatorInvalidFields = string;
 
 export type ValidatorMethodType = () => Promise<ValidatorMethodObject>;
 
@@ -20,6 +18,7 @@ export interface UseValidatorAggregatorProperties {
   registerValidator: (validator: ValidatorMethodType) => void;
   invalidFields: Ref<UseValidatorAggregatorPropertiesState['invalidFields']>;
   validators: Ref<UseValidatorAggregatorPropertiesState['validators']>;
+  registerInvalidFields: (validMeta: boolean, orderProperty: string) => void;
 }
 
 export type UseValidatorAggregatorPropertiesReturn = () => UseValidatorAggregatorProperties;

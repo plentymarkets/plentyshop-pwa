@@ -12,12 +12,25 @@
     </label>
 
     <div class="flex items-center">
-      <SfInput :id="`prop-${orderPropertyId}`" v-model="value" :wrapper-class="'w-full'" />
+      <SfInput
+        :id="`prop-${orderPropertyId}`"
+        v-model="value"
+        v-bind="valueAttributes"
+        :invalid="productPropertyGetters.isOrderPropertyRequired(productProperty) && Boolean(errors['value'])"
+        :wrapper-class="'w-full'"
+      />
 
       <div v-if="hasTooltip" class="w-[28px]">
         <slot name="tooltip" />
       </div>
     </div>
+
+    <VeeErrorMessage
+      v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"
+      as="span"
+      name="value"
+      class="flex text-negative-700 text-sm mt-2"
+    />
   </div>
 </template>
 
@@ -25,23 +38,50 @@
 import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 
-const value = ref('');
+const validationSchema = toTypedSchema(
+  object({
+    value: string().required(t('errorMessages.requiredField')).default(''),
+  }),
+);
+
+const { errors, defineField, validate, meta } = useForm({
+  validationSchema: validationSchema,
+});
+
+if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+  registerValidator(validate);
+}
+
+const [value, valueAttributes] = defineField('value');
+
+watch(
+  () => meta.value,
+  () => {
+    if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+    }
+  },
+);
 
 watch(
   () => value.value,
   (updatedValue) => {
     if (property) {
-      property.property.value = updatedValue.trim() === '' ? null : updatedValue;
+      property.property.value = updatedValue === undefined || updatedValue.trim() === '' ? null : updatedValue;
     }
   },
 );
