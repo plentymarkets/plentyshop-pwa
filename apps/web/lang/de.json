@@ -215,6 +215,10 @@
   "cart": "Warenkorb",
   "wishlist": "Wunschliste",
   "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
+  "wishlistInteraction": {
+    "delete": "Der Artikel wurde von der Wunschliste entfernt.",
+    "add": "Der Artikel wurde der Wunschliste hinzugefügt."
+  },
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
   "quantitySelectorIncrease": "Menge erhöhen",
@@ -622,7 +626,8 @@
     "vat": {
       "incl": "inkl.",
       "plus": "zzgl."
-    }
+    },
+    "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
   "errorMessages": {
     "email": {
