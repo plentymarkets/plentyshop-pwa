@@ -26,7 +26,7 @@ export const useValidatorAggregatorProperties: UseValidatorAggregatorPropertiesR
    * @example
    * ``` ts
    * registerValidator({
-   *   true
+   *   valid: true
    * });
    * ```
    */
