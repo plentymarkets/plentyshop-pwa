@@ -17,7 +17,7 @@
           :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
           v-bind="selectedValueAttributes"
-          :invalid="productPropertyGetters.isOrderPropertyRequired(productProperty) && Boolean(errors['selectedValue'])"
+          :invalid="isOrderPropertyRequired && Boolean(errors['selectedValue'])"
           :placeholder="`-- ${t('orderProperties.select')} --`"
         >
           <option value="">{{ t('orderProperties.noSelection') }}</option>
@@ -33,7 +33,7 @@
     </div>
 
     <VeeErrorMessage
-      v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"
+      v-if="isOrderPropertyRequired"
       as="span"
       name="selectedValue"
       class="flex text-negative-700 text-sm mt-2"
@@ -59,6 +59,7 @@ const orderPropertyId = productPropertyGetters.getOrderPropertyId(productPropert
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
+const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
@@ -77,9 +78,7 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
-  registerValidator(validate);
-}
+if (isOrderPropertyRequired) registerValidator(validate);
 
 const [selectedValue, selectedValueAttributes] = defineField('selectedValue');
 
@@ -90,7 +89,7 @@ if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object
 watch(
   () => meta.value,
   () => {
-    if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+    if (isOrderPropertyRequired) {
       registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
     }
   },
