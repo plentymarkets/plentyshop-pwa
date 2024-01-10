@@ -1,39 +1,43 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+    <label :for="`prop-${orderPropertyId}`">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
-      <span v-if="productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType">
-        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeType) }}
-        {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator }}
-      <span
-        v-if="
-          productPropertyGetters.getOrderPropertyLabel(productProperty).surchargeIndicator &&
-          productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator
-        "
-      >
-        ,
-      </span>
-      {{ productPropertyGetters.getOrderPropertyLabel(productProperty).requiredIndicator }}
+      <template v-if="orderPropertyLabel.surchargeType">
+        ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+      </template>
+      {{ orderPropertyLabel.surchargeIndicator }}
+      <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
+      {{ orderPropertyLabel.requiredIndicator }}
     </label>
+
     <div class="flex items-center w-full">
       <div class="w-full">
         <SfSelect
-          :id="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`"
+          :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
-          :placeholder="`-- ${$t('orderProperties.select')} --`"
+          v-bind="selectedValueAttributes"
+          :invalid="productPropertyGetters.isOrderPropertyRequired(productProperty) && Boolean(errors['selectedValue'])"
+          :placeholder="`-- ${t('orderProperties.select')} --`"
         >
-          <option value="">{{ $t('orderProperties.noSelection') }}</option>
+          <option value="">{{ t('orderProperties.noSelection') }}</option>
           <option v-for="{ value, label } in options" :key="value" :value="value">
             {{ label }}
           </option>
         </SfSelect>
       </div>
-      <span v-if="hasTooltip" class="w-[28px]">
+
+      <div v-if="hasTooltip" class="w-[28px]">
         <slot name="tooltip" />
-      </span>
+      </div>
     </div>
+
+    <VeeErrorMessage
+      v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"
+      as="span"
+      name="selectedValue"
+      class="flex text-negative-700 text-sm mt-2"
+    />
   </div>
 </template>
 
@@ -42,13 +46,19 @@ import { SfSelect } from '@storefront-ui/vue';
 import { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
-import { ref } from 'vue';
+import { object, string } from 'yup';
+import { useForm } from 'vee-validate';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
-const { getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
-const selectedValue = ref('');
+const { t, n } = useI18n();
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
+const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
+const { getPropertyById } = useProductOrderProperties();
+const property = getPropertyById(orderPropertyId);
+const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 
 const options = Object.values(productProperty.property.selectionValues).map(
   (selection: OrderPropertySelectionValue) => ({
@@ -57,22 +67,42 @@ const options = Object.values(productProperty.property.selectionValues).map(
   }),
 );
 
-const property = getPropertyById(productPropertyGetters.getOrderPropertyId(productProperty));
+const validationSchema = toTypedSchema(
+  object({
+    selectedValue: string().required(t('errorMessages.requiredField')).default(''),
+  }),
+);
+
+const { errors, defineField, validate, meta } = useForm({
+  validationSchema: validationSchema,
+});
+
+if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+  registerValidator(validate);
+}
+
+const [selectedValue, selectedValueAttributes] = defineField('selectedValue');
 
 if (productPropertyGetters.isOrderPropertyPreSelected(productProperty) && Object.values(options).length > 0) {
   selectedValue.value = String(Object.values(options)[0].value);
-
-  if (property) {
-    property.property.value = Object.values(options)[0].value;
-  }
 }
+
+watch(
+  () => meta.value,
+  () => {
+    if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+    }
+  },
+);
 
 watch(
   () => selectedValue.value,
   (updatedValue) => {
     if (property) {
-      property.property.value = updatedValue.trim() === '' ? null : updatedValue;
+      property.property.value = updatedValue === undefined || updatedValue.trim() === '' ? null : updatedValue;
     }
   },
+  { immediate: true },
 );
 </script>

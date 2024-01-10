@@ -630,6 +630,7 @@
     "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
   "errorMessages": {
+    "requiredField": "Dieses Feld ist erforderlich.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
       "required": "E-Mail ist erforderlich."
