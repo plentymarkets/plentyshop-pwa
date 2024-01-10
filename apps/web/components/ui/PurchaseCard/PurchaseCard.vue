@@ -1,5 +1,6 @@
 <template>
-  <section
+  <form
+    @submit.prevent="handleAddToCart"
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
@@ -38,7 +39,7 @@
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
       <SfLink variant="secondary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
-        {{ $t('showAllReviews') }}
+        {{ t('showAllReviews') }}
       </SfLink>
     </div>
     <div
@@ -67,29 +68,30 @@
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
+            type="submit"
             data-testid="add-to-cart"
             size="lg"
             class="w-full"
-            @click="handleAddToCart"
-            :disabled="loading || !productGetters.isSalable(product)"
+            :disabled="loading || invalidFields.length > 0 || !productGetters.isSalable(product)"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
             </template>
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ $t('addToCart') }}
-            </span>
+            <template v-else>
+              {{ t('addToCart') }}
+            </template>
           </SfButton>
         </SfTooltip>
       </div>
 
       <div class="mt-4 typography-text-xs flex gap-1">
-        <span>{{ $t('asterisk') }}</span>
-        <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-        <span v-else>{{ $t('itemInclVAT') }}</span>
-        <span>{{ $t('excludedShipping') }}</span>
+        <span>{{ t('asterisk') }}</span>
+        <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+        <span v-else>{{ t('itemInclVAT') }}</span>
+        <span>{{ t('excludedShipping') }}</span>
       </div>
+
       <div
         class="typography-text-xs flex gap-1"
         v-if="
@@ -98,8 +100,8 @@
           )
         "
       >
-        <span>{{ $t('asterisk') }}{{ $t('asterisk') }}</span>
-        <span>{{ $t('orderProperties.hasRequiredFields') }}</span>
+        <span>{{ t('asterisk') }}{{ t('asterisk') }}</span>
+        <span>{{ t('orderProperties.hasRequiredFields') }}</span>
       </div>
       <PayPalExpressButton
         class="mt-4"
@@ -107,7 +109,7 @@
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
       />
     </div>
-  </section>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -122,6 +124,7 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -131,10 +134,10 @@ const props = defineProps<PurchaseCardProps>();
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
-const { getPropertiesForCart } = useProductOrderProperties();
+const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
+const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
-const { getPropertiesPrice } = useProductOrderProperties();
 const { t } = useI18n();
 
 const quantitySelectorValue = ref(1);
@@ -146,11 +149,13 @@ const currentActualPrice = computed(
       productGetters.getPrice(product.value)?.regular ??
       0) + getPropertiesPrice(product.value),
 );
+
 const normalPrice =
   productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
   productGetters.getPrice(product.value)?.special ??
   productGetters.getPrice(product.value)?.regular ??
   0;
+
 const basePriceSingleValue = computed(
   () =>
     productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
@@ -158,6 +163,8 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
+  if (await validateAllFields().then((validatedFields) => validatedFields.some((field) => !field.valid))) return;
+
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
