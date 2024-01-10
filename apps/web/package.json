@@ -53,7 +53,6 @@
     "eslint-config-prettier": "^9.0.0",
     "happy-dom": "^12.10.3",
     "nuxt": "^3.6.5",
-    "playwright-core": "^1.40.1",
     "sass": "^1.64.1",
     "typedoc": "^0.25.3",
     "typedoc-plugin-markdown": "next",
