@@ -74,33 +74,32 @@ mockNuxtImport('useActiveShippingCountries', () => {
   };
 });
 
-import { afterAll, afterEach, beforeAll } from 'vitest'
-import { setupServer } from 'msw/node'
-import { HttpResponse, http } from 'msw'
+import { afterAll, afterEach, beforeAll } from 'vitest';
+import { setupServer } from 'msw/node';
+import { HttpResponse, http } from 'msw';
 import { FacetMock } from './__tests__/fixtures/facet.mock';
 
 export const restHandlers = [
   http.post('http://localhost:8181/plentysystems/getFacet', () => {
-    return HttpResponse.json(FacetMock)
+    return HttpResponse.json(FacetMock);
   }),
   http.get('http://localhost:8181/plentysystems/*', () => {
-    return HttpResponse.json([])
+    return HttpResponse.json([]);
   }),
   http.post('http://localhost:8181/plentysystems/*', () => {
-    return HttpResponse.json([])
+    return HttpResponse.json([]);
   }),
-]
+];
 
-const server = setupServer(...restHandlers)
+const server = setupServer(...restHandlers);
 
 // Start server before all tests
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
 
 //  Close server after all tests
-afterAll(() => server.close())
+afterAll(() => server.close());
 
 // Reset handlers after each test `important for test isolation`
-afterEach(() => server.resetHandlers())
-
+afterEach(() => server.resetHandlers());
 
 vi.resetModules();
