@@ -1,5 +1,5 @@
 <template>
-  <div v-if="transformedProduct?.attributes" data-testid="product-attributes">
+  <div data-testid="product-attributes">
     <div v-for="(attribute, index) in transformedProduct.attributes" :key="index">
       <label :for="'attribute-' + attribute.attributeId" class="capitalize text-xs text-neutral-500">
         {{ attribute.name }}
@@ -38,38 +38,37 @@ const router = useRouter();
 const route = useRoute();
 
 const transformProductData = (product: Product): TransformedProduct => {
-
   const attributes = product?.variationAttributeMap?.attributes.map(({ attributeId, name, values }) => ({
-      attributeId,
+    attributeId,
+    name,
+    values: values.map(({ attributeValueId, name }) => ({
+      attributeValueId,
       name,
-      values: values.map(({ attributeValueId, name }) => ({
-        attributeValueId,
-        name,
-        disabled: false,
-      })),
-    }));
+      disabled: false,
+    })),
+  }));
 
   const combinations = product?.variationAttributeMap?.variations.map(({ variationId, isSalable, attributes }) => ({
-      variationId,
-      isSalable,
-      attributes: attributes ?? [],
-      attributeCombination: attributes ?? [],
-    }));
+    variationId,
+    isSalable,
+    attributes: attributes ?? [],
+    attributeCombination: attributes ?? [],
+  }));
 
   return {
     attributes: attributes ?? [],
-    combinations: combinations ?? [] 
-  }
+    combinations: combinations ?? [],
+  };
 };
 
 const extractVariationIdFromPath = () => {
   if (!route?.fullPath) {
     return null;
   }
-  
+
   const match = route.fullPath.match(/_(\d+)$/);
   return match ? Number(match[1]) : null;
-}
+};
 
 const transformedProduct = reactive<TransformedProduct>(transformProductData(product));
 

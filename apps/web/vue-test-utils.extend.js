@@ -68,7 +68,6 @@ mockNuxtImport('useActiveShippingCountries', () => {
     return {
       data: computed(() => ShippingCountriesMock.data),
       getActiveShippingCountries: () => {
-        console.log('hallo');
         return vi.fn().mockResolvedValue(ShippingCountriesMock.data);
       },
     };

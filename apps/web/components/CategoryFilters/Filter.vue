@@ -124,7 +124,6 @@ function resetPriceFilter() {
 
 const updateFilter = () => {
   for (const filter of filters) {
-
     const filterId = typeof filter.id === 'string' ? filter.id : filter.id.toString();
 
     models[filterId] = Boolean(filter.selected) ?? false;
