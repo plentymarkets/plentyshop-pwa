@@ -4,9 +4,24 @@
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
-    <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
-      {{ productGetters.getName(product) }}
-    </h1>
+    <div class="grid grid-cols-[2fr_1fr] mt-4 gap-x-4">
+      <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+        {{ productGetters.getName(product) }}
+      </h1>
+      <div class="flex items-center justify-center">
+        <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
+          {{ t('addProductToWishlist') }}
+        </WishlistButton>
+
+        <WishlistButton
+          v-else
+          square
+          class="bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
+          :product="product"
+          :quantity="quantitySelectorValue"
+        />
+      </div>
+    </div>
     <Price
       :price="currentActualPrice"
       :normal-price="normalPrice"
@@ -118,6 +133,7 @@ const props = defineProps<PurchaseCardProps>();
 
 const { product } = toRefs(props);
 
+const { isDesktop } = useBreakpoints();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
