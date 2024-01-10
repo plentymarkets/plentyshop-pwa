@@ -18,7 +18,7 @@ export interface UseValidatorAggregatorProperties {
   registerValidator: (validator: ValidatorMethodType) => void;
   invalidFields: Ref<UseValidatorAggregatorPropertiesState['invalidFields']>;
   validators: Ref<UseValidatorAggregatorPropertiesState['validators']>;
-  registerInvalidFields: (validMeta: boolean, orderProperty: string) => void;
+  registerInvalidFields: (validMeta: boolean, fieldUniqueId: string) => void;
 }
 
 export type UseValidatorAggregatorPropertiesReturn = () => UseValidatorAggregatorProperties;

@@ -16,7 +16,7 @@
         :id="`prop-${orderPropertyId}`"
         v-model="value"
         v-bind="valueAttributes"
-        :invalid="productPropertyGetters.isOrderPropertyRequired(productProperty) && Boolean(errors['value'])"
+        :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
         :wrapper-class="'w-full'"
       />
 
@@ -26,7 +26,7 @@
     </div>
 
     <VeeErrorMessage
-      v-if="productPropertyGetters.isOrderPropertyRequired(productProperty)"
+      v-if="isOrderPropertyRequired"
       as="span"
       name="value"
       class="flex text-negative-700 text-sm mt-2"
@@ -51,6 +51,7 @@ const orderPropertyId = productPropertyGetters.getOrderPropertyId(productPropert
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
+const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
 
 const validationSchema = toTypedSchema(
   object({
@@ -62,16 +63,14 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
-  registerValidator(validate);
-}
+if (isOrderPropertyRequired) registerValidator(validate);
 
 const [value, valueAttributes] = defineField('value');
 
 watch(
   () => meta.value,
   () => {
-    if (productPropertyGetters.isOrderPropertyRequired(productProperty)) {
+    if (isOrderPropertyRequired) {
       registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
     }
   },
