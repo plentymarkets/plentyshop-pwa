@@ -1,8 +1,8 @@
 import { createI18n } from 'vue-i18n';
 import { config } from '@vue/test-utils';
 
-const FindTestIdPlugin = (wrapper) => {
-  function findByTestId(testId) {
+const FindTestIdPlugin = (wrapper: any) => {
+  function findByTestId(testId: string) {
     return wrapper.find(`[data-testid='${testId}']`);
   }
 
@@ -11,8 +11,8 @@ const FindTestIdPlugin = (wrapper) => {
   };
 };
 
-const GetTestIdPlugin = (wrapper) => {
-  function getByTestId(testId) {
+const GetTestIdPlugin = (wrapper: any) => {
+  function getByTestId(testId: string) {
     return wrapper.get(`[data-testid='${testId}']`);
   }
 
@@ -31,8 +31,8 @@ const i18n = createI18n({
 });
 config.global.plugins = [i18n];
 config.global.mocks = {
-  $t: (key) => key,
-  $d: (date) => date.toLocaleDateString(),
+  $t: (key: string) => key,
+  $d: (date: Date) => date.toLocaleDateString(),
 };
 config.global.stubs = {
   RouterLink: true,
@@ -40,7 +40,7 @@ config.global.stubs = {
   'i18n-t': true,
 };
 
-import { mockComponent } from '@nuxt/test-utils/runtime';
+import { mockComponent, mockNuxtImport } from '@nuxt/test-utils/runtime';
 import { CategoryTreeMock } from './__tests__/fixtures/category-tree.mock';
 import { ShippingCountriesMock } from './__tests__/fixtures/shipping-countries.mock';
 
@@ -73,5 +73,34 @@ mockNuxtImport('useActiveShippingCountries', () => {
     };
   };
 });
+
+import { afterAll, afterEach, beforeAll } from 'vitest'
+import { setupServer } from 'msw/node'
+import { HttpResponse, http } from 'msw'
+import { FacetMock } from './__tests__/fixtures/facet.mock';
+
+export const restHandlers = [
+  http.post('http://localhost:8181/plentysystems/getFacet', () => {
+    return HttpResponse.json(FacetMock)
+  }),
+  http.get('http://localhost:8181/plentysystems/*', () => {
+    return HttpResponse.json([])
+  }),
+  http.post('http://localhost:8181/plentysystems/*', () => {
+    return HttpResponse.json([])
+  }),
+]
+
+const server = setupServer(...restHandlers)
+
+// Start server before all tests
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+
+//  Close server after all tests
+afterAll(() => server.close())
+
+// Reset handlers after each test `important for test isolation`
+afterEach(() => server.resetHandlers())
+
 
 vi.resetModules();
