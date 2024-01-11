@@ -1,11 +1,17 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
-      {{ productPropertyGetters.getOrderPropertyName(productProperty) }} -
-      {{ $t('orderProperties.upload.orderPropertyTypeFile') }}
-      <span v-if="loading"> {{ $t('orderProperties.upload.uploading') }} </span>
-      <span v-if="loaded"> {{ $t('orderProperties.upload.uploaded') }} </span>
-    </label>
+    <div class="flex row">
+      <label :for="`prop-${productPropertyGetters.getOrderPropertyId(productProperty)}`">
+        {{ productPropertyGetters.getOrderPropertyName(productProperty) }} -
+        {{ $t('orderProperties.upload.orderPropertyTypeFile') }}
+        <span v-if="loading"> {{ $t('orderProperties.upload.uploading') }} </span>
+        <span v-if="loaded"> {{ $t('orderProperties.upload.uploaded') }} </span>
+      </label>
+      <div v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </div>
+    </div>
+
     <div
       v-if="!loaded && !loading"
       class="flex items-center"
@@ -41,10 +47,6 @@
           </div>
           <span> {{ $t('orderProperties.upload.maximumFileSize') }}: 10mb </span>
         </div>
-      </div>
-
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
       </div>
     </div>
 
