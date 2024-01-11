@@ -1,6 +1,6 @@
  import { mount } from '@vue/test-utils';
  import ProductProperties from '~/components/AttributeSelect/AttributeSelect.vue';
-import { ProductMock } from '../../../__tests__/fixtures/product.mock';
+import { ProductMock } from '../../../__tests__/__mocks__/product.mock';
  describe('<ProductProperties />', () => {
    it('should render component', () => {
      const { getByTestId } = mount(ProductProperties, {

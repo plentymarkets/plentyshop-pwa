@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import ProductCard from '~/components/ui/ProductCard/ProductCard.vue';
-import { ProductMock } from '../../../../__tests__/fixtures/product.mock';
+import { ProductMock } from '../../../../__tests__/__mocks__/product.mock';
 
 describe('<ProductCard />', () => {
   it('should render component', () => {

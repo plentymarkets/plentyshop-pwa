@@ -1,5 +1,13 @@
 import { createI18n } from 'vue-i18n';
 import { config } from '@vue/test-utils';
+import { mockComponent, mockNuxtImport } from '@nuxt/test-utils/runtime';
+import { CategoryTreeMock } from './__tests__/__mocks__/category-tree.mock';
+import { ShippingCountriesMock } from './__tests__/__mocks__/shipping-countries.mock';
+import { afterAll, afterEach, beforeAll } from 'vitest';
+import { setupServer } from 'msw/node';
+import { HttpResponse, http } from 'msw';
+import { FacetMock } from './__tests__/__mocks__/facet.mock';
+
 
 const FindTestIdPlugin = (wrapper: any) => {
   function findByTestId(testId: string) {
@@ -40,9 +48,6 @@ config.global.stubs = {
   'i18n-t': true,
 };
 
-import { mockComponent, mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { CategoryTreeMock } from './__tests__/fixtures/category-tree.mock';
-import { ShippingCountriesMock } from './__tests__/fixtures/shipping-countries.mock';
 
 mockComponent('./app.vue', {
   template: `
@@ -73,11 +78,6 @@ mockNuxtImport('useActiveShippingCountries', () => {
     };
   };
 });
-
-import { afterAll, afterEach, beforeAll } from 'vitest';
-import { setupServer } from 'msw/node';
-import { HttpResponse, http } from 'msw';
-import { FacetMock } from './__tests__/fixtures/facet.mock';
 
 export const restHandlers = [
   http.post('http://localhost:8181/plentysystems/getFacet', () => {
