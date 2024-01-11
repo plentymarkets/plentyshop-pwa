@@ -8,7 +8,6 @@ import { setupServer } from 'msw/node';
 import { HttpResponse, http } from 'msw';
 import { FacetMock } from './__tests__/__mocks__/facet.mock';
 
-
 const FindTestIdPlugin = (wrapper: any) => {
   function findByTestId(testId: string) {
     return wrapper.find(`[data-testid='${testId}']`);
@@ -47,7 +46,6 @@ config.global.stubs = {
   NuxtImg: true,
   'i18n-t': true,
 };
-
 
 mockComponent('./app.vue', {
   template: `
