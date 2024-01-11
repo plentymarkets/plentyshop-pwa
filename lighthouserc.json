@@ -73,7 +73,10 @@
       }
     },
     "upload": {
-      "target": "temporary-public-storage"
+      "target": "lhci",
+      "serverBaseUrl": "http://localhost:9001/",
+      "githubToken": "",
+      "token": ""
     }
   }
 }
