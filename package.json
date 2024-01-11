@@ -25,6 +25,7 @@
     "test:coverage": "npx turbo run test:coverage",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && turbo run test:cypress\" \"yarn start\"",
     "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && turbo run test:cypress-dev\" \"yarn dev\"",
+    "lhci:mobile": "lhci autorun",
     "lhci:wizard": "lhci wizard",
     "lhci:server": "lhci server --storage.storageMethod=sql --storage.sqlDialect=sqlite --storage.sqlDatabasePath=./lighthousedb.sql",
     "lhci:audit": "concurrently -k -s=first \"yarn wait-on turbo run lhci:server\" \"lhci autorun\""
