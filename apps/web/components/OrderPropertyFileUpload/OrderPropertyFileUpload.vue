@@ -6,7 +6,13 @@
       <span v-if="loading"> {{ $t('orderProperties.upload.uploading') }} </span>
       <span v-if="loaded"> {{ $t('orderProperties.upload.uploaded') }} </span>
     </label>
-    <div v-if="!loaded && !loading" class="flex items-center">
+    <div
+      v-if="!loaded && !loading"
+      class="flex items-center"
+      id="drop-area"
+      @drop="handleDrop"
+      @dragover="handleDragOver"
+    >
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
         <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
@@ -107,26 +113,32 @@ const supportedFormats = {
 
 const loadedFile: Ref<File | null> = ref(null);
 
+const setBufferValues = () => {
+  const reader = new FileReader();
+  reader.addEventListener('load', (e) => {
+    if (loadedFile.value && Object.values(supportedFormats).filter((x) => x === loadedFile.value?.type).length > 0) {
+      fileName.value = loadedFile.value.name;
+      if (e && e.target && e.target.result) {
+        value.value = new Blob([e.target.result], { type: loadedFile.value.type });
+        loaded.value = true;
+      }
+    } else {
+      send({
+        type: 'negative',
+        message: i18n.t('orderProperties.upload.unSupportedFileType'),
+      });
+    }
+  });
+  if (loadedFile.value) {
+    reader.readAsArrayBuffer(loadedFile.value);
+  }
+};
+
 const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target && target.files && target.files.length > 0) {
     loadedFile.value = target.files[0];
-    const reader = new FileReader();
-    reader.addEventListener('load', (e) => {
-      if (loadedFile.value && Object.values(supportedFormats).filter((x) => x === loadedFile.value?.type).length > 0) {
-        fileName.value = loadedFile.value.name;
-        if (e && e.target && e.target.result) {
-          value.value = new Blob([e.target.result], { type: loadedFile.value.type });
-          loaded.value = true;
-        }
-      } else {
-        send({
-          type: 'negative',
-          message: i18n.t('orderProperties.upload.unSupportedFileType'),
-        });
-      }
-    });
-    reader.readAsArrayBuffer(target.files[0]);
+    setBufferValues();
   }
 };
 const clearUploadedFile = () => {
@@ -135,5 +147,17 @@ const clearUploadedFile = () => {
 };
 const openUploadModal = () => {
   (uploadForm.value as HTMLInputElement).click();
+};
+
+const handleDragOver = (event: Event) => {
+  event.preventDefault();
+};
+
+const handleDrop = (event: DragEvent) => {
+  event.preventDefault();
+  if (event.dataTransfer) {
+    loadedFile.value = event.dataTransfer.files[0];
+    setBufferValues();
+  }
 };
 </script>
