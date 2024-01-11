@@ -1,9 +1,12 @@
 <template>
   <NuxtLayout name="auth" :heading="''">
     <div class="text-lg text-center font-medium">
-      {{ $t('auth.login.heading') }}
+      <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
+      <span v-else>{{ $t('auth.signup.heading') }}</span>
     </div>
-    <LoginComponent @logged-in="returnToPreviousPage" />
+
+    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="returnToPreviousPage" />
+    <register v-else @change-view="isLogin = true" @registered="returnToPreviousPage" />
   </NuxtLayout>
 </template>
 
@@ -17,4 +20,6 @@ const router = useRouter();
 const returnToPreviousPage = () => {
   router.go(-1);
 };
+
+const isLogin = ref(true);
 </script>

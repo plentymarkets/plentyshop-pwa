@@ -459,7 +459,9 @@
       "heading": "Sign up",
       "submitLabel": "Sign up",
       "alreadyHaveAccount": "Already have an account?",
+      "emailAlreadyExists": "This email address is already registered.",
       "logInLinkLabel": "Log in instead",
+      "success": "Your account has been created successfully",
       "modal": {
         "heading": "Welcome",
         "description": "Your account has been created. You can {information} to your account now, so you do not have to do this later during your purchase.",
@@ -627,6 +629,16 @@
       "incl": "incl.",
       "plus": "plus"
     },
+    "upload": {
+      "orderPropertyTypeFile": "Type: File",
+      "uploading": "uploading",
+      "uploaded": "uploaded",
+      "dragAndDropFileHereOrUpload": "Drag and drop file here or {uploadFile}",
+      "uploadFile": "Upload File",
+      "acceptedFormats": "Accepted formats",
+      "maximumFileSize": "Maximum filesize",
+      "unSupportedFileType": "Uploaded file is not supported"
+    },
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
@@ -634,6 +646,10 @@
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."
+    },
+    "password": {
+      "required": "Password is required.",
+      "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
     }
   }
 }
