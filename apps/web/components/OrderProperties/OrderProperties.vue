@@ -41,18 +41,19 @@ import { ComponentsMapper, OrderPropertiesProps } from './types';
 import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
 import OrderPropertySelect from '~/components/OrderPropertySelect/OrderPropertySelect.vue';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
+import OrderPropertyFileUpload from '~/components/OrderPropertyFileUpload/OrderPropertyFileUpload.vue';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 const hasTooltip = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertiesGroups);
-
 const componentsMapper: ComponentsMapper = {
   empty: OrderPropertyCheckbox,
   int: OrderPropertyInput,
   text: OrderPropertyInput,
   float: OrderPropertyInput,
   selection: OrderPropertySelect,
+  file: OrderPropertyFileUpload,
 };
 </script>

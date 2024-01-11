@@ -629,6 +629,16 @@
       "incl": "inkl.",
       "plus": "zzgl."
     },
+    "upload": {
+      "orderPropertyTypeFile": "Typ: Datei",
+      "uploading": "lädt hoch",
+      "uploaded": "hochgeladen",
+      "dragAndDropFileHereOrUpload": "Datei hierher ziehen und ablegen oder {uploadFile}",
+      "uploadFile": "Datei hochladen",
+      "acceptedFormats": "Akzeptiere Dateiformate",
+      "maximumFileSize": "Erlaubte Dateigröße",
+      "unSupportedFileType": "Die hochgeladene Datei wird nicht unterstützt"
+    },
     "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
   "errorMessages": {

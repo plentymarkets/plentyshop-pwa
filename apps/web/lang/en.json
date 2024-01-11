@@ -629,6 +629,16 @@
       "incl": "incl.",
       "plus": "plus"
     },
+    "upload": {
+      "orderPropertyTypeFile": "Type: File",
+      "uploading": "uploading",
+      "uploaded": "uploaded",
+      "dragAndDropFileHereOrUpload": "Drag and drop file here or {uploadFile}",
+      "uploadFile": "Upload File",
+      "acceptedFormats": "Accepted formats",
+      "maximumFileSize": "Maximum filesize",
+      "unSupportedFileType": "Uploaded file is not supported"
+    },
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
