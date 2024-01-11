@@ -1,5 +1,9 @@
 import { defineVitestConfig } from '@nuxt/test-utils/config';
 
+const silenceLogsFromSuspenseComponent = (log: string): boolean => {
+  return log.includes('<Suspense');
+};
+
 export default defineVitestConfig({
   test: {
     coverage: {
@@ -11,8 +15,9 @@ export default defineVitestConfig({
     setupFiles: './vitest.config.setup.ts',
     include: ['**/*/?(*.)+(spec|test).[jt]s'],
     onConsoleLog: (log): any => {
-      // Silence logs coming from vue <Suspense> is experimental, and stdout | unknown component before it
-      if (log.includes('<Suspense')) return false;
+      if (silenceLogsFromSuspenseComponent(log)) {
+        return false;
+      }
       return log;
     },
   },
