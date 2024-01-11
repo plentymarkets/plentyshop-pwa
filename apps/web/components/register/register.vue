@@ -1,31 +1,39 @@
 <template>
   <div class="flex items-center justify-center my-1">
-    <form @submit.prevent="registerUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
+    <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
         <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
-        <SfInput name="email" type="email" autocomplete="email" v-model="email" required />
+        <SfInput
+          v-model="email"
+          v-bind="emailAttributes"
+          :invalid="Boolean(errors['register.email'])"
+          name="customerEmail"
+          type="email"
+          autocomplete="email"
+        />
+        <VeeErrorMessage as="span" name="register.email" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <label>
         <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
         <UiFormPasswordInput
-          pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
           :title="$t('invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-model="password"
-          required
+          v-bind="passwordAttributes"
+          :invalid="Boolean(errors['register.password'])"
         />
+        <VeeErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <div class="flex items-center">
         <SfCheckbox
           id="privacyPolicy"
-          :selected="privacyPolicy"
-          @update:model-value="changePrivacy"
+          v-model="privacyPolicy"
+          v-bind="privacyPolicyAttributes"
           value="value"
           class="peer"
-          required
         />
         <label
           class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900"
@@ -46,9 +54,11 @@
         </label>
       </div>
 
-      <div v-if="invalidPrivacyPolicy" class="text-negative-700 text-sm">{{ $t('privacyPolicyRequired') }}</div>
+      <div v-if="Boolean(errors['register.privacyPolicy'])" class="text-negative-700 text-sm">
+        {{ $t('privacyPolicyRequired') }}
+      </div>
 
-      <SfButton type="submit" class="mt-2" :disabled="loading">
+      <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ $t('auth.signup.submitLabel') }}
@@ -66,31 +76,58 @@
 
 <script lang="ts" setup>
 import { SfButton, SfLink, SfInput, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
+import { useForm } from 'vee-validate';
+import { object, string, boolean } from 'yup';
 
 const localePath = useLocalePath();
 const router = useRouter();
-const { register, loading, setPrivacyPolicy, privacyPolicy } = useCustomer();
+const { register, loading } = useCustomer();
+const { t } = useI18n();
+const { send } = useNotification();
 
 const emits = defineEmits(['registered', 'change-view']);
 
-const email = ref('');
-const password = ref('');
-const invalidPrivacyPolicy = ref(false);
+const validationSchema = toTypedSchema(
+  object({
+    register: object({
+      email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
+      password: string()
+        .required(t('errorMessages.password.required'))
+        .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
+        .default(''),
+      privacyPolicy: boolean().isTrue().required(),
+    }),
+  }),
+);
+
+const { errors, meta, defineField, handleSubmit } = useForm({
+  validationSchema: validationSchema,
+});
+
+const [email, emailAttributes] = defineField('register.email');
+const [password, passwordAttributes] = defineField('register.password');
+const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
 const registerUser = async () => {
-  if (!privacyPolicy.value) {
-    invalidPrivacyPolicy.value = true;
+  const response = await register({ email: email.value ?? '', password: password.value ?? '' });
+
+  if (response?.data.code === 1) {
+    send({
+      message: t('auth.signup.emailAlreadyExists'),
+      type: 'negative',
+    });
     return;
   }
 
-  await register({ email: email.value, password: password.value });
-
-  emits('registered');
-  router.push(localePath({ path: paths.home }));
+  if (response?.data.id) {
+    send({
+      message: t('auth.signup.success'),
+      type: 'positive',
+    });
+    emits('registered');
+    router.push(localePath({ path: paths.home }));
+  }
 };
 
-const changePrivacy = (value: boolean) => {
-  invalidPrivacyPolicy.value = false;
-  setPrivacyPolicy(value);
-};
+const onSubmit = handleSubmit(() => registerUser());
 </script>
