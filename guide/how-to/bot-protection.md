@@ -45,13 +45,14 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 
 ### plentyShop PWA
 
-Paste the sitekey in the PWA `nuxt.config.ts` file in the `turnstile` section:
+Paste the sitekey in the PWA's `apps/web/.env` file:
 
-```ts
-turnstile: {
-    siteKey: '0x4AAAZACDNx3aXDh7UR35x9'
-}
 ```
+CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0"
+NEWSLETTER_FORM_SHOW_NAMES=1
+```
+
+`NEWSLETTER_FORM_SHOW_NAMES=1` is optional. If set, the newsletter signup form displays input fields for first and last name.
 
 ## Disabling Cloudflare Turnstile
 
@@ -68,13 +69,7 @@ This disables the CAPTCHA validation.
 
 ### plentyShop PWA
 
-Remove the sitekey from the PWA `nuxt.config.ts` file in the `turnstile` section. This removes the widget in the PWA:
-
-```ts
-turnstile: {
-    siteKey: ''
-}
-```
+Remove the sitekey from the PWA's `apps/web/.env` file. This removes the widget in the PWA.
 
 ## CAPTCHA protected features
 
