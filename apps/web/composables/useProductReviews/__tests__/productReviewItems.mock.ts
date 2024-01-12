@@ -25,7 +25,7 @@ export const mockProductReviewItems: ReviewItem[] = [
         ratingRelationTargetId: 'test',
         rating: {
           id: 'test',
-          ratingValue: 'test',
+          ratingValue: '4',
           isVisible: 'test',
           createdAt: 'test',
           updatedAt: 'test'

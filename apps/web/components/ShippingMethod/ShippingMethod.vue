@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <ShippingPrivacy />
+    <ShippingPrivacy v-if="shippingMethods" />
   </div>
 </template>
 <script setup lang="ts">
@@ -48,7 +48,7 @@ withDefaults(defineProps<ShippingMethodProps>(), {
 });
 const emit = defineEmits<CheckoutShippingEmits>();
 const { data: cart } = useCart();
-const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value).toString());
+const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
 const i18n = useI18n();
 
 const updateShippingMethod = (shippingId: string) => {
