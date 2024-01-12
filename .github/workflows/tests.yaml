@@ -51,7 +51,7 @@ jobs:
           pushd ${{ github.workspace }}/apps/server/
           yarn start &
           pushd ${{ github.workspace }}/apps/web/
-          yarn test:coverage i18n.spec.ts
+          yarn test:coverage
           pushd -0 && dirs -c
 
       - name: E2E tests

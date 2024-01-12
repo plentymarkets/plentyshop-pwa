@@ -1,9 +1,17 @@
 import { mount } from '@vue/test-utils';
 import CategoryTree from '~/components/CategoryTree/CategoryTree.vue';
+import { CategoryMock } from '../../../__tests__/__mocks__/category.mock';
+
 
 describe('<CategoryTree/>', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(CategoryTree, {});
+
+    // mock category tree
+    const { getByTestId } = mount(CategoryTree, {
+      props: {
+        category: CategoryMock
+      }
+    });
 
     expect(getByTestId('category-tree'));
   });

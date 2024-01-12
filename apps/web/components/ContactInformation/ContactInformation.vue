@@ -70,10 +70,10 @@ const saveContactInformation = async (email: string) => {
   close();
 };
 
-const getEmailFromSession = async () => {
+const getEmailFromSession = () => {
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
 };
 
-await getEmailFromSession();
+getEmailFromSession();
 openContactFormIfNoEmail();
 </script>
