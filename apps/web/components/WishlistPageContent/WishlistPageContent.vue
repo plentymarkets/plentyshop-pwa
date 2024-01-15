@@ -1,8 +1,13 @@
 <template>
   <NarrowContainer>
     <div class="mb-20 px-4 md:px-0" data-testid="wishlist-layout">
-      <ActionableHeader :heading="title" :label-desktop="$t('backToShopping')" :label-mobile="$t('back')" />
-      <div data-testid="wishlist-page-content">
+      <ActionableHeader
+        v-if="withHeader"
+        :heading="title"
+        :label-desktop="$t('backToShopping')"
+        :label-mobile="$t('back')"
+      />
+      <div v-if="products.length > 0" data-testid="wishlist-page-content">
         <div class="flex-1">
           <section
             v-if="products"
@@ -34,6 +39,10 @@
           <LazyCategoryEmptyState v-else />
         </div>
       </div>
+      <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
+        <NuxtImg src="/images/empty-cart.svg" :alt="$t('emptyCartImgAlt')" width="192" height="192" />
+        <h2 class="mt-8">{{ $t('emptyWishlist') }}</h2>
+      </div>
     </div>
   </NarrowContainer>
 </template>
@@ -41,11 +50,11 @@
 <script setup lang="ts">
 import { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
-import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 import ActionableHeader from '~/components/ActionableHeader/ActionableHeader.vue';
+import { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
-withDefaults(defineProps<CategoryPageContentProps>(), {
-  itemsPerPage: 24,
+withDefaults(defineProps<WishlistPageContentProps>(), {
+  withHeader: true,
 });
 
 const { addWebpExtension } = useImageUrl();

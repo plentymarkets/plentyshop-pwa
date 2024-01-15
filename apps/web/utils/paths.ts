@@ -13,6 +13,7 @@ export const paths = {
   accountBillingDetails: '/my-account/billing-details',
   accountShippingDetails: '/my-account/shipping-details',
   accountMyOrders: '/my-account/my-orders',
+  accountMyWishlist: '/my-account/wishlist',
   accountReturns: '/my-account/returns',
   authResetPassword: '/reset-password',
   authResetPasswordSuccess: '/reset-password-success',

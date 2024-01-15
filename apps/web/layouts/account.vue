@@ -139,6 +139,16 @@ const sections = [
       },
     ],
   },
+  {
+    title: t('account.wishlist.heading'),
+    icon: SfIconShoppingCart,
+    subsections: [
+      {
+        label: t('account.wishlist.section.myWishlist'),
+        link: paths.accountMyWishlist,
+      },
+    ],
+  },
 ];
 
 const currentPath = computed(() => router.currentRoute.value.path);

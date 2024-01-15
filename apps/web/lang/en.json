@@ -118,6 +118,7 @@
   "goToCheckout": "Go to checkout",
   "delivery": "Shipping",
   "emptyCart": "Your cart is empty",
+  "emptyWishlist": "Your Wishlist is empty",
   "emptyCartImgAlt": "Image of an empty cart",
   "backToShopping": "Back To Shopping",
   "allFromCategory": "All {name}",
@@ -224,6 +225,7 @@
   "quantitySelectorIncrease": "Increase value",
   "scrollTop": "Scroll to top",
   "numberInCart": "{count} product in cart",
+  "numberInWishlist": "{count} products in wishlist",
   "languageSelector": "Open language select",
   "allProductsLinkText": "Browse products",
   "breadcrumbsDropdownText": "Show more breadcrumbs",
@@ -442,6 +444,12 @@
       },
       "paymentSummary": {
         "heading": "Payment Summary"
+      }
+    },
+    "wishlist": {
+      "heading": "Wishlist",
+      "section": {
+        "myWishlist": "My Wishlist"
       }
     }
   },

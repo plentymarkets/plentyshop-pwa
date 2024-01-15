@@ -1,8 +1,7 @@
 import { Product } from '@plentymarkets/shop-api';
 
-export type CategoryPageContentProps = {
-  title: string;
-  totalProducts: number;
-  itemsPerPage: number;
+export type WishlistPageContentProps = {
+  withHeader?: boolean;
+  title?: string;
   products?: Product[];
 };
