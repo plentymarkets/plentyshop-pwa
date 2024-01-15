@@ -1,7 +1,7 @@
 <template>
   <NarrowContainer>
     <div class="mb-20 px-4 md:px-0" data-testid="wishlist-layout">
-      <ActionableHeader
+      <HeaderWithLink
         v-if="withHeader && title"
         :heading="title"
         :label-desktop="$t('backToShopping')"

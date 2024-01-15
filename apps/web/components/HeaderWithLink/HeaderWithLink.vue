@@ -18,12 +18,12 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconArrowBack } from '@storefront-ui/vue';
-import type { ActionableHeaderProps } from '~/components/ActionableHeader/types';
+import type { HeaderWithLinkProps } from '~/components/HeaderWithLink/types';
 
 const localePath = useLocalePath();
 const router = useRouter();
 
-const props = defineProps<ActionableHeaderProps>();
+const props = defineProps<HeaderWithLinkProps>();
 
 const goToPath = () => {
   props.link ? navigateTo(localePath(props.link)) : router.go(-1);
