@@ -37,6 +37,17 @@
             </span>
           </li>
         </ul>
+        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+          <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
+            <span class="mr-1 font-bold">
+              <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
+              <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
+            </span>
+            <span class="font-medium" v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
+              {{ orderGetters.getItemOrderPropertyValue(property) }}
+            </span>
+          </li>
+        </ul>
       </div>
       <div class="items-start sm:items-center sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
