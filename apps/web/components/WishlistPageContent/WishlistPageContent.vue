@@ -10,7 +10,6 @@
       <div v-if="products && products.length > 0" data-testid="wishlist-page-content">
         <div class="flex-1">
           <section
-            v-if="products"
             class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
             data-testid="wishlist-grid"
           >
@@ -36,7 +35,6 @@
               </UiProductCard>
             </NuxtLazyHydrate>
           </section>
-          <LazyCategoryEmptyState v-else />
         </div>
       </div>
       <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
