@@ -11,38 +11,11 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-Welcome to the plentysystems integration for Vue Storefront 3. For a technical overview of the repository structure, refer to the [Guide](GUIDE.md). The rest of the README details how to configure your plentysystems system and get started with the project.
+Welcome to the plentysystems integration for Vue Storefront 3.
 
-## plentysystems system setup
+## Development setup
 
-To run this project, you need a plentysystems system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
-
-### Plugins
-
-> :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
-
-For plentyShop PWA to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
-
-1. Log into your plentysystems system.
-2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
-   - IO
-   - plentyShop LTS
-   - PayPal
-   - Cash in advance
-   - Pay upon pickup
-   - DHL Shipping (Versenden)
-   - Customer feedback
-3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest. The priorities of all other plugins remains 0.
-
-### System configuration
-
-1. Log into your plentysystems system.
-2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
-3. _Optional:_ Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.
-
-## Local dev setup
-
-This section describes how to run the project locally.
+This section describes how to run the project locally with the preconfigured demo system.
 
 ### Prerequisites
 
@@ -58,16 +31,6 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
-
-### Configuration
-
-Follow the links below for configuration instructions.
-
-- [Middleware](./docs/config/middleware.md) (required)
-- [I18N](./docs/config/i18n.md) (required)
-- [PWA](./docs/config/pwa.md) (optional)
-- [Theme](./docs/config/theme.md) (optional)
-- [Cookies](./docs/config/cookies.md) (optional)
 
 ### Authentication
 
@@ -85,13 +48,12 @@ Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your 
 2. Run `yarn` to install all dependencies.
 3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
-## Deployment
-
-The app uses GitHub Actions to deploy to the plentysystems system.
-
-For detailed setup instructions, refer to the [deployment guide](./docs/deployment/deployment.md).
-
 ## Resources
+
+### Documentation
+
+- [Developers Documentation](https://pwa-docs.plentymarkets.com/)
+- [Technical Overview](GUIDE.md)
 
 ### Changelog
 
