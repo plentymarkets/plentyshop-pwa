@@ -87,7 +87,7 @@ export default defineNuxtConfig({
     ],
     '@nuxt/image',
     '@vite-pwa/nuxt',
-    'nuxt-vitest',
+    '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
