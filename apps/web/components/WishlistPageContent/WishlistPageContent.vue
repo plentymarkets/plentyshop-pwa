@@ -2,12 +2,12 @@
   <NarrowContainer>
     <div class="mb-20 px-4 md:px-0" data-testid="wishlist-layout">
       <ActionableHeader
-        v-if="withHeader"
+        v-if="withHeader && title"
         :heading="title"
         :label-desktop="$t('backToShopping')"
         :label-mobile="$t('back')"
       />
-      <div v-if="products.length > 0" data-testid="wishlist-page-content">
+      <div v-if="products && products.length > 0" data-testid="wishlist-page-content">
         <div class="flex-1">
           <section
             v-if="products"
