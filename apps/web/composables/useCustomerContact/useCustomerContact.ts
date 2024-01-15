@@ -1,6 +1,6 @@
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
+
 import { DoCustomerContactMail, UseCustomerContactReturn, UseCustomerContactState } from './types';
 
 /**

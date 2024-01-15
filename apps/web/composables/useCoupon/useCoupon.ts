@@ -1,5 +1,5 @@
 import { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
-import { useSdk } from '~/sdk';
+
 import { DoAddCouponParams } from '@plentymarkets/shop-api';
 /**
  * @description Composable for managing coupons.

@@ -89,6 +89,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
+    '@vue-storefront/nuxt',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -97,6 +98,11 @@ export default defineNuxtConfig({
       crawlLinks: false,
     },
     compressPublicAssets: true,
+  },
+  vsf: {
+    middleware: {
+      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+    },
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,

@@ -8,7 +8,6 @@ import type {
   SaveShippingMethod,
 } from '~/composables/useCartShippingMethods/types';
 import { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing shipping methods.

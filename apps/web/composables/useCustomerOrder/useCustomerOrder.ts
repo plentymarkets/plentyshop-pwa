@@ -1,6 +1,5 @@
 import type { OrderSearchParams, Order, GetOrderError } from '@plentymarkets/shop-api';
 import { FetchOrder, UseCustomerOrderReturn, UseCustomerOrderState } from '~/composables/useCustomerOrder/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing customer order.

@@ -5,7 +5,6 @@ import type {
   UseCustomerReturnsState,
   FetchCustomerReturns,
 } from '~/composables/useCustomerReturns/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing order returns data

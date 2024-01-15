@@ -1,6 +1,5 @@
 import { ActiveShippingCountry } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
 import { UseActiveShippingCountriesReturn, UseActiveShippingCountriesState, GetActiveShippingCountries } from './types';
 
 /**

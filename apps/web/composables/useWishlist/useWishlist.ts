@@ -1,6 +1,6 @@
 import { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+
 import { toRefs } from '@vueuse/shared';
 import {
   FetchWishlist,
