@@ -8,7 +8,8 @@
   >
     <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
-      <SfIconFavoriteFilled v-if="isWishlistItem(variationId)" size="sm" />
+      <SfIconClose v-if="isWishlistItem(variationId) && discard" size="sm" />
+      <SfIconFavoriteFilled v-else-if="isWishlistItem(variationId)" size="sm" />
       <SfIconFavorite v-else size="sm" />
       <slot />
     </template>
@@ -17,11 +18,12 @@
 
 <script setup lang="ts">
 import { WishlistButtonProps } from '~/components/WishlistButton/types';
-import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
 const props = withDefaults(defineProps<WishlistButtonProps>(), {
   quantity: 1,
+  discard: false,
 });
 const { product, quantity } = toRefs(props);
 

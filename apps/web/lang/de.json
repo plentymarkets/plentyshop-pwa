@@ -118,6 +118,7 @@
   "goToCheckout": "Zur Kasse",
   "delivery": "Versandkosten",
   "emptyCart": "Ihr Warenkorb ist leer",
+  "emptyWishlist": "Ihre Wunschliste ist leer",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "backToShopping": "Zurück zum Einkaufen",
   "allFromCategory": "Alle {name}",
@@ -224,6 +225,7 @@
   "quantitySelectorIncrease": "Menge erhöhen",
   "scrollTop": "Nach oben scrollen",
   "numberInCart": "{count} Produkte im Warenkorb",
+  "numberInWishlist": "{count} Produkte in der Wunschliste",
   "languageSelector": "Sprachauswahl öffnen",
   "allProductsLinkText": "Produkte durchsuchen",
   "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
@@ -442,6 +444,12 @@
       },
       "paymentSummary": {
         "heading": "Zahlungsübersicht"
+      }
+    },
+    "wishlist": {
+      "heading": "Wunschliste",
+      "section": {
+        "myWishlist": "Meine Wunschliste"
       }
     }
   },
