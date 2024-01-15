@@ -98,6 +98,7 @@ import {
   SfButton,
   SfIconArrowBack,
   SfIconChevronRight,
+  SfIconFavorite,
 } from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
@@ -141,7 +142,7 @@ const sections = [
   },
   {
     title: t('account.wishlist.heading'),
-    icon: SfIconShoppingCart,
+    icon: SfIconFavorite,
     subsections: [
       {
         label: t('account.wishlist.section.myWishlist'),

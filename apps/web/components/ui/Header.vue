@@ -5,7 +5,7 @@
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
-          :aria-label="i18n.t('languageSelector')"
+          :aria-label="t('languageSelector')"
           variant="tertiary"
           square
           data-testid="open-languageselect-button"
@@ -19,7 +19,7 @@
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
-          :aria-label="i18n.t('numberInWishlist', { count: wishlistItems.length })"
+          :aria-label="t('numberInWishlist', { count: wishlistItems.length })"
           variant="tertiary"
           square
         >
@@ -36,7 +36,7 @@
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.cart)"
-          :aria-label="i18n.t('numberInCart', { count: cartItemsCount })"
+          :aria-label="t('numberInCart', { count: cartItemsCount })"
           variant="tertiary"
           square
         >
@@ -68,9 +68,9 @@
             <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">{{
-                  i18n.t(label)
-                }}</SfListItem>
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">
+                  {{ t(label) }}
+                </SfListItem>
               </template>
               <SfListItem
                 v-else
@@ -79,7 +79,7 @@
                 :class="{ 'bg-neutral-200': $route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
-                {{ i18n.t(label) }}
+                {{ t(label) }}
               </SfListItem>
             </li>
           </ul>
@@ -102,7 +102,7 @@
         square
         data-testid="open-languageselect-button"
         @click="toggleLanguageSelect"
-        :aria-label="i18n.t('languageSelector')"
+        :aria-label="t('languageSelector')"
       >
         <SfIconLanguage />
       </SfButton>
@@ -111,7 +111,7 @@
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
         square
         @click="searchModalOpen"
-        :aria-label="i18n.t('openSearchModalButtonLabel')"
+        :aria-label="t('openSearchModalButtonLabel')"
       >
         <SfIconSearch />
       </SfButton>
@@ -127,8 +127,8 @@
   >
     <header>
       <div class="text-lg font-medium ml-8">
-        <span v-if="isLogin">{{ i18n.t('auth.login.heading') }}</span>
-        <span v-else>{{ i18n.t('auth.signup.heading') }}</span>
+        <span v-if="isLogin">{{ t('auth.login.heading') }}</span>
+        <span v-else>{{ t('auth.signup.heading') }}</span>
       </div>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
@@ -164,7 +164,7 @@ const { data: wishlistItems } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 const NuxtLink = resolveComponent('NuxtLink');
-const i18n = useI18n();
+const { t } = useI18n();
 const localePath = useLocalePath();
 const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
