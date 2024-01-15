@@ -18,11 +18,13 @@
           format="webp"
         />
       </SfLink>
-      <WishlistButton
-        square
-        class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
-        :product="product"
-      />
+      <slot name="wishlistButton">
+        <WishlistButton
+          square
+          class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
+          :product="product"
+        />
+      </slot>
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
       <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">

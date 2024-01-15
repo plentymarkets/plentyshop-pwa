@@ -3,6 +3,7 @@ export const paths = {
   category: '/',
   product: '/product/',
   cart: '/cart',
+  wishlist: '/wishlist',
   checkout: '/checkout',
   readonlyCheckout: '/readonly-checkout',
   search: '/search',

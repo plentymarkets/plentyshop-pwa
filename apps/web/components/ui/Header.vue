@@ -18,6 +18,23 @@
         <SfButton
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
+          :to="localePath(paths.wishlist)"
+          :aria-label="i18n.t('numberInWishlist', { count: wishlistItems.length })"
+          variant="tertiary"
+          square
+        >
+          <template #prefix>
+            <SfIconFavorite />
+            <SfBadge
+              :content="wishlistItems.length"
+              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              data-testid="cart-badge"
+            />
+          </template>
+        </SfButton>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
           :to="localePath(paths.cart)"
           :aria-label="i18n.t('numberInCart', { count: cartItemsCount })"
           variant="tertiary"
@@ -133,6 +150,7 @@ import {
   SfIconSearch,
   SfIconShoppingCart,
   SfListItem,
+  SfIconFavorite,
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
@@ -142,6 +160,7 @@ import { useCategoryTree, useCustomer } from '~/composables';
 defineProps<DefaultLayoutProps>();
 const isLogin = ref(true);
 const { data: cart } = useCart();
+const { data: wishlistItems } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 const NuxtLink = resolveComponent('NuxtLink');
