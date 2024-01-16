@@ -1,16 +1,31 @@
-import { paths } from "../../../utils/paths";
+import { paths } from '../../../utils/paths';
 
 export class MyAccountPageObject {
-  get accountDropdownListItem () {
-    return cy.get(`a[href="${paths.account}"]`)
+  isURL(path: string) {
+    cy.url().should('contain', path);
+    return this;
+  }
+
+  successLogin() {
+    cy.intercept('/doLogin').as('login');
+    cy.intercept('/getSession').as('session');
+
+    cy.getFixture('account').then((fixture) => {
+      cy.get(`[type="email"]`).type(fixture.email, { delay: 0 });
+      cy.get(`[type="password"]`).type(fixture.password, { delay: 0 });
+    });
+    cy.get(`[type="submit"]`).click();
+  }
+
+  get accountDropdownListItem() {
+    return cy.get(`a[href="${paths.account}"]`);
   }
 
   clickTopBarMyAccountLink() {
+    cy.visitAndHydrate(paths.home);
     cy.getByTestId('account-dropdown-button').should('exist').click();
 
-    this.accountDropdownListItem
-      .should('exist')
-      .contains('My Account').click();
+    this.accountDropdownListItem.should('exist').contains('My Account').click();
 
     cy.url().should('contain', paths.account);
   }
@@ -57,7 +72,7 @@ export class MyAccountPageObject {
   myOrdersSection() {
     cy.get('a').contains('My Orders').click();
     cy.url().should('contain', paths.accountMyOrders);
-    cy.contains("Details").should('exist');
+    cy.contains('Details').should('exist');
 
     return this;
   }
@@ -65,7 +80,7 @@ export class MyAccountPageObject {
   returnsSection() {
     cy.get('a').contains('Returns').click();
     cy.url().should('contain', paths.accountReturns);
-    cy.contains("You haven’t shopped with us yet").should('exist');
+    cy.contains('You haven’t shopped with us yet').should('exist');
 
     return this;
   }
