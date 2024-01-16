@@ -658,6 +658,7 @@
     "password": {
       "required": "Password is required.",
       "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
-    }
+    },
+    "numbersOnly": "This field must contain only numbers"
   }
 }

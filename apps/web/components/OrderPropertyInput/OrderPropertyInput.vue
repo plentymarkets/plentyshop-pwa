@@ -16,7 +16,7 @@
         :id="`prop-${orderPropertyId}`"
         v-model="value"
         v-bind="valueAttributes"
-        :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
+        :invalid="Boolean(errors['value'])"
         :wrapper-class="'w-full'"
       />
 
@@ -24,13 +24,7 @@
         <slot name="tooltip" />
       </div>
     </div>
-
-    <VeeErrorMessage
-      v-if="isOrderPropertyRequired"
-      as="span"
-      name="value"
-      class="flex text-negative-700 text-sm mt-2"
-    />
+    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -52,10 +46,24 @@ const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
-
+const propertyType =
+  productPropertyGetters.isOrderPropertyInt(productProperty) ||
+  productPropertyGetters.isOrderPropertyFloat(productProperty)
+    ? 'number'
+    : 'string';
 const validationSchema = toTypedSchema(
   object({
-    value: string().required(t('errorMessages.requiredField')).default(''),
+    value: string().test({
+      test(value, context) {
+        if (propertyType === 'number' && (/[:ahlp]/.test(value) || /\s/.test(value))) {
+          return context.createError({ message: t('errorMessages.numbersOnly') });
+        }
+        if (isOrderPropertyRequired && (value === undefined || value === '')) {
+          return context.createError({ message: t('errorMessages.requiredField') });
+        }
+        return true;
+      },
+    }),
   }),
 );
 
@@ -63,16 +71,14 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if (isOrderPropertyRequired) registerValidator(validate);
+registerValidator(validate);
 
 const [value, valueAttributes] = defineField('value');
 
 watch(
   () => meta.value,
   () => {
-    if (isOrderPropertyRequired) {
-      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
-    }
+    registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
   },
 );
 
