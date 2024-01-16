@@ -3,6 +3,7 @@ import type { BasketItemOrderParamsProperty, ProductProperty, Product } from '@p
 
 export interface UseProductOrderPropertiesState {
   data: BasketItemOrderParamsProperty[];
+  loading: boolean;
 }
 
 export type SetProperties = (productProperties: ProductProperty[]) => void;
@@ -10,10 +11,12 @@ export type GetPropertiesPrice = (product: Product) => number;
 
 export interface UseProductOrderProperties {
   data: Ref<UseProductOrderPropertiesState['data']>;
+  loading: Ref<UseProductOrderPropertiesState['loading']>;
   setProperties: SetProperties;
   getPropertyById: (id: number) => BasketItemOrderParamsProperty | undefined;
   getPropertiesForCart: () => BasketItemOrderParamsProperty[];
   getPropertiesPrice: GetPropertiesPrice;
+  uploadFile: (file: File) => void;
 }
 
 export type UseProductOrderPropertiesReturn = () => UseProductOrderProperties;

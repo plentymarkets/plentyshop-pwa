@@ -57,6 +57,11 @@ export const useSdk = () => {
           config.headers = {} as AxiosRequestHeaders;
         }
 
+        if (config.url && config.url === 'doUploadOrderPropertyFile') {
+          // config.headers['Content-Type'] = 'multipart/form-data';
+          // config.headers['cache-control'] = 'no-cache';
+        }
+
         if (process.server) {
           if (ssrLocale.value) {
             headers.cookie = headers.cookie?.includes('vsf-locale')

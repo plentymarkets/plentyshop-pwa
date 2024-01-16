@@ -80,13 +80,13 @@ import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
 import { Ref, ref } from 'vue';
 
+const { uploadFile, loading } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const value: Ref<Blob | null> = ref(null);
 
 const uploadForm: Ref<HTMLInputElement | null> = ref(null);
-const loading = ref(false);
 const loaded = ref(false);
 const loadingValue = ref(25);
 const fileName = ref('');
@@ -115,24 +115,20 @@ const supportedFormats = {
 
 const loadedFile: Ref<File | null> = ref(null);
 
-const setBufferValues = () => {
-  const reader = new FileReader();
-  reader.addEventListener('load', (e) => {
-    if (loadedFile.value && Object.values(supportedFormats).filter((x) => x === loadedFile.value?.type).length > 0) {
-      fileName.value = loadedFile.value.name;
-      if (e && e.target && e.target.result) {
-        value.value = new Blob([e.target.result], { type: loadedFile.value.type });
-        loaded.value = true;
-      }
-    } else {
-      send({
-        type: 'negative',
-        message: i18n.t('orderProperties.upload.unSupportedFileType'),
-      });
-    }
-  });
+const upload = async () => {
   if (loadedFile.value) {
-    reader.readAsArrayBuffer(loadedFile.value);
+    uploadFile(loadedFile.value);
+  }
+};
+
+const validateType = () => {
+  if (loadedFile.value && Object.values(supportedFormats).filter((x) => x === loadedFile.value?.type).length > 0) {
+    fileName.value = loadedFile.value.name;
+  } else {
+    send({
+      type: 'negative',
+      message: i18n.t('orderProperties.upload.unSupportedFileType'),
+    });
   }
 };
 
@@ -140,7 +136,8 @@ const handleFileUpload = (event: Event) => {
   const target = event.target as HTMLInputElement;
   if (target && target.files && target.files.length > 0) {
     loadedFile.value = target.files[0];
-    setBufferValues();
+    validateType();
+    upload();
   }
 };
 const clearUploadedFile = () => {
@@ -159,7 +156,8 @@ const handleDrop = (event: DragEvent) => {
   event.preventDefault();
   if (event.dataTransfer) {
     loadedFile.value = event.dataTransfer.files[0];
-    setBufferValues();
+    validateType();
+    upload();
   }
 };
 </script>

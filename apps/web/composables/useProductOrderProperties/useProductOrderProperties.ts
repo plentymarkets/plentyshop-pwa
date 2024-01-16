@@ -5,10 +5,12 @@ import {
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import {useSdk} from "~/sdk";
 
 export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => {
   const state = useState<UseProductOrderPropertiesState>(`useProductOrderProperties`, () => ({
     data: [],
+    loading: false,
   }));
 
   const setProperties: SetProperties = (productProperties) => {
@@ -54,11 +56,34 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     return price;
   };
 
+  const uploadFile = async (file: File) => {
+    const runTimeConfig = useRuntimeConfig();
+    state.value.loading = true;
+
+    const formData = new FormData();
+    formData.append('fileData', file);
+
+    console.log([...formData.entries()]);
+    console.log('formData', JSON.stringify(Object.fromEntries(formData)));
+    const response = await useAsyncData(() => useSdk().plentysystems.doUploadOrderPropertyFile(formData));
+    /**
+    const response = await useAsyncData(() =>
+      fetch('https://xwelm96ydnar.c14-01.plentymarkets.com/rest/io/order/property/file', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      }),
+    ); */
+    console.log(response);
+    state.value.loading = false;
+  };
+
   return {
     ...toRefs(state.value),
     setProperties,
     getPropertyById,
     getPropertiesForCart,
     getPropertiesPrice,
+    uploadFile,
   };
 };
