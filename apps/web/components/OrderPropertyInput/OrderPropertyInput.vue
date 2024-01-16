@@ -46,7 +46,7 @@ const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
-const propertyType =
+const propertyType: string =
   productPropertyGetters.isOrderPropertyInt(productProperty) ||
   productPropertyGetters.isOrderPropertyFloat(productProperty)
     ? 'number'
@@ -55,7 +55,7 @@ const validationSchema = toTypedSchema(
   object({
     value: string().test({
       test(value, context) {
-        if (propertyType === 'number' && (/[:ahlp]/.test(value) || /\s/.test(value))) {
+        if (propertyType === 'number' && (/[:ahlp]/.test(value as string) || /\s/.test(value as string))) {
           return context.createError({ message: t('errorMessages.numbersOnly') });
         }
         if (isOrderPropertyRequired && (value === undefined || value === '')) {
