@@ -110,22 +110,22 @@ const { t } = useI18n();
 const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
 
-const sections = [
+const sections = computed(() => [
   {
     title: t('account.accountSettings.heading'),
     icon: SfIconPerson,
     subsections: [
       {
         label: t('account.accountSettings.section.personalData'),
-        link: paths.accountPersonalData,
+        link: localePath(paths.accountPersonalData),
       },
       {
         label: t('account.accountSettings.section.billingDetails'),
-        link: paths.accountBillingDetails,
+        link: localePath(paths.accountBillingDetails),
       },
       {
         label: t('account.accountSettings.section.shippingDetails'),
-        link: paths.accountShippingDetails,
+        link: localePath(paths.accountShippingDetails),
       },
     ],
   },
@@ -135,11 +135,11 @@ const sections = [
     subsections: [
       {
         label: t('account.ordersAndReturns.section.myOrders'),
-        link: paths.accountMyOrders,
+        link: localePath(paths.accountMyOrders),
       },
       {
         label: t('account.ordersAndReturns.section.returns'),
-        link: paths.accountReturns,
+        link: localePath(paths.accountReturns),
       },
     ],
   },
@@ -149,17 +149,17 @@ const sections = [
     subsections: [
       {
         label: t('account.wishlist.section.myWishlist'),
-        link: paths.accountMyWishlist,
+        link: localePath(paths.accountMyWishlist),
       },
     ],
   },
-];
+]);
 
 const currentPath = computed(() => router.currentRoute.value.path);
-const isRoot = computed(() => currentPath.value === paths.account);
+const isRoot = computed(() => currentPath.value === localePath(paths.account));
 
 const findCurrentPage = computed(() =>
-  sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
+  sections.value.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
 
 const currentSectionLabel = computed(() => findCurrentPage.value?.label || '');
