@@ -59,23 +59,23 @@ const isMultiline = productPropertyGetters.isMultiline(productProperty);
 
 const validationSchema = toTypedSchema(
   object({
-    value: string().test({
-      test(value, context) {
-        if (isOrderPropertyRequired && (value === undefined || value === '')) {
-          return context.createError({ message: t('errorMessages.requiredField') });
-        }
-        if (value && productPropertyGetters.isOrderPropertyInt(productProperty) && /\D/.test(value as string)) {
-          return context.createError({ message: t('errorMessages.numbersOnly') });
-        }
-        if (
-          value &&
-          productPropertyGetters.isOrderPropertyFloat(productProperty) &&
-          !/^\d+(?:[,.]\d*)?$/.test(value as string)
-        ) {
-          return context.createError({ message: t('errorMessages.decimalsOnly') });
-        }
-        return true;
-      },
+    value: string().test((value, context) => {
+      if (isOrderPropertyRequired && value === '') {
+        return context.createError({ message: t('errorMessages.requiredField') });
+      }
+
+      const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
+      const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
+
+      if (value && isInt && /\D/.test(value)) {
+        return context.createError({ message: t('errorMessages.wholeNumber') });
+      }
+
+      if (value && isFloat && !/^\d+(?:[,.]\d*)?$/.test(value)) {
+        return context.createError({ message: t('errorMessages.decimalNumber') });
+      }
+
+      return true;
     }),
   }),
 );
