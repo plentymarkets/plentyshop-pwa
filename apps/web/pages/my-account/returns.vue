@@ -1,10 +1,13 @@
 <template>
   <ClientOnly>
     <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-    <h2 class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize">
+    <h2
+      class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+      data-testid="account-returns-heading"
+    >
       {{ $t('account.ordersAndReturns.returnsHeading') }}
     </h2>
-    <div v-if="!data?.entries.length" class="col-span-3 text-center">
+    <div v-if="!data?.entries.length" class="col-span-3 text-center" data-testid="account-returns-content">
       <NuxtImg
         src="/images/returns.png"
         :alt="$t('account.ordersAndReturns.returnsAltText')"
@@ -17,7 +20,12 @@
       </h3>
     </div>
 
-    <div v-else class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
+    <div
+      v-else
+      class="relative col-span-3"
+      :class="{ 'pointer-events-none opacity-50': loading }"
+      data-testid="account-returns-content"
+    >
       <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
       <ul class="md:hidden my-4 last-of-type:mb-0" v-for="order in data.entries" :key="order.order.id">
         <li>

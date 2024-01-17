@@ -3,29 +3,42 @@ import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObje
 
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
-describe('my account', () => {
-  it('going to login and authenticate', () => {
-    cy.visitAndHydrate(paths.authLogin);
+beforeEach(() => {
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  cy.visitAndHydrate(paths.authLogin);
+  myAccount.successLogin();
 
-    myAccount.successLogin();
+  cy.wait('@doLogin').visitAndHydrate(paths.home);
+});
+
+describe('Smoke: My Account', () => {
+  it('[smoke] Navigating to My Account from top header', () => {
     myAccount.clickTopBarMyAccountLink();
   });
 
-  // it('going to my account from header', () => {
-  //   cy.visitAndHydrate(paths.home);
-  //
-  //   myAccount.clickTopBarMyAccountLink();
-  // });
-  //
-  // it('checking my account section', () => {
-  //   cy.visitAndHydrate(paths.account);
-  //
-  //   myAccount
-  //     .checkAllSections()
-  //     .personalDataSection()
-  //     .billingDetailsSection()
-  //     .shippingDetailsSection()
-  //     .myOrdersSection()
-  //     .returnsSection();
-  // });
+  it('[smoke] Navigating to My Orders from top header', () => {
+    myAccount.clickTopBarMyOrdersLink();
+  });
+
+  it('[smoke] Navigating to Returns from top header', () => {
+    myAccount.clickTopBarReturnsLink();
+  });
+
+  it('[smoke] Logout from top header', () => {
+    myAccount.clickTopBarLogoutButton();
+  });
+
+  it('[smoke] Checking all My Account sections functionality', () => {
+    cy.visitAndHydrate(paths.account);
+
+    myAccount
+      .checkAllSectionsMenu()
+      .checkPersonalDataSection()
+      .checkBillingAddressesSection()
+      .checkShippingAddressesSection()
+      .checkMyOrdersSection()
+      .checkReturnsSection()
+      .checkWishlistSection()
+      .checkLogoutSection();
+  });
 });

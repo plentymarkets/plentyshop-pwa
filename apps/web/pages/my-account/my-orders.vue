@@ -1,10 +1,17 @@
 <template>
   <ClientOnly>
     <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-    <h2 class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize">
+    <h2
+      class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+      data-testid="account-orders-heading"
+    >
       {{ $t('account.ordersAndReturns.myOrders') }}
     </h2>
-    <div v-if="!data || data.data.entries.length === 0" class="col-span-3 text-center mt-8">
+    <div
+      v-if="!data || data.data.entries.length === 0"
+      class="col-span-3 text-center mt-8"
+      data-testid="account-orders-content"
+    >
       <NuxtImg
         src="/images/empty-cart.svg"
         :alt="$t('account.ordersAndReturns.noOrdersAltText')"
@@ -17,7 +24,7 @@
         {{ $t('account.ordersAndReturns.continue') }}
       </SfButton>
     </div>
-    <div v-else class="col-span-3">
+    <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
         <ul class="md:hidden my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
@@ -99,7 +106,6 @@
         />
       </div>
     </div>
-    <NuxtPage />
   </ClientOnly>
 </template>
 
@@ -127,7 +133,6 @@ watch(isDesktop, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
-// const NuxtLink = resolveComponent('NuxtLink');
 
 const generateOrderDetailsLink = (order: Order) => {
   return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
