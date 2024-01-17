@@ -5,7 +5,8 @@ import {
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import {useSdk} from "~/sdk";
+import { useSdk } from '~/sdk';
+import {UploadFileForOrderPropertyResponse} from "@plentymarkets/shop-api";
 
 export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => {
   const state = useState<UseProductOrderPropertiesState>(`useProductOrderProperties`, () => ({
@@ -56,26 +57,50 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     return price;
   };
 
-  const uploadFile = async (file: File) => {
-    const runTimeConfig = useRuntimeConfig();
+  const fileToBase64 = async (file: File): Promise<string | null> => {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+
+      reader.onloadend = function () {
+        if (!reader.result) {
+          resolve(null);
+          return;
+        }
+        if (typeof reader.result === 'string') {
+          const base64String = reader.result.split(',')[1];
+          resolve(base64String);
+        }
+      };
+
+      // eslint-disable-next-line unicorn/prefer-add-event-listener
+      reader.onerror = function () {
+        resolve(null);
+      };
+
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const uploadFile = async (file: File): Promise<UploadFileForOrderPropertyResponse | null> => {
     state.value.loading = true;
 
-    const formData = new FormData();
-    formData.append('fileData', file);
+    const base64String = await fileToBase64(file);
+    if (!base64String) {
+      state.value.loading = false;
+      return null;
+    }
 
-    console.log([...formData.entries()]);
-    console.log('formData', JSON.stringify(Object.fromEntries(formData)));
-    const response = await useAsyncData(() => useSdk().plentysystems.doUploadOrderPropertyFile(formData));
-    /**
-    const response = await useAsyncData(() =>
-      fetch('https://xwelm96ydnar.c14-01.plentymarkets.com/rest/io/order/property/file', {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formData,
+    const { data, error  } = await useAsyncData(() =>
+      useSdk().plentysystems.doUploadOrderPropertyFile({
+        base64: base64String,
+        filename: file.name,
+        type: file.type,
       }),
-    ); */
-    console.log(response);
+    );
+    useHandleError(error.value);
     state.value.loading = false;
+
+    return data.value?.data ?? null;
   };
 
   return {
