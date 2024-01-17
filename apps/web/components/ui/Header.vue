@@ -68,7 +68,7 @@
             <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
               <template v-if="label === 'account.logout'">
                 <UiDivider class="my-2" />
-                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-list-item" @click="logOut()">
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
                   {{ t(label) }}
                 </SfListItem>
               </template>

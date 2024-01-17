@@ -1,5 +1,5 @@
 <template>
-  <div class="addresses-list">
+  <div class="addresses-list" :data-testid="`account-billing-addresses-${props.type}`">
     <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto" size="2xl" />
       <Address
