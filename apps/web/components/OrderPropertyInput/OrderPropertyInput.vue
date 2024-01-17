@@ -64,10 +64,14 @@ const validationSchema = toTypedSchema(
         if (isOrderPropertyRequired && (value === undefined || value === '')) {
           return context.createError({ message: t('errorMessages.requiredField') });
         }
-        if (productPropertyGetters.isOrderPropertyInt(productProperty) && /\D/.test(value as string)) {
+        if (value && productPropertyGetters.isOrderPropertyInt(productProperty) && /\D/.test(value as string)) {
           return context.createError({ message: t('errorMessages.numbersOnly') });
         }
-        if (productPropertyGetters.isOrderPropertyFloat(productProperty) && /[^\d,.]+/.test(value as string)) {
+        if (
+          value &&
+          productPropertyGetters.isOrderPropertyFloat(productProperty) &&
+          !/^\d+(?:[,.]\d*)?$/.test(value as string)
+        ) {
           return context.createError({ message: t('errorMessages.decimalsOnly') });
         }
         return true;
