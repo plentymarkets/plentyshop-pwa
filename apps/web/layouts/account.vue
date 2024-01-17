@@ -5,6 +5,7 @@
         <h1
           v-if="isTablet || (!isTablet && isRoot)"
           class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
+          data-testid="account-layout-heading"
         >
           {{ t('account.heading') }}
         </h1>
@@ -67,6 +68,7 @@
                   <SfListItem
                     @click="logOut"
                     class="py-4 md:py-2 mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
+                    data-testid="account-logout-button"
                   >
                     <template #prefix><SfIconBase /></template>
                     {{ t('account.logout') }}
@@ -80,7 +82,7 @@
                 class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
                 data-testid="category-grid"
               >
-                <slot />
+                <NuxtPage />
               </section>
             </div>
           </div>
