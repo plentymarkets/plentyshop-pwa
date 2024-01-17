@@ -56,9 +56,7 @@ export class MyAccountPageObject {
     cy.getByTestId('account-dropdown-button').should('exist').click();
     cy.getByTestId('account-dropdown-logout-item').should('exist').click();
 
-    cy.wait('@doLogoutUser').visitAndHydrate(paths.home);
-
-    cy.url().should('contain', paths.home);
+    cy.wait('@doLogoutUser').url().should('contain', paths.home);
     cy.getByTestId('account-dropdown-button').should('not.exist');
   }
 
