@@ -6,7 +6,7 @@ import {
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
-import {UploadFileForOrderPropertyResponse} from "@plentymarkets/shop-api";
+import { UploadFileForOrderPropertyResponse } from '@plentymarkets/shop-api';
 
 export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => {
   const state = useState<UseProductOrderPropertiesState>(`useProductOrderProperties`, () => ({
@@ -90,7 +90,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       return null;
     }
 
-    const { data, error  } = await useAsyncData(() =>
+    const { data, error } = await useAsyncData(() =>
       useSdk().plentysystems.doUploadOrderPropertyFile({
         base64: base64String,
         filename: file.name,
