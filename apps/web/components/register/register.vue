@@ -125,7 +125,7 @@ const registerUser = async () => {
       type: 'positive',
     });
     emits('registered');
-    router.push(localePath({ path: paths.home }));
+    router.push(router.currentRoute.value.path);
   }
 };
 
