@@ -644,7 +644,8 @@
       "uploadFile": "Datei hochladen",
       "acceptedFormats": "Akzeptiere Dateiformate",
       "maximumFileSize": "Erlaubte Dateigröße",
-      "unSupportedFileType": "Die hochgeladene Datei wird nicht unterstützt"
+      "unSupportedFileType": "Die hochgeladene Datei wird nicht unterstützt",
+      "uploadError": "Die Datei konnte nicht hochgeladen werden. Prüfen Sie die maximal erlaubte Dateigröße und das Dateiformat."
     },
     "additionalCostsPerItem": "Zusatzkosten (Preis pro Artikel)"
   },
