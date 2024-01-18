@@ -148,7 +148,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
       return null;
     }
 
-    const { data, error } = await useAsyncData(() =>
+    const { data } = await useAsyncData(() =>
       useSdk().plentysystems.doUploadOrderPropertyFile({
         base64: base64String,
         filename: file.name,
