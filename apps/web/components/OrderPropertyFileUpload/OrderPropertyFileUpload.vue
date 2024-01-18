@@ -16,9 +16,6 @@
         <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
         {{ orderPropertyLabel.requiredIndicator }}
       </label>
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
-      </div>
     </div>
 
     <div
@@ -30,23 +27,28 @@
     >
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
-        <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
-          <div class="text-center">
-            <div>
-              <img src="/images/file-upload.svg" :alt="$t('orderProperties.upload.uploadFile')" />
+        <div class="flex items-center">
+          <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
+            <div class="w-full flex items-center flex-col">
+              <div>
+                <img src="/images/file-upload.svg" :alt="$t('orderProperties.upload.uploadFile')" />
+              </div>
+              <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
+                <template #uploadFile>
+                  <div class="underline">
+                    {{ $t('orderProperties.upload.uploadFile') }}
+                  </div>
+                </template>
+              </i18n-t>
             </div>
-            <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
-              <template #uploadFile>
-                <div class="underline">
-                  {{ $t('orderProperties.upload.uploadFile') }}
-                </div>
-              </template>
-            </i18n-t>
+          </SfButton>
+          <div v-if="hasTooltip" class="w-[28px]">
+            <slot name="tooltip" />
           </div>
-        </SfButton>
-        <div>
+        </div>
+        <div class="text-sm text-neutral-500">
           <div class="mr-5">
-            <span> {{ $t('orderProperties.upload.acceptedFormats') }}: </span>
+            <span>{{ $t('orderProperties.upload.acceptedFormats') }}: </span>
             <span v-for="(supportedFormat, i) in Object.keys(supportedFormats)" :key="supportedFormat" class="m-0 p-0">
               <span>
                 {{ supportedFormat }}
@@ -54,7 +56,7 @@
               <span v-if="i < Object.keys(supportedFormats).length - 1">, </span>
             </span>
           </div>
-          <span> {{ $t('orderProperties.upload.maximumFileSize') }}: 10mb </span>
+          <span>{{ $t('orderProperties.upload.maximumFileSize') }}: 10mb</span>
         </div>
       </div>
     </div>
@@ -65,10 +67,13 @@
       </div>
     </div>
 
-    <div v-if="loaded">
-      <SfInput v-model="fileName">
+    <div v-if="loaded" class="flex items-center">
+      <SfInput v-model="fileName" :wrapper-class="'w-full'">
         <template #suffix><SfIconClose @click="clearUploadedFile" /></template>
       </SfInput>
+      <div v-if="hasTooltip" class="w-[28px]">
+        <slot name="tooltip" />
+      </div>
     </div>
   </div>
 </template>
@@ -127,6 +132,10 @@ const upload = async () => {
       loadedFile.value = null;
       loaded.value = false;
       property.property.value = null;
+      send({
+        type: 'negative',
+        message: i18n.t('orderProperties.upload.uploadError'),
+      });
     }
   }
 };

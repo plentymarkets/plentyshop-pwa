@@ -645,7 +645,8 @@
       "uploadFile": "Upload File",
       "acceptedFormats": "Accepted formats",
       "maximumFileSize": "Maximum filesize",
-      "unSupportedFileType": "Uploaded file is not supported"
+      "unSupportedFileType": "Uploaded file is not supported",
+      "uploadError": "The file could not be uploaded. Check the maximum allowed file size and file format."
     },
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
