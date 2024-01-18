@@ -70,3 +70,8 @@ jobs:
           name: cypress-screenshots
           path: apps/web/__tests__/report/screenshots
           if-no-files-found: ignore
+
+      - name: lighthouse mobile audit
+        run: yarn lhci:mobile
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
