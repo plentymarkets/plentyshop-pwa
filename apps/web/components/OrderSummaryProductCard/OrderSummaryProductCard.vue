@@ -43,7 +43,18 @@
               <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
               <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
             </span>
-            <span class="font-medium" v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
+            <span class="font-medium" v-if="orderGetters.isItemOrderPropertyFile(property)">
+              <a
+                :href="orderGetters.getItemOrderPropertyFileUrl(property)"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="underline"
+              >
+                <span>{{ orderGetters.getItemOrderPropertyValue(property) }}</span>
+                <SfIconOpenInNew class="ml-1" size="sm" />
+              </a>
+            </span>
+            <span class="font-medium" v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
               {{ orderGetters.getItemOrderPropertyValue(property) }}
             </span>
           </li>
@@ -71,7 +82,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink } from '@storefront-ui/vue';
+import { SfLink, SfIconOpenInNew } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
 const { addWebpExtension } = useImageUrl();
