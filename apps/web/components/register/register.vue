@@ -84,6 +84,7 @@ const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
+const { isDesktop } = useBreakpoints();
 
 const emits = defineEmits(['registered', 'change-view']);
 
@@ -125,7 +126,7 @@ const registerUser = async () => {
       type: 'positive',
     });
     emits('registered');
-    router.push(localePath({ path: paths.home }));
+    isDesktop.value ? router.push(router.currentRoute.value.path) : router.back();
   }
 };
 
