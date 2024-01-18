@@ -21,9 +21,9 @@
     >
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
-        <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
-          <div align="center">
-            <div>
+        <SfButton class="flex justify-center w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
+          <div>
+            <div class="w-full flex justify-center">
               <img src="/images/file-upload.svg" :alt="$t('orderProperties.upload.uploadFile')" />
             </div>
             <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
@@ -51,7 +51,7 @@
     </div>
 
     <div v-if="loading" class="w-full border-dashed border-2">
-      <div align="center" class="m-5">
+      <div class="m-5 flex justify-center">
         <SfProgressCircular size="3xl" :value="loadingValue">
           <text
             class="font-medium fill-neutral-400"

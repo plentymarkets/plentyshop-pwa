@@ -25,7 +25,7 @@
         :id="`prop-${orderPropertyId}`"
         v-model="value"
         v-bind="valueAttributes"
-        :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
+        :invalid="Boolean(errors['value'])"
         :wrapper-class="'w-full'"
       />
 
@@ -33,13 +33,7 @@
         <slot name="tooltip" />
       </div>
     </div>
-
-    <VeeErrorMessage
-      v-if="isOrderPropertyRequired"
-      as="span"
-      name="value"
-      class="flex text-negative-700 text-sm mt-2"
-    />
+    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -65,7 +59,24 @@ const isMultiline = productPropertyGetters.isMultiline(productProperty);
 
 const validationSchema = toTypedSchema(
   object({
-    value: string().required(t('errorMessages.requiredField')).default(''),
+    value: string().test((value, context) => {
+      if (isOrderPropertyRequired && value === '') {
+        return context.createError({ message: t('errorMessages.requiredField') });
+      }
+
+      const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
+      const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
+
+      if (value && isInt && /\D/.test(value)) {
+        return context.createError({ message: t('errorMessages.wholeNumber') });
+      }
+
+      if (value && isFloat && !/^\d+(?:[,.]\d*)?$/.test(value)) {
+        return context.createError({ message: t('errorMessages.decimalNumber') });
+      }
+
+      return true;
+    }),
   }),
 );
 
@@ -73,16 +84,14 @@ const { errors, defineField, validate, meta } = useForm({
   validationSchema: validationSchema,
 });
 
-if (isOrderPropertyRequired) registerValidator(validate);
+registerValidator(validate);
 
 const [value, valueAttributes] = defineField('value');
 
 watch(
   () => meta.value,
   () => {
-    if (isOrderPropertyRequired) {
-      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
-    }
+    registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
   },
 );
 

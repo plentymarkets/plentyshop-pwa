@@ -64,7 +64,7 @@
           {{ $t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
-      <div align="center">
+      <div class="text-center">
         <div class="my-5 font-bold">{{ $t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
           {{ $t('auth.signup.logInLinkLabel') }}
