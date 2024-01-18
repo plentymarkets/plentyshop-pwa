@@ -559,9 +559,8 @@
     "subscribe": "Subscribe To Newsletter",
     "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
     "success": "Newsletter successfully subscribed",
-    "termsRequired": "You must accept the terms and conditions.",
-    "firstName": "Firstname",
-    "lastName": "Lastname",
+    "firstName": "First Name",
+    "lastName": "Last Name",
     "email": "Email"
   },
   "coupon": {
@@ -652,6 +651,8 @@
   },
   "errorMessages": {
     "requiredField": "This filed is required.",
+    "wholeNumber": "Enter a whole number.",
+    "decimalNumber": "Enter a decimal number.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."
@@ -660,7 +661,10 @@
       "required": "Password is required.",
       "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
     },
-    "wholeNumber": "Enter a whole number.",
-    "decimalNumber": "Enter a decimal number."
+    "newsletter": {
+      "firstNameRequired": "First Name is required.",
+      "lastNameRequired": "Last Name is required.",
+      "termsRequired": "You must accept the terms and conditions."
+    }
   }
 }
