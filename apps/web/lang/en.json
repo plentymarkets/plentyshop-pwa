@@ -659,6 +659,8 @@
     "password": {
       "required": "Password is required.",
       "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
-    }
+    },
+    "wholeNumber": "Enter a whole number.",
+    "decimalNumber": "Enter a decimal number."
   }
 }

@@ -4,6 +4,7 @@
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.yourName')"
     :button-text="$t('account.accountSettings.personalData.edit')"
+    data-testid="account-name"
     @on-click="openModal('yourName')"
   >
     {{ userData?.user?.firstName }} {{ userData?.user?.lastName }}
@@ -13,6 +14,7 @@
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.contactInformation')"
     :button-text="$t('account.accountSettings.personalData.edit')"
+    data-testid="account-email"
     @on-click="openModal('contactInformation')"
   >
     {{ userData?.user?.email }}
@@ -23,6 +25,7 @@
     :header="$t('account.accountSettings.personalData.yourPassword')"
     :button-text="$t('account.accountSettings.personalData.change')"
     :show-edit-button="true"
+    data-testid="account-password"
     @on-click="openModal('passwordChange')"
   >
     ******

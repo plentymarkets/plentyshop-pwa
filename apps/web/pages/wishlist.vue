@@ -16,12 +16,16 @@ definePageMeta({
   layout: false,
 });
 
+const localePath = useLocalePath();
 const { t } = useI18n();
 const { fetchWishlist, data: products, loading } = useWishlist();
 
 fetchWishlist();
 
 const breadcrumbs = computed(() => {
-  return { name: t('wishlist'), link: '/wishlist' };
+  return [
+    { name: t('home'), link: localePath(paths.home) },
+    { name: t('wishlist'), link: localePath(paths.wishlist) },
+  ];
 });
 </script>

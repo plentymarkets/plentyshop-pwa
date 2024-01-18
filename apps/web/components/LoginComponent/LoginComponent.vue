@@ -17,7 +17,7 @@
           {{ $t('auth.login.submitLabel') }}
         </span>
       </SfButton>
-      <div align="center" v-if="!isSoftLogin">
+      <div v-if="!isSoftLogin" class="text-center">
         <div class="my-5 font-bold">{{ $t('auth.login.createAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
           {{ $t('auth.login.createAccountLinkLabel') }}

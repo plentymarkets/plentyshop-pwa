@@ -151,7 +151,13 @@ const paypalCreditCardPaymentId = computed(() =>
 );
 
 const loadAddresses = async () => {
-  await Promise.all([getBillingAddresses(), getShippingAddresses(), getShippingMethods()]);
+  await Promise.all([
+    getBillingAddresses(),
+    getShippingAddresses(),
+    getShippingMethods(),
+    getCart(),
+    fetchPaymentMethods(),
+  ]);
 };
 
 await loadAddresses();

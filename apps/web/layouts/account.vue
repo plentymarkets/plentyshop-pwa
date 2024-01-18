@@ -1,37 +1,33 @@
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
-      <NuxtLazyHydrate when-visible>
-        <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
-          <ClientOnly>
-            <h1
-              v-if="isRoot || isTablet"
-              class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
-            >
-              {{ $t('account.heading') }}
-            </h1>
+      <div :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
+        <h1
+          v-if="isTablet || (!isTablet && isRoot)"
+          class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
+          data-testid="account-layout-heading"
+        >
+          {{ t('account.heading') }}
+        </h1>
 
-            <div v-else class="flex justify-start items-center mb-10 mt-4">
-              <div v-for="({ subsections }, i) in sections" :key="i">
-                <div v-for="{ label, link } in subsections" :key="label" class="font-bold typography-headline-3">
-                  <h1 v-if="currentPath === link">{{ label }}</h1>
-                </div>
-              </div>
+        <div v-else class="flex justify-start items-center mb-10 mt-4">
+          <h1 class="font-bold typography-headline-3">{{ currentSectionLabel }}</h1>
 
-              <SfButton
-                :tag="NuxtLink"
-                :to="localePath(paths.account)"
-                class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
-                size="sm"
-                variant="tertiary"
-              >
-                <template #prefix>
-                  <SfIconArrowBack />
-                </template>
-                {{ $t('account.back') }}
-              </SfButton>
-            </div>
-          </ClientOnly>
+          <SfButton
+            :tag="NuxtLink"
+            :to="localePath(paths.account)"
+            class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
+            size="sm"
+            variant="tertiary"
+          >
+            <template #prefix>
+              <SfIconArrowBack />
+            </template>
+            {{ t('account.back') }}
+          </SfButton>
+        </div>
+
+        <NuxtLazyHydrate when-visible>
           <div class="md:flex gap-10" data-testid="account-page-sidebar">
             <div>
               <div
@@ -40,12 +36,17 @@
                   { hidden: !isRoot },
                 ]"
               >
-                <ul class="[&:not(:last-child)]:mb-4" v-for="{ title, icon, subsections } in sections" :key="title">
-                  <SfListItem class="py-4 md:py-2 hover:!bg-transparent font-medium !cursor-auto">
-                    <template #prefix><component :is="icon" /></template>
+                <ul
+                  class="[&:not(:last-child)]:mb-4"
+                  v-for="({ title, icon, subsections }, secIndex) in sections"
+                  :key="`section-${secIndex}`"
+                >
+                  <SfListItem class="py-4 md:py-2 hover:!bg-transparent font-medium !cursor-auto select-none">
+                    <template #prefix><Component :is="icon" /></template>
                     {{ title }}
                   </SfListItem>
-                  <li v-for="{ label, link } in subsections" :key="label">
+
+                  <li v-for="({ label, link }, subIndex) in subsections" :key="`subsection-${subIndex}`">
                     <SfListItem
                       :tag="NuxtLink"
                       :to="localePath(link)"
@@ -67,24 +68,26 @@
                   <SfListItem
                     @click="logOut"
                     class="py-4 md:py-2 mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
+                    data-testid="account-logout-button"
                   >
                     <template #prefix><SfIconBase /></template>
-                    {{ $t('account.logout') }}
+                    {{ t('account.logout') }}
                   </SfListItem>
                 </ul>
               </div>
             </div>
+
             <div class="flex-1">
               <section
                 class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
                 data-testid="category-grid"
               >
-                <slot />
+                <NuxtPage />
               </section>
             </div>
           </div>
-        </div>
-      </NuxtLazyHydrate>
+        </NuxtLazyHydrate>
+      </div>
     </NarrowContainer>
   </NuxtLayout>
 </template>
@@ -107,22 +110,22 @@ const { t } = useI18n();
 const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
 
-const sections = [
+const sections = computed(() => [
   {
     title: t('account.accountSettings.heading'),
     icon: SfIconPerson,
     subsections: [
       {
         label: t('account.accountSettings.section.personalData'),
-        link: paths.accountPersonalData,
+        link: localePath(paths.accountPersonalData),
       },
       {
         label: t('account.accountSettings.section.billingDetails'),
-        link: paths.accountBillingDetails,
+        link: localePath(paths.accountBillingDetails),
       },
       {
         label: t('account.accountSettings.section.shippingDetails'),
-        link: paths.accountShippingDetails,
+        link: localePath(paths.accountShippingDetails),
       },
     ],
   },
@@ -132,11 +135,11 @@ const sections = [
     subsections: [
       {
         label: t('account.ordersAndReturns.section.myOrders'),
-        link: paths.accountMyOrders,
+        link: localePath(paths.accountMyOrders),
       },
       {
         label: t('account.ordersAndReturns.section.returns'),
-        link: paths.accountReturns,
+        link: localePath(paths.accountReturns),
       },
     ],
   },
@@ -146,30 +149,30 @@ const sections = [
     subsections: [
       {
         label: t('account.wishlist.section.myWishlist'),
-        link: paths.accountMyWishlist,
+        link: localePath(paths.accountMyWishlist),
       },
     ],
   },
-];
+]);
 
 const currentPath = computed(() => router.currentRoute.value.path);
-// eslint-disable-next-line prettier/prettier
-const rootPathRegex = new RegExp(`^${paths.account}/?$`);
-const isRoot = computed(() => rootPathRegex.test(currentPath.value));
+const isRoot = computed(() => currentPath.value === localePath(paths.account));
+
 const findCurrentPage = computed(() =>
-  sections.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
+  sections.value.flatMap(({ subsections }) => subsections).find(({ link }) => currentPath.value.includes(link)),
 );
+
+const currentSectionLabel = computed(() => findCurrentPage.value?.label || '');
+
 const breadcrumbs = computed(() => [
   { name: t('home'), link: localePath(paths.home) },
   { name: t('account.heading'), link: localePath(paths.account) },
-  ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label, link: currentPath.value }]),
+  ...(isRoot.value ? [] : [{ name: findCurrentPage.value?.label || '', link: currentPath.value }]),
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-if (!isAuthorized.value) {
-  navigateTo(localePath(paths.home));
-}
+if (!isAuthorized.value) navigateTo(localePath(paths.home));
 
 const logOut = async () => {
   await logout();

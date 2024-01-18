@@ -1,71 +1,148 @@
-import { paths } from "../../../utils/paths";
+import { paths } from '../../../utils/paths';
 
 export class MyAccountPageObject {
-  get accountDropdownListItem () {
-    return cy.get(`a[href="${paths.account}"]`)
+  get accountLayout() {
+    return cy.getByTestId('account-layout');
+  }
+
+  successLogin() {
+    cy.getFixture('account').then((fixture) => {
+      cy.get(`[type="email"]`).type(fixture.email, { delay: 0 });
+      cy.get(`[type="password"]`).type(fixture.password, { delay: 0 });
+    });
+    cy.get(`[type="submit"]`).click();
+
+    return this;
+  }
+
+  get accountDataListItem() {
+    return cy.get(`a[href="${paths.account}"]`);
+  }
+
+  get accountOrdersListItem() {
+    return cy.get(`a[href="${paths.accountMyOrders}"]`);
+  }
+
+  get accountReturnsListItem() {
+    return cy.get(`a[href="${paths.accountReturns}"]`);
   }
 
   clickTopBarMyAccountLink() {
     cy.getByTestId('account-dropdown-button').should('exist').click();
 
-    this.accountDropdownListItem
-      .should('exist')
-      .contains('My Account').click();
+    this.accountDataListItem.should('exist').contains('My Account').click();
 
     cy.url().should('contain', paths.account);
   }
 
-  checkAllSections() {
-    cy.contains('Account Settings').should('exist');
-    cy.contains('Personal Data').should('exist');
-    cy.contains('Billing Details').should('exist');
-    cy.contains('Shipping Details').should('exist');
-    cy.contains('Orders & Returns').should('exist');
-    cy.contains('My Orders').should('exist');
-    cy.contains('Returns').should('exist');
-    cy.contains('Logout').should('exist');
+  clickTopBarMyOrdersLink() {
+    cy.getByTestId('account-dropdown-button').should('exist').click();
 
-    return this;
-  }
+    this.accountOrdersListItem.should('exist').contains('My Orders').click();
 
-  personalDataSection() {
-    cy.get('a').contains('Personal Data').click();
-    cy.url().should('contain', paths.accountPersonalData);
-    cy.contains('Your name').should('exist');
-    cy.contains('Contact information').should('exist');
-    cy.contains('Your password').should('exist');
-
-    return this;
-  }
-
-  billingDetailsSection() {
-    cy.get('a').contains('Billing Details').click();
-    cy.url().should('contain', paths.accountBillingDetails);
-    cy.contains('Billing address').should('exist');
-
-    return this;
-  }
-
-  shippingDetailsSection() {
-    cy.get('a').contains('Shipping Details').click();
-    cy.url().should('contain', paths.accountShippingDetails);
-    cy.contains('Shipping address').should('exist');
-
-    return this;
-  }
-
-  myOrdersSection() {
-    cy.get('a').contains('My Orders').click();
     cy.url().should('contain', paths.accountMyOrders);
-    cy.contains("Details").should('exist');
+  }
+
+  clickTopBarReturnsLink() {
+    cy.getByTestId('account-dropdown-button').should('exist').click();
+
+    this.accountReturnsListItem.should('exist').contains('Returns').click();
+
+    cy.url().should('contain', paths.accountReturns);
+  }
+
+  clickTopBarLogoutButton() {
+    cy.intercept('/plentysystems/doLogoutUser').as('doLogoutUser');
+    cy.getByTestId('account-dropdown-button').should('exist').click();
+    cy.getByTestId('account-dropdown-logout-item').should('exist').click();
+
+    cy.wait('@doLogoutUser').url().should('contain', paths.home);
+    cy.getByTestId('account-dropdown-button').should('not.exist');
+  }
+
+  checkAllSectionsMenu() {
+    this.accountLayout.getByTestId('account-layout-heading').should('be.visible');
+    this.accountLayout.getByTestId('account-page-sidebar').should('be.visible');
+    this.accountLayout.contains('Account Settings').should('exist');
+    this.accountLayout.contains('Personal Data').should('exist');
+    this.accountLayout.contains('Billing addresses').should('exist');
+    this.accountLayout.contains('Shipping addresses').should('exist');
+    this.accountLayout.contains('Orders & Returns').should('exist');
+    this.accountLayout.contains('My Orders').should('exist');
+    this.accountLayout.contains('Returns').should('exist');
+    this.accountLayout.contains('Wishlist').should('exist');
+    this.accountLayout.contains('My wishlist').should('exist');
+    this.accountLayout.contains('Logout').should('exist');
 
     return this;
   }
 
-  returnsSection() {
+  checkPersonalDataSection() {
+    cy.get('a').contains('Personal Data').click();
+    cy.visitAndHydrate(paths.accountPersonalData);
+    cy.url().should('contain', paths.accountPersonalData);
+    this.accountLayout.getByTestId('account-name').should('be.visible');
+    this.accountLayout.getByTestId('account-email').should('be.visible');
+    this.accountLayout.getByTestId('account-password').should('be.visible');
+
+    return this;
+  }
+
+  checkBillingAddressesSection() {
+    cy.get('a').contains('Billing addresses').click();
+    cy.visitAndHydrate(paths.accountBillingDetails);
+    cy.url().should('contain', paths.accountBillingDetails);
+    this.accountLayout.getByTestId('account-billing-addresses-1').should('be.visible');
+
+    return this;
+  }
+
+  checkShippingAddressesSection() {
+    cy.get('a').contains('Shipping addresses').click();
+    cy.visitAndHydrate(paths.accountShippingDetails);
+    cy.url().should('contain', paths.accountShippingDetails);
+    this.accountLayout.getByTestId('account-billing-addresses-2').should('be.visible');
+
+    return this;
+  }
+
+  checkMyOrdersSection() {
+    cy.get('a').contains('My Orders').click();
+    cy.visitAndHydrate(paths.accountMyOrders);
+    cy.url().should('contain', paths.accountMyOrders);
+    this.accountLayout.getByTestId('account-orders-heading').should('be.visible');
+    this.accountLayout.getByTestId('account-orders-content').should('be.visible');
+
+    return this;
+  }
+
+  checkReturnsSection() {
     cy.get('a').contains('Returns').click();
+    cy.visitAndHydrate(paths.accountReturns);
     cy.url().should('contain', paths.accountReturns);
-    cy.contains("You haven’t shopped with us yet").should('exist');
+    this.accountLayout.getByTestId('account-returns-heading').should('be.visible');
+    this.accountLayout.getByTestId('account-returns-content').should('be.visible');
+
+    return this;
+  }
+
+  checkWishlistSection() {
+    cy.get('a').contains('My wishlist').click();
+    cy.visitAndHydrate(paths.accountMyWishlist);
+    cy.url().should('contain', paths.accountMyWishlist);
+    this.accountLayout.getByTestId('wishlist-page-content').should('be.visible');
+
+    return this;
+  }
+
+  checkLogoutSection() {
+    cy.intercept('/plentysystems/doLogoutUser').as('doLogoutUser');
+
+    this.accountLayout.getByTestId('account-logout-button').should('exist').click();
+
+    cy.wait('@doLogoutUser').visitAndHydrate(paths.home);
+    cy.url().should('contain', paths.home);
+    cy.getByTestId('account-dropdown-button').should('not.exist');
 
     return this;
   }
