@@ -8,9 +8,9 @@
         {{ t('newsletter.info') }}
       </p>
 
-      <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px]" novalidate>
+      <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
         <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
-          <div class="sm:mr-2">
+          <div class="sm:mr-[1rem]">
             <SfInput
               v-model="firstName"
               v-bind="firstNameAttributes"
@@ -19,12 +19,12 @@
               name="firstName"
               :placeholder="t('newsletter.firstName')"
             />
-            <div class="h-[1.2rem]">
-              <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-sm" />
+            <div class="h-[2rem]">
+              <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
             </div>
           </div>
 
-          <div class="sm:ml-2">
+          <div class="sm:ml-[1rem]">
             <SfInput
               v-model="lastName"
               v-bind="lastNameAttributes"
@@ -33,8 +33,8 @@
               name="lastName"
               :placeholder="t('newsletter.lastName')"
             />
-            <div class="h-[1.2rem]">
-              <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-sm" />
+            <div class="h-[2rem]">
+              <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
             </div>
           </div>
         </div>
@@ -50,14 +50,14 @@
               autocomplete="email"
               :placeholder="t('newsletter.email')"
             />
-            <div class="h-[1.2rem]">
-              <VeeErrorMessage as="div" name="email" class="text-negative-700 text-sm" />
+            <div class="h-[2rem]">
+              <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
             </div>
           </div>
         </div>
 
         <div class="text-base text-neutral-900">
-          <div class="flex justify-center">
+          <div class="flex justify-center items-center">
             <SfCheckbox
               v-model="privacyPolicy"
               v-bind="privacyPolicyAttributes"
@@ -80,8 +80,8 @@
               </i18n-t>
             </label>
           </div>
-          <div class="h-[1.2rem]">
-            <VeeErrorMessage as="div" name="privacyPolicy" class="text-center text-negative-700 text-sm" />
+          <div class="h-[2rem]">
+            <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
 
