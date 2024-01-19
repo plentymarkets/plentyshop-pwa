@@ -16,4 +16,5 @@ export type ProductCardProps = {
   unitName?: string;
   basePrice?: number;
   showBasePrice?: boolean;
+  isFromWishlist?: boolean;
 };

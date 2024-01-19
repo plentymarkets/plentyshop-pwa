@@ -16,6 +16,7 @@
             <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
               <UiProductCard
                 :product="product"
+                is-from-wishlist
                 :name="productGetters.getName(product) ?? ''"
                 :rating-count="productGetters.getTotalReviews(product)"
                 :rating="productGetters.getAverageRating(product)"
