@@ -59,7 +59,7 @@
         </span>
       </div>
       <SfButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || isFromWishlist"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
@@ -102,6 +102,7 @@ const i18n = useI18n();
 const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
+  isFromWishlist: false,
 });
 
 const { data: categoryTree } = useCategoryTree();
