@@ -10,14 +10,14 @@
       ]"
       size="sm"
       :tag="NuxtLink"
-      :to="localePath(label === $t('account.navBarBottomHeading') && !isAuthorized ? paths.authLogin : link)"
-      @click="label === $t('products') && open()"
+      :to="link"
+      @click="label === t('products') && open()"
     >
       <template #prefix>
         <div class="relative">
           <component :is="icon" />
           <SfBadge
-            v-if="label === 'cart'"
+            v-if="label === t('cart')"
             :content="cartItemsCount"
             class="outline-white bg-white !text-neutral-900 translate-x-[5px] translate-y-[-3px]"
           />
@@ -38,28 +38,29 @@ const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
 const { open } = useMegaMenu();
 
-const items = [
+const items = computed(() => [
   {
     label: t('home'),
     icon: SfIconHome,
-    link: paths.home,
+    link: localePath(paths.home),
   },
   {
     label: t('products'),
     icon: SfIconMenu,
-    link: '#',
+    link: '',
   },
   {
     label: t('cart'),
     icon: SfIconShoppingCart,
-    link: paths.cart,
+    link: localePath(paths.cart),
   },
   {
-    label: t('account.navBarBottomHeading'),
+    label: isAuthorized.value ? t('account.navBottomHeadingAccount') : t('account.navBottomHeadingLogin'),
     icon: SfIconPerson,
-    link: paths.account,
+    link: isAuthorized.value ? localePath(paths.account) : localePath(paths.authLogin),
   },
-];
+]);
+
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
