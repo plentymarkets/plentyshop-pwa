@@ -1,10 +1,6 @@
 name: Testing (Lighthouse CI)
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    paths:
-      - 'apps/web/**'
-      - 'lighthouserc.json'
+  workflow_dispatch:
 
 permissions:
   contents: read
