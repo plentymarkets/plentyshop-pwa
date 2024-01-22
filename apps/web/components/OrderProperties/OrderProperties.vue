@@ -1,30 +1,6 @@
 <template>
   <div>
-    <div v-for="(productProperty, propIndex) in orderPropertiesWithoutGroup" :key="`withoutgroup-prop-${propIndex}`">
-      <div class="mt-2 flex items-center">
-        <ClientOnly>
-          <Component
-            v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-            :has-tooltip="hasTooltip"
-            :product-property="productProperty"
-            :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-          >
-            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
-              <SfTooltip
-                :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
-                :placement="'bottom'"
-                :show-arrow="true"
-                class="ml-2"
-              >
-                <SfIconInfo :size="'sm'" />
-              </SfTooltip>
-            </template>
-          </Component>
-        </ClientOnly>
-      </div>
-    </div>
-
-    <div v-for="(group, groupIndex) in orderPropertiesWithGroup" :key="`group-${groupIndex}`" class="mt-5">
+    <div v-for="(group, groupIndex) in orderPropertiesGroups" :key="`group-${groupIndex}`" class="mt-5">
       <div class="font-semibold">
         {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
       </div>
@@ -72,11 +48,8 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
-const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-const orderPropertiesWithGroup = Object.assign({}, orderPropertiesGroups);
-delete orderPropertiesWithGroup['NaN'];
-const orderPropertiesWithoutGroup = orderPropertiesGroups['NaN']?.orderProperties;
 
+const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
 const hasTooltip = productPropertyGetters.hasOrderPropertiesGroupsTooltips(orderPropertiesGroups);
 const componentsMapper: ComponentsMapper = {
   empty: OrderPropertyCheckbox,
