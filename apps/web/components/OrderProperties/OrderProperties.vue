@@ -73,7 +73,7 @@ import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 const props = defineProps<OrderPropertiesProps>();
 const product = props.product;
 const orderPropertiesGroups = productPropertyGetters.getOrderPropertiesGroups(product);
-const orderPropertiesWithGroup = orderPropertiesGroups;
+const orderPropertiesWithGroup = Object.assign({}, orderPropertiesGroups);
 delete orderPropertiesWithGroup['NaN'];
 const orderPropertiesWithoutGroup = orderPropertiesGroups['NaN']?.orderProperties;
 
