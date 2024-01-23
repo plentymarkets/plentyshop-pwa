@@ -72,7 +72,8 @@
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.amount') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.shippingDate') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.status') }}</th>
-              <!-- <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th> -->
+              <th class="lg:p-4 p-2 font-medium"></th>
+              <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th>
             </tr>
           </thead>
           <tbody>
@@ -82,6 +83,9 @@
               <td class="lg:p-4 p-2">{{ $n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
+              <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
+                <SfButton @click="openReturn(order)" size="sm" variant="tertiary"> Return </SfButton>
+              </td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
                 <SfButton
                   :tag="NuxtLink"
@@ -104,6 +108,23 @@
           :page-size="data.data.itemsPerPage"
           :max-visible-pages="maxVisiblePages"
         />
+        <UiModal
+          v-model="isOpen"
+          tag="section"
+          role="dialog"
+          class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+          aria-labelledby="return-modal-title"
+        >
+          <header>
+            <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+              <SfIconClose />
+            </SfButton>
+            <h3 id="return-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">Return Products</h3>
+          </header>
+          <div>
+            <OrderReturnForm :order="selectedOrder" />
+          </div>
+        </UiModal>
       </div>
     </div>
   </ClientOnly>
@@ -113,7 +134,7 @@
 import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: 'account',
@@ -121,10 +142,15 @@ definePageMeta({
 });
 
 const localePath = useLocalePath();
+const selectedOrder = ref(null);
 
 const { isDesktop } = useBreakpoints();
 const maxVisiblePages = ref(1);
-
+const { isOpen, open, close } = useDisclosure();
+const openReturn = (order) => {
+  selectedOrder.value = order;
+  open();
+};
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
 
