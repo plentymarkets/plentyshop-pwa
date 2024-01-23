@@ -123,7 +123,11 @@ watch(
   () => categoryTree.value,
   async () => {
     const firstCategoryId = categoryTree.value?.[0]?.id;
-    if (firstCategoryId) await fetchProductRecommended(firstCategoryId.toString());
+    const recommendedProductsCatId = recommendedProducts.value?.[0]?.defaultCategories?.[0]?.id;
+
+    if (firstCategoryId && firstCategoryId !== recommendedProductsCatId) {
+      await fetchProductRecommended(firstCategoryId.toString());
+    }
   },
   { immediate: true },
 );
