@@ -653,6 +653,8 @@
     "requiredField": "This filed is required.",
     "wholeNumber": "Enter a whole number.",
     "decimalNumber": "Enter a decimal number.",
+    "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
+    "pleaseFillOutAllFields": "Please fill out all these fields.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."

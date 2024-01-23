@@ -37,18 +37,33 @@ export const useValidatorAggregatorProperties: UseValidatorAggregatorPropertiesR
   /** @description Function for registering validator's invalid fields.
    * @param validMeta { boolean }
    * @param fieldUniqueId { string }
+   * @param name { string }
    * @return void
    * @example
    * ``` ts
    * registerInvalidFields({
-   *   true, fieldUniqueId
+   *   true, fieldUniqueId, orderPropertyName
    * });
    * ```
    */
-  const registerInvalidFields = (validMeta: boolean, fieldUniqueId: string) => {
-    const invalidFields = new Set(state.value.invalidFields);
-    validMeta ? invalidFields.delete(fieldUniqueId) : invalidFields.add(fieldUniqueId);
-    state.value.invalidFields = [...invalidFields];
+  const registerInvalidFields = (validMeta: boolean, fieldUniqueId: string, name: string) => {
+    const invalidFields = state.value.invalidFields;
+
+    if (validMeta) {
+      const indexToRemove = invalidFields.findIndex((invalidField) => invalidField.key === fieldUniqueId);
+      if (indexToRemove !== -1) {
+        invalidFields.splice(indexToRemove, 1);
+      }
+    } else {
+      const existingField = invalidFields.find((invalidField) => invalidField.key === fieldUniqueId);
+      if (existingField) {
+        existingField.name = name;
+      } else {
+        invalidFields.push({ key: fieldUniqueId, name });
+      }
+    }
+
+    state.value.invalidFields = invalidFields;
   };
 
   /** @description Function for validating fields.

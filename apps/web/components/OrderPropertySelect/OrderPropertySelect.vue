@@ -90,7 +90,11 @@ watch(
   () => meta.value,
   () => {
     if (isOrderPropertyRequired) {
-      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+      registerInvalidFields(
+        meta.value.valid,
+        `prop-${orderPropertyId}`,
+        productPropertyGetters.getOrderPropertyName(productProperty),
+      );
     }
   },
 );
