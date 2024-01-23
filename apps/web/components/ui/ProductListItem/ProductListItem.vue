@@ -1,0 +1,117 @@
+<template>
+  <div
+    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] p-4 last:mb-0"
+    data-testid="cart-product-card"
+  >
+    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
+      <SfLink :tag="NuxtLink" :to="path">
+        <!-- TODO: replace default image with an appropriate one.-->
+        <NuxtImg
+          class="w-full h-auto border rounded-md border-neutral-200"
+          :src="addWebpExtension(cartItemImage) || '/images/placeholder.png'"
+          :alt="cartItemImage || ''"
+          width="300"
+          height="300"
+          loading="lazy"
+          format="webp"
+        />
+      </SfLink>
+    </div>
+    <div class="flex flex-col pl-4 min-w-[180px] flex-1">
+      <SfLink
+        :tag="NuxtLink"
+        :to="path"
+        variant="secondary"
+        class="no-underline typography-text-sm sm:typography-text-lg"
+      >
+        {{ name }}
+      </SfLink>
+      <div>{{ itemPrice }}</div>
+      <div v-if="variation" class="mt-2">
+        <BasePrice
+          v-if="productGetters.showPricePerUnit(variation)"
+          :base-price="basePriceSingleValue"
+          :unit-content="productGetters.getUnitContent(variation)"
+          :unit-name="productGetters.getUnitName(variation)"
+        />
+      </div>
+      <div class="my-2">
+        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+          <li v-for="attribute in attributes" :key="attribute.name">
+            <span class="mr-1">{{ attribute.label }}:</span>
+            <span class="font-medium">{{ attribute.value }}</span>
+          </li>
+        </ul>
+
+        <div
+          class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+          v-if="basketItemOrderParams.length > 0"
+        >
+          <div class="text-[15px]">{{ $t('orderProperties.additionalCostsPerItem') }}:</div>
+          <ul>
+            <!-- should be refactor as well, not independent component-->
+            <CartOrderProperty
+              v-for="property in basketItemOrderParams"
+              :key="property.propertyId"
+              :cart-item="cartItem"
+              :basket-item-order-param="property"
+            />
+          </ul>
+        </div>
+      </div>
+
+      <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
+        <span
+          v-if="currentFullPrice"
+          class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+        >
+          {{ $n(currentFullPrice || 0, 'currency') }}
+        </span>
+        <UiQuantitySelector
+          :disabled="disabled"
+          @change-quantity="debounceQuantity"
+          :value="quantity"
+          :min-value="1"
+          class="mt-4 sm:mt-0"
+        />
+      </div>
+    </div>
+    <SfLoaderCircular v-if="deleteLoading" />
+    <SfIconDelete v-else-if="!disabled" class="cursor-pointer" @click="deleteItem" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { productGetters } from '@plentymarkets/shop-sdk';
+import { SfLink, SfIconDelete, SfLoaderCircular } from '@storefront-ui/vue';
+import _ from 'lodash';
+import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
+
+const { addWebpExtension } = useImageUrl();
+const { setCartItemQuantity, deleteCartItem } = useCart();
+const { send } = useNotification();
+const { t } = useI18n();
+
+const props = withDefaults(defineProps<CartProductCardProps>(), {
+  disabled: false,
+});
+const deleteLoading = ref(false);
+const changeQuantity = async (quantity: string) => {
+  await setCartItemQuantity({
+    quantity: Number(quantity),
+    cartItemId: props.id,
+    productId: props.variationId,
+  });
+};
+const deleteItem = async () => {
+  deleteLoading.value = true;
+  await deleteCartItem({
+    cartItemId: props.id,
+  });
+  send({ message: t('deletedFromCart'), type: 'positive' });
+  deleteLoading.value = false;
+};
+
+const debounceQuantity = _.debounce(changeQuantity, 500);
+const NuxtLink = resolveComponent('NuxtLink');
+</script>
