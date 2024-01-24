@@ -8,6 +8,9 @@
 
 <script setup lang="ts">
 const bodyClass = ref('');
+const DAYS = 100;
+const localeExpireDate = new Date();
+localeExpireDate.setDate(new Date().getDate() + DAYS);
 
 onMounted(() => {
   // Need this class for cypress testing
@@ -18,7 +21,10 @@ const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
-const vsfLocale = useCookie('vsf-locale');
+
+const vsfLocale = useCookie('vsf-locale', {
+  expires: localeExpireDate,
+});
 const { setStaticPageMeta } = useCanonical();
 
 vsfLocale.value = locale.value;
