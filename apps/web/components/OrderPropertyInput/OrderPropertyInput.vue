@@ -60,7 +60,7 @@ const isMultiline = productPropertyGetters.isMultiline(productProperty);
 const validationSchema = toTypedSchema(
   object({
     value: string().test((value, context) => {
-      if (isOrderPropertyRequired && value === '') {
+      if (isOrderPropertyRequired && !value) {
         return context.createError({ message: t('errorMessages.requiredField') });
       }
 
@@ -91,7 +91,11 @@ const [value, valueAttributes] = defineField('value');
 watch(
   () => meta.value,
   () => {
-    registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+    registerInvalidFields(
+      meta.value.valid,
+      `prop-${orderPropertyId}`,
+      productPropertyGetters.getOrderPropertyName(productProperty),
+    );
   },
 );
 
