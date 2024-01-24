@@ -653,6 +653,7 @@
     "requiredField": "Dieses Feld ist erforderlich.",
     "wholeNumber": "Geben Sie eine ganze Zahl ein.",
     "decimalNumber": "Geben Sie eine Kommazahl ein.",
+    "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
     "email": {

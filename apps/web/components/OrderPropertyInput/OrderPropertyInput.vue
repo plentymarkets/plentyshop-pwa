@@ -64,6 +64,10 @@ const validationSchema = toTypedSchema(
         return context.createError({ message: t('errorMessages.requiredField') });
       }
 
+      if (value && value.length > 128) {
+        return context.createError({ message: t('errorMessages.maxCharacters', { max: 128 }) });
+      }
+
       const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
       const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
 
