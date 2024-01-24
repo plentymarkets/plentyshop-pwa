@@ -77,10 +77,22 @@ export const useValidatorAggregatorProperties: UseValidatorAggregatorPropertiesR
     return Promise.all(state.value.validators.map((validator: ValidatorMethodType) => validator()));
   };
 
+  /** @description Function for resetting the invalid fields.
+   * @return void
+   * @example
+   * ``` ts
+   * resetInvalidFields();
+   * ```
+   */
+  const resetInvalidFields = () => {
+    state.value.invalidFields = [];
+  };
+
   return {
     ...toRefs(state.value),
     registerValidator,
     registerInvalidFields,
     validateAllFields,
+    resetInvalidFields,
   };
 };

@@ -134,13 +134,13 @@ const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
-const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 
-invalidFields.value = [];
+resetInvalidFields();
 
 const currentActualPrice = computed(
   () =>
