@@ -138,8 +138,9 @@ const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-
 const quantitySelectorValue = ref(1);
+
+invalidFields.value = [];
 
 const currentActualPrice = computed(
   () =>
