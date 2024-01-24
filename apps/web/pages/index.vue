@@ -96,14 +96,15 @@
         </div>
       </div>
     </div>
-
     <NuxtLazyHydrate when-visible>
       <NewsletterSubscribe />
-      <section v-if="recommendedProducts.length > 0" class="mx-4 mt-28 mb-20 overflow-hidden">
+    </NuxtLazyHydrate>
+    <NuxtLazyHydrate when-visible>
+      <section class="mx-4 mt-28 mb-20 overflow-hidden">
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
           {{ $t('moreItemsOfThisCategory') }}
         </p>
-        <RecommendedProducts :products="recommendedProducts" />
+        <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId"></ProductRecommendedProducts>
       </section>
     </NuxtLazyHydrate>
   </div>
@@ -117,16 +118,14 @@ definePageMeta({
 });
 
 const { data: categoryTree } = useCategoryTree();
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('homepage');
-
+const recommendedProductsCategoryId = ref();
 watch(
   () => categoryTree.value,
   async () => {
     const firstCategoryId = categoryTree.value?.[0]?.id;
-    const recommendedProductsCatId = recommendedProducts.value?.[0]?.defaultCategories?.[0]?.id;
 
-    if (firstCategoryId && firstCategoryId !== recommendedProductsCatId) {
-      await fetchProductRecommended(firstCategoryId.toString());
+    if (firstCategoryId) {
+      recommendedProductsCategoryId.value = firstCategoryId;
     }
   },
   { immediate: true },

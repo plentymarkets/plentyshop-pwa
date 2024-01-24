@@ -3,12 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
 import { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(
-  productGetters.getId(props.product),
+  props.categoryId + props.cacheKey
 );
-fetchProductRecommended(productGetters.getCategoryIds(props.product)[0]);
+if (props.categoryId) {
+  fetchProductRecommended(props.categoryId);
+}
 </script>
