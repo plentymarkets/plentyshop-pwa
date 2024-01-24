@@ -124,7 +124,6 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;

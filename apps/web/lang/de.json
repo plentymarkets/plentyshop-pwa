@@ -653,7 +653,7 @@
     "requiredField": "Dieses Feld ist erforderlich.",
     "wholeNumber": "Geben Sie eine ganze Zahl ein.",
     "decimalNumber": "Geben Sie eine Kommazahl ein.",
-    "missingOrWrongProperties": "Folgende Bestellmerkmale sind Pflichtfelder oder falsch gefüllt:",
+    "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",

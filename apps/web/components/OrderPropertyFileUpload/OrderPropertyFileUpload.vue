@@ -87,7 +87,6 @@ import { OrderPropertyInputProps } from './types';
 import { Ref, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const { t } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();

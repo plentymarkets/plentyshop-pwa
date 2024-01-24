@@ -48,7 +48,6 @@ import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
