@@ -104,7 +104,10 @@
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
           {{ $t('moreItemsOfThisCategory') }}
         </p>
-        <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId"></ProductRecommendedProducts>
+        <ProductRecommendedProducts
+          cache-key="homepage"
+          :category-id="recommendedProductsCategoryId"
+        ></ProductRecommendedProducts>
       </section>
     </NuxtLazyHydrate>
   </div>
