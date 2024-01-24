@@ -23,7 +23,7 @@ const route = useRoute();
 const { locale } = useI18n();
 
 const vsfLocale = useCookie('vsf-locale', {
-  expires: localeExpireDate
+  expires: localeExpireDate,
 });
 const { setStaticPageMeta } = useCanonical();
 
