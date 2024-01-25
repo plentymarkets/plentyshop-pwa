@@ -104,10 +104,7 @@
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
           {{ $t('moreItemsOfThisCategory') }}
         </p>
-        <ProductRecommendedProducts
-          cache-key="homepage"
-          :category-id="recommendedProductsCategoryId"
-        ></ProductRecommendedProducts>
+        <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
     </NuxtLazyHydrate>
   </div>
@@ -121,14 +118,15 @@ definePageMeta({
 });
 
 const { data: categoryTree } = useCategoryTree();
-const recommendedProductsCategoryId = ref();
+const recommendedProductsCategoryId = ref('');
+
 watch(
   () => categoryTree.value,
   async () => {
     const firstCategoryId = categoryTree.value?.[0]?.id;
 
     if (firstCategoryId) {
-      recommendedProductsCategoryId.value = firstCategoryId;
+      recommendedProductsCategoryId.value = firstCategoryId.toString();
     }
   },
   { immediate: true },
