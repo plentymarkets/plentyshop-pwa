@@ -334,7 +334,7 @@ watch(
 3. The same would apply for any other nested component (inside `PurchaseCard`, in our example), for a field that requires validation.
 
 Note:
-- Where `prop-${orderPropertyId}` is a unique form field identifier.
+- `prop-${orderPropertyId}` needs to be a unique form field identifier, that validator would reference.
 - Out of scope code omitted, for simplicity.
 
 ## References
