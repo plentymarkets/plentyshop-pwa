@@ -1,194 +1,343 @@
 # Form fields validation
-
-Form fields validation contributes significantly to the overall user experience by providing real-time feedback to users as they input information. Immediate validation alerts users to errors or inaccuracies, preventing the frustration of submitting a form only to encounter errors later. Form fields validation is a critical aspect of web development that ensures the integrity and accuracy of data submitted through online forms.
-
-This process involves implementing checks and constraints on user input to prevent erroneous or malicious data from being processed by the server. The importance of form fields validation cannot be overstated, as it contributes significantly to data quality, user experience, and overall system security.
-
-## Use cases
-
-Effective form fields validation serves as a proactive measure to prevent errors before they reach the server. This not only saves server resources but also minimizes the risk of propagating inaccuracies throughout the system.
+Form fields validation contributes significantly to the overall user experience by providing real-time feedback to users as they input information. Immediate validation alerts users to errors or inaccuracies, preventing the frustration of submitting a form only to encounter errors later.
 
 Form fields validation serves as a crucial line of defense against malicious activities and security vulnerabilities. Input validation prevents common attacks such as SQL injection, cross-site scripting, and cross-site request forgery.
 
+## Use cases
+Effective form fields validation serves as a proactive measure to prevent errors before they reach the server. This not only saves server resources but also minimizes the risk of propagating inaccuracies throughout the system.
+
 PlentyShop PWA makes use of [VeeValidate](https://vee-validate.logaretm.com/v4/) and [Yup validation schema](https://github.com/jquense/yup) for validation. 
 
-- **Regular (AJAX) form submission**: In this scenario, to handle submissions, you can use the `handleSubmit` function to create submission handlers for your forms; the function accepts a callback that receives the final form values. The following example demonstrates how to implement form validation:
-  1. Assuming a form has the following code structure.
-      ```ts
-      <form @submit.prevent="onSubmit">
-        <div>
-          <SfInput
-              v-model="firstField"
-              v-bind="firstFieldAttributes"
-              :invalid="Boolean(errors['firstField'])"
-              type="text"
-              :placeholder="t('placeholder.firstField')"
-          />
-          <VeeErrorMessage as="div" name="firstField" />
-        </div>
-      
-        <div>
-          <SfInput
-              v-model="secondField"
-              v-bind="secondFieldAttributes"
-              :invalid="Boolean(errors['secondField'])"
-              type="text"
-              :placeholder="t('placeholder.secondField')"
-          />
-          <VeeErrorMessage as="div" name="secondField" />
-        </div>
-      
-        <SfButton type="submit" :disabled="!meta.valid">
-          {{ t('button.label') }}
-        </SfButton>
-      </form>
-      ```
+### Regular (AJAX) form submission
+In this scenario, to handle submissions, you can use the `handleSubmit` function to create submission handlers for your forms; the function accepts a callback that receives the final form values. The following example demonstrates how to implement form validation:
+1. Assuming a form has the following code structure:
+```ts
+<form @submit.prevent="onSubmit">
+  <label>
+    <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
+    <SfInput
+      v-model="email"
+      v-bind="emailAttributes"
+      :invalid="Boolean(errors['register.email'])"
+      name="customerEmail"
+      type="email"
+      autocomplete="email"
+    />
+    <VeeErrorMessage as="span" name="register.email" />
+  </label>
 
-  2. The `handleSubmit` function will only execute your callback once the returned function (`onSubmit` in our example) if all fields are valid, meaning you don’t have to handle if the form is invalid in your logic.
-      ```ts
-      import { useForm } from 'vee-validate';
-      import { object, string } from 'yup';
-      
-      const { t } = useI18n();
-      
-      const validationSchema = toTypedSchema(
-          object({
-              firstField: string().required(t('field.error')).default(''),
-              secondField: string().email(t('field.error')).required(t('field.error')).default(''),
-          }),
-      );
-      
-      const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
-          validationSchema: validationSchema,
-      });
-      
-      const [firstField, firstFieldAttributes] = defineField('firstField');
-      const [secondField, secondFieldAttributes] = defineField('secondField');
-      
-      const apiCall = async () => {
-          const response = await doApiCall({ firstField, secondField });
-          resetForm();
-      };
-      
-      const onSubmit = handleSubmit(() => apiCall());
-      ```
+  <label>
+    <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
+    <UiFormPasswordInput
+      :title="$t('invalidPassword')"
+      name="password"
+      autocomplete="current-password"
+      v-model="password"
+      v-bind="passwordAttributes"
+      :invalid="Boolean(errors['register.password'])"
+    />
+    <VeeErrorMessage as="span" name="register.password" />
+  </label>
 
-- **Custom (AJAX) form submission**: In this scenario, assuming we have multiple components building a form, we would validate our selected fields by using `useValidatorAggregator` composable:
-  1. Assuming a `ParentComponent` form has the following code structure.
-      ```ts
-      <form @submit.prevent="onSubmit">
-        <FirstChildComponent>
-          <SfInput
-              v-model="firstField"
-              v-bind="firstFieldAttributes"
-              :id="`field-${firstFieldUniqueId}`"
-              :invalid="Boolean(errors['firstField'])"
-              :placeholder="t('placeholder.firstField')"
-              type="text"
-          />
-          <VeeErrorMessage as="div" name="firstField" />
-        </FirstChildComponent>
+  <div class="flex items-center">
+    <SfCheckbox
+      id="privacyPolicy"
+      v-model="privacyPolicy"
+      v-bind="privacyPolicyAttributes"
+      value="value"
+      class="peer"
+    />
+    <label for="privacyPolicy">
+      <i18n-t keypath="form.privacyPolicyLabel">
+        <template #privacyPolicy>
+          <SfLink
+          :href="localePath(paths.privacyPolicy)"
+          target="_blank"
+          >
+          {{ $t('privacyPolicy') }}
+          </SfLink>
+        </template>
+      </i18n-t>
+      *
+    </label>
+  </div>
 
-        <SecondChildComponent>
-          <SfInput
-              v-model="secondField"
-              v-bind="secondFieldAttributes"
-              :id="`field-${secondFieldUniqueId}`"
-              :invalid="Boolean(errors['secondField'])"
-              :placeholder="t('placeholder.secondField')"
-              type="text"
-          />
-          <VeeErrorMessage as="div" name="secondField" />
-        </SecondChildComponent>
-    
-        <SfButton type="submit" :disabled="invalidFields.length > 0">
-          {{ t('button.label') }}
-        </SfButton>
-      </form>
+  <div v-if="Boolean(errors['register.privacyPolicy'])">
+    {{ $t('privacyPolicyRequired') }}
+  </div>
 
-      <script setup lang="ts">
-      import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
-      const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
+  <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
+    <SfLoaderCircular v-if="loading" size="base" />
+    <span v-else>
+      {{ $t('auth.signup.submitLabel') }}
+    </span>
+  </SfButton>
 
-      const onSubmit = async () => {
-        if (await validateAllFields().then((validatedFields) => validatedFields.some((field) => !field.valid))) return;
-        await doApiCall({ firstField, secondField })  
-      };
-      </script>
-      ```
+  <div class="text-center">
+    <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
+    <SfLink @click="$emit('change-view')" href="#" variant="primary">
+        {{ $t('auth.signup.logInLinkLabel') }}
+    </SfLink>
+  </div>
+</form>
+```
+
+2. The `handleSubmit` function will only execute your callback once the returned function (`registerUser` in our example) if all fields are valid, meaning you don’t have to handle if the form is invalid in your logic:
+```ts
+import { useForm } from 'vee-validate';
+import { object, string, boolean } from 'yup';
   
-  2. Then `FirstChildComponent` would contain the following code.
-      ```ts
-      import { useForm } from 'vee-validate';
-      import { object, string } from 'yup';
-      import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
-  
-      const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
-      const { t } = useI18n();
+const { t } = useI18n();
+
+const validationSchema = toTypedSchema(
+  object({
+    register: object({
+      email: string()
+        .email(t('errorMessages.email.valid'))
+        .required(t('errorMessages.email.required'))
+        .default(''),
+      password: string()
+        .required(t('errorMessages.password.required'))
+        .matches(
+          /^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/,
+          t('errorMessages.password.valid')
+        )
+        .default(''),
+      privacyPolicy: boolean()
+        .isTrue()
+        .required(),
+    }),
+  }),
+);
+
+const { errors, meta, defineField, handleSubmit } = useForm({
+    validationSchema: validationSchema,
+});
+
+const [email, emailAttributes] = defineField('register.email');
+const [password, passwordAttributes] = defineField('register.password');
+const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
+
+const registerUser = async () => {
+  const response = await register({ 
+    email: email.value ?? '', 
+    password: password.value ?? ''
+  });
+
+  if (response?.data.code === 1) {
+    send({
+      message: t('auth.signup.emailAlreadyExists'),
+      type: 'negative',
+    });
+    return;
+  }
+
+  if (response?.data.id) {
+    send({
+      message: t('auth.signup.success'),
+      type: 'positive',
+    });
     
-      const validationSchema = toTypedSchema(
-        object({
-          firstField: string().required(t('field.error')).default(''),
+    emits('registered');
+    
+    isDesktop.value 
+      ? router.push(router.currentRoute.value.path) 
+      : router.back();
+  }
+};
+
+const onSubmit = handleSubmit(() => registerUser());
+```
+
+### Custom (AJAX) form submission
+In this scenario, assuming we have multiple components building a form, we would validate our selected fields by using `useValidatorAggregator` composable:
+1. Our `PurchaseCard` component has the following code structure:
+```ts
+<form @submit.prevent="handleAddToCart">
+  <div>
+    <h1 data-testid="product-name">
+      {{ productGetters.getName(product) }}
+    </h1>
+    <div>
+      <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
+        {{ t('addProductToWishlist') }}
+      </WishlistButton>
+
+      <WishlistButton v-else :product="product" :quantity="quantitySelectorValue" />
+    </div>
+  </div>
+    
+  <OrderProperties v-if="product" :product="product" />
+
+  <div>
+    <AttributeSelect v-if="product" :product="product" />
+  </div>
+    
+  <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+
+  <div>
+    <SfButton type="submit" :disabled="loading || !productGetters.isSalable(product)">
+      <template #prefix v-if="!loading">
+          <SfIconShoppingCart size="sm" />
+      </template>
+      
+      <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+      
+      <template v-else>
+        {{ t('addToCart') }}
+      </template>
+    </SfButton>
+  </div>
+</form>
+
+<script setup lang="ts">
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
+const { addToCart } = useCart();
+
+resetInvalidFields();
+
+const handleAddToCart = async () => {
+  await validateAllFields();
+  if (invalidFields.value.length > 0) {
+    const invalidFieldsNames = invalidFields.value.map((field) => field.name);
+    send({
+      message: [
+        t('errorMessages.missingOrWrongProperties'),
+        '',
+        ...invalidFieldsNames,
+        '',
+        t('errorMessages.pleaseFillOutAllFields'),
+      ],
+      type: 'negative',
+    });
+    return;
+  }
+
+  const params = {
+    productId: Number(productGetters.getId(product.value)),
+    quantity: Number(quantitySelectorValue.value),
+    basketItemOrderParams: getPropertiesForCart(),
+  };
+
+  if (await addToCart(params)) {
+    send({ message: t('addedToCart'), type: 'positive' });
+  }
+};
+</script>
+```
+
+2. Then our dynamic `OrderPropertyInput` component (from `OrderProperties`) would contain the following code:
+```ts
+<template>
+  <div>
+    <label :for="`prop-${orderPropertyId}`">
+      {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
+      <template v-if="orderPropertyLabel.surchargeType">
+        ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+      </template>
+      {{ orderPropertyLabel.surchargeIndicator }}
+      <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator">
+        , 
+      </template>
+      {{ orderPropertyLabel.requiredIndicator }}
+    </label>
+
+    <div>
+      <textarea v-if="isMultiline" 
+        :id="`prop-${orderPropertyId}`"
+        v-model="value"
+        v-bind="valueAttributes"
+        :class="{ '!ring-negative-700 ring-2': isOrderPropertyRequired && Boolean(errors['value']) }"
+      />
+      <SfInput v-else
+        :id="`prop-${orderPropertyId}`"
+        v-model="value"
+        v-bind="valueAttributes"
+        :invalid="Boolean(errors['value'])"
+      />
+    
+      <div v-if="hasTooltip">
+        <slot name="tooltip" />
+      </div>
+    </div>
+    <VeeErrorMessage as="span" name="value" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { OrderPropertyInputProps } from './types';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
+import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
+
+const props = defineProps<OrderPropertyInputProps>();
+const productProperty = props.productProperty;
+const hasTooltip = props.hasTooltip;
+const { t, n } = useI18n();
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
+const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
+const { getPropertyById } = useProductOrderProperties();
+const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
+const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
+const isMultiline = productPropertyGetters.isMultiline(productProperty);
+
+const validationSchema = toTypedSchema(
+    object({
+        value: string().test((value, context) => {
+            if (isOrderPropertyRequired && !value) {
+                return context.createError({ message: t('errorMessages.requiredField') });
+            }
+
+            if (value && value.length > 128) {
+                return context.createError({ message: t('errorMessages.maxCharacters', { max: 128 }) });
+            }
+
+            const isInt = productPropertyGetters.isOrderPropertyInt(productProperty);
+            const isFloat = productPropertyGetters.isOrderPropertyFloat(productProperty);
+
+            if (value && isInt && /\D/.test(value)) {
+                return context.createError({ message: t('errorMessages.wholeNumber') });
+            }
+
+            if (value && isFloat && !/^\d+(?:[,.]\d*)?$/.test(value)) {
+                return context.createError({ message: t('errorMessages.decimalNumber') });
+            }
+
+            return true;
         }),
-      );
-    
-      const { errors, meta, defineField } = useForm({
-        validationSchema: validationSchema,
-      });
-  
-      // Function for registering validator of this field
-      registerValidator(validate);
-    
-      const [firstField, firstFieldAttributes] = defineField('firstField');
-  
-      watch(
-        () => meta.value,
-        () => {
-          // Function for maintaining validator's invalid fields
-          registerInvalidFields(meta.value.valid, `field-${firstFieldUniqueId}`);
-        }
-      );
-      ```
-     
-  3. And `SecondChildComponent` would contain the following code.
-      ```ts
-      import { useForm } from 'vee-validate';
-      import { object, string } from 'yup';
-      import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
-  
-      const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
-      const { t } = useI18n();
-    
-      const validationSchema = toTypedSchema(
-        object({
-          secondField: string().email(t('field.error')).required(t('field.error')).default(''),
-        }),
-      );
-    
-      const { errors, meta, defineField } = useForm({
-        validationSchema: validationSchema,
-      });
-  
-      // Function for registering validator of this field
-      registerValidator(validate);
-    
-      const [secondField, secondFieldAttributes] = defineField('secondField');
-  
-      watch(
-        () => meta.value,
-        () => {
-          // Function for maintaining validator's invalid fields
-          registerInvalidFields(meta.value.valid, `field-${secondFieldUniqueId}`);
-        }
-      );
-      ```
+    }),
+);
 
-  Note:
-  - Where `field-${firstFieldUniqueId}` is a unique form field identifier.
-  - Where `field-${seconfFieldUniqueId}` is a unique form field identifier.
+const { errors, defineField, validate, meta } = useForm({
+    validationSchema: validationSchema,
+});
+
+registerValidator(validate);
+
+const [value, valueAttributes] = defineField('value');
+
+watch(
+    () => meta.value,
+    () => {
+        registerInvalidFields(
+            meta.value.valid,
+            `prop-${orderPropertyId}`,
+            productPropertyGetters.getOrderPropertyName(productProperty),
+        );
+    },
+);
+</script>
+```
+
+3. The same would apply for any other nested component (inside `PurchaseCard`, in our example), for a field that requires validation.
+
+Note:
+- Where `prop-${orderPropertyId}` is a unique form field identifier.
+- Out of scope code omitted, for simplicity.
 
 ## References
-
 - [VeeValidate documentation](https://vee-validate.logaretm.com/v4/)
 - [Yup validation schema](https://github.com/jquense/yup)
 - [Nuxt vee-validate Module](https://nuxt.com/modules/vee-validate)
