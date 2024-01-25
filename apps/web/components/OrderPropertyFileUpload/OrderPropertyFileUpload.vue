@@ -75,6 +75,8 @@
         <slot name="tooltip" />
       </div>
     </div>
+
+    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -83,19 +85,23 @@ import { SfButton, SfInput, SfIconClose, SfLoaderCircular } from '@storefront-ui
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyInputProps } from './types';
 import { Ref, ref } from 'vue';
+import { useForm } from 'vee-validate';
+import { object, string } from 'yup';
 
+const { t } = useI18n();
+const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
 const { uploadFile, loading, getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const orderPropertyLabel = productPropertyGetters.getOrderPropertyLabel(productProperty);
 const property = getPropertyById(orderPropertyId);
+const isOrderPropertyRequired = productPropertyGetters.isOrderPropertyRequired(productProperty);
 const hasTooltip = props.hasTooltip;
-const value: Ref<Blob | null> = ref(null);
+const blob: Ref<Blob | null> = ref(null);
 
 const uploadForm: Ref<HTMLInputElement | null> = ref(null);
 const loaded = ref(false);
-const fileName = ref('');
 const { send } = useNotification();
 const i18n = useI18n();
 
@@ -118,6 +124,25 @@ const supportedFormats = {
   png: 'image/png',
   svg: 'image/svg+xml',
 };
+
+const validationSchema = toTypedSchema(
+  object({
+    value: string().test((value, context) => {
+      if (isOrderPropertyRequired && !value) {
+        return context.createError({ message: t('errorMessages.requiredField') });
+      }
+      return true;
+    }),
+  }),
+);
+
+const { defineField, validate, meta } = useForm({
+  validationSchema: validationSchema,
+});
+
+registerValidator(validate);
+
+const [fileName] = defineField('value');
 
 const loadedFile: Ref<File | null> = ref(null);
 
@@ -160,8 +185,9 @@ const handleFileUpload = (event: Event) => {
   }
 };
 const clearUploadedFile = () => {
-  value.value = null;
+  blob.value = null;
   loaded.value = false;
+  fileName.value = '';
 
   if (property) {
     property.property.value = null;
@@ -183,4 +209,15 @@ const handleDrop = (event: DragEvent) => {
     upload();
   }
 };
+
+watch(
+  () => meta.value,
+  () => {
+    registerInvalidFields(
+      meta.value.valid,
+      `prop-${orderPropertyId}`,
+      productPropertyGetters.getOrderPropertyName(productProperty),
+    );
+  },
+);
 </script>

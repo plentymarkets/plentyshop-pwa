@@ -41,13 +41,13 @@ export const useNotification: UseNotificationReturn = () => {
       if (index !== -1) state.value.data.splice(index, 1);
     };
 
-    const dismissableNotification = {
+    const dismissibleNotification = {
       ...notification,
       id,
       dismiss,
     };
 
-    state.value.data.push(dismissableNotification);
+    state.value.data.push(dismissibleNotification);
     if (state.value.data.length > maxVisibleNotifications) state.value.data.shift();
 
     if (!notification.persist && notification.type !== 'negative') {

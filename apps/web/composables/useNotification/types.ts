@@ -1,5 +1,5 @@
 export interface Notification {
-  message: string;
+  message: string | string[];
   action?: { text: string; onClick: (...arguments_: any) => void };
   type: 'neutral' | 'positive' | 'secondary' | 'warning' | 'negative';
   persist?: boolean;

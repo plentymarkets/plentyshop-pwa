@@ -5,8 +5,12 @@
     class="flex items-start md:items-center max-w-[600px] shadow-md pr-2 pl-4 ring-1 typography-text-sm md:typography-text-base py-1 rounded-md bg-warning-100 ring-warning-300"
   >
     <SfIconWarning class="mr-2 text-warning-700 shrink-0" />
-
-    <p class="py-2 mr-2">{{ notification.message }}</p>
+    <div class="py-2 mr-2">
+      <div v-if="typeof notification.message === 'string'">{{ notification.message }}</div>
+      <div v-else v-for="message in notification.message" :key="message" :class="{ 'h-6': message === '' }">
+        {{ message }}
+      </div>
+    </div>
     <button
       v-if="notification?.action?.onClick"
       @click="notification?.action?.onClick"
