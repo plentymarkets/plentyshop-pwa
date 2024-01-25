@@ -66,20 +66,20 @@
           </template>
           <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
             <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
-              <template v-if="label === 'account.logout'">
+              <template v-if="label === t('account.logout')">
                 <UiDivider class="my-2" />
                 <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
-                  {{ t(label) }}
+                  {{ label }}
                 </SfListItem>
               </template>
               <SfListItem
                 v-else
                 :tag="NuxtLink"
-                :to="localePath(link)"
+                :to="link"
                 :class="{ 'bg-neutral-200': $route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
-                {{ t(label) }}
+                {{ label }}
               </SfListItem>
             </li>
           </ul>
@@ -166,7 +166,6 @@ const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quanti
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();
 const localePath = useLocalePath();
-const router = useRouter();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen } = useDisclosure();
@@ -182,27 +181,26 @@ watch(
 );
 
 const logOut = async () => {
-  await logout();
   accountDropdownToggle();
-  router.push(localePath({ path: paths.home }));
+  await logout();
+  navigateTo(localePath(paths.home));
 };
 
-const accountDropdown = [
+const accountDropdown = computed(() => [
   {
-    label: 'account.heading',
-    link: paths.account,
+    label: t('account.heading'),
+    link: localePath(paths.account),
   },
   {
-    label: 'account.ordersAndReturns.section.myOrders',
-    link: paths.accountMyOrders,
+    label: t('account.ordersAndReturns.section.myOrders'),
+    link: localePath(paths.accountMyOrders),
   },
   {
-    label: 'account.ordersAndReturns.section.returns',
-    link: paths.accountReturns,
+    label: t('account.ordersAndReturns.section.returns'),
+    link: localePath(paths.accountReturns),
   },
   {
-    label: 'account.logout',
-    link: paths.home,
+    label: t('account.logout'),
   },
-];
+]);
 </script>

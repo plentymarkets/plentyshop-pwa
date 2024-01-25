@@ -97,36 +97,40 @@
       </div>
     </div>
     <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe class="mt-5" />
+      <NewsletterSubscribe />
     </NuxtLazyHydrate>
-    <section class="mx-4 mt-28 mb-20 overflow-hidden">
-      <NuxtLazyHydrate when-visible>
-        <p data-testid="recommended-products" v-if="recommendedProducts" class="my-4 typography-text-lg">
+    <NuxtLazyHydrate when-visible>
+      <section class="mx-4 mt-28 mb-20 overflow-hidden">
+        <p data-testid="recommended-products" class="my-4 typography-text-lg">
           {{ $t('moreItemsOfThisCategory') }}
         </p>
-        <RecommendedProducts v-if="recommendedProducts" :products="recommendedProducts" />
-      </NuxtLazyHydrate>
-    </section>
+        <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
+      </section>
+    </NuxtLazyHydrate>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
 
-const { data: categoryTree } = useCategoryTree();
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended('homepage');
-
 definePageMeta({
   pageType: 'static',
 });
 
-const firstCategoryId = categoryTree.value?.[0]?.id;
+const { data: categoryTree } = useCategoryTree();
+const recommendedProductsCategoryId = ref('');
 
-onMounted(async () => {
-  if (firstCategoryId) {
-    await fetchProductRecommended(firstCategoryId.toString());
-  }
-});
+watch(
+  () => categoryTree.value,
+  async () => {
+    const firstCategoryId = categoryTree.value?.[0]?.id;
+
+    if (firstCategoryId) {
+      recommendedProductsCategoryId.value = firstCategoryId.toString();
+    }
+  },
+  { immediate: true },
+);
 
 const displayDetails = [
   {

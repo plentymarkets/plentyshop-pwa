@@ -358,7 +358,8 @@
   },
   "account": {
     "heading": "My Account",
-    "navBarBottomHeading": "Account",
+    "navBottomHeadingAccount": "Account",
+    "navBottomHeadingLogin": "Login",
     "logout": "Logout",
     "back": "Back",
     "accountSettings": {
