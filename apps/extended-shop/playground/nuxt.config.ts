@@ -1,5 +1,27 @@
 import path from 'path';
 export default defineNuxtConfig({
+
+  app: {
+    head: {
+      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      meta: [
+        { name: 'description', content: 'plentyshop PWA' },
+        { name: 'theme-color', content: '#018937' },
+      ],
+      link: [
+        { rel: 'icon', href: '/favicon.ico' },
+        { rel: 'apple-touch-icon', href: '/favicon.ico' },
+         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/tailwindcss@6.8.0/dist/tailwind.min.css'}
+      ],
+
+      script: [
+        { hid: 'tailwind', src: 'https://cdn.tailwindcss.com', defer: true }
+      ]
+    },
+  },
   modules: ['../src/module',
     '@nuxtjs/turnstile',
     '@nuxtjs/tailwindcss',
@@ -49,6 +71,7 @@ export default defineNuxtConfig({
   ],
 
   css: ['~/assets/style.scss'],
+
 
   devtools: { enabled: true },
   alias: {
