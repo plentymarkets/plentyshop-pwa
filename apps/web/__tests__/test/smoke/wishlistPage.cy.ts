@@ -24,8 +24,8 @@ beforeEach(() => {
 });
 
 
-describe('Smoke: Wishlist', () => {
-  it('[smoke] Checks wishlist functionality from category.', () => {
+describe('Wishlist functionality check.', () => {
+  it('Checks wishlist functionality from category.', () => {
     homePage.goToCategory();
     productListPage.assertGridView();
 
@@ -46,7 +46,7 @@ describe('Smoke: Wishlist', () => {
         .checkEmptyPage()
   });
 
-  it('[smoke] Check wishlist functionality from product page.', () => {
+  it('Check wishlist functionality from product page.', () => {
     homePage.goToCategory();
     productListPage
         .assertGridView()
