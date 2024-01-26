@@ -216,7 +216,7 @@
   "cart": "Warenkorb",
   "wishlist": "Wunschliste",
   "addProductToWishlist": "{label} zur Wunschliste hinzufügen",
-  "removeProductFromWishlist": "{label} von der Wunschliste entfernt",
+  "removeProductFromWishlist": "{label} von der Wunschliste entfernen",
   "wishlistInteraction": {
     "delete": "Der Artikel wurde von der Wunschliste entfernt.",
     "add": "Der Artikel wurde der Wunschliste hinzugefügt."
