@@ -48,8 +48,9 @@ describe('Smoke: Wishlist', () => {
 
   it('[smoke] Check wishlist functionality from product page.', () => {
     homePage.goToCategory();
-    productListPage.assertGridView();
-    productListPage.goToProduct();
+    productListPage
+        .assertGridView()
+        .goToProduct();
     productDetailPage.displayCheck();
 
     wishlist
