@@ -22,6 +22,7 @@
           :aria-label="t('numberInWishlist', { count: wishlistItems.length })"
           variant="tertiary"
           square
+          data-testid="wishlist-page-navigation"
         >
           <template #prefix>
             <SfIconFavorite />
