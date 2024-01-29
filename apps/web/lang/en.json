@@ -666,5 +666,15 @@
       "lastNameRequired": "Last Name is required.",
       "termsRequired": "You must accept the terms and conditions."
     }
+  },
+  "returns": {
+    "returnItems": "Return Items",
+    "areYouSure": "Are you sure you what to return these items?",
+    "commentOptional": "Comment(optional)",
+    "tellUsMore": "Tell us more about why you what to return these items..",
+    "initiateReturn":"Initiate Return",
+    "confirmReturn": "Confirm Return",
+    "cancel": "Cancel",
+    "selectAll": "Select All"
   }
 }

@@ -666,5 +666,15 @@
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen."
     }
+  },
+  "returns": {
+    "returnItems": "Rückgabeartikel",
+    "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
+    "commentOptional": "Kommentar (optional)",
+    "tellUsMore": "Erzählen Sie uns mehr darüber, warum Sie diese Artikel zurückgeben möchten..",
+    "initiateReturn": "Rückgabe einleiten",
+    "confirmReturn": "Rückgabe bestätigen",
+    "cancel": "Abbrechen",
+    "selectAll": "Alles auswählen"
   }
 }

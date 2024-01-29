@@ -112,17 +112,59 @@
           v-model="isOpen"
           tag="section"
           role="dialog"
-          class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+          class="h-full w-fit md:h-fit"
           aria-labelledby="return-modal-title"
         >
-          <header>
-            <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
-              <SfIconClose />
-            </SfButton>
-            <h3 id="return-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">Return Products</h3>
-          </header>
-          <div>
-            <OrderReturnForm :order="selectedOrder" />
+          <div v-if="!isSelected">
+            <div v-if="selectedOrder" class="flex justify-between mb-5">
+              <span class="text-neutral-900 mb-4">
+                <span class="font-bold"> Return for order: </span> # {{ orderGetters.getId(selectedOrder) }}
+              </span>
+              <span class="text-neutral-900 mb-4">
+                <span class="font-bold">Order date </span>
+                : {{ orderGetters.getDate(selectedOrder) }}</span
+              >
+              <div
+                class="bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1"
+              >
+                <SfCheckbox class="text-primary-800 mt-2" id="checkbox" v-model="checkAll" value="value" />
+                <label class="ml-3 text-primary-800" for="checkbox"> {{ $t('returns.selectAll') }} </label>
+              </div>
+            </div>
+            <div class="w-full" v-if="selectedOrder">
+              <OrderReturnForm :order="selectedOrder" />
+            </div>
+            <div class="flex flex-row justify-between mt-5">
+              <SfButton @click="close()" variant="secondary"> {{ $t('return.cancel') }} </SfButton>
+              <SfButton @click="isSelected = true">
+                {{ $t('returns.initiateReturn') }}
+                <SfIconArrowForward />
+              </SfButton>
+            </div>
+          </div>
+          <div v-else class="w-80">
+            <header>
+              <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+                <SfIconClose />
+              </SfButton>
+            </header>
+            <div class="text-2xl font-bold">{{ $t('returns.returnItems') }}</div>
+            <div></div>
+            <div class="my-5">
+              <ul class="list-disc ml-7 font-medium">
+                <li>1 x Item1</li>
+                <li>2 x Item2</li>
+                <li>1 x Item3</li>
+              </ul>
+            </div>
+            <div class="mt-2">{{ $t('returns.commentOptional') }}</div>
+            <div class="w-full">
+              <SfTextarea :placeholder="$t('returns.tellUsMore')" class="w-full block" />
+            </div>
+            <div class="flex flex-row justify-between mt-5">
+              <SfButton @click="isSelected = false" variant="secondary"> {{ $t('returns.cancel') }} </SfButton>
+              <SfButton> {{ $t('returns.confirmReturn') }} </SfButton>
+            </div>
           </div>
         </UiModal>
       </div>
@@ -133,26 +175,35 @@
 <script setup lang="ts">
 import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton } from '@storefront-ui/vue';
-import { SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-
+import {
+  SfLoaderCircular,
+  SfButton,
+  useDisclosure,
+  SfCheckbox,
+  SfTextarea,
+  SfIconClose,
+  SfIconArrowForward,
+} from '@storefront-ui/vue';
+import { ref, Ref } from 'vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
 });
 
 const localePath = useLocalePath();
-const selectedOrder = ref(null);
+const selectedOrder: Ref<Order | null> = ref(null);
 
 const { isDesktop } = useBreakpoints();
 const maxVisiblePages = ref(1);
 const { isOpen, open, close } = useDisclosure();
-const openReturn = (order) => {
-  selectedOrder.value = order;
+const isSelected = ref(false);
+const openReturn = (orderObject: Order) => {
+  selectedOrder.value = orderObject;
   open();
 };
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
+const checkAll = ref(null);
 
 const NuxtLink = resolveComponent('NuxtLink');
 watch(isDesktop, (value) => setMaxVisiblePages(value));
