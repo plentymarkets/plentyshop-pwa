@@ -28,6 +28,10 @@ export default defineNuxtModule<ModuleOptions>({
       path: resolver.resolve('../../web/components/')
     })
 
+    addComponentsDir({
+      path: resolver.resolve('../../web/pages/')
+    })
+
     addImportsDir(resolver.resolve('../../web/composables'))
 
     addImportsDir(resolver.resolve('../../web/utils'))
