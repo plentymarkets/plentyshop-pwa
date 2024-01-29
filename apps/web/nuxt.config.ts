@@ -1,5 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import cookieConfig from './cookie.config';
+import { fileURLToPath } from 'node:url'
+import { dirname, join } from 'node:path'
+const currentDir = dirname(fileURLToPath(import.meta.url))
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
@@ -29,7 +32,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables/**', 'utils/**'],
   },
-  css: ['~/assets/style.scss'],
+  css: [join(currentDir, './assets/style.scss')],
   image: {
     screens: {
       '4xl': 1920,
