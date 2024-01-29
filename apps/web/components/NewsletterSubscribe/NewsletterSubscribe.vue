@@ -94,10 +94,13 @@
           <NuxtTurnstile
             v-if="turnstileSiteKey"
             v-model="turnstile"
+            v-bind="turnstileAttributes"
             ref="turnstileElement"
             :options="{ theme: 'light' }"
             class="mt-4"
           />
+
+          <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </form>
     </div>
@@ -118,7 +121,6 @@ const { t } = useI18n();
 
 const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
-const turnstile = ref('');
 const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(
@@ -131,6 +133,7 @@ const validationSchema = toTypedSchema(
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
+    turnstile: string().required(t('errorMessages.newsletter.turnstileRequired')).default(''),
   }),
 );
 
@@ -141,6 +144,7 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
 const [email, emailAttributes] = defineField('email');
+const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 
 const subscribeNewsletter = async () => {

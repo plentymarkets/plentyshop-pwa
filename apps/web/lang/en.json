@@ -671,7 +671,8 @@
     "newsletter": {
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
-      "termsRequired": "You must accept the terms and conditions."
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
     }
   }
 }
