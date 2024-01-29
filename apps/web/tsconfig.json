@@ -1,7 +1,29 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk"]
+    "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk", "@types/express", "jest"],
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2019",
+    "types": [
+      "@types/express",
+      "jest"
+    ],
+    "rootDir": ".",
+    "outDir": "lib"
   },
   "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
   "typedocOptions": {

@@ -1,16 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import path from 'path';
+// import Composables from "../composable-holder/src/module";
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
+
   extends: [
       "@storefront-ui/vue",
-      "vue-tsc",
+      "@vue-storefront/sdk",
       "../apps/web",
-
   ],
-    alias: {
-        "~": path.resolve(__dirname, '../apps/web'),
-        "@": path.resolve(__dirname, '../apps/web'),
-    },
+
 })

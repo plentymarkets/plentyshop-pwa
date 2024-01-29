@@ -1,3 +1,34 @@
 {
-  "extends": "./.playground/.nuxt/tsconfig.json"
+
+  "extends": "./.playground/.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk", "@types/express", "jest"],
+    "lib": ["DOM", "DOM.Iterable", "ES2019"],
+    "composite": false,
+    "declaration": false,
+    "declarationMap": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "target": "ES2019",
+    "rootDir": "/Users/plentydev/Desktop/gh-desktop/plentyshop-pwa/",
+    "outDir": "lib"
+  },
+  "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
+  "typedocOptions": {
+    "entryPoints": ["composables/index.ts"],
+    "out": "docs/reference/composables",
+    "excludeExternals": true,
+    "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
+    "githubPages": false,
+    "readme": "none"
+  }
 }
