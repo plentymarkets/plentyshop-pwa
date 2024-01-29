@@ -135,7 +135,7 @@
               <OrderReturnForm :order="selectedOrder" />
             </div>
             <div class="flex flex-row justify-between mt-5">
-              <SfButton @click="close()" variant="secondary"> {{ $t('return.cancel') }} </SfButton>
+              <SfButton @click="close()" variant="secondary"> {{ $t('returns.cancel') }} </SfButton>
               <SfButton @click="isSelected = true">
                 {{ $t('returns.initiateReturn') }}
                 <SfIconArrowForward />
