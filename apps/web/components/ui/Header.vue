@@ -118,7 +118,7 @@
       </SfButton>
     </div>
   </MegaMenu>
-  <LanguageSelector v-if="isLanguageSelectOpen"/>
+  <LanguageSelector v-if="isLanguageSelectOpen" />
   <UiNotifications />
   <UiModal
     v-model="isAuthenticationOpen"
