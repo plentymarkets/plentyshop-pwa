@@ -72,7 +72,7 @@
             data-testid="add-to-cart"
             size="lg"
             class="w-full"
-            :disabled="loading || invalidFields.length > 0 || !productGetters.isSalable(product)"
+            :disabled="loading || !productGetters.isSalable(product)"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
@@ -124,7 +124,6 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -135,12 +134,13 @@ const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
-const { validateAllFields, invalidFields } = useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-
 const quantitySelectorValue = ref(1);
+
+resetInvalidFields();
 
 const currentActualPrice = computed(
   () =>
@@ -163,7 +163,21 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
-  if (await validateAllFields().then((validatedFields) => validatedFields.some((field) => !field.valid))) return;
+  await validateAllFields();
+  if (invalidFields.value.length > 0) {
+    const invalidFieldsNames = invalidFields.value.map((field) => field.name);
+    send({
+      message: [
+        t('errorMessages.missingOrWrongProperties'),
+        '',
+        ...invalidFieldsNames,
+        '',
+        t('errorMessages.pleaseFillOutAllFields'),
+      ],
+      type: 'negative',
+    });
+    return;
+  }
 
   const params = {
     productId: Number(productGetters.getId(product.value)),

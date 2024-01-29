@@ -42,7 +42,6 @@ import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 import { object, boolean } from 'yup';
 
 const props = defineProps<OrderPropertyCheckboxProps>();
@@ -79,7 +78,11 @@ watch(
   () => meta.value,
   () => {
     if (isOrderPropertyRequired) {
-      registerInvalidFields(meta.value.valid, `prop-${orderPropertyId}`);
+      registerInvalidFields(
+        meta.value.valid,
+        `prop-${orderPropertyId}`,
+        productPropertyGetters.getOrderPropertyName(productProperty),
+      );
     }
   },
 );

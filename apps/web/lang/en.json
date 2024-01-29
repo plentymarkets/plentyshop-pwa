@@ -216,6 +216,7 @@
   "cart": "Cart",
   "wishlist": "Wishlist",
   "addProductToWishlist": "Add {label} to wishlist",
+  "removeProductFromWishlist": "Remove {label} from wishlist",
   "wishlistInteraction": {
     "delete": "The item was removed from your wish list.",
     "add": "The item was added to your wish list."
@@ -358,7 +359,8 @@
   },
   "account": {
     "heading": "My Account",
-    "navBarBottomHeading": "Account",
+    "navBottomHeadingAccount": "Account",
+    "navBottomHeadingLogin": "Login",
     "logout": "Logout",
     "back": "Back",
     "accountSettings": {
@@ -653,6 +655,9 @@
     "requiredField": "This filed is required.",
     "wholeNumber": "Enter a whole number.",
     "decimalNumber": "Enter a decimal number.",
+    "maxCharacters": "Enter a maximum of {max} characters.",
+    "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
+    "pleaseFillOutAllFields": "Please fill out all these fields.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."

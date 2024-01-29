@@ -2,9 +2,12 @@
   <SfButton
     variant="tertiary"
     size="sm"
-    :aria-label="t('addProductToWishlist', productName)"
+    :aria-label="
+      isWishlistItem(variationId) ? t('removeProductFromWishlist', productName) : t('addProductToWishlist', productName)
+    "
     :disabled="wishlistLoading"
     @click="onWishlistClick()"
+    data-testid="wishlist-trigger"
   >
     <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
