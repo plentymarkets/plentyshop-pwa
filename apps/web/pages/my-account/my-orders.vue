@@ -203,7 +203,7 @@ const openReturn = (orderObject: Order) => {
 };
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
-const checkAll = ref(null);
+const checkAll: Ref<boolean> = ref(false);
 
 const NuxtLink = resolveComponent('NuxtLink');
 watch(isDesktop, (value) => setMaxVisiblePages(value));
