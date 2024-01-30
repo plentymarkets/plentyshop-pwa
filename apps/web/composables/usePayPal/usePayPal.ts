@@ -64,14 +64,15 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
 
   /**
    * @description Function for get the PayPal sdk script.
-   * @param currency
+   * @param currency string
+   * @param commit boolean
    * @return LoadScript
    * @example
    * ``` ts
    * loadScript('EUR');
    * ```
    */
-  const loadScript: LoadScript = async (currency: string) => {
+  const loadScript: LoadScript = async (currency: string, commit = false) => {
     const { $i18n } = useNuxtApp();
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
 
@@ -85,6 +86,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components: 'messages,buttons,funding-eligibility,hosted-fields,payment-fields,marks&enable-funding=paylater',
           locale: localePayPal,
+          commit: commit,
         });
         return state.value.paypalScript;
       } catch {
