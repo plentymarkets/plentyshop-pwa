@@ -170,7 +170,7 @@ const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen } = useDisclosure();
-const { isOpen: isLanguageSelectOpen, toggle: toggleLanguageSelect } = useLanguageSelect();
+const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLanguageSelect();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 
