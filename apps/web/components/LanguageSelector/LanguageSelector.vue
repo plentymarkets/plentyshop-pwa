@@ -39,7 +39,7 @@
 import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
-const { isOpen, toggle: toggleLanguageSelect } = useLanguageSelect();
+const { isOpen } = useLanguageSelect();
 
 const { isDesktop, isTablet } = useBreakpoints();
 const { localeCodes, locale: currentLocale } = useI18n();
