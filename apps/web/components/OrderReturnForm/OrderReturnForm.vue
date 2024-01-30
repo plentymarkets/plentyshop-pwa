@@ -2,7 +2,7 @@
   <div>
     <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
       <div v-for="item in orderGetters.getItems(order)" :key="item.id">
-        <OrderReturnProductCard :order="order" :order-item="item" />
+        <OrderReturnProductCard :order="order" :order-item="item" :select-all="selectAll" />
       </div>
     </SfScrollable>
   </div>

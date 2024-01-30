@@ -47,7 +47,6 @@ import { clamp } from '@storefront-ui/shared';
 import { SfButton, SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
 import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
-
 const emit = defineEmits(['changeQuantity']);
 
 const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorProps>(), {
@@ -74,4 +73,11 @@ const handleOnChange = (event: Event) => {
   const nextValue = Number.parseFloat(currentValue);
   set(clamp(nextValue, minValue, maxValue));
 };
+
+const externalUpdate = (nextValue: number) => {
+  set(clamp(nextValue, minValue, maxValue));
+};
+defineExpose({
+  externalUpdate,
+});
 </script>

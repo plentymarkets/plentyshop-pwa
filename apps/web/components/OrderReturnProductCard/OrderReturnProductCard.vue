@@ -2,14 +2,13 @@
   <div
     class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
     data-testid="cart-product-card"
-    v-if="orderItem.typeId !== 6"
+    v-if="displayItem"
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
       <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
         <NuxtImg
           class="h-auto border rounded-md border-neutral-200"
           :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-          :alt="'' || ''"
           width="300"
           height="300"
           loading="lazy"
@@ -69,9 +68,11 @@
       <div class="flex-1"></div>
       <div>
         <UiQuantitySelector
+          ref="quantitySelector"
           @change-quantity="debounceQuantity"
-          :value="orderGetters.getItemQty(orderItem)"
+          :value="quantity"
           :min-value="1"
+          :max-value="orderGetters.getItemQty(orderItem)"
           class="mt-4 sm:mt-0"
         />
       </div>
@@ -79,8 +80,8 @@
     <div class="flex flex-col">
       <div class="flex-1"></div>
       <label>
-        <span class="pb-1 text-sm font-medium text-neutral-900"> Return reason </span>
-        <SfSelect v-model="returnReason" size="sm" placeholder="Select Return Reason">
+        <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+        <SfSelect v-model="returnReason" size="sm" :placeholder="$t(`returns.selectReturnReason`)">
           <option v-for="{ value, label } in options" :key="value" :value="value">
             {{ label }}
           </option>
@@ -95,10 +96,12 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from 'lodash';
+// import type { UiQuantitySelectorType } from '~/components/ui/QuantitySelector/QuantitySelector'
+// const { UiQuantitySelectorObject } = resolveComponent('QuantitySelector');
 const { addWebpExtension } = useImageUrl();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-
+const props = defineProps<OrderSummaryProductCardProps>();
 const changeQuantity = async () => {};
 
 const options = ref([
@@ -106,6 +109,21 @@ const options = ref([
   { label: 'No reason', value: 'No reason' },
 ]);
 const returnReason = ref('');
+const displayItem = computed(() => props.orderItem.typeId !== 6);
 const debounceQuantity = debounce(changeQuantity, 500);
-defineProps<OrderSummaryProductCardProps>();
+const quantity = ref(0);
+
+// type QuantitySelectorInstance = InstanceType<typeof UiQuantitySelectorObject> & {
+//   externalUpdate: () => void;
+// };
+const quantitySelector = ref<any | null>(null);
+
+watch(
+  () => props.selectAll,
+  () => {
+    if (props.selectAll && quantitySelector && quantitySelector.value) {
+      quantitySelector.value.externalUpdate(orderGetters.getItemQty(props.orderItem));
+    }
+  },
+);
 </script>

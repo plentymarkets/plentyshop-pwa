@@ -84,7 +84,7 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
-                <SfButton @click="openReturn(order)" size="sm" variant="tertiary"> Return </SfButton>
+                <SfButton @click="openReturn(order)" size="sm" variant="tertiary"> {{ $t('returns.return') }}</SfButton>
               </td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
                 <SfButton
@@ -118,21 +118,22 @@
           <div v-if="!isSelected">
             <div v-if="selectedOrder" class="flex justify-between mb-5">
               <span class="text-neutral-900 mb-4">
-                <span class="font-bold"> Return for order: </span> # {{ orderGetters.getId(selectedOrder) }}
+                <span class="font-bold"> {{ $t('returns.returnForOrder') }} </span> #
+                {{ orderGetters.getId(selectedOrder) }}
               </span>
               <span class="text-neutral-900 mb-4">
-                <span class="font-bold">Order date </span>
+                <span class="font-bold">{{ $t('returns.orderDate') }} </span>
                 : {{ orderGetters.getDate(selectedOrder) }}</span
               >
               <div
                 class="bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1"
               >
-                <SfCheckbox class="text-primary-800 mt-2" id="checkbox" v-model="checkAll" value="value" />
+                <SfCheckbox class="text-primary-800 mt-2" id="checkbox" v-model="selectAll" value="value" />
                 <label class="ml-3 text-primary-800" for="checkbox"> {{ $t('returns.selectAll') }} </label>
               </div>
             </div>
             <div class="w-full" v-if="selectedOrder">
-              <OrderReturnForm :order="selectedOrder" />
+              <OrderReturnForm :order="selectedOrder" :select-all="selectAll" />
             </div>
             <div class="flex flex-row justify-between mt-5">
               <SfButton @click="close()" variant="secondary"> {{ $t('returns.cancel') }} </SfButton>
@@ -197,13 +198,9 @@ const { isDesktop } = useBreakpoints();
 const maxVisiblePages = ref(1);
 const { isOpen, open, close } = useDisclosure();
 const isSelected = ref(false);
-const openReturn = (orderObject: Order) => {
-  selectedOrder.value = orderObject;
-  open();
-};
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
-const checkAll: Ref<boolean> = ref(false);
+const selectAll: Ref<boolean> = ref(false);
 
 const NuxtLink = resolveComponent('NuxtLink');
 watch(isDesktop, (value) => setMaxVisiblePages(value));
@@ -213,6 +210,12 @@ const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 
 const generateOrderDetailsLink = (order: Order) => {
   return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+};
+
+const openReturn = (orderObject: Order) => {
+  selectedOrder.value = orderObject;
+  selectAll.value = false;
+  open();
 };
 
 const handleQueryUpdate = async () => {

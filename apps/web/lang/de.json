@@ -673,6 +673,7 @@
     }
   },
   "returns": {
+    "return": "Zurückkehren",
     "returnItems": "Rückgabeartikel",
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
     "commentOptional": "Kommentar (optional)",
@@ -680,6 +681,10 @@
     "initiateReturn": "Rückgabe einleiten",
     "confirmReturn": "Rückgabe bestätigen",
     "cancel": "Abbrechen",
+    "orderDate": "Auftragsdatum",
+    "returnReason": "Rücksendegrund",
+    "returnForOrder": "Zurück zur Bestellung",
+    "selectReturnReason": "Rücksendegrund auswählen",
     "selectAll": "Alles auswählen"
   }
 }

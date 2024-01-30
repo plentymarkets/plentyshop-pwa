@@ -673,6 +673,7 @@
     }
   },
   "returns": {
+    "return": "Return",
     "returnItems": "Return Items",
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
@@ -680,6 +681,10 @@
     "initiateReturn":"Initiate Return",
     "confirmReturn": "Confirm Return",
     "cancel": "Cancel",
+    "orderDate": "Order date",
+    "returnReason": "Return reason",
+    "returnForOrder":"Return for order",
+    "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All"
   }
 }
