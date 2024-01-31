@@ -56,7 +56,7 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData, doMakeOrderReturn } = useReturnOrder();
+const { currentReturnOrder, selectAll, returnData } = useReturnOrder();
 const { t } = useI18n();
 
 const confirmation = ref(false);
