@@ -60,6 +60,12 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * ```
    */
   const updateReturnDataItems: UpdateReturnDataItems = (variationId, quantity) => {
+    if (quantity === 0) {
+      delete state.value.returnData['variationIds'][variationId];
+
+      return;
+    }
+
     state.value.returnData['variationIds'][variationId] = quantity;
   };
 
