@@ -118,17 +118,9 @@
 <script setup lang="ts">
 import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfLoaderCircular,
-  SfButton,
-  useDisclosure,
-  SfCheckbox,
-  SfTextarea,
-  SfIconClose,
-  SfIconArrowForward,
-} from '@storefront-ui/vue';
-import { ref, Ref } from 'vue';
-import {useReturnOrder} from "~/composables/useReturnOrder";
+import { SfLoaderCircular, SfButton, useDisclosure } from '@storefront-ui/vue';
+import { ref } from 'vue';
+import { useReturnOrder } from '~/composables/useReturnOrder';
 definePageMeta({
   layout: 'account',
   pageType: 'static',

@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('close')">
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('closed')">
         <SfIconClose />
       </SfButton>
     </header>
@@ -10,7 +10,9 @@
     <div class="my-6">
       <ul class="list-disc ml-7 font-medium">
         <li v-for="(quantity, variationId) in returnData.variationIds" :key="variationId">
-          {{ quantity }} x {{ orderGetters.getItemName(getItemByVariation(Number(variationId))) }}
+          <template v-if="Object.keys(getItemByVariation(Number(variationId))).length > 0">
+            {{ quantity }} x {{ orderGetters.getItemName(getItemByVariation(Number(variationId))) }}
+          </template>
         </li>
       </ul>
     </div>
@@ -24,7 +26,7 @@
       />
     </div>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton @click="$emit('close')" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
+      <SfButton @click="$emit('closed')" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
       <SfButton> {{ t('returns.confirmReturn') }} </SfButton>
     </div>
   </div>
@@ -32,19 +34,19 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconClose, SfTextarea } from '@storefront-ui/vue';
-import { OrderReturnFormProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-sdk';
+import { OrderItem } from '@plentymarkets/shop-api/src/types/api/order';
 
-defineProps<OrderReturnFormProps>();
-
-defineEmits(['close']);
+defineEmits(['closed']);
 
 const { currentReturnOrder, returnData } = useReturnOrder();
 const { t } = useI18n();
 
 const getItemByVariation = (variationId: number) => {
-  return orderGetters
-    .getItems(currentReturnOrder.value)
-    .find((orderItem) => orderGetters.getItemVariationId(orderItem) === variationId);
+  return (
+    orderGetters
+      .getItems(currentReturnOrder.value)
+      .find((orderItem: OrderItem) => orderGetters.getItemVariationId(orderItem) === variationId) || ({} as OrderItem)
+  );
 };
 </script>

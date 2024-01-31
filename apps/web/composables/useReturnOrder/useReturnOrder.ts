@@ -1,16 +1,22 @@
 import { toRefs } from '@vueuse/shared';
-import { SetCurrentReturnOrder, UseReturnOrderReturn, UseReturnOrderState } from './types';
+import {
+  SelectAll,
+  SetCurrentReturnOrder,
+  UpdateReturnDataItems,
+  UseReturnOrderReturn,
+  UseReturnOrderState,
+} from './types';
 import type { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 
 /**
- * @description Composable for setting additional information.
- * @returns DoAdditionalInformationReturn
+ * @description Composable for managing order return.
+ * @returns UseReturnOrderReturn
  * @example
  * ``` ts
  * const {
- * data, loading, shippingPrivacyAgreement, setShippingPrivacyAgreement, doAdditionalInformation
- * } = useAdditionalInformation();
+ * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateReturnDataItems, selectAll
+ * } = useReturnOrder();
  * ```
  */
 export const useReturnOrder: UseReturnOrderReturn = () => {
@@ -18,7 +24,6 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     data: null,
     loading: false,
     currentReturnOrder: {} as Order,
-    // TODO: tie this to the order
     returnData: {
       variationIds: {},
       returnNote: '',
@@ -26,33 +31,59 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   }));
 
   /**
-   * @description Function for setting the additional information.
+   * @description Function for setting the current order.
+   * @return SetCurrentReturnOrder
    * @example
    * ``` ts
-   * doAdditionalInformation({
-   *   orderContactWish: null,
-   *   orderCustomerSign: null,
-   *   shippingPrivacyHintAccepted: true,
-   *   templateType: 'checkout'
+   * setCurrentReturnOrder({
+   *   order: {},
    * });
    * ```
    */
   const setCurrentReturnOrder: SetCurrentReturnOrder = (order: Order) => {
     state.value.currentReturnOrder = order;
+    state.value.returnData = {
+      variationIds: {},
+      returnNote: '',
+    };
   };
 
-  const updateReturnDataItems = (variationId, quantity) => {
+  /**
+   * @description Function for updating return item quantity.
+   * @return UpdateReturnDataItems
+   * @example
+   * ``` ts
+   * updateReturnDataItems({
+   *   variationId: 1,
+   *   quantity: 1
+   * });
+   * ```
+   */
+  const updateReturnDataItems: UpdateReturnDataItems = (variationId, quantity) => {
     state.value.returnData['variationIds'][variationId] = quantity;
   };
 
-  const selectAll = () => {
+  /**
+   * @description Function for selecting maximum quantity for all items.
+   * @return SelectAll
+   * @example
+   * ``` ts
+   * selectAll(true);
+   * selectAll(false);
+   * ```
+   */
+  const selectAll: SelectAll = (maximum) => {
     const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
+
+    if (!maximum) {
+      state.value.returnData.variationIds = {};
+
+      return;
+    }
 
     orderItems.forEach((item) => {
       updateReturnDataItems(orderGetters.getItemVariationId(item), orderGetters.getItemQty(item));
     });
-
-    console.log('state.value.returnData:', state.value.returnData);
   };
 
   return {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative grid grid-cols-[1fr_1fr_1fr_1fr] first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
+    class="relative sm:grid sm:grid-cols-[1fr_1fr_2fr] first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
@@ -64,7 +64,7 @@
         </ul>
       </div>
     </div>
-    <div class="mx-5 flex flex-col justify-end">
+    <div class="md:mx-5 md:grid grid-cols-[1fr_1fr] self-end">
       <UiQuantitySelector
         :key="quantity"
         ref="quantitySelector"
@@ -72,18 +72,19 @@
         :value="quantity"
         :min-value="0"
         :max-value="orderGetters.getItemQty(orderItem)"
-        class="mt-4 sm:mt-0"
+        class="mt-4 sm:mt-0 h-fit self-end mr-4"
       />
-    </div>
-    <div class="flex flex-col flex-1 justify-end">
-      <label>
-        <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
-        <SfSelect v-model="returnReason" size="sm" :placeholder="$t(`returns.selectReturnReason`)">
-          <option v-for="{ value, label } in options" :key="value" :value="value">
-            {{ label }}
-          </option>
-        </SfSelect>
-      </label>
+
+      <div class="flex flex-col flex-1 justify-end">
+        <label>
+          <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+          <SfSelect v-model="returnReason" size="sm" class="h-fit" :placeholder="$t(`returns.selectReturnReason`)">
+            <option v-for="{ value, label } in options" :key="value" :value="value">
+              {{ label }}
+            </option>
+          </SfSelect>
+        </label>
+      </div>
     </div>
   </div>
 </template>
