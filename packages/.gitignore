@@ -1,0 +1,58 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.gitattributes
+
+# dependencies
+node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarnrc.yml
+
+# nuxt dev/build outputs
+.output
+.nuxt
+.nitro
+.cache
+cache
+.temp
+dist
+
+# testing
+coverage
+
+# misc
+.DS_Store
+.idea
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# turbo
+.turbo
+
+# build
+lib/
+
+# docs build
+apps/web/docs/reference/composables/typedoc-sidebar.json
+apps/web/docs/reference/**/*.md
+
+.vscode
+*.code-workspace
+*.tsbuildinfo

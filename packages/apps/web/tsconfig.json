@@ -1,0 +1,10 @@
+{
+  "extends": "./.playground/.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk"],
+    "verbatimModuleSyntax": false,
+    "strict": false,
+    "strictNullChecks": false,
+    "strictPropertyInitialization": false
+  }
+}

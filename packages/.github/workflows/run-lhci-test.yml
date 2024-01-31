@@ -1,0 +1,56 @@
+name: Testing (Lighthouse CI)
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  lighthouse:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+            yarn config set nodeLinker node-modules
+            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup middleware env
+        run: |
+            touch apps/web/.env
+            echo API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com >> apps/web/.env
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build application
+        run: yarn turbo run build --scope="web"
+
+      - name: lighthouse mobile audit
+        run: yarn lhci:mobile
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

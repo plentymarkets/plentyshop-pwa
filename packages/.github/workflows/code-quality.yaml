@@ -1,0 +1,67 @@
+name: Code quality (sonarcloud)
+on:
+  workflow_dispatch
+#  push:
+#    branches:
+#      - main
+#  pull_request:
+#    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  sonarcloud-server:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2.0.2
+        with:
+          projectBaseDir: apps/server
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SERVER }}
+
+  sonarcloud-web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+            yarn config set nodeLinker node-modules
+            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: yarn --frozen-lockfile
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@v2.0.2
+        with:
+          projectBaseDir: apps/web
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_WEB }}
