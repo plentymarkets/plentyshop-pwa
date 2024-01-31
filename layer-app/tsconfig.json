@@ -3,6 +3,7 @@
   "extends": "./.playground/.nuxt/tsconfig.json",
   "compilerOptions": {
     "types": ["vitest/globals", "@vite-pwa/nuxt", "@vue-storefront/sdk", "@types/express", "jest"],
+    "verbatimModuleSyntax": false,
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "composite": false,
     "declaration": false,
