@@ -57,7 +57,7 @@
         </div>
 
         <div class="text-base text-neutral-900">
-          <div class="flex justify-center items-center">
+          <div class="flex justify-center items-center mb-3">
             <SfCheckbox
               v-model="privacyPolicy"
               v-bind="privacyPolicyAttributes"
@@ -79,6 +79,9 @@
                 </template> </i18n-t
               >*
             </label>
+          </div>
+          <div class="text-left typography-text-xs">
+            {{ t('form.asterixHint') }}
           </div>
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
