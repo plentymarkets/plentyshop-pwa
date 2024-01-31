@@ -17,7 +17,7 @@
               :invalid="Boolean(errors['firstName'])"
               type="text"
               name="firstName"
-              :placeholder="`${t('newsletter.firstName')} *`"
+              :placeholder="`${t('newsletter.firstName')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -31,7 +31,7 @@
               :invalid="Boolean(errors['lastName'])"
               type="text"
               name="lastName"
-              :placeholder="`${t('newsletter.lastName')} *`"
+              :placeholder="`${t('newsletter.lastName')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -48,7 +48,7 @@
               type="email"
               name="email"
               autocomplete="email"
-              :placeholder="`${t('newsletter.email')} *`"
+              :placeholder="`${t('newsletter.email')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -57,7 +57,7 @@
         </div>
 
         <div class="text-base text-neutral-900">
-          <div class="flex justify-center items-center mb-3">
+          <div class="flex justify-center items-center">
             <SfCheckbox
               v-model="privacyPolicy"
               v-bind="privacyPolicyAttributes"
@@ -76,12 +76,10 @@
                   >
                     {{ t('privacyPolicy') }}
                   </SfLink>
-                </template> </i18n-t
-              >*
+                </template>
+              </i18n-t>
+              **
             </label>
-          </div>
-          <div class="text-left typography-text-xs">
-            {{ t('form.asterixHint') }}
           </div>
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -106,6 +104,8 @@
           <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </form>
+
+      <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
     </div>
   </div>
 </template>
