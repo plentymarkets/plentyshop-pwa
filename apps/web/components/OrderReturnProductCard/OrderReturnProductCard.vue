@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
+    class="relative sm:grid sm:grid-cols-[1fr_1fr_2fr] first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
@@ -16,7 +16,7 @@
         />
       </SfLink>
     </div>
-    <div class="flex flex-col min-w-[180px] flex-1">
+    <div class="flex self-start flex-col min-w-[180px]">
       <SfLink
         :tag="NuxtLink"
         :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -64,27 +64,27 @@
         </ul>
       </div>
     </div>
-    <div class="mx-5 flex flex-col-reverse">
-      <div>
-        <UiQuantitySelector
-          ref="quantitySelector"
-          @change-quantity="debounceQuantity"
-          :value="quantity"
-          :min-value="1"
-          :max-value="orderGetters.getItemQty(orderItem)"
-          class="mt-4 sm:mt-0"
-        />
+    <div class="md:mx-5 md:grid grid-cols-[1fr_1fr] self-end">
+      <UiQuantitySelector
+        :key="quantity"
+        ref="quantitySelector"
+        @change-quantity="debounceQuantity"
+        :value="quantity"
+        :min-value="0"
+        :max-value="orderGetters.getItemQty(orderItem)"
+        class="mt-4 sm:mt-0 h-fit self-end mr-4"
+      />
+
+      <div class="flex flex-col flex-1 justify-end">
+        <label>
+          <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+          <SfSelect v-model="returnReason" size="sm" class="h-fit" :placeholder="$t(`returns.selectReturnReason`)">
+            <option v-for="{ value, label } in options" :key="value" :value="value">
+              {{ label }}
+            </option>
+          </SfSelect>
+        </label>
       </div>
-    </div>
-    <div class="flex flex-col-reverse">
-      <label>
-        <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
-        <SfSelect v-model="returnReason" size="sm" :placeholder="$t(`returns.selectReturnReason`)">
-          <option v-for="{ value, label } in options" :key="value" :value="value">
-            {{ label }}
-          </option>
-        </SfSelect>
-      </label>
     </div>
   </div>
 </template>
@@ -96,10 +96,16 @@ import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
+const { updateReturnDataItems, returnData } = useReturnOrder();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
-const changeQuantity = async () => {};
+
+const changeQuantity = async (quantity: number) => {
+  updateReturnDataItems(props.orderItem.itemVariationId, quantity);
+};
+
+const quantity = computed(() => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId] || 0);
 
 const options = ref([
   { label: 'Item damaged', value: 'Item damaged' },
@@ -108,16 +114,6 @@ const options = ref([
 const returnReason = ref('');
 const displayItem = computed(() => props.orderItem.typeId !== 6);
 const debounceQuantity = debounce(changeQuantity, 500);
-const quantity = ref(0);
 
 const quantitySelector = ref<any | null>(null);
-
-watch(
-  () => props.selectAll,
-  () => {
-    if (props.selectAll && quantitySelector && quantitySelector.value) {
-      quantitySelector.value.externalUpdate(orderGetters.getItemQty(props.orderItem));
-    }
-  },
-);
 </script>

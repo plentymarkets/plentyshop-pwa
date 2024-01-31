@@ -73,11 +73,4 @@ const handleOnChange = (event: Event) => {
   const nextValue = Number.parseFloat(currentValue);
   set(clamp(nextValue, minValue, maxValue));
 };
-
-const externalUpdate = (nextValue: number) => {
-  set(clamp(nextValue, minValue, maxValue));
-};
-defineExpose({
-  externalUpdate,
-});
 </script>
