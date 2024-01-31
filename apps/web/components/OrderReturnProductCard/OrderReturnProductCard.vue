@@ -64,8 +64,7 @@
         </ul>
       </div>
     </div>
-    <div class="mx-5 flex flex-col">
-      <div class="flex-1"></div>
+    <div class="mx-5 flex flex-col-reverse">
       <div>
         <UiQuantitySelector
           ref="quantitySelector"
@@ -77,8 +76,7 @@
         />
       </div>
     </div>
-    <div class="flex flex-col">
-      <div class="flex-1"></div>
+    <div class="flex flex-col-reverse">
       <label>
         <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
         <SfSelect v-model="returnReason" size="sm" :placeholder="$t(`returns.selectReturnReason`)">
@@ -96,8 +94,7 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from 'lodash';
-// import type { UiQuantitySelectorType } from '~/components/ui/QuantitySelector/QuantitySelector'
-// const { UiQuantitySelectorObject } = resolveComponent('QuantitySelector');
+
 const { addWebpExtension } = useImageUrl();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
@@ -113,9 +110,6 @@ const displayItem = computed(() => props.orderItem.typeId !== 6);
 const debounceQuantity = debounce(changeQuantity, 500);
 const quantity = ref(0);
 
-// type QuantitySelectorInstance = InstanceType<typeof UiQuantitySelectorObject> & {
-//   externalUpdate: () => void;
-// };
 const quantitySelector = ref<any | null>(null);
 
 watch(
