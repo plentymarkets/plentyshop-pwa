@@ -2,8 +2,8 @@
   <div
     v-if="isDesktop || isTablet"
     data-testid="languageSelectList"
-    class="w-full bg-white items-center py-10 justify-center flex"
-    :class="{ 'top-[10%]': isDesktop, 'flex-col': !isDesktop }"
+    class="absolute w-full bg-white items-center py-10 justify-center flex align-middle z-10 drop-shadow-md"
+    :class="{ 'top-[17,5%]': isDesktop, 'flex-col': !isDesktop }"
   >
     <template v-for="locale in localeCodes" :key="locale">
       <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="ml-3 mb-2">
@@ -36,12 +36,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useDisclosure, SfIconCheck } from '@storefront-ui/vue';
+import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
-const { isOpen, open } = useDisclosure({ initialValue: false });
+const { isOpen } = useLanguageSelect();
 
-open();
 const { isDesktop, isTablet } = useBreakpoints();
 const { localeCodes, locale: currentLocale } = useI18n();
 
