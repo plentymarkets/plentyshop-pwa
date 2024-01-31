@@ -4,13 +4,18 @@
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
-    <div class="grid grid-cols-[2fr_1fr] mt-4 gap-x-4">
+    <div class="grid grid-cols-[2fr_1fr] mt-4">
       <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
         {{ productGetters.getName(product) }}
       </h1>
       <div class="flex items-center justify-center">
         <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
-          {{ t('addProductToWishlist') }}
+          <template v-if="!isWishlistItem(productGetters.getVariationId(product))">
+            {{ t('addToWishlist') }}
+          </template>
+          <template v-else>
+            {{ t('removeFromWishlist') }}
+          </template>
         </WishlistButton>
 
         <WishlistButton
@@ -139,6 +144,7 @@ const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
+const { isWishlistItem } = useWishlist();
 
 resetInvalidFields();
 

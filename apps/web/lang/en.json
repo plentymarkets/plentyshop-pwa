@@ -215,6 +215,8 @@
   "products": "Products",
   "cart": "Cart",
   "wishlist": "Wishlist",
+  "addToWishlist": "Add to wishlist",
+  "removeFromWishlist": "Remove from wishlist",
   "addProductToWishlist": "Add {label} to wishlist",
   "removeProductFromWishlist": "Remove {label} from wishlist",
   "wishlistInteraction": {
@@ -669,7 +671,8 @@
     "newsletter": {
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
-      "termsRequired": "You must accept the terms and conditions."
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
     }
   }
 }
