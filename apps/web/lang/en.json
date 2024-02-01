@@ -575,6 +575,7 @@
     "remove": "Remove",
     "couponApplied": "The coupon has been added successfully",
     "couponRemoved": "The coupon has been removed successfully.",
+    "pleaseProvideCoupon": "Please enter a valid coupon code.",
     "couponInvalid": "The coupon has already been used or is invalid."
   },
   "error": {

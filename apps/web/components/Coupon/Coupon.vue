@@ -3,8 +3,10 @@
     <SfAccordionItem v-if="!cartGetters.getCouponDiscount(cart)" data-testid="couponZone" v-model="openedCoupon">
       <template #summary>
         <div
-          class="flex justify-between font-medium p-3 border-2 border-solid border-transparent"
-          :class="{ 'mb-3 bg-gray-100 !border-dashed !border-red-200': openedCoupon }"
+          :class="[
+            'flex justify-between font-medium p-3',
+            { 'mb-3 bg-gray-100 !border-dashed border-2 mt-2 !border-gray-200': openedCoupon },
+          ]"
         >
           <p class="pl-3">{{ $t('coupon.title') }}</p>
           <SfIconChevronLeft
