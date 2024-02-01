@@ -403,6 +403,7 @@
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
+      "returnId": "Retouren-ID",
       "orderDate": "Auftragsdatum",
       "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
@@ -411,6 +412,7 @@
       "details": "Details",
       "myOrders": "Meine Bestellungen",
       "noOrders": "Sie haben noch nicht bei uns eingekauft",
+      "noReturns": "Es sind noch keine Retouren vorhanden.",
       "continue": "Einkauf fortsetzen",
       "noOrdersAltText": "Keine Bestellungen",
       "returnsHeading": "Retouren",
@@ -677,7 +679,7 @@
     }
   },
   "returns": {
-    "return": "Zurückkehren",
+    "return": "Retournieren",
     "returnItems": "Rückgabeartikel",
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
     "commentOptional": "Kommentar (optional)",
@@ -690,6 +692,6 @@
     "returnForOrder": "Zurück zur Bestellung",
     "selectReturnReason": "Rücksendegrund auswählen",
     "selectAll": "Alles auswählen",
-    "successConfirmationMessage": "Return was successfully created"
+    "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf."
   }
 }
