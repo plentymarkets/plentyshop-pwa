@@ -8,7 +8,7 @@ import {
   UseReturnOrderState,
 } from './types';
 import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, returnGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
 
 /**
@@ -50,7 +50,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
 
     const { returnReasons } = useCustomerReturns();
 
-    const returnReasonId = returnReasons?.value?.defaultReasonId;
+    const returnReasonId = returnGetters.getDefaultReturnReasonId(returnReasons?.value);
 
     if (returnReasonId) {
       const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
