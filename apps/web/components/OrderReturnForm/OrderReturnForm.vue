@@ -58,6 +58,9 @@ const emit = defineEmits(['close']);
 
 const { currentReturnOrder, selectAll, returnData } = useReturnOrder();
 const { t } = useI18n();
+const { fetchReturnReasons } = useCustomerReturns();
+
+fetchReturnReasons();
 
 const confirmation = ref(false);
 const selectAllItems = ref(false);

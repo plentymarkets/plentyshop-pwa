@@ -47,6 +47,23 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
       orderId: Number(orderGetters.getId(order)),
       orderAccessKey: orderGetters.getAccessKey(order),
     };
+
+    const { returnReasons } = useCustomerReturns();
+
+    const returnReasonId = returnReasons?.value?.defaultReasonId;
+
+    if (returnReasonId) {
+      const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
+
+      orderItems.forEach((item) => {
+        const variationId = orderGetters.getItemVariationId(item);
+
+        state.value.returnData.variationIds[variationId] = {
+          ...state.value.returnData.variationIds[variationId],
+          returnReasonId,
+        };
+      });
+    }
   };
 
   /**
