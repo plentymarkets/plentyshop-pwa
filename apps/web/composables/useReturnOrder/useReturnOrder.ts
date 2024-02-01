@@ -17,7 +17,7 @@ import { useSdk } from '~/sdk';
  * @example
  * ``` ts
  * const {
- * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateQuantity, selectAll
+ * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateQuantity, updateReason, selectAll
  * } = useReturnOrder();
  * ```
  */
@@ -50,8 +50,8 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   };
 
   /**
-   * @description Function for updating return item quantity and reason.
-   * @return UpdateReturnData
+   * @description Function for updating return item quantity.
+   * @return UpdateQuantity
    * @example
    * ``` ts
    * updateQuantity({
