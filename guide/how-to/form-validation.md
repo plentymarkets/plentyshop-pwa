@@ -6,10 +6,10 @@ Form fields validation serves as a crucial line of defense against malicious act
 ## Use cases
 Effective form fields validation serves as a proactive measure to prevent errors before they reach the server. This not only saves server resources but also minimizes the risk of propagating inaccuracies throughout the system.
 
-PlentyShop PWA makes use of [VeeValidate](https://vee-validate.logaretm.com/v4/) and [Yup validation schema](https://github.com/jquense/yup) for validation. 
+plentyShop PWA makes use of [VeeValidate](https://vee-validate.logaretm.com/v4/) and [Yup validation schema](https://github.com/jquense/yup) for validation. 
 
 ### Regular (AJAX) form submission
-In this scenario, to handle submissions, you can use the `handleSubmit` function to create submission handlers for your forms; the function accepts a callback that receives the final form values. The following example demonstrates how to implement form validation:
+In this scenario, to handle submissions, you can use the `handleSubmit` function to create submission handlers for your forms. The function accepts a callback that receives the final form values. The following example demonstrates how to implement form validation:
 1. Assuming a form has the following code structure:
 ```ts
 <form @submit.prevent="onSubmit">
