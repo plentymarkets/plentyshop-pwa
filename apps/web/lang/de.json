@@ -403,6 +403,7 @@
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
+      "returnId": "Retouren-ID",
       "orderDate": "Auftragsdatum",
       "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
@@ -411,6 +412,7 @@
       "details": "Details",
       "myOrders": "Meine Bestellungen",
       "noOrders": "Sie haben noch nicht bei uns eingekauft",
+      "noReturns": "Es sind noch keine Retouren vorhanden.",
       "continue": "Einkauf fortsetzen",
       "noOrdersAltText": "Keine Bestellungen",
       "returnsHeading": "Retouren",
@@ -675,5 +677,21 @@
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     }
+  },
+  "returns": {
+    "return": "Retournieren",
+    "returnItems": "Rückgabe-Artikel",
+    "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
+    "commentOptional": "Kommentar (optional)",
+    "tellUsMore": "Erzählen Sie uns mehr darüber, warum Sie diese Artikel zurückgeben möchten..",
+    "initiateReturn": "Rückgabe einleiten",
+    "confirmReturn": "Rückgabe bestätigen",
+    "cancel": "Abbrechen",
+    "orderDate": "Auftragsdatum",
+    "returnReason": "Rücksendegrund",
+    "returnForOrder": "Zurück zur Bestellung",
+    "selectReturnReason": "Rücksendegrund auswählen",
+    "selectAll": "Alles auswählen",
+    "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf."
   }
 }

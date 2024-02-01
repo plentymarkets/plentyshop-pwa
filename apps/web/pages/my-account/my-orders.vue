@@ -72,7 +72,8 @@
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.amount') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.shippingDate') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ $t('account.ordersAndReturns.status') }}</th>
-              <!-- <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th> -->
+              <th class="lg:p-4 p-2 font-medium"></th>
+              <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th>
             </tr>
           </thead>
           <tbody>
@@ -82,6 +83,16 @@
               <td class="lg:p-4 p-2">{{ $n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
+              <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
+                <SfButton
+                  v-if="orderGetters.isReturnable(order)"
+                  @click="openReturn(order)"
+                  size="sm"
+                  variant="tertiary"
+                >
+                  {{ $t('returns.return') }}</SfButton
+                >
+              </td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
                 <SfButton
                   :tag="NuxtLink"
@@ -104,6 +115,8 @@
           :page-size="data.data.itemsPerPage"
           :max-visible-pages="maxVisiblePages"
         />
+
+        <OrderReturnForm :is-open="isReturnOpen" @close="closeReturn" />
       </div>
     </div>
   </ClientOnly>
@@ -112,9 +125,9 @@
 <script setup lang="ts">
 import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton } from '@storefront-ui/vue';
-import { SfLoaderCircular } from '@storefront-ui/vue';
-
+import { SfLoaderCircular, SfButton, useDisclosure } from '@storefront-ui/vue';
+import { ref } from 'vue';
+import { useReturnOrder } from '~/composables/useReturnOrder';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
@@ -124,6 +137,9 @@ const localePath = useLocalePath();
 
 const { isDesktop } = useBreakpoints();
 const maxVisiblePages = ref(1);
+const { isOpen: isReturnOpen, open: openReturnForm, close: closeReturn } = useDisclosure();
+
+const { setCurrentReturnOrder } = useReturnOrder();
 
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const route = useRoute();
@@ -136,6 +152,11 @@ const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 
 const generateOrderDetailsLink = (order: Order) => {
   return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+};
+
+const openReturn = (order: Order) => {
+  setCurrentReturnOrder(order);
+  openReturnForm();
 };
 
 const handleQueryUpdate = async () => {

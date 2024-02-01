@@ -403,6 +403,7 @@
     "ordersAndReturns": {
       "heading": "Orders & Returns",
       "orderId": "Order ID",
+      "returnId": "Return-ID",
       "orderDate": "Order date",
       "shippingDate": "Shipping date",
       "returnDate": "Return date",
@@ -411,6 +412,7 @@
       "details": "Details",
       "myOrders": "My orders",
       "noOrders": "You haven’t shopped with us yet",
+      "noReturns": "You don't have any returns yet.",
       "continue": "Continue shopping",
       "noOrdersAltText": "No orders",
       "returnsHeading": "Returns",
@@ -675,5 +677,21 @@
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
     }
+  },
+  "returns": {
+    "return": "Return",
+    "returnItems": "Return Items",
+    "areYouSure": "Are you sure you what to return these items?",
+    "commentOptional": "Comment(optional)",
+    "tellUsMore": "Tell us more about why you what to return these items..",
+    "initiateReturn":"Initiate Return",
+    "confirmReturn": "Confirm Return",
+    "cancel": "Cancel",
+    "orderDate": "Order date",
+    "returnReason": "Return reason",
+    "returnForOrder":"Return for order",
+    "selectReturnReason": "Select Return Reason",
+    "selectAll": "Select All",
+    "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process."
   }
 }
