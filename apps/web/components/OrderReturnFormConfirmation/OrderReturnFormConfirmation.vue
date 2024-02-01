@@ -44,6 +44,7 @@ import { OrderItem } from '@plentymarkets/shop-api';
 
 const emit = defineEmits(['closed']);
 
+const localePath = useLocalePath();
 const { currentReturnOrder, returnData, makeOrderReturn, loading } = useReturnOrder();
 const { t } = useI18n();
 const { send } = useNotification();
@@ -63,6 +64,8 @@ const confirmReturn = async () => {
     type: 'positive',
     message: t('returns.successConfirmationMessage'),
   });
+
+  navigateTo(localePath(paths.accountReturns));
 
   emit('closed');
 };
