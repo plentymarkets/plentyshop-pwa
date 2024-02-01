@@ -58,7 +58,7 @@
         {{ $t('privacyPolicyRequired') }}
       </div>
 
-      <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
+      <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ $t('auth.signup.submitLabel') }}
@@ -110,6 +110,10 @@ const [password, passwordAttributes] = defineField('register.password');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
 const registerUser = async () => {
+  if (!meta.value.valid) {
+    return;
+  }
+
   const response = await register({ email: email.value ?? '', password: password.value ?? '' });
 
   if (response?.data.code === 1) {

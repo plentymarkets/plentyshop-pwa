@@ -17,7 +17,7 @@
               :invalid="Boolean(errors['firstName'])"
               type="text"
               name="firstName"
-              :placeholder="t('newsletter.firstName')"
+              :placeholder="`${t('newsletter.firstName')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -31,7 +31,7 @@
               :invalid="Boolean(errors['lastName'])"
               type="text"
               name="lastName"
-              :placeholder="t('newsletter.lastName')"
+              :placeholder="`${t('newsletter.lastName')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -48,7 +48,7 @@
               type="email"
               name="email"
               autocomplete="email"
-              :placeholder="t('newsletter.email')"
+              :placeholder="`${t('newsletter.email')} **`"
             />
             <div class="h-[2rem]">
               <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -78,6 +78,7 @@
                   </SfLink>
                 </template>
               </i18n-t>
+              **
             </label>
           </div>
           <div class="h-[2rem]">
@@ -86,7 +87,7 @@
         </div>
 
         <div class="flex flex-col items-center">
-          <SfButton type="submit" size="lg" :disabled="loading || !turnstile || !meta.valid">
+          <SfButton type="submit" size="lg" :disabled="loading">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
             <template v-else>{{ t('newsletter.subscribe') }}</template>
           </SfButton>
@@ -94,12 +95,17 @@
           <NuxtTurnstile
             v-if="turnstileSiteKey"
             v-model="turnstile"
+            v-bind="turnstileAttributes"
             ref="turnstileElement"
             :options="{ theme: 'light' }"
             class="mt-4"
           />
+
+          <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </form>
+
+      <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
     </div>
   </div>
 </template>
@@ -118,7 +124,6 @@ const { t } = useI18n();
 
 const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
-const turnstile = ref('');
 const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(
@@ -131,6 +136,7 @@ const validationSchema = toTypedSchema(
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
+    turnstile: string().required(t('errorMessages.newsletter.turnstileRequired')).default(''),
   }),
 );
 
@@ -141,9 +147,14 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
 const [email, emailAttributes] = defineField('email');
+const [turnstile, turnstileAttributes] = defineField('turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 
 const subscribeNewsletter = async () => {
+  if (!meta.value.valid || !turnstile.value) {
+    return;
+  }
+
   const response = await subscribe({
     firstName: firstName.value,
     lastName: lastName.value,

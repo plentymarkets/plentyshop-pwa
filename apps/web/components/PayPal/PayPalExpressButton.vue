@@ -26,7 +26,8 @@ const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
-const paypal = await loadScript(currency.value);
+const isCommit = props.type === TypeCheckout;
+const paypal = await loadScript(currency.value, isCommit);
 
 const onInit = (actions: OnInitActions) => {
   if (props.type === TypeCheckout) {

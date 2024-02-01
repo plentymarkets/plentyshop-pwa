@@ -23,7 +23,7 @@ export interface UsePayPalState {
 
 export type LoadConfig = () => Promise<void>;
 export type GetLocale = (locale: string) => string;
-export type LoadScript = (currency: string) => Promise<PayPalNamespace | null>;
+export type LoadScript = (currency: string, commit?: boolean) => Promise<PayPalNamespace | null>;
 export type CreateTransaction = (fundingSource: string) => Promise<PayPalCreateOrder | null>;
 export type ApproveOrder = (orderID: string, payerID: string) => Promise<PayPalApproveOrder | null>;
 export type ExecuteOrder = (params: PayPalExecuteParams) => Promise<PayPalExecutePayment | null>;
