@@ -680,7 +680,7 @@
   },
   "returns": {
     "return": "Retournieren",
-    "returnItems": "Rückgabeartikel",
+    "returnItems": "Rückgabe-Artikel",
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
     "commentOptional": "Kommentar (optional)",
     "tellUsMore": "Erzählen Sie uns mehr darüber, warum Sie diese Artikel zurückgeben möchten..",
