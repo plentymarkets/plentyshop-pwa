@@ -1,88 +1,92 @@
 # Form fields validation
 Form fields validation contributes significantly to the overall user experience by providing real-time feedback to users as they input information. Immediate validation alerts users to errors or inaccuracies, preventing the frustration of submitting a form only to encounter errors later.
 
-Form fields validation serves as a crucial line of defense against malicious activities and security vulnerabilities. Input validation prevents common attacks such as SQL injection, cross-site scripting, and cross-site request forgery.
+Effective form fields validation also serves as a proactive measure to prevent errors before they reach the server. This not only saves server resources but also minimizes the risk of propagating inaccuracies throughout the system.
 
-## Use cases
-Effective form fields validation serves as a proactive measure to prevent errors before they reach the server. This not only saves server resources but also minimizes the risk of propagating inaccuracies throughout the system.
+Finally, form fields validation defends against malicious activities and security vulnerabilities. Input validation prevents common attacks such as SQL injection, cross-site scripting, and cross-site request forgery.
 
-plentyShop PWA makes use of [VeeValidate](https://vee-validate.logaretm.com/v4/) and [Yup validation schema](https://github.com/jquense/yup) for validation. 
+## Single-component validation
 
-### Regular (AJAX) form submission
+The most basic use case is if a single component contains the entire form template.
+
 In this scenario, to handle submissions, you can use the `handleSubmit` function to create submission handlers for your forms. The function accepts a callback that receives the final form values. The following example demonstrates how to implement form validation:
-1. Assuming a form has the following code structure:
-```ts
-<form @submit.prevent="onSubmit">
-  <label>
-    <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
-    <SfInput
-      v-model="email"
-      v-bind="emailAttributes"
-      :invalid="Boolean(errors['register.email'])"
-      name="customerEmail"
-      type="email"
-      autocomplete="email"
-    />
-    <VeeErrorMessage as="span" name="register.email" />
-  </label>
 
-  <label>
-    <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
-    <UiFormPasswordInput
-      :title="$t('invalidPassword')"
-      name="password"
-      autocomplete="current-password"
-      v-model="password"
-      v-bind="passwordAttributes"
-      :invalid="Boolean(errors['register.password'])"
-    />
-    <VeeErrorMessage as="span" name="register.password" />
-  </label>
-
-  <div class="flex items-center">
-    <SfCheckbox
-      id="privacyPolicy"
-      v-model="privacyPolicy"
-      v-bind="privacyPolicyAttributes"
-      value="value"
-      class="peer"
-    />
-    <label for="privacyPolicy">
-      <i18n-t keypath="form.privacyPolicyLabel">
-        <template #privacyPolicy>
-          <SfLink
-          :href="localePath(paths.privacyPolicy)"
-          target="_blank"
-          >
-          {{ $t('privacyPolicy') }}
-          </SfLink>
-        </template>
-      </i18n-t>
-      *
+::: details Form to validate
+```vue
+<template>
+  <form @submit.prevent="onSubmit">
+    <label>
+      <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
+      <SfInput
+        v-model="email"
+        v-bind="emailAttributes"
+        :invalid="Boolean(errors['register.email'])"
+        name="customerEmail"
+        type="email"
+        autocomplete="email"
+      />
+      <VeeErrorMessage as="span" name="register.email" />
     </label>
-  </div>
 
-  <div v-if="Boolean(errors['register.privacyPolicy'])">
-    {{ $t('privacyPolicyRequired') }}
-  </div>
+    <label>
+      <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
+      <UiFormPasswordInput
+        :title="$t('invalidPassword')"
+        name="password"
+        autocomplete="current-password"
+        v-model="password"
+        v-bind="passwordAttributes"
+        :invalid="Boolean(errors['register.password'])"
+      />
+      <VeeErrorMessage as="span" name="register.password" />
+    </label>
 
-  <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
-    <SfLoaderCircular v-if="loading" size="base" />
-    <span v-else>
-      {{ $t('auth.signup.submitLabel') }}
-    </span>
-  </SfButton>
+    <div class="flex items-center">
+      <SfCheckbox
+        id="privacyPolicy"
+        v-model="privacyPolicy"
+        v-bind="privacyPolicyAttributes"
+        value="value"
+        class="peer"
+      />
+      <label for="privacyPolicy">
+        <i18n-t keypath="form.privacyPolicyLabel">
+          <template #privacyPolicy>
+            <SfLink
+            :href="localePath(paths.privacyPolicy)"
+            target="_blank"
+            >
+            {{ $t('privacyPolicy') }}
+            </SfLink>
+          </template>
+        </i18n-t>
+        *
+      </label>
+    </div>
 
-  <div class="text-center">
-    <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
-    <SfLink @click="$emit('change-view')" href="#" variant="primary">
-        {{ $t('auth.signup.logInLinkLabel') }}
-    </SfLink>
-  </div>
-</form>
+    <div v-if="Boolean(errors['register.privacyPolicy'])">
+      {{ $t('privacyPolicyRequired') }}
+    </div>
+
+    <SfButton type="submit" class="mt-2" :disabled="loading || !meta.valid">
+      <SfLoaderCircular v-if="loading" size="base" />
+      <span v-else>
+        {{ $t('auth.signup.submitLabel') }}
+      </span>
+    </SfButton>
+
+    <div class="text-center">
+      <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
+      <SfLink @click="$emit('change-view')" href="#" variant="primary">
+          {{ $t('auth.signup.logInLinkLabel') }}
+      </SfLink>
+    </div>
+  </form>
+</template>
 ```
+:::
 
-2. The `handleSubmit` function will only execute your callback once the returned function (`registerUser` in our example) if all fields are valid, meaning you don’t have to handle if the form is invalid in your logic:
+::: details Validator
 ```ts
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
@@ -148,47 +152,64 @@ const registerUser = async () => {
 
 const onSubmit = handleSubmit(() => registerUser());
 ```
+:::
 
-### Custom (AJAX) form submission
-In this scenario, assuming we have multiple components building a form, we would validate our selected fields by using `useValidatorAggregator` composable:
-1. Our `PurchaseCard` component has the following code structure:
-```ts
-<form @submit.prevent="handleAddToCart">
-  <div>
-    <h1 data-testid="product-name">
-      {{ productGetters.getName(product) }}
-    </h1>
+::: tip About invalid form submissions
+The `handleSubmit` function will only execute your callback on the returned function (`registerUser` in our example) if all fields are valid. This means you don’t have to handle if the form is invalid in your logic.
+:::
+
+## Multi-component validation
+
+To better organise your code, you might want to store parts of your form template in different components.
+
+In this scenario, you validate form fields by using the `useValidatorAggregator` composable. The example below demonstrates how to use `useValidatorAggregator`. The example contains `PurchaseCard` as the parent and `OrderInputProperty` as the child component.
+
+In `PurchaseCard`, `validateAllFields` registers the form field validator of the `prop-${orderPropertyId}` field from `OrderPropertyInput`. If you have form fields in multiple child components, you can register them all in the same way.
+
+::: info Unique field identifier
+In the context of the overall validation, every form field identifier has to be unique. In other words, even if your template is distributed across multiple child components, you have to choose different identifers for each form field.
+:::
+
+::: details PurchaseCard component
+```vue
+<template>
+  <form @submit.prevent="handleAddToCart">
     <div>
-      <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
-        {{ t('addProductToWishlist') }}
-      </WishlistButton>
+      <h1 data-testid="product-name">
+        {{ productGetters.getName(product) }}
+      </h1>
+      <div>
+        <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
+          {{ t('addProductToWishlist') }}
+        </WishlistButton>
 
-      <WishlistButton v-else :product="product" :quantity="quantitySelectorValue" />
+        <WishlistButton v-else :product="product" :quantity="quantitySelectorValue" />
+      </div>
     </div>
-  </div>
-    
-  <OrderProperties v-if="product" :product="product" />
-
-  <div>
-    <AttributeSelect v-if="product" :product="product" />
-  </div>
-    
-  <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
-
-  <div>
-    <SfButton type="submit" :disabled="loading || !productGetters.isSalable(product)">
-      <template #prefix v-if="!loading">
-          <SfIconShoppingCart size="sm" />
-      </template>
       
-      <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+    <OrderProperties v-if="product" :product="product" />
+
+    <div>
+      <AttributeSelect v-if="product" :product="product" />
+    </div>
       
-      <template v-else>
-        {{ t('addToCart') }}
-      </template>
-    </SfButton>
-  </div>
-</form>
+    <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+
+    <div>
+      <SfButton type="submit" :disabled="loading || !productGetters.isSalable(product)">
+        <template #prefix v-if="!loading">
+            <SfIconShoppingCart size="sm" />
+        </template>
+        
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+        
+        <template v-else>
+          {{ t('addToCart') }}
+        </template>
+      </SfButton>
+    </div>
+  </form>
+</template>
 
 <script setup lang="ts">
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
@@ -225,9 +246,10 @@ const handleAddToCart = async () => {
 };
 </script>
 ```
+:::
 
-2. Then our dynamic `OrderPropertyInput` component (from `OrderProperties`) would contain the following code:
-```ts
+::: details OrderPropertyInput component
+```vue
 <template>
   <div>
     <label :for="`prop-${orderPropertyId}`">
@@ -330,12 +352,7 @@ watch(
 );
 </script>
 ```
-
-3. The same would apply for any other nested component (inside `PurchaseCard`, in our example), for a field that requires validation.
-
-Note:
-- `prop-${orderPropertyId}` needs to be a unique form field identifier, that validator would reference.
-- Out of scope code omitted, for simplicity.
+:::
 
 ## References
 - [VeeValidate documentation](https://vee-validate.logaretm.com/v4/)
