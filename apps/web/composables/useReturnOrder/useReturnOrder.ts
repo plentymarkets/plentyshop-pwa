@@ -8,7 +8,7 @@ import {
   UseReturnOrderState,
 } from './types';
 import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, returnGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
 
 /**
@@ -47,6 +47,23 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
       orderId: Number(orderGetters.getId(order)),
       orderAccessKey: orderGetters.getAccessKey(order),
     };
+
+    const { returnReasons } = useCustomerReturns();
+
+    const returnReasonId = returnGetters.getDefaultReturnReasonId(returnReasons?.value);
+
+    if (returnReasonId) {
+      const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
+
+      orderItems.forEach((item) => {
+        const variationId = orderGetters.getItemVariationId(item);
+
+        state.value.returnData.variationIds[variationId] = {
+          ...state.value.returnData.variationIds[variationId],
+          returnReasonId,
+        };
+      });
+    }
   };
 
   /**

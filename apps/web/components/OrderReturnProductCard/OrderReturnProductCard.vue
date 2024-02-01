@@ -103,12 +103,10 @@ import { debounce } from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
-const { returnReasons, fetchReturnReasons } = useCustomerReturns();
+const { returnReasons } = useCustomerReturns();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
-
-fetchReturnReasons();
 
 const changeQuantity = async (quantity: number) => {
   updateQuantity(props.orderItem.itemVariationId, quantity);
