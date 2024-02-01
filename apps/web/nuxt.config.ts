@@ -46,6 +46,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/turnstile',
     '@nuxtjs/tailwindcss',
+    '../../plentyshop-pwa-module/src/module',
     [
       '@nuxtjs/google-fonts',
       {

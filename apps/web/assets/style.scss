@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+  --color-primary: #007bff;
+  --color-secondary: 111 114 185;
+}
 
 .scrollbar-hidden {
   -ms-overflow-style: none;
