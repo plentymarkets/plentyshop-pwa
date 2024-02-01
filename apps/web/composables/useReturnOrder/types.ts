@@ -1,21 +1,18 @@
 import type { Ref } from 'vue';
-import type { Order, VariationIds } from '@plentymarkets/shop-api';
-
-export interface ReturnData {
-  variationIds: VariationIds;
-  returnNote: string;
-}
+import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
 
 export interface UseReturnOrderState {
   data: null;
   loading: boolean;
   currentReturnOrder: Order;
-  returnData: ReturnData;
+  returnData: MakeOrderReturnParams;
 }
 
 export type SetCurrentReturnOrder = (order: Order) => void;
-export type UpdateReturnDataItems = (variationId: number, quantity: number) => void;
+export type UpdateQuantity = (variationId: number, quantity: number) => void;
+export type UpdateReason = (variationId: number, returnReasonId?: number) => void;
 export type SelectAll = (maximum: boolean) => void;
+export type MakeOrderReturn = () => void;
 
 export interface UseReturnOrder {
   data: Readonly<Ref<UseReturnOrderState['data']>>;
@@ -23,8 +20,10 @@ export interface UseReturnOrder {
   currentReturnOrder: Readonly<Ref<UseReturnOrderState['currentReturnOrder']>>;
   returnData: Readonly<Ref<UseReturnOrderState['returnData']>>;
   setCurrentReturnOrder: SetCurrentReturnOrder;
-  updateReturnDataItems: UpdateReturnDataItems;
+  updateQuantity: UpdateQuantity;
+  updateReason: UpdateReason;
   selectAll: SelectAll;
+  makeOrderReturn: MakeOrderReturn;
 }
 
 export type UseReturnOrderReturn = () => UseReturnOrder;

@@ -9,9 +9,9 @@
     <div>{{ t('returns.areYouSure') }}</div>
     <div class="my-6">
       <ul class="list-disc ml-7 font-medium">
-        <li v-for="(quantity, variationId) in returnData.variationIds" :key="variationId">
+        <li v-for="(values, variationId) in returnData.variationIds" :key="variationId">
           <template v-if="Object.keys(getItemByVariation(Number(variationId))).length > 0">
-            {{ quantity }} x {{ orderGetters.getItemName(getItemByVariation(Number(variationId))) }}
+            {{ values.quantity }} x {{ orderGetters.getItemName(getItemByVariation(Number(variationId))) }}
           </template>
         </li>
       </ul>
@@ -27,20 +27,26 @@
     </div>
     <div class="flex flex-row justify-between mt-5">
       <SfButton @click="$emit('closed')" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-      <SfButton> {{ t('returns.confirmReturn') }} </SfButton>
+      <SfButton @click="confirmReturn()" :disabled="loading">
+        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+        <span v-else>
+          {{ t('returns.confirmReturn') }}
+        </span>
+      </SfButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconClose, SfTextarea } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { OrderItem } from '@plentymarkets/shop-api/src/types/api/order';
+import { OrderItem } from '@plentymarkets/shop-api';
 
-defineEmits(['closed']);
+const emit = defineEmits(['closed']);
 
-const { currentReturnOrder, returnData } = useReturnOrder();
+const { currentReturnOrder, returnData, makeOrderReturn, loading } = useReturnOrder();
 const { t } = useI18n();
+const { send } = useNotification();
 
 const getItemByVariation = (variationId: number) => {
   return (
@@ -48,5 +54,16 @@ const getItemByVariation = (variationId: number) => {
       .getItems(currentReturnOrder.value)
       .find((orderItem: OrderItem) => orderGetters.getItemVariationId(orderItem) === variationId) || ({} as OrderItem)
   );
+};
+
+const confirmReturn = async () => {
+  await makeOrderReturn();
+
+  send({
+    type: 'positive',
+    message: t('returns.successConfirmationMessage'),
+  });
+
+  emit('closed');
 };
 </script>

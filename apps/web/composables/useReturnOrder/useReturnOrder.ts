@@ -2,12 +2,14 @@ import { toRefs } from '@vueuse/shared';
 import {
   SelectAll,
   SetCurrentReturnOrder,
-  UpdateReturnDataItems,
   UseReturnOrderReturn,
+  UpdateQuantity,
+  UpdateReason,
   UseReturnOrderState,
 } from './types';
-import type { Order } from '@plentymarkets/shop-api';
+import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
+import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing order return.
@@ -15,7 +17,7 @@ import { orderGetters } from '@plentymarkets/shop-sdk';
  * @example
  * ``` ts
  * const {
- * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateReturnDataItems, selectAll
+ * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateQuantity, selectAll
  * } = useReturnOrder();
  * ```
  */
@@ -24,10 +26,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     data: null,
     loading: false,
     currentReturnOrder: {} as Order,
-    returnData: {
-      variationIds: {},
-      returnNote: '',
-    },
+    returnData: {} as MakeOrderReturnParams,
   }));
 
   /**
@@ -45,28 +44,32 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     state.value.returnData = {
       variationIds: {},
       returnNote: '',
+      orderId: Number(orderGetters.getId(order)),
+      orderAccessKey: orderGetters.getAccessKey(order),
     };
   };
 
   /**
-   * @description Function for updating return item quantity.
-   * @return UpdateReturnDataItems
+   * @description Function for updating return item quantity and reason.
+   * @return UpdateReturnData
    * @example
    * ``` ts
-   * updateReturnDataItems({
+   * updateQuantity({
    *   variationId: 1,
-   *   quantity: 1
+   *   quantity: 1,
    * });
    * ```
    */
-  const updateReturnDataItems: UpdateReturnDataItems = (variationId, quantity) => {
-    if (quantity === 0) {
+  const updateQuantity: UpdateQuantity = (variationId: number, quantity: number) => {
+    if (!quantity) {
       delete state.value.returnData['variationIds'][variationId];
-
       return;
     }
 
-    state.value.returnData['variationIds'][variationId] = quantity;
+    state.value.returnData['variationIds'][variationId] = {
+      ...state.value.returnData['variationIds'][variationId],
+      quantity,
+    };
   };
 
   /**
@@ -78,7 +81,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * selectAll(false);
    * ```
    */
-  const selectAll: SelectAll = (maximum) => {
+  const selectAll: SelectAll = (maximum: boolean) => {
     const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
 
     if (!maximum) {
@@ -88,14 +91,47 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     }
 
     orderItems.forEach((item) => {
-      updateReturnDataItems(orderGetters.getItemVariationId(item), orderGetters.getItemQty(item));
+      const variationId = orderGetters.getItemVariationId(item);
+
+      updateQuantity(variationId, orderGetters.getItemQty(item));
     });
+  };
+
+  /**
+   * @description Function for updating return item reason.
+   * @return UpdateReason
+   * @example
+   * ``` ts
+   * updateReason({
+   *   variationId: 1,
+   *   reasonId: 1
+   * });
+   * ```
+   */
+  const updateReason: UpdateReason = (variationId: number, returnReasonId?: number) => {
+    if (!returnReasonId) {
+      delete state.value.returnData['variationIds'][variationId]['returnReasonId'];
+      return;
+    }
+
+    state.value.returnData['variationIds'][variationId] = {
+      ...state.value.returnData['variationIds'][variationId],
+      returnReasonId,
+    };
+  };
+
+  const makeOrderReturn = async () => {
+    state.value.loading = true;
+    await useAsyncData(() => useSdk().plentysystems.doMakeOrderReturn(state.value.returnData));
+    state.value.loading = false;
   };
 
   return {
     setCurrentReturnOrder,
-    updateReturnDataItems,
+    updateQuantity,
+    updateReason,
     selectAll,
+    makeOrderReturn,
     ...toRefs(state.value),
   };
 };

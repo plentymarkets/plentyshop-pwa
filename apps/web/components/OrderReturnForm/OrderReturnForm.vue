@@ -36,7 +36,7 @@
       </div>
       <div class="flex flex-row justify-between mt-5">
         <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-        <SfButton @click="confirmation = true" :disabled="Object.keys(returnData.variationIds).length === 0">
+        <SfButton @click="confirmation = true" :disabled="!canInitiate">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
         </SfButton>
@@ -61,6 +61,10 @@ const { t } = useI18n();
 
 const confirmation = ref(false);
 const selectAllItems = ref(false);
+
+const canInitiate = computed(() =>
+  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1),
+);
 
 const close = () => {
   confirmation.value = false;

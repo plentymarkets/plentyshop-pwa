@@ -67,7 +67,6 @@
     <div class="md:mx-5 md:grid grid-cols-[1fr_1fr] self-end">
       <UiQuantitySelector
         :key="quantity"
-        ref="quantitySelector"
         @change-quantity="debounceQuantity"
         :value="quantity"
         :min-value="0"
@@ -78,9 +77,16 @@
       <div class="flex flex-col flex-1 justify-end">
         <label>
           <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
-          <SfSelect v-model="returnReason" size="sm" class="h-fit" :placeholder="$t(`returns.selectReturnReason`)">
-            <option v-for="{ value, label } in options" :key="value" :value="value">
-              {{ label }}
+          <SfSelect
+            @update:model-value="changeReason($event)"
+            :model-value="String(returnReasonId)"
+            size="sm"
+            class="h-fit"
+            :placeholder="$t(`returns.selectReturnReason`)"
+          >
+            <option :value="null">{{ $t('returns.selectReturnReason') }}</option>
+            <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
+              {{ name }}
             </option>
           </SfSelect>
         </label>
@@ -96,24 +102,26 @@ import type { OrderSummaryProductCardProps } from './types';
 import { debounce } from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
-const { updateReturnDataItems, returnData } = useReturnOrder();
+const { updateQuantity, updateReason, returnData } = useReturnOrder();
+const { returnReasons, fetchReturnReasons } = useCustomerReturns();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
 
+fetchReturnReasons();
+
 const changeQuantity = async (quantity: number) => {
-  updateReturnDataItems(props.orderItem.itemVariationId, quantity);
+  updateQuantity(props.orderItem.itemVariationId, quantity);
+};
+const changeReason = async (reasonId: number) => {
+  updateReason(props.orderItem.itemVariationId, reasonId);
 };
 
-const quantity = computed(() => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId] || 0);
+const quantity = computed(() => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId]?.quantity || 0);
+const returnReasonId = computed(
+  () => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId]?.returnReasonId || '',
+);
 
-const options = ref([
-  { label: 'Item damaged', value: 'Item damaged' },
-  { label: 'No reason', value: 'No reason' },
-]);
-const returnReason = ref('');
 const displayItem = computed(() => props.orderItem.typeId !== 6);
 const debounceQuantity = debounce(changeQuantity, 500);
-
-const quantitySelector = ref<any | null>(null);
 </script>

@@ -685,6 +685,7 @@
     "returnReason": "Rücksendegrund",
     "returnForOrder": "Zurück zur Bestellung",
     "selectReturnReason": "Rücksendegrund auswählen",
-    "selectAll": "Alles auswählen"
+    "selectAll": "Alles auswählen",
+    "successConfirmationMessage": "Return was successfully created"
   }
 }

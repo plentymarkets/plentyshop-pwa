@@ -6,6 +6,7 @@ import type {
   FetchCustomerReturns,
 } from '~/composables/useCustomerReturns/types';
 import { useSdk } from '~/sdk';
+import type { OrderReturnsResponse } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing order returns data
@@ -19,6 +20,7 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
   const state = useState<UseCustomerReturnsState>(`useCustomerReturns`, () => ({
     data: {} as PaginatedResult<Order>,
     loading: false,
+    returnReasons: {} as OrderReturnsResponse,
   }));
 
   /** Function for fetching order returns data
@@ -42,8 +44,25 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     return state.value.data;
   };
 
+  const fetchReturnReasons = () => {
+    state.value.returnReasons = {
+      defaultReasonId: 1,
+      reasons: [
+        {
+          id: 1,
+          name: 'Test1',
+        },
+        {
+          id: 2,
+          name: 'Test2',
+        },
+      ],
+    };
+  };
+
   return {
     fetchCustomerReturns,
+    fetchReturnReasons,
     ...toRefs(state.value),
   };
 };

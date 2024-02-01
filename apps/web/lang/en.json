@@ -685,6 +685,7 @@
     "returnReason": "Return reason",
     "returnForOrder":"Return for order",
     "selectReturnReason": "Select Return Reason",
-    "selectAll": "Select All"
+    "selectAll": "Select All",
+    "successConfirmationMessage": "Return was successfully created"
   }
 }
