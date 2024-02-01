@@ -36,6 +36,10 @@
             {
                 "text": "Variation properties",
                 "link": "/guide/how-to/variation-property.md"
+            },
+            {
+                "text": "Form validation",
+                "link": "/guide/how-to/form-validation.md"
             }
         ]
     }
