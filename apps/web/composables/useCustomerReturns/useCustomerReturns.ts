@@ -44,20 +44,11 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     return state.value.data;
   };
 
-  const fetchReturnReasons = () => {
-    state.value.returnReasons = {
-      defaultReasonId: 1,
-      reasons: [
-        {
-          id: 1,
-          name: 'Test1',
-        },
-        {
-          id: 2,
-          name: 'Test2',
-        },
-      ],
-    };
+  const fetchReturnReasons = async () => {
+    state.value.loading = true;
+    const { data } = await useSdk().plentysystems.getReturnReasons();
+    state.value.returnReasons = data;
+    state.value.loading = false;
   };
 
   return {
