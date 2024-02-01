@@ -30,18 +30,23 @@ export const useCoupon: UseCouponReturn = () => {
     const { send } = useNotification();
     const { getCart } = useCart();
     state.value.loading = true;
+    if (params.couponCode.trim() === '') {
+      send({ message: $i18n.t('coupon.pleaseProvideCoupon'), type: 'warning' });
+      state.value.loading = false;
+      return;
+    }
     const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
-    if (response.data.value.data) {
-      await getCart();
-      send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
-    } else if (response.data.value.error) {
+    if (response.data.value.error) {
       const error = {
         status: 500,
         message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
         statusMessage: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
       };
       useHandleError(error);
+    } else if (response.data.value) {
+      await getCart();
+      send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
     }
     return response.data.value.data;
   };
