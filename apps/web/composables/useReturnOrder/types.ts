@@ -10,7 +10,7 @@ export interface UseReturnOrderState {
 
 export type SetCurrentReturnOrder = (order: Order) => void;
 export type UpdateQuantity = (variationId: number, quantity: number) => void;
-export type UpdateReason = (variationId: number, returnReasonId?: number) => void;
+export type UpdateReason = (variationId: number, returnReasonId?: number | null) => void;
 export type SelectAll = (maximum: boolean) => void;
 export type MakeOrderReturn = () => void;
 

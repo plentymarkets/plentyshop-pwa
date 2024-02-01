@@ -108,7 +108,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * });
    * ```
    */
-  const updateReason: UpdateReason = (variationId: number, returnReasonId?: number) => {
+  const updateReason: UpdateReason = (variationId: number, returnReasonId?: number | null) => {
     if (!returnReasonId) {
       delete state.value.returnData['variationIds'][variationId]['returnReasonId'];
       return;
@@ -120,6 +120,14 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     };
   };
 
+  /**
+   * @description Function for making an order return.
+   * @return Promise<void>
+   * @example
+   * ``` ts
+   * makeOrderReturn();
+   * ```
+   */
   const makeOrderReturn = async () => {
     state.value.loading = true;
     await useAsyncData(() => useSdk().plentysystems.doMakeOrderReturn(state.value.returnData));

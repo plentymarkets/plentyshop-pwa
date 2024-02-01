@@ -113,7 +113,7 @@ fetchReturnReasons();
 const changeQuantity = async (quantity: number) => {
   updateQuantity(props.orderItem.itemVariationId, quantity);
 };
-const changeReason = async (reasonId: number) => {
+const changeReason = async (reasonId: number | null) => {
   updateReason(props.orderItem.itemVariationId, reasonId);
 };
 

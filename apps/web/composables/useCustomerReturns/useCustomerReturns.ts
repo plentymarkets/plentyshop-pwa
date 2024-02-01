@@ -44,6 +44,14 @@ export const useCustomerReturns: UseCustomerReturnsReturn = () => {
     return state.value.data;
   };
 
+  /**
+   * @description Function for getting all return reasons
+   * @return Promise<void>
+   * @example
+   * ``` ts
+   * fetchReturnReasons();
+   * ```
+   */
   const fetchReturnReasons = async () => {
     state.value.loading = true;
     const { data } = await useSdk().plentysystems.getReturnReasons();
