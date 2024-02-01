@@ -575,7 +575,7 @@
     "remove": "Entfernen",
     "couponApplied": "Der Gutschein wurde erfolgreich eingelöst.",
     "couponRemoved": "Der Gutschein wurde erfolgreich entfernt.",
-    "pleaseProvideCoupon": "Bitte geben Sie einen Gutscheincode ein",
+    "pleaseProvideCoupon": "Bitte geben Sie einen gültigen Gutscheincode ein.",
     "couponInvalid": "Der Gutschein wurde bereits verwendet oder ist ungültig."
   },
   "error": {
