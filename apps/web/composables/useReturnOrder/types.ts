@@ -12,6 +12,7 @@ export type SetCurrentReturnOrder = (order: Order) => void;
 export type UpdateQuantity = (variationId: number, quantity: number) => void;
 export type UpdateReason = (variationId: number, returnReasonId?: number | null) => void;
 export type SelectAll = (maximum: boolean) => void;
+export type CleanReturnData = () => void;
 export type MakeOrderReturn = () => void;
 
 export interface UseReturnOrder {
@@ -23,6 +24,7 @@ export interface UseReturnOrder {
   updateQuantity: UpdateQuantity;
   updateReason: UpdateReason;
   selectAll: SelectAll;
+  cleanReturnData: CleanReturnData;
   makeOrderReturn: MakeOrderReturn;
 }
 
