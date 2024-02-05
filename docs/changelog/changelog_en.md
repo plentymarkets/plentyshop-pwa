@@ -27,7 +27,7 @@
 - The mega menu no longer displays categories without a label.
 - The cookie consent bar is now translated in English and German.
 - The lifespan of the `vsf-locale` cookie has been fixed. The lifespan is now 100 days.
-- Fixed content layout shifts caused by the language picker.
+- Fixed Cumulative Layout Shifts caused by the language picker.
 - Added missing aria lables to the category pagination.
 - Added missing aria labels to the cookie bar.
 - Improved the clickable area on the logo for better accessibility on mobile.
