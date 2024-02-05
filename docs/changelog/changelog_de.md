@@ -7,7 +7,7 @@
 - Bestelleigenschaften zu Produktseiten, dem Warenkorb und der Bestellübersicht hinzugefügt
 - Möglichkeit zum Einlösen von Gutscheinen und Rabatten hinzugefügt
 - Retouren hinzugefügt, inklusive der Möglichkeit, einen Grund für die Retoure anzugeben
-- Wunschliste hinzugefügt
+- Wunschliste hinzugefügt, inklusive der Möglichkeit, Produkte von der Wunschliste direkt zum Warenkorb hinzuzufügen
 - Produktbewertungen zu Kategorieseiten hinzugefügt
 - Konfiguration hinzugefügt, um zu bestimmen welche Skripte geladen werden, wenn ein Nutzer der Nutzung eines Cookies zustimmt (`cookie-scripts.config.ts`).
 - Cloudflare Turnstile hinzugefügt, um Formulare gegen Bots zu schützen. Weitere Information zum Einrichten von Turnstile findest du [in der Dokumentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).

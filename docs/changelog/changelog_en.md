@@ -7,7 +7,7 @@
 - Added order properties on product pages, in the cart, and on the order summary.
 - Added coupons.
 - Added returns, including return reasons.
-- Added wishlist functionality.
+- Added wishlist functionality, including the ability to add products to the cart directly from the wishlist.
 - Added product ratings to category pages.
 - Added configuration (`cookie-scripts.config.ts`) to determine which scripts to load when a user accepts a consent cookie.
 - Added Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
