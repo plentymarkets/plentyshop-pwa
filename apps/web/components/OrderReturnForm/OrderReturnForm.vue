@@ -6,6 +6,11 @@
     class="h-full md:h-fit !w-[95%] 3xl:!w-[60%]"
     aria-labelledby="return-modal-title"
   >
+    <header class="mb-4">
+      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close()">
+        <SfIconClose />
+      </SfButton>
+    </header>
     <div v-if="!confirmation">
       <div v-if="currentReturnOrder" class="md:flex justify-between items-center mb-5">
         <div class="md:grid grid-cols-[1fr_1fr] gap-3">
@@ -36,7 +41,7 @@
       </div>
       <div class="flex flex-row justify-between mt-5">
         <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-        <SfButton @click="confirmation = true" :disabled="!canInitiate">
+        <SfButton @click="initiateReturn()" :disabled="!canInitiate">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
         </SfButton>
@@ -49,14 +54,14 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfCheckbox, SfIconArrowForward, SfScrollable } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox, SfIconArrowForward, SfIconClose, SfScrollable } from '@storefront-ui/vue';
 import { OrderReturnFormProps } from './types';
 
 defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData } = useReturnOrder();
+const { currentReturnOrder, selectAll, returnData, cleanReturnData } = useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 
@@ -73,5 +78,10 @@ const close = () => {
   confirmation.value = false;
   selectAllItems.value = false;
   emit('close');
+};
+
+const initiateReturn = () => {
+  cleanReturnData();
+  confirmation.value = true;
 };
 </script>

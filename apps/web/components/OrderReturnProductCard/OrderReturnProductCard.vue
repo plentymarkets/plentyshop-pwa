@@ -61,6 +61,10 @@
             <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
             <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
           </li>
+          <li>
+            <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
+            <span>{{ orderGetters.getItemQty(orderItem) }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -84,7 +88,7 @@
             class="h-fit"
             :placeholder="$t(`returns.selectReturnReason`)"
           >
-            <option :value="null">{{ $t('returns.selectReturnReason') }}</option>
+            <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
             <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
               {{ name }}
             </option>

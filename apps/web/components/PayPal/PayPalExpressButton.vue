@@ -87,7 +87,7 @@ const onApprove = async (data: OnApproveData) => {
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const renderButton = () => {
   if (paypal) {
-    const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL];
+    const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
 
     FUNDING_SOURCES.forEach((fundingSource) => {
       if (paypal?.Buttons && fundingSource) {
