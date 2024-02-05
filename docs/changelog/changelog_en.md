@@ -4,21 +4,21 @@
 
 ### New
 
-- Order properties are now available on product pages, in the cart, and on the order summary.
-- You can now apply coupons to a purchase to receive a discount.
-- You can now return purchased products from the My Account section.
-- Wishlist functionality is now available. You can add products to the wishlist from the product page or the category page. You can view the wishlist by clicking on the icon in the page header or via the My Account section.
-- Category pages now display product ratings.
+- Added order properties on product pages, in the cart, and on the order summary.
+- Added coupons.
+- Added returns, including return reasons.
+- Added wishlist functionality.
+- Added product ratings to category pages.
 - Products can now display images in [WebP format](https://en.wikipedia.org/wiki/WebP). WebP may improve page speed. WebP is currently an opt-in feature. To enable WebP support, you have to set `USE_WEBP=1` in your `.env` file. Separately, your plentysystems system has to have WebP support enabled.
-- You can now use `cookie-scripts.config.ts` to configure which scripts to load when a user accepts a consent cookie.
-- You can now use Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
-- You can now validate forms with vee-validate. The following forms have validation:
+- Added configuration (`cookie-scripts.config.ts`) to determine which scripts to load when a user accepts a consent cookie.
+- Added Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
+- Added form validation with vee-validate. The following forms have validation:
   - Registering a new account
   - Signing up for the newsletter
   - Add a product with order properties to the cart
   - Parts of the checkout; full coverage of the checkout will be added in the future
 - Deployments now use a unified endpoint. This means the secret `URL_ENDPOINT` is obsolete.
-- You can now exit preview mode on live domains via the shop interface.
+- Added a way to exit preview mode on live domains.
 
 ### Fixed
 
