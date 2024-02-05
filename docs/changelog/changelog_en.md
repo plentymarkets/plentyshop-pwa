@@ -9,7 +9,6 @@
 - Added returns, including return reasons.
 - Added wishlist functionality.
 - Added product ratings to category pages.
-- Products can now display images in [WebP format](https://en.wikipedia.org/wiki/WebP). WebP may improve page speed. WebP is currently an opt-in feature. To enable WebP support, you have to set `USE_WEBP=1` in your `.env` file. Separately, your plentysystems system has to have WebP support enabled.
 - Added configuration (`cookie-scripts.config.ts`) to determine which scripts to load when a user accepts a consent cookie.
 - Added Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
 - Added form validation with vee-validate. The following forms have validation:

@@ -9,7 +9,6 @@
 - Retouren hinzugefügt, inklusive der Möglichkeit, einen Grund für die Retoure anzugeben
 - Wunschliste hinzugefügt
 - Produktbewertungen zu Kategorieseiten hinzugefügt
-- Produktbilder können jetzt im [WebP-Format](https://de.wikipedia.org/wiki/WebP) angezeigt werden. Durch das WebP-Format kann die Ladezeit von Seiten verbessert werden. Es handelt sich dabei aktuell um ein Opt-In-Feature. Um das WebP-Format zu nutzen, setze `USE_WEBP=1` in deiner `.env`-Datei. Außerdem muss das WebP-Format im plentysystems System aktiviert sein.
 - Konfiguration hinzugefügt, um zu bestimmen welche Skripte geladen werden, wenn ein Nutzer der Nutzung eines Cookies zustimmt (`cookie-scripts.config.ts`).
 - Cloudflare Turnstile hinzugefügt, um Formulare gegen Bots zu schützen. Weitere Information zum Einrichten von Turnstile findest du [in der Dokumentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
 - Validieren von Formularen mit vee-validate hinzugefügt. Validierung bei folgenden Formularen hinzugefügt:
