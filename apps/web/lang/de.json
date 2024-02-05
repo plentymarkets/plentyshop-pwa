@@ -692,6 +692,7 @@
     "returnForOrder": "Zurück zur Bestellung",
     "selectReturnReason": "Rücksendegrund auswählen",
     "selectAll": "Alles auswählen",
-    "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf."
+    "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf.",
+    "quantity": "Anzahl"
   }
 }
