@@ -92,6 +92,7 @@
 </template>
 
 <script setup lang="ts">
+import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 definePageMeta({
@@ -104,6 +105,7 @@ const { isOpen, close } = useDisclosure();
 
 const { isTablet, isDesktop } = useBreakpoints();
 const NuxtLink = resolveComponent('NuxtLink');
+const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
