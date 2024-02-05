@@ -692,6 +692,7 @@
     "returnForOrder":"Return for order",
     "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All",
-    "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process."
+    "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
+    "quantity": "Quantity"
   }
 }

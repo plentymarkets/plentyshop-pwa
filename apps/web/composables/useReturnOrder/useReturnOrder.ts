@@ -6,6 +6,7 @@ import {
   UpdateQuantity,
   UpdateReason,
   UseReturnOrderState,
+  CleanReturnData,
 } from './types';
 import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
 import { orderGetters, returnGetters } from '@plentymarkets/shop-sdk';
@@ -17,7 +18,8 @@ import { useSdk } from '~/sdk';
  * @example
  * ``` ts
  * const {
- * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateQuantity, updateReason, selectAll
+ * data, loading, currentReturnOrder, returnData, setCurrentReturnOrder, updateQuantity, updateReason, selectAll,
+ * cleanReturnData
  * } = useReturnOrder();
  * ```
  */
@@ -78,11 +80,6 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * ```
    */
   const updateQuantity: UpdateQuantity = (variationId: number, quantity: number) => {
-    if (!quantity) {
-      delete state.value.returnData['variationIds'][variationId];
-      return;
-    }
-
     state.value.returnData['variationIds'][variationId] = {
       ...state.value.returnData['variationIds'][variationId],
       quantity,
@@ -101,16 +98,10 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   const selectAll: SelectAll = (maximum: boolean) => {
     const orderItems = orderGetters.getItems(state.value.currentReturnOrder);
 
-    if (!maximum) {
-      state.value.returnData.variationIds = {};
-
-      return;
-    }
-
     orderItems.forEach((item) => {
       const variationId = orderGetters.getItemVariationId(item);
 
-      updateQuantity(variationId, orderGetters.getItemQty(item));
+      updateQuantity(variationId, maximum ? orderGetters.getItemQty(item) : 0);
     });
   };
 
@@ -138,6 +129,22 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   };
 
   /**
+   * @description Function for cleaning the data by removing items without any quantity.
+   * @return CleanReturnData
+   * @example
+   * ``` ts
+   * cleanReturnData();
+   * ```
+   */
+  const cleanReturnData: CleanReturnData = () => {
+    const data = state.value.returnData['variationIds'];
+
+    const filteredObject = Object.fromEntries(Object.entries(data).filter(([key, value]) => value.quantity > 0));
+
+    state.value.returnData['variationIds'] = filteredObject;
+  };
+
+  /**
    * @description Function for making an order return.
    * @return Promise<void>
    * @example
@@ -155,6 +162,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     setCurrentReturnOrder,
     updateQuantity,
     updateReason,
+    cleanReturnData,
     selectAll,
     makeOrderReturn,
     ...toRefs(state.value),
