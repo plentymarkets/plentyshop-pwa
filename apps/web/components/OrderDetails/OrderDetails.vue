@@ -13,7 +13,7 @@
         {{ $t('account.ordersAndReturns.orderDetails.heading') }}
       </span>
       <span v-else>
-        {{ $t('returns.detailsHeading') }}
+        {{ $t('returns.returnNumber') }}
       </span>
     </p>
     <p>{{ orderGetters.getId(order) }}</p>

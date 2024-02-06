@@ -406,9 +406,9 @@
       "heading": "Orders & Returns",
       "orderId": "Order ID",
       "returnId": "Return-ID",
-      "orderDate": "Order date",
+      "orderDate": "Order Date",
       "shippingDate": "Shipping date",
-      "returnDate": "Return date",
+      "returnDate": "Return Date",
       "amount": "Amount",
       "status": "Status",
       "details": "Details",
@@ -681,8 +681,9 @@
     }
   },
   "returns": {
-    "detailsHeading": "Return details",
+    "detailsHeading": "Return Summary",
     "return": "Return",
+    "returnNumber": "Return Number",
     "returnItems": "Return Items",
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
