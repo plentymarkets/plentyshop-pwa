@@ -2,8 +2,11 @@
   <div class="px-4 md:px-0 flex items-center flex-col" data-testid="order-success-page" v-if="order">
     <div class="p-4 md:p-6 flex flex-col items-center max-w-2xl mx-auto">
       <NuxtImg src="/images/order-success.svg" :alt="$t('orderSuccessfulImageAlt')" width="192" height="192" />
-      <h1 class="mt-6 mb-1 text-2xl" data-testid="success-header">{{ $t('successInfoHeader') }}</h1>
-      <span class="font-medium">{{ $t('successInfoMessage') }}</span>
+      <h1 class="mt-6 mb-1 text-2xl" data-testid="success-header">
+        <span v-if="!isReturn">{{ $t('successInfoOrderHeader') }}</span>
+        <span v-else>{{ $t('successInfoReturnHeader') }}</span>
+      </h1>
+      <span v-if="!isReturn" class="font-medium">{{ $t('successInfoMessage') }}</span>
       <span v-if="order?.order?.deliveryAddress?.options?.length" class="font-medium text-center">
         {{ $t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(order) }) }}
       </span>
@@ -55,7 +58,8 @@ const { getActiveShippingCountries } = useActiveShippingCountries();
 
 await getActiveShippingCountries();
 
-defineProps<ConfirmationPageContentProps>();
+const props = defineProps<ConfirmationPageContentProps>();
+const isReturn = orderGetters.getStatus(props.order) === 'Return';
 </script>
 
 <style lang="scss">

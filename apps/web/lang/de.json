@@ -679,6 +679,7 @@
     }
   },
   "returns": {
+    "detailsHeading": "Rücksendedetails",
     "return": "Retournieren",
     "returnItems": "Rückgabe-Artikel",
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
