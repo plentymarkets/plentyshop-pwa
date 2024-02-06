@@ -7,7 +7,7 @@
         {{ $n(productPropertyGetters.getOrderPropertySurcharge(property), 'currency') }})</span
       >
     </span>
-    <span v-if="productPropertyGetters.isOrderPropertyFile(property)">
+    <span v-if="property.property.valueType === 'file'">
       <a :href="'/rest/storefront/order-property-file/' + value" target="_blank">: {{ value }}</a>
     </span>
     <span v-else-if="!productPropertyGetters.isOrderPropertyCheckbox(property)">: {{ value }}</span>
