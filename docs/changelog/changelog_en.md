@@ -1,15 +1,40 @@
 # Changelog plentyshopPWA
 
-## v1.3.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
 
 ### New
 
-- You can now use `cookie-scripts.config.ts` to configure which scripts to load when a user accepts a consent cookie.
-- You can now use Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
+- Added order properties on product pages, in the cart, and on the order summary.
+- Added coupons.
+- Added PayPal's **Pay Later** option for payments.
+- Added returns, including return reasons.
+- Added wishlist functionality, including the ability to add products to the cart directly from the wishlist.
+- Added product ratings to category pages.
+- Added configuration (`cookie-scripts.config.ts`) to determine which scripts to load when a user accepts a consent cookie.
+- Added Cloudflare Turnstile to protect forms against bots. For further information on how to configure Turnstile, refer [to the documentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
+- Added form validation with vee-validate. The following forms have validation:
+  - Registering a new account
+  - Signing up for the newsletter
+  - Add a product with order properties to the cart
+  - Parts of the checkout; full coverage of the checkout will be added in the future
+- Added a way to exit preview mode on live domains.
+
+### Changed
+
+- Deployments now use a unified endpoint. This means the secret `URL_ENDPOINT` is obsolete.
 
 ### Fixed
 
+- Addresses in the checkout now update properly.
+- The PayPal buttons now show the correct text depending on the location of the button.
+- The mega menu no longer displays categories without a label.
 - The cookie consent bar is now translated in English and German.
+- The lifespan of the `vsf-locale` cookie has been fixed. The lifespan is now 100 days.
+- Fixed Cumulative Layout Shifts caused by the language picker.
+- Added missing aria labels to the category pagination.
+- Added missing aria labels to the cookie bar.
+- Improved the clickable area on the logo for better accessibility on mobile.
+- When navigating back from the registration modal on mobile, the modal now closes and you no longer return to the previous URL.
 
 ## v1.2.0 (2023-11-28) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
