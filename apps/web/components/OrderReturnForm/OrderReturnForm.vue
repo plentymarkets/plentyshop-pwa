@@ -41,7 +41,7 @@
       </div>
       <div class="flex flex-row justify-between mt-5">
         <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-        <SfButton @click="initiateReturn()" :disabled="!canInitiate">
+        <SfButton @click="initiateReturn()">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
         </SfButton>
@@ -64,14 +64,18 @@ const emit = defineEmits(['close']);
 const { currentReturnOrder, selectAll, returnData, cleanReturnData } = useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
-
+const { send } = useNotification();
 fetchReturnReasons();
 
 const confirmation = ref(false);
 const selectAllItems = ref(false);
 
-const canInitiate = computed(() =>
+const quantitySelected = computed(() =>
   Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1),
+);
+
+const hasQuantityAndNoReasonsSelected = computed(() =>
+  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1 && !item.returnReasonId),
 );
 
 const close = () => {
@@ -81,6 +85,20 @@ const close = () => {
 };
 
 const initiateReturn = () => {
+  if (!quantitySelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectQuantities'),
+    });
+    return;
+  }
+  if (hasQuantityAndNoReasonsSelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectReason'),
+    });
+    return;
+  }
   cleanReturnData();
   confirmation.value = true;
 };
