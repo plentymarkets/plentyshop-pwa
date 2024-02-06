@@ -1,11 +1,12 @@
 # Changelog plentyshopPWA
 
-## v1.3.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### Hinzugefügt
 
 - Bestelleigenschaften zu Produktseiten, dem Warenkorb und der Bestellübersicht hinzugefügt
 - Möglichkeit zum Einlösen von Gutscheinen und Rabatten hinzugefügt
+- Zahlungsoption **Später Zahlen** von PayPal hinzugefügt
 - Retouren hinzugefügt, inklusive der Möglichkeit, einen Grund für die Retoure anzugeben
 - Wunschliste hinzugefügt, inklusive der Möglichkeit, Produkte von der Wunschliste direkt zum Warenkorb hinzuzufügen
 - Produktbewertungen zu Kategorieseiten hinzugefügt
@@ -16,8 +17,11 @@
   - Newsletter abonnieren
   - Produkt mit Bestelleigenschaften zum Warenkorb hinzufügen
   - Teile des Checkouts, Validierung für den Rest des Checkouts wird in einer zukünftigen Version ergänzt
-- Zum Hochladen der App auf plentysystems wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
 - Möglichkeit zum Schließen der Vorschau auf Live-Domains hinzugefügt
+
+### Geändert
+
+- Zum Hochladen der App auf plentysystems wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
 
 ### Behoben
 

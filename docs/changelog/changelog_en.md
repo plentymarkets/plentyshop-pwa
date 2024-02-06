@@ -1,11 +1,12 @@
 # Changelog plentyshopPWA
 
-## v1.3.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
 
 ### New
 
 - Added order properties on product pages, in the cart, and on the order summary.
 - Added coupons.
+- Added PayPal's **Pay Later** option for payments.
 - Added returns, including return reasons.
 - Added wishlist functionality, including the ability to add products to the cart directly from the wishlist.
 - Added product ratings to category pages.
@@ -16,8 +17,11 @@
   - Signing up for the newsletter
   - Add a product with order properties to the cart
   - Parts of the checkout; full coverage of the checkout will be added in the future
-- Deployments now use a unified endpoint. This means the secret `URL_ENDPOINT` is obsolete.
 - Added a way to exit preview mode on live domains.
+
+### Changed
+
+- Deployments now use a unified endpoint. This means the secret `URL_ENDPOINT` is obsolete.
 
 ### Fixed
 
