@@ -39,8 +39,7 @@
           </div>
         </SfScrollable>
       </div>
-      <div class="flex flex-row justify-between mt-5">
-        <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
+      <div class="flex flex-row justify-end mt-5">
         <SfButton @click="initiateReturn()" :disabled="!canInitiate">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
@@ -48,7 +47,7 @@
       </div>
     </div>
 
-    <OrderReturnFormConfirmation v-else @closed="close()" />
+    <OrderReturnFormConfirmation v-else @closed="close()" @previous="previous()" />
   </UiModal>
 </template>
 
@@ -61,7 +60,7 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData, cleanReturnData } = useReturnOrder();
+const { currentReturnOrder, selectAll, returnData } = useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 
@@ -80,8 +79,11 @@ const close = () => {
   emit('close');
 };
 
+const previous = () => {
+  confirmation.value = false;
+};
+
 const initiateReturn = () => {
-  cleanReturnData();
   confirmation.value = true;
 };
 </script>
