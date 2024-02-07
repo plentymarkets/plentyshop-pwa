@@ -32,7 +32,7 @@
           {{ t('returns.selectAll') }}
         </label>
       </div>
-      <div class="w-full" v-if="currentReturnOrder">
+      <div class="w-full grid" v-if="currentReturnOrder">
         <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
           <div v-for="item in orderGetters.getItems(currentReturnOrder)" :key="item.id">
             <OrderReturnProductCard :order="currentReturnOrder" :order-item="item" />
