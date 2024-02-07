@@ -85,7 +85,7 @@
             @update:model-value="changeReason($event)"
             :model-value="String(returnReasonId)"
             size="sm"
-            class="h-fit"
+            class="h-fit py-[0.55rem]"
             :placeholder="$t(`returns.selectReturnReason`)"
           >
             <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
