@@ -103,7 +103,7 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
@@ -125,5 +125,5 @@ const returnReasonId = computed(
 );
 
 const displayItem = computed(() => props.orderItem.typeId !== 6);
-const debounceQuantity = debounce(changeQuantity, 500);
+const debounceQuantity = _.debounce(changeQuantity, 500);
 </script>
