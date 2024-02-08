@@ -7,6 +7,8 @@
       id="search"
       :placeholder="i18n.t('search')"
       @focus="open"
+      readonly
+      onfocus="removeAttribute('readonly');"
     >
       <template #prefix>
         <SfLoaderCircular v-if="loading" />
