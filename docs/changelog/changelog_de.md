@@ -1,15 +1,40 @@
 # Changelog plentyshopPWA
 
-## v1.3.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
+### Hinzugefügt
 
-- Ab jetzt kannst du in der Datei `cookie-scripts.config.ts` konfigurieren, welche Skripte nach Akzeptieren eines bestimmten Cookies geladen werden.
-- Ab jetzt kannst du Formulare mit Cloudflare Turnstile gegen Bots schützen. Informationen zur Konfiguration findest du [in der Dokumentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
+- Bestelleigenschaften zu Produktseiten, dem Warenkorb und der Bestellübersicht hinzugefügt
+- Möglichkeit zum Einlösen von Gutscheinen und Rabatten hinzugefügt
+- Zahlungsoption **Später Zahlen** von PayPal hinzugefügt
+- Retouren hinzugefügt, inklusive der Möglichkeit, einen Grund für die Retoure anzugeben
+- Wunschliste hinzugefügt, inklusive der Möglichkeit, Produkte von der Wunschliste direkt zum Warenkorb hinzuzufügen
+- Produktbewertungen zu Kategorieseiten hinzugefügt
+- Konfiguration hinzugefügt, um zu bestimmen welche Skripte geladen werden, wenn ein Nutzer der Nutzung eines Cookies zustimmt (`cookie-scripts.config.ts`).
+- Cloudflare Turnstile hinzugefügt, um Formulare gegen Bots zu schützen. Weitere Information zum Einrichten von Turnstile findest du [in der Dokumentation](https://pwa-docs.plentymarkets.com/guide/how-to/bot-protection).
+- Validieren von Formularen mit vee-validate hinzugefügt. Validierung bei folgenden Formularen hinzugefügt:
+  - Neues Konto erstellen
+  - Newsletter abonnieren
+  - Produkt mit Bestelleigenschaften zum Warenkorb hinzufügen
+  - Teile des Checkouts, Validierung für den Rest des Checkouts wird in einer zukünftigen Version ergänzt
+- Möglichkeit zum Schließen der Vorschau auf Live-Domains hinzugefügt
 
-### Fixed
+### Geändert
 
-- Das Cookie-Consent-Banner wird jetzt sowohl auf Englisch als auch auf Deutsch in der richtigen Sprache angezeigt.
+- Zum Hochladen der App auf plentysystems wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
+
+### Behoben
+
+- Im Checkout werden Adressen jetzt richtig aktualisiert.
+- Auf den Schaltflächen von PayPal werden jetzt der Seite entsprechend die richtigen Beschriftung verwendet.
+- Im Megamenü werden Kategorien ohne Beschriftung nicht mehr angezeigt.
+- Die Cookiebar wird jetzt je nach Sprachauswahl auf Englisch oder Deutsch angezeigt.
+- Die Laufzeit des Cookies `vsf-locale` wurde angepasst und beträgt jetzt 100 Tage.
+- Das Öffnen der Sprachauswahl verursacht keinen Cumulative Layout Shift mehr.
+- Fehlende Aria-Label wurden zur Paginierung von Kategorieseiten hinzugefügt.
+- Fehlende Aria-Label wurden zur Cookiebar hinzugefügt.
+- Der klickbare Bereich rund um das Logo wurde erweitert, um die Barrierefreiheit auf Mobile zu verbessern.
+- Beim zurück navigieren vom Anmeldeformular auf Mobile wird jetzt das Modal geschlossen statt auf die vorherigen URL zu navigieren.
 
 ## v1.2.0 (28.11.2023) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.1.0...v1.2.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
