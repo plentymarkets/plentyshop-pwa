@@ -61,7 +61,13 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData, cleanReturnData } = useReturnOrder();
+const {
+  currentReturnOrder,
+  hasMinimumQuantitySelected,
+  hasQuantityAndNoReasonsSelected,
+  selectAll,
+  cleanReturnData,
+} = useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
@@ -71,14 +77,6 @@ const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
 
-const quantitySelected = computed(() =>
-  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1),
-);
-
-const hasQuantityAndNoReasonsSelected = computed(() =>
-  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1 && !item.returnReasonId),
-);
-
 const close = () => {
   confirmation.value = false;
   selectAllItems.value = false;
@@ -86,7 +84,7 @@ const close = () => {
 };
 
 const initiateReturn = () => {
-  if (!quantitySelected.value) {
+  if (!hasMinimumQuantitySelected.value) {
     send({
       type: 'negative',
       message: t('returns.selectQuantities'),

@@ -157,6 +157,32 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     await useAsyncData(() => useSdk().plentysystems.doMakeOrderReturn(state.value.returnData));
     state.value.loading = false;
   };
+  /**
+   * @description Function checking if user selected at least 1 product for return
+   * @return boolean
+   * @example
+   * ``` ts
+   * hasMinimumQuantitySelected;
+   * ```
+   */
+  const hasMinimumQuantitySelected = computed(() => {
+    return Object.values(state.value.returnData['variationIds'] || {}).some((item) => item.quantity >= 1);
+  });
+
+  /**
+   * @description Function checking if user selected a reason for products that have quantity >=1
+   * @return boolean
+   * @example
+   * ``` ts
+   * hasQuantityAndNoReasonsSelected;
+   * ```
+   */
+
+  const hasQuantityAndNoReasonsSelected = computed(() => {
+    return Object.values(state.value.returnData['variationIds'] || {}).some(
+      (item) => item.quantity >= 1 && !item.returnReasonId,
+    );
+  });
 
   return {
     setCurrentReturnOrder,
@@ -165,6 +191,8 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     cleanReturnData,
     selectAll,
     makeOrderReturn,
+    hasMinimumQuantitySelected,
+    hasQuantityAndNoReasonsSelected,
     ...toRefs(state.value),
   };
 };
