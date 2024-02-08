@@ -65,6 +65,12 @@
             <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
             <span>{{ orderGetters.getItemQty(orderItem) }}</span>
           </li>
+          <li>
+            <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+            <span>
+              {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+            </span>
+          </li>
         </ul>
       </div>
       <div class="md:mx-5 self-end flex justify-end">
