@@ -336,6 +336,7 @@
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
   "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
   "orderNumber": "Auftrags-ID",
+  "returnNumber": "Rückgabe-ID",
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",
   "customerReviews": "Kundenrezensionen",
