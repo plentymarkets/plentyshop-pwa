@@ -67,6 +67,7 @@ const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 fetchReturnReasons();
 
+const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
 
@@ -92,7 +93,7 @@ const initiateReturn = () => {
     });
     return;
   }
-  if (hasQuantityAndNoReasonsSelected.value) {
+  if (runtimeConfig.public.validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
     send({
       type: 'negative',
       message: t('returns.selectReason'),
