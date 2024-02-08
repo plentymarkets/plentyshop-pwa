@@ -61,13 +61,8 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const {
-  currentReturnOrder,
-  hasMinimumQuantitySelected,
-  hasQuantityAndNoReasonsSelected,
-  selectAll,
-  cleanReturnData,
-} = useReturnOrder();
+const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
+  useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();

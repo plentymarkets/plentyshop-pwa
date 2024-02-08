@@ -165,7 +165,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * hasMinimumQuantitySelected;
    * ```
    */
-  const hasMinimumQuantitySelected = computed(() => {
+  const hasMinimumQuantitySelected: Ref<boolean> = computed(() => {
     return Object.values(state.value.returnData['variationIds'] || {}).some((item) => item.quantity >= 1);
   });
 
@@ -178,7 +178,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
    * ```
    */
 
-  const hasQuantityAndNoReasonsSelected = computed(() => {
+  const hasQuantityAndNoReasonsSelected: Ref<boolean> = computed(() => {
     return Object.values(state.value.returnData['variationIds'] || {}).some(
       (item) => item.quantity >= 1 && !item.returnReasonId,
     );
