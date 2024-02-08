@@ -406,6 +406,7 @@
       "heading": "Orders & Returns",
       "orderId": "Order ID",
       "returnId": "Return-ID",
+      "orderNumber": "Order Number",
       "orderDate": "Order Date",
       "shippingDate": "Shipping date",
       "returnDate": "Return Date",

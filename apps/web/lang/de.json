@@ -406,6 +406,7 @@
       "orderId": "Auftrags-ID",
       "returnId": "Retouren-ID",
       "orderDate": "Auftragsdatum",
+      "orderNumber": "Bestellnummer",
       "shippingDate": "Lieferdatum",
       "returnDate": "Retourendatum",
       "amount": "Anzahl",

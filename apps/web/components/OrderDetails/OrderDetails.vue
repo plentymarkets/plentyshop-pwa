@@ -1,6 +1,6 @@
 <template>
   <div class="font-bold text-primary-700 font-headings md:text-lg mb-3">
-    <span v-if="!isReturn">
+    <span v-if="!orderGetters.isReturn(order)">
       {{ $t('account.ordersAndReturns.orderDetails.heading') }}
     </span>
     <span v-else>
@@ -9,8 +9,8 @@
   </div>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
-      <span v-if="!isReturn">
-        {{ $t('account.ordersAndReturns.orderDetails.heading') }}
+      <span v-if="!orderGetters.isReturn(order)">
+        {{ $t('account.ordersAndReturns.orderNumber') }}
       </span>
       <span v-else>
         {{ $t('returns.returnNumber') }}
@@ -18,9 +18,13 @@
     </p>
     <p>{{ orderGetters.getId(order) }}</p>
   </div>
+  <div v-if="orderGetters.isReturn(order)" class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+    <p class="font-medium text-base">{{ $t('account.ordersAndReturns.orderNumber') }}</p>
+    <p>{{ orderGetters.getOrderReferenceOriginId(order) }}</p>
+  </div>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
-      <span v-if="!isReturn">
+      <span v-if="!orderGetters.isReturn(order)">
         {{ $t('account.ordersAndReturns.orderDate') }}
       </span>
       <span v-else>
@@ -41,6 +45,5 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { OrderDetailsProps } from './types';
 
-const props = defineProps<OrderDetailsProps>();
-const isReturn = orderGetters.getStatus(props.order) === 'Return';
+defineProps<OrderDetailsProps>();
 </script>
