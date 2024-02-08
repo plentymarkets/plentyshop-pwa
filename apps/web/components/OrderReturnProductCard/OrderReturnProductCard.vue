@@ -73,7 +73,7 @@
           @change-quantity="debounceQuantity"
           :value="quantity"
           :min-value="0"
-          :max-value="orderGetters.getItemQty(orderItem)"
+          :max-value="orderGetters.getItemReturnableQty(orderItem)"
           class="mt-4 sm:mt-0 h-fit self-end mr-4"
         />
 
