@@ -5,7 +5,6 @@ layout: home
 hero:
   name: "plentyShop PWA"
   text: "Documentation"
-  tagline: Your virtual shop window
   image:
     src: /logo.png
     alt: plentyShop PWA
