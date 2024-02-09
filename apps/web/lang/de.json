@@ -685,6 +685,8 @@
     "detailsHeading": "Zusammenfassung der Rückgabe",
     "return": "Retournieren",
     "returnNumber": "Rücksendenummer",
+    "selectQuantities": "Bitte wählen Sie die Rücksendemengen aus",
+    "selectReason": "Bitte wählen Sie den Rückgabegrund aus",
     "returnItems": "Rückgabe-Artikel",
     "areYouSure": "Sind Sie sicher, dass Sie diese Artikel zurückgeben möchten?",
     "commentOptional": "Kommentar (optional)",

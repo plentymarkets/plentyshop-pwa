@@ -685,6 +685,8 @@
     "detailsHeading": "Return Summary",
     "return": "Return",
     "returnNumber": "Return Number",
+    "selectQuantities": "Please select return quantities",
+    "selectReason": "Please select return reason",
     "returnItems": "Return Items",
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
