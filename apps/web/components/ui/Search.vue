@@ -4,11 +4,9 @@
       ref="inputReference"
       v-model="inputModel"
       :aria-label="i18n.t('search')"
-      id="search"
+      id="search-bar"
       :placeholder="i18n.t('search')"
       @focus="open"
-      readonly
-      onfocus="removeAttribute('readonly');"
     >
       <template #prefix>
         <SfLoaderCircular v-if="loading" />
