@@ -68,6 +68,12 @@
             <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
             <span>{{ orderGetters.getItemQty(orderItem) }}</span>
           </li>
+          <li>
+            <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+            <span>
+              {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+            </span>
+          </li>
         </ul>
       </div>
 
@@ -107,7 +113,7 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
@@ -129,5 +135,5 @@ const returnReasonId = computed(
 );
 
 const displayItem = computed(() => props.orderItem.typeId !== 6);
-const debounceQuantity = debounce(changeQuantity, 500);
+const debounceQuantity = _.debounce(changeQuantity, 500);
 </script>
