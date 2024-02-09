@@ -39,8 +39,9 @@
           </div>
         </SfScrollable>
       </div>
-      <div class="flex flex-row justify-end mt-5">
-        <SfButton @click="initiateReturn()" :disabled="!canInitiate">
+      <div class="flex flex-row justify-between mt-5">
+        <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
+        <SfButton @click="initiateReturn()">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
         </SfButton>
@@ -60,18 +61,16 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData } = useReturnOrder();
+const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
+  useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
-
+const { send } = useNotification();
 fetchReturnReasons();
 
+const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
-
-const canInitiate = computed(() =>
-  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1),
-);
 
 const close = () => {
   confirmation.value = false;
@@ -84,6 +83,21 @@ const previous = () => {
 };
 
 const initiateReturn = () => {
+  if (!hasMinimumQuantitySelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectQuantities'),
+    });
+    return;
+  }
+  if (runtimeConfig.public.validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectReason'),
+    });
+    return;
+  }
+  cleanReturnData();
   confirmation.value = true;
 };
 </script>

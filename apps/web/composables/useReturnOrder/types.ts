@@ -26,6 +26,8 @@ export interface UseReturnOrder {
   selectAll: SelectAll;
   cleanReturnData: CleanReturnData;
   makeOrderReturn: MakeOrderReturn;
+  hasMinimumQuantitySelected: Ref<boolean>;
+  hasQuantityAndNoReasonsSelected: Ref<boolean>;
 }
 
 export type UseReturnOrderReturn = () => UseReturnOrder;

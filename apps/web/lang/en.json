@@ -680,6 +680,8 @@
   },
   "returns": {
     "return": "Return",
+    "selectQuantities": "Please select return quantities",
+    "selectReason": "Please select return reason",
     "returnItems": "Return Items",
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
