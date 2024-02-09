@@ -1,26 +1,76 @@
 /* https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css */
 :root {
-    --vp-c-gray-1: #839BA8;
-    --vp-c-gray-2: #AEC5D0;
-    --vp-c-gray-3: #D8E4EB;
+    --vp-c-gray-1: #839ba8;
+    --vp-c-gray-2: #aec5d0;
+    --vp-c-gray-3: #d8e4eb;
     --vp-c-gray-soft: rgba(43, 59, 63, 0.14);
 
     --vp-c-brand-1: #073342;
-    --vp-c-brand-2: #054E63;
-    --vp-c-brand-3: #02809E;
+    --vp-c-brand-2: #054e63;
+    --vp-c-brand-3: #02809e;
     --vp-c-brand-soft: rgba(0, 153, 190, 0.14);
 }
 
 .dark {
-    --vp-c-gray-1: #5F767F;
-    --vp-c-gray-2: #374D55;
-    --vp-c-gray-3: #2B3B3F;
+    --vp-c-gray-1: #5f767f;
+    --vp-c-gray-2: #374d55;
+    --vp-c-gray-3: #2b3b3f;
     --vp-c-gray-soft: rgba(216, 228, 235, 0.16);
 
-    --vp-c-brand-1: #AFDEF8;
-    --vp-c-brand-2: #5DC3F0;
-    --vp-c-brand-3: #008EBD;
+    --vp-c-brand-1: #afdef8;
+    --vp-c-brand-2: #5dc3f0;
+    --vp-c-brand-3: #008ebd;
     --vp-c-brand-soft: rgba(1, 46, 53, 0.16);
+}
+
+/*
+    Adds Vue Storefront logo to hero tagline
+    Tagline styling taken from https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/components/VPHero.vue
+*/
+
+.tagline {
+    padding-top: 8px;
+    max-width: 392px;
+    line-height: 28px;
+    font-size: 18px;
+    font-weight: 500;
+    white-space: pre-wrap;
+    color: var(--vp-c-text-2);
+}
+
+.VPHero.has-image .tagline {
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+    .tagline {
+        padding-top: 12px;
+        max-width: 576px;
+        line-height: 32px;
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 960px) {
+    .tagline {
+        line-height: 36px;
+        font-size: 24px;
+    }
+
+    .VPHero.has-image .tagline {
+        margin: 0;
+    }
+}
+
+span.logo-vsf {
+    content: url("./assets/logo-vsf-dark.svg");
+    line-height: normal;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.dark span.logo-vsf {
+    content: url("./assets/logo-vsf-primary.svg");
 }
 
 /*
@@ -29,6 +79,6 @@
 */
 .VPSidebarItem.collapsible.is-link {
     .caret-icon {
-        display: none
+        display: none;
     }
 }
