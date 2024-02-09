@@ -63,10 +63,14 @@
 }
 
 span.logo-vsf {
-    content: url("./assets/logo-vsf.svg");
+    content: url("./assets/logo-vsf-dark.svg");
     line-height: normal;
     vertical-align: middle;
     width: 50%;
+}
+
+.dark span.logo-vsf {
+    content: url("./assets/logo-vsf-primary.svg");
 }
 
 /*
