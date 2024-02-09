@@ -3,7 +3,7 @@
     :model-value="isOpen"
     tag="section"
     role="dialog"
-    class="h-full md:h-fit !w-[95%] 3xl:!w-[60%]"
+    class="h-fit overflow-y-auto !w-[95%] 3xl:!w-[60%]"
     aria-labelledby="return-modal-title"
   >
     <header class="mb-4">
@@ -26,17 +26,25 @@
         <label
           @click="selectAll(!selectAllItems)"
           for="selectAll"
-          class="cursor-pointer bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1 flex items-center"
+          class="cursor-pointer w-fit select-none bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1 flex items-center"
         >
           <SfCheckbox class="text-primary-800 mr-2" id="selectAll" v-model="selectAllItems" value="value" />
           {{ t('returns.selectAll') }}
         </label>
       </div>
       <div class="w-full grid" v-if="currentReturnOrder">
-        <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
-          <div v-for="item in orderGetters.getItems(currentReturnOrder)" :key="item.id">
-            <OrderReturnProductCard :order="currentReturnOrder" :order-item="item" />
-          </div>
+        <SfScrollable
+          :total-items="orderGetters.getItems(currentReturnOrder).length"
+          direction="vertical"
+          buttons-placement="none"
+          class="!w-full max-h-[680px]"
+        >
+          <OrderReturnProductCard
+            v-for="item in orderGetters.getItems(currentReturnOrder)"
+            :key="item.id"
+            :order="currentReturnOrder"
+            :order-item="item"
+          />
         </SfScrollable>
       </div>
       <div class="flex flex-row justify-between mt-5">

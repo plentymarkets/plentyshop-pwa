@@ -27,37 +27,44 @@
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
-        <ul class="md:hidden my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
-          <li>
-            <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.orderId') }}</p>
-            <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
-          </li>
-          <li>
-            <p class="block typography-text-sm font-medium">
-              {{ $t('account.ordersAndReturns.orderDate') }}
-            </p>
-            <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
-          </li>
-          <li>
-            <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.amount') }}</p>
-            <span class="block typography-text-sm mb-2">{{ $n(orderGetters.getPrice(order), 'currency') }}</span>
-          </li>
-          <li v-if="orderGetters.getShippingDate(order)">
-            <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.shippingDate') }}</p>
-            <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order) }}</span>
-          </li>
-          <li class="flex flex-wrap items-center mb-2">
-            <p class="block typography-text-sm -mb-1.5 font-medium flex-[100%]">
-              {{ $t('account.ordersAndReturns.status') }}
-            </p>
-            <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-            <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
-              {{ $t('account.ordersAndReturns.details') }}
-            </SfButton>
-          </li>
-          <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-        </ul>
-        <table class="hidden md:block text-left typography-text-sm mx-4">
+
+        <template v-if="!isTablet">
+          <ul class="my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
+            <li>
+              <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.orderId') }}</p>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
+            </li>
+            <li>
+              <p class="block typography-text-sm font-medium">
+                {{ $t('account.ordersAndReturns.orderDate') }}
+              </p>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
+            </li>
+            <li>
+              <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.amount') }}</p>
+              <span class="block typography-text-sm mb-2">{{ $n(orderGetters.getPrice(order), 'currency') }}</span>
+            </li>
+            <li v-if="orderGetters.getShippingDate(order)">
+              <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.shippingDate') }}</p>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getShippingDate(order) }}</span>
+            </li>
+            <li class="flex flex-wrap items-center mb-2">
+              <p class="block typography-text-sm -mb-1.5 font-medium flex-[100%]">
+                {{ $t('account.ordersAndReturns.status') }}
+              </p>
+              <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
+              <SfButton v-if="orderGetters.isReturnable(order)" @click="openReturn(order)" size="sm" variant="tertiary">
+                {{ $t('returns.return') }}
+              </SfButton>
+              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+                {{ $t('account.ordersAndReturns.details') }}
+              </SfButton>
+            </li>
+            <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+          </ul>
+        </template>
+
+        <table v-else class="md:block text-left typography-text-sm mx-4">
           <caption class="hidden">
             {{
               $t('account.ordersAndReturns.listOfOrders')
@@ -90,8 +97,8 @@
                   size="sm"
                   variant="tertiary"
                 >
-                  {{ $t('returns.return') }}</SfButton
-                >
+                  {{ $t('returns.return') }}
+                </SfButton>
               </td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
                 <SfButton
@@ -135,7 +142,7 @@ definePageMeta({
 
 const localePath = useLocalePath();
 
-const { isDesktop } = useBreakpoints();
+const { isDesktop, isTablet } = useBreakpoints();
 const maxVisiblePages = ref(1);
 const { isOpen: isReturnOpen, open: openReturnForm, close: closeReturn } = useDisclosure();
 
