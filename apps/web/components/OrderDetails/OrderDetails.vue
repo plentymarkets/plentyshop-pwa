@@ -1,16 +1,35 @@
 <template>
   <div class="font-bold text-primary-700 font-headings md:text-lg mb-3">
-    {{ $t('account.ordersAndReturns.orderDetails.heading') }}
+    <span v-if="!orderGetters.isReturn(order)">
+      {{ $t('account.ordersAndReturns.orderDetails.heading') }}
+    </span>
+    <span v-else>
+      {{ $t('returns.detailsHeading') }}
+    </span>
   </div>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
-      {{ $t('orderNumber') }}
+      <span v-if="!orderGetters.isReturn(order)">
+        {{ $t('account.ordersAndReturns.orderNumber') }}
+      </span>
+      <span v-else>
+        {{ $t('returns.returnNumber') }}
+      </span>
     </p>
     <p>{{ orderGetters.getId(order) }}</p>
   </div>
+  <div v-if="orderGetters.isReturn(order)" class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
+    <p class="font-medium text-base">{{ $t('account.ordersAndReturns.orderNumber') }}</p>
+    <p>{{ orderGetters.getOrderReferenceOriginId(order) }}</p>
+  </div>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
-      {{ $t('account.ordersAndReturns.orderDate') }}
+      <span v-if="!orderGetters.isReturn(order)">
+        {{ $t('account.ordersAndReturns.orderDate') }}
+      </span>
+      <span v-else>
+        {{ $t('account.ordersAndReturns.returnDate') }}
+      </span>
     </p>
     <p>{{ orderGetters.getDate(order) }}</p>
   </div>
