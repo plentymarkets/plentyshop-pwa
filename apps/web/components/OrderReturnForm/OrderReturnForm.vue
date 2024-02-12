@@ -40,10 +40,11 @@
           class="!w-full max-h-[680px]"
         >
           <OrderReturnProductCard
-            v-for="item in orderGetters.getItems(currentReturnOrder)"
-            :key="item.id"
+            v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
             :order="currentReturnOrder"
             :order-item="item"
+            :index="index"
+            :key="item.id"
           />
         </SfScrollable>
       </div>
