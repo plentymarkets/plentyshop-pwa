@@ -32,7 +32,7 @@
           {{ t('returns.selectAll') }}
         </label>
       </div>
-      <div class="w-full" v-if="currentReturnOrder">
+      <div class="w-full grid" v-if="currentReturnOrder">
         <SfScrollable direction="vertical" buttons-placement="none" class="!w-full max-h-[680px]">
           <div v-for="item in orderGetters.getItems(currentReturnOrder)" :key="item.id">
             <OrderReturnProductCard :order="currentReturnOrder" :order-item="item" />
@@ -41,14 +41,14 @@
       </div>
       <div class="flex flex-row justify-between mt-5">
         <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-        <SfButton @click="initiateReturn()" :disabled="!canInitiate">
+        <SfButton @click="initiateReturn()">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
         </SfButton>
       </div>
     </div>
 
-    <OrderReturnFormConfirmation v-else @closed="close()" />
+    <OrderReturnFormConfirmation v-else @closed="close()" @previous="previous()" />
   </UiModal>
 </template>
 
@@ -61,18 +61,16 @@ defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
 
-const { currentReturnOrder, selectAll, returnData, cleanReturnData } = useReturnOrder();
+const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
+  useReturnOrder();
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
-
+const { send } = useNotification();
 fetchReturnReasons();
 
+const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
-
-const canInitiate = computed(() =>
-  Object.values(returnData?.value?.variationIds || {}).some((item) => item.quantity >= 1),
-);
 
 const close = () => {
   confirmation.value = false;
@@ -80,7 +78,25 @@ const close = () => {
   emit('close');
 };
 
+const previous = () => {
+  confirmation.value = false;
+};
+
 const initiateReturn = () => {
+  if (!hasMinimumQuantitySelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectQuantities'),
+    });
+    return;
+  }
+  if (runtimeConfig.public.validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
+    send({
+      type: 'negative',
+      message: t('returns.selectReason'),
+    });
+    return;
+  }
   cleanReturnData();
   confirmation.value = true;
 };

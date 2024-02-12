@@ -66,6 +66,16 @@
             <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getId(orderReturn) }}</td>
             <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn) }}</td>
             <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
+            <td>
+              <SfButton
+                :tag="NuxtLink"
+                size="sm"
+                variant="tertiary"
+                :to="localePath(generateOrderDetailsLink(orderReturn))"
+              >
+                {{ $t('account.ordersAndReturns.details') }}
+              </SfButton>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -82,9 +92,9 @@
 </template>
 
 <script setup lang="ts">
+import { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
-
+import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
@@ -94,7 +104,8 @@ const { data, fetchCustomerReturns, loading } = useCustomerReturns();
 const { isOpen, close } = useDisclosure();
 
 const { isTablet, isDesktop } = useBreakpoints();
-
+const NuxtLink = resolveComponent('NuxtLink');
+const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
@@ -111,6 +122,10 @@ const handleQueryUpdate = async () => {
   await fetchCustomerReturns({
     page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
   });
+};
+
+const generateOrderDetailsLink = (order: Order) => {
+  return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
 };
 
 await handleQueryUpdate();
