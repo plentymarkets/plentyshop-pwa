@@ -143,11 +143,12 @@ const generateOrderDetailsLink = (order: Order) => {
   return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
 };
 
+await handleQueryUpdate();
+
 watch(
   () => route.query,
   async () => {
     await handleQueryUpdate();
   },
-  { immediate: true },
 );
 </script>
