@@ -36,6 +36,9 @@
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>
+      <div>
+
+      </div>
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
@@ -128,6 +131,7 @@ const addWithLoader = async (productId: number) => {
     loading.value = false;
   }
 };
+
 const mainPrice = computed(() => {
   const price = productGetters.getPrice(product);
   if (!price) return 0;
@@ -138,6 +142,7 @@ const mainPrice = computed(() => {
   return 0;
 });
 
+const tags = productGetters.getTags(product);
 const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
