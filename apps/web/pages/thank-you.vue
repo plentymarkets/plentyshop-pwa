@@ -1,7 +1,11 @@
 <template>
   <NuxtLazyHydrate when-visible>
-    <ConfirmationPageContent v-if="data" :order="data" />
-    <SoftLogin v-if="error" :error="error" @submit="loadOrder" />
+    <template v-if="data">
+      <ConfirmationPageContent :order="data" />
+    </template>
+    <template v-if="error">
+      <SoftLogin :error="error" @submit="loadOrder" />
+    </template>
   </NuxtLazyHydrate>
 </template>
 
