@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative sm:grid sm:grid-cols-[1fr_1fr_2fr] first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
+    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
@@ -16,7 +16,7 @@
         />
       </SfLink>
     </div>
-    <div class="flex self-start flex-col min-w-[180px]">
+    <div class="flex self-start flex-col min-w-[180px] w-full">
       <SfLink
         :tag="NuxtLink"
         :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -65,35 +65,41 @@
             <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
             <span>{{ orderGetters.getItemQty(orderItem) }}</span>
           </li>
+          <li>
+            <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+            <span>
+              {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+            </span>
+          </li>
         </ul>
       </div>
-    </div>
-    <div class="md:mx-5 md:grid grid-cols-[1fr_1fr] self-end">
-      <UiQuantitySelector
-        :key="quantity"
-        @change-quantity="debounceQuantity"
-        :value="quantity"
-        :min-value="0"
-        :max-value="orderGetters.getItemQty(orderItem)"
-        class="mt-4 sm:mt-0 h-fit self-end mr-4"
-      />
+      <div class="md:mx-5 self-end flex justify-end">
+        <UiQuantitySelector
+          :key="quantity"
+          @change-quantity="debounceQuantity"
+          :value="quantity"
+          :min-value="0"
+          :max-value="orderGetters.getItemQty(orderItem)"
+          class="mt-4 sm:mt-0 h-fit self-end mr-4"
+        />
 
-      <div class="flex flex-col flex-1 justify-end">
-        <label>
-          <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
-          <SfSelect
-            @update:model-value="changeReason($event)"
-            :model-value="String(returnReasonId)"
-            size="sm"
-            class="h-fit"
-            :placeholder="$t(`returns.selectReturnReason`)"
-          >
-            <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
-            <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
-              {{ name }}
-            </option>
-          </SfSelect>
-        </label>
+        <div class="flex flex-col flex-1 justify-end">
+          <label>
+            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+            <SfSelect
+              @update:model-value="changeReason($event)"
+              :model-value="String(returnReasonId)"
+              size="sm"
+              class="h-fit py-[0.55rem]"
+              :placeholder="$t(`returns.selectReturnReason`)"
+            >
+              <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
+              <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
+                {{ name }}
+              </option>
+            </SfSelect>
+          </label>
+        </div>
       </div>
     </div>
   </div>
@@ -103,7 +109,7 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 
 const { addWebpExtension } = useImageUrl();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
@@ -125,5 +131,5 @@ const returnReasonId = computed(
 );
 
 const displayItem = computed(() => props.orderItem.typeId !== 6);
-const debounceQuantity = debounce(changeQuantity, 500);
+const debounceQuantity = _.debounce(changeQuantity, 500);
 </script>
