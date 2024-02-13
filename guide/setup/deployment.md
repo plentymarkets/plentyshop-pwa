@@ -32,19 +32,6 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | ----------- | ----------- |
 | `URL_ENDPOINT_TOKEN` | **Access key** |
 
-### System URL
-
-1. Go to your repository.
-2. Go to **Settings**.
-3. In the **Security** section, go to **Secrets and variables » Actions**.
-4. Open the **Variables** tab.
-5. Click on **New repository variable**.
-6. Fill in the information according to the table below.
-
-| Name      | Value |
-| ----------- | ----------- |
-| `API_URL` | Your shop domain |
-
 ### Upload
 
 In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
