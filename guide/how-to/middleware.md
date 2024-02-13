@@ -6,7 +6,7 @@ By default, the app connects to a demo system. To connect to your own plentysyst
 
 ## API endpoint
 
-To update the API endpoint, create a `.env` file in the `apps/server` directory with the following content:
+To update the API endpoint, create a `.env` file in the `apps/web` directory with the following content:
 
 ```
 API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
