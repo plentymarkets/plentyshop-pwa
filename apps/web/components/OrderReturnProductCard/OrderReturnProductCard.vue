@@ -130,6 +130,8 @@ const returnReasonId = computed(
   () => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId]?.returnReasonId || '',
 );
 
-const displayItem = computed(() => props.orderItem.typeId !== 6);
+const displayItem = computed(
+  () => props.orderItem.typeId !== 6 && orderGetters.getItemReturnableQty(props.orderItem) > 0,
+);
 const debounceQuantity = _.debounce(changeQuantity, 500);
 </script>
