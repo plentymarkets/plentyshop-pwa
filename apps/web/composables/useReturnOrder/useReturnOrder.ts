@@ -101,7 +101,7 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
     orderItems.forEach((item) => {
       const variationId = orderGetters.getItemVariationId(item);
 
-      updateQuantity(variationId, maximum ? orderGetters.getItemQty(item) : 0);
+      updateQuantity(variationId, maximum ? orderGetters.getItemReturnableQty(item) : 0);
     });
   };
 

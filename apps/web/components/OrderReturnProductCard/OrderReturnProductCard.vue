@@ -83,7 +83,7 @@
           @change-quantity="debounceQuantity"
           :value="quantity"
           :min-value="0"
-          :max-value="orderGetters.getItemQty(orderItem)"
+          :max-value="orderGetters.getItemReturnableQty(orderItem)"
           class="mt-4 sm:mt-0 h-fit self-end md:mr-4"
         />
 
@@ -134,6 +134,8 @@ const returnReasonId = computed(
   () => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId]?.returnReasonId || '',
 );
 
-const displayItem = computed(() => props.orderItem.typeId !== 6);
+const displayItem = computed(
+  () => props.orderItem.typeId !== 6 && orderGetters.getItemReturnableQty(props.orderItem) > 0,
+);
 const debounceQuantity = _.debounce(changeQuantity, 500);
 </script>

@@ -46,7 +46,10 @@
 
         <OrderDocumentsList :order="order" />
 
-        <OrderReturnItems v-if="orderGetters.isReturnable(order)" :order="order" />
+        <OrderReturnItems
+          v-if="orderGetters.isReturnable(order) && orderGetters.hasReturnableItems(order)"
+          :order="order"
+        />
       </div>
     </div>
 
