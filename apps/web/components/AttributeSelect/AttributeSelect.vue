@@ -1,12 +1,11 @@
 <template>
   <div data-testid="product-attributes">
-    <div v-for="(attribute, index) in transformedProduct.attributes" :key="index">
+    <div v-for="(attribute, index) in transformedProduct.attributes" :key="index" class="mb-2">
       <label :for="'attribute-' + attribute.attributeId" class="capitalize text-xs text-neutral-500">
         {{ attribute.name }}
       </label>
       <SfSelect
         :id="'attribute-' + attribute.attributeId"
-        class="mb-2"
         @update:model-value="changeVariationId($event, index)"
         v-model="selectedVariationsAsString[index]"
         size="sm"
