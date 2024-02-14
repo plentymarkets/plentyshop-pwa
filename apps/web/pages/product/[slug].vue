@@ -35,6 +35,7 @@
 
 <script setup lang="ts">
 import { Product } from '@plentymarkets/shop-api';
+
 import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();

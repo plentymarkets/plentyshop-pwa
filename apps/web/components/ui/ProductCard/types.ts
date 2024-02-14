@@ -1,3 +1,4 @@
+import type { HTMLAttributes } from 'vue';
 import { Product } from '@plentymarkets/shop-api';
 
 export type ProductCardProps = {
