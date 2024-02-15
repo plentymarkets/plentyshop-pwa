@@ -27,7 +27,7 @@
         {{ orderGetters.getItemName(orderItem) }}
       </SfLink>
 
-      <div class="my-2">
+      <div class="mt-2 md:mb-2">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
             <span class="mr-1 font-bold" v-if="orderGetters.getOrderItemAttributeName(attribute)">
@@ -84,7 +84,7 @@
           :value="quantity"
           :min-value="0"
           :max-value="orderGetters.getItemReturnableQty(orderItem)"
-          class="mt-4 sm:mt-0 h-fit self-end md:mr-4"
+          class="mt-0 h-fit self-end md:mt-4 md:mr-4"
         />
 
         <div class="flex flex-col flex-1 justify-end">
