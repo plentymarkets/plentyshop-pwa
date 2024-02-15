@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.category)"
-    :back-label-desktop="$t('backToShopping')"
+    :back-href="backHref"
+    :back-label-desktop="$t('back')"
     :back-label-mobile="$t('back')"
     :heading="$t('myCart')"
   >
@@ -12,9 +12,12 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 
+const router = useRouter();
 const localePath = useLocalePath();
+const backUrl = localePath(String(router.options.history.state.back));
+const backHref =
+  backUrl === localePath(String(router.options.history.state.current)) ? localePath(paths.home) : backUrl;
 </script>
