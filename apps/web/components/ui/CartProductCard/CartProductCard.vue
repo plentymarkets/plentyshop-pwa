@@ -26,7 +26,7 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div>{{ $n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+      <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -47,7 +47,7 @@
           class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
           v-if="cartItem.basketItemOrderParams.length > 0"
         >
-          <div class="text-[15px]">{{ $t('orderProperties.additionalCostsPerItem') }}:</div>
+          <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
           <ul>
             <CartOrderProperty
               v-for="property in cartItem.basketItemOrderParams"
@@ -64,7 +64,7 @@
           v-if="currentFullPrice"
           class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
-          {{ $n(currentFullPrice || 0, 'currency') }}
+          {{ n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
           :disabled="disabled"
@@ -90,7 +90,7 @@ import type { CartProductCardProps } from '~/components/ui/CartProductCard/types
 const { addWebpExtension } = useImageUrl();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
-const { t } = useI18n();
+const { t, n } = useI18n();
 const localePath = useLocalePath();
 
 const props = withDefaults(defineProps<CartProductCardProps>(), {
