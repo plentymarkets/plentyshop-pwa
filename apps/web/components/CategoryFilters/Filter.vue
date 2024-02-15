@@ -36,18 +36,24 @@
         <div class="mb-3">
           <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
         </div>
-        <SfButton type="submit" :disabled="minPrice.length === 0 && maxPrice.length === 0" variant="secondary">
-          <template #prefix>
-            <SfIconCheck />
-          </template>
-          {{ $t('apply') }}
-        </SfButton>
-        <SfButton type="reset" @click="resetPriceFilter" class="float-right" variant="secondary">
-          <template #prefix>
-            <SfIconDelete />
-          </template>
-          {{ $t('clear') }}
-        </SfButton>
+        <div class="flex">
+          <SfButton
+            type="submit"
+            class="w-full mr-3 h-10"
+            :disabled="minPrice.length === 0 && maxPrice.length === 0"
+            variant="secondary"
+          >
+            <template #prefix>
+              <SfIconCheck />
+            </template>
+            {{ $t('apply') }}
+          </SfButton>
+          <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+            <template #prefix>
+              <SfIconDelete />
+            </template>
+          </SfButton>
+        </div>
       </form>
     </div>
 
