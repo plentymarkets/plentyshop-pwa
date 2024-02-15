@@ -1,7 +1,7 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
     <div class="flex justify-between items-center">
-      <h3 class="text-neutral-900 text-lg font-bold">{{ $t('shippingMethod.heading') }}</h3>
+      <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
     </div>
     <div class="mt-4">
       <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
@@ -30,7 +30,7 @@
 
       <div v-else class="flex mb-6">
         <SfIconBlock class="mr-2 text-neutral-500" />
-        <p>{{ $t('shippingMethod.description') }}</p>
+        <p>{{ t('shippingMethod.description') }}</p>
       </div>
     </div>
 
@@ -38,7 +38,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { CheckoutShippingEmits, ShippingMethodProps } from './types';
@@ -49,7 +48,7 @@ withDefaults(defineProps<ShippingMethodProps>(), {
 const emit = defineEmits<CheckoutShippingEmits>();
 const { data: cart } = useCart();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
-const i18n = useI18n();
+const { t, n } = useI18n();
 
 const updateShippingMethod = (shippingId: string) => {
   radioModel.value = shippingId;
@@ -57,6 +56,6 @@ const updateShippingMethod = (shippingId: string) => {
 };
 
 const getShippingAmount = (amount: string) => {
-  return amount === '0' ? i18n.t('shippingMethod.free') : i18n.n(Number(amount), 'currency');
+  return amount === '0' ? t('shippingMethod.free') : n(Number(amount), 'currency');
 };
 </script>
