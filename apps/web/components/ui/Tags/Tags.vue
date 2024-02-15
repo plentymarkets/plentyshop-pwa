@@ -13,11 +13,11 @@
 </template>
 
 <script setup lang="ts">
-import { productTagsGetters } from '@plentymarkets/shop-sdk';
+import { tagGetters } from '@plentymarkets/shop-sdk';
 import type { TagsProps } from '~/components/ui/Tags/types';
 
 const { product } = withDefaults(defineProps<TagsProps>(), {});
 
-const tags = productTagsGetters.getTags(product);
-const isDarkText = productTagsGetters.getTagsTextColor(product);
+const tags = tagGetters.getTags(product);
+const isDarkText = tagGetters.getTagsTextColor(product);
 </script>
