@@ -64,7 +64,10 @@
           </ul>
         </template>
 
-        <table v-else class="md:block text-left typography-text-sm mx-4">
+        <table
+          v-else
+          class="md:block md:overflow-x-auto text-left typography-text-sm mx-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+        >
           <caption class="hidden">
             {{
               $t('account.ordersAndReturns.listOfOrders')
