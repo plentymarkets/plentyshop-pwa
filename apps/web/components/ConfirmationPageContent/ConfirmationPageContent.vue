@@ -11,27 +11,20 @@
       </span>
     </div>
 
-    <div class="flex flex-col md:flex-row w-full md:w-3/4 flex-wrap gap-x-6">
+    <div class="flex flex-col md:flex-row w-full md:w-auto lg:w-3/4 flex-wrap gap-x-6">
       <div class="flex-1">
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderDetails :order="order" />
         </div>
 
-        <div id="order-items" v-if="order?.order" class="flex flex-col my-4">
-          <SfScrollable
-            :total-items="orderGetters.getItems(order).length"
-            direction="vertical"
-            buttons-placement="none"
-            class="!w-full max-h-[680px]"
-          >
-            <OrderSummaryProductCard
-              v-for="(item, index) in orderGetters.getItems(order)"
-              :order="order"
-              :order-item="item"
-              :index="index"
-              :key="item.id"
-            />
-          </SfScrollable>
+        <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
+          <OrderSummaryProductCard
+            v-for="(item, index) in orderGetters.getItems(order)"
+            :order="order"
+            :order-item="item"
+            :index="index"
+            :key="item.id"
+          />
         </div>
 
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
@@ -61,7 +54,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfScrollable } from '@storefront-ui/vue';
+import { SfButton } from '@storefront-ui/vue';
 import { ConfirmationPageContentProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');

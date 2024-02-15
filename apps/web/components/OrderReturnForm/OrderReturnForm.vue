@@ -34,32 +34,13 @@
           </label>
         </div>
 
-        <div v-if="isTablet" class="w-full grid">
-          <SfScrollable
-            :total-items="orderGetters.getItems(currentReturnOrder).length"
-            direction="vertical"
-            buttons-placement="none"
-            class="!w-full max-h-[680px]"
-          >
-            <OrderReturnProductCard
-              v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
-              :order="currentReturnOrder"
-              :order-item="item"
-              :index="index"
-              :key="item.id"
-            />
-          </SfScrollable>
-        </div>
-
-        <template v-else>
-          <OrderReturnProductCard
-            v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
-            :order="currentReturnOrder"
-            :order-item="item"
-            :index="index"
-            :key="item.id"
-          />
-        </template>
+        <OrderReturnProductCard
+          v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
+          :order="currentReturnOrder"
+          :order-item="item"
+          :index="index"
+          :key="item.id"
+        />
       </template>
 
       <div class="flex flex-row justify-between mt-5">
@@ -77,13 +58,12 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfCheckbox, SfIconArrowForward, SfIconClose, SfScrollable } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox, SfIconArrowForward, SfIconClose } from '@storefront-ui/vue';
 import { OrderReturnFormProps } from './types';
 
 defineProps<OrderReturnFormProps>();
 
 const emit = defineEmits(['close']);
-const { isTablet } = useBreakpoints();
 
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
   useReturnOrder();
