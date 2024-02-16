@@ -24,23 +24,23 @@ const documents = computed(() => orderGetters.getDocuments(props.order));
 
 const { data, getDocument, downloadFile } = useOrderDocument();
 
-const i18n = useI18n();
+const { t } = useI18n();
 
 const translations = {
-  correction_document: i18n.t('documents.correctionDocuments'),
-  credit_note: i18n.t('documents.Credit Note'),
-  delivery_note: i18n.t('documents.Delivery Note'),
-  dunning_letter: i18n.t('documents.Dunning Letter'),
-  invoice_external: i18n.t('documents.Invoice External'),
-  invoice: i18n.t('documents.Invoice'),
-  offer: i18n.t('documents.Offer'),
-  order_confirmation: i18n.t('documents.Order Confirmation'),
-  pickup_delivery: i18n.t('documents.Pickup Delivery'),
-  pro_forma_invoice: i18n.t('documents.Pro Forma Invoice'),
-  receipt: i18n.t('documents.Receipt'),
-  return_note: i18n.t('documents.Return Note'),
-  success_confirmation: i18n.t('documents.Success Confirmation'),
-  reversal_document: i18n.t('documents.Reversal Document'),
+  correction_document: t('documents.correctionDocuments'),
+  credit_note: t('documents.Credit Note'),
+  delivery_note: t('documents.Delivery Note'),
+  dunning_letter: t('documents.Dunning Letter'),
+  invoice_external: t('documents.Invoice External'),
+  invoice: t('documents.Invoice'),
+  offer: t('documents.Offer'),
+  order_confirmation: t('documents.Order Confirmation'),
+  pickup_delivery: t('documents.Pickup Delivery'),
+  pro_forma_invoice: t('documents.Pro Forma Invoice'),
+  receipt: t('documents.Receipt'),
+  return_note: t('documents.Return Note'),
+  success_confirmation: t('documents.Success Confirmation'),
+  reversal_document: t('documents.Reversal Document'),
 };
 
 const getTypeName = (type: string) => {

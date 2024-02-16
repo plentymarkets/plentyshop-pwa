@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center my-1">
     <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
-        <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.emailLabel') }}</UiFormLabel>
         <SfInput
           v-model="email"
           v-bind="emailAttributes"
@@ -15,9 +15,9 @@
       </label>
 
       <label>
-        <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.passwordLabel') }}</UiFormLabel>
         <UiFormPasswordInput
-          :title="$t('invalidPassword')"
+          :title="t('invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-model="password"
@@ -46,7 +46,7 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ $t('privacyPolicy') }}
+                {{ t('privacyPolicy') }}
               </SfLink>
             </template>
           </i18n-t>
@@ -55,19 +55,19 @@
       </div>
 
       <div v-if="Boolean(errors['register.privacyPolicy'])" class="text-negative-700 text-sm">
-        {{ $t('privacyPolicyRequired') }}
+        {{ t('privacyPolicyRequired') }}
       </div>
 
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
-          {{ $t('auth.signup.submitLabel') }}
+          {{ t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
       <div class="text-center">
-        <div class="my-5 font-bold">{{ $t('auth.signup.alreadyHaveAccount') }}</div>
+        <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
-          {{ $t('auth.signup.logInLinkLabel') }}
+          {{ t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
     </form>
