@@ -17,7 +17,9 @@ definePageMeta({
 
 const router = useRouter();
 const localePath = useLocalePath();
-const backUrl = localePath(String(router.options.history.state.back));
-const backHref =
-  backUrl === localePath(String(router.options.history.state.current)) ? localePath(paths.home) : backUrl;
+const historyState = router.options.history.state;
+const backUrl = localePath(String(historyState.back));
+const currentUrl = localePath(String(historyState.current));
+const homeUrl = localePath(paths.home);
+const backHref = backUrl === currentUrl ? homeUrl : backUrl;
 </script>
