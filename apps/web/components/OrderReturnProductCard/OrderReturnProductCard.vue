@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4"
+    class="relative flex flex-col md:flex-row first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 py-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
@@ -16,7 +16,8 @@
         />
       </SfLink>
     </div>
-    <div class="flex self-start flex-col min-w-[180px] w-full">
+
+    <div class="flex self-start flex-col w-full">
       <SfLink
         :tag="NuxtLink"
         :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -25,7 +26,8 @@
       >
         {{ orderGetters.getItemName(orderItem) }}
       </SfLink>
-      <div class="my-2">
+
+      <div class="mt-2 md:mb-2">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
             <span class="mr-1 font-bold" v-if="orderGetters.getOrderItemAttributeName(attribute)">
@@ -36,6 +38,7 @@
             </span>
           </li>
         </ul>
+
         <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
             <span class="mr-1">
@@ -73,14 +76,15 @@
           </li>
         </ul>
       </div>
-      <div class="md:mx-5 self-end flex justify-end">
+
+      <div class="flex flex-col md:flex-row self-end justify-end">
         <UiQuantitySelector
           :key="quantity"
           @change-quantity="debounceQuantity"
           :value="quantity"
           :min-value="0"
           :max-value="orderGetters.getItemReturnableQty(orderItem)"
-          class="mt-4 sm:mt-0 h-fit self-end mr-4"
+          class="mt-0 h-fit self-end md:mt-4 md:mr-4"
         />
 
         <div class="flex flex-col flex-1 justify-end">
