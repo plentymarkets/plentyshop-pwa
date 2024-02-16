@@ -4,7 +4,7 @@
       ref="inputReference"
       v-model="inputModel"
       :aria-label="t('search')"
-      id="search"
+      id="search-bar"
       :placeholder="t('search')"
       @focus="open"
     >
