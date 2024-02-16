@@ -4,7 +4,7 @@
       <HeaderWithLink
         v-if="withHeader && title"
         :heading="title"
-        :label-desktop="$t('backToShopping')"
+        :label-desktop="$t('back')"
         :label-mobile="$t('back')"
       />
       <div v-if="products && products.length > 0" data-testid="wishlist-page-content">
