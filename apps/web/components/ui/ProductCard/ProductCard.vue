@@ -36,8 +36,8 @@
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>
-      
-      <UiTags :product="product"/>
+
+      <UiTags :product="product" />
 
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
