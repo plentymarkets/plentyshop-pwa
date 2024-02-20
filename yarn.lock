@@ -4633,8 +4633,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.0.0
     "@lhci/cli": ^0.12.0
     "@paypal/paypal-js": 7.0.0
-    "@plentymarkets/shop-api": ^0.24.0
-    "@plentymarkets/shop-sdk": ^0.37.0
+    "@plentymarkets/shop-api": ^0.25.2
+    "@plentymarkets/shop-sdk": ^0.39.0
     "@trivago/prettier-plugin-sort-imports": ^4.1.1
     "@types/uuid": ^9.0.2
     "@vee-validate/nuxt": ^4.12.4
@@ -4659,23 +4659,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.24.0":
-  version: 0.24.0
-  resolution: "@plentymarkets/shop-api@npm:0.24.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.24.0%2F43f416687332f0cc760e5516184e12cbcd8d14b5"
+"@plentymarkets/shop-api@npm:^0.25.2":
+  version: 0.25.2
+  resolution: "@plentymarkets/shop-api@npm:0.25.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.25.2%2F6d5f30cde2bcc443f69c67813a8033a9c761bf4a"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 30a5262786df5c7f0e90aba7980b3f7a0aa5f52586c375a2dccff54befd9fdc6d964241245aa0f55efb5a4f1c2e4da1afb73f296a1badad095c7403eb22d5c24
+  checksum: 8649e7b1d34afa539e4a6daaec471170f3742aebce1a802cb9189f8f35b2f8856a534cb14f83c8ac5eae0fa39e918cfe64a7e482b987945e89d212d79bc1ad68
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.37.0":
-  version: 0.37.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.37.0%2F26a2e2ec76d29cbe707e53f6e45a1d26b2492f3f"
+"@plentymarkets/shop-sdk@npm:^0.39.0":
+  version: 0.39.0
+  resolution: "@plentymarkets/shop-sdk@npm:0.39.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.39.0%2Ffeb06cbe42c06f228d4d7d96dde8de5f2c62bace"
   dependencies:
     axios: ^1.6.3
-  checksum: af109290c88f1b161cadf5d75a338de78d901d6e2ac0624301191acfdb8ce48f61839146416c6fbb4103160b312b19645c9619ea8487593aa2451d4e54c82c68
+  checksum: fbacf4a31b90514495ab300b497bf74ac89a8cdea12a055e4d89bd9f17be70be2a2dfc62f8c594b0049279b67e71b3e12e8632fa07f018e9431eaa18320985a4
   languageName: node
   linkType: hard
 
