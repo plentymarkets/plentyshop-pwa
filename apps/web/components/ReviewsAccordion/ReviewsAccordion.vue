@@ -21,7 +21,7 @@
     <div v-else class="w-full mt-4 py-2 pl-4 pr-3 flex justify-between items-center">
       <p class="font-bold leading-6">{{ $t('customerReviewsNone') }}</p>
     </div>
-    <UiDivider v-if="reviewsOpen" class="mb-2 mt-2" />
+    <UiDivider v-if="reviewsOpen && reviewGetters.getItems(productReviews).length > 0" class="mb-2 mt-2" />
   </div>
 </template>
 

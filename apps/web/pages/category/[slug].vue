@@ -30,12 +30,11 @@ definePageMeta({
   layout: false,
 });
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
-const { locale } = useI18n();
 const localePath = useLocalePath();
 
 const handleQueryUpdate = async () => {

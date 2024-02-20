@@ -4659,6 +4659,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+
 "@plentymarkets/shop-api@npm:^0.25.2":
   version: 0.25.2
   resolution: "@plentymarkets/shop-api@npm:0.25.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.25.2%2F6d5f30cde2bcc443f69c67813a8033a9c761bf4a"

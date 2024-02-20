@@ -9,11 +9,11 @@
     <div>{{ t('returns.areYouSure') }}</div>
     <div class="my-6">
       <ul class="list-disc ml-7 font-medium">
-        <li v-for="(values, variationId) in returnData.variationIds" :key="variationId">
-          <template v-if="Object.keys(getItemByVariation(Number(variationId))).length > 0">
+        <template v-for="(values, variationId) in returnData.variationIds" :key="variationId">
+          <li v-if="Object.keys(getItemByVariation(Number(variationId))).length > 0 && values.quantity > 0">
             {{ values.quantity }} x {{ orderGetters.getItemName(getItemByVariation(Number(variationId))) }}
-          </template>
-        </li>
+          </li>
+        </template>
       </ul>
     </div>
     <div class="mb-2">{{ t('returns.commentOptional') }}</div>
@@ -26,7 +26,10 @@
       />
     </div>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton @click="$emit('closed')" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
+      <SfButton @click="$emit('previous')" variant="secondary">
+        <SfIconArrowBack />
+        {{ t('prev') }}
+      </SfButton>
       <SfButton @click="confirmReturn()" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
@@ -38,14 +41,14 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
+import { SfButton, SfIconArrowBack, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { OrderItem } from '@plentymarkets/shop-api';
 
-const emit = defineEmits(['closed']);
+const emit = defineEmits(['closed', 'previous']);
 
 const localePath = useLocalePath();
-const { currentReturnOrder, returnData, makeOrderReturn, loading } = useReturnOrder();
+const { currentReturnOrder, returnData, makeOrderReturn, loading, cleanReturnData } = useReturnOrder();
 const { t } = useI18n();
 const { send } = useNotification();
 
@@ -58,6 +61,8 @@ const getItemByVariation = (variationId: number) => {
 };
 
 const confirmReturn = async () => {
+  cleanReturnData();
+
   await makeOrderReturn();
 
   send({

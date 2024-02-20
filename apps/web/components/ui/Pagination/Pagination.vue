@@ -8,7 +8,7 @@
     >
       <SfButton
         size="lg"
-        :aria-label="$t('prevAriaLabel')"
+        :aria-label="t('prevAriaLabel')"
         :disabled="pagination.selectedPage <= 1 || disabled"
         variant="tertiary"
         class="gap-3"
@@ -17,7 +17,7 @@
         <template #prefix>
           <SfIconChevronLeft />
         </template>
-        <span class="hidden sm:inline-flex">{{ $t('prev') }}</span>
+        <span class="hidden sm:inline-flex">{{ t('prev') }}</span>
       </SfButton>
       <ul class="flex justify-center">
         <li v-if="!pagination.pages.includes(1)">
@@ -154,13 +154,13 @@
       </ul>
       <SfButton
         size="lg"
-        :aria-label="$t('nextAriaLabel')"
+        :aria-label="t('nextAriaLabel')"
         :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
         variant="tertiary"
         class="gap-3"
         @click="nextPage"
       >
-        <span class="hidden sm:inline-flex">{{ $t('next') }}</span>
+        <span class="hidden sm:inline-flex">{{ t('next') }}</span>
         <template #suffix>
           <SfIconChevronRight />
         </template>

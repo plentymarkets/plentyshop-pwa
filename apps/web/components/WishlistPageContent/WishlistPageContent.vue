@@ -4,7 +4,7 @@
       <HeaderWithLink
         v-if="withHeader && title"
         :heading="title"
-        :label-desktop="$t('backToShopping')"
+        :label-desktop="$t('back')"
         :label-mobile="$t('back')"
       />
       <div v-if="products && products.length > 0" data-testid="wishlist-page-content">
@@ -21,7 +21,7 @@
                 :rating-count="productGetters.getTotalReviews(product)"
                 :rating="productGetters.getAverageRating(product)"
                 :price="actualPrice(product)"
-                :image-url="addWebpExtension(productGetters.getCoverImagePreview(product))"
+                :image-url="addWebpExtension(productGetters.getMiddleImage(product))"
                 :image-alt="productGetters.getName(product) ?? ''"
                 :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                 :priority="index === 0"

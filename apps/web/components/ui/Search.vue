@@ -3,9 +3,9 @@
     <SfInput
       ref="inputReference"
       v-model="inputModel"
-      :aria-label="i18n.t('search')"
-      id="search"
-      :placeholder="i18n.t('search')"
+      :aria-label="t('search')"
+      id="search-bar"
+      :placeholder="t('search')"
       @focus="open"
     >
       <template #prefix>
@@ -37,7 +37,7 @@ const props = defineProps<{
 }>();
 
 const localePath = useLocalePath();
-const i18n = useI18n();
+const { t } = useI18n();
 const router = useRouter();
 const { open } = useDisclosure();
 const { updateSearchTerm } = useCategoryFilter();

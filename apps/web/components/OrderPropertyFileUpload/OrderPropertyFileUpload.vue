@@ -4,13 +4,13 @@
       <label :for="`prop-${orderPropertyId}`">
         {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
         -
-        {{ $t('orderProperties.upload.orderPropertyTypeFile') }}
-        <span v-if="loading"> ({{ $t('orderProperties.upload.uploading') }}) </span>
-        <span v-if="loaded"> ({{ $t('orderProperties.upload.uploaded') }}) </span>
+        {{ t('orderProperties.upload.orderPropertyTypeFile') }}
+        <span v-if="loading"> ({{ t('orderProperties.upload.uploading') }}) </span>
+        <span v-if="loaded"> ({{ t('orderProperties.upload.uploaded') }}) </span>
 
         <template v-if="orderPropertyLabel.surchargeType">
-          ({{ $t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
-          {{ $n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
+          ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
+          {{ n(productPropertyGetters.getOrderPropertySurcharge(productProperty), 'currency') }})
         </template>
         {{ orderPropertyLabel.surchargeIndicator }}
         <template v-if="orderPropertyLabel.surchargeIndicator && orderPropertyLabel.requiredIndicator"> , </template>
@@ -31,12 +31,12 @@
           <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
             <div class="w-full flex items-center flex-col">
               <div>
-                <img src="/images/file-upload.svg" :alt="$t('orderProperties.upload.uploadFile')" />
+                <img src="/images/file-upload.svg" :alt="t('orderProperties.upload.uploadFile')" />
               </div>
               <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
                 <template #uploadFile>
                   <div class="underline">
-                    {{ $t('orderProperties.upload.uploadFile') }}
+                    {{ t('orderProperties.upload.uploadFile') }}
                   </div>
                 </template>
               </i18n-t>
@@ -48,7 +48,7 @@
         </div>
         <div class="text-sm text-neutral-500">
           <div class="mr-5">
-            <span>{{ $t('orderProperties.upload.acceptedFormats') }}: </span>
+            <span>{{ t('orderProperties.upload.acceptedFormats') }}: </span>
             <span v-for="(supportedFormat, i) in Object.keys(supportedFormats)" :key="supportedFormat" class="m-0 p-0">
               <span>
                 {{ supportedFormat }}
@@ -56,7 +56,7 @@
               <span v-if="i < Object.keys(supportedFormats).length - 1">, </span>
             </span>
           </div>
-          <span>{{ $t('orderProperties.upload.maximumFileSize') }}: 10mb</span>
+          <span>{{ t('orderProperties.upload.maximumFileSize') }}: 10mb</span>
         </div>
       </div>
     </div>
@@ -88,7 +88,7 @@ import { Ref, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
 const { uploadFile, loading, getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
@@ -103,7 +103,6 @@ const blob: Ref<Blob | null> = ref(null);
 const uploadForm: Ref<HTMLInputElement | null> = ref(null);
 const loaded = ref(false);
 const { send } = useNotification();
-const i18n = useI18n();
 
 const supportedFormats = {
   doc: 'application/msword',
@@ -159,7 +158,7 @@ const upload = async () => {
       property.property.value = null;
       send({
         type: 'negative',
-        message: i18n.t('orderProperties.upload.uploadError'),
+        message: t('orderProperties.upload.uploadError'),
       });
     }
   }
@@ -171,7 +170,7 @@ const validateType = () => {
   } else {
     send({
       type: 'negative',
-      message: i18n.t('orderProperties.upload.unSupportedFileType'),
+      message: t('orderProperties.upload.unSupportedFileType'),
     });
   }
 };
