@@ -56,7 +56,7 @@
     <OrderProperties v-if="product" :product="product" />
 
     <div class="mb-2">
-      <AttributeSelect v-if="product" :product="product" />
+      <ProductAttribute v-if="product" :product="product" />
     </div>
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
     <div class="py-4">
