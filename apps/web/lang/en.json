@@ -295,10 +295,6 @@
       }
     }
   },
-  "bottomLinks": {
-    "terms": "Terms",
-    "privacyPolicy": "Privacy policy"
-  },
   "socialLabel": "Go to {label} page",
   "failedInfoHeader": "We are really sorry.",
   "failedInfoMessage": "Your order has not been completed.",

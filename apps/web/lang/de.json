@@ -295,10 +295,6 @@
       }
     }
   },
-  "bottomLinks": {
-    "terms": "AGB",
-    "privacyPolicy": "Datenschutzerklärung"
-  },
   "socialLabel": "Gehe zu {label}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
