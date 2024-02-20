@@ -4,12 +4,12 @@
       <li v-for="(tag, index) in tags" :key="index">
         <p
           class="border rounded-xl inline-block text-center px-1 text-xs shadow-md"
-          :class="tagGetters.getTagTextColorIsDark(tagGetters.getTags(product)[index]) ? 'text-dark' : 'text-white'"
+          :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
           :style="{
-            backgroundColor: tagGetters.getTagBackgroundColor(tagGetters.getTags(product)[index]) || undefined,
+            backgroundColor: tagGetters.getTagBackgroundColor(tag) || undefined,
           }"
         >
-          {{ tagGetters.getTagName(tagGetters.getTags(product)[index]) }}
+          {{ tagGetters.getTagName(tag) }}
         </p>
       </li>
     </ul>
