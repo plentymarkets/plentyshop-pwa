@@ -1,9 +1,9 @@
 <template>
-  <div data-testid="tags">
-    <ul v-if="tags && tags.length > 0" class="flex flex-row flex-wrap">
+  <div v-if="tags && tags.length > 0" data-testid="tags">
+    <ul class="flex flex-row flex-wrap gap-1">
       <li v-for="(tag, index) in tags" :key="index">
         <p
-          class="border rounded-xl inline-block text-center py-1 px-2 text-xs shadow-md"
+          class="border rounded-xl inline-block text-center py-1 px-2 text-xs"
           :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
           :style="{
             backgroundColor: tagGetters.getTagBackgroundColor(tag) || 'bg-white',

@@ -3,6 +3,7 @@
     class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
     data-testid="product-card"
   >
+    <UiTags class="m-2" :product="product" />
     <div class="relative">
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
@@ -36,8 +37,6 @@
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>
-
-      <UiTags :product="product" />
 
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}

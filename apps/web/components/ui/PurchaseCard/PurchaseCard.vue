@@ -27,7 +27,7 @@
         />
       </div>
     </div>
-    <UiTags :product="product" />
+    <UiTags class="my-2" :product="product" />
     <Price
       :price="currentActualPrice"
       :normal-price="normalPrice"
