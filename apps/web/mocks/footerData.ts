@@ -1,12 +1,4 @@
-import {
-  SfIconCall,
-  SfIconContactSupport,
-  SfIconFacebook,
-  SfIconHelp,
-  SfIconInstagram,
-  SfIconTwitter,
-  SfIconYoutube,
-} from '@storefront-ui/vue';
+import { SfIconFacebook, SfIconInstagram, SfIconTwitter, SfIconYoutube } from '@storefront-ui/vue';
 import SfLinkedin from '~/components/ui/Icons/IconLinkedin.vue';
 
 export const categories = [
@@ -96,26 +88,6 @@ export const socialMedia = [
     label: 'Youtube',
     link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg',
     icon: SfIconYoutube,
-  },
-];
-export const contactOptions = [
-  {
-    key: 'helpCenter',
-    link: paths.home,
-    details: ['description'],
-    icon: SfIconHelp,
-  },
-  {
-    key: 'liveChat',
-    link: paths.home,
-    details: ['openingHours-1', 'openingHours-2'],
-    icon: SfIconContactSupport,
-  },
-  {
-    key: 'phone',
-    link: paths.home,
-    details: ['openingHours-1', 'openingHours-2'],
-    icon: SfIconCall,
   },
 ];
 export const bottomLinks = [

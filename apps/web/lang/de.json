@@ -295,28 +295,6 @@
       }
     }
   },
-  "contactOptions": {
-    "helpCenter": {
-      "label": "Hilfezentrum",
-      "details": {
-        "description": "Jederzeit online Antworten finden"
-      }
-    },
-    "liveChat": {
-      "label": "Live-Chat",
-      "details": {
-        "openingHours-1": "Mo–Fr, 5:00–22:00",
-        "openingHours-2": "Sa-So, 6:00–21:00"
-      }
-    },
-    "phone": {
-      "label": "1 234 567 8901",
-      "details": {
-        "openingHours-1": "Mo–Fr, 5:00–22:00",
-        "openingHours-2": "Sa-So, 6:00–21:00"
-      }
-    }
-  },
   "bottomLinks": {
     "terms": "AGB",
     "privacyPolicy": "Datenschutzerklärung"
