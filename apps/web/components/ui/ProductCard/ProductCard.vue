@@ -3,8 +3,8 @@
     class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
     data-testid="product-card"
   >
-    <UiTags class="m-2" :product="product" />
     <div class="relative">
+      <UiTags class="absolute m-2" :product="product" />
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"
