@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div data-testid="tags">
     <ul v-if="tags && tags.length > 0" class="flex flex-row flex-wrap">
       <li v-for="(tag, index) in tags" :key="index">
         <p
