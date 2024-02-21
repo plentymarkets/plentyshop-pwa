@@ -29,12 +29,12 @@ import { AttributeSelectProps } from '../types';
 
 const props = defineProps<AttributeSelectProps>();
 const { updateValue, getValue } = useProductAttributes();
-const value = ref<number | undefined>(getValue(props.attribute.attributeId));
+const value = ref<string | undefined>(getValue(props.attribute.attributeId)?.toString() ?? undefined);
 
 watch(
   () => getValue(props.attribute.attributeId),
   () => {
-    value.value = getValue(props.attribute.attributeId);
+    value.value = getValue(props.attribute.attributeId)?.toString() ?? undefined;
   },
 );
 </script>

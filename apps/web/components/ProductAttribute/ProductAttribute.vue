@@ -1,6 +1,5 @@
 <template>
   <div data-testid="product-attributes">
-    {{ attributeValues }}
     <div v-for="(attribute, index) in attributes" :key="index" class="mb-2">
       <ClientOnly>
         <Component
@@ -20,22 +19,17 @@ import AttributeBox from './AttributeBox/AttributeBox.vue';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 
 const componentsMapper: ComponentsMapper = {
-  dropdown: AttributeDropdown,
+  dropdown: AttributeBox,
   box: AttributeBox,
+  image: AttributeBox,
 };
 
-const { attributes, setAttribute, attributeValues } = useProductAttributes();
+const { attributes, setAttribute } = useProductAttributes();
 const props = defineProps<ProductAttributeProps>();
 const route = useRoute();
 
-const pathSegments = route.path.split('/');
-let lastSegment = pathSegments[pathSegments.length - 1];
-const lastSegmentParts = lastSegment.split('_');
-let selectAttributes = false;
-
-if (lastSegmentParts.length > 2) {
-  selectAttributes = true;
-}
+const lastSegment = route.path.split('/').pop() ?? '';
+const selectAttributes = lastSegment.split('_').length > 2;
 
 setAttribute(props.product, selectAttributes);
 </script>

@@ -69,7 +69,7 @@
         <SfTooltip
           show-arrow
           placement="top"
-          :label="isSalableText"
+          :label="isSalableText || isNotValidVariation"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
@@ -78,6 +78,7 @@
             size="lg"
             class="w-full"
             :disabled="loading || !productGetters.isSalable(product)"
+            :class="{ '!bg-disabled-300 !text-disabled-500 !ring-0 !shadow-none': !getCombination() }"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
@@ -138,6 +139,7 @@ const props = defineProps<PurchaseCardProps>();
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
+const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
 const { send } = useNotification();
@@ -185,6 +187,11 @@ const handleAddToCart = async () => {
     return;
   }
 
+  if (!getCombination()) {
+    send({ message: 'Bitte wählen Sie eine gültige Variante aus', type: 'negative' });
+    return;
+  }
+
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
@@ -226,6 +233,7 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : 'Bitte wählen Sie eine gültige Variante aus'));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

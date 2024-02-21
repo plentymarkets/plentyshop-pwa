@@ -39,6 +39,18 @@ export const useProductAttributes = () => {
     const path = updateURLPathForVariation(route.path, state.value.itemId, variationId);
 
     navigateTo(path);
+    state.value.variationId = variationId;
+  };
+
+  const getCombination = () => {
+    return state.value.combinations.find((combination) => {
+      if (combination?.attributes?.length === Object.values(state.value.attributeValues).length) {
+        return combination.attributes?.every((attribute) => {
+          return state.value.attributeValues[attribute.attributeId] === attribute.attributeValueId;
+        });
+      }
+      return false;
+    });
   };
 
   const disableAttributes = () => {
@@ -55,14 +67,11 @@ export const useProductAttributes = () => {
       });
     });
 
-    const combination = state.value.combinations.find((combination) => {
-      return combination.attributes?.every((attribute) => {
-        return state.value.attributeValues[attribute.attributeId] === attribute.attributeValueId;
-      });
-    });
+    const combination = getCombination();
 
     if (combination) {
-      changeVariationId(combination.variationId);
+      const id = Number(combination.variationId);
+      changeVariationId(id);
     }
   };
 
@@ -95,7 +104,24 @@ export const useProductAttributes = () => {
     }
 
     if (value.disabled) {
+      delete state.value.attributeValues[attributeId];
+      const oldValues = { ...state.value.attributeValues };
       state.value.attributeValues = {};
+      state.value.attributeValues[attributeId] = valueId;
+      disableAttributes();
+
+      Object.values(oldValues).forEach((oldValueId) => {
+        const oldKey = Object.keys(oldValues).find((key) => oldValues[key] === oldValueId);
+        const oldValue = state.value.attributes
+          .find((attribute) => attribute.attributeId === Number(oldKey ?? 0))
+          ?.values.find((value) => value.attributeValueId === oldValueId);
+
+        if (oldKey && oldValue && !oldValue.disabled) {
+          state.value.attributeValues[oldKey] = oldValueId;
+          disableAttributes();
+        }
+      });
+      return;
     }
 
     if (state.value.attributeValues[attributeId] === valueId) {
@@ -116,5 +142,6 @@ export const useProductAttributes = () => {
     setAttribute,
     updateValue,
     getValue,
+    getCombination,
   };
 };
