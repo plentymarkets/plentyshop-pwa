@@ -4,6 +4,7 @@
     data-testid="product-card"
   >
     <div class="relative">
+      <UiTags class="absolute m-2" :product="product" />
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"
@@ -36,6 +37,7 @@
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>
+
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
@@ -127,6 +129,7 @@ const addWithLoader = async (productId: number) => {
     loading.value = false;
   }
 };
+
 const mainPrice = computed(() => {
   const price = productGetters.getPrice(product);
   if (!price) return 0;
