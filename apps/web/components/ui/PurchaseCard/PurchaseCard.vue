@@ -188,7 +188,7 @@ const handleAddToCart = async () => {
   }
 
   if (!getCombination()) {
-    send({ message: 'Bitte wählen Sie eine gültige Variante aus', type: 'negative' });
+    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
     return;
   }
 
@@ -233,7 +233,7 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
-const isNotValidVariation = computed(() => (getCombination() ? '' : 'Bitte wählen Sie eine gültige Variante aus'));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

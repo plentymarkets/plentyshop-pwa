@@ -701,5 +701,9 @@
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
     "quantity": "Quantity"
+  },
+  "productAttributes": {
+    "seeAvailableOptions": "See available options",
+    "notValidVariation": "Please select a valid variation."
   }
 }

@@ -14,7 +14,7 @@
         }"
         @click="updateValue(attribute.attributeId, item.attributeValueId)"
       >
-        <SfTooltip :label="label(item)" strategy="absolute" :show-arrow="true" placement="top">
+        <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
           <div class="font-medium py-2 px-4">{{ item.name }}</div>
         </SfTooltip>
       </div>
@@ -30,11 +30,9 @@ import { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
 const { updateValue, getValue } = useProductAttributes();
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
+const { t } = useI18n();
 
-const label = (item: VariationMapProductAttributeValue): string => {
-  if (item.disabled) {
-    return 'See available options';
-  }
-  return '';
+const getLabel = (item: VariationMapProductAttributeValue): string => {
+  return item.disabled ? t('productAttributes.seeAvailableOptions') : '';
 };
 </script>

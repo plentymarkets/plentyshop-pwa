@@ -19,7 +19,7 @@ import AttributeBox from './AttributeBox/AttributeBox.vue';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 
 const componentsMapper: ComponentsMapper = {
-  dropdown: AttributeBox,
+  dropdown: AttributeDropdown,
   box: AttributeBox,
   image: AttributeBox,
 };

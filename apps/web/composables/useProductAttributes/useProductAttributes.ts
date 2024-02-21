@@ -1,48 +1,57 @@
-import { UseProductAttributesState } from './types';
+import {
+  GetCombination,
+  GetValue,
+  SetAttribute,
+  UpdateValue,
+  UseProductAttributesReturn,
+  UseProductAttributesState,
+} from './types';
 import { Product } from '@plentymarkets/shop-api';
 
-const updateURLPathForVariation = (currentPath: string, itemId: string | number, variationId: string | number) => {
-  const pathSegments = currentPath.split('/');
-  let lastSegment = pathSegments[pathSegments.length - 1];
-  const lastSegmentParts = lastSegment.split('_');
-
-  itemId = String(itemId);
-  variationId = String(variationId);
-
-  const itemIdPosition = lastSegmentParts.length - 1;
-
-  if (lastSegmentParts[itemIdPosition] === itemId) {
-    lastSegmentParts.push(variationId);
-  } else {
-    lastSegmentParts[lastSegmentParts.length - 1] = variationId;
-  }
-
-  lastSegment = lastSegmentParts.join('_');
-  pathSegments[pathSegments.length - 1] = lastSegment;
-
-  return pathSegments.join('/');
-};
-
-export const useProductAttributes = () => {
+/**
+ * @description Composable for handling product attributes.
+ * @returns UseProductAttributesReturn
+ * @example
+ * ``` ts
+ * const {
+ *  setAttribute, updateValue, attributes, getCombination, itemId, variationId, attributesValues, combinations
+ * } = useProductAttributes();
+ * ```
+ */
+export const useProductAttributes = (): UseProductAttributesReturn => {
   const state = useState<UseProductAttributesState>(`useProductAttributes`, () => ({
-    itemId: 0,
-    variationId: 0,
     attributes: [],
     attributeValues: {},
     combinations: [],
+    itemId: 0,
+    variationId: 0,
   }));
 
-  const changeVariationId = (variationId: number) => {
+  /**
+   * @description Function for redirecting to the product variation.
+   * @example
+   * ``` ts
+   * changeVariationId(1072);
+   * ```
+   */
+  const changeVariationId = (variationId: number): void => {
     if (state.value.variationId === variationId) return;
 
     const route = useRoute();
-    const path = updateURLPathForVariation(route.path, state.value.itemId, variationId);
+    const path = updateProductURLPathForVariation(route.path, state.value.itemId, variationId);
 
     navigateTo(path);
     state.value.variationId = variationId;
   };
 
-  const getCombination = () => {
+  /**
+   * @description Function for getting a valid combination from selected attributes.
+   * @example
+   * ``` ts
+   * getCombination();
+   * ```
+   */
+  const getCombination: GetCombination = () => {
     return state.value.combinations.find((combination) => {
       if (combination?.attributes?.length === Object.values(state.value.attributeValues).length) {
         return combination.attributes?.every((attribute) => {
@@ -53,6 +62,13 @@ export const useProductAttributes = () => {
     });
   };
 
+  /**
+   * @description Function disabling attributes based on possible combinations.
+   * @example
+   * ``` ts
+   * disableAttributes();
+   * ```
+   */
   const disableAttributes = () => {
     state.value.attributes.forEach((attribute) => {
       attribute.values.forEach((value) => {
@@ -75,14 +91,21 @@ export const useProductAttributes = () => {
     }
   };
 
-  const setAttribute = (product: Product, selectAttributes = false) => {
+  /**
+   * @description Function for set up the product attributes and preselect them if needed.
+   * @example
+   * ``` ts
+   * setAttribute(product, true);
+   * ```
+   */
+  const setAttribute: SetAttribute = (product: Product, preSelectAttributes = false) => {
     state.value.itemId = product.item.id;
     state.value.variationId = product.variation.id;
     state.value.attributes = product.variationAttributeMap?.attributes || [];
     state.value.combinations = product.variationAttributeMap?.variations || [];
     state.value.attributeValues = {};
 
-    if (selectAttributes) {
+    if (preSelectAttributes) {
       product.attributes?.forEach((attribute) => {
         state.value.attributeValues[attribute.attributeId] = attribute.value.id;
       });
@@ -91,11 +114,16 @@ export const useProductAttributes = () => {
     disableAttributes();
   };
 
-  const updateValue = (attributeId: number, valueId: number | undefined) => {
+  /**
+   * @description Function for updating the value of an attribute.
+   * @example
+   * ``` ts
+   * updateValue(1, 3);
+   * ```
+   */
+  const updateValue: UpdateValue = (attributeId: number, valueId: number | undefined) => {
     const item = state.value.attributes.find((attribute) => attribute.attributeId === attributeId);
-    if (!item) return;
-
-    const value = item.values.find((value) => value.attributeValueId === valueId);
+    const value = item?.values.find((value) => value.attributeValueId === valueId) || undefined;
 
     if (!value || !valueId) {
       delete state.value.attributeValues[attributeId];
@@ -133,7 +161,15 @@ export const useProductAttributes = () => {
     disableAttributes();
   };
 
-  const getValue = (attributeId: number): number | undefined => {
+  /**
+   * @description Function for getting the value of an attribute.
+   * @returns number | undefined
+   * @example
+   * ``` ts
+   * getValue(1);
+   * ```
+   */
+  const getValue: GetValue = (attributeId: number): number | undefined => {
     return state.value.attributeValues[attributeId] || undefined;
   };
 

@@ -8,13 +8,19 @@ export interface UseProductAttributesState {
   variationId: number;
 }
 
+export type SetAttribute = (product: Product, preSelectAttributes: boolean) => void;
+export type UpdateValue = (attributeId: number, valueId: number) => void;
+export type GetValue = (attributeId: number) => number | undefined;
+export type GetCombination = () => VariationMapProductVariation | undefined;
+
 export interface UseProductAttributesReturn {
   attributes: Readonly<Ref<UseProductAttributesState['attributes']>>;
   attributeValues: Ref<UseProductAttributesState['attributeValues']>;
   combinations: Readonly<Ref<UseProductAttributesState['combinations']>>;
-  setAttribute: (product: Product) => void;
-  updateValue: (attributeId: number, valueId: number) => void;
-  getValue: (attributeId: number) => number | undefined;
+  setAttribute: SetAttribute;
+  updateValue: UpdateValue;
+  getValue: GetValue;
+  getCombination: GetCombination;
 }
 
 export type UseProductAttributes = () => UseProductAttributesReturn;
