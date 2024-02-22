@@ -25,11 +25,10 @@
             :value="quantity"
             :min-value="0"
             :max-value="orderGetters.getItemReturnableQty(orderItem)"
-            class="mt-2 w-full"
+            class="mt-4 w-full"
           />
         </div>
-        <!-- start -->
-        <div class="flex self-start flex-col mx-2">
+        <div class="flex self-start flex-col mx-4">
           <SfLink
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -39,7 +38,7 @@
             {{ orderGetters.getItemName(orderItem) }}
           </SfLink>
           <div class="mt-2 md:mb-2">
-            <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+            <!-- <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
               <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
                 <span class="mr-1 font-bold" v-if="orderGetters.getOrderItemAttributeName(attribute)">
                   {{ orderGetters.getOrderItemAttributeName(attribute) }}:
@@ -48,9 +47,9 @@
                   {{ orderGetters.getOrderItemAttributeValue(attribute) }}
                 </span>
               </li>
-            </ul>
+            </ul> -->
             <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
-              <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
+              <!-- <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
                 <span class="mr-1">
                   <span class="font-bold">{{ orderGetters.getItemOrderPropertyName(property) }}</span>
                   <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
@@ -69,7 +68,7 @@
                 <span v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
                   {{ orderGetters.getItemOrderPropertyValue(property) }}
                 </span>
-              </li>
+              </li> -->
               <li>
                 <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
                 <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
@@ -110,7 +109,7 @@
 
         <div class="my-2 w-full md:self-end">
           <button
-            class="flex bg-gray-100 border border-gray-200 p-1 pl-3 w-full justify-between items-center"
+            class="flex bg-gray-100 border border-gray-200 p-1 pl-4 w-full justify-between items-center"
             :class="opened ? 'rounded-t-md' : 'rounded-md'"
             @click="toggleDropdown"
           >
@@ -121,18 +120,32 @@
             />
           </button>
           <div v-if="opened" class="dropdown">
-            <div v-if="orderGetters.getOrderAttributes(props.orderItem).length > 0">
-              <div v-for="(attribute, index) in orderGetters.getOrderAttributes(props.orderItem)" :key="index">
-                <h3
-                  class="h-full w-full border border-gray-200 p-1.5"
-                  :class="index === orderGetters.getOrderAttributes(props.orderItem).length - 1 ? 'rounded-b-md' : ''"
-                >
-                  <div class="flex justify-between">
-                    <p class="text-sm px-2">{{ attribute.name }}</p>
-                    <p class="text-sm px-2 text-gray-300">{{ attribute.value }}</p>
-                  </div>
-                </h3>
-              </div>
+            <div v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
+              <h3
+                class="h-full w-full border border-gray-200 p-1.5"
+                :class="
+                  index === orderGetters.getOrderAttributes(orderItem).length - 1 &&
+                  orderGetters.getItemOrderProperties(orderItem).length === 0
+                    ? 'rounded-b-md'
+                    : ''
+                "
+              >
+                <div class="flex justify-between">
+                  <p class="text-sm px-2">{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
+                  <p class="text-sm px-2 text-gray-300">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
+                </div>
+              </h3>
+            </div>
+            <div v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
+              <h3
+                class="h-full w-full border border-gray-200 p-1.5"
+                :class="index === orderGetters.getItemOrderProperties(orderItem).length - 1 ? 'rounded-b-md' : ''"
+              >
+                <div class="flex justify-between">
+                  <p class="text-sm px-2">{{ orderGetters.getItemOrderPropertyName(property) }}</p>
+                  <p class="text-sm px-2 text-gray-300">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
+                </div>
+              </h3>
             </div>
             <h3
               v-if="orderGetters.getOrderAttributes(props.orderItem).length === 0"
@@ -149,7 +162,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconOpenInNew, SfSelect, SfIconChevronLeft } from '@storefront-ui/vue';
+import { SfLink, SfSelect, SfIconChevronLeft } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
