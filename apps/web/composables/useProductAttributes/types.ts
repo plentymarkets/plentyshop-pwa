@@ -11,7 +11,7 @@ export interface UseProductAttributesState {
 export type SetAttribute = (product: Product, preSelectAttributes: boolean) => void;
 export type UpdateValue = (attributeId: number, valueId: number) => void;
 export type GetValue = (attributeId: number) => number | undefined;
-export type GetCombination = () => VariationMapProductVariation | undefined;
+export type GetCombination = () => VariationMapProductVariation | null;
 
 export interface UseProductAttributesReturn {
   attributes: Readonly<Ref<UseProductAttributesState['attributes']>>;

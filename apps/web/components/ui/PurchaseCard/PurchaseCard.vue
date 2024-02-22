@@ -114,6 +114,7 @@
         class="mt-4"
         type="SingleItem"
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
+        :disabled="!getCombination()"
       />
     </div>
   </form>
@@ -136,7 +137,6 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const props = defineProps<PurchaseCardProps>();
-
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();

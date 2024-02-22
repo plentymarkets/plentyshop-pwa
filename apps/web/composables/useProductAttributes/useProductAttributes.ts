@@ -6,7 +6,7 @@ import {
   UseProductAttributesReturn,
   UseProductAttributesState,
 } from './types';
-import { Product } from '@plentymarkets/shop-api';
+import { Product, VariationMapProductVariation } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for handling product attributes.
@@ -46,20 +46,23 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
 
   /**
    * @description Function for getting a valid combination from selected attributes.
+   * @returns VariationMapProductVariation | null
    * @example
    * ``` ts
    * getCombination();
    * ```
    */
-  const getCombination: GetCombination = () => {
-    return state.value.combinations.find((combination) => {
-      if (combination?.attributes?.length === Object.values(state.value.attributeValues).length) {
-        return combination.attributes?.every((attribute) => {
-          return state.value.attributeValues[attribute.attributeId] === attribute.attributeValueId;
-        });
-      }
-      return false;
-    });
+  const getCombination: GetCombination = (): VariationMapProductVariation | null => {
+    return (
+      state.value.combinations.find((combination) => {
+        if (combination?.attributes?.length === Object.values(state.value.attributeValues).length) {
+          return combination.attributes?.every((attribute) => {
+            return state.value.attributeValues[attribute.attributeId] === attribute.attributeValueId;
+          });
+        }
+        return false;
+      }) ?? null
+    );
   };
 
   /**

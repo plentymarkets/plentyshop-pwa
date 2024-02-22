@@ -1,5 +1,5 @@
 <template>
-  <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid && !unmount" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
@@ -17,6 +17,7 @@ const { data: cart, addToCart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
 const emits = defineEmits(['on-click']);
+const unmount = ref(false);
 
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
@@ -30,7 +31,7 @@ const isCommit = props.type === TypeCheckout;
 const paypal = await loadScript(currency.value, isCommit);
 
 const onInit = (actions: OnInitActions) => {
-  if (props.type === TypeCheckout) {
+  if (props.type === TypeCheckout || props.type === TypeSingleItem) {
     if (props.disabled) {
       actions.disable();
     } else {
@@ -50,7 +51,12 @@ const onInit = (actions: OnInitActions) => {
 };
 
 const onClick = async () => {
-  if (props.type === TypeSingleItem && props.value) {
+  if (
+    props.type === TypeSingleItem &&
+    !props.disabled &&
+    props.value &&
+    productGetters.isSalable(props.value.product)
+  ) {
     await addToCart({
       productId: Number(productGetters.getId(props.value.product)),
       quantity: props.value.quantity,
@@ -128,5 +134,12 @@ const renderButton = () => {
 
 onMounted(() => {
   renderButton();
+});
+
+onUnmounted(() => {
+  unmount.value = true;
+  if (paypalButton.value) {
+    paypalButton.value.innerHTML = '';
+  }
 });
 </script>

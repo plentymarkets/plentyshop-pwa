@@ -1,23 +1,26 @@
 <template>
   <div>
-    <label :for="'attribute-' + attribute.attributeId" class="capitalize text-xs text-neutral-500">
-      {{ attribute.name }}
+    <label
+      :for="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
+      class="leading-5 text-sm text-zinc-900"
+    >
+      {{ productAttributeGetters.getAttributeName(attribute) }}
     </label>
     <SfSelect
-      :id="'attribute-' + attribute.attributeId"
+      :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
       size="sm"
       v-model="value"
-      @update:model-value="(val) => updateValue(attribute.attributeId, val)"
+      @update:model-value="(val) => updateValue(productAttributeGetters.getAttributeId(attribute), val)"
       :placeholder="$t('pleaseSelect')"
     >
       <option :value="undefined">{{ $t('pleaseSelect') }}</option>
       <option
-        v-for="item in attribute.values"
-        :key="item.attributeValueId"
-        :value="item.attributeValueId"
-        :disabled="item.disabled"
+        v-for="item in productAttributeGetters.getAttributeValues(attribute)"
+        :key="productAttributeGetters.getAttributeValueId(item)"
+        :value="productAttributeGetters.getAttributeValueId(item)"
+        :disabled="productAttributeGetters.isAttributeValueDisabled(item)"
       >
-        {{ item.name }}
+        {{ productAttributeGetters.getAttributeValueName(item) }}
       </option>
     </SfSelect>
   </div>
@@ -26,15 +29,18 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 import { AttributeSelectProps } from '../types';
+import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 
 const props = defineProps<AttributeSelectProps>();
 const { updateValue, getValue } = useProductAttributes();
-const value = ref<string | undefined>(getValue(props.attribute.attributeId)?.toString() ?? undefined);
+const value = ref<string | undefined>(
+  getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined,
+);
 
 watch(
-  () => getValue(props.attribute.attributeId),
+  () => getValue(productAttributeGetters.getAttributeId(props.attribute)),
   () => {
-    value.value = getValue(props.attribute.attributeId)?.toString() ?? undefined;
+    value.value = getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined;
   },
 );
 </script>
