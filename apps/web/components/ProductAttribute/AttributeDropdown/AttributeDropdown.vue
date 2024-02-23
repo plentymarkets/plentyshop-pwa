@@ -9,6 +9,7 @@
     <SfSelect
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
       size="sm"
+      class="h-10"
       v-model="value"
       @update:model-value="(val) => updateValue(productAttributeGetters.getAttributeId(attribute), val)"
       :placeholder="$t('pleaseSelect')"

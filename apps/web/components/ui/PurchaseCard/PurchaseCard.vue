@@ -70,7 +70,7 @@
         <SfTooltip
           show-arrow
           placement="top"
-          :label="isSalableText || isNotValidVariation"
+          :label="isNotValidVariation || isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
@@ -114,7 +114,7 @@
         class="mt-4"
         type="SingleItem"
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
-        :disabled="!getCombination()"
+        v-if="getCombination()"
       />
     </div>
   </form>

@@ -10,7 +10,7 @@
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
-        class="border border-zinc-300 rounded-md cursor-pointer hover:bg-zinc-100"
+        class="border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
         :class="{
           'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
           '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
@@ -23,7 +23,9 @@
         "
       >
         <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
-          <div class="font-medium py-2 px-4">{{ productAttributeGetters.getAttributeValueName(item) }}</div>
+          <div class="font-medium h-10 flex items-center px-4">
+            {{ productAttributeGetters.getAttributeValueName(item) }}
+          </div>
         </SfTooltip>
       </div>
     </div>
