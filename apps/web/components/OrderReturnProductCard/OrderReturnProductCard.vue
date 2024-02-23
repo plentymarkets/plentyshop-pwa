@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div class="py-2 w-full md:flex md:flex-col md:mt-2">
+      <div class="w-full md:flex md:flex-col mt-4 md:mt-0">
         <div class="w-full md:self-end">
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
@@ -113,7 +113,7 @@
             :class="opened ? 'rounded-t-md' : 'rounded-md'"
             @click="toggleDropdown"
           >
-            Show Details
+            {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
             <SfIconChevronLeft
               class="text-neutral-500 mr-2.5"
               :class="{ 'rotate-90': opened, '-rotate-90': !opened }"
@@ -149,9 +149,9 @@
             </div>
             <h3
               v-if="orderGetters.getOrderAttributes(props.orderItem).length === 0"
-              class="h-full text-center w-full border border-gray-200 p-1 rounded-b-md"
+              class="h-full px-4 w-full border border-gray-200 p-1 rounded-b-md"
             >
-              None
+              {{ $t('noneExisting') }}
             </h3>
           </div>
         </div>
