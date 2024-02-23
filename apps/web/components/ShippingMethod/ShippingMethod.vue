@@ -1,8 +1,6 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
-    <div class="flex justify-between items-center">
-      <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
-    </div>
+    <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
     <div class="mt-4">
       <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
         <SfListItem

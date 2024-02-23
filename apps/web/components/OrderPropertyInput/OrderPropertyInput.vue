@@ -29,9 +29,7 @@
         :wrapper-class="'w-full'"
       />
 
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
-      </div>
+      <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
     <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>

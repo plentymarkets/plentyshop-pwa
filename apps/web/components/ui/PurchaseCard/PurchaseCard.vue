@@ -34,13 +34,12 @@
       :old-price="productGetters.getPrice(product).regular ?? 0"
     />
     <LowestPrice :product="product" />
-    <div v-if="productGetters.showPricePerUnit(product)">
-      <BasePrice
-        :base-price="basePriceSingleValue"
-        :unit-content="productGetters.getUnitContent(product)"
-        :unit-name="productGetters.getUnitName(product)"
-      />
-    </div>
+    <BasePrice
+      v-if="productGetters.showPricePerUnit(product)"
+      :base-price="basePriceSingleValue"
+      :unit-content="productGetters.getUnitContent(product)"
+      :unit-name="productGetters.getUnitName(product)"
+    />
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
@@ -53,12 +52,8 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
-
     <OrderProperties v-if="product" :product="product" />
-
-    <div class="mb-2">
-      <AttributeSelect v-if="product" :product="product" />
-    </div>
+    <AttributeSelect v-if="product" class="mb-2" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">

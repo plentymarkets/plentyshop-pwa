@@ -1,21 +1,23 @@
 <template>
   <div
-    class="relative flex flex-col md:flex-row first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 py-4"
+    class="relative flex flex-col md:flex-row first:border-t border-b-[1px] border-neutral-200 last:mb-0 py-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
-      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
-        <NuxtImg
-          class="h-auto border rounded-md border-neutral-200"
-          :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-          width="300"
-          height="300"
-          loading="lazy"
-          format="webp"
-        />
-      </SfLink>
-    </div>
+    <SfLink
+      class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
+      :tag="NuxtLink"
+      :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+    >
+      <NuxtImg
+        class="h-auto border rounded-md border-neutral-200"
+        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
+        width="300"
+        height="300"
+        loading="lazy"
+        format="webp"
+      />
+    </SfLink>
 
     <div class="flex self-start flex-col w-full">
       <SfLink

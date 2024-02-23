@@ -28,25 +28,25 @@
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
         <div class="flex items-center">
-          <SfButton class="w-full border-dashed border-2" variant="tertiary" @click="openUploadModal">
-            <div class="w-full flex items-center flex-col">
-              <div>
-                <img src="/images/file-upload.svg" :alt="t('orderProperties.upload.uploadFile')" />
-              </div>
-              <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
-                <template #uploadFile>
-                  <div class="underline">
-                    {{ t('orderProperties.upload.uploadFile') }}
-                  </div>
-                </template>
-              </i18n-t>
-            </div>
+          <SfButton
+            class="w-full border-dashed border-2 flex items-center flex-col !p-5"
+            variant="tertiary"
+            @click="openUploadModal"
+          >
+            <img src="/images/file-upload.svg" :alt="t('orderProperties.upload.uploadFile')" />
+            <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
+              <template #uploadFile>
+                <div class="underline">
+                  {{ t('orderProperties.upload.uploadFile') }}
+                </div>
+              </template>
+            </i18n-t>
           </SfButton>
           <div v-if="hasTooltip" class="w-[28px]">
             <slot name="tooltip" />
           </div>
         </div>
-        <div class="text-sm text-neutral-500">
+        <div class="text-sm text-neutral-500 mr-5">
           <div class="mr-5">
             <span>{{ t('orderProperties.upload.acceptedFormats') }}: </span>
             <span v-for="(supportedFormat, i) in Object.keys(supportedFormats)" :key="supportedFormat" class="m-0 p-0">
@@ -61,19 +61,15 @@
       </div>
     </div>
 
-    <div v-if="loading" class="w-full border-dashed border-2">
-      <div class="justify-center flex m-5">
-        <SfLoaderCircular class="animate-spin" size="3xl" />
-      </div>
+    <div v-if="loading" class="w-full border-dashed border-2 justify-center flex p-5">
+      <SfLoaderCircular class="animate-spin" size="3xl" />
     </div>
 
     <div v-if="loaded" class="flex items-center">
       <SfInput v-model="fileName" :wrapper-class="'w-full'">
         <template #suffix><SfIconClose @click="clearUploadedFile" /></template>
       </SfInput>
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
-      </div>
+      <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
 
     <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />

@@ -1,8 +1,6 @@
-<template>
-  <div class="text-sm" v-if="basePrice">
-    <div>{{ $t('content') }}: {{ unitContent }} {{ unitName }}</div>
-    <div>{{ $t('basePrice') }}: {{ $n(basePrice2Digit, 'currency') }} / {{ unitName }}</div>
-  </div>
+<template v-if="basePrice">
+  <div class="text-sm">{{ $t('content') }}: {{ unitContent }} {{ unitName }}</div>
+  <div class="text-sm">{{ $t('basePrice') }}: {{ $n(basePrice2Digit, 'currency') }} / {{ unitName }}</div>
 </template>
 
 <script setup lang="ts">
