@@ -9,7 +9,7 @@
         <div class="rounded-md w-[180px] sm:w-[176px]">
           <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
             <NuxtImg
-              class="h-auto border rounded-md border-neutral-200"
+              class="h-auto border rounded-md border-neutral-200 p-1"
               :src="
                 addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
               "
