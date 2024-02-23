@@ -1,6 +1,6 @@
 import { Product, VariationMapProductAttribute } from '@plentymarkets/shop-api';
 
-export type ProductAttributeProps = {
+export type ProductAttributesProps = {
   product: Product;
 };
 
