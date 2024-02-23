@@ -634,7 +634,7 @@
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
-    "requiredField": "This filed is required.",
+    "requiredField": "This is a mandatory field.",
     "wholeNumber": "Enter a whole number.",
     "decimalNumber": "Enter a decimal number.",
     "maxCharacters": "Enter a maximum of {max} characters.",
