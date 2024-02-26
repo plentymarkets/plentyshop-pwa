@@ -14,3 +14,30 @@ export const createProductParams = (params: RouteParams) => {
 
   return { productParams, productId: productParams.id.toString() };
 };
+
+export const updateProductURLPathForVariation = (
+  currentPath: string,
+  itemId: string | number,
+  variationId: string | number,
+) => {
+  const pathSegments = currentPath.split('/');
+  let lastSegment = pathSegments.pop();
+  if (!lastSegment) return currentPath;
+
+  const lastSegmentParts = lastSegment.split('_');
+  const itemIdPosition = lastSegmentParts.length - 1;
+
+  itemId = String(itemId);
+  variationId = String(variationId);
+
+  if (lastSegmentParts[itemIdPosition] === itemId) {
+    lastSegmentParts.push(variationId);
+  } else {
+    lastSegmentParts[itemIdPosition] = variationId;
+  }
+
+  lastSegment = lastSegmentParts.join('_');
+  pathSegments.push(lastSegment);
+
+  return pathSegments.join('/');
+};
