@@ -53,8 +53,9 @@
       v-html="productGetters.getShortDescription(product)"
     ></div>
     <OrderProperties v-if="product" :product="product" />
-    <AttributeSelect v-if="product" class="mb-2" :product="product" />
+    <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
@@ -65,7 +66,7 @@
         <SfTooltip
           show-arrow
           placement="top"
-          :label="isSalableText"
+          :label="isNotValidVariation || isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
@@ -74,6 +75,7 @@
             size="lg"
             class="w-full"
             :disabled="loading || !productGetters.isSalable(product)"
+            :class="{ '!bg-disabled-300 !text-disabled-500 !ring-0 !shadow-none': !getCombination() }"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
@@ -108,6 +110,7 @@
         class="mt-4"
         type="SingleItem"
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
+        v-if="getCombination()"
       />
     </div>
   </form>
@@ -130,12 +133,17 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const props = defineProps<PurchaseCardProps>();
-
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
+const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
-const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
+const {
+  validateAllFields: validateAllFieldsAttributes,
+  invalidFields: invalidAttributeFields,
+  resetInvalidFields: resetAttributeFields,
+} = useValidatorAggregator('attributes');
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
@@ -143,6 +151,7 @@ const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 
 resetInvalidFields();
+resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
@@ -165,19 +174,27 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
+  await validateAllFieldsAttributes();
   await validateAllFields();
-  if (invalidFields.value.length > 0) {
+  if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
     const invalidFieldsNames = invalidFields.value.map((field) => field.name);
+    const invalidAttributeFieldsNames = invalidAttributeFields.value.map((field) => field.name);
     send({
       message: [
         t('errorMessages.missingOrWrongProperties'),
         '',
+        ...invalidAttributeFieldsNames,
         ...invalidFieldsNames,
         '',
         t('errorMessages.pleaseFillOutAllFields'),
       ],
       type: 'negative',
     });
+    return;
+  }
+
+  if (!getCombination()) {
+    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
     return;
   }
 
@@ -222,6 +239,7 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
