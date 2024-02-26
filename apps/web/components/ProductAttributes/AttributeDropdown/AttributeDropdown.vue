@@ -11,10 +11,11 @@
       size="sm"
       class="h-10"
       v-model="value"
-      @update:model-value="(val) => updateValue(productAttributeGetters.getAttributeId(attribute), val)"
-      :placeholder="$t('pleaseSelect')"
+      @update:model-value="(val) => doUpdateValue(val)"
+      :placeholder="t('pleaseSelect')"
+      :invalid="Boolean(errors['selectedValue'])"
     >
-      <option :value="undefined">{{ $t('pleaseSelect') }}</option>
+      <option :value="undefined">{{ t('pleaseSelect') }}</option>
       <option
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
@@ -24,6 +25,7 @@
         {{ productAttributeGetters.getAttributeValueName(item) }}
       </option>
     </SfSelect>
+    <VeeErrorMessage as="span" name="selectedValue" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -31,9 +33,13 @@
 import { SfSelect } from '@storefront-ui/vue';
 import { AttributeSelectProps } from '../types';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
+import { number, object } from 'yup';
+import { useForm } from 'vee-validate';
 
+const { t } = useI18n();
 const props = defineProps<AttributeSelectProps>();
 const { updateValue, getValue } = useProductAttributes();
+const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const value = ref<string | undefined>(
   getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined,
 );
@@ -42,6 +48,36 @@ watch(
   () => getValue(productAttributeGetters.getAttributeId(props.attribute)),
   () => {
     value.value = getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined;
+  },
+);
+
+const validationSchema = toTypedSchema(
+  object({
+    selectedValue: number().required(t('errorMessages.requiredField')),
+  }),
+);
+
+const { errors, defineField, validate, meta } = useForm({
+  validationSchema: validationSchema,
+});
+
+registerValidator(validate);
+
+const [selectedValue] = defineField('selectedValue');
+
+const doUpdateValue = (value: number) => {
+  updateValue(props.attribute.attributeId, value);
+  selectedValue.value = getValue(props.attribute.attributeId);
+};
+
+watch(
+  () => meta.value,
+  () => {
+    registerInvalidFields(
+      meta.value.valid,
+      `prop-${productAttributeGetters.getAttributeId(props.attribute)}`,
+      productAttributeGetters.getAttributeName(props.attribute),
+    );
   },
 );
 </script>

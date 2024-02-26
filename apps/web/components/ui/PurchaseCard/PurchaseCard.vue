@@ -140,7 +140,12 @@ const { product } = toRefs(props);
 const { isDesktop } = useBreakpoints();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
-const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
+const {
+  validateAllFields: validateAllFieldsAttributes,
+  invalidFields: invalidAttributeFields,
+  resetInvalidFields: resetAttributeFields,
+} = useValidatorAggregator('attributes');
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
@@ -148,6 +153,7 @@ const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 
 resetInvalidFields();
+resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
@@ -170,13 +176,16 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
+  await validateAllFieldsAttributes();
   await validateAllFields();
-  if (invalidFields.value.length > 0) {
+  if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
     const invalidFieldsNames = invalidFields.value.map((field) => field.name);
+    const invalidAttributeFieldsNames = invalidAttributeFields.value.map((field) => field.name);
     send({
       message: [
         t('errorMessages.missingOrWrongProperties'),
         '',
+        ...invalidAttributeFieldsNames,
         ...invalidFieldsNames,
         '',
         t('errorMessages.pleaseFillOutAllFields'),
