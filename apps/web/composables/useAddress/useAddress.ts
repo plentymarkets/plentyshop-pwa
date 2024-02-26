@@ -96,11 +96,11 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     return state.value.savedAddress;
   };
 
-  const setDefault: SetDefault = async (addressId: number) => {
+  const setDefault: SetDefault = async (address: Address) => {
     state.value.loading = true;
-    await useSdk().plentysystems.setAddressAsDefault({
+    await useSdk().plentysystems.doSaveAddress({
       typeId: type,
-      addressId: addressId,
+      addressData: address,
     });
 
     state.value.loading = false;
