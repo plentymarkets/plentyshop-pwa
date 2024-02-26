@@ -4,24 +4,26 @@
       :for="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
       class="leading-5 text-sm text-zinc-900"
     >
-      {{ productAttributeGetters.getAttributeName(attribute) }}
+      <span>{{ productAttributeGetters.getAttributeName(attribute) }}</span>
+      <span v-if="value">: <b>{{ selectedAttributeValueName }}</b></span>
     </label>
     <div :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)" class="w-full flex gap-4 flex-wrap">
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
-        class="border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
+        class="p-2 border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
         :class="{
           'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
           '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
           '!ring-negative-700 !border-negative-700 ring-1': Boolean(errors['selectedValue']),
         }"
-        @click="doUpdateValue(productAttributeGetters.getAttributeValueId(item))"
+        @click="doUpdateValue(item)"
       >
         <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
-          <div class="font-medium h-10 flex items-center px-4">
-            {{ productAttributeGetters.getAttributeValueName(item) }}
-          </div>
+          <img
+            src="https://timms.plentymarkets-cloud01.com/images/produkte/grp/attr_1.jpg"
+            :alt="productAttributeGetters.getAttributeValueName(item)"
+          />
         </SfTooltip>
       </div>
     </div>
@@ -42,6 +44,7 @@ const { registerValidator, registerInvalidFields } = useValidatorAggregator('att
 const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
 const { t } = useI18n();
+const selectedAttributeValueName = ref<string>('');
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
@@ -61,13 +64,21 @@ registerValidator(validate);
 
 const [selectedValue] = defineField('selectedValue');
 
-const doUpdateValue = (value: number) => {
-  updateValue(props.attribute.attributeId, value);
+const doUpdateValue = (attribute: VariationMapProductAttributeValue) => {
+  updateValue(
+    productAttributeGetters.getAttributeId(props.attribute),
+    productAttributeGetters.getAttributeValueId(attribute),
+  );
   selectedValue.value = getValue(props.attribute.attributeId);
+  selectedAttributeValueName.value = productAttributeGetters.getAttributeValueName(attribute);
 };
 
 const setValue = (value: number | undefined) => {
+  const getAttributeValue = productAttributeGetters.getAttributeValueById(props.attribute, value || -1);
   selectedValue.value = value;
+  selectedAttributeValueName.value = getAttributeValue
+    ? productAttributeGetters.getAttributeValueName(getAttributeValue)
+    : '';
 };
 
 setValue(value.value);
