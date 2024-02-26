@@ -11,18 +11,18 @@ export type ValidatorInvalidFields = {
 
 export type ValidatorMethodType = () => Promise<ValidatorMethodObject>;
 
-export interface UseValidatorAggregatorPropertiesState {
+export interface UseValidatorAggregatorState {
   invalidFields: ValidatorInvalidFields[];
   validators: ValidatorMethodType[];
 }
 
-export interface UseValidatorAggregatorProperties {
+export interface UseValidatorAggregator {
   validateAllFields: () => Promise<ValidatorMethodObject[]>;
   registerValidator: (validator: ValidatorMethodType) => void;
-  invalidFields: Ref<UseValidatorAggregatorPropertiesState['invalidFields']>;
-  validators: Ref<UseValidatorAggregatorPropertiesState['validators']>;
+  invalidFields: Ref<UseValidatorAggregatorState['invalidFields']>;
+  validators: Ref<UseValidatorAggregatorState['validators']>;
   registerInvalidFields: (validMeta: boolean, fieldUniqueId: string, name: string) => void;
   resetInvalidFields: () => void;
 }
 
-export type UseValidatorAggregatorPropertiesReturn = () => UseValidatorAggregatorProperties;
+export type UseValidatorAggregatorReturn = (type: string) => UseValidatorAggregator;
