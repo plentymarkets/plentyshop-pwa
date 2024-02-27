@@ -93,7 +93,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
+import { Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
@@ -106,20 +106,21 @@ const props = withDefaults(defineProps<AddressFormProps>(), {
 });
 
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
-
-const { savedAddress } = toRefs(props);
 const useAsShippingAddress = ref(props.useAsShippingDefault);
 
+const savedAddress = props.savedAddress || ({} as Address);
+
 const defaultValues = ref({
-  firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
-  lastName: savedAddress?.value ? userAddressGetters.getLastName(savedAddress?.value) ?? '' : '',
-  phoneNumber: savedAddress?.value ? userAddressGetters.getPhone(savedAddress?.value) ?? '' : '',
-  country: savedAddress?.value?.country ?? '',
-  streetName: savedAddress?.value ? userAddressGetters.getStreetName(savedAddress?.value) ?? '' : '',
-  apartment: savedAddress?.value ? userAddressGetters.getStreetNumber(savedAddress?.value) ?? '' : '',
-  city: savedAddress?.value ? userAddressGetters.getCity(savedAddress?.value) ?? '' : '',
-  state: savedAddress?.value ? userAddressGetters.getProvince(savedAddress?.value) ?? '' : '',
-  zipCode: savedAddress?.value ? userAddressGetters.getPostCode(savedAddress?.value) ?? '' : '',
+  firstName: userAddressGetters.getFirstName(savedAddress),
+  lastName: userAddressGetters.getLastName(savedAddress),
+  phoneNumber: userAddressGetters.getPhone(savedAddress),
+  country: savedAddress?.country ?? '',
+  streetName: userAddressGetters.getStreetName(savedAddress),
+  apartment: userAddressGetters.getStreetNumber(savedAddress),
+  city: userAddressGetters.getCity(savedAddress),
+  state: userAddressGetters.getProvince(savedAddress),
+  zipCode: userAddressGetters.getPostCode(savedAddress),
+  primary: !userAddressGetters.getId(savedAddress),
 });
 
 const clearInputs = () => {
@@ -133,6 +134,7 @@ const clearInputs = () => {
     city: '',
     state: '',
     zipCode: '',
+    primary: !userAddressGetters.getId(savedAddress),
   };
 };
 
