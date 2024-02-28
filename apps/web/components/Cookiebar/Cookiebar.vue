@@ -86,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <SfLink v-if="!cookieGroup.showMore ?? false" href="#" size="sm" @click="cookieGroup.showMore = true">
+            <SfLink v-if="!cookieGroup.showMore || false" href="#" size="sm" @click="cookieGroup.showMore = true">
               {{ t('CookieBar.More information') }}
             </SfLink>
             <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">

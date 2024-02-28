@@ -12,6 +12,7 @@ export const useSdk = () => {
   const { ssrLocale } = useInitialSetup();
   const { token } = useCsrfToken();
   const sdkConfig = {
+    // @ts-ignore
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
       apiUrl: `${config.public.apiUrl}/plentysystems`,
     }),
