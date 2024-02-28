@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div class="w-full md:flex md:flex-col mt-4 md:mt-0">
+      <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-2/5">
         <div class="w-full md:self-end">
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
