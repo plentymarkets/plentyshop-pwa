@@ -1,8 +1,9 @@
 <template>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <h2
-      v-if="!confirmation" class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
-      data-testid="account-new-return-heading"
+    v-if="!confirmation"
+    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+    data-testid="account-new-return-heading"
   >
     {{ t('returns.return') }}
   </h2>
@@ -20,9 +21,9 @@
           </div>
         </div>
         <label
-            @click="selectAll(!selectAllItems)"
-            for="selectAll"
-            class="cursor-pointer w-fit select-none bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1 flex items-center"
+          @click="selectAll(!selectAllItems)"
+          for="selectAll"
+          class="cursor-pointer w-fit select-none bg-white align-center align-baseline text-center border-2 border-primary-800 text-primary-800 rounded-lg px-3 py-1 flex items-center"
         >
           <SfCheckbox class="text-primary-800 mr-2" id="selectAll" v-model="selectAllItems" value="value" />
           {{ t('returns.selectAll') }}
@@ -30,15 +31,17 @@
       </div>
 
       <OrderReturnProductCard
-          v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
-          :order="currentReturnOrder"
-          :order-item="item"
-          :index="index"
-          :key="item.id"
+        v-for="(item, index) in orderGetters.getItems(currentReturnOrder)"
+        :order="currentReturnOrder"
+        :order-item="item"
+        :index="index"
+        :key="item.id"
       />
     </template>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary"> {{ t('account.back') }} </SfButton>
+      <SfButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
+        {{ t('account.back') }}
+      </SfButton>
       <SfButton @click="initiateReturn()">
         {{ t('returns.initiateReturn') }}
         <SfIconArrowForward />
@@ -46,7 +49,7 @@
     </div>
   </div>
   <div v-else class="col-span-3 mt-8">
-    <OrderReturnFormConfirmation @previous="previous()"/>
+    <OrderReturnFormConfirmation @previous="previous()" />
   </div>
 </template>
 
@@ -64,7 +67,7 @@ definePageMeta({
   pageType: 'static',
 });
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
-    useReturnOrder();
+  useReturnOrder();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 fetchReturnReasons();

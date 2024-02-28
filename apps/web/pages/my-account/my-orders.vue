@@ -52,7 +52,13 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-              <SfButton :tag="NuxtLink" :to="localePath(generateNewReturnLink(order) )" v-if="orderGetters.isReturnable(order)" size="sm" variant="tertiary">
+              <SfButton
+                :tag="NuxtLink"
+                :to="localePath(generateNewReturnLink(order))"
+                v-if="orderGetters.isReturnable(order)"
+                size="sm"
+                variant="tertiary"
+              >
                 {{ t('returns.return') }}
               </SfButton>
               <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
@@ -92,7 +98,7 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
-                <SfButton :tag="NuxtLink" :to="localePath( generateNewReturnLink(order) )" size="sm" variant="tertiary">
+                <SfButton :tag="NuxtLink" :to="localePath(generateNewReturnLink(order))" size="sm" variant="tertiary">
                   {{ t('returns.return') }}
                 </SfButton>
               </td>
