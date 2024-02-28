@@ -56,7 +56,7 @@
 </template>
 <script setup lang="ts">
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
@@ -68,8 +68,21 @@ const { data: activeShippingCountries, getActiveShippingCountries } = useActiveS
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
+const { data: cart } = useCart();
 const editMode = ref(false);
-const selectedAddress = computed(() => props.addresses?.[0] ?? ({} as Address));
+
+const cartAddress = computed(() =>
+  props.type === AddressType.Billing
+    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
+    : cartGetters.getCustomerShippingAddressId(cart.value),
+);
+
+const selectedAddress = computed(
+  () =>
+    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
+    ({} as Address),
+);
+
 const emit = defineEmits(['on-saved']);
 
 getActiveShippingCountries();

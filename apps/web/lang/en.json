@@ -636,7 +636,7 @@
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
-    "requiredField": "This filed is required.",
+    "requiredField": "This is a mandatory field.",
     "wholeNumber": "Enter a whole number.",
     "decimalNumber": "Enter a decimal number.",
     "maxCharacters": "Enter a maximum of {max} characters.",
@@ -677,5 +677,9 @@
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
     "quantity": "Quantity"
+  },
+  "productAttributes": {
+    "seeAvailableOptions": "See available options",
+    "notValidVariation": "Please select a valid variation."
   }
 }

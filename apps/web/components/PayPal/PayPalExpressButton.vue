@@ -50,7 +50,12 @@ const onInit = (actions: OnInitActions) => {
 };
 
 const onClick = async () => {
-  if (props.type === TypeSingleItem && props.value) {
+  if (
+    props.type === TypeSingleItem &&
+    !props.disabled &&
+    props.value &&
+    productGetters.isSalable(props.value.product)
+  ) {
     await addToCart({
       productId: Number(productGetters.getId(props.value.product)),
       quantity: props.value.quantity,

@@ -90,7 +90,7 @@ Distributed under the MIT License. See [LICENSE](LICENSE.md) for more informatio
 
 ## Contributing
 
-Please see our [contributing.md](contributing.md) for more information.
+Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for more information.
 
 ## Support
 

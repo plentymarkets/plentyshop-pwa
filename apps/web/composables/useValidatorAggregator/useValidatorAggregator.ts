@@ -1,21 +1,17 @@
-import {
-  UseValidatorAggregatorPropertiesReturn,
-  UseValidatorAggregatorPropertiesState,
-  ValidatorMethodType,
-} from './types';
+import { UseValidatorAggregatorReturn, UseValidatorAggregatorState, ValidatorMethodType } from './types';
 
 /**
  * @description Composable for managing form validation.
- * @returns UseValidatorAggregatorPropertiesReturn
+ * @returns UseValidatorAggregatorReturn
  * @example
  * ``` ts
  * const {
  *   invalidFields, validators, registerValidator, registerInvalidFields, validateAllFields
- * } = useValidatorAggregatorProperties();
+ * } = useValidatorAggregator('properties');
  * ```
  */
-export const useValidatorAggregatorProperties: UseValidatorAggregatorPropertiesReturn = () => {
-  const state = useState<UseValidatorAggregatorPropertiesState>(`useValidatorAggregatorProperties`, () => ({
+export const useValidatorAggregator: UseValidatorAggregatorReturn = (type: string) => {
+  const state = useState<UseValidatorAggregatorState>(`useValidatorAggregator_${type}`, () => ({
     invalidFields: [],
     validators: [],
   }));
