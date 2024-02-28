@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import { CookieGroupFromNuxtConfig } from 'cookie.config';
+import { CookieGroupFromNuxtConfig } from '~/cookie.config';
 
 export interface UseReadCookieBarState {
   data: CookieGroupFromNuxtConfig;

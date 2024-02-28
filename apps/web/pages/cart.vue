@@ -2,9 +2,9 @@
   <NuxtLayout
     name="checkout"
     :back-href="backHref"
-    :back-label-desktop="$t('back')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('myCart')"
+    :back-label-desktop="t('back')"
+    :back-label-mobile="t('back')"
+    :heading="t('myCart')"
   >
     <CartPageContent />
   </NuxtLayout>
@@ -15,6 +15,7 @@ definePageMeta({
   pageType: 'static',
 });
 
+const { t } = useI18n();
 const router = useRouter();
 const localePath = useLocalePath();
 const historyState = router.options.history.state;

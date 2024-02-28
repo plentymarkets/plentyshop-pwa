@@ -4,11 +4,11 @@
     <header class="flex flex-col pb-2 md:flex-row md:justify-between">
       <span class="flex items-center pr-2 text-xs text-neutral-500">
         <SfRating :value="reviewGetters.getReviewRating(reviewItem) ?? undefined" :max="5" size="xs" class="mr-2" />
-        {{ $d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
+        {{ d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
       </span>
       <p class="flex items-center text-xs truncate text-primary-700">
         <span class="mr-2 text-xs text-neutral-500">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
-        <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
+        <SfIconCheck size="xs" class="mr-1" /> {{ t('review.verifiedPurchase') }}
       </p>
     </header>
     <p class="pb-2 text-sm text-neutral-900">{{ truncatedContent }}</p>
@@ -18,7 +18,7 @@
       class="inline-block mb-2 text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-700 hover:border-primary-800"
       @click="isCollapsed = !isCollapsed"
     >
-      {{ $t(isCollapsed ? 'readMore' : 'readLess') }}
+      {{ t(isCollapsed ? 'readMore' : 'readLess') }}
     </button>
   </article>
 </template>
@@ -30,6 +30,7 @@ import type { ReviewProps } from '~/components/ui/Review/types';
 
 const props = defineProps<ReviewProps>();
 
+const { t, d } = useI18n();
 const { reviewItem } = toRefs(props);
 
 const charLimit = 250;

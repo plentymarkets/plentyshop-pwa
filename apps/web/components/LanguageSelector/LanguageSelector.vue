@@ -9,7 +9,7 @@
       <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="ml-3 mb-2">
         <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" v-html="flagList[locale]" />
         <div>
-          {{ $t(`lang.${locale}`) }}
+          {{ t(`lang.${locale}`) }}
         </div>
       </LanguageButton>
     </template>
@@ -26,7 +26,7 @@
           <div class="flex">
             <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" class="mr-2" v-html="flagList[locale]" />
             <div class="!text-black-500">
-              {{ $t(`lang.${locale}`) }}
+              {{ t(`lang.${locale}`) }}
             </div>
           </div>
           <SfIconCheck class="text-green-500" v-if="locale === currentLocale" />
@@ -40,7 +40,7 @@ import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
 const { isOpen } = useLanguageSelect();
-
+const { t } = useI18n();
 const { isDesktop, isTablet } = useBreakpoints();
 const { localeCodes, locale: currentLocale } = useI18n();
 

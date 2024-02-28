@@ -8,7 +8,7 @@
     <SfButton type="submit" class="mt-2" :disabled="loading">
       <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
       <span v-if="!loading">
-        {{ $t('softLogin.check') }}
+        {{ t('softLogin.check') }}
       </span>
     </SfButton>
   </form>
@@ -18,6 +18,7 @@
 import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { SoftLoginInputProps } from './types';
 
+const { t } = useI18n();
 const { loading } = useCustomerOrder('soft-login');
 const props = defineProps<SoftLoginInputProps>();
 const emit = defineEmits(['submit']);

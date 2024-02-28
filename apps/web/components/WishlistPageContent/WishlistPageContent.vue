@@ -4,8 +4,8 @@
       <HeaderWithLink
         v-if="withHeader && title"
         :heading="title"
-        :label-desktop="$t('back')"
-        :label-mobile="$t('back')"
+        :label-desktop="t('back')"
+        :label-mobile="t('back')"
       />
       <div v-if="products && products.length > 0" data-testid="wishlist-page-content">
         <div class="flex-1">
@@ -42,12 +42,12 @@
         <NuxtImg
           data-testid="empty-wishlist-image"
           src="/images/empty-cart.svg"
-          :alt="$t('emptyCartImgAlt')"
+          :alt="t('emptyCartImgAlt')"
           width="192"
           height="192"
         />
         <h2 data-testid="empty-wishlist-text" class="mt-8 typography-headline-3 font-bold">
-          {{ $t('emptyWishlist') }}
+          {{ t('emptyWishlist') }}
         </h2>
       </div>
     </div>
@@ -64,6 +64,7 @@ withDefaults(defineProps<WishlistPageContentProps>(), {
 });
 
 const { addWebpExtension } = useImageUrl();
+const { t } = useI18n();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

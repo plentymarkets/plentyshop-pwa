@@ -1,18 +1,18 @@
 <template>
-  <NuxtLayout name="auth" :heading="$t('auth.resetPassword.heading')">
+  <NuxtLayout name="auth" :heading="t('auth.resetPassword.heading')">
     <form class="pb-4 md:p-6 mt-10 md:border md:border-neutral-200 rounded-md" @submit.prevent="resetPassword">
       <p class="mb-6">
-        {{ $t('auth.resetPassword.info') }}
+        {{ t('auth.resetPassword.info') }}
       </p>
       <label>
-        <UiFormLabel>{{ $t('auth.resetPassword.email') }}</UiFormLabel>
+        <UiFormLabel>{{ t('auth.resetPassword.email') }}</UiFormLabel>
         <SfInput name="email" type="email" v-model="customerEmail" required />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
         <SfButton :tag="NuxtLink" :to="localePath(paths.authLogin)" class="flex-1" variant="tertiary">
-          {{ $t('auth.resetPassword.backToLogin') }}
+          {{ t('auth.resetPassword.backToLogin') }}
         </SfButton>
-        <SfButton type="submit" class="flex-1"> {{ $t('auth.resetPassword.continue') }} </SfButton>
+        <SfButton type="submit" class="flex-1"> {{ t('auth.resetPassword.continue') }} </SfButton>
       </div>
     </form>
   </NuxtLayout>
@@ -21,6 +21,7 @@
 <script setup lang="ts">
 import { SfButton, SfInput } from '@storefront-ui/vue';
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 definePageMeta({

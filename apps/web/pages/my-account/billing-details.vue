@@ -2,13 +2,15 @@
   <AddressesList
     class="col-span-3"
     :type="AddressType.Billing"
-    :add-address-text="$t('account.accountSettings.billingDetails.newAddress')"
-    :edit-address-text="$t('account.accountSettings.billingDetails.billingAddress')"
+    :add-address-text="t('account.accountSettings.billingDetails.newAddress')"
+    :edit-address-text="t('account.accountSettings.billingDetails.billingAddress')"
   />
 </template>
 
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
+
+const { t } = useI18n();
 
 definePageMeta({
   layout: 'account',

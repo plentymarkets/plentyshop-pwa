@@ -2,7 +2,7 @@
   <SfButton
     square
     class="ml-3 mb-2"
-    :aria-label="$t(`lang.${locale}`)"
+    :aria-label="t(`lang.${locale}`)"
     :data-testid="`languageOption-${locale}`"
     @click="switchLocale(locale)"
   >
@@ -16,6 +16,7 @@ defineProps<{
   locale: string;
 }>();
 
+const { t } = useI18n();
 const { setLocaleCookie } = useI18n();
 const route = useRoute();
 const switchLocalePath = useSwitchLocalePath();

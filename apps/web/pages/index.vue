@@ -102,7 +102,7 @@
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
-          {{ $t('moreItemsOfThisCategory') }}
+          {{ t('moreItemsOfThisCategory') }}
         </p>
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
@@ -117,6 +117,7 @@ definePageMeta({
   pageType: 'static',
 });
 
+const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 

@@ -8,7 +8,7 @@
             { 'mb-3 bg-gray-100 !border-dashed border-2 mt-2 !border-gray-200': openedCoupon },
           ]"
         >
-          <p class="pl-3">{{ $t('coupon.title') }}</p>
+          <p class="pl-3">{{ t('coupon.title') }}</p>
           <SfIconChevronLeft
             :class="['text-neutral-500', { 'rotate-90': openedCoupon, '-rotate-90': !openedCoupon }]"
           />
@@ -16,7 +16,7 @@
       </template>
       <div class="flex mb-2">
         <div class="flex-grow mr-2" data-testid="couponCode">
-          <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
+          <SfInput :placeholder="t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
         </div>
         <SfButton
           data-testid="couponAdd"
@@ -28,7 +28,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else>
-            {{ $t('coupon.apply') }}
+            {{ t('coupon.apply') }}
           </span>
         </SfButton>
       </div>
@@ -45,7 +45,7 @@
         >
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else class="underline">
-            {{ $t('coupon.remove') }}
+            {{ t('coupon.remove') }}
             <SfIconDelete />
           </span>
         </SfButton>
@@ -66,6 +66,8 @@ import {
 } from '@storefront-ui/vue';
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
+
+const { t } = useI18n();
 const openedCoupon = ref(false);
 const couponCode = ref('');
 const { addCoupon, deleteCoupon, loading } = useCoupon();

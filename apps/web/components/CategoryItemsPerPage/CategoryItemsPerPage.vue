@@ -1,13 +1,13 @@
 <template>
   <div class="w-full md:max-w-[376px]" data-testid="category-items-per-page">
     <h6 class="bg-neutral-100 mb-4 px-4 py-2 rounded uppercase typography-headline-6 font-bold tracking-widest">
-      {{ $t('perPage') }}
+      {{ t('perPage') }}
     </h6>
 
     <div class="px-4">
       <SfSelect
         v-model="selected"
-        :aria-label="$t('perPage')"
+        :aria-label="t('perPage')"
         id="perPage"
         @change="updateItemsPerPage(Number(selected))"
       >
@@ -26,6 +26,7 @@ import { defaults } from '~/composables';
 
 const props = defineProps<CategoryItemsPerPageProps>();
 
+const { t } = useI18n();
 const { updateItemsPerPage, getFacetsFromURL } = useCategoryFilter();
 
 const options = ref(

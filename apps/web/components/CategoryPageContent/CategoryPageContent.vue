@@ -11,13 +11,13 @@
         <div class="flex-1">
           <div class="flex justify-between items-center mb-6">
             <span class="font-bold font-headings md:text-lg">
-              {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
+              {{ t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
             </span>
             <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
               <template #prefix>
                 <SfIconTune />
               </template>
-              {{ $t('listSettings') }}
+              {{ t('listSettings') }}
             </SfButton>
           </div>
           <section
@@ -46,10 +46,10 @@
           <LazyCategoryEmptyState v-else />
           <NuxtLazyHydrate when-visible>
             <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
-              <span>{{ $t('asterisk') }}</span>
-              <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-              <span v-else>{{ $t('itemInclVAT') }}</span>
-              <span>{{ $t('excludedShipping') }}</span>
+              <span>{{ t('asterisk') }}</span>
+              <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+              <span v-else>{{ t('itemInclVAT') }}</span>
+              <span>{{ t('excludedShipping') }}</span>
             </div>
             <UiPagination
               v-if="totalProducts > 0"
@@ -76,6 +76,7 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,
 });
 
+const { t } = useI18n();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addWebpExtension } = useImageUrl();
 

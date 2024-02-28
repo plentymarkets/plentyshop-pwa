@@ -7,7 +7,7 @@
         square
         class="rounded-r-none"
         :aria-controls="inputId"
-        :aria-label="$t('quantitySelectorDecrease')"
+        :aria-label="t('quantitySelectorDecrease')"
         data-testid="quantity-selector-decrease-button"
         @click="dec()"
       >
@@ -22,7 +22,7 @@
         :min="minValue"
         :max="maxValue"
         data-testid="quantity-selector-input"
-        :aria-label="$t('quantitySelector')"
+        :aria-label="t('quantitySelector')"
         @input="handleOnChange"
         :disabled="disabled"
       />
@@ -32,7 +32,7 @@
         square
         class="rounded-l-none"
         :aria-controls="inputId"
-        :aria-label="$t('quantitySelectorIncrease')"
+        :aria-label="t('quantitySelectorIncrease')"
         data-testid="quantity-selector-increase-button"
         @click="inc()"
       >
@@ -57,6 +57,7 @@ const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorP
   disabled: false,
 });
 
+const { t } = useI18n();
 const inputId = useId();
 const { count, inc, dec, set } = useCounter(value);
 

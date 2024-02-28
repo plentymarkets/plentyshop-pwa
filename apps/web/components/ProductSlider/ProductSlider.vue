@@ -15,10 +15,10 @@
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
-    <span>{{ $t('asterisk') }}</span>
-    <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-    <span v-else>{{ $t('itemInclVAT') }}</span>
-    <span>{{ $t('excludedShipping') }}</span>
+    <span>{{ t('asterisk') }}</span>
+    <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+    <span v-else>{{ t('itemInclVAT') }}</span>
+    <span>{{ t('excludedShipping') }}</span>
   </div>
 </template>
 
@@ -27,6 +27,7 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
+const { t } = useI18n();
 const { addWebpExtension } = useImageUrl();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;

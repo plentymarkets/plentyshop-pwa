@@ -61,17 +61,17 @@
             </span>
           </li>
           <li>
-            <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
-            <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
+            <span class="font-bold mr-2">{{ t('account.ordersAndReturns.orderDetails.price') }}:</span>
+            <span>{{ n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
           </li>
           <li>
-            <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
+            <span class="font-bold mr-2">{{ t('returns.quantity') }}:</span>
             <span>{{ orderGetters.getItemQty(orderItem) }}</span>
           </li>
           <li>
-            <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+            <span class="font-bold mr-2">{{ t('orderConfirmation.total') }}:</span>
             <span>
-              {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+              {{ n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
             </span>
           </li>
         </ul>
@@ -89,15 +89,15 @@
 
         <div class="flex flex-col flex-1 justify-end">
           <label>
-            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
+            <span class="pb-1 text-sm font-medium text-neutral-900"> {{ t('returns.returnReason') }} </span>
             <SfSelect
               @update:model-value="changeReason($event)"
               :model-value="String(returnReasonId)"
               size="sm"
               class="h-fit py-[0.55rem]"
-              :placeholder="$t(`returns.selectReturnReason`)"
+              :placeholder="t(`returns.selectReturnReason`)"
             >
-              <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
+              <option :value="null">— {{ t('returns.selectReturnReason') }} —</option>
               <option v-for="{ id, name } in returnReasons.reasons" :key="id" :value="id">
                 {{ name }}
               </option>
@@ -115,6 +115,7 @@ import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
+const { t, n } = useI18n();
 const { addWebpExtension } = useImageUrl();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();

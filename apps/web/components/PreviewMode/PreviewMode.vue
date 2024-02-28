@@ -16,7 +16,7 @@
             aria-label="button"
             @click="removeLookupCookie(index)"
           >
-            {{ $t(`PreviewModeBar.${cookieName}`) }}
+            {{ t(`PreviewModeBar.${cookieName}`) }}
           </SfButton>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <SfButton
         variant="secondary"
         class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
-        :aria-label="$t('PreviewModeBar.label')"
+        :aria-label="t('PreviewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
         <SfIconVisibility class="my-1" />
@@ -37,6 +37,7 @@
 import { SfButton, SfIconVisibility } from '@storefront-ui/vue';
 import { RemoveLookupCookie } from './types';
 
+const { t } = useI18n();
 const bannerIsHidden = ref(true);
 
 const foundCookies = defaults.PREVIEW_COOKIES.filter((cookie) => !!useCookie(cookie).value);

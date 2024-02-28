@@ -1,4 +1,4 @@
-import { RouteParams } from '.nuxt/vue-router';
+import type { RouteParams } from 'vue-router';
 import { ProductParams } from '@plentymarkets/shop-api';
 
 export const createProductParams = (params: RouteParams) => {

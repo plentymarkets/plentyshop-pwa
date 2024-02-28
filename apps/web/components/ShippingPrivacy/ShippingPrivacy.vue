@@ -13,7 +13,7 @@
         @update:model-value="changeHint"
       />
       <label for="checkbox" class="cursor-pointer">
-        {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+        {{ t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
       </label>
     </div>
   </ClientOnly>
@@ -23,6 +23,7 @@
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfCheckbox } from '@storefront-ui/vue';
 
+const { t } = useI18n();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const { selectedMethod } = useCartShippingMethods();
 

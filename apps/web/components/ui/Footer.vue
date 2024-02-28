@@ -6,7 +6,7 @@
     >
       <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
         <div class="ml-4 text-lg font-medium leading-7 text-neutral-900">
-          {{ $t(`categories.${key}.label`) }}
+          {{ t(`categories.${key}.label`) }}
         </div>
         <ul>
           <SfListItem
@@ -20,7 +20,7 @@
               variant="secondary"
               :to="localePath(link)"
             >
-              {{ $t(`categories.${key}.subcategories.${subcategoryKey}`) }}
+              {{ t(`categories.${key}.subcategories.${subcategoryKey}`) }}
             </SfLink>
           </SfListItem>
         </ul>
@@ -41,6 +41,7 @@
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories, companyName } from '~/mocks';
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');

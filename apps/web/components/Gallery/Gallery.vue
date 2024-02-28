@@ -55,7 +55,7 @@
             square
             class="absolute !rounded-full bg-white z-10 top-4 rotate-90 disabled:!hidden !ring-neutral-500 !text-neutral-500"
             :class="{ hidden: firstVisibleThumbnailIntersected }"
-            :aria-label="$t('gallery.prev')"
+            :aria-label="t('gallery.prev')"
           >
             <template #prefix>
               <SfIconChevronLeft />
@@ -69,7 +69,7 @@
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
-          :aria-label="$t('gallery.thumb', index)"
+          :aria-label="t('gallery.thumb', index)"
           class="w-20 h-[88px] relative shrink-0 pb-1 border-b-4 snap-start cursor-pointer transition-colors flex-grow-0"
           :class="[activeIndex === index ? 'border-primary-700' : 'border-transparent']"
           @mouseover="onChangeIndex(index)"
@@ -94,7 +94,7 @@
             square
             class="absolute !rounded-full bg-white z-10 bottom-4 rotate-90 disabled:!hidden !ring-neutral-500 !text-neutral-500"
             :class="{ hidden: lastVisibleThumbnailIntersected }"
-            :aria-label="$t('gallery.next')"
+            :aria-label="t('gallery.next')"
           >
             <template #prefix>
               <SfIconChevronRight />
@@ -108,7 +108,7 @@
           :key="url"
           type="button"
           :aria-current="activeIndex === index"
-          :aria-label="$t('gallery.thumb', index + 1)"
+          :aria-label="t('gallery.thumb', index + 1)"
           class="relative shrink-0 pb-1 border-b-4 cursor-pointer transition-colors flex-grow"
           :class="[activeIndex === index ? 'border-primary-700' : 'border-neutral-200']"
           @click="onChangeIndex(index)"
@@ -130,6 +130,7 @@ const props = defineProps<{
 }>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
+const { t } = useI18n();
 
 const thumbsReference = ref<HTMLElement>();
 const firstThumbReference = ref<HTMLButtonElement>();

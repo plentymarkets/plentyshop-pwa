@@ -1,8 +1,8 @@
 <template>
   <NuxtLayout name="auth" :heading="''">
     <div class="text-lg text-center font-medium">
-      <span v-if="isLogin">{{ $t('auth.login.heading') }}</span>
-      <span v-else>{{ $t('auth.signup.heading') }}</span>
+      <span v-if="isLogin">{{ t('auth.login.heading') }}</span>
+      <span v-else>{{ t('auth.signup.heading') }}</span>
     </div>
 
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="returnToPreviousPage" />
@@ -15,7 +15,7 @@ definePageMeta({
   layout: false,
 });
 
-import { useRouter } from 'vue-router';
+const { t } = useI18n();
 const router = useRouter();
 const returnToPreviousPage = () => {
   router.go(-1);

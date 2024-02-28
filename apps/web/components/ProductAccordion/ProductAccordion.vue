@@ -7,7 +7,7 @@
     >
       <template #summary>
         <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-          {{ $t('productDetails') }}
+          {{ t('productDetails') }}
         </h2>
       </template>
       <div v-html="productGetters.getDescription(product)"></div>
@@ -20,7 +20,7 @@
     >
       <template #summary>
         <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-          {{ $t('technicalData') }}
+          {{ t('technicalData') }}
         </h2>
       </template>
       <div v-html="productGetters.getTechnicalData(product)"></div>
@@ -33,6 +33,7 @@
 import { productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
+const { t } = useI18n();
 const props = defineProps<ProductAccordionPropsType>();
 
 const { product } = toRefs(props);

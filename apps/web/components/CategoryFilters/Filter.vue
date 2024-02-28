@@ -31,10 +31,10 @@
     <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'">
       <form @submit.prevent="updatePriceFilter">
         <div class="mb-3">
-          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+          <SfInput v-model="minPrice" :placeholder="t('min')" id="min" />
         </div>
         <div class="mb-3">
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+          <SfInput v-model="maxPrice" :placeholder="t('max')" id="max" />
         </div>
         <div class="flex">
           <SfButton
@@ -46,7 +46,7 @@
             <template #prefix>
               <SfIconCheck />
             </template>
-            {{ $t('apply') }}
+            {{ t('apply') }}
           </SfButton>
           <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
             <template #prefix>
@@ -110,6 +110,7 @@ const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models: Filters = {};
 const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
+const { t } = useI18n();
 
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');

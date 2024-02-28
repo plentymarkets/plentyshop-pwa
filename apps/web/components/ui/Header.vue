@@ -77,7 +77,7 @@
                 v-else
                 :tag="NuxtLink"
                 :to="link"
-                :class="{ 'bg-neutral-200': $route.path === link }"
+                :class="{ 'bg-neutral-200': route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
                 {{ label }}
@@ -163,6 +163,7 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { data: wishlistItems } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
+const route = useRoute();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();

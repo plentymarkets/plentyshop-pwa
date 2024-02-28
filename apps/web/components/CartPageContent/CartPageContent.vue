@@ -17,15 +17,15 @@
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
-          {{ $t('goToCheckout') }}
+          {{ t('goToCheckout') }}
         </SfButton>
         <PayPalExpressButton class="mt-4" type="CartPreview" />
       </OrderSummary>
     </div>
   </div>
   <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
-    <NuxtImg src="/images/empty-cart.svg" :alt="$t('emptyCartImgAlt')" width="192" height="192" />
-    <h2 class="mt-8">{{ $t('emptyCart') }}</h2>
+    <NuxtImg src="/images/empty-cart.svg" :alt="t('emptyCartImgAlt')" width="192" height="192" />
+    <h2 class="mt-8">{{ t('emptyCart') }}</h2>
   </div>
 </template>
 
@@ -34,6 +34,7 @@ import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
 const { isDesktop } = useBreakpoints();
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 const { data: cart, loading } = useCart();

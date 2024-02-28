@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
       <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
-        {{ $t('contactInfo.edit') }}
+        {{ t('contactInfo.edit') }}
       </SfButton>
     </div>
 
@@ -60,6 +60,7 @@ import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
+const { t } = useI18n();
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);

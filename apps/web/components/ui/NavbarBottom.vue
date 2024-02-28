@@ -6,7 +6,7 @@
       variant="tertiary"
       :class="[
         '!p-1 !pt-3 flex flex-col h-full w-full rounded-none bg-primary-700 text-white hover:text-white hover:bg-primary-800 active:text-white active:bg-primary-900 !text-xs !font-base',
-        { 'text-white bg-primary-900': $route.path === link },
+        { 'text-white bg-primary-900': route.path === link },
       ]"
       size="sm"
       :tag="NuxtLink"
@@ -37,6 +37,7 @@ const { t } = useI18n();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
 const { open } = useMegaMenu();
+const route = useRoute();
 
 const items = computed(() => [
   {

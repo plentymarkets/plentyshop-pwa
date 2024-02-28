@@ -7,7 +7,7 @@
     >
       <template #summary>
         <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
-          {{ $t('customerReviews') }}
+          {{ t('customerReviews') }}
         </h2>
       </template>
       <SfLoaderCircular v-if="loading && reviewGetters.getItems(productReviews).length === 0" size="sm" />
@@ -19,7 +19,7 @@
       />
     </UiAccordionItem>
     <div v-else class="w-full mt-4 py-2 pl-4 pr-3 flex justify-between items-center">
-      <p class="font-bold leading-6">{{ $t('customerReviewsNone') }}</p>
+      <p class="font-bold leading-6">{{ t('customerReviewsNone') }}</p>
     </div>
     <UiDivider v-if="reviewsOpen && reviewGetters.getItems(productReviews).length > 0" class="mb-2 mt-2" />
   </div>
@@ -30,6 +30,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 
+const { t } = useI18n();
 const props = defineProps<ProductAccordionPropsType>();
 
 const { product, totalReviews } = toRefs(props);

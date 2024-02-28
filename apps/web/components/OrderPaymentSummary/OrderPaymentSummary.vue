@@ -1,13 +1,13 @@
 <template>
   <div class="font-bold text-primary-700 font-headings md:text-lg mb-3 mt-10">
-    {{ $t('account.ordersAndReturns.paymentSummary.heading') }}
+    {{ t('account.ordersAndReturns.paymentSummary.heading') }}
   </div>
 
-  <h2 class="font-medium text-base">{{ $t('billing.heading') }}</h2>
-  <p v-if="sameAsShippingAddress">{{ $t('orderConfirmation.sameAsShippingAddress') }}</p>
+  <h2 class="font-medium text-base">{{ t('billing.heading') }}</h2>
+  <p v-if="sameAsShippingAddress">{{ t('orderConfirmation.sameAsShippingAddress') }}</p>
   <OrderAddressData v-if="billingAddress && !sameAsShippingAddress" :address="billingAddress" />
 
-  <h2 class="font-medium text-base mt-4">{{ $t('checkoutPayment.heading') }}</h2>
+  <h2 class="font-medium text-base mt-4">{{ t('checkoutPayment.heading') }}</h2>
   <p>{{ orderGetters.getPaymentMethodName(order) }}</p>
   <p data-testid="order-payment-status">{{ orderGetters.getPaymentStatus(order) }}</p>
 </template>
@@ -16,6 +16,7 @@
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { OrderPaymentSummaryPropsType } from './types';
 
+const { t } = useI18n();
 const props = defineProps<OrderPaymentSummaryPropsType>();
 const shippingAddress = orderGetters.getShippingAddress(props.order);
 const billingAddress = orderGetters.getBillingAddress(props.order);

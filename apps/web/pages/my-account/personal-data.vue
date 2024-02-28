@@ -2,8 +2,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourName')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.yourName')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-name"
     @on-click="openModal('yourName')"
   >
@@ -12,8 +12,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.contactInformation')"
-    :button-text="$t('account.accountSettings.personalData.edit')"
+    :header="t('account.accountSettings.personalData.contactInformation')"
+    :button-text="t('account.accountSettings.personalData.edit')"
     data-testid="account-email"
     @on-click="openModal('contactInformation')"
   >
@@ -22,8 +22,8 @@
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
-    :header="$t('account.accountSettings.personalData.yourPassword')"
-    :button-text="$t('account.accountSettings.personalData.change')"
+    :header="t('account.accountSettings.personalData.yourPassword')"
+    :button-text="t('account.accountSettings.personalData.change')"
     :show-edit-button="true"
     data-testid="account-password"
     @on-click="openModal('passwordChange')"
@@ -44,7 +44,7 @@
         <SfIconClose />
       </SfButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-        {{ $t(`account.accountSettings.personalData.${openedForm}`) }}
+        {{ t(`account.accountSettings.personalData.${openedForm}`) }}
       </h3>
     </header>
     <AccountFormsName v-if="openedForm === 'yourName'" @on-save="closeModal" @on-cancel="closeModal" />
@@ -65,6 +65,8 @@ definePageMeta({
   layout: 'account',
   pageType: 'static',
 });
+
+const { t } = useI18n();
 const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();
 const modalElement = ref();

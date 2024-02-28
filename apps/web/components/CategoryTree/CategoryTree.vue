@@ -7,7 +7,7 @@
       class="py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md"
       data-testid="category-tree"
     >
-      {{ $t('category') }}
+      {{ t('category') }}
     </div>
     <template v-if="parent">
       <CategoryTreeItem
@@ -35,6 +35,7 @@ import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 import { type CategoryTreeProps } from '~/components/CategoryTree/types';
 
+const { t } = useI18n();
 const props = defineProps<CategoryTreeProps>();
 
 const { data: categoryTree } = useCategoryTree();

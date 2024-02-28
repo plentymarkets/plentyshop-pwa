@@ -7,13 +7,13 @@
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
         <div class="font-medium text-center">
-          {{ $t(cookieGroups?.barTitle) }}
+          {{ t(cookieGroups?.barTitle) }}
         </div>
         <div class="leading-relaxed pb-5">
-          {{ $t(cookieGroups.barDescription) }}
+          {{ t(cookieGroups.barDescription) }}
 
           <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
-            {{ $t('CookieBar.Privacy Settings') }}
+            {{ t('CookieBar.Privacy Settings') }}
           </SfLink>
         </div>
         <!-- checkboxes -->
@@ -27,7 +27,7 @@
                 :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
               />
               <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
-                {{ $t(cookieGroup.name) }}
+                {{ t(cookieGroup.name) }}
               </label>
             </div>
           </template>
@@ -47,10 +47,10 @@
               class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
               :for="cookieGroup.name"
             >
-              {{ $t(cookieGroup.name) }}
+              {{ t(cookieGroup.name) }}
             </label>
             <div class="leading-6 my-2">
-              {{ $t(cookieGroup.description) }}
+              {{ t(cookieGroup.description) }}
             </div>
             <div v-if="cookieGroup.showMore ?? false">
               <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
@@ -75,7 +75,7 @@
                       <template v-if="propKey === 'PrivacyPolicy'">
                         <!-- TODO -->
                         <SfLink :tag="NuxtLink" :link="localePath(paths.privacyPolicy)">
-                          {{ $t('CookieBar.Privacy Settings') }}
+                          {{ t('CookieBar.Privacy Settings') }}
                         </SfLink>
                       </template>
                       <template v-else>
@@ -87,10 +87,10 @@
               </div>
             </div>
             <SfLink v-if="!cookieGroup.showMore ?? false" href="#" size="sm" @click="cookieGroup.showMore = true">
-              {{ $t('CookieBar.More information') }}
+              {{ t('CookieBar.More information') }}
             </SfLink>
             <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">
-              {{ $t('CookieBar.Show less') }}
+              {{ t('CookieBar.Show less') }}
             </SfLink>
           </div>
         </template>
@@ -98,10 +98,10 @@
       <!-- further settings / back button -->
       <div class="text-center mt-2">
         <SfLink v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
-          {{ $t('CookieBar.Further Settings') }}
+          {{ t('CookieBar.Further Settings') }}
         </SfLink>
         <SfLink v-else href="#" @click="furtherSettingsOn = false">
-          {{ $t('CookieBar.Back') }}
+          {{ t('CookieBar.Back') }}
         </SfLink>
       </div>
       <!-- action buttons -->
@@ -111,10 +111,10 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Accept All')"
+            :aria-label="t('CookieBar.Accept All')"
             @click="setAllCookiesState(true)"
           >
-            {{ $t('CookieBar.Accept All') }}
+            {{ t('CookieBar.Accept All') }}
           </SfButton>
         </div>
         <div class="flex-1">
@@ -122,10 +122,10 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Reject All')"
+            :aria-label="t('CookieBar.Reject All')"
             @click="setAllCookiesState(false)"
           >
-            {{ $t('CookieBar.Reject All') }}
+            {{ t('CookieBar.Reject All') }}
           </SfButton>
         </div>
         <div class="flex-1">
@@ -134,10 +134,10 @@
             class="w-full"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Accept Selection')"
+            :aria-label="t('CookieBar.Accept Selection')"
             @click="setConsent()"
           >
-            {{ $t('CookieBar.Accept Selection') }}
+            {{ t('CookieBar.Accept Selection') }}
           </SfButton>
         </div>
       </div>
@@ -147,7 +147,7 @@
       v-else
       variant="secondary"
       class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2 bg-white !px-3"
-      :aria-label="$t('CookieBar.Cookie Settings')"
+      :aria-label="t('CookieBar.Cookie Settings')"
       @click="changeVisibilityState"
     >
       <SfIconCheckBox />
@@ -159,6 +159,7 @@
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
 import { Cookie, CookieGroup } from '~/cookie.config';
 
+const { t } = useI18n();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();

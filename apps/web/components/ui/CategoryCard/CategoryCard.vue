@@ -14,7 +14,7 @@
           >
             <NuxtImg
               :src="item.image"
-              :alt="$t('imageOfSth', { name: item.name })"
+              :alt="t('imageOfSth', { name: item.name })"
               width="240"
               height="240"
               loading="lazy"
@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import type { CategoryCardProps } from '~/components/ui/CategoryCard/types';
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 
 defineProps<CategoryCardProps>();

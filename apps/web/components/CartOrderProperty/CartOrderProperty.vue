@@ -3,8 +3,8 @@
     <span class="font-bold">
       {{ basketItemOrderParam.name }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType">
-        ({{ $t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
-        {{ $n(productPropertyGetters.getOrderPropertySurcharge(property), 'currency') }})</span
+        ({{ t('orderProperties.vat.' + productPropertyGetters.getOrderPropertyLabel(property).surchargeType) }}
+        {{ n(productPropertyGetters.getOrderPropertySurcharge(property), 'currency') }})</span
       >
     </span>
     <span v-if="!productPropertyGetters.isOrderPropertyCheckbox(property)">: {{ value }}</span>
@@ -15,6 +15,7 @@
 import { CartOrderPropertyProps } from '~/components/CartOrderProperty/types';
 import { cartGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
 
+const { t, n } = useI18n();
 const props = defineProps<CartOrderPropertyProps>();
 const property = computed(() =>
   cartGetters.getPropertyFromCartItem(props.cartItem, Number(props.basketItemOrderParam.propertyId)),

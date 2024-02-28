@@ -1,18 +1,18 @@
 <template>
   <div data-testid="contact-information" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ $t('contactInfo.heading') }}</h2>
+      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ t('contactInfo.heading') }}</h2>
       <SfButton v-if="!disabled && cart.customerEmail && !isAuthorized" size="sm" variant="tertiary" @click="open">
-        {{ $t('contactInfo.edit') }}
+        {{ t('contactInfo.edit') }}
       </SfButton>
     </div>
     <div v-if="cart.customerEmail" class="mt-2 md:w-[520px]">
       <p>{{ cart.customerEmail }}</p>
     </div>
     <div v-else class="w-full md:max-w-[520px]">
-      <p>{{ $t('contactInfo.description') }}</p>
+      <p>{{ t('contactInfo.description') }}</p>
       <SfButton v-if="!disabled" class="mt-4 w-full md:w-auto" variant="secondary" @click="open">
-        {{ $t('contactInfo.add') }}
+        {{ t('contactInfo.add') }}
       </SfButton>
     </div>
 
@@ -30,7 +30,7 @@
           <SfIconClose />
         </SfButton>
         <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
-          {{ $t('contactInfo.heading') }}
+          {{ t('contactInfo.heading') }}
         </h3>
       </header>
       <ContactInformationForm @on-save="saveContactInformation" @on-cancel="close" />
@@ -41,6 +41,7 @@
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import { ContactInformationProps } from '~/components/ContactInformation/types';
 
+const { t } = useI18n();
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 

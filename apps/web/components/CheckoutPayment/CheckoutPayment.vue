@@ -1,7 +1,7 @@
 <template>
   <div data-testid="checkout-payment" class="md:px-4 py-6">
     <fieldset>
-      <legend class="text-neutral-900 text-lg font-bold mb-4">{{ $t('checkoutPayment.heading') }}</legend>
+      <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkoutPayment.heading') }}</legend>
       <div class="grid gap-4 grid-cols-2">
         <label v-for="{ id, icon, name, isSelectable } in paymentMethods.list" :key="id" class="relative">
           <input
@@ -19,7 +19,7 @@
           >
             <span v-if="id === -1">
               <SfIconCreditCard class="mr-2" />
-              <span class="font-medium">{{ $t('checkoutPayment.creditCard') }}</span>
+              <span class="font-medium">{{ t('checkoutPayment.creditCard') }}</span>
             </span>
             <NuxtImg v-else :src="icon" :alt="name" class="!h-[40px]" />
             <p class="text-xs mt-2 text-neutral-500">{{ name }}</p>
@@ -37,7 +37,9 @@ import { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/Checkou
 withDefaults(defineProps<CheckoutPaymentProps>(), {
   disabled: false,
 });
+defineEmits<CheckoutPaymentEmits>();
+
+const { t } = useI18n();
 const { data: cart } = useCart();
 const selectedId = cart.value.methodOfPaymentId;
-defineEmits<CheckoutPaymentEmits>();
 </script>

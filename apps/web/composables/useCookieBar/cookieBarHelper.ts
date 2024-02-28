@@ -1,4 +1,4 @@
-import { CookieGroup } from 'cookie.config';
+import { CookieGroup } from '~/cookie.config';
 
 const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);

@@ -4,7 +4,7 @@
     data-testid="category-filters"
     v-if="facets.length > 0"
   >
-    {{ $t('filters') }}
+    {{ t('filters') }}
   </div>
   <div class="flex flex-col gap-2 px-4">
     <CategoryFiltersFilter v-for="facet in facets" :key="facet.id" :facet="facet" />
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import { CategoryFiltersProps } from '~/components/CategoryFilters/types';
 
+const { t } = useI18n();
 const props = defineProps<CategoryFiltersProps>();
 
 const { facets } = toRefs(props);
