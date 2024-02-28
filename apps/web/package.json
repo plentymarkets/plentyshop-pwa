@@ -24,13 +24,12 @@
   },
   "dependencies": {
     "@vue-storefront/sdk": "^1.0.1",
-    "@vueuse/core": "^10.3.0",
+    "@vueuse/core": "^10.9.0",
     "lodash-es": "^4.17.21",
     "nuxt-lazy-hydrate": "^1.0.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
     "@nuxt/image": "^1.0.0-rc.1",
     "@nuxt/test-utils": "^3.9.0",
     "@nuxtjs/google-fonts": "^3.0.1",
@@ -53,7 +52,7 @@
     "eslint-config-prettier": "^9.0.0",
     "happy-dom": "^12.10.3",
     "msw": "^2.0.13",
-    "nuxt": "^3.9.0",
+    "nuxt": "^3.10.3",
     "sass": "^1.64.1",
     "typedoc": "^0.25.3",
     "typedoc-plugin-markdown": "next",

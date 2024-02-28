@@ -8,7 +8,7 @@ import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } f
 /**
  * @description Composable for working with addresses in the current user session.
  * The composable covers two types of addresses, billing and shipping.
- * @param {@link AddressType}
+ * @param type AddressType
  * @example
  * This example uses the address type `Billing`. All examples are equivalent for addresses of type `Shipping`.
  * ``` ts
