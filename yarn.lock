@@ -4658,6 +4658,7 @@ __metadata:
     wait-on: ^7.0.1
   languageName: unknown
   linkType: soft
+
 "@plentymarkets/shop-api@npm:^0.27.0":
   version: 0.27.0
   resolution: "@plentymarkets/shop-api@npm:0.27.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.27.0%2Ff339edd4c9aafb52584605a1e5232f9beaf739e5"
@@ -4668,6 +4669,7 @@ __metadata:
   checksum: 268cd0032c82a2160f9e10e77ed0e6c8fe667d9c43aec41ec210cb794470aa5b9330dc376e9ddb9092877adaf37f3dc6a528167d4254b823bd10187ae1353293
   languageName: node
   linkType: hard
+
 "@plentymarkets/shop-sdk@npm:^0.41.0":
   version: 0.41.0
   resolution: "@plentymarkets/shop-sdk@npm:0.41.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.41.0%2F487fb48315dd7af0dd6af8ace73bd0515065e3df"
