@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import type { Breadcrumb, Product } from '@plentymarkets/shop-api';
-import { ProductParams } from '@plentymarkets/shop-api';
-import { UseProductOrderProperties } from '~/composables/useProductOrderProperties';
+import type { ProductParams } from '@plentymarkets/shop-api';
+import type { UseProductOrderProperties } from '~/composables/useProductOrderProperties';
 
 export interface UseProductState {
   data: Product;

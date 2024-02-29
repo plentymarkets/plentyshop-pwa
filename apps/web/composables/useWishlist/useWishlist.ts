@@ -1,8 +1,8 @@
-import { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
+import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
 import { useSdk } from '~/sdk';
 import { toRefs } from '@vueuse/shared';
-import {
+import type {
   FetchWishlist,
   UseWishlistReturn,
   UseWishlistState,
@@ -116,22 +116,22 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
+    const { t } = useI18n();
     const { send } = useNotification();
-    const { $i18n } = useNuxtApp();
 
     if (isWishlistItem(variationId)) {
       await deleteWishlistItem({ variationId });
 
       send({
         type: 'positive',
-        message: $i18n.t('wishlistInteraction.delete'),
+        message: t('wishlistInteraction.delete'),
       });
     } else {
       await addWishlistItem({ variationId, quantity });
 
       send({
         type: 'positive',
-        message: $i18n.t('wishlistInteraction.add'),
+        message: t('wishlistInteraction.add'),
       });
     }
 

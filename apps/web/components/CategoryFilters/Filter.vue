@@ -86,8 +86,7 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { Filter } from '@plentymarkets/shop-api';
-import { FilterGroup } from '@plentymarkets/shop-api';
+import type { Filter, FilterGroup } from '@plentymarkets/shop-api';
 import { facetGetters } from '@plentymarkets/shop-sdk';
 import {
   SfInput,
@@ -101,7 +100,7 @@ import {
   SfCounter,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
-import { Filters } from '~/composables';
+import type { Filters } from '~/composables';
 
 const route = useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();

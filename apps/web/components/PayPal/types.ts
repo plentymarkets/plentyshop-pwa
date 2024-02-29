@@ -1,4 +1,4 @@
-import { BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
+import type { BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 export type PaypalButtonPropsType = {
   type: string;

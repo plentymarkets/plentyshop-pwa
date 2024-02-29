@@ -1,5 +1,5 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
+import type { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
 import { useSdk } from '~/sdk';
 import type {
   UsePayPalMethodsReturn,
@@ -73,8 +73,8 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * ```
    */
   const loadScript: LoadScript = async (currency: string, commit = false) => {
-    const { $i18n } = useNuxtApp();
-    const localePayPal = getLocaleForPayPal($i18n.locale.value);
+    const { locale } = useI18n();
+    const localePayPal = getLocaleForPayPal(locale.value);
 
     await loadConfig();
     if (state.value.config && paypalGetters.getClientId(state.value.config)) {

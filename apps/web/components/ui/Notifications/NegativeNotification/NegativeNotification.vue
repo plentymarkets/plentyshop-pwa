@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-import { NegativeNotificationProps } from './types';
+import type { NegativeNotificationProps } from './types';
 
 defineProps<NegativeNotificationProps>();
 </script>
