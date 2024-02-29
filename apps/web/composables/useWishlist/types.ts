@@ -15,7 +15,7 @@ export type FetchWishlist = () => Promise<WishlistItem[]>;
 export type AddWishlistItem = (params: AddWishlistItemParams) => Promise<AddWishlistItemResponse>;
 export type DeleteWishlistItem = (params: DeleteWishlistItemParams) => Promise<boolean>;
 export type IsWishlistItem = (variationId: number) => boolean;
-export type InteractWithWishlist = (variationId: number, quantity: number) => Promise<void>;
+export type InteractWithWishlist = (variationId: number, quantity: number) => Promise<boolean>;
 
 export interface UseWishlist {
   data: Readonly<Ref<UseWishlistState['data']>>;
