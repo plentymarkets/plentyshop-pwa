@@ -89,21 +89,20 @@ export class MyAccountPageObject {
   }
 
   checkBillingAddressesSection() {
+    cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Billing addresses').click();
-    cy.visitAndHydrate(paths.accountBillingDetails);
     cy.url().should('contain', paths.accountBillingDetails);
+    cy.wait("@getAddresses");
     this.accountLayout.getByTestId('account-billing-addresses-1').should('be.visible');
 
     return this;
   }
 
   checkShippingAddressesSection() {
+    cy.intercept('/plentysystems/getAddresses').as('getAddresses');
     cy.get('a').contains('Shipping addresses').click();
-    cy.wait(5000);
-    cy.visitAndHydrate(paths.accountShippingDetails);
-    cy.wait(5000);
     cy.url().should('contain', paths.accountShippingDetails);
-    cy.wait(5000);
+    cy.wait("@getAddresses");
     this.accountLayout.getByTestId('account-billing-addresses-2').should('be.visible');
 
     return this;
