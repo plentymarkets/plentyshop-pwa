@@ -148,7 +148,10 @@
               </h3>
             </div>
             <h3
-              v-if="orderGetters.getOrderAttributes(props.orderItem).length === 0"
+              v-if="
+                orderGetters.getOrderAttributes(props.orderItem).length === 0 &&
+                orderGetters.getItemOrderProperties(props.orderItem).length === 0
+              "
               class="h-full px-4 w-full border border-gray-200 p-1 rounded-b-md"
             >
               {{ $t('noneExisting') }}
