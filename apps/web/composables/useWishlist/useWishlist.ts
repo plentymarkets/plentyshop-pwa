@@ -23,6 +23,8 @@ import type {
  * ```
  */
 export const useWishlist: UseWishlistReturn = () => {
+  const { t } = useI18n();
+  const { send } = useNotification();
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
@@ -116,9 +118,6 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
-    const { t } = useI18n();
-    const { send } = useNotification();
-
     if (isWishlistItem(variationId)) {
       await deleteWishlistItem({ variationId });
 
