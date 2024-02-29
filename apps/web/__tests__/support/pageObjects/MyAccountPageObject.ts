@@ -99,8 +99,11 @@ export class MyAccountPageObject {
 
   checkShippingAddressesSection() {
     cy.get('a').contains('Shipping addresses').click();
+    cy.wait(5000);
     cy.visitAndHydrate(paths.accountShippingDetails);
+    cy.wait(5000);
     cy.url().should('contain', paths.accountShippingDetails);
+    cy.wait(5000);
     this.accountLayout.getByTestId('account-billing-addresses-2').should('be.visible');
 
     return this;

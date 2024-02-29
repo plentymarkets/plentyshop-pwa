@@ -1,3 +1,3 @@
 import 'cypress-real-events';
 import './commands';
-// import './failOnError';
+import './failOnError';
