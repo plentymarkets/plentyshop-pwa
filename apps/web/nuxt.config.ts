@@ -2,9 +2,10 @@
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
+  telemetry: false,
   devtools: { enabled: true },
   typescript: {
-    typeCheck: false,
+    typeCheck: true,
   },
   app: {
     head: {
