@@ -39,7 +39,7 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { ContactInformationProps } from '~/components/ContactInformation/types';
+import type { ContactInformationProps } from '~/components/ContactInformation/types';
 
 const { t } = useI18n();
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();

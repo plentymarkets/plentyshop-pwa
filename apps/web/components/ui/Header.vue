@@ -155,7 +155,7 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
-import { DefaultLayoutProps } from '~/layouts/types';
+import type { DefaultLayoutProps } from '~/layouts/types';
 import { useCategoryTree, useCustomer } from '~/composables';
 
 defineProps<DefaultLayoutProps>();

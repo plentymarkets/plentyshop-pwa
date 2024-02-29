@@ -1,4 +1,4 @@
-import { Category } from '@plentymarkets/shop-api';
+import type { Category } from '@plentymarkets/shop-api';
 
 export type CategoryTreeProps = {
   category: Category;

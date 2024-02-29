@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { SfButton, useDisclosure } from '@storefront-ui/vue';
-import { OrderReturnItemsProps } from './types';
+import type { OrderReturnItemsProps } from './types';
 
 const props = defineProps<OrderReturnItemsProps>();
 

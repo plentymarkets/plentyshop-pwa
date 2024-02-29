@@ -42,7 +42,7 @@
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfIconCheckCircle } from '@storefront-ui/vue';
 import { SfButton } from '@storefront-ui/vue';
-import { AddressProps } from './types';
+import type { AddressProps } from './types';
 
 const { t } = useI18n();
 

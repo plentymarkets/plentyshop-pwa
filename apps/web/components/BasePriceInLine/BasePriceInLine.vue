@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { BasePriceProps } from '~/components/BasePrice/types';
+import type { BasePriceProps } from '~/components/BasePrice/types';
 
 const { n } = useI18n();
 const props = defineProps<BasePriceProps>();

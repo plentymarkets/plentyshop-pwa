@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconVisibility } from '@storefront-ui/vue';
-import { RemoveLookupCookie } from './types';
+import type { RemoveLookupCookie } from './types';
 
 const { t } = useI18n();
 const bannerIsHidden = ref(true);

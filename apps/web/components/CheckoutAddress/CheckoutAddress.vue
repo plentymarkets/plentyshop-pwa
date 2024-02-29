@@ -55,7 +55,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Address, AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';

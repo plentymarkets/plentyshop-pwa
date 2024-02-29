@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { CategoryFiltersProps } from '~/components/CategoryFilters/types';
+import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
 
 const { t } = useI18n();
 const props = defineProps<CategoryFiltersProps>();

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { SoftLoginInputProps } from './types';
+import type { SoftLoginInputProps } from './types';
 
 const { t } = useI18n();
 const { loading } = useCustomerOrder('soft-login');

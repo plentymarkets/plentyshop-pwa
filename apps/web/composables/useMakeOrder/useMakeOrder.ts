@@ -30,7 +30,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ```
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
-    const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
     await useAsyncData(() =>
@@ -71,6 +70,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       );
     };
 
+    const { t } = useI18n();
+
     switch (paymentType) {
       case 'continue':
       case 'htmlContent': {
@@ -95,7 +96,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       default: {
-        useHandleError({ message: $i18n.t('orderErrorProvider', { paymentType: paymentType }) });
+        useHandleError({ message: t('orderErrorProvider', { paymentType: paymentType }) });
         break;
       }
     }

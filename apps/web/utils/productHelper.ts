@@ -1,5 +1,5 @@
 import type { RouteParams } from 'vue-router';
-import { ProductParams } from '@plentymarkets/shop-api';
+import type { ProductParams } from '@plentymarkets/shop-api';
 
 export const createProductParams = (params: RouteParams) => {
   const productPieces = (params.itemId as string).split('_');

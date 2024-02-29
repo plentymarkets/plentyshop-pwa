@@ -1,13 +1,16 @@
-import { CookieRef } from 'nuxt/app';
-import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
-import { UseCookieReturn } from './types';
+import type { CookieRef } from 'nuxt/app';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { UseCookieReturn } from './types';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function convertToSaveableJson(jsonList: any): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return jsonList.map((group: any) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [group.name]: group.cookies.map((cookie: any) => ({
       [cookie.name]: cookie.accepted,
     })),

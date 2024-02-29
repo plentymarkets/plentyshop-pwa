@@ -43,7 +43,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { OrderDetailsProps } from './types';
+import type { OrderDetailsProps } from './types';
 
 const { t } = useI18n();
 

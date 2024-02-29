@@ -107,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { Order } from '@plentymarkets/shop-api';
+import type { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 definePageMeta({

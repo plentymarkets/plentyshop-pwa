@@ -1,4 +1,4 @@
-import { UseNotificationState, UseNotificationReturn, Notification } from './types';
+import type { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
 const maxVisibleNotifications = 5;
 const timeToLive = 3000;

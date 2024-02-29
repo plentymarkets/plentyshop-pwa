@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { SoftLoginProps } from './types';
+import type { SoftLoginProps } from './types';
 
 const { t } = useI18n();
 const emits = defineEmits(['submit']);

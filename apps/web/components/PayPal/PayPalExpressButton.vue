@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { OnApproveData, OnInitActions } from '@paypal/paypal-js';
+import type { OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { orderGetters, productGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
-import { PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = uuid();

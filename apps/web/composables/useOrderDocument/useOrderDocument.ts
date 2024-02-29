@@ -1,8 +1,8 @@
-import { OrderDocument } from '@plentymarkets/shop-api';
+import type { OrderDocument } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn } from './types';
-import { DownloadFile, GetDocument } from './types';
+import type { DownloadFile, GetDocument } from './types';
 
 /**
  * @description Composable for managing the order documents.
