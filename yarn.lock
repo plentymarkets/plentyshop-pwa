@@ -4081,6 +4081,7 @@ __metadata:
     "@types/uuid": ^9.0.2
     "@vee-validate/nuxt": ^4.12.4
     "@vee-validate/yup": ^4.12.4
+    "@vite-pwa/nuxt": ^0.5.0
     "@vue-storefront/eslint-config": ~2.0.0-rc.7
     babel-preset-node: ^5.1.1
     commitizen: ^4.2.5
@@ -4092,6 +4093,7 @@ __metadata:
     husky: ^8.0.0
     is-ci: ^3.0.0
     lint-staged: ^14.0.0
+    nuxt: ^3.10.3
     prettier: ^3.0.0
     rimraf: ^5.0.0
     rollup: ^3.0.0
