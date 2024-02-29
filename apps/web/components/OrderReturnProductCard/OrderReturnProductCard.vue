@@ -6,7 +6,7 @@
   >
     <div class="md:flex flex-none p-2 w-full">
       <div class="flex md:flex-none w-full md:w-2/3">
-        <div class="rounded-md w-[180px] sm:w-[176px]">
+        <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
           <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
             <NuxtImg
               class="h-auto border rounded-md border-neutral-200"
@@ -28,7 +28,7 @@
             class="mt-4 w-full"
           />
         </div>
-        <div class="flex self-start flex-col mx-4">
+        <div class="flex self-start flex-col mx-4 w-2/3">
           <SfLink
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
@@ -88,7 +88,7 @@
         </div>
       </div>
 
-      <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-2/5">
+      <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
         <div class="w-full md:self-end">
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>

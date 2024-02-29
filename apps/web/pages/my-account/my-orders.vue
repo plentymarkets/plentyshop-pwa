@@ -98,7 +98,7 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
-                <SfButton :tag="NuxtLink" :to="localePath(generateNewReturnLink(order))" size="sm" variant="tertiary">
+                <SfButton v-if="orderGetters.isReturnable(order)" :tag="NuxtLink" :to="localePath(generateNewReturnLink(order))" size="sm" variant="tertiary">
                   {{ t('returns.return') }}
                 </SfButton>
               </td>
