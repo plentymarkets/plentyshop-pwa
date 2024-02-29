@@ -132,7 +132,7 @@
               >
                 <div class="flex justify-between">
                   <p class="text-sm px-2">{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
-                  <p class="text-sm px-2 text-gray-300">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
+                  <p class="text-sm px-2 text-gray-700">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
                 </div>
               </h3>
             </div>
@@ -143,7 +143,7 @@
               >
                 <div class="flex justify-between">
                   <p class="text-sm px-2">{{ orderGetters.getItemOrderPropertyName(property) }}</p>
-                  <p class="text-sm px-2 text-gray-300">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
+                  <p class="text-sm px-2 text-gray-800">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
                 </div>
               </h3>
             </div>
