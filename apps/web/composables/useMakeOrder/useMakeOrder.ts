@@ -12,6 +12,7 @@ import { useSdk } from '~/sdk';
  * ```
  */
 export const useMakeOrder: UseMakeOrderReturn = () => {
+  const { t } = useI18n();
   const state = useState<UseMakeOrderState>('useMakeOrder', () => ({
     data: {} as Order,
     loading: false,
@@ -69,8 +70,6 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
         }),
       );
     };
-
-    const { t } = useI18n();
 
     switch (paymentType) {
       case 'continue':

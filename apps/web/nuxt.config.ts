@@ -3,9 +3,6 @@ import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  typescript: {
-    typeCheck: false,
-  },
   app: {
     head: {
       viewport: 'minimum-scale=1, initial-scale=1, width=device-width',

@@ -11,6 +11,8 @@ import type { DoAddCouponParams } from '@plentymarkets/shop-api';
  * ```
  */
 export const useCoupon: UseCouponReturn = () => {
+  const { send } = useNotification();
+  const { t } = useI18n();
   const state = useState<UseCouponState>('coupon', () => ({
     loading: false,
   }));
@@ -27,9 +29,7 @@ export const useCoupon: UseCouponReturn = () => {
    * ```
    */
   const addCoupon: AddCoupon = async (params: DoAddCouponParams) => {
-    const { send } = useNotification();
     const { getCart } = useCart();
-    const { t } = useI18n();
 
     state.value.loading = true;
     if (params.couponCode.trim() === '') {
