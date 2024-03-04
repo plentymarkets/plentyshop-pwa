@@ -116,16 +116,24 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
-    let added = false;
+    const { $i18n } = useNuxtApp();
+    const { send } = useNotification();
+
     if (isWishlistItem(variationId)) {
       await deleteWishlistItem({ variationId });
+      send({
+        type: 'positive',
+        message: $i18n.t('wishlistInteraction.delete'),
+      });
     } else {
       await addWishlistItem({ variationId, quantity });
-      added = true;
+      send({
+        type: 'positive',
+        message: $i18n.t('wishlistInteraction.add'),
+      });
     }
 
     await fetchWishlist();
-    return added;
   };
 
   return {

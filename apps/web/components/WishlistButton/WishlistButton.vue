@@ -31,7 +31,6 @@ const props = withDefaults(defineProps<WishlistButtonProps>(), {
 const { product, quantity } = toRefs(props);
 
 const { t } = useI18n();
-const { send } = useNotification();
 const { isWishlistItem, interactWithWishlist } = useWishlist();
 const wishlistLoading = ref(false);
 
@@ -40,17 +39,7 @@ const variationId = computed(() => productGetters.getVariationId(product.value))
 
 const onWishlistClick = async () => {
   wishlistLoading.value = true;
-  if (await interactWithWishlist(variationId.value, quantity.value)) {
-    send({
-      type: 'positive',
-      message: t('wishlistInteraction.add'),
-    });
-  } else {
-    send({
-      type: 'positive',
-      message: t('wishlistInteraction.delete'),
-    });
-  }
+  await interactWithWishlist(variationId.value, quantity.value);
   wishlistLoading.value = false;
 };
 </script>
