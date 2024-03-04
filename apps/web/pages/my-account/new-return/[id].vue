@@ -7,9 +7,9 @@
   >
     {{ t('returns.return') }}
   </h2>
-  <div v-if="!confirmation" class="col-span-3 mt-8 !w-auto">
+  <div v-if="!confirmation" class="col-span-3 mt-8 !w-auto mx-4">
     <template v-if="currentReturnOrder">
-      <div class="md:flex justify-between items-center mb-5">
+      <div class="flex justify-between items-center mb-5 text-sm sm:text-lg">
         <div class="md:grid grid-cols-[1fr_1fr] gap-3">
           <div class="text-neutral-900">
             <span class="font-bold"> {{ t('returns.returnForOrder') }} </span> #

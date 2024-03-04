@@ -33,7 +33,7 @@
             :tag="NuxtLink"
             :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
             variant="secondary"
-            class="no-underline typography-text-sm sm:typography-text-lg"
+            class="no-underline sm:typography-text-lg"
           >
             {{ orderGetters.getItemName(orderItem) }}
           </SfLink>
@@ -108,54 +108,37 @@
         </div>
 
         <div class="my-2 w-full md:self-end">
-          <button
-            class="flex bg-gray-100 border border-gray-200 p-1 pl-4 w-full justify-between items-center"
-            :class="opened ? 'rounded-t-md' : 'rounded-md'"
-            @click="toggleDropdown"
-          >
-            {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
-            <SfIconChevronLeft
-              class="text-neutral-500 mr-2.5"
-              :class="{ 'rotate-90': opened, '-rotate-90': !opened }"
-            />
-          </button>
-          <div v-if="opened" class="dropdown">
-            <div v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
-              <h3
-                class="h-full w-full border border-gray-200 p-1.5"
-                :class="
-                  index === orderGetters.getOrderAttributes(orderItem).length - 1 &&
-                  orderGetters.getItemOrderProperties(orderItem).length === 0
-                    ? 'rounded-b-md'
-                    : ''
-                "
-              >
-                <div class="flex justify-between">
-                  <p class="text-sm px-2">{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
-                  <p class="text-sm px-2 text-gray-700">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
-                </div>
-              </h3>
-            </div>
-            <div v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
-              <h3
-                class="h-full w-full border border-gray-200 p-1.5"
-                :class="index === orderGetters.getItemOrderProperties(orderItem).length - 1 ? 'rounded-b-md' : ''"
-              >
-                <div class="flex justify-between">
-                  <p class="text-sm px-2">{{ orderGetters.getItemOrderPropertyName(property) }}</p>
-                  <p class="text-sm px-2 text-gray-800">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
-                </div>
-              </h3>
-            </div>
-            <h3
-              v-if="
-                orderGetters.getOrderAttributes(props.orderItem).length === 0 &&
-                orderGetters.getItemOrderProperties(props.orderItem).length === 0
-              "
-              class="h-full px-4 w-full border border-gray-200 p-1 rounded-b-md"
+          <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
+            <SfAccordionItem
+              :model-value="opened"
+              @update:model-value="toggleDropdown"
             >
-              {{ $t('noneExisting') }}
-            </h3>
+              <template #summary>
+                <div class="flex justify-between px-3.5 py-1.5 bg-neutral-100">
+                  {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
+                  <SfIconChevronLeft
+                    class="text-neutral-500"
+                    :class="{ 'rotate-90': opened, '-rotate-90': !opened }"
+                  />
+                </div>
+              </template>
+              <h3>
+                <div class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm" v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
+                    <p>{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
+                    <p class="text-gray-500">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
+                </div>
+                <div class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm" v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
+                    <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
+                    <p class=" text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
+                </div>
+                <p 
+                  v-if="orderGetters.getOrderAttributes(props.orderItem).length === 0 && orderGetters.getItemOrderProperties(props.orderItem).length === 0"
+                  class="py-1.5 border-t-2 text-sm px-4"
+                >
+                  {{ $t('noneExisting') }}
+                </p>
+              </h3>
+            </SfAccordionItem>
           </div>
         </div>
       </div>
@@ -165,7 +148,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfSelect, SfIconChevronLeft } from '@storefront-ui/vue';
+import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
