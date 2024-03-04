@@ -109,30 +109,35 @@
 
         <div class="my-2 w-full md:self-end">
           <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
-            <SfAccordionItem
-              :model-value="opened"
-              @update:model-value="toggleDropdown"
-            >
+            <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
               <template #summary>
                 <div class="flex justify-between px-3.5 py-1.5 bg-neutral-100">
                   {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
-                  <SfIconChevronLeft
-                    class="text-neutral-500"
-                    :class="{ 'rotate-90': opened, '-rotate-90': !opened }"
-                  />
+                  <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
                 </div>
               </template>
               <h3>
-                <div class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm" v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
-                    <p>{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
-                    <p class="text-gray-500">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
+                <div
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
+                  v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)"
+                  :key="index"
+                >
+                  <p>{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
+                  <p class="text-gray-500">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
                 </div>
-                <div class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm" v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
-                    <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
-                    <p class=" text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
+                <div
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
+                  v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)"
+                  :key="index"
+                >
+                  <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
+                  <p class="text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
                 </div>
-                <p 
-                  v-if="orderGetters.getOrderAttributes(props.orderItem).length === 0 && orderGetters.getItemOrderProperties(props.orderItem).length === 0"
+                <p
+                  v-if="
+                    orderGetters.getOrderAttributes(props.orderItem).length === 0 &&
+                    orderGetters.getItemOrderProperties(props.orderItem).length === 0
+                  "
                   class="py-1.5 border-t-2 text-sm px-4"
                 >
                   {{ $t('noneExisting') }}
