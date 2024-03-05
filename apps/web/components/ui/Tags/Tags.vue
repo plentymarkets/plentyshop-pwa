@@ -1,22 +1,25 @@
 <template>
-  <div v-if="tags && tags.length > 0" data-testid="tags">
-    <ul class="flex flex-row flex-wrap gap-1">
-      <li v-for="(tag, index) in tags" :key="index">
-        <p
-          class="border rounded-xl inline-block text-center py-1 px-2 text-xs"
-          :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
-          :style="{
-            backgroundColor: tagGetters.getTagBackgroundColor(tag) || 'bg-white',
-          }"
-        >
-          {{ tagGetters.getTagName(tag) }}
-        </p>
-      </li>
+  <div v-if="tags.length > 0" data-testid="tags">
+    <ul class="flex flex-row flex-wrap gap-2">
+      <SfListItem
+        v-for="(tag, index) in tags"
+        :key="index"
+        size="sm"
+        tag="li"
+        type="button"
+        :id="tag.id"
+        :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
+        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text"
+        :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
+      >
+        {{ tagGetters.getTagName(tag) }}
+      </SfListItem>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
+import { SfListItem } from '@storefront-ui/vue';
 import { tagGetters } from '@plentymarkets/shop-sdk';
 import type { TagsProps } from '~/components/ui/Tags/types';
 
