@@ -4,12 +4,10 @@
       <SfListItem
         v-for="(tag, index) in tags"
         :key="index"
-        size="sm"
-        tag="li"
-        type="button"
         :id="tag.id"
+        size="sm"
         :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
-        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text"
+        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text opacity-75"
         :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
       >
         {{ tagGetters.getTagName(tag) }}
