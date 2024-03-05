@@ -20,10 +20,7 @@
         @click="doUpdateValue(item)"
       >
         <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
-          <img
-            src="https://timms.plentymarkets-cloud01.com/images/produkte/grp/attr_1.jpg"
-            :alt="productAttributeGetters.getAttributeValueName(item)"
-          />
+          <img :src="getImagePath(item)" :alt="productAttributeGetters.getAttributeValueName(item)" />
         </SfTooltip>
       </div>
     </div>
@@ -45,9 +42,15 @@ const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
 const { t } = useI18n();
 const selectedAttributeValueName = ref<string>('');
+const runtimeConfig = useRuntimeConfig();
+const apiEndpoint = runtimeConfig.public?.apiEndpoint ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
+};
+
+const getImagePath = (item: VariationMapProductAttributeValue): string => {
+  return apiEndpoint + productAttributeGetters.getAttributeValueImageUrl(item);
 };
 
 const validationSchema = toTypedSchema(

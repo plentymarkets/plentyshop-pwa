@@ -22,7 +22,7 @@ import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 const componentsMapper: ComponentsMapper = {
   dropdown: AttributeDropdown,
   box: AttributeBox,
-  image: AttributeImage,
+  image: AttributeBox,
 };
 
 const { attributes, setAttribute } = useProductAttributes();
