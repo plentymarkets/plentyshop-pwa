@@ -40,7 +40,7 @@
         :unit-name="productGetters.getUnitName(product)"
       />
     </div>
-    <UiTags class="my-2" :product="product" />
+    <UiTags class="mt-4" :product="product" />
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
