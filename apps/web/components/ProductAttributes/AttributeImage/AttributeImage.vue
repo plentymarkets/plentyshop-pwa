@@ -5,7 +5,9 @@
       class="leading-5 text-sm text-zinc-900"
     >
       <span>{{ productAttributeGetters.getAttributeName(attribute) }}</span>
-      <span v-if="value">: <b>{{ selectedAttributeValueName }}</b></span>
+      <span v-if="value"
+        >: <b>{{ selectedAttributeValueName }}</b></span
+      >
     </label>
     <div :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)" class="w-full flex gap-4 flex-wrap">
       <div
