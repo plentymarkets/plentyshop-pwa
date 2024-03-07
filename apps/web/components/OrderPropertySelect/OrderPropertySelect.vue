@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${orderPropertyId}`">
+    <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
         ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}

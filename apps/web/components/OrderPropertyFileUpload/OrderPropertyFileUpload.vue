@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex row">
-      <label :for="`prop-${orderPropertyId}`">
+      <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
         {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
         -
         {{ t('orderProperties.upload.orderPropertyTypeFile') }}
