@@ -20,7 +20,7 @@
           :key="index"
           :id="`tag-${tag.id}`"
           size="sm"
-          :class="[commonClasses, tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white']"
+          :class="[commonClasses, 'opacity-75', tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white']"
           :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
         >
           {{ tagGetters.getTagName(tag) }}
@@ -36,7 +36,7 @@ import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
 import type { BadgesProps } from '~/components/ui/Badges/types';
 import { ProductTag } from '@plentymarkets/shop-api';
 
-const commonClasses = 'text-xs font-medium select-none rounded-md !w-fit !cursor-text opacity-75 !px-2';
+const commonClasses = 'text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2';
 const props = withDefaults(defineProps<BadgesProps>(), { displayTags: true, displayAvailability: false });
 const productTags = ref([] as ProductTag[]);
 const product = props.product;
