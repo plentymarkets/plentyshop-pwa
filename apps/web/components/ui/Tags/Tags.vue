@@ -3,7 +3,8 @@
     <ul class="flex flex-row flex-wrap gap-1">
       <li v-for="(tag, index) in tags" :key="index">
         <p
-          class="border rounded-xl inline-block text-center py-1 px-2 text-xs"
+          @click="onTagClick(tag)"
+          class="border rounded-xl inline-block text-center py-1 px-2 text-xs cursor-pointer"
           :class="tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white'"
           :style="{
             backgroundColor: tagGetters.getTagBackgroundColor(tag) || 'bg-white',
@@ -19,7 +20,14 @@
 <script setup lang="ts">
 import { tagGetters } from '@plentymarkets/shop-sdk';
 import type { TagsProps } from '~/components/ui/Tags/types';
+import { ProductTag } from '@plentymarkets/shop-api';
 
 const { product } = withDefaults(defineProps<TagsProps>(), {});
+const localePath = useLocalePath();
+
+const onTagClick = (tag: ProductTag) => {
+  navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}`));
+};
+
 const tags = tagGetters.getTags(product);
 </script>

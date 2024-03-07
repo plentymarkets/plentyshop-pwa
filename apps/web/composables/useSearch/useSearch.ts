@@ -44,8 +44,19 @@ export const useSearch: UseSearchReturn = () => {
     return state.value.data;
   };
 
+  const searchByTag = async (tagName: string, additionalParams: ItemSearchParams = {}) => {
+    const params = {
+      ...additionalParams,
+      type: 'tag',
+      tagName: tagName,
+    };
+
+    return await getSearch(params);
+  };
+
   return {
     getSearch,
+    searchByTag,
     ...toRefs(state.value),
   };
 };
