@@ -54,6 +54,7 @@
       v-html="productGetters.getShortDescription(product)"
     ></div>
 
+    <BundleOrderItems/>
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
