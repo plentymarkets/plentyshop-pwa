@@ -28,13 +28,7 @@
       </SfLink>
       <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
 
-      <UiBadges
-        v-if="cartItem.variation"
-        :product="cartItem.variation"
-        :display-tags="false"
-        :display-availability="true"
-        class="mt-4"
-      />
+      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
 
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
