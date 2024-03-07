@@ -37,12 +37,12 @@ import type { BadgesProps } from '~/components/ui/Badges/types';
 import { ProductTag } from '@plentymarkets/shop-api';
 
 const commonClasses = 'text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2';
-const props = withDefaults(defineProps<BadgesProps>(), { displayTags: true, displayAvailability: false });
+const props = withDefaults(defineProps<BadgesProps>(), { useTags: true, useAvailability: false });
 const productTags = ref([] as ProductTag[]);
 const availabilityStyles = ref({});
 const product = props.product;
 
-const availabilityEnabled = props.displayAvailability;
+const availabilityEnabled = props.useAvailability;
 if (availabilityEnabled) {
   availabilityStyles.value = {
     backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
@@ -50,7 +50,7 @@ if (availabilityEnabled) {
   };
 }
 
-const tagsEnabled = props.displayTags;
+const tagsEnabled = props.useTags;
 if (tagsEnabled) {
   productTags.value = tagGetters.getTags(product);
 }
