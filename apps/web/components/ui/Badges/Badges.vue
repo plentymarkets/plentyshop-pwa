@@ -1,37 +1,37 @@
 <template>
   <div data-testid="badges">
     <ul class="flex flex-row flex-wrap gap-2">
-      <SfListItem
-        v-if="availabilityEnabled"
-        :id="`availability-${productGetters.getAvailabilityId(product)}`"
-        size="sm"
-        :class="[commonClasses, '!gap-1']"
-        :style="availabilityStyles"
-      >
-        <template #prefix>
-          <SfIconCheck size="xs" :style="availabilityStyles" />
-        </template>
-        {{ productGetters.getAvailabilityName(product) }}
-      </SfListItem>
-
       <template v-if="tagsEnabled && productTags.length > 0">
         <SfListItem
           v-for="(tag, index) in productTags"
           :key="index"
-          :id="`tag-${tag.id}`"
           size="sm"
-          :class="[commonClasses, 'opacity-75', tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white']"
+          :class="[
+            commonClasses,
+            tagGetters.getAgenciesTagCLass(tag),
+            'opacity-75',
+            tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white',
+          ]"
           :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
         >
           {{ tagGetters.getTagName(tag) }}
         </SfListItem>
       </template>
+
+      <SfListItem
+        v-if="availabilityEnabled"
+        size="sm"
+        :class="[commonClasses, productGetters.getAgenciesAvailabilityCLass(product), '!gap-1']"
+        :style="availabilityStyles"
+      >
+        {{ productGetters.getAvailabilityName(product) }}
+      </SfListItem>
     </ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconCheck, SfListItem } from '@storefront-ui/vue';
+import { SfListItem } from '@storefront-ui/vue';
 import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
 import type { BadgesProps } from '~/components/ui/Badges/types';
 import { ProductTag } from '@plentymarkets/shop-api';
