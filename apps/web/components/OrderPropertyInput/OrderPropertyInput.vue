@@ -26,6 +26,7 @@
         v-model="value"
         v-bind="valueAttributes"
         :invalid="Boolean(errors['value'])"
+        size="lg"
         :wrapper-class="'w-full'"
       />
 

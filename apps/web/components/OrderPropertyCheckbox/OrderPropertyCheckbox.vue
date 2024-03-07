@@ -7,11 +7,14 @@
         v-model="value"
         v-bind="valueAttributes"
         :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
-        class="mr-2"
+        class="mr-2 h-12"
       />
 
-      <div class="flex items-center">
-        <label class="cursor-pointer select-none peer-disabled:text-disabled-900" :for="`prop-${orderPropertyId}`">
+      <div class="flex h-12 items-center justify-center">
+        <label
+          class="cursor-pointer h-12 flex items-center justify-center peer-disabled:text-disabled-900"
+          :for="`prop-${orderPropertyId}`"
+        >
           {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
           <template v-if="orderPropertyLabel.surchargeType">
             ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
