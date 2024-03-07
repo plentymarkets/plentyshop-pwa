@@ -5,12 +5,12 @@
         v-if="availabilityEnabled"
         :id="`availability-${productGetters.getAvailabilityId(product)}`"
         size="sm"
-        :class="commonClasses"
-        :style="{
-          backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
-          color: productGetters.getAvailabilityTextColor(product),
-        }"
+        :class="[commonClasses, '!gap-1']"
+        :style="availabilityStyles"
       >
+        <template #prefix>
+          <SfIconCheck size="xs" :style="availabilityStyles" />
+        </template>
         {{ productGetters.getAvailabilityName(product) }}
       </SfListItem>
 
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfListItem } from '@storefront-ui/vue';
+import { SfIconCheck, SfListItem } from '@storefront-ui/vue';
 import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
 import type { BadgesProps } from '~/components/ui/Badges/types';
 import { ProductTag } from '@plentymarkets/shop-api';
@@ -39,8 +39,19 @@ import { ProductTag } from '@plentymarkets/shop-api';
 const commonClasses = 'text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2';
 const props = withDefaults(defineProps<BadgesProps>(), { displayTags: true, displayAvailability: false });
 const productTags = ref([] as ProductTag[]);
+const availabilityStyles = ref({});
 const product = props.product;
+
 const availabilityEnabled = props.displayAvailability;
+if (availabilityEnabled) {
+  availabilityStyles.value = {
+    backgroundColor: productGetters.getAvailabilityBackgroundColor(product),
+    color: productGetters.getAvailabilityTextColor(product),
+  };
+}
+
 const tagsEnabled = props.displayTags;
-if (tagsEnabled) productTags.value = tagGetters.getTags(product);
+if (tagsEnabled) {
+  productTags.value = tagGetters.getTags(product);
+}
 </script>
