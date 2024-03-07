@@ -4658,6 +4658,7 @@ __metadata:
     wait-on: ^7.0.1
   languageName: unknown
   linkType: soft
+
 "@plentymarkets/shop-api@npm:^0.27.2":
   version: 0.27.2
   resolution: "@plentymarkets/shop-api@npm:0.27.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.27.2%2Fd042e523b4f09bbc44feebc2bc4d79dfc9de3ce4"
