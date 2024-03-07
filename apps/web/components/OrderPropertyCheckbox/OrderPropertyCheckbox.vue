@@ -12,7 +12,7 @@
 
       <div class="flex h-12 items-center justify-center">
         <label
-          class="cursor-pointer h-12 flex items-center justify-center peer-disabled:text-disabled-900"
+          class="cursor-pointer select-none h-12 flex items-center justify-center peer-disabled:text-disabled-900"
           :for="`prop-${orderPropertyId}`"
         >
           {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
