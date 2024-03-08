@@ -53,7 +53,6 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
-
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
@@ -96,17 +95,6 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <div
-        class="typography-text-xs flex gap-1"
-        v-if="
-          productPropertyGetters.groupsHasRequiredOrderProperties(
-            productPropertyGetters.getOrderPropertiesGroups(product),
-          )
-        "
-      >
-        <span>{{ t('asterisk') }}{{ t('asterisk') }}</span>
-        <span>{{ t('orderProperties.hasRequiredFields') }}</span>
-      </div>
       <PayPalExpressButton
         class="mt-4"
         type="SingleItem"
@@ -118,7 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,
