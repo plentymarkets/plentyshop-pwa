@@ -16,13 +16,13 @@
 import { ProductAttributesProps, ComponentsMapper } from './types';
 import AttributeDropdown from './AttributeDropdown/AttributeDropdown.vue';
 import AttributeBox from './AttributeBox/AttributeBox.vue';
-import AttributeImage from './AttributeImage/AttributeImage.vue';
+// import AttributeImage from './AttributeImage/AttributeImage.vue';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 
 const componentsMapper: ComponentsMapper = {
   dropdown: AttributeDropdown,
   box: AttributeBox,
-  image: AttributeImage,
+  image: AttributeBox,
 };
 
 const { attributes, setAttribute } = useProductAttributes();
