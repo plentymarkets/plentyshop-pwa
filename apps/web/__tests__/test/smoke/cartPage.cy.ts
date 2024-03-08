@@ -17,7 +17,7 @@ describe('Smoke: Cart Page', () => {
       .openCart()
       .hasOrderSummary()
       .openCouponAccordion()
-      .addCoupon('KB82AZ')
+      .addCoupon('Z23ZMP')
       .orderSummaryAfterCouponApplied()
       .removeCoupon()
       .orderSummaryAfterCouponRemoved();
