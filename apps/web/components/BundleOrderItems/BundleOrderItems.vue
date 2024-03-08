@@ -6,7 +6,7 @@
                 <p>
                     {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
                 </p>
-                <p class="h-auto line-clamp-3">{{ productBundleGetters.getBundleItemDescription(item) }}</p>
+                <p class="h-auto line-clamp-3" v-html="productBundleGetters.getBundleItemDescription(item)"></p>
             </div>
         </div>
     </div>
