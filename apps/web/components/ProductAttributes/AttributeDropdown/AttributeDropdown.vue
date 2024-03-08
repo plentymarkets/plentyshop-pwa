@@ -69,6 +69,19 @@ const doUpdateValue = (value: number) => {
   selectedValue.value = getValue(props.attribute.attributeId);
 };
 
+const setValue = (value: string | undefined) => {
+  selectedValue.value = value ? Number(value) : undefined;
+};
+
+setValue(value.value);
+
+watch(
+  () => value.value,
+  () => {
+    setValue(value.value);
+  },
+);
+
 watch(
   () => meta.value,
   () => {
