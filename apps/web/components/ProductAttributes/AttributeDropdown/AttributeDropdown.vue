@@ -8,8 +8,7 @@
     </label>
     <SfSelect
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
-      size="sm"
-      class="h-10"
+      size="lg"
       v-model="value"
       @update:model-value="(val) => doUpdateValue(val)"
       :placeholder="t('pleaseSelect')"
