@@ -155,9 +155,7 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
       return;
     }
 
-    if (state.value.attributeValues[attributeId] === valueId) {
-      delete state.value.attributeValues[attributeId];
-    } else {
+    if (state.value.attributeValues[attributeId] !== valueId) {
       state.value.attributeValues[attributeId] = valueId;
     }
 
