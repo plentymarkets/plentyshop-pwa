@@ -77,7 +77,6 @@
             size="lg"
             class="w-full"
             :disabled="loading || !productGetters.isSalable(product)"
-            :class="{ '!bg-disabled-300 !text-disabled-500 !ring-0 !shadow-none': !getCombination() }"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
