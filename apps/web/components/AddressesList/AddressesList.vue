@@ -93,6 +93,6 @@ const onSave = async (address: Address, useAsShippingAddress: boolean) => {
 };
 
 const makeDefault = (address: Address) => {
-  setDefault(Number(userAddressGetters.getId(address)));
+  setDefault(address);
 };
 </script>
