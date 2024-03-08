@@ -24,7 +24,6 @@
         variant="secondary"
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
-        {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
       <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
       <div v-if="cartItem.variation" class="mt-2">
