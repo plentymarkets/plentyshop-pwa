@@ -1,8 +1,8 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseCanonicalReturn } from './types';
-import { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
+import type { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
 import type { Facet } from '@plentymarkets/shop-api';
-import { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
 /**
  * @description Composable managing canonical data
  * @returns UseCanonicalReturn

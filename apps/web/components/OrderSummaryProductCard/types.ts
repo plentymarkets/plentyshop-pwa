@@ -1,4 +1,4 @@
-import { Order, OrderItem } from '@plentymarkets/shop-api';
+import type { Order, OrderItem } from '@plentymarkets/shop-api';
 
 export type OrderSummaryProductCardProps = {
   orderItem: OrderItem;

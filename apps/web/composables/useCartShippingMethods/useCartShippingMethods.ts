@@ -7,7 +7,7 @@ import type {
   GetShippingMethods,
   SaveShippingMethod,
 } from '~/composables/useCartShippingMethods/types';
-import { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
+import type { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
 import { useSdk } from '~/sdk';
 
 /**

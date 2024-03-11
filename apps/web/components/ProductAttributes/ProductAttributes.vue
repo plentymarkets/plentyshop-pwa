@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProductAttributesProps, ComponentsMapper } from './types';
+import type { ProductAttributesProps, ComponentsMapper } from './types';
 import AttributeDropdown from './AttributeDropdown/AttributeDropdown.vue';
 import AttributeBox from './AttributeBox/AttributeBox.vue';
 // import AttributeImage from './AttributeImage/AttributeImage.vue';

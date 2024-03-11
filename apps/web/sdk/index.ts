@@ -1,6 +1,6 @@
-import { PlentysystemsModuleType, plentysystemsModule, client } from '@plentymarkets/shop-sdk';
+import { type PlentysystemsModuleType, plentysystemsModule, client } from '@plentymarkets/shop-sdk';
 import { initSDK, buildModule } from '@vue-storefront/sdk';
-import { AxiosRequestHeaders } from 'axios';
+import type { AxiosRequestHeaders } from 'axios';
 
 // Maintain a reference to the interceptor
 let interceptorIdRequest: number | null = null;
@@ -12,6 +12,7 @@ export const useSdk = () => {
   const { ssrLocale } = useInitialSetup();
   const { token } = useCsrfToken();
   const sdkConfig = {
+    // @ts-ignore
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
       apiUrl: `${config.public.apiUrl}/plentysystems`,
     }),
