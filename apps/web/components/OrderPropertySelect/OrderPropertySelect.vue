@@ -17,6 +17,7 @@
           :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
           v-bind="selectedValueAttributes"
+          class="h-12"
           :invalid="isOrderPropertyRequired && Boolean(errors['selectedValue'])"
           :placeholder="`-- ${t('orderProperties.select')} --`"
         >
