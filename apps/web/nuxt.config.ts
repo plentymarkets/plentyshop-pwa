@@ -46,6 +46,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -106,6 +107,12 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+  },
+  site: {
+    url: '',
+  },
+  sitemap: {
+    sitemaps: true,
   },
   hooks: {
     'pages:extend'(pages) {
