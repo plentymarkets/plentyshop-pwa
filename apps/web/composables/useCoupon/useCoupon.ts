@@ -21,7 +21,7 @@ export const useCoupon: UseCouponReturn = () => {
    * @example
    * ``` ts
    * addCoupon({
-      couponCode: 'KB82AZ'
+      couponCode: 'Z23ZMP'
     })
    * ```
    */

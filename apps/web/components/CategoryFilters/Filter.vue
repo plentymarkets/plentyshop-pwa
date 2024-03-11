@@ -49,9 +49,7 @@
             {{ $t('apply') }}
           </SfButton>
           <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
-            <template #prefix>
-              <SfIconDelete />
-            </template>
+            <SfIconClose />
           </SfButton>
         </div>
       </form>
@@ -92,7 +90,7 @@ import { facetGetters } from '@plentymarkets/shop-sdk';
 import {
   SfInput,
   SfIconCheck,
-  SfIconDelete,
+  SfIconClose,
   SfButton,
   SfAccordionItem,
   SfIconChevronLeft,
