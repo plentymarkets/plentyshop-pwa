@@ -1,4 +1,4 @@
-import { CategoryTreeItem } from "@plentymarkets/shop-api";
+import type { CategoryTreeItem } from "@plentymarkets/shop-api";
 
 export const CategoryTreeMock: CategoryTreeItem[] = [
     {

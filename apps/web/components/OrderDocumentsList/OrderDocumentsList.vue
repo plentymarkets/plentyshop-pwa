@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { OrderDocument } from '@plentymarkets/shop-api';
+import type { OrderDocument } from '@plentymarkets/shop-api';
 import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import type { DocumentsListProps } from './types';

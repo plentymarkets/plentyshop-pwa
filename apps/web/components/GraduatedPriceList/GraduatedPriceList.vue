@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
+import type { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
 import { SfIconCheck } from '@storefront-ui/vue';
 
 const props = withDefaults(defineProps<GraduatedPriceListProps>(), {

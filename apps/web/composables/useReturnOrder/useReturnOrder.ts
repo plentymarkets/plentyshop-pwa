@@ -1,5 +1,5 @@
 import { toRefs } from '@vueuse/shared';
-import {
+import type {
   SelectAll,
   SetCurrentReturnOrder,
   UseReturnOrderReturn,

@@ -1,6 +1,6 @@
-import { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
+import type { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
-import { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
+import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
 import { useSdk } from '~/sdk';
 
 /**
