@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import Badges from '~/components/ui/Badges/Badges.vue';
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 
 describe('<Badges />', () => {
   it('should render component', () => {

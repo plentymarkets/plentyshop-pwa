@@ -34,7 +34,7 @@
 import { SfListItem } from '@storefront-ui/vue';
 import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
 import type { BadgesProps } from '~/components/ui/Badges/types';
-import { ProductTag } from '@plentymarkets/shop-api';
+import type { ProductTag } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<BadgesProps>(), { useTags: true, useAvailability: false });
 const productTags = ref([] as ProductTag[]);
