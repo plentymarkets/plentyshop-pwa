@@ -16,15 +16,17 @@
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderDetails :order="order" />
         </div>
-
         <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
-          <OrderSummaryProductCard
-            v-for="(item, index) in orderGetters.getItems(order)"
-            :order="order"
-            :order-item="item"
-            :index="index"
-            :key="item.id"
-          />
+          <div v-for="(item, index) in orderGetters.getItems(order)">
+            <!-- scheinbar definiert die item.typeId == 3 ein bundle Item eines bundles, muss ich noch fragen ob das benutzbar zum differenzieren ist -->
+            <OrderSummaryProductCard
+              v-if="item.typeId !== 3"
+              :order="order"
+              :order-item="item"
+              :index="index"
+              :key="item.id"
+            />
+          </div>
         </div>
 
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">

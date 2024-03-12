@@ -60,10 +60,23 @@
             </div>
           </div>
       </div>
-      <div v-if="cartItem.variation?.bundleComponents" class="my-2">
+      <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
           <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
-            <p>
-                {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+            <SfLink
+                :tag="NuxtLink"
+                v-if="item.data.filter.isSalable"
+                :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+                variant="secondary"
+                class="no-underline typography-text-sm"
+            >
+                <p class="">
+                    {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+                </p>  
+            </SfLink>
+            <p v-if="!item.data.filter.isSalable">
+                <p class=" text-sm">
+                    {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class=" px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+                </p>  
             </p>
           </div>
       </div>
