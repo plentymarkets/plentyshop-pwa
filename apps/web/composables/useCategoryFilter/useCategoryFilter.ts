@@ -35,9 +35,16 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
 
 const getCategorySlugsFromPath = (path: string): string[] => {
   const parts = path.split('/');
-  const categoryIndex = parts.indexOf('c');
 
-  return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
+   const { locale, defaultLocale } = useNuxtApp().$i18n as any;
+
+  if (locale.value !== defaultLocale) {
+    const categoryIndex = parts.indexOf(locale.value);
+    return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
+  }
+  else {
+    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part));
+  }
 };
 
 /**
