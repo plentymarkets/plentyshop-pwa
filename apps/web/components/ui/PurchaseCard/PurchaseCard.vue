@@ -5,7 +5,7 @@
     data-testid="purchase-card"
   >
     <div class="grid grid-cols-[2fr_1fr] mt-4">
-      <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+      <h1 class="font-bold typography-headline-4" data-testid="product-name">
         {{ productGetters.getName(product) }}
       </h1>
       <div class="flex items-center justify-center">
@@ -27,7 +27,6 @@
         />
       </div>
     </div>
-    <UiTags class="my-2" :product="product" />
     <Price
       :price="currentActualPrice"
       :normal-price="normalPrice"
@@ -41,6 +40,7 @@
         :unit-name="productGetters.getUnitName(product)"
       />
     </div>
+    <UiTags class="mt-4" :product="product" />
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
@@ -53,7 +53,6 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
-
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
@@ -77,7 +76,6 @@
             size="lg"
             class="w-full"
             :disabled="loading || !productGetters.isSalable(product)"
-            :class="{ '!bg-disabled-300 !text-disabled-500 !ring-0 !shadow-none': !getCombination() }"
           >
             <template #prefix v-if="!loading">
               <SfIconShoppingCart size="sm" />
@@ -97,17 +95,6 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <div
-        class="typography-text-xs flex gap-1"
-        v-if="
-          productPropertyGetters.groupsHasRequiredOrderProperties(
-            productPropertyGetters.getOrderPropertiesGroups(product),
-          )
-        "
-      >
-        <span>{{ t('asterisk') }}{{ t('asterisk') }}</span>
-        <span>{{ t('orderProperties.hasRequiredFields') }}</span>
-      </div>
       <PayPalExpressButton
         class="mt-4"
         type="SingleItem"
@@ -119,7 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,

@@ -33,7 +33,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo } from '@storefront-ui/vue';
-import { SecondaryNotificationProps } from './types';
+import type { SecondaryNotificationProps } from './types';
 
 defineProps<SecondaryNotificationProps>();
 </script>

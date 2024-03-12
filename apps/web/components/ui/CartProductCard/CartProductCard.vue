@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg min-w-[320px] p-4 last:mb-0"
+    class="relative flex border-neutral-200 border-b hover:shadow-[rgba(17,_17,_26,_0.1)_0px_0px_12px] min-w-[320px] p-4 last:mb-0"
     data-testid="cart-product-card"
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
@@ -76,14 +76,24 @@
       </div>
     </div>
     <SfLoaderCircular v-if="deleteLoading" />
-    <SfIconDelete v-else-if="!disabled" class="cursor-pointer" @click="deleteItem" />
+
+    <SfButton
+      v-else-if="!disabled"
+      @click="deleteItem"
+      square
+      variant="tertiary"
+      size="sm"
+      class="absolute top-2 right-2 bg-white"
+    >
+      <SfIconClose size="sm" />
+    </SfButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-sdk';
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconDelete, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
