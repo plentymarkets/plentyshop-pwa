@@ -28,11 +28,16 @@
       </div>
     </div>
     <UiTags class="my-2" :product="product" />
-    <Price
-      :price="currentActualPrice"
-      :normal-price="normalPrice"
-      :old-price="productGetters.getPrice(product).regular ?? 0"
-    />
+    <div class="flex space-x-2">
+      <Price
+        :price="currentActualPrice"
+        :normal-price="normalPrice"
+        :old-price="productGetters.getPrice(product).regular ?? 0"
+      />
+      <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+        <UiTag :size="'sm'" :variant="'secondary'">{{ $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) }) }}</UiTag>
+      </div>
+    </div>
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
@@ -120,7 +125,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productPropertyGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,
@@ -130,6 +135,7 @@ import {
   SfLoaderCircular,
   SfTooltip,
 } from '@storefront-ui/vue';
+import { max } from 'lodash-es';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const runtimeConfig = useRuntimeConfig();
