@@ -9,7 +9,6 @@
         :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
         class="mr-2 h-12"
       />
-
       <div class="flex h-12 items-center justify-center">
         <label
           class="cursor-pointer select-none h-12 flex items-center justify-center peer-disabled:text-disabled-900"
