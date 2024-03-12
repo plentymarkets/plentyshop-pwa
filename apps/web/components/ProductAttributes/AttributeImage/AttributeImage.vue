@@ -32,8 +32,8 @@
 
 <script setup lang="ts">
 import { SfTooltip } from '@storefront-ui/vue';
-import { AttributeSelectProps } from '../types';
-import { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
+import type { AttributeSelectProps } from '../types';
+import type { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 import { object, number } from 'yup';
 import { useForm } from 'vee-validate';

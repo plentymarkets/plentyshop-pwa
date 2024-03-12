@@ -12,7 +12,7 @@ import NeutralNotification from './NeutralNotification/NeutralNotification.vue';
 import PositiveNotification from './PositiveNotification/PositiveNotification.vue';
 import SecondaryNotification from './SecondaryNotification/SecondaryNotification.vue';
 import WarningNotification from './WarningNotification/WarningNotification.vue';
-import { ComponentsMapper } from './types';
+import type { ComponentsMapper } from './types';
 
 const { data: notifications } = useNotification();
 

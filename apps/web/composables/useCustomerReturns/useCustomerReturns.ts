@@ -1,4 +1,4 @@
-import { Order, PaginatedResult, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { Order, PaginatedResult, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturnsReturn,

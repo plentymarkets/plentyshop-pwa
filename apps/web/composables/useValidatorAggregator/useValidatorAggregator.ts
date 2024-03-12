@@ -1,4 +1,4 @@
-import { UseValidatorAggregatorReturn, UseValidatorAggregatorState, ValidatorMethodType } from './types';
+import type { UseValidatorAggregatorReturn, UseValidatorAggregatorState, ValidatorMethodType } from './types';
 
 /**
  * @description Composable for managing form validation.

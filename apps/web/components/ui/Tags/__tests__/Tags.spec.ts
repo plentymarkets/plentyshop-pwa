@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import Tags from '~/components/ui/Tags/Tags.vue';
-import {Product} from "@plentymarkets/shop-api";
+import type { Product } from "@plentymarkets/shop-api";
 
 describe('<Tags />', () => {
   it('should render component', () => {

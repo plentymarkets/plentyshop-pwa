@@ -75,7 +75,9 @@ export class ProductListPageObject {
   }
 
   goToProduct() {
-    this.products.first().click()
+    cy.intercept('/plentysystems/getProduct').as('getProduct');
+    this.products.first().click();
+    cy.wait('@getProduct');
 
     return this
   }

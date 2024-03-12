@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${orderPropertyId}`">
+    <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
         ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
@@ -17,6 +17,7 @@
           :id="`prop-${orderPropertyId}`"
           v-model="selectedValue"
           v-bind="selectedValueAttributes"
+          class="h-12"
           :invalid="isOrderPropertyRequired && Boolean(errors['selectedValue'])"
           :placeholder="`-- ${t('orderProperties.select')} --`"
         >
@@ -43,7 +44,7 @@
 
 <script lang="ts" setup>
 import { SfSelect } from '@storefront-ui/vue';
-import { OrderPropertySelectProps } from './types';
+import type { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { object, string } from 'yup';

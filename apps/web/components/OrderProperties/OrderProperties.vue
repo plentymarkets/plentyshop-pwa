@@ -4,12 +4,12 @@
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
 
-    <div class="font-normal typography-text-sm">
+    <div class="font-normal typography-text-sm mb-2">
       {{ productPropertyGetters.getOrderPropertyGroupDescription(group) }}
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div class="mt-2 flex items-center">
+      <div class="mb-2 flex items-center">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { ComponentsMapper, OrderPropertiesProps } from './types';
+import type { ComponentsMapper, OrderPropertiesProps } from './types';
 import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
 import OrderPropertySelect from '~/components/OrderPropertySelect/OrderPropertySelect.vue';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';

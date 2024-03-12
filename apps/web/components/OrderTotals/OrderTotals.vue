@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { OrderTotalsPropsType } from './types';
+import type { OrderTotalsPropsType } from './types';
 
 const props = defineProps<OrderTotalsPropsType>();
 const { t, n } = useI18n();

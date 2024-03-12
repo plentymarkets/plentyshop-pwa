@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import { OrderDocument } from '@plentymarkets/shop-api';
+import type { OrderDocument } from '@plentymarkets/shop-api';
 
 export interface UseOrderDocumentState {
   data: number[];

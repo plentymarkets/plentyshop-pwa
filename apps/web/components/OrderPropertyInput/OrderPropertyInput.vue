@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${orderPropertyId}`">
+    <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
         ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
@@ -26,6 +26,7 @@
         v-model="value"
         v-bind="valueAttributes"
         :invalid="Boolean(errors['value'])"
+        size="lg"
         :wrapper-class="'w-full'"
       />
 
@@ -40,7 +41,7 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyInputProps } from './types';
+import type { OrderPropertyInputProps } from './types';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 
