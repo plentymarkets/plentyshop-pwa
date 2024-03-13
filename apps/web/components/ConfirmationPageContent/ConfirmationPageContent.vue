@@ -18,9 +18,8 @@
         </div>
         <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
           <div v-for="(item, index) in orderGetters.getItems(order)">
-            <!-- scheinbar definiert die item.typeId == 3 ein bundle Item eines bundles, muss ich noch fragen ob das benutzbar zum differenzieren ist -->
             <OrderSummaryProductCard
-              v-if="item.typeId !== 3"
+              v-if="!orderGetters.isBundleItem(item)"
               :order="order"
               :order-item="item"
               :index="index"

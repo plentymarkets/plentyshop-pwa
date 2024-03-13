@@ -60,7 +60,7 @@
           </li>
         </ul>
       </div>
-      <div class="my-2 mb-6" v-if="orderItem.typeId == 2">
+      <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
         <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
           <SfLink
                 :tag="NuxtLink"
