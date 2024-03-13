@@ -5,16 +5,16 @@ const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'p
 
 const reduceFilters =
   (query: GetFacetsFromURLResponse) =>
-  (previous: GetFacetsFromURLResponse, current: string): GetFacetsFromURLResponse => {
-    const makeArray = Array.isArray(query[current as keyof GetFacetsFromURLResponse]) || nonFilters.has(current);
+    (previous: GetFacetsFromURLResponse, current: string): GetFacetsFromURLResponse => {
+      const makeArray = Array.isArray(query[current as keyof GetFacetsFromURLResponse]) || nonFilters.has(current);
 
-    return {
-      ...previous,
-      [current]: makeArray
-        ? query[current as keyof GetFacetsFromURLResponse]
-        : [query[current as keyof GetFacetsFromURLResponse]],
+      return {
+        ...previous,
+        [current]: makeArray
+          ? query[current as keyof GetFacetsFromURLResponse]
+          : [query[current as keyof GetFacetsFromURLResponse]],
+      };
     };
-  };
 
 const getFiltersToUpdate = (filters: Filters): string => {
   return Object.keys(filters)
@@ -36,9 +36,9 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
 const getCategorySlugsFromPath = (path: string): string[] => {
   const parts = path.split('/');
 
-   const { locale, defaultLocale } = useNuxtApp().$i18n as any;
+  const { locale, defaultLocale, strategy } = useNuxtApp().$i18n as any;
 
-  if (locale.value !== defaultLocale) {
+  if (locale.value !== defaultLocale && strategy === 'prefix_except_default') {
     const categoryIndex = parts.indexOf(locale.value);
     return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
   }

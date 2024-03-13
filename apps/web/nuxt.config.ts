@@ -69,7 +69,6 @@ export default defineNuxtConfig({
             file: 'de.json',
           },
         ],
-        lazy: true,
         langDir: 'lang',
         defaultLocale: 'en',
       },
@@ -115,11 +114,11 @@ export default defineNuxtConfig({
           path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
           file: __dirname + '/pages/product/[slug].vue',
         },
-        {
+        /* {
           name: 'category',
           path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
           file: __dirname + '/pages/category/[slug].vue',
-        }
+        }, */
       );
     },
   },
