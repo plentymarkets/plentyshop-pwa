@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import cookieConfig from './cookie.config';
-import type { SitemapUrl } from '#sitemap';
 
 export default defineNuxtConfig({
   telemetry: false,
