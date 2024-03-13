@@ -1,4 +1,3 @@
-import { useRoute } from 'nuxt/app';
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
@@ -33,37 +32,6 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
   return mergedFilters;
 };
 
-const getCategorySlugsFromPath = (path: string): string[] => {
-  const parts = path.split('/');
-
-  const { locale, defaultLocale, strategy } = useNuxtApp().$i18n;
-
-  const shouldRemoveLocale = (strategy: string, locale: string, defaultLocale: string) => {
-    if (strategy === 'prefix') {
-      return true;
-    }
-
-    if (strategy === 'prefix_except_default') {
-      return locale !== defaultLocale;
-    }
-
-    if (strategy === 'prefix_and_default') {
-      return locale !== defaultLocale || parts[1] === locale;
-    }
-
-    return false;
-  };
-
-  if (shouldRemoveLocale(strategy, locale.value, defaultLocale)) {
-    const localeIndex = parts.indexOf(locale.value);
-    if (localeIndex !== -1) {
-      parts.splice(localeIndex, 1);
-    }
-  }
-
-  return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part));
-};
-
 /**
  * @description Composable for managing category filter.
  * @returns UseCategoryFiltersResponse
@@ -87,8 +55,10 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * ```
    */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
+    const { getCategoryUrlFromRoute } = useLocalization();
+
     return {
-      categoryUrlPath: getCategorySlugsFromPath(route.fullPath).join('/'),
+      categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
