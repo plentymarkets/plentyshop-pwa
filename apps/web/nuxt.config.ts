@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import cookieConfig from './cookie.config';
+import type { SitemapUrl } from '#sitemap';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -112,7 +113,27 @@ export default defineNuxtConfig({
     url: '',
   },
   sitemap: {
-    sitemaps: true,
+    xslColumns: [
+      // URL column must always be set, no value needed
+      { label: 'URL', width: '75%' },
+      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
+    ],
+    autoLastmod: true,
+    sitemaps: {
+      content: {
+        exclude: [
+          '/search',
+          '/offline',
+          '/my-account/**',
+          '/readonly-checkout',
+          '/set-new-password',
+          '/reset-password-success',
+        ],
+        includeAppSources: true,
+      },
+      items: {},
+      categories: {},
+    },
   },
   hooks: {
     'pages:extend'(pages) {
