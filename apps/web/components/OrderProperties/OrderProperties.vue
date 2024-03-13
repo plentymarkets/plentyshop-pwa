@@ -4,12 +4,12 @@
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
 
-    <div class="font-normal typography-text-sm">
+    <div class="font-normal typography-text-sm mb-2">
       {{ productPropertyGetters.getOrderPropertyGroupDescription(group) }}
     </div>
 
     <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div class="mt-2 flex items-center">
+      <div class="mb-2 flex items-center">
         <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
         <ClientOnly>
           <Component
