@@ -35,7 +35,9 @@
         :old-price="productGetters.getPrice(product).regular ?? 0"
       />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
-        <UiTag :size="'sm'" :variant="'secondary'">{{ $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) }) }}</UiTag>
+        <UiTag :size="'sm'" :variant="'secondary'">{{
+          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+        }}</UiTag>
       </div>
     </div>
     <LowestPrice :product="product" />
@@ -59,7 +61,7 @@
       v-html="productGetters.getShortDescription(product)"
     ></div>
 
-    <BundleOrderItems v-if="product.bundleComponents" :product="product"/>
+    <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
@@ -135,7 +137,6 @@ import {
   SfLoaderCircular,
   SfTooltip,
 } from '@storefront-ui/vue';
-import { max } from 'lodash-es';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const runtimeConfig = useRuntimeConfig();

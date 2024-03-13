@@ -4,7 +4,7 @@
       <div v-for="cartItem in cart?.items" :key="cartItem.id">
         <UiCartProductCard :cart-item="cartItem" />
       </div>
-      <BundleItem/>
+      <BundleItem />
       <Coupon class="mb-2" v-if="!isDesktop" />
     </div>
     <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">

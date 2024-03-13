@@ -63,21 +63,21 @@
       <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
         <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
           <SfLink
-                :tag="NuxtLink"
-                v-if="item.data.filter.isSalable"
-                :to="localePath(productBundleGetters.getBundleItemUrl(item))"
-                variant="secondary"
-                class="no-underline typography-text-sm"
-            >
-                <p class="">
-                    {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
-                </p>  
-            </SfLink>
-            <p v-if="!item.data.filter.isSalable">
-                <p class="text-sm">
-                    {{ productBundleGetters.getBundleItemQuantity(item) }}x <span class=" px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
-                </p>  
+            :tag="NuxtLink"
+            v-if="item.data.filter.isSalable"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            variant="secondary"
+            class="no-underline typography-text-sm"
+          >
+            <p>
+              {{ productBundleGetters.getBundleItemQuantity(item) }}x
+              <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
+          </SfLink>
+          <p class="text-sm" v-else>
+            {{ productBundleGetters.getBundleItemQuantity(item) }}x
+            <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+          </p>
         </ul>
       </div>
       <div class="items-start sm:items-center sm:mt-auto text-sm">
