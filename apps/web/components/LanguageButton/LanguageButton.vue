@@ -17,5 +17,4 @@ defineProps<{
 }>();
 
 const { switchLocale } = useLocalization();
-
 </script>

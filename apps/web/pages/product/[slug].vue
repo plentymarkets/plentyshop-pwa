@@ -41,7 +41,6 @@ const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
-const localePath = useLocalePath();
 const { buildProductLanguagePath } = useLocalization();
 const { addWebpExtensionForSfImages } = useImageUrl();
 
@@ -72,13 +71,14 @@ generateBreadcrumbs();
  *  Should be removed when the item search is refactored.
  */
 
-
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
       navigateTo({
-        path: buildProductLanguagePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        path: buildProductLanguagePath(
+          `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
+        ),
         query: route.query,
       });
     }
