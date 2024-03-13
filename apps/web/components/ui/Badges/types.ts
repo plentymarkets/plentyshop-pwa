@@ -1,5 +1,7 @@
 import type { Product } from '@plentymarkets/shop-api';
 
-export type TagsProps = {
+export type BadgesProps = {
   product: Product;
+  useTags?: boolean;
+  useAvailability?: boolean;
 };
