@@ -27,6 +27,9 @@
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
       <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+
+      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+
       <div v-if="cartItem.variation" class="mt-2">
         <BasePrice
           v-if="productGetters.showPricePerUnit(cartItem.variation)"
