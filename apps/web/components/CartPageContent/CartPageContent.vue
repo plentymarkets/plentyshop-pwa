@@ -1,8 +1,8 @@
 <template>
   <div v-if="cart?.items?.length ?? 0 > 0" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
     <div class="col-span-7 mb-2 md:mb-0">
-      <div v-for="cartItem in cart?.items" :key="cartItem.id">
-        <UiCartProductCard :cart-item="cartItem" />
+      <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
+        <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
       </div>
       <BundleItem />
       <Coupon class="mb-2" v-if="!isDesktop" />
