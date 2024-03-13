@@ -5,16 +5,16 @@ const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'p
 
 const reduceFilters =
   (query: GetFacetsFromURLResponse) =>
-    (previous: GetFacetsFromURLResponse, current: string): GetFacetsFromURLResponse => {
-      const makeArray = Array.isArray(query[current as keyof GetFacetsFromURLResponse]) || nonFilters.has(current);
+  (previous: GetFacetsFromURLResponse, current: string): GetFacetsFromURLResponse => {
+    const makeArray = Array.isArray(query[current as keyof GetFacetsFromURLResponse]) || nonFilters.has(current);
 
-      return {
-        ...previous,
-        [current]: makeArray
-          ? query[current as keyof GetFacetsFromURLResponse]
-          : [query[current as keyof GetFacetsFromURLResponse]],
-      };
+    return {
+      ...previous,
+      [current]: makeArray
+        ? query[current as keyof GetFacetsFromURLResponse]
+        : [query[current as keyof GetFacetsFromURLResponse]],
     };
+  };
 
 const getFiltersToUpdate = (filters: Filters): string => {
   return Object.keys(filters)
@@ -36,15 +36,32 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
 const getCategorySlugsFromPath = (path: string): string[] => {
   const parts = path.split('/');
 
-  const { locale, defaultLocale, strategy } = useNuxtApp().$i18n as any;
+  const { locale, defaultLocale, strategy } = useNuxtApp().$i18n;
 
-  if (locale.value !== defaultLocale && strategy === 'prefix_except_default') {
-    const categoryIndex = parts.indexOf(locale.value);
-    return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
+  const shouldRemoveLocale = (strategy: string, locale: string, defaultLocale: string) => {
+    if (strategy === 'prefix') {
+      return true;
+    }
+
+    if (strategy === 'prefix_except_default') {
+      return locale !== defaultLocale;
+    }
+
+    if (strategy === 'prefix_and_default') {
+      return locale !== defaultLocale || parts[1] === locale;
+    }
+
+    return false;
+  };
+
+  if (shouldRemoveLocale(strategy, locale.value, defaultLocale)) {
+    const localeIndex = parts.indexOf(locale.value);
+    if (localeIndex !== -1) {
+      parts.splice(localeIndex, 1);
+    }
   }
-  else {
-    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part));
-  }
+
+  return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part));
 };
 
 /**
