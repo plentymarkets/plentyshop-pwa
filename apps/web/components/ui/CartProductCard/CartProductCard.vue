@@ -26,10 +26,13 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div v-if="!cartItem.variation?.bundleComponents">
-        <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
 
-        <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+      <div v-if="!cartItem.variation?.bundleComponents">{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+
+      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+
+      <div v-if="!cartItem.variation?.bundleComponents">
+        
 
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
@@ -117,8 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/shop-sdk';
-import { productGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
