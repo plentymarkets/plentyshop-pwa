@@ -44,7 +44,7 @@ const handleQueryUpdate = async () => {
   if (!productsCatalog.value.category) {
     throw new Response(null, {
       status: 404,
-      statusText: 'Not swagging',
+      statusText: 'Not found',
     });
   }
 };

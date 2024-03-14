@@ -8,10 +8,13 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
+   * @description Function for wrapping the category language path.
    *
    * @param path category path that is provided by the category response to redirect after a language switch
    * @returns category path that is then navigated to
+   * @example buildCategoryLanguagePath('')
    */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -19,10 +22,13 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
+   * @description Function for wrapping the product language path.
    *
    * @param path product path that is provided by the product response to redirect after a language switch
    * @returns product path that is then navigated to
+   * @example buildProductLanguagePath('')
    */
+  // eslint-disable-next-line sonarjs/no-identical-functions,unicorn/consistent-function-scoping
   const buildProductLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -30,19 +36,30 @@ export const useLocalization = createSharedComposable(() => {
   };
 
   /**
-   * Used to generate the category path inside the mega menu and other navigation trees.
+   * @description Used to generate the category path inside the mega menu and other navigation trees.
+   *
    * @param category
    * @param categoryTree
    * @returns product path that is then navigated to
+   * @example buildCategoryMenuLink(category, categoryTree)
    */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryMenuLink = (category: CategoryTreeItem, categoryTree: CategoryTreeItem[]) => {
     return categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
   };
 
+  /**
+   * @description Used to generate the category path inside the mega menu and other navigation trees.
+   *
+   * @param path
+   * @example getCategoryUrlFromRoute('')
+   */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const getCategoryUrlFromRoute = (path: string): string => {
     const parts = path.split('/');
 
-    const { locale, defaultLocale, strategy } = useNuxtApp().$i18n as any;
+    const { $i18n } = useNuxtApp();
+    const { locale, defaultLocale, strategy } = $i18n;
 
     const shouldRemoveLocale = (strategy: string, locale: string, defaultLocale: string) => {
       if (strategy === 'prefix') {
@@ -70,8 +87,16 @@ export const useLocalization = createSharedComposable(() => {
     return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
+  /**
+   * @description Function for switching app locale.
+   * @param language
+   *
+   * @example switchLocale('en')
+   */
   const switchLocale = (language: string) => {
-    const { setLocaleCookie } = useNuxtApp().$i18n as any;
+    const { $i18n } = useNuxtApp();
+    const { setLocaleCookie } = $i18n;
+
     const switchLocalePath = useSwitchLocalePath();
     const router = useRouter();
     const route = useRoute();
