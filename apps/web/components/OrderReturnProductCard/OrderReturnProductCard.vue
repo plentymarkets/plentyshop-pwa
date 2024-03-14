@@ -1,82 +1,61 @@
 <template>
   <div
-    class="relative flex flex-col md:flex-row first:border-t border-b-[1px] border-neutral-200 last:mb-0 py-4"
+    class="flex flex-col sm:flex-none border-t-[1px] border-neutral-200 hover:shadow-lg last:mb-0 px-2 py-4"
     data-testid="cart-product-card"
     v-if="displayItem"
   >
-    <SfLink
-      class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
-      :tag="NuxtLink"
-      :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
-    >
-      <NuxtImg
-        class="h-auto border rounded-md border-neutral-200"
-        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-        width="300"
-        height="300"
-        loading="lazy"
-        format="webp"
-      />
-    </SfLink>
-
-    <div class="flex self-start flex-col w-full">
-      <SfLink
-        :tag="NuxtLink"
-        :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
-        variant="secondary"
-        class="no-underline typography-text-sm sm:typography-text-lg"
-      >
-        {{ orderGetters.getItemName(orderItem) }}
-      </SfLink>
-
-      <div class="mt-2 md:mb-2">
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-          <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
-            <span class="mr-1 font-bold" v-if="orderGetters.getOrderItemAttributeName(attribute)">
-              {{ orderGetters.getOrderItemAttributeName(attribute) }}:
-            </span>
-            <span class="font-medium" v-if="orderGetters.getOrderItemAttributeValue(attribute)">
-              {{ orderGetters.getOrderItemAttributeValue(attribute) }}
-            </span>
-          </li>
-        </ul>
-
-        <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
-          <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
-            <span class="mr-1">
-              <span class="font-bold">{{ orderGetters.getItemOrderPropertyName(property) }}</span>
-              <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
-            </span>
-            <span v-if="orderGetters.isItemOrderPropertyFile(property)">
-              <a
-                :href="orderGetters.getItemOrderPropertyFileUrl(property)"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="underline"
-              >
-                <span>{{ orderGetters.getItemOrderPropertyValue(property) }}</span>
-                <SfIconOpenInNew class="ml-1" size="sm" />
-              </a>
-            </span>
-            <span v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
-              {{ orderGetters.getItemOrderPropertyValue(property) }}
-            </span>
-          </li>
-          <li>
-            <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
-            <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
-          </li>
-          <li>
-            <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
-            <span>{{ orderGetters.getItemQty(orderItem) }}</span>
-          </li>
-          <li>
-            <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
-            <span>
-              {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
-            </span>
-          </li>
-        </ul>
+    <div class="md:flex flex-none p-2 w-full">
+      <div class="flex md:flex-none w-full md:w-2/3">
+        <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
+          <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
+            <NuxtImg
+              class="h-auto border rounded-md border-neutral-200"
+              :src="
+                addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+              "
+              width="300"
+              height="300"
+              loading="lazy"
+              format="webp"
+            />
+          </SfLink>
+          <UiQuantitySelector
+            :key="quantity"
+            @change-quantity="debounceQuantity"
+            :value="quantity"
+            :min-value="0"
+            :max-value="orderGetters.getItemReturnableQty(orderItem)"
+            class="mt-4 w-full"
+          />
+        </div>
+        <div class="flex self-start flex-col mx-4 w-2/3">
+          <SfLink
+            :tag="NuxtLink"
+            :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+            variant="secondary"
+            class="no-underline sm:typography-text-lg"
+          >
+            {{ orderGetters.getItemName(orderItem) }}
+          </SfLink>
+          <div class="mt-2 md:mb-2">
+            <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
+              <li>
+                <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
+                <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
+              </li>
+              <li>
+                <span class="font-bold mr-2">{{ $t('returns.quantity') }}:</span>
+                <span>{{ orderGetters.getItemQty(orderItem) }}</span>
+              </li>
+              <li>
+                <span class="font-bold mr-2">{{ $t('orderConfirmation.total') }}:</span>
+                <span>
+                  {{ $n(orderGetters.getItemPrice(orderItem) * orderGetters.getItemQty(orderItem), 'currency') }}
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
@@ -107,7 +86,7 @@
                   <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
                 </div>
               </template>
-              <h3>
+              <div>
                 <div
                   class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                   v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)"
@@ -133,7 +112,7 @@
                 >
                   {{ $t('noneExisting') }}
                 </p>
-              </h3>
+              </div>
             </SfAccordionItem>
           </div>
         </div>
