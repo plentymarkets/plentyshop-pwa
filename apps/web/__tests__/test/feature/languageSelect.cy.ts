@@ -28,7 +28,7 @@ describe('Smoke: Language Selector', () => {
     cy.url().should('include', '/de/wohnzimmer');
   });
 
-  it('Should change the product url after language switch', () => {
+  it('Should stay on the same product page', () => {
     cy.visitAndHydrate('/living-room/armchair-stool/armchair-afterwork_122');
     cy.intercept('/plentysystems/getProduct').as('getProduct');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
