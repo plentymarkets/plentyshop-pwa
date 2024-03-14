@@ -10,7 +10,7 @@ beforeEach(() => {
 
 describe('Feature: Language Selector', () => {
 
-  it('Check if Language selector works', () => {
+  it('Should change the language from EN to DE', () => {
     languageSelect.openModal();
     languageSelect.checkIfModalIsOpen();
     languageSelect.checkOptions();
