@@ -18,7 +18,7 @@ describe('Feature: Language Selector', () => {
     languageSelect.checkLanguageSelected('de');
   });
 
-  it('Should change the category url after language switch', () => {
+  it('Should stay on the same category page', () => {
     cy.visitAndHydrate('/living-room');
     cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
