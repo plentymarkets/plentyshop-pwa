@@ -27,11 +27,18 @@
         />
       </div>
     </div>
-    <Price
-      :price="currentActualPrice"
-      :normal-price="normalPrice"
-      :old-price="productGetters.getPrice(product).regular ?? 0"
-    />
+    <div class="flex space-x-2">
+      <Price
+        :price="currentActualPrice"
+        :normal-price="normalPrice"
+        :old-price="productGetters.getPrice(product).regular ?? 0"
+      />
+      <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+        <UiTag :size="'sm'" :variant="'secondary'">{{
+          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+        }}</UiTag>
+      </div>
+    </div>
     <LowestPrice :product="product" />
     <div v-if="productGetters.showPricePerUnit(product)">
       <BasePrice
