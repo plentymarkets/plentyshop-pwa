@@ -10,6 +10,7 @@ import type {
   AddWishlistItem,
   IsWishlistItem,
   InteractWithWishlist,
+  SetWishlistItemIds,
 } from '~/composables/useWishlist/types';
 
 /**
@@ -19,13 +20,14 @@ import type {
  * ``` ts
  * const {
  *  data, loading, fetchWishlist, addWishlistItem, deleteWishlistItem, isWishlistItem, interactWithWishlist
- * } = useWishlist();
+ *  wishlistItemIds, setWishlistItemIds } = useWishlist();
  * ```
  */
 export const useWishlist: UseWishlistReturn = () => {
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
+    wishlistItemIds: [] as string[],
   }));
 
   /**
@@ -47,6 +49,25 @@ export const useWishlist: UseWishlistReturn = () => {
   };
 
   /**
+   * @description Function for setting the wishlist item ids.
+   * @return SetWishlistItemIds
+   * @example
+   * ``` ts
+   *  setWishlistItemIds();
+   * ```
+   * @param wishlistItemIds
+   */
+  const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
+    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
+
+    if (state.value.data.length > 0) {
+      state.value.data = state.value.data.filter((wishListItem) =>
+        state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
+      );
+    }
+  };
+
+  /**
    * @description Function for adding an item to the wishlist.
    * @param params { AddWishlistItemParams }
    * @return AddWishlistItemResponse
@@ -62,6 +83,8 @@ export const useWishlist: UseWishlistReturn = () => {
     state.value.loading = true;
 
     const { data } = await useAsyncData(() => useSdk().plentysystems.doAddWishlistItem(params));
+
+    setWishlistItemIds([...state.value.wishlistItemIds, params.variationId.toString()]);
 
     state.value.loading = false;
     return data.value?.data || ({} as AddWishlistItemResponse);
@@ -83,6 +106,8 @@ export const useWishlist: UseWishlistReturn = () => {
 
     const { data } = await useAsyncData(() => useSdk().plentysystems.deleteWishlistItem(params));
 
+    setWishlistItemIds(state.value.wishlistItemIds.filter((id: string) => id !== params.variationId.toString()));
+
     state.value.loading = false;
     return !!data.value?.data;
   };
@@ -99,7 +124,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return !!state.value?.data?.find((item: WishlistItem) => variationId === item.variation.id);
+    return !!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item);
   };
 
   /**
@@ -132,13 +157,12 @@ export const useWishlist: UseWishlistReturn = () => {
         message: $i18n.t('wishlistInteraction.add'),
       });
     }
-
-    await fetchWishlist();
   };
 
   return {
     fetchWishlist,
     addWishlistItem,
+    setWishlistItemIds,
     deleteWishlistItem,
     isWishlistItem,
     interactWithWishlist,
