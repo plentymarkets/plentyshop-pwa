@@ -86,7 +86,7 @@ import { object, string } from 'yup';
 
 const { t, n } = useI18n();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
-const { uploadFile, loading, getPropertyById } = useProductOrderProperties();
+const { uploadFile, getPropertyById } = useProductOrderProperties();
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
@@ -98,6 +98,7 @@ const blob: Ref<Blob | null> = ref(null);
 
 const uploadForm: Ref<HTMLInputElement | null> = ref(null);
 const loaded = ref(false);
+const loading = ref(false);
 const { send } = useNotification();
 
 const supportedFormats = {
@@ -143,6 +144,7 @@ const loadedFile: Ref<File | null> = ref(null);
 
 const upload = async () => {
   if (loadedFile.value && property) {
+    loading.value = true;
     const file = await uploadFile(loadedFile.value);
 
     if (file) {
@@ -157,6 +159,7 @@ const upload = async () => {
         message: t('orderProperties.upload.uploadError'),
       });
     }
+    loading.value = false;
   }
 };
 
