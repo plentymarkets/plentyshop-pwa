@@ -27,13 +27,13 @@
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
 
-      <div v-if="!cartItem.variation?.bundleComponents">{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+      <div v-if="!cartItem.variation?.bundleComponents">
+        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+      </div>
 
       <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
 
       <div v-if="!cartItem.variation?.bundleComponents">
-        
-
         <div v-if="cartItem.variation" class="mt-2">
           <BasePrice
             v-if="productGetters.showPricePerUnit(cartItem.variation)"
@@ -86,7 +86,6 @@
           </p>
         </div>
       </div>
-      
 
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span

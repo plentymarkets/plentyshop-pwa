@@ -18,13 +18,12 @@
         </div>
 
         <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
-          <div v-for="(item, index) in orderGetters.getItems(order)">
+          <div v-for="(item, index) in orderGetters.getItems(order)" :key="item.id">
             <OrderSummaryProductCard
               v-if="!orderGetters.isBundleItem(item)"
               :order="order"
               :order-item="item"
               :index="index"
-              :key="item.id"
             />
           </div>
         </div>
