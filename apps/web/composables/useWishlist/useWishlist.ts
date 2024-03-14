@@ -53,7 +53,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * @return SetWishlistItemIds
    * @example
    * ``` ts
-   *  setWishlistItemIds();
+   *  setWishlistItemIds(['1', '2']);
    * ```
    * @param wishlistItemIds
    */
