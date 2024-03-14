@@ -189,7 +189,7 @@ import {
   useDropdown,
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
-import { MegaMenuProps } from '~/components/MegaMenu/types';
+import type { MegaMenuProps } from '~/components/MegaMenu/types';
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

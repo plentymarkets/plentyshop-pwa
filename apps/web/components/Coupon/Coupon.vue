@@ -9,7 +9,7 @@
           />
         </div>
       </template>
-      <div class="flex mb-2">
+      <div class="flex mb-4">
         <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
         </div>
@@ -28,8 +28,8 @@
         </SfButton>
       </div>
     </SfAccordionItem>
-    <div v-else class="flex justify-between mb-3 mt-2">
-      <div class="text-primary-800 pl-3 pt-2 font-medium">{{ couponCode }}</div>
+    <div v-else class="flex justify-between my-4">
+      <div class="text-primary-800 font-medium flex items-center">{{ couponCode }}</div>
       <div>
         <SfButton
           data-testid="couponRemove"
@@ -41,7 +41,7 @@
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else class="underline">
             {{ $t('coupon.remove') }}
-            <SfIconDelete />
+            <SfIconClose />
           </span>
         </SfButton>
       </div>
@@ -54,9 +54,9 @@ import { cartGetters } from '@plentymarkets/shop-sdk';
 import {
   SfAccordionItem,
   SfIconChevronLeft,
+  SfIconClose,
   SfInput,
   SfButton,
-  SfIconDelete,
   SfLoaderCircular,
 } from '@storefront-ui/vue';
 import { ref, onMounted } from 'vue';

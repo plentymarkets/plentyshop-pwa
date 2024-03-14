@@ -1,7 +1,7 @@
-import { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import type { Facet } from '@plentymarkets/shop-api';
-import { defaults, SelectVariation } from '~/composables';
-import { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
+import { defaults, type SelectVariation } from '~/composables';
+import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 import { useSdk } from '~/sdk';
 
 /**

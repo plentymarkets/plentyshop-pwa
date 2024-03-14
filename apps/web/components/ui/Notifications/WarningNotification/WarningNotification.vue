@@ -33,7 +33,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconClose, SfIconWarning } from '@storefront-ui/vue';
-import { WarningNotificationProps } from './types';
+import type { WarningNotificationProps } from './types';
 
 defineProps<WarningNotificationProps>();
 </script>

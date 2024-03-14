@@ -49,11 +49,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { Address } from '@plentymarkets/shop-api';
-import { AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { AddressesListProps } from '~/components/AddressesList/types';
+import type { AddressesListProps } from '~/components/AddressesList/types';
 
 const props = defineProps<AddressesListProps>();
 

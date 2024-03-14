@@ -79,24 +79,15 @@
         </ul>
       </div>
 
-      <div class="flex flex-col md:flex-row self-end justify-end">
-        <UiQuantitySelector
-          :key="quantity"
-          @change-quantity="debounceQuantity"
-          :value="quantity"
-          :min-value="0"
-          :max-value="orderGetters.getItemReturnableQty(orderItem)"
-          class="mt-0 h-fit self-end md:mt-4 md:mr-4"
-        />
-
-        <div class="flex flex-col flex-1 justify-end">
+      <div class="w-full md:flex md:flex-col mt-4 md:mt-0 md:w-1/3">
+        <div class="w-full md:self-end">
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
             <SfSelect
               @update:model-value="changeReason($event)"
               :model-value="String(returnReasonId)"
               size="sm"
-              class="h-fit py-[0.55rem]"
+              class="h-fit"
               :placeholder="$t(`returns.selectReturnReason`)"
             >
               <option :value="null">— {{ $t('returns.selectReturnReason') }} —</option>
@@ -106,6 +97,46 @@
             </SfSelect>
           </label>
         </div>
+
+        <div class="my-2 w-full md:self-end">
+          <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
+            <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
+              <template #summary>
+                <div class="flex justify-between px-3.5 py-1.5 bg-neutral-100">
+                  {{ $t('account.ordersAndReturns.orderDetails.showDetails') }}
+                  <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
+                </div>
+              </template>
+              <h3>
+                <div
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
+                  v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)"
+                  :key="index"
+                >
+                  <p>{{ orderGetters.getOrderItemAttributeName(attribute) }}</p>
+                  <p class="text-gray-500">{{ orderGetters.getOrderItemAttributeValue(attribute) }}</p>
+                </div>
+                <div
+                  class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
+                  v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)"
+                  :key="index"
+                >
+                  <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
+                  <p class="text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
+                </div>
+                <p
+                  v-if="
+                    orderGetters.getOrderAttributes(props.orderItem).length === 0 &&
+                    orderGetters.getItemOrderProperties(props.orderItem).length === 0
+                  "
+                  class="py-1.5 border-t-2 text-sm px-4"
+                >
+                  {{ $t('noneExisting') }}
+                </p>
+              </h3>
+            </SfAccordionItem>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -113,7 +144,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconOpenInNew, SfSelect } from '@storefront-ui/vue';
+import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
@@ -123,6 +154,11 @@ const { returnReasons } = useCustomerReturns();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
+const opened = ref(false);
+
+const toggleDropdown = () => {
+  opened.value = !opened.value;
+};
 
 const changeQuantity = async (quantity: number) => {
   updateQuantity(props.orderItem.itemVariationId, quantity);

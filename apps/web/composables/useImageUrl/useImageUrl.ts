@@ -1,6 +1,6 @@
-import { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
-import { SfImage } from '@vue-storefront/unified-data-model';
-import { UseImageUrlReturn } from './types';
+import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
+import type { SfImage } from '@vue-storefront/unified-data-model';
+import type { UseImageUrlReturn } from './types';
 
 export const useImageUrl: UseImageUrlReturn = () => {
   const useWebp = useRuntimeConfig().public.useWebp;

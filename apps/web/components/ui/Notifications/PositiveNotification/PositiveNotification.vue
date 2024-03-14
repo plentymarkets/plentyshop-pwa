@@ -33,7 +33,7 @@
 </template>
 <script setup lang="ts">
 import { SfIconCheckCircle, SfIconClose } from '@storefront-ui/vue';
-import { PositiveNotificationProps } from './types';
+import type { PositiveNotificationProps } from './types';
 
 defineProps<PositiveNotificationProps>();
 </script>

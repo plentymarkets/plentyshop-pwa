@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { SfIconCreditCard } from '@storefront-ui/vue';
-import { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
+import type { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
 withDefaults(defineProps<CheckoutPaymentProps>(), {
   disabled: false,

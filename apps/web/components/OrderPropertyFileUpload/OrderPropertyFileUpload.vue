@@ -1,7 +1,7 @@
 <template>
   <div class="w-full">
     <div class="flex row">
-      <label :for="`prop-${orderPropertyId}`">
+      <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
         {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
         -
         {{ t('orderProperties.upload.orderPropertyTypeFile') }}
@@ -79,8 +79,8 @@
 <script setup lang="ts">
 import { SfButton, SfInput, SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyInputProps } from './types';
-import { Ref, ref } from 'vue';
+import type { OrderPropertyInputProps } from './types';
+import { type Ref, ref } from 'vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 

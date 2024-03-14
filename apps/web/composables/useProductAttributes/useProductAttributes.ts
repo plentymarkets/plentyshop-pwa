@@ -1,4 +1,4 @@
-import {
+import type {
   GetCombination,
   GetValue,
   SetAttribute,
@@ -6,7 +6,7 @@ import {
   UseProductAttributesReturn,
   UseProductAttributesState,
 } from './types';
-import { Product, VariationMapProductVariation } from '@plentymarkets/shop-api';
+import type { Product, VariationMapProductVariation } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for handling product attributes.
@@ -155,9 +155,7 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
       return;
     }
 
-    if (state.value.attributeValues[attributeId] === valueId) {
-      delete state.value.attributeValues[attributeId];
-    } else {
+    if (state.value.attributeValues[attributeId] !== valueId) {
       state.value.attributeValues[attributeId] = valueId;
     }
 

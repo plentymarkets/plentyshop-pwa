@@ -1,5 +1,5 @@
 import type { Ref } from 'vue';
-import { GetOrdersResponse, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { GetOrdersResponse, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerOrdersState {
   data: GetOrdersResponse | null;

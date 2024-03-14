@@ -76,7 +76,9 @@ export class HomePageObject {
   }
 
   goToCategory() {
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('category-button').first().click();
+    cy.wait('@getFacet');
     return this;
   }
 }

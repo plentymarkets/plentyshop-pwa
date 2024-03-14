@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import { whenever } from '@vueuse/core';

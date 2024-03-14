@@ -4,12 +4,12 @@
     data-testid="product-card"
   >
     <div class="relative">
-      <UiTags class="absolute m-2" :product="product" />
+      <UiBadges class="absolute m-2" :product="product" />
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
-          class="object-contain rounded-md aspect-square w-full h-full"
+          class="object-contain rounded-md aspect-square w-full h-fit"
           data-testid="image-slot"
           width="190"
           height="190"

@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { BasePriceProps } from '~/components/BasePrice/types';
+import type { BasePriceProps } from '~/components/BasePrice/types';
 
 const props = defineProps<BasePriceProps>();
 const basePrice2Digit = computed(() => (props.basePrice ? Number(props.basePrice.toFixed(2)) : 0));

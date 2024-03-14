@@ -1,4 +1,4 @@
-import { CookieGroup } from 'cookie.config';
+import type { Cookie, CookieGroup } from '~/cookie.config';
 
 const convertToDays = (daysInString: string): number => {
   return Number.parseInt(daysInString.split(' ')[0]);
@@ -9,7 +9,7 @@ const getMinimumLifeSpan = (cookieJsonFromConfig: CookieGroup[]): number => {
   let minimum = 999_999 as number;
 
   cookieJsonFromConfig.forEach((group: CookieGroup) => {
-    const accepted = group.cookies.filter((cookie) => cookie.accepted);
+    const accepted: Cookie[] = group.cookies.filter((cookie) => cookie.accepted);
     accepted.forEach((cookie) => {
       if (minimum > convertToDays(cookie.Lifespan)) {
         minimum = convertToDays(cookie.Lifespan);

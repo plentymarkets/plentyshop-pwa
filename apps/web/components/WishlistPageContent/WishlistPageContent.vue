@@ -51,9 +51,9 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
+import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
 withDefaults(defineProps<WishlistPageContentProps>(), {
   withHeader: true,
