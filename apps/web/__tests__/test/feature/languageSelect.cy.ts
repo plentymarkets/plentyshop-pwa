@@ -8,7 +8,7 @@ beforeEach(() => {
   cy.clearCookies();
 });
 
-describe('Smoke: Language Selector', () => {
+describe('Feature: Language Selector', () => {
 
   it('Check if Language selector works', () => {
     languageSelect.openModal();
