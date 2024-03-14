@@ -19,9 +19,7 @@
         </p>
       </div>
 
-      <div v-if="isDefault" class="default-address flex justify-end">
-        <SfIconCheckCircle class="text-primary-700 shrink-0" />
-      </div>
+      <SfIconCheckCircle v-if="isDefault" class="flex justify-end text-primary-700 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
       <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-edit')">

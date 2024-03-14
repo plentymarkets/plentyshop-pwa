@@ -46,6 +46,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -106,6 +107,32 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+  },
+  site: {
+    url: '',
+  },
+  sitemap: {
+    xslColumns: [
+      // URL column must always be set, no value needed
+      { label: 'URL', width: '75%' },
+      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
+    ],
+    autoLastmod: true,
+    sitemaps: {
+      content: {
+        exclude: [
+          '/search',
+          '/offline',
+          '/my-account/**',
+          '/readonly-checkout',
+          '/set-new-password',
+          '/reset-password-success',
+        ],
+        includeAppSources: true,
+      },
+      items: {},
+      categories: {},
+    },
   },
   hooks: {
     'pages:extend'(pages) {
