@@ -53,6 +53,8 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
+
+    <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
@@ -106,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,

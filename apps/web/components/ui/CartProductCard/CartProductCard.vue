@@ -26,41 +26,64 @@
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
-      <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+      <div v-if="!cartItem.variation?.bundleComponents">
+        <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
 
-      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+        <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
 
-      <div v-if="cartItem.variation" class="mt-2">
-        <BasePrice
-          v-if="productGetters.showPricePerUnit(cartItem.variation)"
-          :base-price="basePriceSingleValue"
-          :unit-content="productGetters.getUnitContent(cartItem.variation)"
-          :unit-name="productGetters.getUnitName(cartItem.variation)"
-        />
-      </div>
-      <div class="my-2">
-        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
-            <span class="mr-1">{{ attribute.label }}:</span>
-            <span class="font-medium">{{ attribute.value }}</span>
-          </li>
-        </ul>
-
-        <div
-          class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
-          v-if="cartItem.basketItemOrderParams.length > 0"
-        >
-          <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
-          <ul>
-            <CartOrderProperty
-              v-for="property in cartItem.basketItemOrderParams"
-              :key="property.propertyId"
-              :cart-item="cartItem"
-              :basket-item-order-param="property"
-            />
+        <div v-if="cartItem.variation" class="mt-2">
+          <BasePrice
+            v-if="productGetters.showPricePerUnit(cartItem.variation)"
+            :base-price="basePriceSingleValue"
+            :unit-content="productGetters.getUnitContent(cartItem.variation)"
+            :unit-name="productGetters.getUnitName(cartItem.variation)"
+          />
+        </div>
+        <div class="my-2">
+          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+            <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
+              <span class="mr-1">{{ attribute.label }}:</span>
+              <span class="font-medium">{{ attribute.value }}</span>
+            </li>
           </ul>
+
+          <div
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+            v-if="cartItem.basketItemOrderParams.length > 0"
+          >
+            <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
+            <ul>
+              <CartOrderProperty
+                v-for="property in cartItem.basketItemOrderParams"
+                :key="property.propertyId"
+                :cart-item="cartItem"
+                :basket-item-order-param="property"
+              />
+            </ul>
+          </div>
         </div>
       </div>
+      <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
+        <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
+          <SfLink
+            :tag="NuxtLink"
+            v-if="item.data.filter.isSalable"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            variant="secondary"
+            class="no-underline typography-text-sm"
+          >
+            <p>
+              {{ productBundleGetters.getBundleItemQuantity(item) }}x
+              <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+            </p>
+          </SfLink>
+          <p class="text-sm" v-else>
+            {{ productBundleGetters.getBundleItemQuantity(item) }}x
+            <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+          </p>
+        </div>
+      </div>
+      
 
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
@@ -95,7 +118,7 @@
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-sdk';
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';

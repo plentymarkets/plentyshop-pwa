@@ -25,7 +25,7 @@ const sizeClasses = computed(() => (props.size === TagSize.sm ? 'text-xs p-1 gap
 const getVariantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary': {
-      return ['text-white', props.strong ? 'bg-secondary-800' : 'bg-secondary-100'];
+      return ['text-secondary-800', props.strong ? 'bg-secondary-600' : 'bg-secondary-200'];
     }
     case 'negative': {
       return ['text-negative-800', props.strong ? 'bg-negative-600' : 'bg-negative-100'];
