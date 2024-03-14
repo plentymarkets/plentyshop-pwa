@@ -28,9 +28,7 @@
         </SfSelect>
       </div>
 
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
-      </div>
+      <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
 
     <VeeErrorMessage
