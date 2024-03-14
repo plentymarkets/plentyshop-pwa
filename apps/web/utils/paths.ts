@@ -15,6 +15,7 @@ export const paths = {
   accountMyOrders: '/my-account/my-orders',
   accountMyWishlist: '/my-account/wishlist',
   accountReturns: '/my-account/returns',
+  accountNewReturn: '/my-account/new-return',
   authResetPassword: '/reset-password',
   authResetPasswordSuccess: '/reset-password-success',
   authLogin: '/login',

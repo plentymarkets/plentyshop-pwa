@@ -146,6 +146,7 @@
   "numberOfProducts": "{count} Produkte von {total} Produkten",
   "prev": "Vorherige",
   "next": "Nächste",
+  "noneExisting": "Keine vorhanden",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
@@ -402,6 +403,7 @@
         "returns": "Retouren"
       },
       "orderDetails": {
+        "showDetails": "Produktdetails anzeigen",
         "heading": "Bestellübersicht",
         "orderId": "Auftrags-ID",
         "orderDate": "Auftragsdatum",
@@ -671,7 +673,7 @@
     "cancel": "Abbrechen",
     "orderDate": "Auftragsdatum",
     "returnReason": "Rücksendegrund",
-    "returnForOrder": "Zurück zur Bestellung",
+    "returnForOrder": "Retoure zur Bestellung",
     "selectReturnReason": "Rücksendegrund auswählen",
     "selectAll": "Alles auswählen",
     "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf.",

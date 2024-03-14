@@ -9,9 +9,11 @@
         :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
         class="mr-2"
       />
-
-      <div class="flex items-center">
-        <label class="cursor-pointer select-none peer-disabled:text-disabled-900" :for="`prop-${orderPropertyId}`">
+      <div class="flex h-12 items-center justify-center">
+        <label
+          class="cursor-pointer select-none h-12 flex items-center justify-center peer-disabled:text-disabled-900"
+          :for="`prop-${orderPropertyId}`"
+        >
           {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
           <template v-if="orderPropertyLabel.surchargeType">
             ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
@@ -39,7 +41,7 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyCheckboxProps } from './types';
+import type { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, boolean } from 'yup';

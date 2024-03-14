@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
-import { ConfirmationPageContentProps } from './types';
+import type { ConfirmationPageContentProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();

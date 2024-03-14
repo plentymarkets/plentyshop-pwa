@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { OrderAddressDataPropsType } from './types';
+import type { OrderAddressDataPropsType } from './types';
 
 const { data: countries } = useActiveShippingCountries();
 const props = defineProps<OrderAddressDataPropsType>();

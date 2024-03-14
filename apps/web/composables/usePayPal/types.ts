@@ -1,6 +1,6 @@
-import { Ref } from 'vue';
-import { PayPalNamespace } from '@paypal/paypal-js';
-import {
+import type { Ref } from 'vue';
+import type { PayPalNamespace } from '@paypal/paypal-js';
+import type {
   PayPalCreateOrder,
   PayPalApproveOrder,
   PayPalExecutePayment,

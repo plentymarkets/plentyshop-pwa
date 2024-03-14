@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { OrderPaymentSummaryPropsType } from './types';
+import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();
 const shippingAddress = orderGetters.getShippingAddress(props.order);

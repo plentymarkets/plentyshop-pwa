@@ -1,6 +1,6 @@
 import type { Ref } from 'vue';
 import type { Facet } from '@plentymarkets/shop-api';
-import { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
 export interface UseCanonicalState {
   loading: boolean;
 }

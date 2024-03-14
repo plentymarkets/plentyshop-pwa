@@ -20,7 +20,7 @@
 </template>
 
 <script setup lang="ts">
-import { WishlistButtonProps } from '~/components/WishlistButton/types';
+import type { WishlistButtonProps } from '~/components/WishlistButton/types';
 import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-sdk';
 

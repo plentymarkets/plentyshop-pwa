@@ -25,23 +25,38 @@
         class="no-underline typography-text-sm sm:typography-text-lg"
       >
       </SfLink>
-      {{ cartGetters.getItemName(cartItem) }}
-      <div v-if="!cartItem.variation?.bundleComponents">
-        <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
-        <div v-if="cartItem.variation" class="mt-2">
-          <BasePrice
-            v-if="productGetters.showPricePerUnit(cartItem.variation)"
-            :base-price="basePriceSingleValue"
-            :unit-content="productGetters.getUnitContent(cartItem.variation)"
-            :unit-name="productGetters.getUnitName(cartItem.variation)"
-          />
-        </div>
-        <div class="my-2">
-          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-            <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
-              <span class="mr-1">{{ attribute.label }}:</span>
-              <span class="font-medium">{{ attribute.value }}</span>
-            </li>
+      <div>{{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}</div>
+
+      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
+
+      <div v-if="cartItem.variation" class="mt-2">
+        <BasePrice
+          v-if="productGetters.showPricePerUnit(cartItem.variation)"
+          :base-price="basePriceSingleValue"
+          :unit-content="productGetters.getUnitContent(cartItem.variation)"
+          :unit-name="productGetters.getUnitName(cartItem.variation)"
+        />
+      </div>
+      <div class="my-2">
+        <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+          <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
+            <span class="mr-1">{{ attribute.label }}:</span>
+            <span class="font-medium">{{ attribute.value }}</span>
+          </li>
+        </ul>
+
+        <div
+          class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+          v-if="cartItem.basketItemOrderParams.length > 0"
+        >
+          <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
+          <ul>
+            <CartOrderProperty
+              v-for="property in cartItem.basketItemOrderParams"
+              :key="property.propertyId"
+              :cart-item="cartItem"
+              :basket-item-order-param="property"
+            />
           </ul>
 
           <div

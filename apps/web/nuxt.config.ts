@@ -2,6 +2,7 @@
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
+  telemetry: false,
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,
@@ -149,6 +150,7 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
+          // @ts-ignore
           urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkOnly',
           options: {

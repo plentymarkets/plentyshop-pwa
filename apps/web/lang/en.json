@@ -146,6 +146,7 @@
   "numberOfProducts": "{count} Products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
+  "noneExisting": "None",
   "emptyStateText": "We no longer have products in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
   "emptyStateAltText": "Image that describes that no products were found",
@@ -402,6 +403,7 @@
         "returns": "Returns"
       },
       "orderDetails": {
+        "showDetails": "Show details",
         "heading": "Order details",
         "orderId": "Order ID",
         "orderDate": "Order date",

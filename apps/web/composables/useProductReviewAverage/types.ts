@@ -1,4 +1,4 @@
-import { ReviewAverage } from '@plentymarkets/shop-api';
+import type { ReviewAverage } from '@plentymarkets/shop-api';
 
 export interface UseProductReviewAverageState {
   data: ReviewAverage;

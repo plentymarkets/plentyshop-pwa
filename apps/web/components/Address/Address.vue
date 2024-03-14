@@ -42,7 +42,7 @@
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfIconCheckCircle } from '@storefront-ui/vue';
 import { SfButton } from '@storefront-ui/vue';
-import { AddressProps } from './types';
+import type { AddressProps } from './types';
 
 defineProps<AddressProps>();
 defineEmits(['on-click', 'on-edit', 'on-delete', 'make-default']);

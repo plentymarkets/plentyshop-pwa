@@ -1,5 +1,5 @@
-import { NewsletterParams } from '@plentymarkets/shop-api';
-import { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
+import type { NewsletterParams } from '@plentymarkets/shop-api';
+import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
 import { useSdk } from '~/sdk';
 
 /**
