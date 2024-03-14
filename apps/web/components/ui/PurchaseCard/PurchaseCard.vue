@@ -33,14 +33,14 @@
       :old-price="productGetters.getPrice(product).regular ?? 0"
     />
     <LowestPrice :product="product" />
-    <div v-if="productGetters.showPricePerUnit(product)">
-      <BasePrice
-        :base-price="basePriceSingleValue"
-        :unit-content="productGetters.getUnitContent(product)"
-        :unit-name="productGetters.getUnitName(product)"
-      />
-    </div>
+    <BasePrice
+      v-if="productGetters.showPricePerUnit(product)"
+      :base-price="basePriceSingleValue"
+      :unit-content="productGetters.getUnitContent(product)"
+      :unit-name="productGetters.getUnitName(product)"
+    />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
+
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>

@@ -1,112 +1,108 @@
 <template>
-  <div class="relative mt-5">
-    <div class="bg-neutral-100 p-4 sm:p-10 text-center">
-      <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
-        {{ t('newsletter.heading') }}
-      </p>
-      <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
-        {{ t('newsletter.info') }}
-      </p>
+  <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
+    <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
+      {{ t('newsletter.heading') }}
+    </p>
+    <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
+      {{ t('newsletter.info') }}
+    </p>
 
-      <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-        <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
-          <div class="sm:mr-[1rem]">
-            <SfInput
-              v-model="firstName"
-              v-bind="firstNameAttributes"
-              :invalid="Boolean(errors['firstName'])"
-              type="text"
-              name="firstName"
-              :placeholder="`${t('newsletter.firstName')} **`"
-            />
-            <div class="h-[2rem]">
-              <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-            </div>
-          </div>
-
-          <div class="sm:ml-[1rem]">
-            <SfInput
-              v-model="lastName"
-              v-bind="lastNameAttributes"
-              :invalid="Boolean(errors['lastName'])"
-              type="text"
-              name="lastName"
-              :placeholder="`${t('newsletter.lastName')} **`"
-            />
-            <div class="h-[2rem]">
-              <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-            </div>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-1">
-          <div>
-            <SfInput
-              v-model="email"
-              v-bind="emailAttributes"
-              :invalid="Boolean(errors['email'])"
-              type="email"
-              name="email"
-              autocomplete="email"
-              :placeholder="`${t('newsletter.email')} **`"
-            />
-            <div class="h-[2rem]">
-              <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-            </div>
-          </div>
-        </div>
-
-        <div class="text-base text-neutral-900">
-          <div class="flex justify-center items-center">
-            <SfCheckbox
-              v-model="privacyPolicy"
-              v-bind="privacyPolicyAttributes"
-              :invalid="Boolean(errors['privacyPolicy'])"
-              id="terms-checkbox"
-              class="inline-block mr-2"
-              data-testid="checkout-terms-checkbox"
-            />
-            <label for="terms-checkbox" class="text-left leading-4 select-none">
-              <i18n-t keypath="newsletter.policy">
-                <template #privacyPolicy>
-                  <SfLink
-                    :href="localePath(paths.privacyPolicy)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('privacyPolicy') }}
-                  </SfLink>
-                </template>
-              </i18n-t>
-              **
-            </label>
-          </div>
-          <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <SfButton type="submit" size="lg" :disabled="loading">
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-            <template v-else>{{ t('newsletter.subscribe') }}</template>
-          </SfButton>
-
-          <NuxtTurnstile
-            v-if="turnstileSiteKey"
-            v-model="turnstile"
-            v-bind="turnstileAttributes"
-            ref="turnstileElement"
-            :options="{ theme: 'light' }"
-            class="mt-4"
+    <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
+      <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
+        <div class="sm:mr-[1rem]">
+          <SfInput
+            v-model="firstName"
+            v-bind="firstNameAttributes"
+            :invalid="Boolean(errors['firstName'])"
+            type="text"
+            name="firstName"
+            :placeholder="`${t('newsletter.firstName')} **`"
           />
-
-          <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <div class="h-[2rem]">
+            <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          </div>
         </div>
-      </form>
 
-      <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
-    </div>
+        <div class="sm:ml-[1rem]">
+          <SfInput
+            v-model="lastName"
+            v-bind="lastNameAttributes"
+            :invalid="Boolean(errors['lastName'])"
+            type="text"
+            name="lastName"
+            :placeholder="`${t('newsletter.lastName')} **`"
+          />
+          <div class="h-[2rem]">
+            <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1">
+        <SfInput
+          v-model="email"
+          v-bind="emailAttributes"
+          :invalid="Boolean(errors['email'])"
+          type="email"
+          name="email"
+          autocomplete="email"
+          :placeholder="`${t('newsletter.email')} **`"
+        />
+        <div class="h-[2rem]">
+          <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        </div>
+      </div>
+
+      <div class="text-base text-neutral-900">
+        <div class="flex justify-center items-center">
+          <SfCheckbox
+            v-model="privacyPolicy"
+            v-bind="privacyPolicyAttributes"
+            :invalid="Boolean(errors['privacyPolicy'])"
+            id="terms-checkbox"
+            class="inline-block mr-2"
+            data-testid="checkout-terms-checkbox"
+          />
+          <label for="terms-checkbox" class="text-left leading-4 select-none">
+            <i18n-t keypath="newsletter.policy">
+              <template #privacyPolicy>
+                <SfLink
+                  :href="localePath(paths.privacyPolicy)"
+                  target="_blank"
+                  class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                >
+                  {{ t('privacyPolicy') }}
+                </SfLink>
+              </template>
+            </i18n-t>
+            **
+          </label>
+        </div>
+        <div class="h-[2rem]">
+          <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center">
+        <SfButton type="submit" size="lg" :disabled="loading">
+          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+          <template v-else>{{ t('newsletter.subscribe') }}</template>
+        </SfButton>
+
+        <NuxtTurnstile
+          v-if="turnstileSiteKey"
+          v-model="turnstile"
+          v-bind="turnstileAttributes"
+          ref="turnstileElement"
+          :options="{ theme: 'light' }"
+          class="mt-4"
+        />
+
+        <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+      </div>
+    </form>
+
+    <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
   </div>
 </template>
 

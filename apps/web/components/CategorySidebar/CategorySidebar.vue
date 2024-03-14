@@ -24,9 +24,7 @@
             </template>
           </SfButton>
         </div>
-        <div class="overflow-y-auto md:overflow-y-visible py-4 md:p-0">
-          <slot />
-        </div>
+        <slot class="overflow-y-auto md:overflow-y-visible py-4 md:p-0" />
         <div class="p-4 md:mt-2 flex flex-wrap justify-between border-t border-t-neutral-200 md:border-0 gap-3">
           <SfButton class="md:hidden whitespace-nowrap flex flex-1" variant="primary" @click="$emit('close')">
             {{ $t('showProducts') }}

@@ -4,19 +4,21 @@
     data-testid="cart-product-card"
     v-if="orderItem.typeId !== 6"
   >
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
-      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
-        <NuxtImg
-          class="h-auto border rounded-md border-neutral-200"
-          :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-          :alt="'' || ''"
-          width="300"
-          height="300"
-          loading="lazy"
-          format="webp"
-        />
-      </SfLink>
-    </div>
+    <SfLink
+      class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
+      :tag="NuxtLink"
+      :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+    >
+      <NuxtImg
+        class="h-auto border rounded-md border-neutral-200"
+        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
+        :alt="'' || ''"
+        width="300"
+        height="300"
+        loading="lazy"
+        format="webp"
+      />
+    </SfLink>
     <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
