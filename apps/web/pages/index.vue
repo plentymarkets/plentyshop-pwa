@@ -17,7 +17,7 @@
           Feel the music
         </p>
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          New Wireless Pro
+          New Wireless Pro XL
         </h1>
         <p class="typography-text-base md:typography-text-lg">
           Spatial audio. Adjustable ear cups. On-device controls. All-day battery.
