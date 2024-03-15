@@ -28,14 +28,12 @@ export class WishlistObject {
   addWishlistItem() {
     this.wishlistTrigger.first().click();
     cy.wait('@doAddWishlistItem')
-    cy.wait('@getWishlist')
     return this;
   }
 
   removeWishlistItem() {
     this.wishlistTrigger.first().click();
     cy.wait('@deleteWishlistItem')
-    cy.wait('@getWishlist')
     return this;
   }
 
