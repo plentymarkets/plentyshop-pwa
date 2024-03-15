@@ -27,11 +27,18 @@
         />
       </div>
     </div>
-    <Price
-      :price="currentActualPrice"
-      :normal-price="normalPrice"
-      :old-price="productGetters.getPrice(product).regular ?? 0"
-    />
+    <div class="flex space-x-2">
+      <Price
+        :price="currentActualPrice"
+        :normal-price="normalPrice"
+        :old-price="productGetters.getPrice(product).regular ?? 0"
+      />
+      <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+        <UiTag :size="'sm'" :variant="'secondary'">{{
+          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+        }}</UiTag>
+      </div>
+    </div>
     <LowestPrice :product="product" />
     <BasePrice
       v-if="productGetters.showPricePerUnit(product)"
@@ -53,6 +60,8 @@
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
     ></div>
+
+    <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
     <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
@@ -106,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,
