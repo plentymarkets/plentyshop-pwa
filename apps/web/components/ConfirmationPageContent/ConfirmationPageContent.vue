@@ -18,13 +18,14 @@
         </div>
 
         <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
-          <OrderSummaryProductCard
-            v-for="(item, index) in orderGetters.getItems(order)"
-            :order="order"
-            :order-item="item"
-            :index="index"
-            :key="item.id"
-          />
+          <div v-for="(item, index) in orderGetters.getItems(order)" :key="item.id">
+            <OrderSummaryProductCard
+              v-if="!orderGetters.isBundleItem(item)"
+              :order="order"
+              :order-item="item"
+              :index="index"
+            />
+          </div>
         </div>
 
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
