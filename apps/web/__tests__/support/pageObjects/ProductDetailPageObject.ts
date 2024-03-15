@@ -1,6 +1,6 @@
-import { Product } from '../types/types';
+import { PageObject } from "./PageObject";
 
-export class ProductDetailPageObject {
+export class ProductDetailPageObject extends PageObject {
   get addToCartButton() {
     return cy.getByTestId('add-to-cart');
   }

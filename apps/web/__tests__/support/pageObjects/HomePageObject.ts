@@ -1,4 +1,6 @@
-export class HomePageObject {
+import { PageObject } from "./PageObject";
+
+export class HomePageObject extends PageObject {
   get header() {
     return cy.getByTestId('header');
   }
