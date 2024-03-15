@@ -8,9 +8,9 @@ beforeEach(() => {
   cy.clearCookies();
 });
 
-describe('Smoke: Language Selector', () => {
+describe('Feature: Language Selector', () => {
 
-  it('Check if Language selector works', () => {
+  it('Should change the language from EN to DE', () => {
     languageSelect.openModal();
     languageSelect.checkIfModalIsOpen();
     languageSelect.checkOptions();
@@ -18,7 +18,7 @@ describe('Smoke: Language Selector', () => {
     languageSelect.checkLanguageSelected('de');
   });
 
-  it('Should change the category url after language switch', () => {
+  it('Should stay on the same category page', () => {
     cy.visitAndHydrate('/living-room');
     cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
@@ -28,7 +28,7 @@ describe('Smoke: Language Selector', () => {
     cy.url().should('include', '/de/wohnzimmer');
   });
 
-  it('Should change the product url after language switch', () => {
+  it('Should stay on the same product page', () => {
     cy.visitAndHydrate('/living-room/armchair-stool/armchair-afterwork_122');
     cy.intercept('/plentysystems/getProduct').as('getProduct');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
