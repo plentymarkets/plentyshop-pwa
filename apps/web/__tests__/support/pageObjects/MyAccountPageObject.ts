@@ -1,6 +1,7 @@
 import { paths } from '../../../utils/paths';
+import { PageObject } from "./PageObject";
 
-export class MyAccountPageObject {
+export class MyAccountPageObject extends PageObject {
   get accountLayout() {
     return cy.getByTestId('account-layout');
   }

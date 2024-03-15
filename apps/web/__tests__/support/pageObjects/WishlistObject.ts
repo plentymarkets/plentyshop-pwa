@@ -1,4 +1,6 @@
-export class WishlistObject {
+import { PageObject } from "./PageObject";
+
+export class WishlistObject extends PageObject {
   get wishlistIcon() {
     return cy.getByTestId('navbar-top').find('[data-testid="wishlist-page-navigation"]');
   }

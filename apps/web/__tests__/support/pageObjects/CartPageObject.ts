@@ -1,4 +1,6 @@
-export class CartPageObject {
+import { PageObject } from "./PageObject";
+
+export class CartPageObject extends PageObject {
   get cartPreview() {
     return cy.getByTestId('checkout-layout');
   }
