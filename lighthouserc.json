@@ -4,7 +4,7 @@
       "startServerCommand": "yarn start",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/c/living-room"
+        "http://localhost:3000/living-room"
       ],
       "numberOfRuns": 3,
       "assert": {

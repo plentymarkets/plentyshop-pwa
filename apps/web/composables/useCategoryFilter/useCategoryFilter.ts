@@ -1,4 +1,3 @@
-import { useRoute } from 'nuxt/app';
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
@@ -33,13 +32,6 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
   return mergedFilters;
 };
 
-const getCategorySlugsFromPath = (path: string): string[] => {
-  const parts = path.split('/');
-  const categoryIndex = parts.indexOf('c');
-
-  return parts.slice(categoryIndex + 1).map((part) => (part.includes('?') ? part.split('?')[0] : part));
-};
-
 /**
  * @description Composable for managing category filter.
  * @returns UseCategoryFiltersResponse
@@ -63,8 +55,10 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * ```
    */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
+    const { getCategoryUrlFromRoute } = useLocalization();
+
     return {
-      categoryUrlPath: getCategorySlugsFromPath(route.fullPath).join('/'),
+      categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
