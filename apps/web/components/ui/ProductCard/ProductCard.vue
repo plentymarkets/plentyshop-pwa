@@ -4,7 +4,7 @@
     data-testid="product-card"
   >
     <div class="relative">
-      <UiTags class="absolute mt-2 mx-2" :product="product" />
+      <UiBadges class="absolute m-2" :product="product" />
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"

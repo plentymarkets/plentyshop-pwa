@@ -6,7 +6,7 @@
     :class="{ 'top-[17,5%]': isDesktop, 'flex-col': !isDesktop }"
   >
     <template v-for="locale in localeCodes" :key="locale">
-      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="ml-3 mb-2">
+      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="mx-3 mb-2">
         <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" v-html="flagList[locale]" />
         <div>
           {{ $t(`lang.${locale}`) }}
@@ -21,7 +21,7 @@
         <LanguageButton
           :locale="locale"
           variant="tertiary"
-          class="ml-3 mb-2 flex items-center justify-between !text-black"
+          class="mx-3 mb-2 flex items-center justify-between !text-black"
         >
           <div class="flex">
             <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" class="mr-2" v-html="flagList[locale]" />
@@ -39,7 +39,7 @@
 import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
-const { isOpen } = useLanguageSelect();
+const { isOpen } = useLocalization();
 
 const { isDesktop, isTablet } = useBreakpoints();
 const { localeCodes, locale: currentLocale } = useI18n();

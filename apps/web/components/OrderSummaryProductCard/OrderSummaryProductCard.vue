@@ -4,19 +4,21 @@
     data-testid="cart-product-card"
     v-if="orderItem.typeId !== 6"
   >
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4">
-      <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
-        <NuxtImg
-          class="h-auto border rounded-md border-neutral-200"
-          :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-          :alt="'' || ''"
-          width="300"
-          height="300"
-          loading="lazy"
-          format="webp"
-        />
-      </SfLink>
-    </div>
+    <SfLink
+      class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
+      :tag="NuxtLink"
+      :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+    >
+      <NuxtImg
+        class="h-auto border rounded-md border-neutral-200"
+        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
+        :alt="'' || ''"
+        width="300"
+        height="300"
+        loading="lazy"
+        format="webp"
+      />
+    </SfLink>
     <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
         :tag="NuxtLink"
@@ -26,7 +28,7 @@
       >
         {{ orderGetters.getItemName(orderItem) }}
       </SfLink>
-      <div class="my-2">
+      <div class="my-2" v-if="!orderGetters.isBundleComponents(orderItem)">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
             <span class="mr-1" v-if="orderGetters.getOrderItemAttributeName(attribute)">
@@ -60,6 +62,26 @@
           </li>
         </ul>
       </div>
+      <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
+        <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
+          <SfLink
+            :tag="NuxtLink"
+            v-if="item.data.filter.isSalable"
+            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+            variant="secondary"
+            class="no-underline typography-text-sm"
+          >
+            <p>
+              {{ productBundleGetters.getBundleItemQuantity(item) }}x
+              <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+            </p>
+          </SfLink>
+          <p class="text-sm" v-else>
+            {{ productBundleGetters.getBundleItemQuantity(item) }}x
+            <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+          </p>
+        </ul>
+      </div>
       <div class="items-start sm:items-center sm:mt-auto text-sm">
         <div class="grid grid-cols-2 w-full">
           <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</p>
@@ -81,7 +103,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 

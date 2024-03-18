@@ -1,19 +1,18 @@
 <template>
   <div data-testid="shipping-method" class="md:px-4 my-6">
-    <div class="flex justify-between items-center">
-      <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
-    </div>
+    <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
     <div class="mt-4">
       <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
         <SfListItem
           v-for="method in shippingMethods"
-          tag="label"
           :key="shippingProviderGetters.getParcelServicePresetId(method)"
-          class="border rounded-md items-start"
-          @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
           :disabled="disabled"
+          @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
+          tag="label"
+          children-tag="div"
+          class="border rounded-md items-start select-none"
         >
-          <div class="flex gap-2">
+          <template #prefix>
             <SfRadio
               v-model="radioModel"
               :checked="
@@ -21,9 +20,12 @@
                 shippingProviderGetters.getParcelServicePresetId(method)
               "
               :value="shippingProviderGetters.getParcelServicePresetId(method)"
+              class="flex items-center"
             />
-            <p>{{ shippingProviderGetters.getShippingMethodName(method) }}</p>
-            <p class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</p>
+          </template>
+          <div class="flex items-center flex-row gap-2">
+            <span>{{ shippingProviderGetters.getShippingMethodName(method) }}</span>
+            <span class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</span>
           </div>
         </SfListItem>
       </ul>

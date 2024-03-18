@@ -46,6 +46,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -69,9 +70,9 @@ export default defineNuxtConfig({
             file: 'de.json',
           },
         ],
-        lazy: true,
         langDir: 'lang',
         defaultLocale: 'en',
+        strategy: 'prefix_and_default',
       },
     ],
     [
@@ -107,20 +108,39 @@ export default defineNuxtConfig({
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
   },
+  site: {
+    url: '',
+  },
+  sitemap: {
+    xslColumns: [
+      // URL column must always be set, no value needed
+      { label: 'URL', width: '75%' },
+      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
+    ],
+    autoLastmod: true,
+    sitemaps: {
+      content: {
+        exclude: [
+          '/search',
+          '/offline',
+          '/my-account/**',
+          '/readonly-checkout',
+          '/set-new-password',
+          '/reset-password-success',
+        ],
+        includeAppSources: true,
+      },
+      items: {},
+      categories: {},
+    },
+  },
   hooks: {
     'pages:extend'(pages) {
-      pages.push(
-        {
-          name: 'category',
-          path: '/c/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
-          file: __dirname + '/pages/category/[slug].vue',
-        },
-        {
-          name: 'product',
-          path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-          file: __dirname + '/pages/product/[slug].vue',
-        },
-      );
+      pages.push({
+        name: 'product',
+        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
+        file: __dirname + '/pages/product/[slug].vue',
+      });
     },
   },
   runtimeConfig: {

@@ -38,37 +38,7 @@
             {{ orderGetters.getItemName(orderItem) }}
           </SfLink>
           <div class="mt-2 md:mb-2">
-            <!-- <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-              <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
-                <span class="mr-1 font-bold" v-if="orderGetters.getOrderItemAttributeName(attribute)">
-                  {{ orderGetters.getOrderItemAttributeName(attribute) }}:
-                </span>
-                <span class="font-medium" v-if="orderGetters.getOrderItemAttributeValue(attribute)">
-                  {{ orderGetters.getOrderItemAttributeValue(attribute) }}
-                </span>
-              </li>
-            </ul> -->
             <ul class="text-xs leading-5 sm:typography-text-sm text-neutral-700">
-              <!-- <li v-for="(property, index) in orderGetters.getItemOrderProperties(orderItem)" :key="index">
-                <span class="mr-1">
-                  <span class="font-bold">{{ orderGetters.getItemOrderPropertyName(property) }}</span>
-                  <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
-                </span>
-                <span v-if="orderGetters.isItemOrderPropertyFile(property)">
-                  <a
-                    :href="orderGetters.getItemOrderPropertyFileUrl(property)"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="underline"
-                  >
-                    <span>{{ orderGetters.getItemOrderPropertyValue(property) }}</span>
-                    <SfIconOpenInNew class="ml-1" size="sm" />
-                  </a>
-                </span>
-                <span v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
-                  {{ orderGetters.getItemOrderPropertyValue(property) }}
-                </span>
-              </li> -->
               <li>
                 <span class="font-bold mr-2">{{ $t('account.ordersAndReturns.orderDetails.price') }}:</span>
                 <span>{{ $n(orderGetters.getItemPrice(orderItem), 'currency') }}</span>
@@ -116,7 +86,7 @@
                   <SfIconChevronLeft class="text-neutral-500" :class="{ 'rotate-90': opened, '-rotate-90': !opened }" />
                 </div>
               </template>
-              <h3>
+              <div>
                 <div
                   class="flex mx-auto justify-between border-t-2 py-1.5 px-4 text-sm"
                   v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)"
@@ -142,7 +112,7 @@
                 >
                   {{ $t('noneExisting') }}
                 </p>
-              </h3>
+              </div>
             </SfAccordionItem>
           </div>
         </div>

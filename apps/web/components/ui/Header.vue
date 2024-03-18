@@ -19,7 +19,7 @@
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
-          :aria-label="t('numberInWishlist', { count: wishlistItems.length })"
+          :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
           variant="tertiary"
           square
           data-testid="wishlist-page-navigation"
@@ -27,7 +27,7 @@
           <template #prefix>
             <SfIconFavorite />
             <SfBadge
-              :content="wishlistItems.length"
+              :content="wishlistItemIds.length"
               class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
               data-testid="wishlist-badge"
             />
@@ -161,7 +161,7 @@ import { useCategoryTree, useCustomer } from '~/composables';
 defineProps<DefaultLayoutProps>();
 const isLogin = ref(true);
 const { data: cart } = useCart();
-const { data: wishlistItems } = useWishlist();
+const { wishlistItemIds } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 const NuxtLink = resolveComponent('NuxtLink');
@@ -170,7 +170,7 @@ const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen } = useDisclosure();
-const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLanguageSelect();
+const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 

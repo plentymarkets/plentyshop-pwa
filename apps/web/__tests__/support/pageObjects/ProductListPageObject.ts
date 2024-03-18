@@ -1,6 +1,6 @@
-const productsAmount = 24;
+import { PageObject } from "./PageObject";
 
-export class ProductListPageObject {
+export class ProductListPageObject extends PageObject {
   get categoryGrid() {
     return cy.getByTestId('category-grid');
   }
