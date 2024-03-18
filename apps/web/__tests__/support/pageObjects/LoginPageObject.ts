@@ -1,4 +1,6 @@
-export class LoginPageObject {
+import { PageObject } from "./PageObject";
+
+export class LoginPageObject extends PageObject {
   clickForgotPasswordLink() {
     cy.getByTestId('login-page-reset-button').click();
     return this;
@@ -22,7 +24,7 @@ export class LoginPageObject {
     cy.getByTestId('signup-page-login-button').click();
     return this;
   }
-  
+
   isURL(path: string) {
     cy.url().should('contain', path);
     return this;

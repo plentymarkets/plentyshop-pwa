@@ -70,9 +70,9 @@ export default defineNuxtConfig({
             file: 'de.json',
           },
         ],
-        lazy: true,
         langDir: 'lang',
         defaultLocale: 'en',
+        strategy: 'prefix_and_default',
       },
     ],
     [
@@ -136,18 +136,11 @@ export default defineNuxtConfig({
   },
   hooks: {
     'pages:extend'(pages) {
-      pages.push(
-        {
-          name: 'category',
-          path: '/c/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
-          file: __dirname + '/pages/category/[slug].vue',
-        },
-        {
-          name: 'product',
-          path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-          file: __dirname + '/pages/product/[slug].vue',
-        },
-      );
+      pages.push({
+        name: 'product',
+        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
+        file: __dirname + '/pages/product/[slug].vue',
+      });
     },
   },
   runtimeConfig: {
