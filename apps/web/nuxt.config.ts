@@ -121,6 +121,7 @@ export default defineNuxtConfig({
     sitemaps: {
       content: {
         exclude: [
+          '/en/**',
           '/search',
           '/offline',
           '/my-account/**',
