@@ -44,7 +44,7 @@
                 {{ title }}
               </SfListItem>
 
-              <li v-for="({ label, link }, subIndex) in subsections" :key="`subsection-${subIndex}`">
+              <li v-for="({ label, link }, subIndex) in getSubsections(subsections)" :key="`subsection-${subIndex}`">
                 <SfListItem
                   :tag="NuxtLink"
                   :to="localePath(link)"
@@ -99,6 +99,7 @@ import {
   SfIconChevronRight,
   SfIconFavorite,
 } from '@storefront-ui/vue';
+import type { MyAccountSubsection } from '~/layouts/types';
 
 const localePath = useLocalePath();
 const { isTablet } = useBreakpoints();
@@ -137,6 +138,11 @@ const sections = computed(() => [
         label: t('account.ordersAndReturns.section.returns'),
         link: localePath(paths.accountReturns),
       },
+      {
+        label: t('returns.return'),
+        link: localePath(paths.accountNewReturn),
+        hide: true,
+      },
     ],
   },
   {
@@ -159,6 +165,10 @@ const findCurrentPage = computed(() =>
 );
 
 const currentSectionLabel = computed(() => findCurrentPage.value?.label || '');
+
+const getSubsections = (sections: MyAccountSubsection[]) => {
+  return sections.filter((section) => !section.hide);
+};
 
 const breadcrumbs = computed(() => [
   { name: t('home'), link: localePath(paths.home) },
