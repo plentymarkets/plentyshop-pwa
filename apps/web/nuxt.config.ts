@@ -130,6 +130,7 @@ export default defineNuxtConfig({
           '/cart',
           '/checkout',
           '/thank-you',
+          '/wishlist',
         ],
         includeAppSources: true,
       },
