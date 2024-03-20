@@ -10,6 +10,27 @@
           {{ $t('customerReviews') }}
         </h2>
       </template>
+      <div class="my-4">
+        <template v-if="isAuthorized">
+          <SfButton
+              type="submit"
+              data-testid="create-review"
+              size="base"
+              @click="open"
+          >
+            {{ $t('createCustomerReview') }}
+          </SfButton>
+        </template>
+        <template v-else>
+          <SfLink
+              class="text-primary-800 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+              variant="secondary"
+              href="#"
+          >
+            {{ $t(`loginBeforeCreateReview`) }}
+          </SfLink>
+        </template>
+      </div>
       <SfLoaderCircular v-if="loading && reviewGetters.getItems(productReviews).length === 0" size="sm" />
       <UiReview
         v-for="(reviewItem, key) in reviewGetters.getItems(productReviews)"
@@ -23,17 +44,36 @@
     </div>
     <UiDivider v-if="reviewsOpen && reviewGetters.getItems(productReviews).length > 0" class="mb-2 mt-2" />
   </div>
+  <!-- TODO Luisa: Fix classes in UiModal to fit content into modal background -->
+  <UiModal
+      v-model="isOpen"
+      aria-labelledby="review-modal"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+  >
+    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+      <SfIconClose />
+    </SfButton>
+    <ReviewForm @on-close="close" @on-submit="saveReview"></ReviewForm>
+  </UiModal>
 </template>
 
 <script lang="ts" setup>
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfLink, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
-
+import { useCustomer } from '~/composables';
 const props = defineProps<ProductAccordionPropsType>();
-
+const { isOpen, open, close } = useDisclosure();
+const { isAuthorized } = useCustomer();
 const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);
+
+const saveReview = () => {
+  close();
+};
+
 const {
   data: productReviews,
   fetchProductReviews,
@@ -47,4 +87,6 @@ watch(
     }
   },
 );
+
+
 </script>

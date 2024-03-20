@@ -20,20 +20,57 @@
     >
       {{ $t(isCollapsed ? 'readMore' : 'readLess') }}
     </button>
+    <div v-if="!isAnswerFormOpen" class="actions flex justify-end">
+      <SfButton variant="tertiary" size="sm" class="self-start" @click="isAnswerFormOpen = true">
+        {{ $t('review.answer') }}
+      </SfButton>
+    </div>
+    <template v-if="isAnswerFormOpen">
+      <div class="mx-24">
+        <form
+          data-testid="review-answer-form"
+          class="mt-8"
+        >
+          <label class="block mb-2 text-sm font-medium text-neutral-500 w-1/2">
+            <span>{{ $t('review.reviewAuthor') }}</span>
+            <SfInput size="sm" class="font-normal text-sm"></SfInput>
+          </label>
+          <label class="my-4 block">
+            <textarea
+                v-model="reviewModelValue"
+                class="block w-full py-2 pl-4 pr-3 min-h-[138px] text-sm rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
+            />
+            <span
+                :class="[
+              'block text-xs mt-0.5 text-right',
+              reviewIsAboveLimit ? 'text-negative-700 font-medium' : 'text-neutral-500',
+            ]"
+            >
+            {{ reviewCharsCount }}
+          </span>
+          </label>
+          <div class="flex justify-end gap-x-4">
+            <SfButton type="button" size="sm" variant="secondary" class="flex-1 md:flex-initial" @click="isAnswerFormOpen = false">{{ $t('review.cancel') }}</SfButton>
+            <SfButton type="submit" size="sm" class="flex-1 md:flex-initial" @click="$emit('on-submit')">{{ $t('review.saveAnswer') }}</SfButton>
+          </div>
+        </form>
+      </div>
+    </template>
   </article>
 </template>
 
 <script setup lang="ts">
 import { reviewGetters } from '@plentymarkets/shop-sdk';
-import { SfRating, SfIconCheck } from '@storefront-ui/vue';
+import {SfRating, SfIconCheck, SfButton, SfRatingButton, SfInput} from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 
 const props = defineProps<ReviewProps>();
 
 const { reviewItem } = toRefs(props);
-
+const isAnswerFormOpen = ref(false);
 const charLimit = 250;
 const isCollapsed = ref(true);
+
 
 const reviewMessage = reviewGetters.getReviewMessage(reviewItem.value);
 

@@ -316,6 +316,8 @@
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",
   "customerReviews": "Kundenrezensionen",
+  "createCustomerReview": "Bewertung abgeben",
+  "loginBeforeCreateReview": "Log dich ein, um eine Bewertung zu schreiben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
@@ -335,7 +337,15 @@
     "image": "Bild {index}"
   },
   "review": {
-    "verifiedPurchase": "Verifizierter Kauf"
+    "verifiedPurchase": "Verifizierter Kauf",
+    "createReviewFormTitle": "Schreib eine Bewertung",
+    "yourRating": "Deine Wertung:",
+    "reviewText": "Produktbewertung (optional)",
+    "reviewAuthor": "Dein Name (optional)",
+    "cancel": "Abbrechen",
+    "submitReview": "Bewertung absenden",
+    "answer": "Antworten",
+    "saveAnswer": "Speichern"
   },
   "account": {
     "heading": "Mein Konto",
