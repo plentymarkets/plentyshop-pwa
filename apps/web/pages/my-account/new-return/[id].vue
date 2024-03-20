@@ -1,23 +1,16 @@
 <template>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-  <h2
-    v-if="!confirmation"
-    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
-    data-testid="account-new-return-heading"
-  >
-    {{ t('returns.return') }}
-  </h2>
-  <div v-if="!confirmation" class="col-span-3 mt-8 !w-auto mx-4">
+  <div v-if="!confirmation" class="col-span-3 !w-auto mx-4">
     <template v-if="currentReturnOrder">
-      <div class="flex justify-between items-center mb-5 text-sm sm:text-lg">
+      <div class="flex justify-between items-center mb-5 text-sm sm:typography-headline-4">
         <div class="md:grid grid-cols-[1fr_1fr] gap-3">
           <div class="text-neutral-900">
-            <span class="font-bold"> {{ t('returns.returnForOrder') }} </span> #
-            {{ orderGetters.getId(currentReturnOrder) }}
+            <span class="font-bold"> {{ t('returns.returnForOrder') }}</span>
+            <span> #{{ orderGetters.getId(currentReturnOrder) }}</span>
           </div>
           <div class="text-neutral-900">
-            <span class="font-bold">{{ t('returns.orderDate') }} </span>
-            : {{ orderGetters.getDate(currentReturnOrder) }}
+            <span class="font-bold">{{ t('returns.orderDate') }}</span>
+            <span>: {{ orderGetters.getDate(currentReturnOrder) }}</span>
           </div>
         </div>
         <label

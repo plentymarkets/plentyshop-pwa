@@ -77,7 +77,7 @@
           </label>
         </div>
 
-        <div class="my-2 w-full md:self-end">
+        <div class="my-2 w-full md:self-end" v-if="hasProductDetails">
           <div class="border border-neutral-200 rounded-md divide-y text-neutral-900">
             <SfAccordionItem :model-value="opened" @update:model-value="toggleDropdown">
               <template #summary>
@@ -103,15 +103,6 @@
                   <p>{{ orderGetters.getItemOrderPropertyName(property) }}</p>
                   <p class="text-gray-500">{{ orderGetters.getItemOrderPropertyValue(property) }}</p>
                 </div>
-                <p
-                  v-if="
-                    orderGetters.getOrderAttributes(props.orderItem).length === 0 &&
-                    orderGetters.getItemOrderProperties(props.orderItem).length === 0
-                  "
-                  class="py-1.5 border-t-2 text-sm px-4"
-                >
-                  {{ $t('noneExisting') }}
-                </p>
               </div>
             </SfAccordionItem>
           </div>
@@ -145,6 +136,12 @@ const changeQuantity = async (quantity: number) => {
 const changeReason = async (reasonId: number | null) => {
   updateReason(props.orderItem.itemVariationId, reasonId);
 };
+const hasProductDetails = computed(() => {
+  return (
+    orderGetters.getOrderAttributes(props.orderItem).length > 0 ||
+    orderGetters.getItemOrderProperties(props.orderItem).length > 0
+  );
+});
 
 const quantity = computed(() => returnData.value?.['variationIds']?.[props.orderItem.itemVariationId]?.quantity || 0);
 const returnReasonId = computed(
