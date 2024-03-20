@@ -101,5 +101,8 @@ jobs:
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: "https://pwapublish.plentysystems.com"
-          forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
+          forms: '{ 
+          "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" ,
+          "pwaSecurityToken": "${{ secrets.PWA_REQUEST_SECURITY_TOKEN }}"
+          }'
           fileForms: '{ "file": "${{ github.workspace }}/pwa.tar.gz" }'
