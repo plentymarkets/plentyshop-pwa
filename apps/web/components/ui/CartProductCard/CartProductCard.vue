@@ -70,7 +70,7 @@
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
             :tag="NuxtLink"
-            v-if="item.data.filter.isSalable"
+            v-if="productBundleGetters.isItemBundleSalable(item)"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
