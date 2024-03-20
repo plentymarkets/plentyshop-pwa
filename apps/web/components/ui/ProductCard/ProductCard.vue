@@ -5,8 +5,7 @@
   >
     <div class="relative">
       <UiBadges
-        class="absolute"
-        :class="isFromWishlist ? 'mx-2' : 'm-2'"
+        :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
         :product="product"
         :use-availability="isFromWishlist"
       />
