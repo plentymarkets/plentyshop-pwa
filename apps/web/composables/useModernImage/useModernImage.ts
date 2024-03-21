@@ -9,23 +9,20 @@ export const useModernImage: UseModernImageReturn = () => {
   const webpExtension = 'webp';
 
   const addModernImageExtension = (url: string | undefined) => {
-    let receivedUrl = '';
-    let receivedImageExtension = '';
+    let baseUrl = '';
+    let baseExtension = '';
 
-    if (url) receivedUrl = url;
+    if (url) baseUrl = url;
 
-    const matches = receivedUrl?.match(/.?(\.\w+)(?:$|\?)/);
-    if (matches) receivedImageExtension = String(matches[1].split('.').pop());
+    const matches = baseUrl?.match(/.?(\.\w+)(?:$|\?)/);
 
-    if (useAvif) {
-      return receivedImageExtension === avifExtension ? receivedUrl : `${receivedUrl}.${avifExtension}`;
-    }
+    if (matches) baseExtension = String(matches[1].split('.').pop());
 
-    if (!useAvif && useWebp) {
-      return receivedImageExtension === webpExtension ? receivedUrl : `${receivedUrl}.${webpExtension}`;
-    }
+    if (useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
 
-    return receivedUrl;
+    if (!useAvif && useWebp) return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
+
+    return baseUrl;
   };
 
   const addModernImageExtensionForSfImages = (images: SfImage[]) => {
