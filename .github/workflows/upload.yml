@@ -56,7 +56,7 @@ jobs:
         run: |
           touch apps/web/.env
           echo API_URL=${{ vars.API_URL }} >> apps/web/.env
-          echo {{ vars.CONFIG }} >> apps/web/.env
+          echo ${{ vars.CONFIG }} >> apps/web/.env
           cat apps/web/.env
 
       - name: Build
