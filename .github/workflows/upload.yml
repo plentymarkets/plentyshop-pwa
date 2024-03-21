@@ -55,8 +55,10 @@ jobs:
       - name: Setup environment
         run: |
           touch apps/web/.env
-          echo API_URL=${{ vars.API_URL }} >> apps/web/.env
-          echo ${{ vars.CONFIG }} >> apps/web/.env
+          cat <<EOT >> apps/web/.env
+          API_URL=${{ vars.API_URL }}
+          ${{ vars.CONFIG }}
+          EOT
 
       - name: Build
         run: yarn build
