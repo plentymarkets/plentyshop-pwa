@@ -240,9 +240,8 @@ const handleRegularOrder = async () => {
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
-  clearCartItems();
-
   if (data?.order?.id) {
+    clearCartItems();
     navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
   }
 };
