@@ -3,8 +3,7 @@ import type { SfImage } from '@vue-storefront/unified-data-model';
 import type { UseModernImageReturn } from './types';
 
 export const useModernImage: UseModernImageReturn = () => {
-  const useAvif = useRuntimeConfig().public.useAvif;
-  const useWebp = useRuntimeConfig().public.useWebp;
+  const config = useRuntimeConfig().public;
   const avifExtension = 'avif';
   const webpExtension = 'webp';
 
@@ -18,9 +17,10 @@ export const useModernImage: UseModernImageReturn = () => {
 
     if (matches) baseExtension = String(matches[1].split('.').pop());
 
-    if (useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
+    if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
 
-    if (!useAvif && useWebp) return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
+    if (!config.useAvif && config.useWebp)
+      return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
 
     return baseUrl;
   };
