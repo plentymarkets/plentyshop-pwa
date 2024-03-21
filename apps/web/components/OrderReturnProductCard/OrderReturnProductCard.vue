@@ -11,7 +11,8 @@
             <NuxtImg
               class="h-auto border rounded-md border-neutral-200"
               :src="
-                addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+                addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
+                '/images/placeholder.png'
               "
               width="300"
               height="300"
@@ -118,7 +119,7 @@ import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem } from '@storefron
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();
 const localePath = useLocalePath();

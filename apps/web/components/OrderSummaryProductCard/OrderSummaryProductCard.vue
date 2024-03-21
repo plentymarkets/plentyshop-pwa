@@ -11,7 +11,9 @@
     >
       <NuxtImg
         class="h-auto border rounded-md border-neutral-200"
-        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
+        :src="
+          addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+        "
         :alt="'' || ''"
         width="300"
         height="300"
@@ -107,7 +109,7 @@ import { orderGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfIconOpenInNew } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 

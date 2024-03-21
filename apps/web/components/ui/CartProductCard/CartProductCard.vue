@@ -8,7 +8,7 @@
         <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
           class="w-full h-auto border rounded-md border-neutral-200"
-          :src="addWebpExtension(cartItemImage) || '/images/placeholder.png'"
+          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
           :alt="cartItemImage || ''"
           width="300"
           height="300"
@@ -124,7 +124,7 @@ import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
