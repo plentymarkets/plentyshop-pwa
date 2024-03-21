@@ -3,8 +3,9 @@
     <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
       <img
         :src="productBundleGetters.getBundleItemImage(item)"
-        class="h-[112px] w-[112px] pr-2 object-contain"
+        class="size-28 pr-2 object-contain"
         ref="image"
+        :alt="productBundleGetters.getBundleItemName(item)"
       />
       <div class="h-24 self-center">
         <SfLink
