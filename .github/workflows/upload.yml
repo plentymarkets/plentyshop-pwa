@@ -55,7 +55,10 @@ jobs:
       - name: Setup environment
         run: |
           touch apps/web/.env
-          echo API_URL=${{ vars.API_URL }} >> apps/web/.env
+          cat <<EOT >> apps/web/.env
+          API_URL=${{ vars.API_URL }}
+          ${{ vars.CONFIG }}
+          EOT
 
       - name: Build
         run: yarn build
@@ -95,7 +98,6 @@ jobs:
         with:
           name: zipped-artifact
           path: ./
-
       - name: Upload File
         id: upload
         uses: JantHsueh/upload-file-action@1.0
@@ -103,3 +105,4 @@ jobs:
           url: "https://pwapublish.plentysystems.com"
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
           fileForms: '{ "file": "${{ github.workspace }}/pwa.tar.gz" }'
+
