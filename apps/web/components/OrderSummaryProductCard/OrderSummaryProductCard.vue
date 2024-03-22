@@ -67,8 +67,8 @@
       <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
         <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
           <SfLink
+            v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
             :tag="NuxtLink"
-            v-if="item.data.filter.isSalable"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
