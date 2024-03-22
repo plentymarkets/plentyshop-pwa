@@ -1,20 +1,18 @@
 <template>
   <div class="relative min-h-[600px]">
     <NuxtImg
-      preload
-      height="600"
-      width="4000"
       src="/images/homepage-hero-bg-mobile.webp"
+      width="4000"
+      height="600"
       alt="Hero mobile background"
       class="absolute w-full h-full z-[-1] md:object-cover"
     />
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <NuxtImg
+          src="/images/homepage-hero-headphones.webp"
           height="600"
           width="800"
-          preload
-          src="/images/homepage-hero-headphones.webp"
           alt="Headphones"
           class="h-full object-cover object-left"
         />
