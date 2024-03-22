@@ -1,11 +1,16 @@
 <template>
   <div v-if="product.bundleComponents" class="border-t-2 my-2">
-    <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-1">
-      <img :src="productBundleGetters.getBundleItemImage(item)" class="h-[112px] w-[112px] pr-2" ref="image" />
-      <div class="h-24">
+    <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
+      <img
+        :src="productBundleGetters.getBundleItemImage(item)"
+        class="size-28 pr-2 object-contain"
+        ref="image"
+        :alt="productBundleGetters.getBundleItemName(item)"
+      />
+      <div class="h-24 self-center">
         <SfLink
           :tag="NuxtLink"
-          v-if="item.data.filter.isSalable"
+          v-if="productBundleGetters.isItemBundleSalable(item)"
           :to="localePath(productBundleGetters.getBundleItemUrl(item))"
           variant="secondary"
           class="no-underline typography-text-sm"

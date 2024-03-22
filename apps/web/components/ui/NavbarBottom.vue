@@ -9,8 +9,8 @@
         { 'text-white bg-primary-900': $route.path === link },
       ]"
       size="sm"
-      :tag="NuxtLink"
-      :to="link"
+      :tag="link ? NuxtLink : undefined"
+      :to="link || undefined"
       @click="label === t('products') && open()"
     >
       <template #prefix>
