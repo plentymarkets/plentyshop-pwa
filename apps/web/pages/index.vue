@@ -1,15 +1,18 @@
 <template>
   <div class="relative min-h-[600px]">
-    <NuxtImg
-      src="/images/homepage-hero-bg-mobile.webp"
-      width="4000"
-      height="600"
-      alt="Hero mobile background"
-      class="absolute w-full h-full z-[-1] md:object-cover"
-    />
+    <picture>
+      <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
+      <img
+        src="/images/homepage-hero-bg-mobile.webp"
+        height="600"
+        width="4000"
+        alt="Hero mobile background"
+        class="absolute w-full h-full z-[-1] md:object-cover"
+      />
+    </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <NuxtImg
+        <img
           src="/images/homepage-hero-headphones.webp"
           height="600"
           width="800"
