@@ -103,10 +103,10 @@ export const useCanonical: UseCanonicalReturn = () => {
     state.value.loading = true;
     const route = useRoute();
     const localePath = useLocalePath();
-    const { defaultLocale } = useI18n();
+    const { locale } = useI18n();
     const runtimeConfig = useRuntimeConfig();
 
-    const canonicalLink = `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, defaultLocale)}`;
+    const canonicalLink = `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, locale.value)}`;
     useHead({
       link: [
         {
@@ -124,7 +124,7 @@ export const useCanonical: UseCanonicalReturn = () => {
               hreflang: key,
               href:
                 key === `x-default`
-                  ? `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, defaultLocale)}`
+                  ? `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, locale.value)}`
                   : `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, key)}`,
             },
           ],
