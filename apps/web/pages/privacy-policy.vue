@@ -1,5 +1,7 @@
 <template>
-  <div class="p-5" v-html="getHTMLTexts()" />
+  <div class="flex items-center justify-center">
+    <div class="container p-4 overflow-x-auto" v-html="getHTMLTexts()" />
+  </div>
 </template>
 
 <script setup lang="ts">
