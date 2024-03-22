@@ -18,13 +18,10 @@
       </template>
 
       <SfListItem
-        v-if="availabilityEnabled"
+        v-if="availabilityEnabled && productGetters.getAvailabilityName(product)"
         size="sm"
-        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid"
-        :class="[
-          productGetters.getAgenciesAvailabilityCLass(product),
-          tagsEnabled && productTags.length > 0 ? 'mt-2' : 'mt-4',
-        ]"
+        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid mt-2"
+        :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
         :style="availabilityStyles"
       >
         {{ productGetters.getAvailabilityName(product) }}

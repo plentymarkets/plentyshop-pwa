@@ -403,7 +403,7 @@
         "returns": "Returns"
       },
       "orderDetails": {
-        "showDetails": "Show details",
+        "showDetails": "Show product details",
         "heading": "Order details",
         "orderId": "Order ID",
         "orderDate": "Order date",
