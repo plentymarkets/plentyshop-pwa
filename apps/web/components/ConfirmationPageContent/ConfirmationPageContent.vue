@@ -1,14 +1,13 @@
 <template>
   <div class="px-4 md:px-0 flex items-center flex-col" data-testid="order-success-page">
-    <div class="p-4 md:p-6 flex flex-col items-center max-w-2xl mx-auto">
-      <NuxtImg src="/images/order-success.svg" :alt="t('orderSuccessfulImageAlt')" width="192" height="192" />
-      <h1 class="mt-6 mb-1 text-2xl" data-testid="success-header">
+    <div class="p-4 md:p-6 flex flex-col max-w-2xl mx-auto">
+      <h1 class="mt-6 mb-1 text-2xl text-center" data-testid="success-header">
         {{ !orderGetters.isReturn(order) ? t('successInfoOrderHeader') : t('successInfoReturnHeader') }}
       </h1>
-      <span v-if="!orderGetters.isReturn(order)" class="font-medium">{{ t('successInfoMessage') }}</span>
-      <span v-if="order?.order?.deliveryAddress?.options?.length" class="font-medium text-center">
+      <div v-if="!orderGetters.isReturn(order)" class="font-medium text-center">{{ t('successInfoMessage') }}</div>
+      <div v-if="order?.order?.deliveryAddress?.options?.length" class="font-medium text-center">
         {{ t('orderConfirmation.confirmationSendTo', { email: orderGetters.getOrderEmail(order) }) }}
-      </span>
+      </div>
     </div>
 
     <div class="flex flex-col md:flex-row w-full md:w-auto lg:w-3/4 flex-wrap gap-x-6">

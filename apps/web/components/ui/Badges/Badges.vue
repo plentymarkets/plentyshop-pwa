@@ -6,7 +6,7 @@
           v-for="(tag, index) in productTags"
           :key="index"
           size="sm"
-          class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 opacity-75 mr-2"
+          class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 opacity-75 mr-2 mb-2"
           :class="[
             tagGetters.getAgenciesTagCLass(tag),
             tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white',
@@ -18,10 +18,10 @@
       </template>
 
       <SfListItem
-        v-if="availabilityEnabled"
+        v-if="availabilityEnabled && productGetters.getAvailabilityName(product)"
         size="sm"
-        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid mt-4"
-        :class="productGetters.getAgenciesAvailabilityCLass(product)"
+        class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid mt-2"
+        :class="[productGetters.getAgenciesAvailabilityCLass(product)]"
         :style="availabilityStyles"
       >
         {{ productGetters.getAvailabilityName(product) }}
