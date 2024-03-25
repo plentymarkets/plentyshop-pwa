@@ -24,7 +24,7 @@
           {{ productBundleGetters.getBundleItemQuantity(item) }}x
           <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
         </p>
-        <p class="h-auto line-clamp-3" v-html="productBundleGetters.getBundleItemDescription(item)"></p>
+        <div class="h-auto line-clamp-3" v-html="productBundleGetters.getBundleItemDescription(item)"></div>
       </div>
     </div>
   </div>
