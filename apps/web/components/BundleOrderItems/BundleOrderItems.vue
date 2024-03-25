@@ -24,10 +24,10 @@
           {{ productBundleGetters.getBundleItemQuantity(item) }}x
           <span class="h-auto">{{ productBundleGetters.getBundleItemName(item) }}</span>
         </p>
-        <p
+        <div
           class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm"
           v-html="productBundleGetters.getBundleItemDescription(item)"
-        ></p>
+        ></div>
       </div>
     </div>
   </div>
