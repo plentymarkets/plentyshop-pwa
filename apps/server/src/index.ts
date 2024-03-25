@@ -22,6 +22,15 @@ import * as express from 'express';
     jsonMiddleware.handle = express.json({ limit: '13.5mb' }); // 13,3mb for 10mb upload file
   }
 
+  const allRequests = app._router.stack.find((layer: any) => layer.name.length > 0);
+  if (allRequests) {
+    allRequests.handle = (req: any, res: any, next: any) => {
+      consola.log('request:', req.headers.host, req.originalUrl);
+      consola.log(res);
+      next();
+    };
+  }
+
   app.listen(port, host, () => {
     consola.success(`API server listening on http://${host}:${port}`);
   });
