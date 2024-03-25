@@ -119,7 +119,7 @@ export default defineNuxtConfig({
     ],
     autoLastmod: true,
     sitemaps: {
-      content: {
+      'sitemap/content': {
         exclude: [
           '/en/**', // default language
           '/search',
