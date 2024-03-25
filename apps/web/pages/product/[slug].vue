@@ -34,14 +34,14 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
-const localePath = useLocalePath();
+const { buildProductLanguagePath } = useLocalization();
 const { addWebpExtensionForSfImages } = useImageUrl();
 
 definePageMeta({
@@ -70,12 +70,15 @@ generateBreadcrumbs();
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.
  */
+
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
       navigateTo({
-        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        path: buildProductLanguagePath(
+          `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
+        ),
         query: route.query,
       });
     }

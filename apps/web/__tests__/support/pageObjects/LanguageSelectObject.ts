@@ -1,9 +1,6 @@
-export class LanguageSelectObject {
-  checkIfModalIsOpen() {
-    cy.getByTestId('languageSelectList').first().should('be.visible');
-    return this;
-  }
+import { PageObject } from "./PageObject";
 
+export class LanguageSelectObject extends PageObject {
   checkOptions() {
     cy.getByTestId('languageOption-en').should('be.visible');
     cy.getByTestId('languageOption-de').should('be.visible');
@@ -12,7 +9,8 @@ export class LanguageSelectObject {
   }
 
   openModal() {
-    cy.getByTestId('open-languageselect-button').first().click();;
+    cy.getByTestId('open-languageselect-button').first().click();
+    cy.getByTestId('languageSelectList').first().should('be.visible');
     return this;
   }
 
@@ -24,6 +22,17 @@ export class LanguageSelectObject {
 
   selectOption(option: string) {
     cy.getByTestId(`languageOption-${option}`).first().click();;
+    return this;
+  }
+
+  changeLanguage(option: string) {
+    this.checkOptions().selectOption(option).checkLanguageSelected(option);
+
+    return this;
+  }
+
+  checkUrl(url: string) {
+    cy.url().should('include', url);
     return this;
   }
 }

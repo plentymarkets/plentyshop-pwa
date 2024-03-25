@@ -2,10 +2,8 @@
   <div>
     <UiHeader />
     <template v-if="breadcrumbs?.length">
-      <NarrowContainer>
-        <div class="p-4 md:px-0">
-          <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-        </div>
+      <NarrowContainer class="p-4 md:px-0">
+        <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
       </NarrowContainer>
     </template>
     <main>
@@ -43,7 +41,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfIconClose, SfModal, useDisclosure } from '@storefront-ui/vue';
-import { DefaultLayoutProps } from '~/layouts/types';
+import type { DefaultLayoutProps } from '~/layouts/types';
 const { t } = useI18n();
 usePageTitle();
 

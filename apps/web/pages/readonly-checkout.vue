@@ -113,7 +113,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, PaymentMethod } from '@plentymarkets/shop-api';
+import { AddressType, type PaymentMethod } from '@plentymarkets/shop-api';
 import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 

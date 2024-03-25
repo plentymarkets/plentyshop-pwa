@@ -1,6 +1,7 @@
-import { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
+import type { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
 import { useSdk } from '~/sdk';
-import { DoAddCouponParams } from '@plentymarkets/shop-api';
+import type { DoAddCouponParams } from '@plentymarkets/shop-api';
+
 /**
  * @description Composable for managing coupons.
  * @returns UseCouponReturn
@@ -21,7 +22,7 @@ export const useCoupon: UseCouponReturn = () => {
    * @example
    * ``` ts
    * addCoupon({
-      couponCode: 'KB82AZ'
+      couponCode: 'Z23ZMP'
     })
    * ```
    */

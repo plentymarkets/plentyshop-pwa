@@ -5,7 +5,7 @@ import type {
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
 import { useSdk } from '~/sdk';
-import { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing customer orders data

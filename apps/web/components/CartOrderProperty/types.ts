@@ -1,4 +1,4 @@
-import { BasketItemOrderParam, CartItem } from '@plentymarkets/shop-api';
+import type { BasketItemOrderParam, CartItem } from '@plentymarkets/shop-api';
 
 export interface CartOrderPropertyProps {
   basketItemOrderParam: BasketItemOrderParam;

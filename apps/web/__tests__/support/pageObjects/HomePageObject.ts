@@ -1,4 +1,6 @@
-export class HomePageObject {
+import { PageObject } from "./PageObject";
+
+export class HomePageObject extends PageObject {
   get header() {
     return cy.getByTestId('header');
   }
@@ -76,7 +78,9 @@ export class HomePageObject {
   }
 
   goToCategory() {
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('category-button').first().click();
+    cy.wait('@getFacet');
     return this;
   }
 }

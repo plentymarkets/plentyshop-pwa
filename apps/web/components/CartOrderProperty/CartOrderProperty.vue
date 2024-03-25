@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { CartOrderPropertyProps } from '~/components/CartOrderProperty/types';
+import type { CartOrderPropertyProps } from '~/components/CartOrderProperty/types';
 import { cartGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
 
 const props = defineProps<CartOrderPropertyProps>();

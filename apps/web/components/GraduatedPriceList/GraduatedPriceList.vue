@@ -21,9 +21,10 @@
         <td class="lg:p-4 p-2 lg:whitespace-nowrap h-[38px]">{{ list.quantity }}</td>
         <td class="lg:p-4 p-2 flex h-[38px]">
           <div>{{ list.discount }} %</div>
-          <div class="ml-auto text-primary-600" v-if="selectedList && list.price === selectedList.price.value">
-            <SfIconCheck />
-          </div>
+          <SfIconCheck
+            v-if="selectedList && list.price === selectedList.price.value"
+            class="ml-auto text-primary-600"
+          />
         </td>
       </tr>
     </tbody>
@@ -32,7 +33,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
+import type { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
 import { SfIconCheck } from '@storefront-ui/vue';
 
 const props = withDefaults(defineProps<GraduatedPriceListProps>(), {

@@ -2,6 +2,7 @@
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
+  telemetry: false,
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,
@@ -45,6 +46,7 @@ export default defineNuxtConfig({
   },
   modules: [
     '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
@@ -68,9 +70,9 @@ export default defineNuxtConfig({
             file: 'de.json',
           },
         ],
-        lazy: true,
         langDir: 'lang',
         defaultLocale: 'en',
+        strategy: 'prefix_and_default',
       },
     ],
     [
@@ -106,14 +108,43 @@ export default defineNuxtConfig({
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
   },
+  site: {
+    url: '',
+  },
+  sitemap: {
+    xslColumns: [
+      // URL column must always be set, no value needed
+      { label: 'URL', width: '75%' },
+      { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
+    ],
+    autoLastmod: true,
+    sitemaps: {
+      content: {
+        exclude: [
+          '/en/**', // default language
+          '/search',
+          '/offline',
+          '/my-account/**',
+          '/readonly-checkout',
+          '/set-new-password',
+          '/reset-password-success',
+          '/cart',
+          '/checkout',
+          '/thank-you',
+          '/wishlist',
+          '/login',
+          '/signup',
+          '/reset-password',
+        ],
+        includeAppSources: true,
+      },
+      items: {},
+      categories: {},
+    },
+  },
   hooks: {
     'pages:extend'(pages) {
       pages.push(
-        {
-          name: 'category',
-          path: '/c/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?',
-          file: __dirname + '/pages/category/[slug].vue',
-        },
         {
           name: 'product',
           path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
@@ -130,6 +161,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
@@ -154,6 +186,7 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
+          // @ts-ignore
           urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkOnly',
           options: {

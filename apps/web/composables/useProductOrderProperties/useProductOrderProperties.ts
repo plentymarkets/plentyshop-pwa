@@ -1,4 +1,4 @@
-import {
+import type {
   GetPropertiesPrice,
   SetProperties,
   UseProductOrderPropertiesReturn,
@@ -6,7 +6,7 @@ import {
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
-import {
+import type {
   UploadFileForOrderPropertyResponse,
   ProductProperty,
   BasketItemOrderParamsProperty,

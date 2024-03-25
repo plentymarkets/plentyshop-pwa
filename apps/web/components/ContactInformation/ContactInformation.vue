@@ -6,9 +6,7 @@
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
-    <div v-if="cart.customerEmail" class="mt-2 md:w-[520px]">
-      <p>{{ cart.customerEmail }}</p>
-    </div>
+    <p v-if="cart.customerEmail" class="mt-2 md:w-[520px]">{{ cart.customerEmail }}</p>
     <div v-else class="w-full md:max-w-[520px]">
       <p>{{ $t('contactInfo.description') }}</p>
       <SfButton v-if="!disabled" class="mt-4 w-full md:w-auto" variant="secondary" @click="open">
@@ -39,7 +37,7 @@
 </template>
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { ContactInformationProps } from '~/components/ContactInformation/types';
+import type { ContactInformationProps } from '~/components/ContactInformation/types';
 
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();

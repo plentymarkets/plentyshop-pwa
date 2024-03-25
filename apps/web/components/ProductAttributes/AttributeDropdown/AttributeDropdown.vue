@@ -8,8 +8,7 @@
     </label>
     <SfSelect
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
-      size="sm"
-      class="h-10"
+      size="lg"
       v-model="value"
       @update:model-value="(val) => doUpdateValue(val)"
       :placeholder="t('pleaseSelect')"
@@ -31,7 +30,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-import { AttributeSelectProps } from '../types';
+import type { AttributeSelectProps } from '../types';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 import { number, object } from 'yup';
 import { useForm } from 'vee-validate';
@@ -69,6 +68,19 @@ const doUpdateValue = (value: number) => {
   updateValue(props.attribute.attributeId, value);
   selectedValue.value = getValue(props.attribute.attributeId);
 };
+
+const setValue = (value: string | undefined) => {
+  selectedValue.value = value ? Number(value) : undefined;
+};
+
+setValue(value.value);
+
+watch(
+  () => value.value,
+  () => {
+    setValue(value.value);
+  },
+);
 
 watch(
   () => meta.value,

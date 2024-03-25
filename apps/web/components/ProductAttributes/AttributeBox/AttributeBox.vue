@@ -10,16 +10,16 @@
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
-        class="border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
+        class="border h-12 border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
         :class="{
-          'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
+          'text-zinc-400 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
           '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
           '!ring-negative-700 !border-negative-700 ring-1': Boolean(errors['selectedValue']),
         }"
         @click="doUpdateValue(productAttributeGetters.getAttributeValueId(item))"
       >
         <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
-          <div class="font-medium h-10 flex items-center px-4">
+          <div class="font-medium h-12 flex items-center px-4">
             {{ productAttributeGetters.getAttributeValueName(item) }}
           </div>
         </SfTooltip>
@@ -31,8 +31,8 @@
 
 <script setup lang="ts">
 import { SfTooltip } from '@storefront-ui/vue';
-import { AttributeSelectProps } from '../types';
-import { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
+import type { AttributeSelectProps } from '../types';
+import type { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
 import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 import { object, number } from 'yup';
 import { useForm } from 'vee-validate';
@@ -65,6 +65,19 @@ const doUpdateValue = (value: number) => {
   updateValue(props.attribute.attributeId, value);
   selectedValue.value = getValue(props.attribute.attributeId);
 };
+
+const setValue = (value: number | undefined) => {
+  selectedValue.value = value;
+};
+
+setValue(value.value);
+
+watch(
+  () => value.value,
+  () => {
+    setValue(value.value);
+  },
+);
 
 watch(
   () => meta.value,
