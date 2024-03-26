@@ -10,9 +10,9 @@
     {{ address.address2 }}
     {{ address.address3 }}
     {{ address.address4 }}
-    {{ address.postalCode }}
   </p>
-  <p>{{ address.town + ', ' + country }}</p>
+  <p>{{ address.postalCode }} {{ address.town }}</p>
+  <p>{{ country }}</p>
 </template>
 
 <script setup lang="ts">

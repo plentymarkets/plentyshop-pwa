@@ -3,7 +3,7 @@
     <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
       <img
         :src="productBundleGetters.getBundleItemImage(item)"
-        class="size-28 pr-2 object-contain"
+        class="size-28 aspect-square mr-4 object-contain"
         ref="image"
         :alt="productBundleGetters.getBundleItemName(item)"
       />
@@ -15,16 +15,19 @@
           variant="secondary"
           class="no-underline typography-text-sm"
         >
-          <p class="font-semibold">
+          <p class="font-medium">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
-            <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+            <span class="underline h-auto">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
         </SfLink>
-        <p class="font-semibold text-sm" v-else>
+        <p class="font-medium text-sm" v-else>
           {{ productBundleGetters.getBundleItemQuantity(item) }}x
-          <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+          <span class="h-auto">{{ productBundleGetters.getBundleItemName(item) }}</span>
         </p>
-        <p class="h-auto line-clamp-3" v-html="productBundleGetters.getBundleItemDescription(item)"></p>
+        <div
+          class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm"
+          v-html="productBundleGetters.getBundleItemDescription(item)"
+        ></div>
       </div>
     </div>
   </div>
