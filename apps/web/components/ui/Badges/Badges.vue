@@ -11,6 +11,7 @@
             tagGetters.getAgenciesTagCLass(tag),
             tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white',
           ]"
+          @click="onTagClick(tag)"
           :style="{ backgroundColor: tagGetters.getTagBackgroundColor(tag) }"
         >
           {{ tagGetters.getTagName(tag) }}
@@ -36,6 +37,8 @@ import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
 import type { BadgesProps } from '~/components/ui/Badges/types';
 import type { ProductTag } from '@plentymarkets/shop-api';
 
+const localePath = useLocalePath();
+
 const props = withDefaults(defineProps<BadgesProps>(), { useTags: true, useAvailability: false });
 const productTags = ref([] as ProductTag[]);
 const availabilityStyles = ref({});
@@ -53,4 +56,8 @@ const tagsEnabled = props.useTags;
 if (tagsEnabled) {
   productTags.value = tagGetters.getTags(product);
 }
+
+const onTagClick = (tag: ProductTag) => {
+  navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}`));
+};
 </script>
