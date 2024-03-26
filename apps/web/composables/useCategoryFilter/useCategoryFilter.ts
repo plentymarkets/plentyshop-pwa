@@ -117,7 +117,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       }
     });
 
-    router.push({ query: updateQuery });
+    navigateTo({ query: updateQuery });
   };
 
   /**
@@ -222,7 +222,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * ```
    */
   const updateSorting = (sort: string): void => {
-    router.push({ query: { ...route.query, sort } });
+    navigateTo({ query: { ...route.query, sort } });
   };
 
   /**
