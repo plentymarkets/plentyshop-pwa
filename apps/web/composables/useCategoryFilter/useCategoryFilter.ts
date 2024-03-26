@@ -44,7 +44,6 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  */
 export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   const route = useRoute();
-  const router = useRouter();
 
   /**
    * @description Function for getting facets from url.
