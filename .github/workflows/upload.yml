@@ -83,26 +83,11 @@ jobs:
            ./middleware
          outPath: pwa.tar.gz
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: zipped-artifact
-          path: ${{ github.workspace }}/pwa.tar.gz
-
-  send-zip:
-    runs-on: ubuntu-latest
-    needs: install-and-build-dependencies
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: zipped-artifact
-          path: ./
       - name: Upload File
         id: upload
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: "https://pwapublish.plentysystems.com"
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
-          fileForms: '{ "file": "${{ github.workspace }}/pwa.tar.gz" }'
+          fileForms: '{ "file": "pwa.tar.gz" }'
 
