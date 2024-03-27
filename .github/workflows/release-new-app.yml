@@ -4,10 +4,6 @@ on:
   release:
     types: [published]
 
-permissions:
-  contents: read
-  packages: read
-
 jobs:
   create-archive:
     runs-on: ubuntu-latest
