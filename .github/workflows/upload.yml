@@ -16,7 +16,7 @@ permissions:
   packages: read
 
 jobs:
-  install-and-build-dependencies:
+  build-and-upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
