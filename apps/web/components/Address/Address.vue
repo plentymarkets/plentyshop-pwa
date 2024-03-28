@@ -6,17 +6,7 @@
   >
     <div class="my-2 flex justify-between">
       <div class="details">
-        <p>
-          {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
-        </p>
-        <p>{{ userAddressGetters.getPhone(address) }}</p>
-        <p>
-          {{ userAddressGetters.getStreetName(address) }}
-          {{ userAddressGetters.getStreetNumber(address) }}
-        </p>
-        <p>
-          {{ `${userAddressGetters.getCity(address)} ${userAddressGetters.getPostCode(address)}` }}
-        </p>
+        <AddressDisplay :address="address" />
       </div>
 
       <SfIconCheckCircle v-if="isDefault" class="flex justify-end text-primary-700 shrink-0 default-address" />
@@ -37,7 +27,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfIconCheckCircle } from '@storefront-ui/vue';
 import { SfButton } from '@storefront-ui/vue';
 import type { AddressProps } from './types';
