@@ -8,15 +8,7 @@
     </div>
 
     <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
-      <p>
-        {{ `${userAddressGetters.getFirstName(selectedAddress)} ${userAddressGetters.getLastName(selectedAddress)}` }}
-      </p>
-      <p>{{ userAddressGetters.getPhone(selectedAddress) }}</p>
-      <p>
-        {{ userAddressGetters.getStreetName(selectedAddress) }}
-        {{ userAddressGetters.getStreetNumber(selectedAddress) }}
-      </p>
-      <p>{{ `${userAddressGetters.getCity(selectedAddress)} ${userAddressGetters.getPostCode(selectedAddress)}` }}</p>
+      <AddressDisplay :address="selectedAddress" />
     </div>
 
     <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addresses.length === 0)">
