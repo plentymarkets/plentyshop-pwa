@@ -45,7 +45,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxtjs/turnstile',
+    // '@nuxtjs/turnstile',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
     [
@@ -100,9 +100,9 @@ export default defineNuxtConfig({
     },
     compressPublicAssets: true,
   },
-  turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
-  },
+  // turnstile: {
+  //   siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  // },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
@@ -158,10 +158,10 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       showNetPrices: true,
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+      // turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      // newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
+      // useWebp: process.env?.USE_WEBP === '1' ?? false,
+      // validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
     },
   },
   pwa: {
