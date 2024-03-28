@@ -4,13 +4,21 @@
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
       <img
         src="/images/homepage-hero-bg-mobile.webp"
+        height="600"
+        width="4000"
         alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
     </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <img src="/images/homepage-hero-headphones.webp" alt="Headphones" class="h-full object-cover object-left" />
+        <img
+          src="/images/homepage-hero-headphones.webp"
+          height="600"
+          width="800"
+          alt="Headphones"
+          class="h-full object-cover object-left"
+        />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
