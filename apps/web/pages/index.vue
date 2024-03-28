@@ -25,14 +25,14 @@
           {{ $t('homepage.banner.moto1') }}
         </p>
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          {{ $t('homepage.banner.moto2') }}
+          {{ t('homepage.banner.moto2') }}
         </h1>
         <p class="typography-text-base md:typography-text-lg">
-          {{ $t('homepage.banner.moto3') }}
+          {{ t('homepage.banner.moto3') }}
         </p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg"> {{ $t('homepage.banner.orderNow') }}</SfButton>
-          <SfButton size="lg" variant="secondary" class="bg-white"> {{ $t('homepage.banner.showMore') }}</SfButton>
+          <SfButton size="lg"> {{ t('homepage.banner.orderNow') }}</SfButton>
+          <SfButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</SfButton>
         </div>
       </div>
     </div>
