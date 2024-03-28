@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Fühle die Musik",
+      "moto2": "Neuer Wireless Pro",
+      "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
+      "orderNow": "Jetzt bestellen",
+      "showMore": "Mehr anzeigen"
+    },
+    "women": "Frauen",
+    "men": "Männer",
+    "kid": "Kind",
+    "displayDetails": {
+      "detail1": {
+        "title": "Stilvoll Heraustreten",
+        "subtitle": "Lassen Sie sich inspirieren",
+        "description": "Treten Sie stilvoll auf mit unserer Sonnenbrillenkollektion",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail2": {
+        "title": "Packen Sie Es",
+        "subtitle": "Seien Sie aktiv",
+        "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail3": {
+        "title": "Frisch und Kühn",
+        "subtitle": "Neue Kollektion",
+        "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
+        "buttonText": "Jetzt entdecken"
+      }
+    }
+  },
   "billing": {
     "heading": "Rechnungsadresse",
     "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
