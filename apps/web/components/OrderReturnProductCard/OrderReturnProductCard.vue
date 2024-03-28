@@ -9,15 +9,14 @@
         <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
           <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
             <NuxtImg
-              class="h-auto border rounded-md border-neutral-200"
               :src="
                 addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
                 '/images/placeholder.png'
               "
+              class="h-auto border rounded-md border-neutral-200"
               width="300"
               height="300"
               loading="lazy"
-              format="webp"
             />
           </SfLink>
           <UiQuantitySelector

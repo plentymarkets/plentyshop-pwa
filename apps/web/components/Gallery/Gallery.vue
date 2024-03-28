@@ -30,7 +30,6 @@
             :loading="index !== 0 ? 'lazy' : undefined"
             :fetchpriority="index === 0 ? 'high' : undefined"
             :preload="index === 0"
-            format="webp"
             width="600"
             height="600"
           />
@@ -75,16 +74,7 @@
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
-          <NuxtImg
-            alt=""
-            class="object-contain"
-            width="80"
-            height="80"
-            :src="url"
-            :quality="80"
-            loading="lazy"
-            format="webp"
-          />
+          <NuxtImg alt="" class="object-contain" width="80" height="80" :src="url" :quality="80" loading="lazy" />
         </button>
 
         <template #nextButton>

@@ -14,14 +14,13 @@
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
+          :loading="lazy && !priority ? 'lazy' : 'eager'"
+          :fetchpriority="priority ? 'high' : undefined"
+          :preload="priority || false"
           class="object-contain rounded-md aspect-square w-full h-fit"
           data-testid="image-slot"
           width="190"
           height="190"
-          :loading="lazy && !priority ? 'lazy' : 'eager'"
-          :fetchpriority="priority ? 'high' : undefined"
-          :preload="priority || false"
-          format="webp"
         />
       </SfLink>
 

@@ -5,15 +5,13 @@
   >
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink :tag="NuxtLink" :to="path">
-        <!-- TODO: replace default image with an appropriate one.-->
         <NuxtImg
-          class="w-full h-auto border rounded-md border-neutral-200"
           :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
           :alt="cartItemImage || ''"
           width="300"
           height="300"
           loading="lazy"
-          format="webp"
+          class="w-full h-auto border rounded-md border-neutral-200"
         />
       </SfLink>
     </div>

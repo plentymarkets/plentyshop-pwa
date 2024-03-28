@@ -10,15 +10,14 @@
       :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
     >
       <NuxtImg
-        class="h-auto border rounded-md border-neutral-200"
         :src="
           addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
         "
         :alt="'' || ''"
+        class="h-auto border rounded-md border-neutral-200"
         width="300"
         height="300"
         loading="lazy"
-        format="webp"
       />
     </SfLink>
     <div class="flex flex-col min-w-[180px] flex-1">

@@ -18,7 +18,6 @@
               width="240"
               height="240"
               loading="lazy"
-              format="webp"
             />
           </div>
           <div class="flex justify-center">
