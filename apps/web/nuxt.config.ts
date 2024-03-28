@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       },
       meta: [
         { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#018937' },
+        { name: 'theme-color', content: '#0C7992' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico' },
@@ -195,7 +195,7 @@ export default defineNuxtConfig({
     manifest: {
       name: 'plentyshop PWA',
       short_name: 'plentyshopPWA',
-      theme_color: '#018937',
+      theme_color: '#0C7992',
       icons: [
         {
           src: 'icons/icon-192x192.png',
