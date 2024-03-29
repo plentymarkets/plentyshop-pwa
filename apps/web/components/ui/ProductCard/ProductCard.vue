@@ -10,8 +10,15 @@
         :use-availability="isFromWishlist"
       />
 
-      <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
+      <SfLink
+        :tag="NuxtLink"
+        rel="preload"
+        :to="localePath(`${path}/${productSlug}`)"
+        as="image"
+        class="flex items-center justify-center"
+      >
         <NuxtImg
+          ref="img"
           :src="imageUrl"
           :alt="imageAlt"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
@@ -22,6 +29,7 @@
           width="190"
           height="190"
         />
+        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
 
       <slot name="wishlistButton">
@@ -117,9 +125,24 @@ const { data: categoryTree } = useCategoryTree();
 const { addToCart } = useCart();
 const { send } = useNotification();
 const loading = ref(false);
-
+const imageLoaded = ref(false);
+const img = ref();
+const emit = defineEmits(['load']);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
+
+onMounted(() => {
+  const imgElement = img.value.$el as HTMLImageElement;
+
+  if (!imageLoaded.value) {
+    if (imgElement.complete) imageLoaded.value = true;
+    imgElement.addEventListener('load', () => (imageLoaded.value = true));
+  }
+
+  nextTick(() => {
+    if (!imgElement.complete) emit('load');
+  });
+});
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
@@ -149,6 +172,5 @@ const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
-
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

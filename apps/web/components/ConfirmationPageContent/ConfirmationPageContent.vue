@@ -23,6 +23,7 @@
               :order="order"
               :order-item="item"
               :index="index"
+              :class="{ 'border-t': index === 0 }"
             />
           </div>
         </div>

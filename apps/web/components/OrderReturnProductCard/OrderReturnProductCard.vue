@@ -18,6 +18,7 @@
               height="300"
               loading="lazy"
             />
+            <SfLoaderCircular class="absolute" size="sm" />
           </SfLink>
           <UiQuantitySelector
             :key="quantity"
@@ -114,7 +115,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem } from '@storefront-ui/vue';
+import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
