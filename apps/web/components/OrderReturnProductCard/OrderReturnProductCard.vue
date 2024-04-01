@@ -7,8 +7,14 @@
     <div class="md:flex flex-none p-2 w-full">
       <div class="flex md:flex-none w-full md:w-2/3">
         <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
-          <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
+          <SfLink
+            :tag="NuxtLink"
+            :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+            as="image"
+            class="flex items-center justify-center"
+          >
             <NuxtImg
+              ref="img"
               :src="
                 addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
                 '/images/placeholder.png'
@@ -18,7 +24,7 @@
               height="300"
               loading="lazy"
             />
-            <SfLoaderCircular class="absolute" size="sm" />
+            <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
           </SfLink>
           <UiQuantitySelector
             :key="quantity"
@@ -126,6 +132,24 @@ const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
 const opened = ref(false);
+const imageLoaded = ref(false);
+const img = ref();
+const emit = defineEmits(['load']);
+
+onMounted(() => {
+  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+
+  if (imgElement) {
+    if (!imageLoaded.value) {
+      if (imgElement.complete) imageLoaded.value = true;
+      imgElement.addEventListener('load', () => (imageLoaded.value = true));
+    }
+
+    nextTick(() => {
+      if (!imgElement.complete) emit('load');
+    });
+  }
+});
 
 const toggleDropdown = () => {
   opened.value = !opened.value;

@@ -134,10 +134,10 @@ const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
 
 onMounted(() => {
   nextTick(() => {
-    props.images.forEach((image, index) => {
+    for (const [index] of props.images.entries()) {
       const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
       if (!imagesLoaded.value[String(myImg?.id)]) imagesLoaded.value[String(myImg?.id)] = Boolean(myImg?.complete);
-    });
+    }
   });
 });
 

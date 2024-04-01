@@ -132,16 +132,18 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 onMounted(() => {
-  const imgElement = img.value.$el as HTMLImageElement;
+  const imgElement = (img.value?.$el as HTMLImageElement) || null;
 
-  if (!imageLoaded.value) {
-    if (imgElement.complete) imageLoaded.value = true;
-    imgElement.addEventListener('load', () => (imageLoaded.value = true));
+  if (imgElement) {
+    if (!imageLoaded.value) {
+      if (imgElement.complete) imageLoaded.value = true;
+      imgElement.addEventListener('load', () => (imageLoaded.value = true));
+    }
+
+    nextTick(() => {
+      if (!imgElement.complete) emit('load');
+    });
   }
-
-  nextTick(() => {
-    if (!imgElement.complete) emit('load');
-  });
 });
 
 const addWithLoader = async (productId: number) => {
