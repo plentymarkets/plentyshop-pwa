@@ -8,7 +8,7 @@ export interface UseSearchState {
 }
 
 export type GetSearch = (params: ItemSearchParams) => Promise<ItemSearchResult>;
-export type SearchByTag = (tagName: string, additionalParams?: ItemSearchParams) => Promise<ItemSearchResult>;
+export type SearchByTag = (tagId: string, additionalParams?: ItemSearchParams) => Promise<ItemSearchResult>;
 
 export interface UseSearch {
   data: Readonly<Ref<UseSearchState['data']>>;

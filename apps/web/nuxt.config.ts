@@ -144,18 +144,11 @@ export default defineNuxtConfig({
   },
   hooks: {
     'pages:extend'(pages) {
-      pages.push(
-        {
-          name: 'product',
-          path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-          file: __dirname + '/pages/product/[slug].vue',
-        },
-        {
-          name: 'search',
-          path: '/tag/:tagName',
-          file: __dirname + '/pages/tag.vue',
-        },
-      );
+      pages.push({
+        name: 'product',
+        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
+        file: __dirname + '/pages/product/[slug].vue',
+      });
     },
   },
   runtimeConfig: {

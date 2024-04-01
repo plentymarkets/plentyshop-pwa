@@ -6,7 +6,7 @@
           v-for="(tag, index) in productTags"
           :key="index"
           size="sm"
-          class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 opacity-75 mr-2 mb-2"
+          class="text-xs font-medium select-none rounded-md !w-fit !px-2 opacity-75 mr-2 mb-2 cursor-pointer"
           :class="[
             tagGetters.getAgenciesTagCLass(tag),
             tagGetters.getTagTextColorIsDark(tag) ? 'text-dark' : 'text-white',
@@ -58,6 +58,6 @@ if (tagsEnabled) {
 }
 
 const onTagClick = (tag: ProductTag) => {
-  navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}`));
+  navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}_${tagGetters.getTagId(tag)}`));
 };
 </script>
