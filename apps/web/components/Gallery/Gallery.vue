@@ -136,7 +136,8 @@ onMounted(() => {
   nextTick(() => {
     for (const [index] of props.images.entries()) {
       const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
-      if (!imagesLoaded.value[String(myImg?.id)]) imagesLoaded.value[String(myImg?.id)] = Boolean(myImg?.complete);
+      const imgId = String(myImg?.id);
+      if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
     }
   });
 });
