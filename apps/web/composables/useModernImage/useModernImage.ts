@@ -4,6 +4,7 @@ import type { UseModernImageReturn } from './types';
 
 export const useModernImage: UseModernImageReturn = () => {
   const config = useRuntimeConfig().public;
+  const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
   const avifExtension = 'avif';
   const webpExtension = 'webp';
 
@@ -16,6 +17,8 @@ export const useModernImage: UseModernImageReturn = () => {
     const matches = baseUrl?.match(/.?(\.\w+)(?:$|\?)/);
 
     if (matches) baseExtension = String(matches[1].split('.').pop());
+
+    if (!validConversionExtensions.has(baseExtension) || /\/item\/images\//.test(baseUrl)) return baseUrl;
 
     if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
 
