@@ -62,6 +62,8 @@ export default defineNuxtModule<ModuleOptions>({
   setup(options, nuxt) {
     const { resolve } = createResolver(import.meta.url);
 
+    nuxt.options.css.push(resolve('assets/style.scss'));
+
     installModule('@nuxtjs/tailwindcss', {
       exposeConfig: true,
       config: {
