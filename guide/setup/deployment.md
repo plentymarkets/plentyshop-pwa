@@ -56,10 +56,7 @@ Creating the application adds a new table entry. In the next part, you'll need t
 
 | Name      | Value |
 | ----------- | ----------- |
-| `Config`  |CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" |
-|           | NEWSLETTER_FORM_SHOW_NAMES=1 |
-|           | USE_WEBP=0 |
-|           | VALIDATE_RETURN_REASONS=1 |
+| `Config`  | CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTER_FORM_SHOW_NAMES=1 <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
 
 
 
