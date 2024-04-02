@@ -1,0 +1,12 @@
+{
+  "dependencies": [
+    {
+      "name": "@nuxtjs/tailwindcss",
+      "version": "^6.11.4"
+    },
+    {
+      "name": "@savvywombat/tailwindcss-grid-areas",
+      "version": "^3.1.0"
+    }
+  ]
+}
