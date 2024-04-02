@@ -45,6 +45,25 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | ----------- | ----------- |
 | `API_URL` | Your shop domain |
 
+### Config
+
+1. Go to your repository.
+2. Go to **Settings**.
+3. In the **Security** section, go to **Secrets and variables » Actions**.
+4. Open the **Variables** tab.
+5. Click on **New repository variable**.
+6. Fill in the information from your .env.example file, according to the table below.
+7. from your apps/web/.env file based on apps/web/.env.example
+
+| Name      | Value |
+| ----------- | ----------- |
+| `Config`  |CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" |
+|           | NEWSLETTER_FORM_SHOW_NAMES=1 |
+|           | USE_WEBP=0 |
+|           | VALIDATE_RETURN_REASONS=1 |
+
+
+
 ### Upload
 
 In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
