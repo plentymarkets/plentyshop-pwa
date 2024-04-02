@@ -7,7 +7,7 @@
       class="max-w-[192px]"
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-      :image-url="addWebpExtension(productGetters.getCoverImagePreview(product))"
+      :image-url="addWebpExtension(getImageForViewport(product, 'Item-List'))"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
@@ -27,7 +27,7 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
-const { addWebpExtension } = useImageUrl();
+const { addWebpExtension, getImageForViewport } = useImageUrl();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
