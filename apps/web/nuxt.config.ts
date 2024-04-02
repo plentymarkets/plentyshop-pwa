@@ -45,18 +45,18 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxtjs/turnstile',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
       {
         families: {
-          'Red Hat Display': [400, 500, 700],
-          'Red Hat Text': [300, 400, 500, 700],
+          'Red Hat Display': { wght: [400, 500, 700] },
+          'Red Hat Text': { wght: [300, 400, 500, 700] },
         },
       },
     ],
+    '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/i18n',
       {
