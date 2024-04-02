@@ -19,7 +19,7 @@
       >
         <NuxtImg
           ref="img"
-          :src="imageUrl"
+          :src="addModernImageExtension(imageUrl)"
           :alt="imageAlt"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
@@ -113,6 +113,7 @@ import {
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
+const { addModernImageExtension } = useModernImage();
 const { t, n } = useI18n();
 const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
