@@ -345,7 +345,12 @@
     "cancel": "Abbrechen",
     "submitReview": "Bewertung absenden",
     "answer": "Antworten",
-    "saveAnswer": "Speichern"
+    "saveAnswer": "Speichern",
+    "showAnswers": "Antworten anzeigen",
+    "hideAnswers": "Antworten ausblenden",
+    "anonymous": "Anonym",
+    "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
+    "deleteReview": "Ja, löschen"
   },
   "account": {
     "heading": "Mein Konto",

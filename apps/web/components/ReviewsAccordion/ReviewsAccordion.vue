@@ -12,20 +12,15 @@
       </template>
       <div class="my-4">
         <template v-if="isAuthorized">
-          <SfButton
-              type="submit"
-              data-testid="create-review"
-              size="base"
-              @click="open"
-          >
+          <SfButton type="submit" data-testid="create-review" size="base" @click="open">
             {{ $t('createCustomerReview') }}
           </SfButton>
         </template>
         <template v-else>
           <SfLink
-              class="text-primary-800 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
-              variant="secondary"
-              href="#"
+            class="text-primary-800 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+            variant="secondary"
+            href="#"
           >
             {{ $t(`loginBeforeCreateReview`) }}
           </SfLink>
@@ -36,7 +31,6 @@
         v-for="(reviewItem, key) in reviewGetters.getItems(productReviews)"
         :key="key"
         :review-item="reviewItem"
-        class="mb-4"
       />
     </UiAccordionItem>
     <div v-else class="w-full mt-4 py-2 pl-4 pr-3 flex justify-between items-center">
@@ -46,11 +40,11 @@
   </div>
   <!-- TODO Luisa: Fix classes in UiModal to fit content into modal background -->
   <UiModal
-      v-model="isOpen"
-      aria-labelledby="review-modal"
-      tag="section"
-      role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+    v-model="isOpen"
+    aria-labelledby="review-modal"
+    tag="section"
+    role="dialog"
+    class="h-fit w-full md:w-[600px]"
   >
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
       <SfIconClose />
@@ -60,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfIconClose, SfLink, SfLoaderCircular, useDisclosure} from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfLink, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import { useCustomer } from '~/composables';
@@ -87,6 +81,4 @@ watch(
     }
   },
 );
-
-
 </script>

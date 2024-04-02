@@ -344,7 +344,10 @@
     "reviewAuthor": "Your name (optional)",
     "cancel": "Cancel",
     "submitReview": "Submit review",
-    "answer": "Answer"
+    "answer": "Answer",
+    "showAnswers": "Show answers",
+    "hideAnswers": "Hide answers",
+    "anonymous": "Anonymous"
   },
   "account": {
     "heading": "My Account",
