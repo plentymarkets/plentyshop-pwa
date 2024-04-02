@@ -52,8 +52,7 @@ Creating the application adds a new table entry. In the next part, you'll need t
 3. In the **Security** section, go to **Secrets and variables » Actions**.
 4. Open the **Variables** tab.
 5. Click on **New repository variable**.
-6. Fill in the information from your .env.example file, according to the table below.
-7. from your apps/web/.env file based on apps/web/.env.example
+6. Fill in the information from your apps/web/.env file based on apps/web/.env.example, example in the table below.
 
 | Name      | Value |
 | ----------- | ----------- |
