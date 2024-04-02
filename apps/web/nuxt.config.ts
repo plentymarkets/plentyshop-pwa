@@ -47,7 +47,7 @@ export default defineNuxtConfig({
   modules: [
     // '@nuxtjs/turnstile',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
+    // '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
       {
