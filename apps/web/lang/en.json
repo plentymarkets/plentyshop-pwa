@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Feel the music",
+      "moto2": "New Wireless Pro",
+      "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
+      "orderNow": "Order now",
+      "showMore": "Show more"
+    },
+    "women": "Women",
+    "men": "Men",
+    "kid": "Kid",
+    "displayDetails": {
+      "detail1": {
+        "title": "Step Out in Style",
+        "subtitle": "Be inspired",
+        "description": "Step out in style with our sunglasses collection",
+        "buttonText": "Discover now"
+      },
+      "detail2": {
+        "title": "Pack it Up",
+        "subtitle": "Be active",
+        "description": "Explore the great outdoors with our backpacks",
+        "buttonText": "Discover now"
+      },
+      "detail3": {
+        "title": "Fresh and Bold",
+        "subtitle": "New collection",
+        "description": "Add a pop of color to your outfit",
+        "buttonText": "Discover now"
+      }
+    }
+  },
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
@@ -415,7 +447,7 @@
         "returns": "Returns"
       },
       "orderDetails": {
-        "showDetails": "Show details",
+        "showDetails": "Show product details",
         "heading": "Order details",
         "orderId": "Order ID",
         "orderDate": "Order date",
@@ -680,12 +712,12 @@
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
     "tellUsMore": "Tell us more about why you want to return these items...",
-    "initiateReturn":"Initiate Return",
+    "initiateReturn": "Initiate Return",
     "confirmReturn": "Confirm Return",
     "cancel": "Cancel",
     "orderDate": "Order date",
     "returnReason": "Return reason",
-    "returnForOrder":"Return for order",
+    "returnForOrder": "Return for order",
     "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
