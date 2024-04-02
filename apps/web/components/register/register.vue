@@ -58,12 +58,24 @@
         {{ t('privacyPolicyRequired') }}
       </div>
 
+      <NuxtTurnstile
+        v-if="turnstileSiteKey"
+        v-model="turnstile"
+        v-bind="turnstileAttributes"
+        ref="turnstileElement"
+        :options="{ theme: 'light' }"
+        class="mt-4"
+      />
+
+      <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
+
       <div class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
@@ -85,8 +97,12 @@ const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
 const { isDesktop } = useBreakpoints();
+const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
+
+const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(
   object({
@@ -97,6 +113,7 @@ const validationSchema = toTypedSchema(
         .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
         .default(''),
       privacyPolicy: boolean().isTrue().required(),
+      turnstile: string().required(t('errorMessages.turnstileRequired')).default(''),
     }),
   }),
 );
@@ -107,14 +124,19 @@ const { errors, meta, defineField, handleSubmit } = useForm({
 
 const [email, emailAttributes] = defineField('register.email');
 const [password, passwordAttributes] = defineField('register.password');
+const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
 const registerUser = async () => {
-  if (!meta.value.valid) {
+  if (!meta.value.valid || !turnstile.value) {
     return;
   }
 
-  const response = await register({ email: email.value ?? '', password: password.value ?? '' });
+  const response = await register({
+    email: email.value ?? '',
+    password: password.value ?? '',
+    'cf-turnstile-response': turnstile.value,
+  });
 
   if (response?.data.code === 1) {
     send({
