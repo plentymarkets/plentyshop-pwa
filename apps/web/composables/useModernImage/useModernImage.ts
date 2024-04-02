@@ -18,7 +18,7 @@ export const useModernImage: UseModernImageReturn = () => {
 
     if (matches) baseExtension = String(matches[1].split('.').pop());
 
-    if (!validConversionExtensions.has(baseExtension) || /\/item\/images\//.test(baseUrl)) return baseUrl;
+    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(baseUrl)) return baseUrl;
 
     if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
 
