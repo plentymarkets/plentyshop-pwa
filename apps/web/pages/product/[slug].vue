@@ -42,7 +42,8 @@ const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
-const { addWebpExtensionForGallerySfImages } = useImageUrl();
+
+const { addWebpExtensionForGallerySfImages } = useModernImage();
 
 definePageMeta({
   layout: false,

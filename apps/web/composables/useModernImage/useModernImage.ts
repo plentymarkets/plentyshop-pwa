@@ -1,15 +1,37 @@
-import type { UseImageUrlReturn } from './types';
+import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
+import type { SfImage } from '@vue-storefront/unified-data-model';
+import type { UseModernImageReturn } from './types';
 import type { Product, ImagesData } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
-export const useImageUrl: UseImageUrlReturn = () => {
-  const useWebp = useRuntimeConfig().public.useWebp;
+export const useModernImage: UseModernImageReturn = () => {
+  const config = useRuntimeConfig().public;
+  const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
+  const avifExtension = 'avif';
+  const webpExtension = 'webp';
 
-  const addWebpExtension = (url: string | undefined) => {
-    if (useWebp) {
-      return url ? `${url}.webp` : '';
-    }
-    return url ?? '';
+  const addModernImageExtension = (url: string | undefined) => {
+    let baseUrl = '';
+    let baseExtension = '';
+
+    if (url) baseUrl = url;
+
+    const matches = baseUrl?.match(/.?(\.\w+)(?:$|\?)/);
+
+    if (matches) baseExtension = String(matches[1].split('.').pop());
+
+    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(baseUrl)) return baseUrl;
+
+    if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
+
+    if (!config.useAvif && config.useWebp)
+      return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
+
+    return baseUrl;
+  };
+
+  const addModernImageExtensionForSfImages = (images: SfImage[]) => {
+    return images.map((image: AgnosticImage) => ({ ...image, url: addModernImageExtension(image.url) }));
   };
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
@@ -36,6 +58,7 @@ export const useImageUrl: UseImageUrlReturn = () => {
       }
     }
   };
+  // eslint-disable-next-line unicorn/consistent-function-scoping
   const addWebpExtensionForGallerySfImages = (images: ImagesData[]) => {
     if (useWebp) {
       return images.map((image: ImagesData) => {
@@ -52,7 +75,8 @@ export const useImageUrl: UseImageUrlReturn = () => {
   };
 
   return {
-    addWebpExtension,
+    addModernImageExtension,
+    addModernImageExtensionForSfImages,
     getImageForViewport,
     addWebpExtensionForGallerySfImages,
   };
