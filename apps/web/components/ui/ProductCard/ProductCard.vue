@@ -9,7 +9,6 @@
         :product="product"
         :use-availability="isFromWishlist"
       />
-
       <SfLink :tag="NuxtLink" rel="preload" :to="localePath(`${path}/${productSlug}`)" as="image">
         <NuxtImg
           :src="imageUrl"

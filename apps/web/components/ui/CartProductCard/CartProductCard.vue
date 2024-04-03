@@ -123,6 +123,7 @@ import { productGetters, productBundleGetters, cartGetters } from '@plentymarket
 import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
+const { isDesktop, isTablet } = useBreakpoints();
 
 const { addWebpExtension } = useImageUrl();
 const { setCartItemQuantity, deleteCartItem } = useCart();
@@ -153,8 +154,14 @@ const deleteItem = async () => {
 const currentFullPrice = computed(() => {
   return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
-
-const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
+const cartItemImage = computed(() => {
+  const item = props.cartItem;
+  if (isDesktop || isTablet) {
+    return item.variation ? productGetters.getSecondPreviewImage(item.variation) : '';
+  } else {
+    return item.variation ? productGetters.getPreviewImage(item.variation) : '';
+  }
+});
 
 const debounceQuantity = _.debounce(changeQuantity, 500);
 

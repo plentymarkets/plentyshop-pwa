@@ -1,7 +1,5 @@
-import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import type { UseImageUrlReturn } from './types';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, ImagesData } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
 export const useImageUrl: UseImageUrlReturn = () => {
@@ -19,33 +17,24 @@ export const useImageUrl: UseImageUrlReturn = () => {
     if (context === 'Item-List') {
       return productGetters.getPreviewImage(product);
     }
-    if (context === 'Item-View') {
-      return productGetters.getFullImage(product);
-    }
-    if (context === 'Item-View-Preview') {
-      return productGetters.getPreviewImage(product);
-    }
     const { isDesktop, isTablet } = useBreakpoints();
 
-    if (context === 'Basket' || context === 'Checkout') {
-      return isDesktop && isTablet
-        ? productGetters.getSecondPreviewImage(product)
-        : productGetters.getPreviewImage(product);
-    }
-
     if (context === 'Whislist') {
-      return isDesktop && isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+      return isDesktop || isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
     }
 
     return '';
   };
 
-  const addWebpExtensionForSfImages = (images: SfImage[]) => {
+  const addWebpExtensionForSfImages = (images: ImagesData[]) => {
     if (useWebp) {
-      return images.map((image: AgnosticImage) => {
+      return images.map((image: ImagesData) => {
         return {
           ...image,
           url: image.url ? `${image.url}.webp` : '',
+          urlPreview: image.urlPreview ? `${image.urlPreview}.webp` : '',
+          urlMiddle: image.urlMiddle ? `${image.urlMiddle}.webp` : '',
+          urlSecondPreview: image.urlSecondPreview ? `${image.urlSecondPreview}.webp` : '',
         };
       });
     }

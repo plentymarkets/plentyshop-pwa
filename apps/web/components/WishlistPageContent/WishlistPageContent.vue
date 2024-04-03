@@ -19,7 +19,7 @@
             :rating-count="productGetters.getTotalReviews(product)"
             :rating="productGetters.getAverageRating(product)"
             :price="actualPrice(product)"
-            :image-url="addWebpExtension(productGetters.getMiddleImage(product))"
+            :image-url="addWebpExtension(getImageForViewport(product, 'Whislist'))"
             :image-alt="productGetters.getName(product) ?? ''"
             :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
             :priority="index === 0"
@@ -59,7 +59,7 @@ withDefaults(defineProps<WishlistPageContentProps>(), {
   withHeader: true,
 });
 
-const { addWebpExtension } = useImageUrl();
+const { addWebpExtension, getImageForViewport } = useImageUrl();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

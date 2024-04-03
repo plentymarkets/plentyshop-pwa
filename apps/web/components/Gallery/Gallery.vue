@@ -14,12 +14,12 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url, cleanImageName }, index) in images"
+          :key="`${cleanImageName}-${index}-thumbnail`"
           class="w-full h-full relative snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
-            :alt="alt ?? ''"
+            :alt="cleanImageName ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
@@ -64,8 +64,8 @@
         </template>
 
         <button
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ urlPreview, cleanImageName }, index) in images"
+          :key="`${cleanImageName}-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
@@ -80,7 +80,7 @@
             class="object-contain"
             width="80"
             height="80"
-            :src="url"
+            :src="urlPreview"
             :quality="80"
             loading="lazy"
             format="webp"
@@ -122,11 +122,10 @@
 import type { ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
-
+import type { ImagesData } from '@plentymarkets/shop-api';
 const props = defineProps<{
-  images: SfImage[];
+  images: ImagesData[];
 }>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
