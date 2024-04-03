@@ -36,7 +36,7 @@ export const useImageUrl: UseImageUrlReturn = () => {
       }
     }
   };
-  const addWebpExtensionForSfImages = (images: ImagesData[]) => {
+  const addWebpExtensionForGallerySfImages = (images: ImagesData[]) => {
     if (useWebp) {
       return images.map((image: ImagesData) => {
         return {
@@ -54,6 +54,6 @@ export const useImageUrl: UseImageUrlReturn = () => {
   return {
     addWebpExtension,
     getImageForViewport,
-    addWebpExtensionForSfImages,
+    addWebpExtensionForGallerySfImages,
   };
 };
