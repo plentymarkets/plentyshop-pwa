@@ -7,7 +7,7 @@
       class="max-w-[192px]"
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-      :image-url="addWebpExtension(getImageForViewport(product, 'Item-List'))"
+      :image-url="addWebpExtension(getImageForViewport(product, 'ItemList'))"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"

@@ -154,7 +154,10 @@ const currentFullPrice = computed(() => {
   return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
 const cartItemImage = computed(() => {
-   return getImageForViewport(props.cartItem.variation);
+  if (props.cartItem && props.cartItem.variation) {
+    return getImageForViewport(props.cartItem.variation, 'CartProductCard');
+  }
+  return '';
 });
 
 const debounceQuantity = _.debounce(changeQuantity, 500);

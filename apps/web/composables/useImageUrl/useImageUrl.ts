@@ -13,26 +13,29 @@ export const useImageUrl: UseImageUrlReturn = () => {
   };
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
-  const getImageForViewport = (product: Product, context: string) => {
-    if (context === 'Item-List') {
-      return productGetters.getPreviewImage(product);
-    }
-    const { isDesktop, isTablet } = useBreakpoints();
+  const getImageForViewport = (product: Product, context: string): string => {
+    if (!product) return '';
 
-    if (context === 'Whislist') {
-      return isDesktop || isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
-    }
-    if (context === 'ProductCard') {
-      if (isDesktop || isTablet) {
-        return product ? productGetters.getSecondPreviewImage(product) : '';
-      } else {
-        return product ? productGetters.getPreviewImage(product) : '';
+    const { isDesktop, isTablet } = useBreakpoints();
+    const isLargeViewport = isDesktop || isTablet;
+
+    switch (context) {
+      case 'ItemList': {
+        return productGetters.getPreviewImage(product);
+      }
+      case 'Whislist': {
+        return isLargeViewport ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+      }
+      case 'CartProductCard': {
+        return isLargeViewport
+          ? productGetters.getSecondPreviewImage(product)
+          : productGetters.getPreviewImage(product);
+      }
+      default: {
+        return '';
       }
     }
-
-    return '';
   };
-
   const addWebpExtensionForSfImages = (images: ImagesData[]) => {
     if (useWebp) {
       return images.map((image: ImagesData) => {
