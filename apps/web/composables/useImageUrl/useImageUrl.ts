@@ -22,6 +22,13 @@ export const useImageUrl: UseImageUrlReturn = () => {
     if (context === 'Whislist') {
       return isDesktop || isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
     }
+    if (context === 'ProductCard') {
+      if (isDesktop || isTablet) {
+        return product ? productGetters.getSecondPreviewImage(product) : '';
+      } else {
+        return product ? productGetters.getPreviewImage(product) : '';
+      }
+    }
 
     return '';
   };
