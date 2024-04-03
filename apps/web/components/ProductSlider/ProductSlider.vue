@@ -4,14 +4,14 @@
       v-for="product in items"
       :product="product"
       :key="productGetters.getId(product)"
-      class="max-w-[192px]"
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-      :image-url="addWebpExtension(productGetters.getCoverImagePreview(product))"
+      :image-url="addModernImageExtension(productGetters.getCoverImagePreview(product))"
       :image-alt="productGetters.getName(product)"
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
       :rating="productGetters.getAverageRating(product)"
+      class="max-w-[192px]"
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
@@ -27,7 +27,7 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 

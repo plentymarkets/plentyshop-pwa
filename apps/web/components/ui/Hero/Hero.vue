@@ -9,7 +9,6 @@
           width="764"
           height="600"
           fetchpriority="high"
-          format="webp"
           preload
         />
       </div>
