@@ -1,12 +1,17 @@
 import sfTypography from '@storefront-ui/typography';
 import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   presets: [tailwindConfig],
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
+      fontFamily: {
+        display: ['"Red Hat Display"', ...defaultTheme.fontFamily.sans],
+        body: ['"Red Hat Text"', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         primary: {
           '50': '#ecffff',
