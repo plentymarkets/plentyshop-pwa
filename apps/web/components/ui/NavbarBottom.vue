@@ -24,7 +24,7 @@
           <SfBadge
             v-if="label === t('wishlist')"
             :content="wishlistItemIds.length"
-            class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+            class="outline-white bg-white !text-neutral-900 translate-x-[5px] translate-y-[-3px]"
             data-testid="wishlist-badge"
           />
         </div>
