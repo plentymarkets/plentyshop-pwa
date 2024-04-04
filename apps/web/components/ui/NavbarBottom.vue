@@ -21,6 +21,12 @@
             :content="cartItemsCount"
             class="outline-white bg-white !text-neutral-900 translate-x-[5px] translate-y-[-3px]"
           />
+          <SfBadge
+            v-if="label === t('wishlist')"
+            :content="wishlistItemIds.length"
+            class="outline-white bg-white !text-neutral-900 translate-x-[5px] translate-y-[-3px]"
+            data-testid="wishlist-badge"
+          />
         </div>
       </template>
       {{ label }}
@@ -29,8 +35,17 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfBadge,
+  SfIconShoppingCart,
+  SfIconHome,
+  SfIconMenu,
+  SfIconPerson,
+  SfIconFavorite,
+} from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
+const { wishlistItemIds } = useWishlist();
 
 const localePath = useLocalePath();
 const { t } = useI18n();
@@ -48,6 +63,11 @@ const items = computed(() => [
     label: t('products'),
     icon: SfIconMenu,
     link: '',
+  },
+  {
+    label: t('wishlist'),
+    icon: SfIconFavorite,
+    link: localePath(paths.wishlist),
   },
   {
     label: t('cart'),
