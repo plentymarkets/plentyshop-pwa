@@ -17,25 +17,20 @@ export const useModernImage: UseModernImageReturn = () => {
   const avifExtension = 'avif';
   const webpExtension = 'webp';
 
-  const addModernImageExtension = (url: string | undefined) => {
-    let baseUrl = '';
-    let baseExtension = '';
+  const addModernImageExtension = (url: string | undefined): string => {
+    if (!url) return '';
 
-    if (url) baseUrl = url;
+    const matches = url.match(/(\.\w+)(?:$|\?)/);
+    if (!matches) return url;
+    const baseExtension = String(matches[1]);
 
-    const matches = baseUrl?.match(/.?(\.\w+)(?:$|\?)/);
+    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(url)) return url;
+    if (config.useAvif && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
+    if (config.useWebp && baseExtension !== webpExtension) return `${url}.${webpExtension}`;
 
-    if (matches) baseExtension = String(matches[1].split('.').pop());
-
-    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(baseUrl)) return baseUrl;
-
-    if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
-
-    if (!config.useAvif && config.useWebp)
-      return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
-
-    return baseUrl;
+    return url;
   };
+
   const addModernImageExtensionForGallery = (images: ImagesData[]) => {
     return images.map((image: ImagesData) => ({
       ...image,
@@ -45,6 +40,7 @@ export const useModernImage: UseModernImageReturn = () => {
       urlSecondPreview: addModernImageExtension(image.urlSecondPreview),
     }));
   };
+
   return {
     addModernImageExtension,
     addModernImageExtensionForGallery,
