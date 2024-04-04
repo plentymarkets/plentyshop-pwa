@@ -15,7 +15,7 @@
       >
         <div
           v-for="({ url, cleanImageName }, index) in images"
-          :key="`${cleanImageName}-${index}-thumbnail`"
+          :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
@@ -67,7 +67,7 @@
 
         <button
           v-for="({ urlPreview, cleanImageName }, index) in images"
-          :key="`${cleanImageName}-${index}-thumbnail`"
+          :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
