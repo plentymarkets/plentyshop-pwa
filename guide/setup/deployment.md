@@ -47,7 +47,7 @@ Creating the application adds a new table entry. In the next part, you'll need t
 
 ### Config
 
-When running locally, the app utilizes values from apps/web/.env to enable features and settings, which are then read by the Nuxt configuration.
+When running the shop locally, the app utilises values from `apps/web/.env` to enable features and settings, which are then read by the Nuxt configuration.
 Since we're ignoring .env files on deployment, the values from apps/web/.env need to be provided as an Action GitHub variable `CONFIG`  to be used in the upload action.
 
 1. Go to your repository.
