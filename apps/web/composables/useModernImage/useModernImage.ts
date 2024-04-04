@@ -2,6 +2,15 @@ import type { UseModernImageReturn } from './types';
 import type { Product, ImagesData } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
+const getImageForViewport = (product: Product, context: string, isTablet: Ref<boolean>) => {
+  if (context === 'ItemList') return productGetters.getPreviewImage(product);
+  if (context === 'Whislist')
+    return isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+  if (context === 'CartProductCard')
+    return isTablet ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
+
+  return '';
+};
 export const useModernImage: UseModernImageReturn = () => {
   const config = useRuntimeConfig().public;
   const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
@@ -27,7 +36,6 @@ export const useModernImage: UseModernImageReturn = () => {
 
     return baseUrl;
   };
-
   const addModernImageExtensionForGallery = (images: ImagesData[]) => {
     return images.map((image: ImagesData) => ({
       ...image,
@@ -37,22 +45,12 @@ export const useModernImage: UseModernImageReturn = () => {
       urlSecondPreview: addModernImageExtension(image.urlSecondPreview),
     }));
   };
-
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const getImageForViewport = (product: Product, context: string): string => {
-    const { isTablet } = useBreakpoints();
-    if (context === 'ItemList') return productGetters.getPreviewImage(product);
-    if (context === 'Whislist')
-      return isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
-    if (context === 'CartProductCard')
-      return isTablet ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
-
-    return '';
-  };
-
   return {
     addModernImageExtension,
     addModernImageExtensionForGallery,
-    getImageForViewport,
+    getImageForViewport: (product, context) => {
+      const { isTablet } = useBreakpoints();
+      return getImageForViewport(product, context, isTablet);
+    },
   };
 };
