@@ -3,13 +3,13 @@ name: Deploy PWA
 on:
   # release:
   # types: [published]
-  pull_request:
+  push:
     branches: [feat/frontend-security-token]
-  # workflow_dispatch:
-  #   inputs:
-  #     tag-version:
-  #       description: 'The tag version, branch name or SHA to checkout'
-  #       required: true
+  workflow_dispatch:
+    inputs:
+      tag-version:
+        description: 'The tag version, branch name or SHA to checkout'
+        required: true
 
 permissions:
   contents: read
