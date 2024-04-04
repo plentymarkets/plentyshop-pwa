@@ -45,6 +45,24 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | ----------- | ----------- |
 | `API_URL` | Your shop domain |
 
+### Config
+
+When running the shop locally, the app utilises values from `apps/web/.env` to enable features and settings, which are then read by the Nuxt configuration.
+Since we're ignoring .env files on deployment, the values from apps/web/.env need to be provided as an Action GitHub variable `CONFIG`  to be used in the upload action.
+
+1. Go to your repository.
+2. Go to **Settings**.
+3. In the **Security** section, go to **Secrets and variables » Actions**.
+4. Open the **Variables** tab.
+5. Click on **New repository variable**.
+6. Fill in the information from your apps/web/.env file based on apps/web/.env.example, example in the table below.
+
+| Name      | Value |
+| ----------- | ----------- |
+| `Config`  | CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTER_FORM_SHOW_NAMES=1 <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
+
+
+
 ### Upload
 
 In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
