@@ -14,13 +14,13 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ url, cleanImageName }, index) in images"
+          :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
             :id="`gallery-img-${index}`"
-            :alt="alt ?? ''"
+            :alt="cleanImageName ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
@@ -66,8 +66,8 @@
         </template>
 
         <button
-          v-for="({ url, alt }, index) in images"
-          :key="`${alt}-${index}-thumbnail`"
+          v-for="({ urlPreview, cleanImageName }, index) in images"
+          :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
@@ -77,7 +77,15 @@
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
-          <NuxtImg alt="" class="object-contain" width="80" height="80" :src="url" :quality="80" loading="lazy" />
+          <NuxtImg
+            :alt="cleanImageName"
+            class="object-contain"
+            width="80"
+            height="80"
+            :src="urlPreview"
+            :quality="80"
+            loading="lazy"
+          />
         </button>
 
         <template #nextButton>
@@ -115,11 +123,10 @@
 import type { ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
-
+import type { ImagesData } from '@plentymarkets/shop-api';
 const props = defineProps<{
-  images: SfImage[];
+  images: ImagesData[];
 }>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);

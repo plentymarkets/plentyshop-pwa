@@ -124,7 +124,7 @@ import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
-const { addModernImageExtension } = useModernImage();
+const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
@@ -172,8 +172,12 @@ const deleteItem = async () => {
 const currentFullPrice = computed(() => {
   return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
-
-const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
+const cartItemImage = computed(() => {
+  if (props.cartItem && props.cartItem.variation) {
+    return getImageForViewport(props.cartItem.variation, 'CartProductCard');
+  }
+  return '';
+});
 
 const debounceQuantity = _.debounce(changeQuantity, 500);
 
