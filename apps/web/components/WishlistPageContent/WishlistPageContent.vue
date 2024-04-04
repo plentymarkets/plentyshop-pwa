@@ -59,7 +59,7 @@ withDefaults(defineProps<WishlistPageContentProps>(), {
   withHeader: true,
 });
 
-const { addModernImageExtension, getImageForViewport } = useImageUrl();
+const { addModernImageExtension, getImageForViewport } = useModernImage();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

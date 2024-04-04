@@ -1,5 +1,3 @@
-import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import type { UseModernImageReturn } from './types';
 import type { Product, ImagesData } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
@@ -30,54 +28,31 @@ export const useModernImage: UseModernImageReturn = () => {
     return baseUrl;
   };
 
-  const addModernImageExtensionForSfImages = (images: SfImage[]) => {
-    return images.map((image: AgnosticImage) => ({ ...image, url: addModernImageExtension(image.url) }));
+  const addModernImageExtensionForGallery = (images: ImagesData[]) => {
+    return images.map((image: ImagesData) => ({
+      ...image,
+      url: addModernImageExtension(image.url),
+      urlPreview: addModernImageExtension(image.urlPreview),
+      urlMiddle: addModernImageExtension(image.urlMiddle),
+      urlSecondPreview: addModernImageExtension(image.urlSecondPreview),
+    }));
   };
 
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const getImageForViewport = (product: Product, context: string): string => {
-    if (!product) return '';
+    const { isTablet } = useBreakpoints();
+    if (context === 'ItemList') return productGetters.getPreviewImage(product);
+    if (context === 'Whislist')
+      return isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+    if (context === 'CartProductCard')
+      return isTablet ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
 
-    const { isDesktop, isTablet } = useBreakpoints();
-    const isLargeViewport = isDesktop || isTablet;
-
-    switch (context) {
-      case 'ItemList': {
-        return productGetters.getPreviewImage(product);
-      }
-      case 'Whislist': {
-        return isLargeViewport ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
-      }
-      case 'CartProductCard': {
-        return isLargeViewport
-          ? productGetters.getSecondPreviewImage(product)
-          : productGetters.getPreviewImage(product);
-      }
-      default: {
-        return '';
-      }
-    }
-  };
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const addWebpExtensionForGallerySfImages = (images: ImagesData[]) => {
-    if (useWebp) {
-      return images.map((image: ImagesData) => {
-        return {
-          ...image,
-          url: image.url ? `${image.url}.webp` : '',
-          urlPreview: image.urlPreview ? `${image.urlPreview}.webp` : '',
-          urlMiddle: image.urlMiddle ? `${image.urlMiddle}.webp` : '',
-          urlSecondPreview: image.urlSecondPreview ? `${image.urlSecondPreview}.webp` : '',
-        };
-      });
-    }
-    return images;
+    return '';
   };
 
   return {
     addModernImageExtension,
-    addModernImageExtensionForSfImages,
+    addModernImageExtensionForGallery,
     getImageForViewport,
-    addWebpExtensionForGallerySfImages,
   };
 };

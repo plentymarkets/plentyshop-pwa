@@ -4,7 +4,7 @@
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
-            <Gallery :images="addWebpExtensionForGallerySfImages(productGetters.getGallery(product))" />
+            <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
           </NuxtLazyHydrate>
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
@@ -43,7 +43,7 @@ const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 
-const { addWebpExtensionForGallerySfImages } = useModernImage();
+const { addModernImageExtensionForGallery } = useModernImage();
 
 definePageMeta({
   layout: false,

@@ -78,14 +78,13 @@
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
-            alt=""
+            :alt="cleanImageName"
             class="object-contain"
             width="80"
             height="80"
             :src="urlPreview"
             :quality="80"
             loading="lazy"
-            format="webp"
           />
         </button>
 

@@ -124,7 +124,7 @@ import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 
-const { addModernImageExtension, getImageForViewport } = useImageUrl();
+const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
