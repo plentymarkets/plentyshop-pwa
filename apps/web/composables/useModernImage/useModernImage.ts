@@ -1,6 +1,16 @@
-import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import type { UseModernImageReturn } from './types';
+import type { Product, ImagesData } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-sdk';
+
+const getImageForViewport = (product: Product, context: string, isTablet: Ref<boolean>) => {
+  if (context === 'ItemList') return productGetters.getPreviewImage(product);
+  if (context === 'Whislist')
+    return isTablet.value ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+  if (context === 'CartProductCard')
+    return isTablet.value ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
+
+  return '';
+};
 
 export const useModernImage: UseModernImageReturn = () => {
   const config = useRuntimeConfig().public;
@@ -8,32 +18,36 @@ export const useModernImage: UseModernImageReturn = () => {
   const avifExtension = 'avif';
   const webpExtension = 'webp';
 
-  const addModernImageExtension = (url: string | undefined) => {
-    let baseUrl = '';
-    let baseExtension = '';
+  const addModernImageExtension = (url: string | undefined): string => {
+    if (!url) return '';
 
-    if (url) baseUrl = url;
+    const matches = url.match(/(\.\w+)(?:$|\?)/);
+    if (!matches) return url;
+    const baseExtension = String(matches[1]);
 
-    const matches = baseUrl?.match(/.?(\.\w+)(?:$|\?)/);
+    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(url)) return url;
+    if (config.useAvif && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
+    if (config.useWebp && baseExtension !== webpExtension) return `${url}.${webpExtension}`;
 
-    if (matches) baseExtension = String(matches[1].split('.').pop());
-
-    if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(baseUrl)) return baseUrl;
-
-    if (config.useAvif) return baseExtension === avifExtension ? baseUrl : `${baseUrl}.${avifExtension}`;
-
-    if (!config.useAvif && config.useWebp)
-      return baseExtension === webpExtension ? baseUrl : `${baseUrl}.${webpExtension}`;
-
-    return baseUrl;
+    return url;
   };
 
-  const addModernImageExtensionForSfImages = (images: SfImage[]) => {
-    return images.map((image: AgnosticImage) => ({ ...image, url: addModernImageExtension(image.url) }));
+  const addModernImageExtensionForGallery = (images: ImagesData[]) => {
+    return images.map((image: ImagesData) => ({
+      ...image,
+      url: addModernImageExtension(image.url),
+      urlPreview: addModernImageExtension(image.urlPreview),
+      urlMiddle: addModernImageExtension(image.urlMiddle),
+      urlSecondPreview: addModernImageExtension(image.urlSecondPreview),
+    }));
   };
 
   return {
     addModernImageExtension,
-    addModernImageExtensionForSfImages,
+    addModernImageExtensionForGallery,
+    getImageForViewport: (product, context) => {
+      const { isTablet } = useBreakpoints();
+      return getImageForViewport(product, context, isTablet);
+    },
   };
 };
