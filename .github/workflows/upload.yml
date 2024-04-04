@@ -3,8 +3,8 @@ name: Deploy PWA
 on:
   # release:
   # types: [published]
-  push:
-    branches: [feat/frontend-security-token]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
     inputs:
       tag-version:
