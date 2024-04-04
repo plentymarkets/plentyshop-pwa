@@ -2,7 +2,7 @@ name: Deploy PWA
 
 on:
   # release:
-  # types: [published]
+  #   types: [published]
   # push:
   #   branches: [main]
   workflow_dispatch:
