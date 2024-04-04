@@ -11,6 +11,7 @@ const getImageForViewport = (product: Product, context: string, isTablet: Ref<bo
 
   return '';
 };
+
 export const useModernImage: UseModernImageReturn = () => {
   const config = useRuntimeConfig().public;
   const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
