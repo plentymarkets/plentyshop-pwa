@@ -5,7 +5,7 @@
       data-testid="gallery-images"
     >
       <SfScrollable
-        class="items-center flex snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-full"
+        class="flex items-center snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-full"
         wrapper-class="!absolute top-0 left-0 w-full h-full"
         buttons-placement="none"
         :active-index="activeIndex"
@@ -16,9 +16,10 @@
         <div
           v-for="({ url, alt }, index) in images"
           :key="`${alt}-${index}-thumbnail`"
-          class="w-full h-full relative snap-center snap-always basis-full shrink-0 grow"
+          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
+            :id="`gallery-img-${index}`"
             :alt="alt ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
@@ -30,10 +31,11 @@
             :loading="index !== 0 ? 'lazy' : undefined"
             :fetchpriority="index === 0 ? 'high' : undefined"
             :preload="index === 0"
-            format="webp"
+            @load="updateImageStatusFor(`gallery-img-${index}`)"
             width="600"
             height="600"
           />
+          <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
       </SfScrollable>
     </div>
@@ -75,16 +77,7 @@
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
-          <NuxtImg
-            alt=""
-            class="object-contain"
-            width="80"
-            height="80"
-            :src="url"
-            :quality="80"
-            loading="lazy"
-            format="webp"
-          />
+          <NuxtImg alt="" class="object-contain" width="80" height="80" :src="url" :quality="80" loading="lazy" />
         </button>
 
         <template #nextButton>
@@ -121,7 +114,7 @@
 <script setup lang="ts">
 import type { ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
-import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
+import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
 import type { SfImage } from '@vue-storefront/unified-data-model';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 
@@ -137,6 +130,21 @@ const lastThumbReference = ref<HTMLButtonElement>();
 const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
+const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
+
+onMounted(() => {
+  nextTick(() => {
+    for (const [index] of props.images.entries()) {
+      const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
+      const imgId = String(myImg?.id);
+      if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
+    }
+  });
+});
+
+const updateImageStatusFor = (imageId: string) => {
+  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
+};
 
 const registerThumbsWatch = (
   singleThumbReference: Ref<HTMLButtonElement | undefined>,
