@@ -1,6 +1,8 @@
-import type { ReviewItem, ReplyItem } from '@plentymarkets/shop-api';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 
 export type ReviewProps = {
   reviewItem: ReviewItem;
-  replyItem: ReplyItem;
 };
+export interface ReviewEditProps {
+  isEditOpen: boolean;
+}

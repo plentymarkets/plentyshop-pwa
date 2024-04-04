@@ -156,19 +156,18 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import type { DefaultLayoutProps } from '~/layouts/types';
-import { useCategoryTree, useCustomer } from '~/composables';
+import { useCategoryTree, useCustomer, useLoginModal } from '~/composables';
 
 defineProps<DefaultLayoutProps>();
 const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
-
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
-const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
+const { isOpen: isAuthenticationOpen, close: closeAuthentication, open: openAuthentication } = useLoginModal();
 const { open: searchModalOpen } = useDisclosure();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();

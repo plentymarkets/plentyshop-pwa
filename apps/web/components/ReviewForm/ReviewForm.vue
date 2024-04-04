@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[450px] md:max-w-[768px]">
-    <div v-if="editReviewForm">
+    <div v-if="true">
       <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.editReviewFormTitle') }}</h3>
       <form
         class="grid grid-cols-[100px_1fr] py-2 px-4 gap-4 md:grid-cols-[176px_1fr] grid-rows-[100px_1fr] md:grid-rows-[28px_1fr] items-center md:items-start"
@@ -105,7 +105,6 @@
 import { ref, computed } from 'vue';
 import { SfButton, SfRatingButton, SfInput, useId } from '@storefront-ui/vue';
 defineEmits(['on-close', 'on-submit']);
-
 const ratingLabelId = useId();
 const ratingModelValue = ref();
 const usernameModelValue = ref('');

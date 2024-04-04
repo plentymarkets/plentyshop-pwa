@@ -29,6 +29,7 @@ export * from './useHandleError';
 export * from './useImageUrl';
 export * from './useInitalSetup';
 export * from './useLegalInformation';
+export * from './useLoginModal';
 export * from './useMakeOrder';
 export * from './useNotification';
 export * from './useOrderDocument';

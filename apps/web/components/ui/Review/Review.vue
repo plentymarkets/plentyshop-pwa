@@ -7,7 +7,7 @@
           <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
         </p>
       </div>
-      <div class="w-1/3 items-start flex justify-end space-x-3">
+      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
         <span v-if="isReviewVisible">
           <SfIconVisibility size="sm" class="fill-neutral-400" />
         </span>
@@ -15,10 +15,10 @@
           <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
         </span>
         <span>
-          <SfLink href="#"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
+          <SfLink href="#" @click="openEdit"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
         </span>
         <span>
-          <SfLink href="#" @click="open"><SfIconDelete size="sm" class="fill-primary-900" /></SfLink>
+          <SfLink href="#" @click="openDelete"><SfIconDelete size="sm" class="fill-primary-900" /></SfLink>
         </span>
       </div>
     </div>
@@ -103,13 +103,13 @@
     </div>
   </article>
   <UiModal
-    v-model="isOpen"
+    v-model="isDeleteOpen"
     aria-labelledby="review-delete-modal"
     tag="section"
     role="dialog"
     class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
   >
-    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeDelete">
       <SfIconClose />
     </SfButton>
     <div class="my-4">
@@ -117,7 +117,7 @@
     </div>
 
     <div class="flex justify-end gap-x-4">
-      <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="close">{{
+      <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="closeDelete">{{
         $t('review.cancel')
       }}</SfButton>
       <SfButton type="submit" class="flex-1 md:flex-initial" @click="delReview">
@@ -125,11 +125,16 @@
       >
     </div>
   </UiModal>
+  <UiModal v-model="isEditOpen" aria-labelledby="review-delete-modal" tag="section" role="dialog">
+    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
+      <SfIconClose />
+    </SfButton>
+    <ReviewForm></ReviewForm>
+  </UiModal>
 </template>
 
 <script setup lang="ts">
 import { reviewGetters } from '@plentymarkets/shop-sdk';
-import { type ReviewItem } from '@plentymarkets/shop-api';
 import {
   SfRating,
   SfIconCheck,
@@ -145,10 +150,10 @@ import {
 } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
-import { useProductReviews } from '~/composables/useProductReviews/useProductReviews';
 
 const props = defineProps<ReviewProps>();
-const { isOpen, open, close } = useDisclosure();
+const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
+const { isOpen: isEditOpen, open: openEdit, close: closeEdit } = useDisclosure();
 const answerModelValue = ref('');
 const answerCharacterLimit = ref(5000);
 const answerIsAboveLimit = computed(() => answerModelValue.value.length > answerCharacterLimit.value);
@@ -157,11 +162,24 @@ const { reviewItem } = toRefs(props);
 const replies = reviewGetters.getReviewReplies(reviewItem.value);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
-const isReviewVisible = ref(false);
-const { deleteProductReviews } = useProductReviews(reviewItem.value.id);
+const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
+const { deleteProductReview, setProductReview } = useProductReviews(Number(itemId));
+const isReviewVisible = reviewItem.value.isVisible;
+const { data } = useCustomer();
+const isEditable = computed(() => {
+  console.log(reviewItem.value.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
+  return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
+});
 
-const delReview = (reviewItem: ReviewItem) => {
-  deleteProductReviews(Number(reviewItem.id));
+/*const saveEditedReview = () => {
+  setProductReview(reviewItem.value);
+  close();
+}; */
+
+const delReview = () => {
+  if (reviewItem.value.id) {
+    deleteProductReview(reviewItem.value.id);
+  }
   close();
 };
 </script>

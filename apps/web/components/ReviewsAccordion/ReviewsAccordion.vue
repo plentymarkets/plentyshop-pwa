@@ -21,6 +21,7 @@
             class="text-primary-800 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
             variant="secondary"
             href="#"
+            @click="openLoginModal"
           >
             {{ $t(`loginBeforeCreateReview`) }}
           </SfLink>
@@ -52,15 +53,14 @@
     <ReviewForm @on-close="close" @on-submit="saveReview"></ReviewForm>
   </UiModal>
 </template>
-
 <script lang="ts" setup>
 import { SfButton, SfIconClose, SfLink, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
-import { useCustomer } from '~/composables';
 const props = defineProps<ProductAccordionPropsType>();
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
+const { open: openLoginModal } = useLoginModal();
 const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);
 
