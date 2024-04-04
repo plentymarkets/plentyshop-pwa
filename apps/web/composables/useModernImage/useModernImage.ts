@@ -29,8 +29,14 @@ export const useModernImage: UseModernImageReturn = () => {
   };
 
   const addModernImageExtensionForSfImages = (images: SfImage[]) => {
-    return images.map((image: AgnosticImage) => ({ ...image, url: addModernImageExtension(image.url) }));
+    return images.map((image: SfImage) => ({
+      ...image,
+      url: addModernImageExtension(image.url),
+      width: 40 ?? null,
+      height: 90 ?? null,
+    }));
   };
+  
 
   return {
     addModernImageExtension,

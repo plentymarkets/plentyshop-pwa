@@ -14,7 +14,7 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, alt }, index) in images"
+          v-for="({ url, alt, width, height }, index) in images"
           :key="`${alt}-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
@@ -32,8 +32,8 @@
             :fetchpriority="index === 0 ? 'high' : undefined"
             :preload="index === 0"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            width="600"
-            height="600"
+            :width="width ?? 600"
+            :height="height ?? 600"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -118,8 +118,13 @@ import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoader
 import type { SfImage } from '@vue-storefront/unified-data-model';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 
+type ExtendedSfImage = SfImage & {
+  width?: number | null;
+  height?: number | null;
+};
+
 const props = defineProps<{
-  images: SfImage[];
+  images: ExtendedSfImage[];
 }>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
