@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Breadcrumbs from '~/components/ui/Breadcrumbs/Breadcrumbs.vue';
+import { UiBreadcrumbs } from '#components';
 
 describe('<Breadcrumbs />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(Breadcrumbs, {
+    const { getByTestId } = mount(UiBreadcrumbs, {
       props: {
         breadcrumbs: [],
       },

@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import ProductCardHorizontal from '~/components/ui/ProductCardHorizontal/ProductCardHorizontal.vue';
+import { UiProductCardHorizontal } from '#components';
 
 describe('<ProductCardHorizontal />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(ProductCardHorizontal, {
+    const { getByTestId } = mount(UiProductCardHorizontal, {
       props: {
         product: {
           name: 'Smartwatch Fitness Tracker',
