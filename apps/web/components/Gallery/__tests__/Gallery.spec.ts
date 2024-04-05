@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Gallery from '~/components/Gallery/Gallery.vue';
+import { Gallery } from '#components';
 
 describe('<Gallery />', () => {
   it('should render component', () => {
