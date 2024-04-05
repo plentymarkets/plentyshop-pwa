@@ -41,7 +41,6 @@ export const useModernImage: UseModernImageReturn = () => {
       urlSecondPreview: addModernImageExtension(image.urlSecondPreview),
     }));
   };
-  
 
   return {
     addModernImageExtension,

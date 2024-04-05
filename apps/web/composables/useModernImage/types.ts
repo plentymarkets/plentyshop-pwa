@@ -1,6 +1,4 @@
-import type { SfImage } from '@vue-storefront/unified-data-model';
 import type { AgnosticImage } from '@plentymarkets/shop-sdk/lib/getters/agnostic.types';
-
 
 export type AddModernImageExtensionForSfImages = (images: AgnosticImage[]) => AgnosticImage[];
 import type { Product, ImagesData } from '@plentymarkets/shop-api';
