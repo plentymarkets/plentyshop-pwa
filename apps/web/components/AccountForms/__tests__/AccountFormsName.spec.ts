@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import AccountFormsName from '~/components/AccountForms/AccountFormsName.vue';
+import { AccountFormsName } from '#components';
 
 describe('<AccountFormsName />', () => {
   it('should render component', () => {

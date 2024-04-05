@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Filter from '~/components/CategoryFilters/Filter.vue';
+import { CategoryFiltersFilter } from '#components';
 
 describe('<Filter />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(Filter, {
+    const { getByTestId } = mount(CategoryFiltersFilter, {
       props: {
         facet: {
           id: '1',

@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Pagination from '~/components/ui/Pagination/Pagination.vue';
+import { UiPagination } from '#components';
 
 describe('<Pagination />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(Pagination, {
+    const { getByTestId } = mount(UiPagination, {
       props: {
         currentPage: 4,
         pageSize: 24,
