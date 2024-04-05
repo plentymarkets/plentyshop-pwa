@@ -14,7 +14,7 @@ const fetchScripts = (scripts: string[]) => {
       if (checkIfScriptIsExternal(script)) {
         fetch(script, { method: 'GET', mode: 'no-cors', credentials: 'same-origin' })
           .then((response) => response.text())
-          .then((text) => eval(text))
+          .then((text) => new Function(text)())
           .catch(() => {
             return;
           });

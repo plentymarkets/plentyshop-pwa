@@ -93,16 +93,15 @@ export const useLocalization = createSharedComposable(() => {
    *
    * @example switchLocale('en')
    */
-  const switchLocale = (language: string) => {
+  const switchLocale = async (language: string) => {
     const { $i18n } = useNuxtApp();
     const { setLocaleCookie } = $i18n;
 
     const switchLocalePath = useSwitchLocalePath();
-    const router = useRouter();
     const route = useRoute();
     setLocaleCookie(language);
-    router.push({ path: switchLocalePath(language), query: route.query });
     toggle();
+    await navigateTo({ path: switchLocalePath(language), query: route.query });
   };
 
   return {
