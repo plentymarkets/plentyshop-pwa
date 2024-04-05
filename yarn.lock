@@ -4316,12 +4316,12 @@ __metadata:
 
 "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.28.1
-  resolution: "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client#/Users/luisahaase/PWA/sdk/packages/api-client::hash=e687d0&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client#/Users/luisahaase/PWA/sdk/packages/api-client::hash=e4c71a&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 682098d214f61b9e715cb823193911681344b82e54ff0986267249a57d889f0c5fb6aff82af61de77f9f99af1d5e78377314be2a238ab5f828adb71ef0fb7a02
+  checksum: 727904723c7c8159c59b938b45c0881b6b2bfb25e73c6060322c07c73476270f7c6016d71d631a3f67a22af17b2f22387f66158f2c74ffc8e2ac5b233d189a76
   languageName: node
   linkType: hard
 

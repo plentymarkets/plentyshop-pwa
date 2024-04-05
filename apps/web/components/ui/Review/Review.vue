@@ -66,14 +66,14 @@
         </SfButton>
       </div>
       <template v-if="isAnswerFormOpen">
-        <form data-testid="review-answer-form" class="mt-8 md:mr-16">
+        <form data-testid="review-answer-form" class="mt-8 md:mr-16" @submit.prevent="$emit('on-submit', form)">
           <label class="block mb-2 text-sm font-medium text-neutral-500 w-1/2">
             <span>{{ $t('review.reviewAuthor') }}</span>
-            <SfInput size="sm" class="font-normal text-sm"></SfInput>
+            <SfInput :v-model="form.authorName" size="sm" class="font-normal text-sm"></SfInput>
           </label>
           <label class="my-4 block">
             <textarea
-              v-model="answerModelValue"
+              v-model="form.message"
               class="block w-full py-2 pl-4 pr-3 min-h-[138px] text-sm rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
             />
             <span
@@ -94,9 +94,7 @@
               @click="isAnswerFormOpen = false"
               >{{ $t('review.cancel') }}</SfButton
             >
-            <SfButton type="submit" size="sm" class="flex-1 md:flex-initial" @click="$emit('on-submit')">{{
-              $t('review.saveAnswer')
-            }}</SfButton>
+            <SfButton type="submit" size="sm" class="flex-1 md:flex-initial">{{ $t('review.saveAnswer') }}</SfButton>
           </div>
         </form>
       </template>
@@ -120,9 +118,7 @@
       <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="closeDelete">{{
         $t('review.cancel')
       }}</SfButton>
-      <SfButton type="submit" class="flex-1 md:flex-initial" @click="delReview">
-        {{ $t('review.deleteReview') }}</SfButton
-      >
+      <SfButton type="button" class="flex-1 md:flex-initial" @click="delReview"> {{ $t('review.deleteReview') }}</SfButton>
     </div>
   </UiModal>
   <UiModal v-model="isEditOpen" aria-labelledby="review-delete-modal" tag="section" role="dialog">
@@ -150,7 +146,7 @@ import {
 } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
-
+defineEmits(['on-submit']);
 const props = defineProps<ReviewProps>();
 const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
 const { isOpen: isEditOpen, open: openEdit, close: closeEdit } = useDisclosure();
@@ -171,10 +167,15 @@ const isEditable = computed(() => {
   return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
 });
 
-/*const saveEditedReview = () => {
-  setProductReview(reviewItem.value);
-  close();
-}; */
+const form = ref({
+  title: '',
+  authorName: '',
+  ratingValue: 0,
+  message: '',
+  type: 'reply',
+  targetId: reviewItem.value.id,
+  honeypot: '',
+});
 
 const delReview = () => {
   if (reviewItem.value.id) {

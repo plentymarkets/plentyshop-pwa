@@ -32,6 +32,7 @@
         v-for="(reviewItem, key) in reviewGetters.getItems(productReviews)"
         :key="key"
         :review-item="reviewItem"
+        @on-submit="saveReview"
       />
     </UiAccordionItem>
     <div v-else class="w-full mt-4 py-2 pl-4 pr-3 flex justify-between items-center">
@@ -58,21 +59,37 @@ import { SfButton, SfIconClose, SfLink, SfLoaderCircular, useDisclosure } from '
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 const props = defineProps<ProductAccordionPropsType>();
+const { send } = useNotification();
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { open: openLoginModal } = useLoginModal();
 const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);
 
-const saveReview = () => {
-  close();
-};
-
 const {
   data: productReviews,
   fetchProductReviews,
+  createProductReview,
   loading,
 } = useProductReviews(Number(productGetters.getItemId(product.value)));
+
+const saveReview = async (form: any) => {
+  const targetId = Number(productGetters.getVariationId(product.value));
+  if (form.type === 'review') {
+    const params = {
+      ...form,
+      targetId: targetId,
+    };
+    await createProductReview(params);
+  } else {
+    const params = {
+      ...form,
+    };
+    await createProductReview(params);
+  }
+  close();
+};
+
 watch(
   () => reviewsOpen.value,
   (value) => {

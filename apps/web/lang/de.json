@@ -382,7 +382,8 @@
     "hideAnswers": "Antworten ausblenden",
     "anonymous": "Anonym",
     "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
-    "deleteReview": "Ja, löschen"
+    "deleteReview": "Ja, löschen",
+    "createSuccess": "Bewertung wurde gesendet"
   },
   "account": {
     "heading": "Mein Konto",

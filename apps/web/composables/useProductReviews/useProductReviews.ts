@@ -1,4 +1,4 @@
-import type { Review, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, ReviewItem } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type {
@@ -47,18 +47,26 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     return state.value.data;
   };
 
-  const createProductReview: CreateProductReview = async () => {
-    /* state.value.loading = true;
+  const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {
+    state.value.loading = true;
     const { data, error } = await useAsyncData(() =>
-        useSdk().plentysystems.doReview({
-
-        }),
+      useSdk().plentysystems.doReview({
+        title: params.title,
+        authorName: params.authorName,
+        ratingValue: params.ratingValue,
+        message: params.message,
+        type: params.type,
+        targetId: params.targetId,
+        honeypot: params.honeypot,
+        titleMissing: params.titleMissing,
+        ratingMissing: params.ratingMissing,
+      }),
     );
     useHandleError(error.value);
     state.value.createdReview = data.value?.data ?? state.value.createdReview;
     state.value.loading = false;
 
-    await fetchProductReviews(); */
+    await fetchProductReviews(itemId);
   };
 
   const deleteProductReview: DeleteProductReview = async (feedbackId: number) => {
