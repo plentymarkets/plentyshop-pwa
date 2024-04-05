@@ -66,7 +66,7 @@
         </template>
 
         <button
-          v-for="({ url, alt }, index) in images"
+          v-for="({ url, alt, width, height }, index) in images"
           :key="`${alt}-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
@@ -77,7 +77,7 @@
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
-          <NuxtImg alt="" class="object-contain" width="80" height="80" :src="url" :quality="80" loading="lazy" />
+          <NuxtImg alt="" class="object-contain" :width="width ?? 80" :height="height ?? 80" :src="url" :quality="80" loading="lazy" />
         </button>
 
         <template #nextButton>

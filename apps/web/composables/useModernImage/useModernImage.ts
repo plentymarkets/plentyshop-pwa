@@ -28,12 +28,12 @@ export const useModernImage: UseModernImageReturn = () => {
     return baseUrl;
   };
 
-  const addModernImageExtensionForSfImages = (images: SfImage[]) => {
-    return images.map((image: SfImage) => ({
+  const addModernImageExtensionForSfImages = (images: AgnosticImage[]) => {
+    return images.map((image: AgnosticImage) => ({
       ...image,
       url: addModernImageExtension(image.url),
-      width: 40 ?? null,
-      height: 90 ?? null,
+      width: image.width ?? null,
+      height: image.height ?? null,
     }));
   };
   
