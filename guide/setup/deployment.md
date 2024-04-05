@@ -55,7 +55,9 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 3. In the **Security** section, go to **Secrets and variables » Actions**.
 4. Open the **Variables** tab.
 5. Click on **New repository variable**.
-6. Fill in the information from your apps/web/.env file based on apps/web/.env.example, example in the table below.
+6. Fill in the information from your apps/web/.env file based on [apps/web/.env.example](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/.env.example), example in the table below.
+
+[supported config values](https://github.com/plentymarkets/plentyshop-pwa/blob/main/apps/web/.env.example)
 
 | Name      | Value |
 | ----------- | ----------- |
