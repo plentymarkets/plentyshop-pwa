@@ -64,9 +64,7 @@
             <SfRatingButton v-model="form.ratingValue" :aria-labelledby="ratingLabelId" class="p-1 gap-x-2" />
           </div>
           <label class="block mb-6">
-            <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
-                $t('review.Title')
-              }}</span>
+            <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{ $t('review.Title') }}</span>
             <SfInput v-model="form.title" />
           </label>
           <label class="my-4 block">
@@ -97,9 +95,7 @@
             <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">{{
               $t('review.cancel')
             }}</SfButton>
-            <SfButton type="submit" class="flex-1 md:flex-initial">{{
-              $t('review.submitReview')
-            }}</SfButton>
+            <SfButton type="submit" class="flex-1 md:flex-initial">{{ $t('review.submitReview') }}</SfButton>
           </div>
         </div>
       </form>

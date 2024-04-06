@@ -4,7 +4,9 @@
       <div class="w-2/3">
         <p class="text-xs truncate text-neutral-400 mb-2">
           <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
-          <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
+          <span v-if="verifiedPurchase">
+            <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
+          </span>
         </p>
       </div>
       <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
@@ -41,11 +43,14 @@
     <div class="ml-8">
       <div v-if="!isCollapsed">
         <div v-for="(replyItem, index) in replies" :key="index" class="mb-8 md:mr-16">
-          <div class="flex items-center mb-2">
+          <div class="flex items-center mb-2 text-xs">
             <p v-if="replyItem.authorName" class="flex font-medium">{{ replyItem.authorName }}</p>
             <p v-else class="flex font-medium">{{ $t('review.anonymous') }}</p>
-            <p class="pl-2 text-xs text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
-            <div class="w-full items-start flex justify-end space-x-3">
+            <p class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
+            <div
+              v-if="isAnswerEditable"
+              class="w-full items-start flex justify-end space-x-3"
+            >
               <span v-if="isReviewVisible">
                 <SfIconVisibility size="xs" class="fill-neutral-400" />
               </span>
@@ -69,7 +74,7 @@
         <form data-testid="review-answer-form" class="mt-8 md:mr-16" @submit.prevent="$emit('on-submit', form)">
           <label class="block mb-2 text-sm font-medium text-neutral-500 w-1/2">
             <span>{{ $t('review.reviewAuthor') }}</span>
-            <SfInput :v-model="form.authorName" size="sm" class="font-normal text-sm"></SfInput>
+            <SfInput v-model="form.authorName" size="sm" class="font-normal text-sm"></SfInput>
           </label>
           <label class="my-4 block">
             <textarea
@@ -118,7 +123,9 @@
       <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="closeDelete">{{
         $t('review.cancel')
       }}</SfButton>
-      <SfButton type="button" class="flex-1 md:flex-initial" @click="delReview"> {{ $t('review.deleteReview') }}</SfButton>
+      <SfButton type="button" class="flex-1 md:flex-initial" @click="delReview">
+        {{ $t('review.deleteReview') }}</SfButton
+      >
     </div>
   </UiModal>
   <UiModal v-model="isEditOpen" aria-labelledby="review-delete-modal" tag="section" role="dialog">
@@ -156,12 +163,19 @@ const answerIsAboveLimit = computed(() => answerModelValue.value.length > answer
 const answerCharsCount = computed(() => answerCharacterLimit.value - answerModelValue.value.length);
 const { reviewItem } = toRefs(props);
 const replies = reviewGetters.getReviewReplies(reviewItem.value);
+const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
 const { deleteProductReview, setProductReview } = useProductReviews(Number(itemId));
 const isReviewVisible = reviewItem.value.isVisible;
 const { data } = useCustomer();
+const answerCustomerId = Number(reviewGetters.getReplyCustomerId ?? -1);
+const customerId = Number(data.value.user?.id ?? 0);
+const isAnswerEditable = computed(() => {
+  console.log(answerCustomerId, customerId);
+  return answerCustomerId === customerId;
+});
 const isEditable = computed(() => {
   console.log(reviewItem.value.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
   return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
@@ -170,7 +184,7 @@ const isEditable = computed(() => {
 const form = ref({
   title: '',
   authorName: '',
-  ratingValue: 0,
+  ratingValue: undefined,
   message: '',
   type: 'reply',
   targetId: reviewItem.value.id,
