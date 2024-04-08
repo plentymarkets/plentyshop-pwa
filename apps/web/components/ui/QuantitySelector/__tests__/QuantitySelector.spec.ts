@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
-import QuantitySelector from '~/components/ui/QuantitySelector/QuantitySelector.vue';
+import { UiQuantitySelector } from '#components';
 
 const value = 1;
 
 describe('<QuantitySelector />', () => {
   it('should render component', () => {
-    const wrapper = mount(QuantitySelector, {
+    const wrapper = mount(UiQuantitySelector, {
       props: {
         value,
       },

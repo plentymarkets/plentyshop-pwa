@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Divider from '~/components/ui/Divider/Divider.vue';
+import { UiDivider } from '#components';
 
 describe('<Divider />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(Divider);
+    const { getByTestId } = mount(UiDivider);
 
     expect(getByTestId('divider'));
   });
