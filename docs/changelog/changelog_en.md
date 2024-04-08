@@ -1,38 +1,40 @@
 # Changelog plentyshopPWA
 
-## v1.4.0 (2024-04-08) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
+## v1.4.0 (2024-04-08) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
 ### New
 
-* feat: return form previous button by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/327
-* feat: i18n optimised imports by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/332
-* feat: change legal pages by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/337
-* feat: tags component for single item and category view by @N-Feist in https://github.com/plentymarkets/plentyshop-pwa/pull/334
-* feat: attribute select refactoring + box component by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/339
-* feat: primary address by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/341
-* feat: image attribute & feedback changes by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/347
-* feat: unify remove buttons by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/354
-* feat: change new return layout by @luisaha in https://github.com/plentymarkets/plentyshop-pwa/pull/344
-* feat: tags design and positioning AB#98448 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/346
-* feat: nuxt upgrade by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/345
-* feat: item display availability AB#98866 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/349
-* feat: static sitemap by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/359
-* feat: display bundle items by @N-Feist in https://github.com/plentymarkets/plentyshop-pwa/pull/360
-* feat: remove c as category url identifier by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/357
-* feat: improve wishlist calls by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/361
-* feat: wishlist item availability AB#101092 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/367
-* feat: load config in upload action by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/373
-* feat: remove artifact from the action by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/388
-* feat: create new action for new release to send repo zip to the s3 bucket by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/387
-* feat: unify address by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/390
-* feat: pwa modern image AB#101096 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/372
-* feat: upgrade nuxt AB#102832 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/393
-* feat: tag search by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/350
+- added a previous button for the return form
+- added tags display on single items and category view
+- added Item attribute select as box component
+- added possiblity to mark a primary address
+- deliver image attribute                                                             -->  by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/347
+- nuxt upgrade                                                                        --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/345
+- added display for item availability                                                 --> AB#98866 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/349
+- added a sitemap generation for static content                                       --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/359
+- added display for bundle items on item, cart, checkout and order summary view       --> by @N-Feist in https://github.com/plentymarkets/plentyshop-pwa/pull/360
+
+* feat: improve wishlist calls by                                                     --> @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/361  -> ?????
+
+- added availability on wishlist item                                                 --> AB#101092 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/367
+- load 'config' repository variable in upload action                                  --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/373
+
+* feat: remove artifact from the action                                               --> by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/388 -> ?????
+* feat: create new action for new release to send repo zip to the s3 bucket           --> by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/387 -> ?????
+
+- unified address in a single component                                               --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/390
+- added modern image(AVIF)                                                            --> AB#101096 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/372
+- added search by tags                                                                --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/350
 
 ### Change
 
-* refactor: remove unnecessary nodes to reduce DOM size and minor styling changes by @Tim-M-S in https://github.com/plentymarkets/plentyshop-pwa/pull/340
-* refactor: test improvments by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/362
+- removed unnecessary nodes to reduce DOM size and minor styling changes
+- changed legal pages filenames
+- optimised i18n imports
+- unified remove buttons                                                              --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/354
+- changed return layout from popup to side and layout chnage                          --> by @luisaha in https://github.com/plentymarkets/plentyshop-pwa/pull/344
+- changed tags design and positioning                                                 --> AB#98448 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/346
+- removed ../c/.. as category url identifier                                          --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/357
 
 ### Fixed
 
