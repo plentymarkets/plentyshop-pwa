@@ -152,6 +152,7 @@ export default defineNuxtConfig({
     },
   },
   runtimeConfig: {
+    apiSecurityToken: process.env.API_SECURITY_TOKEN ?? '',
     public: {
       apiUrl: process.env.API_URL ?? 'http://localhost:8181',
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
