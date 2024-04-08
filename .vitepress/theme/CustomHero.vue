@@ -7,7 +7,7 @@ const { Layout } = DefaultTheme
 <template>
   <Layout>
     <template #home-hero-info-after>
-      <p class="tagline">powered by<span class="logo-vsf"></span></p>
+      <p class="tagline">powered by<span class="logo-alokai"></span></p>
     </template>
   </Layout>
 </template>

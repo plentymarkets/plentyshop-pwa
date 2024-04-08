@@ -20,4 +20,4 @@ In the local development environment, the app connects to the provided URL. In p
 
 ## References
 
-- [Vue Storefront: Middleware](https://docs.vuestorefront.io/middleware)
+- [Alokai: Middleware](https://docs.alokai.com/middleware)

@@ -24,7 +24,7 @@
 }
 
 /*
-    Adds Vue Storefront logo to hero tagline
+    Adds Alokai logo to hero tagline
     Tagline styling taken from https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/components/VPHero.vue
 */
 
@@ -62,15 +62,16 @@
     }
 }
 
-span.logo-vsf {
-    content: url("./assets/logo-vsf-dark.svg");
+span.logo-alokai {
+    content: url("./assets/logo-alokai-black.svg");
     line-height: normal;
+    padding-left: 1rem;
     vertical-align: middle;
-    width: 40%;
+    width: 20%;
 }
 
-.dark span.logo-vsf {
-    content: url("./assets/logo-vsf-primary.svg");
+.dark span.logo-alokai {
+    content: url("./assets/logo-alokai-white.svg");
 }
 
 /*
