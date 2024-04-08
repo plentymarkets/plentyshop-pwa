@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
+    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-1"
     data-testid="product-card"
   >
     <div class="relative">
