@@ -9,7 +9,7 @@
           </span>
         </p>
       </div>
-      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
+      <div v-if="reviewGetters.getIsReviewEditable(reviewItem, customerId)" class="w-1/3 items-start flex justify-end space-x-3">
         <span v-if="isReviewVisible">
           <SfIconVisibility size="sm" class="fill-neutral-400" />
         </span>
@@ -17,7 +17,7 @@
           <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
         </span>
         <span>
-          <SfLink href="#" @click="openEdit"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
+          <SfLink href="#" @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
         </span>
         <span>
           <SfLink href="#" @click="openDelete"><SfIconDelete size="sm" class="fill-primary-900" /></SfLink>
@@ -48,7 +48,7 @@
             <p v-else class="flex font-medium">{{ $t('review.anonymous') }}</p>
             <p class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
             <div
-              v-if="isAnswerEditable"
+              v-if="reviewGetters.getIsReplyEditable(replyItem, customerId)"
               class="w-full items-start flex justify-end space-x-3"
             >
               <span v-if="isReviewVisible">
@@ -57,12 +57,12 @@
               <span v-else>
                 <SfIconVisibilityOff size="xs" class="fill-neutral-400" />
               </span>
-              <span><SfIconTune size="xs" class="fill-primary-900" /></span>
-              <span><SfIconDelete size="xs" class="fill-primary-900" /></span>
+              <span><SfIconTune size="xs" class="fill-primary-900" @click="openReplyEdit" /></span>
+              <span><SfIconDelete size="xs" class="fill-primary-900" @click="openDelete" /></span>
             </div>
             <br />
           </div>
-          <p class="text-sm">{{ replyItem.feedbackComment.comment.message }}</p>
+          <p class="text-sm">{{ Number(replyItem.sourceRelation[0].feedbackRelationSourceId) }}</p>
         </div>
       </div>
       <div v-if="!isAnswerFormOpen" class="actions flex justify-end">
@@ -128,11 +128,29 @@
       >
     </div>
   </UiModal>
-  <UiModal v-model="isEditOpen" aria-labelledby="review-delete-modal" tag="section" role="dialog">
-    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
+  <UiModal
+    v-model="isReviewEditOpen"
+    aria-labelledby="review-edit-modal"
+    tag="section"
+    role="dialog"
+    class="h-full md:w-[500px] md:h-full m-0 p-0"
+  >
+    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReviewEdit">
       <SfIconClose />
     </SfButton>
-    <ReviewForm></ReviewForm>
+    <ReviewEditForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview"></ReviewEditForm>
+  </UiModal>
+  <UiModal
+    v-model="isReplyEditOpen"
+    aria-labelledby="reply-edit-modal"
+    tag="section"
+    role="dialog"
+    class="h-full md:w-[500px] md:h-full m-0 p-0"
+  >
+    <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReplyEdit">
+      <SfIconClose />
+    </SfButton>
+    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm>
   </UiModal>
 </template>
 
@@ -153,48 +171,63 @@ import {
 } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
+import ReviewEditForm from '~/components/ReviewEditForm/ReviewEditForm.vue';
+import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
+
 defineEmits(['on-submit']);
 const props = defineProps<ReviewProps>();
+const { reviewItem } = toRefs(props);
+
 const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
-const { isOpen: isEditOpen, open: openEdit, close: closeEdit } = useDisclosure();
+const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
+const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
+
 const answerModelValue = ref('');
 const answerCharacterLimit = ref(5000);
 const answerIsAboveLimit = computed(() => answerModelValue.value.length > answerCharacterLimit.value);
 const answerCharsCount = computed(() => answerCharacterLimit.value - answerModelValue.value.length);
-const { reviewItem } = toRefs(props);
+
 const replies = reviewGetters.getReviewReplies(reviewItem.value);
+
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
+const isReviewVisible = reviewItem.value.isVisible;
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
+
 const { deleteProductReview, setProductReview } = useProductReviews(Number(itemId));
-const isReviewVisible = reviewItem.value.isVisible;
 const { data } = useCustomer();
-const answerCustomerId = Number(reviewGetters.getReplyCustomerId ?? -1);
-const customerId = Number(data.value.user?.id ?? 0);
-const isAnswerEditable = computed(() => {
-  console.log(answerCustomerId, customerId);
-  return answerCustomerId === customerId;
-});
-const isEditable = computed(() => {
-  console.log(reviewItem.value.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
-  return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
-});
+const customerId = data.value.user?.id ?? 0;
 
 const form = ref({
   title: '',
   authorName: '',
   ratingValue: undefined,
   message: '',
-  type: 'reply',
+  type: '',
   targetId: reviewItem.value.id,
   honeypot: '',
+  titleMissing: true,
+  ratingMissing: true,
 });
 
 const delReview = () => {
   if (reviewItem.value.id) {
     deleteProductReview(reviewItem.value.id);
   }
+  close();
+};
+
+const editReview = async (form: any) => {
+  const params = {
+    feedbackId: form.targetId,
+    message: form.message,
+    title: form.title || undefined,
+    ratingValue: form.ratingValue || undefined,
+  };
+
+  await setProductReview(params);
+
   close();
 };
 </script>

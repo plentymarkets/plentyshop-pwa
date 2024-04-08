@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, UpdateReviewParams} from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type {
@@ -77,13 +77,13 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     await fetchProductReviews(itemId);
   };
 
-  const setProductReview: SetProductReview = async (data: ReviewItem) => {
+  const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
     state.value.loading = true;
     await useSdk().plentysystems.setReview({
-      feedbackId: data.id || 0,
-      message: data.feedbackComment.comment.message,
-      title: data.title || '',
-      ratingValue: Number(data.feedbackRating.rating),
+      feedbackId: Number(params.feedbackId) || 0,
+      message: params.message.toString(),
+      title: params.title?.toString() || '',
+      ratingValue: Number(params.ratingValue) || 0,
     });
     await fetchProductReviews(itemId);
   };

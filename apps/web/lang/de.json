@@ -371,6 +371,8 @@
   "review": {
     "verifiedPurchase": "Verifizierter Kauf",
     "createReviewFormTitle": "Schreib eine Bewertung",
+    "editReviewFormTitle": "Bewertung bearbeiten",
+    "editReplyFormTitle": "Antwort bearbeiten",
     "yourRating": "Deine Wertung:",
     "reviewText": "Produktbewertung (optional)",
     "reviewAuthor": "Dein Name (optional)",

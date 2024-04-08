@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-[450px] md:max-w-[768px]">
-    <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.createReviewFormTitle') }}</h3>
+    <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.editReviewFormTitle') }}</h3>
     <form
       class="grid grid-cols-[100px_1fr] py-2 px-4 gap-4 md:grid-cols-[176px_1fr] grid-rows-[100px_1fr] md:grid-rows-[28px_1fr] items-center md:items-start"
-      data-testid="create-review-form"
+      data-testid="edit-review-form"
       @submit.prevent="$emit('on-submit', form)"
     >
       <div class="col-span-2">
@@ -14,8 +14,8 @@
           <SfRatingButton v-model="form.ratingValue" :aria-labelledby="ratingLabelId" class="p-1 gap-x-2" />
         </div>
         <label class="block mb-6">
-          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{ $t('review.Title') }}</span>
-          <SfInput v-model="form.title" />
+          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-700">{{ $t('review.Title') }}</span>
+          <SfInput v-model="form.title" disabled />
         </label>
         <label class="my-4 block">
           <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">{{
@@ -23,9 +23,11 @@
           }}</span>
           <textarea
             v-model="form.message"
-            placeholder="Describe your experience eg. Great product!"
             class="block w-full py-2 pl-4 pr-3 min-h-[138px] rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
-          />
+          >
+              {{ reviewGetters.getReviewMessage(reviewItem) }}
+            </textarea
+          >
           <span
             :class="[
               'block text-xs mt-0.5 text-right',
@@ -39,7 +41,7 @@
           <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
             $t('review.reviewAuthor')
           }}</span>
-          <SfInput v-model="form.authorName" />
+          <SfInput disabled v-model="form.authorName" class="text-neutral-700" />
         </label>
         <div class="flex justify-end gap-x-4">
           <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">{{
@@ -54,16 +56,20 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
+import { reviewGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfRatingButton, SfInput, useId } from '@storefront-ui/vue';
+import type { ReviewEditFormProps } from '~/components/ReviewEditForm/types';
 defineEmits(['on-close', 'on-submit']);
+const props = defineProps<ReviewEditFormProps>();
+const reviewItem = props.reviewItem;
 
 const form = ref({
-  title: '',
-  authorName: '',
-  ratingValue: 0,
-  message: '',
+  title: reviewGetters.getReviewTitle(reviewItem),
+  authorName: reviewGetters.getReviewAuthor(reviewItem),
+  ratingValue: reviewGetters.getReviewRating(reviewItem),
+  message: reviewGetters.getReviewMessage(reviewItem),
   type: 'review',
-  targetId: 0,
+  targetId: reviewGetters.getReviewId(reviewItem),
   honeypot: '',
   titleMissing: false,
   ratingMissing: false,
