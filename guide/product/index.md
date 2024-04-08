@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the plentysystems integration for Vue Storefront 3. This documentation will provide you with all the information you need to get started.
+Welcome to the plentysystems integration for Alokai 3 (previously Vue Storefront). This documentation will provide you with all the information you need to get started.
 
 ## What is plentysystems?
 
@@ -19,7 +19,7 @@ Progressive Web Apps (PWAs) are websites that offer functionality you typically 
 * One app for all devices
 * Easy to use in the browser; downloading and installing the app isn't required
 
-Based on the e-commerce framework Vue Storefront, plentyShop PWA offers great performance out of the box. Once you’re set up, you benefit from a headless progressive web app that still seamlessly integrates with the rest of plentysystems.
+Based on the e-commerce framework Alokai, plentyShop PWA offers great performance out of the box. Once you’re set up, you benefit from a headless progressive web app that still seamlessly integrates with the rest of plentysystems.
 
 ## Demo
 

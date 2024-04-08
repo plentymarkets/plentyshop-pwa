@@ -11,7 +11,7 @@ import typedocSidebarApi from '../reference/api/typedoc-sidebar.json';
 export default defineConfig({
   head: [['link', { rel: 'icon', href: '/favicon.png' }]],
   title: "plentyShop PWA Docs",
-  description: "Documentation for plentyShop PWA, built with VueJS, Nuxt 3 and Vue Storefront.",
+  description: "Documentation for plentyShop PWA, built with VueJS, Nuxt 3 and Alokai.",
   cleanUrls: true,
   ignoreDeadLinks: true,
   themeConfig: {
