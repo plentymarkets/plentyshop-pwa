@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-1"
-    data-testid="product-card"
-  >
+  <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-1" data-testid="product-card">
     <div class="relative">
       <UiBadges
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
