@@ -53,10 +53,7 @@
           *
         </label>
       </div>
-
-      <div v-if="Boolean(errors['register.privacyPolicy'])" class="text-negative-700 text-sm">
-        {{ t('privacyPolicyRequired') }}
-      </div>
+      <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
         v-if="turnstileSiteKey"
@@ -64,10 +61,10 @@
         v-bind="turnstileAttributes"
         ref="turnstileElement"
         :options="{ theme: 'light' }"
-        class="mt-4"
+        class="mt-4 flex justify-center"
       />
 
-      <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+      <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
@@ -112,8 +109,11 @@ const validationSchema = toTypedSchema(
         .required(t('errorMessages.password.required'))
         .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
         .default(''),
-      privacyPolicy: boolean().isTrue().required(),
-      turnstile: string().required(t('errorMessages.turnstileRequired')).default(''),
+      privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
+      turnstile:
+        turnstileSiteKey.length > 0
+          ? string().required(t('errorMessages.turnstileRequired')).default('')
+          : string().optional().default(''),
     }),
   }),
 );
@@ -137,6 +137,9 @@ const registerUser = async () => {
     password: password.value ?? '',
     'cf-turnstile-response': turnstile.value,
   });
+
+  turnstile.value = '';
+  turnstileElement.value?.reset();
 
   if (response?.data.code === 1) {
     send({
