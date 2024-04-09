@@ -13,22 +13,16 @@
 - added display for item availability                                                 --> AB#98866 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/349
 - added a sitemap generation for static content                                       --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/359
 - added display for bundle items on item, cart, checkout and order summary view       --> by @N-Feist in https://github.com/plentymarkets/plentyshop-pwa/pull/360
-
-* feat: improve wishlist calls by                                                     --> @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/361  -> ?????
-
+- improved wishlist call performance                                                  --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/361
 - added availability on wishlist item                                                 --> AB#101092 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/367
 - load 'config' repository variable in upload action                                  --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/373
-
-* feat: remove artifact from the action                                               --> by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/388 -> ?????
-* feat: create new action for new release to send repo zip to the s3 bucket           --> by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/387 -> ?????
-
 - unified address in a single component                                               --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/390
 - added modern image(AVIF)                                                            --> AB#101096 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/372
 - added search by tags                                                                --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/350
 - added a order return confirmation page                                              --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/324
 
-### Change
 
+### Changed
 
 - removed unnecessary nodes to reduce DOM size and minor styling changes              --> by @Tim-M-S in https://github.com/plentymarkets/plentyshop-pwa/pull/340
 - changed legal pages filenames                                                       --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/337
@@ -37,6 +31,12 @@
 - changed return layout from popup to side and layout chnage                          --> by @luisaha in https://github.com/plentymarkets/plentyshop-pwa/pull/344
 - changed tags design and positioning                                                 --> AB#98448 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/346
 - removed ../c/.. as category url identifier                                          --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/357
+- changed the address format order                                                    --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/375
+- changed order confirmation styling                                                  --> AB#101529 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/379
+- use different image urls for diffrent window sizes                                  --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/394
+- changed delete from wishlist button placing to top right                            --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/398
+- changed upload action                                                               --> by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/388 / by @pfrincu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/387
+
 
 ### Fixed
 
@@ -48,44 +48,27 @@
 - adjusted the return form for mobile return orders                                   --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/330
 - fixed the back to shopping button behaviour and name                                --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/336
 - fixed bug for search autocomplete with e-mail                                       --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/328
-* fix: update position tags by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/338
-* fix: paypal credit card test by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/356
-* fix: unify styling of input heights by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/352
-* fix: unify order properties styles by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/351
-* fix: styling issues AB#100695 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/363
-* fix: new return page style by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/365
-* fix: sitemap excludes by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/364
-* fix: improve item bundle by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/366
-* fix: navbar product button by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/377
-* fix: canonical language path AB#101715 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/376
-* fix: address format by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/375
-* fix: legal text mobile AB#101548 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/374
-* fix: order confirmation styling AB#101529 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/379
-* fix:  item bundle csss by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/380
-* fix: display bundle on ssr by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/383
-* fix: header color on mobile device by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/385
-* fix: dont clear cart after failing order process by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/370
-* fix: homepage cls by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/378
-* fix: homepage missing translations by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/391
-* fix: language switch AB#101714 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/386
-* fix: different image urls for viewports by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/394
-* fix: wishlist button by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/396
-* fix: wishlist button top right by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/398
-* fix: nuxt component import paths for tests by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/399
-* fix: notification test component imports by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/400
-
-
-
-_____________________________________________________________________________________________________________________________________________________________________
-* docs: fix link to contribution guidelines by @ksted in https://github.com/plentymarkets/plentyshop-pwa/pull/342
-
-* chore: update sdk version api response fixes by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/353
-
-* chore: downgrade turbo package to a version that does not contain the… by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/368
-
-* chore(deps): bump the npm_and_yarn group across 1 directory with 1 update by @dependabot in https://github.com/plentymarkets/plentyshop-pwa/pull/389
-_____________________________________________________________________________________________________________________________________________________________________
-
+- fixed the position of tags on category view                                         --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/338
+- fixed paypal credit card tests                                                      --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/356
+- unified the styling of input heights                                                --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/352
+- unified order properties styling                                                    --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/351
+- fixed styling issues on Radiobuttons and some spacing on checkboxes and Coupons     --> AB#100695 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/363
+- fixed new return page styling and wording                                           --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/365
+- excluded some pages from sitemap normally                                           --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/364
+- improve item bundle styling/wording and only hyperlink if variation still exists    --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/366
+- fixed function on "product" button in navbar                                        --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/377
+- fixed the canonical language path                                                   --> AB#101715 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/376
+- fixed legal text format for mobile device                                           --> AB#101548 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/374
+- fixed missing bundle item description after refresh                                 --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/383
+- fixed the header color on mobile device                                             --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/385
+- doesnt clear cart after failing order process anymore                               --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/370
+- fixed homepage layout shifts and deliver fixed image sizes                          --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/378
+- fixed missing translations on homepage                                              --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/391
+- fixed hardload after language switch leads to a ERROR 404                           --> AB#101714 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/386
+- fixed missing wishlist navigation button on mobile device                           --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/396
+- fixed nuxt component import paths for tests                                         --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/399
+- fixed component import paths for notification test                                  --> by @maxiroellplenty in https://github.com/plentymarkets/plentyshop-pwa/pull/400
+- fixed link to contribution guidelines in docs                                       --> by @ksted in https://github.com/plentymarkets/plentyshop-pwa/pull/342 (docs:)
 
 
 
