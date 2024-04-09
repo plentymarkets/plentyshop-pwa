@@ -568,6 +568,7 @@
       "message-placeholder": "Ihre Nachricht",
       "asterixHint": "markierte Felder sind erforderlich"
     },
+    "success": "Nachricht erfolgreich gesendet",
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
@@ -688,6 +689,12 @@
       "firstNameRequired": "Vorname ist erforderlich.",
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
+      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
+    },
+    "contact": {
+      "nameRequired": "Name ist erforderlich.",
+      "messageRequired": "Nachricht ist erforderlich.",
+      "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     }
   },
