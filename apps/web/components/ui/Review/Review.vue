@@ -138,7 +138,7 @@
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReviewEdit">
       <SfIconClose />
     </SfButton>
-    <ReviewEditForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview"></ReviewEditForm>
+    <!-- <ReviewEditForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview"></ReviewEditForm> -->
   </UiModal>
   <UiModal
     v-model="isReplyEditOpen"
@@ -150,7 +150,7 @@
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReplyEdit">
       <SfIconClose />
     </SfButton>
-    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm>
+    <!-- <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm> -->
   </UiModal>
 </template>
 

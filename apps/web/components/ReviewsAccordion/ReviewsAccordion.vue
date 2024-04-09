@@ -27,9 +27,9 @@
           </SfLink>
         </template>
       </div>
-      <SfLoaderCircular v-if="loading && reviewGetters.getItems(productReviews).length === 0" size="sm" />
+      <SfLoaderCircular v-if="loading && productReviews.length === 0" size="sm" />
       <UiReview
-        v-for="(reviewItem, key) in reviewGetters.getItems(productReviews)"
+        v-for="(reviewItem, key) in productReviews"
         :key="key"
         :review-item="reviewItem"
         @on-submit="saveReview"
@@ -38,7 +38,7 @@
     <div v-else class="w-full mt-4 py-2 pl-4 pr-3 flex justify-between items-center">
       <p class="font-bold leading-6">{{ $t('customerReviewsNone') }}</p>
     </div>
-    <UiDivider v-if="reviewsOpen && reviewGetters.getItems(productReviews).length > 0" class="mb-2 mt-2" />
+    <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
   <!-- TODO Luisa: Fix classes in UiModal to fit content into modal background -->
   <UiModal
@@ -67,11 +67,15 @@ const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);
 
 const {
-  data: productReviews,
+  data: productReviewsData,
   fetchProductReviews,
   createProductReview,
   loading,
 } = useProductReviews(Number(productGetters.getItemId(product.value)));
+
+const productReviews = computed(() => {
+  return reviewGetters.getItems(productReviewsData.value);
+})
 
 const saveReview = async (form: any) => {
   const targetId = Number(productGetters.getVariationId(product.value));
@@ -93,7 +97,7 @@ const saveReview = async (form: any) => {
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value && reviewGetters.getItems(productReviews.value).length === 0) {
+    if (value && productReviews.value.length === 0) {
       fetchProductReviews(Number(productGetters.getItemId(product.value)));
     }
   },
