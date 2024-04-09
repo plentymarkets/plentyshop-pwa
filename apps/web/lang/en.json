@@ -48,7 +48,8 @@
     "countryLabel": "Country",
     "streetNameLabel": "Street",
     "streetNumberLabel": "Number",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "City",
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
@@ -567,6 +568,7 @@
       "message-placeholder": "Your message",
       "asterixHint": "marked fields are required"
     },
+    "success": "Message sent successfully",
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
@@ -687,6 +689,12 @@
     "newsletter": {
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
+    },
+    "contact": {
+      "nameRequired": "Name is required.",
+      "messageRequired": "Message is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
     }
