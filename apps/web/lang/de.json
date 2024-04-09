@@ -48,7 +48,8 @@
     "countryLabel": "Land",
     "streetNameLabel": "Straße",
     "streetNumberLabel": "Nummer",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
@@ -676,6 +677,7 @@
     "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
+    "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
       "required": "E-Mail ist erforderlich."
