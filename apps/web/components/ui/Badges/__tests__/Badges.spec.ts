@@ -1,10 +1,10 @@
 import { mount } from '@vue/test-utils';
-import Badges from '~/components/ui/Badges/Badges.vue';
+import { UiBadges } from '#components';
 import type { Product } from '@plentymarkets/shop-api';
 
 describe('<Badges />', () => {
   it('should render component', () => {
-    const wrapper = mount(Badges, {
+    const wrapper = mount(UiBadges, {
       props: {
         product: {
           tags: [{ id: 1, names: { name: 'Tag', lang: 'en' } }],

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import OrderSummary from '~/components/OrderSummary/OrderSummary.vue';
+import { OrderSummary } from '#components';
 import type { Cart } from '@plentymarkets/shop-api';
 
 const cart: Cart =   {

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { ProductMock } from '../../../__tests__/__mocks__/product.mock';
-import ProductAccordion from '~/components/ProductAccordion/ProductAccordion.vue';
+import { ProductAccordion } from '#components';
 
 
  describe('<ProductAccordion />', () => {

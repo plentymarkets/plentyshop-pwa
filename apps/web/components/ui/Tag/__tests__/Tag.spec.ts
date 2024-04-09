@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Tag from '~/components/ui/Tag/Tag.vue';
+import { UiTag } from '#components';
 
 describe('<Tag />', () => {
   it('should render component', () => {
-    const wrapper = mount(Tag);
+    const wrapper = mount(UiTag);
 
     expect(wrapper.getByTestId('tag'));
   });

@@ -31,7 +31,7 @@
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product)"
               :price="actualPrice(product)"
-              :image-url="addWebpExtension(productGetters.getCoverImagePreview(product))"
+              :image-url="addModernImageExtension(productGetters.getCoverImagePreview(product))"
               :image-alt="productGetters.getName(product) ?? ''"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index === 0"
@@ -75,7 +75,7 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 });
 
 const { getFacetsFromURL } = useCategoryFilter();
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
