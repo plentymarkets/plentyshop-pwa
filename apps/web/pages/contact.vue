@@ -2,14 +2,14 @@
   <NuxtLayout name="default">
     <div class="md:max-w-[677px] mx-auto px-4 pt-4 pb-20 md:px-0 md:mt-4">
       <h1 class="font-bold mb-10 typography-headline-3 md:typography-headline-2">
-        {{ $t('contact.contact') }}
+        {{ t('contact.contact') }}
       </h1>
-      <p class="mb-10">{{ $t('contact.contactShopMessage') }}</p>
+      <p class="mb-10">{{ t('contact.contactShopMessage') }}</p>
 
       <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" @submit.prevent="onSubmit" novalidate>
         <div class="">
           <label>
-            <UiFormLabel class="mb-1">{{ $t('contact.form.nameLabel') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} *</UiFormLabel>
             <SfInput
               v-bind="nameAttributes"
               name="name"
@@ -18,13 +18,11 @@
               :invalid="Boolean(errors['name'])"
             />
           </label>
-          <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
+          <VeeErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <div class="">
           <label>
-            <UiFormLabel class="mb-1">{{ $t('contact.form.emailLabel') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} *</UiFormLabel>
 
             <SfInput
               name="email"
@@ -39,24 +37,22 @@
               </template>
             </SfInput>
           </label>
-          <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
+          <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <label>
-          <UiFormLabel class="mb-1">{{ $t('contact.form.subjectLabel') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
           <SfInput name="subject" type="text" v-model="contact.subject" />
         </label>
         <label>
-          <UiFormLabel class="mb-1">{{ $t('contact.form.order-id') }}</UiFormLabel>
+          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }}</UiFormLabel>
           <SfInput name="order-id" type="text" v-model="contact.orderId" />
         </label>
 
         <div>
           <label class="flex flex-col">
-            <UiFormLabel class="mb-1">{{ $t('contact.form.message') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.message') }} *</UiFormLabel>
             <SfTextarea
-              :placeholder="$t('contact.form.message-placeholder')"
+              :placeholder="t('contact.form.message-placeholder')"
               class="w-full"
               name="message"
               v-bind="messageAttributes"
@@ -66,9 +62,7 @@
             />
           </label>
 
-          <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
+          <VeeErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
         <div>
@@ -90,7 +84,7 @@
                     target="_blank"
                     class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
                   >
-                    {{ $t('privacyPolicy') }}
+                    {{ t('privacyPolicy') }}
                   </SfLink>
                 </template>
               </i18n-t>
@@ -98,12 +92,10 @@
             </label>
           </div>
 
-          <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
-          </div>
+          <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
-        <p class="text-sm text-neutral-500 mt-0.5 mb-2">* {{ $t('contact.form.asterixHint') }}</p>
+        <p class="text-sm text-neutral-500 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
           <SfButton
@@ -113,12 +105,12 @@
             :disabled="isContactLoading"
             @click="clearInputs"
           >
-            {{ $t('contact.clearAll') }}
+            {{ t('contact.clearAll') }}
           </SfButton>
           <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
             <SfLoaderCircular v-if="isContactLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
-              {{ $t('contact.contactSend') }}
+              {{ t('contact.contactSend') }}
             </span>
           </SfButton>
         </div>
