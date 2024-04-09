@@ -4,10 +4,10 @@
 
 ### New
 
-- added a previous button for the return form
-- added tags display on single items and category view
-- added Item attribute select as box component
-- added possiblity to mark a primary address
+- added a previous button for the return form                                         --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/327
+- added tags display on single items and category view                                --> by @N-Feist in https://github.com/plentymarkets/plentyshop-pwa/pull/334
+- added Item attribute select as box component                                        --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/339
+- added possiblity to mark a primary address                                          --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/341
 - deliver image attribute                                                             -->  by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/347
 - nuxt upgrade                                                                        --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/345
 - added display for item availability                                                 --> AB#98866 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/349
@@ -25,12 +25,14 @@
 - unified address in a single component                                               --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/390
 - added modern image(AVIF)                                                            --> AB#101096 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/372
 - added search by tags                                                                --> by @abocsan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/350
+- added a order return confirmation page                                              --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/324
 
 ### Change
 
-- removed unnecessary nodes to reduce DOM size and minor styling changes
-- changed legal pages filenames
-- optimised i18n imports
+
+- removed unnecessary nodes to reduce DOM size and minor styling changes              --> by @Tim-M-S in https://github.com/plentymarkets/plentyshop-pwa/pull/340
+- changed legal pages filenames                                                       --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/337
+- optimised i18n imports                                                              --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/332
 - unified remove buttons                                                              --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/354
 - changed return layout from popup to side and layout chnage                          --> by @luisaha in https://github.com/plentymarkets/plentyshop-pwa/pull/344
 - changed tags design and positioning                                                 --> AB#98448 by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/346
@@ -38,15 +40,14 @@
 
 ### Fixed
 
-* fix: wishlist image quality by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/326
-* fix: validation for return quantity and reason by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/325
-* fix: return thank you page by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/324
-* fix: update return quantity by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/329
-* fix: attribute select arrow by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/333
-* fix: price buttons filter by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/335
-* fix: mobile return orders by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/330
-* fix: back to shopping behaviour by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/336
-* fix: quick bug fix for search autocomplete by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/328
+- improved the wishlist image quality                                                 --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/326
+- validation for return quantity and reason                                           --> by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/325
+- update order quantity after making a return                                         --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/329
+- fixed attribute select arrow styling                                                --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/333
+- fixed price buttons filter styling                                                  --> by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/335
+- adjusted the return form for mobile return orders                                   --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/330
+- fixed the back to shopping button behaviour and name                                --> by @csandru-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/336
+- fixed bug for search autocomplete with e-mail                                       --> by @doproiescu-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/328
 * fix: update position tags by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/338
 * fix: paypal credit card test by @FabianGerke in https://github.com/plentymarkets/plentyshop-pwa/pull/356
 * fix: unify styling of input heights by @rbedeoan-plenty in https://github.com/plentymarkets/plentyshop-pwa/pull/352
