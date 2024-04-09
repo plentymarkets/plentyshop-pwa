@@ -31,6 +31,7 @@
       </section>
     </NarrowContainer>
   </NuxtLayout>
+  <QuickCheckout :product="product" />
 </template>
 
 <script setup lang="ts">
