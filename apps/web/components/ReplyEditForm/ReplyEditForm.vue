@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-[450px] md:max-w-[768px]">
+  <div class="max-w-[450px] md:max-w-[768px] h-[300px]">
     <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.editReplyFormTitle') }}</h3>
     <form
       class="grid grid-cols-[100px_1fr] py-2 px-4 gap-4 md:grid-cols-[176px_1fr] grid-rows-[100px_1fr] md:grid-rows-[28px_1fr] items-center md:items-start"
@@ -12,7 +12,7 @@
             <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
               $t('review.reviewAuthor')
             }}</span>
-            <SfInput v-model="form.authorName" />
+            <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.authorName" />
           </label>
           <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">{{
             $t('review.reviewText')

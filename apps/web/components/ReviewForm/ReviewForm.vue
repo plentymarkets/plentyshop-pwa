@@ -14,7 +14,7 @@
           <SfRatingButton v-model="form.ratingValue" :aria-labelledby="ratingLabelId" class="p-1 gap-x-2" />
         </div>
         <label class="block mb-6">
-          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{ $t('review.Title') }}</span>
+          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{ $t('review.title') }}</span>
           <SfInput v-model="form.title" />
         </label>
         <label class="my-4 block">

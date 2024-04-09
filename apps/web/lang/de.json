@@ -369,6 +369,7 @@
     "image": "Bild {index}"
   },
   "review": {
+    "title": "Titel",
     "verifiedPurchase": "Verifizierter Kauf",
     "createReviewFormTitle": "Schreib eine Bewertung",
     "editReviewFormTitle": "Bewertung bearbeiten",

@@ -51,7 +51,7 @@
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
       <SfIconClose />
     </SfButton>
-    <ReviewForm @on-close="close" @on-submit="saveReview"></ReviewForm>
+    <ReviewForm class="h-[520px]" @on-close="close" @on-submit="saveReview"></ReviewForm>
   </UiModal>
 </template>
 <script lang="ts" setup>

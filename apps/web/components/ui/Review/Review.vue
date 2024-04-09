@@ -9,7 +9,10 @@
           </span>
         </p>
       </div>
-      <div v-if="reviewGetters.getIsReviewEditable(reviewItem, customerId)" class="w-1/3 items-start flex justify-end space-x-3">
+      <div
+        v-if="isEditable"
+        class="w-1/3 items-start flex justify-end space-x-3"
+      >
         <span v-if="isReviewVisible">
           <SfIconVisibility size="sm" class="fill-neutral-400" />
         </span>
@@ -48,7 +51,7 @@
             <p v-else class="flex font-medium">{{ $t('review.anonymous') }}</p>
             <p class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
             <div
-              v-if="reviewGetters.getIsReplyEditable(replyItem, customerId)"
+              v-if="isAnswerEditable(replyItem)"
               class="w-full items-start flex justify-end space-x-3"
             >
               <span v-if="isReviewVisible">
@@ -62,10 +65,10 @@
             </div>
             <br />
           </div>
-          <p class="text-sm">{{ Number(replyItem.sourceRelation[0].feedbackRelationSourceId) }}</p>
+          <p class="text-sm">{{ replyItem.feedbackComment.comment.message }}</p>
         </div>
       </div>
-      <div v-if="!isAnswerFormOpen" class="actions flex justify-end">
+      <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
         <SfButton variant="tertiary" size="sm" class="self-start" @click="isAnswerFormOpen = true">
           {{ $t('review.answer') }}
         </SfButton>
@@ -133,24 +136,24 @@
     aria-labelledby="review-edit-modal"
     tag="section"
     role="dialog"
-    class="h-full md:w-[500px] md:h-full m-0 p-0"
+    class="h-fit md:w-[500px] m-0 p-0"
   >
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReviewEdit">
       <SfIconClose />
     </SfButton>
-    <!-- <ReviewEditForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview"></ReviewEditForm> -->
+    <ReviewEditForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview"></ReviewEditForm>
   </UiModal>
   <UiModal
     v-model="isReplyEditOpen"
     aria-labelledby="reply-edit-modal"
     tag="section"
     role="dialog"
-    class="h-full md:w-[500px] md:h-full m-0 p-0"
+    class="md:w-[500px] m-0 p-0"
   >
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReplyEdit">
       <SfIconClose />
     </SfButton>
-    <!-- <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm> -->
+    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm>
   </UiModal>
 </template>
 
@@ -173,10 +176,11 @@ import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
 import ReviewEditForm from '~/components/ReviewEditForm/ReviewEditForm.vue';
 import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
-
+import type { ReplyItem } from '@plentymarkets/shop-api';
 defineEmits(['on-submit']);
 const props = defineProps<ReviewProps>();
 const { reviewItem } = toRefs(props);
+const replyItem = ref({} as ReplyItem);
 
 const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
 const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
@@ -189,6 +193,7 @@ const answerCharsCount = computed(() => answerCharacterLimit.value - answerModel
 
 const replies = reviewGetters.getReviewReplies(reviewItem.value);
 
+const { isAuthorized } = useCustomer();
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const isReviewVisible = reviewItem.value.isVisible;
 const isAnswerFormOpen = ref(false);
@@ -197,7 +202,6 @@ const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
 
 const { deleteProductReview, setProductReview } = useProductReviews(Number(itemId));
 const { data } = useCustomer();
-const customerId = data.value.user?.id ?? 0;
 
 const form = ref({
   title: '',
@@ -209,6 +213,16 @@ const form = ref({
   honeypot: '',
   titleMissing: true,
   ratingMissing: true,
+});
+
+const isAnswerEditable = (replyItem: ReplyItem) => {
+  console.log(replyItem.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
+  return replyItem.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
+};
+
+const isEditable = computed(() => {
+  console.log(reviewItem.value.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
+  return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
 });
 
 const delReview = () => {

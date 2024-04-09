@@ -369,17 +369,24 @@
     "image": "Slide {index}"
   },
   "review": {
+    "title": "Title",
     "verifiedPurchase": "Verified purchase",
     "createReviewFormTitle": "Leave a review",
-    "yourRating": "Your rating",
+    "editReviewFormTitle": "Edit review",
+    "editReplyFormTitle": "Edit reply",
+    "yourRating": "Your rating:",
     "reviewText": "Product review (optional)",
     "reviewAuthor": "Your name (optional)",
     "cancel": "Cancel",
-    "submitReview": "Submit review",
+    "submitReview": "Send review",
     "answer": "Answer",
+    "saveAnswer": "Save",
     "showAnswers": "Show answers",
     "hideAnswers": "Hide answers",
-    "anonymous": "Anonymous"
+    "anonymous": "Anonymous",
+    "areYouSure": "Are you sure to delete the review?",
+    "deleteReview": "Yes, delete",
+    "createSuccess": "Review sent"
   },
   "account": {
     "heading": "My Account",
