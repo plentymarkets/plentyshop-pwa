@@ -76,7 +76,10 @@
               class="peer"
               required
             />
-            <label class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900" for="terms">
+            <label
+              class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
+              for="terms"
+            >
               <i18n-t keypath="contact.privacyPolicy">
                 <template #privacyPolicy>
                   <SfLink
