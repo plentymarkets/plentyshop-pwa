@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategoryPageContent from '~/components/CategoryPageContent/CategoryPageContent.vue';
+import { CategoryPageContent } from '#components';
 
 describe('<CategoryPageContent />', () => {
   it('should render component', () => {

@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import SecondaryNotification from '../SecondaryNotification.vue';
+import { UiNotificationsSecondaryNotification } from '#components';
 
 describe('<SecondaryNotification />', () => {
   it('should render component', () => {
-    const wrapper = mount(SecondaryNotification, {
+    const wrapper = mount(UiNotificationsSecondaryNotification, {
       props: {
         notification: {
             message: 'Test alert secondary',
