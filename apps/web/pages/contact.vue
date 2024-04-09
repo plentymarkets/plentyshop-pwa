@@ -100,7 +100,6 @@
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
           <SfButton
             type="button"
-            class="max-md:w-1/2"
             variant="secondary"
             :disabled="isContactLoading"
             @click="clearInputs"
