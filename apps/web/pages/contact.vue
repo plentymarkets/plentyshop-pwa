@@ -98,12 +98,7 @@
         <p class="text-sm text-neutral-500 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
-          <SfButton
-            type="button"
-            variant="secondary"
-            :disabled="isContactLoading"
-            @click="clearInputs"
-          >
+          <SfButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
             {{ t('contact.clearAll') }}
           </SfButton>
           <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
