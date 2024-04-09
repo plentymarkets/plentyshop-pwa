@@ -20,6 +20,4 @@
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import type { AddressProps } from './types';
 defineProps<AddressProps>();
-
-defineEmits(['on-click', 'on-edit', 'on-delete', 'make-default']);
 </script>
