@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import AccountFormsPassword from '~/components/AccountForms/AccountFormsPassword.vue';
+import { AccountFormsPassword } from '#components';
 
 describe('<AccountFormsPassword />', () => {
   it('should render component', () => {

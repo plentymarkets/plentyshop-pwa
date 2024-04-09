@@ -1,9 +1,8 @@
 import { mount } from '@vue/test-utils';
-import PositiveNotification from '../PositiveNotification.vue';
-
+import { UiNotificationsPositiveNotification } from '#components';
 describe('<PositiveNotification />', () => {
   it('should render component', () => {
-    const wrapper = mount(PositiveNotification, {
+    const wrapper = mount(UiNotificationsPositiveNotification, {
       props: {
         notification: {
             message: 'Test alert positive',

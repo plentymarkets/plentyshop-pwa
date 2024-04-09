@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Heading from '~/components/Heading/Heading.vue';
+import { Heading } from '#components';
 
 describe('<Heading />', () => {
   it('should render component', () => {
