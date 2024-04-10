@@ -4,27 +4,35 @@
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
       <img
         src="/images/homepage-hero-bg-mobile.webp"
+        height="600"
+        width="4000"
         alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
     </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <img src="/images/homepage-hero-headphones.webp" alt="Headphones" class="h-full object-cover object-left" />
+        <img
+          src="/images/homepage-hero-headphones.webp"
+          height="600"
+          width="800"
+          alt="Headphones"
+          class="h-full object-cover object-left"
+        />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
-          Feel the music
+          {{ $t('homepage.banner.moto1') }}
         </p>
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          New Wireless Pro
+          {{ t('homepage.banner.moto2') }}
         </h1>
         <p class="typography-text-base md:typography-text-lg">
-          Spatial audio. Adjustable ear cups. On-device controls. All-day battery.
+          {{ t('homepage.banner.moto3') }}
         </p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg"> Order now </SfButton>
-          <SfButton size="lg" variant="secondary" class="bg-white"> Show more </SfButton>
+          <SfButton size="lg"> {{ t('homepage.banner.orderNow') }}</SfButton>
+          <SfButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</SfButton>
         </div>
       </div>
     </div>
@@ -112,7 +120,7 @@
 
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
-
+const { t } = useI18n();
 definePageMeta({
   pageType: 'static',
 });
@@ -135,10 +143,10 @@ watch(
 const displayDetails = [
   {
     image: '/images/homepage-display-1.webp',
-    title: 'Sunny Days Ahead',
-    subtitle: 'Be inspired',
-    description: 'Step out in style with our sunglasses collection',
-    buttonText: 'Discover now',
+    title: t('homepage.displayDetails.detail1.title'),
+    subtitle: t('homepage.displayDetails.detail1.subtitle'),
+    description: t('homepage.displayDetails.detail1.description'),
+    buttonText: t('homepage.displayDetails.detail1.buttonText'),
     reverse: false,
     backgroundColor: 'bg-negative-200',
     titleClass: 'md:typography-display-2',
@@ -147,19 +155,19 @@ const displayDetails = [
   },
   {
     image: '/images/homepage-display-2.webp',
-    title: 'Pack it Up',
-    subtitle: 'Be active',
-    description: 'Explore the great outdoors with our backpacks',
-    buttonText: 'Discover now',
+    title: t('homepage.displayDetails.detail2.title'),
+    subtitle: t('homepage.displayDetails.detail2.subtitle'),
+    description: t('homepage.displayDetails.detail2.description'),
+    buttonText: t('homepage.displayDetails.detail2.buttonText'),
     reverse: true,
     backgroundColor: 'bg-warning-200',
   },
   {
     image: '/images/homepage-display-3.webp',
-    title: 'Fresh and Bold',
-    subtitle: 'New collection',
-    description: 'Add a pop up color to your outfit',
-    buttonText: 'Discover now',
+    title: t('homepage.displayDetails.detail3.title'),
+    subtitle: t('homepage.displayDetails.detail3.subtitle'),
+    description: t('homepage.displayDetails.detail3.description'),
+    buttonText: t('homepage.displayDetails.detail3.buttonText'),
     reverse: false,
     backgroundColor: 'bg-secondary-200',
   },
@@ -167,15 +175,15 @@ const displayDetails = [
 
 const categories = [
   {
-    title: `Women`,
+    title: t('homepage.women'),
     image: '/images/homepage-women-category.webp',
   },
   {
-    title: `Men`,
+    title: t('homepage.men'),
     image: '/images/homepage-men-category.webp',
   },
   {
-    title: `Kid`,
+    title: t('homepage.kid'),
     image: '/images/homepage-kid-category.webp',
   },
 ];

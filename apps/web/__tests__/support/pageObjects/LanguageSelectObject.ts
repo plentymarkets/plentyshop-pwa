@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class LanguageSelectObject extends PageObject {
   checkOptions() {
@@ -21,7 +21,7 @@ export class LanguageSelectObject extends PageObject {
   }
 
   selectOption(option: string) {
-    cy.getByTestId(`languageOption-${option}`).first().click();;
+    cy.getByTestId(`languageOption-${option}`).first().click();
     return this;
   }
 
