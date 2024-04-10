@@ -15,7 +15,7 @@ export default defineNuxtConfig({
       },
       meta: [
         { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#018937' },
+        { name: 'theme-color', content: '#0C7992' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico' },
@@ -45,18 +45,18 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxtjs/turnstile',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/google-fonts',
       {
         families: {
-          'Red Hat Display': [400, 500, 700],
-          'Red Hat Text': [300, 400, 500, 700],
+          'Red Hat Display': { wght: [400, 500, 700] },
+          'Red Hat Text': { wght: [300, 400, 500, 700] },
         },
       },
     ],
+    '@nuxtjs/turnstile',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss',
     [
       '@nuxtjs/i18n',
       {
@@ -158,6 +158,7 @@ export default defineNuxtConfig({
       logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
       newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
+      useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
     },
@@ -192,7 +193,7 @@ export default defineNuxtConfig({
     manifest: {
       name: 'plentyshop PWA',
       short_name: 'plentyshopPWA',
-      theme_color: '#018937',
+      theme_color: '#0C7992',
       icons: [
         {
           src: 'icons/icon-192x192.png',

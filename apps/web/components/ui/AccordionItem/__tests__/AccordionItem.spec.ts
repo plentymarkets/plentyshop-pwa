@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import AccordionItem from '~/components/ui/AccordionItem/AccordionItem.vue';
+import { UiAccordionItem } from '#components';
 
 describe('<AccordionItem />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(AccordionItem, {
+    const { getByTestId } = mount(UiAccordionItem, {
       props: {
         breadcrumbs: [],
       },

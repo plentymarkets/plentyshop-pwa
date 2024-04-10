@@ -144,18 +144,13 @@ export const useCustomer: UseCustomerReturn = () => {
    * @return Register
    * @example
    * ``` ts
-   * register({ email: 'example', password: 'example' });
+   * register({ email: 'example', password: 'example', 'cf-turnstile-response': '' });
    * ```
    */
   const register: Register = async (params: RegisterParams) => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doRegisterUser({
-        email: params.email,
-        password: params.password,
-      }),
-    );
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRegisterUser(params));
 
     useHandleError(error.value);
     state.value.loading = false;

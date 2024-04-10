@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Fühle die Musik",
+      "moto2": "Neue Wireless Pro",
+      "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
+      "orderNow": "Jetzt bestellen",
+      "showMore": "Mehr anzeigen"
+    },
+    "women": "Frauen",
+    "men": "Männer",
+    "kid": "Kind",
+    "displayDetails": {
+      "detail1": {
+        "title": "Stilvoll heraustreten",
+        "subtitle": "Lassen Sie sich inspirieren",
+        "description": "Treten Sie stilvoll mit unserer Sonnenbrillenkollektion auf",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail2": {
+        "title": "Packen Sie Es",
+        "subtitle": "Seien Sie aktiv",
+        "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail3": {
+        "title": "Frisch und Kühn",
+        "subtitle": "Neue Kollektion",
+        "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
+        "buttonText": "Jetzt entdecken"
+      }
+    }
+  },
   "billing": {
     "heading": "Rechnungsadresse",
     "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
@@ -16,7 +48,8 @@
     "countryLabel": "Land",
     "streetNameLabel": "Straße",
     "streetNumberLabel": "Nummer",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
@@ -535,6 +568,7 @@
       "message-placeholder": "Ihre Nachricht",
       "asterixHint": "markierte Felder sind erforderlich"
     },
+    "success": "Nachricht erfolgreich gesendet",
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
@@ -643,6 +677,7 @@
     "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
+    "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
       "required": "E-Mail ist erforderlich."
@@ -655,6 +690,12 @@
       "firstNameRequired": "Vorname ist erforderlich.",
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
+      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
+    },
+    "contact": {
+      "nameRequired": "Name ist erforderlich.",
+      "messageRequired": "Nachricht ist erforderlich.",
+      "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     }
   },
