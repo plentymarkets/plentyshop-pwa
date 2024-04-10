@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategorySorting from '~/components/CategorySorting/CategorySorting.vue';
+import { CategorySorting } from '#components';
 
 describe('<CategorySorting />', () => {
   it('should render component', () => {

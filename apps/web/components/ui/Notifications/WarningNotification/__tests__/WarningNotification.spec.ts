@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import WarningNotification from '../WarningNotification.vue';
+import { UiNotificationsWarningNotification } from '#components';
 
 describe('<WarningNotification />', () => {
   it('should render component', () => {
-    const wrapper = mount(WarningNotification, {
+    const wrapper = mount(UiNotificationsWarningNotification, {
       props: {
         notification: {
             message: 'Test alert warning',

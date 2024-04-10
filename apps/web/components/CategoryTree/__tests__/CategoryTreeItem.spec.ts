@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategoryTreeItem from '~/components/CategoryTree/CategoryTreeItem.vue';
+import { CategoryTreeItem } from '#components';
 
 describe('<CategoryTreeItem />', () => {
   it('should render component', () => {

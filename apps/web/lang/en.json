@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Feel the music",
+      "moto2": "New Wireless Pro",
+      "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
+      "orderNow": "Order now",
+      "showMore": "Show more"
+    },
+    "women": "Women",
+    "men": "Men",
+    "kid": "Kid",
+    "displayDetails": {
+      "detail1": {
+        "title": "Step Out in Style",
+        "subtitle": "Be inspired",
+        "description": "Step out in style with our sunglasses collection",
+        "buttonText": "Discover now"
+      },
+      "detail2": {
+        "title": "Pack it Up",
+        "subtitle": "Be active",
+        "description": "Explore the great outdoors with our backpacks",
+        "buttonText": "Discover now"
+      },
+      "detail3": {
+        "title": "Fresh and Bold",
+        "subtitle": "New collection",
+        "description": "Add a pop of color to your outfit",
+        "buttonText": "Discover now"
+      }
+    }
+  },
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
@@ -16,7 +48,8 @@
     "countryLabel": "Country",
     "streetNameLabel": "Street",
     "streetNumberLabel": "Number",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "City",
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
@@ -535,6 +568,7 @@
       "message-placeholder": "Your message",
       "asterixHint": "marked fields are required"
     },
+    "success": "Message sent successfully",
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
@@ -643,6 +677,7 @@
     "maxCharacters": "Enter a maximum of {max} characters.",
     "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
+    "turnstileRequired": "Please check the box to verify that you are human.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."
@@ -654,6 +689,12 @@
     "newsletter": {
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
+    },
+    "contact": {
+      "nameRequired": "Name is required.",
+      "messageRequired": "Message is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
     }
@@ -668,12 +709,12 @@
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
     "tellUsMore": "Tell us more about why you want to return these items...",
-    "initiateReturn":"Initiate Return",
+    "initiateReturn": "Initiate Return",
     "confirmReturn": "Confirm Return",
     "cancel": "Cancel",
     "orderDate": "Order date",
     "returnReason": "Return reason",
-    "returnForOrder":"Return for order",
+    "returnForOrder": "Return for order",
     "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",

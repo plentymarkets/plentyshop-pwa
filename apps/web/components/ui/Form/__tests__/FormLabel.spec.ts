@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import FormLabel from '~/components/ui/Form/FormLabel.vue';
+import { UiFormLabel } from '#components';
 
 describe('<FormLabel />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(FormLabel);
+    const { getByTestId } = mount(UiFormLabel);
 
     expect(getByTestId('form-label')); 
   });
