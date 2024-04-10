@@ -40,7 +40,6 @@
     </div>
     <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
-  <!-- TODO Luisa: Fix classes in UiModal to fit content into modal background -->
   <UiModal
     v-model="isOpen"
     aria-labelledby="review-modal"
@@ -85,13 +84,16 @@ const saveReview = async (form: any) => {
       targetId: targetId,
     };
     await createProductReview(params);
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+    close();
   } else {
     const params = {
       ...form,
     };
     await createProductReview(params);
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+    close();
   }
-  close();
 };
 
 watch(

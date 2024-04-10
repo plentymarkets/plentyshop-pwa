@@ -386,7 +386,9 @@
     "anonymous": "Anonym",
     "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
     "deleteReview": "Ja, löschen",
-    "createSuccess": "Bewertung wurde gesendet"
+    "createSuccess": "Bewertung wurde gesendet",
+    "toolTipVisibilityOn": "Dein Beitrag wurde veröffentlicht!",
+    "toolTipVisibilityOff": "Dein Beitrag ist für andere nicht sichtbar. Er wird sichtbar, sobald der Shopbetreiber Ihn geprüft hat."
   },
   "account": {
     "heading": "Mein Konto",

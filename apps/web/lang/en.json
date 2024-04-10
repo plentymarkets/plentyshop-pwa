@@ -386,7 +386,9 @@
     "anonymous": "Anonymous",
     "areYouSure": "Are you sure to delete the review?",
     "deleteReview": "Yes, delete",
-    "createSuccess": "Review sent"
+    "createSuccess": "Review sent",
+    "toolTipVisibilityOn": "Your contribution is visible!",
+    "toolTipVisibilityOff": "Your contribution is currently not visible. It becomes visible as soon as the shop provider releases it."
   },
   "account": {
     "heading": "My Account",

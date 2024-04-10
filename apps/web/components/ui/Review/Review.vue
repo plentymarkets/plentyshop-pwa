@@ -10,11 +10,15 @@
         </p>
       </div>
       <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
-        <span v-if="isReviewVisible">
-          <SfIconVisibility size="sm" class="fill-neutral-400" />
+        <span v-if="reviewGetters.getReviewVisibility(reviewItem)">
+          <SfTooltip :label="$t('review.toolTipVisibilityOn')">
+            <SfIconVisibility size="sm" class="fill-neutral-400" />
+          </SfTooltip>
         </span>
         <span v-else>
-          <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
+          <SfTooltip class="w-3" :label="$t('review.toolTipVisibilityOff')">
+            <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
+          </SfTooltip>
         </span>
         <span>
           <SfLink href="#" @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
@@ -94,9 +98,9 @@
               variant="secondary"
               class="flex-1 md:flex-initial"
               @click="isAnswerFormOpen = false"
-              >{{ $t('review.cancel') }}</SfButton
-            >
-            <SfButton type="submit" size="sm" class="flex-1 md:flex-initial">{{ $t('review.saveAnswer') }}</SfButton>
+              >{{ $t('review.cancel') }}
+            </SfButton>
+            <SfButton @click.="isAnswerFormOpen = false" type="submit" size="sm" class="flex-1 md:flex-initial">{{ $t('review.saveAnswer') }}</SfButton>
           </div>
         </form>
       </template>
@@ -164,6 +168,7 @@ import {
   SfIconVisibilityOff,
   SfIconClose,
   SfLink,
+  SfTooltip,
   useDisclosure,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from '~/components/ui/Review/types';
@@ -189,7 +194,7 @@ const replies = reviewGetters.getReviewReplies(reviewItem.value);
 
 const { isAuthorized } = useCustomer();
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
-const isReviewVisible = reviewItem.value.isVisible;
+const isReviewVisible = ref(reviewItem.value.isVisible);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
@@ -202,7 +207,7 @@ const form = ref({
   authorName: '',
   ratingValue: undefined,
   message: '',
-  type: '',
+  type: 'reply',
   targetId: reviewItem.value.id,
   honeypot: '',
   titleMissing: true,
@@ -210,12 +215,10 @@ const form = ref({
 });
 
 const isAnswerEditable = (replyItem: ReplyItem) => {
-  console.log(replyItem.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
   return replyItem.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
 };
 
 const isEditable = computed(() => {
-  console.log(reviewItem.value.sourceRelation[0].feedbackRelationSourceId, data.value.user?.id);
   return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
 });
 
@@ -223,7 +226,7 @@ const delReview = () => {
   if (reviewItem.value.id) {
     deleteProductReview(reviewItem.value.id);
   }
-  close();
+  closeDelete();
 };
 
 const editReview = async (form: any) => {
@@ -236,6 +239,8 @@ const editReview = async (form: any) => {
 
   await setProductReview(params);
 
-  close();
+  closeReviewEdit();
+  closeReplyEdit();
+  isAnswerFormOpen.value = false;
 };
 </script>
