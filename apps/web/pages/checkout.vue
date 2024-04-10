@@ -13,7 +13,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           id="billing-address"
-          :heading="t('billing.heading')"
+          :heading="`${t('billing.heading')} / ${t('shipping.heading')}`"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
