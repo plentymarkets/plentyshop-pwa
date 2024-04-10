@@ -107,7 +107,6 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
@@ -132,7 +131,10 @@ const validationSchema = toTypedSchema(
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
-    turnstile: string().required(t('errorMessages.newsletter.turnstileRequired')).default(''),
+    turnstile:
+      turnstileSiteKey.length > 0
+        ? string().required(t('errorMessages.newsletter.turnstileRequired')).default('')
+        : string().optional().default(''),
   }),
 );
 
