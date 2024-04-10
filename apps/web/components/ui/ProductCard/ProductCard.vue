@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-1"
+    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col"
     data-testid="product-card"
   >
     <div class="relative overflow-hidden">
