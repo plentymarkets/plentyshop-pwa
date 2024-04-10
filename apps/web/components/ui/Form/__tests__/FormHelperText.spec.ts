@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import FormHelperText from '~/components/ui/Form/FormHelperText.vue';
+import { UiFormHelperText } from '#components';
 
 describe('<FormHelperText />', () => {
   it('should render component', () => {
-    const { getByTestId } = mount(FormHelperText);
+    const { getByTestId } = mount(UiFormHelperText);
 
     expect(getByTestId('form-helper-text')); 
   });

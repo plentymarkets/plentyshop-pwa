@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex first:border-t border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
+    class="relative flex border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
     data-testid="cart-product-card"
     v-if="orderItem.typeId !== 6"
   >
@@ -9,15 +9,20 @@
       :tag="NuxtLink"
       :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
     >
-      <NuxtImg
-        class="h-auto border rounded-md border-neutral-200"
-        :src="addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'"
-        :alt="'' || ''"
-        width="300"
-        height="300"
-        loading="lazy"
-        format="webp"
-      />
+      <div class="flex items-center justify-center">
+        <NuxtImg
+          ref="img"
+          :src="
+            addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+          "
+          :alt="''"
+          class="h-auto border rounded-md border-neutral-200"
+          width="300"
+          height="300"
+          loading="lazy"
+        />
+        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
+      </div>
     </SfLink>
     <div class="flex flex-col min-w-[180px] flex-1">
       <SfLink
@@ -65,8 +70,8 @@
       <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
         <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
           <SfLink
+            v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
             :tag="NuxtLink"
-            v-if="item.data.filter.isSalable"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
@@ -104,12 +109,30 @@
 
 <script setup lang="ts">
 import { orderGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfIconOpenInNew } from '@storefront-ui/vue';
+import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
+const img = ref();
+const imageLoaded = ref(false);
 
+const emit = defineEmits(['load']);
 defineProps<OrderSummaryProductCardProps>();
+
+onMounted(() => {
+  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+
+  if (imgElement) {
+    if (!imageLoaded.value) {
+      if (imgElement.complete) imageLoaded.value = true;
+      imgElement.addEventListener('load', () => (imageLoaded.value = true));
+    }
+
+    nextTick(() => {
+      if (!imgElement.complete) emit('load');
+    });
+  }
+});
 </script>

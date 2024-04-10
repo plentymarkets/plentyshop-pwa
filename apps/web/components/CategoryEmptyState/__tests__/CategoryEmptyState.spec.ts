@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategoryEmptyState from '~/components/CategoryEmptyState/CategoryEmptyState.vue';
+import { CategoryEmptyState } from '#components';
 
 describe('<CategoryEmptyState />', () => {
   it('should render component', () => {

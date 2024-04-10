@@ -30,10 +30,11 @@ const route = useRoute();
 const { getSearch, data: productsCatalog, productsPerPage, loading } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
 
-await getSearch(getFacetsFromURL());
 const handleQueryUpdate = async () => {
   await getSearch(getFacetsFromURL());
 };
+
+await handleQueryUpdate();
 
 watch(
   () => route.query,

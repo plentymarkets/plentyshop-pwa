@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import ContactInformation from '~/components/ContactInformation/ContactInformation.vue';
+import { ContactInformation } from '#components';
 
 describe('<ContactInformation />', () => {
   it('should render component', () => {

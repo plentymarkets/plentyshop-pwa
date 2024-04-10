@@ -19,7 +19,7 @@
             :rating-count="productGetters.getTotalReviews(product)"
             :rating="productGetters.getAverageRating(product)"
             :price="actualPrice(product)"
-            :image-url="addWebpExtension(productGetters.getMiddleImage(product))"
+            :image-url="addModernImageExtension(getImageForViewport(product, 'Whislist'))"
             :image-alt="productGetters.getName(product) ?? ''"
             :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
             :priority="index === 0"
@@ -29,7 +29,7 @@
             :show-base-price="productGetters.showPricePerUnit(product)"
           >
             <template #wishlistButton>
-              <WishlistButton discard square class="absolute top-0 right-0 mr-2 mt-2 bg-white" :product="product" />
+              <WishlistButton discard square class="absolute top-0 right-0 mr-2 mb-2 bg-white" :product="product" />
             </template>
           </UiProductCard>
         </NuxtLazyHydrate>
@@ -59,7 +59,7 @@ withDefaults(defineProps<WishlistPageContentProps>(), {
   withHeader: true,
 });
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension, getImageForViewport } = useModernImage();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

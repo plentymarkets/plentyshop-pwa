@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategorySidebar from '~/components/CategorySidebar/CategorySidebar.vue';
+import { CategorySidebar } from '#components';
 
 describe('<CategorySidebar />', () => {
   it('should render component', () => {

@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CategoryFilters from '~/components/CategoryFilters/CategoryFilters.vue';
+import { CategoryFilters } from '#components';
 
 describe('<CategoryFilters />', () => {
   it('should render component', () => {
