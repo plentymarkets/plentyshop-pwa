@@ -138,8 +138,6 @@ export default defineNuxtConfig({
         ],
         includeAppSources: true,
       },
-      items: {},
-      categories: {},
     },
   },
   hooks: {
