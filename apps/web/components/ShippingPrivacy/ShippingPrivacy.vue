@@ -12,7 +12,7 @@
         :selected="shippingPrivacyAgreement"
         @update:model-value="changeHint"
       />
-      <label for="checkbox" class="cursor-pointer">
+      <label for="checkbox" class="cursor-pointer select-none">
         {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
       </label>
     </div>
