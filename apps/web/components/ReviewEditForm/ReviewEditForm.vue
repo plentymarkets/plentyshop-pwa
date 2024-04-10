@@ -15,7 +15,7 @@
         </div>
         <label class="block mb-6">
           <span class="block mb-0.5 typography-label-sm font-medium">{{ $t('review.title') }}</span>
-          <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.title"/>
+          <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.title" />
         </label>
         <label class="my-4 block">
           <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">{{
@@ -41,7 +41,12 @@
           <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
             $t('review.reviewAuthor')
           }}</span>
-          <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.authorName" class="text-neutral-700 bg-gray-400" />
+          <SfInput
+            disabled
+            wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1"
+            v-model="form.authorName"
+            class="text-neutral-700 bg-gray-400"
+          />
         </label>
         <div class="flex justify-end gap-x-4">
           <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">{{

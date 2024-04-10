@@ -9,10 +9,7 @@
           </span>
         </p>
       </div>
-      <div
-        v-if="isEditable"
-        class="w-1/3 items-start flex justify-end space-x-3"
-      >
+      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
         <span v-if="isReviewVisible">
           <SfIconVisibility size="sm" class="fill-neutral-400" />
         </span>
@@ -50,10 +47,7 @@
             <p v-if="replyItem.authorName" class="flex font-medium">{{ replyItem.authorName }}</p>
             <p v-else class="flex font-medium">{{ $t('review.anonymous') }}</p>
             <p class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
-            <div
-              v-if="isAnswerEditable(replyItem)"
-              class="w-full items-start flex justify-end space-x-3"
-            >
+            <div v-if="isAnswerEditable(replyItem)" class="w-full items-start flex justify-end space-x-3">
               <span v-if="isReviewVisible">
                 <SfIconVisibility size="xs" class="fill-neutral-400" />
               </span>

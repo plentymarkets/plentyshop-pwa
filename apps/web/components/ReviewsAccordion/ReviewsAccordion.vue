@@ -75,7 +75,7 @@ const {
 
 const productReviews = computed(() => {
   return reviewGetters.getItems(productReviewsData.value);
-})
+});
 
 const saveReview = async (form: any) => {
   const targetId = Number(productGetters.getVariationId(product.value));
@@ -97,8 +97,13 @@ const saveReview = async (form: any) => {
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value && productReviews.value.length === 0) {
-      fetchProductReviews(Number(productGetters.getItemId(product.value)));
+    if (value) {
+      /* TODO: the data is already fetched in the product page, so we should not fetch it again/
+      only if the user logs in or creates a new review */
+      fetchProductReviews(
+        Number(productGetters.getItemId(product.value)),
+        productGetters.getVariationId(product.value),
+      );
     }
   },
 );

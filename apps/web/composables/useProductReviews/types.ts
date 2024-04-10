@@ -6,7 +6,7 @@ export interface UseProductReviewsState {
   createdReview: Review;
 }
 
-export type FetchProductReviews = (itemId: number) => Promise<Review>;
+export type FetchProductReviews = (itemId: number, variationId?: number) => Promise<Review>;
 export type DeleteProductReview = (feedbackId: number) => Promise<void>;
 export type SetProductReview = (params: UpdateReviewParams) => Promise<void>;
 export type CreateProductReview = (params: CreateReviewParams) => Promise<void>;
