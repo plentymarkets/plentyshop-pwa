@@ -1,9 +1,9 @@
 <template>
   <div
-    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
+    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-1"
     data-testid="product-card"
   >
-    <div class="relative">
+    <div class="relative overflow-hidden">
       <UiBadges
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
         :product="product"
@@ -25,8 +25,7 @@
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
           :preload="priority || false"
-          :class="{ 'w-full': !isFromSlider }"
-          class="object-contain rounded-md aspect-square"
+          class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
