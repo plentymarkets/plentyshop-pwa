@@ -1,5 +1,6 @@
 <template>
   <UiModal
+    v-if="true"
     v-model="ggh"
     tag="section"
     class="h-full md:h-fit m-0 p-0 md:w-[1000px]"
@@ -55,7 +56,18 @@
           v-html="productGetters.getShortDescription(product)"
         ></div>
       </div>
-      <div>
+      <div class="py-8 px-10">
+        <div class="mb-8">
+          <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
+          <div class="grid grid-cols-2">
+            <p class="text-base">{{ t('orderConfirmation.subTotal') }}:</p>
+            <p class="font-medium text-right">123</p>
+          </div>
+        </div>
+        <SfButton type="button" class="w-full mb-4" size="lg" variant="secondary" @click="localePath(paths.cart)">
+          {{ $t('checkYourCart') }}
+        </SfButton>
+
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
@@ -84,10 +96,12 @@ import { productBundleGetters, productGetters } from '@plentymarkets/shop-sdk';
 const props = defineProps<QuickCheckoutProps>();
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { t } = useI18n();
+const { t, n } = useI18n();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { getPropertiesPrice } = useProductOrderProperties();
 const localePath = useLocalePath();
+const { data: cart } = useCart();
+const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 const ggh = ref(true);
 

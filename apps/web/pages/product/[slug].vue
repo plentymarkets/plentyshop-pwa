@@ -30,8 +30,8 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
+    <QuickCheckout :product="product" />
   </NuxtLayout>
-  <QuickCheckout :product="product" />
 </template>
 
 <script setup lang="ts">
