@@ -41,7 +41,6 @@ v2:
 - Added a search by tags.
 - Added an order return confirmation page.
 
-
 ### Changed
 
 v1:
@@ -61,7 +60,7 @@ v1:
 
 v2:
 
-- Removed unnecessary nodes to reduce DOM size and made minor styling changes.
+- Removed unnecessary nodes to reduce DOM size.
 - Changed filenames of legal pages.
 - Optimized i18n imports.
 - Unified the design of remove buttons.
@@ -73,7 +72,6 @@ v2:
 - Implemented different image URLs for different window sizes.
 - Moved the ‘delete from wishlist’ button to the top right.
 - Updated the upload action.
-
 
 ### Fixed
 
@@ -127,7 +125,7 @@ v2:
 - Fixed the styling and wording on the new return page.
 - Excluded certain pages from the sitemap normally.
 - Improved the styling/wording of item bundles and validated hyperlinks, to only show, if the variation still exists.
-- Fixed the function of the “Product” button in the navbar.
+- Fixed the function of the “Product” button in the navbar for mobile device.
 - Fixed the canonical language path.
 - Fixed the format of legal text for mobile devices.
 - Fixed the issue of missing bundle item description after refresh.

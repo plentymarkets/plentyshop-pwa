@@ -1,5 +1,70 @@
 # Changelog plentyshopPWA
 
+## v1.4.0 (2024-04-08) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
+
+### Hinzugefügt
+
+- Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
+- Tags wurden zu Artikeln und zur Kategorieansichten hinzugefügt.
+- Eine Box-Komponente zur Auswahl von Artikelattributen wurde hinzugefügt.
+- Die Möglichkeit, eine Hauptadresse festzulegen, wurde hinzugefügt.
+- Bildattribute auf Artikelbildern wurden hinzugefügt.
+- Ein Nuxt-Upgrade wurde durchgeführt.
+- Eine Artikelverfügbarkeitsanzeige wurde hinzugefügt.
+- Eine Sitemap-Generierungsfunktion für statischen Inhalt wurde hinzugefügt.
+- Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht wurde hinzugefügt.
+- Die Leistung des Wishlist-Aufrufs wurde optimiert.
+- Eine ‘config’ Repository Variable wurde zur Upload Action hinzugefügt.
+- Eine einheitliche Komponente für Adressverwaltung wurde hinzugefügt.
+- Unterstützung für das moderne Bildformat (AVIF) wurde hinzugefügt.
+- Eine Option für die Suche nach Tags wurde hinzugefügt.
+- Eine Bestätigungsseite für Retouren wurde hinzugefügt.
+
+### Geändert
+
+- Überflüssige Daten wurden entfernt um die DOM größe zu reduzieren.
+- Dateinamen der Rechtsseiten.
+- Verbesserung der i18n imports.
+- Vereinheitlichung der 'entfernen' Schaltflächen.
+- Änderung der Retouren Ansicht von einem Popup zu einer eigenständigen Seite.
+- Tags Design und Position wurden geändert.
+- In der Kategorie URL wurde das '../c/..' entfernt.
+- Das Design der Bestellbestätigungs Seite wurde überarbeitet.
+- Unterschiedliche Bilder URLS für unterschiedliche Fenstergrößen.
+
+### Behoben
+
+- Bildqualität auf der Wunschliste verbessert.
+- Rückgabemenge und -grund validiert.
+- Bestellmenge nach einer Rücksendung aktualisiert.
+- Styling des Auswahlpfeils für Attribute korrigiert.
+- Styling des Preisbutton-Filters behoben.
+- Retouren für mobile Rücksendebestellungen angepasst.
+- Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
+- Fehler bei der Suche behoben, bei dem eine E-Mail-Adresse eingetragen wird.
+- Position von Tags in der Kategorieansicht korrigiert.
+- PayPal-Kreditkartentests behoben.
+- Styling der Eingabehöhen vereinheitlicht.
+- Styling der Bestelleigenschaften vereinheitlicht.
+- Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
+- Styling und Formulierung auf der neuen Retouren korrigiert.
+- Bestimmte Seiten aus der Sitemap ausgeschlossen.
+- Styling und Formulierung von Item Bundles verbessert und Hyperlinks validiert, um nur anzuzeigen, wenn die Variation noch vorhanden ist.
+- Funktion der Schaltfläche "Produkt" in der Navigationsleiste  für die Mobile Ansicht.
+- Kanonischer Sprachpfad korrigiert.
+- Format des Rechtstextes für mobile Geräte korrigiert.
+- Problem fehlender Item Bundles Beschreibungen nach dem Aktualisieren der Seite behoben.
+- Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
+- Sicherstellen, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht geleert wird.
+- Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
+- Fehlende Übersetzungen auf der Startseite behoben.
+- Problem behoben, dass ein hard load nach dem Sprachwechsel zu einem 404-Fehler führt.
+- Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
+- Importpfade für Nuxt-Komponenten in Tests angepasst.
+- Importpfade für den Benachrichtigungstest angepasst.
+- Link zu den Beitragsrichtlinien in der Dokumentation behoben.
+
+
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### Hinzugefügt
