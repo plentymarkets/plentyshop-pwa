@@ -6,7 +6,6 @@
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
-
     <div v-if="selectedAddress && !editMode" class="mt-2 md:w-[520px]">
       <AddressDisplay :address="selectedAddress" />
     </div>
@@ -61,8 +60,14 @@ const edit = () => {
 };
 
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
+  // see if checbox is set, and if yes overwrite please
+  // console.log('saveing');
+  // console.log(useAsShippingAddress);
   if (props.type === AddressType.Billing) {
     await saveBillingAddress(address);
+    if (useAsShippingAddress) {
+      await saveShippingAddress(address);
+    }
   }
   if (props.type === AddressType.Shipping || useAsShippingAddress) {
     await saveShippingAddress(address);
