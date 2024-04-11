@@ -21,9 +21,10 @@ export const useModernImage: UseModernImageReturn = () => {
   const addModernImageExtension = (url: string | undefined): string => {
     if (!url) return '';
 
-    const matches = url.match(/(\.\w+)(?:$|\?)/);
+    const matches = url.match(/.?(\.\w+)(?:$|\?)/);
     if (!matches) return url;
-    const baseExtension = String(matches[1]);
+
+    const baseExtension = String(matches[1].split('.').pop());
 
     if (!validConversionExtensions.has(baseExtension) || !/\/item\/images\//.test(url)) return url;
     if (config.useAvif && baseExtension !== avifExtension) return `${url}.${avifExtension}`;
