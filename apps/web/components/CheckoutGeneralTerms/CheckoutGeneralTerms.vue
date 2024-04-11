@@ -9,7 +9,7 @@
         class="inline-block mr-2"
         data-testid="checkout-terms-checkbox"
       />
-      <div>
+      <label for="terms-checkbox" class="select-none">
         <i18n-t keypath="termsInfo">
           <template #terms>
             <SfLink
@@ -41,7 +41,7 @@
             </SfLink>
           </template>
         </i18n-t>
-      </div>
+      </label>
     </div>
     <div v-if="showErrors" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
   </div>
