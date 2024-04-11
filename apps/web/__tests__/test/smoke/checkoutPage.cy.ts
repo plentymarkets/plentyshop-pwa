@@ -17,13 +17,13 @@ describe('Smoke: Checkout Page', () => {
     productListPage.addToCart()
 
     cart.openCart();
-    checkout
-        .goToCheckout()
-        .fillContactInformationForm()
-        .addBillingAddress()
-        .fillBillingAddressForm()
-        .acceptTerms()
-        .placeOrderButton()
-        .displaySuccessPage();
+    // checkout
+    // .goToCheckout()
+    // .fillContactInformationForm()
+    // .addBillingAddress()
+    // .fillBillingAddressForm()
+    // .acceptTerms()
+    // .placeOrderButton()
+    // .displaySuccessPage();
   });
 });

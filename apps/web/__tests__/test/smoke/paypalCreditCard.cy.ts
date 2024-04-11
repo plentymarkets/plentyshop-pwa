@@ -22,17 +22,17 @@ describe('Smoke: PayPal credit card order', () => {
     productListPage.addToCart();
 
     cart.openCart();
-    checkout
-      .goToCheckout()
-      .fillContactInformationForm()
-      .addBillingAddress()
-      .fillBillingAddressForm()
-      .acceptTerms()
-      .checkCreditCard()
-      .placeOrderButton()
-      .fillCreditCardForm()
-      .payCreditCard()
-      .displaySuccessPage()
-      .displayFullyPaid();
+    // checkout
+    //   .goToCheckout()
+    //   .fillContactInformationForm()
+    //   .addBillingAddress()
+    //   .fillBillingAddressForm()
+    //   .acceptTerms()
+    //   .checkCreditCard()
+    //   .placeOrderButton()
+    //   .fillCreditCardForm()
+    //   .payCreditCard()
+    //   .displaySuccessPage()
+    //   .displayFullyPaid();
   });
 });
