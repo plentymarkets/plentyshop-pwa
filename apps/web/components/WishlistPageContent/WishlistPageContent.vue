@@ -21,6 +21,8 @@
             :price="actualPrice(product)"
             :image-url="addModernImageExtension(getImageForViewport(product, 'Whislist'))"
             :image-alt="productGetters.getName(product) ?? ''"
+            :image-height="productGetters.getImageHeight(product) ?? 600"
+            :image-width="productGetters.getImageWidth(product) ?? 600"
             :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
             :priority="index === 0"
             :base-price="productGetters.getDefaultBaseSinglePrice(product)"
