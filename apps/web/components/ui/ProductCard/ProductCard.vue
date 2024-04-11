@@ -1,9 +1,6 @@
 <template>
-  <div
-    class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col flex-auto flex-shrink-0"
-    data-testid="product-card"
-  >
-    <div class="relative">
+  <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col" data-testid="product-card">
+    <div class="relative overflow-hidden">
       <UiBadges
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
         :product="product"
@@ -14,20 +11,19 @@
         :tag="NuxtLink"
         rel="preload"
         :to="localePath(`${path}/${productSlug}`)"
+        :class="{ 'size-48': isFromSlider }"
         as="image"
         class="flex items-center justify-center"
       >
         <NuxtImg
           ref="img"
-          :src="addModernImageExtension(imageUrl)"
+          :src="imageUrl"
           :alt="imageAlt"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : undefined"
           :preload="priority || false"
-          class="object-contain rounded-md aspect-square w-full h-fit"
+          class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
-          width="190"
-          height="190"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
@@ -113,12 +109,12 @@ import {
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
-const { addModernImageExtension } = useModernImage();
 const { t, n } = useI18n();
 const { product } = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
   isFromWishlist: false,
+  isFromSlider: false,
 });
 
 const { data: categoryTree } = useCategoryTree();

@@ -11,7 +11,8 @@
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
       :rating="productGetters.getAverageRating(product)"
-      class="max-w-[192px]"
+      is-from-slider
+      class="max-w-48"
     />
   </SfScrollable>
   <div class="mt-4 typography-text-xs flex gap-1">
