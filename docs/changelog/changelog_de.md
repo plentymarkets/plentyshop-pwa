@@ -2,6 +2,14 @@
 
 ## v1.4.0 (2024-04-08) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
+
+### Migrations Guide
+
+- Die Upload-Aktion wurde geändert [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) Aktualisieren Sie die Datei, um die [config-Funktion](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config) zu nutzen.
+- Wir benötigen nun ein Access-Token, um Anfragen an die plentymarkets api zu stellen. [guide](todo)
+- Das Kategorie-Routing wurde aktualisiert und das Präfix /c wurde entfernt. Überprüft, dass keine statischen URLs in Ihrer Anwendung noch /c enthalten.
+  - Um die /c-Routing-Änderung möglich zu machen, wurde die [Kategorieseite](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) von apps/web/pages/category/[slug].vue nach apps/web/pages/[...slug].vue verschoben.
+
 ### Hinzugefügt
 
 - Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
@@ -27,7 +35,6 @@
 - Verbesserung der i18n imports.
 - Vereinheitlichung der 'entfernen' Schaltflächen.
 - Änderung der Retouren Ansicht von einem Popup zu einer eigenständigen Seite.
-- Tags Design und Position wurden geändert.
 - In der Kategorie URL wurde das '../c/..' entfernt.
 - Das Design der Bestellbestätigungs Seite wurde überarbeitet.
 - Unterschiedliche Bilder URLS für unterschiedliche Fenstergrößen.
@@ -42,26 +49,20 @@
 - Retouren für mobile Rücksendebestellungen angepasst.
 - Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
 - Fehler bei der Suche behoben, bei dem eine E-Mail-Adresse eingetragen wird.
-- Position von Tags in der Kategorieansicht korrigiert.
-- PayPal-Kreditkartentests behoben.
 - Styling der Eingabehöhen vereinheitlicht.
 - Styling der Bestelleigenschaften vereinheitlicht.
 - Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
 - Styling und Formulierung auf der neuen Retouren korrigiert.
 - Bestimmte Seiten aus der Sitemap ausgeschlossen.
-- Styling und Formulierung von Item Bundles verbessert und Hyperlinks validiert, um nur anzuzeigen, wenn die Variation noch vorhanden ist.
 - Funktion der Schaltfläche "Produkt" in der Navigationsleiste  für die Mobile Ansicht.
-- Kanonischer Sprachpfad korrigiert.
+- Canonical Pfad für die Sprache korrigiert.
 - Format des Rechtstextes für mobile Geräte korrigiert.
-- Problem fehlender Item Bundles Beschreibungen nach dem Aktualisieren der Seite behoben.
 - Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
 - Sicherstellen, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht geleert wird.
 - Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
 - Fehlende Übersetzungen auf der Startseite behoben.
 - Problem behoben, dass ein hard load nach dem Sprachwechsel zu einem 404-Fehler führt.
 - Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
-- Importpfade für Nuxt-Komponenten in Tests angepasst.
-- Importpfade für den Benachrichtigungstest angepasst.
 - Link zu den Beitragsrichtlinien in der Dokumentation behoben.
 
 
