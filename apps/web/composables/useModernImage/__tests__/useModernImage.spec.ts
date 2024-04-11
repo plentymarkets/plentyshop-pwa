@@ -97,4 +97,19 @@ describe('useModernImage', () => {
         const res = addModernImageExtension(url);
         expect(res).toBe('https://example.com/images/image.jpg');
     });
+    
+    it('should not add the avif extension to the url if the base extension is not supported', () => {
+        const { addModernImageExtension } = useModernImage();
+        const url = 'https://example.com/item/images/image.svg';
+        const res = addModernImageExtension(url);
+        expect(res).toBe('https://example.com/item/images/image.svg');
+    });
+
+    it('should add the avif extension to the url if both avif and webp are enabled', () => {
+        const { addModernImageExtension } = useModernImage();
+        const url = 'https://example.com/item/images/image.jpg';
+        const res = addModernImageExtension(url);
+        expect(res).toBe('https://example.com/item/images/image.jpg.avif');
+    });
+
 });
