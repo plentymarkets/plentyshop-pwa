@@ -103,11 +103,16 @@ export const useCart: UseCartReturn = () => {
    */
   const addToCart: AddToCart = async (params: DoAddItemParams) => {
     state.value.loading = true;
+
     try {
       const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCartItem(params));
 
       useHandleError(error.value);
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+
+      const { openQuickCheckout } = useQuickCheckout();
+      openQuickCheckout();
+
       return !!data.value;
     } catch (error) {
       throw new Error(error as string);

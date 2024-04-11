@@ -1,19 +1,22 @@
 <template>
   <UiModal
-    v-if="true"
-    v-model="ggh"
+    @mousemove="endTimer()"
+    v-if="isOpen"
+    v-model="isOpen"
     tag="section"
     class="h-full md:h-fit m-0 p-0 md:w-[1000px]"
     aria-labelledby="quick-checkout-modal"
   >
     <header>
-      <div class="text-lg font-medium ml-8">
-        <span v-if="true">{{ t('quick-checkout.heading') }}</span>
-        <span v-else>{{ t('auth.signup.heading') }}</span>
+      <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+        <span>{{ t('quickCheckout.heading') }}</span>
+      </h2>
+      <div class="absolute right-2 top-2 flex items-center">
+        <span v-if="timer" class="mr-2 text-gray-400">{{ timer }}s</span>
+        <SfButton square variant="tertiary" @click="close">
+          <SfIconClose />
+        </SfButton>
       </div>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
-        <SfIconClose />
-      </SfButton>
     </header>
 
     <div class="grid grid-cols-2 gap-4">
@@ -24,13 +27,14 @@
           width="240"
           height="240"
           loading="lazy"
+          class="mb-3"
         />
 
-        <h1 class="font-bold typography-headline-4" data-testid="product-name">
+        <h1 class="font-bold typography-headline-4 mb-3" data-testid="product-name">
           {{ productGetters.getName(product) }}
         </h1>
 
-        <div>
+        <div class="mb-3">
           <Price
             :price="currentActualPrice"
             :normal-price="normalPrice"
@@ -60,12 +64,12 @@
         <div class="mb-8">
           <p class="font-medium text-base">{{ t('quickCheckout.cartContains', cartItemsCount) }}</p>
           <div class="grid grid-cols-2">
-            <p class="text-base">{{ t('orderConfirmation.subTotal') }}:</p>
-            <p class="font-medium text-right">123</p>
+            <p class="text-base">{{ t('quickCheckout.subTotal') }}:</p>
+            <p data-testid="subtotal" class="font-medium text-right">{{ n(totals.subTotal, 'currency') }}</p>
           </div>
         </div>
-        <SfButton type="button" class="w-full mb-4" size="lg" variant="secondary" @click="localePath(paths.cart)">
-          {{ $t('checkYourCart') }}
+        <SfButton type="button" class="w-full mb-3" size="lg" variant="secondary" @click="localePath(paths.cart)">
+          {{ $t('quickCheckout.checkYourCart') }}
         </SfButton>
 
         <SfButton
@@ -91,7 +95,7 @@
 <script setup lang="ts">
 import { SfButton, SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import { productBundleGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, productBundleGetters, productGetters } from '@plentymarkets/shop-sdk';
 
 const props = defineProps<QuickCheckoutProps>();
 
@@ -101,9 +105,20 @@ const { addModernImageExtensionForGallery } = useModernImage();
 const { getPropertiesPrice } = useProductOrderProperties();
 const localePath = useLocalePath();
 const { data: cart } = useCart();
+const { isOpen, timer, startTimer, endTimer } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
-const ggh = ref(true);
+onMounted(() => startTimer());
+onUnmounted(() => endTimer());
+
+const totals = computed(() => {
+  const totalsData = cartGetters.getTotals(cart.value);
+  return {
+    total: totalsData.total,
+    subTotal: totalsData.subtotal,
+    vats: totalsData.totalVats,
+  };
+});
 
 const currentActualPrice = computed(
   () =>

@@ -30,7 +30,7 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
-    <QuickCheckout :product="product" />
+    <QuickCheckout v-if="isOpen" :product="product" />
   </NuxtLayout>
 </template>
 
@@ -43,6 +43,7 @@ const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
+const { isOpen } = useQuickCheckout();
 
 const { addModernImageExtensionForGallery } = useModernImage();
 
