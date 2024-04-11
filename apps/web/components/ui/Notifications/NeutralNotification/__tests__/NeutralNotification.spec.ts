@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import NeutralNotification from '../NeutralNotification.vue';
+import { UiNotificationsNeutralNotification } from '#components';
 
 describe('<NeutralNotification />', () => {
   it('should render component', () => {
-    const wrapper = mount(NeutralNotification, {
+    const wrapper = mount(UiNotificationsNeutralNotification, {
       props: {
         notification: {
             message: 'Test alert neutral',

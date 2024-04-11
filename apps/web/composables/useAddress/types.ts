@@ -10,7 +10,7 @@ export interface UseAddressMethodsState {
 
 export type GetAddresses = () => Promise<Address[]>;
 export type SaveAddress = (address: Address) => Promise<Address>;
-export type SetDefault = (addressId: number) => void;
+export type SetDefault = (address: Address) => void;
 export type DeleteAddress = (addressId: number) => void;
 
 export interface UseAddressMethods {

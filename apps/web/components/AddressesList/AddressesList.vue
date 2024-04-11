@@ -1,23 +1,23 @@
 <template>
-  <div class="addresses-list" :data-testid="`account-billing-addresses-${props.type}`">
-    <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-      <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto" size="2xl" />
-      <Address
-        v-for="address in addresses"
-        :key="userAddressGetters.getId(address)"
-        :address="address"
-        :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-        @on-edit="editAddress(address)"
-        @on-delete="onDelete(address)"
-        @make-default="makeDefault(address)"
-      />
+  <div
+    class="addresses-list relative"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+    :data-testid="`account-billing-addresses-${props.type}`"
+  >
+    <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto" size="2xl" />
+    <Address
+      v-for="address in addresses"
+      :key="userAddressGetters.getId(address)"
+      :address="address"
+      :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+      @on-edit="editAddress(address)"
+      @on-delete="onDelete(address)"
+      @make-default="makeDefault(address)"
+    />
 
-      <div class="flex justify-end">
-        <SfButton class="mt-4 w-auto" variant="secondary" @click="editAddress">
-          {{ addAddressText }}
-        </SfButton>
-      </div>
-    </div>
+    <SfButton class="!block mt-6 ml-auto w-auto" variant="secondary" @click="editAddress">
+      {{ addAddressText }}
+    </SfButton>
 
     <UiModal
       v-model="isOpen"
@@ -49,11 +49,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { Address } from '@plentymarkets/shop-api';
-import { AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { AddressesListProps } from '~/components/AddressesList/types';
+import type { AddressesListProps } from '~/components/AddressesList/types';
 
 const props = defineProps<AddressesListProps>();
 
@@ -93,6 +92,6 @@ const onSave = async (address: Address, useAsShippingAddress: boolean) => {
 };
 
 const makeDefault = (address: Address) => {
-  setDefault(Number(userAddressGetters.getId(address)));
+  setDefault(address);
 };
 </script>

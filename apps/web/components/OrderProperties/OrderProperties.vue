@@ -4,40 +4,42 @@
       {{ productPropertyGetters.getOrderPropertyGroupName(group) }}
     </div>
 
-    <div class="font-normal typography-text-sm">
+    <div class="font-normal typography-text-sm mb-2">
       {{ productPropertyGetters.getOrderPropertyGroupDescription(group) }}
     </div>
 
-    <div v-for="(productProperty, propIndex) in group.orderProperties" :key="`group-prop-${propIndex}`">
-      <div class="mt-2 flex items-center">
-        <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
-        <ClientOnly>
-          <Component
-            v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-            :has-tooltip="hasTooltip"
-            :product-property="productProperty"
-            :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
-          >
-            <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
-              <SfTooltip
-                :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
-                :placement="'bottom'"
-                :show-arrow="true"
-                class="ml-2"
-              >
-                <SfIconInfo :size="'sm'" />
-              </SfTooltip>
-            </template>
-          </Component>
-        </ClientOnly>
-      </div>
+    <div
+      v-for="(productProperty, propIndex) in group.orderProperties"
+      :key="`group-prop-${propIndex}`"
+      class="mt-2 flex items-center"
+    >
+      <!-- ClientOnly until fixed: https://github.com/nuxt/nuxt/issues/23768#issuecomment-1849023053 -->
+      <ClientOnly>
+        <Component
+          v-if="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
+          :has-tooltip="hasTooltip"
+          :product-property="productProperty"
+          :is="componentsMapper[productPropertyGetters.getOrderPropertyValueType(productProperty)]"
+        >
+          <template v-if="productPropertyGetters.hasOrderPropertyDescription(productProperty)" #tooltip>
+            <SfTooltip
+              :label="productPropertyGetters.getOrderPropertyDescription(productProperty)"
+              :placement="'bottom'"
+              :show-arrow="true"
+              class="ml-2"
+            >
+              <SfIconInfo :size="'sm'" />
+            </SfTooltip>
+          </template>
+        </Component>
+      </ClientOnly>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { ComponentsMapper, OrderPropertiesProps } from './types';
+import type { ComponentsMapper, OrderPropertiesProps } from './types';
 import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
 import OrderPropertySelect from '~/components/OrderPropertySelect/OrderPropertySelect.vue';
 import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';

@@ -2,20 +2,20 @@
   <NuxtLayout
     name="checkout"
     :back-href="localePath(paths.cart)"
-    :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('checkout')"
+    :back-label-desktop="t('backToCart')"
+    :back-label-mobile="t('back')"
+    :heading="t('checkout')"
   >
-    <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
-      <div class="col-span-7 mb-10 md:mb-0">
+    <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
+      <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           id="billing-address"
-          :heading="$t('billing.heading')"
-          :description="$t('billing.description')"
-          :button-text="$t('billing.addButton')"
+          :heading="t('billing.heading')"
+          :description="t('billing.description')"
+          :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
@@ -23,9 +23,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
           id="shipping-address"
-          :heading="$t('shipping.heading')"
-          :description="$t('shipping.description')"
-          :button-text="$t('shipping.addButton')"
+          :heading="t('shipping.heading')"
+          :description="t('shipping.description')"
+          :button-text="t('shipping.addButton')"
           :addresses="shippingAddresses"
           :type="AddressType.Shipping"
           @on-saved="loadAddresses"
@@ -52,14 +52,14 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
-      <div class="col-span-5">
-        <div v-for="cartItem in cart?.items" :key="cartItem.id">
-          <UiCartProductCard :cart-item="cartItem" />
+      <div class="col-span-6 xl:col-span-5">
+        <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
-        <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
+        <div class="relative md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-          <Coupon class="my-5" />
-          <OrderSummary v-if="cart" :cart="cart">
+          <Coupon />
+          <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <PayPalExpressButton
               type="Checkout"
               v-if="selectedPaymentId === paypalPaymentId"
@@ -76,7 +76,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <span>
-                {{ $t('buy') }}
+                {{ t('buy') }}
               </span>
             </SfButton>
             <SfButton
@@ -90,7 +90,7 @@
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ $t('buy') }}
+                {{ t('buy') }}
               </span>
             </SfButton>
           </OrderSummary>
@@ -140,7 +140,7 @@ const {
 const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
-const i18n = useI18n();
+const { t } = useI18n();
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const paypalPaymentId = computed(() =>
@@ -208,7 +208,7 @@ const validateAddresses = () => {
   if (billingAddresses.value.length === 0) {
     send({
       type: 'negative',
-      message: i18n.t('billingAddressRequired'),
+      message: t('billingAddressRequired'),
     });
     scrollToHTMLObject(ID_BILLING_ADDRESS);
     return false;
@@ -217,7 +217,7 @@ const validateAddresses = () => {
   if (shippingAddresses.value.length === 0) {
     send({
       type: 'negative',
-      message: i18n.t('shippingAddressRequired'),
+      message: t('shippingAddressRequired'),
     });
     scrollToHTMLObject(ID_SHIPPING_ADDRESS);
     return false;
@@ -240,9 +240,8 @@ const handleRegularOrder = async () => {
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
-  clearCartItems();
-
   if (data?.order?.id) {
+    clearCartItems();
     navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
   }
 };

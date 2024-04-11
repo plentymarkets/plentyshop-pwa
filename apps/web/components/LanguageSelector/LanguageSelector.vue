@@ -1,16 +1,13 @@
 <template>
   <div
-    v-if="isDesktop || isTablet"
+    v-if="isTablet"
     data-testid="languageSelectList"
-    class="absolute w-full bg-white items-center py-10 justify-center flex align-middle z-10 drop-shadow-md"
-    :class="{ 'top-[17,5%]': isDesktop, 'flex-col': !isDesktop }"
+    class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
     <template v-for="locale in localeCodes" :key="locale">
-      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="ml-3 mb-2">
-        <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" v-html="flagList[locale]" />
-        <div>
-          {{ $t(`lang.${locale}`) }}
-        </div>
+      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="mx-3 mb-2">
+        <div class="w-6 lg:w-8" v-html="flagList[locale]" />
+        <div>{{ $t(`lang.${locale}`) }}</div>
       </LanguageButton>
     </template>
   </div>
@@ -21,37 +18,29 @@
         <LanguageButton
           :locale="locale"
           variant="tertiary"
-          class="ml-3 mb-2 flex items-center justify-between !text-black"
+          class="mx-3 mb-2 flex items-center justify-between !text-black"
         >
           <div class="flex">
-            <div :class="{ 'w-6': isDesktop, 'w-8': !isDesktop }" class="mr-2" v-html="flagList[locale]" />
-            <div class="!text-black-500">
-              {{ $t(`lang.${locale}`) }}
-            </div>
+            <div class="mr-2 w-8" v-html="flagList[locale]" />
+            <div class="!text-black-500">{{ $t(`lang.${locale}`) }}</div>
           </div>
-          <SfIconCheck class="text-green-500" v-if="locale === currentLocale" />
+          <SfIconCheck v-if="locale === currentLocale" class="text-green-500" />
         </LanguageButton>
       </template>
     </UiModal>
   </div>
 </template>
+
 <script setup lang="ts">
 import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
-const { isOpen } = useLanguageSelect();
-
-const { isDesktop, isTablet } = useBreakpoints();
+const { isOpen } = useLocalization();
+const { isTablet } = useBreakpoints();
 const { localeCodes, locale: currentLocale } = useI18n();
-
 const flagList: { [key: string]: string } = {};
-const dynamicFlagImport = async () => {
-  for (const local of localeCodes.value) {
-    const localLang = flagImports[local];
-    if (localLang) {
-      flagList[local] = localLang;
-    }
-  }
-};
-dynamicFlagImport();
+
+localeCodes.value.forEach((localeCode) => {
+  if (flagImports[localeCode]) flagList[localeCode] = flagImports[localeCode];
+});
 </script>

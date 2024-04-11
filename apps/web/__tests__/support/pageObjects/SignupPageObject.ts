@@ -1,4 +1,6 @@
-export class SignupPageObject {
+import { PageObject } from "./PageObject";
+
+export class SignupPageObject extends PageObject {
   createAccount() {
     cy.getFixture('account').then((fixture) => {
       cy.get(`[name="firstName"]`).type(fixture.firstname, { delay: 0 });

@@ -1,4 +1,4 @@
-import { Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { Order, OrderSearchParams, GetOrderError } from '@plentymarkets/shop-api';
 
 export interface UseCustomerOrderState {

@@ -17,14 +17,7 @@
       </ul>
     </div>
     <div class="mb-2">{{ t('returns.commentOptional') }}</div>
-    <div class="w-full">
-      <SfTextarea
-        v-model="returnData.returnNote"
-        :placeholder="t('returns.tellUsMore')"
-        class="w-full block"
-        cols="10"
-      />
-    </div>
+    <SfTextarea v-model="returnData.returnNote" :placeholder="t('returns.tellUsMore')" class="w-full block" cols="10" />
     <div class="flex flex-row justify-between mt-5">
       <SfButton @click="$emit('previous')" variant="secondary">
         <SfIconArrowBack />
@@ -43,7 +36,7 @@
 <script setup lang="ts">
 import { SfButton, SfIconArrowBack, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { OrderItem } from '@plentymarkets/shop-api';
+import type { OrderItem } from '@plentymarkets/shop-api';
 
 const emit = defineEmits(['closed', 'previous']);
 

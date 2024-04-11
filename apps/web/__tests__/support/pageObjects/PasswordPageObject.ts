@@ -1,14 +1,15 @@
+import { PageObject } from "./PageObject";
 
-export class PasswordPageObject {
+export class PasswordPageObject extends PageObject {
   get accountForm() {
     return cy.getByTestId('input-field').should('be.visible');
   }
-  
+
 
   backToLogin() {
     cy.contains('Reset password').should('be.visible');
     cy.contains('Back to Login').click();
-  
+
     return this;
   }
 
@@ -44,5 +45,5 @@ export class PasswordPageObject {
 
     return this;
   }
- 
+
 }

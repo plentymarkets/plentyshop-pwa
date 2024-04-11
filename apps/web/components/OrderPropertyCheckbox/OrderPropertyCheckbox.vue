@@ -7,11 +7,13 @@
         v-model="value"
         v-bind="valueAttributes"
         :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
-        class="mr-2"
+        class="mr-2 h-12"
       />
-
-      <div class="flex items-center">
-        <label class="cursor-pointer select-none peer-disabled:text-disabled-900" :for="`prop-${orderPropertyId}`">
+      <div class="flex h-12 items-center justify-center">
+        <label
+          class="cursor-pointer select-none h-12 flex items-center justify-center peer-disabled:text-disabled-900"
+          :for="`prop-${orderPropertyId}`"
+        >
           {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
           <template v-if="orderPropertyLabel.surchargeType">
             ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
@@ -22,9 +24,7 @@
           {{ orderPropertyLabel.requiredIndicator }}
         </label>
 
-        <div v-if="hasTooltip" class="w-[28px]">
-          <slot name="tooltip" />
-        </div>
+        <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
       </div>
     </div>
 
@@ -39,7 +39,7 @@
 
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyCheckboxProps } from './types';
+import type { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, boolean } from 'yup';
@@ -48,7 +48,7 @@ const props = defineProps<OrderPropertyCheckboxProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
-const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
+const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(productProperty.property.id);
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);

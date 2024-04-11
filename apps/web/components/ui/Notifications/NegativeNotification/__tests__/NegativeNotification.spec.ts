@@ -1,9 +1,10 @@
 import { mount } from '@vue/test-utils';
-import NegativeNotification from '../NegativeNotification.vue';
+import { UiNotificationsNegativeNotification } from '#components';
+
 
 describe('<NegativeNotification />', () => {
   it('should render component', () => {
-    const wrapper = mount(NegativeNotification, {
+    const wrapper = mount(UiNotificationsNegativeNotification, {
       props: {
         notification: {
             message: 'Test alert negative',

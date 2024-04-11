@@ -1,4 +1,6 @@
-export class CheckoutPageObject {
+import { PageObject } from "./PageObject";
+
+export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
     return cy.getByTestId('checkout-button');
   }
@@ -166,7 +168,9 @@ export class CheckoutPageObject {
   }
 
   checkCreditCard() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider')
     cy.getByTestId('payment-method-6008').check({ force: true });
+    cy.wait('@setPaymentProvider');
     return this;
   }
 

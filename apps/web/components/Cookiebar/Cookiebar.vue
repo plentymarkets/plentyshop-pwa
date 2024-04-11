@@ -52,7 +52,7 @@
             <div class="leading-6 my-2">
               {{ $t(cookieGroup.description) }}
             </div>
-            <div v-if="cookieGroup.showMore ?? false">
+            <div v-if="Boolean(cookieGroup.showMore)">
               <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
                 <div class="flex w-full items-center bg-white mb-1 p-2">
                   <SfCheckbox
@@ -86,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <SfLink v-if="!cookieGroup.showMore ?? false" href="#" size="sm" @click="cookieGroup.showMore = true">
+            <SfLink v-if="!Boolean(cookieGroup.showMore)" href="#" size="sm" @click="cookieGroup.showMore = true">
               {{ $t('CookieBar.More information') }}
             </SfLink>
             <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">
@@ -157,7 +157,7 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
-import { Cookie, CookieGroup } from '~/cookie.config';
+import type { Cookie, CookieGroup } from '~/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();

@@ -1,25 +1,26 @@
 <template>
-  <div>
-    <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
-      <div class="relative" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-        <CategoryPageContent
-          v-if="productsCatalog"
-          :title="categoryGetters.getCategoryName(productsCatalog.category)"
-          :total-products="productsCatalog.pagination.totals"
-          :products="productsCatalog.products"
-          :items-per-page="Number(productsPerPage)"
-        >
-          <template #sidebar>
-            <CategoryTree :category="category" />
-            <CategorySorting />
-            <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-            <CategoryFilters :facets="productsCatalog.facets" />
-          </template>
-        </CategoryPageContent>
-      </div>
-    </NuxtLayout>
-  </div>
+  <NuxtLayout
+    name="default"
+    :breadcrumbs="breadcrumbs"
+    class="relative"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+  >
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <CategoryPageContent
+      v-if="productsCatalog"
+      :title="categoryGetters.getCategoryName(productsCatalog.category)"
+      :total-products="productsCatalog.pagination.totals"
+      :products="productsCatalog.products"
+      :items-per-page="Number(productsPerPage)"
+    >
+      <template #sidebar>
+        <CategoryTree :category="category" />
+        <CategorySorting />
+        <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+        <CategoryFilters :facets="productsCatalog.facets" />
+      </template>
+    </CategoryPageContent>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
@@ -30,17 +31,23 @@ definePageMeta({
   layout: false,
 });
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const route = useRoute();
+const router = useRouter();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
 const { data: categoryTree } = useCategoryTree();
-const { locale } = useI18n();
-const localePath = useLocalePath();
+const { buildCategoryLanguagePath } = useLocalization();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
   checkFiltersInURL();
+  if (!productsCatalog.value.category) {
+    throw new Response(null, {
+      status: 404,
+      statusText: 'Not found',
+    });
+  }
 };
 
 await handleQueryUpdate();
@@ -60,8 +67,8 @@ const breadcrumbs = computed(() => {
 watch(
   () => locale.value,
   async (changedLocale: any) => {
-    navigateTo({
-      path: localePath(`/c${productsCatalog.value.languageUrls[changedLocale]}`),
+    router.push({
+      path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
     });
   },

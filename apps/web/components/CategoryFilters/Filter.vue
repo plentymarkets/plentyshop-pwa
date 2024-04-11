@@ -36,18 +36,22 @@
         <div class="mb-3">
           <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
         </div>
-        <SfButton type="submit" :disabled="minPrice.length === 0 && maxPrice.length === 0" variant="secondary">
-          <template #prefix>
-            <SfIconCheck />
-          </template>
-          {{ $t('apply') }}
-        </SfButton>
-        <SfButton type="reset" @click="resetPriceFilter" class="float-right" variant="secondary">
-          <template #prefix>
-            <SfIconDelete />
-          </template>
-          {{ $t('clear') }}
-        </SfButton>
+        <div class="flex">
+          <SfButton
+            type="submit"
+            class="w-full mr-3 h-10"
+            :disabled="minPrice.length === 0 && maxPrice.length === 0"
+            variant="secondary"
+          >
+            <template #prefix>
+              <SfIconCheck />
+            </template>
+            {{ $t('apply') }}
+          </SfButton>
+          <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+            <SfIconClose />
+          </SfButton>
+        </div>
       </form>
     </div>
 
@@ -80,13 +84,12 @@
 
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
-import { Filter } from '@plentymarkets/shop-api';
-import { FilterGroup } from '@plentymarkets/shop-api';
+import type { Filter, FilterGroup } from '@plentymarkets/shop-api';
 import { facetGetters } from '@plentymarkets/shop-sdk';
 import {
   SfInput,
   SfIconCheck,
-  SfIconDelete,
+  SfIconClose,
   SfButton,
   SfAccordionItem,
   SfIconChevronLeft,
@@ -95,7 +98,7 @@ import {
   SfCounter,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
-import { Filters } from '~/composables';
+import type { Filters } from '~/composables';
 
 const route = useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();

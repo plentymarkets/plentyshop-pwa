@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Notifications from '../Notifications.vue';
+import { UiNotifications } from '#components';
 
 describe('<Notifications />', () => {
   it('should render component', () => {
-    const wrapper = mount(Notifications);
+    const wrapper = mount(UiNotifications);
 
     expect(wrapper.getByTestId('notifications'));    
   });

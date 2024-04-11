@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5" v-html="getHTMLTexts()" />
+  <div class="w-full p-5 overflow-x-auto" v-html="getHTMLTexts()" />
 </template>
 
 <script setup lang="ts">
@@ -10,7 +10,7 @@ definePageMeta({
 });
 
 await getLegalTexts({
-  type: 'CancellationRights',
+  type: 'PrivacyPolicy',
 });
 
 const getHTMLTexts = () => {

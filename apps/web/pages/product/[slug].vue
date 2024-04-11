@@ -4,7 +4,7 @@
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
           <NuxtLazyHydrate when-idle>
-            <Gallery :images="addWebpExtensionForSfImages(productGetters.getGallery(product))" />
+            <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
           </NuxtLazyHydrate>
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
@@ -34,15 +34,16 @@
 </template>
 
 <script setup lang="ts">
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
-const localePath = useLocalePath();
-const { addWebpExtensionForSfImages } = useImageUrl();
+const { buildProductLanguagePath } = useLocalization();
+
+const { addModernImageExtensionForGallery } = useModernImage();
 
 definePageMeta({
   layout: false,
@@ -70,12 +71,15 @@ generateBreadcrumbs();
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.
  */
+
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
     if (value !== oldValue) {
       navigateTo({
-        path: localePath(`/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`),
+        path: buildProductLanguagePath(
+          `/${productGetters.getUrlPath(product.value)}_${productGetters.getItemId(product.value)}`,
+        ),
         query: route.query,
       });
     }

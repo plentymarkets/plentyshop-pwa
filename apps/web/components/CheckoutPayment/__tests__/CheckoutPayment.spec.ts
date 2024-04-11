@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import CheckoutPayment from '~/components/CheckoutPayment/CheckoutPayment.vue';
+import { CheckoutPayment } from '#components';
 
 describe('<CheckoutPayment />', () => {
   it('should render component', () => {

@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils';
-import Overlay from '~/components/ui/Overlay/Overlay.vue';
+import { UiOverlay } from '#components';
 
 describe('<Overlay />', () => {
   it('should render component', () => {
-    const wrapper = mount(Overlay, {
+    const wrapper = mount(UiOverlay, {
       props: {
         visible: true,
       },

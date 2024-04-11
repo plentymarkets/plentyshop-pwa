@@ -1,4 +1,4 @@
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 
 export type ProductCardProps = {
   product: Product;
@@ -17,4 +17,5 @@ export type ProductCardProps = {
   basePrice?: number;
   showBasePrice?: boolean;
   isFromWishlist?: boolean;
+  isFromSlider?: boolean;
 };

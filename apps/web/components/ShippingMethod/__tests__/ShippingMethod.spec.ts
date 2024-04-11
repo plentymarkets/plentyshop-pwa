@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import ShippingMethod from '~/components/ShippingMethod/ShippingMethod.vue';
+import { ShippingMethod } from '#components';
 
 describe('<ShippingMethod />', () => {
   it('should render component', () => {

@@ -1,6 +1,6 @@
-import { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
+import type { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
-import { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
+import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
 import { useSdk } from '~/sdk';
 
 /**
@@ -44,8 +44,19 @@ export const useSearch: UseSearchReturn = () => {
     return state.value.data;
   };
 
+  const searchByTag = async (tagId: string, additionalParams: ItemSearchParams = {}) => {
+    const params = {
+      ...additionalParams,
+      type: 'tag',
+      tagId: tagId,
+    };
+
+    return await getSearch(params);
+  };
+
   return {
     getSearch,
+    searchByTag,
     ...toRefs(state.value),
   };
 };

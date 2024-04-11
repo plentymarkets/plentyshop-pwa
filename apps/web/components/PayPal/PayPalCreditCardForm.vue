@@ -4,14 +4,14 @@
       <SfIconClose />
     </SfButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
-      {{ $t('checkoutPayment.creditCard') }}
+      {{ t('checkoutPayment.creditCard') }}
     </h3>
   </header>
   <div class="payment-container" id="pay-container">
     <form ref="form" id="card-form">
       <div class="row">
         <div class="grid-cols-12">
-          <span class="text-sm font-medium">{{ $t('paypal.unbrandedCardNumber') }}</span>
+          <span class="text-sm font-medium">{{ t('paypal.unbrandedCardNumber') }}</span>
           <div
             id="card-number"
             class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
@@ -22,7 +22,7 @@
       <div class="grid grid-cols-2 gap-x-5 mt-5">
         <div>
           <div class="grid-cols-12">
-            <span class="text-sm font-medium">{{ $t('paypal.unbrandedExpirationDate') }}</span>
+            <span class="text-sm font-medium">{{ t('paypal.unbrandedExpirationDate') }}</span>
             <div
               id="expiration-date"
               class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
@@ -31,7 +31,7 @@
         </div>
         <div>
           <div class="grid-cols-12">
-            <span class="text-sm font-medium">{{ $t('paypal.unbrandedCvv') }}</span>
+            <span class="text-sm font-medium">{{ t('paypal.unbrandedCvv') }}</span>
             <div
               id="cvv"
               class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
@@ -42,7 +42,7 @@
 
       <div class="row mt-5">
         <label class="hosted-fields--label">
-          <span class="text-sm font-medium">{{ $t('paypal.unbrandedNameOnCard') }}</span>
+          <span class="text-sm font-medium">{{ t('paypal.unbrandedNameOnCard') }}</span>
           <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
         </label>
       </div>
@@ -50,14 +50,14 @@
       <div class="flex justify-between mt-5">
         <div>
           <SfButton @click="confirmCancel" type="button" variant="secondary">{{
-            $t('paypal.unbrandedCancel')
+            t('paypal.unbrandedCancel')
           }}</SfButton>
         </div>
         <div>
           <SfButton type="submit" :disabled="loading" data-testid="pay-creditcard-button">
             <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
             <span v-else>
-              {{ $t('paypal.unbrandedPay') }}
+              {{ t('paypal.unbrandedPay') }}
             </span>
           </SfButton>
         </div>
@@ -78,7 +78,7 @@ const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
-const i18n = useI18n();
+const { t } = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await loadScript(currency.value);
@@ -142,7 +142,7 @@ onMounted(() => {
             if (payload.liabilityShift === 'NO') {
               send({
                 type: 'negative',
-                message: i18n.t('paypal.errorMessageCreditCard'),
+                message: t('paypal.errorMessageCreditCard'),
               });
               loading.value = false;
             } else if (payload.liabilityShift === 'POSSIBLE' || sandbox) {
@@ -187,7 +187,7 @@ onMounted(() => {
           .catch(function () {
             send({
               type: 'negative',
-              message: i18n.t('paypal.errorMessageCreditCard'),
+              message: t('paypal.errorMessageCreditCard'),
             });
             loading.value = false;
           });

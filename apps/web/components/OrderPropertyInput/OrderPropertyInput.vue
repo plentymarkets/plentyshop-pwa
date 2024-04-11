@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <label :for="`prop-${orderPropertyId}`">
+    <label :for="`prop-${orderPropertyId}`" class="leading-5 text-sm text-zinc-900">
       {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
       <template v-if="orderPropertyLabel.surchargeType">
         ({{ t('orderProperties.vat.' + orderPropertyLabel.surchargeType) }}
@@ -26,12 +26,11 @@
         v-model="value"
         v-bind="valueAttributes"
         :invalid="Boolean(errors['value'])"
+        size="lg"
         :wrapper-class="'w-full'"
       />
 
-      <div v-if="hasTooltip" class="w-[28px]">
-        <slot name="tooltip" />
-      </div>
+      <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
     <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
@@ -40,16 +39,15 @@
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { OrderPropertyInputProps } from './types';
+import type { OrderPropertyInputProps } from './types';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
-import { useValidatorAggregatorProperties } from '~/composables/useValidatorAggregator';
 
 const props = defineProps<OrderPropertyInputProps>();
 const productProperty = props.productProperty;
 const hasTooltip = props.hasTooltip;
 const { t, n } = useI18n();
-const { registerValidator, registerInvalidFields } = useValidatorAggregatorProperties();
+const { registerValidator, registerInvalidFields } = useValidatorAggregator('properties');
 const orderPropertyId = productPropertyGetters.getOrderPropertyId(productProperty);
 const { getPropertyById } = useProductOrderProperties();
 const property = getPropertyById(orderPropertyId);

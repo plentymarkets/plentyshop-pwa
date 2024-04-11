@@ -1,7 +1,7 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from 'cookie.config';
-import { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
@@ -14,7 +14,7 @@ const fetchScripts = (scripts: string[]) => {
       if (checkIfScriptIsExternal(script)) {
         fetch(script, { method: 'GET', mode: 'no-cors', credentials: 'same-origin' })
           .then((response) => response.text())
-          .then((text) => eval(text))
+          .then((text) => new Function(text)())
           .catch(() => {
             return;
           });

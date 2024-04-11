@@ -16,14 +16,5 @@ defineProps<{
   locale: string;
 }>();
 
-const { setLocaleCookie } = useI18n();
-const route = useRoute();
-const switchLocalePath = useSwitchLocalePath();
-const { toggle } = useLanguageSelect();
-
-const switchLocale = (language: string) => {
-  setLocaleCookie(language);
-  navigateTo({ path: switchLocalePath(language), query: route.query });
-  toggle();
-};
+const { switchLocale } = useLocalization();
 </script>

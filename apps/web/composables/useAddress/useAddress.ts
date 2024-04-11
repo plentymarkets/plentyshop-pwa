@@ -1,9 +1,9 @@
-import { Address, AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { toRefs } from '@vueuse/shared';
-import { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
+import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
 import { useSdk } from '~/sdk';
-import { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
+import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
 /**
  * @description Composable for working with addresses in the current user session.
@@ -96,11 +96,11 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     return state.value.savedAddress;
   };
 
-  const setDefault: SetDefault = async (addressId: number) => {
+  const setDefault: SetDefault = async (address: Address) => {
     state.value.loading = true;
-    await useSdk().plentysystems.setAddressAsDefault({
+    await useSdk().plentysystems.doSaveAddress({
       typeId: type,
-      addressId: addressId,
+      addressData: address,
     });
 
     state.value.loading = false;

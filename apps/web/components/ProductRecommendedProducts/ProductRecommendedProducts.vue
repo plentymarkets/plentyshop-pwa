@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ProductRecommendedProductsProps } from './types';
+import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);

@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Fühle die Musik",
+      "moto2": "Neue Wireless Pro",
+      "moto3": "Räumlicher Klang. Verstellbare Ohrmuscheln. Gerätesteuerung. Ganztägige Batterie.",
+      "orderNow": "Jetzt bestellen",
+      "showMore": "Mehr anzeigen"
+    },
+    "women": "Frauen",
+    "men": "Männer",
+    "kid": "Kind",
+    "displayDetails": {
+      "detail1": {
+        "title": "Stilvoll heraustreten",
+        "subtitle": "Lassen Sie sich inspirieren",
+        "description": "Treten Sie stilvoll mit unserer Sonnenbrillenkollektion auf",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail2": {
+        "title": "Packen Sie Es",
+        "subtitle": "Seien Sie aktiv",
+        "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
+        "buttonText": "Jetzt entdecken"
+      },
+      "detail3": {
+        "title": "Frisch und Kühn",
+        "subtitle": "Neue Kollektion",
+        "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
+        "buttonText": "Jetzt entdecken"
+      }
+    }
+  },
   "billing": {
     "heading": "Rechnungsadresse",
     "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
@@ -16,7 +48,8 @@
     "countryLabel": "Land",
     "streetNameLabel": "Straße",
     "streetNumberLabel": "Nummer",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
@@ -128,6 +161,7 @@
   "showProducts": "Produkte anzeigen",
   "content": "Inhalt",
   "basePrice": "Grundpreis",
+  "procentageSavings": "Du sparst {percent} % auf dieses Bundle",
   "showMore": "Mehr anzeigen",
   "showLess": "Weniger anzeigen",
   "filters": "Filter",
@@ -145,6 +179,7 @@
   "numberOfProducts": "{count} Produkte von {total} Produkten",
   "prev": "Vorherige",
   "next": "Nächste",
+  "noneExisting": "Keine vorhanden",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
   "emptyStateText2": "Haben Sie nicht gefunden, was Sie suchen?",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
@@ -295,32 +330,6 @@
       }
     }
   },
-  "contactOptions": {
-    "helpCenter": {
-      "label": "Hilfezentrum",
-      "details": {
-        "description": "Jederzeit online Antworten finden"
-      }
-    },
-    "liveChat": {
-      "label": "Live-Chat",
-      "details": {
-        "openingHours-1": "Mo–Fr, 5:00–22:00",
-        "openingHours-2": "Sa-So, 6:00–21:00"
-      }
-    },
-    "phone": {
-      "label": "1 234 567 8901",
-      "details": {
-        "openingHours-1": "Mo–Fr, 5:00–22:00",
-        "openingHours-2": "Sa-So, 6:00–21:00"
-      }
-    }
-  },
-  "bottomLinks": {
-    "terms": "AGB",
-    "privacyPolicy": "Datenschutzerklärung"
-  },
   "socialLabel": "Gehe zu {label}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
@@ -427,6 +436,7 @@
         "returns": "Retouren"
       },
       "orderDetails": {
+        "showDetails": "Produktdetails anzeigen",
         "heading": "Bestellübersicht",
         "orderId": "Auftrags-ID",
         "orderDate": "Auftragsdatum",
@@ -558,6 +568,7 @@
       "message-placeholder": "Ihre Nachricht",
       "asterixHint": "markierte Felder sind erforderlich"
     },
+    "success": "Nachricht erfolgreich gesendet",
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
@@ -666,6 +677,7 @@
     "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
+    "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
       "required": "E-Mail ist erforderlich."
@@ -678,6 +690,12 @@
       "firstNameRequired": "Vorname ist erforderlich.",
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
+      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
+    },
+    "contact": {
+      "nameRequired": "Name ist erforderlich.",
+      "messageRequired": "Nachricht ist erforderlich.",
+      "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     }
   },
@@ -696,10 +714,14 @@
     "cancel": "Abbrechen",
     "orderDate": "Auftragsdatum",
     "returnReason": "Rücksendegrund",
-    "returnForOrder": "Zurück zur Bestellung",
+    "returnForOrder": "Retoure zur Bestellung",
     "selectReturnReason": "Rücksendegrund auswählen",
     "selectAll": "Alles auswählen",
     "successConfirmationMessage": "Wir haben Ihre Retoure erfasst. Wir informieren Sie über den weiteren Ablauf.",
     "quantity": "Anzahl"
+  },
+  "productAttributes": {
+    "seeAvailableOptions": "Verfügbare Optionen anzeigen",
+    "notValidVariation": "Bitte wählen Sie eine gültige Variante."
   }
 }

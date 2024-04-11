@@ -5,7 +5,7 @@
     data-testid="purchase-card"
   >
     <div class="grid grid-cols-[2fr_1fr] mt-4">
-      <h1 class="mb-1 font-bold typography-headline-4" data-testid="product-name">
+      <h1 class="font-bold typography-headline-4" data-testid="product-name">
         {{ productGetters.getName(product) }}
       </h1>
       <div class="flex items-center justify-center">
@@ -27,19 +27,27 @@
         />
       </div>
     </div>
-    <Price
-      :price="currentActualPrice"
-      :normal-price="normalPrice"
-      :old-price="productGetters.getPrice(product).regular ?? 0"
-    />
-    <LowestPrice :product="product" />
-    <div v-if="productGetters.showPricePerUnit(product)">
-      <BasePrice
-        :base-price="basePriceSingleValue"
-        :unit-content="productGetters.getUnitContent(product)"
-        :unit-name="productGetters.getUnitName(product)"
+    <div class="flex space-x-2">
+      <Price
+        :price="currentActualPrice"
+        :normal-price="normalPrice"
+        :old-price="productGetters.getPrice(product).regular ?? 0"
       />
+      <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+        <UiTag :size="'sm'" :variant="'secondary'">{{
+          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+        }}</UiTag>
+      </div>
     </div>
+    <LowestPrice :product="product" />
+    <BasePrice
+      v-if="productGetters.showPricePerUnit(product)"
+      :base-price="basePriceSingleValue"
+      :unit-content="productGetters.getUnitContent(product)"
+      :unit-name="productGetters.getUnitName(product)"
+    />
+    <UiBadges class="mt-4" :product="product" :use-availability="true" />
+
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
@@ -53,12 +61,11 @@
       v-html="productGetters.getShortDescription(product)"
     ></div>
 
+    <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
-
-    <div class="mb-2">
-      <AttributeSelect v-if="product" :product="product" />
-    </div>
+    <ProductAttributes v-if="product" :product="product" />
     <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
@@ -69,7 +76,7 @@
         <SfTooltip
           show-arrow
           placement="top"
-          :label="isSalableText"
+          :label="isNotValidVariation || isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
           <SfButton
@@ -97,28 +104,18 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <div
-        class="typography-text-xs flex gap-1"
-        v-if="
-          productPropertyGetters.groupsHasRequiredOrderProperties(
-            productPropertyGetters.getOrderPropertiesGroups(product),
-          )
-        "
-      >
-        <span>{{ t('asterisk') }}{{ t('asterisk') }}</span>
-        <span>{{ t('orderProperties.hasRequiredFields') }}</span>
-      </div>
       <PayPalExpressButton
         class="mt-4"
         type="SingleItem"
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
+        v-if="getCombination()"
       />
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import {
   SfButton,
   SfCounter,
@@ -134,12 +131,17 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const props = defineProps<PurchaseCardProps>();
-
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
+const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
-const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregatorProperties();
+const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
+const {
+  validateAllFields: validateAllFieldsAttributes,
+  invalidFields: invalidAttributeFields,
+  resetInvalidFields: resetAttributeFields,
+} = useValidatorAggregator('attributes');
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
@@ -147,6 +149,7 @@ const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 
 resetInvalidFields();
+resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
@@ -169,19 +172,27 @@ const basePriceSingleValue = computed(
 );
 
 const handleAddToCart = async () => {
+  await validateAllFieldsAttributes();
   await validateAllFields();
-  if (invalidFields.value.length > 0) {
+  if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
     const invalidFieldsNames = invalidFields.value.map((field) => field.name);
+    const invalidAttributeFieldsNames = invalidAttributeFields.value.map((field) => field.name);
     send({
       message: [
         t('errorMessages.missingOrWrongProperties'),
         '',
+        ...invalidAttributeFieldsNames,
         ...invalidFieldsNames,
         '',
         t('errorMessages.pleaseFillOutAllFields'),
       ],
       type: 'negative',
     });
+    return;
+  }
+
+  if (!getCombination()) {
+    send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
     return;
   }
 
@@ -226,6 +237,7 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

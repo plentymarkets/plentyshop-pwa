@@ -5,15 +5,18 @@
     @submit.prevent="$emit('on-save', defaultValues, useAsShippingAddress)"
   >
     <label>
-      <UiFormLabel>{{ $t('form.firstNameLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
     </label>
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.lastNameLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastName" required />
     </label>
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.phoneLabel') }}</UiFormLabel>
+      <UiFormLabel class="flex">
+        <span class="mr-1">{{ $t('form.phoneLabel') }}</span>
+        <UiFormHelperText>({{ $t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
       <SfInput
         name="phone"
         type="tel"
@@ -22,10 +25,9 @@
         autocomplete="tel"
         v-model="defaultValues.phoneNumber"
       />
-      <UiFormHelperText>{{ $t('form.optional') }}</UiFormHelperText>
     </label>
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.countryLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
         v-model="defaultValues.country"
@@ -40,19 +42,22 @@
       </SfSelect>
     </label>
     <label class="md:col-span-2">
-      <UiFormLabel>{{ $t('form.streetNameLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.streetName" required />
     </label>
     <label>
-      <UiFormLabel>{{ $t('form.streetNumberLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="streetNumber" v-model="defaultValues.apartment" required />
     </label>
     <label class="md:col-span-3">
-      <UiFormLabel>{{ $t('form.cityLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="city" autocomplete="address-level2" v-model="defaultValues.city" required />
     </label>
     <label class="md:col-span-2" v-if="states.length > 0">
-      <UiFormLabel>{{ $t('form.stateLabel') }}</UiFormLabel>
+      <UiFormLabel class="flex">
+        <span class="mr-1">{{ $t('form.stateLabel') }}</span>
+        <UiFormHelperText>({{ $t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
       <SfSelect
         v-model="defaultValues.state"
         name="state"
@@ -61,10 +66,9 @@
       >
         <option v-for="(state, index) in states" :key="index" :value="state.id.toString()">{{ state.name }}</option>
       </SfSelect>
-      <UiFormHelperText>{{ $t('form.optional') }}</UiFormHelperText>
     </label>
     <label>
-      <UiFormLabel>{{ $t('form.postalCodeLabel') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput name="postalCode" autocomplete="postal-code" v-model="defaultValues.zipCode" required />
     </label>
 
@@ -93,7 +97,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
@@ -106,20 +110,21 @@ const props = withDefaults(defineProps<AddressFormProps>(), {
 });
 
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
-
-const { savedAddress } = toRefs(props);
 const useAsShippingAddress = ref(props.useAsShippingDefault);
 
+const savedAddress = props.savedAddress || ({} as Address);
+
 const defaultValues = ref({
-  firstName: savedAddress?.value ? userAddressGetters.getFirstName(savedAddress?.value) ?? '' : '',
-  lastName: savedAddress?.value ? userAddressGetters.getLastName(savedAddress?.value) ?? '' : '',
-  phoneNumber: savedAddress?.value ? userAddressGetters.getPhone(savedAddress?.value) ?? '' : '',
-  country: savedAddress?.value?.country ?? '',
-  streetName: savedAddress?.value ? userAddressGetters.getStreetName(savedAddress?.value) ?? '' : '',
-  apartment: savedAddress?.value ? userAddressGetters.getStreetNumber(savedAddress?.value) ?? '' : '',
-  city: savedAddress?.value ? userAddressGetters.getCity(savedAddress?.value) ?? '' : '',
-  state: savedAddress?.value ? userAddressGetters.getProvince(savedAddress?.value) ?? '' : '',
-  zipCode: savedAddress?.value ? userAddressGetters.getPostCode(savedAddress?.value) ?? '' : '',
+  firstName: userAddressGetters.getFirstName(savedAddress),
+  lastName: userAddressGetters.getLastName(savedAddress),
+  phoneNumber: userAddressGetters.getPhone(savedAddress),
+  country: savedAddress?.country ?? '',
+  streetName: userAddressGetters.getStreetName(savedAddress),
+  apartment: userAddressGetters.getStreetNumber(savedAddress),
+  city: userAddressGetters.getCity(savedAddress),
+  state: userAddressGetters.getProvince(savedAddress),
+  zipCode: userAddressGetters.getPostCode(savedAddress),
+  primary: !userAddressGetters.getId(savedAddress),
 });
 
 const clearInputs = () => {
@@ -133,6 +138,7 @@ const clearInputs = () => {
     city: '',
     state: '',
     zipCode: '',
+    primary: !userAddressGetters.getId(savedAddress),
   };
 };
 

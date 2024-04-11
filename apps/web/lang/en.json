@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Feel the music",
+      "moto2": "New Wireless Pro",
+      "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
+      "orderNow": "Order now",
+      "showMore": "Show more"
+    },
+    "women": "Women",
+    "men": "Men",
+    "kid": "Kid",
+    "displayDetails": {
+      "detail1": {
+        "title": "Step Out in Style",
+        "subtitle": "Be inspired",
+        "description": "Step out in style with our sunglasses collection",
+        "buttonText": "Discover now"
+      },
+      "detail2": {
+        "title": "Pack it Up",
+        "subtitle": "Be active",
+        "description": "Explore the great outdoors with our backpacks",
+        "buttonText": "Discover now"
+      },
+      "detail3": {
+        "title": "Fresh and Bold",
+        "subtitle": "New collection",
+        "description": "Add a pop of color to your outfit",
+        "buttonText": "Discover now"
+      }
+    }
+  },
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
@@ -16,7 +48,8 @@
     "countryLabel": "Country",
     "streetNameLabel": "Street",
     "streetNumberLabel": "Number",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "City",
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
@@ -128,6 +161,7 @@
   "showProducts": "Show products",
   "content": "Content",
   "basePrice": "Base price",
+  "procentageSavings": "You save {percent} % on this bundle",
   "showMore": "Show more",
   "showLess": "Show less",
   "filters": "Filters",
@@ -145,6 +179,7 @@
   "numberOfProducts": "{count} Products out of {total} Products",
   "prev": "Previous",
   "next": "Next",
+  "noneExisting": "None",
   "emptyStateText": "We no longer have products in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
   "emptyStateAltText": "Image that describes that no products were found",
@@ -295,37 +330,11 @@
       }
     }
   },
-  "contactOptions": {
-    "helpCenter": {
-      "label": "Help center",
-      "details": {
-        "description": "Find answers online anytime"
-      }
-    },
-    "liveChat": {
-      "label": "Live chat",
-      "details": {
-        "openingHours-1": "Mon–Fri, 5am–10pm PT",
-        "openingHours-2": "Sat–Sun, 6am–9pm PT"
-      }
-    },
-    "phone": {
-      "label": "1 234 567 8901",
-      "details": {
-        "openingHours-1": "Mon–Fri, 5am–10pm PT",
-        "openingHours-2": "Sat–Sun, 6am–9pm PT"
-      }
-    }
-  },
-  "bottomLinks": {
-    "terms": "Terms",
-    "privacyPolicy": "Privacy policy"
-  },
   "socialLabel": "Go to {label} page",
   "failedInfoHeader": "We are really sorry.",
   "failedInfoMessage": "Your order has not been completed.",
-  "successInfoOrderHeader": "Thank you for you order!",
-  "successInfoReturnHeader": "Thank you for you return!",
+  "successInfoOrderHeader": "Thank you for your order!",
+  "successInfoReturnHeader": "Thank you for your return!",
   "successInfoMessage": "Your order was completed successfully.",
   "etaDelivery": "Estimated delivery time",
   "shippingAddress": "Shipping address",
@@ -427,6 +436,7 @@
         "returns": "Returns"
       },
       "orderDetails": {
+        "showDetails": "Show product details",
         "heading": "Order details",
         "orderId": "Order ID",
         "orderDate": "Order date",
@@ -558,6 +568,7 @@
       "message-placeholder": "Your message",
       "asterixHint": "marked fields are required"
     },
+    "success": "Message sent successfully",
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
@@ -660,12 +671,13 @@
     "additionalCostsPerItem": "Additional costs (price per item)"
   },
   "errorMessages": {
-    "requiredField": "This filed is required.",
+    "requiredField": "This is a mandatory field.",
     "wholeNumber": "Enter a whole number.",
     "decimalNumber": "Enter a decimal number.",
     "maxCharacters": "Enter a maximum of {max} characters.",
     "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
+    "turnstileRequired": "Please check the box to verify that you are human.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."
@@ -679,6 +691,12 @@
       "lastNameRequired": "Last Name is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
+    },
+    "contact": {
+      "nameRequired": "Name is required.",
+      "messageRequired": "Message is required.",
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
     }
   },
   "returns": {
@@ -690,16 +708,20 @@
     "returnItems": "Return Items",
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
-    "tellUsMore": "Tell us more about why you what to return these items..",
-    "initiateReturn":"Initiate Return",
+    "tellUsMore": "Tell us more about why you want to return these items...",
+    "initiateReturn": "Initiate Return",
     "confirmReturn": "Confirm Return",
     "cancel": "Cancel",
     "orderDate": "Order date",
     "returnReason": "Return reason",
-    "returnForOrder":"Return for order",
+    "returnForOrder": "Return for order",
     "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
     "quantity": "Quantity"
+  },
+  "productAttributes": {
+    "seeAvailableOptions": "See available options",
+    "notValidVariation": "Please select a valid variation."
   }
 }

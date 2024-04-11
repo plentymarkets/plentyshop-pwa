@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center my-1">
     <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
-        <UiFormLabel>{{ $t('form.emailLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.emailLabel') }}</UiFormLabel>
         <SfInput
           v-model="email"
           v-bind="emailAttributes"
@@ -15,9 +15,9 @@
       </label>
 
       <label>
-        <UiFormLabel>{{ $t('form.passwordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.passwordLabel') }}</UiFormLabel>
         <UiFormPasswordInput
-          :title="$t('invalidPassword')"
+          :title="t('invalidPassword')"
           name="password"
           autocomplete="current-password"
           v-model="password"
@@ -36,7 +36,7 @@
           class="peer"
         />
         <label
-          class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900"
+          class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
           for="privacyPolicy"
         >
           <i18n-t keypath="form.privacyPolicyLabel">
@@ -46,28 +46,37 @@
                 target="_blank"
                 class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
               >
-                {{ $t('privacyPolicy') }}
+                {{ t('privacyPolicy') }}
               </SfLink>
             </template>
           </i18n-t>
           *
         </label>
       </div>
+      <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
-      <div v-if="Boolean(errors['register.privacyPolicy'])" class="text-negative-700 text-sm">
-        {{ $t('privacyPolicyRequired') }}
-      </div>
+      <NuxtTurnstile
+        v-if="turnstileSiteKey"
+        v-model="turnstile"
+        v-bind="turnstileAttributes"
+        ref="turnstileElement"
+        :options="{ theme: 'light' }"
+        class="mt-4 flex justify-center"
+      />
+
+      <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
       <SfButton type="submit" class="mt-2" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
-          {{ $t('auth.signup.submitLabel') }}
+          {{ t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
+
       <div class="text-center">
-        <div class="my-5 font-bold">{{ $t('auth.signup.alreadyHaveAccount') }}</div>
+        <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" href="#" variant="primary">
-          {{ $t('auth.signup.logInLinkLabel') }}
+          {{ t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
     </form>
@@ -85,8 +94,12 @@ const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
 const { isDesktop } = useBreakpoints();
+const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
+
+const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(
   object({
@@ -96,7 +109,11 @@ const validationSchema = toTypedSchema(
         .required(t('errorMessages.password.required'))
         .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
         .default(''),
-      privacyPolicy: boolean().isTrue().required(),
+      privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
+      turnstile:
+        turnstileSiteKey.length > 0
+          ? string().required(t('errorMessages.turnstileRequired')).default('')
+          : string().optional().default(''),
     }),
   }),
 );
@@ -107,14 +124,22 @@ const { errors, meta, defineField, handleSubmit } = useForm({
 
 const [email, emailAttributes] = defineField('register.email');
 const [password, passwordAttributes] = defineField('register.password');
+const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
 const registerUser = async () => {
-  if (!meta.value.valid) {
+  if (!meta.value.valid || !turnstile.value) {
     return;
   }
 
-  const response = await register({ email: email.value ?? '', password: password.value ?? '' });
+  const response = await register({
+    email: email.value ?? '',
+    password: password.value ?? '',
+    'cf-turnstile-response': turnstile.value,
+  });
+
+  turnstile.value = '';
+  turnstileElement.value?.reset();
 
   if (response?.data.code === 1) {
     send({

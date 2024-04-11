@@ -2,13 +2,13 @@ name: Deploy PWA
 
 on:
   # release:
-    # types: [published]
+  #   types: [published]
   # push:
   #   branches: [main]
   workflow_dispatch:
     inputs:
       tag-version:
-        description: "The tag version, branch name or SHA to checkout"
+        description: 'The tag version, branch name or SHA to checkout'
         required: true
 
 permissions:
@@ -16,7 +16,7 @@ permissions:
   packages: read
 
 jobs:
-  install-and-build-dependencies:
+  build-and-upload:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '20.5'
           cache: 'yarn'
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: 'https://npm.pkg.github.com'
 
       - name: Set yarn version
         run: |
@@ -41,11 +41,11 @@ jobs:
 
       - name: Setup .yarnrc.yml
         run: |
-            yarn config set nodeLinker node-modules
-            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
-            yarn plugin import workspace-tools
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+          yarn plugin import workspace-tools
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -55,7 +55,11 @@ jobs:
       - name: Setup environment
         run: |
           touch apps/web/.env
-          echo API_URL=${{ vars.API_URL }} >> apps/web/.env
+          cat <<EOT >> apps/web/.env
+          API_URL=${{ vars.API_URL }}
+          API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
+          ${{ vars.CONFIG }}
+          EOT
 
       - name: Build
         run: yarn build
@@ -73,33 +77,17 @@ jobs:
         uses: a7ul/tar-action@v1.1.0
         id: compress
         with:
-         command: c
-         cwd: ./
-         files: |
-           ./apps/web/.output
-           ./middleware
-         outPath: pwa.tar.gz
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: zipped-artifact
-          path: ${{ github.workspace }}/pwa.tar.gz
-
-  send-zip:
-    runs-on: ubuntu-latest
-    needs: install-and-build-dependencies
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: zipped-artifact
-          path: ./
+          command: c
+          cwd: ./
+          files: |
+            ./apps/web/.output
+            ./middleware
+          outPath: pwa.tar.gz
 
       - name: Upload File
         id: upload
         uses: JantHsueh/upload-file-action@1.0
         with:
-          url: "https://pwapublish.plentysystems.com"
+          url: 'https://pwapublish.plentysystems.com'
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
-          fileForms: '{ "file": "${{ github.workspace }}/pwa.tar.gz" }'
+          fileForms: '{ "file": "pwa.tar.gz" }'

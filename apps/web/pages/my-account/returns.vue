@@ -27,26 +27,41 @@
       data-testid="account-returns-content"
     >
       <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
-      <ul class="md:hidden my-4 last-of-type:mb-0" v-for="order in data.entries" :key="order.order.id">
-        <li>
-          <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.returnId') }}</p>
-          <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
-        </li>
-        <li>
-          <p class="block typography-text-sm font-medium">
-            {{ $t('account.ordersAndReturns.returnDate') }}
-          </p>
-          <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
-        </li>
-        <li>
-          <p class="block typography-text-sm font-medium">
-            {{ $t('account.ordersAndReturns.orderDetails.paymentMethod') }}
-          </p>
-          <span class="block typography-text-sm mb-2">{{ orderGetters.getPaymentMethodName(order) }}</span>
-        </li>
-        <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
-      </ul>
-      <table class="hidden md:block text-left typography-text-sm mx-4">
+
+      <template v-if="!isTablet">
+        <ul class="my-4 last-of-type:mb-0" v-for="order in data.entries" :key="order.order.id">
+          <li>
+            <p class="block typography-text-sm font-medium">{{ $t('account.ordersAndReturns.returnId') }}</p>
+            <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
+          </li>
+          <li>
+            <p class="block typography-text-sm font-medium">
+              {{ $t('account.ordersAndReturns.returnDate') }}
+            </p>
+            <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
+          </li>
+          <li>
+            <p class="block typography-text-sm font-medium">
+              {{ $t('account.ordersAndReturns.orderDetails.paymentMethod') }}
+            </p>
+            <span class="block typography-text-sm mb-2">{{ orderGetters.getPaymentMethodName(order) }}</span>
+          </li>
+          <li>
+            <SfButton
+              :to="localePath(generateOrderDetailsLink(order))"
+              :tag="NuxtLink"
+              size="sm"
+              variant="tertiary"
+              class="!px-0"
+            >
+              {{ $t('account.ordersAndReturns.details') }}
+            </SfButton>
+          </li>
+          <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+        </ul>
+      </template>
+
+      <table v-else class="md:block text-left typography-text-sm mx-4">
         <caption class="hidden">
           {{
             $t('account.ordersAndReturns.listOfOrders')
@@ -92,7 +107,7 @@
 </template>
 
 <script setup lang="ts">
-import { Order } from '@plentymarkets/shop-api';
+import type { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 definePageMeta({
