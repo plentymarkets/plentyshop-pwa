@@ -48,7 +48,8 @@
     "countryLabel": "Land",
     "streetNameLabel": "Straße",
     "streetNumberLabel": "Nummer",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
@@ -567,6 +568,7 @@
       "message-placeholder": "Ihre Nachricht",
       "asterixHint": "markierte Felder sind erforderlich"
     },
+    "success": "Nachricht erfolgreich gesendet",
     "contactSend": "Anfrage senden",
     "clearAll": "Alles löschen",
     "privacyPolicy": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe."
@@ -675,6 +677,7 @@
     "maxCharacters": "Geben Sie maximal {max} Zeichen ein.",
     "missingOrWrongProperties": "Folgende Felder sind pflicht oder falsch gefüllt:",
     "pleaseFillOutAllFields": "Bitte füllen Sie alle diese Felder aus.",
+    "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind.",
     "email": {
       "valid": "In diesem Feld muss es sich um eine gültige E-Mail-Adresse handeln.",
       "required": "E-Mail ist erforderlich."
@@ -687,6 +690,12 @@
       "firstNameRequired": "Vorname ist erforderlich.",
       "lastNameRequired": "Nachname ist erforderlich.",
       "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen.",
+      "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
+    },
+    "contact": {
+      "nameRequired": "Name ist erforderlich.",
+      "messageRequired": "Nachricht ist erforderlich.",
+      "termsRequired": "Bitte akzeptieren Sie die Datenschutzbestimmungen",
       "turnstileRequired": "Bitte aktivieren Sie die Checkbox, um zu bestätigen, dass Sie kein Bot sind."
     }
   },

@@ -6,6 +6,7 @@
     >
       <div class="flex items-center">
         <SfButton
+          v-if="!isTablet"
           variant="tertiary"
           square
           aria-label="Close menu"
@@ -18,7 +19,7 @@
         <NuxtLink
           :to="localePath(paths.home)"
           aria-label="Sf Homepage"
-          class="flex shrink-0 w-full h-8 lg:w-[12.5rem] lg:h-[1.75rem] items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+          class="flex shrink-0 w-full h-8 lg:w-48 lg:h-8 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiVsfLogo />
         </NuxtLink>
@@ -26,8 +27,8 @@
 
       <slot />
     </div>
-    <!-- Desktop dropdown -->
-    <nav ref="floatingRef">
+
+    <nav v-if="isTablet" ref="floatingRef">
       <ul
         class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
@@ -111,64 +112,65 @@
       </ul>
     </nav>
 
-    <!-- Mobile drawer -->
-    <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
-    <SfDrawer
-      ref="drawerReference"
-      v-model="isOpen"
-      placement="left"
-      class="md:hidden right-[50px] max-w-[376px] bg-white overflow-y-auto z-[1000]"
-    >
-      <nav>
-        <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
-          <p class="typography-text-base font-medium">Browse products</p>
-          <SfButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
-            <SfIconClose class="text-neutral-500" />
-          </SfButton>
-        </div>
-        <ul class="mt-2 mb-6" v-if="activeMenu">
-          <li v-if="activeMenu.id !== 0">
-            <SfListItem
-              size="lg"
-              tag="button"
-              type="button"
-              class="border-b border-b-neutral-200 border-b-solid"
-              @click="goBack()"
-            >
-              <div class="flex items-center">
-                <SfIconArrowBack class="text-neutral-500" />
-                <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
-              </div>
-            </SfListItem>
-          </li>
-          <template v-for="node in activeMenu.children" :key="node.id">
-            <li v-if="node.childCount === 0">
-              <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))" @click="close()">
+    <template v-else>
+      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
+      <SfDrawer
+        ref="drawerReference"
+        v-model="isOpen"
+        placement="left"
+        class="md:hidden right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+      >
+        <nav>
+          <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
+            <p class="typography-text-base font-medium">Browse products</p>
+            <SfButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
+              <SfIconClose class="text-neutral-500" />
+            </SfButton>
+          </div>
+          <ul class="mt-2 mb-6" v-if="activeMenu">
+            <li v-if="activeMenu.id !== 0">
+              <SfListItem
+                size="lg"
+                tag="button"
+                type="button"
+                class="border-b border-b-neutral-200 border-b-solid"
+                @click="goBack()"
+              >
                 <div class="flex items-center">
-                  <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                  <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                  <SfIconArrowBack class="text-neutral-500" />
+                  <p class="ml-5 font-medium">{{ categoryTreeGetters.getName(activeMenu) }}</p>
                 </div>
               </SfListItem>
             </li>
-            <li v-else>
-              <SfListItem size="lg" tag="button" type="button" class="!p-0">
-                <div class="flex items-center w-100">
-                  <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
-                    <div class="flex items-center">
-                      <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
-                      <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
-                    </div>
-                  </NuxtLink>
-                  <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
-                    <SfIconChevronRight class="text-neutral-500" />
+            <template v-for="node in activeMenu.children" :key="node.id">
+              <li v-if="node.childCount === 0">
+                <SfListItem size="lg" :tag="NuxtLink" :href="localePath(generateCategoryLink(node))" @click="close()">
+                  <div class="flex items-center">
+                    <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                    <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
                   </div>
-                </div>
-              </SfListItem>
-            </li>
-          </template>
-        </ul>
-      </nav>
-    </SfDrawer>
+                </SfListItem>
+              </li>
+              <li v-else>
+                <SfListItem size="lg" tag="button" type="button" class="!p-0">
+                  <div class="flex items-center w-100">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
+                      <div class="flex items-center">
+                        <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
+                        <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>
+                      </div>
+                    </NuxtLink>
+                    <div class="flex justify-center items-center h-8 w-16" @click="goNext(node.id)">
+                      <SfIconChevronRight class="text-neutral-500" />
+                    </div>
+                  </div>
+                </SfListItem>
+              </li>
+            </template>
+          </ul>
+        </nav>
+      </SfDrawer>
+    </template>
   </header>
 </template>
 
@@ -191,6 +193,7 @@ import {
 import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
 
+const { isTablet } = useBreakpoints();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
 const NuxtLink = resolveComponent('NuxtLink');

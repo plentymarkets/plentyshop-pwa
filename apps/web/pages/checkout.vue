@@ -6,8 +6,8 @@
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >
-    <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
-      <div class="col-span-7 mb-10 md:mb-0">
+    <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
+      <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -52,9 +52,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
-      <div class="col-span-5">
-        <div v-for="cartItem in cart?.items" :key="cartItem.id">
-          <UiCartProductCard :cart-item="cartItem" />
+      <div class="col-span-6 xl:col-span-5">
+        <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
         <div class="relative md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
