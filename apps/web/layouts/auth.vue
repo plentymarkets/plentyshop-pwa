@@ -12,7 +12,7 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom />
+      <UiNavbarBottom v-if="!isTablet" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
@@ -26,4 +26,6 @@
 defineProps<{
   heading: string;
 }>();
+
+const { isTablet } = useBreakpoints();
 </script>
