@@ -21,7 +21,6 @@
 - Eine Artikelverfügbarkeitsanzeige wurde hinzugefügt.
 - Eine Sitemap-Generierungsfunktion für statischen Inhalt wurde hinzugefügt.
 - Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht
-- Die Leistung des Wishlist-Aufrufs wurde optimiert.
 - Eine ‘config’ Repository Variable wurde zur Upload Action hinzugefügt.
 - Eine einheitliche Komponente für Adressverwaltung wurde hinzugefügt.
 - Unterstützung für das moderne Bildformat (AVIF) wurde hinzugefügt.
