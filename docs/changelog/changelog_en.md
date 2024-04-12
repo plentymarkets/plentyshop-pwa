@@ -24,7 +24,7 @@
 - Added performance optimization for wishlist calls.
 - Added a ‘config’ repository variable to the upload action.
 - Added a unified address handling in a single component.
-- Added support for the modern image format (AVIF).
+- support for the modern image format (AVIF)
 - Added a search by tags.
 - Added an order return confirmation page.
 
