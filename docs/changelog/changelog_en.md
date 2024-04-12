@@ -17,7 +17,6 @@
 - Added a box component for selecting item attributes, enhancing user interaction.
 - Added the possibility to mark a primary address for improved address management.
 - Added image attributes on item images.
-- Performed an Nuxt upgrade.
 - Added an item availability display to provide inventory status.
 - sitemap generation feature for static content.
 - Added a display for bundle items in item, cart, checkout, and order summary.
@@ -33,6 +32,7 @@
 - Removed unnecessary HTML nodes to reduce DOM size.
 - Changed filenames of legal pages.
 - Optimized i18n imports.
+- Performed an Nuxt upgrade to version 3.11.1.
 - Unified the design of 'Remove' buttons.
 - Changed the return layout from a popup to its own page.
 - Removed ‘…/c/…’ as category URL identifier for cleaner URLs.

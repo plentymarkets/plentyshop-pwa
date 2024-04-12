@@ -13,11 +13,10 @@
 ### Hinzugefügt
 
 - Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
-- Tags auf Artikel- und Kategorieansichten
-- Eine Box-Komponente zur Auswahl von Artikelattributen
+- Tags auf Artikel- und Kategorieansichten.
+- Eine Box-Komponente zur Auswahl von Artikelattributen.
 - Die Möglichkeit, eine Hauptadresse festzulegen, wurde hinzugefügt.
 - Bildattribute auf Artikelbildern wurden hinzugefügt.
-- Ein Nuxt-Upgrade wurde durchgeführt.
 - Eine Artikelverfügbarkeitsanzeige wurde hinzugefügt.
 - Eine Sitemap-Generierungsfunktion für statischen Inhalt wurde hinzugefügt.
 - Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht
@@ -32,6 +31,7 @@
 - Überflüssige HTML Elemente wurden entfernt, um die DOM-Größe zu reduzieren.
 - Dateinamen der Rechtsseiten.
 - Verbesserung der i18n imports.
+- Ein Nuxt-Upgrade wurde durchgeführt auf Version 3.11.1.
 - Vereinheitlichung der 'entfernen' Schaltflächen.
 - Änderung der Retouren-Ansicht von einem Popup zu einer eigenständigen Seite.
 - In der Kategorie URL wurde das '../c/..' entfernt.
