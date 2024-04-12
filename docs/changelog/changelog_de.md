@@ -58,7 +58,7 @@
 - Canonical Pfad für die Sprache korrigiert.
 - Format des Rechtstextes für mobile Geräte korrigiert.
 - Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
-- Sicherstellen, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht geleert wird.
+- Behoben, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht mehr geleert wird.
 - Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
 - Fehlende Übersetzungen auf der Startseite behoben.
 - Problem behoben, dass ein hard load nach dem Sprachwechsel zu einem 404-Fehler führt.
