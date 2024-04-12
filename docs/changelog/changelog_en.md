@@ -26,7 +26,7 @@
 - Added a unified address handling in a single component.
 - support for the modern image format (AVIF)
 - search by tags
-- Added an order return confirmation page.
+- order return confirmation page
 
 ### Changed
 
