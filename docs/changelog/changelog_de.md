@@ -15,17 +15,17 @@
 - Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
 - Tags auf Artikel- und Kategorieansichten
 - Eine Box-Komponente zur Auswahl von Artikelattributen
-- Die Möglichkeit, eine Hauptadresse festzulegen, wurde hinzugefügt.
+- Die Möglichkeit, eine Hauptadresse festzulegen
 - Bildattribute auf Artikelbildern wurden hinzugefügt.
 - Ein Nuxt-Upgrade wurde durchgeführt.
-- Eine Artikelverfügbarkeitsanzeige wurde hinzugefügt.
-- Eine Sitemap-Generierungsfunktion für statischen Inhalt wurde hinzugefügt.
+- Eine Artikelverfügbarkeitsanzeige
+- Eine Sitemap-Generierungsfunktion für statischen Inhalt
 - Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht
-- Eine ‘config’ Repository Variable wurde zur Upload Action hinzugefügt.
-- Eine einheitliche Komponente für Adressverwaltung wurde hinzugefügt.
-- Unterstützung für das moderne Bildformat (AVIF) wurde hinzugefügt.
-- Eine Option für die Suche nach Tags wurde hinzugefügt.
-- Eine Bestätigungsseite für Retouren wurde hinzugefügt.
+- Eine ‘config’ Repository Variable zur Upload Action
+- Eine einheitliche Komponente für Adressverwaltung
+- Unterstützung für das moderne Bildformat (AVIF)
+- Eine Option für die Suche nach Tags
+- Eine Bestätigungsseite für Retouren
 
 ### Geändert
 
@@ -41,7 +41,7 @@
 ### Behoben
 
 - Bildqualität auf der Wunschliste verbessert.
-- Rückgabemenge und -grund validiert.
+- Rückgabemenge und -grund von Retouren wird validiert.
 - Bestellmenge nach einer Rücksendung aktualisiert.
 - Styling des Auswahlpfeils für Attribute korrigiert.
 - Styling des Preisbutton-Filters korrigiert.
