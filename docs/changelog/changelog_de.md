@@ -45,7 +45,7 @@
 - Bestellmenge nach einer Rücksendung aktualisiert.
 - Styling des Auswahlpfeils für Attribute korrigiert.
 - Styling des Preisbutton-Filters korrigiert.
-- Retouren für mobile Rücksendebestellungen angepasst.
+- Retourenerstellung auf kleinen Displaygrößen erleichtert.
 - Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
 - Fehler bei der Suche behoben, bei dem eine E-Mail-Adresse eingetragen wird.
 - Styling der Eingabefelder vereinheitlicht.
