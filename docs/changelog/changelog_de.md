@@ -30,7 +30,7 @@
 
 ### Geändert
 
-- Überflüssige Daten wurden entfernt, um die DOM-Größe zu reduzieren.
+- Überflüssige HTML Elemente wurden entfernt, um die DOM-Größe zu reduzieren.
 - Dateinamen der Rechtsseiten.
 - Verbesserung der i18n imports.
 - Vereinheitlichung der 'entfernen' Schaltflächen.
