@@ -37,7 +37,7 @@
 - Änderung der Retouren-Ansicht von einem Popup zu einer eigenständigen Seite.
 - In der Kategorie URL wurde das '../c/..' entfernt.
 - Das Design der Bestellbestätigungs Seite wurde überarbeitet.
-- Unterschiedliche Bilder URLS für unterschiedliche Fenstergrößen.
+- Unterschiedliche Bildergrößen-URLs für unterschiedliche Bildschirmgrößen.
 
 ### Behoben
 
