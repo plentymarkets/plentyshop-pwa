@@ -25,7 +25,7 @@
 - Added a ‘config’ repository variable to the upload action.
 - Added a unified address handling in a single component.
 - support for the modern image format (AVIF)
-- Added a search by tags.
+- search by tags
 - Added an order return confirmation page.
 
 ### Changed
