@@ -59,7 +59,7 @@
 - Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
 - Behoben, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht mehr geleert wird.
 - Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
-- Fehlende Übersetzungen auf der Startseite behoben.
+- Fehlende Übersetzungen auf der Startseite hinzugefügt.
 - Problem behoben, dass ein hard load nach dem Sprachwechsel zu einem 404-Fehler führt.
 - Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
 - Link zu den Beitragsrichtlinien in der Dokumentation behoben.
