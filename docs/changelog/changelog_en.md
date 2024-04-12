@@ -33,7 +33,7 @@
 - Removed unnecessary nodes to reduce DOM size.
 - Changed filenames of legal pages.
 - Optimized i18n imports.
-- Unified the design of remove buttons.
+- Unified the design of 'Remove' buttons.
 - Changed the return layout from a popup to its own page.
 - Removed ‘…/c/…’ as category URL identifier for cleaner URLs.
 - Modified the order of address format.
