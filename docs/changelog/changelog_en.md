@@ -56,7 +56,7 @@
 - Unified the styling of order properties.
 - Fixed styling issues on radio buttons and adjusted spacing on checkboxes and coupons.
 - Fixed the styling and wording on the new return page.
-- Excluded certain pages from the sitemap normally.
+- Excluded certain pages from the sitemap.
 - Fixed the function of the 'Product' button in the navbar for mobile device.
 - Canonical URL includes currently selected language path.
 - Fixed the format of legal text on small display sizes.
