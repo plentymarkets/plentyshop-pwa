@@ -34,7 +34,7 @@
 - Dateinamen der Rechtsseiten.
 - Verbesserung der i18n imports.
 - Vereinheitlichung der 'entfernen' Schaltflächen.
-- Änderung der Retouren Ansicht von einem Popup zu einer eigenständigen Seite.
+- Änderung der Retouren-Ansicht von einem Popup zu einer eigenständigen Seite.
 - In der Kategorie URL wurde das '../c/..' entfernt.
 - Das Design der Bestellbestätigungs Seite wurde überarbeitet.
 - Unterschiedliche Bilder URLS für unterschiedliche Fenstergrößen.
