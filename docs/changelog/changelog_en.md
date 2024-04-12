@@ -45,7 +45,7 @@
 ### Fixed
 
 - Improved the image quality on the wishlist.
-- fixed validation for return quantity and reason.
+- added validation for return quantity and reason during return creation.
 - Updated the order quantity after making a return.
 - Fixed the styling of the attribute select arrow.
 - Fixed the styling of price buttons filter.
