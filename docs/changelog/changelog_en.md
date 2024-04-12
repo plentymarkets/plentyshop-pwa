@@ -51,7 +51,7 @@
 - Fixed the styling of price buttons filter.
 - Adjusted the return form for mobile return orders.
 - Fixed the behavior and name of the ‘Back to Shopping’ button.
-- Fixed a bug with search autocomplete where an email address will be filled in.
+- Fixed a bug where an email address was added to the searchbar via autocomplete.
 - Unified the styling of input heights.
 - Unified the styling of order properties.
 - Fixed styling issues on radio buttons and adjusted spacing on checkboxes and coupons.
