@@ -47,7 +47,7 @@
 - Styling des Preisbutton-Filters korrigiert.
 - Retourenerstellung auf kleinen Displaygrößen erleichtert.
 - Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
-- Fehler bei der Suche behoben, bei dem eine E-Mail-Adresse eingetragen wird.
+- Eine E-Mail-Adresse wurde fälschlicherweise automatisch im Suchfeld eingefügt
 - Styling der Eingabefelder vereinheitlicht.
 - Styling der Bestelleigenschaften vereinheitlicht.
 - Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
