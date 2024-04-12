@@ -30,7 +30,7 @@
 
 ### Changed
 
-- Removed unnecessary nodes to reduce DOM size.
+- Removed unnecessary HTML nodes to reduce DOM size.
 - Changed filenames of legal pages.
 - Optimized i18n imports.
 - Unified the design of 'Remove' buttons.
