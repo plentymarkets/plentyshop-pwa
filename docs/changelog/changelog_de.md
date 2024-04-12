@@ -52,7 +52,7 @@
 - Styling der Eingabefelder vereinheitlicht.
 - Styling der Bestelleigenschaften vereinheitlicht.
 - Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
-- Styling und Formulierung auf der neuen Retouren korrigiert.
+- Styling und Formulierung im neuen Retourenprozess korrigiert.
 - Bestimmte Seiten aus der Sitemap ausgeschlossen.
 - Funktion der Schaltfläche "Produkt" in der Navigationsleiste für die Mobile Ansicht.
 - Canonical Pfad für die Sprache korrigiert.
