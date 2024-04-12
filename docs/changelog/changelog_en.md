@@ -19,7 +19,7 @@
 - Added image attributes on item images.
 - Performed an Nuxt upgrade.
 - Added an item availability display to provide inventory status.
-- Added a sitemap generation feature for static content.
+- sitemap generation feature for static content.
 - Added a display for bundle items in item, cart, checkout, and order summary.
 - Added performance optimization for wishlist calls.
 - Added a ‘config’ repository variable to the upload action.
