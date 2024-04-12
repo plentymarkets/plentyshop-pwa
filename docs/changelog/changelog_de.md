@@ -13,7 +13,7 @@
 ### Hinzugefügt
 
 - Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
-- Tags wurden zu Artikeln und zur Kategorieansichten hinzugefügt.
+- Tags auf Artikel- und Kategorieansichten
 - Eine Box-Komponente zur Auswahl von Artikelattributen wurde hinzugefügt.
 - Die Möglichkeit, eine Hauptadresse festzulegen, wurde hinzugefügt.
 - Bildattribute auf Artikelbildern wurden hinzugefügt.
