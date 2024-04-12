@@ -38,7 +38,7 @@
 - Removed ‘…/c/…’ as category URL identifier for cleaner URLs.
 - Modified the order of address format.
 - Updated the styling of the order confirmation page.
-- Implemented different image URLs for different window sizes.
+- Implemented different imagesize URLs for different viewport sizes.
 - Moved the ‘delete from wishlist’ button to the top right.
 - Updated the upload action.
 
