@@ -11,9 +11,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
+        <CheckoutAddressNew
           id="billing-address"
-          :heading="t('billing.heading')"
+          :heading="useAsShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
@@ -21,7 +21,8 @@
           @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
+        <CheckoutAddressNew
+          v-if="!useAsShippingAddress"
           id="shipping-address"
           :heading="t('shipping.heading')"
           :description="t('shipping.description')"
@@ -110,7 +111,12 @@
 
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
+import {
+  shippingProviderGetters,
+  paymentProviderGetters,
+  cartGetters,
+  userAddressGetters,
+} from '@plentymarkets/shop-sdk';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -128,7 +134,12 @@ const ID_SHIPPING_ADDRESS = '#shipping-address';
 const localePath = useLocalePath();
 const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const {
+  data: billingAddresses,
+  getAddresses: getBillingAddresses,
+  useAsShippingAddress,
+} = useAddress(AddressType.Billing);
+import { type Address } from '@plentymarkets/shop-api';
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
@@ -150,6 +161,25 @@ const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
 
+const equalAddresses = (address1: Address, address2: Address) => {
+  return Object.keys(address1)
+    .filter((key) => key !== 'id')
+    .every((key) => address1[key as keyof Address] === address2[key as keyof Address]);
+};
+
+const cartAddressId = (type: AddressType) => {
+  return type === AddressType.Billing
+    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
+    : cartGetters.getCustomerShippingAddressId(cart.value);
+};
+
+const selectedAddress = (addresses: Address[], type: AddressType) => {
+  return (
+    addresses.find((address) => userAddressGetters.getId(address) === cartAddressId(type)?.toString()) ??
+    ({} as Address)
+  );
+};
+
 const loadAddresses = async () => {
   await Promise.all([
     getBillingAddresses(),
@@ -158,6 +188,9 @@ const loadAddresses = async () => {
     getCart(),
     fetchPaymentMethods(),
   ]);
+  const selectedBillingAddress = selectedAddress(billingAddresses.value, AddressType.Billing);
+  const selectedShippingAddress = selectedAddress(shippingAddresses.value, AddressType.Shipping);
+  useAsShippingAddress.value = equalAddresses(selectedBillingAddress, selectedShippingAddress);
 };
 
 await loadAddresses();

@@ -10,7 +10,7 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom />
+      <UiNavbarBottom v-if="!isTablet" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
@@ -27,6 +27,7 @@ usePageTitle();
 defineProps<DefaultLayoutProps>();
 
 const { setLogoMeta } = useStructuredData();
+const { isTablet } = useBreakpoints();
 
 setLogoMeta();
 </script>
