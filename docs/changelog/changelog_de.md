@@ -54,7 +54,7 @@
 - Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
 - Styling und Formulierung auf der neuen Retouren korrigiert.
 - Bestimmte Seiten aus der Sitemap ausgeschlossen.
-- Funktion der Schaltfläche "Produkt" in der Navigationsleiste  für die Mobile Ansicht.
+- Funktion der Schaltfläche "Produkt" in der Navigationsleiste für die Mobile Ansicht.
 - Canonical Pfad für die Sprache korrigiert.
 - Format des Rechtstextes für mobile Geräte korrigiert.
 - Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
