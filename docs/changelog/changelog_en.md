@@ -23,7 +23,7 @@
 - Added a display for bundle items in item, cart, checkout, and order summary.
 - Added performance optimization for wishlist calls.
 - Added a ‘config’ repository variable to the upload action.
-- Added a unified address handling in a single component.
+- unified address handling in a single component
 - support for the modern image format (AVIF)
 - search by tags
 - order return confirmation page
