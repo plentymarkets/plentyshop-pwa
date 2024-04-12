@@ -56,7 +56,7 @@
 - Bestimmte Seiten aus der Sitemap ausgeschlossen.
 - Funktion der Schaltfläche "Produkt" in der Navigationsleiste für die Mobile Ansicht.
 - Canonical Pfad für die Sprache korrigiert.
-- Format des Rechtstextes für mobile Geräte korrigiert.
+- Formatierung der Rechtstexte für kleine Displaygrößen optimiert.
 - Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
 - Behoben, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht mehr geleert wird.
 - Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
