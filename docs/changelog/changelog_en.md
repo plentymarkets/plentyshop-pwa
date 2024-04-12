@@ -59,7 +59,7 @@
 - Excluded certain pages from the sitemap normally.
 - Fixed the function of the 'Product' button in the navbar for mobile device.
 - Canonical URL includes currently selected language path.
-- Fixed the format of legal text for mobile devices.
+- Fixed the format of legal text on small display sizes.
 - Fixed the header color on mobile devices, to have a unified look and feel.
 - Ensured the cart does not clear after a failed order process.
 - Fixed homepage layout shifts and deliver fixed image sizes.
