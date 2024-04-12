@@ -12,20 +12,20 @@
 
 ### New
 
-- Added a ‘Previous’ button to the return form for easier navigation.
+- a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - Added a box component for selecting item attributes, enhancing user interaction.
 - Added the possibility to mark a primary address for improved address management.
 - Added image attributes on item images.
-- Added an item availability display to provide inventory status.
+- item availability display to provide inventory status.
 - sitemap generation feature for static content.
-- Added a display for bundle items in item, cart, checkout, and order summary.
-- Added performance optimization for wishlist calls.
-- Added a ‘config’ repository variable to the upload action.
-- unified address handling in a single component
-- support for the modern image format (AVIF)
-- search by tags
-- order return confirmation page
+- display for bundle items in item, cart, checkout, and order summary
+- performance optimisation for wishlist calls.
+- ‘config’ repository variable to the upload action.
+- unified address handling in a single component.
+- support for the modern image format (AVIF).
+- search by tags.
+- order return confirmation page.
 
 ### Changed
 

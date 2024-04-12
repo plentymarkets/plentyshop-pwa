@@ -15,16 +15,16 @@
 - Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
 - Tags auf Artikel- und Kategorieansichten.
 - Eine Box-Komponente zur Auswahl von Artikelattributen.
-- Die Möglichkeit, eine Hauptadresse festzulegen, wurde hinzugefügt.
+- Die Möglichkeit, eine Hauptadresse festzulegen.
 - Bildattribute auf Artikelbildern wurden hinzugefügt.
-- Eine Artikelverfügbarkeitsanzeige wurde hinzugefügt.
-- Eine Sitemap-Generierungsfunktion für statischen Inhalt wurde hinzugefügt.
-- Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht
-- Eine ‘config’ Repository Variable wurde zur Upload Action hinzugefügt.
-- Eine einheitliche Komponente für Adressverwaltung wurde hinzugefügt.
-- Unterstützung für das moderne Bildformat (AVIF) wurde hinzugefügt.
-- Eine Option für die Suche nach Tags wurde hinzugefügt.
-- Eine Bestätigungsseite für Retouren wurde hinzugefügt.
+- Eine Artikelverfügbarkeitsanzeige.
+- Eine Sitemap-Generierungsfunktion für statischen Inhalt.
+- Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht.
+- Eine ‘config’ Repository Variable zur Upload Action.
+- Eine einheitliche Komponente für Adressverwaltung.
+- Unterstützung für das moderne Bildformat (AVIF).
+- Eine Option für die Suche nach Tags.
+- Eine Bestätigungsseite für Retouren.
 
 ### Geändert
 
@@ -41,13 +41,13 @@
 ### Behoben
 
 - Bildqualität auf der Wunschliste verbessert.
-- Rückgabemenge und -grund validiert.
+- Rückgabemenge und -grund von Retouren wird validiert.
 - Bestellmenge nach einer Rücksendung aktualisiert.
 - Styling des Auswahlpfeils für Attribute korrigiert.
 - Styling des Preisbutton-Filters korrigiert.
 - Retourenerstellung auf kleinen Displaygrößen erleichtert.
 - Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
-- Fehler bei der Suche behoben, bei dem eine E-Mail-Adresse eingetragen wird.
+- Eine E-Mail-Adresse wurde fälschlicherweise automatisch im Suchfeld eingefügt
 - Styling der Eingabefelder vereinheitlicht.
 - Styling der Bestelleigenschaften vereinheitlicht.
 - Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
