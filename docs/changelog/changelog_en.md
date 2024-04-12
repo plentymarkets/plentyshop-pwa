@@ -58,7 +58,7 @@
 - Fixed the styling and wording on the new return page.
 - Excluded certain pages from the sitemap normally.
 - Fixed the function of the 'Product' button in the navbar for mobile device.
-- Fixed the canonical language path.
+- Canonical URL includes currently selected language path.
 - Fixed the format of legal text for mobile devices.
 - Fixed the header color on mobile devices, to have a unified look and feel.
 - Ensured the cart does not clear after a failed order process.
