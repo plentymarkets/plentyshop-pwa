@@ -65,7 +65,7 @@
 - Fixed homepage layout shifts and deliver fixed image sizes.
 - Fixed missing translations on the homepage.
 - Fixed the issue where a hard load after language switch leads to a 404 error.
-- Fixed the missing wishlist navigation button on mobile devices.
+- Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
 
 ## New Contributors
