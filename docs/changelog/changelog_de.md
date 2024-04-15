@@ -12,7 +12,7 @@
 
 ### Hinzugefügt
 
-- Ein ‘Zurück’-Knopf wurde zur Retouren Form hinzugefügt, um die Navigation zu erleichtern.
+- Ein ‘Zurück’-Knopf für die Retouren Form, um die Navigation zu erleichtern.
 - Tags auf Artikel- und Kategorieansichten.
 - Eine Box-Komponente zur Auswahl von Artikelattributen.
 - Die Möglichkeit, eine Hauptadresse festzulegen.
