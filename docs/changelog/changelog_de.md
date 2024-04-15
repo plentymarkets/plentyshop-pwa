@@ -61,7 +61,6 @@
 - Problem behoben, dass eine harte Aktualisierung ohne Browsercache nach dem Sprachwechsel zu einem 404-Fehler führt.
 - Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
 - Link zu den Beitragsrichtlinien in der Dokumentation behoben.
-- Hydratation und Intlify Warnungen wurden behoben.
 
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
