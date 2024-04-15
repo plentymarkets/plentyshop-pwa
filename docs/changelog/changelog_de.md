@@ -13,11 +13,13 @@
 
 - Ein ‘Zurück’-Knopf für die Retouren Form, um die Navigation zu erleichtern.
 - Tags auf Artikel- und Kategorieansichten.
-- Eine Box-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen
+- Eine Box-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen.
+- Eine Bilder-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen.
 - Möglichkeit, die Hauptadresse zu markieren, um die Adressenverwaltung zu verbessern
 - Eine Artikelverfügbarkeitsanzeige.
 - Eine Sitemap-Generierungsfunktion für statischen Inhalt.
 - Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht.
+- Leistungsoptimierung bei Aufrufen von Wunschlisten.
 - Eine ‘config’ Repository Variable zur Upload Action.
 - Eine einheitliche Komponente für Adressverwaltung.
 - Unterstützung für das moderne Bildformat (AVIF).
@@ -33,8 +35,11 @@
 - Vereinheitlichung der 'entfernen' Schaltflächen.
 - Änderung der Retouren-Ansicht von einem Popup zu einer eigenständigen Seite.
 - In der Kategorie URL wurde das '../c/..' entfernt.
+- Die Reihenfolge des Addressinputs wurde geändert.
 - Das Design der Bestellbestätigungs Seite wurde überarbeitet.
 - Unterschiedliche Bildergrößen-URLs für unterschiedliche Bildschirmgrößen.
+- Die Schaltfläche "Von der Wunschliste löschen" wurde nach oben rechts verschoben.
+- Die Upload-Aktion wurde aktualisiert.
 
 ### Behoben
 
