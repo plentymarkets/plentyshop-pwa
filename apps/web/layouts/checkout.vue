@@ -36,7 +36,7 @@ const { setInitialData } = useInitialSetup();
 const { isTablet } = useBreakpoints();
 const isTabletDevice = ref(true);
 
-// setInitialData();
+setInitialData();
 
 defineProps<{
   backLabelDesktop: string;
@@ -45,9 +45,6 @@ defineProps<{
   heading: string;
 }>();
 
-onMounted(() => {
-  setInitialData();
-  isTabletDevice.value = isTablet.value;
-});
+onMounted(() => (isTabletDevice.value = isTablet.value));
 watch(isTablet, (updatedValue) => (isTabletDevice.value = updatedValue));
 </script>

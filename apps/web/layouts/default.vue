@@ -10,7 +10,7 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="!isTablet" />
+      <UiNavbarBottom v-if="!isTabletDevice" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
