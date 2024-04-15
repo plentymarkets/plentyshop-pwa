@@ -45,7 +45,7 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | ----------- | ----------- |
 | `API_URL` | Your shop domain |
 
-### System token
+### API security token
 
 1. Go to your repository.
 2. Go to **Settings**.
