@@ -18,6 +18,26 @@ Replace the URL with the shop domain of your plentyShop.
 In the local development environment, the app connects to the provided URL. In production, it connects to the plentysystems system that hosts the app.
 :::
 
+## API security token
+
+To be able to use the API endpoint generated above, an additional key must be added in the same `.env` file from `apps/web` directory:
+
+```
+API_SECURITY_TOKEN=Your-secret-api-token
+```
+
+Find your token and replace the generic key value by using the following guide:
+
+1. Log into your plentysystems system.
+2. Go to **CMS » Deployment**.
+3. Copy `PWA Security Token`
+
+For additional details, refer to the following guide:
+
+* [Deployment](/guide/setup/deployment.md)
+
+
+
 ## References
 
 - [Alokai: Middleware](https://docs.alokai.com/middleware)

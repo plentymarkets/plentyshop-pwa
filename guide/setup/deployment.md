@@ -45,6 +45,24 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | ----------- | ----------- |
 | `API_URL` | Your shop domain |
 
+### System token
+
+1. Go to your repository.
+2. Go to **Settings**.
+3. In the **Security** section, go to **Secrets and variables » Actions**.
+4. Open the **Variables** tab.
+5. Click on **New repository variable**.
+6. Fill in the information according to the table below.
+
+| Name      | Value |
+| ----------- | ----------- |
+| `API_SECURITY_TOKEN` | Your secret api token |
+
+For additional details, refer to the following guide:
+
+* [Middleware](/guide/how-to/middleware.md)
+
+
 ### Config
 
 When running the shop locally, the app utilises values from `apps/web/.env` to enable features and settings, which are then read by the Nuxt configuration.
