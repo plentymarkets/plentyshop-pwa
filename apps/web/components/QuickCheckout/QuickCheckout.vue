@@ -4,7 +4,7 @@
     v-if="isOpen"
     v-model="isOpen"
     tag="section"
-    class="h-full md:h-fit m-0 p-0 md:w-[1000px]"
+    class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto"
     aria-labelledby="quick-checkout-modal"
   >
     <header>
@@ -12,15 +12,15 @@
         <span>{{ t('quickCheckout.heading') }}</span>
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
-        <span v-if="timer" class="mr-2 text-gray-400">{{ timer }}s</span>
+        <span v-if="timer && config.public.enableQuickCheckoutTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <SfButton square variant="tertiary" @click="close">
           <SfIconClose />
         </SfButton>
       </div>
     </header>
 
-    <div class="grid grid-cols-2 gap-4">
-      <div class="border-r-2 flex flex-col items-center p-8">
+    <div class="lg:grid lg:grid-cols-2 lg:gap-4">
+      <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
           :src="productGetters.getPreviewImage(product)"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
@@ -34,25 +34,7 @@
           {{ productGetters.getName(product) }}
         </h1>
 
-        <div class="mb-3">
-          <Price
-            :price="currentActualPrice"
-            :normal-price="normalPrice"
-            :old-price="productGetters.getPrice(product).regular ?? 0"
-          />
-          <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
-            <UiTag :size="'sm'" :variant="'secondary'">{{
-              $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
-            }}</UiTag>
-          </div>
-        </div>
-        <LowestPrice :product="product" />
-        <BasePrice
-          v-if="productGetters.showPricePerUnit(product)"
-          :base-price="basePriceSingleValue"
-          :unit-content="productGetters.getUnitContent(product)"
-          :unit-name="productGetters.getUnitName(product)"
-        />
+        <ProductPrice :product="product" />
 
         <div
           class="mb-4 font-normal typography-text-sm"
@@ -68,12 +50,20 @@
             <p data-testid="subtotal" class="font-medium text-right">{{ n(totals.subTotal, 'currency') }}</p>
           </div>
         </div>
-        <SfButton type="button" class="w-full mb-3" size="lg" variant="secondary" @click="localePath(paths.cart)">
+
+        <SfButton
+          data-testid="quick-checkout-cart-button"
+          :tag="NuxtLink"
+          :to="localePath(paths.cart)"
+          size="lg"
+          class="w-full mb-3"
+          variant="secondary"
+        >
           {{ $t('quickCheckout.checkYourCart') }}
         </SfButton>
 
         <SfButton
-          data-testid="checkout-button"
+          data-testid="quick-checkout-checkout-button"
           :tag="NuxtLink"
           :to="localePath(paths.checkout)"
           size="lg"
@@ -83,10 +73,10 @@
         </SfButton>
         <div class="relative flex py-5 px-12 items-center">
           <div class="flex-grow border-t border-gray-400"></div>
-          <span class="flex-shrink mx-4 text-gray-400">OR</span>
+          <span class="flex-shrink mx-4 text-gray-400">{{ t('quickCheckout.or') }}</span>
           <div class="flex-grow border-t border-gray-400"></div>
         </div>
-        <PayPalExpressButton type="CartPreview" />
+        <PayPalExpressButton class="w-full text-center" type="CartPreview" />
       </div>
     </div>
   </UiModal>
@@ -95,17 +85,18 @@
 <script setup lang="ts">
 import { SfButton, SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import { cartGetters, productBundleGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, productGetters } from '@plentymarkets/shop-sdk';
+import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 
-const props = defineProps<QuickCheckoutProps>();
+defineProps<QuickCheckoutProps>();
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t, n } = useI18n();
-const { addModernImageExtensionForGallery } = useModernImage();
-const { getPropertiesPrice } = useProductOrderProperties();
+
 const localePath = useLocalePath();
 const { data: cart } = useCart();
-const { isOpen, timer, startTimer, endTimer } = useQuickCheckout();
+const config = useRuntimeConfig();
+const { isOpen, timer, startTimer, endTimer, closeQuickCheckout } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 onMounted(() => startTimer());
@@ -120,27 +111,7 @@ const totals = computed(() => {
   };
 });
 
-const currentActualPrice = computed(
-  () =>
-    (productGetters.getGraduatedPriceByQuantity(props.product, 1)?.price.value ??
-      productGetters.getPrice(props.product)?.special ??
-      productGetters.getPrice(props.product)?.regular ??
-      0) + getPropertiesPrice(props.product),
-);
-
-const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(props.product, 1)?.price.value ??
-  productGetters.getPrice(props.product)?.special ??
-  productGetters.getPrice(props.product)?.regular ??
-  0;
-
-const basePriceSingleValue = computed(
-  () =>
-    productGetters.getGraduatedPriceByQuantity(props.product, 1)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(props.product),
-);
-
 const close = () => {
-  console.log('close');
+  closeQuickCheckout();
 };
 </script>

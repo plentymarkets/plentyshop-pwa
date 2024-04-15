@@ -1,23 +1,43 @@
-import type { OpenQuickCheckout, UseQuickCheckoutReturn, UseQuickCheckoutState } from './types';
+import type {
+  CloseQuickCheckout,
+  EndTimer,
+  OpenQuickCheckout,
+  StartTimer,
+  UseQuickCheckoutReturn,
+  UseQuickCheckoutState,
+} from './types';
 
 /**
  * @description Composable for managing the quick checkout.
  * @returns UseCouponReturn
  * @example
  * ``` ts
- * const { addCoupon, deleteCoupon, loading } = useQuickCheckout();
+ * const { isOpen, timer, loading, endTimer, openQuickCheckout, closeQuickCheckout, startTimer } = useQuickCheckout();
  * ```
  */
 export const useQuickCheckout: UseQuickCheckoutReturn = () => {
   const state = useState<UseQuickCheckoutState>('quickCheckout', () => ({
     loading: false,
     isOpen: false,
-    timer: 15,
+    timer: defaults.DEFAULT_QUICK_CHECKOUT_TIMER,
   }));
 
   let interval = setTimeout(() => {});
 
-  const endTimer = () => {
+  /**
+   * @description Function for ending quick checkout timer.
+   * @return EndTimer
+   * @example
+   * ``` ts
+   * endTimer();
+   * ```
+   */
+  const endTimer: EndTimer = () => {
+    const config = useRuntimeConfig();
+    if (!config.public.enableQuickCheckoutTimer) {
+      return;
+    }
+
     if (state.value.timer === 0) {
       return;
     }
@@ -26,17 +46,46 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
     state.value.timer = 0;
   };
 
+  /**
+   * @description Function for opening quick checkout.
+   * @return OpenQuickCheckout
+   * @example
+   * ``` ts
+   * openQuickCheckout();
+   * ```
+   */
   const openQuickCheckout: OpenQuickCheckout = () => {
     state.value.isOpen = true;
   };
 
-  const closeQuickCheckout = () => {
+  /**
+   * @description Function for closing quick checkout.
+   * @return CloseQuickCheckout
+   * @example
+   * ``` ts
+   * closeQuickCheckout();
+   * ```
+   */
+  const closeQuickCheckout: CloseQuickCheckout = () => {
     state.value.isOpen = false;
   };
 
-  const startTimer = () => {
-    console.log('start timer');
-    state.value.timer = 15;
+  /**
+   * @description Function for starting the quick checkout timer.
+   * @return StartTimer
+   * @example
+   * ``` ts
+   * startTimer();
+   * ```
+   */
+  const startTimer: StartTimer = () => {
+    const config = useRuntimeConfig();
+
+    if (!config.public.enableQuickCheckoutTimer) {
+      return;
+    }
+
+    state.value.timer = defaults.DEFAULT_QUICK_CHECKOUT_TIMER;
 
     interval = setInterval(() => {
       state.value.timer--;
