@@ -110,9 +110,6 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
 
-      const { openQuickCheckout } = useQuickCheckout();
-      openQuickCheckout();
-
       return !!data.value;
     } catch (error) {
       throw new Error(error as string);

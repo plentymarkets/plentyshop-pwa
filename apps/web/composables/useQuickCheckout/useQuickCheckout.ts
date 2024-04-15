@@ -6,19 +6,23 @@ import type {
   UseQuickCheckoutReturn,
   UseQuickCheckoutState,
 } from './types';
+import type { Product } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing the quick checkout.
  * @returns UseCouponReturn
  * @example
  * ``` ts
- * const { isOpen, timer, loading, endTimer, openQuickCheckout, closeQuickCheckout, startTimer } = useQuickCheckout();
+ * const {
+ * isOpen, timer, loading, endTimer, openQuickCheckout, closeQuickCheckout, startTimer, product
+ * } = useQuickCheckout();
  * ```
  */
 export const useQuickCheckout: UseQuickCheckoutReturn = () => {
   const state = useState<UseQuickCheckoutState>('quickCheckout', () => ({
     loading: false,
     isOpen: false,
+    product: {} as Product,
     timer: defaults.DEFAULT_QUICK_CHECKOUT_TIMER,
   }));
 
@@ -54,7 +58,8 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * openQuickCheckout();
    * ```
    */
-  const openQuickCheckout: OpenQuickCheckout = () => {
+  const openQuickCheckout: OpenQuickCheckout = (product: Product) => {
+    state.value.product = product;
     state.value.isOpen = true;
   };
 

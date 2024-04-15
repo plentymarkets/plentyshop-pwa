@@ -41,6 +41,13 @@
           data-testid="product-description"
           v-html="productGetters.getShortDescription(product)"
         ></div>
+
+        <div class="mt-4 typography-text-xs flex gap-1">
+          <span>{{ t('asterisk') }}</span>
+          <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
+          <span v-else>{{ t('itemInclVAT') }}</span>
+          <span>{{ t('excludedShipping') }}</span>
+        </div>
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
@@ -53,8 +60,7 @@
 
         <SfButton
           data-testid="quick-checkout-cart-button"
-          :tag="NuxtLink"
-          :to="localePath(paths.cart)"
+          @click="goToPage(paths.cart)"
           size="lg"
           class="w-full mb-3"
           variant="secondary"
@@ -64,8 +70,7 @@
 
         <SfButton
           data-testid="quick-checkout-checkout-button"
-          :tag="NuxtLink"
-          :to="localePath(paths.checkout)"
+          @click="goToPage(paths.checkout)"
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
@@ -90,9 +95,9 @@ import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 
 defineProps<QuickCheckoutProps>();
 
-const NuxtLink = resolveComponent('NuxtLink');
 const { t, n } = useI18n();
-
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
 const config = useRuntimeConfig();
@@ -110,6 +115,11 @@ const totals = computed(() => {
     vats: totalsData.totalVats,
   };
 });
+
+const goToPage = (path: string) => {
+  closeQuickCheckout();
+  navigateTo(localePath(path));
+};
 
 const close = () => {
   closeQuickCheckout();
