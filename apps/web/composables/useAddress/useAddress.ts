@@ -43,6 +43,7 @@ import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsStat
 export const useAddress: UseAddressReturn = (type: AddressType) => {
   const state = useState<UseAddressMethodsState>(`useAddress-${type}`, () => ({
     data: [] as Address[],
+    useAsShippingAddress: true,
     savedAddress: {} as Address,
     loading: false,
     defaultAddressId: 0,

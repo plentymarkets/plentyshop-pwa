@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@types/cors": "^2.8.17",
-    "@vue-storefront/middleware": "3.9.0",
+    "@vue-storefront/middleware": "3.10.0",
     "consola": "^3.2.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
