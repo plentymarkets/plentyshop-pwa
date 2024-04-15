@@ -9,7 +9,6 @@
 - Category routing has been updated, and the /c prefix has been removed. Please verify that no static URLs in your application still include /c.
   - To accommodate the /c routing change, the [category page](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) was moved from apps/web/pages/category/[slug].vue to apps/web/pages/[...slug].vue.
 
-
 ### New
 
 - a ‘Previous’ button to the return form for easier navigation.
