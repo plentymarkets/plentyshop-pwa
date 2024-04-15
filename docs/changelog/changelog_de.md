@@ -14,8 +14,8 @@
 
 - Ein ‘Zurück’-Knopf für die Retouren Form, um die Navigation zu erleichtern.
 - Tags auf Artikel- und Kategorieansichten.
-- Eine Box-Komponente zur Auswahl von Artikelattributen.
-- Die Möglichkeit, eine Hauptadresse festzulegen.
+- Eine Box-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen
+- Möglichkeit, die Hauptadresse zu markieren, um die Adressenverwaltung zu verbessern
 - Bildattribute auf Artikelbildern wurden hinzugefügt.
 - Eine Artikelverfügbarkeitsanzeige.
 - Eine Sitemap-Generierungsfunktion für statischen Inhalt.
