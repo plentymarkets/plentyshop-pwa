@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import type { PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = uuid();
+const paypalUuid = ref('');
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -131,7 +131,6 @@ const renderButton = () => {
   }
 };
 
-onMounted(() => {
-  renderButton();
-});
+onBeforeMount(() => (paypalUuid.value = uuid()));
+onMounted(() => renderButton());
 </script>

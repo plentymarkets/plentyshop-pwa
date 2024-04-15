@@ -28,6 +28,11 @@ defineProps<DefaultLayoutProps>();
 
 const { setLogoMeta } = useStructuredData();
 const { isTablet } = useBreakpoints();
+const isTabletDevice = ref(true);
+
+onMounted(() => (isTabletDevice.value = isTablet.value));
+
+watch(isTablet, (updatedValue) => (isTabletDevice.value = updatedValue));
 
 setLogoMeta();
 </script>

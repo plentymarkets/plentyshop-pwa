@@ -145,9 +145,7 @@ const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 
-onMounted(() => {
-  isDesktopDevice.value = isDesktop.value;
-});
+onMounted(() => (isDesktopDevice.value = isDesktop.value));
 
 watch(isDesktop, (updatedValue) => (isDesktopDevice.value = updatedValue));
 
