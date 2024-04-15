@@ -14,6 +14,7 @@
 - a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction
+- an image component for selecting item attributes, enhancing user interaction
 - possibility to mark a primary address for improved address management
 - item availability display to provide inventory status.
 - sitemap generation feature for static content.
