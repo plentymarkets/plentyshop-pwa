@@ -39,7 +39,7 @@
           class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
           for="privacyPolicy"
         >
-          <i18n-t keypath="form.privacyPolicyLabel">
+          <i18n-t keypath="form.privacyPolicyLabel" scope="global">
             <template #privacyPolicy>
               <SfLink
                 :href="localePath(paths.privacyPolicy)"

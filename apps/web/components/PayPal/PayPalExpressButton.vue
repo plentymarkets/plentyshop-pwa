@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import type { PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const paypalUuid = uuid();
+const paypalUuid = ref('');
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -21,6 +21,8 @@ const emits = defineEmits(['on-click']);
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
 });
+
+onMounted(() => (paypalUuid.value = uuid()));
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';

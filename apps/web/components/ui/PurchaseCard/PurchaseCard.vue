@@ -9,22 +9,18 @@
         {{ productGetters.getName(product) }}
       </h1>
       <div class="flex items-center justify-center">
-        <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
-          <template v-if="!isWishlistItem(productGetters.getVariationId(product))">
-            {{ t('addToWishlist') }}
-          </template>
-          <template v-else>
-            {{ t('removeFromWishlist') }}
-          </template>
-        </WishlistButton>
-
         <WishlistButton
-          v-else
-          square
-          class="bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
           :product="product"
           :quantity="quantitySelectorValue"
-        />
+          :square="!isDesktopDevice"
+          :class="{
+            'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full': !isDesktopDevice,
+          }"
+        >
+          <template v-if="isDesktopDevice">
+            {{ !isWishlistItem(productGetters.getVariationId(product)) ? t('addToWishlist') : t('removeFromWishlist') }}
+          </template>
+        </WishlistButton>
       </div>
     </div>
     <div class="flex space-x-2">
@@ -134,6 +130,7 @@ const props = defineProps<PurchaseCardProps>();
 const { product } = toRefs(props);
 
 const { isDesktop } = useBreakpoints();
+const isDesktopDevice = ref(true);
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
@@ -147,6 +144,12 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
+
+onMounted(() => {
+  isDesktopDevice.value = isDesktop.value;
+});
+
+watch(isDesktop, (updatedValue) => (isDesktopDevice.value = updatedValue));
 
 resetInvalidFields();
 resetAttributeFields();
