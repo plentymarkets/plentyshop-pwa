@@ -16,7 +16,6 @@
 - Tags auf Artikel- und Kategorieansichten.
 - Eine Box-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen
 - Möglichkeit, die Hauptadresse zu markieren, um die Adressenverwaltung zu verbessern
-- Bildattribute auf Artikelbildern wurden hinzugefügt.
 - Eine Artikelverfügbarkeitsanzeige.
 - Eine Sitemap-Generierungsfunktion für statischen Inhalt.
 - Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht.

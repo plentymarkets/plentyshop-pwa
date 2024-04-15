@@ -15,7 +15,6 @@
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction
 - possibility to mark a primary address for improved address management
-- Added image attributes on item images.
 - item availability display to provide inventory status.
 - sitemap generation feature for static content.
 - display for bundle items in item, cart, checkout, and order summary
