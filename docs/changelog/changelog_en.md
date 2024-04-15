@@ -68,8 +68,9 @@
 - Fixed the link to the contribution guidelines in the documentation.
 
 ## New Contributors
-* @N-Feist made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/334
-* @dependabot made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/389
+
+- @N-Feist made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/334
+- @dependabot made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/389
 
 **Full Changelog**: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0
 
