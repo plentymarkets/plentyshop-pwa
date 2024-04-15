@@ -1,5 +1,67 @@
 # Changelog plentyshopPWA
 
+## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
+
+### Migrations Guide
+
+- Die Upload-Aktion wurde geändert [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) Aktualisiere die Datei, um die [config-Funktion](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config) zu nutzen.
+- Wir benötigen nun ein API Security Token, um Anfragen an die plentysystems API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- Das Kategorie-Routing wurde aktualisiert und das Präfix /c wurde entfernt. Überprüft, dass keine statischen URLs in deiner Anwendung noch /c enthalten.
+  - Um die /c-Routing-Änderung möglich zu machen, wurde die [Kategorieseite](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) von apps/web/pages/category/[slug].vue nach apps/web/pages/[...slug].vue verschoben.
+
+### Hinzugefügt
+
+- Ein ‘Zurück’-Knopf für die Retouren Form, um die Navigation zu erleichtern.
+- Tags auf Artikel- und Kategorieansichten.
+- Eine Box-Komponente zum Auswählen von Artikelattributen, um die Nutzerinteraktion zu erhöhen
+- Möglichkeit, die Hauptadresse zu markieren, um die Adressenverwaltung zu verbessern
+- Eine Artikelverfügbarkeitsanzeige.
+- Eine Sitemap-Generierungsfunktion für statischen Inhalt.
+- Eine Ansicht für Bundle-Items für die Artikel-, Warenkorb-, Kasse- und Bestellübersicht.
+- Eine ‘config’ Repository Variable zur Upload Action.
+- Eine einheitliche Komponente für Adressverwaltung.
+- Unterstützung für das moderne Bildformat (AVIF).
+- Eine Option für die Suche nach Tags.
+- Eine Bestätigungsseite für Retouren.
+
+### Geändert
+
+- Überflüssige HTML Elemente wurden entfernt, um die DOM-Größe zu reduzieren.
+- Dateinamen der Rechtsseiten.
+- Verbesserung der i18n imports.
+- Ein Nuxt-Upgrade wurde durchgeführt auf Version 3.11.1.
+- Vereinheitlichung der 'entfernen' Schaltflächen.
+- Änderung der Retouren-Ansicht von einem Popup zu einer eigenständigen Seite.
+- In der Kategorie URL wurde das '../c/..' entfernt.
+- Das Design der Bestellbestätigungs Seite wurde überarbeitet.
+- Unterschiedliche Bildergrößen-URLs für unterschiedliche Bildschirmgrößen.
+
+### Behoben
+
+- Bildqualität auf der Wunschliste verbessert.
+- Rückgabemenge und -grund von Retouren wird validiert.
+- Bestellmenge nach einer Rücksendung aktualisiert.
+- Styling des Auswahlpfeils für Attribute korrigiert.
+- Styling des Preisbutton-Filters korrigiert.
+- Retourenerstellung auf kleinen Displaygrößen erleichtert.
+- Verhalten und Name der Schaltfläche "Zurück zum Einkaufen" korrigiert.
+- Eine E-Mail-Adresse wurde fälschlicherweise automatisch im Suchfeld eingefügt
+- Styling der Eingabefelder vereinheitlicht.
+- Styling der Bestelleigenschaften vereinheitlicht.
+- Styling-Probleme bei Radio-Buttons behoben und Abstand bei Checkboxen und Coupons angepasst.
+- Styling und Formulierung im neuen Retourenprozess korrigiert.
+- Bestimmte Seiten aus der Sitemap ausgeschlossen.
+- Funktion der Schaltfläche "Produkt" in der Navigationsleiste für die Mobile Ansicht.
+- Canonical Pfad berücksichtigt die ausgewählte Sprache.
+- Formatierung der Rechtstexte für kleine Displaygrößen optimiert.
+- Kopfzeilenfarbe auf Mobilgeräten korrigiert, um ein einheitliches Erscheinungsbild zu gewährleisten.
+- Behoben, dass der Warenkorb nach einem fehlgeschlagenen Bestellvorgang nicht mehr geleert wird.
+- Layoutverschiebungen auf der Startseite behoben und feste Bildgrößen bereitgestellt.
+- Fehlende Übersetzungen auf der Startseite hinzugefügt.
+- Problem behoben, dass eine harte Aktualisierung ohne Browsercache nach dem Sprachwechsel zu einem 404-Fehler führt.
+- Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
+- Link zu den Beitragsrichtlinien in der Dokumentation behoben.
+
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### Hinzugefügt
