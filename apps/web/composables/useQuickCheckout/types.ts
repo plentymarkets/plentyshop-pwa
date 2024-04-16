@@ -15,6 +15,7 @@ export type EndTimer = () => void;
 
 export interface UseQuickCheckout {
   loading: Readonly<Ref<boolean>>;
+  hasTimer: Ref<boolean>;
   isOpen: Readonly<Ref<UseQuickCheckoutState['isOpen']>>;
   timer: Readonly<Ref<UseQuickCheckoutState['timer']>>;
   product: Readonly<Ref<UseQuickCheckoutState['product']>>;

@@ -12,7 +12,7 @@
         <span>{{ t('quickCheckout.heading') }}</span>
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
-        <span v-if="timer && config.public.enableQuickCheckoutTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
+        <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
         <SfButton square variant="tertiary" @click="close">
           <SfIconClose />
         </SfButton>
@@ -100,8 +100,7 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
-const config = useRuntimeConfig();
-const { isOpen, timer, startTimer, endTimer, closeQuickCheckout } = useQuickCheckout();
+const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 onMounted(() => startTimer());

@@ -102,11 +102,25 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
     }, 1000);
   };
 
+  /**
+   * @description Getter for checking display of timer.
+   * @return boolen
+   * @example
+   * ``` ts
+   * hasTimer === true;
+   * ```
+   */
+  const hasTimer = computed(() => {
+    const config = useRuntimeConfig();
+    return Boolean(state.value.timer && config.public.enableQuickCheckoutTimer);
+  });
+
   return {
     startTimer,
     endTimer,
     openQuickCheckout,
     closeQuickCheckout,
+    hasTimer,
     ...toRefs(state.value),
   };
 };
