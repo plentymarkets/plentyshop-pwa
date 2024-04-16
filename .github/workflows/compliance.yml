@@ -1,8 +1,14 @@
 name: Compliance
 on: pull_request
 jobs:
+  label:
+    name: conventional-release-labels
+    runs-on: ubuntu-latest
+    steps:
+    - uses: bcoe/conventional-release-labels@v1
   changelog:
     name: Changelog updated
+    needs: label
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
