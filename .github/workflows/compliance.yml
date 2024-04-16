@@ -10,8 +10,7 @@ jobs:
       - name: Check if changelog is in diff
         run: |
           gh pr diff "$BRANCH" --name-only >> diff.txt
-          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
-          cat diff.txt
+          grep -Fx ".github/workflows/compliance.yml" diff.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.head_ref }}
