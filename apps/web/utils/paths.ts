@@ -5,6 +5,7 @@ export const paths = {
   cart: '/cart',
   wishlist: '/wishlist',
   checkout: '/checkout',
+  guestLogin: '/guest/login',
   readonlyCheckout: '/readonly-checkout',
   search: '/search',
   account: '/my-account/personal-data',

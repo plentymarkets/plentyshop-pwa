@@ -13,7 +13,7 @@
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
-          :to="localePath(paths.checkout)"
+          :to="goToCheckout()"
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
@@ -35,7 +35,16 @@ import { useCart } from '~/composables';
 const { isDesktop } = useBreakpoints();
 
 const localePath = useLocalePath();
+const { isAuthorized } = useCustomer();
 
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
+
+function goToCheckout() {
+  if (isAuthorized.value) {
+    return localePath(paths.checkout);
+  } else {
+   return localePath(paths.guestLogin);
+  }
+}
 </script>
