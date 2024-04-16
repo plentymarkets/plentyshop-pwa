@@ -8,11 +8,11 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
       - name: Check if changelog is in diff
-        if: ${{ github.event.pull_request.labels.name != 'feature' && github.event.pull_request.labels.name != 'fix' }}
+        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
         run: |
           gh pr diff "$BRANCH" --name-only >> diff.txt
           grep -Fxq "docs/changelog/changelog_en.md" diff.txt
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.head_ref }}
-          LABEL_NAME: ${{ github.event.pull_request.labels.name }}
+          LABEL_NAME: ${{ github.event.pull_request.labels.*.name }}
