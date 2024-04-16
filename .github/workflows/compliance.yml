@@ -15,4 +15,3 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.head_ref }}
-          LABEL_NAME: ${{ github.event.pull_request.labels.*.name }}
