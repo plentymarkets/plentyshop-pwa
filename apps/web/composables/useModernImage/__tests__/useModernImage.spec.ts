@@ -24,6 +24,14 @@ describe('useModernImage', () => {
 
     afterEach(() => {
         vi.clearAllMocks();
+        useRuntimeConfig.mockImplementation(() => {
+            return {
+                public: {
+                    useAvif: true,
+                    useWebp: true
+                }
+            }
+        });
     });
 
     it('should add the avif extension to the url', () => {
