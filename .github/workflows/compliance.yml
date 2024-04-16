@@ -8,3 +8,5 @@ jobs:
       - name: Check if changelog is in diff
         run: |
           gh pr diff --name-only
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
