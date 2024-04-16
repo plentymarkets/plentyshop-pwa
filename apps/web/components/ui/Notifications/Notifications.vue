@@ -2,9 +2,7 @@
   <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0 h-0">
     <div v-for="notification of notifications" class="my-2" :key="notification.id">
       <UiAlert :size="'base'" :variant="notification.type">
-        <div class="flex items-center gap-2">
-          <span class="typography-text-sm">{{ notification.message }}</span>
-        </div>
+        <span class="typography-text-sm">{{ notification.message }}</span>
         <button
           v-if="notification?.action?.onClick"
           @click="notification?.action?.onClick"
