@@ -1,5 +1,79 @@
 # Changelog plentyshopPWA
 
+## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
+
+### Migration guide
+
+- The upload action was changed [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) update the file to make use of the [config feature](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config)
+- We now require an API Security Token to make requests to the plentysystems API. [setup guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- Category routing has been updated, and the /c prefix has been removed. Please verify that no static URLs in your application still include /c.
+  - To accommodate the /c routing change, the [category page](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) was moved from apps/web/pages/category/[slug].vue to apps/web/pages/[...slug].vue.
+
+### New
+
+- a ‘Previous’ button to the return form for easier navigation.
+- Added tag display on single item and category views.
+- a box component for selecting item attributes, enhancing user interaction
+- an image component for selecting item attributes, enhancing user interaction
+- possibility to mark a primary address for improved address management
+- item availability display to provide inventory status.
+- sitemap generation feature for static content.
+- display for bundle items in item, cart, checkout, and order summary
+- performance optimisation for wishlist calls.
+- ‘config’ repository variable to the upload action.
+- unified address handling in a single component.
+- support for the modern image format (AVIF).
+- search by tags.
+- order return confirmation page.
+
+### Changed
+
+- Removed unnecessary HTML nodes to reduce DOM size.
+- Changed filenames of legal pages.
+- Optimized i18n imports.
+- Performed an Nuxt upgrade to version 3.11.1.
+- Unified the design of 'Remove' buttons.
+- Changed the return layout from a popup to its own page.
+- Removed ‘…/c/…’ as category URL identifier for cleaner URLs.
+- Modified the order of address format.
+- Updated the styling of the order confirmation page.
+- Implemented different imagesize URLs for different viewport sizes.
+- Moved the ‘delete from wishlist’ button to the top right.
+- Updated the upload action.
+
+### Fixed
+
+- Improved the image quality on the wishlist.
+- added validation for return quantity and reason during return creation.
+- Updated the order quantity after making a return.
+- Fixed the styling of the attribute select arrow.
+- Fixed the styling of price buttons filter.
+- Adjusted the return form for mobile return orders.
+- Fixed the behavior and name of the ‘Back to Shopping’ button.
+- Fixed a bug where an email address was added to the searchbar via autocomplete.
+- Unified the styling of input heights.
+- Unified the styling of order properties.
+- Fixed styling issues on radio buttons and adjusted spacing on checkboxes and coupons.
+- Fixed the styling and wording on the new return page.
+- Excluded certain pages from the sitemap.
+- Fixed the function of the 'Product' button in the navbar for mobile device.
+- Canonical URL includes currently selected language path.
+- Fixed the format of legal text on small display sizes.
+- Fixed the header color on mobile devices, to have a unified look and feel.
+- Ensured the cart does not clear after a failed order process.
+- Fixed homepage layout shifts and deliver fixed image sizes.
+- Added missing translations on the homepage.
+- Fixed the issue where a hard load after language switch leads to a 404 error.
+- Added the missing wishlist navigation button on mobile devices.
+- Fixed the link to the contribution guidelines in the documentation.
+
+## New Contributors
+
+- @N-Feist made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/334
+- @dependabot made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/389
+
+**Full Changelog**: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0
+
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener">
 
 ### New
