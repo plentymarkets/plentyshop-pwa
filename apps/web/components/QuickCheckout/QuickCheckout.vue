@@ -22,7 +22,7 @@
     <div class="lg:grid lg:grid-cols-2 lg:gap-4">
       <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
-          :src="productGetters.getPreviewImage(product)"
+          :src="addModernImageExtension(productGetters.getPreviewImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
           width="240"
           height="240"
@@ -100,6 +100,7 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
+const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
