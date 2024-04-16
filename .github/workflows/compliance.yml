@@ -1,0 +1,10 @@
+name: Compliance
+on: pull_request
+jobs:
+  changelog:
+    name: Changelog updated
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if changelog is in diff
+        run: |
+          gh pr diff --name-only
