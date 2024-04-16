@@ -6,7 +6,7 @@
         :back-label-mobile="$t('back')"
         :heading="$t('checkout')"
     >
-        <CartLogin/>
+        <GuestLogin/>
     </NuxtLayout>
 </template>
 
@@ -23,4 +23,4 @@ const backUrl = localePath(String(historyState.back));
 const currentUrl = localePath(String(historyState.current));
 const homeUrl = localePath(paths.home);
 const backHref = backUrl === currentUrl ? homeUrl : backUrl;
-</script>
+</script>../../components/GuestLogin/GuestLogin.vue

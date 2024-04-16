@@ -5,9 +5,9 @@
       </div>
 
       <div class="flex items-center justify-center w-full my-2">
-        <hr class="flex-grow border-black"/>
-        <p class="px-2 text-center">OR</p>
-        <hr class="flex-grow border-black"/>
+        <div class="border-t-2 flex-grow"></div>
+        <p class="px-2 text-sm">OR</p>
+        <div class="border-t-2 flex-grow"></div>
       </div>
 
 
