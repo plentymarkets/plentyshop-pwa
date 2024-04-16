@@ -349,6 +349,8 @@
   "productDetails": "Product details",
   "technicalData": "Technical data",
   "customerReviews": "Customer Reviews",
+  "loginBeforeCreateReview": "Log in to write a review",
+  "createCustomerReview": "Submit review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
@@ -368,7 +370,26 @@
     "image": "Slide {index}"
   },
   "review": {
-    "verifiedPurchase": "Verified purchase"
+    "title": "Title",
+    "verifiedPurchase": "Verified purchase",
+    "createReviewFormTitle": "Leave a review",
+    "editReviewFormTitle": "Edit review",
+    "editReplyFormTitle": "Edit reply",
+    "yourRating": "Your rating:",
+    "reviewText": "Product review (optional)",
+    "reviewAuthor": "Your name (optional)",
+    "cancel": "Cancel",
+    "submitReview": "Send review",
+    "answer": "Answer",
+    "saveAnswer": "Save",
+    "showAnswers": "Show answers",
+    "hideAnswers": "Hide answers",
+    "anonymous": "Anonymous",
+    "areYouSure": "Are you sure to delete the review?",
+    "deleteReview": "Yes, delete",
+    "createSuccess": "Review sent",
+    "toolTipVisibilityOn": "Your contribution is visible!",
+    "toolTipVisibilityOff": "Your contribution is currently not visible. It becomes visible as soon as the shop provider releases it."
   },
   "account": {
     "heading": "My Account",

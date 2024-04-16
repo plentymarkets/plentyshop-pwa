@@ -193,7 +193,6 @@ const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
-
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();
 const localePath = useLocalePath();

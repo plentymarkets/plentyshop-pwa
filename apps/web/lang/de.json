@@ -349,6 +349,8 @@
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",
   "customerReviews": "Kundenrezensionen",
+  "createCustomerReview": "Bewertung abgeben",
+  "loginBeforeCreateReview": "Log dich ein, um eine Bewertung zu schreiben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
@@ -368,7 +370,26 @@
     "image": "Bild {index}"
   },
   "review": {
-    "verifiedPurchase": "Verifizierter Kauf"
+    "title": "Titel",
+    "verifiedPurchase": "Verifizierter Kauf",
+    "createReviewFormTitle": "Schreib eine Bewertung",
+    "editReviewFormTitle": "Bewertung bearbeiten",
+    "editReplyFormTitle": "Antwort bearbeiten",
+    "yourRating": "Deine Wertung:",
+    "reviewText": "Produktbewertung (optional)",
+    "reviewAuthor": "Dein Name (optional)",
+    "cancel": "Abbrechen",
+    "submitReview": "Bewertung absenden",
+    "answer": "Antworten",
+    "saveAnswer": "Speichern",
+    "showAnswers": "Antworten anzeigen",
+    "hideAnswers": "Antworten ausblenden",
+    "anonymous": "Anonym",
+    "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
+    "deleteReview": "Ja, löschen",
+    "createSuccess": "Bewertung wurde gesendet",
+    "toolTipVisibilityOn": "Dein Beitrag wurde veröffentlicht!",
+    "toolTipVisibilityOff": "Dein Beitrag ist für andere nicht sichtbar. Er wird sichtbar, sobald der Shopbetreiber Ihn geprüft hat."
   },
   "account": {
     "heading": "Mein Konto",
