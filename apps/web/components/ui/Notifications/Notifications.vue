@@ -31,7 +31,18 @@
 import { SfIconClose } from '@storefront-ui/vue';
 import type { Notification } from '../../../composables/useNotification/types';
 
-const getButtonClasses = (notification: Notification) => {
+const classMapper = {
+  neutral: 'text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900',
+  warning: 'text-warning-700 hover:bg-warning-200 active:bg-warning-300 hover:text-warning-800 active:text-warning-900',
+  positive:
+    'text-positive-700 hover:bg-positive-200 active:bg-positive-300 hover:text-positive-800 active:text-positive-900',
+  negative:
+    'text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900',
+  secondary:
+    'text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900',
+};
+
+const getButtonClasses = (notification: Notification) => classMapper[notification.type] ?? '';
   switch (notification.type) {
     case 'positive': {
       return 'text-positive-700 hover:bg-positive-200 active:bg-positive-300 hover:text-positive-800 active:text-positive-900';
