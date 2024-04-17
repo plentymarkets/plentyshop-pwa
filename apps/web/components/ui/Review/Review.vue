@@ -5,27 +5,24 @@
         <p class="text-xs truncate text-neutral-400 mb-2">
           <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
           <span v-if="verifiedPurchase">
-            <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
+            <SfIconCheck size="xs" class="mr-1" />
+            {{ $t('review.verifiedPurchase') }}
           </span>
         </p>
       </div>
       <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
-        <span v-if="reviewGetters.getReviewVisibility(reviewItem)">
-          <SfTooltip :label="$t('review.toolTipVisibilityOn')">
-            <SfIconVisibility size="sm" class="fill-neutral-400" />
-          </SfTooltip>
-        </span>
-        <span v-else>
-          <SfTooltip class="w-3" :label="$t('review.toolTipVisibilityOff')">
-            <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
-          </SfTooltip>
-        </span>
-        <span>
-          <SfLink href="#" @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900" /></SfLink>
-        </span>
-        <span>
-          <SfLink href="#" @click="openDelete"><SfIconDelete size="sm" class="fill-primary-900" /></SfLink>
-        </span>
+        <SfTooltip v-if="reviewGetters.getReviewVisibility(reviewItem)" :label="$t('review.toolTipVisibilityOn')">
+          <SfIconVisibility size="sm" class="fill-neutral-400" />
+        </SfTooltip>
+        <SfTooltip v-else :label="$t('review.toolTipVisibilityOff')" class="w-3">
+          <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
+        </SfTooltip>
+        <SfLink href="#" @click="openReviewEdit">
+          <SfIconTune size="sm" class="fill-primary-900" />
+        </SfLink>
+        <SfLink href="#" @click="openDelete">
+          <SfIconDelete size="sm" class="fill-primary-900" />
+        </SfLink>
       </div>
     </div>
     <header>
@@ -100,7 +97,9 @@
               @click="isAnswerFormOpen = false"
               >{{ $t('review.cancel') }}
             </SfButton>
-            <SfButton @click.="isAnswerFormOpen = false" type="submit" size="sm" class="flex-1 md:flex-initial">{{ $t('review.saveAnswer') }}</SfButton>
+            <SfButton @click.="isAnswerFormOpen = false" type="submit" size="sm" class="flex-1 md:flex-initial">{{
+              $t('review.saveAnswer')
+            }}</SfButton>
           </div>
         </form>
       </template>
@@ -151,7 +150,7 @@
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReplyEdit">
       <SfIconClose />
     </SfButton>
-    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm>
+    <!-- <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm> -->
   </UiModal>
 </template>
 
@@ -174,12 +173,12 @@ import {
 import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
 import ReviewEditForm from '~/components/ReviewEditForm/ReviewEditForm.vue';
-import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
-import type { ReplyItem } from '@plentymarkets/shop-api';
+// import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
+// import type { ReplyItem } from '@plentymarkets/shop-api';
 defineEmits(['on-submit']);
 const props = defineProps<ReviewProps>();
 const { reviewItem } = toRefs(props);
-const replyItem = ref({} as ReplyItem);
+// const replyItem = ref({} as ReplyItem);
 
 const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
 const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
@@ -215,11 +214,11 @@ const form = ref({
 });
 
 const isAnswerEditable = (replyItem: ReplyItem) => {
-  return replyItem.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
+  return replyItem.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString();
 };
 
 const isEditable = computed(() => {
-  return reviewItem.value.sourceRelation[0].feedbackRelationSourceId === data.value.user?.id?.toString();
+  return reviewItem.value.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString();
 });
 
 const delReview = () => {
