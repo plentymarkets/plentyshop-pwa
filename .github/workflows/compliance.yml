@@ -1,9 +1,7 @@
 name: Compliance
 on:
   pull_request:
-    types: [ opened, edited, reopened ]
-  pull_request_target:
-    types: [ opened, edited, reopened ]
+    types: [ opened, edited, synchronize, reopened ]
 jobs:
   label:
     name: conventional-release-labels
