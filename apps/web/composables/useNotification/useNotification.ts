@@ -57,7 +57,7 @@ export const useNotification: UseNotificationReturn = () => {
 
   const clear = () => {
     state.value.data = [];
-  }
+  };
 
   return {
     send,
