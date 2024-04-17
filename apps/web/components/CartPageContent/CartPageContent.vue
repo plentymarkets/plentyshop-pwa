@@ -41,10 +41,6 @@ const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
 
 function goToCheckout() {
-  if (isAuthorized.value) {
-    return localePath(paths.checkout);
-  } else {
-   return localePath(paths.guestLogin);
-  }
+  return isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin);
 }
 </script>
