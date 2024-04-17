@@ -57,6 +57,7 @@
     "selectPlaceholder": "-- Select --",
     "emailLabel": "Email",
     "passwordLabel": "Password",
+    "repeatPasswordLabel": "Repeat Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
@@ -483,8 +484,9 @@
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Sign up",
-      "submitLabel": "Sign up",
+      "heading": "Create an account",
+      "subheading": "Sign up now to enjoy awesome benefits",
+      "submitLabel": "Sign up!",
       "alreadyHaveAccount": "Already have an account?",
       "emailAlreadyExists": "This email address is already registered.",
       "logInLinkLabel": "Log in instead",
@@ -495,6 +497,17 @@
         "information": "add information",
         "button": "Go Shopping",
         "imageAlt": "Image to confirm successful signup"
+      },
+      "benefits": {
+        "saveAddresses": "Save multiple addresses",
+        "orderTracking": "Keep track of your orders",
+        "wishlist": "Save items for later everywhere you go",
+        "orderHistory": "Your complete order history in one place"
+      },
+      "passwordValidation": {
+        "characters": "The password must contain at least 8 characters.",
+        "digits": "The password must contain at least one digit.",
+        "letters": "The password must contain at least one letter."
       }
     },
     "resetPassword": {
@@ -684,7 +697,8 @@
     },
     "password": {
       "required": "Password is required.",
-      "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
+      "valid": "Password must be at least 8 characters long and include at least one letter and one number.",
+      "match": "Passwords do not match."
     },
     "newsletter": {
       "firstNameRequired": "First Name is required.",
