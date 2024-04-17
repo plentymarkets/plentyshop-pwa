@@ -4,17 +4,11 @@ import { useModernImage } from "../useModernImage";
 const { useRuntimeConfig } = vi.hoisted(() => {
     return {
         useRuntimeConfig: vi.fn().mockImplementation(() => {
-            return {
-                public: {
-                    useAvif: true,
-                    useWebp: true
-                }
-            }
+            return {}
         })
     }
 });
 
-// mockNuxtImport can only be called once per test file
 mockNuxtImport('useRuntimeConfig', () => {
     return useRuntimeConfig
 });
@@ -108,4 +102,42 @@ describe('useModernImage with webp and avif enabled', () => {
         expect(res).toBe('https://example.com/item/images/image.jpg.avif');
     });
 
+});
+
+describe('useModernImage with webp and avif disabled', () => {
+    beforeEach(() => {
+        useRuntimeConfig.mockImplementation(() => {
+            return {
+                public: {
+                    useAvif: false,
+                    useWebp: false
+                }
+            }
+        });
+    });
+
+    afterEach(() => {
+        vi.clearAllMocks();
+    });
+
+    it('should not add any extension to the url', () => {
+        const { addModernImageExtension } = useModernImage();
+        const url = 'https://example.com/item/images/image.png';
+        const res = addModernImageExtension(url);
+        expect(res).toBe('https://example.com/item/images/image.png');
+    });
+
+    it('should not add any extension to the url if the url has no /item/images/ in it', () => {
+        const { addModernImageExtension } = useModernImage();
+        const url = 'https://example.com/images/image.jpg';
+        const res = addModernImageExtension(url);
+        expect(res).toBe('https://example.com/images/image.jpg');
+    });
+
+    it('should not add any extension to the url if the base extension is not supported', () => {
+        const { addModernImageExtension } = useModernImage();
+        const url = 'https://example.com/item/images/image.svg';
+        const res = addModernImageExtension(url);
+        expect(res).toBe('https://example.com/item/images/image.svg');
+    });
 });
