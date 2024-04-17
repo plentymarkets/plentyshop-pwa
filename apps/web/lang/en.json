@@ -506,8 +506,8 @@
       },
       "passwordValidation": {
         "characters": "The password must contain at least 8 characters.",
-        "digits": "The password must contain at least one digit.",
-        "letters": "The password must contain at least one letter."
+        "letters": "The password must contain at least one letter.",
+        "numbers": "The password must contain at least one digit."
       }
     },
     "resetPassword": {
