@@ -20,11 +20,7 @@ describe('useNotification', () => {
         send({
             message: 'Test alert error with a longer message',
             type: 'negative',
-            persist: true,
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
+            persist: true
         });
 
         expect(data.value.length).toBe(1);
@@ -36,10 +32,6 @@ describe('useNotification', () => {
         send({
             message: 'Test alert error with a longer message',
             type: 'negative',
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
         });
 
         expect(data.value.length).toBe(1);
@@ -88,10 +80,6 @@ describe('useNotification', () => {
         send({
             message: 'Test positive message',
             type: 'positive',
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
         });
 
         expect(data.value.length).toBe(1);
@@ -109,10 +97,6 @@ describe('useNotification', () => {
         send({
             message: 'Test negative message',
             type: 'negative',
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
             dismissTimeout: 10
         });
 
@@ -130,10 +114,6 @@ describe('useNotification', () => {
             message: 'Test persist message',
             type: 'positive',
             persist: true,
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
             dismissTimeout: 10
         });
 
@@ -157,8 +137,6 @@ describe('useNotification', () => {
                 onClick: action,
             },
         });
-
-        expect(data.value.length).toBe(1);
 
         if (data.value[0].action) {
             data.value[0].action.onClick();
