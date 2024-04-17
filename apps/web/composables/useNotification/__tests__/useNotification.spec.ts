@@ -87,8 +87,9 @@ describe('useNotification', () => {
         expect(data.value.length).toBe(5);
     });
 
-    it('should remove a notification after 10ms', async () => {
+    it('should remove a notification after default timeout', async () => {
         const { data, send } = useNotification();
+        const defaultTimeout = 3000;
 
         send({
             message: 'Test positive message',
@@ -97,13 +98,14 @@ describe('useNotification', () => {
                 text: 'action',
                 onClick: () => {},
             },
-            dismissTimeout: 10
         });
 
         expect(data.value.length).toBe(1);
+        
+        await new Promise((resolve) => setTimeout(resolve, defaultTimeout - 100));
+        expect(data.value.length).toBe(1);
 
-        await new Promise((resolve) => setTimeout(resolve, 10));
-
+        await new Promise((resolve) => setTimeout(resolve, 200));
         expect(data.value.length).toBe(0);
     });
 
