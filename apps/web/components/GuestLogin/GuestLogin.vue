@@ -37,15 +37,15 @@
                             </label>
                     
                             <SfButton type="submit" class="mt-4 w-full">
-                                <SfLoaderCircular/>
+                                <SfLoaderCircular v-if="loading"/>
                                 <span>
                                     {{ $t('auth.login.loginAndContinue') }}
                                 </span>
                             </SfButton>
                             <div class="text-center mt-6">
-                            <SfLink href="#" variant="primary">
+                            <!-- <SfLink href="#" variant="primary">
                                 {{ $t('auth.login.forgotPasswordLabel') }}
-                            </SfLink>
+                            </SfLink> -->
                             <div class="mt-6">
                                 <h3 class="font-bold text-lg mb-6">{{ $t('auth.login.createAccount') }}</h3>
                                 <p>{{ $t('auth.login.createAccountLater') }}!</p>
@@ -62,9 +62,9 @@
   
 
 <script setup lang="ts">
-    import { SfButton, SfLink, SfInput} from '@storefront-ui/vue';
+    import { SfButton, SfLink, SfInput,SfLoaderCircular} from '@storefront-ui/vue';
 
-    const { login } = useCustomer();
+    const { login, loading } = useCustomer();
     const { send } = useNotification();
     const { t } = useI18n();
     const localePath = useLocalePath();
