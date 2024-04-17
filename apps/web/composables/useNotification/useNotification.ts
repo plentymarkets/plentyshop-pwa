@@ -1,7 +1,7 @@
 import type { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
 const maxVisibleNotifications = 5;
-const timeToLive = 3000;
+const dismissTimeout = 3000;
 
 /**
  * @description Composable to display ui notifications
@@ -51,12 +51,17 @@ export const useNotification: UseNotificationReturn = () => {
     if (state.value.data.length > maxVisibleNotifications) state.value.data.shift();
 
     if (!notification.persist && notification.type !== 'negative') {
-      setTimeout(dismiss, timeToLive);
+      setTimeout(dismiss, notification.dismissTimeout || dismissTimeout);
     }
   };
 
+  const clear = () => {
+    state.value.data = [];
+  }
+
   return {
     send,
+    clear,
     ...toRefs(state.value),
   };
 };
