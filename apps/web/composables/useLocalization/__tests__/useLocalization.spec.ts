@@ -30,13 +30,23 @@ describe('useLocalization', () => {
   });
 
   it('should test strategy "prefix_except_default"', () => {
+
+    useNuxtApp.mockImplementation(() => {
+      return {
+        $i18n: {
+          locale: ref('de'),
+          defaultLocale: 'de',
+          strategy: 'prefix_except_default',
+        }
+      }
+    });
     const path = '/category/subcategory';
 
     const { getCategoryUrlFromRoute } = useLocalization();
     const res = getCategoryUrlFromRoute(path);
     expect(res).toBe('/category/subcategory');
   });
-  
+
   it('should test strategy "prefix"', () => {
     useNuxtApp.mockImplementation(() => {
       return {
