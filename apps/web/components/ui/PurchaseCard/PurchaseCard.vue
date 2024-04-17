@@ -196,9 +196,11 @@ const handleAddToCart = async () => {
     return;
   }
 
+  const orderProperties = getPropertiesForCart();
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
+    basketItemOrderParams: orderProperties.length > 0 ? orderProperties : undefined,
   };
 
   if (await addToCart(params)) {
