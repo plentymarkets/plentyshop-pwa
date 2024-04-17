@@ -19,7 +19,7 @@ mockNuxtImport('useRuntimeConfig', () => {
     return useRuntimeConfig
 });
 
-describe('useModerImage with only webp enabled', () => {
+describe('useModernImage with only webp enabled', () => {
 
     beforeEach(() => {
         useRuntimeConfig.mockImplementation(() => {
