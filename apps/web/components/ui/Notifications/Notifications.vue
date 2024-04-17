@@ -30,6 +30,7 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 import type { Notification } from '../../../composables/useNotification/types';
+const { data: notifications } = useNotification();
 
 const classMapper = {
   neutral: 'text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900',
@@ -43,73 +44,4 @@ const classMapper = {
 };
 
 const getButtonClasses = (notification: Notification) => classMapper[notification.type] ?? '';
-  switch (notification.type) {
-    case 'positive': {
-      return 'text-positive-700 hover:bg-positive-200 active:bg-positive-300 hover:text-positive-800 active:text-positive-900';
-    }
-    case 'negative': {
-      return 'text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900';
-    }
-    case 'neutral': {
-      return 'text-neutral-700 hover:bg-neutral-200 active:bg-neutral-300 hover:text-neutral-800 active:text-neutral-900';
-    }
-    case 'warning': {
-      return 'text-warning-700 hover:bg-warning-200 active:bg-warning-300 hover:text-warning-800 active:text-warning-900';
-    }
-    case 'secondary': {
-      return 'text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900';
-    }
-    default: {
-      return '';
-    }
-  }
-};
-
-const { data: notifications, send } = useNotification();
-
-onMounted(() => {
-  send({
-    type: 'negative',
-    message: 'This is a negative notification',
-    action: {
-      text: 'Undo',
-      onClick: () => {},
-    },
-  });
-  send({
-    type: 'warning',
-    persist: true,
-    message: 'This is a warning notification',
-    action: {
-      text: 'Undo',
-      onClick: () => {},
-    },
-  });
-  send({
-    type: 'positive',
-    message: 'This is a positive notification',
-    persist: true,
-
-    action: {
-      text: 'Undo',
-      onClick: () => {},
-    },
-  });
-  send({
-    type: 'neutral',
-    message: 'This is a neutral notification',
-    persist: true,
-
-    action: {
-      text: 'Undo',
-      onClick: () => {},
-    },
-  });
-  send({
-    persist: true,
-    type: 'secondary',
-    message:
-      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-  });
-});
 </script>
