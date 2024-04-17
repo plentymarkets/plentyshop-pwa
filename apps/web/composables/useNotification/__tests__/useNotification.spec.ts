@@ -54,16 +54,14 @@ describe('useNotification', () => {
     it('should clear all notifications', () => {
         const { data, send, clear } = useNotification();
 
-        send({
-            message: 'Test alert error with a longer message',
-            type: 'negative',
-            action: {
-                text: 'action',
-                onClick: () => {},
-            },
-        });
+        for (let i = 0; i < 5; i++) {
+            send({
+                message: 'Test alert error with a longer message',
+                type: 'negative',
+            });
+        }
 
-        expect(data.value.length).toBe(1);
+        expect(data.value.length).toBe(5);
 
         clear();
 
@@ -75,15 +73,12 @@ describe('useNotification', () => {
 
         for (let i = 0; i < 6; i++) {
             send({
-                message: 'Test positive message',
+                message: `Message ${i}`,
                 type: 'positive',
-                action: {
-                    text: 'action',
-                    onClick: () => {},
-                },
             });
         }
 
+        expect(data.value[0].message).toBe('Message 1');
         expect(data.value.length).toBe(5);
     });
 
