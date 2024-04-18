@@ -58,9 +58,10 @@ const onClick = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if (result?.url && (type.value === TypeCartPreview || type.value === TypeSingleItem)) {
+  if ((type.value === TypeCartPreview || type.value === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
-  } else if (type.value === TypeCheckout) {
+
+  if (type.value === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -74,13 +75,12 @@ const onApprove = async (data: OnApproveData) => {
 
     clearCartItems();
 
-    if (order?.order?.id) {
+    if (order?.order?.id)
       navigateTo(localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey));
-    }
   }
 };
 
-const activateButton = (fundingSource: FUNDING_SOURCE) => {
+const renderButton = (fundingSource: FUNDING_SOURCE) => {
   if (paypal?.Buttons && fundingSource) {
     const button = paypal?.Buttons({
       style: {
@@ -113,16 +113,15 @@ const activateButton = (fundingSource: FUNDING_SOURCE) => {
   }
 };
 
-const renderButton = () => {
-  if (paypal) {
-    const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
-    FUNDING_SOURCES.forEach((fundingSource) => activateButton(fundingSource as FUNDING_SOURCE));
-  }
-};
-
 const createPaypalUuid = async () => (paypalUuid.value = uuid());
 
 onMounted(async () => {
-  await createPaypalUuid().then(() => renderButton());
+  await createPaypalUuid().then(() => {
+    if (paypal) {
+      const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
+      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+    }
+    return true;
+  });
 });
 </script>
