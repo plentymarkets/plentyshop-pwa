@@ -17,10 +17,10 @@
         <SfTooltip v-else :label="$t('review.toolTipVisibilityOff')" class="w-3">
           <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfLink href="#" @click="openReviewEdit">
+        <SfLink @click="openReviewEdit">
           <SfIconTune size="sm" class="fill-primary-900" />
         </SfLink>
-        <SfLink href="#" @click="openDelete">
+        <SfLink @click="openDelete">
           <SfIconDelete size="sm" class="fill-primary-900" />
         </SfLink>
       </div>
@@ -150,7 +150,7 @@
     <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReplyEdit">
       <SfIconClose />
     </SfButton>
-    <!-- <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm> -->
+    <ReplyEditForm :reply-item="reviewItem" @on-close="closeReplyEdit" @on-submit="editReview"></ReplyEditForm>
   </UiModal>
 </template>
 
@@ -175,6 +175,7 @@ import { computed, ref } from 'vue';
 import ReviewEditForm from '~/components/ReviewEditForm/ReviewEditForm.vue';
 // import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
 // import type { ReplyItem } from '@plentymarkets/shop-api';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 defineEmits(['on-submit']);
 const props = defineProps<ReviewProps>();
 const { reviewItem } = toRefs(props);
@@ -213,7 +214,7 @@ const form = ref({
   ratingMissing: true,
 });
 
-const isAnswerEditable = (replyItem: ReplyItem) => {
+const isAnswerEditable = (replyItem: ReviewItem) => {
   return replyItem.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString();
 };
 

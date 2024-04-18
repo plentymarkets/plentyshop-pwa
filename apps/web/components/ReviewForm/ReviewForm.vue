@@ -36,15 +36,15 @@
           </span>
         </label>
         <label class="block mb-6">
-          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
-            $t('review.reviewAuthor')
-          }}</span>
+          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">
+            {{ $t('review.reviewAuthor') }}
+          </span>
           <SfInput v-model="form.authorName" />
         </label>
         <div class="flex justify-end gap-x-4">
-          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">{{
-            $t('review.cancel')
-          }}</SfButton>
+          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
+            {{ $t('review.cancel') }}
+          </SfButton>
           <SfButton type="submit" class="flex-1 md:flex-initial">{{ $t('review.submitReview') }}</SfButton>
         </div>
       </div>
@@ -70,8 +70,8 @@ const form = ref({
 });
 
 const ratingLabelId = useId();
-const ratingModelValue = ref();
-const usernameModelValue = ref('');
+// const ratingModelValue = ref();
+// const usernameModelValue = ref('');
 const reviewModelValue = ref('');
 const reviewCharacterLimit = ref(500);
 const reviewIsAboveLimit = computed(() => reviewModelValue.value.length > reviewCharacterLimit.value);

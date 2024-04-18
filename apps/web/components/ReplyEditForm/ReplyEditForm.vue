@@ -9,14 +9,14 @@
       <div class="col-span-2">
         <label class="my-4 block">
           <label class="block mb-6">
-            <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{
-              $t('review.reviewAuthor')
-            }}</span>
+            <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">
+              {{ $t('review.reviewAuthor') }}
+            </span>
             <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.authorName" />
           </label>
-          <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">{{
-            $t('review.reviewText')
-          }}</span>
+          <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">
+            {{ $t('review.reviewText') }}
+          </span>
           <textarea
             v-model="form.message"
             class="block w-full py-2 pl-4 pr-3 min-h-[138px] rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
@@ -31,10 +31,12 @@
           </span>
         </label>
         <div class="flex justify-end gap-x-4">
-          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">{{
-            $t('review.cancel')
-          }}</SfButton>
-          <SfButton type="submit" class="flex-1 md:flex-initial">{{ $t('review.submitReview') }}</SfButton>
+          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
+            {{ $t('review.cancel') }}
+          </SfButton>
+          <SfButton type="submit" class="flex-1 md:flex-initial">
+            {{ $t('review.submitReview') }}
+          </SfButton>
         </div>
       </div>
     </form>
@@ -44,7 +46,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import { reviewGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfInput, useId } from '@storefront-ui/vue';
+import { SfButton, SfInput } from '@storefront-ui/vue';
 import type { ReplyEditFormProps } from '~/components/ReplyEditForm/types';
 defineEmits(['on-close', 'on-submit']);
 const props = defineProps<ReplyEditFormProps>();
@@ -62,9 +64,9 @@ const form = ref({
   ratingMissing: true,
 });
 
-const ratingLabelId = useId();
-const ratingModelValue = ref();
-const usernameModelValue = ref('');
+// const ratingLabelId = useId();
+// const ratingModelValue = ref();
+// const usernameModelValue = ref('');
 const reviewModelValue = ref('');
 const reviewCharacterLimit = ref(500);
 const reviewIsAboveLimit = computed(() => reviewModelValue.value.length > reviewCharacterLimit.value);

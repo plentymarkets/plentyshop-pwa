@@ -25,9 +25,7 @@
             v-model="form.message"
             class="block w-full py-2 pl-4 pr-3 min-h-[138px] rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
           >
-              {{ reviewGetters.getReviewMessage(reviewItem) }}
-            </textarea
-          >
+          </textarea>
           <span
             :class="[
               'block text-xs mt-0.5 text-right',
@@ -81,8 +79,8 @@ const form = ref({
 });
 
 const ratingLabelId = useId();
-const ratingModelValue = ref();
-const usernameModelValue = ref('');
+// const ratingModelValue = ref();
+// const usernameModelValue = ref('');
 const reviewModelValue = ref('');
 const reviewCharacterLimit = ref(500);
 const reviewIsAboveLimit = computed(() => reviewModelValue.value.length > reviewCharacterLimit.value);

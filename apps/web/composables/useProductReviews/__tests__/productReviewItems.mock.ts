@@ -40,7 +40,7 @@ export const mockProductReviewItems: ReviewItem[] = [
         targetRelationName: [],
         feedbackRelationParentTargetId: 1
       },
-      sourceRelation: [{
+      sourceRelation: {
         feedbackId: 'test',
         feedbackRelationType: 'test',
         feedbackRelationSourceId: 'test',
@@ -54,7 +54,7 @@ export const mockProductReviewItems: ReviewItem[] = [
           updatedAt: 'test',
           authorName: 'test'
         }
-      }],
+      },
       replies: []
     }
 ]

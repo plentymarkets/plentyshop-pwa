@@ -1,5 +1,5 @@
-import type { ReplyItem } from '@plentymarkets/shop-api';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 
 export type ReplyEditFormProps = {
-  replyItem: ReplyItem;
+  replyItem: ReviewItem;
 };

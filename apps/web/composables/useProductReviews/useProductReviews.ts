@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, UpdateReviewParams } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, ReviewResponse, UpdateReviewParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
 import type {
@@ -55,9 +55,10 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
         );
       }
 
-      await Promise.all(feedbackCalls).then((data) => {
+      await Promise.all(feedbackCalls).then((data: ReviewResponse[]) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
         state.value.data.feedbacks = feedbacks || state.value.data;
+        return true;
       });
 
       state.value.loading = false;
