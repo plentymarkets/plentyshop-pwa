@@ -200,7 +200,7 @@ const handleAddToCart = async () => {
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
-    basketItemOrderParams: orderProperties.length > 0 ? orderProperties : undefined,
+    basketItemOrderParams: getPropertiesForCart(),
   };
 
   if (await addToCart(params)) {
