@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submit" method="POST" class="flex flex-col justify-center rounded-md w-full md:w-[400px] mt-5">
     <label>
-      <UiFormLabel>{{ props.title }}</UiFormLabel>
+      <UiFormLabel>{{ props.title }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput type="text" v-model="input" required />
     </label>
 

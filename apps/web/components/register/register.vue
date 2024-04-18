@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center my-1">
     <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
-        <UiFormLabel>{{ t('form.emailLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
           v-model="email"
           v-bind="emailAttributes"
@@ -15,7 +15,7 @@
       </label>
 
       <label>
-        <UiFormLabel>{{ t('form.passwordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           :title="t('invalidPassword')"
           name="password"
@@ -50,7 +50,7 @@
               </SfLink>
             </template>
           </i18n-t>
-          *
+          {{ t('form.required') }}
         </label>
       </div>
       <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
