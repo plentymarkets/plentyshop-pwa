@@ -102,7 +102,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
    */
   const getPropertiesForCart = (): BasketItemOrderParamsProperty[] | undefined => {
     const result = state.value.data.filter((property) => property.property.value !== null);
-    return result.length > 0 ? result : undefined;  
+    return result.length > 0 ? result : undefined;
   };
 
   /**
@@ -117,7 +117,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   const getPropertiesPrice: GetPropertiesPrice = (product: Product) => {
     const properties = getPropertiesForCart();
     let price = 0;
-    if(properties != undefined){
+    if (properties !== undefined) {
       properties.forEach((property) => {
         const propertyItem = product.properties?.find(
           (productProperty) => productProperty.propertyId === property.property.id,

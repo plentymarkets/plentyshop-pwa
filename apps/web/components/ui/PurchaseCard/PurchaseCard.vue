@@ -196,7 +196,6 @@ const handleAddToCart = async () => {
     return;
   }
 
-  const orderProperties = getPropertiesForCart();
   const params = {
     productId: Number(productGetters.getId(product.value)),
     quantity: Number(quantitySelectorValue.value),
