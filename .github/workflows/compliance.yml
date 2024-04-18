@@ -1,0 +1,25 @@
+name: Compliance
+on:
+  pull_request:
+    types: [ opened, edited, synchronize, reopened ]
+jobs:
+  label:
+    name: Apply conventional release labels
+    runs-on: ubuntu-latest
+    steps:
+    - uses: bcoe/conventional-release-labels@v1
+  changelog:
+    name: Changelog updated
+    needs: label
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Check if changelog is in diff
+        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
+        run: |
+          gh pr diff "$BRANCH" --name-only >> diff.txt
+          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.head_ref }}
