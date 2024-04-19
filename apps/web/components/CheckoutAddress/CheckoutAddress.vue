@@ -2,12 +2,12 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <div class="flex items-center">
-        <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="pick">
+      <div v-if="!disabled && addresses.length > 0" class="flex items-center">
+        <SfButton size="sm" variant="tertiary" @click="pick">
           Pick saved address
         </SfButton>
         <div class="h-5 w-px bg-blue-400 mx-2"></div>
-        <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
+        <SfButton size="sm" variant="tertiary" @click="edit">
           {{ $t('contactInfo.edit') }}
         </SfButton>
       </div>
@@ -68,12 +68,14 @@
         </h3>
         <h1 class="my-2 mb-6 font-semibold">Select one of your saved addresses</h1>
       </header>
-      <div v-for="address in addresses">
+      <div class="hover:bg-gray-300" v-for="address in addresses">
         <Address
           :key="userAddressGetters.getId(address)"
           :address="address"
+          :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
           :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-          @click="saveAddress(address)"
+          @click="setNewSelectedAddress(address)"
+          @on-delete="onDelete(address)"
         />
       </div>
     </UiModal>
@@ -111,11 +113,19 @@ const cartAddress = computed(() =>
     : cartGetters.getCustomerShippingAddressId(cart.value),
 );
 
-const selectedAddress = computed(
+import { ref } from 'vue';
+
+const defaultAddress = computed(
   () =>
     props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
     ({} as Address),
 );
+
+let selectedAddress = ref(defaultAddress.value);
+
+const setNewSelectedAddress = (newSelectedAddress: Address) => {
+  selectedAddress.value = newSelectedAddress;
+};
 
 const emit = defineEmits(['on-saved']);
 
@@ -146,4 +156,33 @@ const saveAddress = async (address: Address, useAsShippingAddress: boolean = fal
   emit('on-saved');
   close();
 };
+
+
+
+
+await getActiveShippingCountries();
+await getAddresses();
+
+
+// const editAddress = (address: Address) => {
+//   selectedAddress.value = address;
+//   open();
+// };
+const onDelete = (address: Address) => {
+  deleteAddress(Number(userAddressGetters.getId(address)));
+};
+
+const onSave = async (address: Address, useAsShippingAddress: boolean = false) => {
+  await saveAddress(address);
+  close();
+
+  if (useAsShippingAddress) {
+    await saveShippingAddress(address);
+  }
+};
+
+const makeDefault = (address: Address) => {
+  setDefault(address);
+};
+
 </script>

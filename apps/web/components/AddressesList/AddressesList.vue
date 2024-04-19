@@ -10,6 +10,7 @@
       :key="userAddressGetters.getId(address)"
       :address="address"
       :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+      :is-Selected="defaultAddressId === Number(userAddressGetters.getId(address))"
       @on-edit="editAddress(address)"
       @on-delete="onDelete(address)"
       @make-default="makeDefault(address)"
