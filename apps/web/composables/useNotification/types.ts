@@ -5,8 +5,10 @@ export interface Notification {
   persist?: boolean;
   id?: symbol;
   dismiss?: () => void;
+  dismissTimeout?: number;
 }
 export type SendNotification = (notification: Notification) => void;
+export type ClearNotification = () => void;
 
 export interface UseNotificationState {
   data: Notification[];
@@ -15,6 +17,7 @@ export interface UseNotificationState {
 export interface UseNotification {
   data: Readonly<Ref<UseNotificationState['data']>>;
   send: SendNotification;
+  clear: ClearNotification;
 }
 
 export type UseNotificationReturn = () => UseNotification;
