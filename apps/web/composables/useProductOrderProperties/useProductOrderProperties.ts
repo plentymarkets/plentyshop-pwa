@@ -117,7 +117,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   const getPropertiesPrice: GetPropertiesPrice = (product: Product) => {
     const properties = getPropertiesForCart();
     let price = 0;
-    if (properties !== undefined) {
+    if (properties) {
       properties.forEach((property) => {
         const propertyItem = product.properties?.find(
           (productProperty) => productProperty.propertyId === property.property.id,
