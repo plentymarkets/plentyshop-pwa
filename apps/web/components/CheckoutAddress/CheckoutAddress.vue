@@ -68,18 +68,14 @@
         </h3>
         <h1 class="my-2 mb-6 font-semibold">Select one of your saved addresses</h1>
       </header>
-      <!-- <Address
-        v-for="address in addresses"
-        :address="address"
-      /> -->
-
-      <Address
-        v-for="address in addresses"
-        :key="userAddressGetters.getId(address)"
-        :address="address"
-        :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-        @click="setAdress(address)"
-      />
+      <div v-for="address in addresses">
+        <Address
+          :key="userAddressGetters.getId(address)"
+          :address="address"
+          :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+          @click="saveAddress(address)"
+        />
+      </div>
     </UiModal>
   </div>
 </template>
@@ -139,10 +135,6 @@ const pick = () => {
   editMode.value = true;
   openPick();
 };
-
-const setAdress = (address: Address) => {
-  console.log(address);
-}
 
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
   if (props.type === AddressType.Billing) {
