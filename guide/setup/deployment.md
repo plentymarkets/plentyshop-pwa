@@ -51,7 +51,7 @@ Creating the application adds a new table entry. In the next part, you'll need t
 2. Go to **Settings**.
 3. In the **Security** section, go to **Secrets and variables » Actions**.
 4. Open the **Variables** tab.
-5. Click on **New repository variable**.
+5. Click on **New repository secret**.
 6. Fill in the information according to the table below.
 
 | Name      | Value |
