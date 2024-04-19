@@ -80,7 +80,6 @@ const isLogin = ref(true);
 // const { send } = useNotification();
 const { isOpen, open, close } = useDisclosure();
 const { isAuthorized } = useCustomer();
-// const { open: openLoginModal } = useLoginModal();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { product, totalReviews } = toRefs(props);
 const reviewsOpen = ref(false);

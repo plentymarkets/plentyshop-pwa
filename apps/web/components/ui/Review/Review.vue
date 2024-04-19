@@ -1,15 +1,14 @@
 <template>
   <article class="w-full p-4 mb-4 border rounded-md" data-testid="review">
     <div class="w-full flex">
-      <div class="w-2/3">
-        <p class="text-xs truncate text-neutral-400 mb-2">
-          <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
-          <span v-if="verifiedPurchase">
-            <SfIconCheck size="xs" class="mr-1" />
-            {{ $t('review.verifiedPurchase') }}
-          </span>
-        </p>
+      <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
+        <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
+        <span v-if="verifiedPurchase">
+          <SfIconCheck size="xs" class="mr-1" />
+          {{ $t('review.verifiedPurchase') }}
+        </span>
       </div>
+
       <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
         <SfTooltip v-if="reviewGetters.getReviewVisibility(reviewItem)" :label="$t('review.toolTipVisibilityOn')">
           <SfIconVisibility size="sm" class="fill-neutral-400" />
@@ -18,13 +17,14 @@
           <SfIconVisibilityOff size="sm" class="fill-neutral-400" />
         </SfTooltip>
         <SfLink @click="openReviewEdit">
-          <SfIconTune size="sm" class="fill-primary-900" />
+          <SfIconTune size="sm" class="fill-primary-900 cursor-pointer" />
         </SfLink>
         <SfLink @click="openDelete">
-          <SfIconDelete size="sm" class="fill-primary-900" />
+          <SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" />
         </SfLink>
       </div>
     </div>
+
     <header>
       <p class="font-medium mb-2">{{ reviewGetters.getReviewTitle(reviewItem) }}</p>
       <span class="flex items-center pr-2 pb-2 text-xs text-neutral-500">
@@ -32,7 +32,9 @@
         {{ $d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
       </span>
     </header>
+
     <p class="pb-2 text-sm text-neutral-900">{{ reviewGetters.getReviewMessage(reviewItem) }}</p>
+
     <button
       v-if="reviewItem.replies.length > 0"
       type="button"
@@ -41,20 +43,16 @@
     >
       {{ $t(isCollapsed ? 'review.showAnswers' : 'review.hideAnswers') }}
     </button>
+
     <div class="ml-8">
       <div v-if="!isCollapsed">
         <div v-for="(replyItem, index) in replies" :key="index" class="mb-8 md:mr-16">
           <div class="flex items-center mb-2 text-xs">
-            <p v-if="replyItem.authorName" class="flex font-medium">{{ replyItem.authorName }}</p>
-            <p v-else class="flex font-medium">{{ $t('review.anonymous') }}</p>
+            <p class="flex font-medium">{{ replyItem.authorName ? replyItem.authorName : $t('review.anonymous') }}</p>
             <p class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(replyItem))) }}</p>
             <div v-if="isAnswerEditable(replyItem)" class="w-full items-start flex justify-end space-x-3">
-              <span v-if="isReviewVisible">
-                <SfIconVisibility size="xs" class="fill-neutral-400" />
-              </span>
-              <span v-else>
-                <SfIconVisibilityOff size="xs" class="fill-neutral-400" />
-              </span>
+              <SfIconVisibility v-if="isReviewVisible" size="xs" class="fill-neutral-400" />
+              <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               <span><SfIconTune size="xs" class="fill-primary-900" @click="openReplyEdit" /></span>
               <span><SfIconDelete size="xs" class="fill-primary-900" @click="openDelete" /></span>
             </div>
@@ -63,46 +61,51 @@
           <p class="text-sm">{{ replyItem.feedbackComment.comment.message }}</p>
         </div>
       </div>
+
       <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
         <SfButton variant="tertiary" size="sm" class="self-start" @click="isAnswerFormOpen = true">
           {{ $t('review.answer') }}
         </SfButton>
       </div>
-      <template v-if="isAnswerFormOpen">
-        <form data-testid="review-answer-form" class="mt-8 md:mr-16" @submit.prevent="$emit('on-submit', form)">
-          <label class="block mb-2 text-sm font-medium text-neutral-500 w-1/2">
-            <span>{{ $t('review.reviewAuthor') }}</span>
-            <SfInput v-model="form.authorName" size="sm" class="font-normal text-sm"></SfInput>
-          </label>
-          <label class="my-4 block">
-            <textarea
-              v-model="form.message"
-              class="block w-full py-2 pl-4 pr-3 min-h-[138px] text-sm rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
-            />
-            <span
-              :class="[
-                'block text-xs mt-0.5 text-right',
-                answerIsAboveLimit ? 'text-negative-700 font-medium' : 'text-neutral-500',
-              ]"
-            >
-              {{ answerCharsCount }}
-            </span>
-          </label>
-          <div class="flex justify-end gap-x-4">
-            <SfButton
-              type="button"
-              size="sm"
-              variant="secondary"
-              class="flex-1 md:flex-initial"
-              @click="isAnswerFormOpen = false"
-              >{{ $t('review.cancel') }}
-            </SfButton>
-            <SfButton @click.="isAnswerFormOpen = false" type="submit" size="sm" class="flex-1 md:flex-initial">{{
-              $t('review.saveAnswer')
-            }}</SfButton>
-          </div>
-        </form>
-      </template>
+
+      <form
+        v-if="isAnswerFormOpen"
+        @submit.prevent="$emit('on-submit', form)"
+        data-testid="review-answer-form"
+        class="mt-8 md:mr-16"
+      >
+        <label class="block mb-2 text-sm font-medium text-neutral-500 w-1/2">
+          <span>{{ $t('review.reviewAuthor') }}</span>
+          <SfInput v-model="form.authorName" size="sm" class="font-normal text-sm"></SfInput>
+        </label>
+        <label class="my-4 block">
+          <textarea
+            v-model="form.message"
+            class="block w-full py-2 pl-4 pr-3 min-h-[138px] text-sm rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
+          />
+          <span
+            :class="[
+              'block text-xs mt-0.5 text-right',
+              answerIsAboveLimit ? 'text-negative-700 font-medium' : 'text-neutral-500',
+            ]"
+          >
+            {{ answerCharsCount }}
+          </span>
+        </label>
+        <div class="flex justify-end gap-x-4">
+          <SfButton
+            type="button"
+            size="sm"
+            variant="secondary"
+            class="flex-1 md:flex-initial"
+            @click="isAnswerFormOpen = false"
+            >{{ $t('review.cancel') }}
+          </SfButton>
+          <SfButton @click.="isAnswerFormOpen = false" type="submit" size="sm" class="flex-1 md:flex-initial">{{
+            $t('review.saveAnswer')
+          }}</SfButton>
+        </div>
+      </form>
     </div>
   </article>
   <UiModal
@@ -173,35 +176,17 @@ import {
 import type { ReviewProps } from '~/components/ui/Review/types';
 import { computed, ref } from 'vue';
 import ReviewEditForm from '~/components/ReviewEditForm/ReviewEditForm.vue';
-// import ReplyEditForm from '~/components/ReplyEditForm/ReplyEditForm.vue';
-// import type { ReplyItem } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
-defineEmits(['on-submit']);
+
 const props = defineProps<ReviewProps>();
+defineEmits(['on-submit']);
+
 const { reviewItem } = toRefs(props);
-// const replyItem = ref({} as ReplyItem);
-
-const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
-const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
-const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
-
 const answerModelValue = ref('');
 const answerCharacterLimit = ref(5000);
-const answerIsAboveLimit = computed(() => answerModelValue.value.length > answerCharacterLimit.value);
-const answerCharsCount = computed(() => answerCharacterLimit.value - answerModelValue.value.length);
-
-const replies = reviewGetters.getReviewReplies(reviewItem.value);
-
-const { isAuthorized } = useCustomer();
-const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const isReviewVisible = ref(reviewItem.value.isVisible);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
-const itemId = reviewItem.value.targetRelation.feedbackRelationTargetId;
-
-const { deleteProductReview, setProductReview } = useProductReviews(Number(itemId));
-const { data } = useCustomer();
-
 const form = ref({
   title: '',
   authorName: '',
@@ -214,18 +199,30 @@ const form = ref({
   ratingMissing: true,
 });
 
+const { isOpen: isDeleteOpen, open: openDelete, close: closeDelete } = useDisclosure();
+const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
+const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
+const { data, isAuthorized } = useCustomer();
+const { deleteProductReview, setProductReview } = useProductReviews(
+  Number(reviewItem.value.targetRelation.feedbackRelationTargetId),
+);
+
+const answerIsAboveLimit = computed(() => answerModelValue.value.length > answerCharacterLimit.value);
+const answerCharsCount = computed(() => answerCharacterLimit.value - answerModelValue.value.length);
+
+const replies = reviewGetters.getReviewReplies(reviewItem.value);
+const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
+
 const isAnswerEditable = (replyItem: ReviewItem) => {
   return replyItem.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString();
 };
 
-const isEditable = computed(() => {
-  return reviewItem.value.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString();
-});
+const isEditable = computed(
+  () => reviewItem.value.sourceRelation.feedbackRelationSourceId === data.value.user?.id?.toString(),
+);
 
 const delReview = () => {
-  if (reviewItem.value.id) {
-    deleteProductReview(reviewItem.value.id);
-  }
+  if (reviewItem.value.id) deleteProductReview(reviewItem.value.id);
   closeDelete();
 };
 

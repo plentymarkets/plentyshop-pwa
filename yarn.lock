@@ -4054,10 +4054,10 @@ __metadata:
 
 "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.50.0
-  resolution: "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk#/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::hash=8555ed&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk#/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::hash=b020e9&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     axios: ^1.6.3
-  checksum: 7bc4cdebd7fcaca015f6a50ad3cad026479e1d4bbb330d3966989056c6e985586b6112d5e439cca4b8c53f4e87a0795338f9eab7fae4cedb553b62c67a73b502
+  checksum: 408c2d02baeda42b17d24874add0b73f725ef0dd76ec2d19d26fe5915ac35b2c95dacf73e41745ed342ab5b9c38e94464756040abaf29bf760cf05e41a8b50ea
   languageName: node
   linkType: hard
 
