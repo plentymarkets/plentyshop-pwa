@@ -77,7 +77,7 @@ const loginUser = async () => {
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
-    window.location.href = localePath(paths.checkout);
+    navigateTo(localePath(paths.checkout));
   }
 };
 </script>
