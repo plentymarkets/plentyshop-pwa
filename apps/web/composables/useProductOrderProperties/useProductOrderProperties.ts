@@ -129,9 +129,8 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
           }
         }
       });
-      return price;
     }
-    return 0;
+    return price;
   };
 
   /**
