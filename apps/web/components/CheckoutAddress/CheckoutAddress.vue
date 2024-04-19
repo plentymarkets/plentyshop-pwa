@@ -2,9 +2,15 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
-        {{ $t('contactInfo.edit') }}
-      </SfButton>
+      <div class="flex items-center">
+        <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="pick">
+          Pick saved address
+        </SfButton>
+        <div class="h-5 w-px bg-blue-400 mx-2"></div>
+        <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
+          {{ $t('contactInfo.edit') }}
+        </SfButton>
+      </div>
     </div>
 
     <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
@@ -20,14 +26,14 @@
 
     <UiModal
       v-if="!disabled"
-      v-model="isOpen"
+      v-model="isOpenEdit"
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="address-modal-title"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
           <SfIconClose />
         </SfButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
@@ -41,7 +47,38 @@
         "
         :type="type"
         @on-save="saveAddress"
-        @on-close="close"
+        @on-close="closeEdit"
+      />
+    </UiModal>
+
+    <UiModal
+      v-if="!disabled"
+      v-model="isOpenPick"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="address-modal-title"
+    >
+      <header>
+        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
+          <SfIconClose />
+        </SfButton>
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+          Saved addresses
+        </h3>
+        <h1 class="my-2 mb-6 font-semibold">Select one of your saved addresses</h1>
+      </header>
+      <!-- <Address
+        v-for="address in addresses"
+        :address="address"
+      /> -->
+
+      <Address
+        v-for="address in addresses"
+        :key="userAddressGetters.getId(address)"
+        :address="address"
+        :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+        @click="setAdress(address)"
       />
     </UiModal>
   </div>
@@ -52,7 +89,8 @@ import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
-const { isOpen, open, close } = useDisclosure();
+const { isOpen: isOpenEdit, open: openEdit, close: closeEdit } = useDisclosure();
+const { isOpen: isOpenPick, open: openPick, close: closePick } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
@@ -62,6 +100,14 @@ const props = withDefaults(defineProps<CheckoutAddressProps>(), {
 });
 const { data: cart } = useCart();
 const editMode = ref(false);
+const {
+  data: addresses,
+  getAddresses,
+  setDefault,
+  deleteAddress,
+  defaultAddressId,
+  loading,
+} = useAddress(props.type);
 
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
@@ -81,13 +127,22 @@ getActiveShippingCountries();
 
 const create = () => {
   editMode.value = false;
-  open();
+  openEdit();
 };
 
 const edit = () => {
   editMode.value = true;
-  open();
+  openEdit();
 };
+
+const pick = () => {
+  editMode.value = true;
+  openPick();
+};
+
+const setAdress = (address: Address) => {
+  console.log(address);
+}
 
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
   if (props.type === AddressType.Billing) {
