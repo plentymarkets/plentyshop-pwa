@@ -142,7 +142,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   acceptTerms() {
-    cy.getByTestId('checkout-terms-checkbox').check();
+    cy.getByTestId('checkout-terms-checkbox').scrollIntoView().check();
 
     return this;
   }
