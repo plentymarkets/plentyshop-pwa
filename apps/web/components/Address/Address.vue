@@ -15,10 +15,17 @@
       <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-edit')" @click.stop>
         {{ $t('account.accountSettings.edit') }}
       </SfButton>
-      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-delete')"  @click.stop>
+      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-delete')" @click.stop>
         {{ $t('account.accountSettings.delete') }}
       </SfButton>
-      <SfButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click="$emit('make-default')" @click.stop>
+      <SfButton
+        v-if="!isDefault"
+        variant="tertiary"
+        size="sm"
+        class="self-start"
+        @click="$emit('make-default')"
+        @click.stop
+      >
         {{ $t('account.accountSettings.makeDefault') }}
       </SfButton>
     </div>

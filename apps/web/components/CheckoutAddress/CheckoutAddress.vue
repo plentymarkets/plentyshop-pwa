@@ -9,7 +9,7 @@
         <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
           {{ $t('savedShippingAddress') }}
         </SfButton>
-        <div class="h-5 w-px bg-blue-400 mx-2"></div>
+        <div class="h-5 w-px bg-primary-700 mx-2"></div>
         <SfButton size="sm" variant="tertiary" @click="edit">
           {{ $t('contactInfo.edit') }}
         </SfButton>
@@ -41,22 +41,21 @@
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
           {{ $t('pickSavedAddress') }}
         </h3>
-        <h1 class="my-2 mb-6 font-semibold"> {{ $t('pickSavedAddressSubtitle') }}</h1>
+        <h1 class="my-2 mb-6 font-semibold">{{ $t('pickSavedAddressSubtitle') }}</h1>
       </header>
-      <div class="hover:bg-primary-100" v-for="address in addresses">
+      <div class="hover:bg-primary-50" v-for="address in addresses" :key="userAddressGetters.getId(address)">
         <Address
-          :key="userAddressGetters.getId(address)"
           :address="address"
           :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
           :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
           @click="setNewSelectedAddress(address)"
           @on-delete="onDelete(address)"
-          @omake-default="makeDefault(address)"
+          @make-default="makeDefault(address)"
           @on-edit="edit"
         />
       </div>
       <div class="flex justify-end w-full">
-        <SfButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10"  @click="create">
+        <SfButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10" @click="create">
           {{ $t('newBillingAddress') }}
         </SfButton>
         <SfButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
@@ -110,21 +109,13 @@ const props = withDefaults(defineProps<CheckoutAddressProps>(), {
 });
 const { data: cart } = useCart();
 const editMode = ref(false);
-const {
-  data: addresses,
-  getAddresses,
-  setDefault,
-  deleteAddress,
-  defaultAddressId,
-} = useAddress(props.type);
+const { data: addresses, setDefault, deleteAddress, defaultAddressId } = useAddress(props.type);
 
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
     : cartGetters.getCustomerShippingAddressId(cart.value),
 );
-
-import { ref } from 'vue';
 
 const defaultAddress = computed(
   () =>
@@ -134,8 +125,8 @@ const defaultAddress = computed(
 
 let selectedAddress = ref(defaultAddress.value);
 
-const setNewSelectedAddress = (newSelectedAddress: Address) => {
-  selectedAddress.value = newSelectedAddress;
+const setNewSelectedAddress = (selectedAddressNew: Address) => {
+  selectedAddress.value = selectedAddressNew;
 };
 
 const emit = defineEmits(['on-saved']);
@@ -175,5 +166,4 @@ const onDelete = (address: Address) => {
 const makeDefault = (address: Address) => {
   setDefault(address);
 };
-
 </script>
