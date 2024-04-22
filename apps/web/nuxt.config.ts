@@ -155,7 +155,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+      logoUrl: (process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com') + '/images/logo.png',
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
       newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
       useAvif: process.env?.USE_AVIF === '1' ?? false,

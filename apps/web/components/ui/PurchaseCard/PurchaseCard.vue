@@ -108,6 +108,7 @@
         class="mt-4"
         type="SingleItem"
         :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
+        @on-click="paypalHandleAddToCart"
         v-if="getCombination()"
       />
     </div>
@@ -126,6 +127,7 @@ import {
   SfTooltip,
 } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -188,12 +190,12 @@ const handleAddToCart = async () => {
       ],
       type: 'negative',
     });
-    return;
+    return false;
   }
 
   if (!getCombination()) {
     send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
-    return;
+    return false;
   }
 
   const params = {
@@ -202,9 +204,16 @@ const handleAddToCart = async () => {
     basketItemOrderParams: getPropertiesForCart(),
   };
 
-  if (await addToCart(params)) {
+  const added = await addToCart(params);
+  if (added) {
     send({ message: t('addedToCart'), type: 'positive' });
   }
+  return added;
+};
+
+const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
+  const added = await handleAddToCart();
+  callback(added);
 };
 
 const changeQuantity = (quantity: string) => {

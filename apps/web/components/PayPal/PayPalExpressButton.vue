@@ -4,19 +4,21 @@
 
 <script setup lang="ts">
 import type { OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters, productGetters, cartGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
-import type { PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = uuid();
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
-const { data: cart, addToCart, clearCartItems } = useCart();
+const { data: cart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
-const emits = defineEmits(['on-click']);
+const emits = defineEmits<{
+  (event: 'on-click', callback: PayPalAddToCartCallback): Promise<void>;
+}>();
 
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
@@ -50,18 +52,11 @@ const onInit = (actions: OnInitActions) => {
 };
 
 const onClick = async () => {
-  if (
-    props.type === TypeSingleItem &&
-    !props.disabled &&
-    props.value &&
-    productGetters.isSalable(props.value.product)
-  ) {
-    await addToCart({
-      productId: Number(productGetters.getId(props.value.product)),
-      quantity: props.value.quantity,
-      basketItemOrderParams: props.value.basketItemOrderParams,
+  return await new Promise<boolean>((resolve) => {
+    emits('on-click', async (successfully) => {
+      resolve(successfully);
     });
-  }
+  });
 };
 
 const onApprove = async (data: OnApproveData) => {
@@ -103,9 +98,11 @@ const renderButton = () => {
             color: 'blue',
           },
           fundingSource: fundingSource,
-          async onClick() {
-            await onClick();
-            emits('on-click');
+          async onClick(data, actions) {
+            const success = await onClick();
+            if (!success) {
+              return actions.reject();
+            }
           },
           onInit(data, actions) {
             onInit(actions);
