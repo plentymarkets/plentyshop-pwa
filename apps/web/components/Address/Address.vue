@@ -12,13 +12,13 @@
       <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-700 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
-      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-edit')">
+      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-edit')" @click.stop>
         {{ $t('account.accountSettings.edit') }}
       </SfButton>
-      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-delete')">
+      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-delete')"  @click.stop>
         {{ $t('account.accountSettings.delete') }}
       </SfButton>
-      <SfButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click="$emit('make-default')">
+      <SfButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click="$emit('make-default')" @click.stop>
         {{ $t('account.accountSettings.makeDefault') }}
       </SfButton>
     </div>

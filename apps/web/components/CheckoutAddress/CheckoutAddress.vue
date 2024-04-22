@@ -3,8 +3,11 @@
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
       <div v-if="!disabled && addresses.length > 0" class="flex items-center">
-        <SfButton size="sm" variant="tertiary" @click="pick">
-          Pick saved address
+        <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
+          {{ $t('savedBillingAddress') }}
+        </SfButton>
+        <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
+          {{ $t('savedShippingAddress') }}
         </SfButton>
         <div class="h-5 w-px bg-blue-400 mx-2"></div>
         <SfButton size="sm" variant="tertiary" @click="edit">
@@ -23,6 +26,44 @@
         {{ buttonText }}
       </SfButton>
     </div>
+
+    <UiModal
+      v-if="!disabled"
+      v-model="isOpenPick"
+      tag="section"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="address-modal-title"
+    >
+      <header>
+        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
+          <SfIconClose />
+        </SfButton>
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+          {{ $t('pickSavedAddress') }}
+        </h3>
+        <h1 class="my-2 mb-6 font-semibold"> {{ $t('pickSavedAddressSubtitle') }}</h1>
+      </header>
+      <div class="hover:bg-primary-100" v-for="address in addresses">
+        <Address
+          :key="userAddressGetters.getId(address)"
+          :address="address"
+          :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
+          :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+          @click="setNewSelectedAddress(address)"
+          @on-delete="onDelete(address)"
+          @omake-default="makeDefault(address)"
+          @on-edit="edit"
+        />
+      </div>
+      <div class="flex justify-end w-full">
+        <SfButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10"  @click="create">
+          {{ $t('newBillingAddress') }}
+        </SfButton>
+        <SfButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
+          {{ $t('newShippingAddress') }}
+        </SfButton>
+      </div>
+    </UiModal>
 
     <UiModal
       v-if="!disabled"
@@ -50,35 +91,6 @@
         @on-close="closeEdit"
       />
     </UiModal>
-
-    <UiModal
-      v-if="!disabled"
-      v-model="isOpenPick"
-      tag="section"
-      role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-      aria-labelledby="address-modal-title"
-    >
-      <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
-          <SfIconClose />
-        </SfButton>
-        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
-          Saved addresses
-        </h3>
-        <h1 class="my-2 mb-6 font-semibold">Select one of your saved addresses</h1>
-      </header>
-      <div class="hover:bg-gray-300" v-for="address in addresses">
-        <Address
-          :key="userAddressGetters.getId(address)"
-          :address="address"
-          :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
-          :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-          @click="setNewSelectedAddress(address)"
-          @on-delete="onDelete(address)"
-        />
-      </div>
-    </UiModal>
   </div>
 </template>
 <script setup lang="ts">
@@ -104,7 +116,6 @@ const {
   setDefault,
   deleteAddress,
   defaultAddressId,
-  loading,
 } = useAddress(props.type);
 
 const cartAddress = computed(() =>
@@ -157,28 +168,8 @@ const saveAddress = async (address: Address, useAsShippingAddress: boolean = fal
   close();
 };
 
-
-
-
-await getActiveShippingCountries();
-await getAddresses();
-
-
-// const editAddress = (address: Address) => {
-//   selectedAddress.value = address;
-//   open();
-// };
 const onDelete = (address: Address) => {
   deleteAddress(Number(userAddressGetters.getId(address)));
-};
-
-const onSave = async (address: Address, useAsShippingAddress: boolean = false) => {
-  await saveAddress(address);
-  close();
-
-  if (useAsShippingAddress) {
-    await saveShippingAddress(address);
-  }
 };
 
 const makeDefault = (address: Address) => {
