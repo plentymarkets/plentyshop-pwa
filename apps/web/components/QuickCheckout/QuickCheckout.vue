@@ -13,7 +13,7 @@
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
-        <SfButton square variant="tertiary" @click="close">
+        <SfButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
         </SfButton>
       </div>
