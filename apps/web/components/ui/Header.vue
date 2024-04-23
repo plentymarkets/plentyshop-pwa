@@ -1,6 +1,6 @@
 <template>
   <MegaMenu :categories="categoryTree">
-    <template v-if="isTablet">
+    <template v-if="viewport.isGreaterOrEquals('md')">
       <NuxtLazyHydrate when-visible>
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
@@ -129,7 +129,7 @@
   <LanguageSelector v-if="isLanguageSelectOpen" />
   <UiNotifications />
   <UiModal
-    v-if="isTablet && isAuthenticationOpen"
+    v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
@@ -148,7 +148,7 @@
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
-  <NuxtLazyHydrate v-if="!isTablet" when-idle>
+  <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>
     <SfModal
       v-model="isSearchModalOpen"
       class="w-full h-full z-50"
@@ -202,7 +202,7 @@ const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClos
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 
 watch(
   () => isAuthenticationOpen.value,

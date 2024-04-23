@@ -10,7 +10,7 @@
         data-testid="checkout-terms-checkbox"
       />
       <label for="terms-checkbox" class="select-none">
-        <i18n-t keypath="termsInfo">
+        <i18n-t keypath="termsInfo" scope="global">
           <template #terms>
             <SfLink
               :href="localePath(paths.termsAndConditions)"
