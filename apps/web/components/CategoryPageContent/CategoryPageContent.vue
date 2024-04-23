@@ -69,7 +69,6 @@
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { whenever } from '@vueuse/core';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
@@ -83,11 +82,11 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const { isOpen, open, close } = useDisclosure();
-const { isTablet, isDesktop } = useBreakpoints();
+const viewport = useViewport();
 
-const maxVisiblePages = computed(() => (isDesktop.value ? 5 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
-whenever(isTablet, close);
+if (viewport.isLessThan('md')) close;
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);
