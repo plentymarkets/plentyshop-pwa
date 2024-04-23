@@ -72,7 +72,7 @@
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneDigit }">
           <SfIconCheck v-if="passwordValidationOneDigit" size="sm" />
           <SfIconClose v-else size="sm" />
-          <span class="ml-1">{{ t('auth.signup.passwordValidation.digits') }}</span>
+          <span class="ml-1">{{ t('auth.signup.passwordValidation.numbers') }}</span>
         </div>
         <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneLetter }">
           <SfIconCheck v-if="passwordValidationOneLetter" size="sm" />
