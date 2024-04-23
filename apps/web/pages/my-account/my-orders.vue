@@ -27,7 +27,7 @@
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
-        <template v-if="!isTablet">
+        <template v-if="viewport.isLessThan('md')">
           <ul class="my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.orderId') }}</p>
@@ -145,16 +145,16 @@ const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
 const localePath = useLocalePath();
 const { t, n } = useI18n();
-const { isDesktop, isTablet } = useBreakpoints();
+const viewport = useViewport();
 const maxVisiblePages = ref(1);
+const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
+const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 
 definePageMeta({
   layout: 'account',
   pageType: 'static',
 });
-const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 
-watch(isDesktop, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
@@ -171,6 +171,7 @@ const handleQueryUpdate = async () => {
 };
 await handleQueryUpdate();
 
+watch(isDesktop, (value) => setMaxVisiblePages(value));
 watch(
   () => route.query,
   async () => {

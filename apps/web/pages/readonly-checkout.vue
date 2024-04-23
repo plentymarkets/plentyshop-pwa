@@ -48,7 +48,7 @@
               class="inline-block mr-2"
             />
             <div>
-              <i18n-t keypath="termsInfo">
+              <i18n-t keypath="termsInfo" scope="global">
                 <template #terms>
                   <SfLink
                     :href="localePath(paths.termsAndConditions)"

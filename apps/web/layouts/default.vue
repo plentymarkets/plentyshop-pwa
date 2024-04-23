@@ -1,16 +1,14 @@
 <template>
   <div>
     <UiHeader />
-    <template v-if="breadcrumbs?.length">
-      <NarrowContainer class="p-4 md:px-0">
-        <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-      </NarrowContainer>
-    </template>
+    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+      <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
+    </NarrowContainer>
     <main>
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="!isTablet" />
+      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
@@ -27,7 +25,7 @@ usePageTitle();
 defineProps<DefaultLayoutProps>();
 
 const { setLogoMeta } = useStructuredData();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 
 setLogoMeta();
 </script>

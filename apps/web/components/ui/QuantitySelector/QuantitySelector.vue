@@ -58,13 +58,15 @@ const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorP
   disabled: false,
 });
 
-const inputId = useId();
+const inputId = ref('0');
 const { count, inc, dec, set } = useCounter(value);
 
 const inputClasses = computed(
   () =>
     'appearance-none flex-1 mx-2 w-8 text-center bg-transparent font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:display-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:display-none [&::-webkit-outer-spin-button]:m-0 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none disabled:placeholder-disabled-900 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm',
 );
+
+onMounted(() => (inputId.value = useId()));
 
 watch(count, (quantity) => {
   emit('changeQuantity', quantity);
