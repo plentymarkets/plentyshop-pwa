@@ -34,8 +34,9 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get displaySuccessPages() {
-    return cy.get('data-testid="order-success-page"', { timeout: 60000 });
-  }
+    return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
+}
+
 
   get inputField() {
     return cy.getByTestId('contact-information-form').children('[type="email"]');
@@ -119,7 +120,8 @@ export class CheckoutPageObject extends PageObject {
   placeOrderButton() {
     this.placeOrderButtons.click();
     return this;
-  }
+}
+
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
@@ -142,7 +144,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   acceptTerms() {
-    cy.getByTestId('checkout-terms-checkbox').scrollIntoView().check({force: true});
+    cy.getByTestId('checkout-terms-checkbox').check({force: true});
 
     return this;
   }

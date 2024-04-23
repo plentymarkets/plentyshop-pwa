@@ -33,6 +33,7 @@
       tag="section"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="address-modal-title"
+      data-testid="checkout-pick-address-modal"
     >
       <header>
         <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
@@ -71,6 +72,7 @@
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="address-modal-title"
+      data-testid="checkout-edit-address-modal"
     >
       <header>
         <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
