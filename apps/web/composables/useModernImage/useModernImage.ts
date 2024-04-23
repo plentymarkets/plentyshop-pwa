@@ -2,12 +2,12 @@ import type { UseModernImageReturn } from './types';
 import type { Product, ImagesData } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
-const getImageForViewport = (product: Product, context: string, isTablet: Ref<boolean>) => {
+const getImageForViewport = (product: Product, context: string, isTablet: boolean) => {
   if (context === 'ItemList') return productGetters.getPreviewImage(product);
   if (context === 'Whislist')
-    return isTablet.value ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
+    return isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
   if (context === 'CartProductCard')
-    return isTablet.value ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
+    return isTablet ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
 
   return '';
 };
@@ -47,8 +47,8 @@ export const useModernImage: UseModernImageReturn = () => {
     addModernImageExtension,
     addModernImageExtensionForGallery,
     getImageForViewport: (product, context) => {
-      const { isTablet } = useBreakpoints();
-      return getImageForViewport(product, context, isTablet);
+      const viewport = useViewport();
+      return getImageForViewport(product, context, viewport.isGreaterOrEquals('md'));
     },
   };
 };

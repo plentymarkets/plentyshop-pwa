@@ -34,7 +34,7 @@
             @click="openUploadModal"
           >
             <img src="/images/file-upload.svg" :alt="t('orderProperties.upload.uploadFile')" />
-            <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload">
+            <i18n-t keypath="orderProperties.upload.dragAndDropFileHereOrUpload" scope="global">
               <template #uploadFile>
                 <div class="underline">
                   {{ t('orderProperties.upload.uploadFile') }}
