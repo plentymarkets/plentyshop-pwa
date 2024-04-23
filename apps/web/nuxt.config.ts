@@ -87,6 +87,29 @@ export default defineNuxtConfig({
         },
       },
     ],
+    [
+      'nuxt-viewport',
+      {
+        breakpoints: {
+          sm: 640,
+          md: 768,
+          lg: 1024,
+        },
+        defaultBreakpoints: {
+          mobile: 'sm',
+          tablet: 'md',
+          desktop: 'lg',
+        },
+        fallbackBreakpoint: 'lg',
+        cookie: {
+          expires: 365,
+          name: 'plenty-viewport',
+          path: '/',
+          sameSite: 'Strict',
+          secure: true,
+        },
+      },
+    ],
     '@nuxt/image',
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',

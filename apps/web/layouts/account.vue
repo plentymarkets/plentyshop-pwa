@@ -2,7 +2,7 @@
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
       <h1
-        v-if="isTablet || (!isTablet && isRoot)"
+        v-if="viewport.isGreaterOrEquals('md') || (viewport.isLessThan('md') && isRoot)"
         class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
         data-testid="account-layout-heading"
       >
@@ -102,7 +102,7 @@ import {
 import type { MyAccountSubsection } from '~/layouts/types';
 
 const localePath = useLocalePath();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 const { t } = useI18n();
 const router = useRouter();
 const { isAuthorized, logout } = useCustomer();
