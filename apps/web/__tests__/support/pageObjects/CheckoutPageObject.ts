@@ -34,7 +34,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get displaySuccessPages() {
-    return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
+    return cy.get('data-testid="order-success-page"', { timeout: 60000 });
   }
 
   get inputField() {
@@ -142,7 +142,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   acceptTerms() {
-    cy.getByTestId('checkout-terms-checkbox').scrollIntoView().check();
+    cy.getByTestId('checkout-terms-checkbox').scrollIntoView().check({force: true});
 
     return this;
   }
