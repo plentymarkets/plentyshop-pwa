@@ -12,7 +12,6 @@ export * from './defaults';
 export * from './useActiveShippingCountries';
 export * from './useAdditionalInformation';
 export * from './useAddress';
-export * from './useBreakpoints';
 export * from './useCanonical';
 export * from './useCart';
 export * from './useCartShippingMethods';
