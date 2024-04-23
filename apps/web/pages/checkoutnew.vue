@@ -62,10 +62,10 @@
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <PayPalExpressButton
-              type="Checkout"
               v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
               @on-click="validateTerms"
+              type="Checkout"
             />
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
