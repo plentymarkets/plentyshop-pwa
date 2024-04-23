@@ -150,6 +150,11 @@ const pick = () => {
   openPick();
 };
 
+const close = () => {
+  closeEdit();
+  closePick();
+};
+
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
   if (props.type === AddressType.Billing) {
     await saveBillingAddress(address);

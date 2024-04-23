@@ -43,7 +43,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get modal() {
-    return cy.getByTestId('modal');
+    return cy.getByTestId('checkout-edit-address-modal');
   }
 
   get thankYouBanner() {
