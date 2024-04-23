@@ -144,7 +144,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   acceptTerms() {
-    cy.getByTestId('checkout-terms-checkbox').check({force: true});
+    cy.getByTestId('checkout-terms-checkbox').check();
 
     return this;
   }
