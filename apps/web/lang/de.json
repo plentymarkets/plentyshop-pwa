@@ -723,5 +723,8 @@
   "productAttributes": {
     "seeAvailableOptions": "Verfügbare Optionen anzeigen",
     "notValidVariation": "Bitte wählen Sie eine gültige Variante."
+  },
+  "newCheckout": {
+    "addCompanyData": "Firmendaten hinzufügen"
   }
 }

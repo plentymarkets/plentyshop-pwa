@@ -723,5 +723,8 @@
   "productAttributes": {
     "seeAvailableOptions": "See available options",
     "notValidVariation": "Please select a valid variation."
+  },
+  "newCheckout": {
+    "addCompanyData": "Add company data"
   }
 }
