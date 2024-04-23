@@ -101,12 +101,7 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <PayPalExpressButton
-        v-if="getCombination()"
-        class="mt-4"
-        type="SingleItem"
-        @on-click="paypalHandleAddToCart"
-      />
+      <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
     </div>
   </form>
 </template>

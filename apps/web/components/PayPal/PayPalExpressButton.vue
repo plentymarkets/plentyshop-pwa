@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
 });
 
-const { type, disabled, value } = toRefs(props);
+const { type, disabled } = toRefs(props);
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
@@ -35,8 +35,8 @@ const paypalUuid = ref('');
 
 const onInit = (actions: OnInitActions) => {
   if (type.value === TypeCheckout) {
-    true === disabled.value ? actions.disable() : actions.enable();
-    watch(disabled, () => (true === disabled.value ? actions.disable() : actions.enable()));
+    disabled.value ? actions.disable() : actions.enable();
+    watch(disabled, () => (disabled.value ? actions.disable() : actions.enable()));
   } else {
     actions.enable();
   }
@@ -113,6 +113,16 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
 const createPaypalUuid = async () => (paypalUuid.value = uuid());
 
 onMounted(async () => {
+  await createPaypalUuid().then(() => {
+    if (paypal) {
+      const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
+      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+    }
+    return true;
+  });
+});
+
+watch(currency, async () => {
   await createPaypalUuid().then(() => {
     if (paypal) {
       const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
