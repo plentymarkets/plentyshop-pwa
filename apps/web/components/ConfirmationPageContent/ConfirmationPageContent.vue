@@ -38,13 +38,6 @@
           <OrderPaymentSummary :order="order" />
         </div>
 
-        <SfButton
-          v-if="!isAuthorized"
-          class="mt-4 w-full cursor-pointer"
-          variant="secondary"
-          @click="openAuthentication"
-          >Registrieren</SfButton
-        >
         <OrderDocumentsList :order="order" />
 
         <OrderReturnItems
@@ -58,34 +51,17 @@
       {{ t('continueShopping') }}
     </SfButton>
   </div>
-
-  <UiModal
-    v-if="isAuthenticationOpen"
-    v-model="isAuthenticationOpen"
-    tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
-    aria-labelledby="login-modal"
-  >
-    <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
-        <SfIconClose />
-      </SfButton>
-    </header>
-    <register @registered="closeAuthentication" :is-modal="true" :email-address="orderGetters.getOrderEmail(order)" />
-  </UiModal>
 </template>
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfButton } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 
-const { isAuthorized } = useCustomer();
 const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();
 const { t } = useI18n();
 const { getActiveShippingCountries } = useActiveShippingCountries();
-const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 
 await getActiveShippingCountries();
 </script>
