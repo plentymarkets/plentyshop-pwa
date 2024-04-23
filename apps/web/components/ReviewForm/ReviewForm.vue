@@ -1,79 +1,134 @@
 <template>
   <div class="max-w-[450px] md:max-w-[768px]">
-    <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.createReviewFormTitle') }}</h3>
-    <form
-      class="grid grid-cols-[100px_1fr] py-2 px-4 gap-4 md:grid-cols-[176px_1fr] grid-rows-[100px_1fr] md:grid-rows-[28px_1fr] items-center md:items-start"
-      data-testid="create-review-form"
-      @submit.prevent="$emit('on-submit', form)"
-    >
-      <div class="col-span-2">
-        <div class="flex items-center justify-between">
-          <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
-            {{ $t('review.yourRating') }}
-          </p>
-          <SfRatingButton v-model="form.ratingValue" :aria-labelledby="ratingLabelId" class="p-1 gap-x-2" />
-        </div>
-        <label class="block mb-6">
-          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">{{ $t('review.title') }}</span>
-          <SfInput v-model="form.title" />
-        </label>
-        <label class="my-4 block">
-          <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">{{
-            $t('review.reviewText')
-          }}</span>
-          <textarea
-            v-model="form.message"
-            placeholder="Describe your experience eg. Great product!"
-            class="block w-full py-2 pl-4 pr-3 min-h-[138px] rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
-          />
-          <span
-            :class="[
-              'block text-xs mt-0.5 text-right',
-              reviewIsAboveLimit ? 'text-negative-700 font-medium' : 'text-neutral-500',
-            ]"
-          >
-            {{ reviewCharsCount }}
-          </span>
-        </label>
-        <label class="block mb-6">
-          <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">
-            {{ $t('review.reviewAuthor') }}
-          </span>
-          <SfInput v-model="form.authorName" />
-        </label>
-        <div class="flex justify-end gap-x-4">
-          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
-            {{ $t('review.cancel') }}
-          </SfButton>
-          <SfButton type="submit" class="flex-1 md:flex-initial">{{ $t('review.submitReview') }}</SfButton>
-        </div>
+    <form class="col-span-2" data-testid="create-review-form" @submit.prevent="onSubmit">
+      <div class="flex items-center justify-between">
+        <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
+          {{ t('review.yourRating') }} *
+        </p>
+        <SfRatingButton
+          v-model="ratingValue"
+          v-bind="ratingValueAttributes"
+          :aria-labelledby="ratingLabelId"
+          :invalid="Boolean(errors['ratingValue'])"
+          name="ratingValue"
+          class="p-1 gap-x-2"
+        />
+      </div>
+      <VeeErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
+
+      <label for="review-title" class="block mb-2 typography-label-sm font-medium text-neutral-900">
+        {{ t('review.title') }} *
+      </label>
+      <SfInput
+        v-model="title"
+        v-bind="titleAttributes"
+        :invalid="Boolean(errors['title'])"
+        name="title"
+        id="review-title"
+      />
+      <VeeErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
+
+      <label for="review-message" class="mt-4 mb-2 block typography-label-sm font-medium text-neutral-900">
+        {{ t('review.reviewText') }}
+      </label>
+      <SfTextarea
+        id="review-message"
+        v-model="message"
+        v-bind="messageAttributes"
+        :invalid="Boolean(errors['message'])"
+        size="lg"
+        name="message"
+        class="w-full"
+      />
+      <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
+      <div v-if="!reviewIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ reviewCharsCount }}</div>
+
+      <label for="review-author" class="my-2 block typography-label-sm font-medium text-neutral-900">
+        {{ t('review.reviewAuthor') }}
+      </label>
+      <SfInput
+        v-model="authorName"
+        v-bind="authorNameAttributes"
+        :invalid="Boolean(errors['authorName'])"
+        name="authorName"
+        id="review-author"
+      />
+      <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
+
+      <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
+
+      <div class="flex justify-end gap-x-4">
+        <SfButton @click="$emit('on-close')" type="button" variant="secondary" class="flex-1 md:flex-initial">
+          {{ t('review.cancel') }}
+        </SfButton>
+        <SfButton type="submit" class="flex-1 md:flex-initial">
+          {{ t('review.submitReview') }}
+        </SfButton>
       </div>
     </form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
-import { SfButton, SfRatingButton, SfInput, useId } from '@storefront-ui/vue';
-defineEmits(['on-close', 'on-submit']);
+import { SfButton, SfRatingButton, SfTextarea, SfInput, useId } from '@storefront-ui/vue';
+import { object, string, number } from 'yup';
+import { useForm } from 'vee-validate';
+import type { ReviewFormProps } from './types';
+import { reviewGetters } from '@plentymarkets/shop-sdk';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 
-const form = ref({
-  title: '',
-  authorName: '',
-  ratingValue: 0,
-  message: '',
-  type: 'review',
-  targetId: 0,
-  honeypot: '',
-  titleMissing: false,
-  ratingMissing: false,
+const props = withDefaults(defineProps<ReviewFormProps>(), { reviewItem: null });
+const { reviewItem } = toRefs(props);
+const { t } = useI18n();
+
+const emits = defineEmits(['on-close', 'on-submit']);
+
+const validationSchema = toTypedSchema(
+  object({
+    ratingValue: number()
+      .required(t('review.validation.ratingRequired'))
+      .default(reviewItem.value ? reviewGetters.getReviewRating(reviewItem.value as unknown as ReviewItem) : null),
+    title: string()
+      .required(t('review.validation.titleRequired'))
+      .default(reviewItem.value ? reviewGetters.getReviewTitle(reviewItem.value as unknown as ReviewItem) : ''),
+    message: string()
+      .optional()
+      .max(500, t('review.validation.textareaMaxLength'))
+      .default(reviewItem.value ? reviewGetters.getReviewMessage(reviewItem.value as unknown as ReviewItem) : ''),
+    authorName: string()
+      .optional()
+      .default(reviewItem.value ? reviewGetters.getReviewAuthor(reviewItem.value as unknown as ReviewItem) : ''),
+  }),
+);
+
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema: validationSchema,
 });
 
-const ratingLabelId = useId();
-// const ratingModelValue = ref();
-// const usernameModelValue = ref('');
-const reviewModelValue = ref('');
-const reviewCharacterLimit = ref(500);
-const reviewIsAboveLimit = computed(() => reviewModelValue.value.length > reviewCharacterLimit.value);
-const reviewCharsCount = computed(() => reviewCharacterLimit.value - reviewModelValue.value.length);
+const [ratingValue, ratingValueAttributes] = defineField('ratingValue');
+const [title, titleAttributes] = defineField('title');
+const [message, messageAttributes] = defineField('message');
+const [authorName, authorNameAttributes] = defineField('authorName');
+const ratingLabelId = ref('');
+const reviewCharacterLimit = 500;
+const reviewIsAboveLimit = computed(() => (message?.value?.length ?? 0) > reviewCharacterLimit);
+const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.length ?? 0));
+
+onMounted(() => (ratingLabelId.value = useId()));
+
+const sendReview = async () => {
+  const form = {
+    type: 'review',
+    targetId: 0,
+    feedbackId: reviewItem.value ? reviewGetters.getReviewId(reviewItem.value as unknown as ReviewItem) : 0,
+    ratingValue: ratingValue.value,
+    title: title.value,
+    message: message.value,
+    authorName: authorName.value,
+  };
+
+  emits('on-submit', form);
+};
+
+const onSubmit = handleSubmit(() => sendReview());
 </script>

@@ -36,15 +36,10 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
    */
   const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
-
     const { isAuthorized } = useCustomer();
 
     try {
-      const feedbackCalls = [
-        useSdk().plentysystems.getReview({
-          itemId: itemId,
-        }),
-      ];
+      const feedbackCalls = [useSdk().plentysystems.getReview({ itemId: itemId })];
 
       if (variationId && isAuthorized.value) {
         feedbackCalls.push(
@@ -82,35 +77,29 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
         message: params.message,
         type: params.type,
         targetId: params.targetId,
-        honeypot: params.honeypot,
-        titleMissing: params.titleMissing,
-        ratingMissing: params.ratingMissing,
       }),
     );
     useHandleError(error.value);
     state.value.createdReview = data.value?.data ?? state.value.createdReview;
     state.value.loading = false;
-
-    await fetchProductReviews(itemId);
   };
 
   const deleteProductReview: DeleteProductReview = async (feedbackId: number) => {
     state.value.loading = true;
-    await useSdk().plentysystems.deleteReview({
-      feedbackId: feedbackId,
-    });
-    await fetchProductReviews(itemId);
+
+    await useSdk()
+      .plentysystems.deleteReview({
+        feedbackId: feedbackId,
+      })
+      .then(() => (state.value.loading = false));
   };
 
   const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
     state.value.loading = true;
-    await useSdk().plentysystems.setReview({
-      feedbackId: Number(params.feedbackId) || 0,
-      message: params.message.toString(),
-      title: params.title?.toString() || '',
-      ratingValue: Number(params.ratingValue) || 0,
-    });
-    await fetchProductReviews(itemId);
+
+    await useSdk()
+      .plentysystems.setReview(params)
+      .then(() => (state.value.loading = false));
   };
 
   return {

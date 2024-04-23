@@ -373,6 +373,7 @@
     "title": "Title",
     "verifiedPurchase": "Verified purchase",
     "createReviewFormTitle": "Leave a review",
+    "createAnswerFormTitle": "Leave an answer",
     "editReviewFormTitle": "Edit review",
     "editReplyFormTitle": "Edit reply",
     "yourRating": "Your rating:",
@@ -381,15 +382,25 @@
     "cancel": "Cancel",
     "submitReview": "Send review",
     "answer": "Answer",
-    "saveAnswer": "Save",
+    "yourAnswer": "Your answer",
+    "saveAnswer": "Submit Answer",
     "showAnswers": "Show answers",
     "hideAnswers": "Hide answers",
     "anonymous": "Anonymous",
-    "areYouSure": "Are you sure to delete the review?",
-    "deleteReview": "Yes, delete",
+    "areYouSure": "Are you sure you want to delete the review?",
+    "deleteReview": "Delete  Review?",
+    "deleteReviewConfirmation": "Delete",
     "createSuccess": "Review sent",
-    "toolTipVisibilityOn": "Your contribution is visible!",
-    "toolTipVisibilityOff": "Your contribution is currently not visible. It becomes visible as soon as the shop provider releases it."
+    "toolTipVisibilityOn": "Your review is visible",
+    "toolTipVisibilityOff": "Your rating is currently being reviewed",
+    "validation": {
+      "ratingRequired": "Add your rating",
+      "titleRequired": "Add your title",
+      "textareaMaxLength": "Maximum allowed lenght is 500"
+    },
+    "notification": {
+      "success": "Your review has been submitted"
+    }
   },
   "account": {
     "heading": "My Account",

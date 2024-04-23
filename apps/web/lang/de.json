@@ -373,6 +373,7 @@
     "title": "Titel",
     "verifiedPurchase": "Verifizierter Kauf",
     "createReviewFormTitle": "Schreib eine Bewertung",
+    "createAnswerFormTitle": "Eine Antwort abgeben",
     "editReviewFormTitle": "Bewertung bearbeiten",
     "editReplyFormTitle": "Antwort bearbeiten",
     "yourRating": "Deine Wertung:",
@@ -381,15 +382,25 @@
     "cancel": "Abbrechen",
     "submitReview": "Bewertung absenden",
     "answer": "Antworten",
-    "saveAnswer": "Speichern",
+    "yourAnswer": "Ihre Antwort",
+    "saveAnswer": "Antwort abgeben",
     "showAnswers": "Antworten anzeigen",
     "hideAnswers": "Antworten ausblenden",
     "anonymous": "Anonym",
     "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
-    "deleteReview": "Ja, löschen",
+    "deleteReview": "Bewertung Löschen?",
+    "deleteReviewConfirmation ": "Löschen",
     "createSuccess": "Bewertung wurde gesendet",
-    "toolTipVisibilityOn": "Dein Beitrag wurde veröffentlicht!",
-    "toolTipVisibilityOff": "Dein Beitrag ist für andere nicht sichtbar. Er wird sichtbar, sobald der Shopbetreiber Ihn geprüft hat."
+    "toolTipVisibilityOn": "Deine Bewertung ist sichtbar",
+    "toolTipVisibilityOff": "Deine Bewertung wird derzeit überprüft",
+    "validation": {
+      "ratingRequired": "Fügen Sie Ihre Bewertung hinzu",
+      "titleRequired": "Fügen Sie Ihren Titel hinzu",
+      "textareaMaxLength": "Die maximal zulässige Länge beträgt 500"
+    },
+    "notification": {
+      "success": "Ihre Bewertung wurde übermittelt"
+    }
   },
   "account": {
     "heading": "Mein Konto",
