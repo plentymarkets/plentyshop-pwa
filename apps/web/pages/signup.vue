@@ -1,7 +1,7 @@
 <template>
   <NuxtLayout name="auth" :heading="$t('auth.signup.heading')">
     <UiAlert class="w-full p-4 md:p-6 mb-6 !justify-start typography-text-base" variant="neutral">
-      <i18n-t keypath="auth.signup.bannerText">
+      <i18n-t keypath="auth.signup.bannerText" scope="global">
         <template #login>
           <SfLink
             :tag="NuxtLink"
@@ -96,7 +96,7 @@
         </h2>
       </header>
       <UiAlert class="w-full p-4 mb-6 !justify-start typography-text-base" variant="neutral">
-        <i18n-t keypath="auth.signup.modal.description" tag="p" id="signUpModalDesc">
+        <i18n-t keypath="auth.signup.modal.description" scope="global" tag="p" id="signUpModalDesc">
           <template #information>
             <SfLink
               :tag="NuxtLink"

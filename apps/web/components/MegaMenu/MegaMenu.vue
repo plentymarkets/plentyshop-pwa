@@ -6,7 +6,7 @@
     >
       <div class="flex items-center">
         <SfButton
-          v-if="!isTablet"
+          v-if="viewport.isLessThan('md')"
           variant="tertiary"
           square
           aria-label="Close menu"
@@ -28,7 +28,7 @@
       <slot />
     </div>
 
-    <nav v-if="isTablet" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
       <ul
         class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
@@ -193,7 +193,7 @@ import {
 import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
 
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
 const NuxtLink = resolveComponent('NuxtLink');
