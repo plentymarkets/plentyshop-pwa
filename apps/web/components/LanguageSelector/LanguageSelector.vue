@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="isTablet"
+    v-if="viewport.isGreaterOrEquals('md')"
     data-testid="languageSelectList"
     class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
@@ -36,7 +36,7 @@ import { SfIconCheck } from '@storefront-ui/vue';
 import { flagImports } from './flags';
 
 const { isOpen } = useLocalization();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 const { localeCodes, locale: currentLocale } = useI18n();
 const flagList: { [key: string]: string } = {};
 

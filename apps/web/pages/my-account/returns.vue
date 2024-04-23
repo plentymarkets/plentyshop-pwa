@@ -118,20 +118,16 @@ definePageMeta({
 const { data, fetchCustomerReturns, loading } = useCustomerReturns();
 const { isOpen, close } = useDisclosure();
 
-const { isTablet, isDesktop } = useBreakpoints();
+const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
+const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
+const isTablet = computed(() => viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg'));
 
-watch(isDesktop, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isDesktop.value));
-watch(isTablet, (value) => {
-  if (value && isOpen.value) {
-    close();
-  }
-});
 
 const handleQueryUpdate = async () => {
   await fetchCustomerReturns({
@@ -144,6 +140,12 @@ const generateOrderDetailsLink = (order: Order) => {
 };
 
 await handleQueryUpdate();
+
+watch(isDesktop, (value) => setMaxVisiblePages(value));
+
+watch(isTablet, (value) => {
+  if (value && isOpen.value) close();
+});
 
 watch(
   () => route.query,

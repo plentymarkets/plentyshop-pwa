@@ -39,7 +39,7 @@
           class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
           for="privacyPolicy"
         >
-          <i18n-t keypath="form.privacyPolicyLabel">
+          <i18n-t keypath="form.privacyPolicyLabel" scope="global">
             <template #privacyPolicy>
               <SfLink
                 :href="localePath(paths.privacyPolicy)"
@@ -93,7 +93,7 @@ const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
-const { isDesktop } = useBreakpoints();
+const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
@@ -155,7 +155,7 @@ const registerUser = async () => {
       type: 'positive',
     });
     emits('registered');
-    isDesktop.value ? router.push(router.currentRoute.value.path) : router.back();
+    viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
   }
 };
 

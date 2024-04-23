@@ -14,9 +14,10 @@
             v-model="firstName"
             v-bind="firstNameAttributes"
             :invalid="Boolean(errors['firstName'])"
+            :placeholder="`${t('newsletter.firstName')} **`"
+            :wrapper-class="wrapperClass"
             type="text"
             name="firstName"
-            :placeholder="`${t('newsletter.firstName')} **`"
           />
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -28,9 +29,10 @@
             v-model="lastName"
             v-bind="lastNameAttributes"
             :invalid="Boolean(errors['lastName'])"
+            :placeholder="`${t('newsletter.lastName')} **`"
+            :wrapper-class="wrapperClass"
             type="text"
             name="lastName"
-            :placeholder="`${t('newsletter.lastName')} **`"
           />
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -43,10 +45,11 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['email'])"
+          :placeholder="`${t('newsletter.email')} **`"
+          :wrapper-class="wrapperClass"
           type="email"
           name="email"
           autocomplete="email"
-          :placeholder="`${t('newsletter.email')} **`"
         />
         <div class="h-[2rem]">
           <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -64,7 +67,7 @@
             data-testid="checkout-terms-checkbox"
           />
           <label for="terms-checkbox" class="text-left leading-5 select-none">
-            <i18n-t keypath="newsletter.policy">
+            <i18n-t keypath="newsletter.policy" scope="global">
               <template #privacyPolicy>
                 <SfLink
                   :href="localePath(paths.privacyPolicy)"
@@ -120,6 +123,7 @@ const { t } = useI18n();
 const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
