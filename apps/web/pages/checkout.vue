@@ -115,7 +115,7 @@ import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import type {PayPalAddToCartCallback} from "~/components/PayPal/types";
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layoutName: 'checkout',
