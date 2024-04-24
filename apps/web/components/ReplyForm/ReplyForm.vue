@@ -70,13 +70,12 @@ const [authorName, authorNameAttributes] = defineField('authorName');
 const answerIsAboveLimit = computed(() => (message?.value?.length ?? 0) > answerCharacterLimit);
 const answerCharsCount = computed(() => answerCharacterLimit - (message?.value?.length ?? 0));
 
-const form = {
-  targetId: 0,
-  authorName: authorName.value,
-  message: message.value,
-  type: 'reply',
-};
-
-const sendReply = async () => emits('on-submit', form);
-const onSubmit = handleSubmit(() => sendReply());
+const onSubmit = handleSubmit(() =>
+  emits('on-submit', {
+    targetId: 0,
+    authorName: authorName.value,
+    message: message.value,
+    type: 'reply',
+  }),
+);
 </script>

@@ -64,7 +64,7 @@ const validationSchema = toTypedSchema(
       .optional()
       .default(replyItem.value ? reviewGetters.getReplyAuthor(replyItem.value as unknown as ReviewItem) : ''),
     message: string()
-      .required()
+      .required(t('review.validation.textareaRequired'))
       .max(500, t('review.validation.textareaMaxLength'))
       .default(replyItem.value ? reviewGetters.getReplyMessage(replyItem.value as unknown as ReviewItem) : ''),
   }),
