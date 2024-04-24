@@ -18,8 +18,8 @@ describe('Smoke: Checkout Page', () => {
 
     cart.openCart();
     checkout
-        .goToCheckout()
         .goToGuestCheckout()
+        .goToCheckout()
         .fillContactInformationForm()
         .addBillingAddress()
         .fillBillingAddressForm()

@@ -19,7 +19,7 @@
                 </template>
                 <template #below>
                   <div>
-                    <PayPalExpressButton class="mt-4" type="CartPreview" />
+                    <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
                   </div>
                 </template>
               </OrDivider>
@@ -76,12 +76,14 @@ const emits = defineEmits(['loggedIn', 'change-view']);
 
 const email = ref('');
 const password = ref('');
+let loginSubmit = false;
 
 const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
+    loginSubmit = true;
     navigateTo(localePath(paths.checkout));
   }
 };
