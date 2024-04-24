@@ -8,12 +8,13 @@
             <div class="w-[400px] mb-4">
               <OrDivider>
                 <template #above>
-                  <SfButton  
-                    data-testid="guest-checkout-button" 
-                    :tag="NuxtLink" 
-                    :to="localePath(paths.checkout)" 
-                    class="w-full mb-4">
-                    {{$t('continueAsGuest') }}
+                  <SfButton
+                    data-testid="guest-checkout-button"
+                    :tag="NuxtLink"
+                    :to="localePath(paths.checkout)"
+                    class="w-full mb-4"
+                  >
+                    {{ $t('continueAsGuest') }}
                   </SfButton>
                 </template>
                 <template #below>
