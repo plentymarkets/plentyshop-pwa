@@ -5,6 +5,10 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('checkout-button');
   }
 
+  get goToGuestCheckoutButton() {
+    return cy.get('[data-testid="guest-checkout-button"]');
+  }
+
   get addContactInformationButton() {
     return cy.getByTestId('button').contains('Add contact information');
   }
@@ -87,6 +91,11 @@ export class CheckoutPageObject extends PageObject {
 
   get postalCodeInput() {
     return cy.getByTestId('input').find('input[name="postalCode"]');
+  }
+
+  goToGuestCheckout() {
+    this.goToGuestCheckoutButton.click();
+    return this;
   }
 
   goToCheckout() {
