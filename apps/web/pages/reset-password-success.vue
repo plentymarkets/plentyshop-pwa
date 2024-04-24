@@ -12,6 +12,7 @@
       <i18n-t
         tag="p"
         keypath="auth.resetPassword.thankYou"
+        scope="global"
         class="bg-neutral-100 text-left border border-neutral-200 p-4 rounded-md my-4"
       >
         <span class="font-medium">{{ email }}</span>

@@ -9,7 +9,7 @@
       <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" @submit.prevent="onSubmit" novalidate>
         <div class="">
           <label>
-            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput
               v-bind="nameAttributes"
               name="name"
@@ -22,7 +22,7 @@
         </div>
         <div class="">
           <label>
-            <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
 
             <SfInput
               name="email"
@@ -40,17 +40,24 @@
           <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }}</UiFormLabel>
+          <UiFormLabel class="flex mb-1">
+            <span class="mr-1">{{ t('contact.form.subjectLabel') }}</span>
+            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+          </UiFormLabel>
           <SfInput name="subject" type="text" v-model="contact.subject" />
         </label>
         <label>
-          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }}</UiFormLabel>
+          <UiFormLabel class="flex mb-1">
+            <span class="mr-1">{{ t('contact.form.order-id') }}</span>
+            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+          </UiFormLabel>
+
           <SfInput name="order-id" type="text" v-model="contact.orderId" />
         </label>
 
         <div>
           <label class="flex flex-col">
-            <UiFormLabel class="mb-1">{{ t('contact.form.message') }} *</UiFormLabel>
+            <UiFormLabel class="mb-1">{{ t('contact.form.message') }} {{ t('form.required') }}</UiFormLabel>
             <SfTextarea
               :placeholder="t('contact.form.message-placeholder')"
               class="w-full"
@@ -80,7 +87,7 @@
               class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
               for="terms"
             >
-              <i18n-t keypath="contact.privacyPolicy">
+              <i18n-t keypath="contact.privacyPolicy" scope="global">
                 <template #privacyPolicy>
                   <SfLink
                     :href="localePath(paths.privacyPolicy)"
@@ -91,14 +98,14 @@
                   </SfLink>
                 </template>
               </i18n-t>
-              *
+              {{ t('form.required') }}
             </label>
           </div>
 
           <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
-        <p class="text-sm text-neutral-500 mb-2">* {{ t('contact.form.asterixHint') }}</p>
+        <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('contact.form.asterixHint') }}</p>
 
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
           <SfButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">

@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center my-1">
     <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
-        <UiFormLabel>{{ t('form.emailLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
           v-model="email"
           v-bind="emailAttributes"
@@ -15,7 +15,7 @@
       </label>
 
       <label>
-        <UiFormLabel>{{ t('form.passwordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           :title="t('invalidPassword')"
           name="password"
@@ -39,7 +39,7 @@
           class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900 select-none"
           for="privacyPolicy"
         >
-          <i18n-t keypath="form.privacyPolicyLabel">
+          <i18n-t keypath="form.privacyPolicyLabel" scope="global">
             <template #privacyPolicy>
               <SfLink
                 :href="localePath(paths.privacyPolicy)"
@@ -50,7 +50,7 @@
               </SfLink>
             </template>
           </i18n-t>
-          *
+          {{ t('form.required') }}
         </label>
       </div>
       <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
@@ -93,7 +93,7 @@ const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
-const { isDesktop } = useBreakpoints();
+const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
@@ -155,7 +155,7 @@ const registerUser = async () => {
       type: 'positive',
     });
     emits('registered');
-    isDesktop.value ? router.push(router.currentRoute.value.path) : router.back();
+    viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
   }
 };
 
