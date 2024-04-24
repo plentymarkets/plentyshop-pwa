@@ -2,7 +2,7 @@ import { PageObject } from "./PageObject";
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
-    return cy.getByTestId('guest-checkout-button');
+    return cy.get('[data-testid="guest-checkout-button"]');
   }
 
   get goToGuestCheckoutButton() {
