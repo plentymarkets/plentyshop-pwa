@@ -58,10 +58,10 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
       state.value.loading = false;
       return state.value.data;
-    } catch (error: any) {
+    } catch (error: unknown) {
       useHandleError({
         status: 500,
-        statusText: error.toString(),
+        statusText: String(error),
       });
     }
     return state.value.data;
