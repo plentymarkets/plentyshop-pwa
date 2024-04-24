@@ -19,7 +19,7 @@ export interface UseProductOrderProperties {
   loading: Ref<UseProductOrderPropertiesState['loading']>;
   setProperties: SetProperties;
   getPropertyById: (id: number) => BasketItemOrderParamsProperty | undefined;
-  getPropertiesForCart: () => BasketItemOrderParamsProperty[];
+  getPropertiesForCart: () => BasketItemOrderParamsProperty[] | undefined;
   getPropertiesPrice: GetPropertiesPrice;
   uploadFile: (file: File) => Promise<UploadFileForOrderPropertyResponse | null>;
 }
