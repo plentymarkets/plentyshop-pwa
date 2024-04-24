@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="submitChangePassword" data-testid="account-forms-password">
     <label class="block">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.currentPassword') }}</UiFormLabel>
+      <UiFormLabel
+        >{{ t('account.accountSettings.personalData.currentPassword') }} {{ $t('form.required') }}</UiFormLabel
+      >
       <UiFormPasswordInput
         name="password"
         autocomplete="current-password"
@@ -10,7 +12,7 @@
       />
     </label>
     <label class="block my-4">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }}</UiFormLabel>
+      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }} {{ $t('form.required') }}</UiFormLabel>
       <UiFormPasswordInput
         name="password"
         autocomplete="new-password"
@@ -22,7 +24,9 @@
       <UiFormHelperText class="block"> {{ t('account.accountSettings.personalData.passwordHelp') }}</UiFormHelperText>
     </label>
     <label class="block">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.newPasswordAgain') }}</UiFormLabel>
+      <UiFormLabel
+        >{{ t('account.accountSettings.personalData.newPasswordAgain') }} {{ $t('form.required') }}</UiFormLabel
+      >
       <UiFormPasswordInput
         name="password"
         autocomplete="new-password"
