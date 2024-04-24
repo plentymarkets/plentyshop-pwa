@@ -69,16 +69,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
   const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doReview({
-        title: params.title,
-        authorName: params.authorName,
-        ratingValue: params.ratingValue,
-        message: params.message,
-        type: params.type,
-        targetId: params.targetId,
-      }),
-    );
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
     useHandleError(error.value);
     state.value.createdReview = data.value?.data ?? state.value.createdReview;
     state.value.loading = false;
@@ -96,10 +87,8 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
   const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
     state.value.loading = true;
-
-    await useSdk()
-      .plentysystems.setReview(params)
-      .then(() => (state.value.loading = false));
+    await useSdk().plentysystems.setReview(params);
+    state.value.loading = false;
   };
 
   return {

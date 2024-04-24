@@ -390,16 +390,20 @@
     "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
     "deleteReview": "Bewertung Löschen?",
     "deleteReviewConfirmation ": "Löschen",
+    "answerAreYouSure": "Sind Sie sicher, dass Sie die Antwort löschen möchten?",
+    "deleteAnswer": "Antwort löschen?",
     "createSuccess": "Bewertung wurde gesendet",
-    "toolTipVisibilityOn": "Deine Bewertung ist sichtbar",
-    "toolTipVisibilityOff": "Deine Bewertung wird derzeit überprüft",
+    "tooltipVisibilityOn": "Deine Bewertung ist sichtbar",
+    "tooltipVisibilityOff": "Deine Bewertung wird derzeit überprüft",
     "validation": {
       "ratingRequired": "Fügen Sie Ihre Bewertung hinzu",
       "titleRequired": "Fügen Sie Ihren Titel hinzu",
+      "textareaRequired": "Fügen Sie Ihre Nachricht hinzu",
       "textareaMaxLength": "Die maximal zulässige Länge beträgt 500"
     },
     "notification": {
-      "success": "Ihre Bewertung wurde übermittelt"
+      "success": "Ihre Bewertung wurde übermittelt",
+      "answerSuccess": "Ihre Antwort wurde übermittelt"
     }
   },
   "account": {

@@ -24,6 +24,7 @@
         v-for="(reviewItem, key) in productReviews"
         :key="key"
         :review-item="reviewItem"
+        @on-submit="saveReview"
         @review-updated="refreshReviews"
         @review-deleted="refreshReviews"
       />
@@ -103,15 +104,11 @@ const refreshReviews = () => {
 };
 
 const saveReview = async (form: CreateReviewParams) => {
-  const targetId = Number(productGetters.getVariationId(product.value));
-  form.targetId = targetId;
+  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
-  send({
-    type: 'positive',
-    message: t('review.notification.success'),
-  });
+  send({ type: 'positive', message: t('review.notification.success') });
 };
 
 watch(

@@ -390,16 +390,20 @@
     "areYouSure": "Are you sure you want to delete the review?",
     "deleteReview": "Delete  Review?",
     "deleteReviewConfirmation": "Delete",
+    "answerAreYouSure": "Are you sure you want to delete the answer?",
+    "deleteAnswer": "Delete  Answer?",
     "createSuccess": "Review sent",
-    "toolTipVisibilityOn": "Your review is visible",
-    "toolTipVisibilityOff": "Your rating is currently being reviewed",
+    "tooltipVisibilityOn": "Your review is visible",
+    "tooltipVisibilityOff": "Your rating is currently being reviewed",
     "validation": {
       "ratingRequired": "Add your rating",
       "titleRequired": "Add your title",
+      "textareaRequired": "Add your message",
       "textareaMaxLength": "Maximum allowed lenght is 500"
     },
     "notification": {
-      "success": "Your review has been submitted"
+      "success": "Your review has been submitted",
+      "answerSuccess": "Your answer has been submitted"
     }
   },
   "account": {

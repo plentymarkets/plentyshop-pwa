@@ -4043,22 +4043,22 @@ __metadata:
   linkType: soft
 
 "@plentymarkets/shop-api@file:/Users/cristi/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
-  version: 0.33.1
-  resolution: "@plentymarkets/shop-api@file:/Users/cristi/workspace/plentymarkets-sdk/packages/api-client#/Users/cristi/workspace/plentymarkets-sdk/packages/api-client::hash=3fdd10&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  version: 0.34.0
+  resolution: "@plentymarkets/shop-api@file:/Users/cristi/workspace/plentymarkets-sdk/packages/api-client#/Users/cristi/workspace/plentymarkets-sdk/packages/api-client::hash=8cc2b4&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: e532f219297d31b41e3a8b09258f07037e6dcf940d1f13c24c50b5d72161d95ff9a2413baefe57d80a756cb1a2ff64210caade283a413abb90accb8ce0589c37
+  checksum: b000d2b022369156602025b7e02765b8eab35bd1e02a6e31be41a73f9d1566a090d1d4cdbdc28c54b88b05bedbf6c6f94b5db6ac577a0653ad0c93a9555c1b86
   languageName: node
   linkType: hard
 
 "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
-  version: 0.51.0
-  resolution: "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk#/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::hash=b885bb&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  version: 0.52.0
+  resolution: "@plentymarkets/shop-sdk@file:/Users/cristi/workspace/plentymarkets-sdk/packages/sdk#/Users/cristi/workspace/plentymarkets-sdk/packages/sdk::hash=208f08&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     axios: ^1.6.3
-  checksum: 1d334c26804d580f0b7bb1ef14356dc6126dfad52fb2352b635f8f1f9cd717e29dcd1440c8ad6a02f52fc785c904b150d13ec3d52cb866b0a2f73583d7c4a766
+  checksum: 217967afd9b6f48d6a3e2486cbcaf6c78c2513e40e21c4746bdb68e8acaea27fe70628ac5d47cdba9c5b1a303796f2f58a14ebe567c3565a0e1445cdb320dfd4
   languageName: node
   linkType: hard
 

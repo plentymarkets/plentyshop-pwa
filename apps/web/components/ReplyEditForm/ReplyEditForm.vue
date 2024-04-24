@@ -1,41 +1,44 @@
 <template>
-  <div class="max-w-[450px] md:max-w-[768px] h-[300px]">
-    <h3 class="font-bold py-2 pl-4 pr-3 typography-headline-4">{{ $t('review.editReplyFormTitle') }}</h3>
-    <form
-      class="grid grid-cols-[100px_1fr] py-2 px-4 gap-4 md:grid-cols-[176px_1fr] grid-rows-[100px_1fr] md:grid-rows-[28px_1fr] items-center md:items-start"
-      data-testid="edit-reply-form"
-      @submit.prevent="$emit('on-submit', form)"
-    >
+  <div class="max-w-[450px] md:max-w-[768px]">
+    <h3 class="font-bold py-2 typography-headline-4">
+      {{ t('review.editReplyFormTitle') }}
+    </h3>
+
+    <form class="col-span-2" data-testid="edit-reply-form" @submit.prevent="onSubmit">
       <div class="col-span-2">
-        <label class="my-4 block">
-          <label class="block mb-6">
-            <span class="block mb-0.5 typography-label-sm font-medium text-neutral-900">
-              {{ $t('review.reviewAuthor') }}
-            </span>
-            <SfInput disabled wrapper-class="!bg-disabled-100 !ring-disabled-300 !ring-1" v-model="form.authorName" />
-          </label>
-          <span class="block typography-label-sm font-medium mb-0.5 text-neutral-900">
-            {{ $t('review.reviewText') }}
-          </span>
-          <textarea
-            v-model="form.message"
-            class="block w-full py-2 pl-4 pr-3 min-h-[138px] rounded-md ring-1 ring-neutral-300 placeholder:text-neutral-500"
-          />
-          <span
-            :class="[
-              'block text-xs mt-0.5 text-right',
-              reviewIsAboveLimit ? 'text-negative-700 font-medium' : 'text-neutral-500',
-            ]"
-          >
-            {{ reviewCharsCount }}
-          </span>
-        </label>
+        <UiFormLabel for="reply-author">
+          {{ t('review.reviewAuthor') }}
+        </UiFormLabel>
+        <SfInput
+          v-model="authorName"
+          v-bind="authorNameAttributes"
+          :invalid="Boolean(errors['authorName'])"
+          name="authorName"
+          id="reply-author"
+        />
+        <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
+
+        <UiFormLabel for="reply-message" class="mt-4">{{ t('review.yourAnswer') }} *</UiFormLabel>
+        <SfTextarea
+          v-model="message"
+          v-bind="messageAttributes"
+          :invalid="Boolean(errors['message'])"
+          id="reply-message"
+          name="message"
+          size="lg"
+          class="w-full"
+        />
+        <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
+        <div v-if="!reviewIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ reviewCharsCount }}</div>
+
+        <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
+
         <div class="flex justify-end gap-x-4">
           <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
-            {{ $t('review.cancel') }}
+            {{ t('review.cancel') }}
           </SfButton>
           <SfButton type="submit" class="flex-1 md:flex-initial">
-            {{ $t('review.submitReview') }}
+            {{ t('review.saveAnswer') }}
           </SfButton>
         </div>
       </div>
@@ -44,31 +47,49 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
 import { reviewGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfInput } from '@storefront-ui/vue';
-import type { ReplyEditFormProps } from '~/components/ReplyEditForm/types';
-defineEmits(['on-close', 'on-submit']);
+import { SfButton, SfInput, SfTextarea } from '@storefront-ui/vue';
+import { object, string } from 'yup';
+import { useForm } from 'vee-validate';
+import type { ReplyEditFormProps } from './types';
+import type { ReviewItem } from '@plentymarkets/shop-api';
+const emits = defineEmits(['on-close', 'on-submit']);
 const props = defineProps<ReplyEditFormProps>();
-const replyItem = props.replyItem;
+const { replyItem } = toRefs(props);
+const { t } = useI18n();
 
-const form = ref({
-  title: undefined,
-  authorName: reviewGetters.getReplyAuthor(replyItem),
-  ratingValue: undefined,
-  message: reviewGetters.getReplyMessage(replyItem),
-  type: 'reply',
-  targetId: reviewGetters.getReplyTargetId(replyItem),
-  honeypot: '',
-  titleMissing: true,
-  ratingMissing: true,
+const validationSchema = toTypedSchema(
+  object({
+    authorName: string()
+      .optional()
+      .default(replyItem.value ? reviewGetters.getReplyAuthor(replyItem.value as unknown as ReviewItem) : ''),
+    message: string()
+      .required()
+      .max(500, t('review.validation.textareaMaxLength'))
+      .default(replyItem.value ? reviewGetters.getReplyMessage(replyItem.value as unknown as ReviewItem) : ''),
+  }),
+);
+
+const { errors, defineField, handleSubmit } = useForm({
+  validationSchema: validationSchema,
 });
 
-// const ratingLabelId = useId();
-// const ratingModelValue = ref();
-// const usernameModelValue = ref('');
-const reviewModelValue = ref('');
-const reviewCharacterLimit = ref(500);
-const reviewIsAboveLimit = computed(() => reviewModelValue.value.length > reviewCharacterLimit.value);
-const reviewCharsCount = computed(() => reviewCharacterLimit.value - reviewModelValue.value.length);
+const [message, messageAttributes] = defineField('message');
+const [authorName, authorNameAttributes] = defineField('authorName');
+const reviewCharacterLimit = 500;
+const reviewIsAboveLimit = computed(() => (message?.value?.length ?? 0) > reviewCharacterLimit);
+const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.length ?? 0));
+
+const sendReply = async () => {
+  const form = {
+    type: 'reply',
+    feedbackId: replyItem.value.id,
+    message: message.value,
+    authorName: authorName.value,
+  };
+
+  emits('on-submit', form);
+};
+
+const onSubmit = handleSubmit(() => sendReply());
 </script>
