@@ -21,20 +21,20 @@
       @submit.prevent="open"
     >
       <label>
-        <UiFormLabel>{{ $t('form.firstNameLabel') }} *</UiFormLabel>
+        <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
         <SfInput name="firstName" autocomplete="given-name" v-model="firstNameModel" required />
       </label>
       <label>
-        <UiFormLabel>{{ $t('form.lastNameLabel') }} *</UiFormLabel>
+        <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
         <SfInput name="lastName" autocomplete="family-name" v-model="lastNameModel" required />
       </label>
       <label>
-        <UiFormLabel>{{ $t('form.emailLabel') }} *</UiFormLabel>
+        <UiFormLabel>{{ $t('form.emailLabel') }} {{ $t('form.required') }}</UiFormLabel>
         <SfInput name="email" type="email" autocomplete="email" v-model="emailModel" required />
       </label>
       <div>
         <label>
-          <UiFormLabel>{{ $t('form.passwordLabel') }} *</UiFormLabel>
+          <UiFormLabel>{{ $t('form.passwordLabel') }} {{ $t('form.required') }}</UiFormLabel>
           <UiFormPasswordInput name="password" autocomplete="current-password" v-model="passwordModel" required />
           <UiFormHelperText class="mb-2">{{ $t('form.passwordHint') }}</UiFormHelperText>
         </label>
@@ -43,7 +43,7 @@
       <div class="flex items-center">
         <SfCheckbox id="terms" v-model="termsAndConditionsModel" value="value" class="peer" required />
         <label class="ml-3 text-base text-neutral-900 cursor-pointer peer-disabled:text-disabled-900" for="terms">
-          *
+          {{ $t('form.required') }}
           <i18n-t keypath="form.termsAndConditionsLabel">
             <template #terms>
               <SfLink

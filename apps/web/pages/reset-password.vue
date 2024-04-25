@@ -5,7 +5,7 @@
         {{ $t('auth.resetPassword.info') }}
       </p>
       <label>
-        <UiFormLabel>{{ $t('auth.resetPassword.email') }}</UiFormLabel>
+        <UiFormLabel>{{ $t('auth.resetPassword.email') }} {{ $t('form.required') }}</UiFormLabel>
         <SfInput name="email" type="email" v-model="customerEmail" required />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
