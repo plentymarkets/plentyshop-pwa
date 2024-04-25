@@ -2,6 +2,10 @@ import { PageObject } from "./PageObject";
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
+    return cy.get('[data-testid="guest-checkout-button"]');
+  }
+
+  get goToGuestCheckoutButton() {
     return cy.getByTestId('checkout-button');
   }
 
@@ -87,6 +91,11 @@ export class CheckoutPageObject extends PageObject {
 
   get postalCodeInput() {
     return cy.getByTestId('input').find('input[name="postalCode"]');
+  }
+
+  goToGuestCheckout() {
+    this.goToGuestCheckoutButton.click();
+    return this;
   }
 
   goToCheckout() {
