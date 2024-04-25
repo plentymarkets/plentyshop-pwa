@@ -119,13 +119,10 @@ const cartAddress = computed(() =>
     : cartGetters.getCustomerShippingAddressId(cart.value),
 );
 
-const defaultAddress = computed(
-  () =>
-    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
+const selectedAddress = ref(
+  props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
     ({} as Address),
 );
-
-let selectedAddress = ref(defaultAddress.value);
 
 const setNewSelectedAddress = (selectedAddressNew: Address) => {
   selectedAddress.value = selectedAddressNew;

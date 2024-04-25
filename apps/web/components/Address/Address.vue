@@ -12,10 +12,10 @@
       <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-700 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
-      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-edit')" @click.stop>
+      <SfButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-edit')">
         {{ $t('account.accountSettings.edit') }}
       </SfButton>
-      <SfButton variant="tertiary" size="sm" class="self-start" @click="$emit('on-delete')" @click.stop>
+      <SfButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-delete')">
         {{ $t('account.accountSettings.delete') }}
       </SfButton>
       <SfButton
@@ -23,8 +23,7 @@
         variant="tertiary"
         size="sm"
         class="self-start"
-        @click="$emit('make-default')"
-        @click.stop
+        @click.stop="$emit('make-default')"
       >
         {{ $t('account.accountSettings.makeDefault') }}
       </SfButton>
@@ -39,5 +38,4 @@ import { SfButton } from '@storefront-ui/vue';
 import type { AddressProps } from './types';
 
 defineProps<AddressProps>();
-defineEmits(['on-click', 'on-edit', 'on-delete', 'make-default']);
 </script>
