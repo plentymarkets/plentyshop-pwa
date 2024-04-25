@@ -22,7 +22,6 @@ const emits = defineEmits<{
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
 });
-
 const { type, disabled } = toRefs(props);
 
 const TypeCartPreview = 'CartPreview';
@@ -30,8 +29,8 @@ const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
+const paypalUuid = uuid();
 const paypal = await loadScript(currency.value, isCommit);
-const paypalUuid = ref('');
 
 const onInit = (actions: OnInitActions) => {
   if (type.value === TypeCheckout) {
@@ -89,6 +88,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         if (!success) {
           return actions.reject();
         }
+        return actions.resolve();
       },
       onInit(data, actions) {
         onInit(actions);
@@ -106,29 +106,21 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
     });
 
-    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value?.id);
+    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value.id);
   }
 };
 
-const createPaypalUuid = async () => (paypalUuid.value = uuid());
-
-onMounted(async () => {
-  await createPaypalUuid().then(() => {
-    if (paypal) {
-      const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
-      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+const createButton = () => {
+  if (paypal) {
+    if (paypalButton.value) {
+      paypalButton.value.innerHTML = '';
     }
-    return true;
-  });
-});
+    const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
+    FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+  }
+};
 
-watch(currency, async () => {
-  await createPaypalUuid().then(() => {
-    if (paypal) {
-      const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
-      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
-    }
-    return true;
-  });
+onMounted(() => {
+  createButton();
 });
 </script>

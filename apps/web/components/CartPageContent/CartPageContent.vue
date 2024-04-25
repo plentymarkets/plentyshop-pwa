@@ -19,7 +19,9 @@
         >
           {{ $t('goToCheckout') }}
         </SfButton>
-        <PayPalExpressButton class="mt-4" type="CartPreview" />
+        <client-only>
+          <PayPalExpressButton class="mt-4" type="CartPreview" />
+        </client-only>
       </OrderSummary>
     </div>
   </div>
