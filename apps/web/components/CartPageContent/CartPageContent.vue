@@ -13,7 +13,7 @@
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
-          :to="localePath(paths.checkout)"
+          :to="goToCheckout()"
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
@@ -34,6 +34,11 @@ import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
 const viewport = useViewport();
 const localePath = useLocalePath();
+const { isAuthorized } = useCustomer();
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
+
+function goToCheckout() {
+  return isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin);
+}
 </script>
