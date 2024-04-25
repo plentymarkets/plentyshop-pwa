@@ -5,6 +5,7 @@
 ### Hinzugefügt
 
 - eine Gast-Anmeldeseite vor der Kasse
+- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
 
 ### Behoben
 
