@@ -2,35 +2,45 @@
   <form data-testid="address-form">
     <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4 mb-2">
       <label>
-        <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
+        <UiFormLabel class="flex">
+          <span class="mr-1">{{ $t('form.firstNameLabel') }}</span>
+          <span v-if="!hasCompany">{{ $t('form.required') }}</span>
+          <UiFormHelperText v-else>({{ $t('form.optional') }})</UiFormHelperText>
+        </UiFormLabel>
         <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
       </label>
 
       <label class="md:col-span-2">
-        <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
+        <UiFormLabel class="flex">
+          <span class="mr-1">{{ $t('form.lastNameLabel') }}</span>
+          <span v-if="!hasCompany">{{ $t('form.required') }}</span>
+          <UiFormHelperText v-else>({{ $t('form.optional') }})</UiFormHelperText>
+        </UiFormLabel>
         <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastName" required />
       </label>
     </div>
 
-    <SfLink
-      href="#"
-      class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded md:col-span-3 mb-2"
-      @click.prevent="changeHasCompany()"
-    >
-      <span v-if="!hasCompany">{{ $t('newCheckout.addCompanyData') }}</span>
-      <span v-else>{{ $t('newCheckout.removeCompanyData') }}</span>
-    </SfLink>
+    <ClientOnly>
+      <SfLink
+        href="#"
+        class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded md:col-span-3 mb-2"
+        @click.prevent="changeHasCompany()"
+      >
+        <span v-if="!hasCompany">{{ $t('newCheckout.addCompanyData') }}</span>
+        <span v-else>{{ $t('newCheckout.removeCompanyData') }}</span>
+      </SfLink>
+    </ClientOnly>
 
     <div v-if="hasCompany" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
       <label class="md:col-span-1">
         <UiFormLabel class="flex">
-          <span class="mr-1">{{ $t('form.companyName') }} {{ $t('form.required') }}</span>
+          <span class="mr-1">{{ $t('newCheckout.companyName') }} {{ $t('form.required') }}</span>
         </UiFormLabel>
         <SfInput name="companyName" type="text" v-model="defaultValues.name1" />
       </label>
       <label class="md:col-span-1">
         <UiFormLabel class="flex">
-          <span class="mr-1">{{ $t('form.vatid') }} {{ $t('form.required') }}</span>
+          <span class="mr-1">{{ $t('newCheckout.vatid') }} {{ $t('form.required') }}</span>
         </UiFormLabel>
         <SfInput name="vatId" type="text" v-model="defaultValues.vatNumber" />
       </label>
@@ -54,7 +64,7 @@
       <label class="md:col-span-3">
         <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
         <SfSelect
-          name="country"
+          name="state"
           v-model="defaultValues.country"
           @change="defaultValues.state = ''"
           :placeholder="$t('form.selectPlaceholder')"

@@ -725,6 +725,9 @@
     "notValidVariation": "Please select a valid variation."
   },
   "newCheckout": {
-    "addCompanyData": "Add company data"
+    "companyName": "Company Name",
+    "vatid": "Vat-ID",
+    "addCompanyData": "+ Add company data",
+    "removeCompanyData": "- Remove Company Data"
   }
 }
