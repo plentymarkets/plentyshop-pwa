@@ -8,6 +8,8 @@
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
       :image-url="addModernImageExtension(getImageForViewport(product, 'ItemList'))"
       :image-alt="productGetters.getName(product)"
+      :image-height="productGetters.getImageHeight(product) ?? 600"
+      :image-width="productGetters.getImageWidth(product) ?? 600"
       :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
       :rating="productGetters.getAverageRating(product)"
