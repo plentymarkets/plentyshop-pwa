@@ -18,9 +18,9 @@
                   </SfButton>
                 </template>
                 <template #below>
-                  <div>
+                  <client-only>
                     <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
-                  </div>
+                  </client-only>
                 </template>
               </OrDivider>
             </div>

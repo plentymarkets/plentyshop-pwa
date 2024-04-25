@@ -23,4 +23,3 @@ const currentUrl = localePath(String(historyState.current));
 const homeUrl = localePath(paths.home);
 const backHref = backUrl === currentUrl ? homeUrl : backUrl;
 </script>
-../../components/GuestLogin/GuestLogin.vue
