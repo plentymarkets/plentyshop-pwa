@@ -4,7 +4,8 @@
 
 ### New
 
-- a guest Login Page bevor gopng to checkout
+- a guest login page before going to checkout
+- width and height attributes to images on category and product view
 
 ### Fixed
 

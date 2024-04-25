@@ -14,7 +14,7 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, cleanImageName }, index) in images"
+          v-for="({ url, cleanImageName, width, height }, index) in images"
           :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
@@ -32,8 +32,8 @@
             :fetchpriority="index === 0 ? 'high' : undefined"
             :preload="index === 0"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            width="600"
-            height="600"
+            :width="width ?? 600"
+            :height="height ?? 600"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -66,7 +66,7 @@
         </template>
 
         <button
-          v-for="({ urlPreview, cleanImageName }, index) in images"
+          v-for="({ urlPreview, cleanImageName, width, height }, index) in images"
           :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
@@ -80,8 +80,8 @@
           <NuxtImg
             :alt="cleanImageName"
             class="object-contain"
-            width="80"
-            height="80"
+            :width="width ?? 80"
+            :height="height ?? 80"
             :src="urlPreview"
             :quality="80"
             loading="lazy"
@@ -125,6 +125,7 @@ import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
+
 const props = defineProps<{
   images: ImagesData[];
 }>();
