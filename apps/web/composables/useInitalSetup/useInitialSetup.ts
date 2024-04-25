@@ -1,5 +1,5 @@
 import type { Cart, SessionResult } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+
 import type { SetInitialData, UseInitialSetupReturn, UseInitialSetupState } from './types';
 
 /** Function for getting current customer/cart data from session

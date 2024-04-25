@@ -1,6 +1,5 @@
 import type { ActiveShippingCountry } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
 import type {
   UseActiveShippingCountriesReturn,
   UseActiveShippingCountriesState,
@@ -28,6 +27,7 @@ export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () =
 
   const getActiveShippingCountries: GetActiveShippingCountries = async () => {
     state.value.loading = true;
+
     const { data, error } = await useAsyncData('getActiveShippingCountries', () =>
       useSdk().plentysystems.getActiveShippingCountries(),
     );

@@ -3490,7 +3490,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
+"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.4, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
   version: 3.11.2
   resolution: "@nuxt/kit@npm:3.11.2"
   dependencies:
@@ -3516,7 +3516,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/schema@npm:3.11.2, @nuxt/schema@npm:^3.10.3, @nuxt/schema@npm:^3.11.1":
+"@nuxt/schema@npm:3.11.2, @nuxt/schema@npm:^3.10.3, @nuxt/schema@npm:^3.11.1, @nuxt/schema@npm:^3.7.4":
   version: 3.11.2
   resolution: "@nuxt/schema@npm:3.11.2"
   dependencies:
@@ -4013,8 +4013,8 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.7.1
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.34.0
-    "@plentymarkets/shop-sdk": ^0.52.0
+    "@plentymarkets/shop-api": "file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client"
+    "@plentymarkets/shop-sdk": /Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.6
@@ -4042,23 +4042,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.34.0":
+"@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.34.0
-  resolution: "@plentymarkets/shop-api@npm:0.34.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.34.0%2Fd85b3808d89196a237acd8ab6db765083dd46642"
+  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=a5702a&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
-    "@vue-storefront/middleware": 3.0.0-rc.2
+    "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: fd92c61f61a96aab26c957bc069a2778a66bf61b9620087fe849556763ca85945a4e29cadb27b834671b10febd9f68fb197839bda9a67ddaf1044c41738ed0f2
+  checksum: 825795f15e7aa1de5722a7ff9d8a3ff5a6b4e2cbeadc74dac6534719d986e06bc34fb1f78634666c80583be0915babf1e16081bf9815fd73dcbe58ba71f57b84
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.52.0":
+"@plentymarkets/shop-sdk@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.52.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.52.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.52.0%2F17fd5b72e0bffa43e9ff04409e63d84d52602a9f"
+  resolution: "@plentymarkets/shop-sdk@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk::hash=8d95ff&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     axios: ^1.6.3
-  checksum: bc9159cac7bc7c2665be42adcf6c6a1242ac6f021c2109fabc46353a8d84921f9bce2e209daf52545b2478075b4e9e6e6df1108d1abf834e5895f7904eceb8cb
+  checksum: 4ffec2689a2448c4a3ebc6181b6cf6fb273fee68546540622f262a59dca366814505b7e108b467388e8834244624a6e557da102b4a9f5c2e1d78e350947ed025
   languageName: node
   linkType: hard
 
@@ -5898,21 +5898,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/middleware@npm:3.0.0-rc.2":
-  version: 3.0.0-rc.2
-  resolution: "@vue-storefront/middleware@npm:3.0.0-rc.2"
-  dependencies:
-    consola: ^2.15.3
-    cookie-parser: ^1.4.6
-    cors: ^2.8.5
-    express: ^4.18.1
-    helmet: ^5.1.1
-    rimraf: ^4.1.2
-  checksum: 38f4a5e535d9bae356c590cca2a0b153f9a565e7195f2ddc785a96f29dbc6207793f960d92bccb769f31b9fff770f16dc4a4232eeab8484d1fd89bb45844cbd4
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.6.1":
+"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.10.0, @vue-storefront/middleware@npm:^3.6.1":
   version: 3.10.0
   resolution: "@vue-storefront/middleware@npm:3.10.0"
   dependencies:
@@ -5925,7 +5911,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.4.4":
+"@vue-storefront/nuxt@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@vue-storefront/nuxt@npm:3.1.0"
+  dependencies:
+    "@nuxt/kit": ^3.7.4
+    "@nuxt/schema": ^3.7.4
+    "@vue-storefront/sdk": ^1.4.0
+    knitwork: ^1.0.0
+  checksum: 7f38aa04836b03ed3edc856b8e471c22181e11d8c97a1c557863d42c896f313c328fa27d396ede35e0bc47507edffa7f7d16a67907c2f82257798b5110df1503
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/sdk@npm:^1.4.0":
   version: 1.4.4
   resolution: "@vue-storefront/sdk@npm:1.4.4"
   checksum: 43f7c67f3f86c5cdd02286ea73ecba04ec1bb435600b34adb69196c9bcee8f1bf5caa4cae680651008cf19e51c6a341fe46a281c7b2ea19132277da84f8ca88f
@@ -11657,18 +11655,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^9.2.0":
-  version: 9.3.5
-  resolution: "glob@npm:9.3.5"
-  dependencies:
-    fs.realpath: ^1.0.0
-    minimatch: ^8.0.2
-    minipass: ^4.2.4
-    path-scurry: ^1.6.1
-  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
-  languageName: node
-  linkType: hard
-
 "global-directory@npm:^4.0.1":
   version: 4.0.1
   resolution: "global-directory@npm:4.0.1"
@@ -14501,15 +14487,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^8.0.2":
-  version: 8.0.4
-  resolution: "minimatch@npm:8.0.4"
-  dependencies:
-    brace-expansion: ^2.0.1
-  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3":
   version: 9.0.4
   resolution: "minimatch@npm:9.0.4"
@@ -14611,13 +14588,6 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: a30d083c8054cee83cdcdc97f97e4641a3f58ae743970457b1489ce38ee1167b3aaf7d815cd39ec7a99b9c40397fd4f686e83750e73e652b21cb516f6d845e48
-  languageName: node
-  linkType: hard
-
-"minipass@npm:^4.2.4":
-  version: 4.2.8
-  resolution: "minipass@npm:4.2.8"
-  checksum: 7f4914d5295a9a30807cae5227a37a926e6d910c03f315930fde52332cf0575dfbc20295318f91f0baf0e6bb11a6f668e30cde8027dea7a11b9d159867a3c830
   languageName: node
   linkType: hard
 
@@ -15942,7 +15912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-scurry@npm:^1.10.2, path-scurry@npm:^1.6.1":
+"path-scurry@npm:^1.10.2":
   version: 1.10.2
   resolution: "path-scurry@npm:1.10.2"
   dependencies:
@@ -17401,17 +17371,6 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
-  languageName: node
-  linkType: hard
-
-"rimraf@npm:^4.1.2":
-  version: 4.4.1
-  resolution: "rimraf@npm:4.4.1"
-  dependencies:
-    glob: ^9.2.0
-  bin:
-    rimraf: dist/cjs/src/bin.js
-  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
   languageName: node
   linkType: hard
 
@@ -19662,7 +19621,7 @@ __metadata:
 
 "typescript@patch:typescript@5.4.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.4 || ^5.2.2#~builtin<compat/typescript>":
   version: 5.4.5
-  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=29ae49"
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -20849,7 +20808,8 @@ __metadata:
     "@types/node": ^20.12.7
     "@vite-pwa/nuxt": ^0.6.0
     "@vitest/coverage-v8": ^0.33.0
-    "@vue-storefront/sdk": ^1.4.4
+    "@vue-storefront/middleware": ^3.10.0
+    "@vue-storefront/nuxt": ^3.1.0
     "@vue-storefront/unified-data-model": ^0.18.1
     "@vue/test-utils": ^2.4.5
     "@vueuse/core": ^10.9.0

@@ -10,7 +10,7 @@ import type {
 } from './types';
 import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
 import { orderGetters, returnGetters } from '@plentymarkets/shop-sdk';
-import { useSdk } from '~/sdk';
+
 
 /**
  * @description Composable for managing order return.

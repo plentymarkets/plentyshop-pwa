@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    "@vue-storefront/nuxt",
     [
       '@nuxtjs/google-fonts',
       {
@@ -125,6 +126,11 @@ export default defineNuxtConfig({
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  },
+  vsf: {
+    middleware: {
+      apiUrl: "http://localhost:8181",
+    },
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },

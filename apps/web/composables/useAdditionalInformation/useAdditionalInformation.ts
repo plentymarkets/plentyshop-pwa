@@ -1,6 +1,5 @@
 import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
 import type {
   DoAdditionalInformation,
   DoAdditionalInformationReturn,

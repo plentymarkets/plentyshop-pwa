@@ -1,6 +1,5 @@
 import type { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
-import { useSdk } from '~/sdk';
-import type { DoAddCouponParams } from '@plentymarkets/shop-api';
+import type { Cart, DoAddCouponParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing coupons.
@@ -34,11 +33,11 @@ export const useCoupon: UseCouponReturn = () => {
     if (params.couponCode.trim() === '') {
       send({ message: $i18n.t('coupon.pleaseProvideCoupon'), type: 'warning' });
       state.value.loading = false;
-      return;
+      return {} as Cart;
     }
     const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
-    if (response.data.value.error) {
+    /* if (response.data.value.data.error) {
       const error = {
         status: 500,
         message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
@@ -48,8 +47,8 @@ export const useCoupon: UseCouponReturn = () => {
     } else if (response.data.value) {
       await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
-    }
-    return response.data.value.data;
+    } */
+    return {} as Cart;
   };
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
@@ -60,7 +59,7 @@ export const useCoupon: UseCouponReturn = () => {
 
     const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
-    if (response.data.value.data) {
+    /* if (response.data.value.data) {
       await getCart();
       send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
     } else if (response.data.value.error) {
@@ -71,8 +70,8 @@ export const useCoupon: UseCouponReturn = () => {
       };
 
       useHandleError(error);
-    }
-    return response.data.value.data;
+    } */
+    return {} as Cart;
   };
 
   return {

@@ -5,7 +5,7 @@ import type {
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { useSdk } from '~/sdk';
+
 import type {
   UploadFileForOrderPropertyResponse,
   ProductProperty,

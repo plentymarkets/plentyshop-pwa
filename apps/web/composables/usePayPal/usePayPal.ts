@@ -1,6 +1,6 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import type { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+
 import type {
   UsePayPalMethodsReturn,
   CreateTransaction,
