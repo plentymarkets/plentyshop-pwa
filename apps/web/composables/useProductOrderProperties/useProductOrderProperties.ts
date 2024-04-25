@@ -100,8 +100,9 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
    * getPropertiesForCart();
    * ```
    */
-  const getPropertiesForCart = (): BasketItemOrderParamsProperty[] => {
-    return state.value.data.filter((property) => property.property.value !== null);
+  const getPropertiesForCart = (): BasketItemOrderParamsProperty[] | undefined => {
+    const result = state.value.data.filter((property) => property.property.value !== null);
+    return result.length > 0 ? result : undefined;
   };
 
   /**
@@ -116,17 +117,19 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   const getPropertiesPrice: GetPropertiesPrice = (product: Product) => {
     const properties = getPropertiesForCart();
     let price = 0;
-    properties.forEach((property) => {
-      const propertyItem = product.properties?.find(
-        (productProperty) => productProperty.propertyId === property.property.id,
-      );
-      if (propertyItem) {
-        const labels = productPropertyGetters.getOrderPropertyLabel(propertyItem);
-        if (labels.surchargeType === 'incl') {
-          price += productPropertyGetters.getOrderPropertySurcharge(propertyItem);
+    if (properties) {
+      properties.forEach((property) => {
+        const propertyItem = product.properties?.find(
+          (productProperty) => productProperty.propertyId === property.property.id,
+        );
+        if (propertyItem) {
+          const labels = productPropertyGetters.getOrderPropertyLabel(propertyItem);
+          if (labels.surchargeType === 'incl') {
+            price += productPropertyGetters.getOrderPropertySurcharge(propertyItem);
+          }
         }
-      }
-    });
+      });
+    }
     return price;
   };
 
