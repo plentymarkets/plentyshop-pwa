@@ -5,7 +5,8 @@
 ### New
 
 - a guest login page before going to checkout
-- width and height attributes to images on category and product view
+- Width and height attributes to images on category and product view
+- Selection for the saved addresses at checkout
 
 ### Fixed
 

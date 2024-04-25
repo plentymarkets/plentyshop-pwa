@@ -39,14 +39,15 @@ export class CheckoutPageObject extends PageObject {
 
   get displaySuccessPages() {
     return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
-  }
+}
+
 
   get inputField() {
     return cy.getByTestId('contact-information-form').children('[type="email"]');
   }
 
   get modal() {
-    return cy.getByTestId('modal');
+    return cy.getByTestId('checkout-edit-address-modal');
   }
 
   get thankYouBanner() {
@@ -128,7 +129,8 @@ export class CheckoutPageObject extends PageObject {
   placeOrderButton() {
     this.placeOrderButtons.click();
     return this;
-  }
+}
+
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
