@@ -17,7 +17,7 @@
         <CategoryTree :category="category" />
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-        <CategoryFilters :facets="productsCatalog.facets" />
+        <CategoryFilters v-if="productsCatalog.facets.length > 0" :facets="productsCatalog.facets" />
       </template>
     </CategoryPageContent>
   </NuxtLayout>
