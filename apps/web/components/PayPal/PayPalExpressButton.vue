@@ -32,6 +32,12 @@ const isCommit = type.value === TypeCheckout;
 const paypalUuid = uuid();
 const paypal = await loadScript(currency.value, isCommit);
 
+const checkOnClickEvent = (): boolean => {
+  const props = getCurrentInstance()?.vnode.props;
+
+  return !!(props && props['onOnClick']);
+};
+
 const onInit = (actions: OnInitActions) => {
   if (type.value === TypeCheckout) {
     disabled.value ? actions.disable() : actions.enable();
@@ -43,6 +49,7 @@ const onInit = (actions: OnInitActions) => {
 
 const onClick = async () => {
   return await new Promise<boolean>((resolve) => {
+    if (!checkOnClickEvent()) resolve(true);
     emits('on-click', async (successfully) => {
       resolve(successfully);
     });
