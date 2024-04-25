@@ -1,6 +1,6 @@
 <template>
-  <form data-testid="address-form" @submit.prevent="$emit('on-save', defaultValues, useAsShippingAddress)">
-    <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4">
+  <form data-testid="address-form">
+    <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4 mb-2">
       <label>
         <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
         <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
@@ -14,20 +14,21 @@
 
     <SfLink
       href="#"
-      target="_blank"
-      class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded md:col-span-3"
+      class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded md:col-span-3 mb-2"
+      @click.prevent="changeHasCompany()"
     >
-      {{ $t('newCheckout.addCompanyData') }}
+      <span v-if="!hasCompany">{{ $t('newCheckout.addCompanyData') }}</span>
+      <span v-else>{{ $t('newCheckout.removeCompanyData') }}</span>
     </SfLink>
 
-    <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4">
-      <label class="md:col-span-2">
+    <div v-if="hasCompany" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+      <label class="md:col-span-1">
         <UiFormLabel class="flex">
           <span class="mr-1">{{ $t('form.companyName') }} {{ $t('form.required') }}</span>
         </UiFormLabel>
         <SfInput name="companyName" type="text" v-model="defaultValues.name1" />
       </label>
-      <label class="md:col-span-2">
+      <label class="md:col-span-1">
         <UiFormLabel class="flex">
           <span class="mr-1">{{ $t('form.vatid') }} {{ $t('form.required') }}</span>
         </UiFormLabel>
@@ -35,7 +36,7 @@
       </label>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4 mt-2">
       <label class="md:col-span-3">
         <UiFormLabel class="flex">
           <span class="mr-1">{{ $t('form.phoneLabel') }}</span>
@@ -112,7 +113,13 @@
       >
         {{ $t('contactInfo.clearAll') }}
       </SfButton>
-      <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isCartUpdateLoading">
+      <SfButton
+        data-testid="save-address"
+        type="submit"
+        class="min-w-[120px]"
+        :disabled="isCartUpdateLoading"
+        @click.prevent="$emit('on-save', defaultValues, useAsShippingAddress)"
+      >
         <SfLoaderCircular v-if="isCartUpdateLoading" class="flex justify-center items-center" size="sm" />
         <span v-else>
           {{ $t('contactInfo.save') }}
@@ -135,6 +142,7 @@ const props = withDefaults(defineProps<AddressFormProps>(), {});
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 
 const savedAddress = props.savedAddress || ({} as Address);
+const hasCompany = ref(false);
 
 const defaultValues = ref({
   firstName: userAddressGetters.getFirstName(savedAddress),
@@ -166,6 +174,12 @@ const clearInputs = () => {
     name1: '',
     vatNumber: '',
   };
+};
+
+const changeHasCompany = () => {
+  hasCompany.value = !hasCompany.value;
+
+  defaultValues.value = { ...defaultValues.value, name1: '', vatNumber: '' };
 };
 
 const states = computed(() => {

@@ -69,7 +69,7 @@ const saveAddress = async (address: Address, useAsShippingAddress: boolean = fal
       await saveShippingAddress(address);
     }
   }
-  if (props.type === AddressType.Shipping || useAsShippingAddress) {
+  if (props.type === AddressType.Shipping) {
     await saveShippingAddress(address);
   }
   emit('on-saved');
