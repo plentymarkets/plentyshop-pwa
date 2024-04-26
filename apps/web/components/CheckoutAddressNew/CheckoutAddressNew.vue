@@ -28,12 +28,11 @@ import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
-const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
-const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
+const { saveAddress: updateAddress } = useAddress(props.type);
 const { data: cart } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
@@ -59,19 +58,8 @@ const edit = () => {
   editMode.value = !editMode.value;
 };
 
-const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
-  // see if checbox is set, and if yes overwrite please
-  // console.log('saveing');
-  // console.log(useAsShippingAddress);
-  if (props.type === AddressType.Billing) {
-    await saveBillingAddress(address);
-    if (useAsShippingAddress) {
-      await saveShippingAddress(address);
-    }
-  }
-  if (props.type === AddressType.Shipping || useAsShippingAddress) {
-    await saveShippingAddress(address);
-  }
+const saveAddress = async (address: Address) => {
+  await updateAddress(address);
   emit('on-saved');
   editMode.value = false;
 };
