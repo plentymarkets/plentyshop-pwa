@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({

@@ -1,7 +1,8 @@
 import type { Product, ProductParams } from '@plentymarkets/shop-api';
-import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
+import { prepareConfig } from "@vue-storefront/sdk";
 
 
 /**
@@ -34,7 +35,10 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const fetchProduct: FetchProduct = async (params: ProductParams) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getProduct(params));
+    const sdk = useSdk();
+    const { data, error } = await useAsyncData(() => sdk.plentysystems.getProduct(params, prepareConfig({
+      method: 'GET',
+    })));
     useHandleError(error.value);
 
     properties.setProperties(data.value?.data.properties ?? []);

@@ -27,7 +27,7 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   const getCategoryTree: GetCategoryTree = async () => {
     state.value.loading = true;
     try {
-      const data = await useSdk().plentysystems.getCategoryTree();
+      const data = await useSdk().plentysystems.getCategoryTree({});
       state.value.data = data?.data ?? state.value.data;
       return state.value.data;
     } catch (error) {

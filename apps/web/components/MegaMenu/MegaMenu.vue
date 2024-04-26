@@ -177,7 +177,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
   SfButton,

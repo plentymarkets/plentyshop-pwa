@@ -4014,7 +4014,6 @@ __metadata:
     "@nuxtjs/turnstile": ^0.7.1
     "@paypal/paypal-js": 7.1.1
     "@plentymarkets/shop-api": "file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client"
-    "@plentymarkets/shop-sdk": /Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.6
@@ -4044,21 +4043,12 @@ __metadata:
 
 "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
   version: 0.34.0
-  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=a5702a&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=f5ef00&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 825795f15e7aa1de5722a7ff9d8a3ff5a6b4e2cbeadc74dac6534719d986e06bc34fb1f78634666c80583be0915babf1e16081bf9815fd73dcbe58ba71f57b84
-  languageName: node
-  linkType: hard
-
-"@plentymarkets/shop-sdk@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
-  version: 0.52.0
-  resolution: "@plentymarkets/shop-sdk@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/sdk::hash=8d95ff&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
-  dependencies:
-    axios: ^1.6.3
-  checksum: 4ffec2689a2448c4a3ebc6181b6cf6fb273fee68546540622f262a59dca366814505b7e108b467388e8834244624a6e557da102b4a9f5c2e1d78e350947ed025
+  checksum: ac90f734dfadb8286e468ef684cd3f54b163a2808800d3692a259a02938a16bb112e58e16c5b6f798baa14bfdbbeff06c997c244db546bed75425399ea0482f0
   languageName: node
   linkType: hard
 
@@ -7102,7 +7092,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.6.3":
+"axios@npm:^1.6.1, axios@npm:^1.6.3, axios@npm:^1.6.8":
   version: 1.6.8
   resolution: "axios@npm:1.6.8"
   dependencies:
@@ -20813,6 +20803,7 @@ __metadata:
     "@vue-storefront/unified-data-model": ^0.18.1
     "@vue/test-utils": ^2.4.5
     "@vueuse/core": ^10.9.0
+    axios: ^1.6.8
     cypress: 12.17.4
     cypress-real-events: ^1.12.0
     cypress-wait-until: ^2.0.1

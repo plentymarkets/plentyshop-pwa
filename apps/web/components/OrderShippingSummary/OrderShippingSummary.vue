@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderShippingSummaryPropsType } from './types';
 
 const props = defineProps<OrderShippingSummaryPropsType>();

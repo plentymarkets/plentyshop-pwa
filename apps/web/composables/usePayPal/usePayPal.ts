@@ -13,7 +13,7 @@ import type {
   LoadConfig,
   GetLocale,
 } from './types';
-import { paypalGetters } from '@plentymarkets/shop-sdk';
+import { paypalGetters } from '@plentymarkets/shop-api';
 
 const getLocaleForPayPal: GetLocale = (locale: string) => {
   // eslint-disable-next-line sonarjs/no-small-switch

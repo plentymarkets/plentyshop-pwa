@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();

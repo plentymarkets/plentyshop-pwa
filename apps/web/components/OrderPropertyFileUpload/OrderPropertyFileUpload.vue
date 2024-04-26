@@ -78,7 +78,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput, SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyInputProps } from './types';
 import { type Ref, ref } from 'vue';
 import { useForm } from 'vee-validate';

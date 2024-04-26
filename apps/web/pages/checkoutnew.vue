@@ -116,7 +116,7 @@ import {
   paymentProviderGetters,
   cartGetters,
   userAddressGetters,
-} from '@plentymarkets/shop-sdk';
+} from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';

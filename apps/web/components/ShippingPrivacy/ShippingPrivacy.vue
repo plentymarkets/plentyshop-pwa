@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfCheckbox } from '@storefront-ui/vue';
 
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();

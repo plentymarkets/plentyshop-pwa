@@ -112,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import {
   SfButton,
   SfCounter,

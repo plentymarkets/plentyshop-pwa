@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters } from '@plentymarkets/shop-api';
 import {
   SfAccordionItem,
   SfIconChevronLeft,

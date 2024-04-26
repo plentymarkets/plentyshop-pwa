@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconOpenInNew, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 

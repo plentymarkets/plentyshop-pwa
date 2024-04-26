@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { productBundleGetters } from '@plentymarkets/shop-sdk';
+import { productBundleGetters } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
 

@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.9.0",
+    "axios": "^1.6.8",
     "lodash-es": "^4.17.21",
     "nuxt-lazy-hydrate": "^1.0.0",
     "uuid": "^9.0.1"
