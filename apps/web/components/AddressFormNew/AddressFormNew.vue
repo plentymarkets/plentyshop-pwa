@@ -154,6 +154,10 @@ const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.val
 const savedAddress = props.savedAddress || ({} as Address);
 const hasCompany = ref(false);
 
+if (userAddressGetters.getCompanyName(savedAddress) || userAddressGetters.getTaxNumber(savedAddress)) {
+  hasCompany.value = true;
+}
+
 const defaultValues = ref({
   firstName: userAddressGetters.getFirstName(savedAddress),
   lastName: userAddressGetters.getLastName(savedAddress),
@@ -165,8 +169,8 @@ const defaultValues = ref({
   state: userAddressGetters.getProvince(savedAddress),
   zipCode: userAddressGetters.getPostCode(savedAddress),
   primary: !userAddressGetters.getId(savedAddress),
-  name1: '',
-  vatNumber: '',
+  name1: userAddressGetters.getCompanyName(savedAddress),
+  vatNumber: userAddressGetters.getTaxNumber(savedAddress),
 });
 
 const clearInputs = () => {
