@@ -2,6 +2,12 @@
 
 ## v1.4.1 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
+### Hinzugefügt
+
+- eine Gast-Anmeldeseite vor der Kasse
+- Auswahl für die gespeicherten Adressen an der Kasse
+- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
+
 ### Behoben
 
 - Hydration und intlify Warnungen wurden behoben.
