@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { Endpoints } from "@plentymarkets/shop-api";
 import { SdkHttpError } from "@vue-storefront/sdk";
+import { AxiosError } from "@vue-storefront/middleware";
 
 export default defineSdkConfig(
   ({ buildModule, middlewareUrl, middlewareModule, getRequestHeaders }) => ({
@@ -12,19 +13,22 @@ export default defineSdkConfig(
       },
       httpClient: async (url, params, config) => {
         try {
-          const { data } = await axios(url, {
+          const client = axios.create({
+            withCredentials: true,
+          });
+
+          const { data } = await client(url, {
             ...config,
             data: params,
-            withCredentials: true, // Includes the `Access-Control-Allow-Credentials` response header
           });
   
           return data;
-        } catch (error: any) {
-          console.log(error);
+        } catch (error: any | AxiosError) {
+          console.error(error);
           throw new SdkHttpError({
-            statusCode: error.response?.status || 500,
-            message: error.response?.data?.message || error.message,
-            cause: error,
+            statusCode: error.response?.status,
+            message: error.message,
+            cause: error.response.data,
           });
         }
       }

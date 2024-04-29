@@ -1,11 +1,12 @@
-import type { Maybe } from '@vue-storefront/unified-data-model';
-import { H3Error } from 'h3';
+import { NuxtError } from "nuxt/app";
 
-export type ErrorParams = Maybe<
-  Partial<H3Error> & {
-    status?: number;
-    statusText?: string;
-  }
->;
+export type ErrorParams = {
+  /** The error message. */
+  message: string;
+  /** The HTTP status code associated with this error. */
+  statusCode?: number;
+  /** An optional cause for the error, providing more context or the underlying error that led to this error. */
+  cause?: unknown;
+};
 
-export type UseHandleError = (error: ErrorParams) => void;
+export type UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => void;

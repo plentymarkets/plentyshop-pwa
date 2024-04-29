@@ -15,6 +15,10 @@ const config = {
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
         },
       },
+      errorHandler: ((error: any, req: any, res: any) => {
+        // override the default error handler to preserve the original error response
+        res.status(error.response.status).send(error.response.data);
+      })
     },
   },
 };
