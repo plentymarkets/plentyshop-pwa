@@ -128,11 +128,11 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const ID_BILLING_ADDRESS = '#billing-address';
-const ID_SHIPPING_ADDRESS = '#shipping-address';
+// const ID_BILLING_ADDRESS = '#billing-address';
+// const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const localePath = useLocalePath();
-const { send } = useNotification();
+// const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const {
   data: billingAddresses,
@@ -244,24 +244,7 @@ const validateTerms = (): boolean => {
 };
 
 const validateAddresses = () => {
-  if (billingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('billingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_BILLING_ADDRESS);
-    return false;
-  }
-
-  if (shippingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('shippingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-    return false;
-  }
-
+  // no address validation until we establish conventions
   return true;
 };
 
