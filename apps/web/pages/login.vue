@@ -6,7 +6,7 @@
     </div>
 
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="returnToPreviousPage" />
-    <register v-else @change-view="isLogin = true" @registered="returnToPreviousPage" />
+    <Register v-else @change-view="isLogin = true" @registered="returnToPreviousPage" />
   </NuxtLayout>
 </template>
 
