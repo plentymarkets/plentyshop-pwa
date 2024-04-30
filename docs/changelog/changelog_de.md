@@ -10,6 +10,7 @@
 
 ### Behoben
 
+- Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Hydration und intlify Warnungen wurden behoben.
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
 
