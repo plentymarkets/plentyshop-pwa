@@ -12,7 +12,7 @@
           <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reviewItem)" size="sm" class="fill-neutral-400" />
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfLink><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <SfLink @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
         <SfLink><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
       </div>
     </div>
@@ -52,7 +52,7 @@
                 <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reply)" size="xs" class="fill-neutral-400" />
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
-              <SfIconTune size="xs" class="fill-primary-900 cursor-pointer" />
+              <SfIconTune @click="openReplyEditor(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
               <SfIconDelete size="xs" class="fill-primary-900 cursor-pointer" />
             </div>
             <br />
@@ -69,6 +69,34 @@
       <ReplyForm v-if="isAnswerFormOpen" @on-close="isAnswerFormOpen = false" @on-submit="sendReply" />
     </div>
   </article>
+
+  <UiModal
+    v-if="isReviewEditOpen"
+    v-model="isReviewEditOpen"
+    aria-labelledby="review-edit-modal"
+    tag="section"
+    role="dialog"
+    class="h-fit md:w-[500px] m-0 p-0"
+  >
+    <SfButton @click="closeReviewEdit" square variant="tertiary" class="absolute right-2 top-2">
+      <SfIconClose />
+    </SfButton>
+    <ReviewForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview" />
+  </UiModal>
+
+  <UiModal
+    v-if="isReplyEditOpen"
+    v-model="isReplyEditOpen"
+    aria-labelledby="reply-edit-modal"
+    tag="section"
+    role="dialog"
+    class="h-fit md:w-[500px] m-0 p-0"
+  >
+    <SfButton @click="closeReplyEdit" square variant="tertiary" class="absolute right-2 top-2">
+      <SfIconClose />
+    </SfButton>
+    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReply" />
+  </UiModal>
 </template>
 
 <script setup lang="ts">
@@ -80,14 +108,16 @@ import {
   SfIconDelete,
   SfIconVisibility,
   SfIconVisibilityOff,
+  SfIconClose,
   SfLink,
   SfTooltip,
   useDisclosure,
   SfIconTune,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
+import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
 import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
-import type { CreateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, ReviewItem, UpdateReviewParams } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
 const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
@@ -98,9 +128,10 @@ const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const replyItem = ref({} as ReviewItem);
 
-const { isOpen: isDeleteReviewOpen, open: openDeleteReview, close: closeDeleteReview } = useDisclosure();
 const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
+const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
+const { setProductReview } = useProductReviews(Number(reviewItem.value.targetRelation.feedbackRelationTargetId));
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const tooltipReviewLabel = reviewGetters.getReviewVisibility(reviewItem.value)
@@ -117,9 +148,26 @@ const isEditable = computed(
   () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
 );
 
+const editReview = async (form: UpdateReviewParams) => {
+  closeReviewEdit();
+  await setProductReview(form).then(() => emits('review-updated'));
+  send({ type: 'positive', message: t('review.notification.success') });
+};
+
 const sendReply = async (form: CreateReviewParams) => {
   isAnswerFormOpen.value = false;
   form.targetId = Number(reviewItem.value.id);
   emits('on-submit', form);
+};
+
+const openReplyEditor = (item: ReviewItem) => {
+  openReplyEdit();
+  replyItem.value = item;
+};
+
+const editReply = async (form: UpdateReviewParams) => {
+  closeReplyEdit();
+  await setProductReview(form).then(() => emits('review-updated'));
+  send({ type: 'positive', message: t('review.notification.answerSuccess') });
 };
 </script>

@@ -1,7 +1,13 @@
-import type { CreateReviewParams, Review, ReviewResponse } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, ReviewResponse, UpdateReviewParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import { useSdk } from '~/sdk';
-import type { FetchProductReviews, UseProductReviews, UseProductReviewsState, CreateProductReview } from './types';
+import type {
+  FetchProductReviews,
+  UseProductReviews,
+  UseProductReviewsState,
+  SetProductReview,
+  CreateProductReview,
+} from './types';
 
 /**
  * @description Composable managing product reviews data
@@ -68,8 +74,15 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     state.value.loading = false;
   };
 
+  const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.setReview(params);
+    state.value.loading = false;
+  };
+
   return {
     fetchProductReviews,
+    setProductReview,
     createProductReview,
     ...toRefs(state.value),
   };

@@ -1,4 +1,4 @@
-import type { Review, CreateReviewParams } from '@plentymarkets/shop-api';
+import type { Review, UpdateReviewParams, CreateReviewParams } from '@plentymarkets/shop-api';
 
 export interface UseProductReviewsState {
   data: Review;
@@ -7,6 +7,7 @@ export interface UseProductReviewsState {
 }
 
 export type FetchProductReviews = (itemId: number, variationId?: number) => Promise<Review>;
+export type SetProductReview = (params: UpdateReviewParams) => Promise<void>;
 export type CreateProductReview = (params: CreateReviewParams) => Promise<void>;
 
 export interface UseProductReviewsReturn {
@@ -14,6 +15,7 @@ export interface UseProductReviewsReturn {
   loading: Readonly<Ref<boolean>>;
   fetchProductReviews: FetchProductReviews;
   createProductReview: CreateProductReview;
+  setProductReview: SetProductReview;
 }
 
 export type UseProductReviews = (itemId: number) => UseProductReviewsReturn;
