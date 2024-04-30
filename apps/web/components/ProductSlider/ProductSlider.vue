@@ -2,7 +2,7 @@
   <SfScrollable
     buttons-placement="floating"
     class="pb-4 scrollbar-hidden"
-    :wrapper-class="[wrapperClass]"
+    :wrapper-class="wrapperClass"
     data-testid="product-slider"
   >
     <UiProductCard
