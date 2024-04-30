@@ -7,6 +7,7 @@
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
 - Selection for the saved addresses at checkout
+- product reviews on single item pages
 
 ### Fixed
 
