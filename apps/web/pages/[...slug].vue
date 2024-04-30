@@ -17,14 +17,14 @@
         <CategoryTree :category="category" />
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-        <CategoryFilters v-if="productsCatalog.facets.length > 0" :facets="productsCatalog.facets" />
+        <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
       </template>
     </CategoryPageContent>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 const { setCategoriesPageMeta } = useCanonical();
 definePageMeta({
