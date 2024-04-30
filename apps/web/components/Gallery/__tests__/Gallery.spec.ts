@@ -6,7 +6,9 @@ describe('<Gallery />', () => {
     const { getByTestId } = mount(Gallery, {
       props: {
         images: [{ 
-          url: '/images/test.webp',
+          url: '/images/test.webp', 
+          width: 400, 
+          height: 573,
           urlMiddle:'',
           urlPreview:'',
           urlSecondPreview: '',
