@@ -145,7 +145,7 @@
       </SfButton>
     </header>
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
+    <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
   </UiModal>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>

@@ -359,6 +359,7 @@
   "productDetails": "Produkt-Details",
   "technicalData": "Technische Daten",
   "customerReviews": "Kundenrezensionen",
+  "createCustomerReview": "Bewertung abgeben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
@@ -378,7 +379,41 @@
     "image": "Bild {index}"
   },
   "review": {
-    "verifiedPurchase": "Verifizierter Kauf"
+    "title": "Titel",
+    "verifiedPurchase": "Verifizierter Kauf",
+    "createReviewFormTitle": "Schreib eine Bewertung",
+    "createAnswerFormTitle": "Eine Antwort abgeben",
+    "editReviewFormTitle": "Bewertung bearbeiten",
+    "editReplyFormTitle": "Antwort bearbeiten",
+    "yourRating": "Deine Wertung:",
+    "reviewText": "Produktbewertung (optional)",
+    "reviewAuthor": "Dein Name (optional)",
+    "cancel": "Abbrechen",
+    "submitReview": "Bewertung absenden",
+    "answer": "Antworten",
+    "yourAnswer": "Ihre Antwort",
+    "saveAnswer": "Antwort abgeben",
+    "showAnswers": "Antworten anzeigen",
+    "hideAnswers": "Antworten ausblenden",
+    "anonymous": "Anonym",
+    "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
+    "deleteReview": "Bewertung Löschen?",
+    "deleteReviewConfirmation ": "Löschen",
+    "answerAreYouSure": "Bist Du sicher, dass Du die Antwort löschen möchtest?",
+    "deleteAnswer": "Antwort löschen?",
+    "createSuccess": "Bewertung wurde gesendet",
+    "tooltipVisibilityOn": "Deine Bewertung ist sichtbar",
+    "tooltipVisibilityOff": "Deine Bewertung wird derzeit überprüft",
+    "validation": {
+      "ratingRequired": "Füge Dein Rating hinzu",
+      "titleRequired": "Füge der Bewertung einen Titel hinzu",
+      "textareaRequired": "Füge eine Nachricht hinzu",
+      "textareaMaxLength": "Die maximal zulässige Länge beträgt 500 Zeichen"
+    },
+    "notification": {
+      "success": "Deine Bewertung wurde übermittelt",
+      "answerSuccess": "Deine Antwort wurde übermittelt"
+    }
   },
   "account": {
     "heading": "Mein Konto",

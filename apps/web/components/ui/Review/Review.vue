@@ -1,45 +1,115 @@
 <template>
-  <article class="w-full p-4 border rounded-md" data-testid="review">
-    <p class="pb-2 font-medium">{{ reviewGetters.getReviewAuthor(reviewItem) }}</p>
-    <header class="flex flex-col pb-2 md:flex-row md:justify-between">
-      <span class="flex items-center pr-2 text-xs text-neutral-500">
+  <article class="w-full p-4 mb-4 border rounded-md" data-testid="review">
+    <div class="w-full flex">
+      <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
+        <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
+        <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
+        {{ t('review.verifiedPurchase') }}
+      </div>
+
+      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
+        <SfTooltip :label="tooltipReviewLabel">
+          <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reviewItem)" size="sm" class="fill-neutral-400" />
+          <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
+        </SfTooltip>
+        <SfLink><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <SfLink><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+      </div>
+    </div>
+
+    <header>
+      <p class="font-medium mb-2">{{ reviewGetters.getReviewTitle(reviewItem) }}</p>
+      <div class="flex items-center pr-2 pb-2 text-xs text-neutral-500">
         <SfRating :value="reviewGetters.getReviewRating(reviewItem) ?? undefined" :max="5" size="xs" class="mr-2" />
-        {{ $d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
-      </span>
-      <p class="flex items-center text-xs truncate text-primary-700">
-        <span class="mr-2 text-xs text-neutral-500">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
-        <SfIconCheck size="xs" class="mr-1" /> {{ $t('review.verifiedPurchase') }}
-      </p>
+        {{ d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
+      </div>
     </header>
-    <p class="pb-2 text-sm text-neutral-900">{{ truncatedContent }}</p>
+
+    <p class="pb-2 text-sm text-neutral-900">{{ reviewGetters.getReviewMessage(reviewItem) }}</p>
+
     <button
-      v-if="isButtonVisible"
+      v-if="reviewItem.replies.length > 0"
       type="button"
       class="inline-block mb-2 text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-700 hover:border-primary-800"
       @click="isCollapsed = !isCollapsed"
     >
-      {{ $t(isCollapsed ? 'readMore' : 'readLess') }}
+      {{ t(isCollapsed ? 'review.showAnswers' : 'review.hideAnswers') }}
     </button>
+
+    <div class="ml-8">
+      <div v-if="!isCollapsed">
+        <div v-for="(reply, index) in replies" :key="index" class="mb-8 md:mr-16">
+          <div class="flex items-center mb-2 text-xs">
+            <div class="w-full">
+              <span class="font-medium">
+                {{ reply.authorName ? reply.authorName : t('review.anonymous') }}
+              </span>
+              <span class="pl-2 text-neutral-500">{{ d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
+            </div>
+
+            <div v-if="isAnswerEditable(reply)" class="w-full items-start flex justify-end space-x-3">
+              <SfTooltip :label="tooltipReplyLabel(reply)">
+                <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reply)" size="xs" class="fill-neutral-400" />
+                <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
+              </SfTooltip>
+              <SfIconTune size="xs" class="fill-primary-900 cursor-pointer" />
+              <SfIconDelete size="xs" class="fill-primary-900 cursor-pointer" />
+            </div>
+            <br />
+          </div>
+          <p class="text-sm">{{ reply.feedbackComment.comment.message }}</p>
+        </div>
+      </div>
+
+      <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
+        <SfButton @click="isAnswerFormOpen = true" variant="tertiary" size="sm" class="self-start">
+          {{ t('review.answer') }}
+        </SfButton>
+      </div>
+    </div>
   </article>
 </template>
 
 <script setup lang="ts">
 import { reviewGetters } from '@plentymarkets/shop-sdk';
-import { SfRating, SfIconCheck } from '@storefront-ui/vue';
-import type { ReviewProps } from '~/components/ui/Review/types';
+import {
+  SfRating,
+  SfIconCheck,
+  SfButton,
+  SfIconDelete,
+  SfIconVisibility,
+  SfIconVisibilityOff,
+  SfLink,
+  SfTooltip,
+  SfIconTune,
+} from '@storefront-ui/vue';
+import type { ReviewProps } from './types';
+import type { ReviewItem } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
-
+const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
+const { send } = useNotification();
+const { t, d } = useI18n();
 const { reviewItem } = toRefs(props);
-
-const charLimit = 250;
+const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
+const replyItem = ref({} as ReviewItem);
 
-const reviewMessage = reviewGetters.getReviewMessage(reviewItem.value);
+const { data: sessionData, isAuthorized } = useCustomer();
 
-const isButtonVisible = computed(() => (reviewMessage?.length || 0) > charLimit);
+const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
+const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
+const tooltipReviewLabel = reviewGetters.getReviewVisibility(reviewItem.value)
+  ? t('review.tooltipVisibilityOn')
+  : t('review.tooltipVisibilityOff');
 
-const truncatedContent = computed(() =>
-  isButtonVisible.value && isCollapsed.value ? `${reviewMessage?.slice(0, Math.max(0, charLimit))}...` : reviewMessage,
+const tooltipReplyLabel = (reply: ReviewItem) =>
+  reviewGetters.getReviewVisibility(reply) ? t('review.tooltipVisibilityOn') : t('review.tooltipVisibilityOff');
+
+const isAnswerEditable = (replyItem: ReviewItem) =>
+  replyItem.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString();
+
+const isEditable = computed(
+  () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
 );
 </script>
