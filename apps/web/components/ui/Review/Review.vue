@@ -13,7 +13,7 @@
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
         <SfLink @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
-        <SfLink><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <SfLink @click="openDeleteReview"><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
       </div>
     </div>
 
@@ -53,7 +53,7 @@
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
               <SfIconTune @click="openReplyEditor(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
-              <SfIconDelete size="xs" class="fill-primary-900 cursor-pointer" />
+              <SfIconDelete @click="openReplyDeletion(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
             </div>
             <br />
           </div>
@@ -69,6 +69,54 @@
       <ReplyForm v-if="isAnswerFormOpen" @on-close="isAnswerFormOpen = false" @on-submit="sendReply" />
     </div>
   </article>
+
+  <UiModal
+    v-if="isDeleteReviewOpen"
+    v-model="isDeleteReviewOpen"
+    aria-labelledby="review-delete-modal"
+    tag="section"
+    role="dialog"
+    class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
+  >
+    <SfButton @click="closeDeleteReview" square variant="tertiary" class="absolute right-2 top-2">
+      <SfIconClose />
+    </SfButton>
+    <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteReview') }}</h3>
+    <div class="mb-6">{{ t('review.areYouSure') }}</div>
+
+    <div class="flex gap-x-4">
+      <SfButton @click="closeDeleteReview" type="button" variant="secondary" class="flex-1">
+        {{ t('review.cancel') }}
+      </SfButton>
+      <SfButton @click="deleteReview" type="button" class="flex-1">
+        {{ t('review.deleteReviewConfirmation') }}
+      </SfButton>
+    </div>
+  </UiModal>
+
+  <UiModal
+    v-if="isReplyDeleteOpen"
+    v-model="isReplyDeleteOpen"
+    aria-labelledby="review-delete-modal"
+    tag="section"
+    role="dialog"
+    class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
+  >
+    <SfButton @click="closeReplyDelete" square variant="tertiary" class="absolute right-2 top-2">
+      <SfIconClose />
+    </SfButton>
+    <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteAnswer') }}</h3>
+    <div class="mb-6">{{ t('review.answerAreYouSure') }}</div>
+
+    <div class="flex gap-x-4">
+      <SfButton @click="closeReplyDelete" type="button" variant="secondary" class="flex-1">
+        {{ t('review.cancel') }}
+      </SfButton>
+      <SfButton @click="deleteReply" type="button" class="flex-1">
+        {{ t('review.deleteReviewConfirmation') }}
+      </SfButton>
+    </div>
+  </UiModal>
 
   <UiModal
     v-if="isReviewEditOpen"
@@ -128,10 +176,14 @@ const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const replyItem = ref({} as ReviewItem);
 
+const { isOpen: isDeleteReviewOpen, open: openDeleteReview, close: closeDeleteReview } = useDisclosure();
 const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
 const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
+const { isOpen: isReplyDeleteOpen, open: openReplyDelete, close: closeReplyDelete } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
-const { setProductReview } = useProductReviews(Number(reviewItem.value.targetRelation.feedbackRelationTargetId));
+const { deleteProductReview, setProductReview } = useProductReviews(
+  Number(reviewItem.value.targetRelation.feedbackRelationTargetId),
+);
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const tooltipReviewLabel = reviewGetters.getReviewVisibility(reviewItem.value)
@@ -147,6 +199,11 @@ const isAnswerEditable = (replyItem: ReviewItem) =>
 const isEditable = computed(
   () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
 );
+
+const deleteReview = async () => {
+  closeDeleteReview();
+  if (reviewItem.value.id) await deleteProductReview(reviewItem.value.id).then(() => emits('review-deleted'));
+};
 
 const editReview = async (form: UpdateReviewParams) => {
   closeReviewEdit();
@@ -169,5 +226,15 @@ const editReply = async (form: UpdateReviewParams) => {
   closeReplyEdit();
   await setProductReview(form).then(() => emits('review-updated'));
   send({ type: 'positive', message: t('review.notification.answerSuccess') });
+};
+
+const openReplyDeletion = (item: ReviewItem) => {
+  openReplyDelete();
+  replyItem.value = item;
+};
+
+const deleteReply = async () => {
+  closeReplyDelete();
+  if (replyItem.value.id) await deleteProductReview(replyItem.value.id).then(() => emits('review-deleted'));
 };
 </script>

@@ -5,6 +5,7 @@ import type {
   FetchProductReviews,
   UseProductReviews,
   UseProductReviewsState,
+  DeleteProductReview,
   SetProductReview,
   CreateProductReview,
 } from './types';
@@ -74,6 +75,16 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     state.value.loading = false;
   };
 
+  const deleteProductReview: DeleteProductReview = async (feedbackId: number) => {
+    state.value.loading = true;
+
+    await useSdk()
+      .plentysystems.deleteReview({
+        feedbackId: feedbackId,
+      })
+      .then(() => (state.value.loading = false));
+  };
+
   const setProductReview: SetProductReview = async (params: UpdateReviewParams) => {
     state.value.loading = true;
     await useSdk().plentysystems.setReview(params);
@@ -82,6 +93,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
   return {
     fetchProductReviews,
+    deleteProductReview,
     setProductReview,
     createProductReview,
     ...toRefs(state.value),
