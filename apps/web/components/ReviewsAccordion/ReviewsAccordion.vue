@@ -20,7 +20,14 @@
       <div v-if="loading" class="w-full flex justify-center items-center">
         <SfLoaderCircular class="absolute" size="sm" />
       </div>
-      <UiReview v-for="(reviewItem, key) in productReviews" :key="key" :review-item="reviewItem" />
+      <UiReview
+        v-for="(reviewItem, key) in productReviews"
+        :key="key"
+        :review-item="reviewItem"
+        @on-submit="saveReview"
+        @review-updated="refreshReviews"
+        @review-deleted="refreshReviews"
+      />
       <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
     </UiAccordionItem>
     <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
@@ -42,6 +49,7 @@
         <SfIconClose />
       </SfButton>
     </header>
+    <ReviewForm @on-close="closeReviewModal" @on-submit="saveReview" class="h-fit" />
   </UiModal>
 
   <UiModal
@@ -69,6 +77,7 @@
 import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
+import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
@@ -82,12 +91,25 @@ const reviewsOpen = ref(false);
 const {
   data: productReviewsData,
   fetchProductReviews,
+  createProductReview,
   loading,
 } = useProductReviews(Number(productGetters.getItemId(product.value)));
 
 const productReviews = computed(() => {
   return reviewGetters.getReviewItems(productReviewsData.value);
 });
+
+const refreshReviews = () => {
+  fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+};
+
+const saveReview = async (form: CreateReviewParams) => {
+  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
+
+  closeReviewModal();
+  await createProductReview(form).then(() => refreshReviews());
+  send({ type: 'positive', message: t('review.notification.success') });
+};
 
 watch(
   () => reviewsOpen.value,
@@ -101,4 +123,3 @@ watch(
   },
 );
 </script>
-script>

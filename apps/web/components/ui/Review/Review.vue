@@ -66,6 +66,7 @@
           {{ t('review.answer') }}
         </SfButton>
       </div>
+      <ReplyForm v-if="isAnswerFormOpen" @on-close="isAnswerFormOpen = false" @on-submit="sendReply" />
     </div>
   </article>
 </template>
@@ -81,10 +82,12 @@ import {
   SfIconVisibilityOff,
   SfLink,
   SfTooltip,
+  useDisclosure,
   SfIconTune,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
-import type { ReviewItem } from '@plentymarkets/shop-api';
+import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
+import type { CreateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
 const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
@@ -95,8 +98,9 @@ const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const replyItem = ref({} as ReviewItem);
 
+const { isOpen: isDeleteReviewOpen, open: openDeleteReview, close: closeDeleteReview } = useDisclosure();
+const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
-
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const tooltipReviewLabel = reviewGetters.getReviewVisibility(reviewItem.value)
@@ -112,4 +116,10 @@ const isAnswerEditable = (replyItem: ReviewItem) =>
 const isEditable = computed(
   () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
 );
+
+const sendReply = async (form: CreateReviewParams) => {
+  isAnswerFormOpen.value = false;
+  form.targetId = Number(reviewItem.value.id);
+  emits('on-submit', form);
+};
 </script>
