@@ -24,6 +24,8 @@
           :preload="priority || false"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
+          :width="imageWidth"
+          :height="imageHeight"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>

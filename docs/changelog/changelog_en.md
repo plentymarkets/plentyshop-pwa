@@ -2,10 +2,20 @@
 
 ## v1.4.1 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
+### New
+
+- a guest login page before going to checkout
+- Width and height attributes to images on category and product view
+- Selection for the saved addresses at checkout
+
 ### Fixed
 
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
+
+### Changed
+
+- Mark optional and required form fields.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
