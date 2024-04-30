@@ -4,9 +4,10 @@
       <NuxtImg
         class="w-full h-auto border rounded-md border-neutral-200"
         :src="product.gallery[0].url"
-        :alt="product.gallery[0].alt ?? ''"
+        :alt="product.gallery[0].alt ?? product.attributes[0].name"
         width="100"
         height="100"
+        loading="lazy"
       />
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1 typography-text-base">

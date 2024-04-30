@@ -7,6 +7,7 @@
         width="192"
         height="192"
         class="mx-auto mb-6"
+        loading="lazy"
       />
       <h1 class="typography-headline-3 font-bold">{{ $t('auth.resetPassword.heading') }}</h1>
       <i18n-t

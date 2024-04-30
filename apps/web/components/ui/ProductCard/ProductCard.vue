@@ -20,7 +20,7 @@
           :src="imageUrl"
           :alt="imageAlt"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
-          :fetchpriority="priority ? 'high' : undefined"
+          :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"

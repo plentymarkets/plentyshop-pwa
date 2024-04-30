@@ -2,22 +2,24 @@
   <div class="relative min-h-[600px]">
     <picture>
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
-      <img
+      <NuxtImg
         src="/images/homepage-hero-bg-mobile.webp"
         height="600"
         width="4000"
         alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
+        loading="lazy"
       />
     </picture>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <img
+        <NuxtImg
           src="/images/homepage-hero-headphones.webp"
           height="600"
           width="800"
           alt="Headphones"
           class="h-full object-cover object-left"
+          loading="lazy"
         />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
@@ -47,12 +49,13 @@
         :aria-labelledby="`image-${title}`"
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
-        <img
+        <NuxtImg
           class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           :src="image"
           :alt="title"
           width="360"
           height="360"
+          loading="lazy"
         />
         <div :id="`image-${title}`" class="flex justify-center">
           <div
@@ -100,7 +103,7 @@
             </p>
             <SfButton class="!bg-black">{{ buttonText }}</SfButton>
           </div>
-          <img :src="image" :alt="title" class="w-1/2 self-end object-contain" />
+          <NuxtImg :src="image" :alt="title" class="w-1/2 self-end object-contain" loading="lazy" />
         </div>
       </div>
     </div>
