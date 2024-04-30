@@ -4,8 +4,8 @@
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
       <img
         src="/images/homepage-hero-bg-mobile.webp"
-        height="600"
-        width="4000"
+        height="412"
+        width="605"
         alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
