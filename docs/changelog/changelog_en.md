@@ -11,6 +11,8 @@
 
 ### Fixed
 
+- Fixed facet filtering on category page
+- Fixed random login error
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
 
