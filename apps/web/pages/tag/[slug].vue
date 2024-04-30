@@ -12,7 +12,7 @@
         <template #sidebar>
           <CategorySorting />
           <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters :facets="productsCatalog.facets" />
+          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
         </template>
       </CategoryPageContent>
     </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { facetGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
