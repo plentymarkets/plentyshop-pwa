@@ -69,10 +69,7 @@
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
         </template>
-        <table
-          v-else
-          class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-        >
+        <table v-else class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
           <caption class="hidden">
             {{
               t('account.ordersAndReturns.listOfOrders')
