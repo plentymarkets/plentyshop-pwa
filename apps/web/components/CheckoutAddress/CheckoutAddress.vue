@@ -2,9 +2,18 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
-        {{ $t('contactInfo.edit') }}
-      </SfButton>
+      <div v-if="!disabled && addresses.length > 0" class="flex items-center">
+        <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
+          {{ $t('savedBillingAddress') }}
+        </SfButton>
+        <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
+          {{ $t('savedShippingAddress') }}
+        </SfButton>
+        <div class="h-5 w-px bg-primary-700 mx-2"></div>
+        <SfButton size="sm" variant="tertiary" @click="edit">
+          {{ $t('contactInfo.edit') }}
+        </SfButton>
+      </div>
     </div>
 
     <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
@@ -20,14 +29,53 @@
 
     <UiModal
       v-if="!disabled"
-      v-model="isOpen"
+      v-model="isOpenPick"
+      tag="section"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="address-modal-title"
+      data-testid="checkout-pick-address-modal"
+    >
+      <header>
+        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
+          <SfIconClose />
+        </SfButton>
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+          {{ $t('pickSavedAddress') }}
+        </h3>
+        <h1 class="my-2 mb-6 font-semibold">{{ $t('pickSavedAddressSubtitle') }}</h1>
+      </header>
+      <div class="hover:bg-primary-50" v-for="address in addresses" :key="userAddressGetters.getId(address)">
+        <Address
+          :address="address"
+          :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
+          :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+          @click="setNewSelectedAddress(address)"
+          @on-delete="onDelete(address)"
+          @make-default="makeDefault(address)"
+          @on-edit="edit"
+        />
+      </div>
+      <div class="flex justify-end w-full">
+        <SfButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10" @click="create">
+          {{ $t('newBillingAddress') }}
+        </SfButton>
+        <SfButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
+          {{ $t('newShippingAddress') }}
+        </SfButton>
+      </div>
+    </UiModal>
+
+    <UiModal
+      v-if="!disabled"
+      v-model="isOpenEdit"
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="address-modal-title"
+      data-testid="checkout-edit-address-modal"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
           <SfIconClose />
         </SfButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
@@ -41,7 +89,7 @@
         "
         :type="type"
         @on-save="saveAddress"
-        @on-close="close"
+        @on-close="closeEdit"
       />
     </UiModal>
   </div>
@@ -52,7 +100,8 @@ import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
-const { isOpen, open, close } = useDisclosure();
+const { isOpen: isOpenEdit, open: openEdit, close: closeEdit } = useDisclosure();
+const { isOpen: isOpenPick, open: openPick, close: closePick } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
@@ -62,6 +111,7 @@ const props = withDefaults(defineProps<CheckoutAddressProps>(), {
 });
 const { data: cart } = useCart();
 const editMode = ref(false);
+const { data: addresses, setDefault, deleteAddress, defaultAddressId } = useAddress(props.type);
 
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
@@ -69,11 +119,14 @@ const cartAddress = computed(() =>
     : cartGetters.getCustomerShippingAddressId(cart.value),
 );
 
-const selectedAddress = computed(
-  () =>
-    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
+const selectedAddress = ref(
+  props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
     ({} as Address),
 );
+
+const setNewSelectedAddress = (selectedAddressNew: Address) => {
+  selectedAddress.value = selectedAddressNew;
+};
 
 const emit = defineEmits(['on-saved']);
 
@@ -81,12 +134,22 @@ getActiveShippingCountries();
 
 const create = () => {
   editMode.value = false;
-  open();
+  openEdit();
 };
 
 const edit = () => {
   editMode.value = true;
-  open();
+  openEdit();
+};
+
+const pick = () => {
+  editMode.value = true;
+  openPick();
+};
+
+const close = () => {
+  closeEdit();
+  closePick();
 };
 
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
@@ -98,5 +161,13 @@ const saveAddress = async (address: Address, useAsShippingAddress: boolean = fal
   }
   emit('on-saved');
   close();
+};
+
+const onDelete = (address: Address) => {
+  deleteAddress(Number(userAddressGetters.getId(address)));
+};
+
+const makeDefault = (address: Address) => {
+  setDefault(address);
 };
 </script>

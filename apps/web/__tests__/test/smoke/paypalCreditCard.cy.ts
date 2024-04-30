@@ -23,6 +23,7 @@ describe('Smoke: PayPal credit card order', () => {
 
     cart.openCart();
     checkout
+      .goToGuestCheckout()
       .goToCheckout()
       .fillContactInformationForm()
       .addBillingAddress()
