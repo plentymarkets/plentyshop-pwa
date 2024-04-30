@@ -8,7 +8,7 @@ export default defineSdkConfig(
     plentysystems: buildModule(middlewareModule<Endpoints>, {
       apiUrl: middlewareUrl + "/plentysystems",
       defaultRequestConfig: {
-        headers:  getRequestHeaders(),
+        headers: getRequestHeaders(),
         method: "GET",
       },
       httpClient: async (url, params, config) => {
@@ -17,11 +17,27 @@ export default defineSdkConfig(
             withCredentials: true,
           });
 
+          const { token } = useCsrfToken();
+
+          client.interceptors.response.use((response) => {
+            if (response.headers["x-csrf-token"]) {
+              token.value = response.headers["x-csrf-token"];
+            }
+            return response;
+          });
+
+          client.interceptors.request.use((request) => {
+            if (token.value) {
+              request.headers["x-csrf-token"] = token.value;
+            }
+            return request;
+          });
+
           const { data } = await client(url, {
             ...config,
             data: params,
           });
-  
+
           return data;
         } catch (error: any | AxiosError) {
           console.error(error);
