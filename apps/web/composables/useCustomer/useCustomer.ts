@@ -119,7 +119,9 @@ export const useCustomer: UseCustomerReturn = () => {
 
       return state.value.isAuthorized;
     } catch (error) {
-      throw new Error(error as string);
+      useHandleError(error as ErrorParams);
+      state.value.loading = false;
+      return false;
     }
   };
 
