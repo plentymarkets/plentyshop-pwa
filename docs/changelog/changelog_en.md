@@ -6,6 +6,7 @@
 
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
+- Add company details on checkout form.
 
 ### Changed
 
@@ -51,7 +52,6 @@
 - Implemented different imagesize URLs for different viewport sizes.
 - Moved the ‘delete from wishlist’ button to the top right.
 - Updated the upload action.
-- Add company details on checkout form.
 
 ### Fixed
 
