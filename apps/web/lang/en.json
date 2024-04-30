@@ -735,5 +735,11 @@
   "productAttributes": {
     "seeAvailableOptions": "See available options",
     "notValidVariation": "Please select a valid variation."
+  },
+  "newCheckout": {
+    "companyName": "Company Name",
+    "vatid": "Vat-ID",
+    "addCompanyData": "+ Add company data",
+    "removeCompanyData": "- Remove Company Data"
   }
 }
