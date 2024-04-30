@@ -60,6 +60,7 @@ const edit = () => {
 
 const saveAddress = async (address: Address) => {
   await updateAddress(address);
+  // if user checked sameAddress one should update the cart (set delivery Address to 0)
   emit('on-saved');
   editMode.value = false;
 };
