@@ -737,6 +737,9 @@
     "notValidVariation": "Bitte wählen Sie eine gültige Variante."
   },
   "newCheckout": {
-    "addCompanyData": "Firmendaten hinzufügen"
+    "companyName": "Name der Firma",
+    "vatid": "Vat-ID",
+    "addCompanyData": "Firmendaten hinzufügen",
+    "removeCompanyData": "- Unternehmensdaten entfernen"
   }
 }
