@@ -4013,8 +4013,8 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.7.1
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": "file:/Users/luisahaase/PWA/sdk/packages/api-client"
-    "@plentymarkets/shop-sdk": "file:/Users/luisahaase/PWA/sdk/packages/sdk"
+    "@plentymarkets/shop-api": ^0.35.0
+    "@plentymarkets/shop-sdk": ^0.52.1
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.6
@@ -4042,23 +4042,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
+"@plentymarkets/shop-api@npm:^0.35.0":
   version: 0.35.0
-  resolution: "@plentymarkets/shop-api@file:/Users/luisahaase/PWA/sdk/packages/api-client#/Users/luisahaase/PWA/sdk/packages/api-client::hash=c29500&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-api@npm:0.35.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.35.0%2F8f288e33f95ddd6f37b8e907dbb1e03a5ec89e2b"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 2d03ec801fd29a08ff9730e697958e005fcd19a8cda52777d7c221d9808bba0a2d8510dac9d5bda83fc6faae28bfa982e4ec87fae57fdf9e367ec9184cd3bc32
+  checksum: f7fbf0977ce47394147b12cf0698b370bf397a47c4104a2a87f994ee7ce6339c5311297309d8c957bcd0c6d4fe10d285b09fc3420257a6a61ae835b2886fdf7a
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@file:/Users/luisahaase/PWA/sdk/packages/sdk::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
+"@plentymarkets/shop-sdk@npm:^0.52.1":
   version: 0.52.1
-  resolution: "@plentymarkets/shop-sdk@file:/Users/luisahaase/PWA/sdk/packages/sdk#/Users/luisahaase/PWA/sdk/packages/sdk::hash=07af37&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  resolution: "@plentymarkets/shop-sdk@npm:0.52.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.52.1%2F94accf5344e3e736c9126097fc28d92764d0bac4"
   dependencies:
     axios: ^1.6.3
-  checksum: a5c9b21fc79b98f64d06d1b40426e60dfb7e8644ff78388f7e6189df1073dcd919ec1eca53b72faf8d5b0a9112b94bea0731050441a0905fed84c65b53f329e3
+  checksum: 31c648403eafaaae26f07a67da9c16c2f2ad0898a1a95beba75ee33442e804f6e8dd07ef95643f4a75ee9da1ee32bff9d000730fa63b7462af54be4a4c5f3a33
   languageName: node
   linkType: hard
 
