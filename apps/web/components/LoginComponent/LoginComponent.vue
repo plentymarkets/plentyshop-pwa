@@ -3,12 +3,12 @@
   <div class="flex flex-col items-center justify-center my-1">
     <form @submit.prevent="loginUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
-        <UiFormLabel>{{ t('form.emailLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput name="email" type="email" autocomplete="email" v-model="email" required />
       </label>
 
       <label>
-        <UiFormLabel>{{ t('form.passwordLabel') }}</UiFormLabel>
+        <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
       </label>
 
