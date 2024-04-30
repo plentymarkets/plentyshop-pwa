@@ -75,7 +75,7 @@
 
       <div class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
-        <SfLink @click="$emit('change-view')" href="#" variant="primary">
+        <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
