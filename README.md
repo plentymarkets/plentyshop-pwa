@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="alokai" height="80px" /></a>
+  <a href="https://alokai.com//"><img src="https://camo.githubusercontent.com/b3f817d20b7d4f18247de2dbdf89756cd2348208b146f7c182fe6c9b0de39426/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f7675652d73746f726566726f6e742f696d6167652f75706c6f61642f76313731303735343532342f4c6f676f5f677265656e5f32785f7a34766d687a2e706e67" alt="alokai" height="80px" /></a>
 
 <a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
 
