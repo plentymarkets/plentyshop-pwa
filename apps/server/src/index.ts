@@ -6,7 +6,7 @@ import * as express from 'express';
 
 (async () => {
   const app = await createServer({ integrations: config.integrations });
-  const host = process.argv[2] ?? '0.0.0.0';
+  const host = '0:0:0:0:0:0:0:1';
   const port = Number(process.argv[3]) || 8181;
   const CORS_MIDDLEWARE_NAME = 'corsMiddleware';
 
