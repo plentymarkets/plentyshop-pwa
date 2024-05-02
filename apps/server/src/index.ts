@@ -4,9 +4,11 @@ import cors from 'cors';
 import config from '../middleware.config';
 import * as express from 'express';
 
+const useIPV6 = process.env.USE_IPV6 === 'true';
+
 (async () => {
   const app = await createServer({ integrations: config.integrations });
-  const host = '::';
+  const host = useIPV6 ? '::' : '0.0.0.0';
   const port = Number(process.argv[3]) || 8181;
   const CORS_MIDDLEWARE_NAME = 'corsMiddleware';
 
@@ -24,8 +26,7 @@ import * as express from 'express';
 
   consola.log('my debug test', config.integrations);
 
-  const server = app.listen(port, host, () => {
+  app.listen(port, host, () => {
     consola.success(`API server listening on http://${host}:${port}`);
   });
-  consola.log(server.address())
 })();
