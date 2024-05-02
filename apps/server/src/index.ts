@@ -24,7 +24,8 @@ import * as express from 'express';
 
   consola.log('my debug test', config.integrations);
 
-  app.listen(port, host, () => {
+  const server = app.listen(port, host, () => {
     consola.success(`API server listening on http://${host}:${port}`);
   });
+  consola.log(server.address())
 })();
