@@ -46,6 +46,8 @@ export class WishlistObject extends PageObject {
 
   addToCart() {
     this.addToCartTrigger.first().click();
+    cy.wait(1000)
+    cy.getByTestId('quick-checkout-close').click()
     return this;
   }
 
