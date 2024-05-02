@@ -1,9 +1,9 @@
 <div align="center">
-  <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="Vue Storefront" height="80px" /></a>
+  <a href="https://vuestorefront.io/"><img src="https://user-images.githubusercontent.com/1626923/137092657-fb398d20-b592-4661-a1f9-4135db0b61d5.png" alt="alokai" height="80px" /></a>
 
 <a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
 
-  <h1 align="center">Vue Storefront 3 Integration With plentysystems</h1>
+  <h1 align="center">alokai Integration With plentysystems</h1>
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
@@ -11,7 +11,7 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-Welcome to the plentysystems integration for Vue Storefront 3.
+Welcome to the plentysystems integration for alokai.
 
 ## Development setup
 
@@ -73,15 +73,15 @@ Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your 
 - Staged code linting with [lint-staged](https://github.com/okonet/lint-staged).
 - [Progressive Web App](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app) features with [Vite PWA for Nuxt](https://vite-pwa-org.netlify.app/).
 - `i18n` localisation powered by [Nuxt-i18n](https://i18n.nuxtjs.org).
-- [Vue Storefront SDK](https://docs.vuestorefront.io/sdk/) ready - integrate headless E-commerce platform with your project easily.
-- [Vue Storefront Middleware](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
+- [alokai SDK](https://docs.vuestorefront.io/sdk/) ready - integrate headless E-commerce platform with your project easily.
+- [alokai Middleware](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
 - Maximized lighthouse score.
 
-### Vue Storefront
+### alokai
 
-- [Introduction to learn what is Vue Storefront](https://docs.vuestorefront.io/v2/getting-started/introduction.html).
-- [Vue Storefront Documentation](https://docs.vuestorefront.io/v2/)
-- [Vue Storefront UI Documentation](https://docs.storefrontui.io/v2/vue/getting-started.html)
+- [Introduction to learn what is alokai](https://docs.vuestorefront.io/v2/getting-started/introduction.html).
+- [alokai Documentation](https://docs.vuestorefront.io/v2/)
+- [alokai UI Documentation](https://docs.storefrontui.io/v2/vue/getting-started.html)
 - [Community Chat](http://discord.vuestorefront.io)
 
 ## License
@@ -94,4 +94,4 @@ Please see our [CONTRIBUTING.md](.github/CONTRIBUTING.md) for more information.
 
 ## Support
 
-If you have any questions about this integration we will be happy to answer them on the `plentymarkets` channel of the [Vue Storefront Discord](http://discord.vuestorefront.io).
+If you have any questions about this integration we will be happy to answer them on the `plentymarkets` channel of the [alokai Discord](http://discord.vuestorefront.io).
