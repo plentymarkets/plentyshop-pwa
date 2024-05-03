@@ -10,7 +10,6 @@
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 
-
 ### Fixed
 
 - Fixed facet filtering on category page
