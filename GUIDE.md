@@ -1,6 +1,6 @@
 # Detailed overview & further development guide
 
-Welcome to the alokai Boilerplate for the [Nuxt.js 3](https://nuxt.com/) project! This guide will provide you with an overview of the project structure, tools, and best practices to help you get started quickly.
+Welcome to the Alokai Boilerplate for the [Nuxt.js 3](https://nuxt.com/) project! This guide will provide you with an overview of the project structure, tools, and best practices to help you get started quickly.
 
 ### Project Structure
 
@@ -10,12 +10,12 @@ For detailed information on how to get started, configure, and use this project 
 
 This Turborepo includes the following apps:
 
-- `server` - alokai Middleware server powered by **[Express.js](https://expressjs.com/)**
+- `server` - Alokai Middleware server powered by **[Express.js](https://expressjs.com/)**
 - `web` - A web application powered by Nuxt.js
 
 #### Server Middleware
 
-The server application is a core of a alokai application. It allows connecting services like E-commerce platform, CMS, or Payment providers to your application.
+The server application is a core of a Alokai application. It allows connecting services like E-commerce platform, CMS, or Payment providers to your application.
 
 ```shell
 
@@ -35,7 +35,7 @@ apps/
 The most important files of the `Server Middleware` app are:
 
 - `src/index.ts` - Express server entry point that handles all requests to the third-party platforms from the SDK
-- `middleware.config.ts` - alokai Middleware configuration
+- `middleware.config.ts` - Alokai Middleware configuration
 
 For more info about `Server Middleware` refer to the [documentation](https://docs.vuestorefront.io/v2/architecture/server-middleware.html).
 
@@ -74,7 +74,7 @@ apps/
      │   ├── index.vue            # App index page component
      │   └── ...
      ├── public/                  # Public assets
-     ├── sdk/                     # alokai SDK configuration
+     ├── sdk/                     # Alokai SDK configuration
      ├── server/                  # In-app backend server
      ├── .eslintrc.js             # ESLint configuration
      ├── .lintstagedrc.js         # Lint-Staged configuration
@@ -92,7 +92,7 @@ apps/
 
 List of essential directories:
 
-- `sdk` [alokai SDK](https://docs.vuestorefront.io/sdk/) module configuration
+- `sdk` [Alokai SDK](https://docs.vuestorefront.io/sdk/) module configuration
 - `components/ui` Storefront UI Block components, like `ProductCard` or `Review`
 - `composables` reusable composition functions, e.g. data fetching and UI composables
 - `mocks` mock data used across the application, e.g. footer links
@@ -187,7 +187,7 @@ Naming convention:
 - Vue (Nuxt) components should follow `Pascal case` pattern (`CategoryFilters`, `Heading`)
 - The types for component's props should be named `{Component}Props`. For example, `GalleryProps` or `HeadingProps`
 
-#### alokai SDK and data fetching
+#### Alokai SDK and data fetching
 
 The data fetching process is handled seamlessly by integrating VSF SDK, which acts as a robust communication layer between the application and the VSF Middleware. The SDK provides a set of convenient and optimized methods to fetch data from various APIs and services.
 
