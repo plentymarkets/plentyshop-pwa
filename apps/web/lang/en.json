@@ -735,5 +735,12 @@
   "productAttributes": {
     "seeAvailableOptions": "See available options",
     "notValidVariation": "Please select a valid variation."
+  },
+  "quickCheckout": {
+    "heading": "Added to shopping cart",
+    "subTotal": "Items subtotal",
+    "checkYourCart": "Check your cart",
+    "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
+    "or": "OR"
   }
 }
