@@ -81,7 +81,7 @@ Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your 
 
 - [Introduction to learn what is Alokai](https://docs.vuestorefront.io/v2/getting-started/introduction.html).
 - [Alokai Documentation](https://docs.vuestorefront.io/v2/)
-- [Alokai UI Documentation](https://docs.storefrontui.io/v2/vue/getting-started.html)
+- [Storefront UI Documentation](https://docs.storefrontui.io/v2/vue/getting-started.html)
 - [Community Chat](http://discord.vuestorefront.io)
 
 ## License
