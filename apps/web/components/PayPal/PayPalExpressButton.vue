@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
+import type { FUNDING_SOURCE, OnApproveData, OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
 import { orderGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
@@ -30,7 +30,7 @@ const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
 const paypalUuid = uuid();
-const paypal = await loadScript(currency.value, isCommit);
+const paypalScript = ref<PayPalNamespace | null>(await loadScript(currency.value, isCommit));
 
 const checkOnClickEvent = (): boolean => {
   const props = getCurrentInstance()?.vnode.props;
@@ -82,8 +82,8 @@ const onApprove = async (data: OnApproveData) => {
 };
 
 const renderButton = (fundingSource: FUNDING_SOURCE) => {
-  if (paypal?.Buttons && fundingSource) {
-    const button = paypal?.Buttons({
+  if (paypalScript.value?.Buttons && fundingSource) {
+    const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
         label: type.value === TypeCartPreview || type.value === TypeSingleItem ? 'checkout' : 'buynow',
@@ -118,16 +118,21 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
 };
 
 const createButton = () => {
-  if (paypal) {
+  if (paypalScript.value) {
     if (paypalButton.value) {
       paypalButton.value.innerHTML = '';
     }
-    const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
+    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL, paypalScript.value.FUNDING?.PAYLATER];
     FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
   }
 };
 
 onMounted(() => {
+  createButton();
+});
+
+watch(currency, async () => {
+  paypalScript.value = await loadScript(currency.value, isCommit);
   createButton();
 });
 </script>
