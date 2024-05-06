@@ -20,7 +20,7 @@
       </SfButton>
       <div v-if="!isSoftLogin" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.login.createAccount') }}</div>
-        <SfLink @click="$emit('change-view')" href="#" variant="primary">
+        <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.login.createAccountLinkLabel') }}
         </SfLink>
       </div>

@@ -749,5 +749,12 @@
   "productAttributes": {
     "seeAvailableOptions": "Verfügbare Optionen anzeigen",
     "notValidVariation": "Bitte wählen Sie eine gültige Variante."
+  },
+  "quickCheckout": {
+    "heading": "Zum Warenkorb hinzugefügt",
+    "subTotal": "Zwischensumme",
+    "checkYourCart": "Warenkorb prüfen",
+    "cartContains": "Ihr Warenkorb enthält {count} Artikel",
+    "or": "ODER"
   }
 }

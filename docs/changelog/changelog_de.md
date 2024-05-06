@@ -7,11 +7,13 @@
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
+- Anpassung des Produktnamens in den Dokumentationsdateien.
 
 ### Behoben
 
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
-- Hydration und intlify Warnungen wurden behoben.
+- Zufälliger Anmeldefehler behoben
+- Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
 
 ### Geändert

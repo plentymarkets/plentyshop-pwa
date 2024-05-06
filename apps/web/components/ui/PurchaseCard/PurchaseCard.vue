@@ -144,6 +144,7 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
+const { openQuickCheckout } = useQuickCheckout();
 
 resetInvalidFields();
 resetAttributeFields();
@@ -200,6 +201,7 @@ const handleAddToCart = async () => {
   };
 
   if (await addToCart(params)) {
+    openQuickCheckout(product.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
 };

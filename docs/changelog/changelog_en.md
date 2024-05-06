@@ -7,12 +7,16 @@
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
 - Selection for the saved addresses at checkout
+- Product renaming in the documentation files
+- Added quick checkout functionality.
 
 ### Fixed
 
 - Fixed facet filtering on category page
+- Fixed random login error
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
+- Fixed aspect ratio on homepage hero img
 
 ### Changed
 
