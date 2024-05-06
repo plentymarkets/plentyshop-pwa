@@ -15,7 +15,6 @@
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
-- Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
 
 ### Geändert
