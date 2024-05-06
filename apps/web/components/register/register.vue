@@ -1,4 +1,27 @@
 <template>
+  <div class="font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
+    <div class="text-lg">{{ t('auth.signup.heading') }}</div>
+    <div class="text-base">{{ t('auth.signup.subheading') }}</div>
+
+    <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
+      <div class="flex items-center gap-2">
+        <SfIconPerson class="text-primary-700" />
+        <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        <SfIconLocalShipping class="text-primary-700" />
+        <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        <SfIconFavorite class="text-primary-700" />
+        <div>{{ t('auth.signup.benefits.wishlist') }}</div>
+      </div>
+      <div class="flex items-center gap-2">
+        <SfIconSchedule class="text-primary-700" />
+        <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
+      </div>
+    </div>
+  </div>
   <div class="flex items-center justify-center my-1">
     <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
@@ -7,6 +30,7 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['register.email'])"
+          :disabled="emailAddress"
           name="customerEmail"
           type="email"
           autocomplete="email"
@@ -24,8 +48,38 @@
           v-bind="passwordAttributes"
           :invalid="Boolean(errors['register.password'])"
         />
-        <VeeErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" />
+        <!-- <VeeErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
       </label>
+      <label>
+        <UiFormLabel>{{ t('form.repeatPasswordLabel') }}</UiFormLabel>
+        <UiFormPasswordInput
+          :title="t('invalidPassword')"
+          name="password"
+          autocomplete="current-password"
+          v-model="repeatPassword"
+          v-bind="repeatPasswordAttributes"
+          :invalid="Boolean(errors['register.repeatPassword'])"
+        />
+        <VeeErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
+      </label>
+
+      <div class="text-xs">
+        <div class="flex items-center" :class="{ 'text-green-600': passwordValidationLength }">
+          <SfIconCheck v-if="passwordValidationLength" size="sm" />
+          <SfIconClose v-else size="sm" />
+          <span class="ml-1">{{ t('auth.signup.passwordValidation.characters') }}</span>
+        </div>
+        <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneDigit }">
+          <SfIconCheck v-if="passwordValidationOneDigit" size="sm" />
+          <SfIconClose v-else size="sm" />
+          <span class="ml-1">{{ t('auth.signup.passwordValidation.numbers') }}</span>
+        </div>
+        <div class="flex items-center" :class="{ 'text-green-600': passwordValidationOneLetter }">
+          <SfIconCheck v-if="passwordValidationOneLetter" size="sm" />
+          <SfIconClose v-else size="sm" />
+          <span class="ml-1">{{ t('auth.signup.passwordValidation.letters') }}</span>
+        </div>
+      </div>
 
       <div class="flex items-center">
         <SfCheckbox
@@ -75,7 +129,7 @@
 
       <div class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
-        <SfLink @click="$emit('change-view')" href="#" variant="primary">
+        <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
@@ -84,9 +138,22 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfLink, SfInput, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfLink,
+  SfInput,
+  SfLoaderCircular,
+  SfCheckbox,
+  SfIconPerson,
+  SfIconLocalShipping,
+  SfIconFavorite,
+  SfIconSchedule,
+  SfIconCheck,
+  SfIconClose,
+} from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
-import { object, string, boolean } from 'yup';
+import { object, string, boolean, ref as yupReference } from 'yup';
+import type { RegisterFormParams } from '~/components/register/types';
 
 const localePath = useLocalePath();
 const router = useRouter();
@@ -97,6 +164,9 @@ const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
+const props = withDefaults(defineProps<RegisterFormParams>(), {
+  isModal: false,
+});
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
@@ -108,6 +178,10 @@ const validationSchema = toTypedSchema(
       password: string()
         .required(t('errorMessages.password.required'))
         .matches(/^(?=.*[A-Za-z])(?=.*\d)\S{8,}$/, t('errorMessages.password.valid'))
+        .default(''),
+      repeatPassword: string()
+        .required(t('errorMessages.password.required'))
+        .oneOf([yupReference('password'), ''], t('errorMessages.password.match'))
         .default(''),
       privacyPolicy: boolean().isTrue(t('privacyPolicyRequired')).required(t('privacyPolicyRequired')),
       turnstile:
@@ -124,8 +198,13 @@ const { errors, meta, defineField, handleSubmit } = useForm({
 
 const [email, emailAttributes] = defineField('register.email');
 const [password, passwordAttributes] = defineField('register.password');
+const [repeatPassword, repeatPasswordAttributes] = defineField('register.repeatPassword');
 const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
+
+if (props.emailAddress) {
+  email.value = props.emailAddress;
+}
 
 const registerUser = async () => {
   if (!meta.value.valid || !turnstile.value) {
@@ -160,4 +239,14 @@ const registerUser = async () => {
 };
 
 const onSubmit = handleSubmit(() => registerUser());
+
+const passwordValidationLength = computed(() => {
+  return (password?.value?.length || 0) >= 8;
+});
+const passwordValidationOneDigit = computed(() => {
+  return /\d/.test(password?.value || '');
+});
+const passwordValidationOneLetter = computed(() => {
+  return /[A-Za-z]/.test(password?.value || '');
+});
 </script>

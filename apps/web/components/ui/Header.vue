@@ -132,20 +132,17 @@
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
     tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
+    :disable-click-away="true"
   >
     <header>
-      <div class="text-lg font-medium ml-8">
-        <span v-if="isLogin">{{ t('auth.login.heading') }}</span>
-        <span v-else>{{ t('auth.signup.heading') }}</span>
-      </div>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
       </SfButton>
     </header>
-    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
+    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" :is-modal="true" />
+    <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
   </UiModal>
 
   <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>

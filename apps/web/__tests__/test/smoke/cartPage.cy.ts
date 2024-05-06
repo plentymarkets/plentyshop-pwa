@@ -11,7 +11,9 @@ describe('Smoke: Cart Page', () => {
       .as('doAddCartItem')
       .getByTestId('add-to-cart')
       .click()
-      .wait('@doAddCartItem');
+      .wait('@doAddCartItem')
+      .wait(1000)
+      .getByTestId('quick-checkout-close').click()
 
     cart
       .openCart()

@@ -120,6 +120,7 @@ const { product } = withDefaults(defineProps<ProductCardProps>(), {
 });
 
 const { data: categoryTree } = useCategoryTree();
+const { openQuickCheckout } = useQuickCheckout();
 
 const { addToCart } = useCart();
 const { send } = useNotification();
@@ -153,6 +154,8 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
+
+    openQuickCheckout(product);
     send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
