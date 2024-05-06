@@ -1,5 +1,6 @@
 <template>
-  <div class="flex items-center justify-center my-1">
+  <div class="text-lg font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">{{ t('auth.login.heading') }}</div>
+  <div class="flex flex-col items-center justify-center my-1">
     <form @submit.prevent="loginUser" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
       <label>
         <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
@@ -42,6 +43,7 @@ const { t } = useI18n();
 
 const props = withDefaults(defineProps<LoginProps>(), {
   isSoftLogin: false,
+  isModal: false,
 });
 const emits = defineEmits(['loggedIn', 'change-view']);
 
