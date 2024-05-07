@@ -20,6 +20,7 @@
 
 ### Changed
 
+- Styling of notifications
 - Mark optional and required form fields.
 
 ### Changed
