@@ -89,7 +89,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
-      image: productGetters.getCoverImagePreview(product),
+      image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
