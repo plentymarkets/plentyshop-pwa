@@ -27,12 +27,11 @@ import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
-
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { saveAddress: updateAddress } = useAddress(props.type);
+const { saveAddress: updateAddress, useAsShippingAddress, setCheckoutAddress } = useAddress(props.type);
 const { data: cart } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
@@ -59,8 +58,13 @@ const edit = () => {
 };
 
 const saveAddress = async (address: Address) => {
-  await updateAddress(address);
-  // if user checked sameAddress one should update the cart (set delivery Address to 0)
+  const result = await updateAddress(address);
+  if (props.type === AddressType.Billing && useAsShippingAddress.value) {
+    await setCheckoutAddress(AddressType.Shipping, -99);
+  } else if (result.id) {
+    await setCheckoutAddress(AddressType.Shipping, result.id);
+    editMode.value = false;
+  }
   emit('on-saved');
   editMode.value = false;
 };

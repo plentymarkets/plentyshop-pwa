@@ -121,11 +121,20 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     await getAddresses();
   };
 
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const setCheckoutAddress = async (typeId: number, addressId: number) => {
+    await useSdk().plentysystems.setCheckoutAddress({
+      typeId: typeId,
+      addressId: addressId,
+    });
+  };
+
   return {
     getAddresses,
     saveAddress,
     setDefault,
     deleteAddress,
+    setCheckoutAddress,
     ...toRefs(state.value),
   };
 };

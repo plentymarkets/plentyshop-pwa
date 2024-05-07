@@ -128,11 +128,8 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-// const ID_BILLING_ADDRESS = '#billing-address';
-// const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const localePath = useLocalePath();
-// const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const {
   data: billingAddresses,
@@ -161,12 +158,6 @@ const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
 
-const equalAddresses = (address1: Address, address2: Address) => {
-  return Object.keys(address1)
-    .filter((key) => key !== 'id')
-    .every((key) => address1[key as keyof Address] === address2[key as keyof Address]);
-};
-
 const cartAddressId = (type: AddressType) => {
   return type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
@@ -194,9 +185,7 @@ const loadAddresses = async () => {
   ]);
   const selectedBillingAddress = selectedAddress(billingAddresses.value, AddressType.Billing);
   const selectedShippingAddress = selectedAddress(shippingAddresses.value, AddressType.Shipping);
-  useAsShippingAddress.value =
-    equalAddresses(selectedBillingAddress, selectedShippingAddress) ||
-    oneOfAddressesIsMising(selectedBillingAddress, selectedShippingAddress);
+  useAsShippingAddress.value = oneOfAddressesIsMising(selectedBillingAddress, selectedShippingAddress);
 };
 
 await loadAddresses();

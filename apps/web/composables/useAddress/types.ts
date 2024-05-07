@@ -12,8 +12,8 @@ export interface UseAddressMethodsState {
 export type GetAddresses = () => Promise<Address[]>;
 export type SaveAddress = (address: Address) => Promise<Address>;
 export type SetDefault = (address: Address) => void;
+export type SetCheckoutAddress = (typeId: number, addressId: number) => void;
 export type DeleteAddress = (addressId: number) => void;
-
 export interface UseAddressMethods {
   data: Readonly<Ref<UseAddressMethodsState['data']>>;
   loading: Readonly<Ref<boolean>>;
