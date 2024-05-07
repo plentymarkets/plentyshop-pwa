@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart"
+    @submit.prevent="handleAddToCart()"
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
@@ -167,7 +167,7 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBaseSinglePrice(product.value),
 );
 
-const handleAddToCart = async () => {
+const handleAddToCart = async (quickCheckout = true) => {
   await validateAllFieldsAttributes();
   await validateAllFields();
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
@@ -200,14 +200,14 @@ const handleAddToCart = async () => {
 
   const added = await addToCart(params);
   if (added) {
-    openQuickCheckout(product.value);
+    if (quickCheckout) openQuickCheckout(product.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
   return added;
 };
 
 const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
-  const added = await handleAddToCart();
+  const added = await handleAddToCart(false);
   callback(added);
 };
 
