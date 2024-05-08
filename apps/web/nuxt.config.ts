@@ -174,7 +174,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+      apiUrl: (process.env.API_URL ?? 'http://localhost:8181').replace(/[\/\\]+$/, ''),
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,
