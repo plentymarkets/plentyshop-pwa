@@ -12,6 +12,7 @@
 
 ### Fixed
 
+- javascript error on PWA preview
 - Fixed facet filtering on category page
 - Fixed random login error
 - Fixed hydration and intlify warnings

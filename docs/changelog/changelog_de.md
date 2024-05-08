@@ -11,6 +11,7 @@
 
 ### Behoben
 
+- javascript Error in der PWA Vorschau
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
