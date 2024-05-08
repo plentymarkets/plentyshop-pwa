@@ -111,8 +111,11 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * ```
    */
   const hasTimer = computed(() => {
-    const config = useRuntimeConfig();
-    return Boolean(state.value.timer && config.public.enableQuickCheckoutTimer);
+    const enableQuickCheckoutTimer = tryUseNuxtApp()
+      ? useRuntimeConfig().public.enableQuickCheckoutTimer
+      : process.env?.ENABLE_QUICK_CHECKOUT_TIMER === '1';
+
+    return Boolean(state.value.timer) && enableQuickCheckoutTimer;
   });
 
   return {

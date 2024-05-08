@@ -3,6 +3,11 @@ import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
 import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
+import cookieConfig from '~/cookie.config';
+
+const initialCookies = tryUseNuxtApp()
+  ? (useRuntimeConfig().public.cookieGroups as CookieGroupFromNuxtConfig)
+  : (cookieConfig as CookieGroupFromNuxtConfig);
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
@@ -43,9 +48,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     visible: false,
     loading: false,
   }));
-
-  const runtimeConfig = useRuntimeConfig();
-  const initialCookies = runtimeConfig.public.cookieGroups as CookieGroupFromNuxtConfig;
 
   const changeVisibilityState: ChangeVisibilityState = () => {
     state.value.visible = !state.value.visible;

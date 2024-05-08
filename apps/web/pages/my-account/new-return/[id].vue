@@ -64,7 +64,6 @@ const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsS
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 fetchReturnReasons();
-const runtimeConfig = useRuntimeConfig();
 const selectAllItems = ref(false);
 const confirmation = ref(false);
 const emit = defineEmits(['close']);
@@ -85,15 +84,20 @@ const initiateReturn = () => {
     });
     return;
   }
-  if (runtimeConfig.public.validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
+
+  const validateReturnReasons = tryUseNuxtApp()
+    ? useRuntimeConfig().public.validateReturnReasons
+    : process.env?.VALIDATE_RETURN_REASONS === '1';
+
+  if (validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
     send({
       type: 'negative',
       message: t('returns.selectReason'),
     });
     return;
-  } else {
-    confirmation.value = true;
   }
+
+  confirmation.value = true;
   cleanReturnData();
 };
 
@@ -105,8 +109,7 @@ onMounted(async () => {
     orderId: route.params.id as string,
     accessKey: route.query.accessKey as string,
   });
-  if (data.value) {
-    setCurrentReturnOrder(data.value);
-  }
+
+  if (data.value) setCurrentReturnOrder(data.value);
 });
 </script>

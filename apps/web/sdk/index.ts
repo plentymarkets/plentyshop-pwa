@@ -8,13 +8,13 @@ let interceptorIdResponse: number | null = null;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const useSdk = () => {
-  const config = useRuntimeConfig();
   const { ssrLocale } = useInitialSetup();
   const { token } = useCsrfToken();
+  const apiUrl = tryUseNuxtApp() ? useRuntimeConfig().public.apiUrl : process.env.API_URL ?? 'http://localhost:8181';
   const sdkConfig = {
     // @ts-ignore
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
-      apiUrl: `${config.public.apiUrl}/plentysystems`,
+      apiUrl: `${apiUrl}/plentysystems`,
     }),
   };
 

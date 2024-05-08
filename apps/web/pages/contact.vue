@@ -145,12 +145,12 @@ definePageMeta({
   layout: false,
 });
 
-const runtimeConfig = useRuntimeConfig();
-
 const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
 const localePath = useLocalePath();
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const turnstileSiteKey = tryUseNuxtApp()
+  ? useRuntimeConfig().public.turnstileSiteKey
+  : process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '';
 const turnstileElement = ref();
 const { send } = useNotification();
 
