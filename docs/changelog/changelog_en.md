@@ -4,6 +4,7 @@
 
 ### New
 
+- Lazy-load images
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
 - Selection for the saved addresses at checkout
@@ -20,6 +21,7 @@
 
 ### Changed
 
+- Styling of notifications
 - Mark optional and required form fields.
 - Improved the registration form
 - Main page images conversion (avif)
