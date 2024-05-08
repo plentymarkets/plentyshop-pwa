@@ -24,8 +24,6 @@ const useIPV6 = process.env.USE_IPV6 === 'true';
     jsonMiddleware.handle = express.json({ limit: '13.5mb' }); // 13,3mb for 10mb upload file
   }
 
-  consola.log('my debug test', config.integrations);
-
   app.listen(port, host, () => {
     consola.success(`API server listening on http://${host}:${port}`);
   });
