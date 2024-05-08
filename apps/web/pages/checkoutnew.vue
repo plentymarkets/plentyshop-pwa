@@ -171,10 +171,6 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
   );
 };
 
-const oneOfAddressesIsMising = (address1: Address, address2: Address) => {
-  return !address1.id || !address2.id;
-};
-
 const loadAddresses = async () => {
   await Promise.all([
     getBillingAddresses(),
@@ -183,9 +179,8 @@ const loadAddresses = async () => {
     getCart(),
     fetchPaymentMethods(),
   ]);
-  const selectedBillingAddress = selectedAddress(billingAddresses.value, AddressType.Billing);
   const selectedShippingAddress = selectedAddress(shippingAddresses.value, AddressType.Shipping);
-  useAsShippingAddress.value = oneOfAddressesIsMising(selectedBillingAddress, selectedShippingAddress);
+  useAsShippingAddress.value = !selectedShippingAddress.id;
 };
 
 await loadAddresses();
