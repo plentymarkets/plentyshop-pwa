@@ -153,7 +153,7 @@ import {
 } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean, ref as yupReference } from 'yup';
-import type { RegisterFormParams } from './types';
+import type { RegisterFormParams } from '~/components/Register/types';
 
 const localePath = useLocalePath();
 const router = useRouter();

@@ -2,6 +2,7 @@
   <div class="relative min-h-[600px]">
     <NuxtImg
       :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
+      format="avif"
       height="412"
       width="605"
       alt="Hero background"
@@ -12,6 +13,7 @@
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <NuxtImg
           src="/images/homepage-hero-headphones.avif"
+          format="avif"
           height="600"
           width="800"
           alt="Headphones"
@@ -47,9 +49,10 @@
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
         <NuxtImg
-          class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           :src="image"
           :alt="title"
+          format="avif"
+          class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           width="360"
           height="360"
           loading="lazy"
@@ -100,7 +103,15 @@
             </p>
             <SfButton class="!bg-black">{{ buttonText }}</SfButton>
           </div>
-          <NuxtImg :src="image" :alt="title" width="50%" height="100%" class="self-end object-contain" loading="lazy" />
+          <NuxtImg
+            :src="image"
+            :alt="title"
+            format="avif"
+            width="50%"
+            height="100%"
+            class="self-end object-contain"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
