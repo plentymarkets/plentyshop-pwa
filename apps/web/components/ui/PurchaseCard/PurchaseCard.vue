@@ -9,22 +9,19 @@
         {{ productGetters.getName(product) }}
       </h1>
       <div class="flex items-center justify-center">
-        <WishlistButton v-if="isDesktop" :product="product" :quantity="quantitySelectorValue">
-          <template v-if="!isWishlistItem(productGetters.getVariationId(product))">
-            {{ t('addToWishlist') }}
-          </template>
-          <template v-else>
-            {{ t('removeFromWishlist') }}
-          </template>
-        </WishlistButton>
-
         <WishlistButton
-          v-else
-          square
-          class="bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
           :product="product"
           :quantity="quantitySelectorValue"
-        />
+          :square="viewport.isLessThan('lg')"
+          :class="{
+            'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
+              viewport.isLessThan('lg'),
+          }"
+        >
+          <template v-if="viewport.isGreaterOrEquals('lg')">
+            {{ !isWishlistItem(productGetters.getVariationId(product)) ? t('addToWishlist') : t('removeFromWishlist') }}
+          </template>
+        </WishlistButton>
       </div>
     </div>
     <div class="flex space-x-2">
@@ -105,10 +102,10 @@
       </div>
 
       <PayPalExpressButton
+        v-if="getCombination()"
+        :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
         class="mt-4"
         type="SingleItem"
-        :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
-        v-if="getCombination()"
       />
     </div>
   </form>
@@ -133,7 +130,7 @@ const showNetPrices = runtimeConfig.public.showNetPrices;
 const props = defineProps<PurchaseCardProps>();
 const { product } = toRefs(props);
 
-const { isDesktop } = useBreakpoints();
+const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
@@ -147,6 +144,7 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
+const { openQuickCheckout } = useQuickCheckout();
 
 resetInvalidFields();
 resetAttributeFields();
@@ -203,6 +201,7 @@ const handleAddToCart = async () => {
   };
 
   if (await addToCart(params)) {
+    openQuickCheckout(product.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
 };

@@ -40,13 +40,17 @@ export const useCustomer: UseCustomerReturn = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
       state.value.isAuthorized = false;
-    } else if (state.value.data?.user?.email) {
+      return;
+    }
+
+    if (state.value.data?.user?.email) {
       state.value.isGuest = false;
       state.value.isAuthorized = true;
-    } else {
-      state.value.isGuest = false;
-      state.value.isAuthorized = false;
+      return;
     }
+
+    state.value.isGuest = false;
+    state.value.isAuthorized = false;
   };
 
   /** Function for getting current user/cart data from session
@@ -108,17 +112,17 @@ export const useCustomer: UseCustomerReturn = () => {
   const login: Login = async (email: string, password: string) => {
     state.value.loading = true;
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLogin({ email: email, password: password }));
-    state.value.loading = false;
-    useHandleError(error.value);
+    try {
+      await useSdk()
+        .plentysystems.doLogin({ email: email, password: password })
+        .then(async () => await getSession());
 
-    if (!error.value) {
-      await getSession();
+      return state.value.isAuthorized;
+    } catch (error) {
+      useHandleError(error as ErrorParams);
+      state.value.loading = false;
+      return false;
     }
-
-    checkUserState();
-
-    return state.value.isAuthorized;
   };
 
   /** Function for user logout.

@@ -1,5 +1,26 @@
 # Changelog plentyshopPWA
 
+## v1.4.1 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
+
+### Hinzugefügt
+
+- eine Gast-Anmeldeseite vor der Kasse
+- Auswahl für die gespeicherten Adressen an der Kasse
+- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
+- Anpassung des Produktnamens in den Dokumentationsdateien.
+
+### Behoben
+
+- Die Facettenfilterung auf der Kategorieseite wurde korrigiert
+- Zufälliger Anmeldefehler behoben
+- Hydration und intlify Warnungen wurden behoben
+- Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+
+### Geändert
+
+- Styling der Benachrichtigungsanzeige
+- Registrierungsformular wurde verbessert.
+
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
 ### Migrations Guide

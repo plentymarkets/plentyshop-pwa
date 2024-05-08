@@ -4013,8 +4013,8 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.7.1
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.32.0
-    "@plentymarkets/shop-sdk": ^0.49.0
+    "@plentymarkets/shop-api": ^0.35.0
+    "@plentymarkets/shop-sdk": ^0.52.1
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.6
@@ -4032,6 +4032,7 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^14.0.1
     nuxt: ^3.11.2
+    nuxt-viewport: ^2.1.4
     prettier: ^3.2.5
     rimraf: ^5.0.5
     rollup: ^3.29.4
@@ -4041,23 +4042,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.32.0":
-  version: 0.32.0
-  resolution: "@plentymarkets/shop-api@npm:0.32.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.32.0%2F4c834a4237db31232dcc5373f4960f6e7c80b17f"
+"@plentymarkets/shop-api@npm:^0.35.0":
+  version: 0.35.0
+  resolution: "@plentymarkets/shop-api@npm:0.35.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.35.0%2F8f288e33f95ddd6f37b8e907dbb1e03a5ec89e2b"
   dependencies:
     "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 0e5d4dd88413ee414782afe303027001cc10dd9d3f25e7687028ac69e1ffd4a9b35764ee659ee7b96d1ed76e046acea1504c9c08a0fd965e89cc0720a4e3755d
+  checksum: f7fbf0977ce47394147b12cf0698b370bf397a47c4104a2a87f994ee7ce6339c5311297309d8c957bcd0c6d4fe10d285b09fc3420257a6a61ae835b2886fdf7a
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-sdk@npm:^0.49.0":
-  version: 0.49.0
-  resolution: "@plentymarkets/shop-sdk@npm:0.49.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.49.0%2Fb2445aefc42e2625632d8c36c1627ed6d0303ff2"
+"@plentymarkets/shop-sdk@npm:^0.52.1":
+  version: 0.52.1
+  resolution: "@plentymarkets/shop-sdk@npm:0.52.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.52.1%2F94accf5344e3e736c9126097fc28d92764d0bac4"
   dependencies:
     axios: ^1.6.3
-  checksum: 9e22331d03d42b0c755459ba0e6a9741d2dcbfda848121147df48b4dd1ff5b9a4fce96c330df4500e141bc0bd2dfb923fbb3f1cbbb412e595e9b6b4a78d9788a
+  checksum: 31c648403eafaaae26f07a67da9c16c2f2ad0898a1a95beba75ee33442e804f6e8dd07ef95643f4a75ee9da1ee32bff9d000730fa63b7462af54be4a4c5f3a33
   languageName: node
   linkType: hard
 
@@ -7695,6 +7696,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bowser@npm:^2.11.0":
+  version: 2.11.0
+  resolution: "bowser@npm:2.11.0"
+  checksum: 29c3f01f22e703fa6644fc3b684307442df4240b6e10f6cfe1b61c6ca5721073189ca97cdeedb376081148c8518e33b1d818a57f781d70b0b70e1f31fb48814f
+  languageName: node
+  linkType: hard
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -8744,6 +8752,13 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+  languageName: node
+  linkType: hard
+
+"cookiejs@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "cookiejs@npm:2.1.3"
+  checksum: bfb6bfb304775ecce48c52bdf5062efb78a532fda619f321495da64fb1d92d662cc2fa941d9daad9b2f989dade041ea99b90205fb01e086f6fa8ad2ffe163017
   languageName: node
   linkType: hard
 
@@ -15309,6 +15324,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt-viewport@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "nuxt-viewport@npm:2.1.4"
+  dependencies:
+    "@nuxt/kit": ^3.9.3
+    bowser: ^2.11.0
+    cookiejs: ^2.1.3
+    vue-demi: ^0.14.6
+  checksum: eb9036fb8829d0bdfc1d167458161337d6b97ca3033ae6e191419e834ea166dcdfade02db9fcdb1a46a07de78d7cbacfe57259dbf84b58f8b9f139206560fba9
+  languageName: node
+  linkType: hard
+
 "nuxt@npm:^3.11.2":
   version: 3.11.2
   resolution: "nuxt@npm:3.11.2"
@@ -20589,7 +20616,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-demi@npm:*, vue-demi@npm:>=0.14.7":
+"vue-demi@npm:*, vue-demi@npm:>=0.14.7, vue-demi@npm:^0.14.6":
   version: 0.14.7
   resolution: "vue-demi@npm:0.14.7"
   peerDependencies:

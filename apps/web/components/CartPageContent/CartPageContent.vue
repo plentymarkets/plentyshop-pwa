@@ -4,16 +4,16 @@
       <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
         <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
       </div>
-      <Coupon class="mb-2" v-if="!isDesktop" />
+      <Coupon class="mb-2" v-if="viewport.isLessThan('lg')" />
     </div>
     <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-      <OrderSummary v-if="cart" :cart="cart">
-        <Coupon v-if="isDesktop" class="mb-5" />
+      <OrderSummary :cart="cart">
+        <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
         <SfButton
           data-testid="checkout-button"
           :tag="NuxtLink"
-          :to="localePath(paths.checkout)"
+          :to="goToCheckout()"
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
@@ -32,10 +32,13 @@
 <script setup lang="ts">
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import { useCart } from '~/composables';
-const { isDesktop } = useBreakpoints();
-
+const viewport = useViewport();
 const localePath = useLocalePath();
-
+const { isAuthorized } = useCustomer();
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
+
+function goToCheckout() {
+  return isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin);
+}
 </script>

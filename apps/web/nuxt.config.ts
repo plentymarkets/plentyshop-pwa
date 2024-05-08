@@ -87,6 +87,29 @@ export default defineNuxtConfig({
         },
       },
     ],
+    [
+      'nuxt-viewport',
+      {
+        breakpoints: {
+          sm: 640,
+          md: 768,
+          lg: 1024,
+        },
+        defaultBreakpoints: {
+          mobile: 'sm',
+          tablet: 'md',
+          desktop: 'lg',
+        },
+        fallbackBreakpoint: 'lg',
+        cookie: {
+          expires: 365,
+          name: 'plenty-viewport',
+          path: '/',
+          sameSite: 'Strict',
+          secure: true,
+        },
+      },
+    ],
     '@nuxt/image',
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
@@ -161,6 +184,7 @@ export default defineNuxtConfig({
       useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
     },
   },
   pwa: {

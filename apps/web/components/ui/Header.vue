@@ -1,6 +1,6 @@
 <template>
   <MegaMenu :categories="categoryTree">
-    <template v-if="isTablet">
+    <template v-if="viewport.isGreaterOrEquals('md')">
       <NuxtLazyHydrate when-visible>
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
@@ -129,26 +129,23 @@
   <LanguageSelector v-if="isLanguageSelectOpen" />
   <UiNotifications />
   <UiModal
-    v-if="isTablet && isAuthenticationOpen"
+    v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
     tag="section"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
+    :disable-click-away="true"
   >
     <header>
-      <div class="text-lg font-medium ml-8">
-        <span v-if="isLogin">{{ t('auth.login.heading') }}</span>
-        <span v-else>{{ t('auth.signup.heading') }}</span>
-      </div>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
       </SfButton>
     </header>
-    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
+    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" :is-modal="true" />
+    <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
   </UiModal>
 
-  <NuxtLazyHydrate v-if="!isTablet" when-idle>
+  <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>
     <SfModal
       v-model="isSearchModalOpen"
       class="w-full h-full z-50"
@@ -203,7 +200,7 @@ const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClos
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 
 watch(
   () => isAuthenticationOpen.value,

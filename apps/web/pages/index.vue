@@ -4,8 +4,8 @@
       <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
       <img
         src="/images/homepage-hero-bg-mobile.webp"
-        height="600"
-        width="4000"
+        height="412"
+        width="605"
         alt="Hero mobile background"
         class="absolute w-full h-full z-[-1] md:object-cover"
       />
@@ -22,7 +22,7 @@
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
-          {{ $t('homepage.banner.moto1') }} - FGE PWA
+          {{ t('homepage.banner.moto1') }}
         </p>
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
           {{ t('homepage.banner.moto2') }}
@@ -110,7 +110,7 @@
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
-          {{ $t('moreItemsOfThisCategory') }}
+          {{ t('moreItemsOfThisCategory') }}
         </p>
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
