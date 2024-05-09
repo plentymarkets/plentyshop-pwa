@@ -19,8 +19,9 @@
 
 ### Geändert
 
+- Konvertierung von Hauptseitenbildern (avif)
 - Styling der Benachrichtigungsanzeige
-- Registrierungsformular wurde verbessert.
+- Registrierungsformular wurde verbessert
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

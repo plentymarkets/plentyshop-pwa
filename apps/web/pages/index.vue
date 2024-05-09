@@ -1,20 +1,19 @@
 <template>
   <div class="relative min-h-[600px]">
-    <picture>
-      <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
-      <NuxtImg
-        src="/images/homepage-hero-bg-mobile.webp"
-        height="412"
-        width="605"
-        alt="Hero mobile background"
-        class="absolute w-full h-full z-[-1] md:object-cover"
-        loading="lazy"
-      />
-    </picture>
-    <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
+    <img
+      :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
+      format="avif"
+      height="412"
+      width="605"
+      alt="Hero background"
+      class="absolute w-full h-full z-[-1] md:object-cover"
+      loading="lazy"
+    />
+    <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <NuxtImg
-          src="/images/homepage-hero-headphones.webp"
+        <img
+          src="/images/homepage-hero-headphones.avif"
+          format="avif"
           height="600"
           width="800"
           alt="Headphones"
@@ -49,10 +48,11 @@
         :aria-labelledby="`image-${title}`"
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
-        <NuxtImg
-          class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
+        <img
           :src="image"
           :alt="title"
+          format="avif"
+          class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           width="360"
           height="360"
           loading="lazy"
@@ -103,7 +103,15 @@
             </p>
             <SfButton class="!bg-black">{{ buttonText }}</SfButton>
           </div>
-          <NuxtImg :src="image" :alt="title" class="w-1/2 self-end object-contain" loading="lazy" />
+          <img
+            :src="image"
+            :alt="title"
+            format="avif"
+            width="50%"
+            height="100%"
+            class="self-end object-contain"
+            loading="lazy"
+          />
         </div>
       </div>
     </div>
@@ -123,10 +131,9 @@
 
 <script lang="ts" setup>
 import { SfButton } from '@storefront-ui/vue';
+const viewport = useViewport();
 const { t } = useI18n();
-definePageMeta({
-  pageType: 'static',
-});
+definePageMeta({ pageType: 'static' });
 
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
@@ -135,17 +142,14 @@ watch(
   () => categoryTree.value,
   async () => {
     const firstCategoryId = categoryTree.value?.[0]?.id;
-
-    if (firstCategoryId) {
-      recommendedProductsCategoryId.value = firstCategoryId.toString();
-    }
+    if (firstCategoryId) recommendedProductsCategoryId.value = firstCategoryId.toString();
   },
   { immediate: true },
 );
 
 const displayDetails = [
   {
-    image: '/images/homepage-display-1.webp',
+    image: '/images/homepage-display-1.avif',
     title: t('homepage.displayDetails.detail1.title'),
     subtitle: t('homepage.displayDetails.detail1.subtitle'),
     description: t('homepage.displayDetails.detail1.description'),
@@ -157,7 +161,7 @@ const displayDetails = [
     descriptionClass: 'md:typography-text-lg',
   },
   {
-    image: '/images/homepage-display-2.webp',
+    image: '/images/homepage-display-2.avif',
     title: t('homepage.displayDetails.detail2.title'),
     subtitle: t('homepage.displayDetails.detail2.subtitle'),
     description: t('homepage.displayDetails.detail2.description'),
@@ -166,7 +170,7 @@ const displayDetails = [
     backgroundColor: 'bg-warning-200',
   },
   {
-    image: '/images/homepage-display-3.webp',
+    image: '/images/homepage-display-3.avif',
     title: t('homepage.displayDetails.detail3.title'),
     subtitle: t('homepage.displayDetails.detail3.subtitle'),
     description: t('homepage.displayDetails.detail3.description'),
@@ -179,15 +183,15 @@ const displayDetails = [
 const categories = [
   {
     title: t('homepage.women'),
-    image: '/images/homepage-women-category.webp',
+    image: '/images/homepage-women-category.avif',
   },
   {
     title: t('homepage.men'),
-    image: '/images/homepage-men-category.webp',
+    image: '/images/homepage-men-category.avif',
   },
   {
     title: t('homepage.kid'),
-    image: '/images/homepage-kid-category.webp',
+    image: '/images/homepage-kid-category.avif',
   },
 ];
 </script>
