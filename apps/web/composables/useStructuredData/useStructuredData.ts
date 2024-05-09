@@ -30,13 +30,18 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setLogoMeta: SetLogoMeta = () => {
     state.value.loading = true;
 
+    const config = tryUseNuxtApp()
+      ? useRuntimeConfig().public
+      : {
+          apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+          logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+        };
+
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      url: tryUseNuxtApp() ? useRuntimeConfig().public.apiUrl : process.env.API_URL ?? 'http://localhost:8181',
-      logo: tryUseNuxtApp()
-        ? useRuntimeConfig().public.logoUrl
-        : (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
+      url: config.apiUrl,
+      logo: config.logoUrl,
     };
     useHead({
       script: [
