@@ -157,12 +157,11 @@
 
 <script setup lang="ts">
 import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
-import type { Cookie, CookieGroup } from '~/cookie.config';
+import cookieConfig, { type Cookie, type CookieGroup } from '~/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
-const runtimeConfig = useRuntimeConfig();
-const cookieGroups = ref(runtimeConfig.public.cookieGroups);
+const cookieGroups = ref(tryUseNuxtApp() ? useRuntimeConfig().public.cookieGroups : cookieConfig);
 
 const {
   initializeCookies,

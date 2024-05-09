@@ -1,9 +1,8 @@
 import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import cookieConfig, { type Cookie, type CookieGroup, type CookieGroupFromNuxtConfig } from '~/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
-import cookieConfig from '~/cookie.config';
 
 const initialCookies = tryUseNuxtApp()
   ? (useRuntimeConfig().public.cookieGroups as CookieGroupFromNuxtConfig)

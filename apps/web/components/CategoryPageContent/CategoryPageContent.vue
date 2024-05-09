@@ -78,8 +78,7 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();

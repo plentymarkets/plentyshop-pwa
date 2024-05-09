@@ -72,7 +72,9 @@ const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 fetchReturnReasons();
 
-const runtimeConfig = useRuntimeConfig();
+const validateReturnReasons = tryUseNuxtApp()
+  ? useRuntimeConfig().public.validateReturnReasons
+  : process.env.VALIDATE_RETURN_REASONS === '1';
 const confirmation = ref(false);
 const selectAllItems = ref(false);
 
@@ -94,7 +96,7 @@ const initiateReturn = () => {
     });
     return;
   }
-  if (runtimeConfig.public.validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
+  if (validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
     send({
       type: 'negative',
       message: t('returns.selectReason'),

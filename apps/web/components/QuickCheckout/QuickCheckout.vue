@@ -96,8 +96,7 @@ import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 defineProps<QuickCheckoutProps>();
 
 const { t, n } = useI18n();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
 const { addModernImageExtension } = useModernImage();

@@ -161,14 +161,15 @@ const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
 const viewport = useViewport();
-const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const props = withDefaults(defineProps<RegisterFormParams>(), {
   isModal: false,
 });
 
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const turnstileSiteKey = tryUseNuxtApp()
+  ? useRuntimeConfig().public.turnstileSiteKey
+  : process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '';
 const turnstileElement = ref();
 
 const validationSchema = toTypedSchema(

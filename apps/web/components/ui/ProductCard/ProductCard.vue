@@ -128,8 +128,7 @@ const loading = ref(false);
 const imageLoaded = ref(false);
 const img = ref();
 const emit = defineEmits(['load']);
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;

@@ -15,6 +15,5 @@ import type { PriceProps } from '~/components/Price/types';
 
 defineProps<PriceProps>();
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 </script>

@@ -26,6 +26,10 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
     timer: defaults.DEFAULT_QUICK_CHECKOUT_TIMER,
   }));
 
+  const enableQuickCheckoutTimer = tryUseNuxtApp()
+    ? useRuntimeConfig().public.enableQuickCheckoutTimer
+    : process.env?.ENABLE_QUICK_CHECKOUT_TIMER === '1';
+
   let interval = setTimeout(() => {});
 
   /**
@@ -37,14 +41,7 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * ```
    */
   const endTimer: EndTimer = () => {
-    const config = useRuntimeConfig();
-    if (!config.public.enableQuickCheckoutTimer) {
-      return;
-    }
-
-    if (state.value.timer === 0) {
-      return;
-    }
+    if (!enableQuickCheckoutTimer || state.value.timer === 0) return;
 
     clearInterval(interval);
     state.value.timer = 0;
@@ -84,11 +81,7 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * ```
    */
   const startTimer: StartTimer = () => {
-    const config = useRuntimeConfig();
-
-    if (!config.public.enableQuickCheckoutTimer) {
-      return;
-    }
+    if (!enableQuickCheckoutTimer) return;
 
     state.value.timer = defaults.DEFAULT_QUICK_CHECKOUT_TIMER;
 
@@ -111,10 +104,6 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * ```
    */
   const hasTimer = computed(() => {
-    const enableQuickCheckoutTimer = tryUseNuxtApp()
-      ? useRuntimeConfig().public.enableQuickCheckoutTimer
-      : process.env?.ENABLE_QUICK_CHECKOUT_TIMER === '1';
-
     return Boolean(state.value.timer) && enableQuickCheckoutTimer;
   });
 

@@ -52,6 +52,8 @@ export const useCanonical: UseCanonicalReturn = () => {
     loading: false,
   }));
 
+  const apiUrl = tryUseNuxtApp() ? useRuntimeConfig().public.apiUrl : process.env.API_URL ?? 'http://localhost:8181';
+
   /**
    * @description Function for setting static page metas.
    * @returns StaticPageMeta
@@ -64,7 +66,6 @@ export const useCanonical: UseCanonicalReturn = () => {
     state.value.loading = true;
 
     const route = useRoute();
-    const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
 
@@ -72,17 +73,17 @@ export const useCanonical: UseCanonicalReturn = () => {
       return {
         rel: 'alternate',
         hreflang: item.code,
-        href: `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, item.code)}`,
+        href: `${apiUrl}${localePath(route.fullPath, item.code)}`,
       };
     });
 
     useHead({
       link: [
-        { rel: 'canonical', href: `${runtimeConfig.public.apiUrl}${localePath(route.fullPath)}` },
+        { rel: 'canonical', href: `${apiUrl}${localePath(route.fullPath)}` },
         {
           rel: 'alternate',
           hreflang: 'x-default',
-          href: `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, defaultLocale)}`,
+          href: `${apiUrl}${localePath(route.fullPath, defaultLocale)}`,
         },
         ...alternateLocales,
       ],
@@ -104,9 +105,7 @@ export const useCanonical: UseCanonicalReturn = () => {
     const route = useRoute();
     const localePath = useLocalePath();
     const { locale } = useI18n();
-    const runtimeConfig = useRuntimeConfig();
-
-    const canonicalLink = `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, locale.value)}`;
+    const canonicalLink = `${apiUrl}${localePath(route.fullPath, locale.value)}`;
     useHead({
       link: [
         {
@@ -124,8 +123,8 @@ export const useCanonical: UseCanonicalReturn = () => {
               hreflang: key,
               href:
                 key === `x-default`
-                  ? `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, locale.value)}`
-                  : `${runtimeConfig.public.apiUrl}${localePath(route.fullPath, key)}`,
+                  ? `${apiUrl}${localePath(route.fullPath, locale.value)}`
+                  : `${apiUrl}${localePath(route.fullPath, key)}`,
             },
           ],
         });

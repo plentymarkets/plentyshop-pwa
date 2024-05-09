@@ -48,8 +48,7 @@ const props = defineProps<AttributeSelectProps>();
 const value = computed(() => getValue(props.attribute.attributeId));
 const { t } = useI18n();
 const selectedAttributeValueName = ref<string>('');
-const runtimeConfig = useRuntimeConfig();
-const apiEndpoint = runtimeConfig.public?.apiEndpoint ?? '';
+const apiEndpoint = tryUseNuxtApp() ? useRuntimeConfig().public.apiEndpoint : process.env?.API_ENDPOINT ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';

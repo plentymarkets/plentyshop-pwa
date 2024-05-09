@@ -114,14 +114,17 @@ import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storef
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
 
-const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
-const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
+const showNewsletterNameForms = tryUseNuxtApp()
+  ? useRuntimeConfig().public?.newsletterFromShowNames ?? false
+  : process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1';
+const turnstileSiteKey = tryUseNuxtApp()
+  ? useRuntimeConfig().public?.turnstileSiteKey ?? ''
+  : process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 

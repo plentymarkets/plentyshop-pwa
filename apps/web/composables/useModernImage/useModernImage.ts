@@ -13,7 +13,9 @@ const getImageForViewport = (product: Product, context: string, isTablet: boolea
 };
 
 export const useModernImage: UseModernImageReturn = () => {
-  const config = useRuntimeConfig().public;
+  const config = tryUseNuxtApp()
+    ? useRuntimeConfig().public
+    : { useAvif: process.env?.USE_AVIF === '1', useWebp: process.env?.USE_WEBP === '1' };
   const validConversionExtensions = new Set(['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'webp']);
   const avifExtension = 'avif';
   const webpExtension = 'webp';
