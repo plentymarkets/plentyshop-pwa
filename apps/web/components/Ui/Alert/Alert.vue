@@ -12,7 +12,7 @@ const sizeClasses = {
 </script>
 
 <script setup lang="ts">
-import type { AlertProps } from '~/components/ui/Alert/types';
+import type { AlertProps } from '~/components/Ui/Alert/types';
 
 const props = withDefaults(defineProps<AlertProps>(), {
   size: 'base',

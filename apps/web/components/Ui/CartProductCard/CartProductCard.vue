@@ -122,7 +122,7 @@
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
-import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
+import type { CartProductCardProps } from '~/components/Ui/CartProductCard/types';
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();

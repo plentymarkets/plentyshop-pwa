@@ -122,7 +122,7 @@ import {
   SfLoaderCircular,
   SfTooltip,
 } from '@storefront-ui/vue';
-import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PurchaseCardProps } from '~/components/Ui/PurchaseCard/types';
 
 const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 

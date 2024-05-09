@@ -108,7 +108,7 @@ import {
   SfRating,
   SfCounter,
 } from '@storefront-ui/vue';
-import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import type { ProductCardProps } from '~/components/Ui/ProductCard/types';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();

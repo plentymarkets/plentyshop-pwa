@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { reviewGetters } from '@plentymarkets/shop-sdk';
 import { SfRating, SfIconCheck } from '@storefront-ui/vue';
-import type { ReviewProps } from '~/components/ui/Review/types';
+import type { ReviewProps } from '~/components/Ui/Review/types';
 
 const props = defineProps<ReviewProps>();
 

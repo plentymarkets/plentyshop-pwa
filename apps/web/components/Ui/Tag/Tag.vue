@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type TagProps, TagSize } from '~/components/ui/Tag/types';
+import { type TagProps, TagSize } from '~/components/Ui/Tag/types';
 
 const props = withDefaults(defineProps<TagProps>(), {
   variant: 'primary',

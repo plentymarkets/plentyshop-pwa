@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
-import type { HeroProps } from '~/components/ui/Hero/types';
+import type { HeroProps } from '~/components/Ui/Hero/types';
 
 defineProps<HeroProps>();
 
