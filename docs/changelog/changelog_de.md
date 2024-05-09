@@ -12,6 +12,7 @@
 
 ### Behoben
 
+- Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben

@@ -13,6 +13,7 @@
 
 ### Fixed
 
+- Fixed random Nuxt instance unavailable
 - Fixed facet filtering on category page
 - Fixed random login error
 - Fixed hydration and intlify warnings
