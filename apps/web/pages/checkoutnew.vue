@@ -32,7 +32,7 @@
           :type="AddressType.Shipping"
           @on-saved="
             async () => {
-              await disableEditMode();
+              await disableEditModeOnBillingForm();
               loadAddresses();
             }
           "
@@ -180,7 +180,7 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
   );
 };
 
-const disableEditMode = () => {
+const disableEditModeOnBillingForm = () => {
   if (checkoutAddressBillingRef?.value?.disableEditMode) {
     checkoutAddressBillingRef.value.disableEditMode();
   }
