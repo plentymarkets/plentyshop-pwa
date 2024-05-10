@@ -139,12 +139,9 @@ const ID_CHECKBOX = '#terms-checkbox';
 const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const {
-  data: billingAddresses,
-  getAddresses: getBillingAddresses,
-  useAsShippingAddress,
-} = useAddress(AddressType.Billing);
+const { data: cart, getCart, clearCartItems, loading: cartLoading, useAsShippingAddress } = useCart();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+
 import { type Address } from '@plentymarkets/shop-api';
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');

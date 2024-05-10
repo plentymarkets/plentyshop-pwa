@@ -34,8 +34,8 @@ const { data: activeShippingCountries, getActiveShippingCountries } = useActiveS
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { saveAddress: updateAddress, useAsShippingAddress, setCheckoutAddress } = useAddress(props.type);
-const { data: cart } = useCart();
+const { saveAddress: updateAddress, setCheckoutAddress } = useAddress(props.type);
+const { data: cart, useAsShippingAddress } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
