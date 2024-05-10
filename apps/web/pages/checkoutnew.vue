@@ -30,7 +30,12 @@
           :button-text="t('shipping.addButton')"
           :addresses="shippingAddresses"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
+          @on-saved="
+            async () => {
+              await disableEditMode();
+              loadAddresses();
+            }
+          "
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -175,10 +180,13 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
   );
 };
 
-const loadAddresses = async () => {
-  if (checkoutAddressBillingRef?.value?.hideEditModeForm) {
-    checkoutAddressBillingRef.value.hideEditModeForm();
+const disableEditMode = () => {
+  if (checkoutAddressBillingRef?.value?.disableEditMode) {
+    checkoutAddressBillingRef.value.disableEditMode();
   }
+};
+
+const loadAddresses = async () => {
   await Promise.all([
     getBillingAddresses(),
     getShippingAddresses(),

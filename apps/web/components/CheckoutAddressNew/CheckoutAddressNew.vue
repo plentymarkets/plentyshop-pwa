@@ -72,16 +72,13 @@ const saveAddress = async (address: Address) => {
   editMode.value = false;
 };
 
-const hideEditModeForm = async () => {
-  // check if we have data in the form and also save it
-  // await updateAddress(address);
-  if (AddressFormNewRef.value) {
+const disableEditMode = async () => {
+  if (AddressFormNewRef.value && editMode.value) {
     AddressFormNewRef.value.emitFormValues();
   }
-  // editMode.value = false;
 };
 
 defineExpose({
-  hideEditModeForm,
+  disableEditMode,
 });
 </script>
