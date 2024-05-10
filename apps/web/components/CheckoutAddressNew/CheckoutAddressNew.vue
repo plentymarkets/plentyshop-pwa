@@ -12,6 +12,7 @@
 
     <div v-if="editMode">
       <AddressFormNew
+        ref="AddressFormNewRef"
         :countries="activeShippingCountries"
         :saved-address="
           editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
@@ -23,6 +24,8 @@
   </div>
 </template>
 <script setup lang="ts">
+import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
+import { defineExpose } from 'vue';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
@@ -36,7 +39,7 @@ const { data: cart } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
-
+const AddressFormNewRef = ref<InstanceType<typeof AddressFormNew> | null>(null);
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
@@ -68,4 +71,17 @@ const saveAddress = async (address: Address) => {
   emit('on-saved');
   editMode.value = false;
 };
+
+const hideEditModeForm = async () => {
+  // check if we have data in the form and also save it
+  // await updateAddress(address);
+  if (AddressFormNewRef.value) {
+    AddressFormNewRef.value.emitFormValues();
+  }
+  // editMode.value = false;
+};
+
+defineExpose({
+  hideEditModeForm,
+});
 </script>

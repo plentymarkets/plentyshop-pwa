@@ -17,6 +17,7 @@
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
+          ref="checkoutAddressBillingRef"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -110,6 +111,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType } from '@plentymarkets/shop-api';
 import {
   shippingProviderGetters,
@@ -128,6 +131,7 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
+const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
@@ -172,6 +176,9 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
 };
 
 const loadAddresses = async () => {
+  if (checkoutAddressBillingRef?.value?.hideEditModeForm) {
+    checkoutAddressBillingRef.value.hideEditModeForm();
+  }
   await Promise.all([
     getBillingAddresses(),
     getShippingAddresses(),
