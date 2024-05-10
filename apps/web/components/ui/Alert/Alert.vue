@@ -24,12 +24,12 @@ const classes = computed(() => [
   sizeClasses[props.size],
   props.strong ? 'text-white font-medium rounded-none' : 'rounded-md font-normal',
   {
-    [`text-positive-800 ${props.strong ? 'bg-positive-600' : 'bg-positive-100'}`]: props.variant === 'positive',
-    [`text-negative-800 ${props.strong ? 'bg-negative-600' : 'bg-negative-100'}`]: props.variant === 'negative',
-    [`text-secondary-800 ${props.strong ? 'bg-secondary-800' : 'bg-secondary-100'}`]: props.variant === 'secondary',
-    [`text-neutral-900 border border-neutral-200 ${props.strong ? 'bg-neutral-600' : 'bg-neutral-100'}`]:
+    [`text-black ${props.strong ? 'bg-positive-600' : 'bg-positive-100'}`]: props.variant === 'positive',
+    [`text-black ${props.strong ? 'bg-negative-600' : 'bg-negative-100'}`]: props.variant === 'negative',
+    [`text-black ${props.strong ? 'bg-secondary-800' : 'bg-secondary-100'}`]: props.variant === 'secondary',
+    [`text-black border border-neutral-200 ${props.strong ? 'bg-neutral-600' : 'bg-neutral-100'}`]:
       props.variant === 'neutral',
-    [`text-warning-700 ${props.strong ? 'bg-warning-600' : 'bg-warning-100'}  `]: props.variant === 'warning',
+    [`text-black ${props.strong ? 'bg-warning-600' : 'bg-warning-100'}  `]: props.variant === 'warning',
   },
 ]);
 </script>

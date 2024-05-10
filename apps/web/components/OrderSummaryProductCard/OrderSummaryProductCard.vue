@@ -15,7 +15,7 @@
           :src="
             addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
           "
-          :alt="''"
+          :alt="orderGetters.getItemName(orderItem)"
           class="h-auto border rounded-md border-neutral-200"
           width="300"
           height="300"
