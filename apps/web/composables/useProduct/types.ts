@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { Breadcrumb, Product, ProductParams } from '@plentymarkets/shop-api';
 import type { UseProductOrderProperties } from '~/composables/useProductOrderProperties';
 

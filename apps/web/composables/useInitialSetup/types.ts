@@ -2,6 +2,7 @@ export type SetInitialData = () => Promise<boolean>;
 
 export interface UseInitialSetupState {
   ssrLocale: string;
+  loading: boolean;
 }
 
 export interface UseInitialSetup {

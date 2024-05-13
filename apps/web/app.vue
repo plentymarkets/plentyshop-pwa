@@ -32,9 +32,7 @@ ssrLocale.value = locale.value;
 
 await setInitialDataSSR();
 
-if (route?.meta.pageType === 'static') {
-  setStaticPageMeta();
-}
+if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
 watch(

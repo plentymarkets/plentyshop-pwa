@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export interface UseCategoryTreeState {
@@ -9,11 +8,11 @@ export interface UseCategoryTreeState {
 export type GetCategoryTree = () => Promise<CategoryTreeItem[]>;
 export type SetCategoryTree = (data: CategoryTreeItem[]) => void;
 
-export interface UseCategoryTreeMethods {
+export interface UseCategoryTree {
   data: Readonly<Ref<UseCategoryTreeState['data']>>;
-  loading: Readonly<Ref<boolean>>;
+  loading: Ref<boolean>;
   getCategoryTree: GetCategoryTree;
   setCategoryTree: SetCategoryTree;
 }
 
-export type UseCategoryTreeMethodsReturn = () => UseCategoryTreeMethods;
+export type UseCategoryTreeMethodsReturn = () => UseCategoryTree;

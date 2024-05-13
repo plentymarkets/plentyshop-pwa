@@ -37,7 +37,7 @@ export default defineNuxtConfig({
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables/**', 'utils/**'],
+    dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
   image: {

@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { Cart, DoAddItemParams, DeleteCartItemParams, SetCartItemQuantityParams } from '@plentymarkets/shop-api';
 
 export interface UseCartState {

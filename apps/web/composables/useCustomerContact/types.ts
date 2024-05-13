@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerContactState {
