@@ -16,7 +16,6 @@
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
-- 
 
 ### Geändert
 
