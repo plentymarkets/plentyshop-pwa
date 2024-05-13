@@ -406,9 +406,9 @@
     "tooltipVisibilityOn": "Your review is visible",
     "tooltipVisibilityOff": "Your rating is currently being reviewed",
     "validation": {
-      "ratingRequired": "Add your rating",
-      "titleRequired": "Add your title",
-      "textareaRequired": "Add your message",
+      "ratingRequired": "Add your rating. ",
+      "titleRequired": "Add your title.",
+      "textareaRequired": "Add your message.",
       "textareaMaxLength": "Maximum allowed length is 500 characters."
     },
     "notification": {

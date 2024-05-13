@@ -406,9 +406,9 @@
     "tooltipVisibilityOn": "Diese Bewertung ist sichtbar",
     "tooltipVisibilityOff": "Diese Bewertung wird derzeit überprüft",
     "validation": {
-      "ratingRequired": "Rating zu Bewertung hinzufügen",
-      "titleRequired": "Titel für Bewertung eingeben",
-      "textareaRequired": "Nachricht für Bewertung eingeben",
+      "ratingRequired": "Rating zu Bewertung hinzufügen.",
+      "titleRequired": "Titel für Bewertung eingeben.",
+      "textareaRequired": "Nachricht für Bewertung eingeben.",
       "textareaMaxLength": "Die maximal zulässige Länge beträgt 500 Zeichen."
     },
     "notification": {
