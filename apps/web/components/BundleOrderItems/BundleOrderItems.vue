@@ -50,11 +50,7 @@ const { product } = withDefaults(defineProps<BundleOrderItemsProps>(), {});
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 
-function isLinkable(item: ProductBundleComponent): boolean {
-  let returnValue = false;
-  if (productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null')) {
-    returnValue = true;
-  }
-  return returnValue;
+const isLinkable = (item: ProductBundleComponent): boolean => {
+  return productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null');
 }
 </script>
