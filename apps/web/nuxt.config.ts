@@ -3,7 +3,16 @@ import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
   telemetry: false,
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+    timeline: {
+      enabled: true,
+    },
+  },
+  sourcemap: {
+    server: true,
+    client: true,
+  },
   typescript: {
     typeCheck: true,
   },

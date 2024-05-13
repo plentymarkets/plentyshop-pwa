@@ -1,4 +1,3 @@
-import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
