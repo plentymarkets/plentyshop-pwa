@@ -18,6 +18,7 @@
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
+- Bundle item accessability via hyperlink, if not fully set
 
 ### Changed
 
