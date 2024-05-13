@@ -155,7 +155,7 @@ const addWithLoader = async (productId: number) => {
       quantity: 1,
     });
 
-    openQuickCheckout(product);
+    openQuickCheckout(product, 1);
     send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
