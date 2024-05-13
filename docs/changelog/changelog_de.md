@@ -9,6 +9,7 @@
 - Auswahl für die gespeicherten Adressen an der Kasse
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
 - Anpassung des Produktnamens in den Dokumentationsdateien.
+- Added quantity to quick checkout product name
 
 ### Behoben
 

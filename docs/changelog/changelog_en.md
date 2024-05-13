@@ -10,6 +10,7 @@
 - Selection for the saved addresses at checkout
 - Product renaming in the documentation files
 - Added quick checkout functionality.
+- Added quantity to quick checkout product name
 
 ### Fixed
 
