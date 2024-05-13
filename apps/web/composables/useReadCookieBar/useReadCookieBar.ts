@@ -26,6 +26,10 @@ const fetchScripts = (scripts: string[]) => {
   });
 };
 
+const initialCookies = tryUseNuxtApp()
+  ? (useRuntimeConfig().public.cookieGroups as CookieGroupFromNuxtConfig)
+  : (cookieConfig as CookieGroupFromNuxtConfig);
+
 /**
  * @description Composable for managing cookie consent bar.
  * @returns UseReadCookieBarReturn
@@ -43,13 +47,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     loading: false,
   }));
 
-  const initialCookies = tryUseNuxtApp()
-    ? (useRuntimeConfig().public.cookieGroups as CookieGroupFromNuxtConfig)
-    : (cookieConfig as CookieGroupFromNuxtConfig);
-
-  const changeVisibilityState: ChangeVisibilityState = () => {
-    state.value.visible = !state.value.visible;
-  };
+  const changeVisibilityState: ChangeVisibilityState = () => (state.value.visible = !state.value.visible);
 
   const loadThirdPartyScripts = (): void => {
     if (!process.server) {
@@ -57,10 +55,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
         cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
           if (cookie.accepted) {
             const scripts = initialCookies.groups[groupIndex].cookies?.[cookieIndex]?.script;
-
-            if (scripts && scripts.length > 0) {
-              fetchScripts(scripts);
-            }
+            if (scripts && scripts.length > 0) fetchScripts(scripts);
           }
         });
       });
@@ -77,7 +72,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
    */
   const initializeCookies: InitializeCookies = () => {
     const cookies = JSON.parse(JSON.stringify(initialCookies));
-
     const browserCookies = useCookie('consent-cookie');
 
     cookies.groups.slice(1).forEach((group: CookieGroup) => {
@@ -89,11 +83,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     });
 
     state.value.data = cookies;
-
-    if (!browserCookies.value) {
-      state.value.visible = true;
-    }
-
+    if (!browserCookies.value) state.value.visible = true;
     loadThirdPartyScripts();
   };
 
@@ -114,7 +104,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
         childAccumulator[cookie.name] = cookie.accepted;
         return childAccumulator;
       }, {});
-
       return accumulator;
     }, {});
 
@@ -126,14 +115,9 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     const alreadySetCookie = Boolean(consentCookie.value);
 
     consentCookie.value = jsonCookie;
-
     changeVisibilityState();
-
     loadThirdPartyScripts();
-
-    if (alreadySetCookie) {
-      router.go(0);
-    }
+    if (alreadySetCookie) router.go(0);
   };
 
   /**
@@ -151,7 +135,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
         group.cookies.forEach((cookie: Cookie) => (cookie.accepted = accepted));
       }
     });
-
     setConsent();
   };
 
