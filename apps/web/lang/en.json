@@ -748,7 +748,8 @@
   },
   "productAttributes": {
     "seeAvailableOptions": "See available options",
-    "notValidVariation": "Please select a valid variation."
+    "notValidVariation": "Please select a valid variation.",
+    "productInformationMissing": "Product information missing"
   },
   "quickCheckout": {
     "heading": "Added to shopping cart",
