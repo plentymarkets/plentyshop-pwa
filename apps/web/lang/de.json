@@ -485,6 +485,7 @@
   },
   "auth": {
     "login": {
+      "openLoginForm": "Login Form öffnen",
       "heading": "In ihr Konto einloggen",
       "success": "Sie wurden erfolgreich eingeloggt.",
       "submitLabel": "Anmelden",
