@@ -170,7 +170,7 @@ import type { CreateReviewParams, ReviewItem, UpdateReviewParams } from '@plenty
 const props = defineProps<ReviewProps>();
 const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
 const { send } = useNotification();
-const { t, d } = useI18n();
+const { t } = useI18n();
 const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
