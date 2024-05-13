@@ -57,6 +57,7 @@
     "selectPlaceholder": "-- Auswählen --",
     "emailLabel": "E-Mail",
     "passwordLabel": "Passwort",
+    "repeatPasswordLabel": "Passwort wiederholen",
     "passwordHint": "8 oder mehr Zeichen mit einer Mischung aus Buchstaben, Zahlen und Symbolen",
     "termsAndConditionsLabel": "Hiermit bestätige ich, dass ich die {terms} gelesen habe.",
     "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
@@ -531,6 +532,7 @@
     },
     "signup": {
       "heading": "Account erstellen",
+      "subheading": "Jetzt registrieren, um großartige Vorteile zu genießen",
       "submitLabel": "Account erstellen",
       "alreadyHaveAccount": "Du hast schon ein Konto?",
       "emailAlreadyExists": "Diese E-Mail-Adresse ist bereits registriert.",
@@ -542,6 +544,17 @@
         "information": "Informationen",
         "button": "Einkaufen gehen",
         "imageAlt": "Bild zum Bestätigen der erfolgreichen Anmeldung"
+      },
+      "benefits": {
+        "saveAddresses": "Save multiple addresses",
+        "orderTracking": "Keep track of your orders",
+        "wishlist": "Save items for later everywhere you go",
+        "orderHistory": "Your complete order history in one place"
+      },
+      "passwordValidation": {
+        "characters": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+        "letters": "Das Passwort muss mindestens einen Buchstaben enthalten.",
+        "numbers": "Das Passwort muss mindestens eine Zahl enthalten."
       }
     },
     "resetPassword": {
@@ -731,7 +744,8 @@
     },
     "password": {
       "required": "Passwort ist erforderlich.",
-      "valid": "Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Buchstaben und eine Zahl enthalten."
+      "valid": "Passwort muss mindestens 8 Zeichen lang sein und mindestens einen Buchstaben und eine Zahl enthalten.",
+      "match": "Passwörter stimmen nicht überein."
     },
     "newsletter": {
       "firstNameRequired": "Vorname ist erforderlich.",
@@ -770,5 +784,12 @@
   "productAttributes": {
     "seeAvailableOptions": "Verfügbare Optionen anzeigen",
     "notValidVariation": "Bitte wählen Sie eine gültige Variante."
+  },
+  "quickCheckout": {
+    "heading": "Zum Warenkorb hinzugefügt",
+    "subTotal": "Zwischensumme",
+    "checkYourCart": "Warenkorb prüfen",
+    "cartContains": "Ihr Warenkorb enthält {count} Artikel",
+    "or": "ODER"
   }
 }
