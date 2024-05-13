@@ -51,6 +51,8 @@ const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
-  return productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null');
-}
+  return (
+    productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null')
+  );
+};
 </script>
