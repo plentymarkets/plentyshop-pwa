@@ -21,7 +21,7 @@
       <p class="font-medium mb-2">{{ reviewGetters.getReviewTitle(reviewItem) }}</p>
       <div class="flex items-center pr-2 pb-2 text-xs text-neutral-500">
         <SfRating :value="reviewGetters.getReviewRating(reviewItem) ?? undefined" :max="5" size="xs" class="mr-2" />
-        {{ d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
+        {{ $d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
       </div>
     </header>
 
@@ -44,7 +44,7 @@
               <span class="font-medium">
                 {{ reply.authorName ? reply.authorName : t('review.anonymous') }}
               </span>
-              <span class="pl-2 text-neutral-500">{{ d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
+              <span class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
             </div>
 
             <div v-if="isAnswerEditable(reply)" class="w-full items-start flex justify-end space-x-3">

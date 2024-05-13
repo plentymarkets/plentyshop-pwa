@@ -4,8 +4,8 @@ export const mockProductReviewItems: ReviewItem[] = [
     id: 1,
     title: 'title',
     isVisible: true,
-    createdAt: '2022-06-27 09:20:16',
-    updatedAt: '2022-06-27 09:20:16',
+    createdAt: '2024-04-10T18:55:44+02:00',
+    updatedAt: '2024-04-10T18:55:44+02:00',
     authorName: 'test',
     feedbackComment: {
       commentId: 'test',
