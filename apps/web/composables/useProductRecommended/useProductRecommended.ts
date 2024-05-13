@@ -1,4 +1,3 @@
-import { toRefs } from '@vueuse/shared';
 import type {
   UseProductRecommendedReturn,
   UseProductRecommendedState,

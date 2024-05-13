@@ -183,7 +183,6 @@ import {
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
 import type { DefaultLayoutProps } from '~/layouts/types';
-import { useCategoryTree, useCustomer } from '~/composables';
 
 defineProps<DefaultLayoutProps>();
 const isLogin = ref(true);

@@ -37,31 +37,28 @@
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
 
+definePageMeta({ layout: false });
+
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
-
-definePageMeta({
-  layout: false,
-});
-
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
-if (process.server) {
-  await Promise.all([
-    fetchProduct(productParams),
-    fetchProductReviewAverage(Number(productId)),
-    fetchProductReviews(Number(productId)),
-  ]);
-  setProductMetaData(product.value, categoryTree.value[0]);
-} else {
-  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
-}
+
+await fetchProduct(productParams)
+  .then(() => fetchProductReviewAverage(Number(productId)))
+  .finally(() => {
+    if (process.server) {
+      fetchProductReviews(Number(productId));
+      setProductMetaData(product.value, categoryTree.value[0]);
+    }
+  });
+
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
