@@ -90,10 +90,7 @@ const initiateReturn = () => {
     : process.env?.VALIDATE_RETURN_REASONS === '1';
 
   if (validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
-    send({
-      type: 'negative',
-      message: t('returns.selectReason'),
-    });
+    send({ type: 'negative', message: t('returns.selectReason') });
     return;
   }
 

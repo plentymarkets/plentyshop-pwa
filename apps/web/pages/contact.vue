@@ -141,9 +141,7 @@ import { SfButton, SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, Sf
 import { boolean, object, string } from 'yup';
 import { useForm } from 'vee-validate';
 
-definePageMeta({
-  layout: false,
-});
+definePageMeta({ layout: false });
 
 const { t } = useI18n();
 const { loading: isContactLoading, doCustomerContactMail } = useCustomerContact();
@@ -191,9 +189,7 @@ const clearInputs = () => {
 };
 
 const sendContact = async () => {
-  if (!meta.value.valid || !turnstile.value) {
-    return;
-  }
+  if (!meta.value.valid || !turnstile.value) return;
 
   const params = {
     name: name?.value || '',
@@ -206,10 +202,7 @@ const sendContact = async () => {
 
   doCustomerContactMail(params);
 
-  send({
-    type: 'positive',
-    message: t('contact.success'),
-  });
+  send({ type: 'positive', message: t('contact.success') });
   resetForm();
 
   turnstile.value = '';

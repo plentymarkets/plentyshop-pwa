@@ -84,25 +84,19 @@ const close = () => {
   emit('close');
 };
 
-const previous = () => {
-  confirmation.value = false;
-};
+const previous = () => (confirmation.value = false);
 
 const initiateReturn = () => {
   if (!hasMinimumQuantitySelected.value) {
-    send({
-      type: 'negative',
-      message: t('returns.selectQuantities'),
-    });
+    send({ type: 'negative', message: t('returns.selectQuantities') });
     return;
   }
+
   if (validateReturnReasons && hasQuantityAndNoReasonsSelected.value) {
-    send({
-      type: 'negative',
-      message: t('returns.selectReason'),
-    });
+    send({ type: 'negative', message: t('returns.selectReason') });
     return;
   }
+
   cleanReturnData();
   confirmation.value = true;
 };
