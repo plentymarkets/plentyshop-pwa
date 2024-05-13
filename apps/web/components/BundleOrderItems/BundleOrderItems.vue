@@ -8,10 +8,7 @@
         :alt="productBundleGetters.getBundleItemName(item)"
         loading="lazy"
       />
-      <div 
-        class="h-24 self-center" 
-        v-if="isLinkable(item)"
-      >
+      <div class="h-24 self-center" v-if="isLinkable(item)">
         <SfLink
           :tag="NuxtLink"
           :to="localePath(productBundleGetters.getBundleItemUrl(item))"
@@ -44,19 +41,20 @@
 
 <script setup lang="ts">
 import { productBundleGetters } from '@plentymarkets/shop-sdk';
-const { t } = useI18n();
 import { type ProductBundleComponent } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
+const { t } = useI18n();
 
 const { product } = withDefaults(defineProps<BundleOrderItemsProps>(), {});
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 
-function isLinkable(item: ProductBundleComponent): boolean{
-  if(productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null')){
-    return true;
+function isLinkable(item: ProductBundleComponent): boolean {
+  let returnValue = false;
+  if (productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null')) {
+    returnValue = true;
   }
-  return false;
+  return returnValue;
 }
 </script>
