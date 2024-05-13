@@ -30,9 +30,9 @@
           class="mb-3"
         />
 
-        <div class="flex">
-          <div class="mr-1 pt-1 font-normal typography-text-md">{{ quantity }} x</div>
-          <h1 class="font-bold typography-headline-4 mb-3" data-testid="product-name">
+        <div class="flex mb-3">
+          <div class="mr-1 font-normal typography-text-md">{{ quantity }} x</div>
+          <h1 class="font-bold typography-headline-4" data-testid="product-name">
             {{ productGetters.getName(product) }}
           </h1>
         </div>
