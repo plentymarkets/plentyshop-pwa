@@ -4042,13 +4042,13 @@ __metadata:
   linkType: soft
 
 "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
-  version: 0.34.0
-  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=8f78e5&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  version: 0.35.0
+  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=1e6922&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 6c292fd5d4f5918fa9d77c00194b840cd98c5a68ab13e7b642e502937bac73afcde141222bc2a4218df9bc9231db6574a871adf43a3a4f01f892668e422253a6
+  checksum: c2c1c934fa8e56dabb0152fa373fe7816b068c5c295cadd0652cb3d9b1bc4d671df50f74c75919551a8f6cba399e9a2138105f19e075c053900c9161f0b01b2c
   languageName: node
   linkType: hard
 

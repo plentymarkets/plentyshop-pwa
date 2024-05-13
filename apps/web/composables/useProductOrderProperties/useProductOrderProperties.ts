@@ -160,7 +160,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     );
     state.value.loading = false;
 
-    return data.value?.data ?? null;
+    return data.value ?? null;
   };
 
   return {
