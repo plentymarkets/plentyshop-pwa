@@ -381,11 +381,11 @@
   "review": {
     "title": "Titel",
     "verifiedPurchase": "Verifizierter Kauf",
-    "createReviewFormTitle": "Schreib eine Bewertung",
+    "createReviewFormTitle": "Bewertung schreiben",
     "createAnswerFormTitle": "Eine Antwort abgeben",
     "editReviewFormTitle": "Bewertung bearbeiten",
     "editReplyFormTitle": "Antwort bearbeiten",
-    "yourRating": "Deine Wertung:",
+    "yourRating": "Ihre Wertung:",
     "reviewText": "Produktbewertung (optional)",
     "reviewAuthor": "Dein Name (optional)",
     "cancel": "Abbrechen",
@@ -396,23 +396,23 @@
     "showAnswers": "Antworten anzeigen",
     "hideAnswers": "Antworten ausblenden",
     "anonymous": "Anonym",
-    "areYouSure": "Bist Du sicher, dass Du Deinen Beitrag löschen möchtest?",
-    "deleteReview": "Bewertung Löschen?",
+    "areYouSure": "Sind Sie sicher, dass Sie die Bewertung löschen möchten?",
+    "deleteReview": "Bewertung löschen?",
     "deleteReviewConfirmation": "Löschen",
-    "answerAreYouSure": "Bist Du sicher, dass Du die Antwort löschen möchtest?",
+    "answerAreYouSure": "Sind Sie sicher, dass Sie die Antwort löschen möchten?",
     "deleteAnswer": "Antwort löschen?",
     "createSuccess": "Bewertung wurde gesendet",
-    "tooltipVisibilityOn": "Deine Bewertung ist sichtbar",
-    "tooltipVisibilityOff": "Deine Bewertung wird derzeit überprüft",
+    "tooltipVisibilityOn": "Diese Bewertung ist sichtbar",
+    "tooltipVisibilityOff": "Diese Bewertung wird derzeit überprüft",
     "validation": {
-      "ratingRequired": "Füge Dein Rating hinzu",
-      "titleRequired": "Füge der Bewertung einen Titel hinzu",
-      "textareaRequired": "Füge eine Nachricht hinzu",
-      "textareaMaxLength": "Die maximal zulässige Länge beträgt 500 Zeichen"
+      "ratingRequired": "Rating zu Bewertung hinzufügen",
+      "titleRequired": "Titel für Bewertung eingeben",
+      "textareaRequired": "Nachricht für Bewertung eingeben",
+      "textareaMaxLength": "Die maximal zulässige Länge beträgt 500 Zeichen."
     },
     "notification": {
-      "success": "Deine Bewertung wurde übermittelt",
-      "answerSuccess": "Deine Antwort wurde übermittelt"
+      "success": "Ihre Bewertung wurde übermittelt.",
+      "answerSuccess": "Ihre Antwort wurde übermittelt."
     }
   },
   "account": {
