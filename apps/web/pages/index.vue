@@ -3,8 +3,8 @@
     <img
       :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
       format="avif"
-      height="412"
-      width="605"
+      height="303"
+      width="606"
       alt="Hero background"
       class="absolute w-full h-full z-[-1] md:object-cover"
       loading="lazy"
@@ -14,7 +14,7 @@
         <img
           src="/images/homepage-hero-headphones.avif"
           format="avif"
-          height="600"
+          height="400"
           width="800"
           alt="Headphones"
           class="h-full object-cover object-left"
