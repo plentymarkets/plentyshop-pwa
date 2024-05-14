@@ -10,7 +10,8 @@
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
 - Artikelbewertung
 - Anpassung des Produktnamens in den Dokumentationsdateien.
-- Hinzugefügte Menge zum Schnellkasse-Produktnamen
+- Schnellkasse-Funktionalität hinzugefügt.
+- Menge zum Produktnamen der Schnellkasse hinzugefügt.
 
 ### Behoben
 
