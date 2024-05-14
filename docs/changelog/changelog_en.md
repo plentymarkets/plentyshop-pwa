@@ -19,6 +19,7 @@
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
+- Fixed bad image quality on category view
 
 ### Changed
 
