@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
-    "update:sdk": "yarn up @plentymarkets/shop-api && yarn up @plentymarkets/shop-sdk",
+    "update:sdk": "yarn up @plentymarkets/shop-api",
     "setup": "yarn && yarn build && yarn dev",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "yarn turbo:disable-telemetry && turbo run build",
