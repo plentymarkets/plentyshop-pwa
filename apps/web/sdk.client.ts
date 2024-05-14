@@ -4,7 +4,6 @@ import { AxiosError } from "@vue-storefront/middleware";
 
 export const httpClient = async (url: any, params: any, config: any) => {
   try {
-    console.log("first axios client unit");
     const { token } = useCsrfToken();
     const client = axios.create({
       withCredentials: true,
