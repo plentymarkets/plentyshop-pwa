@@ -12,21 +12,23 @@
             <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
           </NuxtLazyHydrate>
         </section>
-        <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-          <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
-          </NuxtLazyHydrate>
-        </section>
+        
       </div>
-      <section class="mx-4 mt-28 mb-20">
+      <section class="md:mt-8">
+        <UiDivider class="mt-4 mb-2 md:mt-8" />
         <NuxtLazyHydrate when-visible>
-          <ProductRecommendedProducts
+          <ProductAccordion v-if="product" :product="product" />
+        </NuxtLazyHydrate>
+        <NuxtLazyHydrate when-visible>
+          <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
+        </NuxtLazyHydrate>
+      </section>
+      <section class="mt-28 mb-20">
+        <NuxtLazyHydrate when-visible>
+          <!--<ProductRecommendedProducts
             :category-id="productGetters.getCategoryIds(product)[0]"
-          ></ProductRecommendedProducts>
+          ></ProductRecommendedProducts>-->
+          <uiSliderSplideSlider cache-key="homepage" :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>

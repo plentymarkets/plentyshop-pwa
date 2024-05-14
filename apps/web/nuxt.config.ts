@@ -114,7 +114,11 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
+    'nuxt-splide'
   ],
+  splide: {
+    theme: 'default'
+  },
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
@@ -174,7 +178,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+      apiUrl: process.env.API_URL ?? 'http://127.0.0.1:8181',
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,

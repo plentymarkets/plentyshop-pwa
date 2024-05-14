@@ -1,5 +1,5 @@
 <template>
-  <div class="border border-neutral-200 rounded-md hover:shadow-lg flex flex-col" data-testid="product-card">
+  <div class="hover:shadow-lg flex flex-col h-full" data-testid="product-card">
     <div class="relative overflow-hidden">
       <UiBadges
         :class="['absolute', isFromWishlist ? 'mx-2' : 'm-2']"
@@ -29,7 +29,7 @@
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
-
+       
       <slot name="wishlistButton">
         <WishlistButton
           square
@@ -38,17 +38,22 @@
         />
       </slot>
     </div>
-    <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
+    
+    <div class="p-2 border-b border-primary-700 typography-text-md flex flex-col flex-auto">
+      <div>
+        {{ producerName(product) }}
+      </div>
+      <!--<ProductAttributes :product="product" />-->
       <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
-      <div class="flex items-center pt-1">
+      <!--<div class="flex items-center pt-1">
         <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfLink to="#" variant="secondary" :tag="NuxtLink" class="ml-1 no-underline">
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
-      </div>
-
+      </div>-->
+      
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
@@ -57,7 +62,7 @@
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
       <div class="flex items-center mt-auto">
-        <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
+        <span class="block pb-2 font-bold typography-text-md" data-testid="product-card-vertical-price">
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
@@ -71,6 +76,7 @@
           {{ n(oldPrice, 'currency') }}
         </span>
       </div>
+      <!--
       <SfButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || isFromWishlist"
         size="sm"
@@ -92,7 +98,8 @@
         <template #prefix>
           <SfIconChevronRight size="sm" />
         </template>
-      </SfButton>
+      </SfButton>-->
+
     </div>
   </div>
 </template>
@@ -177,4 +184,13 @@ const oldPrice = productGetters.getRegularPrice(product);
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const NuxtLink = resolveComponent('NuxtLink');
+const producerName = (product: any): string => {
+
+  var manu = "";
+  if(typeof product.item.manufacturer === "object" && product.item.manufacturer && "externalName" in product.item.manufacturer && typeof product.item.manufacturer.externalName === "string"){
+      manu = product.item.manufacturer.externalName;
+    
+  }
+  return manu;
+};
 </script>

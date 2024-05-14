@@ -1,9 +1,11 @@
 <template>
   <header ref="referenceRef" class="relative w-full h-full z-50 md:sticky md:shadow-md">
+
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700/60 border-neutral-200 md:h-20 md:z-10"
       data-testid="navbar-top"
     >
+      <UiSearch class="hidden md:block" />
       <div class="flex items-center">
         <SfButton
           v-if="viewport.isLessThan('md')"
@@ -30,7 +32,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
       <ul
-        class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        class="hidden md:flex px-6 py-2 bg-primary-700/60 justify-center "
         @blur="
           (event) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -44,16 +46,16 @@
             ref="triggerReference"
             variant="tertiary"
             data-testid="category-button"
-            class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
+            class="group mr-2 !font-normal text-xl !text-neutral-900 hover:!bg-transparent hover:!text-neutral-700 active:!bg-transparent active:!text-neutral-900"
             @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
             @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
           >
-            <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
+            <NuxtLink :to="localePath(generateCategoryLink(menuNode))" class="text-white uppercase">
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
-              <SfIconChevronRight
+              <!--<SfIconChevronRight
                 v-if="menuNode.childCount > 0"
                 class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
-              />
+              />-->
             </NuxtLink>
           </SfButton>
 
@@ -99,7 +101,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5"
+                      class="typography-text-sm py-1.5 "
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>

@@ -52,7 +52,8 @@ const getLabel = (item: VariationMapProductAttributeValue): string => {
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {
-  return apiEndpoint + productAttributeGetters.getAttributeValueImageUrl(item);
+  //return apiEndpoint + productAttributeGetters.getAttributeValueImageUrl(item);
+  return productAttributeGetters.getAttributeValueImageUrl(item);
 };
 
 const validationSchema = toTypedSchema(

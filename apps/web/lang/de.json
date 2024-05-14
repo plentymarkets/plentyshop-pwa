@@ -285,11 +285,13 @@
     "howToBuy": {
       "label": "Bestellvorgang",
       "subcategories": {
-        "paymentMethods": "Zahlungsarten",
-        "orderPickup": "Abholung",
+        "paymentMethods": "Zahlungsmöglichkeiten",
+        "orderPickup": "Versand & Lieferung",
         "purchaseStatus": "Bestellstatus",
         "trackOrders": "Bestellungen verfolgen",
-        "returns": "Retouren"
+        "returns": "Rücksendung",
+        "faqLink": "FAQ",
+        "gutscheinLink": "Gutschein"
       }
     },
     "help": {
@@ -334,9 +336,10 @@
       }
     },
     "contact": {
-      "label": "Kontakt",
+      "label": "Service",
       "subcategories": {
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "ratgeberLink": "Ratgeber"
       }
     }
   },

@@ -3,7 +3,7 @@ export const categories = [
     key: 'howToBuy',
     subcategories: [
       {
-        key: 'paymentMethods',
+        key: 'faqLink',
         link: paths.home,
       },
       {
@@ -11,16 +11,38 @@ export const categories = [
         link: paths.home,
       },
       {
+        key: 'returns',
+        link: paths.home,
+      },
+      {
+        key: 'paymentMethods',
+        link: paths.home,
+      },
+      {
+        key: 'gutscheinLink',
+        link: paths.home,
+      }
+      
+      /*{
         key: 'purchaseStatus',
         link: paths.home,
       },
       {
         key: 'trackOrders',
         link: paths.home,
+      }*/
+    ],
+  },
+  {
+    key: 'contact',
+    subcategories: [
+      {
+        key: 'contact',
+        link: '/contact',
       },
       {
-        key: 'returns',
-        link: paths.home,
+        key: 'ratgeberLink',
+        link: '/ratgeber',
       },
     ],
   },
@@ -46,15 +68,6 @@ export const categories = [
       {
         key: 'cancellationForm',
         link: paths.cancellationForm,
-      },
-    ],
-  },
-  {
-    key: 'contact',
-    subcategories: [
-      {
-        key: 'contact',
-        link: '/contact',
       },
     ],
   },

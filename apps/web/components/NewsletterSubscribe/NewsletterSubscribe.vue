@@ -1,5 +1,5 @@
 <template>
-  <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
+  <div class="relative mt-5 bg-white p-4 sm:p-10 text-center">
     <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
       {{ t('newsletter.heading') }}
     </p>
@@ -8,7 +8,7 @@
     </p>
 
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-      <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
+      <!--<div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <SfInput
             v-model="firstName"
@@ -38,7 +38,7 @@
             <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
-      </div>
+      </div>-->
 
       <div class="grid grid-cols-1">
         <SfInput
@@ -91,8 +91,9 @@
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <template v-else>{{ t('newsletter.subscribe') }}</template>
         </SfButton>
-
-        <NuxtTurnstile
+        <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
+        <div class="hidden">
+          <NuxtTurnstile
           v-if="turnstileSiteKey"
           v-model="turnstile"
           v-bind="turnstileAttributes"
@@ -100,12 +101,14 @@
           :options="{ theme: 'light' }"
           class="mt-4"
         />
+        </div>
+        
 
         <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
     </form>
 
-    <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
+    
   </div>
 </template>
 

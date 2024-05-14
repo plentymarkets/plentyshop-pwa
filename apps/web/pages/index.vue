@@ -1,17 +1,17 @@
 <template>
-  <div class="relative min-h-[600px]">
+  <div class="relative min-h-[400px] md:min-h-[800px]">
     <picture>
-      <source srcset="/images/homepage-hero-bg.webp" media="(min-width: 768px)" />
+      <source srcset="/images/Startseite_Hauptbild_Damen_Herren_trim.webp" media="(min-width: 768px)" />
       <img
-        src="/images/homepage-hero-bg-mobile.webp"
+        src="/images/Startseite_Hauptbild_Damen_Herren_trim.jpg"
         height="412"
         width="605"
         alt="Hero mobile background"
-        class="absolute w-full h-full z-[-1] md:object-cover"
+        class="absolute w-full h-full z-[-1] object-cover"
       />
     </picture>
-    <div class="md:flex md:flex-row-reverse md:justify-center max-w[1536px] mx-auto md:min-h-[600px]">
-      <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
+    <div class="flex items-end max-w[1536px] mx-auto  min-h-[400px] md:min-h-[800px] justify-center">
+      <!--<div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           src="/images/homepage-hero-headphones.webp"
           height="600"
@@ -19,8 +19,13 @@
           alt="Headphones"
           class="h-full object-cover object-left"
         />
+      </div>-->
+      <div class="flex gap-8 pb-[5%]">
+        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase"> {{ t('homepage.banner.orderNow') }}</SfButton>
+        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase"> {{ t('homepage.banner.showMore') }}</SfButton>
       </div>
-      <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
+      <!--
+      <div class="p-4 md:p-10 md:max-w-[1200px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
           {{ t('homepage.banner.moto1') }}
         </p>
@@ -30,11 +35,11 @@
         <p class="typography-text-base md:typography-text-lg">
           {{ t('homepage.banner.moto3') }}
         </p>
-        <div class="flex flex-col md:flex-row gap-4 mt-6">
+        <div class="flex w-full gap-4 mt-6">
           <SfButton size="lg"> {{ t('homepage.banner.orderNow') }}</SfButton>
           <SfButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</SfButton>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
@@ -104,9 +109,7 @@
         </div>
       </div>
     </div>
-    <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe />
-    </NuxtLazyHydrate>
+    <!--
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
@@ -114,8 +117,10 @@
         </p>
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
-    </NuxtLazyHydrate>
+    </NuxtLazyHydrate>-->
+    <uiSliderSplideSlider cache-key="homepage" :category-id="recommendedProductsCategoryId" />
   </div>
+  
 </template>
 
 <script lang="ts" setup>
@@ -187,4 +192,5 @@ const categories = [
     image: '/images/homepage-kid-category.webp',
   },
 ];
+
 </script>

@@ -2,11 +2,11 @@
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
     <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
     <div class="md:flex gap-6" data-testid="category-page-content">
-      <CategorySidebar :is-open="isOpen" @close="close">
+      <!--<CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
           <slot name="sidebar" />
         </NuxtLazyHydrate>
-      </CategorySidebar>
+      </CategorySidebar>-->
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold font-headings md:text-lg">
@@ -19,19 +19,23 @@
             {{ $t('listSettings') }}
           </SfButton>
         </div>
+        
         <section
           v-if="products"
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
           <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+            <template v-if="index == 7 && getFacetsFromURL().page == 1">
+              <img src="/images/Kategorie-Stimmungsbilder-Schute-Damen.jpg" alt="Kategorie" loading="lazy" />
+            </template>
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product)"
               :price="actualPrice(product)"
-              :image-url="addModernImageExtension(productGetters.getCoverImagePreview(product))"
+              :image-url="addModernImageExtension(productGetters.getMiddleImage(product))"
               :image-alt="productGetters.getName(product) ?? ''"
               :image-height="productGetters.getImageHeight(product) ?? 600"
               :image-width="productGetters.getImageWidth(product) ?? 600"
@@ -70,6 +74,7 @@ import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+//import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
   itemsPerPage: 24,
@@ -97,4 +102,20 @@ const actualPrice = (product: Product): number => {
 
   return 0;
 };
+/*
+const producerName = (product: Product): string => {
+
+  var manu = "";
+  if(typeof product.item.manufacturer === "object" && product.item.manufacturer && "externalName" in product.item.manufacturer && typeof product.item.manufacturer.externalName === "string"){
+      manu = product.item.manufacturer.externalName;
+    
+  }
+  return manu;
+};
+
+const attributes = (product: Product): string => {
+  console.log(productAttributeGetters.getAttributes(product));
+  return "jfdhg";
+};*/
+
 </script>
