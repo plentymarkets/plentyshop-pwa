@@ -116,8 +116,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       }
     });
 
-    const isDifferent = Object.keys(updateQuery).some((key) => route.query[key] !== updateQuery[key]);
-    if (isDifferent) {
+    if (process.client) {
       navigateTo({ query: updateQuery });
     }
   };
