@@ -14,7 +14,7 @@ export const useSdk = () => {
   const sdkConfig = {
     // @ts-ignore
     plentysystems: buildModule<PlentysystemsModuleType>(plentysystemsModule, {
-      apiUrl: `${config.public.apiUrl}/plentysystems`.replace(/[/\\]+$/, ''),
+      apiUrl: `${config.public.apiUrl}/plentysystems`,
     }),
   };
 
