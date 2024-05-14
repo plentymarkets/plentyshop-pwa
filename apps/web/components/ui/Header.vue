@@ -96,6 +96,7 @@
             @click="openAuthentication"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
+            :aria-label="t('auth.login.openLoginForm')"
             square
           >
             <SfIconPerson />
