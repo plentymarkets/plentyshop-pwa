@@ -8,7 +8,7 @@
         <NuxtImg
           ref="img"
           :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
-          :alt="cartItemImage || ''"
+          :alt="cartGetters.getItemName(cartItem)"
           width="300"
           height="300"
           loading="lazy"

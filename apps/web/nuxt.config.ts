@@ -190,6 +190,7 @@ export default defineNuxtConfig({
       useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
     },
   },
   pwa: {

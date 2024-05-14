@@ -4,7 +4,7 @@
     class="category-tree"
   >
     <div
-      class="py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md"
+      class="py-2 px-4 mb-4 bg-neutral-100 typography-headline-6 font-bold text-neutral-900 uppercase tracking-widest md:rounded-md select-none"
       data-testid="category-tree"
     >
       {{ $t('category') }}

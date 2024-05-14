@@ -44,6 +44,7 @@
         :alt="$t('emptyCartImgAlt')"
         width="192"
         height="192"
+        loading="lazy"
       />
       <h2 data-testid="empty-wishlist-text" class="mt-8 typography-headline-3 font-bold">
         {{ $t('emptyWishlist') }}
