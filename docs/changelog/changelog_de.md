@@ -12,7 +12,6 @@
 - Anpassung des Produktnamens in den Dokumentationsdateien.
 - Hinzugefügte Menge zum Schnellkasse-Produktnamen
 
-
 ### Behoben
 
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
