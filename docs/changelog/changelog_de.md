@@ -8,6 +8,7 @@
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
+- Artikelbewertung
 - Anpassung des Produktnamens in den Dokumentationsdateien.
 - Hinzugefügte Menge zum Schnellkasse-Produktnamen
 

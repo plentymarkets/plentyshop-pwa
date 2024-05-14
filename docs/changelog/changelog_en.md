@@ -8,6 +8,7 @@
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
 - Selection for the saved addresses at checkout
+- Product reviews on single item pages
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
