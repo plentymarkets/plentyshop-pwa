@@ -204,7 +204,7 @@ export const ProductMock = {
                 "minimumOrderQuantity": "1.00",
                 "updatedAt": "2022-02-15 16:56:11",
                 "type": "default",
-                "pricePosition": "0"
+                "pricePosition": 0
             }
         },
         "rrp": {
@@ -263,7 +263,7 @@ export const ProductMock = {
                 "minimumOrderQuantity": "0.00",
                 "updatedAt": "2023-09-14 14:48:22",
                 "type": "rrp",
-                "pricePosition": "0"
+                "pricePosition": 0
             }
         },
         "set": null,
@@ -325,7 +325,7 @@ export const ProductMock = {
                     "minimumOrderQuantity": "1.00",
                     "updatedAt": "2022-02-15 16:56:11",
                     "type": "default",
-                    "pricePosition": "0"
+                    "pricePosition": 0
                 }
             }
         ]
