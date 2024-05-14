@@ -116,7 +116,10 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       }
     });
 
-    navigateTo({ query: updateQuery });
+    const isDifferent = Object.keys(updateQuery).some((key) => route.query[key] !== updateQuery[key]);
+    if (isDifferent) {
+      navigateTo({ query: updateQuery });
+    }
   };
 
   /**
