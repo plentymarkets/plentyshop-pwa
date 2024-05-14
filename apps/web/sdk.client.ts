@@ -4,25 +4,25 @@ import { AxiosError } from "@vue-storefront/middleware";
 
 export const httpClient = async (url: any, params: any, config: any) => {
   try {
-    const { token } = useCsrfToken();
     const client = axios.create({
       withCredentials: true,
     });
-
-    client.interceptors.response.use((response) => {
-      if (response.headers["x-csrf-token"]) {
-        token.value = response.headers["x-csrf-token"];
-      }
-      return response;
-    });
-
-    client.interceptors.request.use((request) => {
-      if (token.value) {
-        request.headers["x-csrf-token"] = token.value;
-      }
-      return request;
-    });
-
+    if (tryUseNuxtApp()) {
+      const { token } = useCsrfToken();
+      client.interceptors.response.use((response) => {
+        if (response.headers["x-csrf-token"]) {
+          token.value = response.headers["x-csrf-token"];
+        }
+        return response;
+      });
+  
+      client.interceptors.request.use((request) => {
+        if (token.value) {
+          request.headers["x-csrf-token"] = token.value;
+        }
+        return request;
+      });
+    }
     const { data } = await client(url, {
       ...config,
       data: params,
