@@ -17,6 +17,7 @@
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Die Sichtbarkeit des Namen vom Login Button
 
 ### Geändert
 
