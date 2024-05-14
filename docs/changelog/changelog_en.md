@@ -20,6 +20,7 @@
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
 - Fixed the filtering in SSR on the category page
+- Fixed acccessibility of the login button name
 
 ### Changed
 
