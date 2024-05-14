@@ -68,7 +68,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
-      reviewGetters.getItems(productReviews.value).forEach((reviewItem) => {
+      reviewGetters.getReviewItems(productReviews.value).forEach((reviewItem) => {
         reviews.push({
           '@type': 'Review',
           reviewRating: {

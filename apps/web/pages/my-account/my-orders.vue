@@ -18,6 +18,7 @@
         width="192"
         height="192"
         class="mx-auto"
+        loading="lazy"
       />
       <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ t('account.ordersAndReturns.noOrders') }}</h3>
       <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
@@ -68,10 +69,7 @@
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
         </template>
-        <table
-          v-else
-          class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
-        >
+        <table v-else class="md:block md:overflow-x-auto text-left typography-text-sm w-auto mx-4 scrollbar-hidden">
           <caption class="hidden">
             {{
               t('account.ordersAndReturns.listOfOrders')
