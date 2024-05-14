@@ -22,7 +22,11 @@
         @click="doUpdateValue(item)"
       >
         <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
-          <img :src="getImagePath(item)" :alt="productAttributeGetters.getAttributeValueName(item)" />
+          <NuxtImg
+            :src="getImagePath(item)"
+            :alt="productAttributeGetters.getAttributeValueName(item)"
+            loading="lazy"
+          />
         </SfTooltip>
       </div>
     </div>

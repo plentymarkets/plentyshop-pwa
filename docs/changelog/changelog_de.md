@@ -4,21 +4,28 @@
 
 ### Hinzugefügt
 
+- Lazy Load-Bilder
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
+- Artikelbewertung
 - Anpassung des Produktnamens in den Dokumentationsdateien.
 
 ### Behoben
 
+- Bilderqualität verbessert auf der Kategorieseite
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Die Sichtbarkeit des Namen vom Login Button
 
 ### Geändert
 
-- Registrierungsformular wurde verbessert.
+- Konvertierung von Hauptseitenbildern (avif)
+- Styling der Benachrichtigungsanzeige
+- Registrierungsformular wurde verbessert
+- Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
