@@ -32,14 +32,14 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const config = tryUseNuxtApp()
       ? useRuntimeConfig().public
       : {
-          apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+          apiEndpoint: process.env.API_URL ?? 'http://localhost:8181',
           logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
         };
 
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      url: config.apiUrl,
+      url: config.apiEndpoint,
       logo: config.logoUrl,
     };
     useHead({

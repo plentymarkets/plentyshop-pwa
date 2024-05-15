@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart"
+    @submit.prevent="handleAddToCart()"
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
@@ -101,12 +101,9 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <PayPalExpressButton
-        v-if="getCombination()"
-        :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
-        class="mt-4"
-        type="SingleItem"
-      />
+      <client-only>
+        <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+      </client-only>
     </div>
   </form>
 </template>
@@ -115,6 +112,7 @@
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/Ui/PurchaseCard/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const showNetPrices = tryUseNuxtApp() ? useRuntimeConfig().public.showNetPrices : true;
 
@@ -160,7 +158,7 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBaseSinglePrice(product.value),
 );
 
-const handleAddToCart = async () => {
+const handleAddToCart = async (quickCheckout = true) => {
   await validateAllFieldsAttributes();
   await validateAllFields();
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
@@ -177,12 +175,12 @@ const handleAddToCart = async () => {
       ],
       type: 'negative',
     });
-    return;
+    return false;
   }
 
   if (!getCombination()) {
     send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
-    return;
+    return false;
   }
 
   const params = {
@@ -191,10 +189,18 @@ const handleAddToCart = async () => {
     basketItemOrderParams: getPropertiesForCart(),
   };
 
-  if (await addToCart(params)) {
-    openQuickCheckout(product.value);
+  const added = await addToCart(params);
+  if (added) {
+    if (quickCheckout) openQuickCheckout(product.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
+  return added;
+};
+
+const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
+  const added = await handleAddToCart(false);
+
+  callback(added);
 };
 
 const changeQuantity = (quantity: string) => {
