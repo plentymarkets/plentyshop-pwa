@@ -32,7 +32,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const config = tryUseNuxtApp()
       ? useRuntimeConfig().public
       : {
-          apiEndpoint: process.env.API_URL ?? 'http://localhost:8181',
+          apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
           logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
         };
 
