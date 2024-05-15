@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
@@ -174,7 +175,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,
