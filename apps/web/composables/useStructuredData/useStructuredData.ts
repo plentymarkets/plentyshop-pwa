@@ -73,7 +73,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
-      reviewGetters.getItems(productReviews.value).forEach((reviewItem) => {
+      reviewGetters.getReviewItems(productReviews.value).forEach((reviewItem) => {
         reviews.push({
           '@type': 'Review',
           reviewRating: {
@@ -94,7 +94,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
-      image: productGetters.getCoverImagePreview(product),
+      image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
