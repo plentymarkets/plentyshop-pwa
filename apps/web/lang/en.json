@@ -57,6 +57,7 @@
     "selectPlaceholder": "-- Select --",
     "emailLabel": "Email",
     "passwordLabel": "Password",
+    "repeatPasswordLabel": "Repeat Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
@@ -358,7 +359,8 @@
   "returnNumber": "Return ID",
   "productDetails": "Product details",
   "technicalData": "Technical data",
-  "customerReviews": "Customer Reviews",
+  "customerReviews": "Customer reviews",
+  "createCustomerReview": "Create review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
@@ -378,7 +380,41 @@
     "image": "Slide {index}"
   },
   "review": {
-    "verifiedPurchase": "Verified purchase"
+    "title": "Title",
+    "verifiedPurchase": "Verified purchase",
+    "createReviewFormTitle": "Leave a review",
+    "createAnswerFormTitle": "Leave an answer",
+    "editReviewFormTitle": "Edit review",
+    "editReplyFormTitle": "Edit reply",
+    "yourRating": "Your rating:",
+    "reviewText": "Product review (optional)",
+    "reviewAuthor": "Your name (optional)",
+    "cancel": "Cancel",
+    "submitReview": "Send review",
+    "answer": "Answer",
+    "yourAnswer": "Your answer",
+    "saveAnswer": "Submit answer",
+    "showAnswers": "Show answers",
+    "hideAnswers": "Hide answers",
+    "anonymous": "Anonymous",
+    "areYouSure": "Are you sure you want to delete the review?",
+    "deleteReview": "Delete review?",
+    "deleteReviewConfirmation": "Delete",
+    "answerAreYouSure": "Are you sure you want to delete the answer?",
+    "deleteAnswer": "Delete answer?",
+    "createSuccess": "Review sent",
+    "tooltipVisibilityOn": "Your review is visible",
+    "tooltipVisibilityOff": "Your rating is currently being reviewed",
+    "validation": {
+      "ratingRequired": "Add your rating. ",
+      "titleRequired": "Add your title.",
+      "textareaRequired": "Add your message.",
+      "textareaMaxLength": "Maximum allowed length is 500 characters."
+    },
+    "notification": {
+      "success": "Your review has been submitted.",
+      "answerSuccess": "Your answer has been submitted."
+    }
   },
   "account": {
     "heading": "My Account",
@@ -484,6 +520,7 @@
   },
   "auth": {
     "login": {
+      "openLoginForm": "Open login form",
       "heading": "Log in to your account",
       "success": "You have been logged in successfully",
       "submitLabel": "Log in",
@@ -495,8 +532,9 @@
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Sign up",
-      "submitLabel": "Sign up",
+      "heading": "Create an account",
+      "subheading": "Sign up now to enjoy awesome benefits",
+      "submitLabel": "Sign up!",
       "alreadyHaveAccount": "Already have an account?",
       "emailAlreadyExists": "This email address is already registered.",
       "logInLinkLabel": "Log in instead",
@@ -507,6 +545,17 @@
         "information": "add information",
         "button": "Go Shopping",
         "imageAlt": "Image to confirm successful signup"
+      },
+      "benefits": {
+        "saveAddresses": "Save multiple addresses",
+        "orderTracking": "Keep track of your orders",
+        "wishlist": "Save items for later everywhere you go",
+        "orderHistory": "Your complete order history in one place"
+      },
+      "passwordValidation": {
+        "characters": "The password must contain at least 8 characters.",
+        "letters": "The password must contain at least one letter.",
+        "numbers": "The password must contain at least one digit."
       }
     },
     "resetPassword": {
@@ -696,7 +745,8 @@
     },
     "password": {
       "required": "Password is required.",
-      "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
+      "valid": "Password must be at least 8 characters long and include at least one letter and one number.",
+      "match": "Passwords do not match."
     },
     "newsletter": {
       "firstNameRequired": "First Name is required.",
@@ -735,5 +785,12 @@
   "productAttributes": {
     "seeAvailableOptions": "See available options",
     "notValidVariation": "Please select a valid variation."
+  },
+  "quickCheckout": {
+    "heading": "Added to shopping cart",
+    "subTotal": "Items subtotal",
+    "checkYourCart": "Check your cart",
+    "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
+    "or": "OR"
   }
 }

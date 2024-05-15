@@ -1,11 +1,12 @@
 <template>
   <div v-if="product.bundleComponents" class="border-t-2 my-2">
     <div v-for="(item, index) in product.bundleComponents" :key="index" class="border-b-2 flex py-2">
-      <img
+      <NuxtImg
         :src="productBundleGetters.getBundleItemImage(item)"
         class="size-28 aspect-square mr-4 object-contain"
         ref="image"
         :alt="productBundleGetters.getBundleItemName(item)"
+        loading="lazy"
       />
       <div class="h-24 self-center">
         <SfLink

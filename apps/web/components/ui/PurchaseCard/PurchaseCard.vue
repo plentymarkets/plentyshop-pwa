@@ -48,9 +48,9 @@
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <SfLink variant="secondary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
+      <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
-      </SfLink>
+      </SfButton>
     </div>
     <div
       class="mb-4 font-normal typography-text-sm"
@@ -113,15 +113,7 @@
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfButton,
-  SfCounter,
-  SfLink,
-  SfRating,
-  SfIconShoppingCart,
-  SfLoaderCircular,
-  SfTooltip,
-} from '@storefront-ui/vue';
+import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 
 const runtimeConfig = useRuntimeConfig();
@@ -144,6 +136,7 @@ const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
+const { openQuickCheckout } = useQuickCheckout();
 
 resetInvalidFields();
 resetAttributeFields();
@@ -200,6 +193,7 @@ const handleAddToCart = async () => {
   };
 
   if (await addToCart(params)) {
+    openQuickCheckout(product.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
 };
