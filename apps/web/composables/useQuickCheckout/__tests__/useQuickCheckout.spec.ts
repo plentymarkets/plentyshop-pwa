@@ -3,9 +3,10 @@ import { ProductMock } from '../../../__tests__/__mocks__/product.mock';
 
 describe('useQuickCheckout', () => {
   it('should check if open is true', () => {
-    const { openQuickCheckout, quantity, isOpen } = useQuickCheckout();
+    const { openQuickCheckout, quantity, isOpen, product } = useQuickCheckout();
     openQuickCheckout(ProductMock, 3);
     expect(isOpen.value).toBe(true);
+    expect(product.value).toStrictEqual(ProductMock);
   });
 
   it('should check if quantity is being set', () => {
