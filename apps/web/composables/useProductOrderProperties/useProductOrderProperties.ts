@@ -6,11 +6,7 @@ import type {
 } from '~/composables/useProductOrderProperties/types';
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
-import type {
-  ProductProperty,
-  BasketItemOrderParamsProperty,
-  Product,
-} from '@plentymarkets/shop-api';
+import type { ProductProperty, BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 const fileToBase64 = async (file: File): Promise<string | null> => {
   return new Promise((resolve) => {
