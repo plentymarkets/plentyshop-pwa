@@ -1,4 +1,4 @@
-<template>
+<template> 
   <footer class="pt-10 bg-neutral-100 mb-[58px] md:mb-0" data-testid="footer">
     <div
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
