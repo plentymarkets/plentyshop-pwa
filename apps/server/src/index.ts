@@ -4,9 +4,11 @@ import cors from 'cors';
 import config from '../middleware.config';
 import * as express from 'express';
 
+const useIPV6 = process.env.USE_IPV6 === 'true';
+
 (async () => {
   const app = await createServer({ integrations: config.integrations });
-  const host = process.argv[2] ?? '0.0.0.0';
+  const host = useIPV6 ? '::' : '0.0.0.0';
   const port = Number(process.argv[3]) || 8181;
   const CORS_MIDDLEWARE_NAME = 'corsMiddleware';
 

@@ -28,32 +28,30 @@
       </SfListItem> -->
     </div>
 
-    <div v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4">
-      <form @submit.prevent="updatePriceFilter">
-        <div class="mb-3">
-          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
-        </div>
-        <div class="mb-3">
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
-        </div>
-        <div class="flex">
-          <SfButton
-            type="submit"
-            class="w-full mr-3 h-10"
-            :disabled="minPrice.length === 0 && maxPrice.length === 0"
-            variant="secondary"
-          >
-            <template #prefix>
-              <SfIconCheck />
-            </template>
-            {{ $t('apply') }}
-          </SfButton>
-          <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
-            <SfIconClose />
-          </SfButton>
-        </div>
-      </form>
-    </div>
+    <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
+      <div class="mb-3">
+        <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+      </div>
+      <div class="mb-3">
+        <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+      </div>
+      <div class="flex">
+        <SfButton
+          type="submit"
+          class="w-full mr-3 h-10"
+          :disabled="minPrice.length === 0 && maxPrice.length === 0"
+          variant="secondary"
+        >
+          <template #prefix>
+            <SfIconCheck />
+          </template>
+          {{ $t('apply') }}
+        </SfButton>
+        <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+          <SfIconClose />
+        </SfButton>
+      </div>
+    </form>
 
     <div v-else class="mb-4">
       <SfListItem
