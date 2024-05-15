@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { validateApiUrl } from '../../../utils/pathHelper';
 
-describe('removeTrailingSlash function', () => {
+describe('validateApiUrl function', () => {
     const expectedApiUrl = 'http://localhost:8181';
 
     it('should remove one trailing slash', () => {
