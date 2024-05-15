@@ -5,6 +5,7 @@
     :aria-label="
       isWishlistItem(variationId) ? t('removeProductFromWishlist', productName) : t('addProductToWishlist', productName)
     "
+    class="p-[0.9rem]"
     :disabled="wishlistLoading"
     @click="onWishlistClick()"
     data-testid="wishlist-trigger"
