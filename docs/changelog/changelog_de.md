@@ -15,11 +15,13 @@
 
 ### Behoben
 
+- Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Fehler beim Filtern im SSR in der Kategorieansicht behoben
 - Die Sichtbarkeit des Namen vom Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen
 
