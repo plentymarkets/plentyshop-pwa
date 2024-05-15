@@ -60,12 +60,13 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <PayPalExpressButton
-              v-if="selectedPaymentId === paypalPaymentId"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="validateTerms"
-              type="Checkout"
-            />
+            <client-only v-if="selectedPaymentId === paypalPaymentId">
+              <PayPalExpressButton
+                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+                @on-click="validateTerms"
+                type="Checkout"
+              />
+            </client-only>
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
@@ -115,6 +116,7 @@ import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layoutName: 'checkout',
@@ -193,15 +195,20 @@ const scrollToHTMLObject = (object: string) => {
   });
 };
 
-const validateTerms = (): boolean => {
+const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+  let valid = true;
   setShowErrors(!termsAccepted.value);
 
   if (!termsAccepted.value) {
     scrollToHTMLObject(ID_CHECKBOX);
-    return false;
+    valid = false;
   }
 
-  return true;
+  if (callback) {
+    callback(valid);
+  }
+
+  return valid;
 };
 
 const validateAddresses = () => {

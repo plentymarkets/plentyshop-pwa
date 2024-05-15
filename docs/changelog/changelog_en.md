@@ -18,6 +18,7 @@
 - Fixed facet filtering on category page
 - Fixed random login error
 - Fixed hydration and intlify warnings
+- The PayPal express button on the product page handles the click event correctly.
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
 - Fixed the filtering in SSR on the category page
