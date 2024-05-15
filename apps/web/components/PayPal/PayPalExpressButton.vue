@@ -95,12 +95,9 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       fundingSource: fundingSource,
       async onClick(data, actions) {
         const success = await onClick();
-        console.log('onClick event', success);
         if (!success) {
-          console.log('onClick reject');
           return actions.reject();
         }
-        console.log('onClick resolve');
         return actions.resolve();
       },
       onInit(data, actions) {
