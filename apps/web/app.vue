@@ -7,9 +7,7 @@
 </template>
 
 <script setup lang="ts">
-const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const DAYS = 100;
-const { getCategoryTree } = useCategoryTree();
 const route = useRoute();
 const { locale } = useI18n();
 const localeExpireDate = new Date();
@@ -17,7 +15,9 @@ localeExpireDate.setDate(new Date().getDate() + DAYS);
 const bodyClass = ref('');
 
 onMounted(() => {
+  const { setInitialDataSSR, ssrLocale } = useInitialSetup();
   setInitialDataSSR();
+  ssrLocale.value = locale.value;
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
@@ -27,7 +27,6 @@ const vsfLocale = useCookie('vsf-locale', {
 const { setStaticPageMeta } = useCanonical();
 
 vsfLocale.value = locale.value;
-ssrLocale.value = locale.value;
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
@@ -36,8 +35,8 @@ watch(
   () => locale.value,
   async (locale: string) => {
     vsfLocale.value = locale;
-
-    await getCategoryTree();
+    const { getCategoryTree } = useCategoryTree();
+    getCategoryTree();
   },
 );
 </script>
