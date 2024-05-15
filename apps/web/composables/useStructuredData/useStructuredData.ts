@@ -34,7 +34,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      url: runtimeConfig.public.apiUrl,
+      url: runtimeConfig.public.apiEndpoint,
       logo: runtimeConfig.public.logoUrl,
     };
     useHead({
