@@ -94,21 +94,18 @@
         <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
         <div class="hidden">
           <NuxtTurnstile
-          v-if="turnstileSiteKey"
-          v-model="turnstile"
-          v-bind="turnstileAttributes"
-          ref="turnstileElement"
-          :options="{ theme: 'light' }"
-          class="mt-4"
-        />
+            v-if="turnstileSiteKey"
+            v-model="turnstile"
+            v-bind="turnstileAttributes"
+            ref="turnstileElement"
+            :options="{ theme: 'light' }"
+            class="mt-4"
+          />
         </div>
-        
 
         <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
     </form>
-
-    
   </div>
 </template>
 

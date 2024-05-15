@@ -12,7 +12,6 @@
             <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
           </NuxtLazyHydrate>
         </section>
-        
       </div>
       <section class="md:mt-8">
         <UiDivider class="mt-4 mb-2 md:mt-8" />

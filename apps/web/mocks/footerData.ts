@@ -21,8 +21,8 @@ export const categories = [
       {
         key: 'gutscheinLink',
         link: paths.home,
-      }
-      
+      },
+
       /*{
         key: 'purchaseStatus',
         link: paths.home,

@@ -7,7 +7,7 @@
       id="search-bar"
       :placeholder="t('search')"
       @focus="open"
-      wrapperTag="div"
+      wrapper-tag="div"
       wrapper-class="!bg-transparent border-b border-white rounded-none !ring-0"
       class="bg-transparent placeholder-white"
     >

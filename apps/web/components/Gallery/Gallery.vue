@@ -5,7 +5,7 @@
       data-testid="gallery-images"
     >
       <SfScrollable
-        class="flex items-center snap-x snap-mandatory scrollbar-hidden w-full h-full"
+        class="flex items-center snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none'] w-full h-full"
         wrapper-class="!absolute top-0 left-0 w-full h-full"
         buttons-placement="none"
         :active-index="activeIndex"
@@ -14,7 +14,7 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, cleanImageName, width, height }, index) in images"
+          v-for="({ url, cleanImageName }, index) in images"
           :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
@@ -28,11 +28,12 @@
             :src="url"
             sizes="2xs:100vw, md:700px"
             draggable="false"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
+            :loading="index !== 0 ? 'lazy' : undefined"
+            :fetchpriority="index === 0 ? 'high' : undefined"
+            :preload="index === 0"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="width ?? 600"
-            :height="height ?? 600"
+            width="600"
+            height="600"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -44,7 +45,7 @@
         ref="thumbsReference"
         wrapper-class="hidden md:inline-flex"
         direction="vertical"
-        class="flex-row w-full items-center md:flex-col md:h-full md:px-0 md:scroll-pl-4 snap-y snap-mandatory flex gap-0.5 md:gap-2 overflow-auto scrollbar-hidden"
+        class="flex-row w-full items-center md:flex-col md:h-full md:px-0 md:scroll-pl-4 snap-y snap-mandatory flex gap-0.5 md:gap-2 overflow-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
         :active-index="activeIndex"
         :prev-disabled="activeIndex === 0"
         :next-disabled="activeIndex === images.length - 1"
@@ -65,7 +66,7 @@
         </template>
 
         <button
-          v-for="({ urlPreview, cleanImageName, width, height }, index) in images"
+          v-for="({ urlPreview, cleanImageName }, index) in images"
           :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
@@ -79,8 +80,8 @@
           <NuxtImg
             :alt="cleanImageName"
             class="object-contain"
-            :width="width ?? 80"
-            :height="height ?? 80"
+            width="80"
+            height="80"
             :src="urlPreview"
             :quality="80"
             loading="lazy"
@@ -124,8 +125,9 @@ import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
-
-const props = defineProps<{ images: ImagesData[] }>();
+const props = defineProps<{
+  images: ImagesData[];
+}>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
@@ -184,19 +186,17 @@ const onChangeIndex = (index: number) => {
   activeIndex.value = clamp(index, 0, props.images.length - 1);
   start();
 };
-
 const onScroll = ({ left, scrollWidth }: SfScrollableOnScrollData) => {
-  if (!isPending.value) onChangeIndex(Math.round(left / (scrollWidth / props.images.length)));
+  if (!isPending.value) {
+    onChangeIndex(Math.round(left / (scrollWidth / props.images.length)));
+  }
 };
-
 const assignReference = (element: Element | ComponentPublicInstance | null, index: number) => {
   if (!element) return;
-
   if (index === props.images.length - 1) {
     lastThumbReference.value = element as HTMLButtonElement;
-    return;
+  } else if (index === 0) {
+    firstThumbReference.value = element as HTMLButtonElement;
   }
-
-  if (index === 0) firstThumbReference.value = element as HTMLButtonElement;
 };
 </script>

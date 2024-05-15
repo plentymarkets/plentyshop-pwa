@@ -29,7 +29,7 @@
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
-       
+
       <slot name="wishlistButton">
         <WishlistButton
           square
@@ -38,7 +38,7 @@
         />
       </slot>
     </div>
-    
+
     <div class="p-2 border-b border-primary-700 typography-text-md flex flex-col flex-auto">
       <div>
         {{ producerName(product) }}
@@ -53,7 +53,7 @@
           <SfCounter size="xs">{{ ratingCount }}</SfCounter>
         </SfLink>
       </div>-->
-      
+
       <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
         {{ description }}
       </p>
@@ -99,22 +99,13 @@
           <SfIconChevronRight size="sm" />
         </template>
       </SfButton>-->
-
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfLink,
-  SfButton,
-  SfIconShoppingCart,
-  SfLoaderCircular,
-  SfIconChevronRight,
-  SfRating,
-  SfCounter,
-} from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
@@ -185,11 +176,14 @@ const path = computed(() => productGetters.getCategoryUrlPath(product, categoryT
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const NuxtLink = resolveComponent('NuxtLink');
 const producerName = (product: any): string => {
-
-  var manu = "";
-  if(typeof product.item.manufacturer === "object" && product.item.manufacturer && "externalName" in product.item.manufacturer && typeof product.item.manufacturer.externalName === "string"){
-      manu = product.item.manufacturer.externalName;
-    
+  let manu = '';
+  if (
+    typeof product.item.manufacturer === 'object' &&
+    product.item.manufacturer &&
+    'externalName' in product.item.manufacturer &&
+    typeof product.item.manufacturer.externalName === 'string'
+  ) {
+    manu = product.item.manufacturer.externalName;
   }
   return manu;
 };

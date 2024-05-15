@@ -1,6 +1,5 @@
 <template>
   <header ref="referenceRef" class="relative w-full h-full z-50 md:sticky md:shadow-md">
-
     <div
       class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700/60 border-neutral-200 md:h-20 md:z-10"
       data-testid="navbar-top"
@@ -32,7 +31,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
       <ul
-        class="hidden md:flex px-6 py-2 bg-primary-700/60 justify-center "
+        class="hidden md:flex px-6 py-2 bg-primary-700/60 justify-center"
         @blur="
           (event) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -101,7 +100,7 @@
                       :tag="NuxtLink"
                       size="sm"
                       :href="localePath(generateCategoryLink(child))"
-                      class="typography-text-sm py-1.5 "
+                      class="typography-text-sm py-1.5"
                     >
                       {{ categoryTreeGetters.getName(child) }}
                     </SfListItem>

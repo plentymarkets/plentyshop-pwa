@@ -10,7 +10,7 @@
         class="absolute w-full h-full z-[-1] object-cover"
       />
     </picture>
-    <div class="flex items-end max-w[1536px] mx-auto  min-h-[400px] md:min-h-[800px] justify-center">
+    <div class="flex items-end max-w[1536px] mx-auto min-h-[400px] md:min-h-[800px] justify-center">
       <!--<div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           src="/images/homepage-hero-headphones.webp"
@@ -21,8 +21,12 @@
         />
       </div>-->
       <div class="flex gap-8 pb-[5%]">
-        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase"> {{ t('homepage.banner.orderNow') }}</SfButton>
-        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase"> {{ t('homepage.banner.showMore') }}</SfButton>
+        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase">
+          {{ t('homepage.banner.orderNow') }}</SfButton
+        >
+        <SfButton size="lg" class="bg-white/60 text-primary-900 !rounded-none min-w-[200px] uppercase">
+          {{ t('homepage.banner.showMore') }}</SfButton
+        >
       </div>
       <!--
       <div class="p-4 md:p-10 md:max-w-[1200px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
@@ -120,7 +124,6 @@
     </NuxtLazyHydrate>-->
     <uiSliderSplideSlider cache-key="homepage" :category-id="recommendedProductsCategoryId" />
   </div>
-  
 </template>
 
 <script lang="ts" setup>
@@ -192,5 +195,4 @@ const categories = [
     image: '/images/homepage-kid-category.webp',
   },
 ];
-
 </script>

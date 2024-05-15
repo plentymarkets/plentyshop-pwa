@@ -1,9 +1,5 @@
 <template>
-  <form
-    @submit.prevent="handleAddToCart"
-    class="p-4 xl:p-6 md:sticky md:top-40"
-    data-testid="purchase-card"
-  >
+  <form @submit.prevent="handleAddToCart" class="p-4 xl:p-6 md:sticky md:top-40" data-testid="purchase-card">
     <div class="grid grid-cols-[2fr_1fr] mt-4">
       <h1 class="font-bold typography-headline-4" data-testid="product-name">
         {{ productGetters.getName(product) }}
