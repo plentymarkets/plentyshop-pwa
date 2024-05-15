@@ -13,7 +13,7 @@
 
 ### Behoben
 
-- javascript Error in der PWA Vorschau
+- Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
