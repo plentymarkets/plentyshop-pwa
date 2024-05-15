@@ -11,15 +11,11 @@ import type { SetInitialData, UseInitialSetupReturn, UseInitialSetupState } from
  * ```
  */
 export const useInitialSetup: UseInitialSetupReturn = () => {
+  const nuxtApp = useNuxtApp();
   const state = useState<UseInitialSetupState>('useInitialSetup', () => ({
     ssrLocale: '',
     loading: false,
   }));
-
-  const { setUser } = useCustomer();
-  const { setCart, loading: cartLoading } = useCart();
-  const { setCategoryTree } = useCategoryTree();
-  const { setWishlistItemIds } = useWishlist();
 
   /** Function for getting current customer/cart data from session
    * @return SetInitialData
@@ -29,6 +25,7 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
    * ```
    */
   const setInitialData: SetInitialData = async () => {
+    const { setCart, loading: cartLoading } = useCart();
     state.value.loading = true;
     cartLoading.value = true;
 
@@ -36,6 +33,7 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
     useHandleError(error.value);
 
     if (data?.value?.data) {
+      const { setUser } = useCustomer();
       setUser(data.value?.data as SessionResult);
       setCart(data.value?.data.basket as Cart);
     }
@@ -53,6 +51,7 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
    * ```
    */
   const setInitialDataSSR: SetInitialData = async () => {
+    const { setCart, loading: cartLoading } = useCart();
     state.value.loading = true;
     cartLoading.value = true;
 
@@ -60,9 +59,13 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
     useHandleError(error.value);
 
     if (data?.value?.data) {
-      useNuxtApp().runWithContext(() => {
-        setUser(data?.value?.data.session as SessionResult);
-        setCart(data?.value?.data.session.basket as Cart);
+      const { setUser } = useCustomer();
+      const { setCategoryTree } = useCategoryTree();
+      const { setWishlistItemIds } = useWishlist();
+
+      nuxtApp.runWithContext(() => {
+        setUser((data?.value?.data?.session || {}) as SessionResult);
+        setCart((data?.value?.data?.session?.basket || {}) as Cart);
         setCategoryTree(data?.value?.data?.categories || []);
         setWishlistItemIds(data?.value?.data?.session?.basket?.itemWishListIds || []);
       });

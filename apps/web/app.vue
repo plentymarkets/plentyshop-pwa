@@ -7,20 +7,19 @@
 </template>
 
 <script setup lang="ts">
-const bodyClass = ref('');
-const DAYS = 100;
-const localeExpireDate = new Date();
-localeExpireDate.setDate(new Date().getDate() + DAYS);
-
-onMounted(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
-
-const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
+const DAYS = 100;
+const { getCategoryTree } = useCategoryTree();
 const route = useRoute();
 const { locale } = useI18n();
+const localeExpireDate = new Date();
+localeExpireDate.setDate(new Date().getDate() + DAYS);
+const bodyClass = ref('');
+
+onMounted(() => {
+  setInitialDataSSR();
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+});
 
 const vsfLocale = useCookie('vsf-locale', {
   expires: localeExpireDate,
@@ -29,8 +28,6 @@ const { setStaticPageMeta } = useCanonical();
 
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
-
-await setInitialDataSSR();
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
