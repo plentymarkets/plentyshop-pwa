@@ -8,6 +8,7 @@
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
 - Selection for the saved addresses at checkout
+- Product reviews on single item pages
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 
@@ -18,6 +19,9 @@
 - Fixed hydration and intlify warnings
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
+- Fixed bad image quality on category view
+- Fixed acccessibility of the login button name
+- The middleware does now support IPv6 addresses
 
 ### Changed
 
@@ -25,6 +29,7 @@
 - Mark optional and required form fields.
 - Improved the registration form
 - Main page images conversion (avif)
+- Accessibility for the category and product page for reviews
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
