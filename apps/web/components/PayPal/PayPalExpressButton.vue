@@ -23,6 +23,7 @@ const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
 });
 const { type, disabled } = toRefs(props);
+const currentInstance = getCurrentInstance();
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
@@ -33,7 +34,7 @@ const paypalUuid = uuid();
 const paypalScript = ref<PayPalNamespace | null>(await loadScript(currency.value, isCommit));
 
 const checkOnClickEvent = (): boolean => {
-  const props = getCurrentInstance()?.vnode.props;
+  const props = currentInstance?.vnode.props;
 
   return !!(props && props['onOnClick']);
 };
@@ -49,7 +50,9 @@ const onInit = (actions: OnInitActions) => {
 
 const onClick = async () => {
   return await new Promise<boolean>((resolve) => {
-    if (!checkOnClickEvent()) resolve(true);
+    if (!checkOnClickEvent()) {
+      resolve(true);
+    }
     emits('on-click', async (successfully) => {
       resolve(successfully);
     });
@@ -92,9 +95,12 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       fundingSource: fundingSource,
       async onClick(data, actions) {
         const success = await onClick();
+        console.log('onClick event', success);
         if (!success) {
+          console.log('onClick reject');
           return actions.reject();
         }
+        console.log('onClick resolve');
         return actions.resolve();
       },
       onInit(data, actions) {

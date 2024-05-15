@@ -200,6 +200,7 @@ const handleAddToCart = async (quickCheckout = true) => {
 
 const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
   const added = await handleAddToCart(false);
+
   callback(added);
 };
 
