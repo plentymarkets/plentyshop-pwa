@@ -12,6 +12,7 @@
 - Anpassung des Produktnamens in den Dokumentationsdateien.
 
 ### Behoben
+
 - Hydration und intlify Warnungen wurden behoben.
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Bilderqualität verbessert auf der Kategorieseite
