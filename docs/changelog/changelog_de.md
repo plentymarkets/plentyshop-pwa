@@ -19,6 +19,7 @@
 - Hydration und intlify Warnungen wurden behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
 - Die Sichtbarkeit des Namen vom Login Button
+- Die Middleware unterstützt jetzt IPv6-Adressen
 
 ### Geändert
 
@@ -191,6 +192,7 @@
 - Bei Produkten mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
 - Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Die Position der Benachrichtungen wurde geändert
+- Neues Checkout-Layout – gleiche Funktionalität des Adress-Kontrollkästchens
 
 ### Behoben
 

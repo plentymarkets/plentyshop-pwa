@@ -41,6 +41,7 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
 export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
     data: {} as Cart,
+    useAsShippingAddress: true,
     loading: false,
   }));
 

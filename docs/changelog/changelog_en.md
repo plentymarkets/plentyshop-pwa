@@ -21,6 +21,7 @@
 - Fixed aspect ratio on homepage hero img
 - Fixed bad image quality on category view
 - Fixed acccessibility of the login button name
+- The middleware does now support IPv6 addresses
 
 ### Changed
 
@@ -201,6 +202,7 @@
 - For products with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
 - Changed position of notifications
+- New checkout layout - same address checkbox functionality
 
 ### Fixed
 
