@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { removeTrailingSlash } from './utils/pathHelper';
+import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
@@ -175,7 +175,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: removeTrailingSlash(process.env.API_URL),
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,

@@ -1,3 +1,3 @@
-export const removeTrailingSlash = (url: string | undefined): string => {
-  return url?.replace(/[/\\]+$/, '') ?? 'http://localhost:8181';
+export const validateApiUrl = (url: string | undefined): string | undefined => {
+  return url?.replace(/[/\\]+$/, '');
 };
