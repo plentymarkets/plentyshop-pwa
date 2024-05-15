@@ -6,6 +6,11 @@ describe('useQuickCheckout', () => {
     const { openQuickCheckout, quantity, isOpen, product } = useQuickCheckout();
     openQuickCheckout(ProductMock, 3);
     expect(isOpen.value).toBe(true);
+  });
+
+  it('should return product that was added', () => {
+    const { openQuickCheckout, quantity, isOpen, product } = useQuickCheckout();
+    openQuickCheckout(ProductMock, 3);
     expect(product.value).toStrictEqual(ProductMock);
   });
 
