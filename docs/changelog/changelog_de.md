@@ -15,6 +15,7 @@
 
 ### Behoben
 
+- Bilderqualität verbessert auf der Kategorieseite
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Hydration und intlify Warnungen wurden behoben
