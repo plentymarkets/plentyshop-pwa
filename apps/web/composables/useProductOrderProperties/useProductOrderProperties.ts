@@ -7,7 +7,6 @@ import type {
 import { productPropertyGetters } from '@plentymarkets/shop-sdk';
 import { useSdk } from '~/sdk';
 import type {
-  UploadFileForOrderPropertyResponse,
   ProductProperty,
   BasketItemOrderParamsProperty,
   Product,
@@ -136,13 +135,13 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   /**
    * @description Function for uploading a file for the order property.
    * @param file { File }
-   * @return { Promise<UploadFileForOrderPropertyResponse | null> }
+   * @return { Promise<string | null> }
    * @example
    * ``` ts
    * uploadFile(file);
    * ```
    */
-  const uploadFile = async (file: File): Promise<UploadFileForOrderPropertyResponse | null> => {
+  const uploadFile = async (file: File): Promise<string | null> => {
     state.value.loading = true;
 
     const base64String = await fileToBase64(file);
