@@ -2,9 +2,15 @@ import { useQuickCheckout } from '../useQuickCheckout';
 import { ProductMock } from '../../../__tests__/__mocks__/product.mock';
 
 describe('useQuickCheckout', () => {
-  it('should render component', () => {
+  it('should check if open is true', () => {
     const { openQuickCheckout, quantity, isOpen } = useQuickCheckout();
     openQuickCheckout(ProductMock, 3);
-    expect(isOpen).toBe(true);
+    expect(isOpen.value).toBe(true);
+  });
+
+  it('should check if quantity is being set', () => {
+    const { openQuickCheckout, quantity, isOpen } = useQuickCheckout();
+    openQuickCheckout(ProductMock, 3);
+    expect(quantity.value).toBe(3);
   });
 });
