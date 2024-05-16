@@ -12,6 +12,7 @@
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
+- cookie bar translations.
 
 ### Fixed
 
@@ -28,6 +29,10 @@
 - The middleware does now support IPv6 addresses
 - Fixed lighthouse error regarding wishlist button size.
 - Removed returns image.
+- Improved cookie bar mobile view.
+- Fixed wishlist close button margins.
+- Fixed cart loader layout shift issue.
+- Removed empty wishlist image.
 
 ### Changed
 
