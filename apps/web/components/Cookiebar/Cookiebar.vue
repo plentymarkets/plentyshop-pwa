@@ -63,7 +63,7 @@
                     :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
                   />
                   <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
-                    {{ cookie.name }}
+                    {{ $t(cookie.name) }}
                   </label>
                 </div>
                 <div v-for="propKey in Object.keys(cookie)" :key="propKey">
@@ -78,8 +78,8 @@
                           {{ $t('CookieBar.Privacy Settings') }}
                         </SfLink>
                       </template>
-                      <template v-else>
-                        {{ cookie[propKey as keyof Cookie] }}
+                      <template v-else-if="getCookiePropValue(cookie, propKey)">
+                        {{ $t(getCookiePropValue(cookie, propKey)) }}
                       </template>
                     </div>
                   </div>
@@ -185,5 +185,9 @@ const triggerGroupConsent = (group: CookieGroup) => {
   group.cookies.forEach((cookie: Cookie) => {
     cookie.accepted = group.accepted;
   });
+};
+
+const getCookiePropValue = (cookie: Cookie, propertyKey: string) => {
+  return cookie[propertyKey as keyof Cookie]?.toString() || '';
 };
 </script>
