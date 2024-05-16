@@ -34,13 +34,13 @@ export const useProducts: UseProductsReturn = () => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
+    const { data } = await useSdk().plentysystems.getFacet(params);
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
-    if (data.value) data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+    if (data) data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
 
-    state.value.data = data.value?.data ?? state.value.data;
+    state.value.data = data ?? state.value.data;
 
     if (state.value.data?.facets?.length) {
       state.value.data.facets = state.value.data.facets.filter((facet) => facet.id !== 'feedback');
