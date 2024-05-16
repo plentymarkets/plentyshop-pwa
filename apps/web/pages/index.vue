@@ -1,19 +1,19 @@
 <template>
   <div class="relative min-h-[600px]">
-    <img
-      :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
-      format="avif"
-      height="412"
-      width="605"
-      alt="Hero background"
-      class="absolute w-full h-full z-[-1] md:object-cover"
-      loading="lazy"
-    />
+    <div class="absolute w-full h-full z-[-1]">
+      <img
+        :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
+        height="1600"
+        width="800"
+        alt="Hero background"
+        class="absolute top-0 left-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           src="/images/homepage-hero-headphones.avif"
-          format="avif"
           height="600"
           width="800"
           alt="Headphones"
