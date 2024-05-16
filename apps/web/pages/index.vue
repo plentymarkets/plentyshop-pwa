@@ -1,7 +1,7 @@
 <template>
   <div class="relative min-h-[600px]">
     <img
-      :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
+      :src="`/images/${viewport.breakpoint}/homepage-hero-bg-mobile.avif`"
       format="avif"
       height="412"
       width="605"
@@ -146,39 +146,40 @@ watch(
   },
   { immediate: true },
 );
-
-const displayDetails = [
-  {
-    image: '/images/homepage-display-1.avif',
-    title: t('homepage.displayDetails.detail1.title'),
-    subtitle: t('homepage.displayDetails.detail1.subtitle'),
-    description: t('homepage.displayDetails.detail1.description'),
-    buttonText: t('homepage.displayDetails.detail1.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-negative-200',
-    titleClass: 'md:typography-display-2',
-    subtitleClass: 'md:typography-headline-6',
-    descriptionClass: 'md:typography-text-lg',
-  },
-  {
-    image: '/images/homepage-display-2.avif',
-    title: t('homepage.displayDetails.detail2.title'),
-    subtitle: t('homepage.displayDetails.detail2.subtitle'),
-    description: t('homepage.displayDetails.detail2.description'),
-    buttonText: t('homepage.displayDetails.detail2.buttonText'),
-    reverse: true,
-    backgroundColor: 'bg-warning-200',
-  },
-  {
-    image: '/images/homepage-display-3.avif',
-    title: t('homepage.displayDetails.detail3.title'),
-    subtitle: t('homepage.displayDetails.detail3.subtitle'),
-    description: t('homepage.displayDetails.detail3.description'),
-    buttonText: t('homepage.displayDetails.detail3.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-secondary-200',
-  },
-];
+const displayDetails = computed(() => {
+  return [
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-1.avif`,
+      title: t('homepage.displayDetails.detail1.title'),
+      subtitle: t('homepage.displayDetails.detail1.subtitle'),
+      description: t('homepage.displayDetails.detail1.description'),
+      buttonText: t('homepage.displayDetails.detail1.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-negative-200',
+      titleClass: 'md:typography-display-2',
+      subtitleClass: 'md:typography-headline-6',
+      descriptionClass: 'md:typography-text-lg',
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-2.avif`,
+      title: t('homepage.displayDetails.detail2.title'),
+      subtitle: t('homepage.displayDetails.detail2.subtitle'),
+      description: t('homepage.displayDetails.detail2.description'),
+      buttonText: t('homepage.displayDetails.detail2.buttonText'),
+      reverse: true,
+      backgroundColor: 'bg-warning-200',
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-3.avif`,
+      title: t('homepage.displayDetails.detail3.title'),
+      subtitle: t('homepage.displayDetails.detail3.subtitle'),
+      description: t('homepage.displayDetails.detail3.description'),
+      buttonText: t('homepage.displayDetails.detail3.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-secondary-200',
+    },
+  ];
+});
 
 const categories = [
   {
