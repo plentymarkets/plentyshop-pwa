@@ -3,56 +3,60 @@
 </template>
 
 <script setup lang="ts">
-import type { FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
-import { orderGetters, productGetters, cartGetters } from '@plentymarkets/shop-sdk';
+import type { FUNDING_SOURCE, OnApproveData, OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import { orderGetters, cartGetters } from '@plentymarkets/shop-sdk';
 import { v4 as uuid } from 'uuid';
-import type { PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
-const { data: cart, addToCart, clearCartItems } = useCart();
+const { data: cart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
-const emits = defineEmits(['on-click']);
+const emits = defineEmits<{
+  (event: 'on-click', callback: PayPalAddToCartCallback): Promise<void>;
+}>();
 
 const props = withDefaults(defineProps<PaypalButtonPropsType>(), {
   disabled: false,
 });
-
-const { type, disabled, value } = toRefs(props);
+const { type, disabled } = toRefs(props);
+const currentInstance = getCurrentInstance();
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
-const paypal = await loadScript(currency.value, isCommit);
-const paypalUuid = ref('');
+const paypalUuid = uuid();
+const paypalScript = ref<PayPalNamespace | null>(await loadScript(currency.value, isCommit));
+
+const checkOnClickEvent = (): boolean => {
+  const props = currentInstance?.vnode.props;
+
+  return !!(props && props['onOnClick']);
+};
 
 const onInit = (actions: OnInitActions) => {
   if (type.value === TypeCheckout) {
-    true === disabled.value ? actions.disable() : actions.enable();
-    watch(disabled, () => (true === disabled.value ? actions.disable() : actions.enable()));
+    disabled.value ? actions.disable() : actions.enable();
+    watch(disabled, () => (disabled.value ? actions.disable() : actions.enable()));
   } else {
     actions.enable();
   }
 };
 
 const onClick = async () => {
-  if (
-    type.value === TypeSingleItem &&
-    !disabled.value &&
-    value.value &&
-    productGetters.isSalable(value.value.product)
-  ) {
-    await addToCart({
-      productId: Number(productGetters.getId(value.value.product)),
-      quantity: value.value.quantity,
-      basketItemOrderParams: value.value.basketItemOrderParams,
+  return await new Promise<boolean>((resolve) => {
+    if (!checkOnClickEvent()) {
+      resolve(true);
+    }
+    emits('on-click', async (successfully) => {
+      resolve(successfully);
     });
-  }
+  });
 };
 
 const onApprove = async (data: OnApproveData) => {
@@ -81,17 +85,20 @@ const onApprove = async (data: OnApproveData) => {
 };
 
 const renderButton = (fundingSource: FUNDING_SOURCE) => {
-  if (paypal?.Buttons && fundingSource) {
-    const button = paypal?.Buttons({
+  if (paypalScript.value?.Buttons && fundingSource) {
+    const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
         label: type.value === TypeCartPreview || type.value === TypeSingleItem ? 'checkout' : 'buynow',
         color: 'blue',
       },
       fundingSource: fundingSource,
-      async onClick() {
-        await onClick();
-        emits('on-click');
+      async onClick(data, actions) {
+        const success = await onClick();
+        if (!success) {
+          return actions.reject();
+        }
+        return actions.resolve();
       },
       onInit(data, actions) {
         onInit(actions);
@@ -109,19 +116,26 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
     });
 
-    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value?.id);
+    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value.id);
   }
 };
 
-const createPaypalUuid = async () => (paypalUuid.value = uuid());
-
-onMounted(async () => {
-  await createPaypalUuid().then(() => {
-    if (paypal) {
-      const FUNDING_SOURCES = [paypal.FUNDING?.PAYPAL, paypal.FUNDING?.PAYLATER];
-      FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+const createButton = () => {
+  if (paypalScript.value) {
+    if (paypalButton.value) {
+      paypalButton.value.innerHTML = '';
     }
-    return true;
-  });
+    const FUNDING_SOURCES = [paypalScript.value.FUNDING?.PAYPAL, paypalScript.value.FUNDING?.PAYLATER];
+    FUNDING_SOURCES.forEach((fundingSource) => renderButton(fundingSource as FUNDING_SOURCE));
+  }
+};
+
+onMounted(() => {
+  createButton();
+});
+
+watch(currency, async () => {
+  paypalScript.value = await loadScript(currency.value, isCommit);
+  createButton();
 });
 </script>

@@ -2,7 +2,20 @@
   <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0 h-0">
     <div v-for="notification of notifications" class="my-2" :key="notification.id">
       <UiAlert :size="'base'" :variant="notification.type">
-        <span class="typography-text-sm pl-2">{{ notification.message }}</span>
+        <div>
+          <div class="typography-text-sm" v-if="typeof notification.message === 'string'">
+            {{ notification.message }}
+          </div>
+          <div
+            v-else
+            v-for="message in notification.message"
+            :key="message"
+            class="typography-text-sm"
+            :class="{ 'h-6': message === '' }"
+          >
+            {{ message }}
+          </div>
+        </div>
         <button
           v-if="notification?.action?.onClick"
           @click="notification?.action?.onClick"
