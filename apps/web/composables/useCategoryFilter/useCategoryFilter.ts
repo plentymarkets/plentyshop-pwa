@@ -116,7 +116,9 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       }
     });
 
-    navigateTo({ query: updateQuery });
+    if (process.client) {
+      navigateTo({ query: updateQuery });
+    }
   };
 
   /**

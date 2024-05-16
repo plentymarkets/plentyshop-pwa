@@ -30,9 +30,14 @@
           class="mb-3"
         />
 
-        <h1 class="font-bold typography-headline-4 mb-3" data-testid="product-name">
-          {{ productGetters.getName(product) }}
-        </h1>
+        <div class="flex mb-3">
+          <div class="mr-1 flex">
+            <span class="self-center"> {{ quantity }}x </span>
+          </div>
+          <h1 class="font-bold typography-headline-4" data-testid="product-name">
+            {{ productGetters.getName(product) }}
+          </h1>
+        </div>
 
         <ProductPrice :product="product" />
 
@@ -101,7 +106,7 @@ const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
 const { addModernImageExtension } = useModernImage();
-const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer } = useQuickCheckout();
+const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
 onMounted(() => startTimer());
