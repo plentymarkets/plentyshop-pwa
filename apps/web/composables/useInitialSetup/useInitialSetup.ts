@@ -52,27 +52,31 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
    */
   const setInitialDataSSR: SetInitialData = async () => {
     const { setCart, loading: cartLoading } = useCart();
+
     state.value.loading = true;
     cartLoading.value = true;
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getInit());
-    useHandleError(error.value);
+    try {
+      const { data } = await useSdk().plentysystems.getInit();
 
-    if (data?.value?.data) {
-      const { setUser } = useCustomer();
-      const { setCategoryTree } = useCategoryTree();
-      const { setWishlistItemIds } = useWishlist();
+      if (data) {
+        const { setUser } = useCustomer();
+        const { setCategoryTree } = useCategoryTree();
+        const { setWishlistItemIds } = useWishlist();
 
-      nuxtApp.runWithContext(() => {
-        setUser((data?.value?.data?.session || {}) as SessionResult);
-        setCart((data?.value?.data?.session?.basket || {}) as Cart);
-        setCategoryTree(data?.value?.data?.categories || []);
-        setWishlistItemIds(data?.value?.data?.session?.basket?.itemWishListIds || []);
-      });
+        nuxtApp.runWithContext(() => {
+          setUser((data?.session || {}) as SessionResult);
+          setCart((data?.session?.basket || {}) as Cart);
+          setCategoryTree(data?.categories || []);
+          setWishlistItemIds(data?.session?.basket?.itemWishListIds || []);
+        });
+      }
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
+      cartLoading.value = false;
     }
-
-    cartLoading.value = false;
-    state.value.loading = false;
 
     return true;
   };
