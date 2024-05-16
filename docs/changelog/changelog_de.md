@@ -25,7 +25,7 @@
 - Die Sichtbarkeit des Namen vom Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
-- Leuchtturmfehler bezüglich der Größe der Wunschliste-Schaltfläche behoben.
+- Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
 
 ### Geändert
 
