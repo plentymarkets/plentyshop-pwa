@@ -3,9 +3,6 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
-  experimental: {
-    asyncContext: true,
-  },
   telemetry: false,
   devtools: {
     enabled: true,

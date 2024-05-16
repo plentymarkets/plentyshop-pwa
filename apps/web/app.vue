@@ -14,12 +14,13 @@ const localeExpireDate = new Date();
 localeExpireDate.setDate(new Date().getDate() + DAYS);
 const bodyClass = ref('');
 
-onMounted(() => {
+onBeforeMount(() => {
   const { setInitialDataSSR, ssrLocale } = useInitialSetup();
   setInitialDataSSR();
   ssrLocale.value = locale.value;
-  bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
+
+onMounted(() => (bodyClass.value = 'hydrated') /** Need this class for cypress testing **/);
 
 const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
 vsfLocale.value = locale.value;
