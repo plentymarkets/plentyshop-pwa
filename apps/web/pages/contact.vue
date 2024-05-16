@@ -130,7 +130,7 @@
 
 <script setup lang="ts">
 import { SfButton, SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
-import { boolean, object, string, number } from 'yup';
+import { boolean, object, string } from 'yup';
 import { useForm } from 'vee-validate';
 
 definePageMeta({
@@ -152,7 +152,14 @@ const validationSchema = toTypedSchema(
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     message: string().required(t('errorMessages.contact.messageRequired')).default(''),
     subject: string().required(t('errorMessages.requiredField')).default(''),
-    orderId: number().required(t('errorMessages.requiredField')).default(null),
+    orderId: string()
+      .required(t('errorMessages.requiredField'))
+      .test((value, context) => {
+        if (value && /\D/.test(value)) {
+          return context.createError({ message: t('errorMessages.wholeNumber') });
+        }
+        return true;
+      }),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile: string().required(t('errorMessages.contact.turnstileRequired')).default(''),
   }),
@@ -174,6 +181,8 @@ const clearInputs = () => {
   name.value = '';
   email.value = '';
   message.value = '';
+  orderId.value = '';
+  subject.value = '';
   privacyPolicy.value = false;
 };
 
@@ -186,18 +195,18 @@ const sendContact = async () => {
     name: name?.value || '',
     email: email?.value || '',
     subject: subject?.value || '',
-    orderId: (orderId?.value || 0).toString(),
+    orderId: orderId?.value || '',
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
 
-  doCustomerContactMail(params);
-
-  send({
-    type: 'positive',
-    message: t('contact.success'),
-  });
-  resetForm();
+  if (await doCustomerContactMail(params)) {
+    send({
+      type: 'positive',
+      message: t('contact.success'),
+    });
+    resetForm();
+  }
 
   turnstile.value = '';
   turnstileElement.value?.reset();
