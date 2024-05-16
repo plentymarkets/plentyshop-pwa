@@ -29,6 +29,7 @@
 - Fixed lighthouse error regarding wishlist button size.
 - Fixed wishlist close button margins.
 - Fixed cart loader layout shift issue.
+- Removed empty wishlist image.
 
 ### Changed
 
