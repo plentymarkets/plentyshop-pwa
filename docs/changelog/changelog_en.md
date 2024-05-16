@@ -32,6 +32,7 @@
 - Improved cookie bar mobile view.
 - Fixed wishlist close button margins.
 - Fixed cart loader layout shift issue.
+- Show review form on login from review button.
 - Removed empty wishlist image.
 
 ### Changed
