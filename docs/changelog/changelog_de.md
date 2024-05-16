@@ -20,6 +20,8 @@
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
 - Die Sichtbarkeit des Namen vom Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen
+- Leuchtturmfehler bezüglich der Größe der Wunschliste-Schaltfläche behoben.
+
 
 ### Geändert
 
