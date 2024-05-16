@@ -2,7 +2,7 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <div v-if="!disabled && addresses.length > 0" class="flex items-center">
+      <div v-if="!disabled && addressList.length > 0" class="flex items-center">
         <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
           {{ $t('savedBillingAddress') }}
         </SfButton>
@@ -16,12 +16,12 @@
       </div>
     </div>
 
-    <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
-      <AddressDisplay :address="selectedAddress" />
+    <div v-if="displayAddress" class="mt-2 md:w-[520px]">
+      <AddressDisplay :key="displayAddress.id" :address="displayAddress" />
     </div>
 
-    <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addresses.length === 0)">
-      <p v-if="addresses.length === 0">{{ description }}</p>
+    <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addressList.length === 0)">
+      <p v-if="addressList.length === 0">{{ description }}</p>
       <SfButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
       </SfButton>
@@ -44,12 +44,12 @@
         </h3>
         <h1 class="my-2 mb-6 font-semibold">{{ $t('pickSavedAddressSubtitle') }}</h1>
       </header>
-      <div class="hover:bg-primary-50" v-for="address in addresses" :key="userAddressGetters.getId(address)">
+      <div class="hover:bg-primary-50" v-for="address in addressList" :key="userAddressGetters.getId(address)">
         <Address
           :address="address"
-          :is-selected="selectedAddress.id === Number(userAddressGetters.getId(address))"
+          :is-selected="displayAddress.id === Number(userAddressGetters.getId(address))"
           :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-          @click="setNewSelectedAddress(address)"
+          @click="setDisplayAddress(address, true)"
           @on-delete="onDelete(address)"
           @make-default="makeDefault(address)"
           @on-edit="edit"
@@ -85,7 +85,9 @@
       <AddressForm
         :countries="activeShippingCountries"
         :saved-address="
-          editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
+          editMode
+            ? addressList.find((address) => address.id?.toString() === displayAddress?.id?.toString())
+            : undefined
         "
         :type="type"
         @on-save="saveAddress"
@@ -96,7 +98,7 @@
 </template>
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
+import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
@@ -109,26 +111,15 @@ const { data: activeShippingCountries, getActiveShippingCountries } = useActiveS
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { data: cart } = useCart();
-const editMode = ref(false);
-const { data: addresses, setDefault, deleteAddress, defaultAddressId } = useAddress(props.type);
-
-const cartAddress = computed(() =>
-  props.type === AddressType.Billing
-    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-    : cartGetters.getCustomerShippingAddressId(cart.value),
-);
-
-const selectedAddress = ref(
-  props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
-    ({} as Address),
-);
-
-const setNewSelectedAddress = (selectedAddressNew: Address) => {
-  selectedAddress.value = selectedAddressNew;
-};
-
 const emit = defineEmits(['on-saved']);
+
+const editMode = ref(false);
+const { setDefault, deleteAddress, defaultAddressId, data, displayAddress, setDisplayAddress} = useAddress(props.type);
+
+const addressList = computed(() => {
+  return data.value ?? [];
+});
+
 
 getActiveShippingCountries();
 

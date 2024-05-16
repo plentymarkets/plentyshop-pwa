@@ -90,6 +90,7 @@ const onSave = async (address: Address, useAsShippingAddress: boolean) => {
   if (useAsShippingAddress) {
     await saveShippingAddress(address);
   }
+  getAddresses();
 };
 
 const makeDefault = (address: Address) => {

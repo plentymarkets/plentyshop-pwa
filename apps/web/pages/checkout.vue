@@ -16,7 +16,7 @@
           :heading="t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
+          :addresses="[]"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -26,7 +26,7 @@
           :heading="t('shipping.heading')"
           :description="t('shipping.description')"
           :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
+          :addresses="[]"
           :type="AddressType.Shipping"
           @on-saved="loadAddresses"
         />
