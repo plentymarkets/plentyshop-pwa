@@ -22,6 +22,7 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
   const state = useState<UseQuickCheckoutState>('quickCheckout', () => ({
     loading: false,
     isOpen: false,
+    quantity: 1,
     product: {} as Product,
     timer: defaults.DEFAULT_QUICK_CHECKOUT_TIMER,
   }));
@@ -55,8 +56,9 @@ export const useQuickCheckout: UseQuickCheckoutReturn = () => {
    * openQuickCheckout();
    * ```
    */
-  const openQuickCheckout: OpenQuickCheckout = (product: Product) => {
+  const openQuickCheckout: OpenQuickCheckout = (product: Product, quantity: number) => {
     state.value.product = product;
+    state.value.quantity = quantity;
     state.value.isOpen = true;
   };
 

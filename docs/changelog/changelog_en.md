@@ -11,6 +11,7 @@
 - Product reviews on single item pages
 - Product renaming in the documentation files
 - Added quick checkout functionality.
+- Added quantity to quick checkout product name
 
 ### Fixed
 
