@@ -42,12 +42,7 @@ const { buildCategoryLanguagePath } = useLocalization();
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL());
   checkFiltersInURL();
-  if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
-    });
-  }
+  if (!productsCatalog.value.category) throw new Response(null, { status: 404, statusText: 'Not found' });
 };
 
 await handleQueryUpdate();
