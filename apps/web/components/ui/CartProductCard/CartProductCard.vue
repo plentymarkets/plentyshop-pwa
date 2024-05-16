@@ -103,7 +103,10 @@
         />
       </div>
     </div>
-    <SfLoaderCircular v-if="deleteLoading" />
+
+    <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
+      <SfLoaderCircular />
+    </div>
 
     <SfButton
       v-else-if="!disabled"
