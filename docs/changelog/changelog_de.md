@@ -30,6 +30,7 @@
 - Verbesserte mobile Ansicht der Cookie-Leiste.
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
+- Leeres Wunschlistenbild entfernt.
 
 ### Geändert
 

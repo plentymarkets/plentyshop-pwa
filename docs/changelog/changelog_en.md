@@ -31,6 +31,7 @@
 - Improved cookie bar mobile view.
 - Fixed wishlist close button margins.
 - Fixed cart loader layout shift issue.
+- Removed empty wishlist image.
 
 ### Changed
 
