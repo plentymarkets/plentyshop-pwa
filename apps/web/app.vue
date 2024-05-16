@@ -21,14 +21,12 @@ onMounted(() => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
-const vsfLocale = useCookie('vsf-locale', {
-  expires: localeExpireDate,
-});
-const { setStaticPageMeta } = useCanonical();
-
+const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
 vsfLocale.value = locale.value;
 
+const { setStaticPageMeta } = useCanonical();
 if (route?.meta.pageType === 'static') setStaticPageMeta();
+
 usePageTitle();
 
 watch(
