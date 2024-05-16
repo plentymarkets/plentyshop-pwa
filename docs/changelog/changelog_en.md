@@ -12,6 +12,7 @@
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
+- cookie bar translations.
 
 ### Fixed
 
