@@ -27,9 +27,11 @@
 - Die Middleware unterstützt jetzt IPv6-Adressen
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
+- Rückgabebild entfernt.
 - Verbesserte mobile Ansicht der Cookie-Leiste.
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
+- Leeres Wunschlistenbild entfernt.
 
 ### Geändert
 
