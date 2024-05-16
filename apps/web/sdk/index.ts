@@ -1,6 +1,7 @@
 import { type PlentysystemsModuleType, plentysystemsModule, client } from '@plentymarkets/shop-sdk';
 import { initSDK, buildModule } from '@vue-storefront/sdk';
 import type { AxiosRequestHeaders } from 'axios';
+import * as initialSetup from '~/composables/useInitialSetup/useInitialSetup';
 
 // Maintain a reference to the interceptor
 let interceptorIdRequest: number | null = null;
@@ -8,7 +9,7 @@ let interceptorIdResponse: number | null = null;
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 export const useSdk = () => {
-  const { ssrLocale } = useInitialSetup();
+  const { ssrLocale } = initialSetup.useInitialSetup();
   const { token } = useCsrfToken();
   const apiUrl = tryUseNuxtApp() ? useRuntimeConfig().public.apiUrl : process.env.API_URL ?? 'http://localhost:8181';
   const sdkConfig = {
