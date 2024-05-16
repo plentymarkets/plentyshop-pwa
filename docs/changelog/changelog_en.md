@@ -29,6 +29,8 @@
 - The middleware does now support IPv6 addresses
 - Fixed lighthouse error regarding wishlist button size.
 - Improved cookie bar mobile view.
+- Fixed wishlist close button margins.
+- Fixed cart loader layout shift issue.
 
 ### Changed
 
