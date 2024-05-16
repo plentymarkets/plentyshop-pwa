@@ -26,6 +26,7 @@
 - Fixed bad image quality on category view
 - Fixed acccessibility of the login button name
 - The middleware does now support IPv6 addresses
+- Fixed lighthouse error regarding wishlist button size.
 
 ### Changed
 
