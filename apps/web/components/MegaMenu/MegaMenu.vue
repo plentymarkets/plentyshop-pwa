@@ -40,22 +40,22 @@
         "
       >
         <li v-for="(menuNode, index) in categoryTree" :key="index">
-          <SfButton
-            ref="triggerReference"
-            variant="tertiary"
-            data-testid="category-button"
-            class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
-            @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
-            @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
-          >
-            <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
+          <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
+            <SfButton
+              ref="triggerReference"
+              variant="tertiary"
+              data-testid="category-button"
+              class="group mr-2 !text-neutral-900 hover:!bg-neutral-200 hover:!text-neutral-700 active:!bg-neutral-300 active:!text-neutral-900"
+              @mouseenter="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
+              @click="menuNode.childCount > 0 ? openMenu([menuNode.id]) : openMenu([])"
+            >
               <span>{{ categoryTreeGetters.getName(menuNode) }}</span>
               <SfIconChevronRight
                 v-if="menuNode.childCount > 0"
                 class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
               />
-            </NuxtLink>
-          </SfButton>
+            </SfButton>
+          </NuxtLink>
 
           <div
             v-if="

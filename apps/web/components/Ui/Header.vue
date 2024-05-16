@@ -135,7 +135,6 @@
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
-    :disable-click-away="true"
   >
     <header>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">

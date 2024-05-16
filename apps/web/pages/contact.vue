@@ -40,19 +40,14 @@
           <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <label>
-          <UiFormLabel class="flex mb-1">
-            <span class="mr-1">{{ t('contact.form.subjectLabel') }}</span>
-            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
-          </UiFormLabel>
-          <SfInput name="subject" type="text" v-model="contact.subject" />
+          <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
+          <SfInput name="subject" type="text" v-model="subject" v-bind="subjectAttributes" />
+          <VeeErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
         <label>
-          <UiFormLabel class="flex mb-1">
-            <span class="mr-1">{{ t('contact.form.order-id') }}</span>
-            <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
-          </UiFormLabel>
-
-          <SfInput name="order-id" type="text" v-model="contact.orderId" />
+          <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
+          <SfInput name="order-id" type="text" v-model="orderId" v-bind="orderIdAttributes" />
+          <VeeErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
 
         <div>
@@ -68,7 +63,6 @@
               required
             />
           </label>
-
           <VeeErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
@@ -101,7 +95,6 @@
               {{ t('form.required') }}
             </label>
           </div>
-
           <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
@@ -128,7 +121,6 @@
             :options="{ theme: 'light' }"
             class="mt-4"
           />
-
           <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </form>
@@ -157,6 +149,15 @@ const validationSchema = toTypedSchema(
     name: string().required(t('errorMessages.contact.nameRequired')).default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     message: string().required(t('errorMessages.contact.messageRequired')).default(''),
+    subject: string().required(t('errorMessages.requiredField')).default(''),
+    orderId: string()
+      .required(t('errorMessages.requiredField'))
+      .test((value, context) => {
+        if (value && /\D/.test(value)) {
+          return context.createError({ message: t('errorMessages.wholeNumber') });
+        }
+        return true;
+      }),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.contact.termsRequired')).default(false),
     turnstile: string().required(t('errorMessages.contact.turnstileRequired')).default(''),
   }),
@@ -168,23 +169,18 @@ const { errors, meta, defineField, handleSubmit, resetForm } = useForm({
 
 const [name, nameAttributes] = defineField('name');
 const [email, emailAttributes] = defineField('email');
+const [subject, subjectAttributes] = defineField('subject');
+const [orderId, orderIdAttributes] = defineField('orderId');
 const [message, messageAttributes] = defineField('message');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('privacyPolicy');
 const [turnstile, turnstileAttributes] = defineField('turnstile');
 
-const defaultContact = ref({
-  subject: '',
-  orderId: '',
-});
-
-const contact = ref({ ...defaultContact.value });
-
 const clearInputs = () => {
-  contact.value = { ...defaultContact.value };
-
   name.value = '';
   email.value = '';
   message.value = '';
+  orderId.value = '';
+  subject.value = '';
   privacyPolicy.value = false;
 };
 
@@ -194,16 +190,19 @@ const sendContact = async () => {
   const params = {
     name: name?.value || '',
     email: email?.value || '',
-    subject: contact.value.subject || '',
-    orderId: contact.value.orderId || '',
+    subject: subject?.value || '',
+    orderId: orderId?.value || '',
     message: message.value || '',
     'cf-turnstile-response': turnstile.value,
   };
 
-  doCustomerContactMail(params);
-
-  send({ type: 'positive', message: t('contact.success') });
-  resetForm();
+  if (await doCustomerContactMail(params)) {
+    send({
+      type: 'positive',
+      message: t('contact.success'),
+    });
+    resetForm();
+  }
 
   turnstile.value = '';
   turnstileElement.value?.reset();
