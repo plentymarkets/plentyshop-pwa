@@ -138,6 +138,21 @@ definePageMeta({ pageType: 'static' });
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      href: viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif',
+      as: 'image',
+    },
+    {
+      rel: 'preload',
+      href: '/images/homepage-hero-headphones.avif',
+      as: 'image',
+    },
+  ],
+});
+
 watch(
   () => categoryTree.value,
   async () => {
