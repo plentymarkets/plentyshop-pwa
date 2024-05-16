@@ -27,7 +27,6 @@
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Leuchtturmfehler bezüglich der Größe der Wunschliste-Schaltfläche behoben.
 
-
 ### Geändert
 
 - Konvertierung von Hauptseitenbildern (avif)
