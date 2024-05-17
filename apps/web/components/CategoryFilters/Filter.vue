@@ -28,32 +28,30 @@
       </SfListItem> -->
     </div>
 
-    <div v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4">
-      <form @submit.prevent="updatePriceFilter">
-        <div class="mb-3">
-          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
-        </div>
-        <div class="mb-3">
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
-        </div>
-        <div class="flex">
-          <SfButton
-            type="submit"
-            class="w-full mr-3 h-10"
-            :disabled="minPrice.length === 0 && maxPrice.length === 0"
-            variant="secondary"
-          >
-            <template #prefix>
-              <SfIconCheck />
-            </template>
-            {{ $t('apply') }}
-          </SfButton>
-          <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
-            <SfIconClose />
-          </SfButton>
-        </div>
-      </form>
-    </div>
+    <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
+      <div class="mb-3">
+        <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+      </div>
+      <div class="mb-3">
+        <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+      </div>
+      <div class="flex">
+        <SfButton
+          type="submit"
+          class="w-full mr-3 h-10"
+          :disabled="minPrice.length === 0 && maxPrice.length === 0"
+          variant="secondary"
+        >
+          <template #prefix>
+            <SfIconCheck />
+          </template>
+          {{ $t('apply') }}
+        </SfButton>
+        <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+          <SfIconClose />
+        </SfButton>
+      </div>
+    </form>
 
     <div v-else class="mb-4">
       <SfListItem
@@ -106,7 +104,6 @@ const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models = ref({} as Filters);
-const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
 
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
@@ -126,12 +123,11 @@ function resetPriceFilter() {
 }
 
 const updateFilter = () => {
+  const currentFacets = getFacetsFromURL().facets?.split(',') ?? [];
   for (const filter of filters) {
     const filterId = typeof filter.id === 'string' ? filter.id : filter.id.toString();
 
-    models.value[filterId] = Boolean(filter.selected) ?? false;
-
-    if (currentFacets.value.includes(filterId)) models.value[filterId] = true;
+    models.value[filterId] = currentFacets.includes(filterId);
   }
 };
 

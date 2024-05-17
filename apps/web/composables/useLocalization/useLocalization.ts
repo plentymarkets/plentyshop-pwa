@@ -95,6 +95,7 @@ export const useLocalization = createSharedComposable(() => {
    */
   const switchLocale = async (language: string) => {
     const { $i18n } = useNuxtApp();
+    const { getCart } = useCart();
     const { setLocaleCookie } = $i18n;
 
     const switchLocalePath = useSwitchLocalePath();
@@ -102,6 +103,7 @@ export const useLocalization = createSharedComposable(() => {
     setLocaleCookie(language);
     toggle();
     await navigateTo({ path: switchLocalePath(language), query: route.query });
+    await getCart(); // Important for paypal express checkout
   };
 
   return {

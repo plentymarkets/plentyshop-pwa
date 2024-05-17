@@ -87,6 +87,11 @@
           "name": "consent-cookie",
           "provider": "plentysystems AG",
           "status": "Stores consent selection."
+        },
+        "cloudflareTurnstile": {
+          "name": "Cloudflare Turnstile",
+          "provider": "Cloudflare",
+          "status": "Necessary for Cloudflare’s Turnstile service."
         }
       }
     },
@@ -359,7 +364,8 @@
   "returnNumber": "Return ID",
   "productDetails": "Product details",
   "technicalData": "Technical data",
-  "customerReviews": "Customer Reviews",
+  "customerReviews": "Customer reviews",
+  "createCustomerReview": "Create review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
@@ -379,7 +385,41 @@
     "image": "Slide {index}"
   },
   "review": {
-    "verifiedPurchase": "Verified purchase"
+    "title": "Title",
+    "verifiedPurchase": "Verified purchase",
+    "createReviewFormTitle": "Leave a review",
+    "createAnswerFormTitle": "Leave an answer",
+    "editReviewFormTitle": "Edit review",
+    "editReplyFormTitle": "Edit reply",
+    "yourRating": "Your rating:",
+    "reviewText": "Product review (optional)",
+    "reviewAuthor": "Your name (optional)",
+    "cancel": "Cancel",
+    "submitReview": "Send review",
+    "answer": "Answer",
+    "yourAnswer": "Your answer",
+    "saveAnswer": "Submit answer",
+    "showAnswers": "Show answers",
+    "hideAnswers": "Hide answers",
+    "anonymous": "Anonymous",
+    "areYouSure": "Are you sure you want to delete the review?",
+    "deleteReview": "Delete review?",
+    "deleteReviewConfirmation": "Delete",
+    "answerAreYouSure": "Are you sure you want to delete the answer?",
+    "deleteAnswer": "Delete answer?",
+    "createSuccess": "Review sent",
+    "tooltipVisibilityOn": "Your review is visible",
+    "tooltipVisibilityOff": "Your rating is currently being reviewed",
+    "validation": {
+      "ratingRequired": "Add your rating. ",
+      "titleRequired": "Add your title.",
+      "textareaRequired": "Add your message.",
+      "textareaMaxLength": "Maximum allowed length is 500 characters."
+    },
+    "notification": {
+      "success": "Your review has been submitted.",
+      "answerSuccess": "Your answer has been submitted."
+    }
   },
   "account": {
     "heading": "My Account",
@@ -485,6 +525,7 @@
   },
   "auth": {
     "login": {
+      "openLoginForm": "Open login form",
       "heading": "Log in to your account",
       "success": "You have been logged in successfully",
       "submitLabel": "Log in",

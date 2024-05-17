@@ -96,6 +96,7 @@
             @click="openAuthentication"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
+            :aria-label="t('auth.login.openLoginForm')"
             square
           >
             <SfIconPerson />
@@ -134,7 +135,6 @@
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
-    :disable-click-away="true"
   >
     <header>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">

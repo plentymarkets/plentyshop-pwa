@@ -149,7 +149,7 @@ const upload = async () => {
 
     if (file) {
       loaded.value = true;
-      property.property.value = file.data;
+      property.property.value = file;
     } else {
       loadedFile.value = null;
       loaded.value = false;
