@@ -61,15 +61,12 @@
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
   >
     <header>
-      <div class="text-lg font-medium ml-8">
-        {{ isLogin ? t('auth.login.heading') : t('auth.signup.heading') }}
-      </div>
       <SfButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
       </SfButton>
     </header>
-    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
+    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuth" />
+    <Register v-else @change-view="isLogin = true" @registered="closeAuth" />
   </UiModal>
 </template>
 
@@ -87,6 +84,11 @@ const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } =
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const reviewsOpen = ref(false);
+
+const closeAuth = () => {
+  closeAuthentication();
+  isReviewOpen.value = true;
+};
 
 const {
   data: productReviewsData,

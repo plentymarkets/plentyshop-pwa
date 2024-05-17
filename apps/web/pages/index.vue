@@ -1,14 +1,16 @@
 <template>
   <div class="relative min-h-[600px]">
-    <img
-      :src="background.image"
-      format="avif"
-      :width="getSizeForViewport(background.sizes).width"
-      :height="getSizeForViewport(background.sizes).height"
-      alt="Hero background"
-      class="absolute w-full h-full z-[-1] md:object-cover"
-      loading="lazy"
-    />
+    <div class="absolute w-full h-full z-[-1]">
+      <img
+        :src="background.image"
+        format="avif"
+        :width="getSizeForViewport(background.sizes).width"
+        :height="getSizeForViewport(background.sizes).height"
+        alt="Hero background"
+        class="absolute top-0 left-0 w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img

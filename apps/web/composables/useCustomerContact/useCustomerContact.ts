@@ -37,7 +37,7 @@ export const useCustomerContact: UseCustomerContactReturn = () => {
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
 
-      return state.value.data;
+      return !!data.value;
     } catch (error) {
       throw new Error(error as string);
     } finally {
