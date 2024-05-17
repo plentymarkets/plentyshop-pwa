@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { Order, MakeOrderReturnParams } from '@plentymarkets/shop-api';
 
 export interface UseReturnOrderState {

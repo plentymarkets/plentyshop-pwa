@@ -1,6 +1,5 @@
 import type { ShippingProvider, ShippingMethod } from '@plentymarkets/shop-api';
 import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
-import { toRefs } from '@vueuse/shared';
 import type {
   UseCartShippingMethodsState,
   UseCartShippingMethodsReturn,
