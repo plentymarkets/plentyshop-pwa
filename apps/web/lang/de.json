@@ -87,6 +87,11 @@
           "name": "consent-cookie",
           "provider": "plentysystems AG",
           "status": "Speichert die Einwilligungsauswahl."
+        },
+        "cloudflareTurnstile": {
+          "name": "Cloudflare Turnstile",
+          "provider": "Cloudflare",
+          "status": "Erforderlich für den Turnstile-Service von Cloudflare."
         }
       }
     },

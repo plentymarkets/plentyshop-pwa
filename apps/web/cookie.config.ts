@@ -58,9 +58,9 @@ export default {
           accepted: true,
         },
         {
-          name: 'Cloudflare Turnstile',
-          Provider: 'Cloudflare',
-          Status: 'Necessary for Cloudflare’s Turnstile service.',
+          name: 'CookieBar.essentials.cookies.cloudflareTurnstile.name',
+          Provider: 'CookieBar.essentials.cookies.cloudflareTurnstile.provider',
+          Status: 'CookieBar.essentials.cookies.cloudflareTurnstile.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: '100 days',
           accepted: true,

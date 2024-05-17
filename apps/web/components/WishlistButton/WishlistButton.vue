@@ -5,13 +5,15 @@
     :aria-label="
       isWishlistItem(variationId) ? t('removeProductFromWishlist', productName) : t('addProductToWishlist', productName)
     "
+    :class="{ 'p-[0.9rem]': !isCloseButton }"
+    class="m-2"
     :disabled="wishlistLoading"
     @click="onWishlistClick()"
     data-testid="wishlist-trigger"
   >
     <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
-      <SfIconClose v-if="isWishlistItem(variationId) && discard" size="sm" />
+      <SfIconClose v-if="isCloseButton" size="sm" />
       <SfIconFavoriteFilled v-else-if="isWishlistItem(variationId)" size="sm" />
       <SfIconFavorite v-else size="sm" />
       <slot />
@@ -36,6 +38,8 @@ const wishlistLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
+
+const isCloseButton = computed(() => isWishlistItem(variationId.value) && props.discard);
 
 const onWishlistClick = async () => {
   wishlistLoading.value = true;
