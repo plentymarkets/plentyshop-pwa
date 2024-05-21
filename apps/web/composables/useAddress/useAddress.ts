@@ -174,12 +174,22 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     await getAddresses();
   };
 
+  const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.setCheckoutAddress({
+      typeId: typeId,
+      addressId: addressId,
+    });
+    state.value.loading = false;
+  };
+
   return {
     setDisplayAddress,
     getAddresses,
     saveAddress,
     setDefault,
     deleteAddress,
+    setCheckoutAddress,
     ...toRefs(state.value),
   };
 };
