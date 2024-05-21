@@ -3,7 +3,7 @@
     <div class="flex items-center">
       <SfCheckbox
         :model-value="checkboxValue"
-        @update:model-value="(event) => setCheckboxValue(event)"
+        @update:model-value="(event) => setCheckboxValue(Boolean(event))"
         :invalid="showErrors"
         id="terms-checkbox"
         class="inline-block mr-2"

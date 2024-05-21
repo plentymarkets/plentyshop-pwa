@@ -16,6 +16,7 @@
 
 ### Behoben
 
+- Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite
@@ -205,6 +206,7 @@
 - Bei Produkten mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
 - Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Die Position der Benachrichtungen wurde geändert
+- Neues Checkout-Layout – gleiche Funktionalität des Adress-Kontrollkästchens
 
 ### Behoben
 
