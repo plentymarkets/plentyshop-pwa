@@ -70,7 +70,7 @@
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
             <SfSelect
-              @update:model-value="changeReason($event)"
+              @update:model-value="(event) => changeReason(Number(event))"
               :model-value="String(returnReasonId)"
               size="sm"
               class="h-fit"

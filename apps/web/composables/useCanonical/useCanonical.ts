@@ -1,4 +1,3 @@
-import { toRefs } from '@vueuse/shared';
 import type { UseCanonicalReturn } from './types';
 import type { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
 import type { Facet } from '@plentymarkets/shop-api';
