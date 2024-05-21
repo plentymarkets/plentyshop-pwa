@@ -21,7 +21,7 @@
     </div>
 
     <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addressList.length === 0)">
-      <p v-if="addressList.length === 0">{{ description }}</p>
+      <p v-if="!displayAddress.id">{{ description }}</p>
       <SfButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
       </SfButton>
@@ -114,12 +114,11 @@ const props = withDefaults(defineProps<CheckoutAddressProps>(), {
 const emit = defineEmits(['on-saved']);
 
 const editMode = ref(false);
-const { setDefault, deleteAddress, defaultAddressId, data, displayAddress, setDisplayAddress} = useAddress(props.type);
+const { setDefault, deleteAddress, defaultAddressId, data, displayAddress, setDisplayAddress } = useAddress(props.type);
 
 const addressList = computed(() => {
   return data.value ?? [];
 });
-
 
 getActiveShippingCountries();
 

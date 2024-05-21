@@ -46,119 +46,140 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     useAsShippingAddress: true,
     loading: false,
     defaultAddressId: 0,
-    displayAddress: {} as Address
+    defaultAddress: {} as Address,
+    cartAddressId: 0,
+    cartAddress: {} as Address,
+    displayAddress: {} as Address,
   }));
 
-  const setDefaultDisplayAddress = (): void => {
-    state.value.loading = true;
+  const hasDisplayAddress = () => {
+    return state.value?.displayAddress?.id;
+  }
 
+  const setDefaultAddress = () => {
     const addresses = state.value.data;
-
-    if (addresses.length > 0 && !state.value?.displayAddress?.id) {
-      const defaultAddress = userAddressGetters.getDefault(addresses) || userAddressGetters.getAddresses(addresses)[0];
+    const defaultAddress = userAddressGetters.getDefault(addresses) || userAddressGetters.getAddresses(addresses)[0];
       if (defaultAddress) {
+        state.value.defaultAddress = defaultAddress;
         state.value.defaultAddressId = Number(userAddressGetters.getId(defaultAddress));
       }
-
-      const { data: cart } = useCart();
-
-      const checkoutAddressId = type === AddressType.Billing
-        ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-        : cartGetters.getCustomerShippingAddressId(cart.value);
-
-
-      if (checkoutAddressId) {
-        const defaultCheckoutAddress = addresses.find((address: Address) => Number(userAddressGetters.getId(address)) === checkoutAddressId);
-        if (defaultCheckoutAddress) {
-          setDisplayAddress(defaultCheckoutAddress);
-        }
-      }
-      else {
-        if (defaultAddress) {
-          setDisplayAddress(defaultAddress, true);
-        }
-      }
   }
 
-  state.value.loading = false;
-}
+  const setCartAddress = () => {
+    const { data: cart } = useCart();
+    const addressCartId = type === AddressType.Billing
+          ? cartGetters.getCustomerInvoiceAddressId(cart.value)
+          : cartGetters.getCustomerShippingAddressId(cart.value);
 
-const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
-  state.value.displayAddress = address;
-
-  if (setAsCheckoutAddress) {
-    useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) })
+    if (addressCartId) {
+      state.value.cartAddressId = addressCartId;
+      const cartAddress = state.value.data.find(
+        (address: Address) => Number(userAddressGetters.getId(address)) === addressCartId,
+      );
+      if (cartAddress) {
+        state.value.cartAddress = cartAddress;
+      }
+    }
   }
-};
 
-const getAddresses: GetAddresses = async () => {
-  state.value.loading = true;
-  const { data, error } = await useAsyncData(type.toString(), () =>
-    useSdk().plentysystems.getAddresses({
-      typeId: type,
-    }),
-  );
-  useHandleError(error.value);
-  state.value.data = data.value?.data ?? state.value.data;
+  const setInitialDisplayAddress = (): void => {
+    if (hasDisplayAddress()) return;
+    
+    state.value.loading = true;
 
-  setDefaultDisplayAddress();
+    if (state.value.data.length > 0) {
+      setDefaultAddress();
+      setCartAddress();
 
-  state.value.loading = false;
-  return state.value.data;
-};
+      if (state.value.cartAddressId) {
+          setDisplayAddress(state.value.cartAddress);
+      } else {
+        if (state.value.defaultAddressId) {
+          setDisplayAddress(state.value.defaultAddress, true);
+        }
+      }
+    }
 
+    state.value.loading = false;
+  };
+  
+  
+  const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
+    state.value.displayAddress = address;
 
+    if (setAsCheckoutAddress) {
+      useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) });
+    }
+  };
 
-const saveAddress: SaveAddress = async (address: Address) => {
-  state.value.loading = true;
+  const getAddresses: GetAddresses = async () => {
+    state.value.loading = true;
+    const { data, error } = await useAsyncData(type.toString(), () =>
+      useSdk().plentysystems.getAddresses({
+        typeId: type,
+      }),
+    );
+    useHandleError(error.value);
+    state.value.data = data.value?.data ?? state.value.data;
 
-  const { data, error } = await useAsyncData(type.toString(), () =>
-    useSdk().plentysystems.doSaveAddress({
+    setInitialDisplayAddress();
+
+    state.value.loading = false;
+    return state.value.data;
+  };
+
+  const saveAddress: SaveAddress = async (address: Address) => {
+    state.value.loading = true;
+
+    const { data, error } = await useAsyncData(type.toString(), () =>
+      useSdk().plentysystems.doSaveAddress({
+        typeId: type,
+        addressData: address,
+      }),
+    );
+    useHandleError(error.value);
+    
+    state.value.loading = false;
+    // workaround for the address id not being returned in the response
+    address.id = data?.value?.data?.id;
+    setDisplayAddress(address);
+
+    // all crud operations should return the updated list of addresses
+    return data?.value?.data ?? address;
+  };
+
+  const setDefault: SetDefault = async (address: Address) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.doSaveAddress({
       typeId: type,
       addressData: address,
-    }),
-  );
-  useHandleError(error.value);
-  // state.value.savedAddress = data.value?.data ?? state.value.savedAddress;
-  state.value.loading = false;
-  address.id = data?.value?.data?.id;
-  setDisplayAddress(address);
+    });
 
-  return data?.value?.data ?? address;
-};
+    state.value.loading = false;
+    state.value.defaultAddressId = Number(userAddressGetters.getId(address));
+    setDisplayAddress(address);
 
-const setDefault: SetDefault = async (address: Address) => {
-  state.value.loading = true;
-  await useSdk().plentysystems.doSaveAddress({
-    typeId: type,
-    addressData: address,
-  });
+    await getAddresses();
+  };
 
-  state.value.loading = false;
-  state.value.defaultAddressId = Number(userAddressGetters.getId(address));
-  setDisplayAddress(address);
+  const deleteAddress: DeleteAddress = async (addressId: number) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.deleteAddress({
+      typeId: type,
+      addressId: addressId,
+    });
 
-  await getAddresses();
-};
+    state.value.loading = false;
 
-const deleteAddress: DeleteAddress = async (addressId: number) => {
-  state.value.loading = true;
-  await useSdk().plentysystems.deleteAddress({
-    typeId: type,
-    addressId: addressId,
-  });
+    await getAddresses();
+  };
 
-  state.value.loading = false;
-
-  await getAddresses();
-};
-
-return {
-  setDisplayAddress,
-  getAddresses,
-  saveAddress,
-  setDefault,
-  deleteAddress,
-  ...toRefs(state.value),
-};
+  return {
+    setDisplayAddress,
+    getAddresses,
+    saveAddress,
+    setDefault,
+    deleteAddress,
+    ...toRefs(state.value),
+  };
 };

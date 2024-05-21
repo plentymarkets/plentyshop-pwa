@@ -1,12 +1,14 @@
 import type { Address } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
-import type { Maybe } from '@vue-storefront/unified-data-model';
 
 export interface UseAddressMethodsState {
   data: Address[];
   useAsShippingAddress: boolean;
   loading: boolean;
   defaultAddressId: number;
+  defaultAddress: Address;
+  cartAddressId: number;
+  cartAddress: Address;
   displayAddress: Address;
 }
 

@@ -37,7 +37,7 @@ export const useActiveShippingCountries: UseActiveShippingCountriesReturn = () =
       state.value.data = data.value?.data ?? state.value.data;
       state.value.loading = false;
     }
-    
+
     return state.value.data;
   };
 
