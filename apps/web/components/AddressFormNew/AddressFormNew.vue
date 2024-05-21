@@ -99,7 +99,7 @@
 </template>
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { ref, defineExpose } from 'vue';
+import { defineExpose } from 'vue';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';

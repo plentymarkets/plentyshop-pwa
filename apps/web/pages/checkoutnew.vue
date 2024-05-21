@@ -117,7 +117,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType } from '@plentymarkets/shop-api';
 import {
