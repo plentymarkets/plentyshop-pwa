@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 
 export interface UseCategoryTreeState {

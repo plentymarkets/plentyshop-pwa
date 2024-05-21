@@ -24,12 +24,15 @@ export default defineNuxtConfig({
       ],
     },
   },
+  experimental: {
+    asyncContext: true,
+  },
   appConfig: {
     titleSuffix: 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables/**', 'utils/**'],
+    dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
   image: {
@@ -57,7 +60,12 @@ export default defineNuxtConfig({
     ],
     '@nuxtjs/turnstile',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
+    [
+      '@nuxtjs/tailwindcss',
+      {
+        configPath: '~/tailwind.config.ts',
+      },
+    ],
     [
       '@nuxtjs/i18n',
       {
