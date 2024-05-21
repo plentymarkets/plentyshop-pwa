@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fixed errors when interacting with wishlist
 - Fixed random Nuxt instance unavailable
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
