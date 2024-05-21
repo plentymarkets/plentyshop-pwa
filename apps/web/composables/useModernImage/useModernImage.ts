@@ -4,7 +4,7 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 
 const getImageForViewport = (product: Product, context: string, isTablet: boolean) => {
   if (context === 'ItemList') return productGetters.getPreviewImage(product);
-  if (context === 'Whislist')
+  if (context === 'Wishlist')
     return isTablet ? productGetters.getFullImage(product) : productGetters.getMiddleImage(product);
   if (context === 'CartProductCard')
     return isTablet ? productGetters.getSecondPreviewImage(product) : productGetters.getPreviewImage(product);
