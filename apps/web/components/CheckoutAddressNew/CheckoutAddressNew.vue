@@ -6,8 +6,8 @@
         {{ $t('contactInfo.edit') }}
       </SfButton>
     </div>
-    <div v-if="selectedAddress && !editMode" class="mt-2 md:w-[520px]">
-      <AddressDisplay :address="selectedAddress" />
+    <div v-if="displayAddress && !editMode" class="mt-2 md:w-[520px]">
+      <AddressDisplay :address="displayAddress" />
     </div>
 
     <div v-if="editMode">
@@ -15,7 +15,7 @@
         ref="AddressFormNewRef"
         :countries="activeShippingCountries"
         :saved-address="
-          editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
+          editMode ? addresses.find((address) => address.id?.toString() === displayAddress?.id?.toString()) : undefined
         "
         :type="type"
         @on-save="saveAddress"
@@ -27,30 +27,17 @@
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
 import { defineExpose } from 'vue';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { saveAddress: updateAddress, setCheckoutAddress } = useAddress(props.type);
-const { data: cart, useAsShippingAddress } = useCart();
-const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
+const { saveAddress: updateAddress, setCheckoutAddress, data: addresses, displayAddress, useAsShippingAddress } = useAddress(props.type);
+const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
 const AddressFormNewRef = ref<InstanceType<typeof AddressFormNew> | null>(null);
-const cartAddress = computed(() =>
-  props.type === AddressType.Billing
-    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-    : cartGetters.getCustomerShippingAddressId(cart.value),
-);
-
-const selectedAddress = computed(
-  () =>
-    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
-    ({} as Address),
-);
 
 const emit = defineEmits(['on-saved']);
 

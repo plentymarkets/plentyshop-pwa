@@ -52,6 +52,15 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     displayAddress: {} as Address,
   }));
 
+  const { data: cart } = useCart();
+
+  watch(cart, () => {
+    const billingId = cartGetters.getCustomerInvoiceAddressId(cart.value);
+    const shippingId = cartGetters.getCustomerShippingAddressId(cart.value);
+  
+    state.value.useAsShippingAddress = billingId === shippingId;
+  });
+
   const hasDisplayAddress = () => {
     return state.value?.displayAddress?.id;
   }
