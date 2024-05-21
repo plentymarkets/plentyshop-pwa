@@ -62,9 +62,8 @@ const saveAddress = async (address: Address) => {
   const result = await updateAddress(address);
   if (props.type === AddressType.Billing && useAsShippingAddress.value) {
     setCheckoutAddress(AddressType.Shipping, -99);
-  } else if (result.id) {
+  } else if (result?.id) {
     setCheckoutAddress(AddressType.Shipping, result.id);
-    editMode.value = false;
   }
 
   emit('on-saved');
