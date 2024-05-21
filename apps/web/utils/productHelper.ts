@@ -1,5 +1,6 @@
 import type { RouteParams } from 'vue-router';
-import type { ProductParams } from '@plentymarkets/shop-api';
+import type { Breadcrumb, CategoryTreeItem, Product, ProductParams } from '@plentymarkets/shop-api';
+import { productGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
 
 export const createProductParams = (params: RouteParams) => {
   const productPieces = (params.itemId as string).split('_');
@@ -40,4 +41,15 @@ export const updateProductURLPathForVariation = (
   pathSegments.push(lastSegment);
 
   return pathSegments.join('/');
+};
+
+export const generateBreadcrumbs = (categoryTree: CategoryTreeItem[], product: Product, home: string): Breadcrumb[] => {
+  const categoryId = productGetters.getCategoryIds(product)?.[0] ?? 0;
+  const breadcrumbs = categoryTreeGetters.generateBreadcrumbFromCategory(categoryTree, Number(categoryId));
+  const productName = productGetters.getName(product);
+
+  breadcrumbs.unshift({ name: home, link: '/' });
+  breadcrumbs.push({ name: productName, link: `#` });
+
+  return breadcrumbs;
 };
