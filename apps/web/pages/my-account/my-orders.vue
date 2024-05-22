@@ -136,8 +136,6 @@
 import type { Order } from '@plentymarkets/shop-api';
 import { orderGetters } from '@plentymarkets/shop-sdk';
 import { SfLoaderCircular, SfButton } from '@storefront-ui/vue';
-import { ref } from 'vue';
-import 'vue-router';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();

@@ -2,9 +2,10 @@
   <div class="relative min-h-[600px]">
     <div class="absolute w-full h-full z-[-1]">
       <img
-        :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
-        height="1600"
-        width="800"
+        :src="background.image"
+        format="avif"
+        :width="getSizeForViewport(background.sizes).width"
+        :height="getSizeForViewport(background.sizes).height"
         alt="Hero background"
         class="absolute top-0 left-0 w-full h-full object-cover"
         loading="lazy"
@@ -13,9 +14,10 @@
     <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
-          src="/images/homepage-hero-headphones.avif"
-          height="600"
-          width="800"
+          :src="headPhones.image"
+          format="avif"
+          :width="getSizeForViewport(headPhones.sizes).width"
+          :height="getSizeForViewport(headPhones.sizes).height"
           alt="Headphones"
           class="h-full object-cover object-left"
           loading="lazy"
@@ -78,6 +80,7 @@
           reverse,
           titleClass,
           subtitleClass,
+          sizes,
         } in displayDetails"
         :key="title"
         :class="[
@@ -107,8 +110,8 @@
             :src="image"
             :alt="title"
             format="avif"
-            width="50%"
-            height="100%"
+            :width="getSizeForViewport(sizes).width"
+            :height="getSizeForViewport(sizes).height"
             class="self-end object-contain"
             loading="lazy"
           />
@@ -138,6 +141,22 @@ definePageMeta({ pageType: 'static' });
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 
+type Size = {
+  width: string;
+  height: string;
+};
+type Sizes = {
+  lg: Size;
+  md: Size;
+  sm: Size;
+};
+type SizeKey = keyof Sizes;
+
+const getSizeForViewport = (sizes: Sizes) => {
+  const breakpoint = viewport.breakpoint.value as SizeKey;
+  return sizes[breakpoint];
+};
+
 watch(
   () => categoryTree.value,
   async () => {
@@ -146,40 +165,116 @@ watch(
   },
   { immediate: true },
 );
-
-const displayDetails = [
-  {
-    image: '/images/homepage-display-1.avif',
-    title: t('homepage.displayDetails.detail1.title'),
-    subtitle: t('homepage.displayDetails.detail1.subtitle'),
-    description: t('homepage.displayDetails.detail1.description'),
-    buttonText: t('homepage.displayDetails.detail1.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-negative-200',
-    titleClass: 'md:typography-display-2',
-    subtitleClass: 'md:typography-headline-6',
-    descriptionClass: 'md:typography-text-lg',
+const displayDetails = computed(() => {
+  return [
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-1.avif`,
+      title: t('homepage.displayDetails.detail1.title'),
+      subtitle: t('homepage.displayDetails.detail1.subtitle'),
+      description: t('homepage.displayDetails.detail1.description'),
+      buttonText: t('homepage.displayDetails.detail1.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-negative-200',
+      titleClass: 'md:typography-display-2',
+      subtitleClass: 'md:typography-headline-6',
+      descriptionClass: 'md:typography-text-lg',
+      sizes: {
+        lg: {
+          width: '728',
+          height: '728',
+        },
+        md: {
+          width: '488',
+          height: '488',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-2.avif`,
+      title: t('homepage.displayDetails.detail2.title'),
+      subtitle: t('homepage.displayDetails.detail2.subtitle'),
+      description: t('homepage.displayDetails.detail2.description'),
+      buttonText: t('homepage.displayDetails.detail2.buttonText'),
+      reverse: true,
+      backgroundColor: 'bg-warning-200',
+      sizes: {
+        lg: {
+          width: '358',
+          height: '358',
+        },
+        md: {
+          width: '472',
+          height: '472',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-3.avif`,
+      title: t('homepage.displayDetails.detail3.title'),
+      subtitle: t('homepage.displayDetails.detail3.subtitle'),
+      description: t('homepage.displayDetails.detail3.description'),
+      buttonText: t('homepage.displayDetails.detail3.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-secondary-200',
+      sizes: {
+        lg: {
+          width: '358',
+          height: '358',
+        },
+        md: {
+          width: '238',
+          height: '238',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+  ];
+});
+const headPhones = {
+  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
+  sizes: {
+    lg: {
+      width: '800',
+      height: '600',
+    },
+    md: {
+      width: '800',
+      height: '600',
+    },
+    sm: {
+      width: '640',
+      height: '480',
+    },
   },
-  {
-    image: '/images/homepage-display-2.avif',
-    title: t('homepage.displayDetails.detail2.title'),
-    subtitle: t('homepage.displayDetails.detail2.subtitle'),
-    description: t('homepage.displayDetails.detail2.description'),
-    buttonText: t('homepage.displayDetails.detail2.buttonText'),
-    reverse: true,
-    backgroundColor: 'bg-warning-200',
+};
+const background = {
+  image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
+  sizes: {
+    lg: {
+      width: '4000',
+      height: '600',
+    },
+    md: {
+      width: '1024',
+      height: '600',
+    },
+    sm: {
+      width: '640',
+      height: '752',
+    },
   },
-  {
-    image: '/images/homepage-display-3.avif',
-    title: t('homepage.displayDetails.detail3.title'),
-    subtitle: t('homepage.displayDetails.detail3.subtitle'),
-    description: t('homepage.displayDetails.detail3.description'),
-    buttonText: t('homepage.displayDetails.detail3.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-secondary-200',
-  },
-];
-
+};
 const categories = [
   {
     title: t('homepage.women'),
