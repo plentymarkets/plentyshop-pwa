@@ -12,9 +12,11 @@
 - Anpassung des Produktnamens in den Dokumentationsdateien.
 - Schnellkasse-Funktionalität hinzugefügt.
 - Menge zum Produktnamen der Schnellkasse hinzugefügt.
+- Übersetzungen von Cookiebar
 
 ### Behoben
 
+- Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite
@@ -26,6 +28,11 @@
 - Die Middleware unterstützt jetzt IPv6-Adressen
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
+- Rückgabebild entfernt.
+- Verbesserte mobile Ansicht der Cookie-Leiste.
+- Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
+- Problem mit der Verschiebung des Wagenlader-Layouts behoben.
+- Leeres Wunschlistenbild entfernt.
 
 ### Geändert
 
@@ -33,6 +40,7 @@
 - Styling der Benachrichtigungsanzeige
 - Registrierungsformular wurde verbessert
 - Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
+- Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
@@ -198,6 +206,7 @@
 - Bei Produkten mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
 - Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Die Position der Benachrichtungen wurde geändert
+- Neues Checkout-Layout – gleiche Funktionalität des Adress-Kontrollkästchens
 
 ### Behoben
 

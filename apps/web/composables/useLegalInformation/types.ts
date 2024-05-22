@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { LegalInformationResponse, LegalTextsParams } from '@plentymarkets/shop-api';
 
 export interface UseLegalInformationState {

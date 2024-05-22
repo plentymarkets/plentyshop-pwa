@@ -12,9 +12,11 @@
 - Product renaming in the documentation files
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
+- cookie bar translations.
 
 ### Fixed
 
+- Fixed random Nuxt instance unavailable
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
 - Fixed random login error
@@ -27,6 +29,12 @@
 - Fixed acccessibility of the login button name
 - The middleware does now support IPv6 addresses
 - Fixed lighthouse error regarding wishlist button size.
+- Removed returns image.
+- Improved cookie bar mobile view.
+- Fixed wishlist close button margins.
+- Fixed cart loader layout shift issue.
+- Show review form on login from review button.
+- Removed empty wishlist image.
 
 ### Changed
 
@@ -35,6 +43,7 @@
 - Improved the registration form
 - Main page images conversion (avif)
 - Accessibility for the category and product page for reviews
+- Different sizes for demo images based on viewport
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
@@ -207,6 +216,7 @@
 - For products with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
 - Changed position of notifications
+- New checkout layout - same address checkbox functionality
 
 ### Fixed
 
