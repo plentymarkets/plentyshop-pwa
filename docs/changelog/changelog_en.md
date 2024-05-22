@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fixed random Nuxt instance unavailable
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
 - Fixed random login error
@@ -215,6 +216,7 @@
 - For products with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
 - Changed position of notifications
+- New checkout layout - same address checkbox functionality
 
 ### Fixed
 
