@@ -13,6 +13,7 @@ const config = {
         api: {
           url: process.env.API_ENDPOINT,
           securityToken: process.env.API_SECURITY_TOKEN ?? '',
+          debug: true,
         },
       },
     },
