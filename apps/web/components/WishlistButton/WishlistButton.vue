@@ -11,7 +11,7 @@
     @click="onWishlistClick"
     data-testid="wishlist-trigger"
   >
-    <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
+    <SfLoaderCircular v-if="actionLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
       <SfIconClose v-if="isCloseButton" size="sm" />
       <SfIconFavoriteFilled v-else-if="isWishlistItem(variationId)" size="sm" />
@@ -30,9 +30,14 @@ const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, di
 const { product, quantity, discard } = toRefs(props);
 const { t } = useI18n();
 const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
+const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
 const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
-const onWishlistClick = () => interactWithWishlist(variationId.value, quantity.value);
+const onWishlistClick = async () => {
+  actionLoading.value = true;
+  await interactWithWishlist(variationId.value, quantity.value);
+  actionLoading.value = false;
+};
 </script>
