@@ -16,6 +16,7 @@
 
 ### Behoben
 
+- Fehler bei der Interaktion mit der Wunschliste behoben
 - DefineExpose-Compilerfehler behoben
 - Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Hydration und intlify Warnungen wurden behoben.
