@@ -126,21 +126,6 @@ const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
-useHead({
-  link: [
-    {
-      rel: 'preload',
-      href: viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif',
-      as: 'image',
-    },
-    {
-      rel: 'preload',
-      href: '/images/homepage-hero-headphones.avif',
-      as: 'image',
-    },
-  ],
-});
-
 type Size = {
   width: string;
   height: string;
@@ -289,4 +274,19 @@ const categories = [
     image: '/images/homepage-kid-category.avif',
   },
 ];
+
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      href: background.image,
+      as: 'image',
+    },
+    {
+      rel: 'preload',
+      href: headPhones.image,
+      as: 'image',
+    },
+  ],
+});
 </script>
