@@ -2,6 +2,7 @@ import type { Cart, DoAddItemParams, DeleteCartItemParams, SetCartItemQuantityPa
 
 export interface UseCartState {
   data: Cart;
+  useAsShippingAddress: boolean;
   loading: boolean;
 }
 
@@ -14,6 +15,7 @@ export type SetCartItemQuantity = (params: SetCartItemQuantityParams) => Promise
 
 export interface UseCart {
   data: Readonly<Ref<UseCartState['data']>>;
+  useAsShippingAddress: Ref<boolean>;
   loading: Ref<boolean>;
   getCart: GetCart;
   addToCart: AddToCart;

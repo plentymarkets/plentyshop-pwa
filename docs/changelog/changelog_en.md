@@ -217,6 +217,7 @@
 - For products with different prices, the cheapest price is displayed as "from price" on the category page
 - Updated URL structure to be more similar to plentyShop LTS
 - Changed position of notifications
+- New checkout layout - same address checkbox functionality
 
 ### Fixed
 
