@@ -40,12 +40,13 @@ export const useWishlist: UseWishlistReturn = () => {
   const fetchWishlist: FetchWishlist = async () => {
     state.value.loading = true;
 
-    const { data } = await useSdk().plentysystems.getWishlist();
-
-    state.value.data = data ?? state.value.data;
-    state.value.loading = false;
-
-    return state.value.data;
+    return await useSdk()
+      .plentysystems.getWishlist()
+      .then(({ data }) => {
+        state.value.data = data ?? state.value.data;
+        state.value.loading = false;
+        return state.value.data;
+      });
   };
 
   /**

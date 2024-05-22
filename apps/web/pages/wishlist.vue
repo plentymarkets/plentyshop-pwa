@@ -13,10 +13,8 @@ definePageMeta({ layout: false });
 
 const localePath = useLocalePath();
 const { t } = useI18n();
-const breadcrumbs = computed(() => {
-  return [
-    { name: t('home'), link: localePath(paths.home) },
-    { name: t('wishlist'), link: localePath(paths.wishlist) },
-  ];
-});
+const breadcrumbs = computed(() => [
+  { name: t('home'), link: localePath(paths.home) },
+  { name: t('wishlist'), link: localePath(paths.wishlist) },
+]);
 </script>

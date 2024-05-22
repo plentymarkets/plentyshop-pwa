@@ -29,16 +29,10 @@ import { productGetters } from '@plentymarkets/shop-sdk';
 const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, discard: false });
 const { product, quantity, discard } = toRefs(props);
 const { t } = useI18n();
-const { isWishlistItem, interactWithWishlist } = useWishlist();
-const wishlistLoading = ref(false);
+const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
 const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
-
-const onWishlistClick = async () => {
-  wishlistLoading.value = true;
-  await interactWithWishlist(variationId.value, quantity.value);
-  wishlistLoading.value = false;
-};
+const onWishlistClick = () => interactWithWishlist(variationId.value, quantity.value);
 </script>
