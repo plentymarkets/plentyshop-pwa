@@ -12,7 +12,7 @@
 
     <div v-if="editMode">
       <AddressFormNew
-        ref="AddressFormNewRef"
+        ref="addressFormNewReference"
         :countries="activeShippingCountries"
         :saved-address="
           editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
@@ -23,9 +23,9 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
-import { defineExpose } from 'vue';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton } from '@storefront-ui/vue';
@@ -39,7 +39,7 @@ const { data: cart, useAsShippingAddress } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
-const AddressFormNewRef = ref<InstanceType<typeof AddressFormNew> | null>(null);
+const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
@@ -56,29 +56,23 @@ const emit = defineEmits(['on-saved']);
 
 getActiveShippingCountries();
 
-const edit = () => {
-  editMode.value = !editMode.value;
-};
+const edit = () => (editMode.value = !editMode.value);
 
 const saveAddress = async (address: Address) => {
   const result = await updateAddress(address);
   if (props.type === AddressType.Billing && useAsShippingAddress.value) {
-    await setCheckoutAddress(AddressType.Shipping, -99);
-  } else if (result.id) {
-    await setCheckoutAddress(AddressType.Shipping, result.id);
-    editMode.value = false;
+    setCheckoutAddress(AddressType.Shipping, -99);
+  } else if (result?.id) {
+    setCheckoutAddress(AddressType.Shipping, result.id);
   }
+
   emit('on-saved');
   editMode.value = false;
 };
 
 const disableEditMode = async () => {
-  if (AddressFormNewRef.value && editMode.value) {
-    AddressFormNewRef.value.emitFormValues();
-  }
+  if (addressFormNewReference.value && editMode.value) addressFormNewReference.value.emitFormValues();
 };
 
-defineExpose({
-  disableEditMode,
-});
+defineExpose({ disableEditMode });
 </script>
