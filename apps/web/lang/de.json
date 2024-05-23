@@ -513,7 +513,8 @@
         "shippingMethod": "Versandart"
       },
       "paymentSummary": {
-        "heading": "Zahlungsübersicht"
+        "heading": "Zahlungsübersicht",
+        "paymentStatus": "Zahlungsstatus"
       }
     },
     "wishlist": {

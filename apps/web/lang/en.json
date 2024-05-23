@@ -513,7 +513,8 @@
         "shippingMethod": "Shipping method"
       },
       "paymentSummary": {
-        "heading": "Payment Summary"
+        "heading": "Payment Summary",
+        "paymentStatus": "Payment status"
       }
     },
     "wishlist": {
