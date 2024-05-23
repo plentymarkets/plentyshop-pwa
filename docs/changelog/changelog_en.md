@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fixed local e2e tests
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
 - Fixed random Nuxt instance unavailable

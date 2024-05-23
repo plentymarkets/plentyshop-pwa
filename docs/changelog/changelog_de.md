@@ -16,6 +16,7 @@
 
 ### Behoben
 
+- Lokale E2E-Tests behoben
 - Fehler bei der Interaktion mit der Wunschliste behoben
 - DefineExpose-Compilerfehler behoben
 - Behoben: Zufällige Nuxt-Instanz nicht verfügbar
