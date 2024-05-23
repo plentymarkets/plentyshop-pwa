@@ -26,6 +26,7 @@
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist
 - Fehler beim Filtern im SSR in der Kategorieansicht behoben
 - Die Sichtbarkeit des Namen vom Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen
