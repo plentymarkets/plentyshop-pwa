@@ -11,10 +11,10 @@ const fetchScripts = (scripts: string[]) => {
   scripts.forEach((script: string) => {
     try {
       if (checkIfScriptIsExternal(script)) {
-        const sc = document.createElement('script');
-        sc.setAttribute('src', script);
-        sc.setAttribute('type', 'text/javascript');
-        document.head.append(sc);
+        const scriptElement = document.createElement('script');
+        scriptElement.setAttribute('src', script);
+        scriptElement.setAttribute('type', 'text/javascript');
+        document.head.append(scriptElement);
       } else if (cookieScripts[script]) {
         cookieScripts[script]();
       }
