@@ -91,7 +91,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
       state.value.visible = true;
     }
 
-    console.log('initialize');
     loadThirdPartyScripts();
   };
 
@@ -127,7 +126,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
     changeVisibilityState();
 
-    console.log('setConsent');
     loadThirdPartyScripts();
 
     if (alreadySetCookie) {
