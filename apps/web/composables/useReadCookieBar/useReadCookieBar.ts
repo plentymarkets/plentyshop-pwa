@@ -11,12 +11,10 @@ const fetchScripts = (scripts: string[]) => {
   scripts.forEach((script: string) => {
     try {
       if (checkIfScriptIsExternal(script)) {
-        fetch(script, { method: 'GET', mode: 'no-cors', credentials: 'same-origin' })
-          .then((response) => response.text())
-          .then((text) => new Function(text)())
-          .catch(() => {
-            return;
-          });
+        const sc = document.createElement('script');
+        sc.setAttribute('src', script);
+        sc.setAttribute('type', 'text/javascript');
+        document.head.append(sc);
       } else if (cookieScripts[script]) {
         cookieScripts[script]();
       }
@@ -93,6 +91,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
       state.value.visible = true;
     }
 
+    console.log('initialize');
     loadThirdPartyScripts();
   };
 
@@ -128,6 +127,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
     changeVisibilityState();
 
+    console.log('setConsent');
     loadThirdPartyScripts();
 
     if (alreadySetCookie) {
