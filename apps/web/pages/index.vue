@@ -3,7 +3,6 @@
     <div class="absolute w-full h-full z-[-1]">
       <img
         :src="background.image"
-        format="avif"
         :width="getSizeForViewport(background.sizes).width"
         :height="getSizeForViewport(background.sizes).height"
         alt="Hero background"
@@ -15,7 +14,6 @@
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           :src="headPhones.image"
-          format="avif"
           :width="getSizeForViewport(headPhones.sizes).width"
           :height="getSizeForViewport(headPhones.sizes).height"
           alt="Headphones"
@@ -70,48 +68,36 @@
     </div>
     <div class="flex flex-col md:flex-row flex-wrap gap-6 mt-max-w-[1540px]">
       <div
-        v-for="{
-          image,
-          title,
-          subtitle,
-          description,
-          buttonText,
-          backgroundColor,
-          reverse,
-          titleClass,
-          subtitleClass,
-          sizes,
-        } in displayDetails"
-        :key="title"
+        v-for="details in displayDetails"
+        :key="details.title"
         :class="[
           'relative flex md:max-w-[1536px] md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full',
-          backgroundColor,
+          details.backgroundColor,
         ]"
       >
         <a
           class="absolute w-full h-full z-1 focus-visible:outline focus-visible:rounded-lg"
-          :aria-label="title"
+          :aria-label="details.title"
           href="#"
         />
-        <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': reverse }]">
+        <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': details.reverse }]">
           <div class="flex flex-col justify-center items-start p-6 lg:p-10 max-w-1/2">
-            <p :class="['uppercase typography-text-xs block font-bold tracking-widest', subtitleClass]">
-              {{ subtitle }}
+            <p :class="['uppercase typography-text-xs block font-bold tracking-widest', details.subtitleClass]">
+              {{ details.subtitle }}
             </p>
-            <h2 :class="['mb-4 mt-2 font-bold typography-display-3', titleClass]">
-              {{ title }}
+            <h2 :class="['mb-4 mt-2 font-bold typography-display-3', details.titleClass]">
+              {{ details.title }}
             </h2>
             <p class="typography-text-base block mb-4">
-              {{ description }}
+              {{ details.description }}
             </p>
-            <SfButton class="!bg-black">{{ buttonText }}</SfButton>
+            <SfButton class="!bg-black">{{ details.buttonText }}</SfButton>
           </div>
           <img
-            :src="image"
-            :alt="title"
-            format="avif"
-            :width="getSizeForViewport(sizes).width"
-            :height="getSizeForViewport(sizes).height"
+            :src="details.image"
+            :alt="details.title"
+            :width="getSizeForViewport(details.sizes).width"
+            :height="getSizeForViewport(details.sizes).height"
             class="self-end object-contain"
             loading="lazy"
           />
@@ -136,10 +122,9 @@
 import { SfButton } from '@storefront-ui/vue';
 const viewport = useViewport();
 const { t } = useI18n();
-definePageMeta({ pageType: 'static' });
-
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
+definePageMeta({ pageType: 'static' });
 
 type Size = {
   width: string;
@@ -289,4 +274,19 @@ const categories = [
     image: '/images/homepage-kid-category.avif',
   },
 ];
+
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      href: background.image,
+      as: 'image',
+    },
+    {
+      rel: 'preload',
+      href: headPhones.image,
+      as: 'image',
+    },
+  ],
+});
 </script>
