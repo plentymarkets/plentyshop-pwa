@@ -27,6 +27,7 @@
 - The PayPal express button on the product page handles the click event correctly.
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
+- Bundle item accessability via hyperlink, if not fully set
 - Fixed the filtering in SSR on the category page
 - Fixed bad image quality on category view
 - Fixed acccessibility of the login button name
