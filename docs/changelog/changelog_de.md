@@ -16,6 +16,7 @@
 
 ### Behoben
 
+- Fehlende Details auf der Dankesseite behoben
 - Lokale E2E-Tests behoben
 - Fehler bei der Interaktion mit der Wunschliste behoben
 - DefineExpose-Compilerfehler behoben
