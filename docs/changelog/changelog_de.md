@@ -38,6 +38,7 @@
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
 - Leeres Wunschlistenbild entfernt.
+- Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
 
 ### Geändert
 
