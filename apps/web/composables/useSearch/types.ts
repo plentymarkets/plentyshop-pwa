@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { ItemSearchResult, ItemSearchParams } from '@plentymarkets/shop-api';
 
 export interface UseSearchState {

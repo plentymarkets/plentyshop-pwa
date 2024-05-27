@@ -52,7 +52,6 @@ export class WishlistObject extends PageObject {
   }
 
   checkEmptyPage() {
-    this.wishlistPage.getByTestId('empty-wishlist-image').should('be.visible');
     this.wishlistPage.getByTestId('empty-wishlist-text').should('be.visible');
     return this;
   }

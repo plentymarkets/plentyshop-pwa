@@ -49,8 +49,7 @@ definePageMeta({
 });
 
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
-console.log(breadcrumbs.value);
+const { data: product, fetchProduct, setTitle, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
 if (process.server) {
@@ -65,7 +64,7 @@ if (process.server) {
 }
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
-generateBreadcrumbs();
+setBreadcrumbs();
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.

@@ -38,14 +38,6 @@
       </section>
     </div>
     <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="wishlist-page-content">
-      <NuxtImg
-        data-testid="empty-wishlist-image"
-        src="/images/empty-cart.svg"
-        :alt="$t('emptyCartImgAlt')"
-        width="192"
-        height="192"
-        loading="lazy"
-      />
       <h2 data-testid="empty-wishlist-text" class="mt-8 typography-headline-3 font-bold">
         {{ $t('emptyWishlist') }}
       </h2>
