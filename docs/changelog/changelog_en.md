@@ -16,6 +16,10 @@
 
 ### Fixed
 
+- Fixed thank-you page missing details
+- Fixed local e2e tests
+- Fixed errors when interacting with wishlist
+- Fixed defineExpose compiler error
 - Fixed random Nuxt instance unavailable
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
@@ -24,6 +28,7 @@
 - The PayPal express button on the product page handles the click event correctly.
 - Creating new item in basket, instead of updating quantity
 - Fixed aspect ratio on homepage hero img
+- Bundle item accessability via hyperlink, if not fully set
 - Fixed the filtering in SSR on the category page
 - Fixed bad image quality on category view
 - Fixed acccessibility of the login button name
@@ -35,6 +40,7 @@
 - Fixed cart loader layout shift issue.
 - Show review form on login from review button.
 - Removed empty wishlist image.
+- Images of the attributes in the product view are now displayed correctly.
 
 ### Changed
 
