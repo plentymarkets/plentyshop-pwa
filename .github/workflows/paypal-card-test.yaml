@@ -1,4 +1,4 @@
-name: tests
+name: Paypal Card Test
 
 on:
   workflow_dispatch:
@@ -33,10 +33,10 @@ jobs:
 
       - name: Setup .yarnrc.yml
         run: |
-            yarn config set nodeLinker node-modules
-            yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-            yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-            yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -49,7 +49,7 @@ jobs:
           build: yarn build
           command: yarn test:cypress
           install: false
-          spec: __tests__/test/**/paypalCreditCard.cy.js
+          spec: '__tests__/test/**/paypalCreditCard.cy.js'
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
