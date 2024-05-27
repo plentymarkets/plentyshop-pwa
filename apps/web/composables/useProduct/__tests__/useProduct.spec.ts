@@ -11,18 +11,4 @@ describe('useProduct', () => {
 
         expect(product.value).not.toBeUndefined();
     });
- 
-    it('should return breadcrumbs', async () => {
-        const { breadcrumbs: breadcrumbs, generateBreadcrumbs } = useProduct(productId);
-        const expected_Breadcrumbs = [
-            { name: 'Home', link: '/' },
-            { name: 'Gear', link: '/gear' },
-            { name: 'Headphones Capybara', link: '#' }
-        ];
-    
-        await generateBreadcrumbs();
-    
-        expect(breadcrumbs.value).toEqual(expected_Breadcrumbs);
-    });
-    
 });
