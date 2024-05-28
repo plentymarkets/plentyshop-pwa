@@ -37,6 +37,7 @@
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
 - Leeres Wunschlistenbild entfernt.
+- Das Laden externer Cookie-Skripte wurde behoben.
 
 ### Geändert
 

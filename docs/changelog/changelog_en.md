@@ -39,6 +39,7 @@
 - Fixed cart loader layout shift issue.
 - Show review form on login from review button.
 - Removed empty wishlist image.
+- Fixed external cookie script load.
 
 ### Changed
 
