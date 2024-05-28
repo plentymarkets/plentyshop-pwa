@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fixed issues related to product reviews
 - Fixed thank-you page missing details
 - Fixed local e2e tests
 - Fixed errors when interacting with wishlist
