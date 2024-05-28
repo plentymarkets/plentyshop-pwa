@@ -86,7 +86,7 @@ export default {
           Status: 'CookieBar.functional.cookies.scriptDemo.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
-          script: ['loadExampleScript'],
+          script: ['https://cdn02.plentymarkets.com/mevofvd5omld/frontend/test-cookie-external-script.js'],
         },
       ],
     },

@@ -114,6 +114,7 @@
               type="button"
               :aria-label="$t('CookieBar.Accept All')"
               @click="setAllCookiesState(true)"
+              data-testid="cookie-bar-accept-all"
             >
               {{ $t('CookieBar.Accept All') }}
             </SfButton>
@@ -151,6 +152,7 @@
       class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2 bg-white !px-3"
       :aria-label="$t('CookieBar.Cookie Settings')"
       @click="changeVisibilityState"
+      data-testid="cookie-bar-open-btn"
     >
       <SfIconCheckBox />
     </SfButton>

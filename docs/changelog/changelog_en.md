@@ -41,6 +41,7 @@
 - Show review form on login from review button.
 - Removed empty wishlist image.
 - Images of the attributes in the product view are now displayed correctly.
+- Fixed external cookie script load.
 
 ### Changed
 
