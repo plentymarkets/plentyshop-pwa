@@ -13,18 +13,20 @@
       <div>
         <div class="flex my-2">
           <div class="w-1/2 flex flex-col">
-            <p class="text-center text-sm">Average Rating</p>
+            <p class="text-center text-sm">{{ t('avreageRating') }}</p>
             <div class="flex justify-center">
               <SfRating
                 class="pb-2"
                 size="lg"
                 :max="5"
-                :value="reviewGetters.getAverageRating(productReviewAverage)"
+                :value="Math.floor(Number(reviewGetters.getAverageRating(productReviewAverage)) * 2) / 2"
                 :half-increment="true"
               />
-              <h3 class="font-bold text-xl ml-2 flex">{{ reviewGetters.getAverageRating(productReviewAverage) }}</h3>
+              <h3 class="font-bold text-xl ml-2 flex">
+                {{ Math.round(Number(reviewGetters.getAverageRating(productReviewAverage)) * 10) / 10 }}
+              </h3>
             </div>
-            <p class="text-xs text-center text-">based on {{ totalReviews }} Review(s)</p>
+            <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
             <SfButton
               @click="isAuthorized ? openReviewModal() : openAuthentication()"
               data-testid="create-review"
@@ -133,7 +135,7 @@ const {
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
-const { data: productReviewAverage, fetchProductReviewAverage} = useProductReviewAverage(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 const productReviews = computed(() => {
   return reviewGetters.getReviewItems(productReviewsData.value);
@@ -169,15 +171,12 @@ const ratingPercentages = computed(() => {
   return splitReviewsCount.value.map((review) => (review > 0 ? (review / total) * 100 : 0));
 });
 
-async function fetchReviews(){
+async function fetchReviews() {
   await Promise.all([
     fetchProductReviewAverage(Number(productId)),
-    fetchProductReviews(
-      Number(productGetters.getItemId(product.value)),
-      productGetters.getVariationId(product.value),
-    )
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value)),
   ]);
-};
+}
 
 watch(
   () => reviewsOpen.value,
@@ -188,39 +187,3 @@ watch(
   },
 );
 </script>
-
-
-<!-- const {
-  data: productReviewsData,
-  fetchProductReviews,
-  createProductReview,
-  loading,
-} = useProductReviews(Number(productGetters.getItemId(product.value)));
-
-const productReviews = computed(() => {
-  return reviewGetters.getReviewItems(productReviewsData.value);
-});
-
-const refreshReviews = () => {
-  fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
-};
-
-const saveReview = async (form: CreateReviewParams) => {
-  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
-
-  closeReviewModal();
-  await createProductReview(form).then(() => refreshReviews());
-  send({ type: 'positive', message: t('review.notification.success') });
-};
-
-watch(
-  () => reviewsOpen.value,
-  (value) => {
-    if (value) {
-      fetchProductReviews(
-        Number(productGetters.getItemId(product.value)),
-        productGetters.getVariationId(product.value),
-      );
-    }
-  },
-); -->
