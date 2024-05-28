@@ -150,6 +150,7 @@ export default defineNuxtConfig({
       { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
     ],
     autoLastmod: true,
+    xsl: '/sitemap-style.xsl',
     sitemaps: {
       'sitemap/content': {
         exclude: [
