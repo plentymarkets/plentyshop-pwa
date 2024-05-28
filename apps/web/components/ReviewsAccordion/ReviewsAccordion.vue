@@ -125,6 +125,7 @@ const closeAuth = () => {
 };
 
 const productId = productGetters.getItemId(product.value);
+const productVariationId = productGetters.getVariationId(product.value);
 
 const {
   data: productReviewsData,
@@ -132,18 +133,18 @@ const {
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: productReviewAverage, fetchProductReviewAverage} = useProductReviewAverage(productId);
 
 const productReviews = computed(() => {
   return reviewGetters.getReviewItems(productReviewsData.value);
 });
 
 const refreshReviews = () => {
-  fetchProductReviews(Number(productId), productGetters.getVariationId(product.value));
+  fetchReviews();
 };
 
 const saveReview = async (form: CreateReviewParams) => {
-  if (form.type === 'review') form.targetId = Number(productId);
+  if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
@@ -168,18 +169,58 @@ const ratingPercentages = computed(() => {
   return splitReviewsCount.value.map((review) => (review > 0 ? (review / total) * 100 : 0));
 });
 
+async function fetchReviews(){
+  await Promise.all([
+    fetchProductReviewAverage(Number(productId)),
+    fetchProductReviews(
+      Number(productGetters.getItemId(product.value)),
+      productGetters.getVariationId(product.value),
+    )
+  ]);
+};
+
 watch(
   () => reviewsOpen.value,
-  async (value) => {
+  (value) => {
     if (value) {
-      await Promise.all([
-        fetchProductReviewAverage(Number(productId)),
-        fetchProductReviews(
-          Number(productGetters.getVariationId(product.value)),
-          Number(productId)
-        )
-      ]);
+      fetchReviews();
     }
-  }
-)
+  },
+);
 </script>
+
+
+<!-- const {
+  data: productReviewsData,
+  fetchProductReviews,
+  createProductReview,
+  loading,
+} = useProductReviews(Number(productGetters.getItemId(product.value)));
+
+const productReviews = computed(() => {
+  return reviewGetters.getReviewItems(productReviewsData.value);
+});
+
+const refreshReviews = () => {
+  fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+};
+
+const saveReview = async (form: CreateReviewParams) => {
+  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
+
+  closeReviewModal();
+  await createProductReview(form).then(() => refreshReviews());
+  send({ type: 'positive', message: t('review.notification.success') });
+};
+
+watch(
+  () => reviewsOpen.value,
+  (value) => {
+    if (value) {
+      fetchProductReviews(
+        Number(productGetters.getItemId(product.value)),
+        productGetters.getVariationId(product.value),
+      );
+    }
+  },
+); -->
