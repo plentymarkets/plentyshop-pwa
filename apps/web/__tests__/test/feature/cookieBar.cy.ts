@@ -11,6 +11,6 @@ beforeEach(() => {
 
 describe('CookieBar functionality check.', () => {
   it('Checks external script.', () => {
-    cookieBar.openBar().acceptAll().checkExternalScript();
+    cookieBar.acceptAll().checkExternalScript();
   });
 });
