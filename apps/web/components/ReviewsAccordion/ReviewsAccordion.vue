@@ -24,7 +24,7 @@
               />
               <h3 class="font-bold text-xl ml-2 flex">{{ reviewGetters.getAverageRating(productReviewAverage) }}</h3>
             </div>
-            <p class="text-xs text-center text-">based on {{ totalReviews }}Review(s)</p>
+            <p class="text-xs text-center text-">based on {{ totalReviews }} Review(s)</p>
             <SfButton
               @click="isAuthorized ? openReviewModal() : openAuthentication()"
               data-testid="create-review"
@@ -36,16 +36,16 @@
           </div>
 
           <div class="flex flex-col">
-            <div v-for="(splitReview, key) in ratingPercentages" :key="key" class="flex items-center">
+            <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
               <p class="w-4 text-center">{{ 6 - key }}</p>
               <SfRating class="mx-2 pb-1" size="base" :max="1" :value="1" />
               <SfProgressLinear
                 class="self-center"
                 size="sm"
-                :value="splitReview"
-                aria-label="5star-Rating-Progress-Element"
+                :value="proportionalRating"
+                aria-label="proportional-rating-in-percent"
               />
-              <p class="ml-2 w-8 text-center">( {{ splitReviews[key] }} )</p>
+              <p class="ml-2 w-8 text-center">( {{ splitReviewsCount[key] }} )</p>
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ const saveReview = async (form: CreateReviewParams) => {
   send({ type: 'positive', message: t('review.notification.success') });
 };
 
-const splitReviews = computed((): number[] => {
+const splitReviewsCount = computed((): number[] => {
   let splitReviewsTemporary = [0, 0, 0, 0, 0];
 
   for (const review of productReviews.value) {
@@ -165,20 +165,21 @@ const splitReviews = computed((): number[] => {
 
 const ratingPercentages = computed(() => {
   const total = Number(totalReviews.value);
-  return splitReviews.value.map((review) => (review > 0 ? (review / total) * 100 : 0));
+  return splitReviewsCount.value.map((review) => (review > 0 ? (review / total) * 100 : 0));
 });
-
-await Promise.all([fetchProductReviewAverage(Number(productId))]);
 
 watch(
   () => reviewsOpen.value,
-  (value) => {
+  async (value) => {
     if (value) {
-      fetchProductReviews(
-        Number(productGetters.getItemId(product.value)),
-        productGetters.getVariationId(product.value),
-      );
+      await Promise.all([
+        fetchProductReviewAverage(Number(productId)),
+        fetchProductReviews(
+          Number(productGetters.getVariationId(product.value)),
+          Number(productId)
+        )
+      ]);
     }
-  },
-);
+  }
+)
 </script>
