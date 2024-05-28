@@ -16,6 +16,7 @@
 
 ### Fixed
 
+- Fixed thank-you page missing details
 - Fixed local e2e tests
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
@@ -39,6 +40,7 @@
 - Fixed cart loader layout shift issue.
 - Show review form on login from review button.
 - Removed empty wishlist image.
+- Images of the attributes in the product view are now displayed correctly.
 - Fixed external cookie script load.
 
 ### Changed
