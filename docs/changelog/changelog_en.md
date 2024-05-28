@@ -13,6 +13,7 @@
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
 - cookie bar translations.
+- Detailed list of reviews 
 
 ### Fixed
 

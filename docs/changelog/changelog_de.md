@@ -13,6 +13,7 @@
 - Schnellkasse-Funktionalität hinzugefügt.
 - Menge zum Produktnamen der Schnellkasse hinzugefügt.
 - Übersetzungen von Cookiebar
+- Detaillierte Auflistung der Rezensionen
 
 ### Behoben
 
