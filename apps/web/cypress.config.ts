@@ -16,7 +16,7 @@ export default defineConfig({
     },
     baseUrl: 'http://localhost:3000',
     specPattern: '__tests__/test/**/*.cy.{js,jsx,ts,tsx}',
-    excludeSpecPattern: [ '__tests__/test/**/paypalCreditCard.cy.js' ],
+    excludeSpecPattern: [ '__tests__/test/smoke/paypalCreditCard.cy.js' ],
     supportFile: '__tests__/support/e2e.ts',
     retries: {
       runMode: 2,
