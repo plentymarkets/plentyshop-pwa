@@ -39,6 +39,7 @@
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
 - Leeres Wunschlistenbild entfernt.
 - Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
+- Das Laden externer Cookie-Skripte wurde behoben.
 
 ### Geändert
 
