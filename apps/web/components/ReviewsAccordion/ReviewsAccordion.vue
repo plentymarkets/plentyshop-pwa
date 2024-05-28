@@ -9,14 +9,44 @@
           {{ t('customerReviews') }}
         </h2>
       </template>
-      <SfButton
-        @click="isAuthorized ? openReviewModal() : openAuthentication()"
-        data-testid="create-review"
-        class="mt-2 mb-4"
-        size="base"
-      >
-        {{ t('createCustomerReview') }}
-      </SfButton>
+
+      <div>
+        <div class="flex my-2">
+          <div class="w-1/2 flex flex-col">
+            <p class="text-center text-sm">Average Rating</p>
+            <div class="flex justify-center">
+              <SfRating class="pb-2" size="lg" :max="5" :value="reviewGetters.getAverageRating(productReviewAverage)" :half-increment="true" />
+              <h3 class="font-bold text-xl ml-2 flex">{{ reviewGetters.getAverageRating(productReviewAverage) }}</h3>
+            </div>
+            <p class="text-xs text-center text-">based on {{totalReviews}}Review(s)</p>
+            <SfButton
+              @click="isAuthorized ? openReviewModal() : openAuthentication()"
+              data-testid="create-review"
+              class="mt-2 mb-4 w-1/2 mx-auto"
+              size="base"
+            >
+              {{ t('createCustomerReview') }}
+            </SfButton>
+          </div>
+
+          <div class="flex flex-col">
+              <div v-for="(splitReview, key) in ratingPercentages" :key="key" class="flex items-center">
+                  <p class="w-4 text-center">{{ 6 - key }}</p>
+                  <SfRating class="mx-2 pb-1" size="base" :max="1" :value="1" />
+                  <SfProgressLinear class="self-center" size="sm" :value="splitReview" aria-label="5star-Rating-Progress-Element" />
+                  <p class="ml-2 w-8 text-center"> ( {{ splitReviews[key] }} )</p>
+              </div>
+          </div>
+        </div>
+
+
+        
+
+
+
+        
+      </div>
+        
       <div v-if="loading" class="w-full flex justify-center items-center">
         <SfLoaderCircular class="absolute" size="sm" />
       </div>
@@ -71,10 +101,10 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { SfButton, SfIconClose, SfLoaderCircular, SfProgressLinear, SfRating, useDisclosure } from '@storefront-ui/vue';
+import { reviewGetters, productGetters, getReviewAverage } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
-import type { CreateReviewParams } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
@@ -90,37 +120,60 @@ const closeAuth = () => {
   isReviewOpen.value = true;
 };
 
+const productId = productGetters.getItemId(product.value);
+
 const {
   data: productReviewsData,
   fetchProductReviews,
   createProductReview,
   loading,
-} = useProductReviews(Number(productGetters.getItemId(product.value)));
+} = useProductReviews(Number(productId));
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 const productReviews = computed(() => {
   return reviewGetters.getReviewItems(productReviewsData.value);
 });
 
 const refreshReviews = () => {
-  fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+  fetchProductReviews(Number(productId), productGetters.getVariationId(product.value));
 };
 
 const saveReview = async (form: CreateReviewParams) => {
-  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
+  if (form.type === 'review') form.targetId = Number(productId);
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
   send({ type: 'positive', message: t('review.notification.success') });
 };
 
+
+const splitReviews = computed((): number[] => {
+  let splitReviewsTemp = [0, 0, 0, 0, 0]
+
+  for (const review of productReviews.value) {
+    const rating = review.feedbackRating.rating.ratingValue
+    if (Number(rating) >= 1 && Number(rating) <= 5) {
+      splitReviewsTemp[5 - Number(rating)]++
+    }
+  }
+  
+  return splitReviewsTemp;
+})
+
+const ratingPercentages = computed(() => {
+  const total = Number(totalReviews.value);
+  return splitReviews.value.map(review => review > 0 ? (review / total) * 100 : 0);
+})
+
+await Promise.all([
+  fetchProductReviewAverage(Number(productId))
+]);
+
 watch(
   () => reviewsOpen.value,
   (value) => {
     if (value) {
-      fetchProductReviews(
-        Number(productGetters.getItemId(product.value)),
-        productGetters.getVariationId(product.value),
-      );
+      
     }
   },
 );
