@@ -39,7 +39,7 @@
 
           <div class="flex flex-col">
             <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
-              <p class="w-4 text-center">{{ 6 - key }}</p>
+              <p class="w-4 text-center">{{5 - key }}</p>
               <SfRating class="mx-2 pb-1" size="base" :max="1" :value="1" />
               <SfProgressLinear
                 class="self-center"
@@ -62,7 +62,7 @@
         :review-item="reviewItem"
         @on-submit="saveReview"
         @review-updated="refreshReviews"
-        @review-deleted="refreshReviews"
+        @review-deleted="deleteReview"
       />
       <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
     </UiAccordionItem>
@@ -112,6 +112,7 @@ import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
@@ -150,8 +151,10 @@ const saveReview = async (form: CreateReviewParams) => {
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
+  emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
+
 
 const splitReviewsCount = computed((): number[] => {
   let splitReviewsTemporary = [0, 0, 0, 0, 0];
@@ -177,6 +180,11 @@ async function fetchReviews() {
     fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value)),
   ]);
 }
+
+const deleteReview = () => {
+  refreshReviews();
+  emits('on-list-change');
+};
 
 watch(
   () => reviewsOpen.value,
