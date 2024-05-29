@@ -18,7 +18,6 @@
           :button-text="t('billing.addButton')"
           :addresses="[]"
           :type="AddressType.Billing"
-          @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
@@ -28,7 +27,6 @@
           :button-text="t('shipping.addButton')"
           :addresses="[]"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">

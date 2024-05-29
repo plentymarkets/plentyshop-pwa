@@ -57,28 +57,37 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
   watch(cart, () => {
     const billingId = cartGetters.getCustomerInvoiceAddressId(cart.value);
     const shippingId = cartGetters.getCustomerShippingAddressId(cart.value);
-  
+
     state.value.useAsShippingAddress = billingId === shippingId;
   });
 
   const hasDisplayAddress = () => {
     return state.value?.displayAddress?.id;
-  }
+  };
 
   const setDefaultAddress = () => {
     const addresses = state.value.data;
     const defaultAddress = userAddressGetters.getDefault(addresses) || userAddressGetters.getAddresses(addresses)[0];
-      if (defaultAddress) {
-        state.value.defaultAddress = defaultAddress;
-        state.value.defaultAddressId = Number(userAddressGetters.getId(defaultAddress));
-      }
-  }
+    if (defaultAddress) {
+      state.value.defaultAddress = defaultAddress;
+      state.value.defaultAddressId = Number(userAddressGetters.getId(defaultAddress));
+    }
+  };
+
+  const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
+    state.value.displayAddress = address;
+
+    if (setAsCheckoutAddress) {
+      useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) });
+    }
+  };
 
   const setCartAddress = () => {
     const { data: cart } = useCart();
-    const addressCartId = type === AddressType.Billing
-          ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-          : cartGetters.getCustomerShippingAddressId(cart.value);
+    const addressCartId =
+      type === AddressType.Billing
+        ? cartGetters.getCustomerInvoiceAddressId(cart.value)
+        : cartGetters.getCustomerShippingAddressId(cart.value);
 
     if (addressCartId) {
       state.value.cartAddressId = addressCartId;
@@ -89,11 +98,11 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
         state.value.cartAddress = cartAddress;
       }
     }
-  }
+  };
 
   const setInitialDisplayAddress = (): void => {
     if (hasDisplayAddress()) return;
-    
+
     state.value.loading = true;
 
     if (state.value.data.length > 0) {
@@ -101,7 +110,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
       setCartAddress();
 
       if (state.value.cartAddressId) {
-          setDisplayAddress(state.value.cartAddress);
+        setDisplayAddress(state.value.cartAddress);
       } else {
         if (state.value.defaultAddressId) {
           setDisplayAddress(state.value.defaultAddress, true);
@@ -110,15 +119,6 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     }
 
     state.value.loading = false;
-  };
-  
-  
-  const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
-    state.value.displayAddress = address;
-
-    if (setAsCheckoutAddress) {
-      useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) });
-    }
   };
 
   const getAddresses: GetAddresses = async () => {
@@ -147,13 +147,11 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
       }),
     );
     useHandleError(error.value);
-    
     state.value.loading = false;
-    // workaround for the address id not being returned in the response
-    address.id = data?.value?.data?.id;
+    address.id = data?.value?.data?.[0]?.id;
     setDisplayAddress(address);
+    state.value.data = data.value?.data ?? state.value.data;
 
-    // all crud operations should return the updated list of addresses
     return data?.value?.data ?? address;
   };
 
