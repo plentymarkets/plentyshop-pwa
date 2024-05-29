@@ -122,7 +122,14 @@
     "Show less": "Show less",
     "Accept All": "Accept All",
     "Reject All": "Reject All",
-    "Accept Selection": "Accept Selection"
+    "Accept Selection": "Accept Selection",
+    "keys": {
+      "Provider": "Provider",
+      "Status": "Status",
+      "PrivacyPolicy": "Privacy Policy",
+      "Lifespan": "Lifespan",
+      "script": "Script"
+    }
   },
   "PreviewModeBar": {
     "label": "Preview mode control",
