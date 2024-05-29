@@ -10,9 +10,9 @@
         </h2>
       </template>
 
-      <div>
-        <div class="flex my-2">
-          <div class="w-1/2 flex flex-col">
+      <div class="flex justify-center lg:flex-none">
+        <div class="lg:flex my-2">
+          <div class="w-1/2 flex flex-col ml-16 lg:mr-8">
             <p class="text-center text-sm">{{ t('avreageRating') }}</p>
             <div class="flex justify-center">
               <SfRating
@@ -30,7 +30,7 @@
             <SfButton
               @click="isAuthorized ? openReviewModal() : openAuthentication()"
               data-testid="create-review"
-              class="mt-2 mb-4 w-1/2 mx-auto"
+              class="mt-2 mb-4 w-full mx-auto"
               size="base"
             >
               {{ t('createCustomerReview') }}
@@ -40,7 +40,7 @@
           <div class="flex flex-col">
             <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
               <p class="w-4 text-center">{{ 5 - key }}</p>
-              <SfIconStarFilled class="mx-2 pb-1 text-warning-500" size="base" />
+              <SfIconStarFilled class="lg:mx-2 pb-1 text-warning-500" size="base" />
               <SfProgressLinear
                 class="self-center"
                 size="sm"
