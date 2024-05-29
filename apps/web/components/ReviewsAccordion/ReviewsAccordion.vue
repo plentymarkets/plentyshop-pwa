@@ -39,7 +39,7 @@
 
           <div class="flex flex-col">
             <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
-              <p class="w-4 text-center">{{5 - key }}</p>
+              <p class="w-4 text-center">{{ 5 - key }}</p>
               <SfRating class="mx-2 pb-1" size="base" :max="1" :value="1" />
               <SfProgressLinear
                 class="self-center"
@@ -154,7 +154,6 @@ const saveReview = async (form: CreateReviewParams) => {
   emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
-
 
 const splitReviewsCount = computed((): number[] => {
   let splitReviewsTemporary = [0, 0, 0, 0, 0];
