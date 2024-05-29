@@ -19,11 +19,11 @@
                 class="pb-2"
                 size="lg"
                 :max="5"
-                :value="Math.floor(Number(reviewGetters.getAverageRating(productReviewAverage)) * 2) / 2"
+                :value="Math.floor(averageRating * 2) / 2"
                 :half-increment="true"
               />
               <h3 class="font-bold text-xl ml-2 flex">
-                {{ Math.round(Number(reviewGetters.getAverageRating(productReviewAverage)) * 10) / 10 }}
+                {{ Math.round(averageRating * 10) / 10 }}
               </h3>
             </div>
             <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
@@ -39,8 +39,8 @@
 
           <div class="flex flex-col">
             <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
-              <p class="w-4 text-center">{{5 - key }}</p>
-              <SfRating class="mx-2 pb-1" size="base" :max="1" :value="1" />
+              <p class="w-4 text-center">{{ 5 - key }}</p>
+              <SfIconStarFilled class="mx-2 pb-1 text-warning-500" size="base" />
               <SfProgressLinear
                 class="self-center"
                 size="sm"
@@ -61,7 +61,7 @@
         :key="key"
         :review-item="reviewItem"
         @on-submit="saveReview"
-        @review-updated="refreshReviews"
+        @review-updated="fetchReviews"
         @review-deleted="deleteReview"
       />
       <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
@@ -107,7 +107,15 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfIconClose, SfLoaderCircular, SfProgressLinear, SfRating, useDisclosure } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfIconClose,
+  SfIconStarFilled,
+  SfLoaderCircular,
+  SfProgressLinear,
+  SfRating,
+  useDisclosure,
+} from '@storefront-ui/vue';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
@@ -138,41 +146,32 @@ const {
 } = useProductReviews(Number(productId));
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-const productReviews = computed(() => {
-  return reviewGetters.getReviewItems(productReviewsData.value);
-});
-
-const refreshReviews = () => {
-  fetchReviews();
-};
+const averageRating = Number(reviewGetters.getAverageRating(productReviewAverage.value));
+const productReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
-  await createProductReview(form).then(() => refreshReviews());
+  await createProductReview(form).then(() => fetchReviews());
   emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
-
 
 const splitReviewsCount = computed((): number[] => {
   let splitReviewsTemporary = [0, 0, 0, 0, 0];
 
   for (const review of productReviews.value) {
-    const rating = review.feedbackRating.rating.ratingValue;
-    if (Number(rating) >= 1 && Number(rating) <= 5) {
-      splitReviewsTemporary[5 - Number(rating)]++;
-    }
+    const rating = Number(review.feedbackRating.rating.ratingValue);
+    if (rating >= 1 && rating <= 5) splitReviewsTemporary[5 - rating]++;
   }
 
   return splitReviewsTemporary;
 });
 
-const ratingPercentages = computed(() => {
-  const total = Number(totalReviews.value);
-  return splitReviewsCount.value.map((review) => (review > 0 ? (review / total) * 100 : 0));
-});
+const ratingPercentages = computed(() =>
+  splitReviewsCount.value.map((review) => (review > 0 ? (review / Number(totalReviews.value)) * 100 : 0)),
+);
 
 async function fetchReviews() {
   await Promise.all([
@@ -182,16 +181,14 @@ async function fetchReviews() {
 }
 
 const deleteReview = () => {
-  refreshReviews();
+  fetchReviews();
   emits('on-list-change');
 };
 
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) {
-      fetchReviews();
-    }
+    if (value) fetchReviews();
   },
 );
 </script>
