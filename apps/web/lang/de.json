@@ -122,7 +122,14 @@
     "Show less": "Weniger anzeigen",
     "Accept All": "Alles akzeptieren",
     "Reject All": "Alles ablehnen",
-    "Accept Selection": "Auswahl akzeptieren"
+    "Accept Selection": "Auswahl akzeptieren",
+    "keys": {
+      "Provider": "Anbieter",
+      "Status": "Status",
+      "PrivacyPolicy": "Datenschutzerklärung",
+      "Lifespan": "Lebensdauer",
+      "script": "Skript"
+    }
   },
   "PreviewModeBar": {
     "label": "Steuerung des Vorschaumodus",
