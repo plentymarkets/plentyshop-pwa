@@ -8,10 +8,10 @@
     :class="{ 'p-[0.9rem]': !isCloseButton }"
     class="m-2"
     :disabled="wishlistLoading"
-    @click="onWishlistClick()"
+    @click="onWishlistClick"
     data-testid="wishlist-trigger"
   >
-    <SfLoaderCircular v-if="wishlistLoading" class="flex justify-center items-center" size="sm" />
+    <SfLoaderCircular v-if="actionLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
       <SfIconClose v-if="isCloseButton" size="sm" />
       <SfIconFavoriteFilled v-else-if="isWishlistItem(variationId)" size="sm" />
@@ -26,24 +26,18 @@ import type { WishlistButtonProps } from '~/components/WishlistButton/types';
 import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-sdk';
 
-const props = withDefaults(defineProps<WishlistButtonProps>(), {
-  quantity: 1,
-  discard: false,
-});
-const { product, quantity } = toRefs(props);
-
+const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, discard: false });
+const { product, quantity, discard } = toRefs(props);
 const { t } = useI18n();
-const { isWishlistItem, interactWithWishlist } = useWishlist();
-const wishlistLoading = ref(false);
+const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
+const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
-
-const isCloseButton = computed(() => isWishlistItem(variationId.value) && props.discard);
-
+const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
 const onWishlistClick = async () => {
-  wishlistLoading.value = true;
+  actionLoading.value = true;
   await interactWithWishlist(variationId.value, quantity.value);
-  wishlistLoading.value = false;
+  actionLoading.value = false;
 };
 </script>
