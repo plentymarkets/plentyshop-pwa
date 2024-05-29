@@ -36,7 +36,7 @@ const { data: addresses, displayAddress } = useAddress(props.type);
 const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
-const AddressFormNewRef = ref<InstanceType<typeof AddressFormNew> | null>(null);
+const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 
 // const emit = defineEmits(['on-saved']);
 
