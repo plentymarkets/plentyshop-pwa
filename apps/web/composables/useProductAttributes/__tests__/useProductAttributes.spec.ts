@@ -13,7 +13,7 @@ describe('useProductAttributes', () => {
 
     it('updateValue updates attribute values', () => {
         const { setAttribute, updateValue, attributeValues } = useProductAttributes();
-        setAttribute(ProductFixture);
+        setAttribute(ProductFixture, true);
         updateValue(1, 1);
 
         expect(attributeValues.value).toEqual({ 1: 1, });
@@ -22,7 +22,7 @@ describe('useProductAttributes', () => {
 
     it('updateValue should return empty object if value is not found', () => {
         const { setAttribute, updateValue, attributeValues } = useProductAttributes();
-        setAttribute(ProductFixture);
+        setAttribute(ProductFixture, true);
         updateValue(1, 2);
 
         expect(attributeValues.value).toEqual({});
@@ -31,7 +31,7 @@ describe('useProductAttributes', () => {
     it('getCombination returns the correct combination', () => {
         const { setAttribute, getCombination } = useProductAttributes();
 
-        setAttribute(ProductFixture);
+        setAttribute(ProductFixture, true);
         const combination = getCombination();
 
         expect(combination).toEqual({
@@ -46,7 +46,7 @@ describe('useProductAttributes', () => {
 
     it('getValue returns the correct attribute value', () => {
         const { setAttribute, updateValue, getValue } = useProductAttributes();
-        setAttribute(ProductFixture);
+        setAttribute(ProductFixture, true);
         updateValue(1, 1);
 
         const value = getValue(1);
