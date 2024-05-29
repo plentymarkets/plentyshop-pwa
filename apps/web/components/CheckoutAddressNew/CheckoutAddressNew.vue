@@ -18,7 +18,6 @@
           editMode ? addresses.find((address) => address.id?.toString() === displayAddress?.id?.toString()) : undefined
         "
         :type="type"
-        @on-save="saveAddress"
       />
     </div>
   </div>
@@ -26,47 +25,25 @@
 
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import { defineExpose } from 'vue';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { saveAddress: updateAddress, setCheckoutAddress, data: addresses, displayAddress, useAsShippingAddress } = useAddress(props.type);
+const { data: addresses, displayAddress } = useAddress(props.type);
 const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
+const AddressFormNewRef = ref<InstanceType<typeof AddressFormNew> | null>(null);
 
-const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
-const cartAddress = computed(() =>
-  props.type === AddressType.Billing
-    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-    : cartGetters.getCustomerShippingAddressId(cart.value),
-);
-
-const selectedAddress = computed(
-  () =>
-    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
-    ({} as Address),
-);
-
-const emit = defineEmits(['on-saved']);
+// const emit = defineEmits(['on-saved']);
 
 getActiveShippingCountries();
 
-const edit = () => (editMode.value = !editMode.value);
-
-const saveAddress = async (address: Address) => {
-  const result = await updateAddress(address);
-  if (props.type === AddressType.Billing && useAsShippingAddress.value) {
-    setCheckoutAddress(AddressType.Shipping, -99);
-  } else if (result?.id) {
-    setCheckoutAddress(AddressType.Shipping, result.id);
-  }
-
-  emit('on-saved');
-  editMode.value = false;
+const edit = () => {
+  editMode.value = !editMode.value;
 };
 
 const disableEditMode = async () => {

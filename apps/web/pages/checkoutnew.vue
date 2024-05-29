@@ -117,10 +117,7 @@
 <script setup lang="ts">
 import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType } from '@plentymarkets/shop-api';
-import {
-  shippingProviderGetters,
-  paymentProviderGetters,
-} from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
