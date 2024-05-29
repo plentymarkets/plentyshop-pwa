@@ -19,11 +19,11 @@
                 class="pb-2"
                 size="lg"
                 :max="5"
-                :value="Math.floor(averageRating * 2) / 2"
+                :value="Math.floor(reviewAverage * 2) / 2"
                 :half-increment="true"
               />
               <h3 class="font-bold text-xl ml-2 flex">
-                {{ Math.round(averageRating * 10) / 10 }}
+                {{ Math.round(reviewAverage * 10) / 10 }}
               </h3>
             </div>
             <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
@@ -121,7 +121,7 @@ import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/ty
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
 const emits = defineEmits(['on-list-change']);
-const { product, totalReviews } = toRefs(props);
+const { product, totalReviews, reviewAverage } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
 const { t } = useI18n();
@@ -144,9 +144,7 @@ const {
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-const averageRating = Number(reviewGetters.getAverageRating(productReviewAverage.value));
 const productReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 
 const saveReview = async (form: CreateReviewParams) => {
@@ -175,7 +173,6 @@ const ratingPercentages = computed(() =>
 
 async function fetchReviews() {
   await Promise.all([
-    fetchProductReviewAverage(Number(productId)),
     fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value)),
   ]);
 }
