@@ -20,7 +20,7 @@
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion
               :product="product"
-              :reviewAverage = "reviewGetters.getAverageRating(productReviewAverage)"
+              :review-average="reviewGetters.getAverageRating(productReviewAverage)"
               :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
               @on-list-change="fetchProductReviewAverage(Number(productId))"
             />
