@@ -64,7 +64,9 @@
         @review-updated="fetchReviews"
         @review-deleted="deleteReview"
       />
-      <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
+      <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
+        {{ t('customerReviewsNone') }}
+      </p>
     </UiAccordionItem>
     <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
