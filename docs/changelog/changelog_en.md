@@ -43,6 +43,7 @@
 - Removed empty wishlist image.
 - Images of the attributes in the product view are now displayed correctly.
 - Fixed external cookie script load.
+- Fixed missing translations in the cookie bar.
 
 ### Changed
 

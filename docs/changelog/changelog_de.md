@@ -41,6 +41,7 @@
 - Leeres Wunschlistenbild entfernt.
 - Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
 - Das Laden externer Cookie-Skripte wurde behoben.
+- Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
 
 ### Geändert
 
