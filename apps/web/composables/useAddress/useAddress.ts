@@ -148,7 +148,8 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     );
     useHandleError(error.value);
     state.value.loading = false;
-    address.id = data?.value?.data[0]?.id;
+    address.id = data?.value?.data?.[0]?.id ?? undefined;
+
     setDisplayAddress(address);
     state.value.data = data.value?.data ?? state.value.data;
 
