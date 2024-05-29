@@ -10,7 +10,7 @@
           {{ $t(cookieGroups?.barTitle) }}
         </div>
         <div class="leading-relaxed pb-5">
-          {{ $t(cookieGroups.barDescription) }}
+          {{ $t(cookieGroups?.barDescription) }}
 
           <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
             {{ $t('CookieBar.Privacy Settings') }}
@@ -69,7 +69,7 @@
                 <div v-for="propKey in Object.keys(cookie)" :key="propKey">
                   <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex w-full mb-1 p-2 bg-white">
                     <div class="w-1/4">
-                      {{ propKey }}
+                      {{ $t(`CookieBar.keys.${propKey}`) }}
                     </div>
                     <div class="w-3/4">
                       <template v-if="propKey === 'PrivacyPolicy'">
@@ -78,8 +78,12 @@
                           {{ $t('CookieBar.Privacy Settings') }}
                         </SfLink>
                       </template>
-                      <template v-else-if="getCookiePropValue(cookie, propKey)">
-                        {{ $t(getCookiePropValue(cookie, propKey)) }}
+                      <template v-else-if="getCookiePropertyValue(cookie, propKey)">
+                        {{
+                          getCookiePropertyValue(cookie, propKey).startsWith('CookieBar.')
+                            ? $t(getCookiePropertyValue(cookie, propKey))
+                            : getCookiePropertyValue(cookie, propKey)
+                        }}
                       </template>
                     </div>
                   </div>
@@ -191,7 +195,7 @@ const triggerGroupConsent = (group: CookieGroup) => {
   });
 };
 
-const getCookiePropValue = (cookie: Cookie, propertyKey: string) => {
+const getCookiePropertyValue = (cookie: Cookie, propertyKey: string) => {
   return cookie[propertyKey as keyof Cookie]?.toString() || '';
 };
 </script>
