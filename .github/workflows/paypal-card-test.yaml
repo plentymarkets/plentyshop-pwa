@@ -49,7 +49,7 @@ jobs:
           build: yarn build
           command: yarn test:cypress
           install: false
-          spec: __tests__/test/smoke/paypalCreditCard.cy.ts
+          spec: "__tests__/test/smoke/paypalCreditCard.cy.ts"
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
