@@ -17,9 +17,6 @@
       >
         {{ t('createCustomerReview') }}
       </SfButton>
-
-      <PlentyCustomIcon class="bg-slate-300 !w-10 !h-10 p-2 rounded-md" />
-
       <div v-if="loading" class="w-full flex justify-center items-center">
         <SfLoaderCircular class="absolute" size="sm" />
       </div>

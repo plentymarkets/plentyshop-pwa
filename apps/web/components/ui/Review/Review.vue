@@ -7,13 +7,13 @@
         {{ t('review.verifiedPurchase') }}
       </div>
 
-      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
-        <SfTooltip :label="tooltipReviewLabel">
+      <div v-if="isEditable" class="w-1/3 flex justify-end items-center space-x-3">
+        <SfTooltip :label="tooltipReviewLabel" class="flex">
           <SfIconVisibility v-if="isReviewVisibile" size="sm" class="fill-neutral-400" />
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfLink @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
-        <SfLink @click="openDeleteReview"><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <PlentyEdit @click="openReviewEdit" class="text-primary-900 cursor-pointer" />
+        <SfIconDelete @click="openDeleteReview" size="sm" class="fill-primary-900 cursor-pointer" />
       </div>
     </div>
 
@@ -52,12 +52,12 @@
               <span class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
             </div>
 
-            <div v-if="isAnswerEditable(reply)" class="w-full items-start flex justify-end space-x-3">
-              <SfTooltip :label="tooltipReplyLabel(reply)">
+            <div v-if="isAnswerEditable(reply)" class="w-full flex justify-end items-center space-x-3">
+              <SfTooltip :label="tooltipReplyLabel(reply)" class="flex">
                 <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reply)" size="xs" class="fill-neutral-400" />
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
-              <SfIconTune @click="openReplyEditor(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
+              <PlentyEdit @click="openReplyEditor(reply)" class="text-primary-900 cursor-pointer" />
               <SfIconDelete @click="openReplyDeletion(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
             </div>
             <br />
@@ -162,10 +162,8 @@ import {
   SfIconVisibility,
   SfIconVisibilityOff,
   SfIconClose,
-  SfLink,
   SfTooltip,
   useDisclosure,
-  SfIconTune,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
 import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
