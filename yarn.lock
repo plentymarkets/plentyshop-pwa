@@ -3687,7 +3687,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
+"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.4.0, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
   version: 3.11.2
   resolution: "@nuxt/kit@npm:3.11.2"
   dependencies:
@@ -4354,6 +4354,7 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^14.0.1
     nuxt: ^3.11.2
+    nuxt-svgo: latest
     nuxt-viewport: ^2.1.5
     prettier: ^3.2.5
     rimraf: ^5.0.7
@@ -15294,6 +15295,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mini-svg-data-uri@npm:^1.4.4":
+  version: 1.4.4
+  resolution: "mini-svg-data-uri@npm:1.4.4"
+  bin:
+    mini-svg-data-uri: cli.js
+  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:9.0.1":
   version: 9.0.1
   resolution: "minimatch@npm:9.0.1"
@@ -16153,6 +16163,29 @@ __metadata:
     site-config-stack: 2.2.12
     ufo: ^1.4.0
   checksum: c743c3a8032702d9ad9882d6cf2f3c98b93e78d92a130230eae53472c4ed3bb7486b16e9b3840d7b866b833803408efa9669b121a8a463f225b595b1a8c067b1
+  languageName: node
+  linkType: hard
+
+"nuxt-svgo@npm:latest":
+  version: 4.0.1
+  resolution: "nuxt-svgo@npm:4.0.1"
+  dependencies:
+    "@nuxt/kit": ^3.4.0
+    mini-svg-data-uri: ^1.4.4
+    svgo: ^3.0.2
+  peerDependencies:
+    svgo-loader: ^4.0.0
+    vue: ">=3.2.13"
+    vue-loader: ^17.0.0
+    vue-svg-loader: 0.17.0-beta.2
+  peerDependenciesMeta:
+    svgo-loader:
+      optional: true
+    vue-loader:
+      optional: true
+    vue-svg-loader:
+      optional: true
+  checksum: 9d05939f459cb8894355b7b02e5be7ca8d2531bb402d46f7393b528868a6c8481440771ae1eeea3b6683c304f6fe1d02e110d27e66041d29948e41846f82115d
   languageName: node
   linkType: hard
 
@@ -19579,6 +19612,23 @@ __metadata:
   version: 1.0.0
   resolution: "svg-tags@npm:1.0.0"
   checksum: 407e5ef87cfa2fb81c61d738081c2decd022ce13b922d035b214b49810630bf5d1409255a4beb3a940b77b32f6957806deff16f1bf0ce1ab11c7a184115a0b7f
+  languageName: node
+  linkType: hard
+
+"svgo@npm:^3.0.2":
+  version: 3.3.2
+  resolution: "svgo@npm:3.3.2"
+  dependencies:
+    "@trysound/sax": 0.2.0
+    commander: ^7.2.0
+    css-select: ^5.1.0
+    css-tree: ^2.3.1
+    css-what: ^6.1.0
+    csso: ^5.0.5
+    picocolors: ^1.0.0
+  bin:
+    svgo: ./bin/svgo
+  checksum: a3f8aad597dec13ab24e679c4c218147048dc1414fe04e99447c5f42a6e077b33d712d306df84674b5253b98c9b84dfbfb41fdd08552443b04946e43d03e054e
   languageName: node
   linkType: hard
 

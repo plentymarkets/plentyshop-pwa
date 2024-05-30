@@ -4,6 +4,7 @@
 
 ### New
 
+- Add custom SVG icon support
 - Lazy-load images
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
