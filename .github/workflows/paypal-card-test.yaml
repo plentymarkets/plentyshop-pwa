@@ -48,6 +48,7 @@ jobs:
         with:
           build: yarn build
           install: false
+          start: yarn start
           project: "./apps/web"
           spec: "__tests__/test/smoke/paypalCreditCard.cy.ts"
         env:
