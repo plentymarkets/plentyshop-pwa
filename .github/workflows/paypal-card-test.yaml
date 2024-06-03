@@ -48,6 +48,7 @@ jobs:
         with:
           build: yarn build
           install: false
+          project: "./apps/web"
           spec: "__tests__/test/smoke/paypalCreditCard.cy.ts"
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
