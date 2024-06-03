@@ -4,6 +4,7 @@
 
 ### Hinzugefügt
 
+- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen
 - Lazy Load-Bilder
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
@@ -16,6 +17,11 @@
 
 ### Behoben
 
+- Probleme im Zusammenhang mit Produktbewertungen behoben
+- Fehlende Details auf der Dankesseite behoben
+- Lokale E2E-Tests behoben
+- Fehler bei der Interaktion mit der Wunschliste behoben
+- DefineExpose-Compilerfehler behoben
 - Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
@@ -23,6 +29,7 @@
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert
 - Zufälliger Anmeldefehler behoben
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
+- Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist
 - Fehler beim Filtern im SSR in der Kategorieansicht behoben
 - Die Sichtbarkeit des Namen vom Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen
@@ -33,6 +40,9 @@
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
 - Leeres Wunschlistenbild entfernt.
+- Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
+- Das Laden externer Cookie-Skripte wurde behoben.
+- Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
 
 ### Geändert
 

@@ -122,7 +122,14 @@
     "Show less": "Weniger anzeigen",
     "Accept All": "Alles akzeptieren",
     "Reject All": "Alles ablehnen",
-    "Accept Selection": "Auswahl akzeptieren"
+    "Accept Selection": "Auswahl akzeptieren",
+    "keys": {
+      "Provider": "Anbieter",
+      "Status": "Status",
+      "PrivacyPolicy": "Datenschutzerklärung",
+      "Lifespan": "Lebensdauer",
+      "script": "Skript"
+    }
   },
   "PreviewModeBar": {
     "label": "Steuerung des Vorschaumodus",
@@ -513,7 +520,8 @@
         "shippingMethod": "Versandart"
       },
       "paymentSummary": {
-        "heading": "Zahlungsübersicht"
+        "heading": "Zahlungsübersicht",
+        "paymentStatus": "Zahlungsstatus"
       }
     },
     "wishlist": {
@@ -789,7 +797,8 @@
   },
   "productAttributes": {
     "seeAvailableOptions": "Verfügbare Optionen anzeigen",
-    "notValidVariation": "Bitte wählen Sie eine gültige Variante."
+    "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
+    "productInformationMissing": "Produktinformationen fehlen"
   },
   "quickCheckout": {
     "heading": "Zum Warenkorb hinzugefügt",
