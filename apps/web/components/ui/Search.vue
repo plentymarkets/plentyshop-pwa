@@ -1,3 +1,4 @@
+<!-- CHANGES -->
 <template>
   <form ref="referenceRef" role="search" class="relative" @submit.prevent="handleSubmit">
     <SfInput
@@ -7,10 +8,13 @@
       id="search-bar"
       :placeholder="t('search')"
       @focus="open"
+      wrapper-tag="div"
+      wrapper-class="!bg-transparent border-b border-white rounded-none !ring-0"
+      class="bg-transparent placeholder-white"
     >
       <template #prefix>
         <SfLoaderCircular v-if="loading" />
-        <SfIconSearch v-else />
+        <SfIconSearch v-else class="fill-white" />
       </template>
       <template #suffix>
         <button

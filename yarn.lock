@@ -4032,6 +4032,7 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^14.0.1
     nuxt: ^3.11.2
+    nuxt-splide: ^1.1.1
     nuxt-viewport: ^2.1.4
     prettier: ^3.2.5
     rimraf: ^5.0.5
@@ -4596,6 +4597,22 @@ __metadata:
   version: 2.3.0
   resolution: "@sindresorhus/merge-streams@npm:2.3.0"
   checksum: e989d53dee68d7e49b4ac02ae49178d561c461144cea83f66fa91ff012d981ad0ad2340cbd13f2fdb57989197f5c987ca22a74eb56478626f04e79df84291159
+  languageName: node
+  linkType: hard
+
+"@splidejs/splide@npm:^4.1.3":
+  version: 4.1.4
+  resolution: "@splidejs/splide@npm:4.1.4"
+  checksum: 919f6e1e5da1ebdfe6df77592fab25d0dd52b1809ac61723157cf1c8dd1804bf7739a28e2bb7a22257c5f7628eacba0439ff1268e9bab8577f638f5376fd4b5e
+  languageName: node
+  linkType: hard
+
+"@splidejs/vue-splide@npm:^0.6.12":
+  version: 0.6.12
+  resolution: "@splidejs/vue-splide@npm:0.6.12"
+  dependencies:
+    "@splidejs/splide": ^4.1.3
+  checksum: 1896a6f38380e4dd6a9d6b1f084275d49590012638a44b56cdf2af32188a720a9d4f19058e97af9932fa9c371f98102ef1c2097f644afe62a0ab7d31f5851dbe
   languageName: node
   linkType: hard
 
@@ -15321,6 +15338,17 @@ __metadata:
     site-config-stack: 2.2.12
     ufo: ^1.4.0
   checksum: c743c3a8032702d9ad9882d6cf2f3c98b93e78d92a130230eae53472c4ed3bb7486b16e9b3840d7b866b833803408efa9669b121a8a463f225b595b1a8c067b1
+  languageName: node
+  linkType: hard
+
+"nuxt-splide@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "nuxt-splide@npm:1.1.1"
+  dependencies:
+    "@nuxt/kit": ^3.10.3
+    "@splidejs/vue-splide": ^0.6.12
+    defu: ^6.1.4
+  checksum: 60e7a29ba0b8c4f1d0152f1e7a0321fcdd16f495c4fb99cd9b5d548baa8fb99a1ede4320f13ea94f098ad256a3863dc4a4b47ad95f3087cb884fbc6f8dbfbfd6
   languageName: node
   linkType: hard
 

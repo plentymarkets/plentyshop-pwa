@@ -1,3 +1,4 @@
+<!-- CHANGES -->
 <template>
   <transition
     enter-active-class="transition duration-500 ease-in-out"
@@ -12,7 +13,7 @@
       :model-value="true"
       :disable-click-away="true"
       :disable-esc="true"
-      class="w-full shadow-none md:translate-x-0 z-[100] md:z-0 md:static md:!block -translate-x-full shrink-0 md:w-[303px] bg-white overflow-y-auto"
+      class="w-full shadow-none md:translate-x-0 z-[100] md:z-10 md:relative md:!block -translate-x-full shrink-0 bg-white overflow-y-auto md:overflow-visible"
       data-testid="category-sidebar"
     >
       <div class="grid grid-rows-category-sidebar h-full md:block">

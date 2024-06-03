@@ -1,8 +1,9 @@
+<!-- CHANGES -->
 <template>
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <NuxtLazyHydrate when-visible>
-        <UiSearch class="hidden md:block flex-1" />
+        
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <SfButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"

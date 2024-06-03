@@ -1,3 +1,4 @@
+<!-- CHANGES -->
 <template>
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
@@ -12,16 +13,17 @@
             <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
           </NuxtLazyHydrate>
         </section>
-        <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-          <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
-          </NuxtLazyHydrate>
-        </section>
       </div>
+      <section class="md:mt-8">
+        <UiDivider class="mt-4 mb-2 md:mt-8 !border-primary-700" />
+        <NuxtLazyHydrate when-visible>
+          <ProductAccordion v-if="product" :product="product" />
+        </NuxtLazyHydrate>
+        <!--<NuxtLazyHydrate when-visible>
+          <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
+        </NuxtLazyHydrate>-->
+      
+      </section>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
           <ProductRecommendedProducts
@@ -29,6 +31,22 @@
           ></ProductRecommendedProducts>
         </NuxtLazyHydrate>
       </section>
+      <div class="brand-section bg-gray-300">
+        <div class="grid grid-cols-8 items-center">
+          <div class="col-span-4 md:col-span-3 h-full overflow-hidden bg-[url('/images/Markenbild_Borsalino.jpg')] min-h-96 bg-cover bg-center">
+            <!--<img src="" class="object-cover w-auto max-w-none md:max-w-full">-->
+          </div>
+          <div class="col-span-4 md:col-span-5 p-10">
+            <h3 class="font-bold">Mayser</h3>
+            <p>
+              Mayser gehört zu den führenden Hutherstellern in Deutschland und ist bekannt für seine erstklassige Qualität 
+              und handwerkliches Können. Seit 1800 fertigt das Unternehmen Hüte in Europa, wobei es sich besonders auf Produkte 
+              mit zertifiziertem UV-Schutz spezialisiert hat. Mayser bietet eine breite Palette von Hutstilen, die sowohl traditionell als auch modern sind.
+            </p>
+          </div>
+        </div>
+        
+      </div>
     </NarrowContainer>
   </NuxtLayout>
 </template>
@@ -84,4 +102,5 @@ watch(
     }
   },
 );
+
 </script>

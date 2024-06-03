@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       },
       meta: [
         { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#0C7992' },
+        { name: 'theme-color', content: '#ded2bc' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico' },
@@ -50,8 +50,7 @@ export default defineNuxtConfig({
       '@nuxtjs/google-fonts',
       {
         families: {
-          'Red Hat Display': { wght: [400, 500, 700] },
-          'Red Hat Text': { wght: [300, 400, 500, 700] },
+          'Open Sans': { wght: [300, 400, 500, 700] },
         },
       },
     ],
@@ -62,17 +61,17 @@ export default defineNuxtConfig({
       '@nuxtjs/i18n',
       {
         locales: [
-          {
+         /* {
             code: 'en',
             file: 'en.json',
-          },
+          },*/
           {
             code: 'de',
             file: 'de.json',
           },
         ],
         langDir: 'lang',
-        defaultLocale: 'en',
+        defaultLocale: 'de',
         strategy: 'prefix_and_default',
       },
     ],
@@ -115,7 +114,11 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
+    'nuxt-splide',
   ],
+  splide: {
+    theme: 'default',
+  },
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
@@ -218,7 +221,7 @@ export default defineNuxtConfig({
     manifest: {
       name: 'plentyshop PWA',
       short_name: 'plentyshopPWA',
-      theme_color: '#0C7992',
+      theme_color: '#ded2bc',
       icons: [
         {
           src: 'icons/icon-192x192.png',

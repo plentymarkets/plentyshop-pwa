@@ -1,7 +1,8 @@
+<!-- CHANGES -->
 <template>
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
     <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
-    <div class="md:flex gap-6" data-testid="category-page-content">
+    <div class="gap-6" data-testid="category-page-content">
       <CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
           <slot name="sidebar" />
@@ -19,12 +20,20 @@
             {{ $t('listSettings') }}
           </SfButton>
         </div>
+
         <section
           v-if="products"
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
           <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+            <template v-if="index == 6 && categoryDetails?.details[0].image2Path != null">
+              <div class="col-span-2">
+                <img :src="`https://www.hutbreiter.de/documents/${categoryDetails?.details[0].image2Path}`" />
+                <div v-html="categoryDetails?.details[0].description2"></div>
+              </div>
+              
+            </template>
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
@@ -97,4 +106,5 @@ const actualPrice = (product: Product): number => {
 
   return 0;
 };
+
 </script>

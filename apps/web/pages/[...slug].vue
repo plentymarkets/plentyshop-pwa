@@ -1,3 +1,4 @@
+<!-- CHANGES -->
 <template>
   <NuxtLayout
     name="default"
@@ -12,9 +13,10 @@
       :total-products="productsCatalog.pagination.totals"
       :products="productsCatalog.products"
       :items-per-page="Number(productsPerPage)"
+      :categoryDetails="category"
     >
       <template #sidebar>
-        <CategoryTree :category="category" />
+        <!--<CategoryTree :category="category" />-->
         <CategorySorting />
         <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
         <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />

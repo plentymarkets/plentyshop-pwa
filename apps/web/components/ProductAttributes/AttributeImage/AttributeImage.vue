@@ -1,3 +1,4 @@
+<!-- CHANGES -->
 <template>
   <div>
     <label
@@ -6,14 +7,24 @@
     >
       <span>{{ productAttributeGetters.getAttributeName(attribute) }}</span>
       <span v-if="value"
-        >: <b>{{ selectedAttributeValueName }}</b></span
-      >
+        >: <b>{{ selectedAttributeValueName }}</b></span> 
+        <template v-if="selectedAttributeValueName">
+   
+          <template v-for="(garniturfarbe, index) in $attrs.propertygarniturfarbe">
+            <template v-if="index == 0">
+              <span class="mx-1">|</span>
+              <span>Garniturfarbe:</span>
+            </template>
+            <b>&nbsp;{{ garniturfarbe }}</b>
+          </template>
+        </template>
+      
     </label>
     <div :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)" class="w-full flex gap-4 flex-wrap">
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
-        class="p-2 border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
+        class="p-2 border border-zinc-300 rounded-full cursor-pointer hover:bg-[#3C3C4226] overflow-hidden"
         :class="{
           'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
           '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
@@ -26,6 +37,7 @@
             :src="getImagePath(item)"
             :alt="productAttributeGetters.getAttributeValueName(item)"
             loading="lazy"
+            class="scale-[2.6]"
           />
         </SfTooltip>
       </div>
@@ -42,6 +54,7 @@ import { productAttributeGetters } from '@plentymarkets/shop-sdk';
 import { object, number } from 'yup';
 import { useForm } from 'vee-validate';
 
+
 const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const props = defineProps<AttributeSelectProps>();
@@ -56,7 +69,7 @@ const getLabel = (item: VariationMapProductAttributeValue): string => {
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {
-  return apiEndpoint + productAttributeGetters.getAttributeValueImageUrl(item);
+  return productAttributeGetters.getAttributeValueImageUrl(item);
 };
 
 const validationSchema = toTypedSchema(
@@ -109,4 +122,5 @@ watch(
     );
   },
 );
+
 </script>

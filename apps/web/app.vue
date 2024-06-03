@@ -1,5 +1,6 @@
+<!-- CHANGES -->
 <template>
-  <Body class="font-body" :class="bodyClass" />
+  <Body class="font-body text-primary-900 " :class="bodyClass" />
   <VitePwaManifest />
   <NuxtLayout>
     <NuxtPage />
@@ -15,6 +16,16 @@ localeExpireDate.setDate(new Date().getDate() + DAYS);
 onMounted(() => {
   // Need this class for cypress testing
   bodyClass.value = 'hydrated';
+  window.addEventListener('click', (e: any) => {
+    let accWrap = <HTMLDetailsElement>document.querySelector('.accordion-item-wrap[open]')
+    if(accWrap != null){
+      if (!accWrap.contains(e.target)){
+        let accWrapChild = <HTMLDetailsElement>document.querySelector('.accordion-item-wrap[open] > summary')
+          accWrapChild.dispatchEvent(new CustomEvent("click"));
+      }
+    }
+    
+  })
 });
 
 const { getCategoryTree } = useCategoryTree();
@@ -45,4 +56,5 @@ watch(
     await getCategoryTree();
   },
 );
+
 </script>

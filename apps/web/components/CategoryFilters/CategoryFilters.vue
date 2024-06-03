@@ -5,7 +5,7 @@
   >
     {{ $t('filters') }}
   </div>
-  <div class="flex flex-col gap-2 px-4">
+  <div class="flex flex-col md:flex-row gap-2 px-4 md:grid md:grid-cols-6">
     <CategoryFiltersFilter v-for="facet in facets" :key="facet.id" :facet="facet" />
   </div>
 </template>

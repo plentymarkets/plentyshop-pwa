@@ -9,21 +9,21 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Red Hat Display"', ...defaultTheme.fontFamily.sans],
-        body: ['"Red Hat Text"', ...defaultTheme.fontFamily.sans],
+        display: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
+        body: ['"Open Sans"', ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {
           '50': '#ecffff',
-          '100': '#cefbff',
+          '100': '#ddd1ba',
           '200': '#a4f7fd',
           '300': '#65edfb',
           '400': '#20dbf0',
           '500': '#04bed6',
           '600': '#0697b4',
-          '700': '#0c7992',
-          '800': '#146276',
-          '900': '#155064',
+          '700': '#ceb38d',
+          '800': '#808080',
+          '900': '#606060',
           '950': '#073342',
         },
         secondary: {
@@ -39,6 +39,9 @@ export default {
           '900': '#74430f',
           '950': '#442204',
         },
+        neutral: {
+          '100': 'transparent',
+        }
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],

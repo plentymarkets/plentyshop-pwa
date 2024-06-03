@@ -1,8 +1,9 @@
+<!-- CHANGES -->
 <template>
-  <SfAccordionItem v-if="facet" v-model="open">
+  <SfAccordionItem v-if="facet" v-model="open" class="relative accordion-item-wrap">
     <template #summary>
-      <div class="flex justify-between p-2 mb-2 select-none">
-        <p class="mb-2 font-medium typography-headline-5">{{ facetGetters.getName(facet) }}</p>
+      <div class="flex justify-between p-2 mb-2 select-none md:rounded-md border md:mb-0":class="[open ? 'md:border-b-0 md:rounded-b-none' : '']">
+        <p class="mb-2 font-medium typography-headline-5 md:mb-0">{{ facetGetters.getName(facet) }}</p>
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
     </template>
@@ -27,7 +28,6 @@
         </div>
       </SfListItem> -->
     </div>
-
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
         <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
@@ -53,14 +53,14 @@
       </div>
     </form>
 
-    <div v-else class="mb-4">
+    <div v-else class="mb-4 md:absolute z-20 bg-white md:border md:border-t-0 w-full md:top-full">
       <SfListItem
         v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
         :key="index"
         tag="label"
         size="sm"
         :data-testid="'category-filter-' + index"
-        class="px-1.5 bg-transparent hover:bg-transparent"
+        class="px-1.5 bg-white hover:bg-transparent"
       >
         <template #prefix>
           <SfCheckbox
@@ -100,7 +100,8 @@ import type { Filters } from '~/composables';
 
 const route = useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
-const open = ref(true);
+const open = ref(false);
+
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
 const models = ref({} as Filters);
@@ -144,4 +145,7 @@ watch(
     maxPrice.value = getFacetsFromURL().priceMax ?? '';
   },
 );
+
+
+
 </script>
