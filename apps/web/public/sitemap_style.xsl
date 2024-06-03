@@ -40,12 +40,8 @@
           box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
           }
 
-          #sitemap tr:nth-child(odd) td {
-          background-color: #f8f8f8 !important;
-          }
-
           #sitemap tbody tr:hover td {
-          background-color: #fff;
+          background-color: #f8f8f8;
           }
 
           #sitemap tbody tr:hover td, #sitemap tbody tr:hover td a {
@@ -53,21 +49,17 @@
           }
 
           .expl a {
-          color: #398465
+          color: #146276
           font-weight: 600;
           }
 
           .expl a:visited {
-          color: #398465
+          color: #146276
           }
 
           a {
-          color: #000;
+          color: #146276;
           text-decoration: none;
-          }
-
-          a:visited {
-          color: #777;
           }
 
           a:hover {
@@ -76,6 +68,10 @@
 
           td {
           font-size: 12px;
+          border-right: 1px solid #000;
+          }
+          td:last-child {
+          border-right: 0;
           }
 
           .text-2xl {
@@ -92,6 +88,11 @@
 
           thead th {
           border-bottom: 1px solid #000;
+          border-right: 1px solid #000;
+          padding: 5px;
+          }
+          thead th:last-child {
+          border-right: 0;
           }
           .fixed { position: fixed; }
           .right-2 { right: 2rem; }
@@ -108,11 +109,9 @@
         <div style="grid-template-columns: 1fr 1fr; display: grid; margin: 3rem;">
           <div>
             <div id="content">
-              <h1 class="text-2xl mb-3">XML Sitemap</h1>
-
               <xsl:if test="count(sitemap:sitemapindex/sitemap:sitemap) &gt; 0">
                 <p class="expl" style="margin-bottom: 1rem;">
-                  This XML Sitemap Index file contains
+                  This sitemap file contains
                   <xsl:value-of select="count(sitemap:sitemapindex/sitemap:sitemap)"/> sitemaps.
                 </p>
                 <table id="sitemap" cellpadding="3">
@@ -143,9 +142,9 @@
                 </table>
               </xsl:if>
               <xsl:if test="count(sitemap:sitemapindex/sitemap:sitemap) &lt; 1">
-                <p style="font-size: 12px; margin-bottom: 1rem;"><a href="/sitemap.xml">/sitemap.xml</a></p>
+                <p style="font-size: 12px; margin-bottom: 1rem;">Back to the <a href="/sitemap.xml">/sitemap.xml</a></p>
                 <p class="expl" style="margin-bottom: 1rem;">
-                  This XML Sitemap contains
+                  This sitemap contains
                   <xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> URLs.
                 </p>
                 <table id="sitemap" cellpadding="3">
