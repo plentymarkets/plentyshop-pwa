@@ -4,6 +4,7 @@
 
 ### New
 
+- Add custom SVG icon support
 - Lazy-load images
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
@@ -16,6 +17,8 @@
 
 ### Fixed
 
+- Fixed issues related to product reviews
+- Fixed thank-you page missing details
 - Fixed local e2e tests
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
@@ -39,6 +42,9 @@
 - Fixed cart loader layout shift issue.
 - Show review form on login from review button.
 - Removed empty wishlist image.
+- Images of the attributes in the product view are now displayed correctly.
+- Fixed external cookie script load.
+- Fixed missing translations in the cookie bar.
 
 ### Changed
 
