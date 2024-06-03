@@ -47,7 +47,6 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           build: yarn build
-          command: yarn test:cypress
           install: false
           spec: "__tests__/test/smoke/paypalCreditCard.cy.ts"
         env:
