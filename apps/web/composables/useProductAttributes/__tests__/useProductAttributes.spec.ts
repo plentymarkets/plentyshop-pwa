@@ -28,7 +28,7 @@ describe('useProductAttributes', () => {
         expect(attributeValues.value).toEqual({});
     });
 
-    it('getCombination returns the correct combination', () => {
+    it('should get the correct combination of attributes', () => {
         const { setAttribute, getCombination } = useProductAttributes();
 
         setAttribute(ProductFixture, true);
