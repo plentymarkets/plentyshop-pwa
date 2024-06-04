@@ -1,7 +1,7 @@
 import ProductFixture from "./../../../utils/__tests__/__fixtures__/Product";
 
 describe('useProductAttributes', () => {
-    it('initializes state correctly', () => {
+    it('should initialize state correctly', () => {
         const { attributes, attributeValues, combinations, itemId, variationId } = useProductAttributes();
 
         expect(attributes.value).toEqual([]);
