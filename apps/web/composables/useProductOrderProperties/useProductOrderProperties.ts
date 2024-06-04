@@ -156,9 +156,10 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
         type: file.type,
       }),
     );
+
     state.value.loading = false;
 
-    return data.value ?? null;
+    return data.value?.data ?? null;
   };
 
   return {
