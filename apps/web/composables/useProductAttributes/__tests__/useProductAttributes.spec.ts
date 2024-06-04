@@ -20,7 +20,7 @@ describe('useProductAttributes', () => {
     });
 
 
-    it('updateValue should return empty object if value is not found', () => {
+    it('should should return empty object if value is not found during update', () => {
         const { setAttribute, updateValue, attributeValues } = useProductAttributes();
         setAttribute(ProductFixture, true);
         updateValue(1, 2);
