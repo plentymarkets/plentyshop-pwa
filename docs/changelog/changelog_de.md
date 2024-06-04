@@ -17,6 +17,7 @@
 
 ### Behoben
 
+- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
 - Probleme im Zusammenhang mit Produktbewertungen behoben
 - Fehlende Details auf der Dankesseite behoben
 - Lokale E2E-Tests behoben

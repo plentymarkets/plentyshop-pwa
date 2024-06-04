@@ -12,6 +12,10 @@
     <p class="font-medium text-base">{{ t('orderConfirmation.shipping') }}:</p>
     <p class="text-right">{{ getShippingAmount(orderGetters.getShippingCost(order) ?? 0) }}</p>
   </div>
+  <div class="grid grid-cols-2 mt-2">
+    <p class="font-medium text-base">{{ t('coupon.name') }}:</p>
+    <p class="text-right">{{ n(orderGetters.getCouponValue(order.totals), 'currency') }}</p>
+  </div>
   <div class="grid grid-cols-2 mt-2" v-for="(vat, index) in orderGetters.getOrderVats(order)" :key="index">
     <p class="font-medium text-base">{{ t('orderConfirmation.vat') }} ({{ orderGetters.getOrderVatRate(vat) }}%):</p>
     <p class="text-right">{{ n(orderGetters.getOrderVatValue(vat), 'currency') }}</p>
