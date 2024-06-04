@@ -18,7 +18,11 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
+            <ReviewsAccordion
+              :product="product"
+              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+              @on-list-change="fetchProductReviewAverage(Number(productId))"
+            />
           </NuxtLazyHydrate>
         </section>
       </div>

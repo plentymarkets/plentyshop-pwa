@@ -4,6 +4,7 @@
 
 ### Hinzugefügt
 
+- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen
 - Lazy Load-Bilder
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
@@ -16,6 +17,8 @@
 
 ### Behoben
 
+- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
+- Probleme im Zusammenhang mit Produktbewertungen behoben
 - Fehlende Details auf der Dankesseite behoben
 - Lokale E2E-Tests behoben
 - Fehler bei der Interaktion mit der Wunschliste behoben
@@ -40,6 +43,7 @@
 - Leeres Wunschlistenbild entfernt.
 - Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
 - Das Laden externer Cookie-Skripte wurde behoben.
+- Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
 
 ### Geändert
 
@@ -48,6 +52,7 @@
 - Registrierungsformular wurde verbessert
 - Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
 - Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster
+- Das Design der Sitemap wurde angepasst
 - Struktur der useProduct Composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
