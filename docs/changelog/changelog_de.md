@@ -4,6 +4,7 @@
 
 ### Hinzugefügt
 
+- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen
 - Lazy Load-Bilder
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
@@ -16,6 +17,8 @@
 
 ### Behoben
 
+- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
+- Probleme im Zusammenhang mit Produktbewertungen behoben
 - Fehlende Details auf der Dankesseite behoben
 - Lokale E2E-Tests behoben
 - Fehler bei der Interaktion mit der Wunschliste behoben

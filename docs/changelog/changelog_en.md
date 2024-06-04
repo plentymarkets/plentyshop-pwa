@@ -4,6 +4,7 @@
 
 ### New
 
+- Add custom SVG icon support
 - Lazy-load images
 - a guest login page before going to checkout
 - Width and height attributes to images on category and product view
@@ -16,6 +17,8 @@
 
 ### Fixed
 
+- Fixed coupon display on thankyou page
+- Fixed issues related to product reviews
 - Fixed thank-you page missing details
 - Fixed local e2e tests
 - Fixed errors when interacting with wishlist
