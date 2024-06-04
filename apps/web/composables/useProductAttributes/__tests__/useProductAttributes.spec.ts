@@ -44,7 +44,7 @@ describe('useProductAttributes', () => {
         });
     });
 
-    it('getValue returns the correct attribute value', () => {
+    it('should get the correct attribute value', () => {
         const { setAttribute, updateValue, getValue } = useProductAttributes();
         setAttribute(ProductFixture, true);
         updateValue(1, 1);
