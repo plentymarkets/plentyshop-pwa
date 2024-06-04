@@ -8,14 +8,14 @@ export interface UseProductState {
 }
 
 export type FetchProduct = (params: ProductParams) => Promise<Product>;
-export type GenerateBreadcrumb = () => void;
+export type SetBreadcrumbs = () => void;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
   loading: Readonly<Ref<boolean>>;
   breadcrumbs: Readonly<Ref<UseProductState['breadcrumbs']>>;
   fetchProduct: FetchProduct;
-  generateBreadcrumbs: GenerateBreadcrumb;
+  setBreadcrumbs: SetBreadcrumbs;
   setTitle: () => void;
   properties: UseProductOrderProperties;
 }
