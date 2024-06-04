@@ -59,7 +59,6 @@ import {
   SfButton,
   SfLoaderCircular,
 } from '@storefront-ui/vue';
-import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables';
 const openedCoupon = ref(false);
 const couponCode = ref('');

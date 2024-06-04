@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 
 export default defineNuxtConfig({
@@ -23,12 +24,15 @@ export default defineNuxtConfig({
       ],
     },
   },
+  experimental: {
+    asyncContext: true,
+  },
   appConfig: {
     titleSuffix: 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables/**', 'utils/**'],
+    dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
   image: {
@@ -57,7 +61,12 @@ export default defineNuxtConfig({
     ],
     '@nuxtjs/turnstile',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
+    [
+      '@nuxtjs/tailwindcss',
+      {
+        configPath: '~/tailwind.config.ts',
+      },
+    ],
     [
       '@nuxtjs/i18n',
       {
@@ -93,7 +102,7 @@ export default defineNuxtConfig({
       {
         breakpoints: {
           sm: 640,
-          md: 768,
+          md: 640,
           lg: 1024,
         },
         defaultBreakpoints: {
@@ -115,6 +124,7 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
+    'nuxt-svgo',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -147,6 +157,7 @@ export default defineNuxtConfig({
       { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
     ],
     autoLastmod: true,
+    xsl: '/sitemap_style.xsl',
     sitemaps: {
       'sitemap/content': {
         exclude: [
@@ -180,11 +191,11 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
+      domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
       apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
       newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
       useAvif: process.env?.USE_AVIF === '1' ?? false,
@@ -244,5 +255,9 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
+  },
+  svgo: {
+    global: false,
+    componentPrefix: 'plenty',
   },
 });

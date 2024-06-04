@@ -1,6 +1,5 @@
 import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
-
 import { toRefs } from '@vueuse/shared';
 import type {
   FetchWishlist,
@@ -40,12 +39,14 @@ export const useWishlist: UseWishlistReturn = () => {
    */
   const fetchWishlist: FetchWishlist = async () => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getWishlist());
 
-    state.value.data = data.value?.data ?? state.value.data;
-
-    state.value.loading = false;
-    return state.value.data;
+    return await useSdk()
+      .plentysystems.getWishlist()
+      .then(({ data }) => {
+        state.value.data = data ?? state.value.data;
+        state.value.loading = false;
+        return state.value.data;
+      });
   };
 
   /**
@@ -82,12 +83,13 @@ export const useWishlist: UseWishlistReturn = () => {
   const addWishlistItem: AddWishlistItem = async (params: AddWishlistItemParams) => {
     state.value.loading = true;
 
-    const { data } = await useAsyncData(() => useSdk().plentysystems.doAddWishlistItem(params));
-
-    setWishlistItemIds([...state.value.wishlistItemIds, params.variationId.toString()]);
-
-    state.value.loading = false;
-    return data.value?.data || ({} as AddWishlistItemResponse);
+    return await useSdk()
+      .plentysystems.doAddWishlistItem(params)
+      .then(({ data }) => {
+        setWishlistItemIds([...state.value.wishlistItemIds, params.variationId.toString()]);
+        state.value.loading = false;
+        return data || ({} as AddWishlistItemResponse);
+      });
   };
 
   /**
@@ -104,12 +106,13 @@ export const useWishlist: UseWishlistReturn = () => {
   const deleteWishlistItem: DeleteWishlistItem = async (params: DeleteWishlistItemParams) => {
     state.value.loading = true;
 
-    const { data } = await useAsyncData(() => useSdk().plentysystems.deleteWishlistItem(params));
-
-    setWishlistItemIds(state.value.wishlistItemIds.filter((id: string) => id !== params.variationId.toString()));
-
-    state.value.loading = false;
-    return !!data.value?.data;
+    return await useSdk()
+      .plentysystems.deleteWishlistItem(params)
+      .then(({ data }) => {
+        setWishlistItemIds(state.value.wishlistItemIds.filter((id: string) => id !== params.variationId.toString()));
+        state.value.loading = false;
+        return !!data;
+      });
   };
 
   /**
@@ -144,19 +147,13 @@ export const useWishlist: UseWishlistReturn = () => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
 
-    if (isWishlistItem(variationId)) {
-      await deleteWishlistItem({ variationId });
-      send({
-        type: 'positive',
-        message: $i18n.t('wishlistInteraction.delete'),
-      });
-    } else {
-      await addWishlistItem({ variationId, quantity });
-      send({
-        type: 'positive',
-        message: $i18n.t('wishlistInteraction.add'),
-      });
-    }
+    await (isWishlistItem(variationId)
+      ? deleteWishlistItem({ variationId }).then(() =>
+          send({ type: 'positive', message: $i18n.t('wishlistInteraction.delete') }),
+        )
+      : addWishlistItem({ variationId, quantity }).then(() =>
+          send({ type: 'positive', message: $i18n.t('wishlistInteraction.add') }),
+        ));
   };
 
   return {

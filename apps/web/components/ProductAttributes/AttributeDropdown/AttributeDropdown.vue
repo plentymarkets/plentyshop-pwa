@@ -10,7 +10,7 @@
       :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
       size="lg"
       v-model="value"
-      @update:model-value="(val) => doUpdateValue(val)"
+      @update:model-value="(event) => doUpdateValue(Number(event))"
       :placeholder="t('pleaseSelect')"
       :invalid="Boolean(errors['selectedValue'])"
     >

@@ -1,5 +1,4 @@
 import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
   UseCustomerState,

@@ -42,7 +42,7 @@
       <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
-      <div class="flex items-center pt-1">
+      <div class="flex items-center pt-1 gap-1">
         <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
@@ -153,7 +153,7 @@ const addWithLoader = async (productId: number) => {
       quantity: 1,
     });
 
-    openQuickCheckout(product);
+    openQuickCheckout(product, 1);
     send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;

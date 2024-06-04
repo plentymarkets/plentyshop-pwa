@@ -26,9 +26,11 @@
         :review-item="reviewItem"
         @on-submit="saveReview"
         @review-updated="refreshReviews"
-        @review-deleted="refreshReviews"
+        @review-deleted="deleteReview"
       />
-      <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
+      <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
+        {{ t('customerReviewsNone') }}
+      </p>
     </UiAccordionItem>
     <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
@@ -61,15 +63,12 @@
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
   >
     <header>
-      <div class="text-lg font-medium ml-8">
-        {{ isLogin ? t('auth.login.heading') : t('auth.signup.heading') }}
-      </div>
       <SfButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
       </SfButton>
     </header>
-    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" />
-    <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" />
+    <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuth" />
+    <Register v-else @change-view="isLogin = true" @registered="closeAuth" />
   </UiModal>
 </template>
 
@@ -79,6 +78,7 @@ import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefr
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
@@ -87,6 +87,11 @@ const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } =
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const reviewsOpen = ref(false);
+
+const closeAuth = () => {
+  closeAuthentication();
+  isReviewOpen.value = true;
+};
 
 const {
   data: productReviewsData,
@@ -108,7 +113,13 @@ const saveReview = async (form: CreateReviewParams) => {
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
+  emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
+};
+
+const deleteReview = () => {
+  refreshReviews();
+  emits('on-list-change');
 };
 
 watch(

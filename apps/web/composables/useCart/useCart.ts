@@ -1,7 +1,6 @@
 import type { CartItem } from '@plentymarkets/shop-api';
 import type { Cart, DoAddItemParams, SetCartItemQuantityParams, DeleteCartItemParams } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
-
 import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
 import type { DeleteCartItem, SetCartItemQuantity } from './types';
 
@@ -41,6 +40,7 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
 export const useCart: UseCartReturn = () => {
   const state = useState<UseCartState>('useCart', () => ({
     data: {} as Cart,
+    useAsShippingAddress: true,
     loading: false,
   }));
 

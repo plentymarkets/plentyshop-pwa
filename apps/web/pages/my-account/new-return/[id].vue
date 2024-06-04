@@ -49,7 +49,6 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
-import { ref, onMounted } from 'vue';
 import { useReturnOrder } from '~/composables/useReturnOrder';
 const route = useRoute();
 const localePath = useLocalePath();

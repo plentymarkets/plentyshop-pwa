@@ -1,6 +1,6 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart"
+    @submit.prevent="handleAddToCart()"
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
@@ -48,9 +48,9 @@
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <SfLink variant="secondary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
+      <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
-      </SfLink>
+      </SfButton>
     </div>
     <div
       class="mb-4 font-normal typography-text-sm"
@@ -101,28 +101,18 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <PayPalExpressButton
-        v-if="getCombination()"
-        :value="{ product: product, quantity: quantitySelectorValue, basketItemOrderParams: getPropertiesForCart() }"
-        class="mt-4"
-        type="SingleItem"
-      />
+      <client-only>
+        <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+      </client-only>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import {
-  SfButton,
-  SfCounter,
-  SfLink,
-  SfRating,
-  SfIconShoppingCart,
-  SfLoaderCircular,
-  SfTooltip,
-} from '@storefront-ui/vue';
+import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -169,7 +159,7 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBaseSinglePrice(product.value),
 );
 
-const handleAddToCart = async () => {
+const handleAddToCart = async (quickCheckout = true) => {
   await validateAllFieldsAttributes();
   await validateAllFields();
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
@@ -186,12 +176,12 @@ const handleAddToCart = async () => {
       ],
       type: 'negative',
     });
-    return;
+    return false;
   }
 
   if (!getCombination()) {
     send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
-    return;
+    return false;
   }
 
   const params = {
@@ -200,10 +190,18 @@ const handleAddToCart = async () => {
     basketItemOrderParams: getPropertiesForCart(),
   };
 
-  if (await addToCart(params)) {
-    openQuickCheckout(product.value);
+  const added = await addToCart(params);
+  if (added) {
+    if (quickCheckout) openQuickCheckout(product.value, quantitySelectorValue.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
+  return added;
+};
+
+const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
+  const added = await handleAddToCart(false);
+
+  callback(added);
 };
 
 const changeQuantity = (quantity: string) => {
