@@ -11,7 +11,7 @@ describe('useProductAttributes', () => {
         expect(variationId.value).toBe(0);
     });
 
-    it('updateValue updates attribute values', () => {
+    it('should update attribute values', () => {
         const { setAttribute, updateValue, attributeValues } = useProductAttributes();
         setAttribute(ProductFixture, true);
         updateValue(1, 1);
