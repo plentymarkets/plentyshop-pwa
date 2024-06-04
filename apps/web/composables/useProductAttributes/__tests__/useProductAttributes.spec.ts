@@ -16,7 +16,7 @@ describe('useProductAttributes', () => {
         setAttribute(ProductFixture, true);
         updateValue(1, 1);
 
-        expect(attributeValues.value).toEqual({ 1: 1, });
+        expect(attributeValues.value).toEqual({ 1: 1 });
     });
 
 
