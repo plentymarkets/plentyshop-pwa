@@ -1,39 +1,37 @@
 # Changelog plentyshopPWA
 
-## v1.4.1 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
+## v1.4.1 (2024-06-04) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
 ### Hinzugefügt
 
-- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen
-- Lazy Load-Bilder
-- eine Gast-Anmeldeseite vor der Kasse
-- Auswahl für die gespeicherten Adressen an der Kasse
-- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht
-- Artikelbewertung
-- Anpassung des Produktnamens in den Dokumentationsdateien.
+- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen.
+- Lazy Load-Bilder.
+- Eine Gast-Anmeldeseite vor der Kasse.
+- Auswahl für die gespeicherten Adressen an der Kasse.
+- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
+- Artikelbewertung.
 - Schnellkasse-Funktionalität hinzugefügt.
 - Menge zum Produktnamen der Schnellkasse hinzugefügt.
-- Übersetzungen von Cookiebar
+- Übersetzungen von Cookiebar.
 
 ### Behoben
 
-- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
-- Probleme im Zusammenhang mit Produktbewertungen behoben
-- Fehlende Details auf der Dankesseite behoben
-- Lokale E2E-Tests behoben
-- Fehler bei der Interaktion mit der Wunschliste behoben
-- DefineExpose-Compilerfehler behoben
-- Behoben: Zufällige Nuxt-Instanz nicht verfügbar
+- Gutschein wird auf der Dankeschön-Seite angezeigt.
+- Probleme im Zusammenhang mit Produktbewertungen behoben.
+- Fehlende Details auf der Dankeschön-Seite behoben.
+- Fehler bei der Interaktion mit der Wunschliste behoben.
+- DefineExpose-Compilerfehler behoben.
+- Zufällige Nuxt-Instanz nicht verfügbar.
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
-- Bilderqualität verbessert auf der Kategorieseite
-- Die Facettenfilterung auf der Kategorieseite wurde korrigiert
-- Zufälliger Anmeldefehler behoben
-- Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren
-- Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist
-- Fehler beim Filtern im SSR in der Kategorieansicht behoben
-- Die Sichtbarkeit des Namen vom Login Button
-- Die Middleware unterstützt jetzt IPv6-Adressen
+- Bilderqualität verbessert auf der Kategorieseite.
+- Die Facettenfilterung auf der Kategorieseite wurde korrigiert.
+- Zufälliger Anmeldefehler behoben.
+- Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren.
+- Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist.
+- Fehler beim Filtern im SSR in der Kategorieansicht behoben.
+- Die Sichtbarkeit des Namen vom Login Button.
+- Die Middleware unterstützt jetzt IPv6-Adressen.
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
 - Rückgabebild entfernt.
@@ -47,12 +45,12 @@
 
 ### Geändert
 
-- Konvertierung von Hauptseitenbildern (avif)
-- Styling der Benachrichtigungsanzeige
-- Registrierungsformular wurde verbessert
-- Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
-- Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster
-- Das Design der Sitemap wurde angepasst
+- Konvertierung von Hauptseitenbildern (avif).
+- Styling der Benachrichtigungsanzeige.
+- Registrierungsformular wurde verbessert.
+- Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert.
+- Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster.
+- Das Design der Sitemap wurde angepasst.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

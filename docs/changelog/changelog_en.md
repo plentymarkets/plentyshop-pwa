@@ -1,38 +1,36 @@
 # Changelog plentyshopPWA
 
-## v1.4.1 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
+## v1.4.1 (2024-06-04) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
 ### New
 
 - Add custom SVG icon support
 - Lazy-load images
-- a guest login page before going to checkout
-- Width and height attributes to images on category and product view
+- A guest login page before going to checkout
 - Selection for the saved addresses at checkout
+- Width and height attributes to images on category and product view
 - Product reviews on single item pages
-- Product renaming in the documentation files
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
-- cookie bar translations.
+- Cookie bar translations.
 
 ### Fixed
 
 - Fixed coupon display on thankyou page
 - Fixed issues related to product reviews
 - Fixed thank-you page missing details
-- Fixed local e2e tests
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
 - Fixed random Nuxt instance unavailable
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
 - Fixed random login error
-- Fixed hydration and intlify warnings
-- The PayPal express button on the product page handles the click event correctly.
 - Creating new item in basket, instead of updating quantity
-- Fixed aspect ratio on homepage hero img
 - Bundle item accessability via hyperlink, if not fully set
 - Fixed the filtering in SSR on the category page
+- Fixed hydration and intlify warnings
+- The PayPal express button on the product page handles the click event correctly.
+- Fixed aspect ratio on homepage hero img
 - Fixed bad image quality on category view
 - Fixed acccessibility of the login button name
 - The middleware does now support IPv6 addresses
