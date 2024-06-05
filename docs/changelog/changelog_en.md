@@ -32,7 +32,7 @@
 - The PayPal express button on the product page handles the click event correctly.
 - Fixed aspect ratio on homepage hero img
 - Fixed bad image quality on category view
-- Fixed acccessibility of the login button name
+- Fixed acccessibility of the login button
 - The middleware does now support IPv6 addresses
 - Fixed lighthouse error regarding wishlist button size.
 - Removed returns image.
