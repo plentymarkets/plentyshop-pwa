@@ -10,7 +10,7 @@
 - Selection of saved addresses in the checkout
 - Width and height attributes to images on category and product view
 - Product reviews on item pages
--  “Item added to shopping cart” dialog
+- “Item added to shopping cart” dialog
 
 ### Fixed
 
