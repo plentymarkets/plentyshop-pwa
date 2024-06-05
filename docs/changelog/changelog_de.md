@@ -6,7 +6,7 @@
 
 - Unterstützung für benutzerdefinierte SVG-Symbole
 - Bilder außerhalb des sichtbaren Bereichs werden lazyloaded
-- Eine Gast-Anmeldeseite vor der Kasse.
+- Anmelde-Dialog vor dem Checkout
 - Auswahl für die gespeicherten Adressen an der Kasse.
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
 - Artikelbewertung.
