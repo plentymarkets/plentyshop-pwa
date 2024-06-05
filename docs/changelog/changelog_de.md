@@ -30,7 +30,7 @@
 - Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren.
 - Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist.
 - Fehler beim Filtern im SSR in der Kategorieansicht behoben.
-- Die Sichtbarkeit des Namen vom Login Button.
+- Die Barrierefreiheit des Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen.
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
 - Lighthouse-Fehler bezüglich der Größe des zur Wunschliste hinzufügen Buttons behoben.
