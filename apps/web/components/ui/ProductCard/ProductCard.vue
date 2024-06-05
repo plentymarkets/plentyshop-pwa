@@ -86,10 +86,7 @@
         </span>
       </SfButton>
       <SfButton v-else type="button" :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" size="sm" class="w-fit">
-        <span>{{ t('showArticle') }}</span>
-        <template #prefix>
-          <SfIconChevronRight size="sm" />
-        </template>
+        <span>{{ t('showOptions') }}</span>
       </SfButton>
     </div>
   </div>
