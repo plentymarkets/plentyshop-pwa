@@ -17,6 +17,7 @@
 
 ### Fixed
 
+- Fixed Badges elements rendering
 - Fixed coupon display on thankyou page
 - Fixed issues related to product reviews
 - Fixed thank-you page missing details
