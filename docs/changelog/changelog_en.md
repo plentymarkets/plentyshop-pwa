@@ -7,7 +7,7 @@
 - Custom SVG icon support
 - Images outside the visible area are lazy loaded
 - Login dialog before checkout
-- Selection for the saved addresses at checkout
+- Selection of saved addresses in the checkout
 - Width and height attributes to images on category and product view
 - Product reviews on single item pages
 - Added quick checkout functionality.
