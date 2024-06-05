@@ -10,7 +10,7 @@
 - Auswahl für die gespeicherten Adressen im Checkout
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
 - Produktbewertungen auf Artikelseiten
-- Schnellkasse-Funktionalität hinzugefügt.
+- "Artikel zum Warenkorb hinzugefügt" Dialog
 - Menge zum Produktnamen der Schnellkasse hinzugefügt.
 - Übersetzungen von Cookiebar.
 
