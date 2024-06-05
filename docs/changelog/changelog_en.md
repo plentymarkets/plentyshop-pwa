@@ -19,7 +19,7 @@
 - Added missing details on the order confirmation
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
-- Fixed random Nuxt instance unavailable
+- Fixed random "Nuxt instance unavailable" error
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
 - Fixed random login error
