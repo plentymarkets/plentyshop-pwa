@@ -9,7 +9,7 @@
 - Anmelde-Dialog vor dem Checkout
 - Auswahl für die gespeicherten Adressen im Checkout
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
-- Artikelbewertung.
+- Produktbewertungen auf Artikelseiten
 - Schnellkasse-Funktionalität hinzugefügt.
 - Menge zum Produktnamen der Schnellkasse hinzugefügt.
 - Übersetzungen von Cookiebar.
