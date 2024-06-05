@@ -49,6 +49,7 @@
 
 ### Changed
 
+- Text for missing information on bundle items changed
 - Styling of notifications
 - Mark optional and required form fields.
 - Improved the registration form

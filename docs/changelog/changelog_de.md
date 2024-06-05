@@ -47,6 +47,7 @@
 
 ### Geändert
 
+- Text bei fehlenden Informationen auf Artikelpaketen geändert
 - Konvertierung von Hauptseitenbildern (avif)
 - Styling der Benachrichtigungsanzeige
 - Registrierungsformular wurde verbessert
