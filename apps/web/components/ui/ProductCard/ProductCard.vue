@@ -46,10 +46,10 @@
         <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-
-      <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
-        {{ description }}
-      </p>
+      <div
+        v-html="productGetters.getShortDescription(product)"
+        class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify"
+      />
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
