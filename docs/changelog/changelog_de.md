@@ -45,7 +45,7 @@
 
 ### Geändert
 
-- Konvertierung von Hauptseitenbildern (avif).
+- Demobilder der Homepage wurden zu AVIF konvertiert
 - Styling der Benachrichtigungsanzeige.
 - Registrierungsformular wurde verbessert.
 - Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert.
