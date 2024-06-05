@@ -111,12 +111,13 @@ export default defineNuxtConfig({
   },
   i18n: nuxtI18nOptions,
   sitemap: {
+    autoLastmod: true,
+    xsl: '/sitemap_style.xsl',
     xslColumns: [
       // URL column must always be set, no value needed
       { label: 'URL', width: '75%' },
       { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
     ],
-    autoLastmod: true,
     sitemaps: {
       'sitemap/content': {
         exclude: [
