@@ -94,15 +94,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfLink,
-  SfButton,
-  SfIconShoppingCart,
-  SfLoaderCircular,
-  SfIconChevronRight,
-  SfRating,
-  SfCounter,
-} from '@storefront-ui/vue';
+import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
