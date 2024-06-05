@@ -123,7 +123,6 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/test-utils/module',
     'nuxt-lazy-hydrate',
-    'nuxt-svgo',
   ],
   // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
@@ -249,9 +248,5 @@ export default defineNuxtConfig({
       ],
     },
     registerWebManifestInRouteRules: true,
-  },
-  svgo: {
-    global: false,
-    componentPrefix: 'plenty',
   },
 });
