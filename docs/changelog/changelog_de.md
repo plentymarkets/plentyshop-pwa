@@ -4,52 +4,51 @@
 
 ### Hinzugefügt
 
-- Unterstützung für benutzerdefinierte SVG-Symbole
-- Bilder außerhalb des sichtbaren Bereichs werden lazyloaded
-- Anmelde-Dialog vor dem Checkout
-- Auswahl für die gespeicherten Adressen im Checkout
-- Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
-- Produktbewertungen auf Artikelseiten
-- "Artikel zum Warenkorb hinzugefügt" Dialog
+- Benutzerdefinierte SVG-Symbole werden jetzt unterstützt.
+- Bilder außerhalb des sichtbaren Bereichs werden jetzt mit Lazy Loading geladen.
+- Ein Anmelde-Dialog vor dem Checkout wurde hinzugefügt.
+- Die Auswahl der gespeicherten Adressen im Checkout wurde hinzugefügt.
+- Bilder in der Kategorie- und Artikelansicht erhalten jetzt Breiten- und Höhenattribute.
+- Artikelseiten können jetzt Produktbewertungen darstellen.
+- "Artikel zum Warenkorb hinzugefügt"-Dialog wurde hinzugefügt.
 
 ### Behoben
 
-- Gutscheindarstellung auf der Bestellbestätigung korrigiert
-- Probleme im Zusammenhang mit Produktbewertungen behoben.
-- Fehlende Details auf der Bestellbestätigung hinzugefügt
-- Fehler bei der Interaktion mit der Wunschliste behoben.
-- "DefineExpose"-Compilerfehler behoben.
-- Zufälliger "Nuxt-Instanz nicht verfügbar" Fehler behoben.
-- Hydration und intlify Warnungen wurden behoben.
-- Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
-- Bilderqualität verbessert auf der Kategorieseite.
+- Die Gutscheindarstellung auf der Bestellbestätigung war fehlerhaft. Dies wurde behoben.
+- Probleme im Zusammenhang mit der Darstellung von Produktbewertungen  wurden behoben.
+- Fehlende Details auf der Bestellbestätigung wurden hinzugefügt.
+- Ein Fehler bei der Interaktion mit der Wunschliste wurde behoben.
+- Ein "DefineExpose"-Compiler-Fehler wurde behoben.
+- Ein "Nuxt-Instanz nicht verfügbar" Fehler wurde behoben.
+- Hydration- und intlify-Warnungen wurden behoben.
+- Es wird nun sichergestellt, dass sich kein Slash am Ende der API_URL befindet.
+- Die Bilderqualität in der Kategorieansicht wurde verbessert.
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert.
-- Zufälliger Anmeldefehler behoben.
-- Beim Hinzufügen, eines bereits im Warenkorb befindlichen Artikels, wird die Anzahl erhöht anstatt den selben Artikel erneut zum Warenkorb hinzuzufügen
-- Bestandteile von Artikelpaketen ohne Artikel URL führen nicht länger zu einer 404 Seite.
-- Bestandteile von Artikelpaketen ohne gepflegten Namen zeigen jetzt den Platzhalter "Product Information Missing" an der Stelle des Namens an
-- Server-Side Rendering Fehler durch Filter auf der Kategorieansicht behoben
-- Die Barrierefreiheit des Login Button
+- Ein zufälliger Fehler bei der Anmeldung wurde behoben.
+- Beim Hinzufügen eines bereits im Warenkorb befindlichen Artikels wird jetzt die Anzahl des Artikels erhöht, anstatt den selben Artikel erneut zum Warenkorb hinzuzufügen.
+- Bestandteile von Artikelpaketen ohne Artikel-URL führen jetzt nicht mehr zu einer 404 Seite.
+- Bestandteile von Artikelpaketen, für die kein Name hinterlegt ist, zeigen jetzt den Platzhalter "Product Information Missing" an der Stelle des Namens an.
+- Durch Filter in der Kategorieansicht kam es zu einem Server-Side-Rendering-Fehler. Dies wurde behoben.
+- Die Login-Schaltfläche ist jetzt barrierefrei.
 - Die Middleware unterstützt jetzt IPv6-Adressen.
-- Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
-- Die Größe des "Zur Wunschliste hinzufügen" Buttons wurde angepasst
-- Rückgabebild entfernt.
-- Verbesserte mobile Ansicht der Cookie-Leiste.
+- Der PayPal-Express-Button auf der Artikelseite verarbeitet das Klickereignis jetzt korrekt.
+- Die Größe der "Zur Wunschliste hinzufügen"-Schaltfläche wurde angepasst.
+- Das Rückgabebild wurde entfernt.
+- Die mobile Ansicht der Cookiebar wurde verbessert.
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
-- Problem mit der Verschiebung des Wagenlader-Layouts behoben.
-- Leeres Wunschlistenbild entfernt.
-- Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
-- Das Laden externer Cookie-Skripte wurde behoben.
-- Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
-- Übersetzungen von Cookiebar.
+- Ein Problem mit der Verschiebung des Wagenlader-Layouts wurde behoben.
+- Das leere Wunschlistenbild wurde entfernt.
+- Bilder von Attributen in der Artikelansicht werden jetzt korrekt angezeigt.
+- Ein Fehler beim Laden externer Cookie-Skripte wurde behoben.
+- Fehlende Übersetzungen für die Cookiebar wurden hinzugefügt.
 
 ### Geändert
 
-- Demobilder der Homepage wurden zu AVIF konvertiert
-- Styling der Benachrichtigungsanzeige.
-- Registrierungsformular wurde verbessert.
-- Die Barrierefreiheit der Bewertungen auf der Kategorie- und Produktseite wurde verbessert
-- Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster.
+- Demo-Bilder der Homepage wurden in das Format AVIF konvertiert.
+- Das Styling der Benachrichtigungsanzeige wurde angepasst.
+- Das Formular für die Kundenregistrierung wurde verbessert.
+- Die Barrierefreiheit der Bewertungen auf der Kategorie- und Artikelseite wurde verbessert.
+- Demo-Bilder haben jetzt verschiedene Größen, basierend auf dem Ansichtsfenster.
 - Das Design der Sitemap wurde angepasst.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
