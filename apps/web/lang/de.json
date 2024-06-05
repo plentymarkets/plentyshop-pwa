@@ -798,7 +798,7 @@
   "productAttributes": {
     "seeAvailableOptions": "Verfügbare Optionen anzeigen",
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productInformationMissing": "Produktinformationen fehlen"
+    "productNameMissing": "Produktname fehlt"
   },
   "quickCheckout": {
     "heading": "Zum Warenkorb hinzugefügt",
