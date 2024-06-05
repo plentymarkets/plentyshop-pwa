@@ -11,8 +11,6 @@
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
 - Produktbewertungen auf Artikelseiten
 - "Artikel zum Warenkorb hinzugefügt" Dialog
-- Menge zum Produktnamen der Schnellkasse hinzugefügt.
-- Übersetzungen von Cookiebar.
 
 ### Behoben
 
@@ -28,7 +26,8 @@
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert.
 - Zufälliger Anmeldefehler behoben.
 - Beim Hinzufügen, eines bereits im Warenkorb befindlichen Artikels, wird die Anzahl erhöht anstatt den selben Artikel erneut zum Warenkorb hinzuzufügen
-- Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist.
+- Bestandteile von Artikelpaketen ohne Artikel URL führen nicht länger zu einer 404 Seite.
+- Bestandteile von Artikelpaketen ohne gepflegten Namen zeigen jetzt den Platzhalter "Product Information Missing" an der Stelle des Namens an
 - Server-Side Rendering Fehler durch Filter auf der Kategorieansicht behoben
 - Die Barrierefreiheit des Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen.
@@ -42,6 +41,7 @@
 - Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
 - Das Laden externer Cookie-Skripte wurde behoben.
 - Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
+- Übersetzungen von Cookiebar.
 
 ### Geändert
 

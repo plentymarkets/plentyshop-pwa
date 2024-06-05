@@ -11,8 +11,6 @@
 - Width and height attributes to images on category and product view
 - Product reviews on item pages
 -  “Item added to shopping cart” dialog
-- Added quantity to quick checkout product name
-- Cookie bar translations.
 
 ### Fixed
 
@@ -26,7 +24,8 @@
 - Fixed facet filtering on category page
 - Fixed random login error
 - Creating new item in basket, instead of updating quantity
-- Bundle item accessability via hyperlink, if not fully set
+- Components of article packages without an article URL no longer lead to a 404 page.
+- Components of item packages without a maintained name now display the placeholder "Product Information Missing" in place of the name
 - Server-side rendering error due to filters on the category view
 - Fixed hydration and intlify warnings
 - The PayPal express button on the product page handles the click event correctly.
@@ -44,6 +43,7 @@
 - Images of the attributes in the product view are now displayed correctly.
 - Fixed external cookie script load.
 - Fixed missing translations in the cookie bar.
+- Cookie bar translations.
 
 ### Changed
 
