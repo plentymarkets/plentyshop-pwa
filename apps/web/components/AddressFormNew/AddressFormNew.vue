@@ -1,5 +1,6 @@
 <template>
   <form
+    ref="formRef"
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="address-form"
     @submit.prevent="$emit('on-save', defaultValues, useAsShippingAddress)"
@@ -96,13 +97,14 @@
     </div>
   </form>
 </template>
+
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-sdk';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
-
-const { loading: loadBilling, useAsShippingAddress } = useAddress(AddressType.Billing);
+const { loading: loadBilling } = useAddress(AddressType.Billing);
+const { useAsShippingAddress } = useCart();
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
 
 const props = withDefaults(defineProps<AddressFormProps>(), {});
@@ -144,5 +146,9 @@ const states = computed(() => {
   return props.countries.find((country) => country.id === Number(selectedCountry))?.states ?? [];
 });
 
-defineEmits(['on-save', 'on-close']);
+const emit = defineEmits(['on-save', 'on-close']);
+const emitFormValues = () => {
+  emit('on-save', defaultValues.value, useAsShippingAddress.value);
+};
+defineExpose({ emitFormValues });
 </script>

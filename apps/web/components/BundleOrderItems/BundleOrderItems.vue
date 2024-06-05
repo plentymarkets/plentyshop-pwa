@@ -17,7 +17,7 @@
         >
           <p class="font-medium">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
-            <span class="underline h-auto" v-html="productBundleGetters.getBundleItemName(item).length > 0 ? productBundleGetters.getBundleItemName(item) : t('productAttributes.productNameMissing')"></span>
+            <span class="underline h-auto">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
         </SfLink>
         <div
@@ -48,7 +48,9 @@ const localePath = useLocalePath();
 
 const isLinkable = (item: ProductBundleComponent): boolean => {
   return (
-    productBundleGetters.isItemBundleSalable(item) && !productBundleGetters.getBundleItemUrl(item).includes('null')
+    productBundleGetters.isItemBundleSalable(item) &&
+    !productBundleGetters.getBundleItemUrl(item).includes('null') &&
+    productBundleGetters.getBundleItemName(item).length > 0
   );
 };
 </script>

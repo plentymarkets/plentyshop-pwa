@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { NewsletterParams } from '@plentymarkets/shop-api';
 
 export interface UseNewsletterState {

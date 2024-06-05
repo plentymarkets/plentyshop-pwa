@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { DoAddCouponParams, Cart } from '@plentymarkets/shop-api';
 
 export interface UseCouponState {

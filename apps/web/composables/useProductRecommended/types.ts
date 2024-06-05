@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { Product } from '@plentymarkets/shop-api';
 
 export interface UseProductRecommendedState {

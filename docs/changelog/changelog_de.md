@@ -4,6 +4,7 @@
 
 ### Hinzugefügt
 
+- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen
 - Lazy Load-Bilder
 - eine Gast-Anmeldeseite vor der Kasse
 - Auswahl für die gespeicherten Adressen an der Kasse
@@ -16,6 +17,13 @@
 
 ### Behoben
 
+- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
+- Probleme im Zusammenhang mit Produktbewertungen behoben
+- Fehlende Details auf der Dankesseite behoben
+- Lokale E2E-Tests behoben
+- Fehler bei der Interaktion mit der Wunschliste behoben
+- DefineExpose-Compilerfehler behoben
+- Behoben: Zufällige Nuxt-Instanz nicht verfügbar
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite
@@ -33,6 +41,9 @@
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
 - Problem mit der Verschiebung des Wagenlader-Layouts behoben.
 - Leeres Wunschlistenbild entfernt.
+- Bilder der Attribute in der Produktansicht werden nun richtig angezeigt.
+- Das Laden externer Cookie-Skripte wurde behoben.
+- Fehlende Übersetzungen für die Cookie-Leiste wurden hinzugefügt.
 
 ### Geändert
 
@@ -40,6 +51,8 @@
 - Styling der Benachrichtigungsanzeige
 - Registrierungsformular wurde verbessert
 - Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
+- Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster
+- Das Design der Sitemap wurde angepasst
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
@@ -205,6 +218,7 @@
 - Bei Produkten mit unterschiedlichen Preisen wird auf der Kategorieseite der niedrigste Preis als "ab Preis" angezeigt
 - Die URL-Struktur wurde aktualisiert und ähnelt nun mehr der von plentyShop LTS
 - Die Position der Benachrichtungen wurde geändert
+- Neues Checkout-Layout – gleiche Funktionalität des Adress-Kontrollkästchens
 
 ### Behoben
 

@@ -119,7 +119,6 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentPublicInstance } from 'vue';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';

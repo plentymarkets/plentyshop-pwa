@@ -2,9 +2,9 @@
   <div class="relative min-h-[600px]">
     <div class="absolute w-full h-full z-[-1]">
       <img
-        :src="viewport.isLessThan('md') ? '/images/homepage-hero-bg-mobile.avif' : '/images/homepage-hero-bg.avif'"
-        height="1600"
-        width="800"
+        :src="background.image"
+        :width="getSizeForViewport(background.sizes).width"
+        :height="getSizeForViewport(background.sizes).height"
         alt="Hero background"
         class="absolute top-0 left-0 w-full h-full object-cover"
         loading="lazy"
@@ -13,9 +13,9 @@
     <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
-          src="/images/homepage-hero-headphones.avif"
-          height="600"
-          width="800"
+          :src="headPhones.image"
+          :width="getSizeForViewport(headPhones.sizes).width"
+          :height="getSizeForViewport(headPhones.sizes).height"
           alt="Headphones"
           class="h-full object-cover object-left"
           loading="lazy"
@@ -68,47 +68,36 @@
     </div>
     <div class="flex flex-col md:flex-row flex-wrap gap-6 mt-max-w-[1540px]">
       <div
-        v-for="{
-          image,
-          title,
-          subtitle,
-          description,
-          buttonText,
-          backgroundColor,
-          reverse,
-          titleClass,
-          subtitleClass,
-        } in displayDetails"
-        :key="title"
+        v-for="details in displayDetails"
+        :key="details.title"
         :class="[
           'relative flex md:max-w-[1536px] md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full',
-          backgroundColor,
+          details.backgroundColor,
         ]"
       >
         <a
           class="absolute w-full h-full z-1 focus-visible:outline focus-visible:rounded-lg"
-          :aria-label="title"
+          :aria-label="details.title"
           href="#"
         />
-        <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': reverse }]">
+        <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': details.reverse }]">
           <div class="flex flex-col justify-center items-start p-6 lg:p-10 max-w-1/2">
-            <p :class="['uppercase typography-text-xs block font-bold tracking-widest', subtitleClass]">
-              {{ subtitle }}
+            <p :class="['uppercase typography-text-xs block font-bold tracking-widest', details.subtitleClass]">
+              {{ details.subtitle }}
             </p>
-            <h2 :class="['mb-4 mt-2 font-bold typography-display-3', titleClass]">
-              {{ title }}
+            <h2 :class="['mb-4 mt-2 font-bold typography-display-3', details.titleClass]">
+              {{ details.title }}
             </h2>
             <p class="typography-text-base block mb-4">
-              {{ description }}
+              {{ details.description }}
             </p>
-            <SfButton class="!bg-black">{{ buttonText }}</SfButton>
+            <SfButton class="!bg-black">{{ details.buttonText }}</SfButton>
           </div>
           <img
-            :src="image"
-            :alt="title"
-            format="avif"
-            width="50%"
-            height="100%"
+            :src="details.image"
+            :alt="details.title"
+            :width="getSizeForViewport(details.sizes).width"
+            :height="getSizeForViewport(details.sizes).height"
             class="self-end object-contain"
             loading="lazy"
           />
@@ -133,10 +122,25 @@
 import { SfButton } from '@storefront-ui/vue';
 const viewport = useViewport();
 const { t } = useI18n();
-definePageMeta({ pageType: 'static' });
-
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
+definePageMeta({ pageType: 'static' });
+
+type Size = {
+  width: string;
+  height: string;
+};
+type Sizes = {
+  lg: Size;
+  md: Size;
+  sm: Size;
+};
+type SizeKey = keyof Sizes;
+
+const getSizeForViewport = (sizes: Sizes) => {
+  const breakpoint = viewport.breakpoint.value as SizeKey;
+  return sizes[breakpoint];
+};
 
 watch(
   () => categoryTree.value,
@@ -146,40 +150,116 @@ watch(
   },
   { immediate: true },
 );
-
-const displayDetails = [
-  {
-    image: '/images/homepage-display-1.avif',
-    title: t('homepage.displayDetails.detail1.title'),
-    subtitle: t('homepage.displayDetails.detail1.subtitle'),
-    description: t('homepage.displayDetails.detail1.description'),
-    buttonText: t('homepage.displayDetails.detail1.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-negative-200',
-    titleClass: 'md:typography-display-2',
-    subtitleClass: 'md:typography-headline-6',
-    descriptionClass: 'md:typography-text-lg',
+const displayDetails = computed(() => {
+  return [
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-1.avif`,
+      title: t('homepage.displayDetails.detail1.title'),
+      subtitle: t('homepage.displayDetails.detail1.subtitle'),
+      description: t('homepage.displayDetails.detail1.description'),
+      buttonText: t('homepage.displayDetails.detail1.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-negative-200',
+      titleClass: 'md:typography-display-2',
+      subtitleClass: 'md:typography-headline-6',
+      descriptionClass: 'md:typography-text-lg',
+      sizes: {
+        lg: {
+          width: '728',
+          height: '728',
+        },
+        md: {
+          width: '488',
+          height: '488',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-2.avif`,
+      title: t('homepage.displayDetails.detail2.title'),
+      subtitle: t('homepage.displayDetails.detail2.subtitle'),
+      description: t('homepage.displayDetails.detail2.description'),
+      buttonText: t('homepage.displayDetails.detail2.buttonText'),
+      reverse: true,
+      backgroundColor: 'bg-warning-200',
+      sizes: {
+        lg: {
+          width: '358',
+          height: '358',
+        },
+        md: {
+          width: '472',
+          height: '472',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+    {
+      image: `/images/${viewport.breakpoint.value}/homepage-display-3.avif`,
+      title: t('homepage.displayDetails.detail3.title'),
+      subtitle: t('homepage.displayDetails.detail3.subtitle'),
+      description: t('homepage.displayDetails.detail3.description'),
+      buttonText: t('homepage.displayDetails.detail3.buttonText'),
+      reverse: false,
+      backgroundColor: 'bg-secondary-200',
+      sizes: {
+        lg: {
+          width: '358',
+          height: '358',
+        },
+        md: {
+          width: '238',
+          height: '238',
+        },
+        sm: {
+          width: '320',
+          height: '320',
+        },
+      },
+    },
+  ];
+});
+const headPhones = {
+  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
+  sizes: {
+    lg: {
+      width: '800',
+      height: '600',
+    },
+    md: {
+      width: '800',
+      height: '600',
+    },
+    sm: {
+      width: '640',
+      height: '480',
+    },
   },
-  {
-    image: '/images/homepage-display-2.avif',
-    title: t('homepage.displayDetails.detail2.title'),
-    subtitle: t('homepage.displayDetails.detail2.subtitle'),
-    description: t('homepage.displayDetails.detail2.description'),
-    buttonText: t('homepage.displayDetails.detail2.buttonText'),
-    reverse: true,
-    backgroundColor: 'bg-warning-200',
+};
+const background = {
+  image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
+  sizes: {
+    lg: {
+      width: '4000',
+      height: '600',
+    },
+    md: {
+      width: '1024',
+      height: '600',
+    },
+    sm: {
+      width: '640',
+      height: '752',
+    },
   },
-  {
-    image: '/images/homepage-display-3.avif',
-    title: t('homepage.displayDetails.detail3.title'),
-    subtitle: t('homepage.displayDetails.detail3.subtitle'),
-    description: t('homepage.displayDetails.detail3.description'),
-    buttonText: t('homepage.displayDetails.detail3.buttonText'),
-    reverse: false,
-    backgroundColor: 'bg-secondary-200',
-  },
-];
-
+};
 const categories = [
   {
     title: t('homepage.women'),
@@ -194,4 +274,19 @@ const categories = [
     image: '/images/homepage-kid-category.avif',
   },
 ];
+
+useHead({
+  link: [
+    {
+      rel: 'preload',
+      href: background.image,
+      as: 'image',
+    },
+    {
+      rel: 'preload',
+      href: headPhones.image,
+      as: 'image',
+    },
+  ],
+});
 </script>

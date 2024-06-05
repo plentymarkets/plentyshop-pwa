@@ -1,4 +1,3 @@
-import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
@@ -34,8 +33,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      url: runtimeConfig.public.apiEndpoint,
-      logo: runtimeConfig.public.logoUrl,
+      url: runtimeConfig.public.domain,
+      logo: runtimeConfig.public.domain + '/images/logo.png',
     };
     useHead({
       script: [
