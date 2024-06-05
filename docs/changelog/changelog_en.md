@@ -18,7 +18,7 @@
 
 - Voucher display on the order confirmation
 - Fixed issues related to product reviews
-- Fixed thank-you page missing details
+- Added missing details on the order confirmation
 - Fixed errors when interacting with wishlist
 - Fixed defineExpose compiler error
 - Fixed random Nuxt instance unavailable
