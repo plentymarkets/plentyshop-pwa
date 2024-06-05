@@ -36,7 +36,7 @@
 - Das Rückgabebild wurde entfernt.
 - Die mobile Ansicht der Cookiebar wurde verbessert.
 - Die Ränder der Schaltflächen zum Schließen der Wunschliste wurden korrigiert.
-- Ein Problem mit der Verschiebung des Wagenlader-Layouts wurde behoben.
+- Ein Layout-Shift-Problem beim Laden des Warenkorbs wurde behoben.
 - Das leere Wunschlistenbild wurde entfernt.
 - Bilder von Attributen in der Artikelansicht werden jetzt korrekt angezeigt.
 - Ein Fehler beim Laden externer Cookie-Skripte wurde behoben.
