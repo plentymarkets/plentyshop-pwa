@@ -23,7 +23,7 @@
 - We do now ensure that there is no `/` at the end of the API_URL.
 - Fixed facet filtering on category page
 - Fixed random login error
-- Creating new item in basket, instead of updating quantity
+- When adding an item that is already in the shopping cart, the quantity is increased instead of adding the same item to the shopping cart again
 - Components of article packages without an article URL no longer lead to a 404 page.
 - Components of item packages without a maintained name now display the placeholder "Product Information Missing" in place of the name
 - Server-side rendering error due to filters on the category view
