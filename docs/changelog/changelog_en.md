@@ -27,7 +27,7 @@
 - Fixed random login error
 - Creating new item in basket, instead of updating quantity
 - Bundle item accessability via hyperlink, if not fully set
-- Fixed the filtering in SSR on the category page
+- Server-side rendering error due to filters on the category view
 - Fixed hydration and intlify warnings
 - The PayPal express button on the product page handles the click event correctly.
 - Fixed aspect ratio on homepage hero img
