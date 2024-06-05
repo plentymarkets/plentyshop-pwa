@@ -18,7 +18,7 @@
 
 - Gutscheindarstellung auf der Bestellbestätigung korrigiert
 - Probleme im Zusammenhang mit Produktbewertungen behoben.
-- Fehlende Details auf der Dankeschön-Seite behoben.
+- Fehlende Details auf der Bestellbestätigung hinzugefügt
 - Fehler bei der Interaktion mit der Wunschliste behoben.
 - DefineExpose-Compilerfehler behoben.
 - Zufällige Nuxt-Instanz nicht verfügbar.
