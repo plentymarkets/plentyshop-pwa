@@ -25,7 +25,7 @@
 - The quality of images in the category view has been improved.
 - The facet filtering on category pages has been corrected.
 - A random login error has been fixed.
-- When adding an item to the shopping cart that is already in the shopping cart, the item's quantity is now increased. 
+- When adding an item to the shopping cart that is already in the shopping cart, the item's quantity is now increased.
 - Components of item bundles without an item URL no longer lead to a 404 page.
 - Components of item bundles without a name now display the placeholder "Product Information Missing" in place of the name
 - Filters on the category view could lead to a server-side rendering error. This has been fixed.
