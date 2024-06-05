@@ -19,7 +19,7 @@
 - Fehlende Details auf der Bestellbestätigung hinzugefügt
 - Fehler bei der Interaktion mit der Wunschliste behoben.
 - "DefineExpose"-Compilerfehler behoben.
-- Zufälliger "Nuxt-Instanz nicht verfügbar" error behoben.
+- Zufälliger "Nuxt-Instanz nicht verfügbar" Fehler behoben.
 - Hydration und intlify Warnungen wurden behoben.
 - Es wird sicher gestellt, dass sich kein `/` am Ende der API_URL befindet.
 - Bilderqualität verbessert auf der Kategorieseite.
