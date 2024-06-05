@@ -17,6 +17,7 @@
 
 ### Behoben
 
+- Fester Gutschein wird auf der Dankeschön-Seite angezeigt
 - Probleme im Zusammenhang mit Produktbewertungen behoben
 - Fehlende Details auf der Dankesseite behoben
 - Lokale E2E-Tests behoben
@@ -51,6 +52,7 @@
 - Registrierungsformular wurde verbessert
 - Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert
 - Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster
+- Das Design der Sitemap wurde angepasst
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
