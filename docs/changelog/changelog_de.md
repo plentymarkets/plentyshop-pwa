@@ -7,7 +7,7 @@
 - Unterstützung für benutzerdefinierte SVG-Symbole
 - Bilder außerhalb des sichtbaren Bereichs werden lazyloaded
 - Anmelde-Dialog vor dem Checkout
-- Auswahl für die gespeicherten Adressen an der Kasse.
+- Auswahl für die gespeicherten Adressen im Checkout
 - Breiten- und Höhenattribute für Bilder in der Kategorie- und Produktansicht.
 - Artikelbewertung.
 - Schnellkasse-Funktionalität hinzugefügt.
