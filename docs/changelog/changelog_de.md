@@ -15,7 +15,7 @@
 ### Behoben
 
 - Die Gutscheindarstellung auf der Bestellbestätigung war fehlerhaft. Dies wurde behoben.
-- Probleme im Zusammenhang mit der Darstellung von Produktbewertungen  wurden behoben.
+- Probleme im Zusammenhang mit der Darstellung von Produktbewertungen wurden behoben.
 - Fehlende Details auf der Bestellbestätigung wurden hinzugefügt.
 - Ein Fehler bei der Interaktion mit der Wunschliste wurde behoben.
 - Ein "DefineExpose"-Compiler-Fehler wurde behoben.
