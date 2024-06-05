@@ -10,7 +10,7 @@
 - Selection of saved addresses in the checkout
 - Width and height attributes to images on category and product view
 - Product reviews on item pages
-- Added quick checkout functionality.
+-  “Item added to shopping cart” dialog
 - Added quantity to quick checkout product name
 - Cookie bar translations.
 
