@@ -4,7 +4,7 @@
 
 ### New
 
-- Add custom SVG icon support
+- Custom SVG icon support
 - Lazy-load images
 - A guest login page before going to checkout
 - Selection for the saved addresses at checkout
