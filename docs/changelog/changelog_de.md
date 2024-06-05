@@ -4,7 +4,7 @@
 
 ### Hinzugefügt
 
-- Unterstützung für benutzerdefinierte SVG-Symbole hinzufügen.
+- Unterstützung für benutzerdefinierte SVG-Symbole
 - Lazy Load-Bilder.
 - Eine Gast-Anmeldeseite vor der Kasse.
 - Auswahl für die gespeicherten Adressen an der Kasse.
