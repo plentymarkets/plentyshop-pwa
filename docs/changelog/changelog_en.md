@@ -9,7 +9,7 @@
 - Login dialog before checkout
 - Selection of saved addresses in the checkout
 - Width and height attributes to images on category and product view
-- Product reviews on single item pages
+- Product reviews on item pages
 - Added quick checkout functionality.
 - Added quantity to quick checkout product name
 - Cookie bar translations.
