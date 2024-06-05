@@ -85,7 +85,6 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
-    'nuxt-svgo',
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
@@ -145,10 +144,6 @@ export default defineNuxtConfig({
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
-  },
-  svgo: {
-    global: false,
-    componentPrefix: 'plenty',
   },
   viewport: {
     breakpoints: {
