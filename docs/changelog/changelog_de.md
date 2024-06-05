@@ -27,7 +27,7 @@
 - Bilderqualität verbessert auf der Kategorieseite.
 - Die Facettenfilterung auf der Kategorieseite wurde korrigiert.
 - Zufälliger Anmeldefehler behoben.
-- Neuer Artikel im Warenkorb erstellen, anstatt die Menge zu aktualisieren.
+- Beim Hinzufügen, eines bereits im Warenkorb befindlichen Artikels, wird die Anzahl erhöht anstatt den selben Artikel erneut zum Warenkorb hinzuzufügen
 - Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist.
 - Fehler beim Filtern im SSR in der Kategorieansicht behoben.
 - Die Barrierefreiheit des Login Button
