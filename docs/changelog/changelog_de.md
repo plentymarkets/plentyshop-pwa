@@ -48,7 +48,7 @@
 - Demobilder der Homepage wurden zu AVIF konvertiert
 - Styling der Benachrichtigungsanzeige.
 - Registrierungsformular wurde verbessert.
-- Die Barrierefreiheit der Bewertungen wurde für die Kategorie- und Produktseite verbessert.
+- Die Barrierefreiheit der Bewertungen auf der Kategorie- und Produktseite wurde verbessert
 - Verschiedene Größen für Demo-Bilder basierend auf dem Ansichtsfenster.
 - Das Design der Sitemap wurde angepasst.
 
