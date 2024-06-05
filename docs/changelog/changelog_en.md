@@ -16,7 +16,7 @@
 
 ### Fixed
 
-- Fixed coupon display on thankyou page
+- Voucher display on the order confirmation
 - Fixed issues related to product reviews
 - Fixed thank-you page missing details
 - Fixed errors when interacting with wishlist
