@@ -29,7 +29,7 @@
 - Zufälliger Anmeldefehler behoben.
 - Beim Hinzufügen, eines bereits im Warenkorb befindlichen Artikels, wird die Anzahl erhöht anstatt den selben Artikel erneut zum Warenkorb hinzuzufügen
 - Zugriff auf Bundle-Elemente über Hyperlink, sofern dieser nicht vollständig ist.
-- Fehler beim Filtern im SSR in der Kategorieansicht behoben.
+- Server-Side Rendering Fehler durch Filter auf der Kategorieansicht behoben
 - Die Barrierefreiheit des Login Button
 - Die Middleware unterstützt jetzt IPv6-Adressen.
 - Der PayPal-Express-Button auf der Produktseite verarbeitet das Klickereignis nun korrekt.
