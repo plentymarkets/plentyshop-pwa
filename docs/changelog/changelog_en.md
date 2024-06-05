@@ -1,59 +1,55 @@
 # Changelog plentyshopPWA
 
-## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
+## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
-- Custom SVG icon support
-- Images outside the visible area are lazy loaded
-- Login dialog before checkout
-- Selection of saved addresses in the checkout
-- Width and height attributes to images on category and product view
-- Product reviews on item pages
-- “Item added to shopping cart” dialog
+- Custom SVG icons are now supported.
+- Images outside the visible area are now lazy loaded.
+- The login dialogue before checkout has been added.
+- The Selection of saved addresses in the checkout has been added.
+- Images in category and item views now have width and height attributes.
+- Item pages can now display reviews.
+- “Item added to shopping cart” dialogue has been added.
 
 ### Fixed
 
-- Voucher display on the order confirmation
-- Fixed issues related to product reviews
-- Added missing details on the order confirmation
-- Fixed errors when interacting with wishlist
-- Fixed defineExpose compiler error
-- Fixed random "Nuxt instance unavailable" error
-- We do now ensure that there is no `/` at the end of the API_URL.
-- Fixed facet filtering on category page
-- Fixed random login error
-- When adding an item that is already in the shopping cart, the quantity is increased instead of adding the same item to the shopping cart again
-- Components of article packages without an article URL no longer lead to a 404 page.
-- Components of item packages without a maintained name now display the placeholder "Product Information Missing" in place of the name
-- Server-side rendering error due to filters on the category view
-- Fixed hydration and intlify warnings
-- The PayPal express button on the product page handles the click event correctly.
-- Fixed aspect ratio on homepage hero img
-- Fixed bad image quality on category view
-- Fixed acccessibility of the login button
-- The middleware does now support IPv6 addresses
-- Fixed lighthouse error regarding wishlist button size.
-- Removed returns image.
-- Improved cookie bar mobile view.
-- Fixed wishlist close button margins.
-- Fixed cart loader layout shift issue.
-- Show review form on login from review button.
-- Removed empty wishlist image.
-- Images of the attributes in the product view are now displayed correctly.
-- Fixed external cookie script load.
-- Fixed missing translations in the cookie bar.
-- Cookie bar translations.
+- The display of coupons in the order confirmation was not working properly. This has been fixed.
+- Some issues related to the display of item reviews have been fixed.
+- Missing details have been added to the order confirmation.
+- Interacting with the wishlist was not working as intended. This has been fixed.
+- A "defineExpose" compiler error has been fixed.
+- A random "Nuxt instance unavailable" error has been fixed.
+- Hydration and intlify warnings have been fixed.
+- Slashes at the end of the API_URL are now removed.
+- The quality of images in the category view has been improved.
+- The facet filtering on category pages has been corrected.
+- A random login error has been fixed.
+- When adding an item to the shopping cart that is already in the shopping cart, the item's quantity is now increased. 
+- Components of item bundles without an item URL no longer lead to a 404 page.
+- Components of item bundles without a name now display the placeholder "Product Information Missing" in place of the name
+- Filters on the category view could lead to a server-side rendering error. This has been fixed.
+- The login button is now acessible.
+- The middleware now supporty IPv6 addresses.
+- The PayPal express button on the product page now handles the click event correctly.
+- Fixed a lighthouse error regarding the wishlist button size.
+- The returns image has been removed.
+- The cookie bar mobile view has been improved.
+- The wishlist close button margins have been corrected.
+- A cart loader layout shift issue has been fixed.
+- An empty wishlist image has been removed.
+- Images of the attributes in the item view are now displayed correctly.
+- An error regarding external cookie script loading has been fixed.
+- The missing translations in the cookie bar have been added.
 
 ### Changed
 
-- Styling of notifications
-- Mark optional and required form fields.
-- Improved the registration form
-- Main page images conversion (avif)
-- Accessibility for the category and product page for reviews
-- Different sizes for demo images based on viewport
-- The design of the sitemap changed
+- Demo images on the homepage have been converted to AVIF format.
+- The styling of notifications has been adjusted.
+- The customer registration form has been improved.
+- Reviews in category and item views are now accessible.
+- Demo images now have different sizes, based on the user's viewport.
+- The design of the sitemap has been adjusted.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
