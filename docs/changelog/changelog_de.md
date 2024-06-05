@@ -16,7 +16,7 @@
 
 ### Behoben
 
-- Gutschein wird auf der Dankeschön-Seite angezeigt.
+- Gutscheindarstellung auf der Bestellbestätigung korrigiert
 - Probleme im Zusammenhang mit Produktbewertungen behoben.
 - Fehlende Details auf der Dankeschön-Seite behoben.
 - Fehler bei der Interaktion mit der Wunschliste behoben.
