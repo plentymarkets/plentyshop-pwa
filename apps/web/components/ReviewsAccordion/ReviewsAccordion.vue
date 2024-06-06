@@ -10,9 +10,9 @@
         </h2>
       </template>
 
-      <div class="flex justify-center lg:flex-none">
+      <div class="flex justify-start mb-4 lg:mb-0">
         <div class="lg:flex my-2">
-          <div class="w-1/2 flex flex-col ml-16 lg:mr-8">
+          <div class="lg:w-1/2 flex flex-col lg:mr-8">
             <p class="text-center text-sm">{{ t('avreageRating') }}</p>
             <div class="flex justify-center">
               <SfRating
@@ -22,7 +22,7 @@
                 :value="Math.floor(reviewAverage * 2) / 2"
                 :half-increment="true"
               />
-              <h3 class="font-bold text-xl ml-2 flex">
+              <h3 class="font-bold text-xl ml-2">
                 {{ Math.round(reviewAverage * 10) / 10 }}
               </h3>
             </div>
@@ -30,7 +30,7 @@
             <SfButton
               @click="isAuthorized ? openReviewModal() : openAuthentication()"
               data-testid="create-review"
-              class="mt-2 mb-4 w-full mx-auto"
+              class="mt-2 mb-4 mx-auto"
               size="base"
             >
               {{ t('createCustomerReview') }}
