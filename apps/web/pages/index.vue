@@ -59,7 +59,7 @@
         />
         <div :id="`image-${title}`" class="flex justify-center">
           <div
-            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:text-primary-800 group-hover:font-normal group-active:text-primary-800 group-active:font-normal"
+            class="mt-4 font-semibold no-underline text-normal-900 typography-text-base group-hover:text-primary-800 group-active:text-primary-800"
           >
             {{ title }}
           </div>
@@ -75,11 +75,6 @@
           details.backgroundColor,
         ]"
       >
-        <a
-          class="absolute w-full h-full z-1 focus-visible:outline focus-visible:rounded-lg"
-          :aria-label="details.title"
-          href="#"
-        />
         <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': details.reverse }]">
           <div class="flex flex-col justify-center items-start p-6 lg:p-10 max-w-1/2">
             <p :class="['uppercase typography-text-xs block font-bold tracking-widest', details.subtitleClass]">
@@ -91,7 +86,9 @@
             <p class="typography-text-base block mb-4">
               {{ details.description }}
             </p>
-            <SfButton class="!bg-black">{{ details.buttonText }}</SfButton>
+            <NuxtLink to="/">
+              <SfButton class="!bg-black hover:!bg-white hover:!text-black">{{ details.buttonText }}</SfButton>
+            </NuxtLink>
           </div>
           <img
             :src="details.image"
