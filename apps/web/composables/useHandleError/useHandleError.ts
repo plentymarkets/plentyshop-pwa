@@ -28,13 +28,15 @@ export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<un
     const { send } = useNotification();
     const { cause } = error as any;
 
+    let message = defaultError.message;
+
+    if (cause) {
+      message = errorCodes[cause.statusCode as keyof typeof errorCodes] ?? cause.message ?? error.message;
+    }
+
     send({
       type: 'negative',
-      message:
-        errorCodes[cause.statusCode as keyof typeof errorCodes] ??
-        cause.message ??
-        error.message ??
-        defaultError.message,
+      message,
       persist: true,
     });
   }
