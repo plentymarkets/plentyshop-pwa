@@ -16,9 +16,6 @@ hero:
       text: Composables
       link: /reference/composables/
     - theme: alt
-      text: SDK
-      link: /reference/sdk/
-    - theme: alt
       text: API Client
       link: /reference/api/
 
