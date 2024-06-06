@@ -7,13 +7,17 @@
         {{ t('review.verifiedPurchase') }}
       </div>
 
-      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
-        <SfTooltip :label="tooltipReviewLabel">
+      <div v-if="isEditable" class="w-1/3 flex justify-end items-center space-x-3">
+        <SfTooltip :label="tooltipReviewLabel" class="flex">
           <SfIconVisibility v-if="isReviewVisibile" size="sm" class="fill-neutral-400" />
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfLink @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
-        <SfLink @click="openDeleteReview"><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <SfIconBase @click="openReviewEdit" viewBox="0 0 32 32" size="xs" class="fill-primary-900 cursor-pointer">
+          <path
+            d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
+          />
+        </SfIconBase>
+        <SfIconDelete @click="openDeleteReview" size="sm" class="fill-primary-900 cursor-pointer" />
       </div>
     </div>
 
@@ -52,12 +56,21 @@
               <span class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
             </div>
 
-            <div v-if="isAnswerEditable(reply)" class="w-full items-start flex justify-end space-x-3">
-              <SfTooltip :label="tooltipReplyLabel(reply)">
+            <div v-if="isAnswerEditable(reply)" class="w-full flex justify-end items-center space-x-3">
+              <SfTooltip :label="tooltipReplyLabel(reply)" class="flex">
                 <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reply)" size="xs" class="fill-neutral-400" />
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
-              <SfIconTune @click="openReplyEditor(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
+              <SfIconBase
+                @click="openReplyEditor(reply)"
+                viewBox="0 0 38 38"
+                size="xs"
+                class="fill-primary-900 cursor-pointer"
+              >
+                <path
+                  d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
+                />
+              </SfIconBase>
               <SfIconDelete @click="openReplyDeletion(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
             </div>
             <br />
@@ -162,10 +175,9 @@ import {
   SfIconVisibility,
   SfIconVisibilityOff,
   SfIconClose,
-  SfLink,
   SfTooltip,
   useDisclosure,
-  SfIconTune,
+  SfIconBase,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
 import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
