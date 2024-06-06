@@ -261,7 +261,7 @@
   "pleaseSelect": "Please Select",
   "addToCart": "Add to cart",
   "itemNotAvailable": "This item is not available.",
-  "showArticle": "Show article",
+  "showOptions": "Show options",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
   "deletedFromCart": "Item removed from shopping cart",
@@ -804,7 +804,6 @@
     "heading": "Added to shopping cart",
     "subTotal": "Items subtotal",
     "checkYourCart": "Check your cart",
-    "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
-    "or": "OR"
+    "cartContains": "Your cart contains {count} item | Your cart contains {count} items"
   }
 }

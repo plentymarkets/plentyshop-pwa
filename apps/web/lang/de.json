@@ -261,7 +261,7 @@
   "pleaseSelect": "Bitte wählen",
   "addToCart": "In den Warenkorb",
   "itemNotAvailable": "Der Artikel ist nicht verfügbar",
-  "showArticle": "Artikel anzeigen",
+  "showOptions": "Optionen anzeigen",
   "addToCartShort": "Hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
   "deletedFromCart": "Artikel aus dem Warenkorb entfernt",
@@ -804,7 +804,6 @@
     "heading": "Zum Warenkorb hinzugefügt",
     "subTotal": "Zwischensumme",
     "checkYourCart": "Warenkorb prüfen",
-    "cartContains": "Ihr Warenkorb enthält {count} Artikel",
-    "or": "ODER"
+    "cartContains": "Ihr Warenkorb enthält {count} Artikel"
   }
 }
