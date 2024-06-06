@@ -56,7 +56,8 @@ const getLabel = (item: VariationMapProductAttributeValue): string => {
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {
-  return domain + productAttributeGetters.getAttributeValueImageUrl(item);
+  const path = productAttributeGetters.getAttributeValueImageUrl(item);
+  return path.startsWith('http') ? path : domain + path;
 };
 
 const validationSchema = toTypedSchema(
