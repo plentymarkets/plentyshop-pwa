@@ -4335,7 +4335,7 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.37.0
+    "@plentymarkets/shop-api": ^0.36.1
     "@plentymarkets/shop-sdk": ^0.53.2
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
@@ -4365,14 +4365,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.37.0":
-  version: 0.37.0
-  resolution: "@plentymarkets/shop-api@npm:0.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.37.0%2F9d16fa7fff934e1b5c72e2b34d8865d26bbaa799"
+"@plentymarkets/shop-api@npm:^0.36.1":
+  version: 0.36.1
+  resolution: "@plentymarkets/shop-api@npm:0.36.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.36.1%2F5c250887edfac0146dc3566fb2b7fb837172e067"
   dependencies:
-    "@vue-storefront/middleware": ^3.10.0
+    "@vue-storefront/middleware": 3.0.0-rc.2
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 6e414d5dc87cc64680339b3f2ca32582622cd9b6c182f0d3a5cbd363221648d19784d0b0bc862dae9ebec9828ed60b116eb6d890a3ec6572a6aee0588e9db667
+  checksum: 6fbae3a679c5cc410866d5ab44b19404c4ff65d0ce2cb0719605b91ec51b7f23d91b0d9014d48044345399fc66e698e615eb6d3b417fbd2c7326f71e6a406035
   languageName: node
   linkType: hard
 
@@ -6514,7 +6514,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.10.0, @vue-storefront/middleware@npm:^3.6.1":
+"@vue-storefront/middleware@npm:3.0.0-rc.2":
+  version: 3.0.0-rc.2
+  resolution: "@vue-storefront/middleware@npm:3.0.0-rc.2"
+  dependencies:
+    consola: ^2.15.3
+    cookie-parser: ^1.4.6
+    cors: ^2.8.5
+    express: ^4.18.1
+    helmet: ^5.1.1
+    rimraf: ^4.1.2
+  checksum: 38f4a5e535d9bae356c590cca2a0b153f9a565e7195f2ddc785a96f29dbc6207793f960d92bccb769f31b9fff770f16dc4a4232eeab8484d1fd89bb45844cbd4
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.6.1":
   version: 3.10.0
   resolution: "@vue-storefront/middleware@npm:3.10.0"
   dependencies:
@@ -12422,6 +12436,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"glob@npm:^9.2.0":
+  version: 9.3.5
+  resolution: "glob@npm:9.3.5"
+  dependencies:
+    fs.realpath: ^1.0.0
+    minimatch: ^8.0.2
+    minipass: ^4.2.4
+    path-scurry: ^1.6.1
+  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
+  languageName: node
+  linkType: hard
+
 "global-directory@npm:^4.0.1":
   version: 4.0.1
   resolution: "global-directory@npm:4.0.1"
@@ -15305,6 +15331,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^8.0.2":
+  version: 8.0.4
+  resolution: "minimatch@npm:8.0.4"
+  dependencies:
+    brace-expansion: ^2.0.1
+  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^9.0.0, minimatch@npm:^9.0.1, minimatch@npm:^9.0.3":
   version: 9.0.4
   resolution: "minimatch@npm:9.0.4"
@@ -15406,6 +15441,13 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: a30d083c8054cee83cdcdc97f97e4641a3f58ae743970457b1489ce38ee1167b3aaf7d815cd39ec7a99b9c40397fd4f686e83750e73e652b21cb516f6d845e48
+  languageName: node
+  linkType: hard
+
+"minipass@npm:^4.2.4":
+  version: 4.2.8
+  resolution: "minipass@npm:4.2.8"
+  checksum: 7f4914d5295a9a30807cae5227a37a926e6d910c03f315930fde52332cf0575dfbc20295318f91f0baf0e6bb11a6f668e30cde8027dea7a11b9d159867a3c830
   languageName: node
   linkType: hard
 
@@ -16779,6 +16821,16 @@ __metadata:
     lru-cache: ^10.2.0
     minipass: ^5.0.0 || ^6.0.2 || ^7.0.0
   checksum: 6739b4290f7d1a949c61c758b481c07ac7d1a841964c68cf5e1fa153d7e18cbde4872b37aadf9c5173c800d627f219c47945859159de36c977dd82419997b9b8
+  languageName: node
+  linkType: hard
+
+"path-scurry@npm:^1.6.1":
+  version: 1.11.1
+  resolution: "path-scurry@npm:1.11.1"
+  dependencies:
+    lru-cache: ^10.2.0
+    minipass: ^5.0.0 || ^6.0.2 || ^7.0.0
+  checksum: 890d5abcd593a7912dcce7cf7c6bf7a0b5648e3dee6caf0712c126ca0a65c7f3d7b9d769072a4d1baf370f61ce493ab5b038d59988688e0c5f3f646ee3c69023
   languageName: node
   linkType: hard
 
@@ -18274,6 +18326,17 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 87f4164e396f0171b0a3386cc1877a817f572148ee13a7e113b238e48e8a9f2f31d009a92ec38a591ff1567d9662c6b67fd8818a2dbbaed74bc26a87a2a4a9a0
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:^4.1.2":
+  version: 4.4.1
+  resolution: "rimraf@npm:4.4.1"
+  dependencies:
+    glob: ^9.2.0
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
   languageName: node
   linkType: hard
 
