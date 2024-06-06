@@ -1,5 +1,6 @@
 import { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
+import { Notification } from '../useNotification';
 
 const defaultError: ErrorParams = {
   statusCode: 500,
@@ -26,18 +27,30 @@ const errorCodes = {
 export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => {
   if (error && process.client) {
     const { send } = useNotification();
-    const { cause } = error as any;
-
     let message = defaultError.message;
-
-    if (cause) {
-      message = errorCodes[cause.statusCode as keyof typeof errorCodes] ?? cause.message ?? error.message;
+    let type: Notification['type'] = 'negative';
+    let persist = true;
+    
+    const { cause } = error.cause as any;
+    if (error.statusCode && errorCodes[error.statusCode as keyof typeof errorCodes]) {
+      message = errorCodes[error.statusCode as keyof typeof errorCodes]
+    }
+    else if (cause?.warn) {
+      message = cause.warn.message;
+      type = 'warning';
+      persist = false;
+    }
+    else if (cause) {
+      message = cause.message
+    }
+    else {
+      message = error.message;
     }
 
     send({
-      type: 'negative',
+      type,
       message,
-      persist: true,
+      persist,
     });
   }
 };

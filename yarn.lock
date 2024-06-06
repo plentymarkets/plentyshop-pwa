@@ -4335,7 +4335,7 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.37.0
+    "@plentymarkets/shop-api": ^0.38.0
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.8
@@ -4364,14 +4364,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.37.0":
-  version: 0.37.0
-  resolution: "@plentymarkets/shop-api@npm:0.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.37.0%2F9d16fa7fff934e1b5c72e2b34d8865d26bbaa799"
+"@plentymarkets/shop-api@npm:^0.38.0":
+  version: 0.38.0
+  resolution: "@plentymarkets/shop-api@npm:0.38.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.38.0%2Ff27e5c93a108464546e3a995f7e8805746391a46"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 6e414d5dc87cc64680339b3f2ca32582622cd9b6c182f0d3a5cbd363221648d19784d0b0bc862dae9ebec9828ed60b116eb6d890a3ec6572a6aee0588e9db667
+  checksum: 1cf9e0c06fc104e3d2f06d8e4deeb6c62816f71ccba4aac302048dcf69d6a13f00437529d3d1487a81a15c614756ef9ec62dd4030193d0d45031d01a82d383b6
   languageName: node
   linkType: hard
 

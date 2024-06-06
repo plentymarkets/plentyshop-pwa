@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { SdkHttpError } from '@vue-storefront/sdk';
 
 export const httpClient = async (url: any, params: any, config: any) => {
@@ -29,11 +29,13 @@ export const httpClient = async (url: any, params: any, config: any) => {
 
     return data;
   } catch (error: any) {
+    const axiosError = error as AxiosError;
     console.error(error);
+
     throw new SdkHttpError({
-      statusCode: error.response?.status,
-      message: error.message,
-      cause: error.response.data,
+      statusCode: Number(axiosError?.response?.status),
+      message: axiosError.response?.statusText ?? axiosError.message,
+      cause: axiosError.response?.data ?? {},
     });
   }
 };

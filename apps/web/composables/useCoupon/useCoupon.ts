@@ -35,19 +35,15 @@ export const useCoupon: UseCouponReturn = () => {
       state.value.loading = false;
       return {} as Cart;
     }
-    const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
-    /* if (response.data.value.data.error) {
-      const error = {
-        status: 500,
-        message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
-        statusMessage: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
-      };
-      useHandleError(error);
-    } else if (response.data.value) {
+
+    useHandleError(error.value);
+
+    if (data.value) {
       await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
-    } */
+    }
     return {} as Cart;
   };
 
@@ -57,20 +53,15 @@ export const useCoupon: UseCouponReturn = () => {
     const { send } = useNotification();
     const { getCart } = useCart();
 
-    const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
+    const { data, error} = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
-    /* if (response.data.value.data) {
+
+    useHandleError(error.value);
+
+    if (data.value) {
       await getCart();
       send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
-    } else if (response.data.value.error) {
-      const error = {
-        status: 500,
-        message: $i18n.t(`error.errorActionIsNotExecuted`),
-        statusMessage: $i18n.t(`error.errorActionIsNotExecuted`),
-      };
-
-      useHandleError(error);
-    } */
+    }
     return {} as Cart;
   };
 
