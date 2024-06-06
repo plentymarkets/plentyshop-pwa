@@ -4335,7 +4335,7 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": "file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client"
+    "@plentymarkets/shop-api": ^0.37.0
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.8
@@ -4364,14 +4364,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
-  version: 0.36.1
-  resolution: "@plentymarkets/shop-api@file:/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client#/Users/maximilianroell/workspace/plentymarkets-sdk/packages/api-client::hash=8a0978&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+"@plentymarkets/shop-api@npm:^0.37.0":
+  version: 0.37.0
+  resolution: "@plentymarkets/shop-api@npm:0.37.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.37.0%2F9d16fa7fff934e1b5c72e2b34d8865d26bbaa799"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 99d7e3dbe7d6eb15c1f48143e56943f87c7d17ef43c724383769059d6ce4579661ee5d11fda275aa104fab60a7605a77f8f9587b81781bd331a71ace496bfe57
+  checksum: 6e414d5dc87cc64680339b3f2ca32582622cd9b6c182f0d3a5cbd363221648d19784d0b0bc862dae9ebec9828ed60b116eb6d890a3ec6572a6aee0588e9db667
   languageName: node
   linkType: hard
 
@@ -20534,7 +20534,7 @@ __metadata:
 
 "typescript@patch:typescript@5.4.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.6.4 || ^5.2.2#~builtin<compat/typescript>":
   version: 5.4.5
-  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=14eedb"
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
