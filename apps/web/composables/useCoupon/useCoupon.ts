@@ -53,7 +53,7 @@ export const useCoupon: UseCouponReturn = () => {
     const { send } = useNotification();
     const { getCart } = useCart();
 
-    const { data, error} = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
 
     useHandleError(error.value);
