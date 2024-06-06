@@ -44,6 +44,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     order: null,
     config: null,
     loadedConfig: false,
+    isAvailable: false,
   }));
 
   /**
@@ -58,6 +59,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     if (!state.value.loadedConfig) {
       const { data } = await useAsyncData('paypalLoadConfig', () => useSdk().plentysystems.getPayPalDataClientToken());
       state.value.config = data.value?.data ?? null;
+      state.value.isAvailable = !!state.value.config;
       state.value.loadedConfig = true;
     }
   };
