@@ -30,8 +30,11 @@ export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<un
     let message = defaultError.message;
     let type: Notification['type'] = 'negative';
     let persist = true;
+    let cause: any = {};
 
-    const { cause } = error.cause as any;
+    if (error.cause) {
+      cause = error.cause;
+    }
     if (error.statusCode && errorCodes[error.statusCode as keyof typeof errorCodes]) {
       message = errorCodes[error.statusCode as keyof typeof errorCodes];
     } else if (cause?.warn) {
