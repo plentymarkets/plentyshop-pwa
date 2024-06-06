@@ -4,7 +4,6 @@ import type {
   FetchProductRecommended,
 } from '~/composables/useProductRecommended/types';
 
-
 /**
  * Composable for managing recommended products data
  * @param categoryId Product slug

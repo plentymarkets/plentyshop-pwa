@@ -1,7 +1,6 @@
 import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
 import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 
-
 /**
  * @description Composable for managing order creation.
  * @return UseMakeOrderReturn

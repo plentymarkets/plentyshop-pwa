@@ -2,7 +2,6 @@ import type { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api
 import { defaults } from '~/composables';
 import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
 
-
 /**
  * @description Composable for managing products search.
  * @returns UseSearchReturn

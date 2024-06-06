@@ -3,7 +3,6 @@ import { categoryTreeGetters, productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
 
-
 /**
  * @description Composable managing product data
  * @param slug Product slug

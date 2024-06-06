@@ -1,4 +1,3 @@
-
 interface AgnosticImage {
   alt: string | null;
   url: string;

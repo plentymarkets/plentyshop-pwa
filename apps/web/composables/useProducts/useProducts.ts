@@ -3,7 +3,6 @@ import type { Facet } from '@plentymarkets/shop-api';
 import { defaults, type SelectVariation } from '~/composables';
 import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 
-
 /**
  * @description Composable for managing products.
  * @returns UseProductsReturn

@@ -10,7 +10,6 @@ import type {
   ChangePassword,
 } from '~/composables/useCustomer/types';
 
-
 /**
  * @description Composable managing Customer data
  * @returns UseCustomerReturn

@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 import { SdkHttpError } from '@vue-storefront/sdk';
-import { AxiosError } from "@vue-storefront/middleware";
+import { AxiosError } from '@vue-storefront/middleware';
 
 export const httpClient = async (url: any, params: any, config: any) => {
   try {
@@ -10,15 +10,15 @@ export const httpClient = async (url: any, params: any, config: any) => {
     if (tryUseNuxtApp()) {
       const { token } = useCsrfToken();
       client.interceptors.response.use((response) => {
-        if (response.headers["x-csrf-token"]) {
-          token.value = response.headers["x-csrf-token"];
+        if (response.headers['x-csrf-token']) {
+          token.value = response.headers['x-csrf-token'];
         }
         return response;
       });
-  
+
       client.interceptors.request.use((request) => {
         if (token.value) {
-          request.headers["x-csrf-token"] = token.value;
+          request.headers['x-csrf-token'] = token.value;
         }
         return request;
       });

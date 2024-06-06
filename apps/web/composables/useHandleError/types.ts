@@ -1,4 +1,4 @@
-import { NuxtError } from "nuxt/app";
+import { NuxtError } from 'nuxt/app';
 
 export type ErrorParams = {
   /** The error message. */

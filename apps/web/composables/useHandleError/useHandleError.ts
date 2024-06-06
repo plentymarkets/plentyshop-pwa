@@ -7,9 +7,8 @@ const defaultError: ErrorParams = {
   cause: {},
 };
 
-
 const errorCodes = {
-  401: "Unauthorized",
+  401: 'Unauthorized',
 };
 
 /**
@@ -29,10 +28,14 @@ export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<un
     const { send } = useNotification();
     const { cause } = error as any;
 
-      send({
-        type: 'negative',
-        message: errorCodes[cause.statusCode as keyof typeof errorCodes] ?? cause.message ?? error.message ?? defaultError.message,
-        persist: true,
-      });
+    send({
+      type: 'negative',
+      message:
+        errorCodes[cause.statusCode as keyof typeof errorCodes] ??
+        cause.message ??
+        error.message ??
+        defaultError.message,
+      persist: true,
+    });
   }
 };

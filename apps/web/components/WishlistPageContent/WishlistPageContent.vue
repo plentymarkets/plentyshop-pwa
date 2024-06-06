@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import  { type Product, productGetters } from '@plentymarkets/shop-api';
+import { type Product, productGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 

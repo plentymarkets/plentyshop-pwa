@@ -77,7 +77,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    "@vue-storefront/nuxt",
+    '@vue-storefront/nuxt',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
@@ -92,7 +92,7 @@ export default defineNuxtConfig({
   ],
   vsf: {
     middleware: {
-      apiUrl: "http://localhost:8181",
+      apiUrl: 'http://localhost:8181',
     },
   },
   image: {
