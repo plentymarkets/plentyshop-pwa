@@ -29,7 +29,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.36.1",
+    "@plentymarkets/shop-api": "^0.37.0",
     "@vee-validate/nuxt": "^4.12.8",
     "@vee-validate/yup": "^4.12.8",
     "country-flag-icons": "^1.5.11",

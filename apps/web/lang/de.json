@@ -806,7 +806,6 @@
     "heading": "Zum Warenkorb hinzugefügt",
     "subTotal": "Zwischensumme",
     "checkYourCart": "Warenkorb prüfen",
-    "cartContains": "Ihr Warenkorb enthält {count} Artikel",
-    "or": "ODER"
+    "cartContains": "Ihr Warenkorb enthält {count} Artikel"
   }
 }
