@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { SdkHttpError } from '@vue-storefront/sdk';
-import { AxiosError } from '@vue-storefront/middleware';
 
 export const httpClient = async (url: any, params: any, config: any) => {
   try {
@@ -29,7 +28,7 @@ export const httpClient = async (url: any, params: any, config: any) => {
     });
 
     return data;
-  } catch (error: any | AxiosError) {
+  } catch (error: any) {
     console.error(error);
     throw new SdkHttpError({
       statusCode: error.response?.status,
