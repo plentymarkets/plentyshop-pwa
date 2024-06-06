@@ -2,7 +2,6 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-
 ### Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
@@ -13,7 +12,6 @@
 - useSdk() is now autoimported and can no longer be imported remove all `import { useSdk } from '~/sdk';` imports.
 
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
-
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
