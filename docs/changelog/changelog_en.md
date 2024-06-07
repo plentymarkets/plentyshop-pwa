@@ -7,6 +7,7 @@
 ### Fixed
 
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
+- Registration without cloudflare turnstile configuration is now possible.
 
 ### Changed
 
