@@ -13,7 +13,7 @@
       <div class="flex justify-start mb-4 lg:mb-0">
         <div class="lg:flex my-2">
           <div class="lg:w-1/2 flex flex-col lg:mr-8">
-            <p class="text-center text-sm">{{ t('avreageRating') }}</p>
+            <p class="text-center text-sm">{{ t('averageRating') }}</p>
             <div class="flex justify-center">
               <SfRating
                 class="pb-2"
