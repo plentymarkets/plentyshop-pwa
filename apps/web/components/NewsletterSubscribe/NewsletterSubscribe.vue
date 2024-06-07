@@ -1,6 +1,7 @@
+<!-- CHANGES -->
 <template>
-  <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
-    <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
+  <div class="relative mt-7 mb-7 bg-neutral-100 px-4 sm:px-10 text-center">
+    <p class="typography-headline-4 sm:typography-headline-2 mb-2">
       {{ t('newsletter.heading') }}
     </p>
     <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
@@ -98,14 +99,14 @@
           v-bind="turnstileAttributes"
           ref="turnstileElement"
           :options="{ theme: 'light' }"
-          class="mt-4"
+          class="mt-4 hidden"
         />
 
         <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
     </form>
 
-    <div class="text-left typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
+    <div class="text-center typography-text-xs mt-3">** {{ t('contact.form.asterixHint') }}</div>
   </div>
 </template>
 

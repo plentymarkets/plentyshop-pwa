@@ -100,7 +100,7 @@
   
 
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
-    <div class="flex flex-wrap gap-4 lg:gap-6 lg:flex-no-wrap justify-center my-10">
+    <!--<div class="flex flex-wrap gap-4 lg:gap-6 lg:flex-no-wrap justify-center my-10">
       <div
         v-for="{ title, image } in categories"
         :key="title"
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     <div class="flex flex-col md:flex-row flex-wrap gap-6 mt-max-w-[1540px]">
       <div
         v-for="{
@@ -152,7 +152,7 @@
           href="#"
         />
         <div :class="['flex justify-between overflow-hidden grow', { 'flex-row-reverse': reverse }]">
-          <div class="flex flex-col justify-center items-start p-6 lg:p-10 max-w-1/2">
+          <div class="flex flex-col justify-center items-start p-6 lg:p-10 w-1/2">
             <p :class="['uppercase typography-text-xs block font-bold tracking-widest', subtitleClass]">
               {{ subtitle }}
             </p>
@@ -176,9 +176,11 @@
         </div>
       </div>
     </div>
+   <!--
     <NuxtLazyHydrate when-visible>
       <NewsletterSubscribe />
     </NuxtLazyHydrate>
+  --> 
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
         <p data-testid="recommended-products" class="my-4 typography-text-lg">
@@ -209,7 +211,7 @@ watch(
 );
 
 const displayDetails = [
-  {
+  /*{
     image: '/images/homepage-display-1.avif',
     title: t('homepage.displayDetails.detail1.title'),
     subtitle: t('homepage.displayDetails.detail1.subtitle'),
@@ -220,24 +222,28 @@ const displayDetails = [
     titleClass: 'md:typography-display-2',
     subtitleClass: 'md:typography-headline-6',
     descriptionClass: 'md:typography-text-lg',
-  },
+  },*/
   {
-    image: '/images/homepage-display-2.avif',
+    titleClass: 'md:typography-display-2',
+    subtitleClass: 'md:typography-headline-6',
+    image: '/images/herstellung_panama.jpg',
     title: t('homepage.displayDetails.detail2.title'),
     subtitle: t('homepage.displayDetails.detail2.subtitle'),
     description: t('homepage.displayDetails.detail2.description'),
     buttonText: t('homepage.displayDetails.detail2.buttonText'),
     reverse: true,
-    backgroundColor: 'bg-warning-200',
+    backgroundColor: 'bg-primary-700/60',
   },
   {
-    image: '/images/homepage-display-3.avif',
+    titleClass: 'md:typography-display-2',
+    subtitleClass: 'md:typography-headline-6',
+    image: '/images/formen_panama.jpg',
     title: t('homepage.displayDetails.detail3.title'),
     subtitle: t('homepage.displayDetails.detail3.subtitle'),
     description: t('homepage.displayDetails.detail3.description'),
     buttonText: t('homepage.displayDetails.detail3.buttonText'),
     reverse: false,
-    backgroundColor: 'bg-secondary-200',
+    backgroundColor: 'bg-primary-700/60',
   },
 ];
 

@@ -18,15 +18,15 @@
         "buttonText": "Jetzt entdecken"
       },
       "detail2": {
-        "title": "Packen Sie Es",
+        "title": "Die Vielfalt der Hutformen",
         "subtitle": "Seien Sie aktiv",
-        "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
         "buttonText": "Jetzt entdecken"
       },
       "detail3": {
-        "title": "Frisch und Kühn",
+        "title": "Wie entsteht ein echter Panama",
         "subtitle": "Neue Kollektion",
-        "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
+        "description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren",
         "buttonText": "Jetzt entdecken"
       }
     }
@@ -285,11 +285,13 @@
     "howToBuy": {
       "label": "Bestellvorgang",
       "subcategories": {
-        "paymentMethods": "Zahlungsarten",
-        "orderPickup": "Abholung",
+        "paymentMethods": "Zahlungsmöglichkeiten",
+        "orderPickup": "Versand & Lieferung",
         "purchaseStatus": "Bestellstatus",
         "trackOrders": "Bestellungen verfolgen",
-        "returns": "Retouren"
+        "returns": "Rücksendung",
+        "faqLink": "FAQ",
+        "gutscheinLink": "Gutschein"
       }
     },
     "help": {
@@ -334,9 +336,10 @@
       }
     },
     "contact": {
-      "label": "Kontakt",
+      "label": "Service",
       "subcategories": {
-        "contact": "Kontakt"
+        "contact": "Kontakt",
+        "ratgeberLink": "Ratgeber"
       }
     }
   },
