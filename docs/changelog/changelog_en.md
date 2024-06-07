@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Hydration errors
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
 
 ### Changed

@@ -6,6 +6,7 @@
 
 ### Behoben
 
+- Hydratationsfehler
 - PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
 
 ### Geändert
