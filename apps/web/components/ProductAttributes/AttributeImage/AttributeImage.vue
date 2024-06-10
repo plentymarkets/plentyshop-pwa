@@ -25,6 +25,7 @@
           <NuxtImg
             :src="getImagePath(item)"
             :alt="productAttributeGetters.getAttributeValueName(item)"
+            :title="productAttributeGetters.getAttributeValueName(item)"
             loading="lazy"
           />
         </SfTooltip>
