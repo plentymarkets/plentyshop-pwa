@@ -49,14 +49,15 @@ const value = computed(() => getValue(props.attribute.attributeId));
 const { t } = useI18n();
 const selectedAttributeValueName = ref<string>('');
 const runtimeConfig = useRuntimeConfig();
-const apiEndpoint = runtimeConfig.public?.apiEndpoint ?? '';
+const domain = runtimeConfig.public?.domain ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
   return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {
-  return apiEndpoint + productAttributeGetters.getAttributeValueImageUrl(item);
+  const path = productAttributeGetters.getAttributeValueImageUrl(item);
+  return path.startsWith('http') ? path : domain + path;
 };
 
 const validationSchema = toTypedSchema(

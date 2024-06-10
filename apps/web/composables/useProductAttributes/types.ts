@@ -15,6 +15,8 @@ export type GetCombination = () => VariationMapProductVariation | null;
 
 export interface UseProductAttributesReturn {
   attributes: Readonly<Ref<UseProductAttributesState['attributes']>>;
+  itemId: Readonly<Ref<UseProductAttributesState['itemId']>>;
+  variationId: Readonly<Ref<UseProductAttributesState['variationId']>>;
   attributeValues: Ref<UseProductAttributesState['attributeValues']>;
   combinations: Readonly<Ref<UseProductAttributesState['combinations']>>;
   setAttribute: SetAttribute;
