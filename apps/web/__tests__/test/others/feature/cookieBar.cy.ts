@@ -1,5 +1,5 @@
-import { CookieBarObject } from '../../support/pageObjects/CookieBarObject';
-import { paths } from '../../../utils/paths';
+import { CookieBarObject } from '../../../support/pageObjects/CookieBarObject';
+import { paths } from '../../../../utils/paths';
 
 const cookieBar = new CookieBarObject();
 beforeEach(() => {

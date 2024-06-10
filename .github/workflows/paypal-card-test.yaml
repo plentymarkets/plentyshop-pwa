@@ -51,7 +51,7 @@ jobs:
           start: yarn start
           wait-on: "http://localhost:3000"
           project: "./apps/web"
-          spec: "./apps/web/__tests__/test/standalone/paypalCreditCard.spec.cy.ts"
+          spec: "./apps/web/__tests__/test/quarantine/**.ts"
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}

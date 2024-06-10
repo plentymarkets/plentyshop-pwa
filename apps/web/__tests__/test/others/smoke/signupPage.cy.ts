@@ -1,5 +1,5 @@
-import { paths } from '../../../utils/paths';
-import { SignupPageObject } from '../../support/pageObjects/SignupPageObject';
+import { paths } from '../../../../utils/paths';
+import { SignupPageObject } from '../../../support/pageObjects/SignupPageObject';
 
 const signup = new SignupPageObject();
 

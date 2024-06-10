@@ -64,6 +64,8 @@ jobs:
           build: yarn build
           command: yarn test:cypress
           install: false
+          project: "./apps/web"
+          spec: "./apps/web/__tests__/test/others/**.ts"
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}

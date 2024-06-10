@@ -1,5 +1,5 @@
-import { HomePageObject } from '../../support/pageObjects/HomePageObject';
-import { paths } from '../../../utils/paths';
+import { HomePageObject } from '../../../support/pageObjects/HomePageObject';
+import { paths } from '../../../../utils/paths';
 
 const homePage = new HomePageObject();
 const locale_de = 'de';

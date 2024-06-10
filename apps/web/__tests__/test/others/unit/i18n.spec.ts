@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-const en = require('../../../lang/en.json')
-const de = require('../../../lang/de.json')
+const en = require('../../../../lang/en.json')
+const de = require('../../../../lang/de.json')
 
 describe('i18n', () => {
     it('has the same keys in English and German', () => {
@@ -33,7 +33,7 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
 const hasAllKeys = (obj1: object, obj2: object)  => {
     const obj1WorkingCopy = structuredClone(obj1)
     const obj2WorkingCopy = structuredClone(obj2)
-    
+
     const obj1Skeleton = setValuesToEmptyString(obj1WorkingCopy);
     const obj2Skeleton = setValuesToEmptyString(obj2WorkingCopy);
 

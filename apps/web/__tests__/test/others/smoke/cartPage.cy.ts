@@ -1,4 +1,4 @@
-import { CartPageObject } from '../../support/pageObjects/CartPageObject';
+import { CartPageObject } from '../../../support/pageObjects/CartPageObject';
 
 const cart = new CartPageObject();
 
