@@ -62,8 +62,9 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           build: yarn build
-          command: yarn test:cypress
           install: false
+          start: yarn start
+          wait-on: "http://localhost:3000"
           project: "./apps/web"
           spec: "./apps/web/__tests__/test/others/**.ts"
         env:
