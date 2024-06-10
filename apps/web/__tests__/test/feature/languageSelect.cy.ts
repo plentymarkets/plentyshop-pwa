@@ -1,5 +1,5 @@
-import { LanguageSelectObject } from '../../../support/pageObjects/LanguageSelectObject';
-import { paths } from '../../../../utils/paths';
+import { LanguageSelectObject } from '../../support/pageObjects/LanguageSelectObject';
+import { paths } from '../../../utils/paths';
 
 const languageSelect = new LanguageSelectObject();
 

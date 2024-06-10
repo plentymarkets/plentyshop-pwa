@@ -1,5 +1,5 @@
-import { paths } from '../../../../utils/paths';
-import { LoginPageObject } from '../../../support/pageObjects/LoginPageObject';
+import { paths } from '../../../utils/paths';
+import { LoginPageObject } from '../../support/pageObjects/LoginPageObject';
 
 const login = new LoginPageObject();
 describe('Login page check', () => {

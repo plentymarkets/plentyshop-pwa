@@ -1,9 +1,9 @@
-import { paths } from '../../../../utils/paths';
-import { HomePageObject } from '../../../support/pageObjects/HomePageObject';
-import { ProductListPageObject } from '../../../support/pageObjects/ProductListPageObject';
-import { WishlistObject } from "../../../support/pageObjects/WishlistObject";
-import { CartPageObject } from "../../../support/pageObjects/CartPageObject";
-import {ProductDetailPageObject} from "../../../support/pageObjects/ProductDetailPageObject";
+import { paths } from '../../../utils/paths';
+import { HomePageObject } from '../../support/pageObjects/HomePageObject';
+import { ProductListPageObject } from '../../support/pageObjects/ProductListPageObject';
+import { WishlistObject } from "../../support/pageObjects/WishlistObject";
+import { CartPageObject } from "../../support/pageObjects/CartPageObject";
+import {ProductDetailPageObject} from "../../support/pageObjects/ProductDetailPageObject";
 
 const homePage = new HomePageObject();
 const wishlist = new WishlistObject();

@@ -1,4 +1,4 @@
-import { CategoryPageObject } from '../../../support/pageObjects/CategoryObject';
+import { CategoryPageObject } from '../../support/pageObjects/CategoryObject';
 
 const category = new CategoryPageObject();
 

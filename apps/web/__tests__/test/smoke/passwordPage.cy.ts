@@ -1,5 +1,5 @@
-import { paths } from '../../../../utils/paths';
-import { PasswordPageObject } from '../../../support/pageObjects/PasswordPageObject';
+import { paths } from '../../../utils/paths';
+import { PasswordPageObject } from '../../support/pageObjects/PasswordPageObject';
 
 const password = new PasswordPageObject();
 
