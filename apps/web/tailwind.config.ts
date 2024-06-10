@@ -1,10 +1,8 @@
 import sfTypography from '@storefront-ui/typography';
-import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
-  presets: [tailwindConfig],
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
@@ -14,30 +12,30 @@ export default {
       },
       colors: {
         primary: {
-          '50': '#ecffff',
-          '100': '#cefbff',
-          '200': '#a4f7fd',
-          '300': '#65edfb',
-          '400': '#20dbf0',
-          '500': '#04bed6',
-          '600': '#0697b4',
+          '50': 'rgb(var(--colors-primary-50) / <alpha-value>)',
+          '100': 'rgb(var(--colors-primary-100) / <alpha-value>)',
+          '200': 'rgb(var(--colors-primary-200) / <alpha-value>)',
+          '300': 'rgb(var(--colors-primary-300) / <alpha-value>)',
+          '400': 'rgb(var(--colors-primary-400) / <alpha-value>)',
+          '500': 'rgb(var(--colors-primary-500) / <alpha-value>)',
+          '600': 'rgb(var(--colors-primary-600) / <alpha-value>)',
           '700': 'rgb(var(--colors-primary-700) / <alpha-value>)',
-          '800': '#146276',
-          '900': '#155064',
-          '950': '#073342',
+          '800': 'rgb(var(--colors-primary-800) / <alpha-value>)',
+          '900': 'rgb(var(--colors-primary-900) / <alpha-value>)',
+          '950': 'rgb(var(--colors-primary-950) / <alpha-value>)',
         },
         secondary: {
-          '50': '#fffde7',
-          '100': '#fffcc1',
-          '200': '#fff787',
-          '300': '#ffea42',
-          '400': '#ffd90f',
-          '500': '#f1c002',
-          '600': '#cf9400',
-          '700': '#a56903',
-          '800': '#88520b',
-          '900': '#74430f',
-          '950': '#442204',
+          '50': 'rgb(var(--colors-secondary-50) / <alpha-value>)',
+          '100': 'rgb(var(--colors-secondary-100) / <alpha-value>)',
+          '200': 'rgb(var(--colors-secondary-200) / <alpha-value>)',
+          '300': 'rgb(var(--colors-secondary-300) / <alpha-value>)',
+          '400': 'rgb(var(--colors-secondary-400) / <alpha-value>)',
+          '500': 'rgb(var(--colors-secondary-500) / <alpha-value>)',
+          '600': 'rgb(var(--colors-secondary-600) / <alpha-value>)',
+          '700': 'rgb(var(--colors-secondary-700) / <alpha-value>)',
+          '800': 'rgb(var(--colors-secondary-800) / <alpha-value>)',
+          '900': 'rgb(var(--colors-secondary-900) / <alpha-value>)',
+          '950': 'rgb(var(--colors-secondary-950) / <alpha-value>)',
         },
       },
       gridTemplateAreas: {
