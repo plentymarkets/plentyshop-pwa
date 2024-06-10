@@ -67,7 +67,8 @@ jobs:
           wait-on: "http://localhost:3000"
           project: "./apps/web"
           spec: |
-            apps/web/__tests__/test/feature/**.ts
+            apps/web/__tests__/test/feature/*.cy.{js,jsx,ts,tsx}
+            apps/web/__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
