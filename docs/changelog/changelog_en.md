@@ -1,5 +1,18 @@
 # Changelog plentyshopPWA
 
+## v1.5.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener">
+
+### New
+
+### Fixed
+
+- Wish list button aria label
+- Hydration errors under guest login and cart
+- PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
+- Registration without cloudflare turnstile configuration is now possible.
+
+### Changed
+
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New

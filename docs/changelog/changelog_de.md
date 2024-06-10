@@ -1,5 +1,17 @@
 # Changelog plentyshopPWA
 
+## v1.5.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener">
+
+### Hinzugefügt
+
+### Behoben
+
+- Wunschlisten-Button Arien-Etikett
+- PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
+- Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
+
+### Geändert
+
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
 ### Hinzugefügt
