@@ -25,7 +25,6 @@
           <NuxtImg
             :src="getImagePath(item)"
             :alt="productAttributeGetters.getAttributeValueName(item)"
-            :title="productAttributeGetters.getAttributeValueName(item)"
             loading="lazy"
           />
         </SfTooltip>
@@ -53,7 +52,9 @@ const runtimeConfig = useRuntimeConfig();
 const domain = runtimeConfig.public?.domain ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
-  return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
+  return productAttributeGetters.isAttributeValueDisabled(item)
+    ? t('productAttributes.seeAvailableOptions')
+    : productAttributeGetters.getAttributeValueName(item);
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {

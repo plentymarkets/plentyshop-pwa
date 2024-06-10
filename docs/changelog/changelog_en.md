@@ -6,7 +6,7 @@
 
 ### Fixed
 
-- Attribute images should have a tooltip
+- The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
 - Hydration errors under guest login and cart
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
