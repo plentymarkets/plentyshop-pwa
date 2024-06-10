@@ -1,6 +1,5 @@
 import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
 import type {
   FetchWishlist,
   UseWishlistReturn,

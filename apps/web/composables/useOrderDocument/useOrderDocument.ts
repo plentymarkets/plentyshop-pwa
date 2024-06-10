@@ -1,6 +1,4 @@
 import type { OrderDocument } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-
 import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn } from './types';
 import type { DownloadFile, GetDocument } from './types';
 

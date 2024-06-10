@@ -1,6 +1,4 @@
 import type { ReviewAverage } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-
 import type { FetchProductReviewAverage, UseProductReviewAverage, UseProductReviewAverageState } from './types';
 
 /**

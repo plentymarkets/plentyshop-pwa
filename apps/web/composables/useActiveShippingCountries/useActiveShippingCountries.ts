@@ -1,5 +1,4 @@
 import type { ActiveShippingCountry } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
 import type {
   UseActiveShippingCountriesReturn,
   UseActiveShippingCountriesState,

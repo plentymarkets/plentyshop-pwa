@@ -77,7 +77,6 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@vue-storefront/nuxt',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
@@ -89,6 +88,7 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
   ],
   vsf: {
     middleware: {

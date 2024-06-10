@@ -1,6 +1,4 @@
 import type { CreateReviewParams, Review, UpdateReviewParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-
 import type {
   FetchProductReviews,
   UseProductReviews,
