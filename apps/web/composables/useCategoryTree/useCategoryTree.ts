@@ -1,5 +1,5 @@
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+
 import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree, SetCategoryTree } from './types';
 
 /**

@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
 import type { AttributeSelectProps } from '../types';
-import { productAttributeGetters } from '@plentymarkets/shop-sdk';
+import { productAttributeGetters } from '@plentymarkets/shop-api';
 import { number, object } from 'yup';
 import { useForm } from 'vee-validate';
 
