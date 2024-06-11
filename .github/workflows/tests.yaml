@@ -63,7 +63,7 @@ jobs:
         with:
           build: yarn build
           install: false
-          start: yarn start
+          start: yarn dev
           wait-on: "http://localhost:3000"
           project: "./apps/web"
           spec: |
