@@ -63,9 +63,7 @@ jobs:
         with:
           build: yarn build
           install: false
-          start: yarn start
-          wait-on: "http://localhost:3000"
-          project: "./apps/web"
+          command: yarn test:cypress
           spec: |
             apps/web/__tests__/test/unit/*.cy.{js,jsx,ts,tsx}
             apps/web/__tests__/test/feature/*.cy.{js,jsx,ts,tsx}
