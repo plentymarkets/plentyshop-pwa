@@ -141,7 +141,7 @@ resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
+    (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
       productGetters.getPrice(product.value)?.special ??
       productGetters.getPrice(product.value)?.regular ??
       0) + getPropertiesPrice(product.value),

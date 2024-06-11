@@ -30,7 +30,7 @@ const { getPropertiesPrice } = useProductOrderProperties();
 
 const currentActualPrice = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(props.product, 1)?.price.value ??
+    (productGetters.getGraduatedPriceByQuantity(props.product, 1)?.baseSinglePrice ??
       productGetters.getPrice(props.product)?.special ??
       productGetters.getPrice(props.product)?.regular ??
       0) + getPropertiesPrice(props.product),
