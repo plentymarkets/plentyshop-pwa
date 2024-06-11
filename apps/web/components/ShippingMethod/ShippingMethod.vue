@@ -40,7 +40,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 

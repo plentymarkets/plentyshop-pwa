@@ -4,7 +4,7 @@ import type {
   UseCustomerReturnsState,
   FetchCustomerReturns,
 } from '~/composables/useCustomerReturns/types';
-import { useSdk } from '~/sdk';
+
 import type { OrderReturnsResponse } from '@plentymarkets/shop-api';
 
 /**
