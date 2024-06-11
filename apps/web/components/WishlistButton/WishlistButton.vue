@@ -3,7 +3,9 @@
     variant="tertiary"
     size="sm"
     :aria-label="
-      isWishlistItem(variationId) ? t('removeProductFromWishlist', productName) : t('addProductToWishlist', productName)
+      isWishlistItem(variationId)
+        ? t('removeProductFromWishlist', { label: productName })
+        : t('addProductToWishlist', { label: productName })
     "
     :class="{ 'p-[0.9rem]': !isCloseButton }"
     class="m-2"
