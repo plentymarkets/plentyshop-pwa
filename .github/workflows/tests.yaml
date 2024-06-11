@@ -43,7 +43,7 @@ jobs:
       - name: Install Dependencies
         run: yarn --immutable
 
-      - name: Unit tests
+      - name: Set environment
         run: |
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
@@ -52,6 +52,9 @@ jobs:
           CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
           ${{ vars.CONFIG }}
           EOT
+
+      - name: Unit tests
+        run: |
           pushd ${{ github.workspace }}/apps/server/
           yarn start &
           pushd ${{ github.workspace }}/apps/web/
