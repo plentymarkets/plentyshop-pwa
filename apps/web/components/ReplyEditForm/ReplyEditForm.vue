@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reviewGetters } from '@plentymarkets/shop-sdk';
+import { reviewGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';

@@ -1,7 +1,6 @@
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { userAddressGetters } from '@plentymarkets/shop-api';
 import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
-import { useSdk } from '~/sdk';
 import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
 /**

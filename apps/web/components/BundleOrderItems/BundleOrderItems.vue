@@ -53,8 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { productBundleGetters } from '@plentymarkets/shop-sdk';
-import { type ProductBundleComponent } from '@plentymarkets/shop-api';
+import { type ProductBundleComponent, productBundleGetters } from '@plentymarkets/shop-api';
 import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
 const { t } = useI18n();
