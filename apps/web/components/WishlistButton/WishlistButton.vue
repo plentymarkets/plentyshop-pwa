@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { WishlistButtonProps } from '~/components/WishlistButton/types';
 import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, discard: false });
 const { product, quantity, discard } = toRefs(props);

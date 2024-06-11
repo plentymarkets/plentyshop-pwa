@@ -68,7 +68,7 @@ import { SfButton, SfRatingButton, SfTextarea, SfInput, useId } from '@storefron
 import { object, string, number } from 'yup';
 import { useForm } from 'vee-validate';
 import type { ReviewFormProps } from './types';
-import { reviewGetters } from '@plentymarkets/shop-sdk';
+import { reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<ReviewFormProps>(), { reviewItem: null });
