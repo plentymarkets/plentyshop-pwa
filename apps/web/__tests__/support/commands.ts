@@ -12,6 +12,7 @@ declare global {
       visitAndHydrate(options: Partial<Cypress.VisitOptions> & { url: string }): Cypress.Chainable | null;
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
+      checkConsoleWarnings(): void;
     }
   }
 }
@@ -55,4 +56,18 @@ Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.visit(url, options);
   // Wait until app is hydrated
   cy.get('body.hydrated');
+});
+
+Cypress.Commands.add('checkConsoleWarnings', () => {
+  describe('Hydration Warnings', () => {
+    it('should not have any hydration warnings in console', () => {
+      cy.window().then((win) => {
+        cy.spy(win.console, 'warn').as('consoleWarn')
+      })
+
+      cy.wait(5000)
+
+      cy.get('@consoleWarn').should('not.have.been.called')
+    })
+  })
 });
