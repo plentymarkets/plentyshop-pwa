@@ -31,7 +31,7 @@
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product)"
               :price="actualPrice(product)"
-              :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
+              :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"
               :image-alt="productGetters.getName(product) ?? ''"
               :image-height="productGetters.getImageHeight(product) ?? 600"
               :image-width="productGetters.getImageWidth(product) ?? 600"
