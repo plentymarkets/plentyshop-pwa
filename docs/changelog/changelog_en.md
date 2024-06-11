@@ -6,6 +6,7 @@
 
 ### Fixed
 
+- Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
 - Hydration errors under guest login and cart

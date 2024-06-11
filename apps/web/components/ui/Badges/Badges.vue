@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="badges">
+  <div v-if="haveBadges" data-testid="badges">
     <ul>
       <template v-if="tagsEnabled && productTags.length > 0">
         <SfListItem
@@ -56,6 +56,12 @@ const tagsEnabled = props.useTags;
 if (tagsEnabled) {
   productTags.value = tagGetters.getTags(product);
 }
+
+const haveBadges = computed(
+  () =>
+    (tagsEnabled && productTags.value.length > 0) ||
+    (availabilityEnabled && productGetters.getAvailabilityName(product)),
+);
 
 const onTagClick = (tag: ProductTag) => {
   navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}_${tagGetters.getTagId(tag)}`));
