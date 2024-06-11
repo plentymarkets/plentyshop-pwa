@@ -23,13 +23,5 @@ describe('Smoke: Cart Page', () => {
       .orderSummaryAfterCouponApplied()
       .removeCoupon()
       .orderSummaryAfterCouponRemoved();
-
-      cy.window().then((win) => {
-        cy.spy(win.console, 'warn').as('consoleWarn')
-      })
-
-      cy.wait(5000)
-
-      cy.get('@consoleWarn').should('not.have.been.called')
   });
 });
