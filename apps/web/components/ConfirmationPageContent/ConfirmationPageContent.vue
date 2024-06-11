@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { SfButton } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 
