@@ -61,6 +61,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
+      feedbackPage: Number(route.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
+      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE,
       itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
       term: route.query.term?.toString(),
       priceMin: route.query.priceMin?.toString(),
@@ -191,6 +193,31 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   };
 
   /**
+   * @description Function for updating the feedback page.
+   * @param page
+   * @return void
+   * @example
+   * ``` ts
+   * updateFeedbackPage('1');
+   * ```
+   */
+  const updateFeedbackPage = (page: string): void => {
+    updateQuery({ feedbackPage: page });
+  };
+
+  /**
+   * @description Function for updating the feedback page.
+   * @param page
+   * @return void
+   * @example
+   * ``` ts
+   * updateFeedbackPage('1');
+   * ```
+   */
+  const updateFeedbacksPerPage = (perPage: string): void => {
+    updateQuery({ feedbacksPerPage: perPage });
+  };
+  /**
    * @description Function for updating the search term.
    * @param term
    * @return void
@@ -263,6 +290,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateSorting,
     updatePage,
     updatePrices,
+    updateFeedbackPage,
+    updateFeedbacksPerPage,
     updateQuery,
     checkFiltersInURL,
   };

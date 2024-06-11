@@ -32,7 +32,13 @@
         {{ t('customerReviewsNone') }}
       </p>
     </UiAccordionItem>
-    <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
+    <UiPagination
+      v-if="productReviews.length > 0"
+      :current-page="getFacetsFromURL().feedbackPage ?? 1"
+      :total-items="productReviews.length"
+      :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+      :max-visible-pages="maxVisiblePages"
+    />
   </div>
 
   <UiModal
@@ -78,6 +84,7 @@ import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const { getFacetsFromURL} = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
@@ -86,8 +93,8 @@ const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
-const reviewsOpen = ref(false);
-
+const reviewsOpen = ref(true);
+const viewport = useViewport();
 const closeAuth = () => {
   closeAuthentication();
   isReviewOpen.value = true;
@@ -107,7 +114,7 @@ const productReviews = computed(() => {
 const refreshReviews = () => {
   fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
 };
-
+refreshReviews();
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
 
@@ -121,16 +128,17 @@ const deleteReview = () => {
   refreshReviews();
   emits('on-list-change');
 };
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
-watch(
-  () => reviewsOpen.value,
-  (value) => {
-    if (value) {
-      fetchProductReviews(
-        Number(productGetters.getItemId(product.value)),
-        productGetters.getVariationId(product.value),
-      );
-    }
-  },
-);
+// watch(
+//   () => reviewsOpen.value,
+//   (value) => {
+//     if (value) {
+//       fetchProductReviews(
+//         Number(productGetters.getItemId(product.value)),
+//         productGetters.getVariationId(product.value),
+//       );
+//     }
+//   },
+// );
 </script>
