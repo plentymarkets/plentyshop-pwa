@@ -63,7 +63,13 @@ jobs:
         with:
           build: yarn build
           install: false
-          command: yarn test:cypress
+          start: yarn start
+          wait-on: "http://localhost:3000"
+          project: "./apps/web"
+          spec: |
+            apps/web/__tests__/test/unit/*.cy.{js,jsx,ts,tsx}
+            apps/web/__tests__/test/feature/*.cy.{js,jsx,ts,tsx}
+            apps/web/__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
