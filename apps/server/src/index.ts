@@ -8,6 +8,15 @@ const useIPV6 = process.env.USE_IPV6 === 'true';
 
 (async () => {
   const app = await createServer({ integrations: config.integrations });
+
+  if (!config.integrations.plentysystems.configuration.api.securityToken) {
+    consola.warn('API_SECURITY_TOKEN is not set. Please set it in your .env file');
+  }
+
+  if (!config.integrations.plentysystems.configuration.api.url) {
+    consola.warn('API_ENDPOINT is not set. Please set it in your .env file');
+  }
+
   const host = useIPV6 ? '::' : '0.0.0.0';
   const port = Number(process.argv[3]) || 8181;
   const CORS_MIDDLEWARE_NAME = 'corsMiddleware';
