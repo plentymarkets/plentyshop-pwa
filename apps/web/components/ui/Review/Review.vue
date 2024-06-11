@@ -166,7 +166,6 @@
 </template>
 
 <script setup lang="ts">
-import { reviewGetters } from '@plentymarkets/shop-sdk';
 import {
   SfRating,
   SfIconCheck,
@@ -183,6 +182,7 @@ import type { ReviewProps } from './types';
 import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
 import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
 import type { CreateReviewParams, ReviewItem, UpdateReviewParams } from '@plentymarkets/shop-api';
+import { reviewGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
 const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);

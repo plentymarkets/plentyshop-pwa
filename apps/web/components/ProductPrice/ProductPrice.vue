@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { productBundleGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { productBundleGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ProductPriceProps } from '~/components/ProductPrice/types';
 
 const props = defineProps<ProductPriceProps>();
