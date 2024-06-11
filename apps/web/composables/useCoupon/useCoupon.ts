@@ -1,6 +1,5 @@
 import type { UseCouponReturn, UseCouponState, AddCoupon, DeleteCoupon } from './types';
-import { useSdk } from '~/sdk';
-import type { DoAddCouponParams } from '@plentymarkets/shop-api';
+import type { Cart, DoAddCouponParams } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for managing coupons.
@@ -34,22 +33,18 @@ export const useCoupon: UseCouponReturn = () => {
     if (params.couponCode.trim() === '') {
       send({ message: $i18n.t('coupon.pleaseProvideCoupon'), type: 'warning' });
       state.value.loading = false;
-      return;
+      return {} as Cart;
     }
-    const response = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCoupon(params));
     state.value.loading = false;
-    if (response.data.value.error) {
-      const error = {
-        status: 500,
-        message: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
-        statusMessage: $i18n.t(`error.${getErrorCode(response.data.value.error.code)}`),
-      };
-      useHandleError(error);
-    } else if (response.data.value) {
+
+    useHandleError(error.value);
+
+    if (data.value) {
       await getCart();
       send({ message: $i18n.t('coupon.couponApplied'), type: 'positive' });
     }
-    return response.data.value.data;
+    return {} as Cart;
   };
 
   const deleteCoupon: DeleteCoupon = async (params: DoAddCouponParams) => {
@@ -58,21 +53,16 @@ export const useCoupon: UseCouponReturn = () => {
     const { send } = useNotification();
     const { getCart } = useCart();
 
-    const response = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.deleteCoupon(params));
     state.value.loading = false;
-    if (response.data.value.data) {
+
+    useHandleError(error.value);
+
+    if (data.value) {
       await getCart();
       send({ message: $i18n.t('coupon.couponRemoved'), type: 'positive' });
-    } else if (response.data.value.error) {
-      const error = {
-        status: 500,
-        message: $i18n.t(`error.errorActionIsNotExecuted`),
-        statusMessage: $i18n.t(`error.errorActionIsNotExecuted`),
-      };
-
-      useHandleError(error);
     }
-    return response.data.value.data;
+    return {} as Cart;
   };
 
   return {

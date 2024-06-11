@@ -88,7 +88,13 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
   ],
+  vsf: {
+    middleware: {
+      apiUrl: 'http://localhost:8181',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,

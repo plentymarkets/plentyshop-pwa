@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
