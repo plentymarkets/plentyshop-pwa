@@ -81,12 +81,10 @@
         >
           {{ $t('goToCheckout') }}
         </SfButton>
-        <div class="relative flex py-5 px-12 items-center">
-          <div class="flex-grow border-t border-gray-400"></div>
-          <span class="flex-shrink mx-4 text-gray-400">{{ t('quickCheckout.or') }}</span>
-          <div class="flex-grow border-t border-gray-400"></div>
+        <div v-if="isAvailable">
+          <OrDivider class="my-4" />
+          <PayPalExpressButton class="w-full text-center" type="CartPreview" />
         </div>
-        <PayPalExpressButton class="w-full text-center" type="CartPreview" />
       </div>
     </div>
   </UiModal>
@@ -95,7 +93,7 @@
 <script setup lang="ts">
 import { SfButton, SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import { cartGetters, productGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 
 defineProps<QuickCheckoutProps>();
@@ -105,11 +103,15 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const { data: cart } = useCart();
+const { isAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);
 
-onMounted(() => startTimer());
+onMounted(() => {
+  startTimer();
+  loadConfig();
+});
 onUnmounted(() => endTimer());
 
 const totals = computed(() => {

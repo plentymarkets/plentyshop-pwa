@@ -2,18 +2,22 @@
   <article class="w-full p-4 mb-4 border rounded-md" data-testid="review">
     <div class="w-full flex">
       <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
-        <span class="mr-2 text-xs text-neutral-700">{{ reviewGetters.getReviewAuthor(reviewItem) }}</span>
+        <span class="mr-2 text-xs text-neutral-700">{{ reviewAuthor }}</span>
         <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
         {{ t('review.verifiedPurchase') }}
       </div>
 
-      <div v-if="isEditable" class="w-1/3 items-start flex justify-end space-x-3">
-        <SfTooltip :label="tooltipReviewLabel">
-          <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reviewItem)" size="sm" class="fill-neutral-400" />
+      <div v-if="isEditable" class="w-1/3 flex justify-end items-center space-x-3">
+        <SfTooltip :label="tooltipReviewLabel" class="flex">
+          <SfIconVisibility v-if="isReviewVisibile" size="sm" class="fill-neutral-400" />
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfLink @click="openReviewEdit"><SfIconTune size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
-        <SfLink @click="openDeleteReview"><SfIconDelete size="sm" class="fill-primary-900 cursor-pointer" /></SfLink>
+        <SfIconBase @click="openReviewEdit" viewBox="0 0 32 32" size="xs" class="fill-primary-900 cursor-pointer">
+          <path
+            d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
+          />
+        </SfIconBase>
+        <SfIconDelete @click="openDeleteReview" size="sm" class="fill-primary-900 cursor-pointer" />
       </div>
     </div>
 
@@ -25,41 +29,55 @@
       </div>
     </header>
 
-    <p class="pb-2 text-sm text-neutral-900">{{ reviewGetters.getReviewMessage(reviewItem) }}</p>
+    <p class="text-sm text-neutral-900">{{ reviewGetters.getReviewMessage(reviewItem) }}</p>
 
     <button
       v-if="reviewItem.replies.length > 0"
       type="button"
-      class="inline-block mb-2 text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-700 hover:border-primary-800"
+      class="inline-block text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-700 hover:border-primary-800"
       @click="isCollapsed = !isCollapsed"
     >
       {{ t(isCollapsed ? 'review.showAnswers' : 'review.hideAnswers') }}
     </button>
 
     <div class="ml-8">
-      <div v-if="!isCollapsed">
-        <div v-for="(reply, index) in replies" :key="index" class="mb-8 md:mr-16">
+      <template v-if="!isCollapsed">
+        <div
+          v-for="(reply, index) in replies"
+          :key="index"
+          :class="{ 'mt-5': index === 0, 'mb-5': index < replies.length - 1 }"
+          class="md:mr-16"
+        >
           <div class="flex items-center mb-2 text-xs">
             <div class="w-full">
               <span class="font-medium">
-                {{ reply.authorName ? reply.authorName : t('review.anonymous') }}
+                {{ reply.authorName || t('review.anonymous') }}
               </span>
               <span class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
             </div>
 
-            <div v-if="isAnswerEditable(reply)" class="w-full items-start flex justify-end space-x-3">
-              <SfTooltip :label="tooltipReplyLabel(reply)">
+            <div v-if="isAnswerEditable(reply)" class="w-full flex justify-end items-center space-x-3">
+              <SfTooltip :label="tooltipReplyLabel(reply)" class="flex">
                 <SfIconVisibility v-if="reviewGetters.getReviewVisibility(reply)" size="xs" class="fill-neutral-400" />
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
-              <SfIconTune @click="openReplyEditor(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
+              <SfIconBase
+                @click="openReplyEditor(reply)"
+                viewBox="0 0 38 38"
+                size="xs"
+                class="fill-primary-900 cursor-pointer"
+              >
+                <path
+                  d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
+                />
+              </SfIconBase>
               <SfIconDelete @click="openReplyDeletion(reply)" size="xs" class="fill-primary-900 cursor-pointer" />
             </div>
             <br />
           </div>
           <p class="text-sm">{{ reply.feedbackComment.comment.message }}</p>
         </div>
-      </div>
+      </template>
 
       <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
         <SfButton @click="isAnswerFormOpen = true" variant="tertiary" size="sm" class="self-start">
@@ -148,7 +166,6 @@
 </template>
 
 <script setup lang="ts">
-import { reviewGetters } from '@plentymarkets/shop-sdk';
 import {
   SfRating,
   SfIconCheck,
@@ -157,15 +174,15 @@ import {
   SfIconVisibility,
   SfIconVisibilityOff,
   SfIconClose,
-  SfLink,
   SfTooltip,
   useDisclosure,
-  SfIconTune,
+  SfIconBase,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
 import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
 import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
 import type { CreateReviewParams, ReviewItem, UpdateReviewParams } from '@plentymarkets/shop-api';
+import { reviewGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
 const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
@@ -176,6 +193,7 @@ const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
 const replyItem = ref({} as ReviewItem);
 
+const reviewAuthor = reviewGetters.getReviewAuthor(reviewItem.value) || t('review.anonymous');
 const { isOpen: isDeleteReviewOpen, open: openDeleteReview, close: closeDeleteReview } = useDisclosure();
 const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
 const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
@@ -186,9 +204,8 @@ const { deleteProductReview, setProductReview } = useProductReviews(
 );
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
-const tooltipReviewLabel = reviewGetters.getReviewVisibility(reviewItem.value)
-  ? t('review.tooltipVisibilityOn')
-  : t('review.tooltipVisibilityOff');
+const isReviewVisibile = reviewGetters.getReviewVisibility(reviewItem.value);
+const tooltipReviewLabel = isReviewVisibile ? t('review.tooltipVisibilityOn') : t('review.tooltipVisibilityOff');
 
 const tooltipReplyLabel = (reply: ReviewItem) =>
   reviewGetters.getReviewVisibility(reply) ? t('review.tooltipVisibilityOn') : t('review.tooltipVisibilityOff');

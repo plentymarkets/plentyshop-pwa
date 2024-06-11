@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
+import { nuxtI18nOptions } from './i18n.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -35,6 +36,65 @@ export default defineNuxtConfig({
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
+  // eslint-disable-next-line unicorn/expiring-todo-comments
+  // TODO: build is consistently failing because of this. check whether we need pre-render check.
+  nitro: {
+    prerender: {
+      crawlLinks: false,
+    },
+    compressPublicAssets: true,
+  },
+  routeRules: {
+    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+  },
+  site: {
+    url: '',
+  },
+  hooks: {
+    'pages:extend'(pages) {
+      pages.push({
+        name: 'product',
+        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
+        file: __dirname + '/pages/product/[slug].vue',
+      });
+    },
+  },
+  runtimeConfig: {
+    public: {
+      domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
+      cookieGroups: cookieConfig,
+      showNetPrices: true,
+      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
+      useAvif: process.env?.USE_AVIF === '1' ?? false,
+      useWebp: process.env?.USE_WEBP === '1' ?? false,
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+    },
+  },
+  modules: [
+    '@nuxt/image',
+    '@nuxt/test-utils/module',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/turnstile',
+    'nuxt-lazy-hydrate',
+    'nuxt-viewport',
+    '@vee-validate/nuxt',
+    '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
+  ],
+  vsf: {
+    middleware: {
+      apiUrl: 'http://localhost:8181',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,
@@ -48,112 +108,25 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  modules: [
-    [
-      '@nuxtjs/google-fonts',
-      {
-        families: {
-          'Red Hat Display': { wght: [400, 500, 700] },
-          'Red Hat Text': { wght: [300, 400, 500, 700] },
-        },
-      },
-    ],
-    '@nuxtjs/turnstile',
-    '@nuxtjs/sitemap',
-    [
-      '@nuxtjs/tailwindcss',
-      {
-        configPath: '~/tailwind.config.ts',
-      },
-    ],
-    [
-      '@nuxtjs/i18n',
-      {
-        locales: [
-          {
-            code: 'en',
-            file: 'en.json',
-          },
-          {
-            code: 'de',
-            file: 'de.json',
-          },
-        ],
-        langDir: 'lang',
-        defaultLocale: 'en',
-        strategy: 'prefix_and_default',
-      },
-    ],
-    [
-      '@vee-validate/nuxt',
-      {
-        autoImports: true,
-        componentNames: {
-          Form: 'VeeForm',
-          Field: 'VeeField',
-          FieldArray: 'VeeFieldArray',
-          ErrorMessage: 'VeeErrorMessage',
-        },
-      },
-    ],
-    [
-      'nuxt-viewport',
-      {
-        breakpoints: {
-          sm: 640,
-          md: 640,
-          lg: 1024,
-        },
-        defaultBreakpoints: {
-          mobile: 'sm',
-          tablet: 'md',
-          desktop: 'lg',
-        },
-        fallbackBreakpoint: 'lg',
-        cookie: {
-          expires: 365,
-          name: 'plenty-viewport',
-          path: '/',
-          sameSite: 'Strict',
-          secure: true,
-        },
-      },
-    ],
-    '@nuxt/image',
-    '@vite-pwa/nuxt',
-    '@nuxt/test-utils/module',
-    'nuxt-lazy-hydrate',
-  ],
-  // eslint-disable-next-line unicorn/expiring-todo-comments
-  // TODO: build is consistently failing because of this. check whether we need pre-render check.
-  nitro: {
-    prerender: {
-      crawlLinks: false,
+  googleFonts: {
+    families: {
+      'Red Hat Display': { wght: [400, 500, 700] },
+      'Red Hat Text': { wght: [300, 400, 500, 700] },
     },
-    compressPublicAssets: true,
   },
-  turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
-  },
-  routeRules: {
-    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-  },
-  site: {
-    url: '',
-  },
+  i18n: nuxtI18nOptions,
   sitemap: {
+    autoLastmod: true,
+    xsl: '/sitemap_style.xsl',
     xslColumns: [
       // URL column must always be set, no value needed
       { label: 'URL', width: '75%' },
       { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
     ],
-    autoLastmod: true,
     sitemaps: {
       'sitemap/content': {
         exclude: [
-          '/en/**', // default language
+          `/${nuxtI18nOptions.defaultLocale}/**`,
           '/search',
           '/offline',
           '/my-account/**',
@@ -172,28 +145,39 @@ export default defineNuxtConfig({
       },
     },
   },
-  hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
+  tailwindcss: {
+    configPath: '~/tailwind.config.ts',
+  },
+  turnstile: {
+    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  },
+  viewport: {
+    breakpoints: {
+      sm: 640,
+      md: 640,
+      lg: 1024,
+    },
+    defaultBreakpoints: {
+      mobile: 'sm',
+      tablet: 'md',
+      desktop: 'lg',
+    },
+    fallbackBreakpoint: 'lg',
+    cookie: {
+      expires: 365,
+      name: 'plenty-viewport',
+      path: '/',
+      sameSite: 'Strict',
+      secure: true,
     },
   },
-  runtimeConfig: {
-    public: {
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
-      cookieGroups: cookieConfig,
-      showNetPrices: true,
-      logoUrl: (process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com') + '/images/logo.png',
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
-      useAvif: process.env?.USE_AVIF === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
-      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+  veeValidate: {
+    autoImports: true,
+    componentNames: {
+      Form: 'VeeForm',
+      Field: 'VeeField',
+      FieldArray: 'VeeFieldArray',
+      ErrorMessage: 'VeeErrorMessage',
     },
   },
   pwa: {

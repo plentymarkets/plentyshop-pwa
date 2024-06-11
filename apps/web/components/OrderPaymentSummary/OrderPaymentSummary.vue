@@ -9,11 +9,13 @@
 
   <h2 class="font-medium text-base mt-4">{{ $t('checkoutPayment.heading') }}</h2>
   <p>{{ orderGetters.getPaymentMethodName(order) }}</p>
+
+  <h2 class="font-medium text-base mt-4">{{ $t('account.ordersAndReturns.paymentSummary.paymentStatus') }}</h2>
   <p data-testid="order-payment-status">{{ orderGetters.getPaymentStatus(order) }}</p>
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderPaymentSummaryPropsType } from './types';
 
 const props = defineProps<OrderPaymentSummaryPropsType>();

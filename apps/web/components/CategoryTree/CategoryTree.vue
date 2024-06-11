@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-sdk';
+import { categoryGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 import { SfIconArrowBack } from '@storefront-ui/vue';
 import { type CategoryTreeProps } from '~/components/CategoryTree/types';
 
