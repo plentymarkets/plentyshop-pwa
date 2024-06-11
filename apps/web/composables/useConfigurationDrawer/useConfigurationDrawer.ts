@@ -1,9 +1,10 @@
 import { getTailwindColorsOklch, oklchToRgb } from '~/utils/tailwindHelper';
+import type { TailwindColors } from './types';
 
 const open = ref(false);
 
-const setColorProperties = (type: string, tailwindColors: any) => {
-  tailwindColors.forEach((color: {weight: string, value: string}) => {
+const setColorProperties = (type: string, tailwindColors: TailwindColors) => {
+  tailwindColors.forEach((color) => {
     if (color.value) {
       const rgb = oklchToRgb(color.value);
       document.documentElement.style.setProperty(`--colors-${type}-${color.weight}`, rgb);
