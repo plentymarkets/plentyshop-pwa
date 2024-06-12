@@ -35,7 +35,7 @@ import { productGetters } from '@plentymarkets/shop-api';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
-const { addModernImageExtension, getImageForViewport } = useModernImage();
+const { addModernImageExtension } = useModernImage();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
