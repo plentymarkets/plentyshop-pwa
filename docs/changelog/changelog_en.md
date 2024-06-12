@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- Added PWA additional check to prevent webmanifest 404
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
