@@ -1,6 +1,6 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
 import type { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+
 import type {
   UsePayPalMethodsReturn,
   CreateTransaction,
@@ -13,7 +13,7 @@ import type {
   LoadConfig,
   GetLocale,
 } from './types';
-import { paypalGetters } from '@plentymarkets/shop-sdk';
+import { paypalGetters } from '@plentymarkets/shop-api';
 
 const getLocaleForPayPal: GetLocale = (locale: string) => {
   // eslint-disable-next-line sonarjs/no-small-switch
@@ -44,6 +44,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     order: null,
     config: null,
     loadedConfig: false,
+    isAvailable: false,
   }));
 
   /**
@@ -58,6 +59,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     if (!state.value.loadedConfig) {
       const { data } = await useAsyncData('paypalLoadConfig', () => useSdk().plentysystems.getPayPalDataClientToken());
       state.value.config = data.value?.data ?? null;
+      state.value.isAvailable = !!state.value.config;
       state.value.loadedConfig = true;
     }
   };

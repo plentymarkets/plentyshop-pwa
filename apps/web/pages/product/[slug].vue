@@ -18,7 +18,11 @@
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion :product="product" :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)" />
+            <ReviewsAccordion
+              :product="product"
+              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+              @on-list-change="fetchProductReviewAverage(Number(productId))"
+            />
           </NuxtLazyHydrate>
         </section>
       </div>
@@ -35,7 +39,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();

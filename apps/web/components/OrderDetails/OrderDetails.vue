@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderDetailsProps } from './types';
 
 defineProps<OrderDetailsProps>();
