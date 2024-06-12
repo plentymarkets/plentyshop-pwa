@@ -68,7 +68,7 @@
         <UiQuantitySelector
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
-          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+          class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
         />
         <SfTooltip
           show-arrow
@@ -80,7 +80,7 @@
             type="submit"
             data-testid="add-to-cart"
             size="lg"
-            class="w-full"
+            class="w-full h-full"
             :disabled="loading || !productGetters.isSalable(product)"
           >
             <template #prefix v-if="!loading">
