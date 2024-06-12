@@ -15,6 +15,9 @@
 
 ### Fixed
 
+- Fixed missing Item short description
+- Fixed wrong link on the order confirmation page
+- Bundle Items links to include image
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
@@ -26,6 +29,10 @@
 ### Changed
 
 - Moved paypal credit card test into quarantine folder.
+
+### Changed
+
+- Removed unnecessary hover state from cart items.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
