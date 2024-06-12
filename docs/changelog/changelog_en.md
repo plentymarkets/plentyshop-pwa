@@ -66,6 +66,7 @@
 
 ### Changed
 
+- Added PWA additional check to prevent webmanifest 404
 - Demo images on the homepage have been converted to AVIF format.
 - The styling of notifications has been adjusted.
 - The customer registration form has been improved.
