@@ -1,13 +1,4 @@
 <template>
-  <!-- <div>
-    <button @click="updatePrimaryColor">Update primary colour</button>
-  </div>
-  <div>
-    <button @click="updateTestConfig">Update config</button>
-  </div>
-  <div>
-    {{ config.public.testConfig }}
-  </div> -->
   <div class="relative min-h-[600px]">
     <div class="absolute w-full h-full z-[-1]">
       <img
@@ -131,15 +122,6 @@ const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
-const config = useRuntimeConfig();
-
-const updateTestConfig = () => {
-  config.public.testConfig = "Hello World!"
-};
-
-const updatePrimaryColor = () => {
-  document.documentElement.style.setProperty('--colors-primary-700', '165 105 3');
-};
 
 type Size = {
   width: string;

@@ -232,10 +232,6 @@ const logOut = async () => {
 
 const accountDropdown = computed(() => [
   {
-    label: 'Admin',
-    link: localePath(paths.adminGlobal),
-  },
-  {
     label: t('account.heading'),
     link: localePath(paths.account),
   },
