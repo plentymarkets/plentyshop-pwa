@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "prepare": "is-ci || husky install",
-    "update:sdk": "yarn up @plentymarkets/shop-api && yarn up @plentymarkets/shop-sdk",
+    "update:sdk": "yarn up @plentymarkets/shop-api",
     "setup": "yarn && yarn build && yarn dev",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "yarn turbo:disable-telemetry && turbo run build",
@@ -24,12 +24,13 @@
     "test": "yarn turbo:disable-telemetry && turbo run test",
     "test:watch": "yarn turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "yarn turbo:disable-telemetry && npx turbo run test:coverage",
+    "test:cypress-quarantine": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"yarn start\"",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress\" \"yarn start\"",
     "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn dev\"",
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.36.1",
+    "@plentymarkets/shop-api": "^0.38.0",
     "@vee-validate/nuxt": "^4.12.8",
     "@vee-validate/yup": "^4.12.8",
     "country-flag-icons": "^1.5.11",
@@ -42,7 +43,6 @@
     "@lhci/cli": "^0.13.0",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "7.1.1",
-    "@plentymarkets/shop-sdk": "^0.53.2",
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/uuid": "^9.0.8",
     "@vite-pwa/nuxt": "^0.7.0",
