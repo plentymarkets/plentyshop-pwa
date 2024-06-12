@@ -102,10 +102,11 @@
             <SfIconPerson />
           </SfButton>
           <SfButton
+            v-if="showConfigurationDrawer"
             @click="open = true"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
-            :aria-label="t('auth.login.openLoginForm')"
+            aria-label="Open configuration drawer"
             square
             ><SfIconTune
           /></SfButton>
@@ -172,7 +173,7 @@
       <UiSearch :close="searchModalClose" />
     </SfModal>
   </NuxtLazyHydrate>
-  <LazyConfigurationDrawer />
+  <LazyConfigurationDrawer v-if="showConfigurationDrawer" />
 </template>
 
 <script setup lang="ts">
@@ -212,6 +213,9 @@ const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocali
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
+const runtimeConfig = useRuntimeConfig();
+
+const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 
 watch(
   () => isAuthenticationOpen.value,
