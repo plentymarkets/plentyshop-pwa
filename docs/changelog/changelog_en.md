@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
