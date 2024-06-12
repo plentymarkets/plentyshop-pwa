@@ -51,7 +51,7 @@
               />
             </template>
           </SfButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
             <template #trigger>
               <SfButton
                 variant="tertiary"
