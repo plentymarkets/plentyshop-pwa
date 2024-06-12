@@ -20,6 +20,10 @@ Creating the application adds a new table entry. In the next part, you'll need t
 
 ## GitHub
 
+### Repository fork
+
+[Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo) of the [PWA repository](https://github.com/plentymarkets/plentyshop-pwa).
+
 ### Authentication
 
 1. Go to your repository.
