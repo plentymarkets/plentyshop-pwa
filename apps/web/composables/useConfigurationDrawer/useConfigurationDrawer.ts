@@ -7,7 +7,7 @@ const setColorProperties = (type: string, tailwindColors: TailwindColors) => {
   tailwindColors.forEach((color) => {
     if (color.value) {
       const rgb = oklchToRgb(color.value);
-      document.documentElement.style.setProperty(`--colors-${type}-${color.weight}`, rgb);
+      document.documentElement.style.setProperty(`--colors-2-${type}-${color.weight}`, rgb);
     }
   });
 };
