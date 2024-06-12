@@ -42,6 +42,11 @@ This project queries data from plentysystems by using other NPM packages as midd
 
 Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
 
+### Setup environment
+
+1. Add your [API endpoint](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint)
+2. Add your [API security token](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+
 ### Starting the app
 
 1. Open the repository in your command line interface.
