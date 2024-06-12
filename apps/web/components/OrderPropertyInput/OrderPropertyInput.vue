@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyInputProps } from './types';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';

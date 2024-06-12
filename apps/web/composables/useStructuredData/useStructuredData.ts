@@ -1,6 +1,6 @@
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
