@@ -1,5 +1,4 @@
 import type { ReviewAverage } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
 import type { FetchProductReviewAverage, UseProductReviewAverage, UseProductReviewAverageState } from './types';
 
 /**
