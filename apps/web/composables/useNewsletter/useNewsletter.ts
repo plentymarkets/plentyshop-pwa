@@ -11,7 +11,7 @@ import { useSdk } from '~/sdk';
  * ```
  */
 export const useNewsletter: UseNewsletterReturn = () => {
-  const state = useState<UseNewsletterState>('search', () => ({
+  const state = useState<UseNewsletterState>('useNewsletter', () => ({
     loading: false,
   }));
 
