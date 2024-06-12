@@ -1,11 +1,10 @@
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
 import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
 /**
  * @description Composable for working with addresses in the current user session.
  * The composable covers two types of addresses, billing and shipping.
- * @param {@link AddressType}
  * @example
  * This example uses the address type `Billing`. All examples are equivalent for addresses of type `Shipping`.
  * ``` ts
@@ -35,6 +34,7 @@ import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsStat
  * After deleting the address, updates the list of addresses.
  * - `setDefault` updates the `defaultAddressId` of the type passed to `useAddress` with the given ID.
  * After setting the default, updates the list of addresses.
+ * @param type
  */
 
 export const useAddress: UseAddressReturn = (type: AddressType) => {
@@ -145,10 +145,10 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     );
     useHandleError(error.value);
     state.value.loading = false;
-    address.id = data?.value?.data?.[0]?.id ?? undefined;
+    address.id = data?.value?.data?.id ?? undefined;
 
     setDisplayAddress(address);
-    state.value.data = data.value?.data ?? state.value.data;
+    state.value.data = data.value?.data ? [data.value?.data] : state.value.data;
 
     return data?.value?.data ?? address;
   };

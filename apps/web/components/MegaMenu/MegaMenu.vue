@@ -175,8 +175,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
   SfButton,

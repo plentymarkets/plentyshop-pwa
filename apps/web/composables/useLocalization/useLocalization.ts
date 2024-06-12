@@ -1,6 +1,5 @@
 import { createSharedComposable } from '@vueuse/core';
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 export const useLocalization = createSharedComposable(() => {
   const isOpen = ref(false);
   const toggle = () => {

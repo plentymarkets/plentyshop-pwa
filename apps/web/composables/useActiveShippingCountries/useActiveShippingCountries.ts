@@ -1,5 +1,4 @@
 import type { ActiveShippingCountry } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
 import type {
   UseActiveShippingCountriesReturn,
   UseActiveShippingCountriesState,
