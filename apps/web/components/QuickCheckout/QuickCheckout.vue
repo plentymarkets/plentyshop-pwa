@@ -41,7 +41,7 @@
 
         <ProductPrice :product="product" />
 
-        <div class="mb-4 font-normal typography-text-sm" data-testid="product-description">
+        <div class="mb-4 font-normal typography-text-sm whitespace-pre" data-testid="product-description">
           {{ productGetters.getShortDescription(product) }}
         </div>
 

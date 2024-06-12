@@ -46,7 +46,7 @@
         <SfRating size="xs" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-      <div class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
+      <div class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre">
         {{ productGetters.getShortDescription(product) }}
       </div>
       <LowestPrice :product="product" />
