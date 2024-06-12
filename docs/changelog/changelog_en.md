@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- Respect shop language after a purchase on ThankYou page
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
