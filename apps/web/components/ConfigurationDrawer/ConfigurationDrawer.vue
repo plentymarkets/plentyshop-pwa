@@ -25,27 +25,29 @@
           <SfIconClose />
         </SfButton>
       </header>
-      <h3>Theme</h3>
-      <div class="p-5 px-10">
-        Primary:
-        <input type="color" v-model="primaryColorReference" />
-      </div>
-      <div class="p-5 px-10">
-        Secondary:
-        <input type="color" v-model="secondaryColorReference" />
-      </div>
-      <h3>General</h3>
-      <div class="flex items-center">
-        <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
-        <label
-          class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
-          for="newsletterNamesCheckbox"
-        >
-          Newsletter form
-        </label>
-      </div>
-      <div class="flex justify-between ml-8">
-        <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+      <div class="px-10 py-6">
+        <h3>Theme</h3>
+        <div class="py-2 px-10">
+          Primary:
+          <input type="color" v-model="primaryColorReference" />
+        </div>
+        <div class="py-2 px-10">
+          Secondary:
+          <input type="color" v-model="secondaryColorReference" />
+        </div>
+        <h3>General</h3>
+        <div class="flex items-center pt-2">
+          <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
+          <label
+            class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
+            for="newsletterNamesCheckbox"
+          >
+            Newsletter form
+          </label>
+        </div>
+        <div class="flex justify-between ml-8">
+          <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+        </div>
       </div>
     </SfDrawer>
   </transition>
