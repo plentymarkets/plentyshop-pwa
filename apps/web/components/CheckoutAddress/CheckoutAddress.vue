@@ -97,8 +97,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 

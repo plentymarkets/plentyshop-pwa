@@ -17,7 +17,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { userAddressGetters } from '@plentymarkets/shop-api';
 import type { AddressProps } from './types';
 defineProps<AddressProps>();
 </script>

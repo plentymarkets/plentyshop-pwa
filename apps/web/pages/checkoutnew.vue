@@ -16,7 +16,7 @@
           :heading="useAsShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
-          ref="checkoutAddressBillingRef"
+          ref="checkoutAddressBillingReference"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -116,8 +116,7 @@
 
 <script setup lang="ts">
 import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
-import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
+import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -129,7 +128,7 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
+const checkoutAddressBillingReference = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
@@ -157,8 +156,8 @@ const paypalCreditCardPaymentId = computed(() =>
 );
 
 const disableEditModeOnBillingForm = () => {
-  if (checkoutAddressBillingRef?.value?.disableEditMode) {
-    checkoutAddressBillingRef.value.disableEditMode();
+  if (checkoutAddressBillingReference?.value?.disableEditMode) {
+    checkoutAddressBillingReference.value.disableEditMode();
   }
 };
 

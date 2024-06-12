@@ -207,7 +207,7 @@ if (props.emailAddress) {
 }
 
 const registerUser = async () => {
-  if (!meta.value.valid || !turnstile.value) {
+  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;
   }
 

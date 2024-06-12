@@ -1,5 +1,4 @@
-import type { CreateReviewParams, Review, ReviewResponse, UpdateReviewParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
+import type { CreateReviewParams, Review, UpdateReviewParams } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   UseProductReviews,
@@ -49,7 +48,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
         );
       }
 
-      await Promise.all(feedbackCalls).then((data: ReviewResponse[]) => {
+      await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
         state.value.data.feedbacks = feedbacks || state.value.data;
         return true;
@@ -59,8 +58,8 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
       return state.value.data;
     } catch (error: unknown) {
       useHandleError({
-        status: 500,
-        statusText: String(error),
+        statusCode: 500,
+        message: String(error),
       });
     }
     return state.value.data;

@@ -26,9 +26,11 @@
         :review-item="reviewItem"
         @on-submit="saveReview"
         @review-updated="refreshReviews"
-        @review-deleted="refreshReviews"
+        @review-deleted="deleteReview"
       />
-      <p v-if="!totalReviews" class="font-bold leading-6 w-full py-2">{{ t('customerReviewsNone') }}</p>
+      <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
+        {{ t('customerReviewsNone') }}
+      </p>
     </UiAccordionItem>
     <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
@@ -71,11 +73,12 @@
 </template>
 
 <script lang="ts" setup>
+import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { reviewGetters, productGetters } from '@plentymarkets/shop-sdk';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
@@ -110,7 +113,13 @@ const saveReview = async (form: CreateReviewParams) => {
 
   closeReviewModal();
   await createProductReview(form).then(() => refreshReviews());
+  emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
+};
+
+const deleteReview = () => {
+  refreshReviews();
+  emits('on-list-change');
 };
 
 watch(

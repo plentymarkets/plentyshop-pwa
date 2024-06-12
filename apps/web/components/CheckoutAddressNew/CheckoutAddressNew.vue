@@ -25,7 +25,6 @@
 
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
-import { defineExpose } from 'vue';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();

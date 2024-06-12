@@ -17,7 +17,7 @@ import type { ProductAttributesProps, ComponentsMapper } from './types';
 import AttributeDropdown from './AttributeDropdown/AttributeDropdown.vue';
 import AttributeBox from './AttributeBox/AttributeBox.vue';
 import AttributeImage from './AttributeImage/AttributeImage.vue';
-import { productAttributeGetters } from '@plentymarkets/shop-sdk';
+import { productAttributeGetters } from '@plentymarkets/shop-api';
 
 const componentsMapper: ComponentsMapper = {
   dropdown: AttributeDropdown,
