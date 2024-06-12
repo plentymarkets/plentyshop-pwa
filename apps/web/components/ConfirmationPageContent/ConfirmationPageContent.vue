@@ -47,7 +47,7 @@
       </div>
     </div>
 
-    <SfButton :tag="NuxtLink" href="/" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <SfButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('continueShopping') }}
     </SfButton>
   </div>
@@ -62,6 +62,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();
 const { t } = useI18n();
 const { getActiveShippingCountries } = useActiveShippingCountries();
+const localePath = useLocalePath();
 
 await getActiveShippingCountries();
 </script>
