@@ -16,9 +16,7 @@ export interface UseCategoryFiltersResponse {
   updateItemsPerPage(itemsPerPage: number): void;
   updateSearchTerm(term: string): void;
   updateSorting(sort: string): void;
-  updatePage(page: string): void;
-  updateFeedbackPage(page: string): void;
-  updateFeedbacksPerPage(perPage: string): void;
+  updatePage(page: string, currenPagename: string): void;
   updateQuery(parameter?: object): void;
   checkFiltersInURL(): void;
 }

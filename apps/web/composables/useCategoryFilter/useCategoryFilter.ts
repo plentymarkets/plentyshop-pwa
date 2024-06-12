@@ -185,38 +185,14 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * @return void
    * @example
    * ``` ts
-   * updatePage('1');
+   * updatePage('1', 'page');
    * ```
    */
-  const updatePage = (page: string): void => {
-    updateQuery({ page: page });
+  const updatePage = (page: string, currenPagename: string): void => {
+    updateQuery({ [currenPagename]: page });
   };
 
-  /**
-   * @description Function for updating the feedback page.
-   * @param page
-   * @return void
-   * @example
-   * ``` ts
-   * updateFeedbackPage('1');
-   * ```
-   */
-  const updateFeedbackPage = (page: string): void => {
-    updateQuery({ feedbackPage: page });
-  };
 
-  /**
-   * @description Function for updating the feedback page.
-   * @param page
-   * @return void
-   * @example
-   * ``` ts
-   * updateFeedbackPage('1');
-   * ```
-   */
-  const updateFeedbacksPerPage = (perPage: string): void => {
-    updateQuery({ feedbacksPerPage: perPage });
-  };
   /**
    * @description Function for updating the search term.
    * @param term
@@ -290,8 +266,6 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateSorting,
     updatePage,
     updatePrices,
-    updateFeedbackPage,
-    updateFeedbacksPerPage,
     updateQuery,
     checkFiltersInURL,
   };
