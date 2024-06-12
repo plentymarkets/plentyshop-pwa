@@ -8,7 +8,7 @@
     </p>
 
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-      <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
+      <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <SfInput
             v-model="firstName"
@@ -115,22 +115,21 @@ import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
 
 const runtimeConfig = useRuntimeConfig();
-const { subscribe, loading } = useNewsletter();
+const { subscribe, loading, showNames } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: showNewsletterNameForms
+    firstName: showNames.value
       ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
-    lastName: showNewsletterNameForms
+    lastName: showNames.value
       ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),

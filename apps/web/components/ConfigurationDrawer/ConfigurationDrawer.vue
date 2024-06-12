@@ -35,18 +35,39 @@
         <input type="color" v-model="secondaryColorReference" />
       </div>
       <h3>General</h3>
+      <div class="flex items-center">
+        <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
+        <label
+          class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
+          for="newsletterNamesCheckbox"
+        >
+          Newsletter form
+        </label>
+      </div>
+      <div class="flex justify-between ml-8">
+        <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+      </div>
     </SfDrawer>
   </transition>
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfButton, SfIconClose, SfIconTune, SfDrawerPlacement, useTrapFocus } from '@storefront-ui/vue';
+import {
+  SfDrawer,
+  SfButton,
+  SfIconClose,
+  SfIconTune,
+  SfDrawerPlacement,
+  useTrapFocus,
+  SfCheckbox,
+} from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();
 const primaryColorReference = ref();
 const secondaryColorReference = ref();
 const { open, updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
+const { showNames } = useNewsletter();
 
 useTrapFocus(drawerReference, { activeState: open });
 
