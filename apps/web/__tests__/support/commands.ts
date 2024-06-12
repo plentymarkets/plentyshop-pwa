@@ -12,6 +12,7 @@ declare global {
       visitAndHydrate(options: Partial<Cypress.VisitOptions> & { url: string }): Cypress.Chainable | null;
       visitAndHydrate(url: string, options?: Partial<Cypress.VisitOptions>): Cypress.Chainable | null;
       clearServiceWorkers(): Cypress.Chainable | null;
+      checkConsoleWarningsDoNotContain(unwantedString: string): void;
     }
   }
 }
@@ -55,4 +56,21 @@ Cypress.Commands.add('visitAndHydrate', (url, options) => {
   cy.visit(url, options);
   // Wait until app is hydrated
   cy.get('body.hydrated');
+});
+
+Cypress.Commands.add('checkConsoleWarningsDoNotContain', (unwantedString: string) => {
+  cy.on('window:before:load', (win) => {
+    const originalConsoleWarn = win.console.warn;
+
+    win.console.warn = (...args) => {
+      const message = args.join(' ');
+
+      if (message.includes(unwantedString)) {
+        console.log('Message: ', message);
+        throw new Error(`Found forbidden string in console.warn: ${unwantedString}`);
+      }
+
+      originalConsoleWarn.apply(win.console, args);
+    };
+  });
 });
