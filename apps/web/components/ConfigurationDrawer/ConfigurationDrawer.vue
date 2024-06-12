@@ -16,7 +16,7 @@
         'border',
         'border-gray-300',
         'z-50',
-        { 'max-w-[370px]': placement === 'left' || placement === 'right' },
+        { 'min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-700">
@@ -25,28 +25,32 @@
           <SfIconClose />
         </SfButton>
       </header>
-      <div class="px-10 py-6">
+      <div class="px-5 py-5">
         <h3>Theme</h3>
-        <div class="py-2 px-10">
-          Primary:
-          <input type="color" v-model="primaryColorReference" />
-        </div>
-        <div class="py-2 px-10">
-          Secondary:
-          <input type="color" v-model="secondaryColorReference" />
+        <div class="border border-black p-4 mb-4 rounded-md">
+          <div class="py-2 pl-2 flex justify-between min-w-20">
+            <div>Primary:</div>
+            <div><input type="color" v-model="primaryColorReference" /></div>
+          </div>
+          <div class="py-2 pl-2 flex justify-between">
+            <div>Secondary:</div>
+            <div><input type="color" v-model="secondaryColorReference" /></div>
+          </div>
         </div>
         <h3>General</h3>
-        <div class="flex items-center pt-2">
-          <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
-          <label
-            class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
-            for="newsletterNamesCheckbox"
-          >
-            Newsletter form
-          </label>
-        </div>
-        <div class="flex justify-between ml-8">
-          <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+        <div class="border border-black p-4 rounded-md">
+          <div class="flex items-center pt-2">
+            <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
+            <label
+              class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
+              for="newsletterNamesCheckbox"
+            >
+              Newsletter form
+            </label>
+          </div>
+          <div class="flex justify-between ml-8">
+            <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+          </div>
         </div>
       </div>
     </SfDrawer>
