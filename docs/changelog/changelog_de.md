@@ -6,6 +6,7 @@
 
 ### Behoben
 
+- Fehlende Artikelkurzbeschreibung behoben
 - Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert
 - Links zu Bundle-Artikeln
 - Das Rendern von Badges-Elementen wurde korrigiert
