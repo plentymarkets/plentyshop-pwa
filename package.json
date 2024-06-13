@@ -55,7 +55,6 @@
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
     "nuxt": "^3.11.2",
-    "nuxt-svgo": "latest",
     "nuxt-viewport": "^2.1.5",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.7",
