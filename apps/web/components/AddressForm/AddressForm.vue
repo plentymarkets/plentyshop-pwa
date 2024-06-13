@@ -103,7 +103,6 @@ import { userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
 
-const { locale: currentLocale } = useI18n();
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
 
