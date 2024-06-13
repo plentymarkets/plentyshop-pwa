@@ -35,9 +35,14 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
   const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
     const { isAuthorized } = useCustomer();
-
+    const route = useRoute();
     try {
-      const feedbackCalls = [useSdk().plentysystems.getReview({ itemId: itemId })];
+      const feedbackCalls = [
+        useSdk().plentysystems.getReview({
+          itemId: itemId,
+          page: route.query.feedbackPage ? Number(route.query.feedbackPage) : 1,
+        }),
+      ];
 
       if (variationId && isAuthorized.value) {
         feedbackCalls.push(

@@ -31,15 +31,15 @@
       <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
         {{ t('customerReviewsNone') }}
       </p>
+      <UiPagination
+        v-if="productReviews.length > 0"
+        :current-page="getFacetsFromURL().feedbackPage ?? 1"
+        :total-items="totalReviews"
+        :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+        :max-visible-pages="maxVisiblePages"
+        current-page-name="feedbackPage"
+      />
     </UiAccordionItem>
-    <UiPagination
-      v-if="productReviews.length > 0"
-      :current-page="getFacetsFromURL().feedbackPage ?? 1"
-      :total-items="totalReviews"
-      :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
-      :max-visible-pages="maxVisiblePages"
-      current-page-name="feedbackPage"
-    />
   </div>
 
   <UiModal
@@ -96,7 +96,7 @@ const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const viewport = useViewport();
 const reviewsOpen = ref(false);
-
+const route = useRoute();
 const closeAuth = () => {
   closeAuthentication();
   isReviewOpen.value = true;
@@ -141,6 +141,12 @@ watch(
         productGetters.getVariationId(product.value),
       );
     }
+  },
+);
+watch(
+  () => route.query,
+  async () => {
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
   },
 );
 </script>

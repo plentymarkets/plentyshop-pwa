@@ -182,6 +182,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   /**
    * @description Function for updating the page.
    * @param page
+   * @param currenPageName
    * @return void
    * @example
    * ``` ts
