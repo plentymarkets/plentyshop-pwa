@@ -91,9 +91,8 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
       const cartAddress = state.value.data.find(
         (address: Address) => Number(userAddressGetters.getId(address)) === addressCartId,
       );
-      if (cartAddress) {
-        state.value.cartAddress = cartAddress;
-      }
+
+      if (cartAddress) state.value.cartAddress = cartAddress;
     }
   };
 
@@ -109,9 +108,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
       if (state.value.cartAddressId) {
         setDisplayAddress(state.value.cartAddress);
       } else {
-        if (state.value.defaultAddressId) {
-          setDisplayAddress(state.value.defaultAddress, true);
-        }
+        if (state.value.defaultAddressId) setDisplayAddress(state.value.defaultAddress, true);
       }
     }
 

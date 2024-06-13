@@ -115,9 +115,7 @@ const emit = defineEmits(['on-saved']);
 const editMode = ref(false);
 const { setDefault, deleteAddress, defaultAddressId, data, displayAddress, setDisplayAddress } = useAddress(props.type);
 
-const addressList = computed(() => {
-  return data.value ?? [];
-});
+const addressList = computed(() => data.value ?? []);
 
 getActiveShippingCountries();
 
