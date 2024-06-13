@@ -7,16 +7,17 @@
         ? t('removeProductFromWishlist', { label: productName })
         : t('addProductToWishlist', { label: productName })
     "
-    class="m-2 p-[0.9rem]"
+    :class="{ 'p-[0.9rem]': !isCloseButton }"
+    class="m-2"
     :disabled="wishlistLoading"
     @click="onWishlistClick"
     data-testid="wishlist-trigger"
   >
     <SfLoaderCircular v-if="actionLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>
-      <SfIconClose v-if="isCloseButton && discard" size="sm" />
-      <SfIconFavoriteFilled v-if="isWishlistItem(variationId) && !discard" size="sm" />
-      <SfIconFavorite v-else-if="!discard" size="sm" />
+      <SfIconClose v-if="isCloseButton" size="sm" />
+      <SfIconFavoriteFilled v-else-if="isWishlistItem(variationId)" size="sm" />
+      <SfIconFavorite v-else size="sm" />
       <slot />
     </template>
   </SfButton>
@@ -35,7 +36,7 @@ const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
+const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard.value);
 const onWishlistClick = async () => {
   actionLoading.value = true;
   await interactWithWishlist(variationId.value, quantity.value);
