@@ -35,7 +35,7 @@
     <UiPagination
       v-if="productReviews.length > 0"
       :current-page="getFacetsFromURL().feedbackPage ?? 1"
-      :total-items="productReviews.length"
+      :total-items="totalReviews"
       :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
       :max-visible-pages="maxVisiblePages"
       current-page-name="feedbackPage"
@@ -103,7 +103,6 @@ const closeAuth = () => {
 
 const {
   data: productReviewsData,
-  authFeedbackCount,
   fetchProductReviews,
   createProductReview,
   loading,
@@ -131,13 +130,6 @@ const deleteReview = () => {
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
-
-const totalNumberOfReviews = computed(() => {
-  const feedbacksPerPage = getFacetsFromURL().feedbacksPerPage;
-  const numberOfPages = productReviewsData.value.pagination.lastPage;
-  const feedbackCount = numberOfPages * Number(feedbacksPerPage);
-  return feedbackCount + authFeedbackCount.value;
-});
 
 // watch(
 //   () => reviewsOpen.value,
