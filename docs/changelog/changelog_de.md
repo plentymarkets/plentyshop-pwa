@@ -6,6 +6,7 @@
 
 ### Behoben
 
+- Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
 - Fehlende Artikelkurzbeschreibung behoben
 - Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert
 - Links zu Bundle-Artikeln
