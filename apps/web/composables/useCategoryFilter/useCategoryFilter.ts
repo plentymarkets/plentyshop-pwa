@@ -192,7 +192,6 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
     updateQuery({ [currenPagename]: page });
   };
 
-
   /**
    * @description Function for updating the search term.
    * @param term

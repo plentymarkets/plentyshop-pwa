@@ -85,7 +85,7 @@ import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefr
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
-const { getFacetsFromURL} = useCategoryFilter();
+const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
