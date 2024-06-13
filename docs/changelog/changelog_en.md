@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- Countries name listing respects current locale
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
