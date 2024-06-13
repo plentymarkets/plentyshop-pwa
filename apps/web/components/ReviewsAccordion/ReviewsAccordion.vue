@@ -130,16 +130,4 @@ const deleteReview = () => {
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
-
-// watch(
-//   () => reviewsOpen.value,
-//   (value) => {
-//     if (value) {
-//       fetchProductReviews(
-//         Number(productGetters.getItemId(product.value)),
-//         productGetters.getVariationId(product.value),
-//       );
-//     }
-//   },
-// );
 </script>

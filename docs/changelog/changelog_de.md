@@ -23,6 +23,7 @@
 
 ### Hinzugefügt
 
+- Pagination for item reviews has been added.
 - Benutzerdefinierte SVG-Symbole werden jetzt unterstützt.
 - Bilder außerhalb des sichtbaren Bereichs werden jetzt mit Lazy Loading geladen.
 - Ein Anmelde-Dialog vor dem Checkout wurde hinzugefügt.
