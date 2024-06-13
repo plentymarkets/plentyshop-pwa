@@ -188,8 +188,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * updatePage('1', 'page');
    * ```
    */
-  const updatePage = (page: string, currenPagename: string): void => {
-    updateQuery({ [currenPagename]: page });
+  const updatePage = (page: string, currenPageName: string): void => {
+    updateQuery({ [currenPageName]: page });
   };
 
   /**

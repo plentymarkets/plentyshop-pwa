@@ -94,8 +94,9 @@ const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
-const reviewsOpen = ref(true);
 const viewport = useViewport();
+const reviewsOpen = ref(false);
+
 const closeAuth = () => {
   closeAuthentication();
   isReviewOpen.value = true;
@@ -115,7 +116,7 @@ const productReviews = computed(() => {
 const refreshReviews = () => {
   fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
 };
-refreshReviews();
+
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
 
@@ -130,4 +131,16 @@ const deleteReview = () => {
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
+
+watch(
+  () => reviewsOpen.value,
+  (value) => {
+    if (value) {
+      fetchProductReviews(
+        Number(productGetters.getItemId(product.value)),
+        productGetters.getVariationId(product.value),
+      );
+    }
+  },
+);
 </script>
