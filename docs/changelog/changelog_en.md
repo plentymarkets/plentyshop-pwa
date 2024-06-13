@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
