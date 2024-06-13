@@ -41,6 +41,9 @@
     "test:watch": {
       "cache": false
     },
+    "test:cypress-quarantine": {
+      "cache": false
+    },
     "test:cypress": {
       "cache": false
     },
