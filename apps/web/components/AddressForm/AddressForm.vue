@@ -37,7 +37,7 @@
         required
       >
         <option v-for="(country, index) in countries" :key="index" :value="country.id.toString()">
-          {{ getLocaleCountryName(country) }}
+          {{ country.currLangName }}
         </option>
       </SfSelect>
     </label>
@@ -98,7 +98,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType, ActiveShippingCountry } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
@@ -148,9 +148,6 @@ const states = computed(() => {
   const selectedCountry = defaultValues.value.country;
   return props.countries.find((country) => country.id === Number(selectedCountry))?.states ?? [];
 });
-
-const getLocaleCountryName = (country: ActiveShippingCountry) =>
-  country.names.find((name) => name.language === currentLocale.value)?.name ?? country.name;
 
 defineEmits(['on-save', 'on-close']);
 </script>
