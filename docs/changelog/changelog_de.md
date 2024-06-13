@@ -6,6 +6,10 @@
 
 ### Behoben
 
+- Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
+- Fehlende Artikelkurzbeschreibung behoben
+- Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert
+- Links zu Bundle-Artikeln
 - Das Rendern von Badges-Elementen wurde korrigiert
 - Bilder-Komponente zum Auswählen von Artikelattributen verfügt nun über einen Tooltip.
 - Wunschlisten-Button Arien-Etikett
@@ -13,6 +17,8 @@
 - Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
 
 ### Geändert
+
+- Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
