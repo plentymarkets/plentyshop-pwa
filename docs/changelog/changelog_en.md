@@ -15,12 +15,24 @@
 
 ### Fixed
 
+- Fixed missing Item short description
+- Fixed wrong link on the order confirmation page
+- Bundle Items links to include image
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
 - Hydration errors under guest login and cart
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
 - Registration without cloudflare turnstile configuration is now possible.
+- Fixed item image size in recommended product slider.
+
+### Changed
+
+- Moved paypal credit card test into quarantine folder.
+
+### Changed
+
+- Removed unnecessary hover state from cart items.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
