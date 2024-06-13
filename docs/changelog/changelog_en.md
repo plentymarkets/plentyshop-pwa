@@ -27,6 +27,7 @@
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
 - The wishlist button is now toggling between filled/empty heart icon
+- Changed shortDescription to return empty string
 
 ### Changed
 
