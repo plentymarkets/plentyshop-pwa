@@ -2,6 +2,8 @@ import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
 
 export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
+  feedbackPage?: number;
+  feedbacksPerPage?: number;
   categoryUrlPath?: string;
 }
 
