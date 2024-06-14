@@ -61,6 +61,8 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
+      feedbackPage: Number(route.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
+      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE,
       itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
       term: route.query.term?.toString(),
       priceMin: route.query.priceMin?.toString(),
@@ -180,14 +182,15 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   /**
    * @description Function for updating the page.
    * @param page
+   * @param currentPageName
    * @return void
    * @example
    * ``` ts
-   * updatePage('1');
+   * updatePage('1', 'page');
    * ```
    */
-  const updatePage = (page: string): void => {
-    updateQuery({ page: page });
+  const updatePage = (page: string, currentPageName: string): void => {
+    updateQuery({ [currentPageName]: page });
   };
 
   /**

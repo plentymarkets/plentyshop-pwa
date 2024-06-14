@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
@@ -26,6 +27,8 @@
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
 - Changed add to cart button to take full height
+- The wishlist button is now toggling between filled/empty heart icon
+- Changed shortDescription to return empty string
 
 ### Changed
 
@@ -39,6 +42,7 @@
 
 ### New
 
+- Pagination for review items has been added.
 - Custom SVG icons are now supported.
 - Images outside the visible area are now lazy loaded.
 - The login dialogue before checkout has been added.
