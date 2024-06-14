@@ -15,6 +15,7 @@
 
 ### Fixed
 
+- The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
@@ -25,6 +26,8 @@
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
+- The wishlist button is now toggling between filled/empty heart icon
+- Changed shortDescription to return empty string
 
 ### Changed
 
