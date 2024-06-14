@@ -2,14 +2,18 @@
   <div
     v-if="viewport.isGreaterOrEquals('md')"
     data-testid="languageSelectList"
-    class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-10 drop-shadow-md"
+    class="absolute w-full bg-white flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
-    <template v-for="locale in localeCodes" :key="locale">
-      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="mx-3 mb-2">
-        <div class="w-6 lg:w-8" v-html="flagList[locale]" />
-        <div>{{ $t(`lang.${locale}`) }}</div>
-      </LanguageButton>
-    </template>
+    <UiModal v-model="isOpen" tag="section" class="w-full bg-white" aria-labelledby="login-modal">
+      <div class="pb-10 flex justify-center">
+        <div v-for="locale in localeCodes" :key="locale">
+          <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="">
+            <div class="w-6 lg:w-8" v-html="flagList[locale]" />
+            <div>{{ $t(`lang.${locale}`) }}</div>
+          </LanguageButton>
+        </div>
+      </div>
+    </UiModal>
   </div>
 
   <div v-else data-testid="languageSelectList">
