@@ -38,7 +38,7 @@
 
 ### New
 
-- Pagination for item reviews has been added.
+- Pagination for review items has been added.
 - Custom SVG icons are now supported.
 - Images outside the visible area are now lazy loaded.
 - The login dialogue before checkout has been added.

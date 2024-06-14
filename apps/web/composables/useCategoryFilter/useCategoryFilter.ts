@@ -182,15 +182,15 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
   /**
    * @description Function for updating the page.
    * @param page
-   * @param currenPageName
+   * @param currentPageName
    * @return void
    * @example
    * ``` ts
    * updatePage('1', 'page');
    * ```
    */
-  const updatePage = (page: string, currenPageName: string): void => {
-    updateQuery({ [currenPageName]: page });
+  const updatePage = (page: string, currentPageName: string): void => {
+    updateQuery({ [currentPageName]: page });
   };
 
   /**

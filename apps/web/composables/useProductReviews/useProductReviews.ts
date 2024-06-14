@@ -40,7 +40,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
       const feedbackCalls = [
         useSdk().plentysystems.getReview({
           itemId: itemId,
-          page: route.query.feedbackPage ? Number(route.query.feedbackPage) : 1,
+          page: Number(route.query.feedbackPage) || 1,
         }),
       ];
 
