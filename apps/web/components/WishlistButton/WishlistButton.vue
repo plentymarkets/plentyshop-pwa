@@ -36,7 +36,7 @@ const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
+const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard.value);
 const onWishlistClick = async () => {
   actionLoading.value = true;
   await interactWithWishlist(variationId.value, quantity.value);
