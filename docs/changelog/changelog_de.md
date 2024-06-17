@@ -4,6 +4,8 @@
 
 ### Hinzugefügt
 
+- Demo zum Anpassen von Einstellungen zur Laufzeit
+
 ### Behoben
 
 - Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
