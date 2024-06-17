@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -119,7 +118,6 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 

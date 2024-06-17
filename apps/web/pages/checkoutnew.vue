@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -17,7 +16,7 @@
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
-          ref="checkoutAddressBillingRef"
+          ref="checkoutAddressBillingReference"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -131,12 +130,11 @@ import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
+const checkoutAddressBillingReference = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading, useAsShippingAddress } = useCart();
@@ -178,8 +176,8 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
 };
 
 const disableEditModeOnBillingForm = () => {
-  if (checkoutAddressBillingRef?.value?.disableEditMode) {
-    checkoutAddressBillingRef.value.disableEditMode();
+  if (checkoutAddressBillingReference?.value?.disableEditMode) {
+    checkoutAddressBillingReference.value.disableEditMode();
   }
 };
 
