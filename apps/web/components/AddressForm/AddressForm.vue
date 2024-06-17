@@ -37,7 +37,7 @@
         required
       >
         <option v-for="(country, index) in countries" :key="index" :value="country.id.toString()">
-          {{ country.name }}
+          {{ country.currLangName }}
         </option>
       </SfSelect>
     </label>
@@ -96,6 +96,7 @@
     </div>
   </form>
 </template>
+
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
