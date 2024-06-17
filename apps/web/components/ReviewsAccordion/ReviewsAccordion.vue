@@ -30,9 +30,16 @@
         <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
           {{ t('customerReviewsNone') }}
         </p>
+        <UiPagination
+          v-if="productReviews.length > 0"
+          :current-page="getFacetsFromURL().feedbackPage ?? 1"
+          :total-items="totalReviews"
+          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+          :max-visible-pages="maxVisiblePages"
+          current-page-name="feedbackPage"
+        />
       </UiAccordionItem>
     </div>
-    <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
   </div>
 
   <UiModal
@@ -78,6 +85,7 @@ import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefr
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
@@ -86,8 +94,9 @@ const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
+const viewport = useViewport();
 const reviewsOpen = ref(true);
-
+const route = useRoute();
 const closeAuth = () => {
   closeAuthentication();
   isReviewOpen.value = true;
@@ -121,6 +130,7 @@ const deleteReview = () => {
   refreshReviews();
   emits('on-list-change');
 };
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
 watch(
   () => reviewsOpen.value,
@@ -133,5 +143,11 @@ watch(
     }
   },
   { immediate: true },
+);
+watch(
+  () => route.query,
+  async () => {
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+  },
 );
 </script>

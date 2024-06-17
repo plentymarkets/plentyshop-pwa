@@ -64,7 +64,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
@@ -93,7 +92,7 @@ export default defineNuxtConfig({
   ],
   vsf: {
     middleware: {
-      apiUrl: 'http://localhost:8181',
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
     },
   },
   image: {
