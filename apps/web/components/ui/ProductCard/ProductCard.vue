@@ -69,7 +69,7 @@
         </span>
       </div>
       <SfButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || isFromWishlist"
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
