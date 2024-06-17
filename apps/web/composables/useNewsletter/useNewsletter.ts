@@ -10,8 +10,11 @@ import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/compo
  * ```
  */
 export const useNewsletter: UseNewsletterReturn = () => {
-  const state = useState<UseNewsletterState>('search', () => ({
+  const runtimeConfig = useRuntimeConfig();
+
+  const state = useState<UseNewsletterState>('useNewsletter', () => ({
     loading: false,
+    showNames: runtimeConfig.public.newsletterFromShowNames,
   }));
 
   /**

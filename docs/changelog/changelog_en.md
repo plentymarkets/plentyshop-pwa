@@ -13,6 +13,10 @@
 
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
 
+### New
+
+- Demo for changing app settings at runtime
+
 ### Fixed
 
 - The country list in the address form is now translated correctly.
