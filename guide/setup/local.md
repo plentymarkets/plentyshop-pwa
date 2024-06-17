@@ -19,6 +19,8 @@ We recommend working with a fork of the [app repository](https://github.com/plen
 
 ## Authentication
 
+### NPM registry
+
 This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
 
 1. In the root directory, create a new file called `.yarnrc.yml`.
@@ -30,6 +32,11 @@ The `.gitignore` doesn't track `.yarnrc.yml`, so you don't have to worry about e
 ::: tip
 You can enable [push protection](https://docs.github.com/en/code-security/secret-scanning/push-protection-for-users) in your GitHub account for an additional layer of security.
 :::
+
+### plentysystems system
+
+1. Add your [API endpoint](/guide/how-to/middleware#api-endpoint)
+2. Add your [API security token](/guide/how-to/middleware#api-security-token)
 
 ## Starting the app
 
