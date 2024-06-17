@@ -4,6 +4,8 @@
 
 ### Hinzugefügt
 
+- Demo zum Anpassen von Einstellungen zur Laufzeit
+
 ### Behoben
 
 - SEO Canonical Verlinkungen angepasst
