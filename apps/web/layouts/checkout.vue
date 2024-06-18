@@ -8,6 +8,7 @@
             @click="goToPreviousRoute"
             :class="[viewport.isLessThan('md') ? 'flex md:hidden whitespace-nowrap' : 'hidden md:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
+            :aria-label="$t('prevAriaLabel')"
             variant="tertiary"
           >
             <template #prefix>
