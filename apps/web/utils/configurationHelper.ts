@@ -4,12 +4,12 @@ const getConfiguration = () => {
   const instance = axios.create({
     baseURL: process.env.API_ENDPOINT,
     headers: {
-      'X-Security-Token': process.env.API_ENDPOINT,
+      'X-Security-Token': process.env.API_SECURITY_TOKEN,
     },
   });
   
   instance
-    .get(`/storefront/settings/${process.env.API_ENDPOINT}`)
+    .get(`/storefront/settings/${process.env.API_CONFIG_ID}`)
     // eslint-disable-next-line promise/always-return
     .then((res) => {
       process.env.ID = res.data.userId;
