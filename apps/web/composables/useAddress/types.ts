@@ -33,4 +33,4 @@ export interface UseAddressMethods {
   setDisplayAddress: SetDisplayAddress;
 }
 
-export type UseAddressReturn = (type: AddressType) => UseAddressMethods;
+export type UseAddressReturn = (type: AddressType, cacheKey?: string) => UseAddressMethods;

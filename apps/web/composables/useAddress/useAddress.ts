@@ -37,8 +37,8 @@ import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsStat
  * @param type
  */
 
-export const useAddress: UseAddressReturn = (type: AddressType) => {
-  const state = useState<UseAddressMethodsState>(`useAddress-${type}`, () => ({
+export const useAddress: UseAddressReturn = (type: AddressType, cacheKey: string = '') => {
+  const state = useState<UseAddressMethodsState>(`useAddress-${type}${cacheKey}`, () => ({
     data: [] as Address[],
     useAsShippingAddress: true,
     loading: false,
@@ -140,10 +140,14 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
         addressData: address,
       }),
     );
+
     useHandleError(error.value);
     state.value.loading = false;
 
-    address.id = data?.value?.data.pop()?.id ?? undefined;
+    const lastAddress = data?.value?.data?.at(-1);
+    if (lastAddress) {
+      address.id = lastAddress.id ?? undefined;
+    }
 
     setDisplayAddress(address);
     state.value.data = data.value?.data ?? state.value.data;
