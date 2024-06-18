@@ -34,6 +34,7 @@
 - Fixed item image size in recommended product slider.
 - The wishlist button is now toggling between filled/empty heart icon
 - Changed shortDescription to return empty string
+- Removed extra margin
 
 ### Changed
 
