@@ -53,10 +53,12 @@
       </SfButton>
     </div>
     <div
+      v-if="productGetters.getShortDescription(product).length > 0"
       class="mb-4 font-normal typography-text-sm"
       data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"
-    ></div>
+    >
+      {{ productGetters.getShortDescription(product) }}
+    </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
