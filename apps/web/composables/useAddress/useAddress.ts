@@ -152,7 +152,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey: string
     setDisplayAddress(address);
     state.value.data = data.value?.data ?? state.value.data;
 
-    return data?.value?.data ?? [];
+    return state.value.data ?? [];
   };
 
   const setDefault: SetDefault = async (address: Address) => {
@@ -176,6 +176,8 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey: string
 
     state.value.loading = false;
     state.value.data = data;
+
+    return state.value.data;
   };
 
   const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {

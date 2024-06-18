@@ -27,32 +27,13 @@ const addressMock = {
 const { useSdk } = vi.hoisted(() => {
     return {
         useSdk: vi.fn().mockReturnValue({
-            plentysystems: {
-                doSaveAddress: vi.fn()
-            }
+            plentysystems: {}
         })
     }
 });
 
 mockNuxtImport('useSdk', () => {
     return useSdk
-});
-
-beforeEach(() => {
-    useSdk.mockImplementation(() => {
-        return {
-            plentysystems: {
-                doSaveAddress: vi.fn().mockImplementation(() => {
-                    return {
-                        data: [
-                            addressMock
-                        ]
-                    }
-                })
-            }
-        }
-
-    });
 });
 
 afterEach(() => {
@@ -63,6 +44,20 @@ afterEach(() => {
 describe('useAddress unit', () => {
 
     it('should set display address with Id ', async () => {
+        useSdk.mockImplementation(() => {
+            return {
+                plentysystems: {
+                    doSaveAddress: vi.fn().mockImplementation(() => {
+                        return {
+                            data: [
+                                addressMock
+                            ]
+                        }
+                    })
+                }
+            }
+    
+        });
         const { saveAddress, displayAddress } = useAddress(AddressType.Shipping, '001');
         await saveAddress(addressMock);
 
@@ -70,10 +65,76 @@ describe('useAddress unit', () => {
     });
 
     it('should update addresses after save address', async () => {
+        useSdk.mockImplementation(() => {
+            return {
+                plentysystems: {
+                    doSaveAddress: vi.fn().mockImplementation(() => {
+                        return {
+                            data: [
+                                addressMock
+                            ]
+                        }
+                    })
+                }
+            }
+    
+        });
         const { saveAddress, data } = useAddress(AddressType.Shipping, '002');
         expect(data.value.length).toBe(0);
         await saveAddress(addressMock);
 
         expect(data.value.length).toEqual(1);
+    });
+
+    it('should remove address after delete address', async () => {
+        useSdk.mockImplementation(() => {
+            return {
+                plentysystems: {
+                    getAddresses: vi.fn().mockImplementation(() => {
+                        return {
+                            data: [
+                                {...addressMock, id:1},
+                                {...addressMock, id:2}
+                            ]
+                        }
+                    }),
+                    deleteAddress: vi.fn().mockImplementation(() => {
+                        return {
+                            data: [
+                                {...addressMock, id:2}
+                            ]
+                        }
+                    }),
+                    setCheckoutAddress: vi.fn()
+                }
+            }
+    
+        });
+
+        const { getAddresses, deleteAddress, data } = useAddress(AddressType.Shipping, '003');
+
+        await getAddresses();
+
+        const addressIdToDelete = 1;
+
+        await deleteAddress(addressIdToDelete);
+
+        expect(data.value.find((address) => address.id === addressIdToDelete)).toBe(undefined);
+    });
+
+    it('should call setCheckoutAddress if setDisplayAddress is called with setAsCheckoutAddress true', async () => {
+        const setCheckoutAddressSpy = vi.fn();
+        useSdk.mockImplementation(() => {
+            return {
+                plentysystems: {
+                    setCheckoutAddress: setCheckoutAddressSpy
+                }
+            }
+        });
+        const { setDisplayAddress } = useAddress(AddressType.Shipping, '004');
+
+        setDisplayAddress(addressMock, true);
+
+        expect(setCheckoutAddressSpy).toBeCalled();
     });
 });
