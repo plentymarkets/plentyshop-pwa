@@ -2262,6 +2262,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@effective/color@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@effective/color@npm:1.0.1"
+  dependencies:
+    culori: ^4.0.1
+  checksum: 24abea88d2c67b6df15db3193a64a58caf908a01cbf6577779c8665d3579e8f8fc83466c856dc18ad5347d2c8c0574cc0e9e652cd611a427d99b0c0662f04e38
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -4335,7 +4344,7 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.38.0
+    "@plentymarkets/shop-api": ^0.38.1
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.8
@@ -4363,14 +4372,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.38.0":
-  version: 0.38.0
-  resolution: "@plentymarkets/shop-api@npm:0.38.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.38.0%2Ff27e5c93a108464546e3a995f7e8805746391a46"
+"@plentymarkets/shop-api@npm:^0.38.1":
+  version: 0.38.1
+  resolution: "@plentymarkets/shop-api@npm:0.38.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.38.1%2Ff89db7e318637fdfb4e719a613029cd7fd3f4d20"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 1cf9e0c06fc104e3d2f06d8e4deeb6c62816f71ccba4aac302048dcf69d6a13f00437529d3d1487a81a15c614756ef9ec62dd4030193d0d45031d01a82d383b6
+  checksum: 34cc137bb876b6e0abc400c4efb14d524fcedeb7bd402401156a6c7c93dc7b277084d97a9bb8a8e0c7fc780924519afa3c2e90b7453bc91f2d2025e44eca4caa
   languageName: node
   linkType: hard
 
@@ -5092,6 +5101,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 469bd85e29a35977099a3745c78e489916011169a664e97c4c3d6538143b0a16e4cc72b05b407dc008df3892ed7bf595f9b7c0f1f4680e169565ee9d64966bde
+  languageName: node
+  linkType: hard
+
+"@types/culori@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@types/culori@npm:2.1.0"
+  checksum: 662536394606b20408d54dc94c05a9abf344ab67c97e18c838689dafe623f8fc142d3f9d87ca1f0059f4020d9fe86cc5294b59792304f08867fbec1964c0bdf0
   languageName: node
   linkType: hard
 
@@ -6532,6 +6548,13 @@ __metadata:
   version: 1.4.4
   resolution: "@vue-storefront/sdk@npm:1.4.4"
   checksum: 43f7c67f3f86c5cdd02286ea73ecba04ec1bb435600b34adb69196c9bcee8f1bf5caa4cae680651008cf19e51c6a341fe46a281c7b2ea19132277da84f8ca88f
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/sdk@npm:^1.4.4":
+  version: 1.5.0
+  resolution: "@vue-storefront/sdk@npm:1.5.0"
+  checksum: e0a5dba65bcdcbaef6b2e9b910ab4486674bbd9e0fe5298d69d37d6f8276886e341aac44a9f6da91dff194b2c984451abdfcf163f7e21ba44340fcaf11e37887
   languageName: node
   linkType: hard
 
@@ -9836,6 +9859,13 @@ __metadata:
   version: 3.1.3
   resolution: "csstype@npm:3.1.3"
   checksum: 8db785cc92d259102725b3c694ec0c823f5619a84741b5c7991b8ad135dfaa66093038a1cc63e03361a6cd28d122be48f2106ae72334e067dd619a51f49eddf7
+  languageName: node
+  linkType: hard
+
+"culori@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "culori@npm:4.0.1"
+  checksum: 73af42280b3496de9c6a98c3b8689664376a014c0a51afbe80ce442773ec197fcc94f39908e7b805a7e722432395ffebaa1c6e4312b9da44032cbca906fbce49
   languageName: node
   linkType: hard
 
@@ -21761,6 +21791,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:apps/web"
   dependencies:
+    "@effective/color": ^1.0.1
     "@nuxt/image": ^1.7.0
     "@nuxt/test-utils": ^3.13.0
     "@nuxtjs/google-fonts": ^3.2.0
@@ -21771,16 +21802,19 @@ __metadata:
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.0
     "@storefront-ui/vue": ^2.6.3
+    "@types/culori": ^2.1.0
     "@types/lodash-es": ^4.17.12
     "@types/node": ^20.12.12
     "@vite-pwa/nuxt": ^0.7.0
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/middleware": ^3.10.0
     "@vue-storefront/nuxt": ^3.1.0
+    "@vue-storefront/sdk": ^1.4.4
     "@vue-storefront/unified-data-model": ^0.18.1
     "@vue/test-utils": ^2.4.6
     "@vueuse/core": ^10.9.0
     axios: ^1.6.8
+    culori: ^4.0.1
     cypress: 12.17.4
     cypress-real-events: ^1.12.0
     cypress-wait-until: ^2.0.1

@@ -24,12 +24,13 @@
     "test": "yarn turbo:disable-telemetry && turbo run test",
     "test:watch": "yarn turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "yarn turbo:disable-telemetry && npx turbo run test:coverage",
+    "test:cypress-quarantine": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"yarn start\"",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress\" \"yarn start\"",
     "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn dev\"",
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.38.0",
+    "@plentymarkets/shop-api": "^0.38.1",
     "@vee-validate/nuxt": "^4.12.8",
     "@vee-validate/yup": "^4.12.8",
     "country-flag-icons": "^1.5.11",

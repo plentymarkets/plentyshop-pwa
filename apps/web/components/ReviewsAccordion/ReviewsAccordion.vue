@@ -1,38 +1,45 @@
 <template>
-  <div data-testid="reviews-accordion" id="customerReviewsAccordion">
-    <UiAccordionItem
-      v-model="reviewsOpen"
-      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
-    >
-      <template #summary>
-        <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
-          {{ t('customerReviews') }}
-        </h2>
-      </template>
-      <SfButton
-        @click="isAuthorized ? openReviewModal() : openAuthentication()"
-        data-testid="create-review"
-        class="mt-2 mb-4"
-        size="base"
+  <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
+    <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+    <div data-testid="reviews-accordion" id="customerReviewsAccordion">
+      <UiAccordionItem
+        v-model="reviewsOpen"
+        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
       >
-        {{ t('createCustomerReview') }}
-      </SfButton>
-      <div v-if="loading" class="w-full flex justify-center items-center">
-        <SfLoaderCircular class="absolute" size="sm" />
-      </div>
-      <UiReview
-        v-for="(reviewItem, key) in productReviews"
-        :key="key"
-        :review-item="reviewItem"
-        @on-submit="saveReview"
-        @review-updated="refreshReviews"
-        @review-deleted="deleteReview"
-      />
-      <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
-        {{ t('customerReviewsNone') }}
-      </p>
-    </UiAccordionItem>
-    <UiDivider v-if="reviewsOpen && productReviews.length > 0" class="mb-2 mt-2" />
+        <template #summary>
+          <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
+            {{ t('customerReviews') }}
+          </h2>
+        </template>
+        <SfButton
+          @click="isAuthorized ? openReviewModal() : openAuthentication()"
+          data-testid="create-review"
+          class="mt-2 mb-4"
+          size="base"
+        >
+          {{ t('createCustomerReview') }}
+        </SfButton>
+        <UiReview
+          v-for="(reviewItem, key) in productReviews"
+          :key="key"
+          :review-item="reviewItem"
+          @on-submit="saveReview"
+          @review-updated="refreshReviews"
+          @review-deleted="deleteReview"
+        />
+        <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
+          {{ t('customerReviewsNone') }}
+        </p>
+        <UiPagination
+          v-if="productReviews.length > 0"
+          :current-page="getFacetsFromURL().feedbackPage ?? 1"
+          :total-items="totalReviews"
+          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+          :max-visible-pages="maxVisiblePages"
+          current-page-name="feedbackPage"
+        />
+      </UiAccordionItem>
+    </div>
   </div>
 
   <UiModal
@@ -78,6 +85,7 @@ import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefr
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
+const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
@@ -86,8 +94,9 @@ const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
-const reviewsOpen = ref(false);
-
+const viewport = useViewport();
+const reviewsOpen = ref(true);
+const route = useRoute();
 const closeAuth = () => {
   closeAuthentication();
   isReviewOpen.value = true;
@@ -121,6 +130,7 @@ const deleteReview = () => {
   refreshReviews();
   emits('on-list-change');
 };
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
 watch(
   () => reviewsOpen.value,
@@ -131,6 +141,13 @@ watch(
         productGetters.getVariationId(product.value),
       );
     }
+  },
+  { immediate: true },
+);
+watch(
+  () => route.query,
+  async () => {
+    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
   },
 );
 </script>
