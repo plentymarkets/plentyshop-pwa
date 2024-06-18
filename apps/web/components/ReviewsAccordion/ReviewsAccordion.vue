@@ -151,13 +151,22 @@ const productVariationId = productGetters.getVariationId(product.value);
 
 const {
   data: productReviewsData,
+  fetchAllProductReviews,
   fetchProductReviews,
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
 
-const initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
+let initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
 const allProductReviews = ref(initialAllProductReviews);
+
+const fetchAllReviews = async() => {
+  await fetchAllProductReviews(Number(productId), productVariationId);
+  initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
+  await fetchProductReviews(Number(productId), productVariationId);
+}
+
+fetchAllReviews();
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 
@@ -165,7 +174,8 @@ const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
-  await createProductReview(form).then(() => fetchReviews());
+  await createProductReview(form).then(() =>fetchAllReviews());
+  fetchReviews()
   emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
@@ -187,12 +197,13 @@ const ratingPercentages = computed(() =>
 
 async function fetchReviews() {
   await Promise.all([
-    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value)),
+    fetchProductReviews(Number(productId), productVariationId),
   ]);
 }
 
 const deleteReview = () => {
   fetchReviews();
+  fetchAllReviews();
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
@@ -211,7 +222,6 @@ watch(
   },
   { immediate: true },
 );
-
 watch(
   () => productReviewsData.value,
   (newReviews) => {

@@ -25,6 +25,36 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     createdReview: {} as Review,
   }));
 
+  const fetchAllProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+    state.value.loading = true;
+    const { isAuthorized } = useCustomer();
+    
+    const feedbackCalls = [
+      useSdk().plentysystems.getReview({
+        itemId: itemId,
+      }),
+    ];
+
+    if (variationId && isAuthorized.value) {
+      feedbackCalls.push(
+        useSdk().plentysystems.getAuthenticatedReview({
+          itemId: itemId,
+          variationId: variationId,
+        }),
+      );
+    }
+
+    await Promise.all(feedbackCalls).then((data) => {
+      const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
+      state.value.data.feedbacks = feedbacks || state.value.data;
+      return true;
+    });
+   
+
+    state.value.loading = false;
+    return state.value.data;
+  }
+
   /** Function for fetching product reviews data
    * @return FetchProductReviews
    * @example
@@ -95,6 +125,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
   };
 
   return {
+    fetchAllProductReviews,
     fetchProductReviews,
     deleteProductReview,
     setProductReview,
