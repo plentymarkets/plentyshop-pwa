@@ -16,7 +16,7 @@
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
-          ref="checkoutAddressBillingReference"
+          ref="checkoutAddressBillingRef"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -134,7 +134,7 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const checkoutAddressBillingReference = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
+const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading, useAsShippingAddress } = useCart();
@@ -176,8 +176,8 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
 };
 
 const disableEditModeOnBillingForm = () => {
-  if (checkoutAddressBillingReference?.value?.disableEditMode) {
-    checkoutAddressBillingReference.value.disableEditMode();
+  if (checkoutAddressBillingRef?.value?.disableEditMode) {
+    checkoutAddressBillingRef.value.disableEditMode();
   }
 };
 
