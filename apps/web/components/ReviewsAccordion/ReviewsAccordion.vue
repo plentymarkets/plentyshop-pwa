@@ -11,25 +11,25 @@
             {{ t('customerReviews') }}
           </h2>
         </template>
-  
-      <div class="flex justify-start mb-4 lg:mb-0">
-        <div class="lg:flex my-2">
-          <div class="lg:w-1/2 flex flex-col lg:mr-8">
-            <p class="text-center text-sm">{{ t('averageRating') }}</p>
-            <div class="flex justify-center">
-              <SfRating
-                class="pb-2"
-                size="lg"
-                :max="5"
-                :value="Math.floor(reviewAverage * 2) / 2"
-                :half-increment="true"
-              />
-              <h3 class="font-bold text-xl ml-2">
-                {{ Math.round(reviewAverage * 10) / 10 }}
-              </h3>
-            </div>
-            <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
-            <SfButton
+
+        <div class="flex justify-start mb-4 lg:mb-0">
+          <div class="lg:flex my-2">
+            <div class="lg:w-1/2 flex flex-col lg:mr-8">
+              <p class="text-center text-sm">{{ t('averageRating') }}</p>
+              <div class="flex justify-center">
+                <SfRating
+                  class="pb-2"
+                  size="lg"
+                  :max="5"
+                  :value="Math.floor(reviewAverage * 2) / 2"
+                  :half-increment="true"
+                />
+                <h3 class="font-bold text-xl ml-2">
+                  {{ Math.round(reviewAverage * 10) / 10 }}
+                </h3>
+              </div>
+              <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
+              <SfButton
                 @click="isAuthorized ? openReviewModal() : openAuthentication()"
                 data-testid="create-review"
                 class="mt-2 mb-4 mx-auto"
@@ -37,23 +37,23 @@
               >
                 {{ t('createCustomerReview') }}
               </SfButton>
-          </div>
+            </div>
 
-          <div class="flex flex-col">
-            <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
-              <p class="w-4 text-center">{{ 5 - key }}</p>
-              <SfIconStarFilled class="lg:mx-2 pb-1 text-warning-500" size="base" />
-              <SfProgressLinear
-                class="self-center"
-                size="sm"
-                :value="proportionalRating"
-                aria-label="proportional-rating-in-percent"
-              />
-              <p class="ml-2 w-8 text-center">( {{ splitReviewsCount[key] }} )</p>
+            <div class="flex flex-col">
+              <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
+                <p class="w-4 text-center">{{ 5 - key }}</p>
+                <SfIconStarFilled class="lg:mx-2 pb-1 text-warning-500" size="base" />
+                <SfProgressLinear
+                  class="self-center"
+                  size="sm"
+                  :value="proportionalRating"
+                  aria-label="proportional-rating-in-percent"
+                />
+                <p class="ml-2 w-8 text-center">( {{ splitReviewsCount[key] }} )</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
         <UiReview
           v-for="(reviewItem, key) in productReviews"
