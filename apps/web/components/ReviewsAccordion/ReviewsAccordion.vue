@@ -151,31 +151,21 @@ const productVariationId = productGetters.getVariationId(product.value);
 
 const {
   data: productReviewsData,
+  allData: allProductReviewsData,
   fetchAllProductReviews,
   fetchProductReviews,
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
 
-let initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
-const allProductReviews = ref(initialAllProductReviews);
-
-const fetchAllReviews = async() => {
-  await fetchAllProductReviews(Number(productId), productVariationId);
-  initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
-  await fetchProductReviews(Number(productId), productVariationId);
-}
-
-fetchAllReviews();
-
+const allProductReviews = computed(() => reviewGetters.getReviewItems(allProductReviewsData.value));
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
-  await createProductReview(form).then(() =>fetchAllReviews());
-  fetchReviews()
+  await createProductReview(form).then(() =>fetchReviews());
   emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
@@ -198,12 +188,12 @@ const ratingPercentages = computed(() =>
 async function fetchReviews() {
   await Promise.all([
     fetchProductReviews(Number(productId), productVariationId),
+    fetchAllProductReviews(Number(productId), productVariationId),
   ]);
 }
 
 const deleteReview = () => {
   fetchReviews();
-  fetchAllReviews();
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
@@ -221,20 +211,6 @@ watch(
     fetchReviews();
   },
   { immediate: true },
-);
-watch(
-  () => productReviewsData.value,
-  (newReviews) => {
-    const newReviewItems = reviewGetters.getReviewItems(newReviews);
-
-    // Überprüfen, ob neue Bewertungen hinzugefügt werden müssen
-    newReviewItems.forEach((newReview) => {
-      if (!allProductReviews.value.some(review => review.id === newReview.id)) {
-        allProductReviews.value.push(newReview);
-      }
-    });
-  },
-  { deep: true } // Beobachten von tiefen Änderungen in der Datenstruktur
 );
 
 </script>

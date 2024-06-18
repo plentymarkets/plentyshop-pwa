@@ -21,6 +21,7 @@ import type {
 export const useProductReviews: UseProductReviews = (itemId: number) => {
   const state = useState<UseProductReviewsState>(`useProductReviews-${itemId}`, () => ({
     data: {} as Review,
+    allData: {} as Review,
     loading: false,
     createdReview: {} as Review,
   }));
@@ -28,31 +29,38 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
   const fetchAllProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
     const { isAuthorized } = useCustomer();
-    
-    const feedbackCalls = [
-      useSdk().plentysystems.getReview({
-        itemId: itemId,
-      }),
-    ];
-
-    if (variationId && isAuthorized.value) {
-      feedbackCalls.push(
-        useSdk().plentysystems.getAuthenticatedReview({
+    try {
+      const feedbackCalls = [
+        useSdk().plentysystems.getReview({
           itemId: itemId,
-          variationId: variationId,
         }),
-      );
+      ];
+
+      if (variationId && isAuthorized.value) {
+        feedbackCalls.push(
+          useSdk().plentysystems.getAuthenticatedReview({
+            itemId: itemId,
+            variationId: variationId,
+          }),
+        );
+      }
+
+      await Promise.all(feedbackCalls).then((data) => {
+        const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
+        state.value.allData.feedbacks = feedbacks || state.value.allData;
+        return true;
+      });
+
+      state.value.loading = false;
+      return state.value.allData;
+    } catch (error: unknown) {
+      useHandleError({
+        statusCode: 500,
+        message: String(error),
+      });
     }
 
-    await Promise.all(feedbackCalls).then((data) => {
-      const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-      state.value.data.feedbacks = feedbacks || state.value.data;
-      return true;
-    });
-   
-
-    state.value.loading = false;
-    return state.value.data;
+    return state.value.allData;
   }
 
   /** Function for fetching product reviews data

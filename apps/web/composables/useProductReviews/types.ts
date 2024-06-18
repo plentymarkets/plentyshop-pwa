@@ -2,6 +2,7 @@ import type { Review, UpdateReviewParams, CreateReviewParams } from '@plentymark
 
 export interface UseProductReviewsState {
   data: Review;
+  allData: Review;
   loading: boolean;
   createdReview: Review;
 }
@@ -14,6 +15,7 @@ export type CreateProductReview = (params: CreateReviewParams) => Promise<void>;
 
 export interface UseProductReviewsReturn {
   data: Readonly<Ref<UseProductReviewsState['data']>>;
+  allData: Readonly<Ref<UseProductReviewsState['allData']>>;
   loading: Readonly<Ref<boolean>>;
   fetchAllProductReviews: FetchProductReviews;
   fetchProductReviews: FetchProductReviews;
