@@ -8,6 +8,7 @@
 
 ### Behoben
 
+- Fehlerhafte Darstellung von Produktattributen behoben
 - SEO Canonical Verlinkungen angepasst
 - Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
 - Fehlende Artikelkurzbeschreibung behoben
