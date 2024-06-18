@@ -1,5 +1,4 @@
 import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
 import type {
   DoAdditionalInformation,
   DoAdditionalInformationReturn,

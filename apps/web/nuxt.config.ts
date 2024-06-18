@@ -64,8 +64,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
+      apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
@@ -74,6 +73,7 @@ export default defineNuxtConfig({
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
     },
   },
   modules: [
@@ -88,7 +88,13 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
   ],
+  vsf: {
+    middleware: {
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,

@@ -10,25 +10,30 @@
       >
     </label>
     <div :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)" class="w-full flex gap-4 flex-wrap">
-      <div
+      <SfTooltip
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
-        class="p-2 border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
-        :class="{
-          'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
-          '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
-          '!ring-negative-700 !border-negative-700 ring-1': Boolean(errors['selectedValue']),
-        }"
-        @click="doUpdateValue(item)"
+        :label="getLabel(item)"
+        strategy="absolute"
+        :show-arrow="true"
+        placement="top"
       >
-        <SfTooltip :label="getLabel(item)" strategy="absolute" :show-arrow="true" placement="top">
+        <div
+          class="p-2 border border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
+          :class="{
+            'text-zinc-300 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
+            '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
+            '!ring-negative-700 !border-negative-700 ring-1': Boolean(errors['selectedValue']),
+          }"
+          @click="doUpdateValue(item)"
+        >
           <NuxtImg
             :src="getImagePath(item)"
             :alt="productAttributeGetters.getAttributeValueName(item)"
             loading="lazy"
           />
-        </SfTooltip>
-      </div>
+        </div>
+      </SfTooltip>
     </div>
     <VeeErrorMessage as="span" name="selectedValue" class="flex text-negative-700 text-sm mt-2" />
   </div>
@@ -38,7 +43,7 @@
 import { SfTooltip } from '@storefront-ui/vue';
 import type { AttributeSelectProps } from '../types';
 import type { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
-import { productAttributeGetters } from '@plentymarkets/shop-sdk';
+import { productAttributeGetters } from '@plentymarkets/shop-api';
 import { object, number } from 'yup';
 import { useForm } from 'vee-validate';
 
@@ -52,7 +57,9 @@ const runtimeConfig = useRuntimeConfig();
 const domain = runtimeConfig.public?.domain ?? '';
 
 const getLabel = (item: VariationMapProductAttributeValue): string => {
-  return productAttributeGetters.isAttributeValueDisabled(item) ? t('productAttributes.seeAvailableOptions') : '';
+  return productAttributeGetters.isAttributeValueDisabled(item)
+    ? t('productAttributes.seeAvailableOptions')
+    : productAttributeGetters.getAttributeValueName(item);
 };
 
 const getImagePath = (item: VariationMapProductAttributeValue): string => {

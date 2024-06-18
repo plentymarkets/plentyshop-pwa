@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();

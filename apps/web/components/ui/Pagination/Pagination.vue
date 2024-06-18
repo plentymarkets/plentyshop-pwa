@@ -177,6 +177,7 @@ const { updatePage } = useCategoryFilter();
 const { t } = useI18n();
 
 const props = withDefaults(defineProps<PaginationProps>(), {
+  currentPageName: 'page',
   disabled: false,
 });
 
@@ -198,7 +199,7 @@ const getAriaLabel = (isCurrent: boolean, page: number) => {
 };
 
 const setPage = (page: number) => {
-  updatePage(page.toString());
+  updatePage(page.toString(), props.currentPageName);
   pagination.value.setPage(page);
 };
 
