@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();

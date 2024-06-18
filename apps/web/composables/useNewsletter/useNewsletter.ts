@@ -1,6 +1,5 @@
 import type { NewsletterParams } from '@plentymarkets/shop-api';
 import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for subscribing/unsubscribing to newsletter.
@@ -11,8 +10,11 @@ import { useSdk } from '~/sdk';
  * ```
  */
 export const useNewsletter: UseNewsletterReturn = () => {
-  const state = useState<UseNewsletterState>('search', () => ({
+  const runtimeConfig = useRuntimeConfig();
+
+  const state = useState<UseNewsletterState>('useNewsletter', () => ({
     loading: false,
+    showNames: runtimeConfig.public.newsletterFromShowNames,
   }));
 
   /**

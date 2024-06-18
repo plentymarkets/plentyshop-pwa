@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import type { WishlistButtonProps } from '~/components/WishlistButton/types';
 import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, discard: false });
 const { product, quantity, discard } = toRefs(props);
@@ -36,7 +36,7 @@ const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
-const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard);
+const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard.value);
 const onWishlistClick = async () => {
   actionLoading.value = true;
   await interactWithWishlist(variationId.value, quantity.value);

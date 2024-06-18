@@ -33,7 +33,7 @@
 import { SfTooltip } from '@storefront-ui/vue';
 import type { AttributeSelectProps } from '../types';
 import type { VariationMapProductAttributeValue } from '@plentymarkets/shop-api';
-import { productAttributeGetters } from '@plentymarkets/shop-sdk';
+import { productAttributeGetters } from '@plentymarkets/shop-api';
 import { object, number } from 'yup';
 import { useForm } from 'vee-validate';
 

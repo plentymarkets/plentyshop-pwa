@@ -134,7 +134,7 @@
 
 <script setup lang="ts">
 import type { Order } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');

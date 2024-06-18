@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters } from '@plentymarkets/shop-api';
 import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
 
 const props = defineProps<OrderSummaryPropsType>();

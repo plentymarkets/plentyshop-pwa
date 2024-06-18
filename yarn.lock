@@ -2262,6 +2262,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@effective/color@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@effective/color@npm:1.0.1"
+  dependencies:
+    culori: ^4.0.1
+  checksum: 24abea88d2c67b6df15db3193a64a58caf908a01cbf6577779c8665d3579e8f8fc83466c856dc18ad5347d2c8c0574cc0e9e652cd611a427d99b0c0662f04e38
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -3687,7 +3696,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.4.0, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
+"@nuxt/kit@npm:3.11.2, @nuxt/kit@npm:^3.10.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.1, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.4, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0, @nuxt/kit@npm:^3.9.3":
   version: 3.11.2
   resolution: "@nuxt/kit@npm:3.11.2"
   dependencies:
@@ -3739,7 +3748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/schema@npm:3.11.2, @nuxt/schema@npm:^3.10.3, @nuxt/schema@npm:^3.11.1, @nuxt/schema@npm:^3.11.2":
+"@nuxt/schema@npm:3.11.2, @nuxt/schema@npm:^3.10.3, @nuxt/schema@npm:^3.11.1, @nuxt/schema@npm:^3.11.2, @nuxt/schema@npm:^3.7.4":
   version: 3.11.2
   resolution: "@nuxt/schema@npm:3.11.2"
   dependencies:
@@ -4335,8 +4344,7 @@ __metadata:
     "@lhci/cli": ^0.13.0
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 7.1.1
-    "@plentymarkets/shop-api": ^0.36.1
-    "@plentymarkets/shop-sdk": ^0.53.2
+    "@plentymarkets/shop-api": ^0.38.1
     "@trivago/prettier-plugin-sort-imports": ^4.3.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.12.8
@@ -4354,7 +4362,6 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^14.0.1
     nuxt: ^3.11.2
-    nuxt-svgo: latest
     nuxt-viewport: ^2.1.5
     prettier: ^3.2.5
     rimraf: ^5.0.7
@@ -4365,23 +4372,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.36.1":
-  version: 0.36.1
-  resolution: "@plentymarkets/shop-api@npm:0.36.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.36.1%2F5c250887edfac0146dc3566fb2b7fb837172e067"
+"@plentymarkets/shop-api@npm:^0.38.1":
+  version: 0.38.1
+  resolution: "@plentymarkets/shop-api@npm:0.38.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.38.1%2Ff89db7e318637fdfb4e719a613029cd7fd3f4d20"
   dependencies:
-    "@vue-storefront/middleware": 3.0.0-rc.2
+    "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 6fbae3a679c5cc410866d5ab44b19404c4ff65d0ce2cb0719605b91ec51b7f23d91b0d9014d48044345399fc66e698e615eb6d3b417fbd2c7326f71e6a406035
-  languageName: node
-  linkType: hard
-
-"@plentymarkets/shop-sdk@npm:^0.53.2":
-  version: 0.53.2
-  resolution: "@plentymarkets/shop-sdk@npm:0.53.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-sdk%2F0.53.2%2F2fe7581e2afa32334729beb5f028a7cfb9f2370f"
-  dependencies:
-    axios: ^1.6.3
-  checksum: be1e5f6f8a0cf2625ca547f4537cd7e7765f285d7d54e8d372d180b6ed25a5b55ab88a16fe211b55078c358c6396797092f2b2b3e9e267b506ca3806721b639b
+  checksum: 34cc137bb876b6e0abc400c4efb14d524fcedeb7bd402401156a6c7c93dc7b277084d97a9bb8a8e0c7fc780924519afa3c2e90b7453bc91f2d2025e44eca4caa
   languageName: node
   linkType: hard
 
@@ -5103,6 +5101,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 469bd85e29a35977099a3745c78e489916011169a664e97c4c3d6538143b0a16e4cc72b05b407dc008df3892ed7bf595f9b7c0f1f4680e169565ee9d64966bde
+  languageName: node
+  linkType: hard
+
+"@types/culori@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@types/culori@npm:2.1.0"
+  checksum: 662536394606b20408d54dc94c05a9abf344ab67c97e18c838689dafe623f8fc142d3f9d87ca1f0059f4020d9fe86cc5294b59792304f08867fbec1964c0bdf0
   languageName: node
   linkType: hard
 
@@ -6514,21 +6519,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/middleware@npm:3.0.0-rc.2":
-  version: 3.0.0-rc.2
-  resolution: "@vue-storefront/middleware@npm:3.0.0-rc.2"
-  dependencies:
-    consola: ^2.15.3
-    cookie-parser: ^1.4.6
-    cors: ^2.8.5
-    express: ^4.18.1
-    helmet: ^5.1.1
-    rimraf: ^4.1.2
-  checksum: 38f4a5e535d9bae356c590cca2a0b153f9a565e7195f2ddc785a96f29dbc6207793f960d92bccb769f31b9fff770f16dc4a4232eeab8484d1fd89bb45844cbd4
-  languageName: node
-  linkType: hard
-
-"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.6.1":
+"@vue-storefront/middleware@npm:3.10.0, @vue-storefront/middleware@npm:^3.10.0, @vue-storefront/middleware@npm:^3.6.1":
   version: 3.10.0
   resolution: "@vue-storefront/middleware@npm:3.10.0"
   dependencies:
@@ -6541,10 +6532,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue-storefront/sdk@npm:^1.4.4":
+"@vue-storefront/nuxt@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@vue-storefront/nuxt@npm:3.1.0"
+  dependencies:
+    "@nuxt/kit": ^3.7.4
+    "@nuxt/schema": ^3.7.4
+    "@vue-storefront/sdk": ^1.4.0
+    knitwork: ^1.0.0
+  checksum: 7f38aa04836b03ed3edc856b8e471c22181e11d8c97a1c557863d42c896f313c328fa27d396ede35e0bc47507edffa7f7d16a67907c2f82257798b5110df1503
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/sdk@npm:^1.4.0":
   version: 1.4.4
   resolution: "@vue-storefront/sdk@npm:1.4.4"
   checksum: 43f7c67f3f86c5cdd02286ea73ecba04ec1bb435600b34adb69196c9bcee8f1bf5caa4cae680651008cf19e51c6a341fe46a281c7b2ea19132277da84f8ca88f
+  languageName: node
+  linkType: hard
+
+"@vue-storefront/sdk@npm:^1.4.4":
+  version: 1.5.0
+  resolution: "@vue-storefront/sdk@npm:1.5.0"
+  checksum: e0a5dba65bcdcbaef6b2e9b910ab4486674bbd9e0fe5298d69d37d6f8276886e341aac44a9f6da91dff194b2c984451abdfcf163f7e21ba44340fcaf11e37887
   languageName: node
   linkType: hard
 
@@ -7815,7 +7825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.6.3":
+"axios@npm:^1.6.1, axios@npm:^1.6.3, axios@npm:^1.6.8":
   version: 1.6.8
   resolution: "axios@npm:1.6.8"
   dependencies:
@@ -9849,6 +9859,13 @@ __metadata:
   version: 3.1.3
   resolution: "csstype@npm:3.1.3"
   checksum: 8db785cc92d259102725b3c694ec0c823f5619a84741b5c7991b8ad135dfaa66093038a1cc63e03361a6cd28d122be48f2106ae72334e067dd619a51f49eddf7
+  languageName: node
+  linkType: hard
+
+"culori@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "culori@npm:4.0.1"
+  checksum: 73af42280b3496de9c6a98c3b8689664376a014c0a51afbe80ce442773ec197fcc94f39908e7b805a7e722432395ffebaa1c6e4312b9da44032cbca906fbce49
   languageName: node
   linkType: hard
 
@@ -12433,18 +12450,6 @@ __metadata:
     minimatch: ^5.0.1
     once: ^1.3.0
   checksum: 92fbea3221a7d12075f26f0227abac435de868dd0736a17170663783296d0dd8d3d532a5672b4488a439bf5d7fb85cdd07c11185d6cd39184f0385cbdfb86a47
-  languageName: node
-  linkType: hard
-
-"glob@npm:^9.2.0":
-  version: 9.3.5
-  resolution: "glob@npm:9.3.5"
-  dependencies:
-    fs.realpath: ^1.0.0
-    minimatch: ^8.0.2
-    minipass: ^4.2.4
-    path-scurry: ^1.6.1
-  checksum: 94b093adbc591bc36b582f77927d1fb0dbf3ccc231828512b017601408be98d1fe798fc8c0b19c6f2d1a7660339c3502ce698de475e9d938ccbb69b47b647c84
   languageName: node
   linkType: hard
 
@@ -15295,15 +15300,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mini-svg-data-uri@npm:^1.4.4":
-  version: 1.4.4
-  resolution: "mini-svg-data-uri@npm:1.4.4"
-  bin:
-    mini-svg-data-uri: cli.js
-  checksum: 997f1fbd8d59a70f03761e18626d335197a3479cb9d1ff75678e4b64b864d32a0b8fc18115eabde035e5299b8b4a354a78e57dd6ac10f9d604162a6170898d09
-  languageName: node
-  linkType: hard
-
 "minimatch@npm:9.0.1":
   version: 9.0.1
   resolution: "minimatch@npm:9.0.1"
@@ -15328,15 +15324,6 @@ __metadata:
   dependencies:
     brace-expansion: ^2.0.1
   checksum: 7564208ef81d7065a370f788d337cd80a689e981042cb9a1d0e6580b6c6a8c9279eba80010516e258835a988363f99f54a6f711a315089b8b42694f5da9d0d77
-  languageName: node
-  linkType: hard
-
-"minimatch@npm:^8.0.2":
-  version: 8.0.4
-  resolution: "minimatch@npm:8.0.4"
-  dependencies:
-    brace-expansion: ^2.0.1
-  checksum: 2e46cffb86bacbc524ad45a6426f338920c529dd13f3a732cc2cf7618988ee1aae88df4ca28983285aca9e0f45222019ac2d14ebd17c1edadd2ee12221ab801a
   languageName: node
   linkType: hard
 
@@ -15441,13 +15428,6 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: a30d083c8054cee83cdcdc97f97e4641a3f58ae743970457b1489ce38ee1167b3aaf7d815cd39ec7a99b9c40397fd4f686e83750e73e652b21cb516f6d845e48
-  languageName: node
-  linkType: hard
-
-"minipass@npm:^4.2.4":
-  version: 4.2.8
-  resolution: "minipass@npm:4.2.8"
-  checksum: 7f4914d5295a9a30807cae5227a37a926e6d910c03f315930fde52332cf0575dfbc20295318f91f0baf0e6bb11a6f668e30cde8027dea7a11b9d159867a3c830
   languageName: node
   linkType: hard
 
@@ -16166,29 +16146,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nuxt-svgo@npm:latest":
-  version: 4.0.1
-  resolution: "nuxt-svgo@npm:4.0.1"
-  dependencies:
-    "@nuxt/kit": ^3.4.0
-    mini-svg-data-uri: ^1.4.4
-    svgo: ^3.0.2
-  peerDependencies:
-    svgo-loader: ^4.0.0
-    vue: ">=3.2.13"
-    vue-loader: ^17.0.0
-    vue-svg-loader: 0.17.0-beta.2
-  peerDependenciesMeta:
-    svgo-loader:
-      optional: true
-    vue-loader:
-      optional: true
-    vue-svg-loader:
-      optional: true
-  checksum: 9d05939f459cb8894355b7b02e5be7ca8d2531bb402d46f7393b528868a6c8481440771ae1eeea3b6683c304f6fe1d02e110d27e66041d29948e41846f82115d
-  languageName: node
-  linkType: hard
-
 "nuxt-viewport@npm:^2.1.5":
   version: 2.1.5
   resolution: "nuxt-viewport@npm:2.1.5"
@@ -16814,7 +16771,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-scurry@npm:^1.10.2, path-scurry@npm:^1.6.1":
+"path-scurry@npm:^1.10.2":
   version: 1.10.2
   resolution: "path-scurry@npm:1.10.2"
   dependencies:
@@ -18319,17 +18276,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^4.1.2":
-  version: 4.4.1
-  resolution: "rimraf@npm:4.4.1"
-  dependencies:
-    glob: ^9.2.0
-  bin:
-    rimraf: dist/cjs/src/bin.js
-  checksum: b786adc02651e2e24bbedb04bbdea80652fc9612632931ff2d9f898c5e4708fe30956186597373c568bd5230a4dc2fadfc816ccacba8a1daded3a006a6b74f1a
-  languageName: node
-  linkType: hard
-
 "rimraf@npm:^5.0.7":
   version: 5.0.7
   resolution: "rimraf@npm:5.0.7"
@@ -19612,23 +19558,6 @@ __metadata:
   version: 1.0.0
   resolution: "svg-tags@npm:1.0.0"
   checksum: 407e5ef87cfa2fb81c61d738081c2decd022ce13b922d035b214b49810630bf5d1409255a4beb3a940b77b32f6957806deff16f1bf0ce1ab11c7a184115a0b7f
-  languageName: node
-  linkType: hard
-
-"svgo@npm:^3.0.2":
-  version: 3.3.2
-  resolution: "svgo@npm:3.3.2"
-  dependencies:
-    "@trysound/sax": 0.2.0
-    commander: ^7.2.0
-    css-select: ^5.1.0
-    css-tree: ^2.3.1
-    css-what: ^6.1.0
-    csso: ^5.0.5
-    picocolors: ^1.0.0
-  bin:
-    svgo: ./bin/svgo
-  checksum: a3f8aad597dec13ab24e679c4c218147048dc1414fe04e99447c5f42a6e077b33d712d306df84674b5253b98c9b84dfbfb41fdd08552443b04946e43d03e054e
   languageName: node
   linkType: hard
 
@@ -21862,6 +21791,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:apps/web"
   dependencies:
+    "@effective/color": ^1.0.1
     "@nuxt/image": ^1.7.0
     "@nuxt/test-utils": ^3.13.0
     "@nuxtjs/google-fonts": ^3.2.0
@@ -21872,14 +21802,19 @@ __metadata:
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.0
     "@storefront-ui/vue": ^2.6.3
+    "@types/culori": ^2.1.0
     "@types/lodash-es": ^4.17.12
     "@types/node": ^20.12.12
     "@vite-pwa/nuxt": ^0.7.0
     "@vitest/coverage-v8": ^0.33.0
+    "@vue-storefront/middleware": ^3.10.0
+    "@vue-storefront/nuxt": ^3.1.0
     "@vue-storefront/sdk": ^1.4.4
     "@vue-storefront/unified-data-model": ^0.18.1
     "@vue/test-utils": ^2.4.6
     "@vueuse/core": ^10.9.0
+    axios: ^1.6.8
+    culori: ^4.0.1
     cypress: 12.17.4
     cypress-real-events: ^1.12.0
     cypress-wait-until: ^2.0.1

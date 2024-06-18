@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCheckbox, SfIconArrowForward, SfIconClose } from '@storefront-ui/vue';
 import type { OrderReturnFormProps } from './types';
 
