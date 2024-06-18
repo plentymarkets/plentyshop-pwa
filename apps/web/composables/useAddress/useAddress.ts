@@ -142,12 +142,13 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     );
     useHandleError(error.value);
     state.value.loading = false;
-    address.id = data?.value?.data?.id ?? undefined;
+
+    address.id = data?.value?.data.pop()?.id ?? undefined;
 
     setDisplayAddress(address);
-    state.value.data = data.value?.data ? [data.value?.data] : state.value.data;
+    state.value.data = data.value?.data ?? state.value.data;
 
-    return data?.value?.data ?? address;
+    return data?.value?.data ?? [];
   };
 
   const setDefault: SetDefault = async (address: Address) => {
@@ -160,20 +161,17 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     state.value.loading = false;
     state.value.defaultAddressId = Number(userAddressGetters.getId(address));
     setDisplayAddress(address);
-
-    await getAddresses();
   };
 
   const deleteAddress: DeleteAddress = async (addressId: number) => {
     state.value.loading = true;
-    await useSdk().plentysystems.deleteAddress({
+    const { data } = await useSdk().plentysystems.deleteAddress({
       typeId: type,
       addressId: addressId,
     });
 
     state.value.loading = false;
-
-    await getAddresses();
+    state.value.data = data;
   };
 
   const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
