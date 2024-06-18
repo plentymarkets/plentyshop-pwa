@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="relative flex border-neutral-200 border-b hover:shadow-[rgba(17,_17,_26,_0.1)_0px_0px_12px] min-w-[320px] p-4 last:mb-0"
-    data-testid="cart-product-card"
-  >
+  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
       <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
@@ -22,7 +19,7 @@
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="no-underline typography-text-sm sm:typography-text-lg"
+        class="w-fit no-underline typography-text-sm sm:typography-text-lg"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
@@ -103,7 +100,10 @@
         />
       </div>
     </div>
-    <SfLoaderCircular v-if="deleteLoading" />
+
+    <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
+      <SfLoaderCircular />
+    </div>
 
     <SfButton
       v-else-if="!disabled"
@@ -119,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';

@@ -1,5 +1,4 @@
 import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
   UseCustomerState,
@@ -10,7 +9,6 @@ import type {
   Logout,
   ChangePassword,
 } from '~/composables/useCustomer/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing Customer data

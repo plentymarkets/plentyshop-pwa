@@ -17,6 +17,7 @@
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
           :addresses="billingAddresses"
+          ref="checkoutAddressBillingRef"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -29,7 +30,12 @@
           :button-text="t('shipping.addButton')"
           :addresses="shippingAddresses"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
+          @on-saved="
+            async () => {
+              await disableEditModeOnBillingForm();
+              loadAddresses();
+            }
+          "
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -111,13 +117,14 @@
 </template>
 
 <script setup lang="ts">
+import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType } from '@plentymarkets/shop-api';
 import {
   shippingProviderGetters,
   paymentProviderGetters,
   cartGetters,
   userAddressGetters,
-} from '@plentymarkets/shop-sdk';
+} from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -129,17 +136,12 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const ID_BILLING_ADDRESS = '#billing-address';
-const ID_SHIPPING_ADDRESS = '#shipping-address';
+const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
-const { send } = useNotification();
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const {
-  data: billingAddresses,
-  getAddresses: getBillingAddresses,
-  useAsShippingAddress,
-} = useAddress(AddressType.Billing);
+const { data: cart, getCart, clearCartItems, loading: cartLoading, useAsShippingAddress } = useCart();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+
 import { type Address } from '@plentymarkets/shop-api';
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
@@ -162,12 +164,6 @@ const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
 
-const equalAddresses = (address1: Address, address2: Address) => {
-  return Object.keys(address1)
-    .filter((key) => key !== 'id')
-    .every((key) => address1[key as keyof Address] === address2[key as keyof Address]);
-};
-
 const cartAddressId = (type: AddressType) => {
   return type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
@@ -181,6 +177,12 @@ const selectedAddress = (addresses: Address[], type: AddressType) => {
   );
 };
 
+const disableEditModeOnBillingForm = () => {
+  if (checkoutAddressBillingRef?.value?.disableEditMode) {
+    checkoutAddressBillingRef.value.disableEditMode();
+  }
+};
+
 const loadAddresses = async () => {
   await Promise.all([
     getBillingAddresses(),
@@ -189,9 +191,8 @@ const loadAddresses = async () => {
     getCart(),
     fetchPaymentMethods(),
   ]);
-  const selectedBillingAddress = selectedAddress(billingAddresses.value, AddressType.Billing);
   const selectedShippingAddress = selectedAddress(shippingAddresses.value, AddressType.Shipping);
-  useAsShippingAddress.value = equalAddresses(selectedBillingAddress, selectedShippingAddress);
+  useAsShippingAddress.value = !selectedShippingAddress.id;
 };
 
 await loadAddresses();
@@ -239,24 +240,7 @@ const validateTerms = (): boolean => {
 };
 
 const validateAddresses = () => {
-  if (billingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('billingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_BILLING_ADDRESS);
-    return false;
-  }
-
-  if (shippingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('shippingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-    return false;
-  }
-
+  // no address validation until we establish conventions
   return true;
 };
 

@@ -52,7 +52,7 @@
               />
             </template>
           </SfButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end">
+          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
             <template #trigger>
               <SfButton
                 variant="tertiary"
@@ -102,6 +102,15 @@
           >
             <SfIconPerson />
           </SfButton>
+          <SfButton
+            v-if="showConfigurationDrawer"
+            @click="open = true"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+            variant="tertiary"
+            aria-label="Open configuration drawer"
+            square
+            ><SfIconTune
+          /></SfButton>
         </nav>
       </NuxtLazyHydrate>
     </template>
@@ -136,7 +145,6 @@
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     aria-labelledby="login-modal"
-    :disable-click-away="true"
   >
     <header>
       <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
@@ -166,6 +174,7 @@
       <UiSearch :close="searchModalClose" />
     </SfModal>
   </NuxtLazyHydrate>
+  <LazyConfigurationDrawer v-if="showConfigurationDrawer" />
 </template>
 
 <script setup lang="ts">
@@ -178,6 +187,7 @@ import {
   SfIconPerson,
   SfIconSearch,
   SfIconShoppingCart,
+  SfIconTune,
   SfListItem,
   SfModal,
   SfIconFavorite,
@@ -199,10 +209,14 @@ const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
+const { open } = useConfigurationDrawer();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
+const runtimeConfig = useRuntimeConfig();
+
+const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 
 watch(
   () => isAuthenticationOpen.value,

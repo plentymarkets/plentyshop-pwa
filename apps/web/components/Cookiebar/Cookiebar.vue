@@ -2,7 +2,7 @@
   <client-only>
     <div
       v-if="visible"
-      class="fixed z-50 w-full xl:w-3/5 xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
+      class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -10,7 +10,7 @@
           {{ $t(cookieGroups?.barTitle) }}
         </div>
         <div class="leading-relaxed pb-5">
-          {{ $t(cookieGroups.barDescription) }}
+          {{ $t(cookieGroups?.barDescription) }}
 
           <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
             {{ $t('CookieBar.Privacy Settings') }}
@@ -33,7 +33,7 @@
           </template>
         </div>
       </div>
-      <div v-else class="overflow-y-auto h-80 pb-2">
+      <div v-else class="max-sm:h-full overflow-y-auto h-80 pb-2">
         <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex">
           <div v-if="cookieGroup?.cookies?.length" class="mb-2 bg-gray-100 p-2">
             <SfCheckbox
@@ -63,13 +63,13 @@
                     :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
                   />
                   <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
-                    {{ cookie.name }}
+                    {{ $t(cookie.name) }}
                   </label>
                 </div>
                 <div v-for="propKey in Object.keys(cookie)" :key="propKey">
                   <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex w-full mb-1 p-2 bg-white">
                     <div class="w-1/4">
-                      {{ propKey }}
+                      {{ $t(`CookieBar.keys.${propKey}`) }}
                     </div>
                     <div class="w-3/4">
                       <template v-if="propKey === 'PrivacyPolicy'">
@@ -78,8 +78,12 @@
                           {{ $t('CookieBar.Privacy Settings') }}
                         </SfLink>
                       </template>
-                      <template v-else>
-                        {{ cookie[propKey as keyof Cookie] }}
+                      <template v-else-if="getCookiePropertyValue(cookie, propKey)">
+                        {{
+                          getCookiePropertyValue(cookie, propKey).startsWith('CookieBar.')
+                            ? $t(getCookiePropertyValue(cookie, propKey))
+                            : getCookiePropertyValue(cookie, propKey)
+                        }}
                       </template>
                     </div>
                   </div>
@@ -96,49 +100,52 @@
         </template>
       </div>
       <!-- further settings / back button -->
-      <div class="text-center mt-2">
-        <SfLink v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
-          {{ $t('CookieBar.Further Settings') }}
-        </SfLink>
-        <SfLink v-else href="#" @click="furtherSettingsOn = false">
-          {{ $t('CookieBar.Back') }}
-        </SfLink>
-      </div>
-      <!-- action buttons -->
-      <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
-        <div class="flex-1">
-          <SfButton
-            class="w-full"
-            :aria-disabled="false"
-            type="button"
-            :aria-label="$t('CookieBar.Accept All')"
-            @click="setAllCookiesState(true)"
-          >
-            {{ $t('CookieBar.Accept All') }}
-          </SfButton>
+      <div>
+        <div class="text-center mt-2">
+          <SfLink v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
+            {{ $t('CookieBar.Further Settings') }}
+          </SfLink>
+          <SfLink v-else href="#" @click="furtherSettingsOn = false">
+            {{ $t('CookieBar.Back') }}
+          </SfLink>
         </div>
-        <div class="flex-1">
-          <SfButton
-            class="w-full"
-            :aria-disabled="false"
-            type="button"
-            :aria-label="$t('CookieBar.Reject All')"
-            @click="setAllCookiesState(false)"
-          >
-            {{ $t('CookieBar.Reject All') }}
-          </SfButton>
-        </div>
-        <div class="flex-1">
-          <SfButton
-            variant="secondary"
-            class="w-full"
-            :aria-disabled="false"
-            type="button"
-            :aria-label="$t('CookieBar.Accept Selection')"
-            @click="setConsent()"
-          >
-            {{ $t('CookieBar.Accept Selection') }}
-          </SfButton>
+        <!-- action buttons -->
+        <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
+          <div class="flex-1">
+            <SfButton
+              class="w-full"
+              :aria-disabled="false"
+              type="button"
+              :aria-label="$t('CookieBar.Accept All')"
+              @click="setAllCookiesState(true)"
+              data-testid="cookie-bar-accept-all"
+            >
+              {{ $t('CookieBar.Accept All') }}
+            </SfButton>
+          </div>
+          <div class="flex-1">
+            <SfButton
+              class="w-full"
+              :aria-disabled="false"
+              type="button"
+              :aria-label="$t('CookieBar.Reject All')"
+              @click="setAllCookiesState(false)"
+            >
+              {{ $t('CookieBar.Reject All') }}
+            </SfButton>
+          </div>
+          <div class="flex-1">
+            <SfButton
+              variant="secondary"
+              class="w-full"
+              :aria-disabled="false"
+              type="button"
+              :aria-label="$t('CookieBar.Accept Selection')"
+              @click="setConsent()"
+            >
+              {{ $t('CookieBar.Accept Selection') }}
+            </SfButton>
+          </div>
         </div>
       </div>
     </div>
@@ -149,6 +156,7 @@
       class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2 bg-white !px-3"
       :aria-label="$t('CookieBar.Cookie Settings')"
       @click="changeVisibilityState"
+      data-testid="cookie-bar-open-btn"
     >
       <SfIconCheckBox />
     </SfButton>
@@ -185,5 +193,9 @@ const triggerGroupConsent = (group: CookieGroup) => {
   group.cookies.forEach((cookie: Cookie) => {
     cookie.accepted = group.accepted;
   });
+};
+
+const getCookiePropertyValue = (cookie: Cookie, propertyKey: string) => {
+  return cookie[propertyKey as keyof Cookie]?.toString() || '';
 };
 </script>

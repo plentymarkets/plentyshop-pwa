@@ -12,6 +12,7 @@
 
     <div v-if="editMode">
       <AddressFormNew
+        ref="addressFormNewReference"
         :countries="activeShippingCountries"
         :saved-address="
           editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
@@ -22,23 +23,23 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
+import { cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
-
-const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
-const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { data: cart } = useCart();
+const { saveAddress: updateAddress, setCheckoutAddress } = useAddress(props.type);
+const { data: cart, useAsShippingAddress } = useCart();
 const noPreviousAddressWasSet = computed(() => props.addresses.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
-
+const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 const cartAddress = computed(() =>
   props.type === AddressType.Billing
     ? cartGetters.getCustomerInvoiceAddressId(cart.value)
@@ -55,24 +56,23 @@ const emit = defineEmits(['on-saved']);
 
 getActiveShippingCountries();
 
-const edit = () => {
-  editMode.value = !editMode.value;
-};
+const edit = () => (editMode.value = !editMode.value);
 
-const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
-  // see if checbox is set, and if yes overwrite please
-  // console.log('saveing');
-  // console.log(useAsShippingAddress);
-  if (props.type === AddressType.Billing) {
-    await saveBillingAddress(address);
-    if (useAsShippingAddress) {
-      await saveShippingAddress(address);
-    }
+const saveAddress = async (address: Address) => {
+  const result = await updateAddress(address);
+  if (props.type === AddressType.Billing && useAsShippingAddress.value) {
+    setCheckoutAddress(AddressType.Shipping, -99);
+  } else if (result?.id) {
+    setCheckoutAddress(AddressType.Shipping, result.id);
   }
-  if (props.type === AddressType.Shipping || useAsShippingAddress) {
-    await saveShippingAddress(address);
-  }
+
   emit('on-saved');
   editMode.value = false;
 };
+
+const disableEditMode = async () => {
+  if (addressFormNewReference.value && editMode.value) addressFormNewReference.value.emitFormValues();
+};
+
+defineExpose({ disableEditMode });
 </script>

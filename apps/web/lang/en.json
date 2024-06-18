@@ -87,6 +87,11 @@
           "name": "consent-cookie",
           "provider": "plentysystems AG",
           "status": "Stores consent selection."
+        },
+        "cloudflareTurnstile": {
+          "name": "Cloudflare Turnstile",
+          "provider": "Cloudflare",
+          "status": "Necessary for Cloudflare’s Turnstile service."
         }
       }
     },
@@ -117,7 +122,14 @@
     "Show less": "Show less",
     "Accept All": "Accept All",
     "Reject All": "Reject All",
-    "Accept Selection": "Accept Selection"
+    "Accept Selection": "Accept Selection",
+    "keys": {
+      "Provider": "Provider",
+      "Status": "Status",
+      "PrivacyPolicy": "Privacy Policy",
+      "Lifespan": "Lifespan",
+      "script": "Script"
+    }
   },
   "PreviewModeBar": {
     "label": "Preview mode control",
@@ -249,7 +261,7 @@
   "pleaseSelect": "Please Select",
   "addToCart": "Add to cart",
   "itemNotAvailable": "This item is not available.",
-  "showArticle": "Show article",
+  "showOptions": "Show options",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
   "deletedFromCart": "Item removed from shopping cart",
@@ -510,7 +522,8 @@
         "shippingMethod": "Shipping method"
       },
       "paymentSummary": {
-        "heading": "Payment Summary"
+        "heading": "Payment Summary",
+        "paymentStatus": "Payment status"
       }
     },
     "wishlist": {
@@ -786,13 +799,13 @@
   },
   "productAttributes": {
     "seeAvailableOptions": "See available options",
-    "notValidVariation": "Please select a valid variation."
+    "notValidVariation": "Please select a valid variation.",
+    "productInformationMissing": "Product information missing"
   },
   "quickCheckout": {
     "heading": "Added to shopping cart",
     "subTotal": "Items subtotal",
     "checkYourCart": "Check your cart",
-    "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
-    "or": "OR"
+    "cartContains": "Your cart contains {count} item | Your cart contains {count} items"
   }
 }

@@ -1,6 +1,4 @@
 import type { PaymentProviders } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
 import type { UsePaymentMethodsReturn, UsePaymentMethodsState, FetchPaymentMethods, SavePaymentMethod } from './types';
 
 /**

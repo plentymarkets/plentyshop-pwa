@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import type { OrderDocument } from '@plentymarkets/shop-api';
-import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-sdk';
+import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfButton } from '@storefront-ui/vue';
 import type { DocumentsListProps } from './types';
 

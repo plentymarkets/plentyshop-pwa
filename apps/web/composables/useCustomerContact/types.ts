@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
 
 export interface UseCustomerContactState {
@@ -6,7 +5,7 @@ export interface UseCustomerContactState {
   loading: boolean;
 }
 
-export type DoCustomerContactMail = (params: CustomerContactEmailParams) => void;
+export type DoCustomerContactMail = (params: CustomerContactEmailParams) => Promise<boolean>;
 
 export interface UseCustomerContact {
   data: Readonly<Ref<UseCustomerContactState['data']>>;

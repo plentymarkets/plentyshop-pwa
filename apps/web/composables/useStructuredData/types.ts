@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 export interface UseStructuredDataState {
   loading: boolean;

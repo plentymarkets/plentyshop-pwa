@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { PayPalNamespace } from '@paypal/paypal-js';
 import type {
   PayPalCreateOrder,
@@ -19,6 +18,7 @@ export interface UsePayPalState {
   config: PayPalConfigResponse | null;
   loadedConfig: boolean;
   loading: boolean;
+  isAvailable: boolean;
 }
 
 export type LoadConfig = () => Promise<void>;
@@ -32,6 +32,8 @@ export type CaptureOrder = (params: PayPalCaptureOrderParams) => Promise<PayPalA
 
 export interface UsePayPalMethods {
   loading: Readonly<Ref<boolean>>;
+  isAvailable: Readonly<Ref<boolean>>;
+  loadedConfig: Readonly<Ref<boolean>>;
   loadScript: LoadScript;
   createTransaction: CreateTransaction;
   approveOrder: ApproveOrder;

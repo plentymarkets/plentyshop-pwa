@@ -8,14 +8,15 @@
       {{ $t('account.ordersAndReturns.returnsHeading') }}
     </h2>
     <div v-if="!data?.entries.length" class="col-span-3 text-center" data-testid="account-returns-content">
-      <NuxtImg
-        src="/images/returns.png"
-        :alt="$t('account.ordersAndReturns.returnsAltText')"
-        width="192"
-        height="192"
-        class="mx-auto"
-        loading="lazy"
-      />
+      <!-- TODO: add image when we find a suitable one in a format that works. -->
+      <!--      <NuxtImg-->
+      <!--        src="/images/returns.png"-->
+      <!--        :alt="$t('account.ordersAndReturns.returnsAltText')"-->
+      <!--        width="192"-->
+      <!--        height="192"-->
+      <!--        class="mx-auto"-->
+      <!--        loading="lazy"-->
+      <!--      />-->
       <h3 class="typography-headline-3 font-bold mt-6 mb-4">
         {{ $t('account.ordersAndReturns.noReturns') }}
       </h3>
@@ -109,7 +110,7 @@
 
 <script setup lang="ts">
 import type { Order } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',

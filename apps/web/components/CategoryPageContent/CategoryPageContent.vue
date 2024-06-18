@@ -45,7 +45,7 @@
               :image-height="productGetters.getImageHeight(product) ?? 600"
               :image-width="productGetters.getImageWidth(product) ?? 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-              :priority="index === 0"
+              :priority="index < 5"
               :base-price="productGetters.getDefaultBaseSinglePrice(product)"
               :unit-content="productGetters.getUnitContent(product)"
               :unit-name="productGetters.getUnitName(product)"
@@ -76,7 +76,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 

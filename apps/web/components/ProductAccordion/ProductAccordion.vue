@@ -50,7 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();

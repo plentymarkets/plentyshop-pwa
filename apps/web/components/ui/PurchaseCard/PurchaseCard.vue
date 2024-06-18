@@ -54,10 +54,12 @@
       </SfButton>
     </div>
     <div
-      class="mb-4 font-normal typography-text-sm"
+      v-if="productGetters.getShortDescription(product).length > 0"
+      class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
       data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"
-    ></div>
+    >
+      {{ productGetters.getShortDescription(product) }}
+    </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
@@ -110,7 +112,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';

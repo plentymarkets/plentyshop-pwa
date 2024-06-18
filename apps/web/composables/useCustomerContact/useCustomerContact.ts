@@ -1,6 +1,4 @@
 import type { CustomerContactEmailParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
 import type { DoCustomerContactMail, UseCustomerContactReturn, UseCustomerContactState } from './types';
 
 /**
@@ -37,7 +35,7 @@ export const useCustomerContact: UseCustomerContactReturn = () => {
       useHandleError(error.value);
       state.value.data = data?.value?.data ?? state.value.data;
 
-      return state.value.data;
+      return !!data.value;
     } catch (error) {
       throw new Error(error as string);
     } finally {
