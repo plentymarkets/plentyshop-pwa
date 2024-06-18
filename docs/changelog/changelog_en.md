@@ -19,6 +19,8 @@
 
 ### Fixed
 
+- Fixed Product attributes empty list rendering
+- SEO canonical links are now correctly set.
 - The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
@@ -32,6 +34,7 @@
 - Fixed item image size in recommended product slider.
 - The wishlist button is now toggling between filled/empty heart icon
 - Changed shortDescription to return empty string
+- Removed extra margin
 
 ### Changed
 
