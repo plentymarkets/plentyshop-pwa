@@ -10,7 +10,7 @@
           {{ $t('savedShippingAddress') }}
         </SfButton>
         <div class="h-5 w-px bg-primary-700 mx-2"></div>
-        <SfButton size="sm" variant="tertiary" @click="edit">
+        <SfButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
           {{ $t('contactInfo.edit') }}
         </SfButton>
       </div>
@@ -84,11 +84,7 @@
       </header>
       <AddressForm
         :countries="activeShippingCountries"
-        :saved-address="
-          editMode
-            ? addressList.find((address) => address.id?.toString() === displayAddress?.id?.toString())
-            : undefined
-        "
+        :saved-address="addressToEdit"
         :type="type"
         @on-save="saveAddress"
         @on-close="closeEdit"
@@ -110,6 +106,8 @@ const { data: activeShippingCountries, getActiveShippingCountries } = useActiveS
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
+
+const addressToEdit = ref();
 const emit = defineEmits(['on-saved']);
 
 const editMode = ref(false);
@@ -120,11 +118,13 @@ const addressList = computed(() => data.value ?? []);
 getActiveShippingCountries();
 
 const create = () => {
+  addressToEdit.value = null;
   editMode.value = false;
   openEdit();
 };
 
-const edit = () => {
+const edit = (addressId: string) => {
+  addressToEdit.value = addressList.value.find((address) => userAddressGetters.getId(address) === addressId);
   editMode.value = true;
   openEdit();
 };
