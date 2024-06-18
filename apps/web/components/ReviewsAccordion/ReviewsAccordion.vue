@@ -152,7 +152,6 @@ const productVariationId = productGetters.getVariationId(product.value);
 const {
   data: productReviewsData,
   allData: allProductReviewsData,
-  fetchAllProductReviews,
   fetchProductReviews,
   createProductReview,
   loading,
@@ -165,7 +164,7 @@ const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
-  await createProductReview(form).then(() =>fetchReviews());
+  await createProductReview(form).then(() => fetchReviews());
   emits('on-list-change');
   send({ type: 'positive', message: t('review.notification.success') });
 };
@@ -188,7 +187,7 @@ const ratingPercentages = computed(() =>
 async function fetchReviews() {
   await Promise.all([
     fetchProductReviews(Number(productId), productVariationId),
-    fetchAllProductReviews(Number(productId), productVariationId),
+    fetchProductReviews(Number(productId), productVariationId, { allData: true }),
   ]);
 }
 
@@ -212,5 +211,4 @@ watch(
   },
   { immediate: true },
 );
-
 </script>

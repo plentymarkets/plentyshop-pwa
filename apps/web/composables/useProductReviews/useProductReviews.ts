@@ -26,43 +26,6 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     createdReview: {} as Review,
   }));
 
-  const fetchAllProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
-    state.value.loading = true;
-    const { isAuthorized } = useCustomer();
-    try {
-      const feedbackCalls = [
-        useSdk().plentysystems.getReview({
-          itemId: itemId,
-        }),
-      ];
-
-      if (variationId && isAuthorized.value) {
-        feedbackCalls.push(
-          useSdk().plentysystems.getAuthenticatedReview({
-            itemId: itemId,
-            variationId: variationId,
-          }),
-        );
-      }
-
-      await Promise.all(feedbackCalls).then((data) => {
-        const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-        state.value.allData.feedbacks = feedbacks || state.value.allData;
-        return true;
-      });
-
-      state.value.loading = false;
-      return state.value.allData;
-    } catch (error: unknown) {
-      useHandleError({
-        statusCode: 500,
-        message: String(error),
-      });
-    }
-
-    return state.value.allData;
-  }
-
   /** Function for fetching product reviews data
    * @return FetchProductReviews
    * @example
@@ -70,17 +33,31 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (
+    itemId: number,
+    variationId?: number,
+    options?: { allData?: boolean },
+  ) => {
     state.value.loading = true;
     const { isAuthorized } = useCustomer();
     const route = useRoute();
     try {
-      const feedbackCalls = [
-        useSdk().plentysystems.getReview({
-          itemId: itemId,
-          page: Number(route.query.feedbackPage) || 1,
-        }),
-      ];
+      const feedbackCalls = [];
+
+      if (options?.allData) {
+        feedbackCalls.push(
+          useSdk().plentysystems.getReview({
+            itemId: itemId,
+          }),
+        );
+      } else {
+        feedbackCalls.push(
+          useSdk().plentysystems.getReview({
+            itemId: itemId,
+            page: Number(route.query.feedbackPage) || 1,
+          }),
+        );
+      }
 
       if (variationId && isAuthorized.value) {
         feedbackCalls.push(
@@ -93,17 +70,23 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
       await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-        state.value.data.feedbacks = feedbacks || state.value.data;
+        if (options?.allData) {
+          state.value.allData.feedbacks = feedbacks || state.value.allData;
+        } else {
+          state.value.data.feedbacks = feedbacks || state.value.data;
+        }
         return true;
       });
 
       state.value.loading = false;
-      return state.value.data;
     } catch (error: unknown) {
       useHandleError({
         statusCode: 500,
         message: String(error),
       });
+    }
+    if (options?.allData) {
+      return state.value.allData;
     }
     return state.value.data;
   };
@@ -133,7 +116,6 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
   };
 
   return {
-    fetchAllProductReviews,
     fetchProductReviews,
     deleteProductReview,
     setProductReview,
