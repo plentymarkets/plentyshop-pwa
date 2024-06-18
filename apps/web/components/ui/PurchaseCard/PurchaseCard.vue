@@ -53,6 +53,7 @@
       </SfButton>
     </div>
     <div
+      v-if="productGetters.getShortDescription(product).length > 0"
       class="mb-4 font-normal typography-text-sm"
       data-testid="product-description"
       v-html="productGetters.getShortDescription(product)"
