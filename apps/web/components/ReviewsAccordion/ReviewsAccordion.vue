@@ -49,25 +49,25 @@
                   :value="proportionalRating"
                   aria-label="proportional-rating-in-percent"
                 />
-                <p class="ml-2 w-8 text-center">( {{ splitReviewsCount[key] }} )</p>
+                <p class="ml-2 w-20">( {{ splitReviewsCount[key] }} )</p>
               </div>
             </div>
           </div>
         </div>
 
         <UiReview
-          v-for="(reviewItem, key) in productReviews"
+          v-for="(reviewItem, key) in paginatedProductReviews"
           :key="key"
           :review-item="reviewItem"
           @on-submit="saveReview"
           @review-updated="fetchReviews"
           @review-deleted="deleteReview"
         />
-        <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
+        <p v-if="!totalReviews && paginatedProductReviews.length === 0" class="font-bold leading-6 w-full py-2">
           {{ t('customerReviewsNone') }}
         </p>
         <UiPagination
-          v-if="productReviews.length > 0"
+          v-if="paginatedProductReviews.length > 0"
           :current-page="getFacetsFromURL().feedbackPage ?? 1"
           :total-items="totalReviews"
           :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
@@ -156,7 +156,10 @@ const {
   loading,
 } = useProductReviews(Number(productId));
 
-const productReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
+const initialAllProductReviews = reviewGetters.getReviewItems(productReviewsData.value);
+const allProductReviews = ref(initialAllProductReviews);
+
+const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
@@ -170,7 +173,7 @@ const saveReview = async (form: CreateReviewParams) => {
 const splitReviewsCount = computed((): number[] => {
   let splitReviewsTemporary = [0, 0, 0, 0, 0];
 
-  for (const review of productReviews.value) {
+  for (const review of allProductReviews.value) {
     const rating = Number(review.feedbackRating.rating.ratingValue);
     if (rating >= 1 && rating <= 5) splitReviewsTemporary[5 - rating]++;
   }
@@ -208,4 +211,20 @@ watch(
   },
   { immediate: true },
 );
+
+watch(
+  () => productReviewsData.value,
+  (newReviews) => {
+    const newReviewItems = reviewGetters.getReviewItems(newReviews);
+
+    // Überprüfen, ob neue Bewertungen hinzugefügt werden müssen
+    newReviewItems.forEach((newReview) => {
+      if (!allProductReviews.value.some(review => review.id === newReview.id)) {
+        allProductReviews.value.push(newReview);
+      }
+    });
+  },
+  { deep: true } // Beobachten von tiefen Änderungen in der Datenstruktur
+);
+
 </script>
