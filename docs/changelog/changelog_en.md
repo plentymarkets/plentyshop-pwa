@@ -19,6 +19,7 @@
 
 ### Fixed
 
+- SEO canonical links are now correctly set.
 - The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
