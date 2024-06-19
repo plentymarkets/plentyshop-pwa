@@ -35,7 +35,6 @@
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
 
-
 ### Changed
 
 - Moved paypal credit card test into quarantine folder.
