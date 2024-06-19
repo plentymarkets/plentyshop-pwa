@@ -7,7 +7,6 @@ describe('<CheckoutAddress />', () => {
     const { getByTestId } = mount(CheckoutAddress, {
       props: {
         type: AddressType.Billing,
-        addresses: [],
         heading: '',
         description: '',
         buttonText: '',
