@@ -19,6 +19,7 @@
 
 ### Fixed
 
+- Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
 - SEO canonical links are now correctly set.
 - The country list in the address form is now translated correctly.
