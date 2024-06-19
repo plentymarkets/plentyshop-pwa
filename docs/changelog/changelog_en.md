@@ -13,8 +13,14 @@
 
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
 
+### New
+
+- Demo for changing app settings at runtime
+
 ### Fixed
 
+- Fixed Product attributes empty list rendering
+- SEO canonical links are now correctly set.
 - The country list in the address form is now translated correctly.
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
@@ -27,11 +33,11 @@
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
 - The wishlist button is now toggling between filled/empty heart icon
-- Changed shortDescription to return empty string
 
 ### Changed
 
 - Moved paypal credit card test into quarantine folder.
+- Changed shortDescription to return empty string.
 
 ### Changed
 

@@ -4,8 +4,12 @@
 
 ### Hinzugefügt
 
+- Demo zum Anpassen von Einstellungen zur Laufzeit
+
 ### Behoben
 
+- Fehlerhafte Darstellung von Produktattributen behoben
+- SEO Canonical Verlinkungen angepasst
 - Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
 - Fehlende Artikelkurzbeschreibung behoben
 - Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert

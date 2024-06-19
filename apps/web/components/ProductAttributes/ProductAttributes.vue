@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="product-attributes" class="mb-2">
+  <div v-if="attributes.length > 0" data-testid="product-attributes" class="mb-2">
     <div v-for="(attribute, index) in attributes" :key="index" class="mb-2">
       <ClientOnly>
         <Component
