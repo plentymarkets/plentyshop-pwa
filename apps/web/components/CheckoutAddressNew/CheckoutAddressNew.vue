@@ -37,8 +37,6 @@ const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
 const editMode = ref(noPreviousAddressWasSet.value);
 const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 
-// const emit = defineEmits(['on-saved']);
-
 getActiveShippingCountries();
 
 const edit = () => {

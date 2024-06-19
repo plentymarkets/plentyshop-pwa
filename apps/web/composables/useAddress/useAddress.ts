@@ -37,7 +37,7 @@ import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsStat
  * @param type
  */
 
-export const useAddress: UseAddressReturn = (type: AddressType, cacheKey: string = '') => {
+export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') => {
   const state = useState<UseAddressMethodsState>(`useAddress-${type}${cacheKey}`, () => ({
     data: [] as Address[],
     useAsShippingAddress: true,
