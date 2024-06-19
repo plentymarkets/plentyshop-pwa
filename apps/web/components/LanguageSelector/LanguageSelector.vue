@@ -4,7 +4,7 @@
     data-testid="languageSelectList"
     class="absolute w-full bg-white flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
-    <UiModal v-model="isOpen" tag="section" class="w-full mt-0.5 bg-white" aria-labelledby="login-modal">
+    <UiModal v-model="isOpen" tag="section" class="w-full mt-0.5 bg-white !max-h-fit" aria-labelledby="login-modal">
       <div class="flex justify-center">
         <div v-for="locale in localeCodes" :key="locale">
           <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="">
