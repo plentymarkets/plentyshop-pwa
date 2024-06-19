@@ -16,8 +16,7 @@
           :heading="useAsShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
-          ref="checkoutAddressBillingRef"
+          ref="checkoutAddressBillingReference"
           :type="AddressType.Billing"
           @on-saved="loadAddresses"
         />
@@ -28,7 +27,6 @@
           :heading="t('shipping.heading')"
           :description="t('shipping.description')"
           :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
           :type="AddressType.Shipping"
           @on-saved="
             async () => {
@@ -118,13 +116,7 @@
 
 <script setup lang="ts">
 import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
-import { AddressType } from '@plentymarkets/shop-api';
-import {
-  shippingProviderGetters,
-  paymentProviderGetters,
-  cartGetters,
-  userAddressGetters,
-} from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -136,14 +128,13 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const checkoutAddressBillingRef = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
+const checkoutAddressBillingReference = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
-const { data: cart, getCart, clearCartItems, loading: cartLoading, useAsShippingAddress } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
+const { getAddresses: getBillingAddresses, useAsShippingAddress } = useAddress(AddressType.Billing);
 
-import { type Address } from '@plentymarkets/shop-api';
-const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,
@@ -164,22 +155,9 @@ const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
 
-const cartAddressId = (type: AddressType) => {
-  return type === AddressType.Billing
-    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-    : cartGetters.getCustomerShippingAddressId(cart.value);
-};
-
-const selectedAddress = (addresses: Address[], type: AddressType) => {
-  return (
-    addresses.find((address) => userAddressGetters.getId(address) === cartAddressId(type)?.toString()) ??
-    ({} as Address)
-  );
-};
-
 const disableEditModeOnBillingForm = () => {
-  if (checkoutAddressBillingRef?.value?.disableEditMode) {
-    checkoutAddressBillingRef.value.disableEditMode();
+  if (checkoutAddressBillingReference?.value?.disableEditMode) {
+    checkoutAddressBillingReference.value.disableEditMode();
   }
 };
 
@@ -191,8 +169,6 @@ const loadAddresses = async () => {
     getCart(),
     fetchPaymentMethods(),
   ]);
-  const selectedShippingAddress = selectedAddress(shippingAddresses.value, AddressType.Shipping);
-  useAsShippingAddress.value = !selectedShippingAddress.id;
 };
 
 await loadAddresses();
