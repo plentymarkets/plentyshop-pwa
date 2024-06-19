@@ -5,12 +5,25 @@
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <SfButton
+            v-if="!isLanguageSelectOpen"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
             @click="toggleLanguageSelect"
+          >
+            <template #prefix>
+              <SfIconLanguage class="relative" />
+            </template>
+          </SfButton>
+          <SfButton
+            v-else
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            :aria-label="t('languageSelector')"
+            variant="tertiary"
+            square
+            data-testid="open-languageselect-button"
           >
             <template #prefix>
               <SfIconLanguage class="relative" />
@@ -120,7 +133,6 @@
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
         square
         data-testid="open-languageselect-button"
-        @click="toggleLanguageSelect"
         :aria-label="t('languageSelector')"
       >
         <SfIconLanguage />
@@ -136,7 +148,7 @@
       </SfButton>
     </div>
   </MegaMenu>
-  <LanguageSelector v-if="isLanguageSelectOpen" />
+  <LanguageSelector />
   <UiNotifications />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
