@@ -1,7 +1,8 @@
 import type { Product } from '@plentymarkets/shop-api';
 
 export type ProductAccordionPropsType = {
-  reviewAverage: number;
+  reviewAverageText: number;
+  reviewAverageStars?: number;
   product: Product;
   totalReviews: number;
 };

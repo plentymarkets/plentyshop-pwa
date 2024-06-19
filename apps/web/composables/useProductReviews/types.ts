@@ -7,12 +7,6 @@ export interface UseProductReviewsState {
   createdReview: Review;
 }
 
-type FetchProductReviewsParams = {
-  itemId: number;
-  variationId?: number;
-  allData?: boolean;
-};
-
 export type FetchProductReviews = (
   itemId: number,
   variationId?: number,

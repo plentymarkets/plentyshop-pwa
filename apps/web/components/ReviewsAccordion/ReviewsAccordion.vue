@@ -21,11 +21,11 @@
                   class="pb-2"
                   size="lg"
                   :max="5"
-                  :value="Math.floor(reviewAverage * 2) / 2"
+                  :value="reviewAverageStars || reviewAverageText"
                   :half-increment="true"
                 />
                 <h3 class="font-bold text-xl ml-2">
-                  {{ Math.round(reviewAverage * 10) / 10 }}
+                  {{ reviewAverageText }}
                 </h3>
               </div>
               <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
@@ -131,7 +131,7 @@ import type { CreateReviewParams } from '@plentymarkets/shop-api';
 const props = defineProps<ProductAccordionPropsType>();
 const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
-const { product, totalReviews, reviewAverage } = toRefs(props);
+const { product, totalReviews, reviewAverageText, reviewAverageStars } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
 const { t } = useI18n();

@@ -46,7 +46,12 @@
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :half-increment="true" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
+      <SfRating
+        size="xs"
+        :half-increment="true"
+        :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+        :max="5"
+      />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
       <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
