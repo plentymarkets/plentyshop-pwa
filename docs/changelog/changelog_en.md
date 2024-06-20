@@ -33,6 +33,7 @@
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
+- Fixed layout shift on add to cart button.
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
 
