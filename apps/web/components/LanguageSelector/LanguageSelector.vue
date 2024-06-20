@@ -12,7 +12,7 @@
     >
       <div class="flex justify-center">
         <div v-for="locale in localeCodes" :key="locale">
-          <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="">
+          <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'">
             <div class="w-6 lg:w-8" v-html="flagList[locale]" />
             <div>{{ $t(`lang.${locale}`) }}</div>
           </LanguageButton>
