@@ -31,6 +31,16 @@ const fileToBase64 = async (file: File): Promise<string | null> => {
   });
 };
 
+const base64ToBlob = (base64: string, contentType: string): Blob => {
+  const byteCharacters = atob(base64);
+  const byteNumbers: number[] = Array.from({ length: byteCharacters.length });
+  for (let index = 0; index < byteCharacters.length; index++) {
+    byteNumbers[index] = byteCharacters.codePointAt(index) ?? -1;
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: contentType });
+};
+
 /**
  * @description Composable for helping with product order properties.
  * @returns UseProductOrderPropertiesReturn
@@ -155,7 +165,26 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
 
     state.value.loading = false;
 
-    return data.value?.data ?? null;
+    return data.value?.data.data ?? null;
+  };
+
+  const downloadFile = async (file: string) => {
+    const split = file.split('/');
+    const { data } = await useAsyncData(() =>
+      useSdk().plentysystems.getOrderPropertyFile({
+        hash: split[0] ?? '',
+        fileName: split[1] ?? '',
+      }),
+    );
+
+    if (data.value?.data) {
+      const blob = base64ToBlob(data.value.data.data.body, data.value.data.data.type);
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }
+
+    state.value.loading = false;
+    return null;
   };
 
   return {
@@ -165,5 +194,6 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     getPropertiesForCart,
     getPropertiesPrice,
     uploadFile,
+    downloadFile,
   };
 };
