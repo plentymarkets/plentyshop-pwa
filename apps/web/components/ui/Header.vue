@@ -11,7 +11,7 @@
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
-            @click="toggleLanguageSelect"
+            @click="toggleLanguageSelect()"
           >
             <template #prefix>
               <SfIconLanguage class="relative" />
