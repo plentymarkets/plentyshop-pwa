@@ -34,6 +34,7 @@
 - Registration without cloudflare turnstile configuration is now possible.
 - Fixed item image size in recommended product slider.
 - The wishlist button is now toggling between filled/empty heart icon
+- Fixed addresses not being displayed in checkout after creation
 
 ### Changed
 
@@ -163,7 +164,6 @@
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
-- Improved address calls on createNewAddress on checkout
 
 ## New Contributors
 
