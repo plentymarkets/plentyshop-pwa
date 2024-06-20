@@ -49,6 +49,7 @@
                   :value="proportionalRating"
                   aria-label="proportional-rating-in-percent"
                 />
+                <p class="w-20 ml-2">( {{ splitRatings[key]}} )</p>
               </div>
             </div>
           </div>
@@ -161,24 +162,8 @@ const {
 } = useProductReviewAverage(productId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
-
-import { computed } from 'vue';
-
-const ratingPercentages = computed(() => {
-  const counts = productReviewsAverageData.value.counts;
-  if (totalReviews.value === 0) {
-    return [0, 0, 0, 0, 0];
-  }
-
-  return [
-    (counts.ratingsCountOf5 / totalReviews.value) * 100,
-    (counts.ratingsCountOf4 / totalReviews.value) * 100,
-    (counts.ratingsCountOf3 / totalReviews.value) * 100,
-    (counts.ratingsCountOf2 / totalReviews.value) * 100,
-    (counts.ratingsCountOf1 / totalReviews.value) * 100,
-  ];
-});
-
+const ratingPercentages = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value, true));
+const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value));
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
