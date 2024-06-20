@@ -32,19 +32,17 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number,variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
     const { isAuthorized } = useCustomer();
     const route = useRoute();
     try {
-      const feedbackCalls = [];
-
-      feedbackCalls.push(
+      const feedbackCalls = [
         useSdk().plentysystems.getReview({
           itemId: itemId,
           page: Number(route.query.feedbackPage) || 1,
         }),
-      );
+      ];
 
       if (variationId && isAuthorized.value) {
         feedbackCalls.push(
@@ -57,11 +55,12 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
       await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-          state.value.data.feedbacks = feedbacks || state.value.data;
+        state.value.data.feedbacks = feedbacks || state.value.data;
         return true;
       });
 
       state.value.loading = false;
+      return state.value.data;
     } catch (error: unknown) {
       useHandleError({
         statusCode: 500,
