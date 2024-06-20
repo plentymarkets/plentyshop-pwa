@@ -41,9 +41,7 @@
 
 - Moved paypal credit card test into quarantine folder.
 - Changed shortDescription to return empty string.
-
-### Changed
-
+- Improved Reviews rating average display
 - Removed unnecessary hover state from cart items.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
@@ -58,7 +56,6 @@
 - Images in category and item views now have width and height attributes.
 - Item pages can now display reviews.
 - “Item added to shopping cart” dialogue has been added.
-- Detailed list of reviews
 
 ### Fixed
 
