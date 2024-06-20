@@ -57,13 +57,12 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
-                type="Checkout"
-              />
-            </client-only>
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+              type="Checkout"
+            />
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"

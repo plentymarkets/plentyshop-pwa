@@ -11,29 +11,28 @@
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddressNew
-          id="billing-address"
-          :heading="useAsShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          ref="checkoutAddressBillingReference"
+          :key="0"
           :type="AddressType.Billing"
+          :as-shipping-address="useAsShippingAddress"
+          id="billing-address"
+          ref="checkoutAddressBillingReference"
           @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressNew
-          v-if="!useAsShippingAddress"
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :type="AddressType.Shipping"
-          @on-saved="
-            async () => {
-              await disableEditModeOnBillingForm();
-              loadAddresses();
-            }
-          "
-        />
+        <template v-if="!useAsShippingAddress">
+          <CheckoutAddressNew
+            :key="1"
+            :type="AddressType.Shipping"
+            :as-shipping-address="useAsShippingAddress"
+            id="shipping-address"
+            @on-saved="
+              () => {
+                disableEditModeOnBillingForm();
+                loadAddresses();
+              }
+            "
+          />
+        </template>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -64,13 +63,12 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
-                type="Checkout"
-              />
-            </client-only>
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+              type="Checkout"
+            />
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"

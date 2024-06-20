@@ -19,9 +19,7 @@
         >
           {{ $t('goToCheckout') }}
         </SfButton>
-        <client-only>
-          <PayPalExpressButton class="mt-4" type="CartPreview" />
-        </client-only>
+        <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
       </OrderSummary>
     </div>
   </div>
@@ -39,7 +37,5 @@ const { isAuthorized } = useCustomer();
 const { data: cart, loading } = useCart();
 const NuxtLink = resolveComponent('NuxtLink');
 
-function goToCheckout() {
-  return isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin);
-}
+const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
 </script>
