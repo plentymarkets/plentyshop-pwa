@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="badges">
+  <div v-if="haveBadges" data-testid="badges">
     <ul>
       <template v-if="tagsEnabled && productTags.length > 0">
         <SfListItem
@@ -33,9 +33,8 @@
 
 <script setup lang="ts">
 import { SfListItem } from '@storefront-ui/vue';
-import { productGetters, tagGetters } from '@plentymarkets/shop-sdk';
+import { type ProductTag, productGetters, tagGetters } from '@plentymarkets/shop-api';
 import type { BadgesProps } from '~/components/ui/Badges/types';
-import type { ProductTag } from '@plentymarkets/shop-api';
 
 const localePath = useLocalePath();
 
@@ -56,6 +55,12 @@ const tagsEnabled = props.useTags;
 if (tagsEnabled) {
   productTags.value = tagGetters.getTags(product);
 }
+
+const haveBadges = computed(
+  () =>
+    (tagsEnabled && productTags.value.length > 0) ||
+    (availabilityEnabled && productGetters.getAvailabilityName(product)),
+);
 
 const onTagClick = (tag: ProductTag) => {
   navigateTo(localePath(`/tag/${tagGetters.getTagName(tag)}_${tagGetters.getTagId(tag)}`));

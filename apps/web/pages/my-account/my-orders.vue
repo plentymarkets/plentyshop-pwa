@@ -133,8 +133,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Order } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { type Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');

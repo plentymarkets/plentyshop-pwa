@@ -100,13 +100,11 @@
 
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
-const { loading: loadBilling } = useAddress(AddressType.Billing);
-const { useAsShippingAddress } = useCart();
+const { loading: loadBilling, useAsShippingAddress } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
-
 const props = withDefaults(defineProps<AddressFormProps>(), {});
 
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);

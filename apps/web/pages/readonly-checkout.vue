@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -113,12 +112,10 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type PaymentMethod } from '@plentymarkets/shop-api';
-import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 

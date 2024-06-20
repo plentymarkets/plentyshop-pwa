@@ -47,14 +47,14 @@
       </div>
     </div>
 
-    <SfButton :tag="NuxtLink" href="/" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <SfButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('continueShopping') }}
     </SfButton>
   </div>
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { SfButton } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 
@@ -62,6 +62,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();
 const { t } = useI18n();
 const { getActiveShippingCountries } = useActiveShippingCountries();
+const localePath = useLocalePath();
 
 await getActiveShippingCountries();
 </script>

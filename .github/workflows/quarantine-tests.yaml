@@ -1,0 +1,72 @@
+name: Quarantine Tests
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  quarantine-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+          registry-url: "https://npm.pkg.github.com"
+
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Dependencies
+        run: yarn --immutable
+
+      - name: Set environment
+        run: |
+          touch apps/web/.env
+          cat <<EOT >> apps/web/.env
+          API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
+          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
+          ${{ vars.CONFIG }}
+          EOT
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          build: yarn build
+          install: false
+          command: yarn test:cypress-quarantine
+        env:
+          PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
+          PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
+
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore

@@ -53,10 +53,12 @@
       </SfButton>
     </div>
     <div
-      class="mb-4 font-normal typography-text-sm"
+      v-if="productGetters.getShortDescription(product).length > 0"
+      class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
       data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"
-    ></div>
+    >
+      {{ productGetters.getShortDescription(product) }}
+    </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
@@ -68,7 +70,7 @@
         <UiQuantitySelector
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
-          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+          class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
         />
         <SfTooltip
           show-arrow
@@ -80,15 +82,17 @@
             type="submit"
             data-testid="add-to-cart"
             size="lg"
-            class="w-full"
+            class="w-full h-full"
             :disabled="loading || !productGetters.isSalable(product)"
           >
-            <template #prefix v-if="!loading">
-              <SfIconShoppingCart size="sm" />
-            </template>
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <template v-else>
-              {{ t('addToCart') }}
+            <template #prefix>
+              <div v-if="!loading" class="flex row items-center">
+                <SfIconShoppingCart size="sm" />
+                {{ t('addToCart') }}
+              </div>
+              <div v-else>
+                <SfLoaderCircular size="sm" />
+              </div>
             </template>
           </SfButton>
         </SfTooltip>
@@ -109,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';

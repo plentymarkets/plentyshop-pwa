@@ -1,13 +1,10 @@
-import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
+import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
-import { useSdk } from '~/sdk';
 import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
 
 /**
  * @description Composable for working with addresses in the current user session.
  * The composable covers two types of addresses, billing and shipping.
- * @param {@link AddressType}
  * @example
  * This example uses the address type `Billing`. All examples are equivalent for addresses of type `Shipping`.
  * ``` ts
@@ -37,26 +34,81 @@ import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsStat
  * After deleting the address, updates the list of addresses.
  * - `setDefault` updates the `defaultAddressId` of the type passed to `useAddress` with the given ID.
  * After setting the default, updates the list of addresses.
+ * @param type
  */
 
-export const useAddress: UseAddressReturn = (type: AddressType) => {
-  const state = useState<UseAddressMethodsState>(`useAddress-${type}`, () => ({
+export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') => {
+  const state = useState<UseAddressMethodsState>(`useAddress-${type}${cacheKey}`, () => ({
     data: [] as Address[],
-    savedAddress: {} as Address,
+    useAsShippingAddress: true,
     loading: false,
     defaultAddressId: 0,
+    defaultAddress: {} as Address,
+    cartAddressId: 0,
+    cartAddress: {} as Address,
+    displayAddress: {} as Address,
   }));
 
-  const getDefaultAddress = (): void => {
+  const { data: cart } = useCart();
+
+  watch(cart, () => {
+    const billingId = cartGetters.getCustomerInvoiceAddressId(cart.value);
+    const shippingId = cartGetters.getCustomerShippingAddressId(cart.value);
+
+    state.value.useAsShippingAddress = billingId === shippingId;
+  });
+
+  const hasDisplayAddress = () => {
+    return state.value?.displayAddress?.id;
+  };
+
+  const setDefaultAddress = () => {
+    const addresses = state.value.data;
+    const defaultAddress = userAddressGetters.getDefault(addresses) || userAddressGetters.getAddresses(addresses)[0];
+    if (defaultAddress) {
+      state.value.defaultAddress = defaultAddress;
+      state.value.defaultAddressId = Number(userAddressGetters.getId(defaultAddress));
+    }
+  };
+
+  const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
+    state.value.displayAddress = address;
+
+    if (setAsCheckoutAddress) {
+      useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) });
+    }
+  };
+
+  const setCartAddress = () => {
+    const { data: cart } = useCart();
+    const addressCartId =
+      type === AddressType.Billing
+        ? cartGetters.getCustomerInvoiceAddressId(cart.value)
+        : cartGetters.getCustomerShippingAddressId(cart.value);
+
+    if (addressCartId) {
+      state.value.cartAddressId = addressCartId;
+      const cartAddress = state.value.data.find(
+        (address: Address) => Number(userAddressGetters.getId(address)) === addressCartId,
+      );
+
+      if (cartAddress) state.value.cartAddress = cartAddress;
+    }
+  };
+
+  const setInitialDisplayAddress = (): void => {
+    if (hasDisplayAddress()) return;
+
     state.value.loading = true;
 
-    const addresses = state.value.data;
+    if (state.value.data.length > 0) {
+      setDefaultAddress();
+      setCartAddress();
 
-    if (addresses.length > 0) {
-      const defaultAddress = userAddressGetters.getDefault(addresses) || userAddressGetters.getAddresses(addresses)[0];
-
-      if (defaultAddress) {
-        state.value.defaultAddressId = Number(userAddressGetters.getId(defaultAddress));
+      if (state.value.cartAddressId) {
+        setDisplayAddress(state.value.cartAddress);
+      } else {
+        if (state.value.defaultAddressId) setDisplayAddress(state.value.defaultAddress, true);
       }
     }
 
@@ -73,7 +125,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     useHandleError(error.value);
     state.value.data = data.value?.data ?? state.value.data;
 
-    getDefaultAddress();
+    setInitialDisplayAddress();
 
     state.value.loading = false;
     return state.value.data;
@@ -81,18 +133,26 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
 
   const saveAddress: SaveAddress = async (address: Address) => {
     state.value.loading = true;
+
     const { data, error } = await useAsyncData(type.toString(), () =>
       useSdk().plentysystems.doSaveAddress({
         typeId: type,
         addressData: address,
       }),
     );
+
     useHandleError(error.value);
-    state.value.savedAddress = data.value?.data ?? state.value.savedAddress;
     state.value.loading = false;
 
-    await getAddresses();
-    return state.value.savedAddress;
+    const lastAddress = data?.value?.data?.at(-1);
+    if (lastAddress) {
+      address.id = lastAddress.id ?? undefined;
+    }
+
+    setDisplayAddress(address);
+    state.value.data = data.value?.data ?? state.value.data;
+
+    return state.value.data ?? [];
   };
 
   const setDefault: SetDefault = async (address: Address) => {
@@ -103,20 +163,21 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
     });
 
     state.value.loading = false;
-
-    await getAddresses();
+    state.value.defaultAddressId = Number(userAddressGetters.getId(address));
+    setDisplayAddress(address);
   };
 
   const deleteAddress: DeleteAddress = async (addressId: number) => {
     state.value.loading = true;
-    await useSdk().plentysystems.deleteAddress({
+    const { data } = await useSdk().plentysystems.deleteAddress({
       typeId: type,
       addressId: addressId,
     });
 
     state.value.loading = false;
+    state.value.data = data;
 
-    await getAddresses();
+    return state.value.data;
   };
 
   const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
@@ -129,6 +190,7 @@ export const useAddress: UseAddressReturn = (type: AddressType) => {
   };
 
   return {
+    setDisplayAddress,
     getAddresses,
     saveAddress,
     setDefault,
