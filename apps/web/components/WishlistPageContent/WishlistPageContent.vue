@@ -23,7 +23,7 @@
             is-from-wishlist
             :name="productGetters.getName(product) ?? ''"
             :rating-count="productGetters.getTotalReviews(product)"
-            :rating="productGetters.getAverageRating(product)"
+            :rating="productGetters.getAverageRating(product, 'half')"
             :price="actualPrice(product)"
             :image-url="addModernImageExtension(getImageForViewport(product, 'Wishlist'))"
             :image-alt="productGetters.getName(product) ?? ''"

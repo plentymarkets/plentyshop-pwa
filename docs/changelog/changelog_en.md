@@ -42,9 +42,7 @@
 
 - Moved paypal credit card test into quarantine folder.
 - Changed shortDescription to return empty string.
-
-### Changed
-
+- Improved Reviews rating average display
 - Removed unnecessary hover state from cart items.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
@@ -62,6 +60,7 @@
 
 ### Fixed
 
+- Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
 - Some issues related to the display of item reviews have been fixed.
 - Missing details have been added to the order confirmation.
