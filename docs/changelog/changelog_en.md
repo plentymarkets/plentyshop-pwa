@@ -59,6 +59,7 @@
 
 ### Fixed
 
+- Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
 - Some issues related to the display of item reviews have been fixed.
 - Missing details have been added to the order confirmation.
