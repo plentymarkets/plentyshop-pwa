@@ -49,7 +49,7 @@
                   :value="proportionalRating"
                   aria-label="proportional-rating-in-percent"
                 />
-                <p class="w-20 ml-2">( {{ splitRatings[key]}} )</p>
+                <p class="w-20 ml-2">( {{ splitRatings[key] }} )</p>
               </div>
             </div>
           </div>
@@ -156,14 +156,15 @@ const {
   loading,
 } = useProductReviews(Number(productId));
 
-const { 
-  data: productReviewsAverageData,
-  fetchProductReviewAverage 
-} = useProductReviewAverage(productId);
+const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
-const ratingPercentages = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value, true));
-const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value));
+const ratingPercentages = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value, true),
+);
+const splitRatings = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value),
+);
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
