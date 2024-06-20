@@ -1,11 +1,10 @@
 import { createSharedComposable } from '@vueuse/core';
-import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
-export const useLocalization = createSharedComposable(() => {
-  const isOpen = ref(false);
-  const toggle = () => {
-    isOpen.value = !isOpen.value;
-  };
+import type { CategoryTreeItem } from '@plentymarkets/shop-api';
+import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { useDisclosure } from '@storefront-ui/vue';
 
+export const useLocalization = createSharedComposable(() => {
+  const { isOpen: isOpen, toggle } = useDisclosure();
   /**
    * @description Function for wrapping the category language path.
    *
