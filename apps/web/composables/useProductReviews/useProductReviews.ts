@@ -21,7 +21,6 @@ import type {
 export const useProductReviews: UseProductReviews = (itemId: number) => {
   const state = useState<UseProductReviewsState>(`useProductReviews-${itemId}`, () => ({
     data: {} as Review,
-    allData: {} as Review,
     loading: false,
     createdReview: {} as Review,
   }));
@@ -33,31 +32,19 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (
-    itemId: number,
-    variationId?: number,
-    options?: { allData?: boolean },
-  ) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number,variationId?: number) => {
     state.value.loading = true;
     const { isAuthorized } = useCustomer();
     const route = useRoute();
     try {
       const feedbackCalls = [];
 
-      if (options?.allData) {
-        feedbackCalls.push(
-          useSdk().plentysystems.getReview({
-            itemId: itemId,
-          }),
-        );
-      } else {
-        feedbackCalls.push(
-          useSdk().plentysystems.getReview({
-            itemId: itemId,
-            page: Number(route.query.feedbackPage) || 1,
-          }),
-        );
-      }
+      feedbackCalls.push(
+        useSdk().plentysystems.getReview({
+          itemId: itemId,
+          page: Number(route.query.feedbackPage) || 1,
+        }),
+      );
 
       if (variationId && isAuthorized.value) {
         feedbackCalls.push(
@@ -70,11 +57,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
       await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-        if (options?.allData) {
-          state.value.allData.feedbacks = feedbacks || state.value.allData;
-        } else {
           state.value.data.feedbacks = feedbacks || state.value.data;
-        }
         return true;
       });
 
@@ -84,9 +67,6 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
         statusCode: 500,
         message: String(error),
       });
-    }
-    if (options?.allData) {
-      return state.value.allData;
     }
     return state.value.data;
   };

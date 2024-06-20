@@ -49,7 +49,6 @@
                   :value="proportionalRating"
                   aria-label="proportional-rating-in-percent"
                 />
-                <p class="ml-2 w-20">( {{ splitReviewsCount[key] }} )</p>
               </div>
             </div>
           </div>
@@ -151,14 +150,35 @@ const productVariationId = productGetters.getVariationId(product.value);
 
 const {
   data: productReviewsData,
-  allData: allProductReviewsData,
   fetchProductReviews,
   createProductReview,
   loading,
 } = useProductReviews(Number(productId));
 
-const allProductReviews = computed(() => reviewGetters.getReviewItems(allProductReviewsData.value));
+const { 
+  data: productReviewsAverageData,
+  fetchProductReviewAverage 
+} = useProductReviewAverage(productId);
+
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
+
+import { computed } from 'vue';
+
+const ratingPercentages = computed(() => {
+  const counts = productReviewsAverageData.value.counts;
+  if (totalReviews.value === 0) {
+    return [0, 0, 0, 0, 0];
+  }
+
+  return [
+    (counts.ratingsCountOf5 / totalReviews.value) * 100,
+    (counts.ratingsCountOf4 / totalReviews.value) * 100,
+    (counts.ratingsCountOf3 / totalReviews.value) * 100,
+    (counts.ratingsCountOf2 / totalReviews.value) * 100,
+    (counts.ratingsCountOf1 / totalReviews.value) * 100,
+  ];
+});
+
 
 const saveReview = async (form: CreateReviewParams) => {
   if (form.type === 'review') form.targetId = Number(productVariationId);
@@ -169,25 +189,10 @@ const saveReview = async (form: CreateReviewParams) => {
   send({ type: 'positive', message: t('review.notification.success') });
 };
 
-const splitReviewsCount = computed((): number[] => {
-  let splitReviewsTemporary = [0, 0, 0, 0, 0];
-
-  for (const review of allProductReviews.value) {
-    const rating = Number(review.feedbackRating.rating.ratingValue);
-    if (rating >= 1 && rating <= 5) splitReviewsTemporary[5 - rating]++;
-  }
-
-  return splitReviewsTemporary;
-});
-
-const ratingPercentages = computed(() =>
-  splitReviewsCount.value.map((review) => (review > 0 ? (review / Number(totalReviews.value)) * 100 : 0)),
-);
-
 async function fetchReviews() {
   await Promise.all([
     fetchProductReviews(Number(productId), productVariationId),
-    fetchProductReviews(Number(productId), productVariationId, { allData: true }),
+    fetchProductReviewAverage(Number(productId)),
   ]);
 }
 
