@@ -23,6 +23,7 @@
 ### Geändert
 
 - Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
+- Anzeige der durchschnittlichen Bewertung hinzugefügt
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
