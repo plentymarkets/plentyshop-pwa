@@ -4,8 +4,12 @@
 
 ### Hinzugefügt
 
+- Demo zum Anpassen von Einstellungen zur Laufzeit
+
 ### Behoben
 
+- Fehlerhafte Darstellung von Produktattributen behoben
+- SEO Canonical Verlinkungen angepasst
 - Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
 - Fehlende Artikelkurzbeschreibung behoben
 - Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert
@@ -138,6 +142,7 @@
 - Problem behoben, dass eine harte Aktualisierung ohne Browsercache nach dem Sprachwechsel zu einem 404-Fehler führt.
 - Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
 - Link zu den Beitragsrichtlinien in der Dokumentation behoben.
+- Verbesserte Adressaufrufe bei der Erstellung einer neuen Adresse beim Checkout
 
 ## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

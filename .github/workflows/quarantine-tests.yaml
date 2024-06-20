@@ -10,7 +10,7 @@ permissions:
   packages: read
 
 jobs:
-  quarantine tests:
+  quarantine-tests:
     runs-on: ubuntu-latest
 
     steps:
