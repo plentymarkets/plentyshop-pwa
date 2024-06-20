@@ -19,6 +19,7 @@
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion
+              v-if="product"
               :product="product"
               :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
               :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"

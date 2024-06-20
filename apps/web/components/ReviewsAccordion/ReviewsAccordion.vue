@@ -128,10 +128,9 @@ import {
 } from '@storefront-ui/vue';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
-const props = defineProps<ProductAccordionPropsType>();
+const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
-const { product, totalReviews, reviewAverageText, reviewAverageStars } = toRefs(props);
 const isLogin = ref(true);
 const { send } = useNotification();
 const { t } = useI18n();
@@ -146,8 +145,8 @@ const closeAuth = () => {
   isReviewOpen.value = true;
 };
 
-const productId = productGetters.getItemId(product.value);
-const productVariationId = productGetters.getVariationId(product.value);
+const productId = productGetters.getItemId(product);
+const productVariationId = productGetters.getVariationId(product);
 
 const {
   data: productReviewsData,
@@ -188,13 +187,15 @@ const deleteReview = () => {
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
+onMounted(() => fetchReviews());
+
 watch(
   () => reviewsOpen.value,
   (value) => {
     if (value) fetchReviews();
   },
-  { immediate: true },
 );
+
 watch(
   () => route.query,
   async () => {
