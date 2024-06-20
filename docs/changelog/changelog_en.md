@@ -19,6 +19,7 @@
 
 ### Fixed
 
+- Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
 - SEO canonical links are now correctly set.
 - The country list in the address form is now translated correctly.
@@ -163,6 +164,7 @@
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
+- Improved address calls on createNewAddress on checkout
 
 ## New Contributors
 

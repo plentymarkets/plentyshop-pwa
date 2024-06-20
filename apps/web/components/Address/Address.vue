@@ -12,7 +12,12 @@
       <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-700 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
-      <SfButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-edit')">
+      <SfButton
+        variant="tertiary"
+        size="sm"
+        class="self-start"
+        @click.stop="$emit('on-edit', userAddressGetters.getId(address))"
+      >
         {{ $t('account.accountSettings.edit') }}
       </SfButton>
       <SfButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-delete')">
@@ -30,6 +35,7 @@
 import { SfIconCheckCircle } from '@storefront-ui/vue';
 import { SfButton } from '@storefront-ui/vue';
 import type { AddressProps } from './types';
+import { userAddressGetters } from '@plentymarkets/shop-api';
 
 defineProps<AddressProps>();
 defineEmits(['on-edit', 'on-delete', 'make-default']);
