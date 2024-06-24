@@ -79,7 +79,6 @@ const loginUser = async () => {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
     loginSubmit = true;
-    navigateTo(localePath(paths.checkout));
   }
 };
 
