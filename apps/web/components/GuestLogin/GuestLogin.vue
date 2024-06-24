@@ -85,10 +85,10 @@ const loginUser = async () => {
 
 watch(
   () => isAuthorized.value,
-  (newValue) => {
-    if(newValue === true){
+  (value) => {
+    if (value === true) {
       navigateTo(localePath(paths.checkout));
     }
-  }
+  },
 );
 </script>
