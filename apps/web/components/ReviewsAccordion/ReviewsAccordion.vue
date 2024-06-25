@@ -132,7 +132,6 @@ const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineP
 const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const isLogin = ref(true);
-const { send } = useNotification();
 const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
@@ -171,7 +170,6 @@ const saveReview = async (form: CreateReviewParams) => {
   closeReviewModal();
   await createProductReview(form).then(() => fetchReviews());
   emits('on-list-change');
-  send({ type: 'positive', message: t('review.notification.success') });
 };
 
 async function fetchReviews() {
