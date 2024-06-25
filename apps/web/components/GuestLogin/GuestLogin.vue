@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
-const { login, loading } = useCustomer();
+const { login, isAuthorized, loading } = useCustomer();
 const { send } = useNotification();
 const { isAvailable, loadConfig } = usePayPal();
 const { t } = useI18n();
@@ -79,7 +79,15 @@ const loginUser = async () => {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
     loginSubmit = true;
-    navigateTo(localePath(paths.checkout));
   }
 };
+
+watch(
+  () => isAuthorized.value,
+  (value) => {
+    if (value === true) {
+      navigateTo(localePath(paths.checkout));
+    }
+  },
+);
 </script>

@@ -19,6 +19,7 @@
 - Wunschlisten-Button Arien-Etikett
 - PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
 - Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
+- Bei Verwendung der Anmeldung über den Header erfolgte keine Weiterleitung, während man sich auf der Gast-Anmeldeseite befand
 
 ### Geändert
 

@@ -2,6 +2,10 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
+### Fixed
+
+- Upon using login on the header, while being on the guest login page, there was no redirect
+
 ### Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
