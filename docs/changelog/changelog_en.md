@@ -23,6 +23,7 @@
 
 ### Fixed
 
+- Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
 - SEO canonical links are now correctly set.
