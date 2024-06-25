@@ -48,7 +48,7 @@
       </SfLink>
       <!--
       <div class="flex items-center pt-1 gap-1">
-        <SfRating size="xs" :value="rating ?? 0" :max="5" />
+        <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
       -->

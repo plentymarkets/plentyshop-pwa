@@ -7,20 +7,13 @@
     >
       {{ t('account.ordersAndReturns.myOrders') }}
     </h2>
+
     <div
       v-if="!data || data.data.entries.length === 0"
-      class="col-span-3 text-center mt-8"
+      class="col-span-3 text-center"
       data-testid="account-orders-content"
     >
-      <NuxtImg
-        src="/images/empty-cart.svg"
-        :alt="t('account.ordersAndReturns.noOrdersAltText')"
-        width="192"
-        height="192"
-        class="mx-auto"
-        loading="lazy"
-      />
-      <h3 class="typography-headline-3 font-bold mb-4 mt-6">{{ t('account.ordersAndReturns.noOrders') }}</h3>
+      <h3 class="typography-headline-3 font-bold mt-6 mb-4">{{ t('account.ordersAndReturns.noOrders') }}</h3>
       <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
         {{ t('account.ordersAndReturns.continue') }}
       </SfButton>
@@ -133,8 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Order } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-api';
+import { type Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular, SfButton } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
