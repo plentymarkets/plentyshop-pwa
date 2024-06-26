@@ -64,7 +64,6 @@
 
 ### Fixed
 
-- Fixed scroll for navigation on next review page
 - Fixed recommended product text overflow.
 - Fixed too many reviews error case.
 - Language select not closing when clicking outside the modal
@@ -117,6 +116,7 @@
 
 ### New
 
+- Added scroll to top for review pagination.
 - a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction
