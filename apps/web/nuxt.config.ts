@@ -2,6 +2,7 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
+import getConfiguration from './utils/configurationHelper';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -59,6 +60,10 @@ export default defineNuxtConfig({
         path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
         file: __dirname + '/pages/product/[slug].vue',
       });
+    },
+
+    'build:before'() {
+      getConfiguration();
     },
   },
   runtimeConfig: {
