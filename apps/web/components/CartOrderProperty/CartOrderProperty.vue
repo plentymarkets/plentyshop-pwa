@@ -40,6 +40,10 @@ const value = computed(() => {
 });
 
 const downloadPropertyFile = async () => {
+  if (loading.value) {
+    return;
+  }
+
   loading.value = true;
   await downloadFile(value.value);
   loading.value = false;

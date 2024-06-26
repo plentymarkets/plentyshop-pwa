@@ -178,7 +178,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     );
 
     if (data.value?.data) {
-      const blob = base64ToBlob(data.value.data.data.body, data.value.data.data.type);
+      const blob = base64ToBlob(data.value.data.data.body, data.value.data.data['content-type']);
       const url = URL.createObjectURL(blob);
       window.open(url, '_blank');
     }
