@@ -63,6 +63,7 @@
 
 ### Fixed
 
+- Fixed recommended product text overflow.
 - Fixed too many reviews error case.
 - Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
