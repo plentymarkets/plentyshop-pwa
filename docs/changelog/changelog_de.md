@@ -5,6 +5,7 @@
 ### Hinzugefügt
 
 - Demo zum Anpassen von Einstellungen zur Laufzeit
+- Hochgeladene Dateien als Produktattribut können jetzt wieder heruntergeladen werden
 
 ### Behoben
 

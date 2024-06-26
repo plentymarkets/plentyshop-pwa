@@ -41,7 +41,7 @@ export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<un
       message = cause.warn.message;
       type = 'warning';
       persist = false;
-    } else if (cause) {
+    } else if (cause && cause?.message) {
       message = cause.message;
     } else {
       message = error.message;
