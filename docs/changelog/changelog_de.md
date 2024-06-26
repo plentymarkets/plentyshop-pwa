@@ -20,10 +20,12 @@
 - Wunschlisten-Button Arien-Etikett
 - PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
 - Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
+- Bei Verwendung der Anmeldung über den Header erfolgte keine Weiterleitung, während man sich auf der Gast-Anmeldeseite befand
 
 ### Geändert
 
 - Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
+- Anzeige der durchschnittlichen Bewertung hinzugefügt
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 

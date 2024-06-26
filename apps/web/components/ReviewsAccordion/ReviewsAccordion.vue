@@ -1,45 +1,84 @@
 <template>
   <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
-    <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-    <div data-testid="reviews-accordion" id="customerReviewsAccordion">
-      <UiAccordionItem
-        v-model="reviewsOpen"
-        summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
-      >
-        <template #summary>
-          <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
-            {{ t('customerReviews') }}
-          </h2>
-        </template>
-        <SfButton
-          @click="isAuthorized ? openReviewModal() : openAuthentication()"
-          data-testid="create-review"
-          class="mt-2 mb-4"
-          size="base"
+    <ClientOnly>
+      <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+
+      <div data-testid="reviews-accordion" id="customerReviewsAccordion">
+        <UiAccordionItem
+          v-model="reviewsOpen"
+          summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
         >
-          {{ t('createCustomerReview') }}
-        </SfButton>
-        <UiReview
-          v-for="(reviewItem, key) in productReviews"
-          :key="key"
-          :review-item="reviewItem"
-          @on-submit="saveReview"
-          @review-updated="refreshReviews"
-          @review-deleted="deleteReview"
-        />
-        <p v-if="!totalReviews && productReviews.length === 0" class="font-bold leading-6 w-full py-2">
-          {{ t('customerReviewsNone') }}
-        </p>
-        <UiPagination
-          v-if="productReviews.length > 0"
-          :current-page="getFacetsFromURL().feedbackPage ?? 1"
-          :total-items="totalReviews"
-          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
-          :max-visible-pages="maxVisiblePages"
-          current-page-name="feedbackPage"
-        />
-      </UiAccordionItem>
-    </div>
+          <template #summary>
+            <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl" id="customerReviewsClick">
+              {{ t('customerReviews') }}
+            </h2>
+          </template>
+
+          <div class="flex justify-start mb-4 lg:mb-0">
+            <div class="lg:flex my-2">
+              <div class="lg:w-1/2 flex flex-col lg:mr-8">
+                <p class="text-center text-sm">{{ t('averageRating') }}</p>
+                <div class="flex justify-center">
+                  <SfRating
+                    class="pb-2"
+                    size="lg"
+                    :max="5"
+                    :value="reviewAverageStars || reviewAverageText"
+                    :half-increment="true"
+                  />
+                  <h3 class="font-bold text-xl ml-2">
+                    {{ reviewAverageText }}
+                  </h3>
+                </div>
+                <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
+                <SfButton
+                  @click="isAuthorized ? openReviewModal() : openAuthentication()"
+                  data-testid="create-review"
+                  class="mt-2 mb-4 mx-auto"
+                  size="base"
+                >
+                  {{ t('createCustomerReview') }}
+                </SfButton>
+              </div>
+
+              <div class="flex flex-col">
+                <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
+                  <p class="w-4 text-center">{{ 5 - key }}</p>
+                  <SfIconStarFilled class="lg:mx-2 pb-1 text-warning-500" size="base" />
+                  <SfProgressLinear
+                    class="self-center"
+                    size="sm"
+                    :value="proportionalRating"
+                    aria-label="proportional-rating-in-percent"
+                  />
+                  <p class="w-20 ml-2">( {{ splitRatings[key] }} )</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <UiReview
+            v-for="(reviewItem, key) in paginatedProductReviews"
+            :key="key"
+            :review-item="reviewItem"
+            @on-submit="saveReview"
+            @review-updated="fetchReviews"
+            @review-deleted="deleteReview"
+          />
+          <p v-if="!totalReviews && paginatedProductReviews.length === 0" class="font-bold leading-6 w-full py-2">
+            {{ t('customerReviewsNone') }}
+          </p>
+          <UiPagination
+            v-if="paginatedProductReviews.length > 0"
+            :current-page="getFacetsFromURL().feedbackPage ?? 1"
+            :total-items="totalReviews"
+            :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+            :max-visible-pages="maxVisiblePages"
+            current-page-name="feedbackPage"
+          />
+        </UiAccordionItem>
+      </div>
+    </ClientOnly>
   </div>
 
   <UiModal
@@ -81,15 +120,21 @@
 
 <script lang="ts" setup>
 import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import {
+  SfButton,
+  SfIconClose,
+  SfIconStarFilled,
+  SfLoaderCircular,
+  SfProgressLinear,
+  SfRating,
+  useDisclosure,
+} from '@storefront-ui/vue';
 import type { ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import type { CreateReviewParams } from '@plentymarkets/shop-api';
-const props = defineProps<ProductAccordionPropsType>();
+const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
-const { product, totalReviews } = toRefs(props);
 const isLogin = ref(true);
-const { send } = useNotification();
 const { t } = useI18n();
 const { isOpen: isReviewOpen, open: openReviewModal, close: closeReviewModal } = useDisclosure();
 const { isAuthorized } = useCustomer();
@@ -102,52 +147,61 @@ const closeAuth = () => {
   isReviewOpen.value = true;
 };
 
+const productId = productGetters.getItemId(product);
+const productVariationId = productGetters.getVariationId(product);
+
 const {
   data: productReviewsData,
   fetchProductReviews,
   createProductReview,
   loading,
-} = useProductReviews(Number(productGetters.getItemId(product.value)));
+} = useProductReviews(Number(productId));
 
-const productReviews = computed(() => {
-  return reviewGetters.getReviewItems(productReviewsData.value);
-});
+const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
-const refreshReviews = () => {
-  fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
-};
+const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
+const ratingPercentages = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value, true),
+);
+const splitRatings = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverageData.value),
+);
 
 const saveReview = async (form: CreateReviewParams) => {
-  if (form.type === 'review') form.targetId = Number(productGetters.getVariationId(product.value));
+  if (form.type === 'review') form.targetId = Number(productVariationId);
 
   closeReviewModal();
-  await createProductReview(form).then(() => refreshReviews());
+  await createProductReview(form).then(() => fetchReviews());
   emits('on-list-change');
-  send({ type: 'positive', message: t('review.notification.success') });
 };
 
+async function fetchReviews() {
+  await Promise.all([
+    fetchProductReviews(Number(productId), productVariationId),
+    fetchProductReviewAverage(Number(productId)),
+  ]);
+}
+
 const deleteReview = () => {
-  refreshReviews();
+  fetchReviews();
   emits('on-list-change');
 };
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
+onMounted(() => fetchReviews());
+
 watch(
   () => reviewsOpen.value,
   (value) => {
-    if (value) {
-      fetchProductReviews(
-        Number(productGetters.getItemId(product.value)),
-        productGetters.getVariationId(product.value),
-      );
-    }
+    if (value) fetchReviews();
   },
-  { immediate: true },
 );
+
 watch(
   () => route.query,
   async () => {
-    fetchProductReviews(Number(productGetters.getItemId(product.value)), productGetters.getVariationId(product.value));
+    fetchReviews();
   },
+  { immediate: true },
 );
 </script>
