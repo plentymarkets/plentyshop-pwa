@@ -118,7 +118,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       }
     });
 
-    if (process.client) {
+    if (import.meta.client) {
       navigateTo({ query: updateQuery });
     }
   };
