@@ -5,6 +5,7 @@
 ### Fixed
 
 - Upon using login on the header, while being on the guest login page, there was no redirect
+- Fixed mobile cross price display.
 
 ### Migration guide
 
