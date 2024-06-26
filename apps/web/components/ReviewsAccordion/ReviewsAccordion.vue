@@ -203,9 +203,9 @@ watch(
 );
 
 watch(
-  () => loading.value,
-  (value) => {
-    if (!value && accordionRef.value) {
+  () => route.query.feedbackPage,
+  async () => {
+    if (accordionRef.value) {
       accordionRef.value.scrollIntoView({ behavior: 'smooth' });
     }
   },
