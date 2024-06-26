@@ -4372,24 +4372,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-<<<<<<< feat/download-order-property-file
 "@plentymarkets/shop-api@npm:^0.41.0":
   version: 0.41.0
   resolution: "@plentymarkets/shop-api@npm:0.41.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.41.0%2F445b50ab188c1cbc65761fa04381042d568ca150"
-=======
-"@plentymarkets/shop-api@npm:^0.40.0":
-  version: 0.40.0
-  resolution: "@plentymarkets/shop-api@npm:0.40.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.40.0%2F6f749ceaaedd4a7c319c830e9fe8982601932e48"
->>>>>>> main
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-<<<<<<< feat/download-order-property-file
   checksum: 8b6e382fb52a073e9d512e3690f12816bda6d633a0dc04eb2636ea6f49fb00fb54ad7b4c7ab62faaeb9e7f8ca2fb9dbc2420a8b5b2c47837ffbb56c595dd92ab
-=======
-  checksum: 6f248cb16e1618651d9e552cba18b5e5c723358db6c94a6aa20e1b027a22356ea793c242c57920bd0071fe4b1740fc2854820aae207bb754a20b84f51cdfff32
->>>>>>> main
   languageName: node
   linkType: hard
 
