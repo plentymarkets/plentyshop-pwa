@@ -4937,17 +4937,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@savvywombat/tailwindcss-grid-areas@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "@savvywombat/tailwindcss-grid-areas@npm:3.1.0"
-  dependencies:
-    lodash: ^4.17.21
-  peerDependencies:
-    tailwindcss: ^3.0.1
-  checksum: 66481b841b8355daa4e2220870d31d4701baf5d548e7034a2f0524f6a13a975d1505dec380e6ea6f6ee709e6486831ee5df4a203e37a31a20d721edd6588c4aa
-  languageName: node
-  linkType: hard
-
 "@sentry/core@npm:6.19.7":
   version: 6.19.7
   resolution: "@sentry/core@npm:6.19.7"
@@ -21368,7 +21357,6 @@ __metadata:
     "@nuxtjs/sitemap": ^5.2.1
     "@nuxtjs/tailwindcss": ^6.12.0
     "@nuxtjs/turnstile": ^0.8.0
-    "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
     "@storefront-ui/vue": ^2.6.3
     "@types/culori": ^2.1.0

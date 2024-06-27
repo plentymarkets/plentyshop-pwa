@@ -41,7 +41,6 @@
     "@nuxtjs/sitemap": "^5.2.1",
     "@nuxtjs/tailwindcss": "^6.12.0",
     "@nuxtjs/turnstile": "^0.8.0",
-    "@savvywombat/tailwindcss-grid-areas": "^3.1.0",
     "@storefront-ui/typography": "^2.6.1",
     "@storefront-ui/vue": "^2.6.3",
     "@types/culori": "^2.1.0",
