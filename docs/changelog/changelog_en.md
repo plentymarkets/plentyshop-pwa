@@ -2,6 +2,10 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
+### Fixed
+
+- Upon using login on the header, while being on the guest login page, there was no redirect
+
 ### Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
@@ -16,6 +20,7 @@
 ### New
 
 - Demo for changing app settings at runtime
+- Uploaded files as a product attribute can now be downloaded again
 
 ### Fixed
 
@@ -60,6 +65,8 @@
 
 ### Fixed
 
+- Fixed recommended product text overflow.
+- Fixed too many reviews error case.
 - Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
 - Some issues related to the display of item reviews have been fixed.
@@ -110,6 +117,7 @@
 
 ### New
 
+- Added scroll to top for review pagination.
 - a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction

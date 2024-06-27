@@ -16,6 +16,7 @@ export interface UseProductOrderProperties {
   getPropertiesForCart: () => BasketItemOrderParamsProperty[] | undefined;
   getPropertiesPrice: GetPropertiesPrice;
   uploadFile: (file: File) => Promise<string | null>;
+  downloadFile: (url: string) => Promise<string | null>;
 }
 
 export type UseProductOrderPropertiesReturn = () => UseProductOrderProperties;
