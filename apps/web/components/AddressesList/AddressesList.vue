@@ -15,6 +15,7 @@
       @on-delete="onDelete(address)"
       @make-default="makeDefault(address)"
     />
+    <div v-if="addresses.length === 0">{{ $t('account.accountSettings.noAddresses') }}</div>
 
     <SfButton class="!block mt-6 ml-auto w-auto" variant="secondary" @click="editAddress">
       {{ addAddressText }}
