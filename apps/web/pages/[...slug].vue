@@ -1,37 +1,36 @@
 <template>
-  <div>
-    <NuxtLayout
-      name="default"
-      :breadcrumbs="breadcrumbs"
-      class="relative"
-      :class="{ 'pointer-events-none opacity-50': loading }"
+  <NuxtLayout
+    name="default"
+    :breadcrumbs="breadcrumbs"
+    class="relative"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+  >
+    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <CategoryPageContent
+      v-if="productsCatalog"
+      :title="categoryGetters.getCategoryName(productsCatalog.category)"
+      :total-products="productsCatalog.pagination.totals"
+      :products="productsCatalog.products"
+      :items-per-page="Number(productsPerPage)"
     >
-      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-      <CategoryPageContent
-        v-if="productsCatalog"
-        :title="categoryGetters.getCategoryName(productsCatalog.category)"
-        :total-products="productsCatalog.pagination.totals"
-        :products="productsCatalog.products"
-        :items-per-page="Number(productsPerPage)"
-      >
-        <template #sidebar>
-          <CategoryTree :category="category" />
-          <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
-        </template>
-      </CategoryPageContent>
-    </NuxtLayout>
-  </div>
+      <template #sidebar>
+        <CategoryTree :category="category" />
+        <CategorySorting />
+        <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+        <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+      </template>
+    </CategoryPageContent>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-
-definePageMeta({ layout: false });
-
 const { setCategoriesPageMeta } = useCanonical();
+definePageMeta({
+  layout: false,
+});
+
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();

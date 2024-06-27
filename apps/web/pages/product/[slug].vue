@@ -1,51 +1,47 @@
 <template>
-  <div>
-    <NuxtLayout :breadcrumbs="breadcrumbs" :catchall="true">
-      <NarrowContainer>
-        <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-          <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-            <NuxtLazyHydrate when-idle>
-              <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
-            </NuxtLazyHydrate>
-          </section>
-          <section class="mb-10 grid-in-right md:mb-0">
-            <NuxtLazyHydrate when-idle>
-              <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
-            </NuxtLazyHydrate>
-          </section>
-          <section class="grid-in-left-bottom md:mt-8">
-            <UiDivider class="mt-4 mb-2 md:mt-8" />
-            <NuxtLazyHydrate when-visible>
-              <ProductAccordion v-if="product" :product="product" />
-            </NuxtLazyHydrate>
-            <NuxtLazyHydrate when-visible>
-              <ReviewsAccordion
-                v-if="product"
-                :product="product"
-                :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-                :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-                :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-                @on-list-change="fetchProductReviewAverage(Number(productId))"
-              />
-            </NuxtLazyHydrate>
-          </section>
-        </div>
-        <section class="mx-4 mt-28 mb-20">
-          <NuxtLazyHydrate when-visible>
-            <ProductRecommendedProducts
-              :category-id="productGetters.getCategoryIds(product)[0]"
-            ></ProductRecommendedProducts>
+  <NuxtLayout :breadcrumbs="breadcrumbs" :catchall="true">
+    <NarrowContainer>
+      <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
+        <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
+          <NuxtLazyHydrate when-idle>
+            <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
           </NuxtLazyHydrate>
         </section>
-      </NarrowContainer>
-    </NuxtLayout>
-  </div>
+        <section class="mb-10 grid-in-right md:mb-0">
+          <NuxtLazyHydrate when-idle>
+            <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
+          </NuxtLazyHydrate>
+        </section>
+        <section class="grid-in-left-bottom md:mt-8">
+          <UiDivider class="mt-4 mb-2 md:mt-8" />
+          <NuxtLazyHydrate when-visible>
+            <ProductAccordion v-if="product" :product="product" />
+          </NuxtLazyHydrate>
+          <NuxtLazyHydrate when-visible>
+            <ReviewsAccordion
+              v-if="product"
+              :product="product"
+              :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
+              :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
+              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+              @on-list-change="fetchProductReviewAverage(Number(productId))"
+            />
+          </NuxtLazyHydrate>
+        </section>
+      </div>
+      <section class="mx-4 mt-28 mb-20">
+        <NuxtLazyHydrate when-visible>
+          <ProductRecommendedProducts
+            :category-id="productGetters.getCategoryIds(product)[0]"
+          ></ProductRecommendedProducts>
+        </NuxtLazyHydrate>
+      </section>
+    </NarrowContainer>
+  </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { type Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
-
-definePageMeta({ layout: false });
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
@@ -53,6 +49,11 @@ const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
+
+definePageMeta({
+  layout: false,
+});
+
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
