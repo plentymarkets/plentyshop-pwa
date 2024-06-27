@@ -44,12 +44,12 @@ export default defineNuxtConfig({
     },
     compressPublicAssets: true,
   },
+  routeRules: {
+    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+  },
   site: {
-    routeRules: {
-      '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-      '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-      '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    },
     url: '',
   },
   hooks: {
