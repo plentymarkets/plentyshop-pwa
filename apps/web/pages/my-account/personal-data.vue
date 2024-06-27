@@ -1,5 +1,12 @@
 <template>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <h2
+    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+    data-testid="account-orders-heading"
+  >
+    {{ t('account.accountSettings.section.personalData') }}
+  </h2>
+  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.yourName')"
@@ -69,6 +76,7 @@ const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();
 const modalElement = ref();
 const openedForm = ref('');
+const { t } = useI18n();
 const openModal = async (modalName: string) => {
   openedForm.value = modalName;
   lastActiveElement.value = document.activeElement;
