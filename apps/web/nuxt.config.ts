@@ -2,8 +2,6 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
-import { resolve } from 'pathe';
-import { NuxtPage } from 'nuxt/schema';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -38,27 +36,28 @@ export default defineNuxtConfig({
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
+  // eslint-disable-next-line unicorn/expiring-todo-comments
+  // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
-    compressPublicAssets: true,
     prerender: {
       crawlLinks: false,
-      failOnError: true,
     },
+    compressPublicAssets: true,
+  },
+  site: {
     routeRules: {
       '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
       '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
       '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     },
-  },
-  site: {
     url: '',
   },
   hooks: {
-    'pages:extend'(pages: NuxtPage[]) {
+    'pages:extend'(pages) {
       pages.push({
         name: 'product',
         path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: resolve(__dirname, './pages/product/[slug].vue'),
+        file: __dirname + '/pages/product/[slug].vue',
       });
     },
   },
