@@ -65,6 +65,7 @@
 
 ### Fixed
 
+- Fixed recommended product text overflow.
 - Fixed too many reviews error case.
 - Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
@@ -116,6 +117,7 @@
 
 ### New
 
+- Added scroll to top for review pagination.
 - a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction

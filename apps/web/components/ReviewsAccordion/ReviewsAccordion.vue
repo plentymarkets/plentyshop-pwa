@@ -1,5 +1,9 @@
 <template>
-  <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
+  <div
+    ref="accordionRef"
+    class="relative col-span-5 md:sticky md:top-10 h-fit"
+    :class="{ 'pointer-events-none opacity-50': loading }"
+  >
     <ClientOnly>
       <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
@@ -149,6 +153,7 @@ const closeAuth = () => {
 
 const productId = productGetters.getItemId(product);
 const productVariationId = productGetters.getVariationId(product);
+const accordionRef = ref<HTMLElement | null>(null);
 
 const {
   data: productReviewsData,
@@ -194,6 +199,15 @@ watch(
   () => reviewsOpen.value,
   (value) => {
     if (value) fetchReviews();
+  },
+);
+
+watch(
+  () => route.query.feedbackPage,
+  async () => {
+    if (accordionRef.value) {
+      accordionRef.value.scrollIntoView({ behavior: 'smooth' });
+    }
   },
 );
 

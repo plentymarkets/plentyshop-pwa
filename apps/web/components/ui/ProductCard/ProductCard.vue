@@ -49,7 +49,9 @@
       <div
         class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
-        {{ productGetters.getShortDescription(product) }}
+        <span class="line-clamp-3">
+          {{ productGetters.getShortDescription(product) }}
+        </span>
       </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
