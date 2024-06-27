@@ -62,7 +62,7 @@ const getConfiguration = async () => {
     }
   }
 
-  return data;
+  return Promise.resolve(data);
     
 };
 
