@@ -61,9 +61,9 @@ export default defineNuxtConfig({
         file: __dirname + '/pages/product/[slug].vue',
       });
     },
-    'build:before'() {
+    'build:before': async () => {
       console.log('Adding MyCustomWebpackPlugin to the webpack configuration');
-      configurationHelper();
+      await configurationHelper();
     }
   },
   runtimeConfig: {

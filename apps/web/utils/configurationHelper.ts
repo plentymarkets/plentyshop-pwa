@@ -33,7 +33,7 @@ const setEnvValue = (key: string, value: string) => {
 };
 
 
-const getConfiguration = () => {
+const getConfiguration = async () => {
   const instance = axios.create({
     withCredentials: true,
     baseURL: process.env.API_ENDPOINT,
@@ -50,22 +50,20 @@ const getConfiguration = () => {
   // Solution 1 - Create a temporary .env file (.env.tmp) then change the name to .env
   // Disable the .env check from nodemon.json ("ignore": [".env"])
 
-  instance
-    .get('/storefront/settings/1')
-    .then(result => {
-      const data = result.data;
-      for (const category in data) {
-        if (Array.isArray(data[category])) {
-          data[category].forEach((item: any) => {
-            setEnvValue(item.key, item.value);
-            console.log(item.key, item.value);
-          })
-        }
-      }
-    })
-    .catch(error => {
-      console.log('Catch ->', error);
-    })
+  const { data: result } = await instance.get('/storefront/settings/1');
+
+  const data = result.data;
+  for (const category in data) {
+    if (Array.isArray(data[category])) {
+      data[category].forEach((item: any) => {
+        setEnvValue(item.key, item.value);
+        console.log(item.key, item.value);
+      })
+    }
+  }
+
+  return data;
+    
 };
 
 export default getConfiguration
