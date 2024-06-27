@@ -157,7 +157,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
