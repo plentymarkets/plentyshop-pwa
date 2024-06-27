@@ -5,7 +5,6 @@ export const httpClient = async (url: any, params: any, config: any) => {
   try {
     const client = axios.create({
       timeout: 5000,
-      signal: AbortSignal.timeout(5000),
       withCredentials: true,
     });
     if (tryUseNuxtApp()) {
