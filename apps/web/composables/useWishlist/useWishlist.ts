@@ -39,13 +39,17 @@ export const useWishlist: UseWishlistReturn = () => {
   const fetchWishlist: FetchWishlist = async () => {
     state.value.loading = true;
 
-    return await useSdk()
-      .plentysystems.getWishlist()
-      .then(({ data }) => {
-        state.value.data = data ?? state.value.data;
-        state.value.loading = false;
-        return state.value.data;
-      });
+    try {
+      return await useSdk()
+        .plentysystems.getWishlist()
+        .then(({ data }) => {
+          state.value.data = data ?? state.value.data;
+          state.value.loading = false;
+          return state.value.data;
+        });
+    } catch (error) {
+      throw new Error(error as string);
+    }
   };
 
   /**
