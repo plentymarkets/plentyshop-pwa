@@ -2,6 +2,7 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
+import configurationHelper from './utils/configurationHelper';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -60,6 +61,10 @@ export default defineNuxtConfig({
         file: __dirname + '/pages/product/[slug].vue',
       });
     },
+    'build:before'() {
+      console.log('Adding MyCustomWebpackPlugin to the webpack configuration');
+      configurationHelper();
+    }
   },
   runtimeConfig: {
     public: {

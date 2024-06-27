@@ -1,3 +1,5 @@
 nuxt.config.js
 jest.setup.ts
 cypress.config.ts
+nuxt.config.ts
+utils/configurationHelper.ts
