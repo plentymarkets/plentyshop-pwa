@@ -3933,9 +3933,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/sitemap@npm:^5.2.1":
-  version: 5.2.1
-  resolution: "@nuxtjs/sitemap@npm:5.2.1"
+"@nuxtjs/sitemap@npm:^5.2.2":
+  version: 5.2.2
+  resolution: "@nuxtjs/sitemap@npm:5.2.2"
   dependencies:
     "@nuxt/devtools-kit": ^1.3.6
     "@nuxt/devtools-ui-kit": ^1.3.6
@@ -3956,7 +3956,7 @@ __metadata:
     sirv: ^2.0.4
     site-config-stack: ^2.2.12
     ufo: ^1.5.3
-  checksum: 2c99f5649d2cb8796745e367d17d55efc111bca236076966fe7cafb4fde6073f1a17e3fea57ae624ead09cc67572dec270e0878e8245cbc77d656a259fc121fe
+  checksum: 2a2fd14e30aa201dd3dc12d02dcea34333849fb1a94f03651043b38ccd0472235f9ea6126b976e6412dde37ccc2d4cecb2d616498e1a9ea2e7081f9946039314
   languageName: node
   linkType: hard
 
@@ -4937,6 +4937,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@savvywombat/tailwindcss-grid-areas@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "@savvywombat/tailwindcss-grid-areas@npm:3.1.0"
+  dependencies:
+    lodash: ^4.17.21
+  peerDependencies:
+    tailwindcss: ^3.0.1
+  checksum: 66481b841b8355daa4e2220870d31d4701baf5d548e7034a2f0524f6a13a975d1505dec380e6ea6f6ee709e6486831ee5df4a203e37a31a20d721edd6588c4aa
+  languageName: node
+  linkType: hard
+
 "@sentry/core@npm:6.19.7":
   version: 6.19.7
   resolution: "@sentry/core@npm:6.19.7"
@@ -5491,7 +5502,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^20.14.6, @types/node@npm:^20.14.8":
+"@types/node@npm:*, @types/node@npm:>=13.7.0, @types/node@npm:^20.14.6":
   version: 20.14.8
   resolution: "@types/node@npm:20.14.8"
   dependencies:
@@ -5511,6 +5522,15 @@ __metadata:
   version: 16.18.101
   resolution: "@types/node@npm:16.18.101"
   checksum: d099055168529f56665ad470e0aeb443557301b1342be12eeedcb04897614bbc09ecf10621a90460f83a5264acad4feaf84d0db181251ebe901049aad4ab4bcf
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.14.9":
+  version: 20.14.9
+  resolution: "@types/node@npm:20.14.9"
+  dependencies:
+    undici-types: ~5.26.4
+  checksum: 5e9eda1ac8c6cc6bcd1063903ae195eaede9aad1bdad00408a919409cfbcdd2d6535aa3d50346f0d385528f9e03dafc7d1b3bad25aedb1dcd79a6ad39d06c35d
   languageName: node
   linkType: hard
 
@@ -21354,14 +21374,15 @@ __metadata:
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/google-fonts": ^3.2.0
     "@nuxtjs/i18n": 8.3.1
-    "@nuxtjs/sitemap": ^5.2.1
+    "@nuxtjs/sitemap": ^5.2.2
     "@nuxtjs/tailwindcss": ^6.12.0
     "@nuxtjs/turnstile": ^0.8.0
+    "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
     "@storefront-ui/vue": ^2.6.3
     "@types/culori": ^2.1.0
     "@types/lodash-es": ^4.17.12
-    "@types/node": ^20.14.8
+    "@types/node": ^20.14.9
     "@vite-pwa/nuxt": ^0.8.1
     "@vitest/coverage-v8": ^0.33.0
     "@vue-storefront/middleware": ^3.10.0

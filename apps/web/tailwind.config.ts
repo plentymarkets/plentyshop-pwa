@@ -62,5 +62,5 @@ export default {
       },
     },
   },
-  plugins: [sfTypography],
+  plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
 } as Config;

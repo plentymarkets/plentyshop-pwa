@@ -3,17 +3,17 @@
     <NuxtLayout :breadcrumbs="breadcrumbs" :catchall="true">
       <NarrowContainer>
         <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
-          <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
+          <section class="grid-in-left md:h-full xl:max-h-[700px]">
             <NuxtLazyHydrate when-idle>
               <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
             </NuxtLazyHydrate>
           </section>
-          <section class="mb-10 grid-in-right md:mb-0">
+          <section class="mb-10 grid-in-right-top md:mb-0">
             <NuxtLazyHydrate when-idle>
               <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
             </NuxtLazyHydrate>
           </section>
-          <section class="grid-in-left-bottom md:mt-8">
+          <section class="grid-in-left md:mt-8">
             <UiDivider class="mt-4 mb-2 md:mt-8" />
             <NuxtLazyHydrate when-visible>
               <ProductAccordion v-if="product" :product="product" />
