@@ -46,17 +46,24 @@
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
 
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
+      <SfRating
+        size="xs"
+        :half-increment="true"
+        :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+        :max="5"
+      />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
       <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
       </SfButton>
     </div>
     <div
-      class="mb-4 font-normal typography-text-sm"
+      v-if="productGetters.getShortDescription(product).length > 0"
+      class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
       data-testid="product-description"
-      v-html="productGetters.getShortDescription(product)"
-    ></div>
+    >
+      {{ productGetters.getShortDescription(product) }}
+    </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
     <OrderProperties v-if="product" :product="product" />
@@ -68,7 +75,7 @@
         <UiQuantitySelector
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
-          class="min-w-[145px] flex-grow flex-shrink-0 basis-0"
+          class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
         />
         <SfTooltip
           show-arrow
@@ -80,15 +87,17 @@
             type="submit"
             data-testid="add-to-cart"
             size="lg"
-            class="w-full"
+            class="w-full h-full"
             :disabled="loading || !productGetters.isSalable(product)"
           >
-            <template #prefix v-if="!loading">
-              <SfIconShoppingCart size="sm" />
-            </template>
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <template v-else>
-              {{ t('addToCart') }}
+            <template #prefix>
+              <div v-if="!loading" class="flex row items-center">
+                <SfIconShoppingCart size="sm" />
+                {{ t('addToCart') }}
+              </div>
+              <div v-else>
+                <SfLoaderCircular size="sm" />
+              </div>
             </template>
           </SfButton>
         </SfTooltip>
@@ -101,9 +110,7 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <client-only>
-        <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
-      </client-only>
+      <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
     </div>
   </form>
 </template>

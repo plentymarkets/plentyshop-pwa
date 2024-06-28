@@ -1,5 +1,5 @@
 <template>
-  <header ref="referenceRef" class="relative w-full h-full z-50 md:sticky md:shadow-md">
+  <header ref="referenceRef" class="relative w-full h-full z-40 md:sticky md:shadow-md">
     <div
       class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
       data-testid="navbar-top"
@@ -68,7 +68,7 @@
             :key="activeMenu.id"
             ref="megaMenuReference"
             :style="style"
-            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-[1000]"
+            class="hidden md:grid gap-x-6 grid-cols-4 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
             tabindex="0"
             @mouseleave="close()"
             @keydown.esc="focusTrigger(index)"
@@ -175,8 +175,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { categoryTreeGetters } from '@plentymarkets/shop-api';
+import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
   SfButton,

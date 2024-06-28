@@ -13,9 +13,7 @@
         </SfButton>
         <OrDivider />
         <div v-if="isAvailable">
-          <client-only>
-            <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
-          </client-only>
+          <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
           <OrDivider />
         </div>
         <div class="w-[400px] mt-4">
@@ -56,7 +54,7 @@
 <script setup lang="ts">
 import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
-const { login, loading } = useCustomer();
+const { login, isAuthorized, loading } = useCustomer();
 const { send } = useNotification();
 const { isAvailable, loadConfig } = usePayPal();
 const { t } = useI18n();
@@ -79,7 +77,15 @@ const loginUser = async () => {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
     loginSubmit = true;
-    navigateTo(localePath(paths.checkout));
   }
 };
+
+watch(
+  () => isAuthorized.value,
+  (value) => {
+    if (value === true) {
+      navigateTo(localePath(paths.checkout));
+    }
+  },
+);
 </script>

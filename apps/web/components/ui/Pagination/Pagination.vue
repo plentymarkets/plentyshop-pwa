@@ -177,18 +177,19 @@ const { updatePage } = useCategoryFilter();
 const { t } = useI18n();
 
 const props = withDefaults(defineProps<PaginationProps>(), {
+  currentPageName: 'page',
   disabled: false,
 });
 
-const { currentPage, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = toRefs(props);
+const { currentPage, currentPageName, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = props;
 
 const pagination = computed(() =>
   reactive(
     usePagination({
-      totalItems: totalItems.value,
-      currentPage: currentPage.value,
-      pageSize: pageSize.value,
-      maxPages: maxVisiblePagesProperty.value,
+      totalItems: totalItems,
+      currentPage: currentPage,
+      pageSize: pageSize,
+      maxPages: maxVisiblePagesProperty,
     }),
   ),
 );
@@ -198,7 +199,7 @@ const getAriaLabel = (isCurrent: boolean, page: number) => {
 };
 
 const setPage = (page: number) => {
-  updatePage(page.toString());
+  updatePage(page.toString(), currentPageName);
   pagination.value.setPage(page);
 };
 
@@ -211,10 +212,10 @@ const nextPage = () => {
 };
 
 const shouldDisplayPreviousLink: boolean =
-  maxVisiblePagesProperty.value === 1 &&
+  maxVisiblePagesProperty === 1 &&
   pagination.value.totalPages > 1 &&
   pagination.value.selectedPage === pagination.value.totalPages;
 
 const shouldDisplayNextLink: boolean =
-  maxVisiblePagesProperty.value === 1 && pagination.value.totalPages > 1 && pagination.value.selectedPage === 1;
+  maxVisiblePagesProperty === 1 && pagination.value.totalPages > 1 && pagination.value.selectedPage === 1;
 </script>

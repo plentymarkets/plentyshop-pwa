@@ -43,13 +43,16 @@
         {{ name }}
       </SfLink>
       <div class="flex items-center pt-1 gap-1">
-        <SfRating size="xs" :value="rating ?? 0" :max="5" />
+        <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-
-      <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
-        {{ description }}
-      </p>
+      <div
+        class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
+      >
+        <span class="line-clamp-3">
+          {{ productGetters.getShortDescription(product) }}
+        </span>
+      </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
@@ -70,7 +73,7 @@
         </span>
       </div>
       <SfButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || isFromWishlist"
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
