@@ -17,7 +17,7 @@
           v-if="inputModel"
           type="button"
           aria-label="Reset search"
-          class="flex rounded-md focus-within:ring-primary-700 focus-within:ring-2"
+          class="flex rounded-md focus-visible:outline focus-visible:outline-offset"
           @click="handleReset"
         >
           <SfIconCancel />
