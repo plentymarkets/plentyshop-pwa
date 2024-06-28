@@ -13,9 +13,7 @@
         </SfButton>
         <OrDivider />
         <div v-if="isAvailable">
-          <client-only>
-            <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
-          </client-only>
+          <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
           <OrDivider />
         </div>
         <div class="w-[400px] mt-4">
