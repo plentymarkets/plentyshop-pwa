@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout :breadcrumbs="breadcrumbs" :catchall="true">
+  <NuxtLayout name="default" :breadcrumbs="breadcrumbs" :catchall="true">
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
