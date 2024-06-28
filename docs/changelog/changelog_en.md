@@ -5,6 +5,8 @@
 ### Fixed
 
 - Upon using login on the header, while being on the guest login page, there was no redirect
+- Added placeholder text for missing addresses
+- Added same custom header in the myAccount
 
 ### Migration guide
 
