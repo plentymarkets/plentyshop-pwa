@@ -22,6 +22,7 @@
 
 ### New
 
+- Upgraded Nuxt and package dependencies
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 

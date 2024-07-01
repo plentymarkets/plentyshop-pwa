@@ -40,4 +40,8 @@
       @apply hidden;
     }
   }
+
+  .grid-areas-product-page {
+    grid-template-areas: 'left-top right' 'left-bottom right';
+  }
 }

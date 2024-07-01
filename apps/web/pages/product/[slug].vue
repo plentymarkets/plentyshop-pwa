@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
+  <NuxtLayout name="default" :breadcrumbs="breadcrumbs" :catchall="true">
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
@@ -58,7 +58,7 @@ const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
-if (process.server) {
+if (import.meta.server) {
   await Promise.all([
     fetchProduct(productParams),
     fetchProductReviewAverage(Number(productId)),

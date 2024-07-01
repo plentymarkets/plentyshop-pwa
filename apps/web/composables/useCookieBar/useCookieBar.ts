@@ -73,7 +73,7 @@ export const useCookieBar = (
    * ```
    */
   function loadThirdPartyScripts(): void {
-    if (!process.server) {
+    if (!import.meta.server) {
       cookieJson.value.forEach((cookieGroup, groupIndex) => {
         cookieGroup.cookies.forEach((cookie, cookieIndex) => {
           if (cookie.accepted) {
