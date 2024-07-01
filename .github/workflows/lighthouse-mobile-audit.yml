@@ -55,7 +55,7 @@ jobs:
           EOT
 
       - name: Build application
-        run: yarn turbo run build --scope="web"
+        run: yarn build
 
       - name: lighthouse mobile audit
         run: yarn lhci:mobile
