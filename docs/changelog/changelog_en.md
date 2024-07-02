@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Purchase card hydration error when navigating to a product with attributes
 - Upon using login on the header, while being on the guest login page, there was no redirect
 - Fixed mobile cross price display.
 - Added placeholder text for missing addresses
