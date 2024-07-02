@@ -62,7 +62,6 @@ export default defineNuxtConfig({
       });
     },
     'build:before': async () => {
-      console.log('Adding MyCustomWebpackPlugin to the webpack configuration');
       await configurationHelper();
     }
   },

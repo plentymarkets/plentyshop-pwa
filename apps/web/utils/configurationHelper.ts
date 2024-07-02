@@ -5,19 +5,20 @@ import os from 'os';
 import path from 'path';
 
 const envFilePath = path.resolve(__dirname, "../.env");
+const envTmpFilePath = path.resolve(__dirname, '../.env.tmp');
 
 // read .env file & convert to array
-const readEnvVars = () => fs.readFileSync(envFilePath, "utf-8").split(os.EOL);
+const readEnvVars = (path: string) => fs.readFileSync(path, "utf-8").split(os.EOL);
 
-const getEnvValue = (key: string) => {
+const getEnvValue = (path: string, key: string) => {
   // find the line that contains the key (exact match)
-  const matchedLine = readEnvVars().find((line) => line.split("=")[0] === key);
+  const matchedLine = readEnvVars(path).find((line) => line.split("=")[0] === key);
   // split the line (delimiter is '=') and return the item at index 2
   return matchedLine !== undefined ? matchedLine.split("=")[1] : null;
 };
 
-const setEnvValue = (key: string, value: string) => {
-  const envVars = readEnvVars();
+const setEnvValue = (path: string, key: string, value: string) => {
+  const envVars = readEnvVars(path);
   const targetLine = envVars.find((line) => line.split("=")[0] === key);
   if (targetLine !== undefined) {
     // update existing line
@@ -29,41 +30,80 @@ const setEnvValue = (key: string, value: string) => {
     envVars.push(`${key.toUpperCase()}="${value}"`);
   }
   // write everything back to the file system
-  fs.writeFileSync(envFilePath, envVars.join(os.EOL));
+  fs.writeFileSync(path, envVars.join(os.EOL));
 };
 
-
 const getConfiguration = async () => {
+  const requiredEnvVars = ['API_ENDPOINT', 'API_SECURITY_TOKEN', 'CONFIG_ID'];
+  let requiredEnvData: string = '';
+
+  console.log('Verifying required env variables...');
+
+  for (let i = 0; i < requiredEnvVars.length; i++) {
+    const envVar = requiredEnvVars[i];
+    if (!getEnvValue(envFilePath, envVar)) {
+      console.log(`Missing or invalid required environment variable: ${envVar}`);
+      return;
+    }
+
+    const envValue = process.env[envVar];
+    requiredEnvData += `${envVar}=${envValue}`;
+
+    // For last iteration just skip adding
+    if (i !== requiredEnvVars.length - 1) {
+      requiredEnvData += '\n';
+    }
+  }
+
+  console.log('Required env variables found ✅');
+
+  // Create .env.tmp file
+  console.log('Creating .env.tmp file...');
+  fs.writeFile(envTmpFilePath, requiredEnvData, () => {});
+
+  // Create axios instance
   const instance = axios.create({
     withCredentials: true,
     baseURL: process.env.API_ENDPOINT,
     headers: {
-      'X-Security-Token': process.env.API_SECURITY_TOKEN
+      'X-Security-Token': process.env.API_SECURITY_TOKEN // Testing this what happen when bad token
     },
     httpsAgent: new https.Agent({
       rejectUnauthorized: false
     })
   });
 
-  // What we can do for Cert issue (rejectUnauthorized was one solution)
-  // The .env keeps restarting because we write data in it (creating something close to an infinite loop - ".env changed, restarting server...")
-  // Solution 1 - Create a temporary .env file (.env.tmp) then change the name to .env
-  // Disable the .env check from nodemon.json ("ignore": [".env"])
+  let response;
 
-  const { data: result } = await instance.get('/storefront/settings/1');
+  try {
+    console.log('Fetching PWA settings...');
+    const { data } = await instance.get(`/storefront/settings/${process.env.CONFIG_ID}`);
+    response = data;
 
-  const data = result.data;
-  for (const category in data) {
-    if (Array.isArray(data[category])) {
-      data[category].forEach((item: any) => {
-        setEnvValue(item.key, item.value);
-        console.log(item.key, item.value);
-      })
+    // console.log('Response', response, data);
+    for (const category in response) {
+      if (Array.isArray(data[category])) {
+        response[category].forEach((item: any) => {
+          setEnvValue(envTmpFilePath, item.key, item.value);
+        })
+      }
+    }
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error('PWA settings error:', error.response!.data.error);
+      return;
     }
   }
 
-  return Promise.resolve(data);
-    
+  // Copy the contents of .env.tmp to .env
+  fs.copyFile(envTmpFilePath, envFilePath, () => {});
+  console.log('.env.tmp data has been copied to .env');
+
+  // Remove the .env.tmp file
+  fs.unlink(envTmpFilePath, () => {});
+  console.log('.env.tmp file has been removed');
+
+  return Promise.resolve(response);
 };
 
 export default getConfiguration
