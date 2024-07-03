@@ -2,7 +2,7 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
-import configurationHelper from './utils/configurationHelper';
+import fetchConfiguration from '~/build/fetchConfiguration';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -62,8 +62,8 @@ export default defineNuxtConfig({
       });
     },
     'build:before': async () => {
-      await configurationHelper();
-    }
+      await fetchConfiguration();
+    },
   },
   runtimeConfig: {
     public: {

@@ -26,7 +26,7 @@ const setEnvironmentValue = (path: string, key: string, value: string) => {
   fs.writeFileSync(path, environmentVariables.join(os.EOL));
 };
 
-const getConfiguration = async () => {
+const fetchConfiguration = async () => {
   const fetchingStatus = getEnvironmentValue(environmentFilePath, 'DISABLE_SETTINGS_FETCH');
   if (fetchingStatus === '1') {
     console.warn(`Fetching PWA settings is disabled! Check DISABLE_SETTINGS_FETCH in .env file.`);
@@ -92,4 +92,4 @@ const getConfiguration = async () => {
   return response;
 };
 
-export default getConfiguration;
+export default fetchConfiguration;
