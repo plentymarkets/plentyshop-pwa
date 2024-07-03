@@ -134,6 +134,7 @@
         square
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
+        @click="toggleLanguageSelect()"
       >
         <SfIconLanguage />
       </SfButton>

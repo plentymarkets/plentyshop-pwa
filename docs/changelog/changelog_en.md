@@ -8,6 +8,7 @@
 - Fixed mobile cross price display.
 - Added placeholder text for missing addresses
 - Added same custom header in the myAccount
+- Fixed language selector on mobile
 
 ### Migration guide
 
