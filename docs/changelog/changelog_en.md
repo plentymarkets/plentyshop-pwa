@@ -5,6 +5,10 @@
 ### Fixed
 
 - Upon using login on the header, while being on the guest login page, there was no redirect
+- Fixed mobile cross price display.
+- Added placeholder text for missing addresses
+- Added same custom header in the myAccount
+- Fixed language selector on mobile
 
 ### Migration guide
 
@@ -19,11 +23,13 @@
 
 ### New
 
+- Moved Lighthouse Test into its own GitHub action
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 
 ### Fixed
 
+- Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
 - SEO canonical links are now correctly set.

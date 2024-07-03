@@ -7,7 +7,6 @@
         :height="getSizeForViewport(background.sizes).height"
         alt="Hero background"
         class="absolute top-0 left-0 w-full h-full object-cover"
-        loading="lazy"
       />
     </div>
     <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
@@ -18,7 +17,6 @@
           :height="getSizeForViewport(headPhones.sizes).height"
           alt="Headphones"
           class="h-full object-cover object-left"
-          loading="lazy"
         />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
