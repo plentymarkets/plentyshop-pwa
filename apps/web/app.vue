@@ -11,14 +11,14 @@ const bodyClass = ref('');
 const DAYS = 100;
 const localeExpireDate = new Date();
 localeExpireDate.setDate(new Date().getDate() + DAYS);
-
-onNuxtReady(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
-
 const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
+
+onNuxtReady(() => {
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+  setInitialDataSSR();
+});
+
 const route = useRoute();
 const { locale } = useI18n();
 
@@ -30,11 +30,7 @@ const { setStaticPageMeta } = useCanonical();
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
-await setInitialDataSSR();
-
-if (route?.meta.pageType === 'static') {
-  setStaticPageMeta();
-}
+if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
 watch(

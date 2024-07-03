@@ -121,8 +121,9 @@
             variant="tertiary"
             aria-label="Open configuration drawer"
             square
-            ><SfIconTune
-          /></SfButton>
+          >
+            <SfIconTune />
+          </SfButton>
         </nav>
       </NuxtLazyHydrate>
     </template>
@@ -206,9 +207,7 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
-import type { DefaultLayoutProps } from '~/layouts/types';
 
-defineProps<DefaultLayoutProps>();
 const isLogin = ref(true);
 const { data: cart } = useCart();
 const { wishlistItemIds } = useWishlist();
