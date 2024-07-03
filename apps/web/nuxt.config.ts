@@ -2,7 +2,7 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
-import fetchConfiguration from '~/build/fetchConfiguration';
+import fetchConfiguration from './build/fetchConfiguration';
 
 export default defineNuxtConfig({
   telemetry: false,
