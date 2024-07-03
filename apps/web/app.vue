@@ -15,8 +15,8 @@ const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 
 onNuxtReady(() => {
-  bodyClass.value = 'hydrated'; // Need this class for cypress testing
   setInitialDataSSR();
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
 const route = useRoute();

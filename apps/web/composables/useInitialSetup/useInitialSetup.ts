@@ -48,10 +48,10 @@ const setInitialDataSSR: SetInitialData = async () => {
   useHandleError(error.value as ErrorParams);
 
   if (data.value?.data) {
-    setUser(data.value?.data.session as SessionResult);
-    setCart(data.value?.data.session.basket as Cart);
+    setUser(data.value.data.session as SessionResult);
+    setCart(data.value.data.session.basket as Cart);
     setCategoryTree(data.value.data.categories);
-    setWishlistItemIds(data?.value?.data?.session?.basket?.itemWishListIds || []);
+    setWishlistItemIds(data.value.data.session?.basket?.itemWishListIds || []);
   }
 
   cartLoading.value = false;
