@@ -15,7 +15,6 @@
     <div v-if="editMode">
       <AddressFormNew
         ref="addressFormNewReference"
-        :countries="activeShippingCountries"
         :saved-address="
           editMode ? addresses.find((address) => address.id?.toString() === displayAddress?.id?.toString()) : undefined
         "
@@ -29,20 +28,21 @@
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
 import { SfButton } from '@storefront-ui/vue';
 import { CheckoutAddressNewProps } from './types';
+import { AddressType } from '@plentymarkets/shop-api';
+import { useCheckout } from '../../composables/useCheckout/useCheckout';
+import { watch } from 'vue';
 
 const { t } = useI18n();
-const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
-const { type, asShippingAddress, disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), {
+const { type, disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), {
   disabled: false,
 });
+const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
 const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
 
 const editMode = ref(noPreviousAddressWasSet.value);
 const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 const heading = ref('');
-
-getActiveShippingCountries();
 
 const edit = () => {
   editMode.value = !editMode.value;
@@ -53,8 +53,25 @@ const disableEditMode = async () => {
 };
 
 onMounted(() => {
-  heading.value = asShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading');
+  setHeading();
 });
+
+watch(
+  () => combineShippingAndBilling.value,
+  () => {
+    setHeading();
+  },
+);
+
+const setHeading = () => {
+  if (combineShippingAndBilling.value) {
+    heading.value = `${t('shipping.heading')} / ${t('billing.heading')}`;
+  } else if (type === AddressType.Shipping) {
+    heading.value = t('shipping.heading');
+  } else {
+    heading.value = t('billing.heading');
+  }
+};
 
 defineExpose({ disableEditMode });
 </script>

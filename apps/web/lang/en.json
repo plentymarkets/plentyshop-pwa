@@ -53,7 +53,7 @@
     "cityLabel": "City",
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
-    "useAsShippingLabel": "Use as shipping address",
+    "useAsBillingLabel": "Use as billing address",
     "selectPlaceholder": "-- Select --",
     "emailLabel": "Email",
     "passwordLabel": "Password",

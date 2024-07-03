@@ -10,23 +10,22 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="billing-address"
-          :heading="t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          :addresses="[]"
-          :type="AddressType.Billing"
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :addresses="[]"
+        <CheckoutAddressNew
+          :key="0"
           :type="AddressType.Shipping"
-        />
+          id="shipping-address"
+          ref="checkoutAddressShippingReference"
+          @on-saved="loadAddresses">
+        </CheckoutAddressNew>
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CheckoutAddressNew
+          v-if="!combineShippingAndBilling"
+          :key="1"
+          :type="AddressType.Billing"
+          id="billing-address"
+          ref="checkoutAddressBillingReference"
+          @on-saved="loadAddresses">
+        </CheckoutAddressNew>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -124,8 +123,9 @@ const ID_SHIPPING_ADDRESS = '#shipping-address';
 const localePath = useLocalePath();
 const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { combineShippingAndBilling } = useCheckout();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,

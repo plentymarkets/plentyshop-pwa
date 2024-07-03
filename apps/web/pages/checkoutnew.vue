@@ -12,7 +12,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddressNew
           :key="0"
-          :type="AddressType.Billing"
+          :type="AddressType.Shipping"
           :as-shipping-address="useAsShippingAddress"
           id="billing-address"
           ref="checkoutAddressBillingReference"
@@ -22,7 +22,7 @@
         <template v-if="!useAsShippingAddress">
           <CheckoutAddressNew
             :key="1"
-            :type="AddressType.Shipping"
+            :type="AddressType.Billing"
             :as-shipping-address="useAsShippingAddress"
             id="shipping-address"
             @on-saved="

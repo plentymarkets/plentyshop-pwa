@@ -53,7 +53,7 @@
     "cityLabel": "Stadt",
     "stateLabel": "Bundesland",
     "postalCodeLabel": "Postleitzahl",
-    "useAsShippingLabel": "Als Lieferadresse nutzen",
+    "useAsBillingLabel": "Als Rechnungsadresse nutzen",
     "selectPlaceholder": "-- Auswählen --",
     "emailLabel": "E-Mail",
     "passwordLabel": "Passwort",

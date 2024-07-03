@@ -46,7 +46,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     defaultAddress: {} as Address,
     cartAddressId: 0,
     cartAddress: {} as Address,
-    displayAddress: {} as Address,
+    displayAddress: {} as Address
   }));
 
   const { data: cart } = useCart();
