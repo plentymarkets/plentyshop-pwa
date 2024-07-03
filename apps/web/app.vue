@@ -48,9 +48,7 @@ onNuxtReady(async () => {
 
 watch(
   () => isAuthorized.value,
-  (authenticated) => {
-    watchAuthRoutes(authenticated);
-  },
+  (authenticated: boolean) => watchAuthRoutes(authenticated),
 );
 
 watch(
