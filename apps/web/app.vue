@@ -12,7 +12,7 @@ const DAYS = 100;
 const localeExpireDate = new Date();
 localeExpireDate.setDate(new Date().getDate() + DAYS);
 
-onMounted(() => {
+onNuxtReady(() => {
   // Need this class for cypress testing
   bodyClass.value = 'hydrated';
 });
