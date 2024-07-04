@@ -18,8 +18,9 @@ const setupTemporaryEnvironment = () => {
   let requiredEnvironmentData = '';
 
   for (const [key, value] of Object.entries(environmentMap)) {
-    if (key !== 'DISABLE_SETTINGS_FETCH' && !value) {
-      console.error(`Missing or invalid required environment variable: ${value}`);
+    if (key === 'DISABLE_SETTINGS_FETCH') continue;
+    if (!value) {
+      console.error(`Missing or invalid required environment variable: ${key}`);
       return;
     }
 
@@ -72,13 +73,13 @@ const convertTemporaryToPermanentEnvironment = () => {
 };
 
 const fetchConfiguration = async () => {
-  if (environmentMap.DISABLE_SETTINGS_FETCH === 'undefined' || environmentMap.DISABLE_SETTINGS_FETCH === '0') {
+  if (environmentMap.DISABLE_SETTINGS_FETCH === undefined || environmentMap.DISABLE_SETTINGS_FETCH === '1') {
     console.warn(`Fetching PWA settings is disabled! Check DISABLE_SETTINGS_FETCH in .env file.`);
     return;
   }
 
   setupTemporaryEnvironment();
-  fetchAndWriteRemoteConfiguration();
+  await fetchAndWriteRemoteConfiguration();
   convertTemporaryToPermanentEnvironment();
 };
 
