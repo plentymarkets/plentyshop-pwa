@@ -40,12 +40,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create .env file
-        run: touch apps/web/.env
-
-      - name: Install Dependencies
-        run: yarn --immutable
-
       - name: Set environment
         run: |
           touch apps/web/.env
@@ -55,6 +49,9 @@ jobs:
           CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
           ${{ vars.CONFIG }}
           EOT
+
+      - name: Install Dependencies
+        run: yarn --immutable
 
       - name: Build application
         run: yarn build
