@@ -10,6 +10,7 @@ describe('Smoke: Cart Page', () => {
       .intercept('/plentysystems/doAddCartItem')
       .as('doAddCartItem')
       .getByTestId('add-to-cart')
+      .first()
       .click()
       .wait('@doAddCartItem')
       .wait(1000)
