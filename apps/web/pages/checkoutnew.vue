@@ -10,28 +10,8 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressNew
-          :key="0"
-          :type="AddressType.Shipping"
-          :as-shipping-address="useAsShippingAddress"
-          id="billing-address"
-          ref="checkoutAddressBillingReference"
-          @on-saved="loadAddresses"
-        />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <template v-if="!useAsShippingAddress">
-          <CheckoutAddressNew
-            :key="1"
-            :type="AddressType.Billing"
-            :as-shipping-address="useAsShippingAddress"
-            id="shipping-address"
-            @on-saved="
-              () => {
-                disableEditModeOnBillingForm();
-                loadAddresses();
-              }
-            "
-          />
           <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         </template>
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -112,7 +92,6 @@
 </template>
 
 <script setup lang="ts">
-import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
@@ -124,7 +103,6 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const checkoutAddressBillingReference = ref<InstanceType<typeof CheckoutAddressNew> | null>(null);
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();

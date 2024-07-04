@@ -3,8 +3,9 @@ import { createSharedComposable } from "@vueuse/core";
 import { object, string, boolean, number } from 'yup';
 
 
-export const useAddressForm = createSharedComposable((type: AddressType, address?: Address) => {
+export const useAddressFormBilling = createSharedComposable((address?: Address) => {
 
+    const type = AddressType.Billing;
     const { t } = useI18n();
     const validationSchema = toTypedSchema(
         object({
@@ -50,12 +51,13 @@ export const useAddressForm = createSharedComposable((type: AddressType, address
 
 
         console.log(meta.value.valid);
+        console.log('billing', errors.value);
         console.log(values.form);
 
         data.value.isLoading = false;
 
         /* await saveAddress(state.value.form);
-        state.value.isLoading = false;
+        state.value.isLoading = false;π
         state.value.open = false; */
     }
 

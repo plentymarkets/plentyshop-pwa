@@ -1,8 +1,9 @@
 <template>
-  <form ref="formRef" class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4" data-testid="address-form">
+  <form ref="billingForm" class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4" data-testid="address-form">
     <label>
       <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
+        name="firstName"
         autocomplete="given-name"
         v-model="form.firstName"
         v-bind="attributes.firstNameAttribures"
@@ -100,10 +101,6 @@
     </label>
 
     <div class="md:col-span-3 flex">
-      <label v-if="type === AddressType.Shipping" class="md:col-span-3 flex items-center gap-2">
-        <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
-        {{ $t('form.useAsBillingLabel') }}
-      </label>
       <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="reset">
         {{ $t('contactInfo.clearAll') }}
       </SfButton>
@@ -112,11 +109,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfCheckbox, SfInput, SfSelect } from '@storefront-ui/vue';
-import type { AddressFormProps } from '~/components/AddressFormNew/types';
+import { SfButton, SfInput, SfSelect } from '@storefront-ui/vue';
 
-const { combineShippingAndBilling } = useCheckout();
-const { type } = withDefaults(defineProps<AddressFormProps>(), {});
-const { states, shippingCountries, isLoading, reset, errors, form, attributes } = useAddressForm(type);
+const { states, shippingCountries, isLoading, reset, errors, form, attributes } = useAddressFormBilling();
 </script>

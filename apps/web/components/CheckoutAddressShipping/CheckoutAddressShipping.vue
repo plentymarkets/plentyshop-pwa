@@ -13,25 +13,23 @@
     </div>
 
     <div v-if="open">
-      <AddressFormNew :type="type"/>
+      <AddressFormShipping/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfButton } from '@storefront-ui/vue';
-import { CheckoutAddressNewProps } from './types';
+import { CheckoutShippingAddressProps } from './types';
 import { AddressType } from '@plentymarkets/shop-api';
-import { watch } from 'vue';
-import { AddressFormNew } from '#components';
-
 const { t } = useI18n();
-const { type, disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), {
+const type = AddressType.Shipping;
+const { disabled } = withDefaults(defineProps<CheckoutShippingAddressProps>(), {
   disabled: false,
 });
 const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
-const { open } = useAddressForm(type);
+const { open } = useAddressFormShipping();
 
 const heading = ref('');
 
