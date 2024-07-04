@@ -87,8 +87,6 @@ const fetchConfiguration = async () => {
   fs.copyFile(environmentTemporaryFilePath, environmentFilePath, () => {});
   fs.unlink(environmentTemporaryFilePath, () => {});
 
-  console.log('New .env file generated!');
-
   return response;
 };
 
