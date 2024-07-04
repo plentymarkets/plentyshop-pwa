@@ -1,17 +1,24 @@
 <template>
-  <form
-    ref="formRef"
-    class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
-    data-testid="address-form"
-    @submit.prevent="$emit('on-save', form)"
-  >
+  <form ref="formRef" class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4" data-testid="address-form">
     <label>
       <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="firstName" autocomplete="given-name" v-model="form.firstName" required />
+      <SfInput
+        autocomplete="given-name"
+        v-model="form.firstName"
+        v-bind="attributes.firstNameAttribures"
+        :invalid="Boolean(errors['form.firstName'])"
+      />
+      <VeeErrorMessage as="span" name="form.firstName" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="lastName" autocomplete="family-name" v-model="form.lastName" required />
+      <SfInput
+        autocomplete="family-name"
+        v-model="form.lastName"
+        v-bind="attributes.lastNameAttribures"
+        :invalid="Boolean(errors['form.lastName'])"
+      />
+      <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel class="flex">
@@ -25,38 +32,54 @@
         maxlength="18"
         autocomplete="tel"
         v-model="form.phoneNumber"
+        v-bind="attributes.phoneNumberAttribures"
+        :invalid="Boolean(errors['form.phoneNumber'])"
       />
+      <VeeErrorMessage as="span" name="form.phoneNumber" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
         v-model="form.country"
+        v-bind="attributes.countryAttribures"
         @change="form.state = ''"
         :placeholder="$t('form.selectPlaceholder')"
         autocomplete="country-name"
-        required
+        :invalid="Boolean(errors['form.country'])"
       >
         <option v-for="(country, index) in shippingCountries" :key="index" :value="country.id.toString()">
           {{ country.currLangName }}
         </option>
       </SfSelect>
+      <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="streetName" autocomplete="address-line1" v-model="form.streetName" required />
+      <SfInput
+        name="streetName"
+        autocomplete="address-line1"
+        v-model="form.streetName"
+        v-bind="attributes.streetNameAttribures"
+        :invalid="Boolean(errors['form.streetName'])"
+      />
+      <VeeErrorMessage as="span" name="form.streetName" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="streetNumber" v-model="form.apartment" required />
+      <SfInput name="streetNumber" autocomplete="address-line2" v-model="form.apartment" v-bind="attributes.apartmentAttribures" :invalid="Boolean(errors['form.apartment'])" />
+      <VeeErrorMessage as="span" name="form.apartment" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-1">
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="postalCode" autocomplete="postal-code" v-model="form.zipCode" required />
+      <SfInput autocomplete="postal-code" v-model="form.zipCode" v-bind="attributes.zipCodeAttribures" :invalid="Boolean(errors['form.zipCode'])" />
+      <VeeErrorMessage as="span" name="form.zipCode" class="flex text-negative-700 text-sm mt-2" />
+
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="city" autocomplete="address-level2" v-model="form.city" required />
+      <SfInput name="city" autocomplete="address-level2" v-model="form.city" v-bind="attributes.cityAttribures" :invalid="Boolean(errors['form.city'])" />
+      <VeeErrorMessage as="span" name="form.city" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-3" v-if="states.length > 0">
       <UiFormLabel class="flex">
@@ -65,34 +88,24 @@
       </UiFormLabel>
       <SfSelect
         v-model="form.state"
+        v-bind="attributes.stateAttribures"
         name="state"
         autocomplete="address-level1"
         :placeholder="$t('form.selectPlaceholder')"
+        :invalid="Boolean(errors['form.state'])"
       >
         <option v-for="(state, index) in states" :key="index" :value="state.id.toString()">{{ state.name }}</option>
       </SfSelect>
+      <VeeErrorMessage as="span" name="form.state" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
-    <label v-if="type === AddressType.Shipping" class="md:col-span-3 flex items-center gap-2">
-      <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
-      {{ $t('form.useAsBillingLabel') }}
-    </label>
-
-    <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end mt-6 gap-4">
-      <SfButton
-        type="button"
-        class="max-md:w-1/2"
-        variant="secondary"
-        :disabled="isLoading"
-        @click="reset"
-      >
+    <div class="md:col-span-3 flex">
+      <label v-if="type === AddressType.Shipping" class="md:col-span-3 flex items-center gap-2">
+        <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
+        {{ $t('form.useAsBillingLabel') }}
+      </label>
+      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="reset">
         {{ $t('contactInfo.clearAll') }}
-      </SfButton>
-      <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isLoading">
-        <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="sm" />
-        <span v-else>
-          {{ $t('contactInfo.save') }}
-        </span>
       </SfButton>
     </div>
   </form>
@@ -100,19 +113,10 @@
 
 <script setup lang="ts">
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import type { AddressFormProps } from '~/components/AddressForm/types';
+import { SfButton, SfCheckbox, SfInput, SfSelect } from '@storefront-ui/vue';
+import type { AddressFormProps } from '~/components/AddressFormNew/types';
 
-const { loading: loadShipping } = useAddress(AddressType.Shipping);
-const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { combineShippingAndBilling } = useCheckout();
 const { type } = withDefaults(defineProps<AddressFormProps>(), {});
-const { form, reset, states, shippingCountries } = await useAddressForm(type);
-const isLoading = computed(() => loadBilling.value || loadShipping.value);
-
-const emit = defineEmits(['on-save', 'on-close']);
-const emitFormValues = () => {
-  emit('on-save', form);
-};
-defineExpose({ emitFormValues });
+const { states, shippingCountries, isLoading, reset, errors, form, attributes } = useAddressForm(type);
 </script>

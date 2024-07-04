@@ -152,9 +152,9 @@ const paypalCreditCardPaymentId = computed(() =>
 );
 
 const disableEditModeOnBillingForm = () => {
-  if (checkoutAddressBillingReference?.value?.disableEditMode) {
+  /* if (checkoutAddressBillingReference?.value?.disableEditMode) {
     checkoutAddressBillingReference.value.disableEditMode();
-  }
+  } */
 };
 
 const loadAddresses = async () => {

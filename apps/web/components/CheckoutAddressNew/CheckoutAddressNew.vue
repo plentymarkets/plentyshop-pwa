@@ -4,33 +4,26 @@
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <SfButton v-if="!disabled && addresses.length > 0 && !editMode" size="sm" variant="tertiary" @click="edit">
+      <SfButton v-if="!disabled && addresses.length > 0 && !open" size="sm" variant="tertiary" @click="open = true">
         {{ t('contactInfo.edit') }}
       </SfButton>
     </div>
-    <div v-if="displayAddress && !editMode" class="mt-2 md:w-[520px]">
+    <div v-if="displayAddress && !open" class="mt-2 md:w-[520px]">
       <AddressDisplay :address="displayAddress" />
     </div>
 
-    <div v-if="editMode">
-      <AddressFormNew
-        ref="addressFormNewReference"
-        :saved-address="
-          editMode ? addresses.find((address) => address.id?.toString() === displayAddress?.id?.toString()) : undefined
-        "
-        :type="type"
-      />
+    <div v-if="open">
+      <AddressFormNew :type="type"/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
 import { SfButton } from '@storefront-ui/vue';
 import { CheckoutAddressNewProps } from './types';
 import { AddressType } from '@plentymarkets/shop-api';
-import { useCheckout } from '../../composables/useCheckout/useCheckout';
 import { watch } from 'vue';
+import { AddressFormNew } from '#components';
 
 const { t } = useI18n();
 const { type, disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), {
@@ -38,19 +31,9 @@ const { type, disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), 
 });
 const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
-const noPreviousAddressWasSet = computed(() => addresses.value.length === 0);
+const { open } = useAddressForm(type);
 
-const editMode = ref(noPreviousAddressWasSet.value);
-const addressFormNewReference = ref<InstanceType<typeof AddressFormNew> | null>(null);
 const heading = ref('');
-
-const edit = () => {
-  editMode.value = !editMode.value;
-};
-
-const disableEditMode = async () => {
-  if (addressFormNewReference.value && editMode.value) addressFormNewReference.value.emitFormValues();
-};
 
 onMounted(() => {
   setHeading();
@@ -73,5 +56,4 @@ const setHeading = () => {
   }
 };
 
-defineExpose({ disableEditMode });
 </script>

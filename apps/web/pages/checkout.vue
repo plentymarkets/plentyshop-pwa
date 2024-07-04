@@ -10,22 +10,28 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressNew
-          :key="0"
-          :type="AddressType.Shipping"
-          id="shipping-address"
-          ref="checkoutAddressShippingReference"
-          @on-saved="loadAddresses">
-        </CheckoutAddressNew>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <CheckoutAddressNew :key="0" :type="AddressType.Shipping" id="shipping-address"> </CheckoutAddressNew>
+        <UiDivider v-if="!combineShippingAndBilling" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddressNew
           v-if="!combineShippingAndBilling"
           :key="1"
           :type="AddressType.Billing"
           id="billing-address"
-          ref="checkoutAddressBillingReference"
-          @on-saved="loadAddresses">
-        </CheckoutAddressNew>
+        ></CheckoutAddressNew>
+        <div class="flex w-full -mx-4">
+          <SfButton
+            data-testid="save-address"
+            type="button"
+            class="min-w-[120px] ml-auto my-2"
+            :disabled="isLoading"
+            @click="save"
+          >
+            <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="sm" />
+            <span v-else>
+              {{ $t('contactInfo.save') }}
+            </span>
+          </SfButton>
+        </div>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -125,7 +131,8 @@ const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling } = useCheckout();
+const { combineShippingAndBilling, save, isLoading } = useCheckout();
+const { getActiveShippingCountries } = useActiveShippingCountries();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,
@@ -146,8 +153,10 @@ const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
 
+
 const loadAddresses = async () => {
   await Promise.all([
+    getActiveShippingCountries(),
     getBillingAddresses(),
     getShippingAddresses(),
     getShippingMethods(),
