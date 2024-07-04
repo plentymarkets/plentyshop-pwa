@@ -41,7 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { type Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
+import { Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
+
+definePageMeta({ layout: false });
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
@@ -49,34 +51,40 @@ const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
-
-definePageMeta({
-  layout: false,
-});
-
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
-if (import.meta.server) {
-  await Promise.all([
-    fetchProduct(productParams),
-    fetchProductReviewAverage(Number(productId)),
-    fetchProductReviews(Number(productId)),
-  ]);
-  setProductMetaData(product.value, categoryTree.value[0]);
-} else {
-  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
-}
+
+await (import.meta.server
+  ? Promise.all([
+      fetchProduct(productParams),
+      fetchProductReviewAverage(Number(productId)),
+      fetchProductReviews(Number(productId)),
+    ])
+  : Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]));
+
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
 generateBreadcrumbs();
+
+watch(
+  () => categoryTree.value,
+  (categoriesTree) => {
+    const productCategoryId = product.value.defaultCategories?.[0]?.parentCategoryId;
+
+    if (categoriesTree.length > 0 && productCategoryId) {
+      const categoryTree = categoriesTree.find((categoryTree) => categoryTree.id === productCategoryId);
+      if (categoryTree) setProductMetaData(product.value, categoryTree);
+    }
+  },
+);
+
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.
  */
-
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
