@@ -64,15 +64,12 @@ const fetchConfiguration = async () => {
     }),
   });
 
-  let response;
-
   try {
     const { data } = await instance.get(`/storefront/settings/${process.env.CONFIG_ID}`);
-    response = data;
 
-    for (const category in response) {
+    for (const category in data) {
       if (Array.isArray(data[category])) {
-        response[category].forEach((item: { [key: string]: string }) => {
+        data[category].forEach((item: { [key: string]: string }) => {
           setEnvironmentValue(environmentTemporaryFilePath, item.key, item.value);
         });
       }
@@ -86,8 +83,6 @@ const fetchConfiguration = async () => {
 
   fs.copyFile(environmentTemporaryFilePath, environmentFilePath, () => {});
   fs.unlink(environmentTemporaryFilePath, () => {});
-
-  return response;
 };
 
 export default fetchConfiguration;
