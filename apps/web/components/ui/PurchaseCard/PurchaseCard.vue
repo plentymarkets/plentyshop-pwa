@@ -110,12 +110,7 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
 
-      <PayPalExpressButton
-        v-if="validAttributesCombination"
-        class="mt-4"
-        type="SingleItem"
-        @on-click="paypalHandleAddToCart"
-      />
+      <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
     </div>
   </form>
 </template>
@@ -133,7 +128,6 @@ const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
-const validAttributesCombination = ref(true);
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
 const {
@@ -150,8 +144,6 @@ const { openQuickCheckout } = useQuickCheckout();
 
 resetInvalidFields();
 resetAttributeFields();
-
-onMounted(() => (validAttributesCombination.value = Boolean(getCombination())));
 
 const currentActualPrice = computed(
   () =>
@@ -193,7 +185,7 @@ const handleAddToCart = async (quickCheckout = true) => {
     return false;
   }
 
-  if (!validAttributesCombination.value) {
+  if (!getCombination()) {
     send({ message: t('productAttributes.notValidVariation'), type: 'negative' });
     return false;
   }
@@ -248,9 +240,7 @@ const scrollToReviewsAccordion = () => {
 };
 
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
-const isNotValidVariation = computed(() =>
-  validAttributesCombination.value ? '' : t('productAttributes.notValidVariation'),
-);
+const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

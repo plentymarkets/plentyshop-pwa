@@ -32,5 +32,5 @@ const route = useRoute();
 const lastSegment = route.path.split('/').pop() ?? '';
 const selectAttributes = lastSegment.split('_').length > 2;
 
-setAttribute(product, selectAttributes);
+onNuxtReady(() => setAttribute(product, selectAttributes));
 </script>
