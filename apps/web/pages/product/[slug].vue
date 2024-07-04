@@ -58,13 +58,15 @@ const { data: productReviewAverage, fetchProductReviewAverage } = useProductRevi
 await fetchProduct(productParams);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
-generateBreadcrumbs();
+
+if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
 
 watch(
   () => categoryTree.value,
   (categoriesTree) => {
-    const productCategoryId = product.value.defaultCategories?.[0]?.parentCategoryId;
+    generateBreadcrumbs(categoriesTree);
 
+    const productCategoryId = product.value.defaultCategories?.[0]?.parentCategoryId;
     if (categoriesTree.length > 0 && productCategoryId) {
       const categoryTree = categoriesTree.find((categoryTree) => categoryTree.id === productCategoryId);
       if (categoryTree) setProductMetaData(product.value, categoryTree);
