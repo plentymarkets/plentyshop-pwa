@@ -16,7 +16,7 @@
       <UiFooter />
     </NuxtLazyHydrate>
 
-    <QuickCheckout v-if="isOpen" :product="product" />
+    <QuickCheckout v-if="!layoutProps.catchall && isOpen" :product="product" />
   </div>
 </template>
 
