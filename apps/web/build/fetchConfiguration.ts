@@ -18,13 +18,12 @@ const setupTemporaryEnvironment = () => {
   let requiredEnvironmentData = '';
 
   for (const [key, value] of Object.entries(environmentMap)) {
+    requiredEnvironmentData += `${key}=${value}\n`;
     if (key === 'DISABLE_SETTINGS_FETCH') continue;
     if (!value) {
       console.error(`Missing or invalid required environment variable: ${key}`);
       return;
     }
-
-    requiredEnvironmentData += `${key}=${value}\n`;
   }
 
   fs.writeFile(environmentTemporaryFilePath, requiredEnvironmentData, () => {});
