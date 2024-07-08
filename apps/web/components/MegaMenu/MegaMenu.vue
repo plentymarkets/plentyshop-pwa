@@ -28,7 +28,7 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('md') && categoryTree.length > 0" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
       <ul
         class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
