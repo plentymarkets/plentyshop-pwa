@@ -1,69 +1,39 @@
 import { Address, AddressType } from "@plentymarkets/shop-api";
-import { createSharedComposable } from "@vueuse/core";
-import { object, string, boolean, number } from 'yup';
-
-
-export const useAddressFormBilling = createSharedComposable((address?: Address) => {
+export const useAddressFormBilling = (address?: Address) => {
 
     const type = AddressType.Billing;
-    const { t } = useI18n();
-    const validationSchema = toTypedSchema(
-        object({
-            form: object({
-                firstName: string().required(t('errorMessages.requiredField')).default(''),
-                lastName: string().required(t('errorMessages.requiredField')).default(''),
-                phoneNumber: number().default(null),
-                country: string().required(t('errorMessages.requiredField')).default(''),
-                streetName: string().required(t('errorMessages.requiredField')).default(''),
-                apartment: string().required(t('errorMessages.requiredField')).default(''),
-                city: string().required(t('errorMessages.requiredField')).default(''),
-                state: string().required(t('errorMessages.requiredField')).default(''),
-                zipCode: string().required(t('errorMessages.requiredField')).default(''),
-                primary: boolean().default(false),
-            }),
-        }
-        ));
 
-    const { meta, defineField, errors, values, resetForm, validate } = useForm({
-        validationSchema: validationSchema,
-    });
-
-    const [firstName, firstNameAttribures] = defineField('form.firstName');
-    const [lastName, lastNameAttribures] = defineField('form.lastName');
-    const [phoneNumber, phoneNumberAttribures] = defineField('form.phoneNumber');
-    const [country, countryAttribures] = defineField('form.country');
-    const [streetName, streetNameAttribures] = defineField('form.streetName');
-    const [apartment, apartmentAttribures] = defineField('form.apartment');
-    const [city, cityAttribures] = defineField('form.city');
-    const [state, stateAttribures] = defineField('form.state');
-    const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
-
-    const data = useState('useAddressForm' + type, () => ({
+    const { saveAddress } = useAddress(type);
+    
+    const state = useState('useAddressForm' + type, () => ({
         isLoading: false,
         open: true,
+        address: {},
+        onValidationStart: false,
+        onValidationEnd: {
+            address: {},
+            validation: {
+                valid: false,
+                errors: {},
+                results: {},
+            },
+        }
     }));
 
-    const save = async () => {
+    const save = () => {
+        state.value.isLoading = true;
+        state.value.onValidationStart = true;
 
-        data.value.isLoading = true;
+        watch(() => state.value.onValidationEnd, (value) => {
+            state.value.onValidationStart = false;
+            state.value.address = value.address;
+            state.value.isLoading = false;
 
-        validate();
-
-
-        console.log(meta.value.valid);
-        console.log('billing', errors.value);
-        console.log(values.form);
-
-        data.value.isLoading = false;
-
-        /* await saveAddress(state.value.form);
-        state.value.isLoading = false;π
-        state.value.open = false; */
+            if (value.validation.valid) {
+                saveAddress(state.value.address as Address);
+            }
+        }, { once: true })
     }
-
-
-    const { data: shippingCountries } = useActiveShippingCountries();
-    const { saveAddress } = useAddress(type);
 
     /* if (address) {
         data.value.form = ({
@@ -88,23 +58,9 @@ export const useAddressFormBilling = createSharedComposable((address?: Address) 
         }
     } */
 
-    const states = computed(() => {
-        const selectedCountry = values.form?.country;
-        return shippingCountries.value.find((country) => country.id === Number(selectedCountry))?.states ?? [];
-    });
-
-    const reset = () => {
-        resetForm();
-    }
 
     return {
-        form: ref({ firstName, lastName, phoneNumber, country, streetName, apartment, city, state, zipCode }),
-        attributes: ref({ firstNameAttribures, lastNameAttribures, phoneNumberAttribures, countryAttribures, streetNameAttribures, apartmentAttribures, cityAttribures, stateAttribures, zipCodeAttribures }),
-        errors,
         save,
-        reset,
-        ...toRefs(data.value),
-        states,
-        shippingCountries
+        ...toRefs(state.value),
     }
-});
+};

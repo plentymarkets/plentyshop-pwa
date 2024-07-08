@@ -12,7 +12,7 @@ export const useCheckout = createSharedComposable(() => {
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     
     const save = async () => {
-        await saveShipping();
+        saveShipping();
 
         if (!combineShippingAndBilling.value) {
             await saveBilling();
