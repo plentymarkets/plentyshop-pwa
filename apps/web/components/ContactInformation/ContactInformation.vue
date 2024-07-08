@@ -39,16 +39,11 @@
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ContactInformationProps } from '~/components/ContactInformation/types';
 
+const { disabled } = withDefaults(defineProps<ContactInformationProps>(), { disabled: false });
+
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
-
-withDefaults(defineProps<ContactInformationProps>(), {
-  disabled: false,
-});
-
-const cart = ref({
-  customerEmail: '',
-});
+const cart = ref({ customerEmail: '' });
 
 const isEmailEmpty = () => {
   cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
