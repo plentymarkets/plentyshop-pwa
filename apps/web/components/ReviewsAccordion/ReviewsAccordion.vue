@@ -2,9 +2,9 @@
   <div
     ref="accordionRef"
     class="relative col-span-5 md:sticky md:top-10 h-fit"
-    :class="{ 'pointer-events-none opacity-50': loading }"
+    :class="{ 'pointer-events-none opacity-50': loadingReviews }"
   >
-    <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
+    <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
     <div data-testid="reviews-accordion" id="customerReviewsAccordion">
       <UiAccordionItem
@@ -143,6 +143,7 @@ const { isAuthorized } = useCustomer();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const viewport = useViewport();
 const reviewsOpen = ref(true);
+const loadingReviews = ref(true);
 const route = useRoute();
 const closeAuth = () => {
   closeAuthentication();
@@ -153,12 +154,11 @@ const productId = productGetters.getItemId(product);
 const productVariationId = productGetters.getVariationId(product);
 const accordionRef = ref<HTMLElement | null>(null);
 
-const {
-  data: productReviewsData,
-  fetchProductReviews,
-  createProductReview,
-  loading,
-} = useProductReviews(Number(productId));
+onNuxtReady(async () => {
+  loadingReviews.value = false;
+});
+
+const { data: productReviewsData, fetchProductReviews, createProductReview } = useProductReviews(Number(productId));
 
 const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 
@@ -209,8 +209,10 @@ watch(
 
 watch(
   () => route.query,
-  () => {
-    fetchReviews();
+  async () => {
+    loadingReviews.value = true;
+    await fetchReviews();
+    loadingReviews.value = false;
   },
 );
 </script>
