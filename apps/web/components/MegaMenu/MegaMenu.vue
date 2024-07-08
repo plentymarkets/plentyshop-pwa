@@ -28,7 +28,7 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('md') && categoryTree.length > 0" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
       <ul
         class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
@@ -39,7 +39,9 @@
           }
         "
       >
-        <li v-for="(menuNode, index) in categoryTree" :key="index">
+        <li v-if="categoryTree.length === 0" class="h-10"></li>
+
+        <li v-else v-for="(menuNode, index) in categoryTree" :key="index">
           <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
             <SfButton
               ref="triggerReference"
