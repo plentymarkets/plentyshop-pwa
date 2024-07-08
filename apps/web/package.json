@@ -48,6 +48,7 @@
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.14.9",
     "@vite-pwa/nuxt": "^0.8.1",
+    "@vitest/coverage-v8": "^0.33.0",
     "@vue-storefront/middleware": "^3.10.0",
     "@vue-storefront/nuxt": "^3.1.1",
     "@vue-storefront/unified-data-model": "^0.18.1",
