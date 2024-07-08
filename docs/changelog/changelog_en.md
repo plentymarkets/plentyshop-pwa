@@ -47,6 +47,7 @@
 - Fixed layout shift on add to cart button.
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
+- Hydration errors for reviews.
 
 ### Changed
 
