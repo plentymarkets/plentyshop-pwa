@@ -211,6 +211,6 @@ watch(
 
 watch(
   () => route.query,
-  async () => fetchReviews(),
+  () => fetchReviews(),
 );
 </script>
