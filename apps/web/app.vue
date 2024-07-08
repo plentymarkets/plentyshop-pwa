@@ -40,9 +40,9 @@ const watchAuthRoutes = (authenticated: boolean) => {
   if (authOnlyRoutes.has(localePath(route.path)) && !authenticated) navigateTo(localePath(paths.home));
 };
 
-onNuxtReady(() => {
+onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
-  setInitialDataSSR();
+  await setInitialDataSSR();
   watchAuthRoutes(isAuthorized.value);
 });
 
