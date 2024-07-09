@@ -44,7 +44,7 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-
+    <ProductProperties :product="product" />
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating
         size="xs"
@@ -57,6 +57,7 @@
         {{ t('showAllReviews') }}
       </SfButton>
     </div>
+    
     <div
       v-if="productGetters.getShortDescription(product).length > 0"
       class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
