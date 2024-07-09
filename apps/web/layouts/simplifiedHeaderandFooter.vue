@@ -9,7 +9,7 @@
       <PreviewMode />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
-      <UiFooter />
+      <UiFooter :no-bottom-spacing="true" />
     </NuxtLazyHydrate>
     <QuickCheckout v-if="isOpen" :product="product" />
   </div>
