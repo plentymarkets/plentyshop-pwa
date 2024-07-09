@@ -115,6 +115,7 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
+  pageType: 'static',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
