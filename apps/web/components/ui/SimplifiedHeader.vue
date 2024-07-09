@@ -1,0 +1,21 @@
+<template>
+    <div
+        class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+        data-testid="navbar-top"
+      >
+        <div class="flex items-center">
+            <SfIconMenu class="text-white" />
+            <NuxtLink
+                :to="localePath(paths.home)"
+                aria-label="Sf Homepage"
+                class="flex shrink-0 w-full h-8 lg:w-48 lg:h-8 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
+            >
+                <UiVsfLogo />
+            </NuxtLink>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+    const localePath = useLocalePath();
+</script>

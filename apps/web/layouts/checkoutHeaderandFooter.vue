@@ -1,5 +1,6 @@
 <template>
     <div>
+      <UiSimplifiedHeader/>
       <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
         <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
       </NarrowContainer>
@@ -7,11 +8,12 @@
         <slot />
       </main>
       <NuxtLazyHydrate when-idle>
-        <UiNavbarBottom v-if="viewport.isLessThan('md')" />
         <Cookiebar />
         <PreviewMode />
       </NuxtLazyHydrate>
-  
+      <NuxtLazyHydrate when-visible>
+      <UiFooter />
+      </NuxtLazyHydrate>
       <QuickCheckout v-if="isOpen" :product="product" />
     </div>
   </template>
