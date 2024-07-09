@@ -198,7 +198,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { defineField, errors, values, resetForm, validate } = useForm({
+const { defineField, errors, values, resetForm, validate, setValues } = useForm({
   validationSchema: validationSchema,
 });
 
@@ -216,7 +216,7 @@ const [company, companyAttribures] = defineField('form.company');
 
 watch(setFormAddress, (newAddress) => {
   if (newAddress) {
-    values.form = newAddress;
+    setValues({form: newAddress});
   }
 });
 

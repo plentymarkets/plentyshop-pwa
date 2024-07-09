@@ -15,9 +15,9 @@
       <AddressDisplay :address="displayAddress" />
     </div>
 
-    <div v-if="open">
-      <AddressFormShipping v-if="type === AddressType.Shipping"/>
-      <AddressFormBilling v-else/>
+    <div v-show="open">
+      <AddressFormShipping v-show="type === AddressType.Shipping"/>
+      <AddressFormBilling v-show="type === AddressType.Billing"/>
     </div>
   </div>
 </template>
