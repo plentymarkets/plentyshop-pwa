@@ -185,7 +185,7 @@ async function fetchReviews() {
 
 const deleteReview = () => fetchReviews();
 
-onNuxtReady(() => fetchReviews());
+onMounted(() => fetchReviews());
 
 watch(
   () => productReviewsAverageData.value,
