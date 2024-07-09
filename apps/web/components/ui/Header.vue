@@ -228,6 +228,10 @@ const runtimeConfig = useRuntimeConfig();
 
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 
+onNuxtReady(() => {
+  cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
+});
+
 watch(
   () => cart.value?.items,
   (cartItems) => {
