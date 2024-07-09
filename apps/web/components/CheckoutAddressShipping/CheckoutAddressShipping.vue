@@ -29,7 +29,7 @@ const { disabled } = withDefaults(defineProps<CheckoutShippingAddressProps>(), {
 });
 const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
-const { open } = useAddressFormShipping();
+const { open } = useAddressForm(type);
 
 const heading = ref('');
 
