@@ -18,7 +18,6 @@ export type SetDefault = (address: Address) => void;
 export type SetCheckoutAddress = (typeId: AddressType, addressId: number) => void;
 export type DeleteAddress = (addressId: number) => Promise<Address[]>;
 export type SetDisplayAddress = (address: Address, setAsCheckoutAddress: boolean) => void;
-
 export interface UseAddressMethods {
   data: Readonly<Ref<UseAddressMethodsState['data']>>;
   loading: Readonly<Ref<boolean>>;

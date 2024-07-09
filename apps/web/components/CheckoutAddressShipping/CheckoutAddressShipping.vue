@@ -4,11 +4,9 @@
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <SfButton v-if="!disabled && addresses.length > 0 && !open" size="sm" variant="tertiary" @click="editForm">
-        {{ t('contactInfo.edit') }}
-      </SfButton>
-      <SfButton v-if="open" size="sm" variant="tertiary" @click="open = false">
-        {{ t('back') }}
+      <SfButton v-if="!disabled && displayAddress.id" size="sm" variant="tertiary" @click="editForm">
+        <template v-if="!open">{{ t('contactInfo.edit') }}</template>
+        <template v-else>{{ t('back') }}</template>
       </SfButton>
     </div>
     <div v-if="displayAddress && !open" class="mt-2 md:w-[520px]">
@@ -33,15 +31,14 @@ const { disabled, type } = withDefaults(defineProps<CheckoutShippingAddressProps
 const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
 const { open, setAddress } = useAddressForm(type);
-
-open.value = Boolean(!displayAddress.value);
+const heading = ref('');
 
 const editForm = () => {
-  open.value = true;
-  setAddress(displayAddress.value);
+  open.value = !open.value;
+  if(open.value) {
+    setAddress(displayAddress.value);
+  }
 };
-
-const heading = ref('');
 
 onMounted(() => {
   setHeading();
