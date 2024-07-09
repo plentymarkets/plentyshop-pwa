@@ -114,7 +114,7 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
-  layout: 'simplified-header-and-footer',
+  layout: 'simplified-headerand-footer',
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
