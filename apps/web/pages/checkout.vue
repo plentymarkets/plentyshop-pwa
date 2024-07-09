@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -16,9 +15,8 @@
           :heading="t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
+          :addresses="[]"
           :type="AddressType.Billing"
-          @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
@@ -26,9 +24,8 @@
           :heading="t('shipping.heading')"
           :description="t('shipping.description')"
           :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
+          :addresses="[]"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -60,13 +57,12 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
-                type="Checkout"
-              />
-            </client-only>
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+              type="Checkout"
+            />
             <SfButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
@@ -110,8 +106,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -119,7 +114,6 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 
@@ -163,7 +157,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);

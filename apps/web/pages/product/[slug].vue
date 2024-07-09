@@ -19,7 +19,10 @@
           </NuxtLazyHydrate>
           <NuxtLazyHydrate when-visible>
             <ReviewsAccordion
+              v-if="product"
               :product="product"
+              :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
+              :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
               :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
               @on-list-change="fetchProductReviewAverage(Number(productId))"
             />
@@ -38,8 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
-import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
+import { type Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();

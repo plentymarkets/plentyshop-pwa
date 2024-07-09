@@ -2,6 +2,7 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
+import fetchConfiguration from './build/fetchConfiguration';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -60,12 +61,14 @@ export default defineNuxtConfig({
         file: __dirname + '/pages/product/[slug].vue',
       });
     },
+    'build:before': async () => {
+      await fetchConfiguration();
+    },
   },
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
+      apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
@@ -74,6 +77,7 @@ export default defineNuxtConfig({
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
     },
   },
   modules: [
@@ -92,7 +96,7 @@ export default defineNuxtConfig({
   ],
   vsf: {
     middleware: {
-      apiUrl: 'http://localhost:8181',
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
     },
   },
   image: {

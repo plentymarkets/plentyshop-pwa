@@ -1,0 +1,62 @@
+name: Lighthouse Mobile Audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  lighthouse-mobile-audit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set environment
+        run: |
+          touch apps/web/.env
+          cat <<EOT >> apps/web/.env
+          API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
+          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
+          ${{ vars.CONFIG }}
+          EOT
+
+      - name: Install Dependencies
+        run: yarn --immutable
+
+      - name: Build application
+        run: yarn build
+
+      - name: lighthouse mobile audit
+        run: yarn lhci:mobile
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

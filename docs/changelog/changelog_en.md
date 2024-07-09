@@ -2,6 +2,14 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
+### Fixed
+
+- Upon using login on the header, while being on the guest login page, there was no redirect
+- Fixed mobile cross price display.
+- Added placeholder text for missing addresses
+- Added same custom header in the myAccount
+- Fixed language selector on mobile
+
 ### Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
@@ -13,20 +21,47 @@
 
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
 
+### New
+
+- Moved Lighthouse Test into its own GitHub action
+- Demo for changing app settings at runtime
+- Uploaded files as a product attribute can now be downloaded again
+- Added hook to load system configuration
+
 ### Fixed
 
 - Added PWA additional check to prevent webmanifest 404
+- Fixed Checkout layout console error
+- Fixed Cart and pagination hydration errors
+- Fixed Product attributes empty list rendering
+- SEO canonical links are now correctly set.
+- The country list in the address form is now translated correctly.
+- Fixed missing Item short description
+- Fixed wrong link on the order confirmation page
+- Bundle Items links to include image
 - Fixed Badges elements rendering
 - The image component for selecting item attributes has a tooltip.
 - Wish list button aria label
 - Hydration errors under guest login and cart
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
 - Registration without cloudflare turnstile configuration is now possible.
+- Fixed item image size in recommended product slider.
+- Fixed layout shift on add to cart button.
+- The wishlist button is now toggling between filled/empty heart icon
+- Fixed addresses not being displayed in checkout after creation
+
+### Changed
+
+- Moved paypal credit card test into quarantine folder.
+- Changed shortDescription to return empty string.
+- Improved Reviews rating average display
+- Removed unnecessary hover state from cart items.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
+- Pagination for review items has been added.
 - Custom SVG icons are now supported.
 - Images outside the visible area are now lazy loaded.
 - The login dialogue before checkout has been added.
@@ -37,6 +72,9 @@
 
 ### Fixed
 
+- Fixed recommended product text overflow.
+- Fixed too many reviews error case.
+- Language select not closing when clicking outside the modal
 - The display of coupons in the order confirmation was not working properly. This has been fixed.
 - Some issues related to the display of item reviews have been fixed.
 - Missing details have been added to the order confirmation.
@@ -86,6 +124,7 @@
 
 ### New
 
+- Added scroll to top for review pagination.
 - a ‘Previous’ button to the return form for easier navigation.
 - Added tag display on single item and category views.
 - a box component for selecting item attributes, enhancing user interaction

@@ -377,6 +377,8 @@
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
+  "averageRating": "Average rating",
+  "basedOnratings": "Based on {count} review(s)",
   "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
   "sale": "Sale",
@@ -467,7 +469,8 @@
       "shippingDetails": {
         "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
-      }
+      },
+      "noAddresses": "You don't have any addresses yet"
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",

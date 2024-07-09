@@ -377,6 +377,8 @@
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
   "showAllReviews": "Alle Bewertungen anzeigen",
+  "averageRating": "Durchschnittliche Bewertung",
+  "basedOnratings": "Basierend auf {count} Bewertung(en)",
   "moreItemsOfThisCategory": "Weitere Produkte in dieser Kategorie",
   "outOfStock": "Nicht auf Lager",
   "sale": "Verkauf",
@@ -467,7 +469,8 @@
       "shippingDetails": {
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
-      }
+      },
+      "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
