@@ -10,14 +10,15 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressShipping :key="0" id="shipping-address"> </CheckoutAddressShipping>
+        <CheckoutAddressShipping :type="AddressType.Shipping" :key="0" id="shipping-address"> </CheckoutAddressShipping>
         <UiDivider v-if="!combineShippingAndBilling" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressBilling
+        <CheckoutAddressShipping
+          :type="AddressType.Billing"
           v-if="!combineShippingAndBilling"
           :key="1"
           id="billing-address"
-        ></CheckoutAddressBilling>
-        <div class="flex w-full -mx-4">
+        ></CheckoutAddressShipping>
+        <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"
             type="button"
@@ -130,7 +131,7 @@ const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling, save, isLoading } = useCheckout();
+const { combineShippingAndBilling, save, isLoading, hasOpenForms } = useCheckout();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {

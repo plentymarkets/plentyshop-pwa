@@ -4,8 +4,11 @@
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <SfButton v-if="!disabled && addresses.length > 0 && !open" size="sm" variant="tertiary" @click="open = true">
+      <SfButton v-if="!disabled && addresses.length > 0 && !open" size="sm" variant="tertiary" @click="editForm">
         {{ t('contactInfo.edit') }}
+      </SfButton>
+      <SfButton v-if="open" size="sm" variant="tertiary" @click="open = false">
+        {{ t('back') }}
       </SfButton>
     </div>
     <div v-if="displayAddress && !open" class="mt-2 md:w-[520px]">
@@ -13,7 +16,8 @@
     </div>
 
     <div v-if="open">
-      <AddressFormShipping/>
+      <AddressFormShipping v-if="type === AddressType.Shipping"/>
+      <AddressFormBilling v-else/>
     </div>
   </div>
 </template>
@@ -23,13 +27,19 @@ import { SfButton } from '@storefront-ui/vue';
 import { CheckoutShippingAddressProps } from './types';
 import { AddressType } from '@plentymarkets/shop-api';
 const { t } = useI18n();
-const type = AddressType.Shipping;
-const { disabled } = withDefaults(defineProps<CheckoutShippingAddressProps>(), {
-  disabled: false,
+const { disabled, type } = withDefaults(defineProps<CheckoutShippingAddressProps>(), {
+  disabled: false
 });
 const { combineShippingAndBilling } = useCheckout();
 const { data: addresses, displayAddress } = useAddress(type);
-const { open } = useAddressForm(type);
+const { open, setAddress } = useAddressForm(type);
+
+open.value = Boolean(!displayAddress.value);
+
+const editForm = () => {
+  open.value = true;
+  setAddress(displayAddress.value);
+};
 
 const heading = ref('');
 

@@ -21,6 +21,35 @@
       />
       <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
+    <div class="md:col-span-3">
+      <SfLink href="#" class="" @click.prevent="toggleCompany">
+        <span v-if="!hasCompany">{{ t('form.addCompany') }}</span>
+        <span v-else>{{ t('form.removeCompany') }}</span>
+      </SfLink>
+    </div>
+
+    <label v-if="hasCompany">
+      <UiFormLabel class="flex">
+        <span class="mr-1">{{ t('form.companyLabel') }}</span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
+      <SfInput
+        name="company"
+        autocomplete="company"
+        v-model="company"
+        v-bind="companyAttribures"
+        :invalid="Boolean(errors['form.company'])"
+      />
+      <VeeErrorMessage as="span" name="form.company" class="flex text-negative-700 text-sm mt-2" />
+    </label>
+    <label v-if="hasCompany" class="md:col-span-2">
+      <UiFormLabel class="flex">
+        <span class="mr-1">{{ t('form.vatIdLabel') }}</span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
+      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttribures" :invalid="Boolean(errors['form.vatId'])" />
+      <VeeErrorMessage as="span" name="form.vatId" class="flex text-negative-700 text-sm mt-2" />
+    </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
@@ -115,7 +144,7 @@
     </label>
 
     <div class="md:col-span-3 flex">
-      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="resetForm">
+      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="tertiary" size="sm" :disabled="isLoading" @click="resetForm">
         {{ t('contactInfo.clearAll') }}
       </SfButton>
     </div>
@@ -124,11 +153,20 @@
 
 <script setup lang="ts">
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfInput, SfSelect } from '@storefront-ui/vue';
+import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean, number } from 'yup';
 
 const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
+
+const hasCompany = ref(false);
+const toggleCompany = () => {
+  hasCompany.value = !hasCompany.value;
+  if (!hasCompany.value) {
+    company.value = '';
+    vatId.value = '';
+  }
+};
 
 const { t } = useI18n();
 const validationSchema = toTypedSchema(
@@ -144,6 +182,8 @@ const validationSchema = toTypedSchema(
       state: string().default('').optional(),
       zipCode: string().required(t('errorMessages.requiredField')).min(5),
       primary: boolean().default(false),
+      company: string().optional(),
+      vatId: string().optional(),
     }),
   }),
 );
@@ -163,7 +203,7 @@ watch(onValidationStart, async (startValidation) => {
     const validation = await validate();
     onValidationEnd.value = {
       address: values.form as Address,
-      validation
+      validation,
     };
   }
 });
@@ -177,6 +217,8 @@ const [apartment, apartmentAttribures] = defineField('form.apartment');
 const [city, cityAttribures] = defineField('form.city');
 const [state, stateAttribures] = defineField('form.state');
 const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
+const [vatId, vatIdAttribures] = defineField('form.vatId');
+const [company, companyAttribures] = defineField('form.company');
 
 const states = computed(() => {
   const selectedCountry = values.form?.country;

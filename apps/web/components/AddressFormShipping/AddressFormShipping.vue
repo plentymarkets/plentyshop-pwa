@@ -154,7 +154,7 @@
         <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
         {{ t('form.useAsBillingLabel') }}
       </label>
-      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="resetForm">
+      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="tertiary" size="sm" :disabled="isLoading" @click="resetForm">
         {{ t('contactInfo.clearAll') }}
       </SfButton>
     </div>

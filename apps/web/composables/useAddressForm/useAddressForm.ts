@@ -2,10 +2,10 @@ import { Address, AddressType, userAddressGetters } from "@plentymarkets/shop-ap
 export const useAddressForm = (type: AddressType) => {
 
     const { saveAddress } = useAddress(type);
-    
+
     const state = useState('useAddressForm' + type, () => ({
         isLoading: false,
-        open: true,
+        open: false,
         addressToSave: {},
         setFormAddress: {},
         onValidationStart: false,
@@ -25,7 +25,7 @@ export const useAddressForm = (type: AddressType) => {
     const isValid = computed(() => {
         return state.value.onValidationEnd.validation.valid;
     });
-    
+
     /**
      * Set the forms address
      * @param address 
@@ -49,17 +49,19 @@ export const useAddressForm = (type: AddressType) => {
     /**
      * Triggers the forms validation and saves the address if it is valid
      */
-    const save = () => {
+    const save = async () => {
         state.value.isLoading = true;
         state.value.onValidationStart = true;
 
-        watch(() => state.value.onValidationEnd, (value) => {
+        watch(() => state.value.onValidationEnd, async (value) => {
             state.value.onValidationStart = false;
             state.value.addressToSave = value.address;
-            state.value.isLoading = false;
-
             if (value.validation.valid) {
-                saveAddress(state.value.addressToSave as Address);
+                await saveAddress(state.value.addressToSave as Address);
+                state.value.open = false;
+                state.value.isLoading = false;
+            } else {
+                state.value.isLoading = false;
             }
         }, { once: true })
     }
