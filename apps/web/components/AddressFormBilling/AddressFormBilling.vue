@@ -22,23 +22,6 @@
       <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-3">
-      <UiFormLabel class="flex">
-        <span class="mr-1">{{ t('form.phoneLabel') }}</span>
-        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
-      </UiFormLabel>
-      <SfInput
-        name="phone"
-        type="tel"
-        minlength="7"
-        maxlength="18"
-        autocomplete="tel"
-        v-model="phoneNumber"
-        v-bind="phoneNumberAttribures"
-        :invalid="Boolean(errors['form.phoneNumber'])"
-      />
-      <VeeErrorMessage as="span" name="form.phoneNumber" class="flex text-negative-700 text-sm mt-2" />
-    </label>
-    <label class="md:col-span-3">
       <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
@@ -98,6 +81,21 @@
       />
       <VeeErrorMessage as="span" name="form.city" class="flex text-negative-700 text-sm mt-2" />
     </label>
+    <label class="md:col-span-3">
+      <UiFormLabel class="flex">
+        <span class="mr-1">{{ t('form.phoneLabel') }}</span>
+        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
+      </UiFormLabel>
+      <SfInput
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        v-model="phoneNumber"
+        v-bind="phoneNumberAttribures"
+        :invalid="Boolean(errors['form.phoneNumber'])"
+      />
+      <VeeErrorMessage as="span" name="form.phoneNumber" class="flex text-negative-700 text-sm mt-2" />
+    </label>
     <label class="md:col-span-3" v-if="states.length > 0">
       <UiFormLabel class="flex">
         <span class="mr-1">{{ t('form.stateLabel') }}</span>
@@ -138,13 +136,13 @@ const validationSchema = toTypedSchema(
     form: object({
       firstName: string().required(t('errorMessages.requiredField')).default(''),
       lastName: string().required(t('errorMessages.requiredField')).default(''),
-      phoneNumber: number().optional(),
+      phoneNumber: number().optional().min(8),
       country: string().required(t('errorMessages.requiredField')).default(''),
       streetName: string().required(t('errorMessages.requiredField')).default(''),
       apartment: string().required(t('errorMessages.requiredField')).default(''),
       city: string().required(t('errorMessages.requiredField')).default(''),
       state: string().default('').optional(),
-      zipCode: string().required(t('errorMessages.requiredField')).default(''),
+      zipCode: string().required(t('errorMessages.requiredField')).min(5),
       primary: boolean().default(false),
     }),
   }),

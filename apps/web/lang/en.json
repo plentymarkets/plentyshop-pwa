@@ -62,7 +62,11 @@
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
-    "asterixHint": "* marked consents are required"
+    "asterixHint": "* marked consents are required",
+    "addCompany": "Add company data",
+    "removeCompany": "Remove company data",
+    "companyLabel": "Company",
+    "vatIdLabel": "VAT ID"
   },
   "CookieBar": {
     "about": {

@@ -62,7 +62,11 @@
     "termsAndConditionsLabel": "Hiermit bestätige ich, dass ich die {terms} gelesen habe.",
     "privacyPolicyLabel": "Hiermit bestätige ich, dass ich die {privacyPolicy} gelesen habe.",
     "subscriptionLabel": "Ich möchte gelegentlich E-Mails über Sonderangebote, neue Produkte und exklusive Aktionen erhalten. Ich kann mein Abonnement jederzeit kündigen. (Optional)",
-    "asterixHint": "* markierte Zustimmungen sind erforderlich"
+    "asterixHint": "* markierte Zustimmungen sind erforderlich",
+    "addCompany": "Firmendaten hinzufügen",
+    "removeCompany": "Firmendaten entfernen",
+    "companyLabel": "Firma",
+    "vatIdLabel": "USt-IdNr."
   },
   "CookieBar": {
     "about": {
