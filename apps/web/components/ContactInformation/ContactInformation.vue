@@ -16,15 +16,15 @@
 
     <UiModal
       v-model="isOpen"
-      :disable-click-away="isEmailEmpty()"
-      :disable-esc="isEmailEmpty()"
+      :disable-click-away="isEmailEmpty"
+      :disable-esc="isEmailEmpty"
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="contact-modal-title"
     >
       <header>
-        <SfButton v-if="!isEmailEmpty()" square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <SfButton v-if="!isEmailEmpty" square variant="tertiary" class="absolute right-2 top-2" @click="close">
           <SfIconClose />
         </SfButton>
         <h3 id="contact-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
@@ -35,6 +35,7 @@
     </UiModal>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ContactInformationProps } from '~/components/ContactInformation/types';
@@ -43,18 +44,9 @@ const { disabled } = withDefaults(defineProps<ContactInformationProps>(), { disa
 
 const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
-const cart = ref({ customerEmail: '' });
+const cart = ref({ customerEmail: data.value?.user?.email ?? data.value?.user?.guestMail ?? '' });
 
-const isEmailEmpty = () => {
-  cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
-  return cart.value.customerEmail === '';
-};
-
-const openContactFormIfNoEmail = () => {
-  if (isEmailEmpty() && !isAuthorized.value) {
-    open();
-  }
-};
+const isEmailEmpty = computed(() => cart.value.customerEmail === '');
 
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
@@ -62,11 +54,4 @@ const saveContactInformation = async (email: string) => {
   await getSession();
   close();
 };
-
-const getEmailFromSession = () => {
-  cart.value.customerEmail = data.value?.user?.email ?? data.value?.user?.guestMail ?? '';
-};
-
-getEmailFromSession();
-openContactFormIfNoEmail();
 </script>
