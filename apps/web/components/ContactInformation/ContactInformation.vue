@@ -58,6 +58,7 @@ watch(
   (userData) => {
     cart.value.customerEmail = userData?.email ?? userData?.guestMail ?? '';
   },
+  { immediate: true },
 );
 
 watch(
