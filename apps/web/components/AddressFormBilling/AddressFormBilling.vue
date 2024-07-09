@@ -125,11 +125,11 @@
 </template>
 
 <script setup lang="ts">
-import { Address } from '@plentymarkets/shop-api';
+import { Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect } from '@storefront-ui/vue';
 import { object, string, boolean, number } from 'yup';
 
-const { isLoading, onValidationStart, onValidationEnd } = useAddressFormBilling();
+const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
 const { t } = useI18n();
@@ -152,6 +152,12 @@ const validationSchema = toTypedSchema(
 
 const { defineField, errors, values, resetForm, validate } = useForm({
   validationSchema: validationSchema,
+});
+
+watch(setFormAddress, (newAddress) => {
+  if (newAddress) {
+    values.form = newAddress;
+  }
 });
 
 watch(onValidationStart, async (startValidation) => {

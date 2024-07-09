@@ -5,8 +5,8 @@
       <SfInput
         name="firstName"
         autocomplete="given-name"
-        v-model="form.firstName"
-        v-bind="attributes.firstNameAttribures"
+        v-model="firstName"
+        v-bind="firstNameAttribures"
         :invalid="Boolean(errors['form.firstName'])"
       />
       <VeeErrorMessage as="span" name="form.firstName" class="flex text-negative-700 text-sm mt-2" />
@@ -15,8 +15,8 @@
       <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         autocomplete="family-name"
-        v-model="form.lastName"
-        v-bind="attributes.lastNameAttribures"
+        v-model="lastName"
+        v-bind="lastNameAttribures"
         :invalid="Boolean(errors['form.lastName'])"
       />
       <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
@@ -32,8 +32,8 @@
         minlength="7"
         maxlength="18"
         autocomplete="tel"
-        v-model="form.phoneNumber"
-        v-bind="attributes.phoneNumberAttribures"
+        v-model="phoneNumber"
+        v-bind="phoneNumberAttribures"
         :invalid="Boolean(errors['form.phoneNumber'])"
       />
       <VeeErrorMessage as="span" name="form.phoneNumber" class="flex text-negative-700 text-sm mt-2" />
@@ -42,9 +42,9 @@
       <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
-        v-model="form.country"
-        v-bind="attributes.countryAttribures"
-        @change="form.state = ''"
+        v-model="country"
+        v-bind="countryAttribures"
+        @change="state = ''"
         :placeholder="$t('form.selectPlaceholder')"
         autocomplete="country-name"
         :invalid="Boolean(errors['form.country'])"
@@ -60,26 +60,26 @@
       <SfInput
         name="streetName"
         autocomplete="address-line1"
-        v-model="form.streetName"
-        v-bind="attributes.streetNameAttribures"
+        v-model="streetName"
+        v-bind="streetNameAttribures"
         :invalid="Boolean(errors['form.streetName'])"
       />
       <VeeErrorMessage as="span" name="form.streetName" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="streetNumber" autocomplete="address-line2" v-model="form.apartment" v-bind="attributes.apartmentAttribures" :invalid="Boolean(errors['form.apartment'])" />
+      <SfInput name="streetNumber" autocomplete="address-line2" v-model="apartment" v-bind="apartmentAttribures" :invalid="Boolean(errors['form.apartment'])" />
       <VeeErrorMessage as="span" name="form.apartment" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-1">
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput autocomplete="postal-code" v-model="form.zipCode" v-bind="attributes.zipCodeAttribures" :invalid="Boolean(errors['form.zipCode'])" />
+      <SfInput autocomplete="postal-code" v-model="zipCode" v-bind="zipCodeAttribures" :invalid="Boolean(errors['form.zipCode'])" />
       <VeeErrorMessage as="span" name="form.zipCode" class="flex text-negative-700 text-sm mt-2" />
 
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="city" autocomplete="address-level2" v-model="form.city" v-bind="attributes.cityAttribures" :invalid="Boolean(errors['form.city'])" />
+      <SfInput name="city" autocomplete="address-level2" v-model="city" v-bind="cityAttribures" :invalid="Boolean(errors['form.city'])" />
       <VeeErrorMessage as="span" name="form.city" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="md:col-span-3" v-if="states.length > 0">
@@ -88,8 +88,8 @@
         <UiFormHelperText>({{ $t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
       <SfSelect
-        v-model="form.state"
-        v-bind="attributes.stateAttribures"
+        v-model="state"
+        v-bind="stateAttribures"
         name="state"
         autocomplete="address-level1"
         :placeholder="$t('form.selectPlaceholder')"
@@ -101,11 +101,11 @@
     </label>
 
     <div class="md:col-span-3 flex">
-      <label v-if="type === AddressType.Shipping" class="md:col-span-3 flex items-center gap-2">
+      <label class="md:col-span-3 flex items-center gap-2">
         <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
         {{ $t('form.useAsBillingLabel') }}
       </label>
-      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="reset">
+      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="secondary" :disabled="isLoading" @click="resetForm">
         {{ $t('contactInfo.clearAll') }}
       </SfButton>
     </div>
@@ -113,12 +113,67 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfCheckbox, SfInput, SfSelect } from '@storefront-ui/vue';
+import { Address, AddressType } from '@plentymarkets/shop-api';
+import { SfButton, SfInput, SfSelect, SfCheckbox } from '@storefront-ui/vue';
+import { object, string, boolean, number } from 'yup';
 
 const { combineShippingAndBilling } = useCheckout();
-const type = AddressType.Shipping;
-const { states, shippingCountries, isLoading, reset, errors, form, attributes } = useAddressFormShipping();
+const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Shipping);
+const { data: shippingCountries } = useActiveShippingCountries();
+
+const { t } = useI18n();
+const validationSchema = toTypedSchema(
+  object({
+    form: object({
+      firstName: string().required(t('errorMessages.requiredField')).default(''),
+      lastName: string().required(t('errorMessages.requiredField')).default(''),
+      phoneNumber: number().default(null),
+      country: string().required(t('errorMessages.requiredField')).default(''),
+      streetName: string().required(t('errorMessages.requiredField')).default(''),
+      apartment: string().required(t('errorMessages.requiredField')).default(''),
+      city: string().default(''),
+      state: string().required(t('errorMessages.requiredField')).default(''),
+      zipCode: string().required(t('errorMessages.requiredField')).default(''),
+      primary: boolean().default(false),
+    }),
+  }),
+);
+
+const { defineField, errors, values, resetForm, validate } = useForm({
+  validationSchema: validationSchema,
+});
+
+const [firstName, firstNameAttribures] = defineField('form.firstName');
+const [lastName, lastNameAttribures] = defineField('form.lastName');
+const [phoneNumber, phoneNumberAttribures] = defineField('form.phoneNumber');
+const [country, countryAttribures] = defineField('form.country');
+const [streetName, streetNameAttribures] = defineField('form.streetName');
+const [apartment, apartmentAttribures] = defineField('form.apartment');
+const [city, cityAttribures] = defineField('form.city');
+const [state, stateAttribures] = defineField('form.state');
+const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
+
+watch(setFormAddress, (newAddress) => {
+  if (newAddress) {
+    values.form = newAddress;
+  }
+});
+
+watch(onValidationStart, async (startValidation) => {
+  if (startValidation) {
+    const validation = await validate();
+    onValidationEnd.value = {
+      address: values.form as Address,
+      validation
+    };
+  }
+});
+
+
+const states = computed(() => {
+  const selectedCountry = values.form?.country;
+  return shippingCountries.value.find((country) => country.id === Number(selectedCountry))?.states ?? [];
+});
 
 
 </script>

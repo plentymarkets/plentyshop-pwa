@@ -28,6 +28,6 @@ const { disabled } = withDefaults(defineProps<CheckoutAddressNewProps>(), {
   disabled: false,
 });
 const { data: addresses, displayAddress } = useAddress(AddressType.Billing);
-const { open } = useAddressFormBilling();
+const { open } = useAddressForm(AddressType.Billing);
 
 </script>

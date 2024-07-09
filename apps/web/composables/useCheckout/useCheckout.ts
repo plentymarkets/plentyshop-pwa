@@ -6,16 +6,17 @@ export const useCheckout = createSharedComposable(() => {
     const { isOpen: combineShippingAndBilling, toggle: toggleBillingShipping } = useDisclosure();
     combineShippingAndBilling.value = true;
 
-    const { save: saveShipping, isLoading: shippingLoading } = useAddressFormShipping();
-    const { save: saveBilling, isLoading: billingLoading } = useAddressFormBilling();
+    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid } = useAddressForm(AddressType.Shipping);
+    const { save: saveBilling, isLoading: billingLoading, isValid: billingValid } = useAddressForm(AddressType.Billing);
 
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
-    
+    const isValid = computed(() => shippingValid.value && billingValid.value);
+
     const save = async () => {
         saveShipping();
 
         if (!combineShippingAndBilling.value) {
-            await saveBilling();
+            saveBilling();
         }
     }
 
@@ -23,6 +24,7 @@ export const useCheckout = createSharedComposable(() => {
         combineShippingAndBilling,
         toggleBillingShipping,
         save,
+        isValid,
         isLoading
     };
 });
