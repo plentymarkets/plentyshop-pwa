@@ -30,6 +30,7 @@
 - Moved Lighthouse Test into its own GitHub action
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
+- Added hook to load system configuration
 
 ### Fixed
 
