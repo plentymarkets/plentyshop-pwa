@@ -5,6 +5,7 @@
 ### New
 
 - Added 3 test cases for language selector on mobile viewport
+- Added "buy again" dialog to my orders section 
 
 ### Fixed
 
