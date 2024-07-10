@@ -11,18 +11,10 @@
     <NuxtLazyHydrate when-visible>
       <UiFooter :simplified-footer="true" />
     </NuxtLazyHydrate>
-    <QuickCheckout v-if="isOpen" :product="product" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { DefaultLayoutProps } from '~/layouts/types';
-usePageTitle();
-
-defineProps<DefaultLayoutProps>();
-
-const { setLogoMeta } = useStructuredData();
-const { isOpen, product } = useQuickCheckout();
-
-setLogoMeta();
+  usePageTitle();
+  useStructuredData().setLogoMeta();
 </script>
