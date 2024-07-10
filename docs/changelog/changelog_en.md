@@ -13,6 +13,7 @@
 - Added placeholder text for missing addresses
 - Added same custom header in the myAccount
 - Fixed language selector on mobile
+- Fixed the scroll for reviews on mobile
 
 ### Migration guide
 
