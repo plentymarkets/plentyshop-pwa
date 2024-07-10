@@ -2,29 +2,30 @@ import { AddressType } from '@plentymarkets/shop-api';
 import { useDisclosure } from '@storefront-ui/vue';
 import { createSharedComposable } from '@vueuse/core';
 
-export const useCheckout = createSharedComposable(() => {
+export const useCheckout = () => {
     const { isOpen: combineShippingAndBilling, toggle: toggleBillingShipping } = useDisclosure();
-    const { isGuest } = useCustomer();
-    combineShippingAndBilling.value = true;
 
-
-    const { displayAddress: displayAddressShipping } = useAddress(AddressType.Shipping);
-    const { displayAddress: displayAddressBilling } = useAddress(AddressType.Billing);
+    const { displayAddress: displayAddressShipping, hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
+    const { displayAddress: displayAddressBilling, hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
     const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen } = useAddressForm(AddressType.Shipping);
     const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen} = useAddressForm(AddressType.Billing);
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
 
-    if (isGuest.value) {
-        shippingOpen.value = true;
-        billingOpen.value = true;
+    shippingOpen.value = true;
+    billingOpen.value = true;
+    combineShippingAndBilling.value = true;
+
+    if (hasShippingAddress.value) {
+        shippingOpen.value = false;
+        billingOpen.value = false;
     }
 
-    if (!displayAddressShipping.value && !displayAddressBilling.value) {
-        shippingOpen.value = true;
-        billingOpen.value = true;
+    if (hasBillingAddress.value) {
+        combineShippingAndBilling.value = false;
     }
+
 
 
     const save = async () => {
@@ -50,4 +51,4 @@ export const useCheckout = createSharedComposable(() => {
         shippingOpen,
         billingOpen
     };
-});
+};

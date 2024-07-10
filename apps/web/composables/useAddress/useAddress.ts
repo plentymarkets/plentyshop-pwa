@@ -58,9 +58,9 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.useAsShippingAddress = billingId === shippingId;
   });
 
-  const hasDisplayAddress = () => {
-    return state.value?.displayAddress?.id;
-  };
+  const hasDisplayAddress = computed(() => {
+    return Boolean(state.value?.displayAddress?.id);
+  });
 
   const setDefaultAddress = () => {
     const addresses = state.value.data;
@@ -97,7 +97,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   };
 
   const setInitialDisplayAddress = (): void => {
-    if (hasDisplayAddress()) return;
+    if (hasDisplayAddress.value) return;
 
     state.value.loading = true;
 
@@ -196,6 +196,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     setDefault,
     deleteAddress,
     setCheckoutAddress,
+    hasDisplayAddress,
     ...toRefs(state.value),
   };
 };

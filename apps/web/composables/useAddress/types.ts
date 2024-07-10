@@ -30,6 +30,7 @@ export interface UseAddressMethods {
   setDefault: SetDefault;
   deleteAddress: DeleteAddress;
   setDisplayAddress: SetDisplayAddress;
+  hasDisplayAddress: ComputedRef<boolean>;
 }
 
 export type UseAddressReturn = (type: AddressType, cacheKey?: string) => UseAddressMethods;
