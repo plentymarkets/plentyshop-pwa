@@ -469,7 +469,8 @@
       "shippingDetails": {
         "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
-      }
+      },
+      "noAddresses": "You don't have any addresses yet"
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",

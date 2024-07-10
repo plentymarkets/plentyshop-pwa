@@ -6,6 +6,9 @@
 
 - Demo zum Anpassen von Einstellungen zur Laufzeit
 - Hochgeladene Dateien als Produktattribut können jetzt wieder heruntergeladen werden
+- Platzhaltertext für fehlende Adressen hinzugefügt
+- Dieselbe benutzerdefinierte Kopfzeile in „Mein Konto“ hinzugefügt
+- Hook hinzugefügt, um Systemkonfigurationen zu laden
 
 ### Behoben
 

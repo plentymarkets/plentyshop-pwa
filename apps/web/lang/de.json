@@ -469,7 +469,8 @@
       "shippingDetails": {
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
-      }
+      },
+      "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
