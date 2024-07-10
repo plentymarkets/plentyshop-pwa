@@ -10,7 +10,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressShipping :type="AddressType.Shipping" :key="0" id="shipping-address"> </CheckoutAddressShipping>
+        <CheckoutAddressShipping :type="AddressType.Shipping" :key="0" id="shipping-address"></CheckoutAddressShipping>
         <UiDivider v-if="!combineShippingAndBilling" class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddressShipping
           :type="AddressType.Billing"
@@ -112,7 +112,7 @@
 
 <script setup lang="ts">
 import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
@@ -152,7 +152,6 @@ const paypalPaymentId = computed(() =>
 const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
-
 
 const loadAddresses = async () => {
   await Promise.all([

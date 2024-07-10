@@ -9,10 +9,7 @@ const { useCustomer } = vi.hoisted(() => {
 
 const { useAddress } = vi.hoisted(() => {
     return {
-        useAddress: vi.fn().mockReturnValue({
-            displayAddress: {},
-            hasDisplayAddress: {},
-        })
+        useAddress: vi.fn().mockReturnValue({})
     }
 });
 
@@ -104,7 +101,16 @@ describe('useCheckout', () => {
         expect(shippingOpen.value).toBe(false);
     });
 
-    it.todo('should save billing and shipping with one call if combineShippingAndBilling is true');
+    it('should save billing and shipping with one call if combineShippingAndBilling is true', () => {
+
+        
+
+        const { save, combineShippingAndBilling } = useCheckout();
+        combineShippingAndBilling.value = true;
+        save();
+
+    
+    });
     
     it.todo('should only validate forms that are open');
     it.todo('should only save forms that are open');

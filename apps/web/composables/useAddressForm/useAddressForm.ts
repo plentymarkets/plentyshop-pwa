@@ -46,6 +46,10 @@ export const useAddressForm = (type: AddressType) => {
         state.value.setFormAddress = mappedAddress;
     }
 
+    const saveShippingAndBilling = async () => {
+        console.warn('TODO: saveShippingAndBilling');
+    }
+
     /**
      * Triggers the forms validation and saves the address if it is valid
      */
@@ -54,6 +58,7 @@ export const useAddressForm = (type: AddressType) => {
         state.value.onValidationStart = true;
 
         watch(() => state.value.onValidationEnd, async (value) => {
+            console.log('onValidationEnd', value);
             state.value.onValidationStart = false;
             state.value.addressToSave = value.address;
             if (value.validation.valid) {
@@ -69,6 +74,7 @@ export const useAddressForm = (type: AddressType) => {
 
     return {
         save,
+        saveShippingAndBilling,
         setAddress,
         isValid,
         ...toRefs(state.value),

@@ -1,51 +1,60 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex justify-between items-center">
+    <div class="flex items-center justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <SfButton v-if="!disabled && displayAddress.id" size="sm" variant="tertiary" @click="editForm">
-        <template v-if="!open">{{ t('contactInfo.edit') }}</template>
-        <template v-else>{{ t('back') }}</template>
-      </SfButton>
+      <label class="flex items-center gap-2" v-if="type === AddressType.Shipping">
+        <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
+        <span>{{ t('form.useAsBillingLabel') }}</span>
+      </label>
     </div>
-    <div v-if="displayAddress && !open" class="mt-2 md:w-[520px]">
-      <AddressDisplay :address="displayAddress" />
+    <div class="flex justify-between">
+      <div>
+        <div v-if="hasDisplayAddress && !edit" class="mt-2">
+          <AddressDisplay :address="displayAddress" />
+        </div>
+      </div>
+      <div>
+        <SfButton v-if="!edit" size="sm" variant="tertiary">Switch</SfButton>
+        <SfButton v-if="!disabled && hasDisplayAddress" size="sm" variant="tertiary" @click="editForm">
+          <template v-if="!edit">{{ t('contactInfo.edit') }}</template>
+          <template v-else>{{ t('back') }}</template>
+        </SfButton>
+      </div>
     </div>
 
-    <div v-show="open">
-      <AddressFormShipping v-show="type === AddressType.Shipping"/>
-      <AddressFormBilling v-show="type === AddressType.Billing"/>
+    <div v-if="edit">
+      <AddressFormShipping v-if="type === AddressType.Shipping" :address="displayAddress" />
+      <AddressFormBilling v-if="type === AddressType.Billing" :address="displayAddress" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
+import { SfButton, SfCheckbox } from '@storefront-ui/vue';
 import { CheckoutShippingAddressProps } from './types';
 import { AddressType } from '@plentymarkets/shop-api';
 const { t } = useI18n();
 const { disabled, type } = withDefaults(defineProps<CheckoutShippingAddressProps>(), {
-  disabled: false
+  disabled: false,
 });
-const { combineShippingAndBilling } = useCheckout();
-const { data: addresses, displayAddress } = useAddress(type);
-const { open, setAddress } = useAddressForm(type);
-const heading = ref('');
 
+const { combineShippingAndBilling, } = useCheckout();
+const { data: addresses, displayAddress, hasDisplayAddress } = useAddress(type);
+const { open: edit } = useAddressForm(type);
+const heading = ref('');
 const editForm = () => {
-  open.value = !open.value;
-  if(open.value) {
-    setAddress(displayAddress.value);
-  }
+  edit.value = !edit.value;
 };
+
 
 onMounted(() => {
   setHeading();
 });
 
 watch(
-  () => combineShippingAndBilling.value,
+  () => combineShippingAndBilling,
   () => {
     setHeading();
   },
@@ -60,5 +69,4 @@ const setHeading = () => {
     heading.value = t('billing.heading');
   }
 };
-
 </script>

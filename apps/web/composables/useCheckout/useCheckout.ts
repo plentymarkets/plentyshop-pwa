@@ -1,21 +1,26 @@
 import { AddressType } from '@plentymarkets/shop-api';
-import { useDisclosure } from '@storefront-ui/vue';
-import { createSharedComposable } from '@vueuse/core';
 
-export const useCheckout = () => {
-    const { isOpen: combineShippingAndBilling, toggle: toggleBillingShipping } = useDisclosure();
+export const useCheckout = (cacheKey = '') => {
 
-    const { displayAddress: displayAddressShipping, hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
-    const { displayAddress: displayAddressBilling, hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
-    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen } = useAddressForm(AddressType.Shipping);
-    const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen} = useAddressForm(AddressType.Billing);
+    const state = useState('useCheckout' + cacheKey, () => ({
+        combineShippingAndBilling: true,
+        init: false
+    }));
+
+    const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
+    const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
+    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen, saveShippingAndBilling } = useAddressForm(AddressType.Shipping);
+    const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen } = useAddressForm(AddressType.Billing);
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
 
-    shippingOpen.value = true;
-    billingOpen.value = true;
-    combineShippingAndBilling.value = true;
+
+    if (!state.value.init) {
+        shippingOpen.value = true;
+        billingOpen.value = true;
+        state.value.init = true;
+    }
 
     if (hasShippingAddress.value) {
         shippingOpen.value = false;
@@ -23,27 +28,41 @@ export const useCheckout = () => {
     }
 
     if (hasBillingAddress.value) {
-        combineShippingAndBilling.value = false;
+        state.value.combineShippingAndBilling = false;
     }
 
+    watch(hasShippingAddress, (value) => {
+        if (!value) {
+            shippingOpen.value = true;
+        }
+    })
 
+    watch(() => state.value.combineShippingAndBilling, (value) => {
+        if (!value) {
+            if (!hasBillingAddress.value) {
+                billingOpen.value = true;
+            }
+        } else {
+            billingOpen.value = false;
+        }
+    });
 
     const save = async () => {
+
+        if (state.value.combineShippingAndBilling) {
+            await saveShippingAndBilling()
+        }
         if (shippingOpen.value) {
             await saveShipping();
         }
         if (billingOpen.value) {
             await saveBilling();
         }
-        if (combineShippingAndBilling.value) {
-            // saveShippingAndBilling
-            // saveBilling();
-        }
+
     }
 
     return {
-        combineShippingAndBilling,
-        toggleBillingShipping,
+        ...toRefs(state.value),
         save,
         isValid,
         isLoading,

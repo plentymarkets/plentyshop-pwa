@@ -150,10 +150,6 @@
     </label>
 
     <div class="md:col-span-3 flex">
-      <label class="md:col-span-3 flex items-center gap-2">
-        <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
-        {{ t('form.useAsBillingLabel') }}
-      </label>
       <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="tertiary" size="sm" :disabled="isLoading" @click="resetForm">
         {{ t('contactInfo.clearAll') }}
       </SfButton>
@@ -163,10 +159,12 @@
 
 <script setup lang="ts">
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfInput, SfSelect, SfCheckbox, SfLink } from '@storefront-ui/vue';
+import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean, number } from 'yup';
+import { AddressFormProps } from './types';
 
-const { combineShippingAndBilling } = useCheckout();
+const props = defineProps<AddressFormProps>();
+
 const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Shipping);
 const { data: shippingCountries } = useActiveShippingCountries();
 const hasCompany = ref(false);
@@ -214,11 +212,7 @@ const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
 const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
 
-watch(setFormAddress, (newAddress) => {
-  if (newAddress) {
-    setValues({form: newAddress});
-  }
-});
+setValues({form: props.address as any});
 
 watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
