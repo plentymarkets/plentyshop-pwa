@@ -15,6 +15,10 @@
 - Fixed language selector on mobile
 - Fixed the scroll for reviews on mobile
 
+### Chnaged
+
+- The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed.
+
 ### Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
