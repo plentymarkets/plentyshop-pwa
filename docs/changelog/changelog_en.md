@@ -2,6 +2,10 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
+### New
+
+- Added 3 test cases for language selector on mobile viewport
+
 ### Fixed
 
 - Purchase card hydration error when navigating to a product with attributes
