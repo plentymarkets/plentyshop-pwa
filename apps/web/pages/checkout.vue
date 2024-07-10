@@ -113,7 +113,10 @@ import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
-definePageMeta({ pageType: 'static' });
+definePageMeta({
+  layout: 'simplified-header-and-footer',
+  pageType: 'static',
+});
 
 const ID_CHECKBOX = '#terms-checkbox';
 const ID_BILLING_ADDRESS = '#billing-address';
