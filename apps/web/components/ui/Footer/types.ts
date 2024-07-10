@@ -1,3 +1,3 @@
 export type FooterProps = {
-  noBottomSpacing?: boolean;
+  simplifiedFooter?: boolean;
 };
