@@ -9,7 +9,7 @@
     "
     :class="{ 'p-[0.9rem]': !isCloseButton }"
     class="m-2"
-    :disabled="!isAuthorized || wishlistLoading"
+    :disabled="wishlistLoading"
     @click="onWishlistClick"
     data-testid="wishlist-trigger"
   >
@@ -33,13 +33,11 @@ const { product, quantity, discard } = toRefs(props);
 const { t } = useI18n();
 const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
 const actionLoading = ref(false);
-const { isAuthorized } = useCustomer();
 
 const productName = computed(() => productGetters.getName(product.value));
 const variationId = computed(() => productGetters.getVariationId(product.value));
 const isCloseButton = computed(() => isWishlistItem(variationId.value) && discard.value);
 const onWishlistClick = async () => {
-  if (!isAuthorized) return;
   actionLoading.value = true;
   await interactWithWishlist(variationId.value, quantity.value);
   actionLoading.value = false;
