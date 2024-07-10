@@ -77,8 +77,7 @@ export class ProductListPageObject extends PageObject {
   }
 
   goToProduct() {
-    this.products.first().click();
-    cy.wait(1000);
+    this.products.first().wait(2000).click().wait(2000);
     return this;
   }
 }
