@@ -230,7 +230,7 @@ const openReviewsAccordion = () => {
 const scrollToReviewsAccordion = () => {
   const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
   const customerReviewsAccordionElementOffset =
-    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop ?? 0;
+    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
 
   const headerElement = document.querySelector('header') as HTMLElement;
   const headerElementOffset = headerElement.offsetHeight ?? 0;

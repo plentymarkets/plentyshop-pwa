@@ -2,6 +2,10 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
+### New
+
+- Added 3 test cases for language selector on mobile viewport
+
 ### Fixed
 
 - Upon using login on the header, while being on the guest login page, there was no redirect
@@ -9,6 +13,7 @@
 - Added placeholder text for missing addresses
 - Added same custom header in the myAccount
 - Fixed language selector on mobile
+- Fixed the scroll for reviews on mobile
 
 ### Migration guide
 

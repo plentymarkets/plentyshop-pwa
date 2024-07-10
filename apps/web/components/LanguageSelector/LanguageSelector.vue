@@ -30,7 +30,7 @@
           class="mx-3 mb-2 flex items-center justify-between !text-black"
         >
           <div class="flex">
-            <div class="mr-2 w-8" v-html="flagList[locale]" />
+            <div class="mr-2 w-8" :data-testid="`flagIcon-${locale}`" v-html="flagList[locale]" />
             <div class="!text-black-500">{{ $t(`lang.${locale}`) }}</div>
           </div>
           <SfIconCheck v-if="locale === currentLocale" class="text-green-500" />
