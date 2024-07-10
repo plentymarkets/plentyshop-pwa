@@ -1,6 +1,6 @@
 import type { Product } from '@plentymarkets/shop-api';
 
-export type ProductPropertiesProps = {
+export type VariationPropertiesProps = {
   product: Product;
 };
 

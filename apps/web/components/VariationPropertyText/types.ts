@@ -1,5 +1,5 @@
 import type { VariationProperty } from '@plentymarkets/shop-api';
 
-export type ProductPropertyTextProps = {
+export type VariationPropertyTextProps = {
   productProperty: VariationProperty;
 };
