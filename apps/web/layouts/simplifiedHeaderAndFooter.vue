@@ -15,6 +15,6 @@
 </template>
 
 <script setup lang="ts">
-  usePageTitle();
-  useStructuredData().setLogoMeta();
+usePageTitle();
+useStructuredData().setLogoMeta();
 </script>
