@@ -59,6 +59,9 @@
                 :cart-item="cartItem"
                 :basket-item-order-param="property"
               />
+              <div v-if="cartItem.variation">
+                <VariationProperties :product="cartItem.variation"></VariationProperties>
+              </div>
             </ul>
           </div>
         </div>
