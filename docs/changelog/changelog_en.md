@@ -9,6 +9,7 @@
 
 ### Fixed
 
+- Purchase card hydration error when navigating to a product with attributes
 - Upon using login on the header, while being on the guest login page, there was no redirect
 - Fixed mobile cross price display.
 - Added placeholder text for missing addresses
@@ -34,6 +35,7 @@
 
 ### New
 
+- Upgraded Nuxt and package dependencies
 - Moved Lighthouse Test into its own GitHub action
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
@@ -41,6 +43,7 @@
 
 ### Fixed
 
+- Added PWA additional check to prevent webmanifest 404
 - Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering

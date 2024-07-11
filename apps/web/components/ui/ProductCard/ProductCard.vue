@@ -10,7 +10,7 @@
       <SfLink
         :tag="NuxtLink"
         rel="preload"
-        :to="localePath(`${path}/${productSlug}`)"
+        :to="productPath"
         :class="{ 'size-48': isFromSlider }"
         as="image"
         class="flex items-center justify-center"
@@ -39,7 +39,7 @@
       </slot>
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
-      <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
+      <SfLink :tag="NuxtLink" :to="productPath" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
       <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
@@ -89,7 +89,7 @@
           {{ t('addToCartShort') }}
         </span>
       </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" size="sm" class="w-fit">
+      <SfButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
       </SfButton>
     </div>
@@ -97,13 +97,30 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-api';
+import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
-const { product } = withDefaults(defineProps<ProductCardProps>(), {
+const {
+  product,
+  name,
+  imageUrl,
+  imageAlt,
+  imageWidth,
+  imageHeight,
+  rating,
+  ratingCount,
+  priority,
+  lazy,
+  unitContent,
+  unitName,
+  basePrice,
+  showBasePrice,
+  isFromWishlist,
+  isFromSlider,
+} = withDefaults(defineProps<ProductCardProps>(), {
   lazy: true,
   imageAlt: '',
   isFromWishlist: false,
@@ -112,7 +129,6 @@ const { product } = withDefaults(defineProps<ProductCardProps>(), {
 
 const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
-
 const { addToCart } = useCart();
 const { send } = useNotification();
 const loading = ref(false);
@@ -121,8 +137,15 @@ const img = ref();
 const emit = defineEmits(['load']);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
+const productPath = ref('');
 
-onMounted(() => {
+const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
+  const path = productGetters.getCategoryUrlPath(product, categoriesTree);
+  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`;
+  productPath.value = localePath(`${path}/${productSlug}`);
+};
+
+onNuxtReady(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
 
   if (imgElement) {
@@ -135,6 +158,8 @@ onMounted(() => {
       if (!imgElement.complete) emit('load');
     });
   }
+
+  setProductPath(categoryTree.value);
 });
 
 const addWithLoader = async (productId: number) => {
@@ -165,7 +190,10 @@ const mainPrice = computed(() => {
 
 const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
-const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const NuxtLink = resolveComponent('NuxtLink');
+
+watch(
+  () => categoryTree.value,
+  (categoriesTree) => setProductPath(categoriesTree),
+);
 </script>

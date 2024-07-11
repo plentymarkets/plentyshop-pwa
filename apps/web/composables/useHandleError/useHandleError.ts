@@ -25,7 +25,7 @@ const errorCodes = {
  * ```
  */
 export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => {
-  if (error && process.client) {
+  if (error && import.meta.client) {
     const { send } = useNotification();
     let message = defaultError.message;
     let type: Notification['type'] = 'negative';

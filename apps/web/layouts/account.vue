@@ -105,7 +105,7 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 const { t } = useI18n();
 const router = useRouter();
-const { isAuthorized, logout } = useCustomer();
+const { logout } = useCustomer();
 
 const sections = computed(() => [
   {
@@ -177,8 +177,6 @@ const breadcrumbs = computed(() => [
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-if (!isAuthorized.value) navigateTo(localePath(paths.home));
 
 const logOut = async () => {
   await logout();
