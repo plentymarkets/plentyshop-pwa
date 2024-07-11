@@ -2,26 +2,7 @@
 
 ## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
-### New
-
-- Added 3 test cases for language selector on mobile viewport
-
-### Fixed
-
-- Purchase card hydration error when navigating to a product with attributes
-- Upon using login on the header, while being on the guest login page, there was no redirect
-- Fixed mobile cross price display.
-- Added placeholder text for missing addresses
-- Added same custom header in the myAccount
-- Fixed language selector on mobile
-- Fixed the scroll for reviews on mobile
-- The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file.
-
-### Chnaged
-
-- The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed.
-
-### Migration guide
+### 📙 Migration guide
 
 - The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
 
@@ -32,15 +13,12 @@
 
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
 
-### New
-
-- Upgraded Nuxt and package dependencies
-- Moved Lighthouse Test into its own GitHub action
+### 🚀 New
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 - Added hook to load system configuration
 
-### Fixed
+### 🩹 Fixes
 
 - Added PWA additional check to prevent webmanifest 404
 - Fixed Checkout layout console error
@@ -61,13 +39,27 @@
 - Fixed layout shift on add to cart button.
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
+- Purchase card hydration error when navigating to a product with attributes
+- Upon using login on the header, while being on the guest login page, there was no redirect
+- Fixed mobile cross price display.
+- Added placeholder text for missing addresses
+- Added same custom header in the myAccount
+- Fixed language selector on mobile
+- Fixed the scroll for reviews on mobile
+- The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file.
 
-### Changed
+### 👷 Changed
 
 - Moved paypal credit card test into quarantine folder.
 - Changed shortDescription to return empty string.
 - Improved Reviews rating average display
 - Removed unnecessary hover state from cart items.
+- The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed.
+
+### 🏡 Chore
+- Upgraded Nuxt and package dependencies
+- Moved Lighthouse Test into its own GitHub action
+  
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
