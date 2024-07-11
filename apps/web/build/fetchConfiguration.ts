@@ -8,7 +8,7 @@ const environmentFilePath = path.resolve(__dirname, '../.env');
 const environmentTemporaryFilePath = path.resolve(__dirname, '../.env.tmp');
 
 const environmentMap = {
-  DISABLE_SETTINGS_FETCH: process.env.DISABLE_SETTINGS_FETCH,
+  FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
   API_ENDPOINT: process.env.API_ENDPOINT,
   API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
   CONFIG_ID: process.env.CONFIG_ID,
@@ -18,13 +18,12 @@ const setupTemporaryEnvironment = () => {
   let requiredEnvironmentData = '';
 
   for (const [key, value] of Object.entries(environmentMap)) {
-    if (key === 'DISABLE_SETTINGS_FETCH') continue;
+    requiredEnvironmentData += `${key}=${value}\n`;
+    if (key === 'FETCH_REMOTE_CONFIG') continue;
     if (!value) {
       console.error(`Missing or invalid required environment variable: ${key}`);
       return;
     }
-
-    requiredEnvironmentData += `${key}=${value}\n`;
   }
 
   fs.writeFile(environmentTemporaryFilePath, requiredEnvironmentData, () => {});
@@ -73,8 +72,8 @@ const convertTemporaryToPermanentEnvironment = () => {
 };
 
 const fetchConfiguration = async () => {
-  if (environmentMap.DISABLE_SETTINGS_FETCH === undefined || environmentMap.DISABLE_SETTINGS_FETCH === '1') {
-    console.warn(`Fetching PWA settings is disabled! Check DISABLE_SETTINGS_FETCH in .env file.`);
+  if (environmentMap.FETCH_REMOTE_CONFIG === undefined || environmentMap.FETCH_REMOTE_CONFIG !== '1') {
+    console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
     return;
   }
 
