@@ -36,17 +36,17 @@ import { number, object } from 'yup';
 import { useForm } from 'vee-validate';
 
 const { t } = useI18n();
-const props = defineProps<AttributeSelectProps>();
+const { attribute } = defineProps<AttributeSelectProps>();
 const { updateValue, getValue } = useProductAttributes();
 const { registerValidator, registerInvalidFields } = useValidatorAggregator('attributes');
 const value = ref<string | undefined>(
-  getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined,
+  getValue(productAttributeGetters.getAttributeId(attribute))?.toString() ?? undefined,
 );
 
 watch(
-  () => getValue(productAttributeGetters.getAttributeId(props.attribute)),
+  () => getValue(productAttributeGetters.getAttributeId(attribute)),
   () => {
-    value.value = getValue(productAttributeGetters.getAttributeId(props.attribute))?.toString() ?? undefined;
+    value.value = getValue(productAttributeGetters.getAttributeId(attribute))?.toString() ?? undefined;
   },
 );
 
@@ -65,8 +65,8 @@ registerValidator(validate);
 const [selectedValue] = defineField('selectedValue');
 
 const doUpdateValue = (value: number) => {
-  updateValue(props.attribute.attributeId, value);
-  selectedValue.value = getValue(props.attribute.attributeId);
+  updateValue(attribute.attributeId, value);
+  selectedValue.value = getValue(attribute.attributeId);
 };
 
 const setValue = (value: string | undefined) => {
@@ -87,8 +87,8 @@ watch(
   () => {
     registerInvalidFields(
       meta.value.valid,
-      `prop-${productAttributeGetters.getAttributeId(props.attribute)}`,
-      productAttributeGetters.getAttributeName(props.attribute),
+      `prop-${productAttributeGetters.getAttributeId(attribute)}`,
+      productAttributeGetters.getAttributeName(attribute),
     );
   },
 );

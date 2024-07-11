@@ -119,6 +119,7 @@ import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/useP
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
+  layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
