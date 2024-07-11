@@ -20,48 +20,45 @@
 - Added hook to load system configuration
 
 ### 🩹 Fixes
-
+- Fixed hydration errors
 - Fixed a problem with the image loading status for category products
-- Added PWA additional check to prevent webmanifest 404
+- Fixed webmanifest 404 error
 - Fixed Checkout layout console error
-- Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
-- SEO canonical links are now correctly set
-- The country list in the address form is now translated correctly
-- Fixed missing Item short description
+- Fixed canonical links are now correctly set
+- Fixed missing translation in country select
+- Fixed missing item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
-- Fixed Badges elements rendering
-- The image component for selecting item attributes has a tooltip
-- Wish list button aria label
-- Hydration errors under guest login and cart
+- Fixed badges elements rendering
+- Wishlist button aria label
 - PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected
 - Registration without cloudflare turnstile configuration is now possible
 - Fixed item image size in recommended product slider
 - Fixed layout shift on add to cart button
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
-- Purchase card hydration error when navigating to a product with attributes
 - Upon using login on the header, while being on the guest login page, there was no redirect
 - Fixed mobile cross price display
-- Added placeholder text for missing addresses
-- Added same custom header in the myAccount
 - Fixed language selector on mobile
 - Fixed the scroll for reviews on mobile
 - The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file
 
 ### 👷 Changed
 
-- Moved paypal credit card test into quarantine folder
 - Changed shortDescription to return empty string
 - Improved Reviews rating average display
 - Removed unnecessary hover state from cart items
 - The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed
+- Added placeholder text for missing addresses
+- Added same custom header in the myAccount
+- Added tooltip for item attributes image component
 
 ### 🏡 Chore
 
 - Upgraded Nuxt and package dependencies
 - Moved Lighthouse Test into its own GitHub action
+- Moved paypal credit card test into quarantine folder
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
