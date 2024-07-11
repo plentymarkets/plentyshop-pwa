@@ -21,6 +21,7 @@
 
 ### 🩹 Fixes
 
+- Fixed a problem with the image loading status for category products
 - Added PWA additional check to prevent webmanifest 404
 - Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
