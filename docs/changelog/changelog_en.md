@@ -11,7 +11,7 @@
 - All `@plentymarkets/shop-sdk` imports have to be renamed to `@plentymarkets/shop-api`
 - useSdk() is now autoimported and can no longer be imported remove all `import { useSdk } from '~/sdk';` imports.
 
-[full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
+[full sdk migration changelog](https://github.com/plentymarkets/plentyshop-pwa/pull/452/files)
 
 ### 🚀 New
 
@@ -26,37 +26,37 @@
 - Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering
-- SEO canonical links are now correctly set.
-- The country list in the address form is now translated correctly.
+- SEO canonical links are now correctly set
+- The country list in the address form is now translated correctly
 - Fixed missing Item short description
 - Fixed wrong link on the order confirmation page
 - Bundle Items links to include image
 - Fixed Badges elements rendering
-- The image component for selecting item attributes has a tooltip.
+- The image component for selecting item attributes has a tooltip
 - Wish list button aria label
 - Hydration errors under guest login and cart
-- PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected.
-- Registration without cloudflare turnstile configuration is now possible.
-- Fixed item image size in recommended product slider.
-- Fixed layout shift on add to cart button.
+- PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected
+- Registration without cloudflare turnstile configuration is now possible
+- Fixed item image size in recommended product slider
+- Fixed layout shift on add to cart button
 - The wishlist button is now toggling between filled/empty heart icon
 - Fixed addresses not being displayed in checkout after creation
 - Purchase card hydration error when navigating to a product with attributes
 - Upon using login on the header, while being on the guest login page, there was no redirect
-- Fixed mobile cross price display.
+- Fixed mobile cross price display
 - Added placeholder text for missing addresses
 - Added same custom header in the myAccount
 - Fixed language selector on mobile
 - Fixed the scroll for reviews on mobile
-- The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file.
+- The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file
 
 ### 👷 Changed
 
-- Moved paypal credit card test into quarantine folder.
-- Changed shortDescription to return empty string.
+- Moved paypal credit card test into quarantine folder
+- Changed shortDescription to return empty string
 - Improved Reviews rating average display
-- Removed unnecessary hover state from cart items.
-- The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed.
+- Removed unnecessary hover state from cart items
+- The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed
 
 ### 🏡 Chore
 
