@@ -29,6 +29,7 @@
 
 - Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
 - Anzeige der durchschnittlichen Bewertung hinzugefügt
+- Die Navigationsleiste am unteren Bildschirmrand (auf mobilen Geräten) sowie die Navigations- und Einstellungsknöpfe im Checkout wurden entfernt.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
