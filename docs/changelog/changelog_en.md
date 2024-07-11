@@ -42,6 +42,7 @@
 
 ### Fixed
 
+- Added PWA additional check to prevent webmanifest 404
 - Fixed Checkout layout console error
 - Fixed Cart and pagination hydration errors
 - Fixed Product attributes empty list rendering

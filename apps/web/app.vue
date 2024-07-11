@@ -1,12 +1,13 @@
 <template>
   <Body class="font-body" :class="bodyClass" />
-  <VitePwaManifest />
+  <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const DAYS = 100;
 const localeExpireDate = new Date();
