@@ -1,10 +1,10 @@
 <template>
   <div class="w-full">
     <div class="font-semibold">
-      {{ productPropertyGetters.getPropertyName(productProperty) }}
+      {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </div>
     <div>
-      {{ productPropertyGetters.getPropertyValue(productProperty) }}
+      {{ productPropertyGetters.getPropertyValue(variationProperty) }}
     </div>
   </div>
 </template>
@@ -13,5 +13,5 @@
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyTextProps } from './types';
 const props = defineProps<VariationPropertyTextProps>();
-const productProperty = props.productProperty;
+const variationProperty = props.variationProperty;
 </script>

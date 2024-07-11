@@ -1,15 +1,15 @@
 <template>
   <div v-for="(group, groupIndex) in variationProperties" :key="`group-${groupIndex}`" class="mt-5">
     <div
-      v-for="(productProperty, propIndex) in group.properties"
+      v-for="(variationProperty, propIndex) in group.properties"
       :key="`group-prop-${propIndex}`"
       class="mt-2 flex items-center"
     >
       <ClientOnly>
         <Component
-          v-if="componentsMapper[productPropertyGetters.getPropertyCast(productProperty)]"
-          :product-property="productProperty"
-          :is="componentsMapper[productPropertyGetters.getPropertyCast(productProperty)]"
+          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          :variation-property="variationProperty"
+          :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
         >
         </Component>
       </ClientOnly>
