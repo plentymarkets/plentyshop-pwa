@@ -21,6 +21,7 @@ import type {
 export const useProductReviews: UseProductReviews = (itemId: number) => {
   const state = useState<UseProductReviewsState>(`useProductReviews-${itemId}`, () => ({
     data: {} as Review,
+    totalCount: 0,
     loading: false,
     createdReview: {} as Review,
   }));
@@ -55,6 +56,15 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
       await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
+        const firstResult = data[0]?.data;
+        const secondResult = data[1]?.data;
+        if (firstResult?.pagination) {
+          state.value.totalCount = firstResult.pagination.totalCount;
+          state.value.totalCount += secondResult ? secondResult.feedbacks.length : 0;
+        } else if (secondResult?.pagination) {
+          state.value.totalCount = secondResult.pagination.totalCount;
+          state.value.totalCount += firstResult ? firstResult.feedbacks.length : 0;
+        }
         state.value.data.feedbacks = feedbacks || state.value.data;
         return true;
       });

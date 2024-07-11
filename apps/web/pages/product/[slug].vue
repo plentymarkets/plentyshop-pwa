@@ -23,7 +23,7 @@
               :product="product"
               :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
               :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+              :total-reviews="totalCount"
               @on-list-change="fetchProductReviewAverage(Number(productId))"
             />
           </NuxtLazyHydrate>
@@ -57,7 +57,8 @@ definePageMeta({
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
-const { fetchProductReviews } = useProductReviews(Number(productId));
+const { fetchProductReviews, totalCount: totalCount } = useProductReviews(Number(productId));
+
 if (process.server) {
   await Promise.all([
     fetchProduct(productParams),
