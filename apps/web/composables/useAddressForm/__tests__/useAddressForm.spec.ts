@@ -38,33 +38,4 @@ describe('useAddressForm', () => {
         
         expect(isValid.value).toBe(true);
     })
-
-    it('should set the forms address', () => {
-        const { setAddress, setFormAddress } = useAddressForm(AddressType.Billing);
-        const address = {
-            firstName: 'John',
-            lastName: 'Doe',
-            phoneNumber: '123456789',
-            country: '1',
-            streetName: 'Main St',
-            apartment: '123',
-            city: 'Springfield',
-            state: 'IL',
-            zipCode: '62701',
-            primary: true
-        };
-        setAddress(address);
-        expect(setFormAddress.value).toEqual({
-            firstName: 'John',
-            lastName: 'Doe',
-            phoneNumber: '123456789',
-            country: '1',
-            streetName: 'Main St',
-            apartment: '123',
-            city: 'Springfield',
-            state: 'IL',
-            zipCode: '62701',
-            primary: true
-        });
-    });
 });

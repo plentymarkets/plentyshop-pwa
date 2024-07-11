@@ -10,14 +10,14 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressShipping :type="AddressType.Shipping" :key="0" id="shipping-address"></CheckoutAddressShipping>
+        <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address"></AddressContainer>
         <UiDivider v-if="!combineShippingAndBilling" class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressShipping
-          :type="AddressType.Billing"
+        <AddressContainer
           v-if="!combineShippingAndBilling"
+          :type="AddressType.Billing"
           :key="1"
           id="billing-address"
-        ></CheckoutAddressShipping>
+        ></AddressContainer>
         <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"

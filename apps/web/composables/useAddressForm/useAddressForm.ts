@@ -26,26 +26,6 @@ export const useAddressForm = (type: AddressType) => {
         return state.value.onValidationEnd.validation.valid;
     });
 
-    /**
-     * Set the forms address
-     * @param address 
-     */
-    const setAddress = (address: Address) => {
-        const mappedAddress = {
-            firstName: userAddressGetters.getFirstName(address),
-            lastName: userAddressGetters.getLastName(address),
-            phoneNumber: userAddressGetters.getPhone(address),
-            country: userAddressGetters.getCountryId(address).toString() ?? '',
-            streetName: userAddressGetters.getStreetName(address),
-            apartment: userAddressGetters.getStreetNumber(address).toString() ?? '',
-            city: userAddressGetters.getCity(address),
-            state: userAddressGetters.getProvince(address),
-            zipCode: userAddressGetters.getPostCode(address),
-            primary: !userAddressGetters.getId(address)
-        }
-        state.value.setFormAddress = mappedAddress;
-    }
-
     const saveShippingAndBilling = async () => {
         console.warn('TODO: saveShippingAndBilling');
     }
@@ -58,7 +38,6 @@ export const useAddressForm = (type: AddressType) => {
         state.value.onValidationStart = true;
 
         watch(() => state.value.onValidationEnd, async (value) => {
-            console.log('onValidationEnd', value);
             state.value.onValidationStart = false;
             state.value.addressToSave = value.address;
             if (value.validation.valid) {
@@ -75,7 +54,6 @@ export const useAddressForm = (type: AddressType) => {
     return {
         save,
         saveShippingAndBilling,
-        setAddress,
         isValid,
         ...toRefs(state.value),
     }

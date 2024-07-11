@@ -1,6 +1,6 @@
 import { AddressType } from "@plentymarkets/shop-api";
 
-export type CheckoutShippingAddressProps = {
+export type AddressContainerProps = {
   disabled?: boolean;
   type: AddressType;
 };
