@@ -20,6 +20,7 @@
 - Added hook to load system configuration
 
 ### 🩹 Fixes
+
 - Fixed hydration errors
 - Fixed a problem with the image loading status for category products
 - Fixed webmanifest 404 error
