@@ -11,31 +11,45 @@ const bodyClass = ref('');
 const DAYS = 100;
 const localeExpireDate = new Date();
 localeExpireDate.setDate(new Date().getDate() + DAYS);
-
-onMounted(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
-
 const { getCategoryTree } = useCategoryTree();
 const { setInitialDataSSR, ssrLocale } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
-
-const vsfLocale = useCookie('vsf-locale', {
-  expires: localeExpireDate,
-});
+const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
 const { setStaticPageMeta } = useCanonical();
+const { isAuthorized } = useCustomer();
+const localePath = useLocalePath();
 
 vsfLocale.value = locale.value;
 ssrLocale.value = locale.value;
 
-await setInitialDataSSR();
-
-if (route?.meta.pageType === 'static') {
-  setStaticPageMeta();
-}
+if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
+
+const authOnlyRoutes = new Set([
+  localePath(paths.accountPersonalData),
+  localePath(paths.accountBillingDetails),
+  localePath(paths.accountShippingDetails),
+  localePath(paths.accountMyOrders),
+  localePath(paths.accountMyWishlist),
+  localePath(paths.accountReturns),
+  localePath(paths.accountNewReturn),
+]);
+
+const watchAuthRoutes = (authenticated: boolean) => {
+  if (authOnlyRoutes.has(localePath(route.path)) && !authenticated) navigateTo(localePath(paths.home));
+};
+
+onNuxtReady(async () => {
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+  await setInitialDataSSR();
+  watchAuthRoutes(isAuthorized.value);
+});
+
+watch(
+  () => isAuthorized.value,
+  (authenticated: boolean) => watchAuthRoutes(authenticated),
+);
 
 watch(
   () => locale.value,

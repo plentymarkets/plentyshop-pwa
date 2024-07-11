@@ -26,11 +26,11 @@ const componentsMapper: ComponentsMapper = {
 };
 
 const { attributes, setAttribute } = useProductAttributes();
-const props = defineProps<ProductAttributesProps>();
+const { product } = defineProps<ProductAttributesProps>();
 const route = useRoute();
 
 const lastSegment = route.path.split('/').pop() ?? '';
 const selectAttributes = lastSegment.split('_').length > 2;
 
-setAttribute(props.product, selectAttributes);
+onNuxtReady(() => setAttribute(product, selectAttributes));
 </script>
