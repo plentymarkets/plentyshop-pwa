@@ -155,8 +155,11 @@
 import { Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean, number } from 'yup';
+import { AddressFormProps } from './types';
 
-const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Billing);
+const props = defineProps<AddressFormProps>();
+
+const { isLoading, onValidationStart, onValidationEnd } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
 const hasCompany = ref(false);
@@ -192,11 +195,7 @@ const { defineField, errors, values, resetForm, validate, setValues } = useForm(
   validationSchema: validationSchema,
 });
 
-watch(setFormAddress, (newAddress) => {
-  if (newAddress) {
-    setValues({form: newAddress});
-  }
-});
+setValues({form: props.address as any});
 
 watch(onValidationStart, async (startValidation) => {
   if (startValidation) {

@@ -165,7 +165,7 @@ import { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 
-const { isLoading, onValidationStart, onValidationEnd, setFormAddress } = useAddressForm(AddressType.Shipping);
+const { isLoading, onValidationStart, onValidationEnd } = useAddressForm(AddressType.Shipping);
 const { data: shippingCountries } = useActiveShippingCountries();
 const hasCompany = ref(false);
 const toggleCompany = () => {

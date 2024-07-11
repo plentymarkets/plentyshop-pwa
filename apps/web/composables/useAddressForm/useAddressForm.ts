@@ -7,7 +7,6 @@ export const useAddressForm = (type: AddressType) => {
         isLoading: false,
         open: false,
         addressToSave: {},
-        setFormAddress: {},
         onValidationStart: false,
         onValidationEnd: {
             address: {},
