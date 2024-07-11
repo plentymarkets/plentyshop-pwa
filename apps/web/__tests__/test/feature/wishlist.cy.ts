@@ -4,12 +4,14 @@ import { ProductListPageObject } from '../../support/pageObjects/ProductListPage
 import { WishlistObject } from "../../support/pageObjects/WishlistObject";
 import { CartPageObject } from "../../support/pageObjects/CartPageObject";
 import {ProductDetailPageObject} from "../../support/pageObjects/ProductDetailPageObject";
+import { MyAccountPageObject } from '../../support/pageObjects/MyAccountPageObject';
 
 const homePage = new HomePageObject();
 const wishlist = new WishlistObject();
 const cart = new CartPageObject();
 const productListPage = new ProductListPageObject();
 const productDetailPage = new ProductDetailPageObject();
+const myAccount: MyAccountPageObject = new MyAccountPageObject();
 
 beforeEach(() => {
   cy.intercept('/plentysystems/getWishlist').as('getWishlist');
@@ -18,9 +20,13 @@ beforeEach(() => {
 
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}')
+  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
 
-  cy.visitAndHydrate(paths.home);
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  cy.visitAndHydrate(paths.authLogin);
+  myAccount.successLogin();
+
+  cy.wait('@doLogin').visitAndHydrate(paths.home);
 });
 
 

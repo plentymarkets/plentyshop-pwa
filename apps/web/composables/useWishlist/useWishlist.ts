@@ -143,6 +143,8 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
+    if (!useCustomer().isAuthorized.value) return;
+
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
 

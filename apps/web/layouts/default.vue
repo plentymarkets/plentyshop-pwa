@@ -1,22 +1,22 @@
 <template>
   <div>
-    <UiHeader />
+    <UiHeader v-if="!layoutProps.catchall" />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
     <main>
       <slot />
     </main>
-    <NuxtLazyHydrate when-idle>
+    <NuxtLazyHydrate v-if="!layoutProps.catchall" when-idle>
       <UiNavbarBottom v-if="viewport.isLessThan('md')" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
+    <NuxtLazyHydrate v-if="!layoutProps.catchall" when-visible>
       <UiFooter />
     </NuxtLazyHydrate>
 
-    <QuickCheckout v-if="isOpen" :product="product" />
+    <QuickCheckout v-if="!layoutProps.catchall && isOpen" :product="product" />
   </div>
 </template>
 
@@ -29,6 +29,7 @@ defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
+const layoutProps = useAttrs();
 
 setLogoMeta();
 </script>
