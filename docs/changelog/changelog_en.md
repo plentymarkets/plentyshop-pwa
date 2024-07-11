@@ -14,6 +14,7 @@
 [full sdk migration changelog]("https://github.com/plentymarkets/plentyshop-pwa/pull/452/files")
 
 ### 🚀 New
+
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 - Added hook to load system configuration
@@ -57,9 +58,9 @@
 - The navigation bar at the bottom of the screen (mobile) and the navigation/settings buttons in the checkout have been removed.
 
 ### 🏡 Chore
+
 - Upgraded Nuxt and package dependencies
 - Moved Lighthouse Test into its own GitHub action
-  
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
