@@ -1,5 +1,5 @@
 <template>
-  <UiModal v-model="isOpen" tag="section" class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto">
+  <UiModal v-model="isOpen" tag="section" class="w-full h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto">
     <header>
       <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
         <span>{{ t('account.ordersAndReturns.orderAgain.heading') }}</span>
@@ -12,8 +12,8 @@
       </div>
     </header>
 
-    <div class="lg:grid lg:grid-cols-3 lg:gap-4">
-      <div class="lg:border-r-2 lg:col-span-2 flex flex-col items-center lg:pr-6">
+    <div class="w-full">
+      <div class="overflow-y-scroll mb-4 max-h-[calc(100vh-205px)] md:max-h-[calc(100vh-270px)]">
         <div v-if="!loading">
           <div
             v-for="item in orderGetters.getItems(order)"
@@ -103,24 +103,21 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
       </div>
-      <div class="py-8 px-10 flex flex-col relative">
-        <div class="lg:sticky lg:top-0">
-          <SfButton
-            data-testid="quick-checkout-cart-button"
-            @click="addToCart"
-            :disabled="loading || loadingAddToCart"
-            size="lg"
-            class="w-full mb-3"
-            variant="secondary"
-          >
-            <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
-            <span v-else>{{ t('account.ordersAndReturns.orderAgain.buyAgain') }}</span>
-          </SfButton>
+      <div class="h-auto flex-shrink-0 flex gap-2 ml-auto w-full max-w-[500px] relative justify-end mt-3">
+        <SfButton
+          data-testid="quick-checkout-cart-button"
+          @click="addToCart"
+          :disabled="loading || loadingAddToCart"
+          size="lg"
+          variant="secondary"
+        >
+          <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
+          <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
+        </SfButton>
 
-          <SfButton data-testid="quick-checkout-checkout-button" @click="close()" size="lg" class="w-full mb-4 md:mb-0">
-            {{ t('account.ordersAndReturns.orderAgain.cancel') }}
-          </SfButton>
-        </div>
+        <SfButton data-testid="quick-checkout-checkout-button" @click="close()" size="lg">
+          {{ t('account.ordersAndReturns.orderAgain.cancel') }}
+        </SfButton>
       </div>
     </div>
   </UiModal>

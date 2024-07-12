@@ -528,6 +528,7 @@
       },
       "orderAgain": {
         "heading": "Erneut kaufen",
+        "addToCart": "In den Warenkorb",
         "subtext": "Sie können die Produkte aus dieser Bestellung erneut kaufen.",
         "headingChanges": "Änderungen der Produkte",
         "subtextChanges": "Seit Ihrer letzten Bestellung sind Änderungen aufgetreten",
