@@ -100,8 +100,13 @@ export const useLocalization = createSharedComposable(() => {
     const route = useRoute();
     setLocaleCookie(language);
     toggle();
-    await navigateTo({ path: switchLocalePath(language), query: route.query });
-    await getCart(); // Important for paypal express checkout
+    await getCart().then(
+      async () =>
+        await navigateTo({
+          path: switchLocalePath(language),
+          query: route.query,
+        }),
+    );
   };
 
   return {

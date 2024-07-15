@@ -3,6 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
 import fetchConfiguration from './build/fetchConfiguration';
+import { resolve } from 'node:path';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -53,16 +54,15 @@ export default defineNuxtConfig({
   site: {
     url: '',
   },
+  pages: true,
   hooks: {
+    'build:before': async () => await fetchConfiguration(),
     'pages:extend'(pages) {
       pages.push({
         name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
+        path: '/:slug*_:itemId',
+        file: resolve(__dirname, './pages/product/[slug].vue'),
       });
-    },
-    'build:before': async () => {
-      await fetchConfiguration();
     },
   },
   runtimeConfig: {
