@@ -18,7 +18,7 @@
           :key="1"
           id="billing-address"
         ></AddressContainer>
-          <div v-if="showSaveButton" class="flex w-full -mx-4">
+        <div v-if="showSaveButton" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"
             type="button"
@@ -32,7 +32,7 @@
             </span>
           </SfButton>
         </div>
-        
+
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -113,28 +113,23 @@
 
 <script setup lang="ts">
 import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLoaderCircular, SfCheckbox } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
-const ID_CHECKBOX = '#terms-checkbox';
-
 const localePath = useLocalePath();
-const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling, save, isLoading, hasOpenForms, isValid, validateAddresses} = useCheckout();
+const { combineShippingAndBilling, save, isLoading, hasOpenForms, validateAddresses, validateTerms } = useCheckout();
 const showSaveButton = ref(false);
 const { getActiveShippingCountries } = useActiveShippingCountries();
-const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loading: loadShipping,
   data: shippingMethodData,
@@ -153,6 +148,7 @@ const paypalPaymentId = computed(() =>
 const paypalCreditCardPaymentId = computed(() =>
   paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
 );
+const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 
 const loadAddresses = async () => {
   await Promise.all([
@@ -172,11 +168,14 @@ const paymentMethods = computed(() => paymentMethodData.value);
 const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
 
 onNuxtReady(() => {
-  watch(hasOpenForms, (value) => {
-    showSaveButton.value = value;
-  }, { immediate: true });
-})
-
+  watch(
+    () => hasOpenForms.value,
+    (value) => {
+      showSaveButton.value = value;
+    },
+    { immediate: true },
+  );
+});
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
@@ -191,38 +190,13 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
   await getShippingMethods();
 };
 
-const scrollToHTMLObject = (object: string) => {
-  const element = document.querySelector(object) as HTMLElement;
-  const elementOffset = element?.offsetTop ?? 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: elementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
-const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
-  let valid = true;
-  setShowErrors(!termsAccepted.value);
-
-  if (!termsAccepted.value) {
-    scrollToHTMLObject(ID_CHECKBOX);
-    valid = false;
+const openPayPalCardDialog = async () => {
+  try {
+    await validateAddresses();
+  } catch (error) {
+    return;
   }
-
-  if (callback) {
-    callback(valid);
-  }
-
-  return valid;
-};
-
-
-const openPayPalCardDialog = () => {
-  if (!validateAddresses() || !validateTerms()) {
+  if (!validateTerms()) {
     return;
   }
 

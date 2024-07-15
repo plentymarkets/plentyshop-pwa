@@ -34,7 +34,7 @@ export const useAddressForm = (type: AddressType) => {
         state.value.isLoading = true;
         emitValidationStart();
 
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             watch(() => state.value.onValidationEnd, async (value) => {
                 state.value.onValidationStart = false;
                 state.value.addressToSave = value.address;
@@ -46,7 +46,7 @@ export const useAddressForm = (type: AddressType) => {
                     resolve(true);
                 } else {
                     state.value.isLoading = false;
-                    resolve(false);
+                    reject(false);
                 }
             }, { once: true });
         });

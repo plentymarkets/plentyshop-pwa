@@ -1,4 +1,5 @@
 import { AddressType } from '@plentymarkets/shop-api';
+import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 export const useCheckout = (cacheKey = '') => {
 
@@ -10,6 +11,8 @@ export const useCheckout = (cacheKey = '') => {
     const ID_BILLING_ADDRESS = '#billing-address';
     const ID_SAVE_ADDRESS = '#save-address';
     const ID_SHIPPING_ADDRESS = '#shipping-address';
+    const ID_CHECKBOX = '#terms-checkbox';
+
 
     const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
     const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
@@ -18,6 +21,9 @@ export const useCheckout = (cacheKey = '') => {
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
+
+    const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+
 
     const { t } = useI18n();
     const { send } = useNotification();
@@ -63,20 +69,38 @@ export const useCheckout = (cacheKey = '') => {
         });
     };
 
+    const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+        let valid = true;
+        setShowErrors(!termsAccepted.value);
 
+        if (!termsAccepted.value) {
+            scrollToHTMLObject(ID_CHECKBOX);
+            valid = false;
+        }
+
+        if (callback) {
+            callback(valid);
+        }
+
+        return valid;
+    };
 
     const validateAddresses = async () => {
         return new Promise((resolve, reject) => {
             if (hasOpenForms.value) {
                 try {
                     save()
-                    .finally(() => {
-                        if (!isValid.value) {
-                            scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-                            reject(false);
-                        }
-                        resolve(true);
-                    })
+                        .then((isValid) => {
+                            if (!isValid) {
+                                console.log('not valid reject');
+                                scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+                                reject(false);
+                            } else {
+                                resolve(true);
+                            }
+                        }).catch(() =>
+                            reject(false)
+                        )
                 } catch (error) {
                     reject(false);
                 }
@@ -126,6 +150,7 @@ export const useCheckout = (cacheKey = '') => {
         ...toRefs(state.value),
         save,
         validateAddresses,
+        validateTerms,
         isValid,
         isLoading,
         hasOpenForms,
