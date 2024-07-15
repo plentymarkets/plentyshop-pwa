@@ -125,15 +125,13 @@ definePageMeta({
 });
 
 const ID_CHECKBOX = '#terms-checkbox';
-const ID_BILLING_ADDRESS = '#billing-address';
-const ID_SHIPPING_ADDRESS = '#shipping-address';
 
 const localePath = useLocalePath();
 const { send } = useNotification();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling, save, isLoading, hasOpenForms } = useCheckout();
+const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
+const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { combineShippingAndBilling, save, isLoading, hasOpenForms, isValid, validateAddresses} = useCheckout();
 const showSaveButton = ref(false);
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
@@ -176,7 +174,7 @@ const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
 onNuxtReady(() => {
   watch(hasOpenForms, (value) => {
     showSaveButton.value = value;
-  });
+  }, { immediate: true });
 })
 
 
@@ -222,27 +220,6 @@ const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
   return valid;
 };
 
-const validateAddresses = () => {
-  if (billingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('billingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_BILLING_ADDRESS);
-    return false;
-  }
-
-  if (shippingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('shippingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-    return false;
-  }
-
-  return true;
-};
 
 const openPayPalCardDialog = () => {
   if (!validateAddresses() || !validateTerms()) {
@@ -265,7 +242,13 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
-  if (!validateAddresses() || !validateTerms()) return;
+  try {
+    await validateAddresses();
+  } catch (error) {
+    return;
+  }
+
+  if (!validateTerms()) return;
 
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 

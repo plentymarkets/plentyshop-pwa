@@ -1,5 +1,6 @@
 import { Address, AddressType } from "@plentymarkets/shop-api";
 import { OnValidationEnd } from "./types";
+
 export const useAddressForm = (type: AddressType) => {
 
     const { saveAddress } = useAddress(type);
@@ -29,11 +30,11 @@ export const useAddressForm = (type: AddressType) => {
     /**
      * Triggers the forms validation and saves the address if it is valid
      */
-    const save = async (combineShippingAndBilling: boolean = false) => {
+    const save = async (combineShippingAndBilling: boolean = false): Promise<Boolean> => {
         state.value.isLoading = true;
         emitValidationStart();
 
-        await new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             watch(() => state.value.onValidationEnd, async (value) => {
                 state.value.onValidationStart = false;
                 state.value.addressToSave = value.address;
@@ -45,7 +46,7 @@ export const useAddressForm = (type: AddressType) => {
                     resolve(true);
                 } else {
                     state.value.isLoading = false;
-                    reject(false);
+                    resolve(false);
                 }
             }, { once: true });
         });

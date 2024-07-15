@@ -7,6 +7,10 @@ export const useCheckout = (cacheKey = '') => {
         init: false
     }));
 
+    const ID_BILLING_ADDRESS = '#billing-address';
+    const ID_SAVE_ADDRESS = '#save-address';
+    const ID_SHIPPING_ADDRESS = '#shipping-address';
+
     const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
     const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
     const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen } = useAddressForm(AddressType.Shipping);
@@ -14,6 +18,9 @@ export const useCheckout = (cacheKey = '') => {
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
+
+    const { t } = useI18n();
+    const { send } = useNotification();
 
     if (!state.value.init) {
         shippingOpen.value = true;
@@ -43,24 +50,82 @@ export const useCheckout = (cacheKey = '') => {
         }
     });
 
+    const scrollToHTMLObject = (object: string) => {
+        const element = document.querySelector(object) as HTMLElement;
+        const elementOffset = element?.offsetTop ?? 0;
+
+        const headerElement = document.querySelector('header') as HTMLElement;
+        const headerElementOffset = headerElement.offsetHeight ?? 0;
+
+        window.scrollTo({
+            top: elementOffset - headerElementOffset,
+            behavior: 'smooth',
+        });
+    };
+
+
+
+    const validateAddresses = async () => {
+        return new Promise((resolve, reject) => {
+            if (hasOpenForms.value) {
+                try {
+                    save()
+                    .finally(() => {
+                        if (!isValid.value) {
+                            scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+                            reject(false);
+                        }
+                        resolve(true);
+                    })
+                } catch (error) {
+                    reject(false);
+                }
+            } else {
+                if (!hasShippingAddress.value) {
+                    send({
+                        type: 'negative',
+                        message: t('billingAddressRequired'),
+                    });
+                    scrollToHTMLObject(ID_BILLING_ADDRESS);
+                    reject(false);
+                } else if (!hasBillingAddress.value) {
+                    send({
+                        type: 'negative',
+                        message: t('shippingAddressRequired'),
+                    });
+                    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+                    reject(false);
+                } else {
+                    resolve(true);
+                }
+            }
+        });
+    };
+
     const save = async () => {
 
         if (state.value.combineShippingAndBilling && shippingOpen.value) {
-            saveShipping(true);
-            return;
+            return saveShipping(true);
         }
+
+        const toSave = [];
+
         if (shippingOpen.value) {
-            await saveShipping();
-        }
+            toSave.push(saveShipping());
+        };
+
         if (billingOpen.value) {
-            await saveBilling();
+            toSave.push(saveBilling());
         }
+
+        return Promise.all(toSave);
 
     }
 
     return {
         ...toRefs(state.value),
         save,
+        validateAddresses,
         isValid,
         isLoading,
         hasOpenForms,
