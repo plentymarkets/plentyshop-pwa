@@ -1,6 +1,6 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex items-center justify-between mb-4">
+    <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>

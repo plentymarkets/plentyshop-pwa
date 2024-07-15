@@ -18,8 +18,7 @@
           :key="1"
           id="billing-address"
         ></AddressContainer>
-        <client-only>
-          <div v-if="hasOpenForms" class="flex w-full -mx-4">
+          <div v-if="showSaveButton" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"
             type="button"
@@ -33,7 +32,6 @@
             </span>
           </SfButton>
         </div>
-          </client-only>
         
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -136,6 +134,7 @@ const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { combineShippingAndBilling, save, isLoading, hasOpenForms } = useCheckout();
+const showSaveButton = ref(false);
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
@@ -173,6 +172,13 @@ await loadAddresses();
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
+
+onNuxtReady(() => {
+  watch(hasOpenForms, (value) => {
+    showSaveButton.value = value;
+  });
+})
+
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
