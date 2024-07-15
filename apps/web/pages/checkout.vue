@@ -18,7 +18,8 @@
           :key="1"
           id="billing-address"
         ></AddressContainer>
-        <div v-if="hasOpenForms" class="flex w-full -mx-4">
+        <client-only>
+          <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"
             type="button"
@@ -32,6 +33,8 @@
             </span>
           </SfButton>
         </div>
+          </client-only>
+        
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod

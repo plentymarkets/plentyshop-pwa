@@ -74,6 +74,8 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   const setDisplayAddress = (address: Address, setAsCheckoutAddress = false): void => {
     state.value.displayAddress = address;
 
+    console.log(address);
+
     if (setAsCheckoutAddress) {
       useSdk().plentysystems.setCheckoutAddress({ typeId: type, addressId: Number(address.id) });
     }
@@ -145,11 +147,10 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.loading = false;
 
     const lastAddress = data?.value?.data?.at(-1);
+    console.log(lastAddress);
     if (lastAddress) {
-      address.id = lastAddress.id ?? undefined;
+      setDisplayAddress(lastAddress);
     }
-
-    setDisplayAddress(address);
     state.value.data = data.value?.data ?? state.value.data;
 
     return state.value.data ?? [];

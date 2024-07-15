@@ -60,8 +60,6 @@ const setFormToDisplayAddress = () => {
 };
 
 onNuxtReady(() => {
-  setHeading();
-
   if (hasDisplayAddress.value) {
     setFormToDisplayAddress();
   }
@@ -81,9 +79,6 @@ watch(displayAddress, () => {
   setFormToDisplayAddress();
 });
 
-watch(combineShippingAndBilling, () => {
-  setHeading();
-});
 
 const setHeading = () => {
   if (combineShippingAndBilling.value) {
@@ -94,4 +89,8 @@ const setHeading = () => {
     heading.value = t('billing.heading');
   }
 };
+
+watch(combineShippingAndBilling, () => {
+  setHeading();
+}, { immediate: true });
 </script>

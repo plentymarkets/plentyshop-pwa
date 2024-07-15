@@ -165,7 +165,7 @@ import { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 
-const { isLoading, onValidationStart, onValidationEnd } = useAddressForm(AddressType.Shipping);
+const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Shipping);
 const { data: shippingCountries } = useActiveShippingCountries();
 const hasCompany = ref(false);
 const toggleCompany = () => {
@@ -214,15 +214,23 @@ const [company, companyAttribures] = defineField('form.company');
 
 setValues({form: props.address as any});
 
-watch(onValidationStart, async (startValidation) => {
+const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
     const validation = await validate();
-    onValidationEnd.value = {
+    console.log(validation);
+    emitValidationEnd({
       address: values.form as Address,
-      validation,
-    };
+      validation: validation as any,
+    });
   }
 });
+
+onUnmounted(() => {
+  // https://vuejs.org/guide/essentials/watchers#stopping-a-watcher
+  unwatch();
+});
+
+
 
 const states = computed(() => {
   const selectedCountry = values.form?.country;

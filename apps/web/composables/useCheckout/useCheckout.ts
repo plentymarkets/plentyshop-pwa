@@ -15,20 +15,18 @@ export const useCheckout = (cacheKey = '') => {
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
 
-
     if (!state.value.init) {
         shippingOpen.value = true;
         billingOpen.value = true;
         state.value.init = true;
+        if (hasBillingAddress.value) {
+            state.value.combineShippingAndBilling = false;
+        }
     }
 
     if (hasShippingAddress.value) {
         shippingOpen.value = false;
         billingOpen.value = false;
-    }
-
-    if (hasBillingAddress.value) {
-        state.value.combineShippingAndBilling = false;
     }
 
     watch(hasShippingAddress, (value) => {
@@ -49,8 +47,9 @@ export const useCheckout = (cacheKey = '') => {
 
     const save = async () => {
 
-        if (state.value.combineShippingAndBilling) {
+        if (state.value.combineShippingAndBilling && shippingOpen.value) {
             await saveShippingAndBilling()
+            return;
         }
         if (shippingOpen.value) {
             await saveShipping();

@@ -159,7 +159,7 @@ import { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 
-const { isLoading, onValidationStart, onValidationEnd } = useAddressForm(AddressType.Billing);
+const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
 const hasCompany = ref(false);
@@ -197,14 +197,19 @@ const { defineField, errors, values, resetForm, validate, setValues } = useForm(
 
 setValues({form: props.address as any});
 
-watch(onValidationStart, async (startValidation) => {
+const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
     const validation = await validate();
-    onValidationEnd.value = {
+    console.log(validation);
+    emitValidationEnd({
       address: values.form as Address,
-      validation,
-    };
+      validation: validation as any,
+    })
   }
+});
+
+onUnmounted(() => {
+  unwatch();
 });
 
 const [firstName, firstNameAttribures] = defineField('form.firstName');
