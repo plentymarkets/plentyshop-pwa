@@ -13,7 +13,7 @@ export interface UseAddressMethodsState {
 }
 
 export type GetAddresses = () => Promise<Address[]>;
-export type SaveAddress = (address: Address) => Promise<Address[]>;
+export type SaveAddress = (address: Address, combineShippingBilling?: boolean) => Promise<Address[]>;
 export type SetDefault = (address: Address) => void;
 export type SetCheckoutAddress = (typeId: AddressType, addressId: number) => void;
 export type DeleteAddress = (addressId: number) => Promise<Address[]>;

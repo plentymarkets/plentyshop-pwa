@@ -5,7 +5,7 @@
         {{ heading }}
       </h2>
       <label class="flex items-center gap-2" v-if="type === AddressType.Shipping">
-        <SfCheckbox name="useAsShipping" v-model="combineShippingAndBilling" />
+        <SfCheckbox name="combineShippingBilling" v-model="combineShippingAndBilling" />
         <span>{{ t('form.useAsBillingLabel') }}</span>
       </label>
     </div>
@@ -55,28 +55,19 @@ const setFormAddress = (address: Address) => {
   formAddress.value = address;
 };
 
-const setFormToDisplayAddress = () => {
-  setFormAddress(displayAddress.value);
-};
-
 onNuxtReady(() => {
   if (hasDisplayAddress.value) {
-    setFormToDisplayAddress();
+    setFormAddress(displayAddress.value)
   }
 });
 
 const editForm = (address: Address) => {
-  if (edit.value) {
-    edit.value = false;
-    setFormToDisplayAddress();
-    return;
-  }
-  setFormAddress(address);
-  edit.value = true;
+  edit.value = !edit.value;
+  setFormAddress(edit.value ? address : displayAddress.value);
 }
 
 watch(displayAddress, () => {
-  setFormToDisplayAddress();
+  setFormAddress(displayAddress.value)
 });
 
 

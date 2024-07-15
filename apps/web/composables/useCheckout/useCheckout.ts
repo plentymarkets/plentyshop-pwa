@@ -9,7 +9,7 @@ export const useCheckout = (cacheKey = '') => {
 
     const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
     const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
-    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen, saveShippingAndBilling } = useAddressForm(AddressType.Shipping);
+    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen } = useAddressForm(AddressType.Shipping);
     const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen } = useAddressForm(AddressType.Billing);
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
@@ -36,10 +36,8 @@ export const useCheckout = (cacheKey = '') => {
     })
 
     watch(() => state.value.combineShippingAndBilling, (value) => {
-        if (!value) {
-            if (!hasBillingAddress.value) {
-                billingOpen.value = true;
-            }
+        if (!value && !hasBillingAddress.value) {
+            billingOpen.value = true;
         } else {
             billingOpen.value = false;
         }
@@ -48,7 +46,7 @@ export const useCheckout = (cacheKey = '') => {
     const save = async () => {
 
         if (state.value.combineShippingAndBilling && shippingOpen.value) {
-            await saveShippingAndBilling()
+            saveShipping(true);
             return;
         }
         if (shippingOpen.value) {

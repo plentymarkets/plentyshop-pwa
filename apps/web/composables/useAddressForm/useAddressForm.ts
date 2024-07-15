@@ -2,7 +2,7 @@ import { Address, AddressType } from "@plentymarkets/shop-api";
 import { OnValidationEnd } from "./types";
 export const useAddressForm = (type: AddressType) => {
 
-    const { saveAddress, setCheckoutAddress} = useAddress(type);
+    const { saveAddress } = useAddress(type);
 
     const state = useState('useAddressForm' + type, () => ({
         isLoading: false,
@@ -26,47 +26,29 @@ export const useAddressForm = (type: AddressType) => {
         return state.value.onValidationEnd.validation.valid;
     });
 
-    const saveShippingAndBilling = async () => {
-
-        state.value.isLoading = true;
-        emitValidationStart();
-
-        watch(() => state.value.onValidationEnd, async (value) => {
-            state.value.onValidationStart = false;
-            state.value.addressToSave = value.address;
-            if (value.validation.valid) {
-                const addresses = await saveAddress(state.value.addressToSave as Address);
-                console.log('data', addresses);
-                if (addresses[0].id){
-                    setCheckoutAddress(AddressType.Billing, addresses[0].id );
-                }
-                state.value.open = false;
-                state.value.isLoading = false;
-            } else {
-                state.value.isLoading = false;
-            }
-        }, { once: true })
-    }
-
     /**
      * Triggers the forms validation and saves the address if it is valid
      */
-    const save = async () => {
+    const save = async (combineShippingAndBilling: boolean = false) => {
         state.value.isLoading = true;
         emitValidationStart();
 
-        watch(() => state.value.onValidationEnd, async (value) => {
-            state.value.onValidationStart = false;
-            state.value.addressToSave = value.address;
-            console.log('value', value);
-            if (value.validation.valid) {
-                await saveAddress(state.value.addressToSave as Address);
-                state.value.open = false;
-                state.value.isLoading = false;
-            } else {
-                state.value.isLoading = false;
-            }
-        }, { once: true })
+        await new Promise((resolve, reject) => {
+            watch(() => state.value.onValidationEnd, async (value) => {
+                state.value.onValidationStart = false;
+                state.value.addressToSave = value.address;
+
+                if (value.validation.valid) {
+                    await saveAddress(state.value.addressToSave as Address, combineShippingAndBilling);
+                    state.value.open = false;
+                    state.value.isLoading = false;
+                    resolve(true);
+                } else {
+                    state.value.isLoading = false;
+                    reject(false);
+                }
+            }, { once: true });
+        });
     }
 
     const emitValidationStart = () => {
@@ -82,7 +64,6 @@ export const useAddressForm = (type: AddressType) => {
         emitValidationStart,
         emitValidationEnd,
         save,
-        saveShippingAndBilling,
         isValid,
         ...toRefs(state.value),
     }

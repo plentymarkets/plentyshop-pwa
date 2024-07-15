@@ -133,7 +133,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     return state.value.data;
   };
 
-  const saveAddress: SaveAddress = async (address: Address) => {
+  const saveAddress: SaveAddress = async (address: Address, combineShippingBilling: boolean = false) => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData(type.toString(), () =>
@@ -146,11 +146,17 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     useHandleError(error.value);
     state.value.loading = false;
 
+    // TODO: find out if its the first address or last address
     const lastAddress = data?.value?.data?.at(-1);
-    console.log(lastAddress);
     if (lastAddress) {
       setDisplayAddress(lastAddress);
+      if (combineShippingBilling) {
+        setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(lastAddress)));
+      }
     }
+
+
+
     state.value.data = data.value?.data ?? state.value.data;
 
     return state.value.data ?? [];

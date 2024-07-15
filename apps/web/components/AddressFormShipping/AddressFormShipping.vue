@@ -217,7 +217,7 @@ setValues({form: props.address as any});
 const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
     const validation = await validate();
-    console.log(validation);
+
     emitValidationEnd({
       address: values.form as Address,
       validation: validation as any,
