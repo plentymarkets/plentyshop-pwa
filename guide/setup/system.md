@@ -20,16 +20,16 @@ For plentyShop PWA to run, you have to install plugins that provide additional R
     - PayPal
 3. Set the priorities of the plugins, so that IO has the highest priority and plentyShop LTS the second highest. The priority of all other plugins remains 0.
 
-Optionally, install additional plugins to add more payment providers to your shop.
+Optionally, install additional plugins to add more payment or shipping providers to your shop.
 
 ::: details Available payment providers
-- Cash in advance
-- Pay upon pickup
+- [Cash in advance](https://marketplace.plentymarkets.com/prepayment_4758)
+- [Pay upon pickup](https://marketplace.plentymarkets.com/payuponpickup_4757)
 :::
 
 ::: details Available shipping providers
-- DHL Shipping
-- GLS Shipping
+- [DHL Shipping](https://marketplace.plentymarkets.com/dhlshipping_4871)
+- [GLS Shipping](https://marketplace.plentymarkets.com/en/glsshipping_6463)
 :::
 
 ::: info
