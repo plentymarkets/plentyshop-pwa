@@ -158,8 +158,14 @@
       @click="changeVisibilityState"
       data-testid="cookie-bar-open-btn"
     >
-      <SfIconBase viewBox="0 0 24 24" size="base">
-        <path d="M9 16h.01M12 11h.01M7 10h.01M15 16h.01M21 12a9 9 0 1 1-9-9c0 2.761 1.79 5 4 5 0 2.21 2.239 4 5 4z" />
+      <SfIconBase viewBox="0 0 24 24" size="base" class="fill-none">
+        <path
+          d="M9 16h.01M12 11h.01M7 10h.01M15 16h.01M21 12a9 9 0 1 1-9-9c0 2.761 1.79 5 4 5 0 2.21 2.239 4 5 4z"
+          stroke="#0c7992"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
       </SfIconBase>
     </SfButton>
   </client-only>
