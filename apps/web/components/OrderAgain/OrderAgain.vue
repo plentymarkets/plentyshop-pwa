@@ -20,7 +20,9 @@
     </header>
 
     <div class="w-full">
-      <div class="overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-205px)] md:max-h-[calc(100vh-270px)]">
+      <div
+        class="overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-205px)] md:max-h-[calc(100vh-270px)]"
+      >
         <div v-if="!loading">
           <div
             v-for="item in orderGetters.getItems(order)"
@@ -31,8 +33,7 @@
               <NuxtImg
                 ref="img"
                 :src="
-                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) ||
-                  '/images/placeholder.png'
+                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) || '/images/placeholder.png'
                 "
                 :alt="orderGetters.getItemName(item)"
                 width="300"
@@ -141,7 +142,8 @@ import {
   SfIconError,
   SfIconArrowUpward,
   SfIconArrowDownward,
-  SfListItem, SfLink,
+  SfListItem,
+  SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-api';
