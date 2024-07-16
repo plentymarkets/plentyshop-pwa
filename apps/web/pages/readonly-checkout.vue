@@ -10,25 +10,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="billing-address"
-          :heading="t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
-          :type="AddressType.Billing"
-          disabled
-        />
+        <AddressContainer disabled :type="AddressType.Shipping"> </AddressContainer>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
-          :type="AddressType.Shipping"
-          disabled
-        />
+        <AddressContainer disabled :type="AddressType.Billing"> </AddressContainer>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
           <ShippingMethod :shipping-methods="shippingMethods" disabled />

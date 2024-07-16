@@ -4,7 +4,7 @@
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <label class="flex items-center gap-2" v-if="type === AddressType.Shipping">
+      <label class="flex items-center gap-2" v-if="type === AddressType.Shipping && !disabled">
         <SfCheckbox name="combineShippingBilling" v-model="combineShippingAndBilling" />
         <span>{{ t('form.useAsBillingLabel') }}</span>
       </label>
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div>
-        <AddressSelect v-if="!edit" @edit="editForm($event)" :type="type"></AddressSelect>
+        <AddressSelect v-if="!disabled && !edit" @edit="editForm($event)" :type="type"></AddressSelect>
         <SfTooltip label="Edit address">
           <SfButton
             v-if="!disabled && hasDisplayAddress"
@@ -35,7 +35,7 @@
       </div>
     </div>
 
-    <div v-if="edit">
+    <div v-if="edit && !disabled">
       <AddressFormShipping v-if="type === AddressType.Shipping" :address="formAddress" />
       <AddressFormBilling v-if="type === AddressType.Billing" :address="formAddress" />
     </div>
