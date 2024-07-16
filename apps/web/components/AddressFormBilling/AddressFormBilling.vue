@@ -61,8 +61,12 @@
         autocomplete="country-name"
         :invalid="Boolean(errors['form.country'])"
       >
-        <option v-for="(country, index) in shippingCountries" :key="index" :value="country.id.toString()">
-          {{ country.currLangName }}
+        <option
+          v-for="(shippingCountry, index) in shippingCountries"
+          :key="index"
+          :value="shippingCountry.id.toString()"
+        >
+          {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
@@ -138,13 +142,22 @@
         :placeholder="t('form.selectPlaceholder')"
         :invalid="Boolean(errors['form.state'])"
       >
-        <option v-for="(state, index) in states" :key="index" :value="state.id.toString()">{{ state.name }}</option>
+        <option v-for="(countryState, index) in states" :key="index" :value="countryState.id.toString()">
+          {{ countryState.name }}
+        </option>
       </SfSelect>
       <VeeErrorMessage as="span" name="form.state" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="md:col-span-3 flex">
-      <SfButton type="button" class="max-md:w-1/2 ml-auto" variant="tertiary" size="sm" :disabled="isLoading" @click="resetForm">
+      <SfButton
+        type="button"
+        class="max-md:w-1/2 ml-auto"
+        variant="tertiary"
+        size="sm"
+        :disabled="isLoading"
+        @click="resetForm"
+      >
         {{ t('contactInfo.clearAll') }}
       </SfButton>
     </div>
@@ -159,19 +172,10 @@ import { AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 
+const { t } = useI18n();
 const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
-const hasCompany = ref(false);
-const toggleCompany = () => {
-  hasCompany.value = !hasCompany.value;
-  if (!hasCompany.value) {
-    company.value = '';
-    vatId.value = '';
-  }
-};
-
-const { t } = useI18n();
 const validationSchema = toTypedSchema(
   object({
     form: object({
@@ -195,23 +199,6 @@ const { defineField, errors, values, resetForm, validate, setValues } = useForm(
   validationSchema: validationSchema,
 });
 
-setValues({form: props.address as any});
-
-const unwatch = watch(onValidationStart, async (startValidation) => {
-  if (startValidation) {
-    const validation = await validate();
-    
-    emitValidationEnd({
-      address: values.form as Address,
-      validation: validation as any,
-    })
-  }
-});
-
-onUnmounted(() => {
-  unwatch();
-});
-
 const [firstName, firstNameAttribures] = defineField('form.firstName');
 const [lastName, lastNameAttribures] = defineField('form.lastName');
 const [phoneNumber, phoneNumberAttribures] = defineField('form.phoneNumber');
@@ -223,6 +210,32 @@ const [state, stateAttribures] = defineField('form.state');
 const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
 const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
+
+const hasCompany = ref(false);
+const toggleCompany = () => {
+  hasCompany.value = !hasCompany.value;
+  if (!hasCompany.value) {
+    company.value = '';
+    vatId.value = '';
+  }
+};
+
+setValues({ form: props.address as any });
+
+const unwatch = watch(onValidationStart, async (startValidation) => {
+  if (startValidation) {
+    const validation = await validate();
+
+    emitValidationEnd({
+      address: values.form as Address,
+      validation: validation as any,
+    });
+  }
+});
+
+onUnmounted(() => {
+  unwatch();
+});
 
 const states = computed(() => {
   const selectedCountry = values.form?.country;
