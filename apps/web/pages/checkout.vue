@@ -18,7 +18,7 @@
           :key="1"
           id="billing-address"
         ></AddressContainer>
-        <div v-if="showSaveButton" class="flex w-full -mx-4">
+        <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SfButton
             data-testid="save-address"
             type="button"
@@ -129,7 +129,6 @@ const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const { combineShippingAndBilling, save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } =
   useCheckout();
-const showSaveButton = ref(false);
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const {
   loading: loadShipping,
@@ -167,16 +166,6 @@ await loadAddresses();
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
-
-onNuxtReady(() => {
-  watch(
-    () => hasOpenForms.value,
-    (value) => {
-      showSaveButton.value = value;
-    },
-    { immediate: true },
-  );
-});
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
