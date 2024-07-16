@@ -1,4 +1,4 @@
-import type { Order } from '@plentymarkets/shop-api';
+import { Order } from '@plentymarkets/shop-api';
 
 export interface UseOrderAgainState {
   loading: boolean;

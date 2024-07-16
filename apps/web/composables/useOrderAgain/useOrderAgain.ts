@@ -46,7 +46,6 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
     if (data.value?.data?.data) {
       state.value.order = data.value.data.data;
       state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.value.data.data);
-      state.value.order.order.orderItems = [...state.value.order.order.orderItems, ...state.value.order.order.orderItems];
       state.value.hasItemsChanged = state.value.order
         ? orderGetters.hasOrderAgainChangedItems(state.value.order)
         : false;
