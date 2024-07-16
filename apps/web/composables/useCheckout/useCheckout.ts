@@ -8,23 +8,19 @@ export const useCheckout = (cacheKey = '') => {
         init: false
     }));
 
-    const ID_BILLING_ADDRESS = '#billing-address';
     const ID_SHIPPING_ADDRESS = '#shipping-address';
     const ID_CHECKBOX = '#terms-checkbox';
 
 
     const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
     const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
-    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen } = useAddressForm(AddressType.Shipping);
+    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen, saveShippingAndBilling } = useAddressForm(AddressType.Shipping);
     const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen } = useAddressForm(AddressType.Billing);
     const isLoading = computed(() => shippingLoading.value || billingLoading.value);
     const isValid = computed(() => shippingValid.value && billingValid.value);
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
 
     const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-
-    const { t } = useI18n();
-    const { send } = useNotification();
 
     if (!state.value.init) {
         shippingOpen.value = true;
@@ -98,23 +94,15 @@ export const useCheckout = (cacheKey = '') => {
     };
 
     const save = async () => {
-
-        if (state.value.combineShippingAndBilling && shippingOpen.value) {
-            return saveShipping(true);
-        }
-
         const toSave = [];
 
-        if (shippingOpen.value) {
-            toSave.push(saveShipping());
-        };
+        if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
 
-        if (billingOpen.value) {
-            toSave.push(saveBilling());
-        }
+        if (shippingOpen.value) toSave.push(saveShipping());
+
+        if (billingOpen.value) toSave.push(saveBilling());
 
         return Promise.all(toSave);
-
     }
 
     return {

@@ -27,6 +27,10 @@ export const useAddressForm = (type: AddressType) => {
         return state.value.onValidationEnd.validation.valid;
     });
 
+    const saveShippingAndBilling = () => {
+        return save(true);
+    }
+
     /**
      * Triggers the forms validation and saves the address if it is valid
      */
@@ -65,6 +69,7 @@ export const useAddressForm = (type: AddressType) => {
         emitValidationStart,
         emitValidationEnd,
         save,
+        saveShippingAndBilling,
         isValid,
         ...toRefs(state.value),
     }
