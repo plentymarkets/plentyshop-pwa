@@ -26,6 +26,10 @@
             {
                 "text": "Bot protection",
                 "link": "/guide/how-to/bot-protection.md"
+            },
+            {
+                "text": "Custom Icon",
+                "link": "/guide/how-to/custom-icon.md"
             }
         ]
     },
