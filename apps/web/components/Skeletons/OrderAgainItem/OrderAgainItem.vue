@@ -22,6 +22,5 @@
       <div class="h-4 bg-gray-300 rounded-sm w-7/12 mt-1"></div>
       <div class="h-6 sm:h-8 bg-gray-300 rounded-sm w-[150px] mt-2"></div>
     </div>
-    <span class="sr-only">Loading...</span>
   </div>
 </template>
