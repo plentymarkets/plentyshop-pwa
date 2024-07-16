@@ -1,4 +1,4 @@
-import type { BasketItemOrderParamsProperty, DoAddItemParams, Order } from '@plentymarkets/shop-api';
+import { BasketItemOrderParamsProperty, DoAddItemParams, Order, orderGetters } from '@plentymarkets/shop-api';
 import type {
   AddOrderToCart,
   OpenOrderAgainModal,
@@ -6,7 +6,6 @@ import type {
   UseOrderAgainState,
   LoadOrderInformation,
 } from './types';
-import { orderGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing order again data
@@ -47,6 +46,7 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
     if (data.value?.data?.data) {
       state.value.order = data.value.data.data;
       state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.value.data.data);
+      state.value.order.order.orderItems = [...state.value.order.order.orderItems, ...state.value.order.order.orderItems];
       state.value.hasItemsChanged = state.value.order
         ? orderGetters.hasOrderAgainChangedItems(state.value.order)
         : false;
