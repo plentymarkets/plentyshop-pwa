@@ -226,7 +226,11 @@ const toggleCompany = () => {
   }
 };
 
-setValues({ form: props.address as any });
+if (!props.address){
+  resetForm();
+} else {
+  setValues({ form: props.address as any });
+}
 
 const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
