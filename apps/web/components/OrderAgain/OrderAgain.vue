@@ -143,7 +143,6 @@ import {
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfListItem,
-  SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-api';
@@ -157,7 +156,6 @@ const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const loadingAddToCart = ref(false);
-const NuxtLink = resolveComponent('NuxtLink');
 
 const close = () => {
   isOpen.value = false;
