@@ -33,7 +33,7 @@
       />
     </div>
     <div class="flex justify-end w-full">
-      <SfButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="openForm({})">
+      <SfButton variant="secondary" class="mt-10" @click="openForm({})">
         <template v-if="type === AddressType.Shipping">{{ $t('newShippingAddress') }}</template>
         <template v-else>{{ $t('newBillingAddress') }}</template>
       </SfButton>
