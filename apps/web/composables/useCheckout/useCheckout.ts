@@ -79,9 +79,7 @@ export const useCheckout = (cacheKey = '') => {
         const toSave = [];
 
         if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
-
         if (shippingOpen.value) toSave.push(saveShipping());
-
         if (billingOpen.value) toSave.push(saveBilling());
 
         return Promise.all(toSave);

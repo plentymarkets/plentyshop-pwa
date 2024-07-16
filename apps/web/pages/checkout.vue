@@ -19,20 +19,8 @@
           id="billing-address"
         ></AddressContainer>
         <div v-if="hasOpenForms" class="flex w-full -mx-4">
-          <SfButton
-            data-testid="save-address"
-            type="button"
-            class="min-w-[120px] ml-auto my-2"
-            :disabled="isLoading"
-            @click="save"
-          >
-            <SfLoaderCircular v-if="isLoading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ $t('contactInfo.save') }}
-            </span>
-          </SfButton>
+          <SaveAddressButton :isLoading="isLoading" :save="save" />
         </div>
-
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -150,18 +138,14 @@ const paypalCreditCardPaymentId = computed(() =>
 );
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 
-const loadAddresses = async () => {
-  await Promise.all([
-    getActiveShippingCountries(),
-    getBillingAddresses(),
-    getShippingAddresses(),
-    getShippingMethods(),
-    getCart(),
-    fetchPaymentMethods(),
-  ]);
-};
-
-await loadAddresses();
+await Promise.all([
+  getActiveShippingCountries(),
+  getBillingAddresses(),
+  getShippingAddresses(),
+  getShippingMethods(),
+  getCart(),
+  fetchPaymentMethods(),
+]);
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
