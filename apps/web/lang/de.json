@@ -812,5 +812,8 @@
     "subTotal": "Zwischensumme",
     "checkYourCart": "Warenkorb prüfen",
     "cartContains": "Ihr Warenkorb enthält {count} Artikel"
+  },
+  "addressContainer": {
+    "sameAsShippingAddress": "Entspricht der Lieferadresse"
   }
 }

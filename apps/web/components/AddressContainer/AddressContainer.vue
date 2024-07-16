@@ -16,7 +16,7 @@
           <div v-if="!combineShippingAndBilling && hasDisplayAddress && !edit" class="mt-2">
             <AddressDisplay :address="displayAddress" />
           </div>
-          <div v-if="combineShippingAndBilling && !edit">Same as Shipping</div>
+          <div v-if="combineShippingAndBilling && !edit">{{ $t('addressContainer.sameAsShippingAddress') }}</div>
         </template>
       </div>
       <div>
