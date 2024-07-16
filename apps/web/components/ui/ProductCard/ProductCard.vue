@@ -16,16 +16,16 @@
         class="flex items-center justify-center"
       >
         <NuxtImg
-          ref="img"
           :src="imageUrl"
           :alt="imageAlt"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
-          class="object-contain rounded-md aspect-square w-full"
-          data-testid="image-slot"
           :width="imageWidth"
           :height="imageHeight"
+          @load="trackImageLoading"
+          class="object-contain rounded-md aspect-square w-full"
+          data-testid="image-slot"
         />
         <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
@@ -133,34 +133,21 @@ const { addToCart } = useCart();
 const { send } = useNotification();
 const loading = ref(false);
 const imageLoaded = ref(false);
-const img = ref();
-const emit = defineEmits(['load']);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const productPath = ref('');
-
 const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
   const path = productGetters.getCategoryUrlPath(product, categoriesTree);
   const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`;
   productPath.value = localePath(`${path}/${productSlug}`);
 };
 
-onNuxtReady(() => {
-  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+onNuxtReady(() => setProductPath(categoryTree.value));
 
-  if (imgElement) {
-    if (!imageLoaded.value) {
-      if (imgElement.complete) imageLoaded.value = true;
-      imgElement.addEventListener('load', () => (imageLoaded.value = true));
-    }
-
-    nextTick(() => {
-      if (!imgElement.complete) emit('load');
-    });
-  }
-
-  setProductPath(categoryTree.value);
-});
+const trackImageLoading = (event: Event) => {
+  const imgElement = event.target as HTMLImageElement;
+  if (imgElement?.complete) imageLoaded.value = true;
+};
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
