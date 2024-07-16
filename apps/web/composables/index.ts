@@ -22,7 +22,6 @@ export * from './useCookieBar';
 export * from './useCoupon';
 export * from './useCsrfToken';
 export * from './useCustomer';
-export * from './useCustomerAddress';
 export * from './useCustomerContact';
 export * from './useCustomerOrder';
 export * from './useCustomerOrders';
