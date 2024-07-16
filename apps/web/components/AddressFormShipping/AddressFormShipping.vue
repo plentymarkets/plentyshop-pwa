@@ -226,11 +226,7 @@ const toggleCompany = () => {
   }
 };
 
-if (props.address) {
-  setValues({ form: props.address as any });
-} else {
-  resetForm();
-}
+props.address ? setValues({ form: props.address as any }) : resetForm();
 
 const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
@@ -243,10 +239,7 @@ const unwatch = watch(onValidationStart, async (startValidation) => {
   }
 });
 
-onUnmounted(() => {
-  // https://vuejs.org/guide/essentials/watchers#stopping-a-watcher
-  unwatch();
-});
+onUnmounted(() => unwatch());
 
 const states = computed(() => {
   const selectedCountry = values.form?.country;

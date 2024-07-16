@@ -40,10 +40,11 @@
     </div>
   </UiModal>
 </template>
+
 <script setup lang="ts">
 import { type AddressSelectEvents, type AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import type { Address } from '@plentymarkets/shop-api';
+import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, SfButton, useDisclosure, SfIconViewList, SfTooltip } from '@storefront-ui/vue';
 const { type } = defineProps<AddressSelectProps>();
 const {

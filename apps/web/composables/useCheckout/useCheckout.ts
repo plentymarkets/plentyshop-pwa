@@ -62,6 +62,7 @@ export const useCheckout = (cacheKey = '') => {
     () => state.value.combineShippingAndBilling,
     (value) => {
       billingOpen.value = !value && !hasBillingAddress.value ? true : false;
+      // eslint-disable-next-line unicorn/expiring-todo-comments
       // todo: if checked and shipping exists -> set billing to shipping id
     },
   );
@@ -75,9 +76,7 @@ export const useCheckout = (cacheKey = '') => {
       valid = false;
     }
 
-    if (callback) {
-      callback(valid);
-    }
+    if (callback) callback(valid);
 
     return valid;
   };
