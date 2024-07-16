@@ -1,6 +1,6 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
-import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
+import { type DeleteAddress, type SetDefault } from '~/composables/useAddress/types';
+import { type UseAddressReturn, type GetAddresses, type SaveAddress, UseAddressMethodsState } from './types';
 
 /**
  * @description Composable for working with addresses in the current user session.
@@ -153,6 +153,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     useHandleError(error.value);
     state.value.loading = false;
 
+    // eslint-disable-next-line unicorn/expiring-todo-comments
     // TODO: find out if its the first address or last address
     const lastAddress = data?.value?.data?.at(-1);
     if (lastAddress) {

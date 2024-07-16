@@ -1,4 +1,4 @@
-import type { Address } from '@plentymarkets/shop-api';
+import { type Address } from '@plentymarkets/shop-api';
 import { AddressType } from '@plentymarkets/shop-api';
 
 export interface UseAddressMethodsState {

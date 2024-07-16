@@ -44,8 +44,8 @@
 
 <script setup lang="ts">
 import { SfButton, SfCheckbox, SfIconBase, SfIconClose, SfTooltip } from '@storefront-ui/vue';
-import { AddressContainerProps } from './types';
-import { Address, AddressType } from '@plentymarkets/shop-api';
+import { type AddressContainerProps } from './types';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), {
   disabled: false,
 });

@@ -1,5 +1,5 @@
-import { Address, AddressType } from '@plentymarkets/shop-api';
-import { OnValidationEnd } from './types';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
+import { type OnValidationEnd } from './types';
 
 export const useAddressForm = (type: AddressType) => {
   const { saveAddress } = useAddress(type);

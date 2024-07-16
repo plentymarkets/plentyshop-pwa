@@ -19,7 +19,7 @@
           id="billing-address"
         ></AddressContainer>
         <div v-if="hasOpenForms" class="flex w-full -mx-4">
-          <SaveAddressButton :isLoading="isLoading" :save="save" />
+          <SaveAddressButton :is-loading="isLoading" :save="save" />
         </div>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">

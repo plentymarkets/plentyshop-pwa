@@ -1,116 +1,122 @@
 import { AddressType } from '@plentymarkets/shop-api';
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
-
+import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 const ID_CHECKBOX = '#terms-checkbox';
 
 /* eslint-disable sonarjs/cognitive-complexity */
 export const useCheckout = (cacheKey = '') => {
-    const state = useState('useCheckout' + cacheKey, () => ({
-        combineShippingAndBilling: true
-    }));
+  const state = useState('useCheckout' + cacheKey, () => ({
+    combineShippingAndBilling: true,
+  }));
 
-    const { hasDisplayAddress: hasShippingAddress, displayAddress: displayAddressShipping } = useAddress(AddressType.Shipping);
-    const { hasDisplayAddress: hasBillingAddress, displayAddress: displayAddressBilling } = useAddress(AddressType.Billing);
-    const {
-        save: saveShipping,
-        isLoading: shippingLoading,
-        isValid: shippingValid,
-        open: shippingOpen,
-        saveShippingAndBilling,
-    } = useAddressForm(AddressType.Shipping);
-    const {
-        save: saveBilling,
-        isLoading: billingLoading,
-        isValid: billingValid,
-        open: billingOpen,
-    } = useAddressForm(AddressType.Billing);
-    const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+  const { hasDisplayAddress: hasShippingAddress, displayAddress: displayAddressShipping } = useAddress(
+    AddressType.Shipping,
+  );
+  const { hasDisplayAddress: hasBillingAddress, displayAddress: displayAddressBilling } = useAddress(
+    AddressType.Billing,
+  );
+  const {
+    save: saveShipping,
+    isLoading: shippingLoading,
+    isValid: shippingValid,
+    open: shippingOpen,
+    saveShippingAndBilling,
+  } = useAddressForm(AddressType.Shipping);
+  const {
+    save: saveBilling,
+    isLoading: billingLoading,
+    isValid: billingValid,
+    open: billingOpen,
+  } = useAddressForm(AddressType.Billing);
+  const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 
-    const isLoading = computed(() => shippingLoading.value || billingLoading.value);
-    const isValid = computed(() => shippingValid.value && billingValid.value);
-    const hasOpenForms = computed(() => shippingOpen.value || billingOpen.value);
+  const isLoading = computed(() => shippingLoading.value || billingLoading.value);
+  const isValid = computed(() => shippingValid.value && billingValid.value);
+  const hasOpenForms = computed(() => shippingOpen.value || billingOpen.value);
 
-    onNuxtReady(() => {
-        if (hasShippingAddress.value) {
-            shippingOpen.value = false;
-            billingOpen.value = false;
-        } else {
-            shippingOpen.value = true;
-        }
-        if (hasBillingAddress.value) {
-            if (hasShippingAddress.value && displayAddressShipping.value.id !== displayAddressBilling.value.id) {
-                state.value.combineShippingAndBilling = false;
-            }
-        }
-    });
+  onNuxtReady(() => {
+    if (hasShippingAddress.value) {
+      shippingOpen.value = false;
+      billingOpen.value = false;
+    } else {
+      shippingOpen.value = true;
+    }
+    if (
+      hasBillingAddress.value &&
+      hasShippingAddress.value &&
+      displayAddressShipping.value.id !== displayAddressBilling.value.id
+    ) {
+      state.value.combineShippingAndBilling = false;
+    }
+  });
 
-    watch(hasShippingAddress, (value) => {
-        if (!value) {
-            shippingOpen.value = true;
-        }
-    });
+  watch(hasShippingAddress, (value) => {
+    if (!value) {
+      shippingOpen.value = true;
+    }
+  });
 
-    watch(
-        () => state.value.combineShippingAndBilling,
-        (value) => {
-            billingOpen.value = !value && !hasBillingAddress.value ? true : false;
-        },
-    );
+  watch(
+    () => state.value.combineShippingAndBilling,
+    (value) => {
+      billingOpen.value = !value && !hasBillingAddress.value ? true : false;
+    },
+  );
 
-    const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
-        let valid = true;
-        setShowErrors(!termsAccepted.value);
+  const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+    let valid = true;
+    setShowErrors(!termsAccepted.value);
 
-        if (!termsAccepted.value) {
-            scrollToHTMLObject(ID_CHECKBOX);
-            valid = false;
-        }
+    if (!termsAccepted.value) {
+      scrollToHTMLObject(ID_CHECKBOX);
+      valid = false;
+    }
 
-        if (callback) {
-            callback(valid);
-        }
+    if (callback) {
+      callback(valid);
+    }
 
-        return valid;
-    };
+    return valid;
+  };
 
-    const save = async () => {
-        const toSave = [];
+  const save = async () => {
+    const toSave = [];
 
-        if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
-        if (shippingOpen.value) toSave.push(saveShipping());
-        if (billingOpen.value) toSave.push(saveBilling());
+    if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
+    if (shippingOpen.value) toSave.push(saveShipping());
+    if (billingOpen.value) toSave.push(saveBilling());
 
-        return Promise.all(toSave);
-    };
+    return Promise.all(toSave);
+  };
 
-    const validateAndSaveAddresses = async () => {
-        if (!hasOpenForms.value) {
-            return new Promise((resolve) => resolve(true));
-        }
+  const validateAndSaveAddresses = async () => {
+    if (!hasOpenForms.value) {
+      return new Promise((resolve) => resolve(true));
+    }
 
-        return new Promise((resolve, reject) => {
-            save()
-                .then(() => {
-                    return resolve(true);
-                })
-                .catch(() => {
-                    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-                    return reject(new Error('Failed to validate address'));
-                });
+    return new Promise((resolve, reject) => {
+      save()
+        .then(() => {
+          return resolve(true);
+        })
+        .catch(() => {
+          scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+          return reject(new Error('Failed to validate address'));
         });
-    };
+    });
+  };
 
-    return {
-        ...toRefs(state.value),
-        save,
-        validateAndSaveAddresses,
-        validateTerms,
-        isValid,
-        isLoading,
-        hasOpenForms,
-        shippingOpen,
-        billingOpen,
-    };
+  return {
+    ...toRefs(state.value),
+    save,
+    validateAndSaveAddresses,
+    validateTerms,
+    isValid,
+    isLoading,
+    hasOpenForms,
+    shippingOpen,
+    billingOpen,
+  };
 };

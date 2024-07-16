@@ -165,10 +165,10 @@
 </template>
 
 <script setup lang="ts">
-import { Address, AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean, number } from 'yup';
-import { AddressFormProps } from './types';
+import { type AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
 
