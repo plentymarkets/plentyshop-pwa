@@ -6,6 +6,7 @@ import type {
   UseOrderAgainState,
   LoadOrderInformation,
 } from './types';
+import { orderGetters } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing order again data
@@ -23,6 +24,7 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
     loading: false,
     order: null,
     orderAgainOrder: null,
+    hasItemsChanged: false,
     isOpen: false,
   }));
 
@@ -42,9 +44,15 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
     );
     useHandleError(error.value);
 
-    state.value.order = data.value?.data.data ?? null;
-    if (!state.value.order) {
+    if (data.value?.data?.data) {
+      state.value.order = data.value.data.data;
+      state.value.order.order.orderItems = orderGetters.getOrderAgainSortedChangedItems(data.value.data.data);
+      state.value.hasItemsChanged = state.value.order
+        ? orderGetters.hasOrderAgainChangedItems(state.value.order)
+        : false;
+    } else {
       state.value.isOpen = false;
+      state.value.hasItemsChanged = false;
     }
 
     state.value.loading = false;
@@ -71,22 +79,26 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
    */
   const addOrderToCart: AddOrderToCart = async () => {
     const items: DoAddItemParams[] = [];
+
     state.value.order?.order.orderItems.forEach((orderItem) => {
       const properties = orderItem.orderProperties.map((property) => {
         return {
           property: {
             id: Number(property.propertyId),
-            valueType: property.type,
-            value: property.value || 'true',
             names: {
               name: property.name,
             },
-            surcharge: Number(property.surcharge),
+            valueType: property.type,
+            value: orderGetters.getItemOrderPropertyValue(property),
           },
         };
       }) as BasketItemOrderParamsProperty[];
 
-      if (orderItem.itemVariationId > 0) {
+      if (
+        orderItem.itemVariationId > 0 &&
+        state.value.order &&
+        orderGetters.isItemSalableAndActive(state.value.order, orderItem)
+      ) {
         items.push({
           productId: orderItem.itemVariationId,
           quantity: orderItem.quantity,

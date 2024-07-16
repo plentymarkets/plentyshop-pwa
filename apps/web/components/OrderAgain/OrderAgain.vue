@@ -4,7 +4,14 @@
       <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
         <span>{{ t('account.ordersAndReturns.orderAgain.heading') }}</span>
       </h2>
-      <div class="font-medium">{{ t('account.ordersAndReturns.orderAgain.subtext') }}</div>
+      <div v-if="!loading">
+        <div class="font-medium" v-if="hasItemsChanged">
+          {{ t('account.ordersAndReturns.orderAgain.subtextChanges') }}
+        </div>
+        <div class="font-medium" v-else>
+          {{ t('account.ordersAndReturns.orderAgain.subtext') }}
+        </div>
+      </div>
       <div class="absolute right-2 top-2 flex items-center">
         <SfButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
@@ -13,31 +20,34 @@
     </header>
 
     <div class="w-full">
-      <div class="overflow-y-scroll mb-4 max-h-[calc(100vh-205px)] md:max-h-[calc(100vh-270px)]">
+      <div class="overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-205px)] md:max-h-[calc(100vh-270px)]">
         <div v-if="!loading">
           <div
             v-for="item in orderGetters.getItems(order)"
             :key="item.id"
-            class="flex w-full mt-6 flex-col items-center sm:flex-row"
+            class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0"
           >
-            <div class="w-40 h-40 flex-shrink-0 flex-grow-0 mr-4">
+            <div class="relative overflow-hidden flex-shrink-0 rounded-md w-24 h-24 sm:h-40 sm:w-40">
               <NuxtImg
-                :src="addModernImageExtension(orderGetters.getOrderVariationImage(order, item))"
-                alt="Test"
-                class="w-full h-full object-contain"
+                ref="img"
+                :src="
+                  addModernImageExtension(orderGetters.getOrderVariationImage(order, item)) ||
+                  '/images/placeholder.png'
+                "
+                :alt="orderGetters.getItemName(item)"
+                width="300"
+                height="300"
                 loading="lazy"
+                class="w-full h-full object-contain border rounded-md border-neutral-200"
               />
             </div>
 
-            <div class="w-full flex items-center flex-col sm:block">
-              <h1
-                class="font-bold typography-headline-4 break-words text-center sm:text-left"
-                data-testid="product-name"
-              >
+            <div class="ml-3 w-full flex flex-col">
+              <h1 class="w-fit no-underline typography-text-sm sm:typography-text-lg" data-testid="product-name">
                 {{ orderGetters.getItemQty(item) }}x {{ orderGetters.getItemName(item) }}
               </h1>
               <Price
-                v-if="orderGetters.getOrderAgainInformationPrice(item) > 0"
+                v-if="orderGetters.isItemSalableAndActive(order, item)"
                 :price="orderGetters.getOrderAgainInformationPrice(item)"
                 :normal-price="orderGetters.getOrderAgainInformationPrice(item)"
                 :old-price="orderGetters.getItemPrice(item)"
@@ -48,7 +58,7 @@
               >
                 {{ orderGetters.getItemShortDescription(order, item) }}
               </div>
-              <div class="w-full flex flex-wrap justify-center gap-2 sm:justify-normal">
+              <div class="w-full flex flex-wrap gap-2">
                 <SfListItem
                   v-if="orderGetters.getOrderAgainAvailability(item)"
                   size="sm"
@@ -62,7 +72,7 @@
                   {{ orderGetters.getOrderAgainAvailabilityName(item) }}
                 </SfListItem>
                 <UiTag
-                  v-if="orderGetters.getOrderAgainInformationPrice(item) <= 0"
+                  v-if="!orderGetters.isItemSalableAndActive(order, item)"
                   variant="negative"
                   size="sm"
                   class="!font-medium"
@@ -95,21 +105,21 @@
         <div class="w-full" v-else>
           <SkeletonsOrderAgainItem class="mt-6" v-for="item in orderGetters.getItems(order)" :key="item.id" />
         </div>
-
-        <div class="mt-4 typography-text-xs flex gap-1">
+      </div>
+      <div class="h-auto flex-shrink-0 flex gap-2 w-full relative mt-3">
+        <div class="typography-text-xs flex gap-1 mr-auto">
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
           <span>{{ t('excludedShipping') }}</span>
         </div>
-      </div>
-      <div class="h-auto flex-shrink-0 flex gap-2 ml-auto w-full max-w-[500px] relative justify-end mt-3">
         <SfButton
           data-testid="quick-checkout-cart-button"
           @click="addToCart"
           :disabled="loading || loadingAddToCart"
           size="lg"
           variant="secondary"
+          class="ml-auto"
         >
           <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
           <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
@@ -131,19 +141,21 @@ import {
   SfIconError,
   SfIconArrowUpward,
   SfIconArrowDownward,
-  SfListItem,
+  SfListItem, SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters } from '@plentymarkets/shop-api';
 
 defineProps<OrderAgainProps>();
+const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
-const { isOpen, addOrderToCart, loading } = useOrderAgain();
+const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
 const { t } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
 const loadingAddToCart = ref(false);
+const NuxtLink = resolveComponent('NuxtLink');
 
 const close = () => {
   isOpen.value = false;
@@ -157,8 +169,27 @@ const goToPage = (path: string) => {
 const addToCart = async () => {
   loadingAddToCart.value = true;
   if (await addOrderToCart()) {
+    send({
+      type: 'positive',
+      message: t('addedToCart'),
+    });
     goToPage(paths.cart);
   }
   loadingAddToCart.value = false;
 };
 </script>
+
+<style scoped>
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+</style>

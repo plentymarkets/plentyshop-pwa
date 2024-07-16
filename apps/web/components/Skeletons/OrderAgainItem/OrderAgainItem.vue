@@ -1,7 +1,7 @@
 <template>
-  <div role="status" class="flex w-full mt-6 items-center flex-col animate-pulse sm:flex-row">
+  <div role="status" class="flex w-full mt-6 items-center animate-pulse">
     <div
-      class="flex items-center justify-center w-40 h-40 flex-shrink-0 bg-gray-300 text-gray-600 rounded-sm mr-4 mb-2"
+      class="flex items-center justify-center w-24 h-24 flex-shrink-0 bg-gray-300 text-gray-600 rounded-sm mr-3 sm:w-40 sm:h-40"
     >
       <svg
         class="w-10 h-10"
@@ -15,12 +15,12 @@
         />
       </svg>
     </div>
-    <div class="w-full flex flex-col items-center sm:items-start">
-      <div class="h-8 bg-gray-300 rounded-sm w-full"></div>
-      <div class="h-8 bg-gray-300 rounded-sm w-[140px] mt-2"></div>
+    <div class="w-full flex flex-col">
+      <div class="h-6 sm:h-8 bg-gray-300 rounded-sm w-full"></div>
+      <div class="h-6 sm:h-8 bg-gray-300 rounded-sm w-[140px] mt-2"></div>
       <div class="h-4 bg-gray-300 rounded-sm w-11/12 mt-2"></div>
       <div class="h-4 bg-gray-300 rounded-sm w-7/12 mt-1"></div>
-      <div class="h-8 bg-gray-300 rounded-sm w-[150px] mt-2"></div>
+      <div class="h-6 sm:h-8 bg-gray-300 rounded-sm w-[150px] mt-2"></div>
     </div>
     <span class="sr-only">Loading...</span>
   </div>
