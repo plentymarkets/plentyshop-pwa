@@ -1,5 +1,3 @@
-import { createSharedComposable } from "@vueuse/core";
+import { createSharedComposable } from '@vueuse/core';
 
-export const useCheckoutAddress = createSharedComposable(() => {
-    
-});
+export const useCheckoutAddress = createSharedComposable(() => {});

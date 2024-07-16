@@ -1,119 +1,119 @@
 import { AddressType } from '@plentymarkets/shop-api';
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
+
+const ID_SHIPPING_ADDRESS = '#shipping-address';
+const ID_CHECKBOX = '#terms-checkbox';
+
+/* eslint-disable sonarjs/cognitive-complexity */
 export const useCheckout = (cacheKey = '') => {
+  const state = useState('useCheckout' + cacheKey, () => ({
+    combineShippingAndBilling: true,
+    init: false,
+  }));
 
-    const state = useState('useCheckout' + cacheKey, () => ({
-        combineShippingAndBilling: true,
-        init: false
-    }));
+  const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
+  const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
+  const {
+    save: saveShipping,
+    isLoading: shippingLoading,
+    isValid: shippingValid,
+    open: shippingOpen,
+    saveShippingAndBilling,
+  } = useAddressForm(AddressType.Shipping);
+  const {
+    save: saveBilling,
+    isLoading: billingLoading,
+    isValid: billingValid,
+    open: billingOpen,
+  } = useAddressForm(AddressType.Billing);
+  const isLoading = computed(() => shippingLoading.value || billingLoading.value);
+  const isValid = computed(() => shippingValid.value && billingValid.value);
+  const hasOpenForms = computed(() => shippingOpen.value || billingOpen.value);
 
-    const ID_SHIPPING_ADDRESS = '#shipping-address';
-    const ID_CHECKBOX = '#terms-checkbox';
+  const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 
+  if (!state.value.init) {
+    shippingOpen.value = true;
+    billingOpen.value = true;
+    state.value.init = true;
+    if (hasBillingAddress.value) {
+      state.value.combineShippingAndBilling = false;
+    }
+  }
 
-    const { hasDisplayAddress: hasShippingAddress } = useAddress(AddressType.Shipping);
-    const { hasDisplayAddress: hasBillingAddress } = useAddress(AddressType.Billing);
-    const { save: saveShipping, isLoading: shippingLoading, isValid: shippingValid, open: shippingOpen, saveShippingAndBilling } = useAddressForm(AddressType.Shipping);
-    const { save: saveBilling, isLoading: billingLoading, isValid: billingValid, open: billingOpen } = useAddressForm(AddressType.Billing);
-    const isLoading = computed(() => shippingLoading.value || billingLoading.value);
-    const isValid = computed(() => shippingValid.value && billingValid.value);
-    const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
+  if (hasShippingAddress.value) {
+    shippingOpen.value = false;
+    billingOpen.value = false;
+  }
 
-    const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+  watch(hasShippingAddress, (value) => {
+    if (!value) {
+      shippingOpen.value = true;
+    }
+  });
 
-    if (!state.value.init) {
-        shippingOpen.value = true;
-        billingOpen.value = true;
-        state.value.init = true;
-        if (hasBillingAddress.value) {
-            state.value.combineShippingAndBilling = false;
-        }
+  watch(
+    () => state.value.combineShippingAndBilling,
+    (value) => {
+      billingOpen.value = !value && !hasBillingAddress.value ? true : false;
+    },
+  );
+
+  const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+    let valid = true;
+    setShowErrors(!termsAccepted.value);
+
+    if (!termsAccepted.value) {
+      scrollToHTMLObject(ID_CHECKBOX);
+      valid = false;
     }
 
-    if (hasShippingAddress.value) {
-        shippingOpen.value = false;
-        billingOpen.value = false;
+    if (callback) {
+      callback(valid);
     }
 
-    watch(hasShippingAddress, (value) => {
-        if (!value) {
-            shippingOpen.value = true;
-        }
-    })
+    return valid;
+  };
 
-    watch(() => state.value.combineShippingAndBilling, (value) => {
-        if (!value && !hasBillingAddress.value) {
-            billingOpen.value = true;
-        } else {
-            billingOpen.value = false;
-        }
+  const save = async () => {
+    const toSave = [];
+
+    if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
+
+    if (shippingOpen.value) toSave.push(saveShipping());
+
+    if (billingOpen.value) toSave.push(saveBilling());
+
+    return Promise.all(toSave);
+  };
+
+  const validateAndSaveAddresses = async () => {
+    if (!hasOpenForms.value) {
+      return new Promise((resolve) => resolve(true));
+    }
+
+    return new Promise((resolve, reject) => {
+      save()
+        .then(() => {
+          return resolve(true);
+        })
+        .catch(() => {
+          scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+          return reject(new Error('Failed to validate address'));
+        });
     });
+  };
 
-    const scrollToHTMLObject = (object: string) => {
-        const element = document.querySelector(object) as HTMLElement;
-        const elementOffset = element?.offsetTop ?? 0;
-
-        const headerElement = document.querySelector('header') as HTMLElement;
-        const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-        window.scrollTo({
-            top: elementOffset - headerElementOffset,
-            behavior: 'smooth',
-        });
-    };
-
-    const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
-        let valid = true;
-        setShowErrors(!termsAccepted.value);
-
-        if (!termsAccepted.value) {
-            scrollToHTMLObject(ID_CHECKBOX);
-            valid = false;
-        }
-
-        if (callback) {
-            callback(valid);
-        }
-
-        return valid;
-    };
-
-    const validateAddresses = async () => {
-        if (!hasOpenForms.value) {
-            return new Promise((resolve) => resolve(true));
-        }
-        return new Promise( async (resolve, reject) => {
-            try {
-                resolve(await save());
-            } catch (error) {
-                scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-                reject(false);
-            }
-        });
-    };
-
-    const save = async () => {
-        const toSave = [];
-
-        if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
-
-        if (shippingOpen.value) toSave.push(saveShipping());
-
-        if (billingOpen.value) toSave.push(saveBilling());
-
-        return Promise.all(toSave);
-    }
-
-    return {
-        ...toRefs(state.value),
-        save,
-        validateAddresses,
-        validateTerms,
-        isValid,
-        isLoading,
-        hasOpenForms,
-        shippingOpen,
-        billingOpen
-    };
+  return {
+    ...toRefs(state.value),
+    save,
+    validateAndSaveAddresses,
+    validateTerms,
+    isValid,
+    isLoading,
+    hasOpenForms,
+    shippingOpen,
+    billingOpen,
+  };
 };

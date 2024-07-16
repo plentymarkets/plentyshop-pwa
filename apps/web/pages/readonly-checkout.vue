@@ -21,7 +21,7 @@
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
-        <CheckoutGeneralTerms />
+          <CheckoutGeneralTerms />
         </div>
       </div>
       <div class="col-span-5">
@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   pageType: 'static',
@@ -122,25 +122,10 @@ await savePaymentMethod(
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 
-const scrollToHTMLObject = (object: string) => {
-  const element = document.querySelector(object) as HTMLElement;
-  const elementOffset = element?.offsetTop ?? 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: elementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
-
-
 const validateTerms = (): boolean => {
   if (!termsAccepted.value) {
     scrollToHTMLObject(ID_CHECKBOX);
-    setShowErrors(true)
+    setShowErrors(true);
     return false;
   }
   return true;

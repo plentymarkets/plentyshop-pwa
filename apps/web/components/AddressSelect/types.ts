@@ -1,7 +1,7 @@
-import { Address, AddressType } from "@plentymarkets/shop-api";
+import { Address, AddressType } from '@plentymarkets/shop-api';
 
 export type AddressSelectProps = {
-    type: AddressType;
-}
+  type: AddressType;
+};
 
 export type AddressSelectEvents = (event: 'edit', payload: Address) => void;

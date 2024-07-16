@@ -1,8 +1,8 @@
 export type OnValidationEnd = {
-    address: {},
-    validation: {
-        valid: false,
-        errors: {},
-        results: {},
-    },
-}
+  address: any;
+  validation: {
+    valid: false;
+    errors: any;
+    results: any;
+  };
+};

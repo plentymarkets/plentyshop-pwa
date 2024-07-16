@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { AddressSelectEvents, AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import type { Address} from '@plentymarkets/shop-api';
+import type { Address } from '@plentymarkets/shop-api';
 import { SfIconClose, SfButton, useDisclosure, SfIconViewList, SfTooltip } from '@storefront-ui/vue';
 const { type } = defineProps<AddressSelectProps>();
 const {
@@ -57,7 +57,7 @@ const {
 const { isOpen, open, close } = useDisclosure();
 const emit = defineEmits<AddressSelectEvents>();
 
-const openForm = (address: Address | {} ) => {
+const openForm = (address: Address | {}) => {
   emit('edit', address as Address);
   close();
 };

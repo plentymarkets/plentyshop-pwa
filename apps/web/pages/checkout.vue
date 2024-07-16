@@ -127,7 +127,8 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling, save, isLoading, hasOpenForms, validateAddresses, validateTerms } = useCheckout();
+const { combineShippingAndBilling, save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } =
+  useCheckout();
 const showSaveButton = ref(false);
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const {
@@ -192,8 +193,8 @@ const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
 
 const openPayPalCardDialog = async () => {
   try {
-    await validateAddresses();
-  } catch (error) {
+    await validateAndSaveAddresses();
+  } catch {
     return;
   }
   if (!validateTerms()) {
@@ -217,8 +218,8 @@ const handleRegularOrder = async () => {
 
 const order = async () => {
   try {
-    await validateAddresses();
-  } catch (error) {
+    await validateAndSaveAddresses();
+  } catch {
     return;
   }
 

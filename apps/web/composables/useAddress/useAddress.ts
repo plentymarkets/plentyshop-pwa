@@ -46,7 +46,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     defaultAddress: {} as Address,
     cartAddressId: 0,
     cartAddress: {} as Address,
-    displayAddress: {} as Address
+    displayAddress: {} as Address,
   }));
 
   const { data: cart } = useCart();
@@ -61,6 +61,15 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   const hasDisplayAddress = computed(() => {
     return Boolean(state.value?.displayAddress?.id);
   });
+
+  const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.setCheckoutAddress({
+      typeId: typeId,
+      addressId: addressId,
+    });
+    state.value.loading = false;
+  };
 
   const setDefaultAddress = () => {
     const addresses = state.value.data;
@@ -131,7 +140,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     return state.value.data;
   };
 
-  const saveAddress: SaveAddress = async (address: Address, combineShippingBilling: boolean = false) => {
+  const saveAddress: SaveAddress = async (address: Address, combineShippingBilling = false) => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData(type.toString(), () =>
@@ -152,8 +161,6 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
         setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(lastAddress)));
       }
     }
-
-
 
     state.value.data = data.value?.data ?? state.value.data;
 
@@ -183,15 +190,6 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.data = data;
 
     return state.value.data;
-  };
-
-  const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
-    state.value.loading = true;
-    await useSdk().plentysystems.setCheckoutAddress({
-      typeId: typeId,
-      addressId: addressId,
-    });
-    state.value.loading = false;
   };
 
   return {
