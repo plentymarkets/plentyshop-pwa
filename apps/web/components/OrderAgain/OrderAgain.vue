@@ -180,18 +180,3 @@ const addToCart = async () => {
   loadingAddToCart.value = false;
 };
 </script>
-
-<style scoped>
-.scrollbar-thin::-webkit-scrollbar {
-  width: 8px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background-color: #cccccc;
-  border-radius: 8px;
-}
-
-.scrollbar-thin::-webkit-scrollbar-track {
-  background-color: #f1f1f1;
-}
-</style>
