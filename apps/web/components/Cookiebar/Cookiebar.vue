@@ -158,13 +158,15 @@
       @click="changeVisibilityState"
       data-testid="cookie-bar-open-btn"
     >
-      <SfIconCheckBox />
+      <SfIconBase viewBox="0 0 24 24" size="base">
+        <path d="M9 16h.01M12 11h.01M7 10h.01M15 16h.01M21 12a9 9 0 1 1-9-9c0 2.761 1.79 5 4 5 0 2.21 2.239 4 5 4z" />
+      </SfIconBase>
     </SfButton>
   </client-only>
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfButton, SfCheckbox, SfIconCheckBox } from '@storefront-ui/vue';
+import { SfLink, SfButton, SfCheckbox, SfIconBase } from '@storefront-ui/vue';
 import type { Cookie, CookieGroup } from '~/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');

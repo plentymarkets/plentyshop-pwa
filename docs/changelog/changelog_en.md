@@ -47,6 +47,7 @@
 
 ### 👷 Changed
 
+- Cookiebar icon has been replaced
 - Changed shortDescription to return empty string
 - Improved Reviews rating average display
 - Removed unnecessary hover state from cart items
