@@ -153,13 +153,12 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     useHandleError(error.value);
     state.value.loading = false;
 
-    // eslint-disable-next-line unicorn/expiring-todo-comments
-    // TODO: find out if its the first address or last address
-    const lastAddress = data?.value?.data?.at(-1);
-    if (lastAddress) {
-      setDisplayAddress(lastAddress);
+    const createdAddress = data.value?.data[0];
+
+    if (createdAddress) {
+      setDisplayAddress(createdAddress);
       if (combineShippingBilling) {
-        setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(lastAddress)));
+        setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
       }
     }
 

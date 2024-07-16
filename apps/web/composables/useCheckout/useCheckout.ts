@@ -62,6 +62,7 @@ export const useCheckout = (cacheKey = '') => {
     () => state.value.combineShippingAndBilling,
     (value) => {
       billingOpen.value = !value && !hasBillingAddress.value ? true : false;
+      // todo: if checked and shipping exists -> set billing to shipping id
     },
   );
 
