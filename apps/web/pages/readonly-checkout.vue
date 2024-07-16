@@ -10,59 +10,18 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Shipping"> </AddressContainer>
+        <AddressContainer disabled :type="AddressType.Shipping" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Billing"> </AddressContainer>
+        <AddressContainer disabled :type="AddressType.Billing" />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
           <ShippingMethod :shipping-methods="shippingMethods" disabled />
-
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
           <CheckoutPayment :payment-methods="paymentMethods" disabled />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
-          <div class="flex items-center">
-            <SfCheckbox
-              v-model="termsAccepted"
-              :invalid="showTermsError"
-              @change="showTermsError = false"
-              id="terms-checkbox"
-              class="inline-block mr-2"
-            />
-            <div>
-              <i18n-t keypath="termsInfo" scope="global">
-                <template #terms>
-                  <SfLink
-                    :href="localePath(paths.termsAndConditions)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('termsAndConditions') }}
-                  </SfLink>
-                </template>
-                <template #cancellationRights>
-                  <SfLink
-                    :href="localePath(paths.cancellationRights)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('cancellationRights') }}
-                  </SfLink>
-                </template>
-                <template #privacyPolicy>
-                  <SfLink
-                    :href="localePath(paths.privacyPolicy)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('privacyPolicy') }}
-                  </SfLink>
-                </template>
-              </i18n-t>
-            </div>
-          </div>
-          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('termsRequired') }}</div>
+        <CheckoutGeneralTerms />
         </div>
       </div>
       <div class="col-span-5">
@@ -122,9 +81,7 @@ const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
-
-const termsAccepted = ref(false);
-const showTermsError = ref(false);
+const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -178,13 +135,14 @@ const scrollToHTMLObject = (object: string) => {
   });
 };
 
+
+
 const validateTerms = (): boolean => {
-  showTermsError.value = !termsAccepted.value;
-  if (showTermsError.value) {
+  if (!termsAccepted.value) {
     scrollToHTMLObject(ID_CHECKBOX);
+    setShowErrors(true)
     return false;
   }
-
   return true;
 };
 
