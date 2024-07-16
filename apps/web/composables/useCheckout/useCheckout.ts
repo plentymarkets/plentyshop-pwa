@@ -9,7 +9,6 @@ export const useCheckout = (cacheKey = '') => {
     }));
 
     const ID_BILLING_ADDRESS = '#billing-address';
-    const ID_SAVE_ADDRESS = '#save-address';
     const ID_SHIPPING_ADDRESS = '#shipping-address';
     const ID_CHECKBOX = '#terms-checkbox';
 
@@ -23,7 +22,6 @@ export const useCheckout = (cacheKey = '') => {
     const hasOpenForms = computed(() => (shippingOpen.value || billingOpen.value));
 
     const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-
 
     const { t } = useI18n();
     const { send } = useNotification();
@@ -86,42 +84,15 @@ export const useCheckout = (cacheKey = '') => {
     };
 
     const validateAddresses = async () => {
-        return new Promise((resolve, reject) => {
-            if (hasOpenForms.value) {
-                try {
-                    save()
-                        .then((isValid) => {
-                            if (!isValid) {
-                                console.log('not valid reject');
-                                scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-                                reject(false);
-                            } else {
-                                resolve(true);
-                            }
-                        }).catch(() =>
-                            reject(false)
-                        )
-                } catch (error) {
-                    reject(false);
-                }
-            } else {
-                if (!hasShippingAddress.value) {
-                    send({
-                        type: 'negative',
-                        message: t('billingAddressRequired'),
-                    });
-                    scrollToHTMLObject(ID_BILLING_ADDRESS);
-                    reject(false);
-                } else if (!hasBillingAddress.value) {
-                    send({
-                        type: 'negative',
-                        message: t('shippingAddressRequired'),
-                    });
-                    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-                    reject(false);
-                } else {
-                    resolve(true);
-                }
+        if (!hasOpenForms.value) {
+            return new Promise((resolve) => resolve(true));
+        }
+        return new Promise( async (resolve, reject) => {
+            try {
+                resolve(await save());
+            } catch (error) {
+                scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+                reject(false);
             }
         });
     };
