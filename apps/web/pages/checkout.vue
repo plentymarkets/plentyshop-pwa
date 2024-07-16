@@ -11,9 +11,8 @@
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address"></AddressContainer>
-        <UiDivider v-if="!combineShippingAndBilling" class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer
-          v-if="!combineShippingAndBilling"
           :type="AddressType.Billing"
           :key="1"
           id="billing-address"
@@ -115,7 +114,7 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { combineShippingAndBilling, save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } =
+const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } =
   useCheckout();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const {

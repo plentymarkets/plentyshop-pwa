@@ -1,19 +1,23 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
+    <div class="flex md:items-center flex-col md:flex-row justify-between">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <label class="flex items-center gap-2" v-if="type === AddressType.Shipping && !disabled">
-        <SfCheckbox name="combineShippingBilling" v-model="combineShippingAndBilling" />
-        <span>{{ t('form.useAsBillingLabel') }}</span>
-      </label>
     </div>
     <div class="flex justify-between">
       <div>
-        <div v-if="hasDisplayAddress && !edit" class="mt-2">
-          <AddressDisplay :address="displayAddress" />
-        </div>
+        <template v-if="type === AddressType.Shipping">
+          <div v-if="hasDisplayAddress && !edit" class="mt-2">
+            <AddressDisplay :address="displayAddress" />
+          </div>
+        </template>
+        <template v-else>
+          <div v-if="!combineShippingAndBilling && hasDisplayAddress && !edit" class="mt-2">
+            <AddressDisplay :address="displayAddress" />
+          </div>
+          <div v-if="combineShippingAndBilling && !edit">Same as Shipping</div>
+        </template>
       </div>
       <div>
         <AddressSelect v-if="!disabled && !edit" @edit="editForm($event)" :type="type"></AddressSelect>
@@ -43,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfCheckbox, SfIconBase, SfIconClose, SfTooltip } from '@storefront-ui/vue';
+import { SfButton, SfIconBase, SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { type AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), {
@@ -76,9 +80,7 @@ watch(displayAddress, () => {
 });
 
 const setHeading = () => {
-  if (combineShippingAndBilling.value) {
-    heading.value = `${t('shipping.heading')} / ${t('billing.heading')}`;
-  } else if (type === AddressType.Shipping) {
+  if (type === AddressType.Shipping) {
     heading.value = t('shipping.heading');
   } else {
     heading.value = t('billing.heading');
