@@ -75,23 +75,11 @@ const editForm = (address: Address) => {
   setFormAddress(edit.value ? address : displayAddress.value);
 };
 
-watch(displayAddress, () => {
-  setFormAddress(displayAddress.value);
-});
+watch(displayAddress, () => setFormAddress(displayAddress.value));
 
 const setHeading = () => {
-  if (type === AddressType.Shipping) {
-    heading.value = t('shipping.heading');
-  } else {
-    heading.value = t('billing.heading');
-  }
+  heading.value = type === AddressType.Shipping ? t('shipping.heading') : t('billing.heading');
 };
 
-watch(
-  combineShippingAndBilling,
-  () => {
-    setHeading();
-  },
-  { immediate: true },
-);
+watch(combineShippingAndBilling, () => setHeading(), { immediate: true });
 </script>
