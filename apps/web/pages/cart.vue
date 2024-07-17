@@ -38,14 +38,14 @@
 
 <script setup lang="ts">
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
-import { useCart } from '~/composables';
 
 definePageMeta({ pageType: 'static' });
+
 const NuxtLink = resolveComponent('NuxtLink');
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { isAuthorized } = useCustomer();
 const { data: cart, loading } = useCart();
-const cartNotEmpty = (cart.value?.items?.length ?? 0) > 0;
+const cartNotEmpty = computed(() => (cart.value?.items?.length ?? 0) > 0);
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
 </script>

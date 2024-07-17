@@ -24,11 +24,14 @@
 - PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
 - Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
 - Bei Verwendung der Anmeldung über den Header erfolgte keine Weiterleitung, während man sich auf der Gast-Anmeldeseite befand
+- Die Umgebungsvariable zum Laden der Systemeinstellungen wird jetzt in der aktualisierten `.env`-Datei korrekt übernommen.
+- Im Workflow zum Veröffentlichen der App wird jetzt ein Lieferanten-Token verwendet.
 
 ### Geändert
 
 - Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
 - Anzeige der durchschnittlichen Bewertung hinzugefügt
+- Die Navigationsleiste am unteren Bildschirmrand (auf mobilen Geräten) sowie die Navigations- und Einstellungsknöpfe im Checkout wurden entfernt.
 
 ## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
 
