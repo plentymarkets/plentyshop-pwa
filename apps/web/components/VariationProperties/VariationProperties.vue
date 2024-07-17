@@ -22,7 +22,6 @@ import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api'
 import type { VariationPropertiesProps, ComponentsMapper } from './types';
 import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
 import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
-import VariationPropertyFile from '~/components/VariationPropertyFile/VariationPropertyFile.vue';
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
 
 const props = defineProps<VariationPropertiesProps>();
