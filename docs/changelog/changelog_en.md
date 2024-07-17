@@ -19,9 +19,11 @@
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 - Added hook to load system configuration
+- Added dialog "Buy again" in the order history and order confirmation page
 
 ### 🩹 Fixes
 
+- Fixed recursive calls found under catch-all `category/product` routes
 - Fixed hydration errors
 - Fixed a problem with the image loading status for category products
 - Fixed webmanifest 404 error
