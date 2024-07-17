@@ -115,20 +115,18 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
         <div class="ml-auto float-right">
+          <SfButton class="mr-2" variant="secondary" @click="close()" size="lg">
+            {{ t('account.ordersAndReturns.orderAgain.cancel') }}
+          </SfButton>
           <SfButton
             data-testid="quick-checkout-cart-button"
             @click="addToCart"
             :disabled="loading || loadingAddToCart"
             size="lg"
-            variant="secondary"
-            class="mr-2"
+            variant="primary"
           >
             <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
             <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
-          </SfButton>
-
-          <SfButton @click="close()" size="lg">
-            {{ t('account.ordersAndReturns.orderAgain.cancel') }}
           </SfButton>
         </div>
       </div>
