@@ -60,8 +60,8 @@
               />
             </ul>
           </div>
-          <div v-if="cartItem.variation">
-            <VariationProperties :product="cartItem.variation" />
+          <div v-if="cartGetters.getVariation(cartItem)">
+            <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
         </div>
       </div>

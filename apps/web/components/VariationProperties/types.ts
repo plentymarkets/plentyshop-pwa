@@ -1,7 +1,7 @@
 import type { Product } from '@plentymarkets/shop-api';
 
 export type VariationPropertiesProps = {
-  product: Product;
+  product: Product | null;
 };
 
 export interface ComponentsMapper {

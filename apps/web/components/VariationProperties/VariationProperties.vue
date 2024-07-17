@@ -19,13 +19,14 @@
 
 <script setup lang="ts">
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import type { VariationPropertiesProps, ComponentsMapper } from './types';
 import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
 import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
 
 const props = defineProps<VariationPropertiesProps>();
-const variationProperties = productGetters.getPropertyGroups(props.product);
+const variationProperties = productGetters.getPropertyGroups(props.product ?? {} as Product);
 
 const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
