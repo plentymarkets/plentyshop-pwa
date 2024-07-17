@@ -149,6 +149,7 @@
         </div>
       </div>
     </div>
+    <!-- button to open cookie tab -->
     <div v-else class="z-10 h-auto w-12 fixed bottom-[4.3rem] sm:bottom-2 left-2 xl:left-auto xl:right-2">
       <SfTooltip :label="$t('CookieBar.Cookie Settings')" placement="left">
         <SfButton
