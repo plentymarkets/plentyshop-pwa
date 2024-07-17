@@ -154,7 +154,7 @@
       <SfTooltip :label="$t('CookieBar.Cookie Settings')" placement="left">
         <SfButton
           variant="secondary"
-          class="!px-3"
+          class="!px-3 bg-white"
           :aria-label="$t('CookieBar.Cookie Settings')"
           @click="changeVisibilityState"
           data-testid="cookie-bar-open-btn"
