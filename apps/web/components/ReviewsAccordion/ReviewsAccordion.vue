@@ -17,7 +17,7 @@
           </h2>
         </template>
 
-        <div class="flex justify-start mb-4 lg:mb-0">
+        <div class="flex justify-center lg:justify-start mb-4 lg:mb-0">
           <div class="lg:flex my-2">
             <div class="lg:w-1/2 flex flex-col lg:mr-8">
               <p class="text-center text-sm">{{ t('averageRating') }}</p>
@@ -47,14 +47,14 @@
             <div class="flex flex-col">
               <div v-for="(proportionalRating, key) in ratingPercentages" :key="key" class="flex items-center">
                 <p class="w-4 text-center">{{ 5 - key }}</p>
-                <SfIconStarFilled class="lg:mx-2 pb-1 text-warning-500" size="base" />
+                <SfIconStarFilled class="mx-2 pb-1 text-warning-500" size="base" />
                 <SfProgressLinear
                   class="self-center"
                   size="sm"
                   :value="proportionalRating"
                   aria-label="proportional-rating-in-percent"
                 />
-                <p class="w-20 ml-2">( {{ splitRatings[key] }} )</p>
+                <p class="lg:w-20 ml-2">( {{ splitRatings[key] }} )</p>
               </div>
             </div>
           </div>
