@@ -45,6 +45,8 @@
 - Fixed the scroll for reviews on mobile
 - The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file
 - Fix Review Overview design flaws
+- The token in the release workflow now uses a supplier secret.
+- Fixed guest wishlist functionality.
 
 ### 👷 Changed
 
