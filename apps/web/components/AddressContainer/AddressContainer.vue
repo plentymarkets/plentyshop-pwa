@@ -20,7 +20,7 @@
         </template>
       </div>
       <div>
-        <AddressSelect v-if="!disabled && !edit" @edit="editForm($event)" :type="type"></AddressSelect>
+        <AddressSelect v-if="!disabled && !edit" @edit="editForm" :type="type" />
         <SfTooltip label="Edit address">
           <SfButton
             v-if="!disabled && hasDisplayAddress"
@@ -40,8 +40,8 @@
     </div>
 
     <div v-if="edit && !disabled">
-      <AddressFormShipping v-if="type === AddressType.Shipping" :address="formAddress" />
-      <AddressFormBilling v-if="type === AddressType.Billing" :address="formAddress" />
+      <AddressFormShipping v-if="type === AddressType.Shipping" />
+      <AddressFormBilling v-if="type === AddressType.Billing" />
     </div>
   </div>
 </template>
@@ -50,32 +50,18 @@
 import { SfButton, SfIconBase, SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { type AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), {
-  disabled: false,
-});
+
+const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
 const { t } = useI18n();
 const { combineShippingAndBilling } = useCheckout();
-const { displayAddress, hasDisplayAddress } = useAddress(type);
+const { displayAddress, hasDisplayAddress, setDisplayAddress } = useAddress(type);
 const { open: edit } = useAddressForm(type);
 const heading = ref('');
-const formAddress = ref();
-
-const setFormAddress = (address: Address) => {
-  formAddress.value = address;
-};
-
-onNuxtReady(() => {
-  if (hasDisplayAddress.value) {
-    setFormAddress(displayAddress.value);
-  }
-});
 
 const editForm = (address: Address) => {
   edit.value = !edit.value;
-  setFormAddress(edit.value ? address : displayAddress.value);
+  if (edit.value) setDisplayAddress(address, false);
 };
-
-watch(displayAddress, () => setFormAddress(displayAddress.value));
 
 const setHeading = () => {
   heading.value = type === AddressType.Shipping ? t('shipping.heading') : t('billing.heading');

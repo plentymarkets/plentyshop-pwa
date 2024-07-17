@@ -133,11 +133,9 @@
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
-import { type AddressFormProps } from './types';
-
-const props = defineProps<AddressFormProps>();
 
 const { t } = useI18n();
+const { displayAddress, hasDisplayAddress } = useAddress(AddressType.Billing);
 const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
@@ -182,8 +180,6 @@ const toggleCompany = () => {
   }
 };
 
-props.address ? setValues({ form: props.address as any }) : resetForm();
-
 const unwatch = watch(onValidationStart, async (startValidation) => {
   if (startValidation) {
     const validation = await validate();
@@ -194,6 +190,8 @@ const unwatch = watch(onValidationStart, async (startValidation) => {
     });
   }
 });
+
+hasDisplayAddress.value ? setValues({ form: displayAddress.value as any }) : resetForm();
 
 onUnmounted(() => unwatch());
 </script>

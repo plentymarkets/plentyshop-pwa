@@ -41,7 +41,7 @@ export const useAddressForm = (type: AddressType) => {
     state.value.isLoading = true;
     emitValidationStart();
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       watch(
         () => state.value.onValidationEnd,
         async (value) => {
@@ -55,7 +55,6 @@ export const useAddressForm = (type: AddressType) => {
             resolve(true);
           } else {
             state.value.isLoading = false;
-            return reject(new Error('Failed to validate address'));
           }
         },
         { once: true },

@@ -10,9 +10,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address"></AddressContainer>
+        <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address"></AddressContainer>
+        <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
         <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SaveAddressButton :is-loading="isLoading" :save="save" />
         </div>
