@@ -12,6 +12,5 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyTextProps } from './types';
-const props = defineProps<VariationPropertyTextProps>();
-const variationProperty = props.variationProperty;
+defineProps<VariationPropertyTextProps>();
 </script>

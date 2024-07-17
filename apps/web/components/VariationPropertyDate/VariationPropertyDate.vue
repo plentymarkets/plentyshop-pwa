@@ -13,6 +13,5 @@
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { VariationPropertyDateProps } from './types';
 const props = defineProps<VariationPropertyDateProps>();
-const variationProperty = props.variationProperty;
-const preatyDate = computed(() => productPropertyGetters.getPropertyValue(variationProperty).split(' ')[0]);
+const preatyDate = computed(() => productPropertyGetters.getPropertyValue(props.variationProperty)?.split(' ')[0]);
 </script>

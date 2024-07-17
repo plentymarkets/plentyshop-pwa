@@ -25,8 +25,7 @@ import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationP
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
 
 const props = defineProps<VariationPropertiesProps>();
-const product = props.product;
-const variationProperties = productGetters.getPropertyGroups(product);
+const variationProperties = productGetters.getPropertyGroups(props.product);
 
 const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
