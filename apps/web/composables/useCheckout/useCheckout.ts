@@ -12,9 +12,11 @@ export const useCheckout = (cacheKey = '') => {
     init: false,
   }));
 
-  const { hasDisplayAddress: hasShippingAddress, displayAddress: displayAddressShipping, setCheckoutAddress } = useAddress(
-    AddressType.Shipping,
-  );
+  const {
+    hasDisplayAddress: hasShippingAddress,
+    displayAddress: displayAddressShipping,
+    setCheckoutAddress,
+  } = useAddress(AddressType.Shipping);
   const { hasDisplayAddress: hasBillingAddress, displayAddress: displayAddressBilling } = useAddress(
     AddressType.Billing,
   );

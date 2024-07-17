@@ -20,7 +20,7 @@
         </template>
       </div>
       <div>
-        <AddressSelect v-if="!disabled && hasDisplayAddress && !edit" @edit="editForm($event)" :type="type"></AddressSelect>
+        <AddressSelect v-if="!disabled && !edit" @edit="editForm($event)" :type="type"></AddressSelect>
         <SfTooltip label="Edit address">
           <SfButton
             v-if="!disabled && hasDisplayAddress"
