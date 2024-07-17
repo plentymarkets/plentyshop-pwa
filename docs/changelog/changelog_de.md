@@ -9,6 +9,7 @@
 - Platzhaltertext für fehlende Adressen hinzugefügt
 - Dieselbe benutzerdefinierte Kopfzeile in „Mein Konto“ hinzugefügt
 - Hook hinzugefügt, um Systemkonfigurationen zu laden
+- Dialog "Erneut kaufen" bei der Bestellübersicht und auf der Bestellbestätigungsseite hinzugefügt
 
 ### Behoben
 
@@ -25,6 +26,7 @@
 - Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
 - Bei Verwendung der Anmeldung über den Header erfolgte keine Weiterleitung, während man sich auf der Gast-Anmeldeseite befand
 - Die Umgebungsvariable zum Laden der Systemeinstellungen wird jetzt in der aktualisierten `.env`-Datei korrekt übernommen.
+- Im Workflow zum Veröffentlichen der App wird jetzt ein Lieferanten-Token verwendet.
 
 ### Geändert
 

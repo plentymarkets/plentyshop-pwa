@@ -18,6 +18,7 @@
 - Demo for changing app settings at runtime
 - Uploaded files as a product attribute can now be downloaded again
 - Added hook to load system configuration
+- Added dialog "Buy again" in the order history and order confirmation page
 
 ### 🩹 Fixes
 
@@ -45,6 +46,9 @@
 - Fixed language selector on mobile
 - Fixed the scroll for reviews on mobile
 - The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file
+- Fix Review Overview design flaws
+- The token in the release workflow now uses a supplier secret.
+- Fixed guest wishlist functionality.
 
 ### 👷 Changed
 
