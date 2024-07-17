@@ -35,7 +35,6 @@ const componentsMapper: ComponentsMapper = {
   float: VariationPropertyText,
   string: VariationPropertyText,
   html: VariationPropertyHtml,
-  file: VariationPropertyFile,
   date: VariationPropertyDate,
 };
 </script>
