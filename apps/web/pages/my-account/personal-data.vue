@@ -89,6 +89,5 @@ const closeModal = () => {
   lastActiveElement.value.focus();
 };
 
-const { getSession, data: userData } = useCustomer();
-getSession();
+const { data: userData } = useCustomer();
 </script>

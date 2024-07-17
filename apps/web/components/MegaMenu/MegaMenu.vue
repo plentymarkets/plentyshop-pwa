@@ -39,7 +39,9 @@
           }
         "
       >
-        <li v-for="(menuNode, index) in categoryTree" :key="index">
+        <li v-if="categoryTree.length === 0" class="h-10"></li>
+
+        <li v-else v-for="(menuNode, index) in categoryTree" :key="index">
           <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
             <SfButton
               ref="triggerReference"
