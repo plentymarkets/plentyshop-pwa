@@ -1,7 +1,7 @@
 <template>
   <SfTooltip label="Manage your addresses">
     <SfButton size="sm" variant="tertiary" @click="open">
-      <SfIconViewList></SfIconViewList>
+      {{ $t('pickSavedAddress') }}
     </SfButton>
   </SfTooltip>
 

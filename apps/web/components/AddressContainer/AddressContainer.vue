@@ -1,26 +1,12 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex md:items-center flex-col md:flex-row justify-between">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">
-        {{ heading }}
+    <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
+      <h2 class="text-neutral-900 text-lg font-bold">
+        {{ type === AddressType.Shipping ?  $t('shipping.heading') : $t('billing.heading') }}
       </h2>
-    </div>
-    <div class="flex justify-between">
       <div>
-        <template v-if="type === AddressType.Shipping">
-          <div v-if="hasDisplayAddress && !edit" class="mt-2">
-            <AddressDisplay :address="displayAddress" />
-          </div>
-        </template>
-        <template v-else>
-          <div v-if="!combineShippingAndBilling && hasDisplayAddress && !edit" class="mt-2">
-            <AddressDisplay :address="displayAddress" />
-          </div>
-          <div v-if="combineShippingAndBilling && !edit">{{ $t('addressContainer.sameAsShippingAddress') }}</div>
-        </template>
-      </div>
-      <div>
-        <AddressSelect v-if="!disabled && !edit" @edit="editForm" :type="type" />
+        <AddressSelect v-if="!disabled && hasDisplayAddress && !editing" @edit="editForm" :type="type" />
+        <span v-if="!editing" class="mx-2">|</span>
         <SfTooltip label="Edit address">
           <SfButton
             v-if="!disabled && hasDisplayAddress"
@@ -28,18 +14,29 @@
             variant="tertiary"
             @click="editForm(displayAddress)"
           >
-            <SfIconBase v-if="!edit" viewBox="0 0 38 38" class="fill-primary-900 cursor-pointer">
-              <path
-                d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
-              />
-            </SfIconBase>
+            <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
             <SfIconClose v-else></SfIconClose>
           </SfButton>
         </SfTooltip>
       </div>
     </div>
+    <div class="flex justify-between">
+      <div>
+        <template v-if="type === AddressType.Shipping">
+          <div v-if="hasDisplayAddress && !editing" class="mt-2">
+            <AddressDisplay :address="displayAddress" />
+          </div>
+        </template>
+        <template v-else>
+          <div v-if="!combineShippingAndBilling && hasDisplayAddress && !editing" class="mt-2">
+            <AddressDisplay :address="displayAddress" />
+          </div>
+          <div v-if="combineShippingAndBilling && !editing">{{ $t('addressContainer.sameAsShippingAddress') }}</div>
+        </template>
+      </div>
+    </div>
 
-    <div v-if="edit && !disabled">
+    <div v-if="editing && !disabled">
       <AddressFormShipping v-if="type === AddressType.Shipping" />
       <AddressFormBilling v-if="type === AddressType.Billing" />
     </div>
@@ -47,25 +44,18 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconBase, SfIconClose, SfTooltip } from '@storefront-ui/vue';
+import { SfButton, SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { type AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
-const { t } = useI18n();
 const { combineShippingAndBilling } = useCheckout();
 const { displayAddress, hasDisplayAddress, setDisplayAddress } = useAddress(type);
-const { open: edit } = useAddressForm(type);
-const heading = ref('');
+const { open: editing } = useAddressForm(type);
 
 const editForm = (address: Address) => {
-  edit.value = !edit.value;
-  if (edit.value) setDisplayAddress(address, false);
+  editing.value = !editing.value;
+  if (editing.value) setDisplayAddress(address, false);
 };
 
-const setHeading = () => {
-  heading.value = type === AddressType.Shipping ? t('shipping.heading') : t('billing.heading');
-};
-
-watch(combineShippingAndBilling, () => setHeading(), { immediate: true });
 </script>

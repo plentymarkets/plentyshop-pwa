@@ -108,9 +108,21 @@ definePageMeta({
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } = useCheckout();
+const {
+  getAddresses: getShippingAddresses,
+  hasDisplayAddress: hasShippingAddress,
+  displayAddress: displayShippingAddress,
+} = useAddress(AddressType.Shipping);
+const {
+  getAddresses: getBillingAddresses,
+  hasDisplayAddress: hasBillingAddress,
+  displayAddress: displayBillingAddress,
+} = useAddress(AddressType.Billing);
+const { open: shippingOpen } = useAddressForm(AddressType.Shipping);
+const { open: billingOpen } = useAddressForm(AddressType.Shipping);
+
+const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms, combineShippingAndBilling } =
+  useCheckout();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const {
   loading: loadShipping,
@@ -140,6 +152,22 @@ await Promise.all([
   getCart(),
   fetchPaymentMethods(),
 ]);
+
+onNuxtReady(() => {
+  if (hasShippingAddress.value) {
+    shippingOpen.value = false;
+    billingOpen.value = false;
+  } else {
+    shippingOpen.value = true;
+  }
+  if (
+    hasBillingAddress.value &&
+    hasShippingAddress.value &&
+    displayShippingAddress.value.id !== displayBillingAddress.value.id
+  ) {
+    combineShippingAndBilling.value = false;
+  }
+});
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);

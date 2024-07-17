@@ -39,25 +39,6 @@ export const useCheckout = (cacheKey = '') => {
   const isValid = computed(() => shippingValid.value && billingValid.value);
   const hasOpenForms = computed(() => shippingOpen.value || billingOpen.value);
 
-  onNuxtReady(() => {
-    if (!state.value.init) {
-      if (hasShippingAddress.value) {
-        shippingOpen.value = false;
-        billingOpen.value = false;
-      } else {
-        shippingOpen.value = true;
-      }
-      if (
-        hasBillingAddress.value &&
-        hasShippingAddress.value &&
-        displayAddressShipping.value.id !== displayAddressBilling.value.id
-      ) {
-        state.value.combineShippingAndBilling = false;
-      }
-      state.value.init = true;
-    }
-  });
-
   watch(hasShippingAddress, (value) => {
     if (!value) shippingOpen.value = true;
   });
