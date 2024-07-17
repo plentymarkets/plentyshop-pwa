@@ -9,6 +9,7 @@
 - Platzhaltertext für fehlende Adressen hinzugefügt
 - Dieselbe benutzerdefinierte Kopfzeile in „Mein Konto“ hinzugefügt
 - Hook hinzugefügt, um Systemkonfigurationen zu laden
+- Dialog "Erneut kaufen" bei der Bestellübersicht und auf der Bestellbestätigungsseite hinzugefügt
 
 ### Behoben
 

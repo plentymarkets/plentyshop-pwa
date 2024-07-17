@@ -44,6 +44,7 @@
           v-if="orderGetters.isReturnable(order) && orderGetters.hasReturnableItems(order)"
           :order="order"
         />
+        <OrderAgainButton :order="order" />
       </div>
     </div>
 
