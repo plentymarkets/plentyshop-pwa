@@ -12,7 +12,7 @@ export const useCheckout = (cacheKey = '') => {
     init: false,
   }));
 
-  const { hasDisplayAddress: hasShippingAddress, displayAddress: displayAddressShipping } = useAddress(
+  const { hasDisplayAddress: hasShippingAddress, displayAddress: displayAddressShipping, setCheckoutAddress } = useAddress(
     AddressType.Shipping,
   );
   const { hasDisplayAddress: hasBillingAddress, displayAddress: displayAddressBilling } = useAddress(
@@ -64,8 +64,9 @@ export const useCheckout = (cacheKey = '') => {
     () => state.value.combineShippingAndBilling,
     (value) => {
       billingOpen.value = !value && !hasBillingAddress.value ? true : false;
-      // eslint-disable-next-line unicorn/expiring-todo-comments
-      // todo: if checked and shipping exists -> set billing to shipping id
+      if (hasShippingAddress.value) {
+        setCheckoutAddress(AddressType.Billing, Number(displayAddressShipping.value.id));
+      }
     },
   );
 
