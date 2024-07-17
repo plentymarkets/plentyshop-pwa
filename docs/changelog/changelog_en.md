@@ -1,10 +1,10 @@
 # Changelog plentyshopPWA
 
-## v1.5.0 (2024-xx-xx) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.5.0 (2024-07-18) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 📙 Migration guide
 
-- The `@plentymarkets/shop-sdk` package was migrated to the new @vue-storefront/nuxt middleware module structure.
+- The `@plentymarkets/shop-sdk` package was migrated to the new `@vue-storefront/nuxt` middleware module structure.
 
   The package `@plentymarkets/shop-sdk` was removed and all its functionality was moved into `@plentymarkets/shop-api`
 
@@ -15,41 +15,39 @@
 
 ### 🚀 New
 
-- Added Variation properties for item
+- Added variation properties for item
 - Demo for changing app settings at runtime
-- Uploaded files as a product attribute can now be downloaded again
+- Uploaded files as a product attribute can now be downloaded
 - Added hook to load system configuration
-- Added dialog "Buy again" in the order history and order confirmation page
+- Reorder previous purchases from 'My Account' and order confirmation pages using the 'Buy Again' feature.
 
-### 🩹 Fixes
+### 🩹 Fixed
 
-- Fixed recursive calls found under catch-all `category/product` routes
-- Fixed hydration errors
-- Fixed a problem with the image loading status for category products
-- Fixed webmanifest 404 error
-- Fixed Checkout layout console error
-- Fixed Product attributes empty list rendering
-- Fixed canonical links are now correctly set
-- Fixed missing translation in country select
-- Fixed missing item short description
-- Fixed wrong link on the order confirmation page
-- Bundle Items links to include image
-- Fixed badges elements rendering
+- Recursive calls found under catch-all `category/product` routes
+- Hydration errors
+- A problem with the image loading status for category products
+- Webmanifest 404 error
+- Checkout layout console error
+- Product attributes empty list rendering
+- Canonical links are now correctly set
+- Missing translation in country select
+- Missing item short description
+- Wrong link on the order confirmation page
+- Bundle items links missing image
+- Badges elements rendering
 - Wishlist button aria label
-- PayPal area in the quick checkout dialog and guest login is only displayed if PayPal is connected
-- Registration without cloudflare turnstile configuration is now possible
-- Fixed item image size in recommended product slider
-- Fixed layout shift on add to cart button
-- The wishlist button is now toggling between filled/empty heart icon
-- Fixed addresses not being displayed in checkout after creation
-- Upon using login on the header, while being on the guest login page, there was no redirect
-- Fixed mobile cross price display
-- Fixed language selector on mobile
-- Fixed the scroll for reviews on mobile
-- The environment variable for fetching the system configuration from remote now gets correctly written to the updated `.env` file
-- Fix Review Overview design flaws
-- The token in the release workflow now uses a supplier secret.
-- Fixed guest wishlist functionality.
+- Reserve place for PayPal in quick checkout if paypal is not connected
+- Item image size in recommended product slider
+- Layout shift on add to cart button
+- Wishlist button not toggling between filled/empty heart icon
+- Addresses not being displayed in checkout after creation
+- No redirect occurred when using the login on the header while on the guest login page
+- Mobile cross price display
+- Language selector on mobile
+- The scroll for reviews on mobile
+- Fetch system configuration script not using the FETCH_REMOTE_CONFIG from .env
+- Review overview design
+- Guest wishlist functionality
 
 ### 👷 Changed
 
@@ -60,6 +58,8 @@
 - Added placeholder text for missing addresses
 - Added same custom header in the myAccount
 - Added tooltip for item attributes image component
+- The token in the release workflow now uses a supplier secret
+- Registration without cloudflare turnstile configuration is now possible
 
 ### 🏡 Chore
 
