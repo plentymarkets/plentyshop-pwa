@@ -46,7 +46,6 @@
               <span class="font-medium">{{ attribute.value }}</span>
             </li>
           </ul>
-
           <div
             class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
             v-if="cartItem.basketItemOrderParams.length > 0"
@@ -60,6 +59,9 @@
                 :basket-item-order-param="property"
               />
             </ul>
+          </div>
+          <div v-if="cartGetters.getVariation(cartItem)">
+            <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
         </div>
       </div>
