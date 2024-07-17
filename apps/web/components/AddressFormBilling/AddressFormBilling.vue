@@ -50,7 +50,7 @@
       <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttribures" :invalid="Boolean(errors['form.vatId'])" />
       <VeeErrorMessage as="span" name="form.vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
-    
+
     <label class="md:col-span-2">
       <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
-import { object, string, boolean, number } from 'yup';
+import { object, string, boolean } from 'yup';
 import { type AddressFormProps } from './types';
 
 const props = defineProps<AddressFormProps>();
@@ -196,5 +196,4 @@ const unwatch = watch(onValidationStart, async (startValidation) => {
 });
 
 onUnmounted(() => unwatch());
-
 </script>

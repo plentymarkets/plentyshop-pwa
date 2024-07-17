@@ -12,11 +12,7 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address"></AddressContainer>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer
-          :type="AddressType.Billing"
-          :key="1"
-          id="billing-address"
-        ></AddressContainer>
+        <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address"></AddressContainer>
         <div v-if="hasOpenForms" class="flex w-full -mx-4">
           <SaveAddressButton :is-loading="isLoading" :save="save" />
         </div>
@@ -114,8 +110,7 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } =
-  useCheckout();
+const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms } = useCheckout();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const {
   loading: loadShipping,
