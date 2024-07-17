@@ -21,13 +21,13 @@
 
     <div class="w-full">
       <div
-        class="overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-270px)]"
+        class="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-100 mb-4 max-h-[calc(100vh-225px)] md:max-h-[calc(100vh-270px)]"
       >
         <div v-if="!loading">
           <div
             v-for="item in orderGetters.getItems(order)"
             :key="item.id"
-            class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0"
+            class="relative flex border-neutral-200 border-b p-4"
           >
             <div class="relative overflow-hidden flex-shrink-0 rounded-md w-24 h-24 sm:h-40 sm:w-40">
               <NuxtImg
@@ -104,7 +104,7 @@
           </div>
         </div>
         <div class="w-full" v-else>
-          <SkeletonsOrderAgainItem class="mt-6" v-for="item in orderGetters.getItems(order)" :key="item.id" />
+          <SkeletonsOrderAgainItem v-for="item in orderGetters.getItems(order)" :key="item.id" />
         </div>
       </div>
       <div class="h-auto flex-shrink-0 block sm:flex gap-2 relative mt-3">
