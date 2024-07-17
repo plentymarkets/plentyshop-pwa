@@ -1,7 +1,19 @@
-import type { CartItem } from '@plentymarkets/shop-api';
-import type { Cart, DoAddItemParams, SetCartItemQuantityParams, DeleteCartItemParams } from '@plentymarkets/shop-api';
-import type { UseCartReturn, UseCartState, GetCart, AddToCart, AddItemsToCart } from './types';
-import type { DeleteCartItem, SetCartItemQuantity } from './types';
+import {
+  type Cart,
+  DoAddItemParams,
+  SetCartItemQuantityParams,
+  DeleteCartItemParams,
+  CartItem,
+} from '@plentymarkets/shop-api';
+import {
+  type UseCartReturn,
+  UseCartState,
+  type GetCart,
+  type AddToCart,
+  type AddItemsToCart,
+  type DeleteCartItem,
+  type SetCartItemQuantity,
+} from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
   if (!oldCart || !oldCart.items || !nextCart || !nextCart.items) {
