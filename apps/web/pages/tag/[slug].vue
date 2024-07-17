@@ -5,14 +5,17 @@
       <CategoryPageContent
         v-if="productsCatalog"
         :title="$t('resultsFor', { phrase: tagName })"
-        :total-products="productsCatalog.pagination.totals"
+        :total-products="searchPaginationTotals"
         :products="productsCatalog.products"
         :items-per-page="Number(productsPerPage)"
       >
         <template #sidebar>
           <CategorySorting />
-          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+          <CategoryItemsPerPage class="mt-6" :total-products="searchPaginationTotals" />
+          <CategoryFilters
+            v-if="productsCatalog?.facets?.length && facetGetters.hasFilters(productsCatalog?.facets)"
+            :facets="productsCatalog.facets"
+          />
         </template>
       </CategoryPageContent>
     </div>
@@ -23,26 +26,19 @@
 import { facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({
-  layout: false,
-});
+definePageMeta({ layout: false });
 
 const route = useRoute();
 const { data: productsCatalog, productsPerPage, loading, searchByTag } = useSearch();
 const { getFacetsFromURL } = useCategoryFilter();
-
 const [tagName, tagId] = route.params.slug.toString().split('_');
 
-const handleQueryUpdate = async () => {
-  await searchByTag(tagId, getFacetsFromURL());
-};
+onNuxtReady(async () => await searchByTag(tagId, getFacetsFromURL()));
 
-handleQueryUpdate();
+const searchPaginationTotals = computed(() => productsCatalog.value?.pagination?.totals || 0);
 
 watch(
   () => route.query,
-  async () => {
-    handleQueryUpdate();
-  },
+  async () => await searchByTag(tagId, getFacetsFromURL()),
 );
 </script>

@@ -22,6 +22,7 @@
 
 ### 🩹 Fixes
 
+- Fixed recursive calls found under catch-all `category/product` routes
 - Fixed hydration errors
 - Fixed a problem with the image loading status for category products
 - Fixed webmanifest 404 error
