@@ -50,7 +50,7 @@
 ### 👷 Changed
 
 - Changed shortDescription to return empty string
-- Improved display of reviews rating average  
+- Improved display of reviews rating average
 - Removed unnecessary hover state from cart items
 - The mobile navigation bar at the bottom of the screen and the navigation/settings buttons in the checkout have been removed
 - Added placeholder text for missing addresses
