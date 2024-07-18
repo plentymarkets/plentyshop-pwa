@@ -1,40 +1,71 @@
 # Changelog plentyshopPWA
 
-## v1.5.0 (yyyy-mm-dd) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener">
+## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Hinzugefügt
+### TODO 📙 Migrationsanleitung
 
+- Das Paket `@plentymarkets/shop-sdk` wurde auf die neue `@vue-storefront/nuxt` Middleware-Modulstruktur migriert.
+- Das Paket `@plentymarkets/shop-sdk` wurde entfernt und seine gesamte Funktionalität wurde in `@plentymarkets/shop-api` verschoben.
+- Alle `@plentymarkets/shop-sdk`-Importe müssen in `@plentymarkets/shop-api` umbenannt werden
+- useSdk() wird jetzt automatisch importiert und kann nicht mehr importiert werden. Entfernen Sie alle `import { useSdk } from '~/sdk';` Importe.
+
+[Vollständiges Änderungsprotokoll der SDK-Migration](https://github.com/plentymarkets/plentyshop-pwa/pull/452/files)
+
+### 🚀 Hinzugefügt
+
+- Variationseigenschaften können im Shop angezeigt werden
 - Demo zum Anpassen von Einstellungen zur Laufzeit
 - Hochgeladene Dateien als Produktattribut können jetzt wieder heruntergeladen werden
+- Hook, um Systemkonfigurationen zu laden
+- Dialog "Erneut kaufen" bei der Bestellübersicht und auf der Bestellbestätigungsseite
+
+### 🩹 Behoben
+
+- Rekursive Aufrufe gefunden in „Kategorie/Produkt“-Routen
+- Mehrere Hydratationsfehler
+- Ein Problem mit dem Laden von Bildern auf Kategorieseiten
+- Webmanifest 404-Fehler
+- Konsolenfehler im Checkout
+- Leere Liste der Produktattributen wurde angezeigt
+- Kanonische Links werden jetzt korrekt gesetzt
+- Fehlende Übersetzung in der Länderauswahl
+- Fehlende Artikelkurzbeschreibung
+- Falscher Link auf der Bestellbestätigungsseite
+- Artikelpaket-Links mit fehlendem Bild
+- Rendering von Badges
+- Aria-Beschriftung der Schaltfläche „Wishlist
+- Platz für PayPal im Express Checkout reservieren, wenn Paypal nicht konfiguriert ist
+- Größe des Artikelbildes in Artikel-Listen
+- Layout-Verschiebung bei der Schaltfläche „In den Warenkorb"
+- Wishlist-Schaltfläche schaltet nicht zwischen ausgefülltem/leerem Herzsymbol um
+- Adressen werden nach der Erstellung nicht im Checkout angezeigt
+- Kein Redirect bei Verwendung des Logins im Header, wenn man sich auf der Gast-Login-Seite befindet
+- Streichpreise auf kleinen Bildschirmgrößen
+- Sprachauswahl auf kleinen Bildschirmgrößen
+- Das Scrollen zu Bewertungen auf kleinen Bildschirmgrößen
+- Skript zum Abrufen der Systemkonfiguration verwendet nicht das FETCH_REMOTE_CONFIG aus .env
+- Design der Rezensionsübersicht
+- Wunschlisten-Funktionalität für Gäste
+
+### 👷 Geändert
+
+- shortDescription gibt nun einen leeren String zurück
+- Verbesserte Anzeige des Bewertungsdurchschnitts bei Bewertungen
+- Unnötiger Hover-Status von Warenkorbartikeln wurde entfernt
+- Die Navigationsleiste auf mobilen Geräten am unteren Rand des Bildschirms und die Navigations-/Einstellungsschaltflächen im Checkout wurden entfernt
 - Platzhaltertext für fehlende Adressen hinzugefügt
-- Dieselbe benutzerdefinierte Kopfzeile in „Mein Konto“ hinzugefügt
-- Hook hinzugefügt, um Systemkonfigurationen zu laden
-- Dialog "Erneut kaufen" bei der Bestellübersicht und auf der Bestellbestätigungsseite hinzugefügt
+- Custom Header im myAccount entfernt
+- Tooltip für Bildkomponente für Artikelattribute hinzugefügt
+- Das Token im Release-Workflow verwendet nun ein supplier secret
+- Die Registrierung ohne Cloudflare-Turnstile-Konfiguration ist nun möglich
 
-### Behoben
+### 🏡 Aufräumen
 
-- Fehlerhafte Darstellung von Produktattributen behoben
-- SEO Canonical Verlinkungen angepasst
-- Die Länder-Auflistung im Adressformular werden jetzt richtig übersetzt.
-- Fehlende Artikelkurzbeschreibung behoben
-- Fehlerhafte Link auf der Bestellbestätigungsseite wurde korrigiert
-- Links zu Bundle-Artikeln
-- Das Rendern von Badges-Elementen wurde korrigiert
-- Bilder-Komponente zum Auswählen von Artikelattributen verfügt nun über einen Tooltip.
-- Wunschlisten-Button Arien-Etikett
-- PayPal-Bereich im "Artikel zum Warenkorb hinzugefügt"-Dialog und Gast-Login wird nur noch angezeigt, wenn PayPal verbunden ist.
-- Registration ohne Cloudflare Turnstile-Konfiguration ist jetzt möglich.
-- Bei Verwendung der Anmeldung über den Header erfolgte keine Weiterleitung, während man sich auf der Gast-Anmeldeseite befand
-- Die Umgebungsvariable zum Laden der Systemeinstellungen wird jetzt in der aktualisierten `.env`-Datei korrekt übernommen.
-- Im Workflow zum Veröffentlichen der App wird jetzt ein Lieferanten-Token verwendet.
+- Nuxt und Paketabhängigkeiten aktualisiert
+- Lighthouse Test in eine eigene GitHub-Aktion verschoben
+- Paypal-Kreditkartentest in den Quarantäne-Ordner verschoben
 
-### Geändert
-
-- Unnötiger Hover-Status von Artikeln im Warenkorb entfernt.
-- Anzeige der durchschnittlichen Bewertung hinzugefügt
-- Die Navigationsleiste am unteren Bildschirmrand (auf mobilen Geräten) sowie die Navigations- und Einstellungsknöpfe im Checkout wurden entfernt.
-
-## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener">
+## v1.4.1 (2024-06-05) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.0...v1.4.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Hinzugefügt
 
@@ -86,9 +117,9 @@
 - Das Design der Sitemap wurde angepasst.
 - Es wird jetzt gekennzeichnet, ob ein Eingabefeld optional oder ein Pflichtfeld ist.
 
-## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
+## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
-### Migrations Guide
+### Migrationsanleitung
 
 - Die Upload-Aktion wurde geändert [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) Aktualisiere die Datei, um die [config-Funktion](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config) zu nutzen.
 - Wir benötigen nun ein API Security Token, um Anfragen an die plentysystems API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
@@ -153,7 +184,7 @@
 - Fehlender Wunschlisten-Navigationsbutton auf Mobilgeräten hinzugefügt.
 - Link zu den Beitragsrichtlinien in der Dokumentation behoben.
 
-## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+## v1.3.0 (2024-02-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.2.0...v1.3.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Hinzugefügt
 
