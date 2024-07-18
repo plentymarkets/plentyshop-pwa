@@ -46,6 +46,7 @@
 - Skript zum Abrufen der Systemkonfiguration verwendet nicht das FETCH_REMOTE_CONFIG aus .env
 - Design der Rezensionsübersicht
 - Wunschlisten-Funktionalität für Gäste
+- Ein Fehler beim REST-Aufruf zur Abfrage der Systemkonfiguration wurde behoben.
 
 ### 👷 Geändert
 

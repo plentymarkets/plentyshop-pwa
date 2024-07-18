@@ -46,6 +46,7 @@
 - Fetch system configuration script not using the FETCH_REMOTE_CONFIG from .env
 - Review overview design
 - Guest wishlist functionality
+- Fixed the REST call to fetch the remote configuration in the build process.
 
 ### 👷 Changed
 
