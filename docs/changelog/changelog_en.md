@@ -1,5 +1,11 @@
 # Changelog plentyshopPWA
 
+## v1.6.0
+
+### 🩹 Fixed
+
+- Fixed the REST call to fetch the remote configuration in the build process.
+
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO 📙 Migration guide
@@ -46,7 +52,6 @@
 - Fetch system configuration script not using the FETCH_REMOTE_CONFIG from .env
 - Review overview design
 - Guest wishlist functionality
-- Fixed the REST call to fetch the remote configuration in the build process.
 
 ### 👷 Changed
 
