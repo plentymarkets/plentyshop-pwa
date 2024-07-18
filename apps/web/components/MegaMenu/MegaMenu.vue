@@ -39,7 +39,9 @@
           }
         "
       >
-        <li v-for="(menuNode, index) in categoryTree" :key="index">
+        <li v-if="categoryTree.length === 0" class="h-10"></li>
+
+        <li v-else v-for="(menuNode, index) in categoryTree" :key="index">
           <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
             <SfButton
               ref="triggerReference"
@@ -87,11 +89,14 @@
                 </ul>
               </template>
               <div v-else>
-                <p
+                <SfListItem
+                  :tag="NuxtLink"
+                  size="sm"
+                  :href="localePath(generateCategoryLink(node))"
                   class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid"
                 >
                   {{ categoryTreeGetters.getName(node) }}
-                </p>
+                </SfListItem>
                 <ul class="mt-2">
                   <li v-for="child in node.children" :key="child.id">
                     <SfListItem

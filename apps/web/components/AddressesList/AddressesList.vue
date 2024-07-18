@@ -16,9 +16,14 @@
       @make-default="makeDefault(address)"
     />
 
-    <SfButton class="!block mt-6 ml-auto w-auto" variant="secondary" @click="editAddress">
-      {{ addAddressText }}
-    </SfButton>
+    <div class="col-span-3 text-center">
+      <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
+        {{ $t('account.accountSettings.noAddresses') }}
+      </h3>
+      <SfButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
+        {{ addAddressText }}
+      </SfButton>
+    </div>
 
     <UiModal
       v-model="isOpen"

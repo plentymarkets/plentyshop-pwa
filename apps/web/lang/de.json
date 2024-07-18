@@ -469,7 +469,8 @@
       "shippingDetails": {
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
-      }
+      },
+      "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
@@ -524,6 +525,18 @@
       "paymentSummary": {
         "heading": "Zahlungsübersicht",
         "paymentStatus": "Zahlungsstatus"
+      },
+      "orderAgain": {
+        "heading": "Erneut kaufen",
+        "addToCart": "In den Warenkorb",
+        "subtext": "Sie können die Produkte aus dieser Bestellung erneut kaufen.",
+        "headingChanges": "Änderungen der Produkte",
+        "subtextChanges": "Seit Ihrer letzten Bestellung sind Änderungen aufgetreten",
+        "priceUp": "Preis erhöht",
+        "priceDown": "Preis gesenkt",
+        "notAvailable": "Nicht verfügbar",
+        "buyAgain": "Erneut kaufen",
+        "cancel": "Abbrechen"
       }
     },
     "wishlist": {

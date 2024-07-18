@@ -32,7 +32,7 @@
       />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
-          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+          t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
         }}</UiTag>
       </div>
     </div>
@@ -44,7 +44,7 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-
+    <VariationProperties :product="product" />
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating
         size="xs"
@@ -66,9 +66,9 @@
     </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
-    <OrderProperties v-if="product" :product="product" />
-    <ProductAttributes v-if="product" :product="product" />
-    <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+    <OrderProperties :product="product" />
+    <ProductAttributes :product="product" />
+    <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -124,8 +124,7 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
-const props = defineProps<PurchaseCardProps>();
-const { product } = toRefs(props);
+const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
@@ -148,22 +147,22 @@ resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
-      productGetters.getPrice(product.value)?.special ??
-      productGetters.getPrice(product.value)?.regular ??
-      0) + getPropertiesPrice(product.value),
+    (productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
+      productGetters.getPrice(product)?.special ??
+      productGetters.getPrice(product)?.regular ??
+      0) + getPropertiesPrice(product),
 );
 
 const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
-  productGetters.getPrice(product.value)?.special ??
-  productGetters.getPrice(product.value)?.regular ??
+  productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
+  productGetters.getPrice(product)?.special ??
+  productGetters.getPrice(product)?.regular ??
   0;
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(product.value),
+    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.baseSinglePrice ??
+    productGetters.getDefaultBaseSinglePrice(product),
 );
 
 const handleAddToCart = async (quickCheckout = true) => {
@@ -192,14 +191,14 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   const params = {
-    productId: Number(productGetters.getId(product.value)),
+    productId: Number(productGetters.getId(product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
   };
 
   const added = await addToCart(params);
   if (added) {
-    if (quickCheckout) openQuickCheckout(product.value, quantitySelectorValue.value);
+    if (quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
   return added;
@@ -229,7 +228,8 @@ const openReviewsAccordion = () => {
 
 const scrollToReviewsAccordion = () => {
   const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
-  const customerReviewsAccordionElementOffset = customerReviewsAccordionElement?.offsetTop ?? 0;
+  const customerReviewsAccordionElementOffset =
+    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
 
   const headerElement = document.querySelector('header') as HTMLElement;
   const headerElementOffset = headerElement.offsetHeight ?? 0;
@@ -240,7 +240,7 @@ const scrollToReviewsAccordion = () => {
   });
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {

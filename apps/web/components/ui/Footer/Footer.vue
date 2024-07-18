@@ -1,5 +1,5 @@
 <template>
-  <footer class="pt-10 bg-neutral-100 mb-[58px] md:mb-0" data-testid="footer">
+  <footer class="pt-10 bg-neutral-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
     <div
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
       data-testid="section-top"
@@ -40,8 +40,10 @@
 <script setup lang="ts">
 import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories, companyName } from '~/mocks';
+import type { FooterProps } from './types';
+
+const { simplifiedFooter } = withDefaults(defineProps<FooterProps>(), { simplifiedFooter: false });
 
 const localePath = useLocalePath();
-
 const NuxtLink = resolveComponent('NuxtLink');
 </script>
