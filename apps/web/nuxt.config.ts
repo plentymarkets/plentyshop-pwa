@@ -17,8 +17,17 @@ export default defineNuxtConfig({
         lang: 'en',
       },
       meta: [
-        { name: 'description', content: 'plentyshop PWA' },
+        { name: 'title', content: process.env.METATITLE || 'Meta Title'},
+        { name: 'shop-name', content: 'My shop name' },
+        { name: 'description', content: process.env.METADESC || 'Meta Description'},
+        { name: 'keywords', content: process.env.METAKEYWORDS || 'Meta Keywords' },
         { name: 'theme-color', content: '#0C7992' },
+        { property: 'og:title', content: process.env.OGTITLE },
+        { property: 'og:image', content: process.env.OGIMAGE || 'default image' },
+        { property: 'og:type', content: process.env.OGTYPE || 'website' },
+        { property: 'og:url', content: process.env.OGURL || 'default url' },
+        { property: 'og:site_name', content: process.env.OGSITENAME || 'default site name' },
+        { property: 'og:description', content: process.env.OGDESCRIPTION || 'default description' },
       ],
       link: [
         { rel: 'icon', href: '/favicon.ico' },
