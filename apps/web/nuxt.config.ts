@@ -62,17 +62,9 @@ export default defineNuxtConfig({
   site: {
     url: '',
   },
+  pages: true,
   hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
-    },
-    'build:before': async () => {
-      await fetchConfiguration();
-    },
+    'build:before': async () => await fetchConfiguration(),
   },
   runtimeConfig: {
     public: {

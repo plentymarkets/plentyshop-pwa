@@ -3,11 +3,6 @@ name: New release app
 on:
   release:
     types: [published]
-  workflow_dispatch:
-    inputs:
-      tag-version:
-        description: 'The tag version, branch name or SHA to checkout'
-        required: true
 
 jobs:
   create-archive:
@@ -16,7 +11,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.release.tag_name }} || ${{ inputs.tag-version }}
+          ref: ${{ github.event.release.tag_name }}
 
       - name: Compress repo to Tar
         uses: a7ul/tar-action@v1.1.0
@@ -33,6 +28,5 @@ jobs:
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: "https://pwapublish.plentysystems.com/storeDefaultApplication"
-          forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
+          forms: '{ "token": "${{ secrets.SUPPLIER_TOKEN }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'
-

@@ -525,6 +525,18 @@
       "paymentSummary": {
         "heading": "Payment Summary",
         "paymentStatus": "Payment status"
+      },
+      "orderAgain": {
+        "heading": "Buy again",
+        "addToCart": "Add to cart",
+        "subtext": "You can purchase the products from this order again.",
+        "headingChanges": "Change in products",
+        "subtextChanges": "Changes occured since you last ordered",
+        "priceUp": "Price increased",
+        "priceDown": "Price decreased",
+        "notAvailable": "Currently unavailable",
+        "buyAgain": "Buy again",
+        "cancel": "Cancel"
       }
     },
     "wishlist": {
