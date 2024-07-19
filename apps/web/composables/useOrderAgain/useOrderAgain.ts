@@ -88,7 +88,7 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
               name: property.name,
             },
             valueType: property.type,
-            value: orderGetters.getItemOrderPropertyValue(property),
+            value: orderGetters.getOrderAgainPropertyValue(property),
           },
         };
       }) as BasketItemOrderParamsProperty[];
