@@ -17,9 +17,9 @@ export default defineNuxtConfig({
         lang: 'en',
       },
       meta: [
-        { name: 'title', content: process.env.METATITLE || 'Meta Title'},
+        { name: 'title', content: process.env.METATITLE || 'Meta Title' },
         { name: 'shop-name', content: 'My shop name' },
-        { name: 'description', content: process.env.METADESC || 'Meta Description'},
+        { name: 'description', content: process.env.METADESC || 'Meta Description' },
         { name: 'keywords', content: process.env.METAKEYWORDS || 'Meta Keywords' },
         { name: 'theme-color', content: '#0C7992' },
         { property: 'og:title', content: process.env.OGTITLE },
