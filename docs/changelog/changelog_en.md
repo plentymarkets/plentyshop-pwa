@@ -1,5 +1,11 @@
 # Changelog plentyshopPWA
 
+## v1.6.1
+
+### New
+
+- The app now reads metadata, such as description and keywords, from the environment.
+
 ## v1.6.0
 
 ### 🩹 Fixed
