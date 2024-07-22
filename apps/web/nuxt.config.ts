@@ -3,6 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
 import fetchConfiguration from './build/fetchConfiguration';
+import { appConfiguration } from './configuration/app-configuration';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -10,22 +11,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  app: {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#0C7992' },
-      ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/favicon.ico' },
-      ],
-    },
-  },
+  app: appConfiguration,
   experimental: {
     asyncContext: true,
   },
