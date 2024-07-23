@@ -44,17 +44,8 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
         }),
       ];
 
-      if (variationId && isAuthorized.value) {
-        feedbackCalls.push(
-          useSdk().plentysystems.getAuthenticatedReview({
-            itemId: itemId,
-            variationId: variationId,
-          }),
-        );
-      }
-
       await Promise.all(feedbackCalls).then((data) => {
-        const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
+        const feedbacks = [...(data[0]?.data?.feedbacks || [])];
         state.value.data.feedbacks = feedbacks || state.value.data;
         return true;
       });
