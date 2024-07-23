@@ -1,5 +1,9 @@
 # Changelog plentyshopPWA
 
+## v1.6.2
+
+- Die Anwendungskonfigurationen werden nun in einen neuen, dafür vorgesehenen Ordner verschoben
+
 ## v1.6.1
 
 ### Hinzugefügt
