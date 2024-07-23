@@ -48,7 +48,9 @@
                 {{ orderGetters.getItemQty(item) }}x {{ orderGetters.getItemName(item) }}
               </h1>
               <Price
-                v-if="orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesReady(item)"
+                v-if="
+                  orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesAvailable(item)
+                "
                 :price="orderGetters.getOrderAgainInformationPrice(item)"
                 :normal-price="orderGetters.getOrderAgainInformationPrice(item)"
                 :old-price="orderGetters.getItemPrice(item)"
@@ -135,7 +137,7 @@
                   <span>{{ t('account.ordersAndReturns.orderAgain.notAvailable') }}</span>
                 </UiTag>
                 <UiTag
-                  v-else-if="!orderGetters.hasAllOrderPropertiesReady(item)"
+                  v-else-if="!orderGetters.hasAllOrderPropertiesAvailable(item)"
                   variant="negative"
                   size="sm"
                   class="!font-medium"
@@ -230,7 +232,7 @@ const goToPage = (path: string) => {
 
 const canAddToCart = computed(() => {
   return orderGetters.getItems(props.order).find((item) => {
-    return orderGetters.isItemSalableAndActive(props.order, item) && orderGetters.hasAllOrderPropertiesReady(item);
+    return orderGetters.isItemSalableAndActive(props.order, item) && orderGetters.hasAllOrderPropertiesAvailable(item);
   });
 });
 
