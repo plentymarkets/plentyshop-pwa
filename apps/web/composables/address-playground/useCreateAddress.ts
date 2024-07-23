@@ -14,12 +14,12 @@ export const useCreateAddress = (type: AddressType) => {
                 addressData: address,
             });
 
-            const { set } = useAddresses(type);
-            set(data.data);
+            /* const { set } = useAddresses(type);
+            set(data.data); */
 
-            // setDisplayAddress?
-            const { set: setDisplayAddress } = useDisplayAddress(type);
-            setDisplayAddress(data.data[0]);
+            // setCheckoutAddress?
+            const { set: setCheckoutAddress } = useCheckoutAddress(type);
+            setCheckoutAddress(data.data[0]);
 
             state.value.loading = false;
         } catch (error: any) {

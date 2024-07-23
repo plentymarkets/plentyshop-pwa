@@ -12,8 +12,8 @@ export const useFetchAdddress = (type: AddressType) => {
             const data = await useSdk().plentysystems.getAddresses({
                 typeId: type,
             });
-            const { set } = useAddresses(type);
-            set(data.data);
+            /* const { set } = useAddresses(type);
+            set(data.data); */
             state.value.loading = false;
         } catch (error: any) {
             useHandleError(error);
@@ -30,8 +30,8 @@ export const useFetchAdddress = (type: AddressType) => {
         );
         useHandleError(error.value);
 
-        const { set } = useAddresses(type);
-        set(data.value?.data ?? []);
+        /* const { set } = useAddresses(type);
+        set(data.data); */
         state.value.loading = false;
     }
     return {

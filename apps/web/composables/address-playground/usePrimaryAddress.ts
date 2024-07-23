@@ -19,9 +19,6 @@ export const usePrimaryAddress = (type: AddressType) => {
             useHandleError(error);
             state.value.loading = false;
         }
-
-        const { set } = useDisplayAddress(type);
-        set(address);
     };
     
     return {
