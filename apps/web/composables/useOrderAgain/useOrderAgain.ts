@@ -96,7 +96,8 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
       if (
         orderItem.itemVariationId > 0 &&
         state.value.order &&
-        orderGetters.isItemSalableAndActive(state.value.order, orderItem)
+        orderGetters.isItemSalableAndActive(state.value.order, orderItem) &&
+        orderGetters.hasAllOrderPropertiesReady(orderItem)
       ) {
         items.push({
           productId: orderItem.itemVariationId,

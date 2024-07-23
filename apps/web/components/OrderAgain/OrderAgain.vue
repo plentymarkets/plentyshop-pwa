@@ -48,22 +48,75 @@
                 {{ orderGetters.getItemQty(item) }}x {{ orderGetters.getItemName(item) }}
               </h1>
               <Price
-                v-if="orderGetters.isItemSalableAndActive(order, item)"
+                v-if="orderGetters.isItemSalableAndActive(order, item) && orderGetters.hasAllOrderPropertiesReady(item)"
                 :price="orderGetters.getOrderAgainInformationPrice(item)"
                 :normal-price="orderGetters.getOrderAgainInformationPrice(item)"
                 :old-price="orderGetters.getItemPrice(item)"
               />
               <div
+                v-if="orderGetters.getItemShortDescription(order, item)"
                 class="mb-2 font-normal typography-text-sm whitespace-pre-wrap break-words text-center sm:text-left"
                 data-testid="product-description"
               >
                 {{ orderGetters.getItemShortDescription(order, item) }}
               </div>
+              <div class="mb-2" v-if="!orderGetters.isBundleComponents(item)">
+                <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+                  <li v-for="(attribute, index) in orderGetters.getOrderAttributes(item)" :key="index">
+                    <span class="mr-1" v-if="orderGetters.getOrderItemAttributeName(attribute)">
+                      {{ orderGetters.getOrderItemAttributeName(attribute) }}:
+                    </span>
+                    <span class="font-medium" v-if="orderGetters.getOrderItemAttributeValue(attribute)">
+                      {{ orderGetters.getOrderItemAttributeValue(attribute) }}
+                    </span>
+                  </li>
+                </ul>
+                <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+                  <li
+                    v-for="(property, index) in orderGetters.getItemOrderProperties(item)"
+                    :key="index"
+                    :class="{ 'line-through': !orderGetters.getOrderAgainOrderProperty(item, property) }"
+                  >
+                    <span class="mr-1 font-bold">
+                      <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
+                      <span
+                        v-if="
+                          orderGetters.getOrderAgainOrderProperty(item, property) &&
+                          productPropertyGetters.getOrderPropertyLabel(
+                            orderGetters.getOrderAgainOrderProperty(item, property),
+                          ).surchargeType
+                        "
+                      >
+                        ({{
+                          t(
+                            'orderProperties.vat.' +
+                              productPropertyGetters.getOrderPropertyLabel(
+                                orderGetters.getOrderAgainOrderProperty(item, property),
+                              ).surchargeType,
+                          )
+                        }}
+                        {{
+                          n(
+                            productPropertyGetters.getOrderPropertySurcharge(
+                              orderGetters.getOrderAgainOrderProperty(item, property),
+                            ),
+                            'currency',
+                          )
+                        }})</span
+                      >
+                      <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
+                    </span>
+                    <span class="font-medium" v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
+                      {{ orderGetters.getItemOrderPropertyValue(property) }}
+                    </span>
+                  </li>
+                </ul>
+              </div>
               <div class="w-full flex flex-wrap gap-2">
                 <SfListItem
                   v-if="orderGetters.getOrderAgainAvailability(item)"
                   size="sm"
-                  class="text-xs font-medium select-none rounded-md !w-fit !cursor-text !px-2 grid"
+                  class="text-xs font-medium rounded-md !w-fit !cursor-text !px-2 grid"
                   :class="[orderGetters.getOrderAgainAvailabilityClass(item)]"
                   :style="{
                     backgroundColor: orderGetters.getOrderAgainAvailabilityBackgroundColor(item),
@@ -80,6 +133,15 @@
                 >
                   <SfIconError size="xs" />
                   <span>{{ t('account.ordersAndReturns.orderAgain.notAvailable') }}</span>
+                </UiTag>
+                <UiTag
+                  v-else-if="!orderGetters.hasAllOrderPropertiesReady(item)"
+                  variant="negative"
+                  size="sm"
+                  class="!font-medium"
+                >
+                  <SfIconError size="xs" />
+                  <span>{{ t('account.ordersAndReturns.orderAgain.orderPropertyNotAvailableOrChanged') }}</span>
                 </UiTag>
                 <UiTag
                   v-else-if="orderGetters.getOrderAgainInformationPrice(item) > orderGetters.getItemPrice(item)"
@@ -121,7 +183,7 @@
           <SfButton
             data-testid="quick-checkout-cart-button"
             @click="addToCart"
-            :disabled="loading || loadingAddToCart"
+            :disabled="loading || loadingAddToCart || !canAddToCart"
             size="lg"
             variant="primary"
           >
@@ -145,13 +207,13 @@ import {
   SfListItem,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 
-defineProps<OrderAgainProps>();
+const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
-const { t } = useI18n();
+const { t, n } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
@@ -165,6 +227,12 @@ const goToPage = (path: string) => {
   close();
   navigateTo(localePath(path));
 };
+
+const canAddToCart = computed(() => {
+  return orderGetters.getItems(props.order).find((item) => {
+    return orderGetters.isItemSalableAndActive(props.order, item) && orderGetters.hasAllOrderPropertiesReady(item);
+  });
+});
 
 const addToCart = async () => {
   loadingAddToCart.value = true;

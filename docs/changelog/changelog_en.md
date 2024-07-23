@@ -1,12 +1,11 @@
 # Changelog plentyshopPWA
 
-## v1.6.1
+## v1.6.0
 
-### New
+### 🚀 New
 
 - The app now reads metadata, such as description and keywords, from the environment.
-
-## v1.6.0
+- The order again feature supports and shows order properties.
 
 ### 🩹 Fixed
 
