@@ -1,7 +1,7 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex justify-between items-center">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
+    <div class="flex justify-between items-center flex-col sm:flex-row">
+      <h2 class="text-neutral-900 text-lg font-bold">{{ heading }}</h2>
       <div v-if="!disabled && addressList.length > 0" class="flex items-center">
         <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
           {{ $t('savedBillingAddress') }}
