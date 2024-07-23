@@ -15,6 +15,7 @@
 ### 👷 Changed
 
 - Cookiebar icon has been replaced
+- Checkout address buttons in the mobile view have been adjusted
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
