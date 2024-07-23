@@ -87,7 +87,6 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
     'nuxt-viewport',
@@ -150,8 +149,11 @@ export default defineNuxtConfig({
       },
     },
   },
-  tailwindcss: {
-    configPath: '~/tailwind.config.ts',
+  postcss: {
+    plugins: {
+      tailwindcss: {},
+      autoprefixer: {},
+    },
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
