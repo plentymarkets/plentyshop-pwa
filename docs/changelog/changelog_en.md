@@ -2,7 +2,7 @@
 
 ## v1.6.2
 
-- The application configurations are now moved in a new designated folder 
+- The application configurations are now moved in a new designated folder
 
 ### New
 
