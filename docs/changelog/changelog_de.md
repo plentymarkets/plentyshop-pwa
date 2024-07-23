@@ -1,5 +1,11 @@
 # Changelog plentyshopPWA
 
+## v1.6.1
+
+### Hinzugefügt
+
+- Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
+
 ## v1.6.0
 
 ### 🩹 Behoben
