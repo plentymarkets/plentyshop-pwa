@@ -536,7 +536,8 @@
         "priceDown": "Preis gesenkt",
         "notAvailable": "Nicht verfügbar",
         "buyAgain": "Erneut kaufen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar"
       }
     },
     "wishlist": {
