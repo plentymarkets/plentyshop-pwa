@@ -3,6 +3,7 @@
     <span class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </span>
+    <span>:</span>
     <div v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
   </div>
 </template>
