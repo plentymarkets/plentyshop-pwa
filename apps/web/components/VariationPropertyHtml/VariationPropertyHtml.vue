@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full ml-4">
+  <div class="w-full">
     <span class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </span>

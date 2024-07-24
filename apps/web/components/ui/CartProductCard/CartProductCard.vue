@@ -60,7 +60,7 @@
           </div>
           <div
             v-if="cartGetters.getVariation(cartItem)"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-2"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
           >
             <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
