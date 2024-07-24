@@ -1,11 +1,9 @@
 <template>
-  <div class="w-full">
-    <div class="font-semibold">
+  <div class="w-full list-item list-disc ml-4">
+    <span class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
-    </div>
-    <div>
-      <div v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
-    </div>
+    </span>
+    <div v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
   </div>
 </template>
 

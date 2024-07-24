@@ -60,7 +60,10 @@
               />
             </ul>
           </div>
-          <div v-if="cartGetters.getVariation(cartItem)">
+          <div
+            v-if="cartGetters.getVariation(cartItem)"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-2"
+          >
             <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
         </div>

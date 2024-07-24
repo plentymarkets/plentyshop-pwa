@@ -1,11 +1,9 @@
 <template>
-  <div class="w-full">
-    <div class="font-semibold">
+  <div class="w-full list-item list-disc ml-4">
+    <span class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
-    </div>
-    <div>
-      {{ preatyDate }}
-    </div>
+    </span>
+    <span>: {{ preatyDate }} </span>
   </div>
 </template>
 
