@@ -66,7 +66,10 @@ export default defineNuxtConfig({
   },
   pages: true,
   hooks: {
-    'build:before': generateScssVariables,
+    'build:before': async () => {
+      await fetchConfiguration();
+      generateScssVariables();
+    },
   },
   runtimeConfig: {
     public: {
