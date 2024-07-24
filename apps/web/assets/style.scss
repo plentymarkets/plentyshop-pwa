@@ -1,3 +1,4 @@
+@import "test";
 @tailwind base;
 
 @layer base {
@@ -9,7 +10,7 @@
     --colors-2-primary-400: 32 219 240;
     --colors-2-primary-500: 4 190 214;
     --colors-2-primary-600: 6 151 180;
-    --colors-2-primary-700: 12 121 146;
+    --colors-2-primary-700: rgb(var(--test));
     --colors-2-primary-800: 20 98 118;
     --colors-2-primary-900: 21 80 100;
     --colors-2-primary-950: 7 51 66;
