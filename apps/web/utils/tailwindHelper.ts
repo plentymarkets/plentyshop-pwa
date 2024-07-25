@@ -17,7 +17,7 @@ const spectrumToTailwindMapper = [
   { id: '+5', weight: '950' },
 ];
 
-const spectrumToTailwind = (spectrumList: SpectrumList) => {
+export const spectrumToTailwind = (spectrumList: SpectrumList) => {
   const tailwindColors = [
     { weight: '50', value: '' },
     { weight: '100', value: '' },

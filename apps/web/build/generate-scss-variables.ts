@@ -1,66 +1,75 @@
 import fs from 'node:fs';
 import path from 'node:path';
-// import { parse } from 'culori';
-import { hex2rgb, getTailwindColorsOklch } from '../utils/tailwindHelper.js';
-import { converter, formatRgb, parse } from 'culori/fn';
+import { getTailwindColorsOklch } from '../utils/tailwindHelper';
+import type { TailwindColors } from '~/composables/useConfigurationDrawer';
+import { rgb } from 'culori';
+import { formatRgb } from 'culori/fn';
 
-const primary700Hex = process.env.PRIMARY700 || '12 121 146';
-const secondary700Hex = process.env.SECONDARY700 || '165 105 3';
+const primaryColor = process.env.PRIMARY700 || '12 121 146';
+const secondaryColor = process.env.SECONDARY700 || '165 105 3';
 
-const oklchToRgb = (oklch: string) => {
-  const toRgb = converter('rgb');
-  const rgbColor = toRgb(parse(oklch));
-  console.log(oklch + 'here');
-  return formatRgb(rgbColor);
+export const oklchToRgb = (oklch: string) => {
+  const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
+  const rgbColorFormatted = formatRgb(rgbColor);
+  const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
+
+  return rgbColorString.replaceAll(',', '');
 };
 
-const generateColorPallete = () => {
-  const colorList = getTailwindColorsOklch(primary700Hex);
-  console.log(colorList);
-  const rgbColorList = colorList.map((item) => ({
-    weight: item.weight,
-    value: oklchToRgb(item.value),
-  }));
+export const convertOklchToRgb = (tailwindColors: TailwindColors) => {
+  const spectrum: Array<{ weight: string; rgb: string }> = [];
+  tailwindColors.forEach((color) => {
+    if (color.value) {
+      spectrum.push({ weight: color.weight, rgb: oklchToRgb(color.value) });
+    }
+  });
+  return spectrum;
+};
 
-  console.log('Converted RGB color list:', rgbColorList);
-  return rgbColorList;
+const prepareConfigFile = (
+  primarySpectrum: Array<{ weight: string; rgb: string }>,
+  secondarySpectrum: Array<{ weight: string; rgb: string }>,
+) => {
+  let scssContent = '';
+  primarySpectrum.forEach((shade, index) => {
+    scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};`;
+    if (index !== primarySpectrum.length) {
+      scssContent += `\n`;
+    }
+  });
 
-  // console.log(colorList);
-  // const values = colorList.map((item) => item.value);
-  // console.log(values);
-  // console.log(values[0]);
-  // console.log(oklchToRgb(values[0]));
+  scssContent += '\n';
+
+  secondarySpectrum.forEach((shade, index) => {
+    scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};`;
+    if (index !== secondarySpectrum.length) {
+      scssContent += `\n`;
+    }
+  });
+
+  return scssContent;
 };
 
 const generateScssVariables = () => {
-  let scssContent = '';
-  // eslint-disable-next-line unicorn/consistent-function-scoping
-  const isRgb = (value: string) => /^(?:\d{1,3}\s){2}\d{1,3}$/.test(value);
+  // const isRgb = (value: string) => /^(?:\d{1,3}\s){2}\d{1,3}$/.test(value);
 
-  if (isRgb(primary700Hex)) {
-    scssContent += `$primary700: ${primary700Hex};\n`;
-  } else {
-    const parsedMain = hex2rgb(primary700Hex);
-    scssContent += `$primary700: ${parsedMain.r} ${parsedMain.g} ${parsedMain.b};\n`;
-  }
+  // Either have HEX everywhere or add the regex back
+  // Current version works with HEX values only
 
-  if (isRgb(secondary700Hex)) {
-    scssContent += `$secondary700: ${secondary700Hex};`;
-  } else {
-    const parsedSecond = hex2rgb(secondary700Hex);
-    scssContent += `$secondary700: ${parsedSecond.r} ${parsedSecond.g} ${parsedSecond.b};`;
-  }
+  const primaryTailwindColors = getTailwindColorsOklch(primaryColor);
+  const primarySpectrum = convertOklchToRgb(primaryTailwindColors);
+  const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor);
+  const secondarySpectrum = convertOklchToRgb(secondaryTailwindColors);
+  const scssContent = prepareConfigFile(primarySpectrum, secondarySpectrum);
 
-  const scssVariablesDir = path.resolve(__dirname, '../assets');
-  const scssVariablesFilePath = path.resolve(scssVariablesDir, '_variables.scss');
+  const scssVariablesDirectory = path.resolve(__dirname, '../assets');
+  const scssVariablesFilePath = path.resolve(scssVariablesDirectory, '_variables.scss');
 
-  if (!fs.existsSync(scssVariablesDir)) {
-    fs.mkdirSync(scssVariablesDir, { recursive: true });
+  if (!fs.existsSync(scssVariablesDirectory)) {
+    fs.mkdirSync(scssVariablesDirectory, { recursive: true });
   }
 
   fs.writeFileSync(scssVariablesFilePath, scssContent, 'utf8');
-
-  generateColorPallete();
 };
 
 export default generateScssVariables;
