@@ -1,20 +1,21 @@
 # Changelog plentyshopPWA
 
-## v1.6.1
+## v1.6.0
 
-### New
+### 🚀 New
 
 - The app now reads metadata, such as description and keywords, from the environment.
-
-## v1.6.0
+- The order again feature supports and shows order properties.
 
 ### 🩹 Fixed
 
 - Fixed the REST call to fetch the remote configuration in the build process.
+- Fixed: middleware calls being stuck in an infinite loop
 
 ### 👷 Changed
 
 - Cookiebar icon has been replaced
+- Checkout address buttons in the mobile view have been adjusted
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
