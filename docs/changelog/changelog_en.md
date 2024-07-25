@@ -1,19 +1,5 @@
 # Changelog plentyshopPWA
 
-## v1.6.2
-
-- The application configurations are now moved in a new designated folder
-
-### New
-
-- The app now reads metadata, such as description and keywords, from the environment.
-
-## v1.6.1
-
-### New
-
-- The app now reads metadata, such as description and keywords, from the environment.
-
 ## v1.6.0
 
 ### 🩹 Fixed
