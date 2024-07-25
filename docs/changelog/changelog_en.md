@@ -2,6 +2,11 @@
 
 ## v1.6.0
 
+### 🚀 New
+
+- The app now reads metadata, such as description and keywords, from the environment.
+- The order again feature supports and shows order properties.
+
 ### 🩹 Fixed
 
 - Fixed the REST call to fetch the remote configuration in the build process.
