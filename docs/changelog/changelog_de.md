@@ -6,6 +6,7 @@
 
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
+- Anwendungs-, Cookie- und Tailwind-Konfigurationen werden außerhalb der Nuxt-Konfiguration extrahiert.
 
 ### 🩹 Behoben
 
