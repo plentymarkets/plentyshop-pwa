@@ -218,6 +218,7 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "address": "Adressen",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "pickSavedAddress": "Gespeicherte Adresse auswählen",
   "pickSavedAddressSubtitle": "Wählen Sie eine Ihrer gespeicherten Adressen oder erstellen Sie eine Neue",
@@ -536,7 +537,8 @@
         "priceDown": "Preis gesenkt",
         "notAvailable": "Nicht verfügbar",
         "buyAgain": "Erneut kaufen",
-        "cancel": "Abbrechen"
+        "cancel": "Abbrechen",
+        "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar"
       }
     },
     "wishlist": {
