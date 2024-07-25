@@ -1,5 +1,5 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
-import { converter, formatRgb } from 'culori/fn';
+import { converter, formatRgb, parse } from 'culori/fn';
 
 const rgb = converter('rgb');
 
@@ -52,6 +52,13 @@ export const oklchToRgb = (oklch: string) => {
   const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
 
   return rgbColorString.replaceAll(',', '');
+};
+
+export const hex2rgb = (hex: string) => {
+  const r = Number.parseInt(hex.slice(1, 3), 16);
+  const g = Number.parseInt(hex.slice(3, 5), 16);
+  const b = Number.parseInt(hex.slice(5, 7), 16);
+  return { r, g, b };
 };
 
 export const getTailwindColorsOklch = (hexColor: string) => {

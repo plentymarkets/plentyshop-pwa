@@ -1,32 +1,45 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { parse } from 'culori';
+// import { parse } from 'culori';
+import { hex2rgb, getTailwindColorsOklch } from '../utils/tailwindHelper.js';
+import { converter, formatRgb, parse } from 'culori/fn';
 
-const hex2rgb = (hex: string) => {
-  const r = Number.parseInt(hex.slice(1, 3), 16);
-  const g = Number.parseInt(hex.slice(3, 5), 16);
-  const b = Number.parseInt(hex.slice(5, 7), 16);
-  return { r, g, b };
+const primary700Hex = process.env.PRIMARY700 || '12 121 146';
+const secondary700Hex = process.env.SECONDARY700 || '165 105 3';
+
+const oklchToRgb = (oklch: string) => {
+  const toRgb = converter('rgb');
+  const rgbColor = toRgb(parse(oklch));
+  console.log(oklch + 'here');
+  return formatRgb(rgbColor);
+};
+
+const generateColorPallete = () => {
+  const colorList = getTailwindColorsOklch(primary700Hex);
+  console.log(colorList);
+  const rgbColorList = colorList.map((item) => ({
+    weight: item.weight,
+    value: oklchToRgb(item.value),
+  }));
+
+  console.log('Converted RGB color list:', rgbColorList);
+  return rgbColorList;
+
+  // console.log(colorList);
+  // const values = colorList.map((item) => item.value);
+  // console.log(values);
+  // console.log(values[0]);
+  // console.log(oklchToRgb(values[0]));
 };
 
 const generateScssVariables = () => {
-  const primary700Hex = process.env.PRIMARY700 || '12 121 146';
-  const secondary700Hex = process.env.SECONDARY700 || '165 105 3';
-
   let scssContent = '';
-
   // eslint-disable-next-line unicorn/consistent-function-scoping
   const isRgb = (value: string) => /^(?:\d{1,3}\s){2}\d{1,3}$/.test(value);
 
   if (isRgb(primary700Hex)) {
     scssContent += `$primary700: ${primary700Hex};\n`;
   } else {
-    const primary700 = parse(primary700Hex);
-
-    if (!primary700) {
-      throw new Error('Failed to parse PRIMARY700 hex value.');
-    }
-
     const parsedMain = hex2rgb(primary700Hex);
     scssContent += `$primary700: ${parsedMain.r} ${parsedMain.g} ${parsedMain.b};\n`;
   }
@@ -34,12 +47,6 @@ const generateScssVariables = () => {
   if (isRgb(secondary700Hex)) {
     scssContent += `$secondary700: ${secondary700Hex};`;
   } else {
-    const secondary700 = parse(secondary700Hex);
-
-    if (!secondary700) {
-      throw new Error('Failed to parse SECONDARY700 hex value.');
-    }
-
     const parsedSecond = hex2rgb(secondary700Hex);
     scssContent += `$secondary700: ${parsedSecond.r} ${parsedSecond.g} ${parsedSecond.b};`;
   }
@@ -52,6 +59,8 @@ const generateScssVariables = () => {
   }
 
   fs.writeFileSync(scssVariablesFilePath, scssContent, 'utf8');
+
+  generateColorPallete();
 };
 
 export default generateScssVariables;
