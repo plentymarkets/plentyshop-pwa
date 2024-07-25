@@ -1,12 +1,11 @@
 # Changelog plentyshopPWA
 
-## v1.6.1
+## v1.6.0
 
-### Hinzugefügt
+### 🚀 Hinzugefügt
 
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
-
-## v1.6.0
+- Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 
 ### 🩹 Behoben
 
