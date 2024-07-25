@@ -15,7 +15,8 @@ const generateScssVariables = () => {
 
   let scssContent = '';
 
-  const isRgb = (value : string)  => /^\d{1,3}\s\d{1,3}\s\d{1,3}$/.test(value);
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const isRgb = (value: string) => /^(?:\d{1,3}\s){2}\d{1,3}$/.test(value);
 
   if (isRgb(primary700Hex)) {
     scssContent += `$primary700: ${primary700Hex};\n`;
