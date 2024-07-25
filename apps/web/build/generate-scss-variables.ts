@@ -41,7 +41,7 @@ const prepareConfigFile = (
   scssContent += '\n';
 
   secondarySpectrum.forEach((shade, index) => {
-    scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};`;
+    scssContent += `$color-2-secondary-${shade.weight}: ${shade.rgb};`;
     if (index !== secondarySpectrum.length) {
       scssContent += `\n`;
     }
