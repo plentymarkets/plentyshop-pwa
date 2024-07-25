@@ -6,7 +6,7 @@
 
 - The app now reads metadata, such as description and keywords, from the environment.
 - The order again feature supports and shows order properties.
-- Application,cookie and tailwind configurations are extracted outside nuxt config. 
+- Application,cookie and tailwind configurations are extracted outside nuxt config.
 
 ### 🩹 Fixed
 
