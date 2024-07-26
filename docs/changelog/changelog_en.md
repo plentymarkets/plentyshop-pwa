@@ -5,6 +5,7 @@
 ### 🩹 Fixed
 
 - Fixed the REST call to fetch the remote configuration in the build process.
+- Fixed tailwind css double import.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
