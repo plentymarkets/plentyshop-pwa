@@ -2,9 +2,15 @@
 
 ## v1.6.0
 
+### 🚀 Hinzugefügt
+
+- Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
+- Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
+
 ### 🩹 Behoben
 
 - Ein Fehler beim REST-Aufruf zur Abfrage der Systemkonfiguration wurde behoben.
+- Die Schaltflächen bei den Adressen in der Kasse wurden in der mobilen Ansicht angepasst.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
