@@ -119,7 +119,7 @@
           />
         </template>
         <template #fallback>
-          <div>Loading...</div>
+          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
         </template>
       </Suspense>
     </div>
