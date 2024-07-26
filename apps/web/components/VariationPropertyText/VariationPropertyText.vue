@@ -1,9 +1,18 @@
 <template>
-  <div class="w-full">
-    <span class="font-semibold">
+  <div class="w-full flex row">
+    <span v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </span>
-    <span>: {{ productPropertyGetters.getPropertyValue(variationProperty) }} </span>
+    <span
+      v-if="
+        productPropertyGetters.getPropertyName(variationProperty) &&
+        productPropertyGetters.getPropertyValue(variationProperty)
+      "
+      >:
+    </span>
+    <span v-if="productPropertyGetters.getPropertyValue(variationProperty) ">
+      {{ productPropertyGetters.getPropertyValue(variationProperty) }}
+    </span>
   </div>
 </template>
 
