@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex row">
+  <div class="w-full flex row variation-property-date">
     <span v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </span>
