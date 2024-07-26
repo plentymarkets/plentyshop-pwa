@@ -10,7 +10,7 @@
       "
       >:
     </span>
-    <span v-if="productPropertyGetters.getPropertyValue(variationProperty) ">
+    <span v-if="productPropertyGetters.getPropertyValue(variationProperty)">
       {{ productPropertyGetters.getPropertyValue(variationProperty) }}
     </span>
   </div>
