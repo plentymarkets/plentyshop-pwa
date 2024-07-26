@@ -52,7 +52,7 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
 
-        <VariationProperties :product="product" />
+        <CartVariationProperties :product="product" />
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
@@ -127,7 +127,6 @@ const goToPage = (path: string) => {
   closeQuickCheckout();
   navigateTo(localePath(path));
 };
-
 const close = () => {
   closeQuickCheckout();
 };
