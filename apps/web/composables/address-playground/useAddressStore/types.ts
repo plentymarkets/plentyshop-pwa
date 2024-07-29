@@ -4,6 +4,12 @@ export type AddressState = {
     addresses: Address[];
 }
 
+export type AddressSetEvent = {
+    event: 'set';
+    payload: Address[];
+    state: AddressState;
+}
+
 export type AddressUpdateEvent = {
     event: 'update';
     payload: Address;

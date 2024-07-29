@@ -1,6 +1,6 @@
 import { Address, AddressType } from "@plentymarkets/shop-api";
 import { EventEmitter } from "events";
-import { AddressCreateEvent, AddressDestroyEvent, AddressState, AddressUpdateEvent } from "./types";
+import { AddressCreateEvent, AddressDestroyEvent, AddressSetEvent, AddressState, AddressUpdateEvent } from "./types";
 
 const eventEmitter = new EventEmitter();
 
@@ -15,6 +15,7 @@ export const useAddressStore = ((type: AddressType) => {
     }));
 
     const EVENTS = {
+        SET: `addressStore.${type}.set`,
         CREATE: `addressStore.${type}.create`,
         DESTROY: `addressStore.${type}.destroy`,
         UPDATE: `addressStore.${type}.update`,
@@ -22,7 +23,12 @@ export const useAddressStore = ((type: AddressType) => {
 
     const set = (addresses: Address[]) => {
         state.value.addresses = addresses;
-        emit(EVENTS.CREATE, addresses, state.value);
+        emit(EVENTS.SET, addresses, state.value);
+    }
+
+    const create = (payload: Address, addresses: Address[]) => {
+        state.value.addresses = addresses;
+        emit(EVENTS.CREATE, payload, state.value);
     }
 
     const get = (addressId: number) => {
@@ -43,7 +49,16 @@ export const useAddressStore = ((type: AddressType) => {
     }
 
     const clear = () => {
-        state.value.addresses = [];
+        set([]);
+    }
+
+    const unsubscribeAll = () => {
+        eventEmitter.removeAllListeners();
+    }
+
+    const onSet = (listener: (event: AddressSetEvent) => void) => {
+        eventEmitter.on(EVENTS.SET, listener);
+        return () => eventEmitter.off(EVENTS.SET, listener);
     }
 
     const onCreate = (listener: (event: AddressCreateEvent) => void) => {
@@ -61,5 +76,5 @@ export const useAddressStore = ((type: AddressType) => {
         return () => eventEmitter.off(EVENTS.DESTROY, listener);
     }
 
-    return { ...toRefs(state.value), set, get, update, destroy, onCreate, onDestroy, onUpdate, clear };
+    return { ...toRefs(state.value), set, create, get, update, destroy, onSet, onCreate, onDestroy, onUpdate, clear, unsubscribeAll };
 });

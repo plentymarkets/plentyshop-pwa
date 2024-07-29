@@ -21,15 +21,15 @@ describe('useAddressStore', () => {
 
 
     it('should set addresses', () => {
-        const { onCreate, set, addresses } = useAddressStore(AddressType.Billing);
-        const onCreateSpy = vi.fn();
+        const { onSet, set, addresses } = useAddressStore(AddressType.Billing);
+        const onSetSpy = vi.fn();
 
-        const unsubscribeCreate = onCreate(onCreateSpy);
+        const unsubscribeCreate = onSet(onSetSpy);
 
         set([addressFixture]);
 
         expect(addresses.value).toEqual([addressFixture]);
-        expect(onCreateSpy).toHaveBeenCalledTimes(1);
+        expect(onSetSpy).toHaveBeenCalledTimes(1);
         unsubscribeCreate();
     });
 
@@ -81,20 +81,38 @@ describe('useAddressStore', () => {
         expect(addresses.value).toEqual([]);
     });
 
-    it('should unsubscribe events', () => {
-        const { onCreate, set, addresses } = useAddressStore(AddressType.Billing);
+    it(('should unsubscribe all events'), async () => {
+        const { set, unsubscribeAll, onSet, onDestroy, destroy } = useAddressStore(AddressType.Billing);
+
+        const onSetSpy = vi.fn();
+        const onDestroySpy = vi.fn();
+        onSet(onSetSpy);
+        onDestroy(onDestroySpy);
+
+        unsubscribeAll();
+
+        set([addressFixture]);
+        destroy(1);
+        
+        expect(onSetSpy).toHaveBeenCalledTimes(0);
+        expect(onDestroySpy).toHaveBeenCalledTimes(0);
+
+    });
+
+    it('should unsubscribe event', () => {
+        const { onCreate, create, addresses } = useAddressStore(AddressType.Billing);
         const onCreateSpy = vi.fn();
 
         const unsubscribeCreate = onCreate(onCreateSpy);
 
-        set([addressFixture]);
+        create(addressFixture,[addressFixture]);
 
         expect(addresses.value).toEqual([addressFixture]);
         expect(onCreateSpy).toHaveBeenCalledTimes(1);
 
         unsubscribeCreate();
 
-        set([{ ...addressFixture, id: 2 }]);
+        create(addressFixture, [{ ...addressFixture, id: 2 }]);
 
         expect(addresses.value).toEqual([{ ...addressFixture, id: 2 }]);
         expect(onCreateSpy).toHaveBeenCalledTimes(1);

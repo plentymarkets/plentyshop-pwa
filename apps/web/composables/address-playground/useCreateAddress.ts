@@ -14,8 +14,8 @@ export const useCreateAddress = (type: AddressType) => {
                 addressData: address,
             });
 
-            const { set } = useAddressStore(type);
-            set(data.data);
+            const { create } = useAddressStore(type);
+            create(address, data.data);
 
             state.value.loading = false;
         } catch (error: any) {
