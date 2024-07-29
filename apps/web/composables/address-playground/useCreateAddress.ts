@@ -14,20 +14,14 @@ export const useCreateAddress = (type: AddressType) => {
                 addressData: address,
             });
 
-            /* const { set } = useAddresses(type);
-            set(data.data); */
-
-            // setCheckoutAddress?
-            const { set: setCheckoutAddress } = useCheckoutAddress(type);
-            setCheckoutAddress(data.data[0]);
+            const { set } = useAddressStore(type);
+            set(data.data);
 
             state.value.loading = false;
         } catch (error: any) {
             useHandleError(error);
             state.value.loading = false;
         }
-
-        // return value? to be used in the component and setDisplayAddress?
     };
 
     return {
