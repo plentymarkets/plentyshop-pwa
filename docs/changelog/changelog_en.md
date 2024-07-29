@@ -8,6 +8,7 @@
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Application,cookie, i18n and tailwind configurations are extracted outside nuxt config.
+
 ### 🩹 Fixed
 
 - Fixed the REST call to fetch the remote configuration in the build process.
