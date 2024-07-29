@@ -55,9 +55,11 @@ const generateScssVariables = () => {
 
   // Either have HEX everywhere or add the regex back
   // Current version works with HEX values only
-
+  console.log('Primary color:', primaryColor);
   const primaryTailwindColors = getTailwindColorsOklch(primaryColor);
+  console.log(primaryTailwindColors);
   const primarySpectrum = convertOklchToRgb(primaryTailwindColors);
+  console.log(primarySpectrum)
   const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor);
   const secondarySpectrum = convertOklchToRgb(secondaryTailwindColors);
   const scssContent = prepareConfigFile(primarySpectrum, secondarySpectrum);

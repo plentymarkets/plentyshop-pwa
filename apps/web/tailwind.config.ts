@@ -3,18 +3,6 @@ import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
-const primaryColor50: string = process.env.PRIMARY50 || 'rgb(var(--colors-2-primary-50) / <alpha-value>)';
-const primaryColor100: string = process.env.PRIMARY100 || 'rgb(var(--colors-2-primary-100) / <alpha-value>)';
-const primaryColor200: string = process.env.PRIMARY200 || 'rgb(var(--colors-2-primary-200) / <alpha-value>)';
-const primaryColor300: string = process.env.PRIMARY300 || 'rgb(var(--colors-2-primary-300) / <alpha-value>)';
-const primaryColor400: string = process.env.PRIMARY400 || 'rgb(var(--colors-2-primary-400) / <alpha-value>)';
-const primaryColor500: string = process.env.PRIMARY500 || 'rgb(var(--colors-2-primary-500) / <alpha-value>)';
-const primaryColor600: string = process.env.PRIMARY600 || 'rgb(var(--colors-2-primary-600) / <alpha-value>)';
-const primaryColor700: string = process.env.PRIMARY700 || 'rgb(var(--colors-2-primary-700) / <alpha-value>)';
-const primaryColor800: string = process.env.PRIMARY800 || 'rgb(var(--colors-2-primary-800) / <alpha-value>)';
-const primaryColor900: string = process.env.PRIMARY900 || 'rgb(var(--colors-2-primary-900) / <alpha-value>)';
-const primaryColor950: string = process.env.PRIMARY950 || 'rgb(var(--colors-2-primary-950) / <alpha-value>)';
-
 export default {
   presets: [tailwindConfig],
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
@@ -31,12 +19,12 @@ export default {
           '200': 'rgb(var(--colors-2-primary-200) / <alpha-value>)',
           '300': 'rgb(var(--colors-2-primary-300) / <alpha-value>)',
           '400': 'rgb(var(--colors-2-primary-400) / <alpha-value>)',
-          '500': 'rgb(var(--colors-2-primary-500) / <alpha-value>)',
+          '500': 'rgb(var(--colors-2-primary-700) / <alpha-value>)',
           '600': 'rgb(var(--colors-2-primary-600) / <alpha-value>)',
-          '700': 'rgb(var(--colors-2-primary-700) / <alpha-value>)',
+          '700': 'rgb(var(--colors-2-primary-500) / <alpha-value>)',
           '800': 'rgb(var(--colors-2-primary-800) / <alpha-value>)',
           '900': 'rgb(var(--colors-2-primary-900) / <alpha-value>)',
-          '950': primaryColor950,
+          '950': 'rgb(var(--colors-2-primary-950) / <alpha-value>)',
         },
         secondary: {
           '50': 'rgb(var(--colors-2-secondary-50) / <alpha-value>)',
@@ -44,9 +32,9 @@ export default {
           '200': 'rgb(var(--colors-2-secondary-200) / <alpha-value>)',
           '300': 'rgb(var(--colors-2-secondary-300) / <alpha-value>)',
           '400': 'rgb(var(--colors-2-secondary-400) / <alpha-value>)',
-          '500': 'rgb(var(--colors-2-secondary-500) / <alpha-value>)',
+          '500': 'rgb(var(--colors-2-secondary-700) / <alpha-value>)',
           '600': 'rgb(var(--colors-2-secondary-600) / <alpha-value>)',
-          '700': 'rgb(var(--colors-2-secondary-700) / <alpha-value>)',
+          '700': 'rgb(var(--colors-2-secondary-500) / <alpha-value>)',
           '800': 'rgb(var(--colors-2-secondary-800) / <alpha-value>)',
           '900': 'rgb(var(--colors-2-secondary-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-secondary-950) / <alpha-value>)',

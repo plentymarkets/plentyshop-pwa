@@ -67,7 +67,7 @@ export default defineNuxtConfig({
   pages: true,
   hooks: {
     'build:before': async () => {
-      await fetchConfiguration();
+    //  await fetchConfiguration();
       generateScssVariables();
     },
   },
