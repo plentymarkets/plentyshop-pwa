@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
-import { nuxtI18nOptions } from './configuration/nuxt-i18n.config';
+import { nuxtI18nOptions } from './configuration/i18n.config';
 import fetchConfiguration from './build/fetchConfiguration';
 import { appConfiguration } from './configuration/app.config';
 
