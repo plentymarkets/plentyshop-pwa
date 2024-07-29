@@ -8,6 +8,7 @@
         productPropertyGetters.getPropertyName(variationProperty) &&
         productPropertyGetters.getPropertyValue(variationProperty)
       "
+      class="mr-1"
       >:
     </span>
     <span v-if="productPropertyGetters.getPropertyValue(variationProperty)">

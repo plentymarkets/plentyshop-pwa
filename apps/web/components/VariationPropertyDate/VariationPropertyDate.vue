@@ -3,7 +3,7 @@
     <span v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </span>
-    <span v-if="productPropertyGetters.getPropertyName(variationProperty) && preatyDate">: </span>
+    <span v-if="productPropertyGetters.getPropertyName(variationProperty) && preatyDate" class="mr-1">: </span>
     <span v-if="preatyDate">
       {{ preatyDate }}
     </span>
