@@ -4,8 +4,20 @@ export type AddressState = {
     addresses: Address[];
 }
 
-export type AddressEvent = {
-    event: 'create' | 'update' | 'destroy';
-    payload: any;
+export type AddressUpdateEvent = {
+    event: 'update';
+    payload: Address;
+    state: AddressState;
+}
+
+export type AddressCreateEvent = {
+    event: 'create';
+    payload: Address[];
+    state: AddressState;
+}
+
+export type AddressDestroyEvent = {
+    event: 'destroy';
+    payload: number;
     state: AddressState;
 }

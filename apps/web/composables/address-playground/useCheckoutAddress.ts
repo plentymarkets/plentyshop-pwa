@@ -20,8 +20,9 @@ export const useCheckoutAddress = (type: AddressType) => {
         }
     };
 
-    const set = (address: Address) => {
+    const set = (address: Address, clientOnly = false) => {
         state.value.checkoutAddress = address;
+        if (clientOnly) return;
         setCheckoutAddress(address);
     }
 

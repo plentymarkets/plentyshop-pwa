@@ -1,6 +1,6 @@
 import { Address, AddressType } from "@plentymarkets/shop-api";
 import { EventEmitter } from "events";
-import { AddressEvent, AddressState } from "./types";
+import { AddressCreateEvent, AddressDestroyEvent, AddressState, AddressUpdateEvent } from "./types";
 
 const eventEmitter = new EventEmitter();
 
@@ -46,17 +46,17 @@ export const useAddressStore = ((type: AddressType) => {
         state.value.addresses = [];
     }
 
-    const onCreate = (listener: (event: AddressEvent) => void) => {
+    const onCreate = (listener: (event: AddressCreateEvent) => void) => {
         eventEmitter.on(EVENTS.CREATE, listener);
         return () => eventEmitter.off(EVENTS.CREATE, listener);
     }
 
-    const onUpdate = (listener: (event: AddressEvent) => void) => {
+    const onUpdate = (listener: (event: AddressUpdateEvent) => void) => {
         eventEmitter.on(EVENTS.UPDATE, listener);
         return () => eventEmitter.off(EVENTS.UPDATE, listener);
     }
 
-    const onDestroy = (listener: (event: AddressEvent) => void) => {
+    const onDestroy = (listener: (event: AddressDestroyEvent) => void) => {
         eventEmitter.on(EVENTS.DESTROY, listener);
         return () => eventEmitter.off(EVENTS.DESTROY, listener);
     }
