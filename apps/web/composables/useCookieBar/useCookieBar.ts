@@ -1,5 +1,5 @@
 import type { CookieRef } from 'nuxt/app';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { UseCookieReturn } from './types';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {

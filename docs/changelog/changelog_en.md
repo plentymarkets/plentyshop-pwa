@@ -7,6 +7,11 @@
 - The app now reads metadata, such as description and keywords, from the environment.
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
+-
+
+### Changed
+
+- The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
 
 ### 🩹 Fixed
 
