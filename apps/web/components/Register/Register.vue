@@ -5,19 +5,19 @@
 
     <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
       <div class="flex items-center gap-2">
-        <SfIconPerson class="text-primary-700" />
+        <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconLocalShipping class="text-primary-700" />
+        <SfIconLocalShipping class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconFavorite class="text-primary-700" />
+        <SfIconFavorite class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.wishlist') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconSchedule class="text-primary-700" />
+        <SfIconSchedule class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
       </div>
     </div>

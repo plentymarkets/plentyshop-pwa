@@ -32,7 +32,7 @@
               :class="[
                 'px-4 py-3 md:w-12 rounded-md text-neutral-500',
                 {
-                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900':
+                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-50 active:text-primary-700':
                     !disabled,
                 },
               ]"
@@ -58,7 +58,7 @@
               :class="[
                 'px-4 py-3 md:w-12 rounded-md text-neutral-500',
                 {
-                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900':
+                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-50 active:text-primary-700':
                     !disabled,
                 },
               ]"
@@ -75,7 +75,7 @@
           <div
             :class="[
               'flex pt-1 border-t-4 border-transparent',
-              { 'font-medium border-t-4 !border-primary-700': pagination.selectedPage === page },
+              { 'font-medium border-t-4 !border-primary-500': pagination.selectedPage === page },
             ]"
           >
             <button
@@ -83,11 +83,11 @@
               :class="[
                 'px-4 py-3 md:w-12 text-neutral-500 rounded-md',
                 {
-                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900':
+                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-50 active:text-primary-700':
                     !disabled,
                 },
                 {
-                  '!text-neutral-900 hover:!text-primary-800 active:!text-primary-900':
+                  '!text-neutral-900 hover:!text-primary-800 active:!text-primary-700':
                     pagination.selectedPage === page,
                 },
               ]"
@@ -107,7 +107,7 @@
               :class="[
                 'px-4 py-3 md:w-12 rounded-md text-neutral-500',
                 {
-                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900':
+                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-50 active:text-primary-700':
                     !disabled,
                 },
               ]"
@@ -138,7 +138,7 @@
               :class="[
                 'px-4 py-3 md:w-12 rounded-md text-neutral-500',
                 {
-                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900':
+                  'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-50 active:text-primary-700':
                     !disabled,
                 },
               ]"

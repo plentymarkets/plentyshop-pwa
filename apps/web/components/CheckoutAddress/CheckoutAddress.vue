@@ -9,7 +9,7 @@
         <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
           {{ $t('savedShippingAddress') }}
         </SfButton>
-        <div class="h-5 w-px bg-primary-700 mx-2"></div>
+        <div class="h-5 w-px bg-primary-500 mx-2"></div>
         <SfButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
           {{ $t('contactInfo.edit') }}
         </SfButton>

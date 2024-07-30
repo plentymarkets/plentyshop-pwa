@@ -16,7 +16,7 @@
                 <template #prefix>
                   <SfIconMoreHoriz
                     size="sm"
-                    class="text-neutral-500 hover:text-primary-700 active:text-primary-800 active:bg-transparent"
+                    class="text-neutral-500 hover:text-primary-500 active:text-primary-800 active:bg-transparent"
                   />
                 </template>
               </SfButton>

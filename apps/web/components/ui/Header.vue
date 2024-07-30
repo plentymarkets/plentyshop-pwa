@@ -6,7 +6,7 @@
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <SfButton
             v-if="!isLanguageSelectOpen"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
             variant="tertiary"
             square
@@ -19,7 +19,7 @@
           </SfButton>
           <SfButton
             v-else
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
             variant="tertiary"
             square
@@ -30,7 +30,7 @@
             </template>
           </SfButton>
           <SfButton
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.wishlist)"
             :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
@@ -42,13 +42,13 @@
               <SfIconFavorite />
               <SfBadge
                 :content="wishlistItemIds.length"
-                class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
                 data-testid="wishlist-badge"
               />
             </template>
           </SfButton>
           <SfButton
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.cart)"
             :aria-label="t('numberInCart', { count: cartItemsCount })"
@@ -59,7 +59,7 @@
               <SfIconShoppingCart />
               <SfBadge
                 :content="cartItemsCount"
-                class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+                class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
                 data-testid="cart-badge"
               />
             </template>
@@ -68,8 +68,8 @@
             <template #trigger>
               <SfButton
                 variant="tertiary"
-                class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-                :class="{ 'bg-primary-900': isAccountDropdownOpen }"
+                class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md"
+                :class="{ 'bg-primary-700': isAccountDropdownOpen }"
                 @click="accountDropdownToggle()"
                 data-testid="account-dropdown-button"
               >
@@ -107,7 +107,7 @@
           <SfButton
             v-else
             @click="openAuthentication"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
             :aria-label="t('auth.login.openLoginForm')"
             square
@@ -117,7 +117,7 @@
           <SfButton
             v-if="showConfigurationDrawer"
             @click="open = true"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             variant="tertiary"
             aria-label="Open configuration drawer"
             square
@@ -131,7 +131,7 @@
     <div v-else>
       <SfButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
@@ -141,7 +141,7 @@
       </SfButton>
       <SfButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
         @click="searchModalOpen"
         :aria-label="t('openSearchModalButtonLabel')"

@@ -19,7 +19,7 @@
         { 'min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
-      <header class="flex items-center justify-between px-10 py-6 bg-primary-700">
+      <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white"><SfIconTune class="mr-2" /> App Settings</div>
         <SfButton square variant="tertiary" class="text-white" @click="open = false">
           <SfIconClose />

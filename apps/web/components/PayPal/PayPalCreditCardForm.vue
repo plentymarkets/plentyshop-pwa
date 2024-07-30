@@ -14,7 +14,7 @@
           <span class="text-sm font-medium">{{ t('paypal.unbrandedCardNumber') }}</span>
           <div
             id="card-number"
-            class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
+            class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-500 focus-within:caret-primary-500 active:caret-primary-500 active:ring-primary-500 active:ring-2 focus-within:ring-primary-500 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
           ></div>
         </div>
       </div>
@@ -25,7 +25,7 @@
             <span class="text-sm font-medium">{{ t('paypal.unbrandedExpirationDate') }}</span>
             <div
               id="expiration-date"
-              class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
+              class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-500 focus-within:caret-primary-500 active:caret-primary-500 active:ring-primary-500 active:ring-2 focus-within:ring-primary-500 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
             ></div>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <span class="text-sm font-medium">{{ t('paypal.unbrandedCvv') }}</span>
             <div
               id="cvv"
-              class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-700 focus-within:caret-primary-700 active:caret-primary-700 active:ring-primary-700 active:ring-2 focus-within:ring-primary-700 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
+              class="flex items-center gap-2 px-4 bg-white rounded-md text-neutral-500 hover:ring-primary-500 focus-within:caret-primary-500 active:caret-primary-500 active:ring-primary-500 active:ring-2 focus-within:ring-primary-500 focus-within:ring-2 ring-1 ring-neutral-200 h-[40px]"
             ></div>
           </div>
         </div>

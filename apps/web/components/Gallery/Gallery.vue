@@ -72,7 +72,7 @@
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index)"
           class="w-20 h-[88px] relative shrink-0 pb-1 border-b-4 snap-start cursor-pointer transition-colors flex-grow-0"
-          :class="[activeIndex === index ? 'border-primary-700' : 'border-transparent']"
+          :class="[activeIndex === index ? 'border-primary-500' : 'border-transparent']"
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
@@ -110,7 +110,7 @@
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index + 1)"
           class="relative shrink-0 pb-1 border-b-4 cursor-pointer transition-colors flex-grow"
-          :class="[activeIndex === index ? 'border-primary-700' : 'border-neutral-200']"
+          :class="[activeIndex === index ? 'border-primary-500' : 'border-neutral-200']"
           @click="onChangeIndex(index)"
         />
       </div>

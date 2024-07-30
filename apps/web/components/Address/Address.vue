@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="{ 'border border-primary-700 mb-4 pb-1 pt-4': isSelected }"
+    :class="{ 'border border-primary-500 mb-4 pb-1 pt-4': isSelected }"
     class="pl-4 pr-4 pt-1"
     data-testid="address-data"
   >
@@ -9,7 +9,7 @@
         <AddressDisplay :address="address" />
       </div>
 
-      <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-700 shrink-0 default-address" />
+      <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-500 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
       <SfButton

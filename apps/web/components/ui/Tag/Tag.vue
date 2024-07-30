@@ -36,7 +36,7 @@ const getVariantClasses = computed(() => {
       return ['text-green-800', props.strong ? 'bg-green-200' : 'bg-green-100'];
     }
     default: {
-      return ['text-primary-800', props.strong ? 'bg-primary-200' : 'bg-primary-100'];
+      return ['text-primary-800', props.strong ? 'bg-primary-50' : 'bg-primary-100'];
     }
   }
 });

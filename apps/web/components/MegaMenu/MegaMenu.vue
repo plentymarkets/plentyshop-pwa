@@ -1,7 +1,7 @@
 <template>
   <header ref="referenceRef" class="relative w-full h-full z-40 md:sticky md:shadow-md">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-500 border-neutral-200 md:h-20 md:z-10"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
@@ -10,7 +10,7 @@
           variant="tertiary"
           square
           aria-label="Close menu"
-          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-700 active:text-white"
           @click="openMenu([])"
         >
           <SfIconMenu class="text-white" />
