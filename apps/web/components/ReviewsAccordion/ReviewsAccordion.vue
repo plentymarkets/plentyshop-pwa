@@ -77,6 +77,7 @@
           :total-items="pagination.totalCount"
           :page-size="pageSize"
           :max-visible-pages="maxVisiblePages"
+          current-page-name="feedbackPage"
         />
       </UiAccordionItem>
     </div>
