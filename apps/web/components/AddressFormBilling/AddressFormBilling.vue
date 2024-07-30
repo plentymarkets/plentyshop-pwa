@@ -136,7 +136,7 @@ import { object, string, boolean } from 'yup';
 
 const { t } = useI18n();
 const { displayAddress, hasDisplayAddress } = useAddress(AddressType.Billing);
-const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Billing);
+const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
 const validationSchema = toTypedSchema(
@@ -180,18 +180,15 @@ const toggleCompany = () => {
   }
 };
 
-const unwatch = watch(onValidationStart, async (startValidation) => {
-  if (startValidation) {
-    const validation = await validate();
+const unsubscribeValidation = onStartValidation(async () => {
+  const validation = await validate();
 
-    emitValidationEnd({
-      address: values.form as Address,
-      validation: validation as any,
-    });
-  }
+  endValidation({
+    address: values.form as Address,
+    validation: validation as any,
+  });
 });
-
 hasDisplayAddress.value ? setValues({ form: displayAddress.value as any }) : resetForm();
 
-onUnmounted(() => unwatch());
+onUnmounted(() => unsubscribeValidation());
 </script>

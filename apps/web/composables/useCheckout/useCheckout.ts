@@ -20,38 +20,9 @@ export const useCheckout = (cacheKey = '') => {
   const { hasDisplayAddress: hasBillingAddress, displayAddress: displayAddressBilling } = useAddress(
     AddressType.Billing,
   );
-  const {
-    save: saveShipping,
-    isLoading: shippingLoading,
-    isValid: shippingValid,
-    open: shippingOpen,
-    saveShippingAndBilling,
-  } = useAddressForm(AddressType.Shipping);
-  const {
-    save: saveBilling,
-    isLoading: billingLoading,
-    isValid: billingValid,
-    open: billingOpen,
-  } = useAddressForm(AddressType.Billing);
+  
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 
-  const isLoading = computed(() => shippingLoading.value || billingLoading.value);
-  const isValid = computed(() => shippingValid.value && billingValid.value);
-  const hasOpenForms = computed(() => shippingOpen.value || billingOpen.value);
-
-  watch(hasShippingAddress, (value) => {
-    if (!value) shippingOpen.value = true;
-  });
-
-  watch(
-    () => state.value.combineShippingAndBilling,
-    (value) => {
-      billingOpen.value = !value && !hasBillingAddress.value ? true : false;
-      // if (hasShippingAddress.value) {
-      //   setCheckoutAddress(AddressType.Billing, Number(displayAddressShipping.value.id));
-      // }
-    },
-  );
 
   const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
     let valid = true;
@@ -70,17 +41,15 @@ export const useCheckout = (cacheKey = '') => {
   };
 
   const save = async () => {
-    const toSave = [];
 
-    if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
+    /* if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
     if (shippingOpen.value) toSave.push(saveShipping());
-    if (billingOpen.value) toSave.push(saveBilling());
+    if (billingOpen.value) toSave.push(saveBilling()); */
 
-    return Promise.all(toSave);
   };
 
   const validateAndSaveAddresses = async () => {
-    if (!hasOpenForms.value) {
+    /* if (!hasOpenForms.value) {
       return new Promise((resolve) => resolve(true));
     }
 
@@ -93,7 +62,7 @@ export const useCheckout = (cacheKey = '') => {
           scrollToHTMLObject(ID_SHIPPING_ADDRESS);
           return reject(new Error('Failed to validate address'));
         });
-    });
+    }); */
   };
 
   return {
@@ -101,10 +70,5 @@ export const useCheckout = (cacheKey = '') => {
     save,
     validateAndSaveAddresses,
     validateTerms,
-    isValid,
-    isLoading,
-    hasOpenForms,
-    shippingOpen,
-    billingOpen,
   };
 };

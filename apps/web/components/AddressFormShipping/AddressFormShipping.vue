@@ -120,7 +120,7 @@
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="flex items-center gap-2">
-      <SfCheckbox name="combineShippingBilling" v-model="combineShippingAndBilling" />
+      <SfCheckbox name="combineShippingBilling" v-model="combineShippingBilling" />
       <span>{{ t('form.useAsBillingLabel') }}</span>
     </label>
     <div class="md:col-span-3 flex">
@@ -144,9 +144,8 @@ import { SfButton, SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/
 import { object, string, boolean } from 'yup';
 
 const { displayAddress, hasDisplayAddress } = useAddress(AddressType.Shipping);
-const { isLoading, onValidationStart, emitValidationEnd } = useAddressForm(AddressType.Shipping);
+const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
 const { data: shippingCountries } = useActiveShippingCountries();
-const { combineShippingAndBilling } = useCheckout();
 const hasCompany = ref(false);
 
 const { t } = useI18n();
@@ -182,6 +181,8 @@ const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
 const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
 
+const combineShippingBilling = ref(false);
+
 const toggleCompany = () => {
   hasCompany.value = !hasCompany.value;
   if (!hasCompany.value) {
@@ -190,18 +191,16 @@ const toggleCompany = () => {
   }
 };
 
-const unwatch = watch(onValidationStart, async (startValidation) => {
-  if (startValidation) {
-    const validation = await validate();
+const unsubscribeValidation = onStartValidation(async () => {
+  const validation = await validate();
 
-    emitValidationEnd({
-      address: values.form as Address,
-      validation: validation as any,
-    });
-  }
+  endValidation({
+    address: values.form as Address,
+    validation: validation as any,
+  });
 });
 
 hasDisplayAddress.value ? setValues({ form: displayAddress.value as any }) : resetForm();
 
-onUnmounted(() => unwatch());
+onUnmounted(() => unsubscribeValidation());
 </script>
