@@ -164,7 +164,7 @@ const {
 const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 const pagination = computed(() => {
-  return productReviewsData.value.pagination
+  return productReviewsData.value.pagination;
 });
 const currentPage = computed(() => {
   return Number(productReviewsData.value.pagination.page);
