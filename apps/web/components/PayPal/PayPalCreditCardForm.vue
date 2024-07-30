@@ -8,52 +8,48 @@
     </h3>
   </header>
   <div class="payment-container" id="pay-container">
-    <form ref="form" id="card-form">
-      <div class="row">
+    <div class="row">
+      <div class="grid-cols-12">
+        <span class="text-sm font-medium">{{ t('paypal.unbrandedCardNumber') }}</span>
+        <div id="card-number"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 gap-x-5 mt-5">
+      <div>
         <div class="grid-cols-12">
-          <span class="text-sm font-medium">{{ t('paypal.unbrandedCardNumber') }}</span>
-          <div id="card-number"></div>
+          <span class="text-sm font-medium">{{ t('paypal.unbrandedExpirationDate') }}</span>
+          <div id="expiration-date"></div>
         </div>
       </div>
+      <div>
+        <div class="grid-cols-12">
+          <span class="text-sm font-medium">{{ t('paypal.unbrandedCvv') }}</span>
+          <div id="credit-card-cvv"></div>
+        </div>
+      </div>
+    </div>
 
-      <div class="grid grid-cols-2 gap-x-5 mt-5">
-        <div>
-          <div class="grid-cols-12">
-            <span class="text-sm font-medium">{{ t('paypal.unbrandedExpirationDate') }}</span>
-            <div id="expiration-date"></div>
-          </div>
-        </div>
-        <div>
-          <div class="grid-cols-12">
-            <span class="text-sm font-medium">{{ t('paypal.unbrandedCvv') }}</span>
-            <div id="cvv"></div>
-          </div>
-        </div>
-      </div>
+    <div class="row mt-5">
+      <label class="hosted-fields--label">
+        <span class="text-sm font-medium">{{ t('paypal.unbrandedNameOnCard') }}</span>
+        <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
+      </label>
+    </div>
 
-      <div class="row mt-5">
-        <label class="hosted-fields--label">
-          <span class="text-sm font-medium">{{ t('paypal.unbrandedNameOnCard') }}</span>
-          <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
-        </label>
+    <div class="flex justify-between mt-5">
+      <div>
+        <SfButton @click="confirmCancel" type="button" variant="secondary">{{ t('paypal.unbrandedCancel') }}</SfButton>
       </div>
-
-      <div class="flex justify-between mt-5">
-        <div>
-          <SfButton @click="confirmCancel" type="button" variant="secondary">{{
-            t('paypal.unbrandedCancel')
-          }}</SfButton>
-        </div>
-        <div>
-          <SfButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ t('paypal.unbrandedPay') }}
-            </span>
-          </SfButton>
-        </div>
+      <div>
+        <SfButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
+          <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
+          <span v-else>
+            {{ t('paypal.unbrandedPay') }}
+          </span>
+        </SfButton>
       </div>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -75,7 +71,6 @@ const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppCo
 // eslint-disable-next-line unicorn/expiring-todo-comments
 // TODO: return now PayPalCardFieldsComponent
 const paypal = await loadScript(currency.value);
-const form = ref<HTMLElement | null>(null);
 const cardHolder = ref('');
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -138,7 +133,7 @@ onMounted(() => {
       const cvv = cardFields.CVVField({
         placeholder: '123',
       });
-      cvv.render('cvv');
+      cvv.render('#credit-card-cvv');
 
       const expiry = cardFields.ExpiryField({
         placeholder: 'MM/YY',
@@ -146,7 +141,21 @@ onMounted(() => {
       expiry.render('#expiration-date');
 
       button?.addEventListener('click', () => {
-        cardFields.submit();
+        cardFields
+          .submit()
+          // eslint-disable-next-line promise/always-return
+          .then(() => {
+            send({
+              type: 'positive',
+              message: 'Kein Fehler',
+            });
+          })
+          .catch(() => {
+            send({
+              type: 'negative',
+              message: 'Fehler',
+            });
+          });
       });
     }
   }
