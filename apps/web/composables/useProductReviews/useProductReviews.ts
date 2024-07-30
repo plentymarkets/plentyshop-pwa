@@ -40,7 +40,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
       const feedbackCalls = [
         useSdk().plentysystems.getReview({
           itemId: itemId,
-          page: Number(route.query.feedbackPage) || 1,
+          page: Number(route.query.page) || 1,
         }),
       ];
 
@@ -56,6 +56,7 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
       await Promise.all(feedbackCalls).then((data) => {
         const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
         state.value.data.feedbacks = feedbacks || state.value.data;
+        state.value.data.pagination = data[0]?.data?.pagination;
         return true;
       });
 

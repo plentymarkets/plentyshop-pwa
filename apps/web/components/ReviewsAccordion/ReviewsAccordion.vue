@@ -73,11 +73,10 @@
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
-          :current-page="getFacetsFromURL().feedbackPage ?? 1"
-          :total-items="totalReviews"
-          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+          :current-page="currentPage"
+          :total-items="pagination.totalCount"
+          :page-size="pageSize"
           :max-visible-pages="maxVisiblePages"
-          current-page-name="feedbackPage"
         />
       </UiAccordionItem>
     </div>
@@ -164,6 +163,13 @@ const {
 
 const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
+const pagination = computed(() => {
+  return productReviewsData.value.pagination
+});
+const currentPage = computed(() => {
+  return Number(productReviewsData.value.pagination.page);
+});
+const pageSize = 10;
 const ratingPercentages = ref([] as number[]);
 const splitRatings = ref([] as number[]);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
