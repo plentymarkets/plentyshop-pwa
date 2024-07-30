@@ -7,7 +7,7 @@
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 - PayPal-Button für PS Lazyload
-- Anwendungs-,Cookie- i18n und Tailwind-Konfigurationen werden außerhalb der Nuxt-Konfiguration extrahiert.
+- - Die Konfigurationsdateien für App-, Cookie-, Internationalisierungs- und Tailwind-Einstellungen befinden sich jetzt im Ordner `apps/web/configuration`.
 
 ### 🩹 Behoben
 
