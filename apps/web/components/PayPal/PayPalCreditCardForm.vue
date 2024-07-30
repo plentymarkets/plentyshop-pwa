@@ -56,6 +56,7 @@
 <script lang="ts" setup>
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { CardFieldsOnApproveData } from '@paypal/paypal-js';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -87,7 +88,7 @@ onMounted(() => {
         paypalPayerId = data?.payPalPayerId ?? '';
         return paypalOrderId ?? '';
       },
-      async onApprove(data) {
+      async onApprove(data: CardFieldsOnApproveData) {
         const capture = await captureOrder({
           paypalOrderId: data.orderID,
           paypalPayerId: paypalPayerId,
