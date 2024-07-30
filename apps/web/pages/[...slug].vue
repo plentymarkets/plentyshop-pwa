@@ -82,4 +82,21 @@ watch(
 );
 
 setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL());
+
+useHead({
+  meta: [
+    {
+      name: 'title',
+      content: categoryGetters.getMetaTitle(category.value) || process.env.METATITLE,
+    },
+    {
+      name: 'description',
+      content: categoryGetters.getMetaDescription(category.value) || process.env.METADESC,
+    },
+    {
+      name: 'keywords',
+      content: categoryGetters.getMetaKeywords(category.value) || process.env.METAKEYWORDS,
+    },
+  ],
+});
 </script>
