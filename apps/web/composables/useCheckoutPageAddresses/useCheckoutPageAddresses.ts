@@ -23,15 +23,16 @@ export const useCheckoutPageAddresses = () => {
         const primaryAddress = userAddressGetters.getDefault(event.payload);
 
         if (event.payload[0]) {
-            const address = ref(event.payload[0]);
             const cartAddress = ref();
 
             if (cartShippingAddressId) {
                 cartAddress.value = getShipping(cartShippingAddressId);
             }
-
-            address.value = cartAddress.value ?? primaryAddress ?? event.payload[0];
-            setCheckoutAddress(address.value, true);
+            if (cartAddress.value) {
+                setCheckoutAddress(cartAddress.value, true);
+            } else {
+                setCheckoutAddress(primaryAddress ?? event.payload[0]);
+            }
         }
     });
 
@@ -41,15 +42,16 @@ export const useCheckoutPageAddresses = () => {
         const primaryAddress = userAddressGetters.getDefault(event.payload);
 
         if (event.payload[0]) {
-            const address = ref(event.payload[0]);
             const cartAddress = ref();
 
             if (cartBillingAddressId) {
                 cartAddress.value = getBilling(cartBillingAddressId);
             }
-
-            address.value = cartAddress.value ?? primaryAddress ?? event.payload[0];
-            setCheckoutAddress(address.value, true);
+            if (cartAddress.value) {
+                setCheckoutAddress(cartAddress.value, true);
+            } else {
+                setCheckoutAddress(primaryAddress ?? event.payload[0]);
+            }
         }
 
     });
