@@ -95,7 +95,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: categoryGetters.getMetaKeywords(category.value),
+      content: categoryGetters.getMetaKeywords(category.value) || process.env.METAKEYWORDS,
     },
   ],
 });
