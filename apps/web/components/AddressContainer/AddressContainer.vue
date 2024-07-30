@@ -28,10 +28,10 @@
           </div>
         </template>
         <template v-else>
-          <div class="mt-2">
+          <div v-if="sameAsShippingAddress">{{ $t('addressContainer.sameAsShippingAddress') }}</div>
+          <div v-else class="mt-2">
             <AddressDisplay :address="checkoutAddress" />
           </div>
-          <div>{{ $t('addressContainer.sameAsShippingAddress') }}</div>
         </template>
       </div>
     </div>
@@ -51,6 +51,17 @@ import { AddressType } from '@plentymarkets/shop-api';
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
 const { checkoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
+
+const sameAsShippingAddress = computed(() => {
+  if (type === AddressType.Billing && checkoutAddress) {
+    const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
+
+    if (checkoutAddress && shippingAddress && checkoutAddress.value.id === shippingAddress.value.id) {
+      return true;
+    }
+  }
+  return false;
+});
 
 /* const editForm = (address: Address) => {
   editing.value = !editing.value;
