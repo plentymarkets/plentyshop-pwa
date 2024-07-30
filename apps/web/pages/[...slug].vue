@@ -91,7 +91,7 @@ useHead({
     },
     {
       name: 'description',
-      content: categoryGetters.getMetaDescription(category.value),
+      content: categoryGetters.getMetaDescription(category.value) || process.env.METADESC,
     },
     {
       name: 'keywords',
