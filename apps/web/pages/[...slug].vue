@@ -87,7 +87,7 @@ useHead({
   meta: [
     {
       name: 'title',
-      content: categoryGetters.getMetaTitle(category.value),
+      content: categoryGetters.getMetaTitle(category.value) || process.env.METATITLE,
     },
     {
       name: 'description',
