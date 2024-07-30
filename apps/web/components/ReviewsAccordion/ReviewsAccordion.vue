@@ -135,7 +135,6 @@ import { CreateReviewParams } from '@plentymarkets/shop-api';
 
 const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 
-const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const isLogin = ref(true);
 const { t } = useI18n();
