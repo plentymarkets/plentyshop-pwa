@@ -24,11 +24,11 @@
     <div class="hover:bg-primary-50" v-for="address in addresses" :key="userAddressGetters.getId(address)">
       <Address
         :address="address"
-        :is-selected="Number(userAddressGetters.getId(displayAddress)) === Number(userAddressGetters.getId(address))"
-        :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
-        @click="setDisplayAddress(address, true)"
+        :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
+        :is-default="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
+        @click="setPrimaryAddress(address)"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
-        @make-default="setDefault(address)"
+        @make-default="setPrimaryAddress(address)"
         @on-edit="openForm(address)"
       />
     </div>
@@ -45,16 +45,13 @@
 import { type AddressSelectEvents, type AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
-import { SfIconClose, SfButton, useDisclosure, SfIconViewList, SfTooltip } from '@storefront-ui/vue';
+import { SfIconClose, SfButton, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 const { type } = defineProps<AddressSelectProps>();
-const {
-  data: addresses,
-  displayAddress,
-  setDefault,
-  deleteAddress,
-  defaultAddressId,
-  setDisplayAddress,
-} = useAddress(type);
+const { addresses } = useAddressStore(type);
+const { deleteAddress } = useDeleteAddress(type);
+const { set: setPrimaryAddress } = usePrimaryAddress(type);
+const { checkoutAddress } = useCheckoutAddress(type);
+
 const { isOpen, open, close } = useDisclosure();
 const emit = defineEmits<AddressSelectEvents>();
 

@@ -5,14 +5,14 @@
         {{ type === AddressType.Shipping ?  $t('shipping.heading') : $t('billing.heading') }}
       </h2>
       <div>
-        <AddressSelect v-if="!disabled && hasDisplayAddress && !editing" @edit="editForm" :type="type" />
+        <AddressSelect v-if="!disabled && checkoutAddress && !editing" @edit="" :type="type" />
         <span v-if="!editing" class="mx-2">|</span>
         <SfTooltip label="Edit address">
           <SfButton
-            v-if="!disabled && hasDisplayAddress"
+            v-if="!disabled && checkoutAddress"
             size="sm"
             variant="tertiary"
-            @click="editForm(displayAddress)"
+            @click=""
           >
             <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
             <SfIconClose v-else></SfIconClose>
@@ -23,15 +23,15 @@
     <div class="flex justify-between">
       <div>
         <template v-if="type === AddressType.Shipping">
-          <div v-if="hasDisplayAddress && !editing" class="mt-2">
-            <AddressDisplay :address="displayAddress" />
+          <div v-if="checkoutAddress && !editing" class="mt-2">
+            <AddressDisplay :address="checkoutAddress" />
           </div>
         </template>
         <template v-else>
-          <div v-if="!combineShippingAndBilling && hasDisplayAddress && !editing" class="mt-2">
-            <AddressDisplay :address="displayAddress" />
+          <div class="mt-2">
+            <AddressDisplay :address="checkoutAddress" />
           </div>
-          <div v-if="combineShippingAndBilling && !editing">{{ $t('addressContainer.sameAsShippingAddress') }}</div>
+          <div>{{ $t('addressContainer.sameAsShippingAddress') }}</div>
         </template>
       </div>
     </div>
@@ -46,16 +46,15 @@
 <script setup lang="ts">
 import { SfButton, SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { type AddressContainerProps } from './types';
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import { AddressType } from '@plentymarkets/shop-api';
 
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
-const { combineShippingAndBilling } = useCheckout();
-const { displayAddress, hasDisplayAddress, setDisplayAddress } = useAddress(type);
+const { checkoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
 
-const editForm = (address: Address) => {
+/* const editForm = (address: Address) => {
   editing.value = !editing.value;
   if (editing.value) setDisplayAddress(address, false);
-};
+}; */
 
 </script>
