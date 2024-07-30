@@ -5,7 +5,7 @@
         {{ type === AddressType.Shipping ?  $t('shipping.heading') : $t('billing.heading') }}
       </h2>
       <div>
-        <AddressSelect v-if="!disabled && checkoutAddress && !editing" @edit="" :type="type" />
+        <AddressSelect @edit="" :type="type" />
         <span v-if="!editing" class="mx-2">|</span>
         <SfTooltip label="Edit address">
           <SfButton

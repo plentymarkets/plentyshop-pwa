@@ -26,9 +26,9 @@
         :address="address"
         :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
         :is-default="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
-        @click="setPrimaryAddress(address)"
+        @click="setCheckoutAddress(address), isOpen = false"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
-        @make-default="setPrimaryAddress(address)"
+        @make-default="setPrimaryAddress(address), isOpen = false"
         @on-edit="openForm(address)"
       />
     </div>
@@ -50,6 +50,7 @@ const { type } = defineProps<AddressSelectProps>();
 const { addresses } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { set: setPrimaryAddress } = usePrimaryAddress(type);
+const { set: setCheckoutAddress } = useCheckoutAddress(type);
 const { checkoutAddress } = useCheckoutAddress(type);
 
 const { isOpen, open, close } = useDisclosure();

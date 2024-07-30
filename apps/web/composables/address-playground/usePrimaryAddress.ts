@@ -23,6 +23,6 @@ export const usePrimaryAddress = (type: AddressType) => {
     
     return {
         set,
-        ...toRefs(state),
+        ...toRefs(state.value),
     }
 }

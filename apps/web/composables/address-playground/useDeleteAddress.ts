@@ -25,6 +25,6 @@ export const useDeleteAddress = (type: AddressType) => {
 
     return {
         deleteAddress,
-        ...toRefs(state),
+        ...toRefs(state.value),
     }
 }

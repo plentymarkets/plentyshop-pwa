@@ -38,6 +38,6 @@ export const useFetchAdddress = (type: AddressType) => {
     return {
         fetch,
         fetchServer,
-        ...toRefs(state),
+        ...toRefs(state.value),
     }
 }
