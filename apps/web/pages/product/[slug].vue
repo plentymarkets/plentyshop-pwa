@@ -108,7 +108,7 @@ useHead({
     },
     {
       name: 'keywords',
-      content: productGetters.getMetaKeywords(product.value),
+      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
     },
   ],
 });
