@@ -104,7 +104,7 @@ useHead({
     },
     {
       name: 'description',
-      content: productGetters.getMetaDescription(product.value),
+      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
     },
     {
       name: 'keywords',
