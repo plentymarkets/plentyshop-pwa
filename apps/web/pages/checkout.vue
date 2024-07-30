@@ -13,8 +13,8 @@
         <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
-        <div v-if="hasOpenForms" class="flex w-full -mx-4">
-          <SaveAddressButton :is-loading="isLoading" :save="save" />
+        <div class="flex w-full -mx-4">
+          <!--  <SaveAddressButton /> -->
         </div>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -49,7 +49,7 @@
             <PayPalExpressButton
               v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="validateTerms"
+              @on-click="console.log('todo')"
               type="Checkout"
             />
             <SfButton
@@ -95,11 +95,12 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, paymentProviderGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import { useCheckoutPagePaymentAndShipping } from '../composables/useCheckoutPagePaymentAndShipping/useCheckoutPagePaymentAndShipping';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -108,100 +109,51 @@ definePageMeta({
 
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const {
-  getAddresses: getShippingAddresses,
-  hasDisplayAddress: hasShippingAddress,
-  displayAddress: displayShippingAddress,
-} = useAddress(AddressType.Shipping);
-const {
-  getAddresses: getBillingAddresses,
-  hasDisplayAddress: hasBillingAddress,
-  displayAddress: displayBillingAddress,
-} = useAddress(AddressType.Billing);
-const { open: shippingOpen } = useAddressForm(AddressType.Shipping);
-const { open: billingOpen } = useAddressForm(AddressType.Shipping);
-
-const { save, isLoading, hasOpenForms, validateAndSaveAddresses, validateTerms, combineShippingAndBilling } =
-  useCheckout();
-const { getActiveShippingCountries } = useActiveShippingCountries();
-const {
-  loading: loadShipping,
-  data: shippingMethodData,
-  getShippingMethods,
-  saveShippingMethod,
-} = useCartShippingMethods();
-const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const { t } = useI18n();
+
+await getCart();
+
+const {
+  loadPayment,
+  loadShipping,
+  paymentMethods,
+  shippingMethods,
+  selectedPaymentId,
+  handleShippingMethodUpdate,
+  handlePaymentMethodUpdate,
+  shippingPrivacyAgreement,
+} = useCheckoutPagePaymentAndShipping();
+useCheckoutPageAddresses();
+
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-const paypalPaymentId = computed(() =>
-  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
-);
-const paypalCreditCardPaymentId = computed(() =>
-  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
-);
+const paypalPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey)
+});
+const paypalCreditCardPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey)
+});
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 
-await Promise.all([
-  getActiveShippingCountries(),
-  getBillingAddresses(),
-  getShippingAddresses(),
-  getShippingMethods(),
-  getCart(),
-  fetchPaymentMethods(),
-]);
-
-onNuxtReady(() => {
-  if (hasShippingAddress.value) {
-    shippingOpen.value = false;
-    billingOpen.value = false;
-  } else {
-    shippingOpen.value = true;
-  }
-  if (
-    hasBillingAddress.value &&
-    hasShippingAddress.value &&
-    displayShippingAddress.value.id !== displayBillingAddress.value.id
-  ) {
-    combineShippingAndBilling.value = false;
-  }
-});
-
-const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value);
-const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
-
-const handleShippingMethodUpdate = async (shippingMethodId: string) => {
-  await saveShippingMethod(Number(shippingMethodId));
-  await fetchPaymentMethods();
-  await getCart();
-
-  setShippingPrivacyAgreement(false);
-};
-
-const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
-  await savePaymentMethod(paymentMethodId);
-  await getShippingMethods();
-};
-
 const openPayPalCardDialog = async () => {
-  try {
+  /* try {
     await validateAndSaveAddresses();
   } catch {
     return;
   }
   if (!validateTerms()) {
     return;
-  }
+  } */
 
   paypalCardDialog.value = true;
 };
 
 const handleRegularOrder = async () => {
   const data = await createOrder({
-    paymentId: paymentMethodData.value.selected,
+    paymentId: paymentMethods.value.selected,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
@@ -212,13 +164,13 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
-  try {
+  /* try {
     await validateAndSaveAddresses();
   } catch {
     return;
   }
 
-  if (!validateTerms()) return;
+  if (!validateTerms()) return; */
 
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 

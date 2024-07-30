@@ -1,7 +1,7 @@
 import { AddressType } from "@plentymarkets/shop-api";
 
-export const useCheckoutComponent = () => {
-    const { onCreate: onShippingCreate, onUpdate: onShippingUpdate, onSet: onSetShipping, clear } = useAddressStore(AddressType.Shipping);
+export const useCheckoutPageAddresses = () => {
+    const { onCreate: onShippingCreate, onSet: onSetShipping, unsubscribeAll } = useAddressStore(AddressType.Shipping);
     const { onCreate: onBillingCreate } = useAddressStore(AddressType.Billing);
     
     onNuxtReady( async () => {
@@ -32,6 +32,6 @@ export const useCheckoutComponent = () => {
     });
 
     onUnmounted(() => {
-        clear();
+        unsubscribeAll();
     });
 };
