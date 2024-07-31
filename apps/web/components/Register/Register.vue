@@ -241,18 +241,12 @@ const registerUser = async () => {
       type: 'positive',
     });
 
-    if (
-      props.order &&
-      (await migrateGuestOrder({
+    if (props.order) {
+      await migrateGuestOrder({
         orderId: props.order?.order.id ?? -1,
         accessKey: props.order?.order.accessKey ?? '',
         postcode: props.order?.order.deliveryAddress.postalCode ?? undefined,
         name: props.order?.order.deliveryAddress.name3 ?? undefined,
-      }))
-    ) {
-      send({
-        message: 'Order has been successfully migrated to your account.',
-        type: 'positive',
       });
     }
 
