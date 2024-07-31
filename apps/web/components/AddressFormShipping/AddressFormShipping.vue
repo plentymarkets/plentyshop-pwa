@@ -120,7 +120,7 @@
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <label class="flex items-center gap-2">
-      <SfCheckbox name="combineShippingBilling" v-model="combineShippingBilling" />
+      <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
       <span>{{ t('form.useAsBillingLabel') }}</span>
     </label>
     <div class="md:col-span-3 flex">
@@ -143,9 +143,9 @@ import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 
-const { displayAddress, hasDisplayAddress } = useAddress(AddressType.Shipping);
 const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
 const { data: shippingCountries } = useActiveShippingCountries();
+const { shippingAsBilling } = useShippingAsBilling();
 const hasCompany = ref(false);
 
 const { t } = useI18n();
@@ -181,8 +181,6 @@ const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
 const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
 
-const combineShippingBilling = ref(false);
-
 const toggleCompany = () => {
   hasCompany.value = !hasCompany.value;
   if (!hasCompany.value) {
@@ -199,8 +197,6 @@ const unsubscribeValidation = onStartValidation(async () => {
     validation: validation as any,
   });
 });
-
-hasDisplayAddress.value ? setValues({ form: displayAddress.value as any }) : resetForm();
 
 onUnmounted(() => unsubscribeValidation());
 </script>

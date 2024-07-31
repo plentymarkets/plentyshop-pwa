@@ -30,14 +30,14 @@ export const useCheckoutAddress = (type: AddressType) => {
     state.value.checkoutAddress = {} as Address;
   };
 
-  const hasDisplayAddress = computed(() => {
-    return !!state.value.checkoutAddress.id;
+  const hasCheckoutAddress = computed(() => {
+    return Number(state.value.checkoutAddress.id) > 0;
   });
 
   return {
     set,
     clear,
-    hasDisplayAddress,
+    hasCheckoutAddress,
     ...toRefs(state.value),
   };
 };

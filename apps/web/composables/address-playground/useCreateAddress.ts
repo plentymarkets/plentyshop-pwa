@@ -25,6 +25,6 @@ export const useCreateAddress = (type: AddressType) => {
 
   return {
     create,
-    ...toRefs(state),
+    ...toRefs(state.value),
   };
 };

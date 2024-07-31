@@ -135,7 +135,6 @@ import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 
 const { t } = useI18n();
-const { displayAddress, hasDisplayAddress } = useAddress(AddressType.Billing);
 const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
 
@@ -188,7 +187,6 @@ const unsubscribeValidation = onStartValidation(async () => {
     validation: validation as any,
   });
 });
-hasDisplayAddress.value ? setValues({ form: displayAddress.value as any }) : resetForm();
 
 onUnmounted(() => unsubscribeValidation());
 </script>

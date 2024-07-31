@@ -17,10 +17,6 @@ export const useCheckoutPageAddresses = () => {
     fetchBilling();
   });
 
-  /* const unsubscribeShippingUpdate = onShippingUpdate((event) => {
-        const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
-        setCheckoutAddress(event.payload);
-    }); */
 
   onSetShipping((event) => {
     const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);

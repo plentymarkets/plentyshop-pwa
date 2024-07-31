@@ -32,8 +32,8 @@
     </div>
 
     <div v-if="editing && !disabled">
-      <AddressFormShipping v-if="type === AddressType.Shipping" />
-      <AddressFormBilling v-if="type === AddressType.Billing" />
+      <AddressFormShipping :address="address" v-if="type === AddressType.Shipping" />
+      <AddressFormBilling :address="address" v-if="type === AddressType.Billing && !sameAsShippingAddress" />
     </div>
   </div>
 </template>
@@ -44,22 +44,31 @@ import { type AddressContainerProps } from './types';
 import { AddressType } from '@plentymarkets/shop-api';
 
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
-const { checkoutAddress } = useCheckoutAddress(type);
+const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
+const { shippingAsBilling } = useShippingAsBilling();
+
+const address = ref();
+
+onNuxtReady(() => {
+  if (checkoutAddress.value.id) {
+    address.value = checkoutAddress.value;
+  } else {
+    editing.value = true;
+    if (type === AddressType.Shipping) {
+      shippingAsBilling.value = true;
+    }
+  }
+});
 
 const sameAsShippingAddress = computed(() => {
-  if (type === AddressType.Billing && checkoutAddress) {
+  if (type === AddressType.Billing) {
     const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
 
-    if (checkoutAddress && shippingAddress && checkoutAddress.value.id === shippingAddress.value.id) {
+    if (Number(checkoutAddress.value.id) === Number(shippingAddress.value.id) || shippingAsBilling.value) {
       return true;
     }
   }
   return false;
 });
-
-/* const editForm = (address: Address) => {
-  editing.value = !editing.value;
-  if (editing.value) setDisplayAddress(address, false);
-}; */
 </script>
