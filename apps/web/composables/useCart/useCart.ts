@@ -1,7 +1,19 @@
-import type { CartItem } from '@plentymarkets/shop-api';
-import type { Cart, DoAddItemParams, SetCartItemQuantityParams, DeleteCartItemParams } from '@plentymarkets/shop-api';
-import type { UseCartReturn, UseCartState, GetCart, AddToCart } from './types';
-import type { DeleteCartItem, SetCartItemQuantity } from './types';
+import {
+  type Cart,
+  DoAddItemParams,
+  SetCartItemQuantityParams,
+  DeleteCartItemParams,
+  CartItem,
+} from '@plentymarkets/shop-api';
+import {
+  type UseCartReturn,
+  UseCartState,
+  type GetCart,
+  type AddToCart,
+  type AddItemsToCart,
+  type DeleteCartItem,
+  type SetCartItemQuantity,
+} from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
   if (!oldCart || !oldCart.items || !nextCart || !nextCart.items) {
@@ -118,6 +130,34 @@ export const useCart: UseCartReturn = () => {
   };
 
   /**
+   * @description Function for adding multiple cart items.
+   * @param params { DoAddItemParams[] }
+   * @example
+   * ``` ts
+   * addItemsToCart([{
+   *     productId: 1,
+   *     quantity: 1,
+   * }]);
+   * ```
+   */
+  const addItemsToCart: AddItemsToCart = async (params: DoAddItemParams[]) => {
+    state.value.loading = true;
+
+    try {
+      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCartItems(params));
+
+      useHandleError(error.value);
+      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+
+      return !!data.value;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
+    }
+  };
+
+  /**
    * @description Function for updating cart item quantity.
    * @param params { SetCartItemQuantityParams }
    * @example
@@ -186,6 +226,7 @@ export const useCart: UseCartReturn = () => {
     clearCartItems,
     setCartItemQuantity,
     addToCart,
+    addItemsToCart,
     deleteCartItem,
     getCart,
     ...toRefs(state.value),

@@ -223,6 +223,7 @@
   "billingAddressRequired": "Please select a billing address.",
   "shippingAddressRequired": "Please select a shipping address.",
   "savedShippingAddress": "Saved shipping adresses",
+  "address": "Addresses",
   "savedBillingAddress": "Saved billing adresses",
   "pickSavedAddress": "Pick saved address",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
@@ -529,6 +530,19 @@
       "paymentSummary": {
         "heading": "Payment Summary",
         "paymentStatus": "Payment status"
+      },
+      "orderAgain": {
+        "heading": "Buy again",
+        "addToCart": "Add to cart",
+        "subtext": "You can purchase the products from this order again.",
+        "headingChanges": "Change in products",
+        "subtextChanges": "Changes occured since you last ordered",
+        "priceUp": "Price increased",
+        "priceDown": "Price decreased",
+        "notAvailable": "Currently unavailable",
+        "buyAgain": "Buy again",
+        "cancel": "Cancel",
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available"
       }
     },
     "wishlist": {

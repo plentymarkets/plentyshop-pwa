@@ -1,5 +1,5 @@
 <template>
-  <NuxtLayout name="default" :breadcrumbs="breadcrumbs" :catchall="true">
+  <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
@@ -43,7 +43,10 @@
 <script setup lang="ts">
 import { Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
 
-definePageMeta({ layout: false });
+definePageMeta({
+  layout: false,
+  path: '/:slug*_:itemId',
+});
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
@@ -92,4 +95,21 @@ watch(
     }
   },
 );
+
+useHead({
+  meta: [
+    {
+      name: 'title',
+      content: productGetters.getName(product.value),
+    },
+    {
+      name: 'description',
+      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
+    },
+    {
+      name: 'keywords',
+      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
+    },
+  ],
+});
 </script>

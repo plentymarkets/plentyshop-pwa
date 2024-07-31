@@ -8,6 +8,10 @@
       {{ t('account.ordersAndReturns.myOrders') }}
     </h2>
 
+    <div v-if="loading">
+      <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
+    </div>
+
     <div
       v-if="!data || data.data.entries.length === 0"
       class="col-span-3 text-center"
@@ -20,7 +24,6 @@
     </div>
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
-        <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto z-[999]" size="2xl" />
         <template v-if="viewport.isLessThan('md')">
           <ul class="my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
             <li>
@@ -46,18 +49,32 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-              <SfButton
-                :tag="NuxtLink"
-                :to="localePath(generateNewReturnLink(order))"
-                v-if="orderGetters.isReturnable(order)"
-                size="sm"
-                variant="tertiary"
-              >
-                {{ t('returns.return') }}
-              </SfButton>
               <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
                 {{ t('account.ordersAndReturns.details') }}
               </SfButton>
+              <UiDropdown class="relative">
+                <template #trigger>
+                  <SfButton variant="tertiary">
+                    <SfIconMoreHoriz size="sm" />
+                  </SfButton>
+                </template>
+                <ul
+                  class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
+                >
+                  <li>
+                    <SfListItem @click="openOrderAgainModal(order)" tag="button" class="text-left">
+                      {{ t('account.ordersAndReturns.orderAgain.heading') }}
+                    </SfListItem>
+                  </li>
+                  <li>
+                    <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                      <SfListItem v-if="orderGetters.isReturnable(order)" tag="button" class="text-left">
+                        {{ t('returns.return') }}
+                      </SfListItem>
+                    </NuxtLink>
+                  </li>
+                </ul>
+              </UiDropdown>
             </li>
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
@@ -77,7 +94,6 @@
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
-              <th class="lg:p-4 p-2 font-medium"></th>
               <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th>
             </tr>
           </thead>
@@ -88,18 +104,7 @@
               <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">
-                <SfButton
-                  v-if="orderGetters.isReturnable(order)"
-                  :tag="NuxtLink"
-                  :to="localePath(generateNewReturnLink(order))"
-                  size="sm"
-                  variant="tertiary"
-                >
-                  {{ t('returns.return') }}
-                </SfButton>
-              </td>
-              <td class="py-1.5 lg:pl-4 pl-2 text-right w-full">
+              <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
                 <SfButton
                   :tag="NuxtLink"
                   size="sm"
@@ -108,6 +113,29 @@
                 >
                   {{ t('account.ordersAndReturns.details') }}
                 </SfButton>
+                <UiDropdown class="relative">
+                  <template #trigger>
+                    <SfButton variant="tertiary">
+                      <SfIconMoreHoriz size="sm" />
+                    </SfButton>
+                  </template>
+                  <ul
+                    class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
+                  >
+                    <li>
+                      <SfListItem @click="openOrderAgainModal(order)" tag="button" class="text-left">
+                        {{ t('account.ordersAndReturns.orderAgain.heading') }}
+                      </SfListItem>
+                    </li>
+                    <li>
+                      <NuxtLink :to="localePath(generateNewReturnLink(order))">
+                        <SfListItem v-if="orderGetters.isReturnable(order)" tag="button" class="text-left">
+                          {{ t('returns.return') }}
+                        </SfListItem>
+                      </NuxtLink>
+                    </li>
+                  </ul>
+                </UiDropdown>
               </td>
             </tr>
           </tbody>
@@ -123,13 +151,15 @@
       </div>
     </div>
   </ClientOnly>
+  <OrderAgain v-if="selectedOrder" :order="selectedOrder" />
 </template>
 
 <script setup lang="ts">
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular, SfButton } from '@storefront-ui/vue';
+import { SfButton, SfIconMoreHoriz, SfListItem, SfLoaderCircular } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
+const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -149,6 +179,7 @@ const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const generateOrderDetailsLink = (order: Order) => {
   return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
 };
+
 const generateNewReturnLink = (order: Order) => {
   return `${paths.accountNewReturn}/${orderGetters.getId(order)}?accessKey=${orderGetters.getAccessKey(order)}`;
 };
@@ -157,13 +188,13 @@ const handleQueryUpdate = async () => {
     page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
   });
 };
-await handleQueryUpdate();
+handleQueryUpdate();
 
 watch(isDesktop, (value) => setMaxVisiblePages(value));
 watch(
   () => route.query,
-  async () => {
-    await handleQueryUpdate();
+  () => {
+    handleQueryUpdate();
   },
 );
 </script>

@@ -56,7 +56,7 @@ const fetchAndWriteRemoteConfiguration = async () => {
   });
 
   try {
-    const { data } = await instance.get(`/storefront/settings/${environmentMap.CONFIG_ID}`);
+    const { data } = await instance.get(`/rest/storefront/settings/${environmentMap.CONFIG_ID}`);
     writeConfigurationToTemporaryEnvironment(data);
   } catch (error: any) {
     if (axios.isAxiosError(error)) {

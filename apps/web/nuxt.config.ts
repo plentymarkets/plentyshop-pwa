@@ -1,8 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { validateApiUrl } from './utils/pathHelper';
-import cookieConfig from './cookie.config';
-import { nuxtI18nOptions } from './i18n.config';
+import cookieConfig from './configuration/cookie.config';
+import { nuxtI18nOptions } from './configuration/i18n.config';
 import fetchConfiguration from './build/fetchConfiguration';
+import { appConfiguration } from './configuration/app.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -10,22 +11,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  app: {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#0C7992' },
-      ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/favicon.ico' },
-      ],
-    },
-  },
+  app: appConfiguration,
   experimental: {
     asyncContext: true,
   },
@@ -53,17 +39,9 @@ export default defineNuxtConfig({
   site: {
     url: '',
   },
+  pages: true,
   hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
-    },
-    'build:before': async () => {
-      await fetchConfiguration();
-    },
+    'build:before': async () => await fetchConfiguration(),
   },
   runtimeConfig: {
     public: {
@@ -151,7 +129,7 @@ export default defineNuxtConfig({
     },
   },
   tailwindcss: {
-    configPath: '~/tailwind.config.ts',
+    configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
