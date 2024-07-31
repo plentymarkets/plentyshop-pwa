@@ -2,18 +2,13 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
-        {{ type === AddressType.Shipping ?  $t('shipping.heading') : $t('billing.heading') }}
+        {{ type === AddressType.Shipping ? $t('shipping.heading') : $t('billing.heading') }}
       </h2>
       <div>
         <AddressSelect @edit="" :type="type" />
         <span v-if="!editing" class="mx-2">|</span>
         <SfTooltip label="Edit address">
-          <SfButton
-            v-if="!disabled && checkoutAddress"
-            size="sm"
-            variant="tertiary"
-            @click=""
-          >
+          <SfButton v-if="!disabled && checkoutAddress" size="sm" variant="tertiary" @click="">
             <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
             <SfIconClose v-else></SfIconClose>
           </SfButton>
@@ -67,5 +62,4 @@ const sameAsShippingAddress = computed(() => {
   editing.value = !editing.value;
   if (editing.value) setDisplayAddress(address, false);
 }; */
-
 </script>

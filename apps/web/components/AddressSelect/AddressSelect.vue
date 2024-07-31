@@ -26,9 +26,9 @@
         :address="address"
         :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
         :is-default="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
-        @click="setCheckoutAddress(address), isOpen = false"
+        @click="setCheckoutAddress(address), (isOpen = false)"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
-        @make-default="setPrimaryAddress(address), isOpen = false"
+        @make-default="setPrimaryAddress(address), (isOpen = false)"
         @on-edit="openForm(address)"
       />
     </div>

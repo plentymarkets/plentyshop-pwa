@@ -130,11 +130,11 @@ const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey)
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
 });
 const paypalCreditCardPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
-  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey)
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 
