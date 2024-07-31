@@ -95,4 +95,21 @@ watch(
     }
   },
 );
+
+useHead({
+  meta: [
+    {
+      name: 'title',
+      content: productGetters.getName(product.value),
+    },
+    {
+      name: 'description',
+      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
+    },
+    {
+      name: 'keywords',
+      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
+    },
+  ],
+});
 </script>
