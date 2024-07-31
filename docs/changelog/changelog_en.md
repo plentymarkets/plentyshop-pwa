@@ -8,7 +8,6 @@
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
--
 
 ### Changed
 

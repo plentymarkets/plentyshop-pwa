@@ -120,14 +120,14 @@
 
       <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
-      <SfButton type="submit" class="mt-2" :disabled="loading">
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+      <SfButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
+        <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
       </SfButton>
 
-      <div class="text-center">
+      <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.signup.logInLinkLabel') }}
@@ -154,18 +154,21 @@ import {
 import { useForm } from 'vee-validate';
 import { object, string, boolean, ref as yupReference } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
+import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
 
 const localePath = useLocalePath();
 const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
+const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const props = withDefaults(defineProps<RegisterFormParams>(), {
   isModal: false,
+  changeableView: true,
 });
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
@@ -206,6 +209,12 @@ if (props.emailAddress) {
   email.value = props.emailAddress;
 }
 
+const clearTurnstile = () => {
+  turnstile.value = '';
+  turnstileElement.value?.reset();
+};
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const registerUser = async () => {
   if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;
@@ -217,14 +226,12 @@ const registerUser = async () => {
     'cf-turnstile-response': turnstile.value,
   });
 
-  turnstile.value = '';
-  turnstileElement.value?.reset();
-
   if (response?.data.code === 1) {
     send({
       message: t('auth.signup.emailAlreadyExists'),
       type: 'negative',
     });
+    clearTurnstile();
     return;
   }
 
@@ -233,8 +240,28 @@ const registerUser = async () => {
       message: t('auth.signup.success'),
       type: 'positive',
     });
+
+    if (
+      props.order &&
+      (await migrateGuestOrder({
+        orderId: props.order?.order.id ?? -1,
+        accessKey: props.order?.order.accessKey ?? '',
+        postcode: props.order?.order.deliveryAddress.postalCode ?? undefined,
+        name: props.order?.order.deliveryAddress.name3 ?? undefined,
+      }))
+    ) {
+      send({
+        message: 'Order has been successfully migrated to your account.',
+        type: 'positive',
+      });
+    }
+
     emits('registered');
-    viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    clearTurnstile();
+
+    if (!props.order) {
+      viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    }
   }
 };
 
