@@ -51,16 +51,17 @@
             v-if="cartItem.basketItemOrderParams.length > 0"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
-            <ul>
-              <CartOrderProperty
-                v-for="property in cartItem.basketItemOrderParams"
-                :key="property.propertyId"
-                :cart-item="cartItem"
-                :basket-item-order-param="property"
-              />
-            </ul>
+            <CartOrderProperty
+              v-for="property in cartItem.basketItemOrderParams"
+              :key="property.propertyId"
+              :cart-item="cartItem"
+              :basket-item-order-param="property"
+            />
           </div>
-          <div v-if="cartGetters.getVariation(cartItem)">
+          <div
+            v-if="cartGetters.getVariation(cartItem)"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
+          >
             <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
         </div>
