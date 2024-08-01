@@ -1,20 +1,30 @@
 # Changelog plentyshopPWA
 
-## v1.6.1
+## v1.6.0
 
-### New
+### 🚀 New
 
 - The app now reads metadata, such as description and keywords, from the environment.
+- The order again feature supports and shows order properties.
+- Make the paypal button lazyload for PS
+- Added dynamic metadata for products and categories.
+-
 
-## v1.6.0
+### Changed
+
+- The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
+- Changes to item reviews logic in order to use the feedback api ms
 
 ### 🩹 Fixed
 
 - Fixed the REST call to fetch the remote configuration in the build process.
+- Fixed: middleware calls being stuck in an infinite loop
+- Fixed tailwind css double import.
 
 ### 👷 Changed
 
 - Cookiebar icon has been replaced
+- Checkout address buttons in the mobile view have been adjusted
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

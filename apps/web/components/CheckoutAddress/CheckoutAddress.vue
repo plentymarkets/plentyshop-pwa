@@ -1,13 +1,15 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
+      <h2 class="text-neutral-900 text-lg font-bold">{{ heading }}</h2>
       <div v-if="!disabled && addressList.length > 0" class="flex items-center">
         <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
-          {{ $t('savedBillingAddress') }}
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedBillingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
         </SfButton>
         <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
-          {{ $t('savedShippingAddress') }}
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedShippingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
         </SfButton>
         <div class="h-5 w-px bg-primary-500 mx-2"></div>
         <SfButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
@@ -102,6 +104,7 @@ const { isOpen: isOpenPick, open: openPick, close: closePick } = useDisclosure()
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
+const viewPort = useViewport();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,

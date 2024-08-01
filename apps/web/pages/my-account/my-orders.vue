@@ -49,6 +49,9 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
+              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+                {{ t('account.ordersAndReturns.details') }}
+              </SfButton>
               <UiDropdown class="relative">
                 <template #trigger>
                   <SfButton variant="tertiary">
@@ -72,9 +75,6 @@
                   </li>
                 </ul>
               </UiDropdown>
-              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
-                {{ t('account.ordersAndReturns.details') }}
-              </SfButton>
             </li>
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
@@ -105,6 +105,14 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
+                <SfButton
+                  :tag="NuxtLink"
+                  size="sm"
+                  variant="tertiary"
+                  :to="localePath(generateOrderDetailsLink(order))"
+                >
+                  {{ t('account.ordersAndReturns.details') }}
+                </SfButton>
                 <UiDropdown class="relative">
                   <template #trigger>
                     <SfButton variant="tertiary">
@@ -128,14 +136,6 @@
                     </li>
                   </ul>
                 </UiDropdown>
-                <SfButton
-                  :tag="NuxtLink"
-                  size="sm"
-                  variant="tertiary"
-                  :to="localePath(generateOrderDetailsLink(order))"
-                >
-                  {{ t('account.ordersAndReturns.details') }}
-                </SfButton>
               </td>
             </tr>
           </tbody>
