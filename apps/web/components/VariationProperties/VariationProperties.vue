@@ -1,19 +1,17 @@
 <template>
-  <div v-for="(group, groupIndex) in nonEmptyGroups" :key="`group-${groupIndex}`">
-    <div
-      v-for="(variationProperty, propIndex) in group.properties"
-      :key="`group-prop-${propIndex}`"
-      class="flex items-center"
-    >
-      <ClientOnly>
-        <Component
-          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-          :variation-property="variationProperty"
-          :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
-        >
-        </Component>
-      </ClientOnly>
-    </div>
+  <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
+    <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
+      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center">
+        <ClientOnly>
+          <Component
+            v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+            :variation-property="variationProperty"
+            :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          >
+          </Component>
+        </ClientOnly>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -34,10 +32,6 @@ const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
 };
 
 const variationPropertyGroups = productGetters.getPropertyGroups(props.product ?? ({} as Product));
-const nonEmptyGroups = variationPropertyGroups.map((group) => {
-  group.properties = group.properties.filter((property) => propertyHasNameOrValue(property));
-  return group;
-});
 
 const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
