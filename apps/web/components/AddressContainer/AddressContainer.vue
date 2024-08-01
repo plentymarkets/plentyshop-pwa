@@ -51,24 +51,23 @@ const sameAsShippingAddress = computed(() => {
 
 const handleCheckoutAddressChange = () => {
   if (!hasCheckoutAddress.value) {
-      if (isBilling) {
-        openNewForm.value = false;
-      } else {
-        shippingAsBilling.value = true;
-        openNewForm.value = true;
-      }
-    }
-    else {
-      shippingAsBilling.value = false;
+    if (isBilling) {
       openNewForm.value = false;
+    } else {
+      shippingAsBilling.value = true;
+      openNewForm.value = true;
     }
-}
+  } else {
+    shippingAsBilling.value = false;
+    openNewForm.value = false;
+  }
+};
 
 const handleShippingAsBillingChange = () => {
-  if (isBilling &&  !hasCheckoutAddress.value) {
+  if (isBilling && !hasCheckoutAddress.value) {
     openNewForm.value = !shippingAsBilling.value;
   }
-}
+};
 
 const edit = (address: Address) => {
   if (editing.value) {
@@ -82,6 +81,4 @@ const edit = (address: Address) => {
 
 watch(checkoutAddress, handleCheckoutAddressChange, { immediate: true });
 watch(shippingAsBilling, handleShippingAsBillingChange);
-
-
 </script>
