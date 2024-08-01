@@ -8,6 +8,10 @@
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 - PayPal-Button für PS Lazyload
 
+### Geändert
+
+- Die Konfigurationsdateien für App-, Cookie-, Internationalisierungs- und Tailwind-Einstellungen befinden sich jetzt im Ordner `apps/web/configuration`.
+
 ### 🩹 Behoben
 
 - Ein Fehler beim REST-Aufruf zur Abfrage der Systemkonfiguration wurde behoben.
