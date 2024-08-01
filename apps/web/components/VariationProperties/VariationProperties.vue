@@ -7,7 +7,10 @@
     >
       <ClientOnly>
         <Component
-          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
+          v-if="
+            componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] &&
+            hasNameOrValue(variationProperty)
+          "
           :variation-property="variationProperty"
           :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
         >
@@ -19,7 +22,7 @@
 
 <script setup lang="ts">
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
-import type { Product } from '@plentymarkets/shop-api';
+import type { Product, VariationProperty } from '@plentymarkets/shop-api';
 import type { VariationPropertiesProps, ComponentsMapper } from './types';
 import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
 import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
@@ -35,5 +38,12 @@ const componentsMapper: ComponentsMapper = {
   string: VariationPropertyText,
   html: VariationPropertyHtml,
   date: VariationPropertyDate,
+};
+
+const hasNameOrValue = (variationProperty: VariationProperty) => {
+  return (
+    productPropertyGetters.getPropertyName(variationProperty) ||
+    productPropertyGetters.getPropertyValue(variationProperty)
+  );
 };
 </script>
