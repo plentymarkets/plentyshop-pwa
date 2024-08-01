@@ -133,10 +133,12 @@
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
+import { AddressFormProps } from './types';
 
 const { t } = useI18n();
 const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
 const { data: shippingCountries } = useActiveShippingCountries();
+const props = defineProps<AddressFormProps>();
 
 const validationSchema = toTypedSchema(
   object({
@@ -178,6 +180,10 @@ const toggleCompany = () => {
     vatId.value = '';
   }
 };
+
+if (!props.new) {
+  setValues( {form: props.address as any });
+}
 
 const unsubscribeValidation = onStartValidation(async () => {
   const validation = await validate();
