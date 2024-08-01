@@ -5,3 +5,4 @@ export type AddressSelectProps = {
 };
 
 export type AddressSelectEvents = (event: 'edit', payload: Address) => void;
+export type AddressSelectNewAddressEvents = (event: 'create', payload: Address) => void;

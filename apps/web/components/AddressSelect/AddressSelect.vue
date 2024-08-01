@@ -29,11 +29,11 @@
         @click="setCheckoutAddress(address), (isOpen = false)"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
         @make-default="setPrimaryAddress(address), (isOpen = false)"
-        @on-edit="openForm(address)"
+        @on-edit="emit('edit', address); close();"
       />
     </div>
     <div class="flex justify-end w-full">
-      <SfButton variant="secondary" class="mt-10" @click="openForm({})">
+      <SfButton variant="secondary" class="mt-10" @click="(emit('new')); close();">
         <template v-if="type === AddressType.Shipping">{{ $t('newShippingAddress') }}</template>
         <template v-else>{{ $t('newBillingAddress') }}</template>
       </SfButton>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { type AddressSelectEvents, type AddressSelectProps } from './types';
+import { type AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, SfButton, useDisclosure, SfTooltip } from '@storefront-ui/vue';
@@ -54,10 +54,9 @@ const { set: setCheckoutAddress } = useCheckoutAddress(type);
 const { checkoutAddress } = useCheckoutAddress(type);
 
 const { isOpen, open, close } = useDisclosure();
-const emit = defineEmits<AddressSelectEvents>();
+const emit = defineEmits({
+  edit: (address: Address) => true,
+  new: () => true,
+});
 
-const openForm = (address: Address | {}) => {
-  emit('edit', address as Address);
-  close();
-};
 </script>
