@@ -1,11 +1,12 @@
 <template>
-  <div class="w-full">
-    <div class="font-semibold">
+  <div class="w-full flex row variation-property-date">
+    <span v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
-    </div>
-    <div>
+    </span>
+    <span v-if="productPropertyGetters.getPropertyName(variationProperty) && preatyDate" class="mr-1">: </span>
+    <span v-if="preatyDate">
       {{ preatyDate }}
-    </div>
+    </span>
   </div>
 </template>
 

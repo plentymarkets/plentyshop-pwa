@@ -35,3 +35,7 @@ describe('tailwind helper', () => {
     ])
   })
 })
+
+
+// { weight: '500', value: 'oklch(0.735 0.127 210.719)'},
+// { weight: '700', value: 'oklch(0.776 0.108 210.719)'},
