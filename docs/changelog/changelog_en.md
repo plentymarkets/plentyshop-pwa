@@ -22,7 +22,7 @@
 
 ### 👷 Changed
 
-- Align order properies and variation properties
+- Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
 
