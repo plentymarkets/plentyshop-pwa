@@ -111,12 +111,22 @@ The workflow takes several minutes to complete. You can monitor the progress in 
 The activation makes the application reachable on the configured domain.
 It can take up to 1 hour for the changes to take effect.
 
-
 ## Preview
 
 1. Log into your plentysystems system.
 2. Go to **CMS » Deployment**.
 3. Click on the **URL** of the app you want to preview.
+
+## Live
+
+::: info
+:notebook: To activate live mode, you first have to [activate](#activation) the application.
+:::
+
+1. Log into your plentysystems system.
+2. Go to **CMS » Deployment**.
+3. For the configuration domain, open the further actions menu (three dots).
+4. Click on **Activate live mode**.
 
 ## References
 
