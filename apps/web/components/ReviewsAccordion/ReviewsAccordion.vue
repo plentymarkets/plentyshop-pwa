@@ -75,7 +75,7 @@
           v-if="paginatedProductReviews.length > 0"
           :current-page="currentPage"
           :total-items="pagination.totalCount"
-          :page-size="pageSize"
+          :page-size="defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE"
           :max-visible-pages="maxVisiblePages"
           current-page-name="feedbackPage"
         />
@@ -133,6 +133,7 @@ import {
 } from '@storefront-ui/vue';
 import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import { CreateReviewParams } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 
