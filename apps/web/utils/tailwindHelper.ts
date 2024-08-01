@@ -1,20 +1,20 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
-import { converter, formatRgb, parse } from 'culori/fn';
+import { converter, formatRgb } from 'culori/fn';
 
 const rgb = converter('rgb');
 
 const spectrumToTailwindMapper = [
-  { id: '-5', weight: '50' },
-  { id: '-4', weight: '100' },
-  { id: '-3', weight: '200' },
-  { id: '-2', weight: '300' },
-  { id: '-1', weight: '400' },
+  { id: '+5', weight: '50' },
+  { id: '+4', weight: '100' },
+  { id: '+3', weight: '200' },
+  { id: '+2', weight: '300' },
+  { id: '+1', weight: '400' },
   { id: '0', weight: '500' },
-  { id: '+1', weight: '600' },
-  { id: '+2', weight: '700' },
-  { id: '+3', weight: '800' },
-  { id: '+4', weight: '900' },
-  { id: '+5', weight: '950' },
+  { id: '-1', weight: '600' },
+  { id: '-2', weight: '700' },
+  { id: '-3', weight: '800' },
+  { id: '-4', weight: '900' },
+  { id: '-5', weight: '950' },
 ];
 
 export const spectrumToTailwind = (spectrumList: SpectrumList) => {
@@ -54,15 +54,17 @@ export const oklchToRgb = (oklch: string) => {
   return rgbColorString.replaceAll(',', '');
 };
 
-export const hex2rgb = (hex: string) => {
-  const r = Number.parseInt(hex.slice(1, 3), 16);
-  const g = Number.parseInt(hex.slice(3, 5), 16);
-  const b = Number.parseInt(hex.slice(5, 7), 16);
-  return { r, g, b };
-};
-
 export const getTailwindColorsOklch = (hexColor: string) => {
-  const spectrum = buildSpectrum(hexColor);
+  const spectrum = buildSpectrum(hexColor, {
+    colorSteps: 5,
+    colorDifference: 6,
+    darkColorCompensation: 0,
+    mixerSteps: 0.001,
+    outputSpace: 'oklch',
+    outputGamut: 'p3',
+    outputCSS: true,
+    outputPrecision: 3,
+  });
   const spectrumList = spectrumToList(spectrum);
   return spectrumToTailwind(spectrumList);
 };
