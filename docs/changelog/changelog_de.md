@@ -2,9 +2,22 @@
 
 ## v1.6.0
 
+### TODO 📙 Migrationsanleitung
+
+- Vue-Komponenten nutzen jetzt andere Farbgewichtungen (s. Bereich **Hinzugefügt** für Details). Deshalb musst du deine Farbpaletten wie folgt aktualisieren:
+  - `900` -> `700`
+  - `800` -> `600`
+  - `700` -> `500`
+  - `600` -> `400`
+  - `500` -> `300`
+  - `400` -> `200`
+  - `300` -> `100`
+  - `200` -> `50`
+
 ### 🚀 Hinzugefügt
 
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
+- Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`.
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 - PayPal-Button für PS Lazyload
 
