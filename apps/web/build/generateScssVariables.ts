@@ -5,8 +5,8 @@ import type { TailwindColors } from '~/composables/useConfigurationDrawer';
 import { rgb } from 'culori';
 import { formatRgb } from 'culori/fn';
 
-const primaryColor = process.env.PRIMARY700 || '12 121 146';
-const secondaryColor = process.env.SECONDARY700 || '165 105 3';
+const primaryColor = process.env.PRIMARY || '#0c7992';
+const secondaryColor = process.env.SECONDARY || '#008ebd';
 
 export const oklchToRgb = (oklch: string) => {
   const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
@@ -51,15 +51,8 @@ const prepareConfigFile = (
 };
 
 const generateScssVariables = () => {
-  // const isRgb = (value: string) => /^(?:\d{1,3}\s){2}\d{1,3}$/.test(value);
-
-  // Either have HEX everywhere or add the regex back
-  // Current version works with HEX values only
-  console.log('Primary color:', primaryColor);
   const primaryTailwindColors = getTailwindColorsOklch(primaryColor);
-  console.log(primaryTailwindColors);
   const primarySpectrum = convertOklchToRgb(primaryTailwindColors);
-  console.log(primarySpectrum)
   const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor);
   const secondarySpectrum = convertOklchToRgb(secondaryTailwindColors);
   const scssContent = prepareConfigFile(primarySpectrum, secondarySpectrum);

@@ -3,7 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './cookie.config';
 import { nuxtI18nOptions } from './i18n.config';
 import fetchConfiguration from './build/fetchConfiguration';
-import generateScssVariables from './build/generate-scss-variables';
+import generateScssVariables from './build/generateScssVariables';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -67,7 +67,7 @@ export default defineNuxtConfig({
   pages: true,
   hooks: {
     'build:before': async () => {
-    //  await fetchConfiguration();
+      await fetchConfiguration();
       generateScssVariables();
     },
   },
@@ -84,17 +84,6 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
-      PRIMARY50: process.env.PRIMARY50,
-      PRIMARY100: process.env.PRIMARY100,
-      PRIMARY200: process.env.PRIMARY200,
-      PRIMARY300: process.env.PRIMARY300,
-      PRIMARY400: process.env.PRIMARY400,
-      PRIMARY500: process.env.PRIMARY500,
-      PRIMARY600: process.env.PRIMARY600,
-      PRIMARY700: process.env.PRIMARY700,
-      PRIMARY800: process.env.PRIMARY800,
-      PRIMARY900: process.env.PRIMARY900,
-      PRIMARY950: process.env.PRIMARY950,
     },
   },
   modules: [
