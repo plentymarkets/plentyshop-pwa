@@ -78,7 +78,13 @@
         <SfIconClose />
       </SfButton>
     </header>
-    <Register @registered="closeAuthentication" :order="order" :is-modal="true" :changeable-view="false" />
+    <Register
+      @registered="closeAuthentication"
+      :order="order"
+      :email-address="orderGetters.getOrderEmail(order)"
+      :is-modal="true"
+      :changeable-view="false"
+    />
   </UiModal>
 </template>
 

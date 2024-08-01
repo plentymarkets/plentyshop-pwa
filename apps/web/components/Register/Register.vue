@@ -30,7 +30,6 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['register.email'])"
-          :disabled="emailAddress"
           name="customerEmail"
           type="email"
           autocomplete="email"
