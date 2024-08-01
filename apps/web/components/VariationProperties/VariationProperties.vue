@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in variationProperties" :key="`group-${groupIndex}`">
+  <div v-for="(group, groupIndex) in nonEmptyGroups" :key="`group-${groupIndex}`">
     <div
       v-for="(variationProperty, propIndex) in group.properties"
       :key="`group-prop-${propIndex}`"
@@ -7,10 +7,7 @@
     >
       <ClientOnly>
         <Component
-          v-if="
-            componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)] &&
-            hasNameOrValue(variationProperty)
-          "
+          v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
           :variation-property="variationProperty"
           :is="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
         >
@@ -29,7 +26,18 @@ import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationP
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
 
 const props = defineProps<VariationPropertiesProps>();
-const variationProperties = productGetters.getPropertyGroups(props.product ?? ({} as Product));
+const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
+  return (
+    productPropertyGetters.getPropertyName(variationProperty) ||
+    productPropertyGetters.getPropertyValue(variationProperty)
+  );
+};
+
+const variationPropertyGroups = productGetters.getPropertyGroups(props.product ?? ({} as Product));
+const nonEmptyGroups = variationPropertyGroups.map((group) => {
+  group.properties = group.properties.filter((property) => propertyHasNameOrValue(property));
+  return group;
+});
 
 const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
@@ -38,12 +46,5 @@ const componentsMapper: ComponentsMapper = {
   string: VariationPropertyText,
   html: VariationPropertyHtml,
   date: VariationPropertyDate,
-};
-
-const hasNameOrValue = (variationProperty: VariationProperty) => {
-  return (
-    productPropertyGetters.getPropertyName(variationProperty) ||
-    productPropertyGetters.getPropertyValue(variationProperty)
-  );
 };
 </script>
