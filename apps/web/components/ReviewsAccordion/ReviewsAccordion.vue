@@ -73,9 +73,9 @@
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
-          :current-page="getFacetsFromURL().feedbackPage ?? 1"
-          :total-items="totalReviews"
-          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+          :current-page="currentPage"
+          :total-items="pagination.totalCount"
+          :page-size="defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE"
           :max-visible-pages="maxVisiblePages"
           current-page-name="feedbackPage"
         />
@@ -133,10 +133,10 @@ import {
 } from '@storefront-ui/vue';
 import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import { CreateReviewParams } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 
-const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const isLogin = ref(true);
 const { t } = useI18n();
@@ -164,6 +164,9 @@ const {
 
 const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
+const pagination = computed(() => reviewGetters.getReviewPagination(productReviewsData.value));
+const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviewsData.value));
+
 const ratingPercentages = ref([] as number[]);
 const splitRatings = ref([] as number[]);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
