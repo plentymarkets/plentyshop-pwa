@@ -1,4 +1,4 @@
-import { getTailwindColorsOklch, oklchToRgb } from '~/utils/tailwindHelper';
+import { ColorParameters, getTailwindColorsOklch, oklchToRgb } from '~/utils/tailwindHelper';
 import type { TailwindColors } from './types';
 
 const open = ref(false);
@@ -12,14 +12,19 @@ const setColorProperties = (type: string, tailwindColors: TailwindColors) => {
   });
 };
 
+const colorProperties: ColorParameters = {
+  colorDifference: 6,
+  darkColorCompensation: 0,
+};
+
 const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors = getTailwindColorsOklch(hexColor);
+  const tailwindColors = getTailwindColorsOklch(hexColor, colorProperties);
 
   setColorProperties('primary', tailwindColors);
 };
 
 const updateSecondaryColor = (hexColor: string) => {
-  const tailwindColors = getTailwindColorsOklch(hexColor);
+  const tailwindColors = getTailwindColorsOklch(hexColor, colorProperties);
 
   setColorProperties('secondary', tailwindColors);
 };

@@ -1,12 +1,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getTailwindColorsOklch } from '../utils/tailwindHelper';
+import { ColorParameters, getTailwindColorsOklch } from '../utils/tailwindHelper';
 import type { TailwindColors } from '~/composables/useConfigurationDrawer';
 import { rgb } from 'culori';
 import { formatRgb } from 'culori/fn';
 
 const primaryColor = process.env.PRIMARY || '#0c7992';
 const secondaryColor = process.env.SECONDARY || '#008ebd';
+const colorProperties: ColorParameters = {
+  colorDifference: 6,
+  darkColorCompensation: 0,
+};
 
 export const oklchToRgb = (oklch: string) => {
   const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
@@ -51,9 +55,9 @@ const prepareConfigFile = (
 };
 
 const generateScssVariables = () => {
-  const primaryTailwindColors = getTailwindColorsOklch(primaryColor);
+  const primaryTailwindColors = getTailwindColorsOklch(primaryColor, colorProperties);
   const primarySpectrum = convertOklchToRgb(primaryTailwindColors);
-  const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor);
+  const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor, colorProperties);
   const secondarySpectrum = convertOklchToRgb(secondaryTailwindColors);
   const scssContent = prepareConfigFile(primarySpectrum, secondarySpectrum);
 

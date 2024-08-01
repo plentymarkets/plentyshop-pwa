@@ -1,6 +1,11 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
 import { converter, formatRgb } from 'culori/fn';
 
+export interface ColorParameters {
+  colorDifference: number;
+  darkColorCompensation: number;
+}
+
 const rgb = converter('rgb');
 
 const spectrumToTailwindMapper = [
@@ -54,11 +59,11 @@ export const oklchToRgb = (oklch: string) => {
   return rgbColorString.replaceAll(',', '');
 };
 
-export const getTailwindColorsOklch = (hexColor: string) => {
+export const getTailwindColorsOklch = (hexColor: string, colorParameters: ColorParameters) => {
   const spectrum = buildSpectrum(hexColor, {
     colorSteps: 5,
-    colorDifference: 6,
-    darkColorCompensation: 0,
+    colorDifference: colorParameters.colorDifference,
+    darkColorCompensation: colorParameters.darkColorCompensation,
     mixerSteps: 0.001,
     outputSpace: 'oklch',
     outputGamut: 'p3',
