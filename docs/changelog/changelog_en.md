@@ -12,6 +12,7 @@
 ### Changed
 
 - The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
+- Changes to item reviews logic in order to use the feedback api ms
 
 ### 🩹 Fixed
 
