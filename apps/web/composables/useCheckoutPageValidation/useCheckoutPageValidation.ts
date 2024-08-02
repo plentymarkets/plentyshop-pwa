@@ -1,3 +1,1 @@
-export const useCheckoutPageValidation = () => {
-    
-};
+export const useCheckoutPageValidation = () => {};

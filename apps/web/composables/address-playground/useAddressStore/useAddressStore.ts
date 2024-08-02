@@ -1,5 +1,5 @@
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 import { AddressCreateEvent, AddressDestroyEvent, AddressSetEvent, AddressState, AddressUpdateEvent } from './types';
 
 const eventEmitter = new EventEmitter();

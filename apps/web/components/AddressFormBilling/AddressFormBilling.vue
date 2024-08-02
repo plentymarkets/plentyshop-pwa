@@ -182,7 +182,7 @@ const toggleCompany = () => {
 };
 
 if (!props.new) {
-  setValues( {form: props.address as any });
+  setValues({ form: props.address as any });
 }
 
 const unsubscribeValidation = onStartValidation(async () => {

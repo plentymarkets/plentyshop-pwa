@@ -29,11 +29,21 @@
         @click="setCheckoutAddress(address), (isOpen = false)"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
         @make-default="setPrimaryAddress(address), (isOpen = false)"
-        @on-edit="emit('edit', address); close();"
+        @on-edit="
+          emit('edit', address);
+          close();
+        "
       />
     </div>
     <div class="flex justify-end w-full">
-      <SfButton variant="secondary" class="mt-10" @click="(emit('new')); close();">
+      <SfButton
+        variant="secondary"
+        class="mt-10"
+        @click="
+          emit('new');
+          close();
+        "
+      >
         <template v-if="type === AddressType.Shipping">{{ $t('newShippingAddress') }}</template>
         <template v-else>{{ $t('newBillingAddress') }}</template>
       </SfButton>
@@ -58,5 +68,4 @@ const emit = defineEmits({
   edit: (address: Address) => true,
   new: () => true,
 });
-
 </script>

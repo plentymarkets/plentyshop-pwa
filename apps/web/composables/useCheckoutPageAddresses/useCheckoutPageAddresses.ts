@@ -17,7 +17,6 @@ export const useCheckoutPageAddresses = () => {
     fetchBilling();
   });
 
-
   onSetShipping((event) => {
     const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
     const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);

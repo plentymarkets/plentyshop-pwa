@@ -183,7 +183,7 @@ const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
 
 if (!props.new) {
-  setValues( {form: props.address as any });
+  setValues({ form: props.address as any });
 }
 
 const toggleCompany = () => {

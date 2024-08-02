@@ -7,7 +7,12 @@
       <AddressSelect @edit="emit('edit', $event)" @new="emit('new')" :type="type" />
       <span v-if="!editing" class="mx-2">|</span>
       <SfTooltip label="Edit address">
-        <SfButton v-if="!disabled && checkoutAddress" size="sm" variant="tertiary" @click="emit('edit', checkoutAddress)">
+        <SfButton
+          v-if="!disabled && checkoutAddress"
+          size="sm"
+          variant="tertiary"
+          @click="emit('edit', checkoutAddress)"
+        >
           <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
           <SfIconClose v-else></SfIconClose>
         </SfButton>
@@ -19,7 +24,7 @@
 <script setup lang="ts">
 import { SfButton, SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { AddressContainerHeaderProps  } from './types';
+import { AddressContainerHeaderProps } from './types';
 const { disabled, type } = withDefaults(defineProps<AddressContainerHeaderProps>(), { disabled: false });
 const { checkoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);

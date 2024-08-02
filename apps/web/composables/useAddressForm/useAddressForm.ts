@@ -1,6 +1,6 @@
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { type OnValidationEnd } from './types';
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'node:events';
 
 const eventEmitter = new EventEmitter();
 
