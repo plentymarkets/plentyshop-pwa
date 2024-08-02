@@ -10,13 +10,11 @@
         </template>
       </template>
       <template v-if="isBilling">
-        <div>
-          <AddressFormBilling v-if="showNewForm" new />
-          <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
-            <AddressFormBilling v-if="editing" :address="addressToEdit" />
-            <AddressDisplay v-else :address="checkoutAddress" />
-          </template>
-        </div>
+        <AddressFormBilling v-if="showNewForm" new />
+        <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
+          <AddressFormBilling v-if="editing" :address="addressToEdit" />
+          <AddressDisplay v-else :address="checkoutAddress" />
+        </template>
         <div v-if="showSameAsShippingText" class="mt-2">
           {{ $t('addressContainer.sameAsShippingAddress') }}
         </div>
@@ -31,5 +29,5 @@ import { type AddressContainerProps } from './types';
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
-const { showSameAsShippingText, showNewForm , addressToEdit, isBilling, isShipping, edit } = useAddressContainer(type);
+const { showSameAsShippingText, showNewForm, addressToEdit, isBilling, isShipping, edit } = useAddressContainer(type);
 </script>
