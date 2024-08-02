@@ -1,7 +1,7 @@
 ## Composable best practices (WIP)
 
 ### Naming Convention
-- Start with [`use`](command:_github.copilot.openSymbolFromReferences?%5B%7B%22%24mid%22%3A1%2C%22path%22%3A%22%2FUsers%2Fmaximilianroell%2Fworkspace%2Fplentyshop-pwa%2Fapps%2Fweb%2Fcomposables%2Faddress-playground%2FComposable%20best%20practices.md%22%2C%22scheme%22%3A%22file%22%7D%2C%7B%22line%22%3A2%2C%22character%22%3A0%7D%5D "apps/web/composables/address-playground/Composable best practices.md") and camel case the rest
+- Start with `use` and camel case the rest
     - Example: `useCustomer`
 
 ### SRP (Single Responsibility Principle)
