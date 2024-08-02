@@ -1,11 +1,11 @@
 ## Composable best practices (WIP)
 
-### Naming Convention
+### 1. Naming Convention
 
 - Start with `use` and camel case the rest
   - Example: `useCustomer`
 
-### SRP (Single Responsibility Principle)
+### 2. SRP (Single Responsibility Principle)
 
 - Each composable should have a single responsibility
 
@@ -19,13 +19,13 @@ composables/
 │   └── useDeleteCustomer.ts
 ```
 
-### Split Composables into State and Action Composables
+### 3. Split Composables into State and Action Composables
 
 - Use separate composables for state and actions
   - Example: `useCustomer` for state
   - Example: `useCreateCustomer` for action
 
-### Component-Bound Composables
+### 4. Component-Bound Composables
 
 - Composables that should only be used once with one component
   - Example: `Checkout.vue` in pages as component
@@ -41,7 +41,7 @@ composables/
 
 - This enables us to unit test the logic without having to test the .vue template file.
 
-### Avoid Side Effects
+### 5. Avoiding Side Effects
 
 - What is it?
   - Side effects are unintended changes in state or behavior caused by a function or composable.
