@@ -46,6 +46,7 @@ composables/
         - `onCreate` event
 
 ```ts
+// Checkout.vue or CheckoutPageComposable
 onCreate((event) => {
     const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
     setCheckoutAddress(event.payload[0], true);
