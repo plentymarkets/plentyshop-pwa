@@ -1,8 +1,12 @@
 ## Composable best practices (WIP)
 
-### Name convention start with use and camel case the rest
-    - `useCustomer`
-### SRP Single responsibility principal
+### Naming Convention
+- Start with [`use`](command:_github.copilot.openSymbolFromReferences?%5B%7B%22%24mid%22%3A1%2C%22path%22%3A%22%2FUsers%2Fmaximilianroell%2Fworkspace%2Fplentyshop-pwa%2Fapps%2Fweb%2Fcomposables%2Faddress-playground%2FComposable%20best%20practices.md%22%2C%22scheme%22%3A%22file%22%7D%2C%7B%22line%22%3A2%2C%22character%22%3A0%7D%5D "apps/web/composables/address-playground/Composable best practices.md") and camel case the rest
+    - Example: `useCustomer`
+
+### SRP (Single Responsibility Principle)
+- Each composable should have a single responsibility
+
 ```
 composables/
 ├── useCustomer/
@@ -12,13 +16,17 @@ composables/
 ├── useDeleteCustomer/
 │   └── useDeleteCustomer.ts
 ```
-### Split composables into state and action composables
-    - `useCustomer` for state
-    - `useCreateCustomer` for action 
-### Use a component bind composable
-composable that should only be used once with one component
-    - `Checkout.vue` in pages as component
-    - `useCheckoutPage` as composable that is only used in the `checkout.vue`
+
+### Split Composables into State and Action Composables
+- Use separate composables for state and actions
+    - Example: `useCustomer` for state
+    - Example: `useCreateCustomer` for action
+
+### Component-Bound Composables
+- Composables that should only be used once with one component
+    - Example: `Checkout.vue` in pages as component
+    - Example: `useCheckoutPage` as composable that is only used in the `Checkout.vue`
+
 ```
 pages/
 ├── Checkout.vue
@@ -27,23 +35,21 @@ composables/
 │   └── useCheckoutPage.ts
 ```
 
-This enables use to unit test the logic without having to test the .vue template file.
+- This enables us to unit test the logic without having to test the .vue template file.
 
-### Avoid side effects
-
+### Avoid Side Effects
 - What is it?
-    - 
-- How to avoid them: 
-- To avoid side effects, we can use events that can be used in business logic composables.
-- `useAddressStore` 
-    - `onCreate` event
+    - Side effects are unintended changes in state or behavior caused by a function or composable.
+- How to avoid them:
+    - Use events that can be used in business logic composables.
+    - Example: `useAddressStore`
+        - `onCreate` event
 
-- component or other composable that waits for `onCreate` and then sets it as checkout address with:
-``` ts
+```ts
 onCreate((event) => {
     const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
     setCheckoutAddress(event.payload[0], true);
 });
 ```
 
-- This way we dont set the checkout address while creating a new address but do it else where.
+- This way we don't set the checkout address while creating a new address but do it elsewhere.
