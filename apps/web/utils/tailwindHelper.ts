@@ -1,5 +1,6 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
-import { converter, formatRgb } from 'culori/fn';
+import { converter, formatRgb, Rgb } from 'culori/fn';
+import { createPaletteFromColor } from "palettey";
 
 export interface ColorParameters {
   colorDifference: number;
@@ -51,8 +52,15 @@ export const spectrumToTailwind = (spectrumList: SpectrumList) => {
   return tailwindColors;
 };
 
-export const oklchToRgb = (oklch: string) => {
-  const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
+const handleMissingColor = (weight: string): Rgb => {
+  const white = rgb('#fff') as Rgb;
+  const black = rgb('#000') as Rgb;
+
+  return weight < '500' ? white : black;
+};
+
+export const oklchToRgb = (oklch: string, weight: string) => {
+  const rgbColor = rgb(oklch) ?? handleMissingColor(weight);
   const rgbColorFormatted = formatRgb(rgbColor);
   const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
 
@@ -60,16 +68,23 @@ export const oklchToRgb = (oklch: string) => {
 };
 
 export const getTailwindColorsOklch = (hexColor: string, colorParameters: ColorParameters) => {
-  const spectrum = buildSpectrum(hexColor, {
-    colorSteps: 5,
-    colorDifference: colorParameters.colorDifference,
-    darkColorCompensation: colorParameters.darkColorCompensation,
-    mixerSteps: 0.001,
-    outputSpace: 'oklch',
-    outputGamut: 'p3',
-    outputCSS: true,
-    outputPrecision: 3,
+  const palette = createPaletteFromColor("primary", hexColor, {});
+  let colors;
+  Object.entries(palette).forEach((entry) => {
+    colors = entry[1];
   });
-  const spectrumList = spectrumToList(spectrum);
-  return spectrumToTailwind(spectrumList);
+  console.log(colors)
+  return colors;
+  // const spectrum = buildSpectrum(hexColor, {
+  //   colorSteps: 5,
+  //   colorDifference: colorParameters.colorDifference,
+  //   darkColorCompensation: colorParameters.darkColorCompensation,
+  //   mixerSteps: 0.001,
+  //   outputSpace: 'oklch',
+  //   outputGamut: 'p3',
+  //   outputCSS: true,
+  //   outputPrecision: 3,
+  // });
+  // const spectrumList = spectrumToList(spectrum);
+  // return spectrumToTailwind(spectrumList);
 };

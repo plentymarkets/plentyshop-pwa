@@ -31,6 +31,7 @@
     "culori": "^4.0.1",
     "lodash-es": "^4.17.21",
     "nuxt-lazy-hydrate": "^1.0.0",
+    "palettey": "^1.0.4",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
