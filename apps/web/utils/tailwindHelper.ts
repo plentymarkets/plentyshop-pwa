@@ -1,6 +1,6 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
 import { converter, formatRgb, Rgb } from 'culori/fn';
-import { createPaletteFromColor } from "palettey";
+import { createPaletteFromColor, PaletteConfig } from 'palettey';
 
 export interface ColorParameters {
   colorDifference: number;
@@ -67,14 +67,22 @@ export const oklchToRgb = (oklch: string, weight: string) => {
   return rgbColorString.replaceAll(',', '');
 };
 
-export const getTailwindColorsOklch = (hexColor: string, colorParameters: ColorParameters) => {
-  const palette = createPaletteFromColor("primary", hexColor, {});
-  let colors;
-  Object.entries(palette).forEach((entry) => {
-    colors = entry[1];
+export const getTailwindColorsOklch = (type: string, hexColor: string, config: PaletteConfig) => {
+  const palette = createPaletteFromColor(type, hexColor, config);
+  const fix: Array<{ weight: string; rgb: string }> = [];
+  Object.entries(palette[type]).forEach((entry) => {
+    fix.push({ weight: entry[0], rgb: entry[1] });
   });
-  console.log(colors)
-  return colors;
+  return fix;
+
+  // console.error('_Pallet', palette);
+  // return palette;
+  // let colors;
+  // Object.entries(palette).forEach((entry) => {
+  //   colors = entry[1];
+  // });
+  // console.log(colors)
+  // return colors;
   // const spectrum = buildSpectrum(hexColor, {
   //   colorSteps: 5,
   //   colorDifference: colorParameters.colorDifference,

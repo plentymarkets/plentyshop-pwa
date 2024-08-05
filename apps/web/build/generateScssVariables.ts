@@ -55,11 +55,11 @@ const prepareConfigFile = (
 };
 
 const generateScssVariables = () => {
-  const primaryTailwindColors = getTailwindColorsOklch(primaryColor, colorProperties);
-  const primarySpectrum = convertOklchToRgb(primaryTailwindColors);
-  const secondaryTailwindColors = getTailwindColorsOklch(secondaryColor, colorProperties);
-  const secondarySpectrum = convertOklchToRgb(secondaryTailwindColors);
-  const scssContent = prepareConfigFile(primarySpectrum, secondarySpectrum);
+  const primaryTailwindColors = getTailwindColorsOklch('primary', primaryColor, {});
+  const secondaryTailwindColors = getTailwindColorsOklch('secondary', secondaryColor, {});
+  console.error('____', primaryTailwindColors);
+  const scssContent = prepareConfigFile(primaryTailwindColors, secondaryTailwindColors);
+  console.error('scssContent', scssContent);
 
   const scssVariablesDirectory = path.resolve(__dirname, '../assets');
   const scssVariablesFilePath = path.resolve(scssVariablesDirectory, '_variables.scss');
