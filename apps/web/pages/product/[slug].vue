@@ -17,16 +17,15 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion
-              v-if="product"
-              :product="product"
-              :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-              :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-              @on-list-change="fetchProductReviewAverage(Number(productId))"
-            />
-          </NuxtLazyHydrate>
+
+          <ReviewsAccordion
+            v-if="product"
+            :product="product"
+            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
+            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
+            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+            @on-list-change="fetchProductReviewAverage(Number(productId))"
+          />
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
