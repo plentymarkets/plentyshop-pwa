@@ -1,6 +1,6 @@
 import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
 import { converter, formatRgb, Rgb } from 'culori/fn';
-import { createPaletteFromColor, PaletteConfig } from 'palettey';
+import { createPaletteFromColor, PaletteConfig } from '@plentymarkets/tailwind-colors';
 
 export interface ColorParameters {
   colorDifference: number;

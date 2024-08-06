@@ -4495,6 +4495,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@plentymarkets/tailwind-colors@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@plentymarkets/tailwind-colors@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Ftailwind-colors%2F1.0.0%2F00e412f7c1cd700b914e1e6aacda2ac475980a72"
+  dependencies:
+    nanoid: ^3.3.1
+  checksum: db93ef46647a958eb18148008ff732854b238359333d37c22866d3c1d1b57c8d43dda40a9577b8637801a00fb7e47c0f316df44cc79577f73d23e6744589387e
+  languageName: node
+  linkType: hard
+
 "@polka/url@npm:^1.0.0-next.24":
   version: 1.0.0-next.25
   resolution: "@polka/url@npm:1.0.0-next.25"
@@ -16355,15 +16364,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"palettey@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "palettey@npm:1.0.4"
-  dependencies:
-    nanoid: ^3.3.1
-  checksum: bb97daf57fe3e12b61758a9846bcf9d39e6c2cd1ce56693479d781890ec8dfa06be30a3bd36e36530aed68a37d155bb910500f72ca86ebf7444034f6198328a3
-  languageName: node
-  linkType: hard
-
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -21337,6 +21337,7 @@ __metadata:
     "@nuxtjs/sitemap": ^5.2.2
     "@nuxtjs/tailwindcss": ^6.12.0
     "@nuxtjs/turnstile": ^0.8.0
+    "@plentymarkets/tailwind-colors": ^1.0.0
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
     "@storefront-ui/vue": ^2.6.3
@@ -21363,7 +21364,6 @@ __metadata:
     msw: ^2.3.1
     nuxt: ^3.12.2
     nuxt-lazy-hydrate: ^1.0.0
-    palettey: ^1.0.4
     sass: ^1.77.6
     typedoc: ^0.26.2
     typedoc-plugin-markdown: ^4.1.0
