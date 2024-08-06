@@ -41,8 +41,8 @@ const loadOrder = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
 
   await fetchOrder({
-    orderId: route.query.orderId as string,
-    accessKey: route.query.accessKey as string,
+    orderId: route.params.orderId as string,
+    accessKey: route.params.accessKey as string,
     ...object,
   });
 };
