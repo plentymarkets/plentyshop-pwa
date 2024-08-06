@@ -174,9 +174,7 @@ onMounted(() => {
               clearCartItems();
 
               if (order?.order?.id) {
-                navigateTo(
-                  localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey),
-                );
+                navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
               }
 
               loading.value = false;

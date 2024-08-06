@@ -152,7 +152,7 @@ const order = async () => {
   clearCartItems();
 
   if (data?.order?.id) {
-    navigateTo(localePath('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
   }
 };
 </script>
