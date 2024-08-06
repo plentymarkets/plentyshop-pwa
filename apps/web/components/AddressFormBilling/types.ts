@@ -1,6 +1,7 @@
-import { type Address } from '@plentymarkets/shop-api';
+import { type ActiveShippingCountry, type Address } from '@plentymarkets/shop-api';
 
 export type AddressFormProps = {
+  countries: ActiveShippingCountry[];
   address?: Address;
-  new?: boolean;
+  addAddress?: boolean;
 };

@@ -109,19 +109,15 @@
         autocomplete="country-name"
         :invalid="Boolean(errors['form.country'])"
       >
-        <option
-          v-for="(shippingCountry, index) in shippingCountries"
-          :key="index"
-          :value="shippingCountry.id.toString()"
-        >
+        <option v-for="(shippingCountry, index) in countries" :key="index" :value="shippingCountry.id.toString()">
           {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
-    <label class="flex items-center gap-2 cursor-pointer select-none">
+    <label class="flex items-center gap-2">
       <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
-      {{ t('form.useAsBillingLabel') }}
+      <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
     </label>
     <div class="md:col-span-3 flex">
       <SfButton
@@ -145,10 +141,9 @@ import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 
 const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
-const { data: shippingCountries } = useActiveShippingCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const hasCompany = ref(false);
-const props = defineProps<AddressFormProps>();
+const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 const { t } = useI18n();
 const validationSchema = toTypedSchema(
   object({
@@ -182,8 +177,8 @@ const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
 const [vatId, vatIdAttribures] = defineField('form.vatId');
 const [company, companyAttribures] = defineField('form.company');
 
-if (!props.new) {
-  setValues({ form: props.address as any });
+if (!addAddress) {
+  setValues({ form: address as any });
 }
 
 const toggleCompany = () => {

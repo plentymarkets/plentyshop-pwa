@@ -104,11 +104,7 @@
         autocomplete="country-name"
         :invalid="Boolean(errors['form.country'])"
       >
-        <option
-          v-for="(shippingCountry, index) in shippingCountries"
-          :key="index"
-          :value="shippingCountry.id.toString()"
-        >
+        <option v-for="(shippingCountry, index) in countries" :key="index" :value="shippingCountry.id.toString()">
           {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
@@ -137,8 +133,7 @@ import { AddressFormProps } from './types';
 
 const { t } = useI18n();
 const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
-const { data: shippingCountries } = useActiveShippingCountries();
-const props = defineProps<AddressFormProps>();
+const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
 const validationSchema = toTypedSchema(
   object({
@@ -181,8 +176,8 @@ const toggleCompany = () => {
   }
 };
 
-if (!props.new) {
-  setValues({ form: props.address as any });
+if (!addAddress) {
+  setValues({ form: address as any });
 }
 
 const unsubscribeValidation = onStartValidation(async () => {

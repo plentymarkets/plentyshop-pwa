@@ -82,6 +82,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+const { getActiveShippingCountries } = useActiveShippingCountries();
 
 const loadAddresses = async () => {
   await getBillingAddresses();
@@ -112,6 +113,7 @@ const redirectBack = () => {
 await getSession();
 redirectBack();
 await loadAddresses();
+await getActiveShippingCountries();
 await getShippingMethods();
 await fetchPaymentMethods();
 

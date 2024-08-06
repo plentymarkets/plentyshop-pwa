@@ -94,6 +94,7 @@
     </UiModal>
   </div>
 </template>
+
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
