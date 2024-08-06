@@ -203,11 +203,14 @@ const nextPage = () => {
   setPage(pagination.value.selectedPage + 1);
 };
 
-const shouldDisplayPreviousLink: boolean =
-  maxVisiblePagesProperty === 1 &&
-  pagination.value.totalPages > 1 &&
-  pagination.value.selectedPage === pagination.value.totalPages;
+const shouldDisplayPreviousLink = computed(
+  () =>
+    maxVisiblePagesProperty === 1 &&
+    pagination.value.totalPages > 1 &&
+    pagination.value.selectedPage === pagination.value.totalPages,
+);
 
-const shouldDisplayNextLink: boolean =
-  maxVisiblePagesProperty === 1 && pagination.value.totalPages > 1 && pagination.value.selectedPage === 1;
+const shouldDisplayNextLink = computed(
+  () => maxVisiblePagesProperty === 1 && pagination.value.totalPages > 1 && pagination.value.selectedPage === 1,
+);
 </script>
