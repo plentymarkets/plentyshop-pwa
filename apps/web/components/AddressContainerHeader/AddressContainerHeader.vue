@@ -28,8 +28,9 @@ import { AddressContainerHeaderProps } from './types';
 const { disabled, type } = withDefaults(defineProps<AddressContainerHeaderProps>(), { disabled: false });
 const { checkoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
-const emit = defineEmits({
-  edit: (address: Address) => true,
-  new: () => true,
-});
+
+const emit = defineEmits<{
+  (event: 'edit', address: Address): void;
+  (event: 'new'): void;
+}>();
 </script>

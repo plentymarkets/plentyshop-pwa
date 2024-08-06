@@ -44,8 +44,7 @@
           close();
         "
       >
-        <template v-if="type === AddressType.Shipping">{{ $t('newShippingAddress') }}</template>
-        <template v-else>{{ $t('newBillingAddress') }}</template>
+        {{ type === AddressType.Shipping ? $t('newShippingAddress') : $t('newBillingAddress') }}
       </SfButton>
     </div>
   </UiModal>

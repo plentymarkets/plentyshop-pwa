@@ -4,7 +4,7 @@ import { AddressCreateEvent, AddressDestroyEvent, AddressSetEvent, AddressState,
 
 const eventEmitter = new EventEmitter();
 
-const emit = (event: string, payload: any, state: AddressState) => {
+const emit = (event: string, payload: unknown, state: AddressState) => {
   eventEmitter.emit(event, { event, payload, state });
 };
 
