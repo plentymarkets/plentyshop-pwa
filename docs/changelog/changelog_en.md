@@ -8,11 +8,11 @@
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
--
 
 ### Changed
 
 - The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
+- Changes to item reviews logic in order to use the feedback api ms
 
 ### 🩹 Fixed
 
@@ -22,6 +22,7 @@
 
 ### 👷 Changed
 
+- Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
 

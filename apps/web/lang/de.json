@@ -617,7 +617,10 @@
     "subTotal": "Zwischensumme",
     "shipping": "Lieferkosten",
     "vat": "MwSt.",
-    "total": "Summe"
+    "total": "Summe",
+    "saveOrderToAccount": "Speichern Sie diese Bestellung in Ihrem Konto",
+    "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
+    "signUp": "Registrieren"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "asterisk": "*",

@@ -37,27 +37,15 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     const { isAuthorized } = useCustomer();
     const route = useRoute();
     try {
-      const feedbackCalls = [
+      const { data, error } = await useAsyncData(() =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           page: Number(route.query.feedbackPage) || 1,
         }),
-      ];
-
-      if (variationId && isAuthorized.value) {
-        feedbackCalls.push(
-          useSdk().plentysystems.getAuthenticatedReview({
-            itemId: itemId,
-            variationId: variationId,
-          }),
-        );
-      }
-
-      await Promise.all(feedbackCalls).then((data) => {
-        const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-        state.value.data.feedbacks = feedbacks || state.value.data;
-        return true;
-      });
+      );
+      useHandleError(error.value);
+      state.value.data.feedbacks = data?.value?.data?.feedbacks ?? state.value.data.feedbacks;
+      state.value.data.pagination = data?.value?.data?.pagination ?? state.value.data.pagination;
 
       state.value.loading = false;
       return state.value.data;
