@@ -538,7 +538,8 @@
         "notAvailable": "Nicht verfügbar",
         "buyAgain": "Erneut kaufen",
         "cancel": "Abbrechen",
-        "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar"
+        "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar",
+        "stockLimitation": "nur noch {stock} Artikel verfügbar"
       }
     },
     "wishlist": {
