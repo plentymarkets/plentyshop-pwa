@@ -1,5 +1,8 @@
-import { type SpectrumList } from '@effective/color/dist/engine';
+import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
+import { converter, formatRgb } from 'culori/fn';
 import { createPaletteFromColor, PaletteConfig } from 'palettey';
+
+const rgb = converter('rgb');
 
 export interface ColorParameters {
   colorDifference: number;
@@ -65,4 +68,18 @@ export const getPaletteFromColor = (type: string, hexColor: string, config: Pale
     rgbPalette.push({ weight: entry[0], rgb: `${rgb.r} ${rgb.g} ${rgb.b}` });
   });
   return rgbPalette;
+};
+
+export const oklchToRgb = (oklch: string) => {
+  const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
+  const rgbColorFormatted = formatRgb(rgbColor);
+  const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
+
+  return rgbColorString.replaceAll(',', '');
+};
+
+export const getTailwindColorsOklch = (hexColor: string) => {
+  const spectrum = buildSpectrum(hexColor);
+  const spectrumList = spectrumToList(spectrum);
+  return spectrumToTailwind(spectrumList);
 };
