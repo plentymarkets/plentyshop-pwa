@@ -56,10 +56,21 @@ const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+
+  await Promise.all([
+    fetchProductReviews(Number(productId), productVariationId),
+    fetchProductReviewAverage(Number(productId)),
+  ]);
+}
+await fetchReviews();
 
 if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
 
