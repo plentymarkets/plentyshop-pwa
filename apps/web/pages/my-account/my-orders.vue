@@ -177,11 +177,11 @@ onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return `${paths.accountNewReturn}/${orderGetters.getId(order)}?accessKey=${orderGetters.getAccessKey(order)}`;
+  return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
 const handleQueryUpdate = async () => {
   await fetchCustomerOrders({
