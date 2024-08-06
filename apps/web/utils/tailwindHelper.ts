@@ -1,13 +1,10 @@
-import { buildSpectrum, spectrumToList, type SpectrumList } from '@effective/color/dist/engine';
-import { converter, formatRgb, Rgb } from 'culori/fn';
+import { type SpectrumList } from '@effective/color/dist/engine';
 import { createPaletteFromColor, PaletteConfig } from 'palettey';
 
 export interface ColorParameters {
   colorDifference: number;
   darkColorCompensation: number;
 }
-
-const rgb = converter('rgb');
 
 const spectrumToTailwindMapper = [
   { id: '+5', weight: '50' },
@@ -52,47 +49,20 @@ export const spectrumToTailwind = (spectrumList: SpectrumList) => {
   return tailwindColors;
 };
 
-const handleMissingColor = (weight: string): Rgb => {
-  const white = rgb('#fff') as Rgb;
-  const black = rgb('#000') as Rgb;
+export const hex2rgb = (hex: string) => {
+  const r = Number.parseInt(hex.slice(1, 3), 16);
+  const g = Number.parseInt(hex.slice(3, 5), 16);
+  const b = Number.parseInt(hex.slice(5, 7), 16);
 
-  return weight < '500' ? white : black;
+  return { r, g, b };
 };
 
-export const oklchToRgb = (oklch: string, weight: string) => {
-  const rgbColor = rgb(oklch) ?? handleMissingColor(weight);
-  const rgbColorFormatted = formatRgb(rgbColor);
-  const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
-
-  return rgbColorString.replaceAll(',', '');
-};
-
-export const getTailwindColorsOklch = (type: string, hexColor: string, config: PaletteConfig) => {
-  const palette = createPaletteFromColor(type, hexColor, config);
-  const fix: Array<{ weight: string; rgb: string }> = [];
-  Object.entries(palette[type]).forEach((entry) => {
-    fix.push({ weight: entry[0], rgb: entry[1] });
+export const getPaletteFromColor = (type: string, hexColor: string, config: PaletteConfig = {}) => {
+  const paletteOutput = createPaletteFromColor(type, hexColor, config);
+  const rgbPalette: Array<{ weight: string; rgb: string }> = [];
+  Object.entries(paletteOutput[type]).forEach((entry) => {
+    const rgb = hex2rgb(entry[1]) || '';
+    rgbPalette.push({ weight: entry[0], rgb: `${rgb.r} ${rgb.g} ${rgb.b}` });
   });
-  return fix;
-
-  // console.error('_Pallet', palette);
-  // return palette;
-  // let colors;
-  // Object.entries(palette).forEach((entry) => {
-  //   colors = entry[1];
-  // });
-  // console.log(colors)
-  // return colors;
-  // const spectrum = buildSpectrum(hexColor, {
-  //   colorSteps: 5,
-  //   colorDifference: colorParameters.colorDifference,
-  //   darkColorCompensation: colorParameters.darkColorCompensation,
-  //   mixerSteps: 0.001,
-  //   outputSpace: 'oklch',
-  //   outputGamut: 'p3',
-  //   outputCSS: true,
-  //   outputPrecision: 3,
-  // });
-  // const spectrumList = spectrumToList(spectrum);
-  // return spectrumToTailwind(spectrumList);
+  return rgbPalette;
 };

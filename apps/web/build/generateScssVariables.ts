@@ -1,34 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { ColorParameters, getTailwindColorsOklch } from '../utils/tailwindHelper';
-import type { TailwindColors } from '~/composables/useConfigurationDrawer';
-import { rgb } from 'culori';
-import { formatRgb } from 'culori/fn';
+import { getPaletteFromColor } from '../utils/tailwindHelper';
 
 const primaryColor = process.env.PRIMARY || '#0c7992';
 const secondaryColor = process.env.SECONDARY || '#008ebd';
-const colorProperties: ColorParameters = {
-  colorDifference: 6,
-  darkColorCompensation: 0,
-};
-
-export const oklchToRgb = (oklch: string) => {
-  const rgbColor = rgb(oklch) ?? { mode: 'rgb', r: 0, g: 0, b: 0 };
-  const rgbColorFormatted = formatRgb(rgbColor);
-  const rgbColorString = rgbColorFormatted.slice(rgbColorFormatted.indexOf('(') + 1, rgbColorFormatted.indexOf(')'));
-
-  return rgbColorString.replaceAll(',', '');
-};
-
-export const convertOklchToRgb = (tailwindColors: TailwindColors) => {
-  const spectrum: Array<{ weight: string; rgb: string }> = [];
-  tailwindColors.forEach((color) => {
-    if (color.value) {
-      spectrum.push({ weight: color.weight, rgb: oklchToRgb(color.value) });
-    }
-  });
-  return spectrum;
-};
 
 const prepareConfigFile = (
   primarySpectrum: Array<{ weight: string; rgb: string }>,
@@ -55,11 +30,9 @@ const prepareConfigFile = (
 };
 
 const generateScssVariables = () => {
-  const primaryTailwindColors = getTailwindColorsOklch('primary', primaryColor, {});
-  const secondaryTailwindColors = getTailwindColorsOklch('secondary', secondaryColor, {});
-  console.error('____', primaryTailwindColors);
+  const primaryTailwindColors = getPaletteFromColor('primary', primaryColor);
+  const secondaryTailwindColors = getPaletteFromColor('secondary', secondaryColor);
   const scssContent = prepareConfigFile(primaryTailwindColors, secondaryTailwindColors);
-  console.error('scssContent', scssContent);
 
   const scssVariablesDirectory = path.resolve(__dirname, '../assets');
   const scssVariablesFilePath = path.resolve(scssVariablesDirectory, '_variables.scss');
