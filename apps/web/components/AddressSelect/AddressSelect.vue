@@ -62,10 +62,10 @@ const { deleteAddress } = useDeleteAddress(type);
 const { set: setPrimaryAddress } = usePrimaryAddress(type);
 const { set: setCheckoutAddress } = useCheckoutAddress(type);
 const { checkoutAddress } = useCheckoutAddress(type);
-
 const { isOpen, open, close } = useDisclosure();
-const emit = defineEmits({
-  edit: (address: Address) => true,
-  new: () => true,
-});
+
+const emit = defineEmits<{
+  (event: 'edit', address: Address): void;
+  (event: 'new'): void;
+}>();
 </script>

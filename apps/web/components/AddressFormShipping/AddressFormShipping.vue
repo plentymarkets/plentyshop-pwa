@@ -119,9 +119,9 @@
       </SfSelect>
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
-    <label class="flex items-center gap-2">
+    <label class="flex items-center gap-2 cursor-pointer select-none">
       <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
-      <span>{{ t('form.useAsBillingLabel') }}</span>
+      {{ t('form.useAsBillingLabel') }}
     </label>
     <div class="md:col-span-3 flex">
       <SfButton
@@ -139,7 +139,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import { Address, AddressType } from '@plentymarkets/shop-api';
 import { SfButton, SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';

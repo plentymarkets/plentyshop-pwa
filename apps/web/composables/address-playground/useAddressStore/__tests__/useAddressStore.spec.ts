@@ -93,7 +93,7 @@ describe('useAddressStore', () => {
 
         set([addressFixture]);
         destroy(1);
-        
+
         expect(onSetSpy).toHaveBeenCalledTimes(0);
         expect(onDestroySpy).toHaveBeenCalledTimes(0);
 

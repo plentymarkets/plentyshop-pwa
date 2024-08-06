@@ -4525,6 +4525,7 @@ __metadata:
     cross-env: ^7.0.3
     cypress-iframe: ^1.0.1
     dotenv: ^16.4.5
+    eventemitter3: ^5.0.1
     happy-dom: ^14.12.3
     husky: ^8.0.3
     is-ci: ^3.0.1
@@ -20310,7 +20311,7 @@ __metadata:
 
 "typescript@patch:typescript@5.4.5#~builtin<compat/typescript>":
   version: 5.4.5
-  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=14eedb"
+  resolution: "typescript@patch:typescript@npm%3A5.4.5#~builtin<compat/typescript>::version=5.4.5&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -20320,7 +20321,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.4 || ^5.2.2#~builtin<compat/typescript>":
   version: 5.5.2
-  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=14eedb"
+  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=29ae49"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

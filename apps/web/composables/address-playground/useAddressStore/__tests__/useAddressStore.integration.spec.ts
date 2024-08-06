@@ -75,7 +75,7 @@ describe('Integration test createAddress with store', () => {
         const onCreateSpy = vi.fn();
         const unsubscribeCreate = onCreate(onCreateSpy);
         await create(addressFixture);
-        
+
         expect(onCreateSpy).toHaveBeenCalledTimes(1);
         unsubscribeCreate();
     });

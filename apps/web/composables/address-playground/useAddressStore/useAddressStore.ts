@@ -1,11 +1,15 @@
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { EventEmitter } from 'node:events';
+import { EventEmitter } from 'eventemitter3';
 import { AddressCreateEvent, AddressDestroyEvent, AddressSetEvent, AddressState, AddressUpdateEvent } from './types';
 
 const eventEmitter = new EventEmitter();
 
 const emit = (event: string, payload: any, state: AddressState) => {
   eventEmitter.emit(event, { event, payload, state });
+};
+
+const unsubscribeAll = () => {
+  eventEmitter.removeAllListeners();
 };
 
 export const useAddressStore = (type: AddressType) => {
@@ -49,10 +53,6 @@ export const useAddressStore = (type: AddressType) => {
 
   const clear = () => {
     set([]);
-  };
-
-  const unsubscribeAll = () => {
-    eventEmitter.removeAllListeners();
   };
 
   const onSet = (listener: (event: AddressSetEvent) => void) => {
