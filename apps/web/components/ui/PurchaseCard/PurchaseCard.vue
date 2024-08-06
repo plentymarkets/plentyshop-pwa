@@ -44,7 +44,9 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-    <VariationProperties :product="product" />
+    <div class="mt-2">
+      <VariationProperties :product="product" />
+    </div>
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating
         size="xs"
@@ -109,8 +111,19 @@
         <span v-else>{{ t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-
-      <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+      <Suspense>
+        <template #default>
+          <PayPalExpressButton
+            v-if="getCombination()"
+            class="mt-4"
+            type="SingleItem"
+            @on-click="paypalHandleAddToCart"
+          />
+        </template>
+        <template #fallback>
+          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+        </template>
+      </Suspense>
     </div>
   </form>
 </template>
