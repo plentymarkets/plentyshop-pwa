@@ -73,6 +73,7 @@
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
+          :key="pagination.totalCount"
           :current-page="currentPage"
           :total-items="pagination.totalCount"
           :page-size="defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE"
@@ -157,18 +158,22 @@ const accordionReference = ref<HTMLElement | null>(null);
 
 const {
   data: productReviewsData,
-  fetchProductReviews,
   createProductReview,
   loading: loadingReviews,
+  fetchProductReviews,
 } = useProductReviews(Number(productId));
 
-const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: productReviewsAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviewsData.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviewsData.value));
 
-const ratingPercentages = ref([] as number[]);
-const splitRatings = ref([] as number[]);
+const ratingPercentages = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage.value, true),
+);
+const splitRatings = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage.value),
+);
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
 const saveReview = async (form: CreateReviewParams) => {
@@ -187,16 +192,6 @@ async function fetchReviews() {
 }
 
 const deleteReview = () => fetchReviews();
-
-onMounted(() => fetchReviews());
-
-watch(
-  () => productReviewsAverageData.value,
-  (productReviewsAverage) => {
-    ratingPercentages.value = reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage, true);
-    splitRatings.value = reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage);
-  },
-);
 
 watch(
   () => reviewsOpen.value,
