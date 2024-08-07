@@ -1,4 +1,5 @@
 interface TailwindColor {
+  rgb: string;
   weight: string;
   value: string;
 }
