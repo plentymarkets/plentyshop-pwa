@@ -25,7 +25,7 @@
       <Address
         :address="address"
         :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
-        :is-default="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
+        :is-default="primaryAddressId === Number(userAddressGetters.getId(address))"
         @click="setCheckoutAddress(address), (isOpen = false)"
         @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
         @make-default="setPrimaryAddress(address), (isOpen = false)"
@@ -58,7 +58,7 @@ import { SfIconClose, SfButton, useDisclosure, SfTooltip } from '@storefront-ui/
 const { type } = defineProps<AddressSelectProps>();
 const { addresses } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
-const { set: setPrimaryAddress } = usePrimaryAddress(type);
+const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { set: setCheckoutAddress } = useCheckoutAddress(type);
 const { checkoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();

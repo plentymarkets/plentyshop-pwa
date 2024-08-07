@@ -11,10 +11,8 @@ export const useCheckoutPageAddresses = () => {
   const { data: cart } = useCart();
 
   onNuxtReady(async () => {
-    const { fetchServer: fetchShipping } = useFetchAdddress(AddressType.Shipping);
-    fetchShipping();
-    const { fetchServer: fetchBilling } = useFetchAdddress(AddressType.Billing);
-    fetchBilling();
+    useFetchAdddress(AddressType.Shipping).fetchServer();
+    useFetchAdddress(AddressType.Billing).fetchServer();
   });
 
   onSetShipping((event) => {

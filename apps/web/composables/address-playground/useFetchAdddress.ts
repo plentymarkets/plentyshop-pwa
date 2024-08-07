@@ -31,6 +31,9 @@ export const useFetchAdddress = (type: AddressType) => {
 
     const { set } = useAddressStore(type);
     set(data.value?.data || []);
+    if (data.value?.data) {
+      usePrimaryAddress(type).primaryAddressId.value = data.value?.data.find((item) => item.primary === true)?.id || -1;
+    }
 
     state.value.loading = false;
   };
