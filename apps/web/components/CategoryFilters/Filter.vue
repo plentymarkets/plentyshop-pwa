@@ -36,7 +36,7 @@
         <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
       </div>
       <div class="flex">
-        <SfButton
+        <UiButton
           type="submit"
           class="w-full mr-3 h-10"
           :disabled="minPrice.length === 0 && maxPrice.length === 0"
@@ -46,10 +46,10 @@
             <SfIconCheck />
           </template>
           {{ $t('apply') }}
-        </SfButton>
-        <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+        </UiButton>
+        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </div>
     </form>
 

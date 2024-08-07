@@ -26,9 +26,9 @@
               {{ item.title }}
             </h2>
             <p class="typography-text-base block text-center md:text-left mb-4">{{ item.description }}</p>
-            <SfButton class="!bg-black" :tag="NuxtLink" :to="localePath(paths.category)">
+            <UiButton class="!bg-black" :tag="NuxtLink" :to="localePath(paths.category)">
               {{ item.buttonText }}
-            </SfButton>
+            </UiButton>
           </div>
           <NuxtImg
             :src="item.image"

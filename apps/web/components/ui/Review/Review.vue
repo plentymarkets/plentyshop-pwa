@@ -80,9 +80,9 @@
       </template>
 
       <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
-        <SfButton @click="isAnswerFormOpen = true" variant="tertiary" size="sm" class="self-start">
+        <UiButton @click="isAnswerFormOpen = true" variant="tertiary" size="sm" class="self-start">
           {{ t('review.answer') }}
-        </SfButton>
+        </UiButton>
       </div>
       <ReplyForm v-if="isAnswerFormOpen" @on-close="isAnswerFormOpen = false" @on-submit="sendReply" />
     </div>
@@ -96,19 +96,19 @@
     role="dialog"
     class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
   >
-    <SfButton @click="closeDeleteReview" square variant="tertiary" class="absolute right-2 top-2">
+    <UiButton @click="closeDeleteReview" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
-    </SfButton>
+    </UiButton>
     <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteReview') }}</h3>
     <div class="mb-6">{{ t('review.areYouSure') }}</div>
 
     <div class="flex gap-x-4">
-      <SfButton @click="closeDeleteReview" type="button" variant="secondary" class="flex-1">
+      <UiButton @click="closeDeleteReview" type="button" variant="secondary" class="flex-1">
         {{ t('review.cancel') }}
-      </SfButton>
-      <SfButton @click="deleteReview" type="button" class="flex-1">
+      </UiButton>
+      <UiButton @click="deleteReview" type="button" class="flex-1">
         {{ t('review.deleteReviewConfirmation') }}
-      </SfButton>
+      </UiButton>
     </div>
   </UiModal>
 
@@ -120,19 +120,19 @@
     role="dialog"
     class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
   >
-    <SfButton @click="closeReplyDelete" square variant="tertiary" class="absolute right-2 top-2">
+    <UiButton @click="closeReplyDelete" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
-    </SfButton>
+    </UiButton>
     <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteAnswer') }}</h3>
     <div class="mb-6">{{ t('review.answerAreYouSure') }}</div>
 
     <div class="flex gap-x-4">
-      <SfButton @click="closeReplyDelete" type="button" variant="secondary" class="flex-1">
+      <UiButton @click="closeReplyDelete" type="button" variant="secondary" class="flex-1">
         {{ t('review.cancel') }}
-      </SfButton>
-      <SfButton @click="deleteReply" type="button" class="flex-1">
+      </UiButton>
+      <UiButton @click="deleteReply" type="button" class="flex-1">
         {{ t('review.deleteReviewConfirmation') }}
-      </SfButton>
+      </UiButton>
     </div>
   </UiModal>
 
@@ -144,9 +144,9 @@
     role="dialog"
     class="h-fit md:w-[500px] m-0 p-0"
   >
-    <SfButton @click="closeReviewEdit" square variant="tertiary" class="absolute right-2 top-2">
+    <UiButton @click="closeReviewEdit" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
-    </SfButton>
+    </UiButton>
     <ReviewForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview" />
   </UiModal>
 
@@ -158,9 +158,9 @@
     role="dialog"
     class="h-fit md:w-[500px] m-0 p-0"
   >
-    <SfButton @click="closeReplyEdit" square variant="tertiary" class="absolute right-2 top-2">
+    <UiButton @click="closeReplyEdit" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
-    </SfButton>
+    </UiButton>
     <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReply" />
   </UiModal>
 </template>

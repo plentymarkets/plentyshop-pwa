@@ -63,7 +63,7 @@
               @on-click="validateTerms"
               type="Checkout"
             />
-            <SfButton
+            <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
               data-testid="place-order-button"
@@ -75,8 +75,8 @@
               <span>
                 {{ t('buy') }}
               </span>
-            </SfButton>
-            <SfButton
+            </UiButton>
+            <UiButton
               v-else
               type="submit"
               @click="order"
@@ -89,7 +89,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>

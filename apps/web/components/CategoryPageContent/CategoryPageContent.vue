@@ -12,12 +12,12 @@
           <span class="font-bold font-headings md:text-lg">
             {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
           </span>
-          <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
               <SfIconTune />
             </template>
             {{ $t('listSettings') }}
-          </SfButton>
+          </UiButton>
         </div>
         <section
           v-if="products"

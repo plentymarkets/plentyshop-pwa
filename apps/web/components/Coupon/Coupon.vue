@@ -13,7 +13,7 @@
         <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
         </div>
-        <SfButton
+        <UiButton
           data-testid="couponAdd"
           @click="addCoupon({ couponCode })"
           class="ml-2"
@@ -25,13 +25,13 @@
           <span v-else>
             {{ $t('coupon.apply') }}
           </span>
-        </SfButton>
+        </UiButton>
       </div>
     </SfAccordionItem>
     <div v-else class="flex justify-between my-4">
       <div class="text-primary-800 font-medium flex items-center">{{ couponCode }}</div>
       <div>
-        <SfButton
+        <UiButton
           data-testid="couponRemove"
           @click="handleDeleteCoupon"
           variant="tertiary"
@@ -43,7 +43,7 @@
             {{ $t('coupon.remove') }}
             <SfIconClose />
           </span>
-        </SfButton>
+        </UiButton>
       </div>
     </div>
   </div>

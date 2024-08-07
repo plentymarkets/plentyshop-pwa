@@ -28,7 +28,7 @@
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
         <div class="flex items-center">
-          <SfButton
+          <UiButton
             class="w-full border-dashed border-2 flex items-center flex-col !p-5"
             variant="tertiary"
             @click="openUploadModal"
@@ -41,7 +41,7 @@
                 </div>
               </template>
             </i18n-t>
-          </SfButton>
+          </UiButton>
           <div v-if="hasTooltip" class="w-[28px]">
             <slot name="tooltip" />
           </div>

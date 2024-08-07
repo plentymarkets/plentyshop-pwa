@@ -4,7 +4,7 @@
       <NarrowContainer class="px-4 md:px-0 mb-20">
         <div class="flex items-center justify-between mt-8 mb-10 px-4 md:px-0">
           <h1 class="font-bold typography-headline-3 md:typography-headline-2">{{ heading }}</h1>
-          <SfButton
+          <UiButton
             @click="goToPreviousRoute"
             :class="[viewport.isLessThan('md') ? 'flex md:hidden whitespace-nowrap' : 'hidden md:flex']"
             :size="viewport.isLessThan('md') ? 'sm' : 'base'"
@@ -15,7 +15,7 @@
               <SfIconArrowBack />
             </template>
             {{ viewport.isLessThan('md') ? backLabelMobile : backLabelDesktop }}
-          </SfButton>
+          </UiButton>
         </div>
         <span v-if="isLoading && !cart" class="!flex justify-center my-40 h-24">
           <SfLoaderCircular size="2xl" />

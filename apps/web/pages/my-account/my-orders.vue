@@ -18,9 +18,9 @@
       data-testid="account-orders-content"
     >
       <h3 class="typography-headline-3 font-bold mt-6 mb-4">{{ t('account.ordersAndReturns.noOrders') }}</h3>
-      <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
+      <UiButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
         {{ t('account.ordersAndReturns.continue') }}
-      </SfButton>
+      </UiButton>
     </div>
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
@@ -49,14 +49,14 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
-              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
                 {{ t('account.ordersAndReturns.details') }}
-              </SfButton>
+              </UiButton>
               <UiDropdown class="relative">
                 <template #trigger>
-                  <SfButton variant="tertiary">
+                  <UiButton variant="tertiary">
                     <SfIconMoreHoriz size="sm" />
-                  </SfButton>
+                  </UiButton>
                 </template>
                 <ul
                   class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
@@ -105,19 +105,19 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
-                <SfButton
+                <UiButton
                   :tag="NuxtLink"
                   size="sm"
                   variant="tertiary"
                   :to="localePath(generateOrderDetailsLink(order))"
                 >
                   {{ t('account.ordersAndReturns.details') }}
-                </SfButton>
+                </UiButton>
                 <UiDropdown class="relative">
                   <template #trigger>
-                    <SfButton variant="tertiary">
+                    <UiButton variant="tertiary">
                       <SfIconMoreHoriz size="sm" />
-                    </SfButton>
+                    </UiButton>
                   </template>
                   <ul
                     class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"

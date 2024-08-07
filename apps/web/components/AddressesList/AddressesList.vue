@@ -20,9 +20,9 @@
       <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
         {{ $t('account.accountSettings.noAddresses') }}
       </h3>
-      <SfButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
+      <UiButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
         {{ addAddressText }}
-      </SfButton>
+      </UiButton>
     </div>
 
     <UiModal
@@ -33,9 +33,9 @@
       aria-labelledby="address-modal-title"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           <span v-if="userAddressGetters.getId(selectedAddress)">
             {{ editAddressText }}

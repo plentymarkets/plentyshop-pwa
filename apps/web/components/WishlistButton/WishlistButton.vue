@@ -1,5 +1,5 @@
 <template>
-  <SfButton
+  <UiButton
     variant="tertiary"
     size="sm"
     :aria-label="
@@ -20,7 +20,7 @@
       <SfIconFavorite v-else size="sm" />
       <slot />
     </template>
-  </SfButton>
+  </UiButton>
 </template>
 
 <script setup lang="ts">

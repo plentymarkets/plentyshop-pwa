@@ -1,6 +1,6 @@
 <template>
   <nav class="w-full fixed bottom-0 left-0 flex flex-row items-stretch md:hidden" data-testid="navbar-bottom">
-    <SfButton
+    <UiButton
       v-for="{ label, icon, link } in items"
       :key="label"
       variant="tertiary"
@@ -30,7 +30,7 @@
         </div>
       </template>
       {{ label }}
-    </SfButton>
+    </UiButton>
   </nav>
 </template>
 

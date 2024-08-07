@@ -1,9 +1,9 @@
 <template>
   <div>
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('closed')">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="$emit('closed')">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <div class="text-2xl font-bold mb-2">{{ t('returns.returnItems') }}</div>
     <div>{{ t('returns.areYouSure') }}</div>
@@ -19,16 +19,16 @@
     <div class="mb-2">{{ t('returns.commentOptional') }}</div>
     <SfTextarea v-model="returnData.returnNote" :placeholder="t('returns.tellUsMore')" class="w-full block" cols="10" />
     <div class="flex flex-row justify-between mt-5">
-      <SfButton @click="$emit('previous')" variant="secondary">
+      <UiButton @click="$emit('previous')" variant="secondary">
         <SfIconArrowBack />
         {{ t('prev') }}
-      </SfButton>
-      <SfButton @click="confirmReturn()" :disabled="loading">
+      </UiButton>
+      <UiButton @click="confirmReturn()" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('returns.confirmReturn') }}
         </span>
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>

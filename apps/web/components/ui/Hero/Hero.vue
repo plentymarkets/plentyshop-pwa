@@ -22,10 +22,10 @@
         </h1>
         <p class="typography-text-base md:typography-text-lg">{{ description }}</p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg" :tag="NuxtLink" :to="localePath(primaryButtonLink)">
+          <UiButton size="lg" :tag="NuxtLink" :to="localePath(primaryButtonLink)">
             {{ primaryButtonText }}
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             size="lg"
             :tag="NuxtLink"
             :to="localePath(secondaryButtonLink)"
@@ -33,7 +33,7 @@
             variant="secondary"
           >
             {{ secondaryButtonText }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>

@@ -108,7 +108,7 @@
       <SfLoaderCircular />
     </div>
 
-    <SfButton
+    <UiButton
       v-else-if="!disabled"
       @click="deleteItem"
       square
@@ -117,7 +117,7 @@
       class="absolute top-2 right-2 bg-white"
     >
       <SfIconClose size="sm" />
-    </SfButton>
+    </UiButton>
   </div>
 </template>
 

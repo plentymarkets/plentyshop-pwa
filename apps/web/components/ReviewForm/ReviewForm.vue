@@ -52,12 +52,12 @@
       <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
       <div class="flex justify-end gap-x-4">
-        <SfButton @click="$emit('on-close')" type="button" variant="secondary" class="flex-1 md:flex-initial">
+        <UiButton @click="$emit('on-close')" type="button" variant="secondary" class="flex-1 md:flex-initial">
           {{ t('review.cancel') }}
-        </SfButton>
-        <SfButton type="submit" class="flex-1 md:flex-initial">
+        </UiButton>
+        <UiButton type="submit" class="flex-1 md:flex-initial">
           {{ t('review.submitReview') }}
-        </SfButton>
+        </UiButton>
       </div>
     </form>
   </div>

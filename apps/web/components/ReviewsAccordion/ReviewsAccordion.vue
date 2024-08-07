@@ -34,14 +34,14 @@
                 </h3>
               </div>
               <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
-              <SfButton
+              <UiButton
                 @click="isAuthorized ? openReviewModal() : openAuthentication()"
                 data-testid="create-review"
                 class="mt-2 mb-4 mx-auto"
                 size="base"
               >
                 {{ t('createCustomerReview') }}
-              </SfButton>
+              </UiButton>
             </div>
 
             <div class="flex flex-col">
@@ -95,9 +95,9 @@
       <h3 class="font-bold typography-headline-4">
         {{ t('review.createReviewFormTitle') }}
       </h3>
-      <SfButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <ReviewForm @on-close="closeReviewModal" @on-submit="saveReview" class="h-fit" />
   </UiModal>
@@ -111,9 +111,9 @@
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
   >
     <header>
-      <SfButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuth" />
     <Register v-else @change-view="isLogin = true" @registered="closeAuth" />

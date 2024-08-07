@@ -50,7 +50,7 @@
         :next-disabled="activeIndex === images.length - 1"
       >
         <template #previousButton>
-          <SfButton
+          <UiButton
             variant="secondary"
             size="sm"
             square
@@ -61,7 +61,7 @@
             <template #prefix>
               <SfIconChevronLeft />
             </template>
-          </SfButton>
+          </UiButton>
         </template>
 
         <button
@@ -88,7 +88,7 @@
         </button>
 
         <template #nextButton>
-          <SfButton
+          <UiButton
             variant="secondary"
             size="sm"
             square
@@ -99,7 +99,7 @@
             <template #prefix>
               <SfIconChevronRight />
             </template>
-          </SfButton>
+          </UiButton>
         </template>
       </SfScrollable>
       <div class="flex md:hidden gap-0.5" role="group">

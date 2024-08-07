@@ -32,13 +32,13 @@
       />
     </template>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
+      <UiButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
         {{ t('account.back') }}
-      </SfButton>
-      <SfButton @click="initiateReturn()">
+      </UiButton>
+      <UiButton @click="initiateReturn()">
         {{ t('returns.initiateReturn') }}
         <SfIconArrowForward />
-      </SfButton>
+      </UiButton>
     </div>
   </div>
   <div v-else class="col-span-3 mt-8">

@@ -112,7 +112,7 @@
         <!-- action buttons -->
         <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
           <div class="flex-1">
-            <SfButton
+            <UiButton
               class="w-full"
               :aria-disabled="false"
               type="button"
@@ -121,10 +121,10 @@
               data-testid="cookie-bar-accept-all"
             >
               {{ $t('CookieBar.Accept All') }}
-            </SfButton>
+            </UiButton>
           </div>
           <div class="flex-1">
-            <SfButton
+            <UiButton
               class="w-full"
               :aria-disabled="false"
               type="button"
@@ -132,10 +132,10 @@
               @click="setAllCookiesState(false)"
             >
               {{ $t('CookieBar.Reject All') }}
-            </SfButton>
+            </UiButton>
           </div>
           <div class="flex-1">
-            <SfButton
+            <UiButton
               variant="secondary"
               class="w-full"
               :aria-disabled="false"
@@ -144,7 +144,7 @@
               @click="setConsent()"
             >
               {{ $t('CookieBar.Accept Selection') }}
-            </SfButton>
+            </UiButton>
           </div>
         </div>
       </div>
@@ -152,7 +152,7 @@
     <!-- button to open cookie tab -->
     <div v-else class="z-10 h-auto w-12 fixed bottom-[4.3rem] sm:bottom-2 left-2 xl:left-auto xl:right-2">
       <SfTooltip :label="$t('CookieBar.Cookie Settings')" placement="left">
-        <SfButton
+        <UiButton
           variant="secondary"
           class="!px-3 bg-white"
           :aria-label="$t('CookieBar.Cookie Settings')"
@@ -168,7 +168,7 @@
               stroke-linejoin="round"
             />
           </SfIconBase>
-        </SfButton>
+        </UiButton>
       </SfTooltip>
     </div>
     <!-- button to open cookie tab -->

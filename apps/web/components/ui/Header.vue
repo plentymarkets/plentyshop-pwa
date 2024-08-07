@@ -4,7 +4,7 @@
       <NuxtLazyHydrate when-visible>
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-          <SfButton
+          <UiButton
             v-if="!isLanguageSelectOpen"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
@@ -16,8 +16,8 @@
             <template #prefix>
               <SfIconLanguage class="relative" />
             </template>
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             v-else
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
             :aria-label="t('languageSelector')"
@@ -28,8 +28,8 @@
             <template #prefix>
               <SfIconLanguage class="relative" />
             </template>
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.wishlist)"
@@ -46,8 +46,8 @@
                 data-testid="wishlist-badge"
               />
             </template>
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
             :tag="NuxtLink"
             :to="localePath(paths.cart)"
@@ -63,10 +63,10 @@
                 data-testid="cart-badge"
               />
             </template>
-          </SfButton>
+          </UiButton>
           <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
             <template #trigger>
-              <SfButton
+              <UiButton
                 variant="tertiary"
                 class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md"
                 :class="{ 'bg-primary-700': isAccountDropdownOpen }"
@@ -77,7 +77,7 @@
                   <SfIconPerson />
                 </template>
                 {{ user.user?.firstName }}
-              </SfButton>
+              </UiButton>
             </template>
             <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
               <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
@@ -104,7 +104,7 @@
               </li>
             </ul>
           </SfDropdown>
-          <SfButton
+          <UiButton
             v-else
             @click="openAuthentication"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
@@ -113,8 +113,8 @@
             square
           >
             <SfIconPerson />
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             v-if="showConfigurationDrawer"
             @click="open = true"
             class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
@@ -123,13 +123,13 @@
             square
           >
             <SfIconTune />
-          </SfButton>
+          </UiButton>
         </nav>
       </NuxtLazyHydrate>
     </template>
 
     <div v-else>
-      <SfButton
+      <UiButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
@@ -138,8 +138,8 @@
         @click="toggleLanguageSelect()"
       >
         <SfIconLanguage />
-      </SfButton>
-      <SfButton
+      </UiButton>
+      <UiButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
@@ -147,7 +147,7 @@
         :aria-label="t('openSearchModalButtonLabel')"
       >
         <SfIconSearch />
-      </SfButton>
+      </UiButton>
     </div>
   </MegaMenu>
   <LanguageSelector />
@@ -160,9 +160,9 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" :is-modal="true" />
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
@@ -177,9 +177,9 @@
       aria-labelledby="search-modal-title"
     >
       <header class="mb-4">
-        <SfButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
+        <UiButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
           <SfIconClose class="text-neutral-500" />
-        </SfButton>
+        </UiButton>
         <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
           {{ t('search') }}
         </h3>

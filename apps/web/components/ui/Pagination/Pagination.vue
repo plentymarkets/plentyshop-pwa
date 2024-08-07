@@ -6,7 +6,7 @@
       :aria-label="t('pagination')"
       data-testid="pagination"
     >
-      <SfButton
+      <UiButton
         size="lg"
         :aria-label="t('prevAriaLabel')"
         :disabled="pagination.selectedPage <= 1 || disabled"
@@ -18,7 +18,7 @@
           <SfIconChevronLeft />
         </template>
         <span class="hidden sm:inline-flex">{{ t('prev') }}</span>
-      </SfButton>
+      </UiButton>
       <ul class="flex justify-center">
         <li v-if="!pagination.pages.includes(1)">
           <div
@@ -147,7 +147,7 @@
           </div>
         </li>
       </ul>
-      <SfButton
+      <UiButton
         size="lg"
         :aria-label="t('nextAriaLabel')"
         :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
@@ -159,7 +159,7 @@
         <template #suffix>
           <SfIconChevronRight />
         </template>
-      </SfButton>
+      </UiButton>
     </nav>
   </client-only>
 </template>

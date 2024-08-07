@@ -3,14 +3,14 @@
     <div class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-2/3">
       <div class="md:self-center">
         <h2 class="font-bold mb-6 text-lg">{{ $t('guestCheckout') }}</h2>
-        <SfButton
+        <UiButton
           data-testid="guest-checkout-button"
           :tag="NuxtLink"
           :to="localePath(paths.checkout)"
           class="w-full mb-4"
         >
           {{ $t('continueAsGuest') }}
-        </SfButton>
+        </UiButton>
         <OrDivider />
         <div v-if="isAvailable">
           <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
@@ -29,12 +29,12 @@
               <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
             </label>
 
-            <SfButton type="submit" class="mt-4 w-full">
+            <UiButton type="submit" class="mt-4 w-full">
               <SfLoaderCircular v-if="loading" />
               <span>
                 {{ $t('auth.login.loginAndContinue') }}
               </span>
-            </SfButton>
+            </UiButton>
             <div class="text-center mt-6">
               <!-- <SfLink href="#" variant="primary">
                             {{ $t('auth.login.forgotPasswordLabel') }}

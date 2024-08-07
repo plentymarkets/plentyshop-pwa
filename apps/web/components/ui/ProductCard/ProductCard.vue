@@ -73,7 +73,7 @@
           {{ n(oldPrice, 'currency') }}
         </span>
       </div>
-      <SfButton
+      <UiButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -88,10 +88,10 @@
         <span v-else>
           {{ t('addToCartShort') }}
         </span>
-      </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+      </UiButton>
+      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>

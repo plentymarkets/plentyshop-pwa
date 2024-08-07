@@ -1,6 +1,6 @@
 <template>
   <div v-if="documents && documents.length > 0" data-testid="documents-list" class="documents-list">
-    <SfButton
+    <UiButton
       v-for="(document, key) in documents"
       :key="key"
       @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
@@ -8,7 +8,7 @@
       variant="secondary"
     >
       {{ getDocumentName(document) }}
-    </SfButton>
+    </UiButton>
   </div>
 </template>
 

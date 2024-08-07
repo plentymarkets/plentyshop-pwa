@@ -119,12 +119,12 @@
 
       <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
-      <SfButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
+      <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
         <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
-      </SfButton>
+      </UiButton>
 
       <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>

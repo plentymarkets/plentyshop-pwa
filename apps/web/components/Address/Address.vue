@@ -12,20 +12,20 @@
       <SfIconCheckCircle v-if="isSelected" class="flex justify-end text-primary-500 shrink-0 default-address" />
     </div>
     <div class="actions flex justify-end">
-      <SfButton
+      <UiButton
         variant="tertiary"
         size="sm"
         class="self-start"
         @click.stop="$emit('on-edit', userAddressGetters.getId(address))"
       >
         {{ $t('account.accountSettings.edit') }}
-      </SfButton>
-      <SfButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-delete')">
+      </UiButton>
+      <UiButton variant="tertiary" size="sm" class="self-start" @click.stop="$emit('on-delete')">
         {{ $t('account.accountSettings.delete') }}
-      </SfButton>
-      <SfButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click.stop="$emit('make-default')">
+      </UiButton>
+      <UiButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click.stop="$emit('make-default')">
         {{ $t('account.accountSettings.makeDefault') }}
-      </SfButton>
+      </UiButton>
     </div>
 
     <UiDivider v-if="!isDefault" class="col-span-3 mx-4 !w-auto md:mx-0 mt-1 mb-4" />

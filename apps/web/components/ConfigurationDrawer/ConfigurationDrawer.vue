@@ -21,9 +21,9 @@
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white"><SfIconTune class="mr-2" /> App Settings</div>
-        <SfButton square variant="tertiary" class="text-white" @click="open = false">
+        <UiButton square variant="tertiary" class="text-white" @click="open = false">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </header>
       <div class="px-5 py-5">
         <h3>Theme</h3>

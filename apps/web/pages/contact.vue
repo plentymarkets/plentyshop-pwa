@@ -101,15 +101,15 @@
         <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('contact.form.asterixHint') }}</p>
 
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
-          <SfButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
+          <UiButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
             {{ t('contact.clearAll') }}
-          </SfButton>
-          <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
+          </UiButton>
+          <UiButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
             <SfLoaderCircular v-if="isContactLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ t('contact.contactSend') }}
             </span>
-          </SfButton>
+          </UiButton>
         </div>
 
         <div>
