@@ -2064,15 +2064,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effective/color@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@effective/color@npm:1.0.1"
-  dependencies:
-    culori: ^4.0.1
-  checksum: 24abea88d2c67b6df15db3193a64a58caf908a01cbf6577779c8665d3579e8f8fc83466c856dc18ad5347d2c8c0574cc0e9e652cd611a427d99b0c0662f04e38
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -9556,13 +9547,6 @@ __metadata:
   version: 3.1.3
   resolution: "csstype@npm:3.1.3"
   checksum: 8db785cc92d259102725b3c694ec0c823f5619a84741b5c7991b8ad135dfaa66093038a1cc63e03361a6cd28d122be48f2106ae72334e067dd619a51f49eddf7
-  languageName: node
-  linkType: hard
-
-"culori@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "culori@npm:4.0.1"
-  checksum: 73af42280b3496de9c6a98c3b8689664376a014c0a51afbe80ce442773ec197fcc94f39908e7b805a7e722432395ffebaa1c6e4312b9da44032cbca906fbce49
   languageName: node
   linkType: hard
 
@@ -21329,7 +21313,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:apps/web"
   dependencies:
-    "@effective/color": ^1.0.1
     "@nuxt/image": ^1.7.0
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/google-fonts": ^3.2.0
@@ -21353,7 +21336,6 @@ __metadata:
     "@vue/test-utils": ^2.4.6
     "@vueuse/core": ^10.11.0
     axios: ^1.7.2
-    culori: ^4.0.1
     cypress: 12.17.4
     cypress-real-events: ^1.13.0
     cypress-wait-until: ^2.0.1
