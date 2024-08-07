@@ -1,23 +1,20 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { getPaletteFromColor } from '../utils/tailwindHelper';
+import { getPaletteFromColor, TailwindPalette } from '../utils/tailwindHelper';
 
 const primaryColor = process.env.PRIMARY || '#0c7992';
 const secondaryColor = process.env.SECONDARY || '#008ebd';
 
-const prepareConfigFile = (
-  primarySpectrum: Array<{ weight: string; rgb: string }>,
-  secondarySpectrum: Array<{ weight: string; rgb: string }>,
-) => {
+const prepareConfigFile = (primaryPalette: TailwindPalette, secondaryPalette: TailwindPalette) => {
   let scssContent = '';
 
-  primarySpectrum.forEach((shade) => {
+  primaryPalette.forEach((shade) => {
     scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};\n`;
   });
 
   scssContent += '\n';
 
-  secondarySpectrum.forEach((shade) => {
+  secondaryPalette.forEach((shade) => {
     scssContent += `$color-2-secondary-${shade.weight}: ${shade.rgb};\n`;
   });
 

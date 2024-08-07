@@ -1,18 +1,18 @@
-import { getPaletteFromColor } from '~/utils/tailwindHelper';
-import type { TailwindColors } from './types';
+import { getPaletteFromColor, TailwindPalette } from '~/utils/tailwindHelper';
+import { SetColorProperties, UpdateColorPalette, UseConfigurationDraerMethodsReturn } from './types';
 
 const open = ref(false);
 
-const setColorProperties = (type: string, tailwindColors: TailwindColors) => {
-  tailwindColors.forEach((color) => {
-    if (color.rgb) {
-      document.documentElement.style.setProperty(`--colors-2-${type}-${color.weight}`, color.rgb);
+const setColorProperties: SetColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+  tailwindPalette.forEach((shade) => {
+    if (shade.rgb) {
+      document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
     }
   });
 };
 
-const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors: TailwindColors = getPaletteFromColor('primary', hexColor).map((color) => ({
+const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
+  const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
     ...color,
     value: '',
   }));
@@ -20,8 +20,8 @@ const updatePrimaryColor = (hexColor: string) => {
   setColorProperties('primary', tailwindColors);
 };
 
-const updateSecondaryColor = (hexColor: string) => {
-  const tailwindColors: TailwindColors = getPaletteFromColor('secondary', hexColor).map((color) => ({
+const updateSecondaryColor: UpdateColorPalette = (hexColor: string) => {
+  const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
     ...color,
     value: '',
   }));
@@ -29,6 +29,6 @@ const updateSecondaryColor = (hexColor: string) => {
   setColorProperties('secondary', tailwindColors);
 };
 
-export const useConfigurationDrawer = () => {
+export const useConfigurationDrawer: UseConfigurationDraerMethodsReturn = () => {
   return { open, updatePrimaryColor, updateSecondaryColor };
 };
