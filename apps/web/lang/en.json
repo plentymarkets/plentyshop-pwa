@@ -542,7 +542,8 @@
         "notAvailable": "Currently unavailable",
         "buyAgain": "Buy again",
         "cancel": "Cancel",
-        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available"
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
+        "stockLimitation": "only {stock} item(s) available"
       }
     },
     "wishlist": {
