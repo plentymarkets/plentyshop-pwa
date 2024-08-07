@@ -44,3 +44,9 @@
 .scrollbar-thin::-webkit-scrollbar-track {
   background-color: #f1f1f1;
 }
+
+.variation-properties {
+  a {
+    color: rgb(var(--colors-2-primary-700));
+  }
+}

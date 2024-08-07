@@ -44,7 +44,7 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-    <div class="mt-2">
+    <div class="mt-2 variation-properties">
       <VariationProperties :product="product" />
     </div>
     <div class="inline-flex items-center mt-4 mb-2">

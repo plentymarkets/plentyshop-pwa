@@ -125,7 +125,7 @@ export default defineNuxtConfig({
           '/reset-password-success',
           '/cart',
           '/checkout',
-          '/thank-you',
+          '/confirmation',
           '/wishlist',
           '/login',
           '/signup',
