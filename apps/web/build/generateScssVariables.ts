@@ -12,13 +12,13 @@ const prepareConfigFile = (
   let scssContent = '';
 
   primarySpectrum.forEach((shade) => {
-    scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};`;
+    scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};\n`;
   });
 
   scssContent += '\n';
 
   secondarySpectrum.forEach((shade) => {
-    scssContent += `$color-2-secondary-${shade.weight}: ${shade.rgb};`;
+    scssContent += `$color-2-secondary-${shade.weight}: ${shade.rgb};\n`;
   });
 
   return scssContent;
