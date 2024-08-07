@@ -10,7 +10,7 @@
           variant="tertiary"
           square
           aria-label="Close menu"
-          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+          class="mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
           @click="openMenu([])"
         >
           <SfIconMenu class="text-white" />
@@ -30,7 +30,7 @@
 
     <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
-        class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        class="flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
           (event) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -118,12 +118,12 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="md:hidden right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
