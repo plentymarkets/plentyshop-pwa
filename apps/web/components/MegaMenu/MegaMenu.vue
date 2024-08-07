@@ -6,11 +6,11 @@
     >
       <div class="flex items-center">
         <SfButton
-          v-if="viewport.isLessThan('md')"
+          v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
           aria-label="Close menu"
-          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+          class="block lg:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
           @click="openMenu([])"
         >
           <SfIconMenu class="text-white" />
