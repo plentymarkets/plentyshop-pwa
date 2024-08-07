@@ -116,7 +116,9 @@
               </div>
               <div class="w-full flex flex-wrap gap-2">
                 <SfListItem
-                  v-if="orderGetters.getOrderAgainAvailability(item)"
+                  v-if="
+                    orderGetters.getOrderAgainAvailability(item) && orderGetters.getOrderAgainAvailabilityName(item)
+                  "
                   size="sm"
                   class="text-xs font-medium rounded-md !w-fit !cursor-text !px-2 grid"
                   :class="[orderGetters.getOrderAgainAvailabilityClass(item)]"
@@ -128,13 +130,29 @@
                   {{ orderGetters.getOrderAgainAvailabilityName(item) }}
                 </SfListItem>
                 <UiTag
-                  v-if="!orderGetters.isItemSalableAndActive(order, item)"
+                  v-if="
+                    !orderGetters.isItemSalableAndActive(order, item) ||
+                    orderGetters.getOrderAgainOrderItemStock(item) === 0
+                  "
                   variant="negative"
                   size="sm"
                   class="!font-medium"
                 >
                   <SfIconError size="xs" />
                   <span>{{ t('account.ordersAndReturns.orderAgain.notAvailable') }}</span>
+                </UiTag>
+                <UiTag
+                  v-else-if="orderGetters.getOrderAgainOrderItemStock(item) < orderGetters.getItemQty(item)"
+                  variant="negative"
+                  size="sm"
+                  class="!font-medium"
+                >
+                  <SfIconError size="xs" />
+                  <span>{{
+                    t('account.ordersAndReturns.orderAgain.stockLimitation', {
+                      stock: orderGetters.getOrderAgainOrderItemStock(item),
+                    })
+                  }}</span>
                 </UiTag>
                 <UiTag
                   v-else-if="!orderGetters.hasAllOrderPropertiesAvailable(item)"

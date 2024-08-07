@@ -4409,12 +4409,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@paypal/paypal-js@npm:7.1.1":
-  version: 7.1.1
-  resolution: "@paypal/paypal-js@npm:7.1.1"
+"@paypal/paypal-js@npm:8.1.0":
+  version: 8.1.0
+  resolution: "@paypal/paypal-js@npm:8.1.0"
   dependencies:
     promise-polyfill: ^8.3.0
-  checksum: 4877df658383b825f2ac1ce1b39054be46feda701f26902add9034be8f2623adb217a1b8423d06e2d6cbbe677cc692cdc4057b8f67a1ca7150431513f02b8573
+  checksum: 3bd1c02c095aa240db590ddc9e1ec18ffc5db3ca723a93ddc6853a0c2d4612339e9f6f3fcc3374c9aacaf8dca6c79c64721f0c3a9f969520097ce3256dddeaa2
   languageName: node
   linkType: hard
 
@@ -4452,8 +4452,8 @@ __metadata:
     "@lhci/cli": ^0.14.0
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
-    "@paypal/paypal-js": 7.1.1
     "@plentymarkets/shop-api": ^0.50.1
+    "@paypal/paypal-js": 8.1.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.1
     "@vee-validate/yup": ^4.13.1
@@ -4484,6 +4484,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+
 "@plentymarkets/shop-api@npm:^0.50.1":
   version: 0.50.1
   resolution: "@plentymarkets/shop-api@npm:0.50.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.50.1%2F5a448d4ea297764bfda333f2c99edea2cc89e023"
@@ -4491,10 +4492,10 @@ __metadata:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-  checksum: 5a2578614194d559b22213f7eea3ce917649658ceddedad007e42e69a7386597422eab0cdab4b199dc7924083d0c34f179411b1d511e027dbed977aeee67f8ab
+checksum: 5a2578614194d559b22213f7eea3ce917649658ceddedad007e42e69a7386597422eab0cdab4b199dc7924083d0c34f179411b1d511e027dbed977aeee67f8ab
   languageName: node
   linkType: hard
-
+  
 "@polka/url@npm:^1.0.0-next.24":
   version: 1.0.0-next.25
   resolution: "@polka/url@npm:1.0.0-next.25"
