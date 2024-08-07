@@ -64,6 +64,8 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      primaryColor: process.env.PRIMARY || '#0c7992',
+      secondaryColor: process.env.SECONDARY || '#008ebd',
     },
   },
   modules: [

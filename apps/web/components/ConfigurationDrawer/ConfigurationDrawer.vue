@@ -70,8 +70,11 @@ import {
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();
-const primaryColorReference = ref();
-const secondaryColorReference = ref();
+
+const runtimeConfig = useRuntimeConfig();
+const primaryColorReference = ref(runtimeConfig.public.primaryColor);
+const secondaryColorReference = ref(runtimeConfig.public.secondaryColor);
+
 const { open, updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
 const { showNames } = useNewsletter();
 
