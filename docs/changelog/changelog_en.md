@@ -25,6 +25,7 @@
 - The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
 - Changes to item reviews logic in order to use the feedback api ms
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
+- Remove cookie browser language detect.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
