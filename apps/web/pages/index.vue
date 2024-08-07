@@ -32,7 +32,6 @@
         <div class="flex flex-col md:flex-row gap-4 mt-6">
           <SfButton size="lg"> {{ t('homepage.banner.orderNow') }}</SfButton>
           <SfButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</SfButton>
-          <UiButton size="lg" variant="secondary"> Test </UiButton>
         </div>
       </div>
     </div>
