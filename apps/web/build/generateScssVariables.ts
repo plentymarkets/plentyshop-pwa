@@ -10,20 +10,15 @@ const prepareConfigFile = (
   secondarySpectrum: Array<{ weight: string; rgb: string }>,
 ) => {
   let scssContent = '';
-  primarySpectrum.forEach((shade, index) => {
+
+  primarySpectrum.forEach((shade) => {
     scssContent += `$color-2-primary-${shade.weight}: ${shade.rgb};`;
-    if (index !== primarySpectrum.length) {
-      scssContent += `\n`;
-    }
   });
 
   scssContent += '\n';
 
-  secondarySpectrum.forEach((shade, index) => {
+  secondarySpectrum.forEach((shade) => {
     scssContent += `$color-2-secondary-${shade.weight}: ${shade.rgb};`;
-    if (index !== secondarySpectrum.length) {
-      scssContent += `\n`;
-    }
   });
 
   return scssContent;
@@ -37,10 +32,7 @@ const generateScssVariables = () => {
   const scssVariablesDirectory = path.resolve(__dirname, '../assets');
   const scssVariablesFilePath = path.resolve(scssVariablesDirectory, '_variables.scss');
 
-  if (!fs.existsSync(scssVariablesDirectory)) {
-    fs.mkdirSync(scssVariablesDirectory, { recursive: true });
-  }
-
+  fs.mkdirSync(scssVariablesDirectory, { recursive: true });
   fs.writeFileSync(scssVariablesFilePath, scssContent, 'utf8');
 };
 

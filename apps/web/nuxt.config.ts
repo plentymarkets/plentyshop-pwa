@@ -43,8 +43,12 @@ export default defineNuxtConfig({
   pages: true,
   hooks: {
     'build:before': async () => {
-      await fetchConfiguration();
-      generateScssVariables();
+      if (process.env.FETCH_REMOTE_CONFIG === '1') {
+        await fetchConfiguration();
+        generateScssVariables();
+      } else {
+        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
+      }
     },
   },
   runtimeConfig: {
