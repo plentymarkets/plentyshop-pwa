@@ -4452,8 +4452,8 @@ __metadata:
     "@lhci/cli": ^0.14.0
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
-    "@plentymarkets/shop-api": ^0.50.1
     "@paypal/paypal-js": 8.1.0
+    "@plentymarkets/shop-api": ^0.50.1
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.1
     "@vee-validate/yup": ^4.13.1
@@ -4484,7 +4484,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-
 "@plentymarkets/shop-api@npm:^0.50.1":
   version: 0.50.1
   resolution: "@plentymarkets/shop-api@npm:0.50.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.50.1%2F5a448d4ea297764bfda333f2c99edea2cc89e023"
@@ -4492,10 +4491,10 @@ __metadata:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.6.3
     consola: ^3.0.0
-checksum: 5a2578614194d559b22213f7eea3ce917649658ceddedad007e42e69a7386597422eab0cdab4b199dc7924083d0c34f179411b1d511e027dbed977aeee67f8ab
+  checksum: 5a2578614194d559b22213f7eea3ce917649658ceddedad007e42e69a7386597422eab0cdab4b199dc7924083d0c34f179411b1d511e027dbed977aeee67f8ab
   languageName: node
   linkType: hard
-  
+
 "@polka/url@npm:^1.0.0-next.24":
   version: 1.0.0-next.25
   resolution: "@polka/url@npm:1.0.0-next.25"
