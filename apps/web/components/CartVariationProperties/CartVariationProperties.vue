@@ -1,5 +1,5 @@
 <template>
-  <div v-for="(group, groupIndex) in variationProperties" :key="`group-${groupIndex}`" class="mt-5">
+  <div v-for="(group, groupIndex) in variationProperties" :key="`variation-group-${groupIndex}`" class="mt-5">
     <div
       v-for="(variationProperty, propIndex) in group.properties"
       :key="`group-prop-${propIndex}`"
