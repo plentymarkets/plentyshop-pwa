@@ -1,4 +1,4 @@
-import { getPaletteFromColor } from '~/utils/tailwindHelper'; // Adjust the import based on your file structure
+import { getPaletteFromColor } from '~/utils/tailwindHelper';
 import type { TailwindColors } from './types';
 
 const open = ref(false);
