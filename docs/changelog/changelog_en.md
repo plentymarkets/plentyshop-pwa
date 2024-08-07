@@ -4,6 +4,7 @@
 
 ### 🚀 New
 
+- Variation properties are visible in quick checkout.
 - The app now reads metadata, such as description and keywords, from the environment.
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
