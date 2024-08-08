@@ -14,7 +14,6 @@ const setColorProperties: SetColorProperties = (type: string, tailwindPalette: T
 const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
   const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
     ...color,
-    value: '',
   }));
 
   setColorProperties('primary', tailwindColors);
@@ -23,7 +22,6 @@ const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
 const updateSecondaryColor: UpdateColorPalette = (hexColor: string) => {
   const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
     ...color,
-    value: '',
   }));
 
   setColorProperties('secondary', tailwindColors);
