@@ -17,16 +17,14 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <NuxtLazyHydrate when-visible>
-            <ReviewsAccordion
-              v-if="product"
-              :product="product"
-              :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-              :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-              @on-list-change="fetchProductReviewAverage(Number(productId))"
-            />
-          </NuxtLazyHydrate>
+          <ReviewsAccordion
+            v-if="product"
+            :product="product"
+            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
+            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
+            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+            @on-list-change="fetchProductReviewAverage(Number(productId))"
+          />
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
@@ -57,10 +55,20 @@ const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+  await Promise.all([
+    fetchProductReviews(Number(productId), productVariationId),
+    fetchProductReviewAverage(Number(productId)),
+  ]);
+}
+await fetchReviews();
 
 if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
 
