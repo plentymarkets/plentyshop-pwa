@@ -25,11 +25,7 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <Price
-        :price="currentActualPrice"
-        :normal-price="normalPrice"
-        :old-price="productGetters.getPrice(product).regular ?? 0"
-      />
+      <Price :price="price" :crossed-price="crossedPrice" />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
           t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -133,6 +129,7 @@ import { productGetters, reviewGetters, productBundleGetters } from '@plentymark
 import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { getCrossedPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -158,19 +155,16 @@ const { openQuickCheckout } = useQuickCheckout();
 resetInvalidFields();
 resetAttributeFields();
 
-const currentActualPrice = computed(
+const price = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-      productGetters.getPrice(product)?.special ??
-      productGetters.getPrice(product)?.regular ??
+    (getSpecialOffer(product) ||
+      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ||
       0) + getPropertiesPrice(product),
 );
 
-const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-  productGetters.getPrice(product)?.special ??
-  productGetters.getPrice(product)?.regular ??
-  0;
+const crossedPrice = computed(
+  () => (getSpecialOffer(product) ? getPrice(product) : getCrossedPrice(product)) || undefined,
+);
 
 const basePriceSingleValue = computed(
   () =>

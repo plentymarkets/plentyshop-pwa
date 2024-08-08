@@ -63,7 +63,7 @@
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ n(cheapestPrice ?? mainPrice, 'currency') }}</span>
+          <span>{{ n(price, 'currency') }}</span>
           <span v-if="showNetPrices">{{ t('asterisk') }} </span>
         </span>
         <span
@@ -100,6 +100,7 @@
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { getSpecialOffer } from '~/utils/pricesHelper';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -165,17 +166,12 @@ const addWithLoader = async (productId: number) => {
   }
 };
 
-const mainPrice = computed(() => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
+const price = computed(() =>
+  getSpecialOffer(product) && getSpecialOffer(product) < productGetters.getCheapestGraduatedPrice(product)
+    ? getSpecialOffer(product)
+    : productGetters.getCheapestGraduatedPrice(product),
+);
 
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
-
-  return 0;
-});
-
-const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
 const oldPrice = productGetters.getRegularPrice(product);
 const NuxtLink = resolveComponent('NuxtLink');
 
