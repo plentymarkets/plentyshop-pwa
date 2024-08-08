@@ -13,6 +13,7 @@
   - `400` -> `200`
   - `300` -> `100`
   - `200` -> `50`
+  - `100` -> `50`
 - Ersetze alle Vorkommen von `SfButton` mit `UiButton`.
 
 ### 🚀 Hinzugefügt
