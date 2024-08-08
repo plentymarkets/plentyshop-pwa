@@ -1,7 +1,6 @@
 <template>
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <NuxtLazyHydrate when-visible>
         <UiSearch class="hidden md:block flex-1" />
         <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
           <UiButton
@@ -125,10 +124,9 @@
             <SfIconTune />
           </UiButton>
         </nav>
-      </NuxtLazyHydrate>
     </template>
 
-    <div v-else>
+    <div v-if="viewport.isLessThan('lg')">
       <UiButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
@@ -168,7 +166,7 @@
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
   </UiModal>
 
-  <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>
+  <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
     <SfModal
       v-model="isSearchModalOpen"
       class="w-full h-full z-50"

@@ -31,6 +31,7 @@
 
 - Ein Fehler beim REST-Aufruf zur Abfrage der Systemkonfiguration wurde behoben.
 - Die Schaltflächen bei den Adressen in der Kasse wurden in der mobilen Ansicht angepasst.
+- Problem behoben, bei dem die Navigationsleiste zwischen 640px und 767px verschwunden ist.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
