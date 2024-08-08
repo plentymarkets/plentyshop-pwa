@@ -52,7 +52,7 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
 
-        <CartVariationProperties :product="product" />
+        <VariationProperties :product="product" />
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
