@@ -96,7 +96,7 @@
 </template>
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
 const { isOpen: isOpenEdit, open: openEdit, close: closeEdit } = useDisclosure();

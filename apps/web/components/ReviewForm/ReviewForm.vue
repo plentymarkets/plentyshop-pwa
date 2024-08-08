@@ -64,7 +64,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfRatingButton, SfTextarea, SfInput, useId } from '@storefront-ui/vue';
+import { SfRatingButton, SfTextarea, SfInput, useId } from '@storefront-ui/vue';
 import { object, string, number } from 'yup';
 import { useForm } from 'vee-validate';
 import type { ReviewFormProps } from './types';

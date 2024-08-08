@@ -50,7 +50,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
 
 const { send } = useNotification();

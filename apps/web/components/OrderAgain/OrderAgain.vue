@@ -218,7 +218,6 @@
 
 <script setup lang="ts">
 import {
-  SfButton,
   SfIconClose,
   SfLoaderCircular,
   SfIconError,

@@ -16,8 +16,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-
 const localePath = useLocalePath();
 
 const NuxtLink = resolveComponent('NuxtLink');

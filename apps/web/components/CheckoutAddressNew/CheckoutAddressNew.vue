@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
-import { SfButton } from '@storefront-ui/vue';
 import { CheckoutAddressNewProps } from './types';
 
 const { t } = useI18n();

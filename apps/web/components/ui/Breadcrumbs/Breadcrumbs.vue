@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfDropdown, SfButton, SfLink, SfIconMoreHoriz } from '@storefront-ui/vue';
+import { SfDropdown, SfLink, SfIconMoreHoriz } from '@storefront-ui/vue';
 import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();

@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 import type { AccountDataProps } from '~/components/AccountData/types';
 
 withDefaults(defineProps<AccountDataProps>(), {

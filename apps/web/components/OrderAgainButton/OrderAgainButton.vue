@@ -7,7 +7,6 @@
 
 <script setup lang="ts">
 import type { OrderAgainButtonProps } from './types';
-import { SfButton } from '@storefront-ui/vue';
 
 defineProps<OrderAgainButtonProps>();
 

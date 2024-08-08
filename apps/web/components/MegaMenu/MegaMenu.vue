@@ -183,7 +183,6 @@
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
-  SfButton,
   SfDrawer,
   SfListItem,
   SfIconChevronRight,

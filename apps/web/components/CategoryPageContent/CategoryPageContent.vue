@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {

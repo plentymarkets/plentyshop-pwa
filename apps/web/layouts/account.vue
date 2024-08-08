@@ -94,7 +94,6 @@ import {
   SfIconPerson,
   SfIconShoppingCart,
   SfListItem,
-  SfButton,
   SfIconArrowBack,
   SfIconChevronRight,
   SfIconFavorite,

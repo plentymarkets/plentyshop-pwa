@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
-import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
+import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',

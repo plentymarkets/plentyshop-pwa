@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput } from '@storefront-ui/vue';
+import { SfInput } from '@storefront-ui/vue';
 
 const localePath = useLocalePath();
 

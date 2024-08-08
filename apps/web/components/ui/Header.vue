@@ -193,7 +193,6 @@
 <script setup lang="ts">
 import {
   SfBadge,
-  SfButton,
   SfDropdown,
   SfIconClose,
   SfIconLanguage,

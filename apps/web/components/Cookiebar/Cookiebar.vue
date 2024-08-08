@@ -176,7 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfButton, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
+import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { Cookie, CookieGroup } from '~/configuration/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');

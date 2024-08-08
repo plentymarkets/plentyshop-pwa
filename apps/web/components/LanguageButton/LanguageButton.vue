@@ -11,7 +11,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 defineProps<{ locale: string }>();
 const { switchLocale } = useLocalization();
 </script>

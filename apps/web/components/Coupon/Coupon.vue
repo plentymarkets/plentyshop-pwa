@@ -51,14 +51,7 @@
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-api';
-import {
-  SfAccordionItem,
-  SfIconChevronLeft,
-  SfIconClose,
-  SfInput,
-  SfButton,
-  SfLoaderCircular,
-} from '@storefront-ui/vue';
+import { SfAccordionItem, SfIconChevronLeft, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 const openedCoupon = ref(false);
 const couponCode = ref('');
 const { addCoupon, deleteCoupon, loading } = useCoupon();

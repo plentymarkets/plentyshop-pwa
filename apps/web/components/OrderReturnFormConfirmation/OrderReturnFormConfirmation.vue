@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconArrowBack, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
+import { SfIconArrowBack, SfIconClose, SfLoaderCircular, SfTextarea } from '@storefront-ui/vue';
 import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderItem } from '@plentymarkets/shop-api';
 

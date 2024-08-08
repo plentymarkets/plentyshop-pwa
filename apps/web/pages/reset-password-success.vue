@@ -30,8 +30,6 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-
 definePageMeta({
   layout: false,
 });

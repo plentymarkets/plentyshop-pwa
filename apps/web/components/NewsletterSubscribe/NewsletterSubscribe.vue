@@ -110,7 +110,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
 

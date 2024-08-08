@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({ pageType: 'static' });
 

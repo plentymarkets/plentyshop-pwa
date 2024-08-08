@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import { AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { LoginProps } from './types';
 
 const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);

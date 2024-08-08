@@ -68,7 +68,7 @@
 
 <script lang="ts" setup>
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();

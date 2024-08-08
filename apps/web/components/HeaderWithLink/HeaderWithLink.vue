@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconArrowBack } from '@storefront-ui/vue';
+import { SfIconArrowBack } from '@storefront-ui/vue';
 import type { HeaderWithLinkProps } from '~/components/HeaderWithLink/types';
 
 const localePath = useLocalePath();

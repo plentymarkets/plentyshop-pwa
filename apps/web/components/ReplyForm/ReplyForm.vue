@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
 

@@ -123,7 +123,7 @@
 
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 

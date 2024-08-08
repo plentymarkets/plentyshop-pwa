@@ -33,7 +33,6 @@
 </template>
 <script lang="ts" setup>
 import { SfIconCheckCircle } from '@storefront-ui/vue';
-import { SfButton } from '@storefront-ui/vue';
 import type { AddressProps } from './types';
 import { userAddressGetters } from '@plentymarkets/shop-api';
 

@@ -27,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconArrowBack, SfLoaderCircular } from '@storefront-ui/vue';
 import { CheckoutLayoutProps } from './types';
 
 const localePath = useLocalePath();

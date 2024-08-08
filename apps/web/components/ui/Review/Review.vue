@@ -169,7 +169,6 @@
 import {
   SfRating,
   SfIconCheck,
-  SfButton,
   SfIconDelete,
   SfIconVisibility,
   SfIconVisibilityOff,

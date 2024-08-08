@@ -58,15 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfDrawer,
-  SfButton,
-  SfIconClose,
-  SfIconTune,
-  SfDrawerPlacement,
-  useTrapFocus,
-  SfCheckbox,
-} from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, SfIconTune, SfDrawerPlacement, useTrapFocus, SfCheckbox } from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();

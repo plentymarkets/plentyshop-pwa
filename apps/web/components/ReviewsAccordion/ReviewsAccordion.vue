@@ -123,7 +123,6 @@
 <script lang="ts" setup>
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import {
-  SfButton,
   SfIconClose,
   SfIconStarFilled,
   SfLoaderCircular,

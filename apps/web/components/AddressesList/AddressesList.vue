@@ -56,7 +56,7 @@
 </template>
 <script lang="ts" setup>
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import type { AddressesListProps } from '~/components/AddressesList/types';
 
 const props = defineProps<AddressesListProps>();

@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 

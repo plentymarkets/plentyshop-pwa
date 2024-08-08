@@ -120,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfCheckbox, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfLink, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,

@@ -165,7 +165,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
+import { SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
 import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();
