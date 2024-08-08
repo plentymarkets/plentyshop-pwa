@@ -15,7 +15,10 @@
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
 - Fixed tailwind css double import.
+- Fixed a deadspot in the viewport for the navigation bar.
 - Added link color on item variation properties
+- Fixed pagination issues with reactivity.
+- Fixed wrongful display of base prices issue.
 
 ### 👷 Changed
 

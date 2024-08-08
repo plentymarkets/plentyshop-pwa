@@ -1,134 +1,128 @@
 <template>
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <NuxtLazyHydrate when-visible>
-        <UiSearch class="hidden md:block flex-1" />
-        <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-          <SfButton
-            v-if="!isLanguageSelectOpen"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="t('languageSelector')"
-            variant="tertiary"
-            square
-            data-testid="open-languageselect-button"
-            @click="toggleLanguageSelect()"
-          >
-            <template #prefix>
-              <SfIconLanguage class="relative" />
-            </template>
-          </SfButton>
-          <SfButton
-            v-else
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
-            :aria-label="t('languageSelector')"
-            variant="tertiary"
-            square
-            data-testid="open-languageselect-button"
-          >
-            <template #prefix>
-              <SfIconLanguage class="relative" />
-            </template>
-          </SfButton>
-          <SfButton
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-            :tag="NuxtLink"
-            :to="localePath(paths.wishlist)"
-            :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
-            variant="tertiary"
-            square
-            data-testid="wishlist-page-navigation"
-          >
-            <template #prefix>
-              <SfIconFavorite />
-              <SfBadge
-                :content="wishlistItemIds.length"
-                class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-                data-testid="wishlist-badge"
-              />
-            </template>
-          </SfButton>
-          <SfButton
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-            :tag="NuxtLink"
-            :to="localePath(paths.cart)"
-            :aria-label="t('numberInCart', { count: cartItemsCount })"
-            variant="tertiary"
-            square
-          >
-            <template #prefix>
-              <SfIconShoppingCart />
-              <SfBadge
-                :content="cartItemsCount"
-                class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
-                data-testid="cart-badge"
-              />
-            </template>
-          </SfButton>
-          <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
-            <template #trigger>
-              <SfButton
-                variant="tertiary"
-                class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-                :class="{ 'bg-primary-900': isAccountDropdownOpen }"
-                @click="accountDropdownToggle()"
-                data-testid="account-dropdown-button"
-              >
-                <template #prefix>
-                  <SfIconPerson />
-                </template>
-                {{ user.user?.firstName }}
-              </SfButton>
-            </template>
-            <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
-              <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
-                <template v-if="label === t('account.logout')">
-                  <UiDivider class="my-2" />
-                  <SfListItem
-                    tag="button"
-                    class="text-left"
-                    data-testid="account-dropdown-logout-item"
-                    @click="logOut()"
-                  >
-                    {{ label }}
-                  </SfListItem>
-                </template>
-                <SfListItem
-                  v-else
-                  :tag="NuxtLink"
-                  :to="link"
-                  :class="{ 'bg-neutral-200': $route.path === link }"
-                  data-testid="account-dropdown-list-item"
-                >
+      <UiSearch class="hidden md:block flex-1" />
+
+      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
+        <SfButton
+          v-if="!isLanguageSelectOpen"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          :aria-label="t('languageSelector')"
+          variant="tertiary"
+          square
+          data-testid="open-languageselect-button"
+          @click="toggleLanguageSelect()"
+        >
+          <template #prefix>
+            <SfIconLanguage class="relative" />
+          </template>
+        </SfButton>
+        <SfButton
+          v-else
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          :aria-label="t('languageSelector')"
+          variant="tertiary"
+          square
+          data-testid="open-languageselect-button"
+        >
+          <template #prefix>
+            <SfIconLanguage class="relative" />
+          </template>
+        </SfButton>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="localePath(paths.wishlist)"
+          :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
+          variant="tertiary"
+          square
+          data-testid="wishlist-page-navigation"
+        >
+          <template #prefix>
+            <SfIconFavorite />
+            <SfBadge
+              :content="wishlistItemIds.length"
+              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              data-testid="wishlist-badge"
+            />
+          </template>
+        </SfButton>
+        <SfButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          :tag="NuxtLink"
+          :to="localePath(paths.cart)"
+          :aria-label="t('numberInCart', { count: cartItemsCount })"
+          variant="tertiary"
+          square
+        >
+          <template #prefix>
+            <SfIconShoppingCart />
+            <SfBadge
+              :content="cartItemsCount"
+              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              data-testid="cart-badge"
+            />
+          </template>
+        </SfButton>
+        <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
+          <template #trigger>
+            <SfButton
+              variant="tertiary"
+              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
+              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
+              @click="accountDropdownToggle()"
+              data-testid="account-dropdown-button"
+            >
+              <template #prefix>
+                <SfIconPerson />
+              </template>
+              {{ user.user?.firstName }}
+            </SfButton>
+          </template>
+          <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
+            <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
+              <template v-if="label === t('account.logout')">
+                <UiDivider class="my-2" />
+                <SfListItem tag="button" class="text-left" data-testid="account-dropdown-logout-item" @click="logOut()">
                   {{ label }}
                 </SfListItem>
-              </li>
-            </ul>
-          </SfDropdown>
-          <SfButton
-            v-else
-            @click="openAuthentication"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-            variant="tertiary"
-            :aria-label="t('auth.login.openLoginForm')"
-            square
-          >
-            <SfIconPerson />
-          </SfButton>
-          <SfButton
-            v-if="showConfigurationDrawer"
-            @click="open = true"
-            class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
-            variant="tertiary"
-            aria-label="Open configuration drawer"
-            square
-          >
-            <SfIconTune />
-          </SfButton>
-        </nav>
-      </NuxtLazyHydrate>
+              </template>
+              <SfListItem
+                v-else
+                :tag="NuxtLink"
+                :to="link"
+                :class="{ 'bg-neutral-200': $route.path === link }"
+                data-testid="account-dropdown-list-item"
+              >
+                {{ label }}
+              </SfListItem>
+            </li>
+          </ul>
+        </SfDropdown>
+        <SfButton
+          v-else
+          @click="openAuthentication"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          variant="tertiary"
+          :aria-label="t('auth.login.openLoginForm')"
+          square
+        >
+          <SfIconPerson />
+        </SfButton>
+        <SfButton
+          v-if="showConfigurationDrawer"
+          @click="open = true"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          variant="tertiary"
+          aria-label="Open configuration drawer"
+          square
+        >
+          <SfIconTune />
+        </SfButton>
+      </nav>
     </template>
 
-    <div v-else>
+    <div v-if="viewport.isLessThan('lg')">
       <SfButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
@@ -168,7 +162,7 @@
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
   </UiModal>
 
-  <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>
+  <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
     <SfModal
       v-model="isSearchModalOpen"
       class="w-full h-full z-50"
