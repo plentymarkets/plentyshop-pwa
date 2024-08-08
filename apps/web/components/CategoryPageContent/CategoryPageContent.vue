@@ -45,21 +45,20 @@
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />
-        <NuxtLazyHydrate when-visible>
-          <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
-            <span>{{ $t('asterisk') }}</span>
-            <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-            <span v-else>{{ $t('itemInclVAT') }}</span>
-            <span>{{ $t('excludedShipping') }}</span>
-          </div>
-          <UiPagination
-            v-if="totalProducts > 0"
-            :current-page="getFacetsFromURL().page ?? 1"
-            :total-items="totalProducts"
-            :page-size="itemsPerPage"
-            :max-visible-pages="maxVisiblePages"
-          />
-        </NuxtLazyHydrate>
+        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+          <span>{{ $t('asterisk') }}</span>
+          <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+          <span v-else>{{ $t('itemInclVAT') }}</span>
+          <span>{{ $t('excludedShipping') }}</span>
+        </div>
+        <UiPagination
+          v-if="totalProducts > 0"
+          :key="`${totalProducts}-${itemsPerPage}`"
+          :current-page="getFacetsFromURL().page ?? 1"
+          :total-items="totalProducts"
+          :page-size="itemsPerPage"
+          :max-visible-pages="maxVisiblePages"
+        />
       </div>
     </div>
   </NarrowContainer>
