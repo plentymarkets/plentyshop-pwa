@@ -66,11 +66,8 @@
           <span>{{ n(price, 'currency') }}</span>
           <span v-if="showNetPrices">{{ t('asterisk') }} </span>
         </span>
-        <span
-          v-if="oldPrice && oldPrice !== mainPrice"
-          class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
-        >
-          {{ n(oldPrice, 'currency') }}
+        <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
+          {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
       <SfButton
@@ -100,7 +97,7 @@
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
-import { getSpecialOffer } from '~/utils/pricesHelper';
+import { getCrossedPrice, getPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -166,13 +163,15 @@ const addWithLoader = async (productId: number) => {
   }
 };
 
+const specialOffer = getSpecialOffer(product);
+
 const price = computed(() =>
-  getSpecialOffer(product) && getSpecialOffer(product) < productGetters.getCheapestGraduatedPrice(product)
-    ? getSpecialOffer(product)
+  specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
+    ? specialOffer
     : productGetters.getCheapestGraduatedPrice(product),
 );
 
-const oldPrice = productGetters.getRegularPrice(product);
+const crossedPrice = computed(() => (specialOffer ? getPrice(product) : getCrossedPrice(product)) || undefined);
 const NuxtLink = resolveComponent('NuxtLink');
 
 watch(

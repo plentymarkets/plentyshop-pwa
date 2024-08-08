@@ -27,8 +27,9 @@ const { getPropertiesPrice } = useProductOrderProperties();
 
 const price = computed(
   () =>
-    (getSpecialOffer(props.product) || productGetters.getGraduatedPriceByQuantity(props.product, 1)?.price.value || 0) +
-    getPropertiesPrice(props.product),
+    (getSpecialOffer(props.product) ||
+      productGetters.getGraduatedPriceByQuantity(props.product, 1)?.unitPrice.value ||
+      0) + getPropertiesPrice(props.product),
 );
 
 const crossedPrice = computed(

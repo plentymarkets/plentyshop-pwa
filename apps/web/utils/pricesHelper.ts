@@ -1,7 +1,7 @@
 import type { Product } from '@plentymarkets/shop-api';
 
 export const getPrice = (product: Product): number | null => {
-  return product?.prices?.default?.price?.value ?? null;
+  return product?.prices?.default?.unitPrice?.value ?? null;
 };
 
 export const getCrossedPrice = (product: Product): number | null => {

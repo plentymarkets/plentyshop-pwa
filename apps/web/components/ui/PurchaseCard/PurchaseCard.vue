@@ -158,7 +158,7 @@ resetAttributeFields();
 const price = computed(
   () =>
     (getSpecialOffer(product) ||
-      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ||
+      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
 );
 
