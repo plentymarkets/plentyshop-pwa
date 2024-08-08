@@ -33,6 +33,7 @@
 - Fixed a deadspot in the viewport for the navigation bar.
 - Added link color on item variation properties
 - Fixed pagination issues with reactivity.
+- Fixed wrongful display of base prices issue.
 
 ### 👷 Changed
 

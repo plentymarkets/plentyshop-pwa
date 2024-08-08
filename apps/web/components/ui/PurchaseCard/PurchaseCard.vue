@@ -174,8 +174,8 @@ const normalPrice =
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(product),
+    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
+    productGetters.getDefaultBasePrice(product),
 );
 
 const handleAddToCart = async (quickCheckout = true) => {
