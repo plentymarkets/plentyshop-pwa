@@ -122,7 +122,7 @@
       </nav>
     </template>
 
-    <div v-else>
+    <div v-if="viewport.isLessThan('lg')">
       <SfButton
         variant="tertiary"
         class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
@@ -162,7 +162,7 @@
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
   </UiModal>
 
-  <NuxtLazyHydrate v-if="viewport.isLessThan('md')" when-idle>
+  <NuxtLazyHydrate v-if="viewport.isLessThan('lg')" when-idle>
     <SfModal
       v-model="isSearchModalOpen"
       class="w-full h-full z-50"
