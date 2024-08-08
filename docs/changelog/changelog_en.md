@@ -13,11 +13,12 @@
   - `400` -> `200`
   - `300` -> `100`
   - `200` -> `50`
+- Replace all instances of `SfButton` with `UiButton`.
 
 ### 🚀 New
 
 - The app now reads metadata, such as description and keywords, from the environment.
-- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`.
+- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
