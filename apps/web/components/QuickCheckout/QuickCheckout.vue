@@ -127,6 +127,7 @@ const goToPage = (path: string) => {
   closeQuickCheckout();
   navigateTo(localePath(path));
 };
+  
 const close = () => {
   closeQuickCheckout();
 };
