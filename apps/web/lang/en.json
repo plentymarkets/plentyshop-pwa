@@ -224,11 +224,13 @@
   "shippingAddressRequired": "Please select a shipping address.",
   "savedShippingAddress": "Saved shipping adresses",
   "address": "Addresses",
+  "manageAddresses": "Manage your addresses",
   "savedBillingAddress": "Saved billing adresses",
   "pickSavedAddress": "Pick saved address",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "newBillingAddress": "New billing address",
   "newShippingAddress": "New shipping address",
+  "editAddress": "Edit address",
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "contactInfo": {

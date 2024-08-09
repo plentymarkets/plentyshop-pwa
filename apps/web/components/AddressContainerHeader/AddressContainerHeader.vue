@@ -6,7 +6,7 @@
     <div class="flex justify-center">
       <AddressSelect @edit="emit('edit', $event)" @new="emit('new')" :type="type" />
       <span v-if="!editing" class="mx-2">|</span>
-      <SfTooltip label="Edit address">
+      <SfTooltip :label="$t('editAddress')">
         <UiButton
           v-if="!disabled && checkoutAddress"
           size="sm"

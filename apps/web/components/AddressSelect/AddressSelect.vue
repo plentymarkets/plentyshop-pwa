@@ -1,5 +1,5 @@
 <template>
-  <SfTooltip label="Manage your addresses">
+  <SfTooltip :label="$t('manageAddresses')">
     <UiButton size="sm" variant="tertiary" @click="open">
       {{ $t('pickSavedAddress') }}
     </UiButton>
