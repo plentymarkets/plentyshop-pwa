@@ -72,10 +72,6 @@ const setInitialDataSSR: SetInitialData = async () => {
  * ```
  */
 export const useInitialSetup: UseInitialSetupReturn = () => {
-  const state = useState<UseInitialSetupState>('useInitialSetup', () => ({
-    ssrLocale: '',
-  }));
-
   return {
     setInitialData,
     setInitialDataSSR,
