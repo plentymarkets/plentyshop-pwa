@@ -6,7 +6,7 @@
     >
       <div class="flex items-center">
         <UiButton
-          v-if="viewport.isLessThan('ld')"
+          v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
           aria-label="Close menu"
