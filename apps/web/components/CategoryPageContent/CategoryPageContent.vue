@@ -37,7 +37,7 @@
               :image-width="productGetters.getImageWidth(product) ?? 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index < 5"
-              :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+              :base-price="productGetters.getDefaultBasePrice(product)"
               :unit-content="productGetters.getUnitContent(product)"
               :unit-name="productGetters.getUnitName(product)"
               :show-base-price="productGetters.showPricePerUnit(product)"
