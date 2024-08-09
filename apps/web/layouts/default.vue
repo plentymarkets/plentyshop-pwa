@@ -8,7 +8,7 @@
       <slot />
     </main>
     <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
+      <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
       <Cookiebar />
       <PreviewMode />
     </NuxtLazyHydrate>
@@ -22,13 +22,10 @@
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
-usePageTitle();
-
 defineProps<DefaultLayoutProps>();
-
+usePageTitle();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-
 setLogoMeta();
 </script>

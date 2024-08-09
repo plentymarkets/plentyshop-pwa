@@ -63,6 +63,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
+    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
 
     state.value.loading = false;
     return state.value.data;
@@ -139,6 +140,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
     state.value.data.user = null;
     checkUserState();
+    useWishlist().setWishlistItemIds([]);
   };
 
   /** Function for registering a user.

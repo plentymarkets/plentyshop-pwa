@@ -23,7 +23,7 @@
             is-from-wishlist
             :name="productGetters.getName(product) ?? ''"
             :rating-count="productGetters.getTotalReviews(product)"
-            :rating="productGetters.getAverageRating(product)"
+            :rating="productGetters.getAverageRating(product, 'half')"
             :price="actualPrice(product)"
             :image-url="addModernImageExtension(getImageForViewport(product, 'Wishlist'))"
             :image-alt="productGetters.getName(product) ?? ''"
@@ -31,7 +31,7 @@
             :image-width="productGetters.getImageWidth(product) ?? 600"
             :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
             :priority="index < 5"
-            :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+            :base-price="productGetters.getDefaultBasePrice(product)"
             :unit-content="productGetters.getUnitContent(product)"
             :unit-name="productGetters.getUnitName(product)"
             :show-base-price="productGetters.showPricePerUnit(product)"

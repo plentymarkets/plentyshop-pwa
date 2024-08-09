@@ -78,7 +78,7 @@
     </label>
 
     <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end mt-6 gap-4">
-      <SfButton
+      <UiButton
         type="button"
         class="max-md:w-1/2"
         variant="secondary"
@@ -86,20 +86,20 @@
         @click="clearInputs"
       >
         {{ $t('contactInfo.clearAll') }}
-      </SfButton>
-      <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isCartUpdateLoading">
+      </UiButton>
+      <UiButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isCartUpdateLoading">
         <SfLoaderCircular v-if="isCartUpdateLoading" class="flex justify-center items-center" size="sm" />
         <span v-else>
           {{ $t('contactInfo.save') }}
         </span>
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
 import type { AddressFormProps } from '~/components/AddressForm/types';
 
 const { loading: loadBilling } = useAddress(AddressType.Billing);

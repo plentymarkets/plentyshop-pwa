@@ -1,7 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { validateApiUrl } from './utils/pathHelper';
-import cookieConfig from './cookie.config';
-import { nuxtI18nOptions } from './i18n.config';
+import cookieConfig from './configuration/cookie.config';
+import { nuxtI18nOptions } from './configuration/i18n.config';
+import { appConfiguration } from './configuration/app.config';
+import fetchConfiguration from './build/fetchConfiguration';
+import generateScssVariables from './build/generateScssVariables';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -9,22 +12,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  app: {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#0C7992' },
-      ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/favicon.ico' },
-      ],
-    },
-  },
+  app: appConfiguration,
   experimental: {
     asyncContext: true,
   },
@@ -52,13 +40,15 @@ export default defineNuxtConfig({
   site: {
     url: '',
   },
+  pages: true,
   hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
+    'build:before': async () => {
+      if (process.env.FETCH_REMOTE_CONFIG === '1') {
+        await fetchConfiguration();
+        generateScssVariables();
+      } else {
+        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
+      }
     },
   },
   runtimeConfig: {
@@ -74,6 +64,8 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      primaryColor: process.env.PRIMARY || '#0c7992',
+      secondaryColor: process.env.SECONDARY || '#008ebd',
     },
   },
   modules: [
@@ -135,7 +127,7 @@ export default defineNuxtConfig({
           '/reset-password-success',
           '/cart',
           '/checkout',
-          '/thank-you',
+          '/confirmation',
           '/wishlist',
           '/login',
           '/signup',
@@ -146,7 +138,7 @@ export default defineNuxtConfig({
     },
   },
   tailwindcss: {
-    configPath: '~/tailwind.config.ts',
+    configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
     siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,

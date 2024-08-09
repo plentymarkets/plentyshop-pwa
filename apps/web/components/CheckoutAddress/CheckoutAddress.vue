@@ -1,18 +1,20 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
+      <h2 class="text-neutral-900 text-lg font-bold">{{ heading }}</h2>
       <div v-if="!disabled && addressList.length > 0" class="flex items-center">
-        <SfButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
-          {{ $t('savedBillingAddress') }}
-        </SfButton>
-        <SfButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
-          {{ $t('savedShippingAddress') }}
-        </SfButton>
-        <div class="h-5 w-px bg-primary-700 mx-2"></div>
-        <SfButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
+        <UiButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedBillingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
+        </UiButton>
+        <UiButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedShippingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
+        </UiButton>
+        <div class="h-5 w-px bg-primary-500 mx-2"></div>
+        <UiButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
           {{ $t('contactInfo.edit') }}
-        </SfButton>
+        </UiButton>
       </div>
     </div>
 
@@ -22,9 +24,9 @@
 
     <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addressList.length === 0)">
       <p v-if="!displayAddress.id">{{ description }}</p>
-      <SfButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
+      <UiButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
-      </SfButton>
+      </UiButton>
     </div>
 
     <UiModal
@@ -36,9 +38,9 @@
       data-testid="checkout-pick-address-modal"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
           {{ $t('pickSavedAddress') }}
         </h3>
@@ -56,12 +58,12 @@
         />
       </div>
       <div class="flex justify-end w-full">
-        <SfButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10" @click="create">
+        <UiButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10" @click="create">
           {{ $t('newBillingAddress') }}
-        </SfButton>
-        <SfButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
+        </UiButton>
+        <UiButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
           {{ $t('newShippingAddress') }}
-        </SfButton>
+        </UiButton>
       </div>
     </UiModal>
 
@@ -75,9 +77,9 @@
       data-testid="checkout-edit-address-modal"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           {{ heading }}
         </h3>
@@ -94,7 +96,7 @@
 </template>
 <script setup lang="ts">
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
 const { isOpen: isOpenEdit, open: openEdit, close: closeEdit } = useDisclosure();
@@ -102,6 +104,7 @@ const { isOpen: isOpenPick, open: openPick, close: closePick } = useDisclosure()
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
+const viewPort = useViewport();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,

@@ -1,5 +1,5 @@
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
 
@@ -49,7 +49,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   };
 
   const loadThirdPartyScripts = (): void => {
-    if (!process.server) {
+    if (!import.meta.server) {
       state.value.data.groups.forEach((cookieGroup: CookieGroup, groupIndex: number) => {
         cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
           if (cookie.accepted) {

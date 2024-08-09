@@ -16,9 +16,14 @@
       @make-default="makeDefault(address)"
     />
 
-    <SfButton class="!block mt-6 ml-auto w-auto" variant="secondary" @click="editAddress">
-      {{ addAddressText }}
-    </SfButton>
+    <div class="col-span-3 text-center">
+      <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
+        {{ $t('account.accountSettings.noAddresses') }}
+      </h3>
+      <UiButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
+        {{ addAddressText }}
+      </UiButton>
+    </div>
 
     <UiModal
       v-model="isOpen"
@@ -28,9 +33,9 @@
       aria-labelledby="address-modal-title"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           <span v-if="userAddressGetters.getId(selectedAddress)">
             {{ editAddressText }}
@@ -51,7 +56,7 @@
 </template>
 <script lang="ts" setup>
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
 import type { AddressesListProps } from '~/components/AddressesList/types';
 
 const props = defineProps<AddressesListProps>();

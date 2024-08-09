@@ -37,27 +37,15 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
     const { isAuthorized } = useCustomer();
     const route = useRoute();
     try {
-      const feedbackCalls = [
+      const { data, error } = await useAsyncData(() =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
           page: Number(route.query.feedbackPage) || 1,
         }),
-      ];
-
-      if (variationId && isAuthorized.value) {
-        feedbackCalls.push(
-          useSdk().plentysystems.getAuthenticatedReview({
-            itemId: itemId,
-            variationId: variationId,
-          }),
-        );
-      }
-
-      await Promise.all(feedbackCalls).then((data) => {
-        const feedbacks = [...(data[1]?.data?.feedbacks || []), ...data[0].data.feedbacks];
-        state.value.data.feedbacks = feedbacks || state.value.data;
-        return true;
-      });
+      );
+      useHandleError(error.value);
+      state.value.data.feedbacks = data?.value?.data?.feedbacks ?? state.value.data.feedbacks;
+      state.value.data.pagination = data?.value?.data?.pagination ?? state.value.data.pagination;
 
       state.value.loading = false;
       return state.value.data;
@@ -72,9 +60,16 @@ export const useProductReviews: UseProductReviews = (itemId: number) => {
 
   const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {
     state.value.loading = true;
+    const { send } = useNotification();
+    const { $i18n } = useNuxtApp();
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
     useHandleError(error.value);
-    state.value.createdReview = data.value?.data ?? state.value.createdReview;
+    if (data.value?.data && typeof data.value.data === 'string') {
+      useHandleError({ message: data.value.data, statusCode: 500 });
+    } else {
+      state.value.createdReview = data.value?.data ?? state.value.createdReview;
+      send({ type: 'positive', message: $i18n.t('review.notification.success') });
+    }
     state.value.loading = false;
   };
 

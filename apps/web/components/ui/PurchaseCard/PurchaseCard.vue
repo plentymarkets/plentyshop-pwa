@@ -32,7 +32,7 @@
       />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
-          $t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
+          t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
         }}</UiTag>
       </div>
     </div>
@@ -44,13 +44,20 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-
+    <div class="mt-2 variation-properties">
+      <VariationProperties :product="product" />
+    </div>
     <div class="inline-flex items-center mt-4 mb-2">
-      <SfRating size="xs" :value="reviewGetters.getAverageRating(reviewAverage)" :max="5" />
+      <SfRating
+        size="xs"
+        :half-increment="true"
+        :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+        :max="5"
+      />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
+      <UiButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
-      </SfButton>
+      </UiButton>
     </div>
     <div
       v-if="productGetters.getShortDescription(product).length > 0"
@@ -61,9 +68,9 @@
     </div>
 
     <BundleOrderItems v-if="product.bundleComponents" :product="product" />
-    <OrderProperties v-if="product" :product="product" />
-    <ProductAttributes v-if="product" :product="product" />
-    <GraduatedPriceList v-if="product" :product="product" :count="quantitySelectorValue" />
+    <OrderProperties :product="product" />
+    <ProductAttributes :product="product" />
+    <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
     <div class="py-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
@@ -78,7 +85,7 @@
           :label="isNotValidVariation || isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
-          <SfButton
+          <UiButton
             type="submit"
             data-testid="add-to-cart"
             size="lg"
@@ -94,7 +101,7 @@
                 <SfLoaderCircular size="sm" />
               </div>
             </template>
-          </SfButton>
+          </UiButton>
         </SfTooltip>
       </div>
 
@@ -104,25 +111,33 @@
         <span v-else>{{ t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-
-      <client-only>
-        <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
-      </client-only>
+      <Suspense>
+        <template #default>
+          <PayPalExpressButton
+            v-if="getCombination()"
+            class="mt-4"
+            type="SingleItem"
+            @on-click="paypalHandleAddToCart"
+          />
+        </template>
+        <template #fallback>
+          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+        </template>
+      </Suspense>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
+import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
-const props = defineProps<PurchaseCardProps>();
-const { product } = toRefs(props);
+const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
@@ -145,22 +160,22 @@ resetAttributeFields();
 
 const currentActualPrice = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
-      productGetters.getPrice(product.value)?.special ??
-      productGetters.getPrice(product.value)?.regular ??
-      0) + getPropertiesPrice(product.value),
+    (productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
+      productGetters.getPrice(product)?.special ??
+      productGetters.getPrice(product)?.regular ??
+      0) + getPropertiesPrice(product),
 );
 
 const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.price.value ??
-  productGetters.getPrice(product.value)?.special ??
-  productGetters.getPrice(product.value)?.regular ??
+  productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
+  productGetters.getPrice(product)?.special ??
+  productGetters.getPrice(product)?.regular ??
   0;
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product.value, quantitySelectorValue.value)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(product.value),
+    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
+    productGetters.getDefaultBasePrice(product),
 );
 
 const handleAddToCart = async (quickCheckout = true) => {
@@ -189,14 +204,14 @@ const handleAddToCart = async (quickCheckout = true) => {
   }
 
   const params = {
-    productId: Number(productGetters.getId(product.value)),
+    productId: Number(productGetters.getId(product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
   };
 
   const added = await addToCart(params);
   if (added) {
-    if (quickCheckout) openQuickCheckout(product.value, quantitySelectorValue.value);
+    if (quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
     send({ message: t('addedToCart'), type: 'positive' });
   }
   return added;
@@ -226,7 +241,8 @@ const openReviewsAccordion = () => {
 
 const scrollToReviewsAccordion = () => {
   const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
-  const customerReviewsAccordionElementOffset = customerReviewsAccordionElement?.offsetTop ?? 0;
+  const customerReviewsAccordionElementOffset =
+    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
 
   const headerElement = document.querySelector('header') as HTMLElement;
   const headerElementOffset = headerElement.offsetHeight ?? 0;
@@ -237,7 +253,7 @@ const scrollToReviewsAccordion = () => {
   });
 };
 
-const isSalableText = computed(() => (productGetters.isSalable(product.value) ? '' : t('itemNotAvailable')));
+const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
 const scrollToReviews = () => {

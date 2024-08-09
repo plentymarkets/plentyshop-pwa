@@ -218,6 +218,7 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "address": "Adressen",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "pickSavedAddress": "Gespeicherte Adresse auswählen",
   "pickSavedAddressSubtitle": "Wählen Sie eine Ihrer gespeicherten Adressen oder erstellen Sie eine Neue",
@@ -377,6 +378,8 @@
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
   "showAllReviews": "Alle Bewertungen anzeigen",
+  "averageRating": "Durchschnittliche Bewertung",
+  "basedOnratings": "Basierend auf {count} Bewertung(en)",
   "moreItemsOfThisCategory": "Weitere Produkte in dieser Kategorie",
   "outOfStock": "Nicht auf Lager",
   "sale": "Verkauf",
@@ -467,7 +470,8 @@
       "shippingDetails": {
         "shippingAddress": "Lieferadresse",
         "newAddress": "Neue Lieferadresse"
-      }
+      },
+      "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
       "heading": "Bestellungen & Retouren",
@@ -522,6 +526,20 @@
       "paymentSummary": {
         "heading": "Zahlungsübersicht",
         "paymentStatus": "Zahlungsstatus"
+      },
+      "orderAgain": {
+        "heading": "Erneut kaufen",
+        "addToCart": "In den Warenkorb",
+        "subtext": "Sie können die Produkte aus dieser Bestellung erneut kaufen.",
+        "headingChanges": "Änderungen der Produkte",
+        "subtextChanges": "Seit Ihrer letzten Bestellung sind Änderungen aufgetreten",
+        "priceUp": "Preis erhöht",
+        "priceDown": "Preis gesenkt",
+        "notAvailable": "Nicht verfügbar",
+        "buyAgain": "Erneut kaufen",
+        "cancel": "Abbrechen",
+        "orderPropertyNotAvailableOrChanged": "Artikeleigenschaften geändert oder nicht mehr verfügbar",
+        "stockLimitation": "nur noch {stock} Artikel verfügbar"
       }
     },
     "wishlist": {
@@ -596,7 +614,10 @@
     "subTotal": "Zwischensumme",
     "shipping": "Lieferkosten",
     "vat": "MwSt.",
-    "total": "Summe"
+    "total": "Summe",
+    "saveOrderToAccount": "Speichern Sie diese Bestellung in Ihrem Konto",
+    "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
+    "signUp": "Registrieren"
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "asterisk": "*",

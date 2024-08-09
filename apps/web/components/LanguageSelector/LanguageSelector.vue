@@ -1,15 +1,24 @@
 <template>
   <div
-    v-if="viewport.isGreaterOrEquals('md')"
+    v-if="viewport.isGreaterOrEquals('md') && isOpen"
     data-testid="languageSelectList"
     class="absolute w-full bg-white py-10 flex flex-row items-center justify-center z-10 drop-shadow-md"
   >
-    <template v-for="locale in localeCodes" :key="locale">
-      <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'" class="mx-3 mb-2">
-        <div class="w-6 lg:w-8" v-html="flagList[locale]" />
-        <div>{{ $t(`lang.${locale}`) }}</div>
-      </LanguageButton>
-    </template>
+    <UiModal
+      v-model="isOpen"
+      tag="section"
+      class="w-full bg-white !max-h-fit relative !rounded-none"
+      aria-labelledby="language-modal"
+    >
+      <div class="flex justify-center">
+        <div v-for="locale in localeCodes" :key="locale">
+          <LanguageButton :locale="locale" :variant="locale === currentLocale ? 'primary' : 'tertiary'">
+            <div class="w-6 lg:w-8" v-html="flagList[locale]" />
+            <div>{{ $t(`lang.${locale}`) }}</div>
+          </LanguageButton>
+        </div>
+      </div>
+    </UiModal>
   </div>
 
   <div v-else data-testid="languageSelectList">
@@ -21,7 +30,7 @@
           class="mx-3 mb-2 flex items-center justify-between !text-black"
         >
           <div class="flex">
-            <div class="mr-2 w-8" v-html="flagList[locale]" />
+            <div class="mr-2 w-8" :data-testid="`flagIcon-${locale}`" v-html="flagList[locale]" />
             <div class="!text-black-500">{{ $t(`lang.${locale}`) }}</div>
           </div>
           <SfIconCheck v-if="locale === currentLocale" class="text-green-500" />

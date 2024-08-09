@@ -11,30 +11,29 @@
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddressNew
-          id="billing-address"
-          :heading="useAsShippingAddress ? `${t('billing.heading')} / ${t('shipping.heading')}` : t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          ref="checkoutAddressBillingReference"
+          :key="0"
           :type="AddressType.Billing"
+          :as-shipping-address="useAsShippingAddress"
+          id="billing-address"
+          ref="checkoutAddressBillingReference"
           @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddressNew
-          v-if="!useAsShippingAddress"
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :type="AddressType.Shipping"
-          @on-saved="
-            async () => {
-              await disableEditModeOnBillingForm();
-              loadAddresses();
-            }
-          "
-        />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <template v-if="!useAsShippingAddress">
+          <CheckoutAddressNew
+            :key="1"
+            :type="AddressType.Shipping"
+            :as-shipping-address="useAsShippingAddress"
+            id="shipping-address"
+            @on-saved="
+              () => {
+                disableEditModeOnBillingForm();
+                loadAddresses();
+              }
+            "
+          />
+          <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        </template>
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :shipping-methods="shippingMethods"
@@ -64,14 +63,13 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
-                type="Checkout"
-              />
-            </client-only>
-            <SfButton
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+              type="Checkout"
+            />
+            <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
               data-testid="place-order-button"
@@ -83,8 +81,8 @@
               <span>
                 {{ t('buy') }}
               </span>
-            </SfButton>
-            <SfButton
+            </UiButton>
+            <UiButton
               v-else
               type="submit"
               @click="order"
@@ -97,7 +95,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -116,7 +114,7 @@
 <script setup lang="ts">
 import CheckoutAddressNew from '~/components/CheckoutAddressNew/CheckoutAddressNew.vue';
 import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
@@ -170,7 +168,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
@@ -234,7 +231,7 @@ const handleRegularOrder = async () => {
 
   if (data?.order?.id) {
     clearCartItems();
-    navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
 };
 

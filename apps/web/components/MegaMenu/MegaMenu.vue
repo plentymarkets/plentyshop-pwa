@@ -1,20 +1,20 @@
 <template>
   <header ref="referenceRef" class="relative w-full h-full z-40 md:sticky md:shadow-md">
     <div
-      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-700 border-neutral-200 md:h-20 md:z-10"
+      class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-primary-500 border-neutral-200 md:h-20 md:z-10"
       data-testid="navbar-top"
     >
       <div class="flex items-center">
-        <SfButton
-          v-if="viewport.isLessThan('md')"
+        <UiButton
+          v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
           aria-label="Close menu"
-          class="block md:hidden mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-900 active:text-white"
+          class="mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-700 active:text-white"
           @click="openMenu([])"
         >
           <SfIconMenu class="text-white" />
-        </SfButton>
+        </UiButton>
 
         <NuxtLink
           :to="localePath(paths.home)"
@@ -28,9 +28,9 @@
       <slot />
     </div>
 
-    <nav v-if="viewport.isGreaterOrEquals('md')" ref="floatingRef">
+    <nav v-if="viewport.isGreaterOrEquals('lg')" ref="floatingRef">
       <ul
-        class="hidden md:flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
+        class="flex px-6 py-2 bg-white border-b border-b-neutral-200 border-b-solid"
         @blur="
           (event) => {
             if (!(event.currentTarget as Element).contains(event.relatedTarget as Element)) {
@@ -39,9 +39,11 @@
           }
         "
       >
-        <li v-for="(menuNode, index) in categoryTree" :key="index">
+        <li v-if="categoryTree.length === 0" class="h-10"></li>
+
+        <li v-else v-for="(menuNode, index) in categoryTree" :key="index">
           <NuxtLink :to="localePath(generateCategoryLink(menuNode))">
-            <SfButton
+            <UiButton
               ref="triggerReference"
               variant="tertiary"
               data-testid="category-button"
@@ -54,7 +56,7 @@
                 v-if="menuNode.childCount > 0"
                 class="rotate-90 text-neutral-500 group-hover:text-neutral-700 group-active:text-neutral-900"
               />
-            </SfButton>
+            </UiButton>
           </NuxtLink>
 
           <div
@@ -87,11 +89,14 @@
                 </ul>
               </template>
               <div v-else>
-                <p
+                <SfListItem
+                  :tag="NuxtLink"
+                  size="sm"
+                  :href="localePath(generateCategoryLink(node))"
                   class="typography-text-base font-medium text-neutral-900 whitespace-nowrap px-4 py-1.5 border-b border-b-neutral-200 border-b-solid"
                 >
                   {{ categoryTreeGetters.getName(node) }}
-                </p>
+                </SfListItem>
                 <ul class="mt-2">
                   <li v-for="child in node.children" :key="child.id">
                     <SfListItem
@@ -113,19 +118,19 @@
     </nav>
 
     <template v-else>
-      <div v-if="isOpen" class="md:hidden fixed inset-0 bg-neutral-500 bg-opacity-50" />
+      <div v-if="isOpen" class="fixed z-[50] inset-0 bg-neutral-500 bg-opacity-50" />
       <SfDrawer
         ref="drawerReference"
         v-model="isOpen"
         placement="left"
-        class="md:hidden right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
+        class="right-12 max-w-96 bg-white overflow-y-auto z-[1000]"
       >
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
             <p class="typography-text-base font-medium">Browse products</p>
-            <SfButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
+            <UiButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
               <SfIconClose class="text-neutral-500" />
-            </SfButton>
+            </UiButton>
           </div>
           <ul class="mt-2 mb-6" v-if="activeMenu">
             <li v-if="activeMenu.id !== 0">
@@ -178,7 +183,6 @@
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
-  SfButton,
   SfDrawer,
   SfListItem,
   SfIconChevronRight,

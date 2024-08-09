@@ -13,9 +13,9 @@
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
-        <SfButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </div>
     </header>
 
@@ -51,6 +51,8 @@
           <span v-else>{{ t('itemInclVAT') }}</span>
           <span>{{ t('excludedShipping') }}</span>
         </div>
+
+        <VariationProperties :product="product" />
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
@@ -61,7 +63,7 @@
           </div>
         </div>
 
-        <SfButton
+        <UiButton
           data-testid="quick-checkout-cart-button"
           @click="goToPage(paths.cart)"
           size="lg"
@@ -69,16 +71,16 @@
           variant="secondary"
         >
           {{ $t('quickCheckout.checkYourCart') }}
-        </SfButton>
+        </UiButton>
 
-        <SfButton
+        <UiButton
           data-testid="quick-checkout-checkout-button"
           @click="goToPage(paths.checkout)"
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
           {{ $t('goToCheckout') }}
-        </SfButton>
+        </UiButton>
         <div v-if="isAvailable">
           <OrDivider class="my-4" />
           <PayPalExpressButton class="w-full text-center" type="CartPreview" />
@@ -89,7 +91,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
 import { cartGetters, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';

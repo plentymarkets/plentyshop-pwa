@@ -57,14 +57,13 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
-              <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
-                type="Checkout"
-              />
-            </client-only>
-            <SfButton
+            <PayPalExpressButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              @on-click="validateTerms"
+              type="Checkout"
+            />
+            <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
               data-testid="place-order-button"
@@ -76,8 +75,8 @@
               <span>
                 {{ t('buy') }}
               </span>
-            </SfButton>
-            <SfButton
+            </UiButton>
+            <UiButton
               v-else
               type="submit"
               @click="order"
@@ -90,7 +89,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -108,13 +107,14 @@
 
 <script setup lang="ts">
 import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
+  layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
@@ -158,7 +158,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
@@ -244,7 +243,7 @@ const handleRegularOrder = async () => {
 
   if (data?.order?.id) {
     clearCartItems();
-    navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
 };
 

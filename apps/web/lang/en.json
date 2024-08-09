@@ -219,6 +219,7 @@
   "billingAddressRequired": "Please select a billing address.",
   "shippingAddressRequired": "Please select a shipping address.",
   "savedShippingAddress": "Saved shipping adresses",
+  "address": "Addresses",
   "savedBillingAddress": "Saved billing adresses",
   "pickSavedAddress": "Pick saved address",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
@@ -377,6 +378,8 @@
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
+  "averageRating": "Average rating",
+  "basedOnratings": "Based on {count} review(s)",
   "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
   "sale": "Sale",
@@ -467,7 +470,8 @@
       "shippingDetails": {
         "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
-      }
+      },
+      "noAddresses": "You don't have any addresses yet"
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",
@@ -522,6 +526,20 @@
       "paymentSummary": {
         "heading": "Payment Summary",
         "paymentStatus": "Payment status"
+      },
+      "orderAgain": {
+        "heading": "Buy again",
+        "addToCart": "Add to cart",
+        "subtext": "You can purchase the products from this order again.",
+        "headingChanges": "Change in products",
+        "subtextChanges": "Changes occured since you last ordered",
+        "priceUp": "Price increased",
+        "priceDown": "Price decreased",
+        "notAvailable": "Currently unavailable",
+        "buyAgain": "Buy again",
+        "cancel": "Cancel",
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
+        "stockLimitation": "only {stock} item(s) available"
       }
     },
     "wishlist": {
@@ -596,7 +614,10 @@
     "subTotal": "Subtotal",
     "shipping": "Shipping",
     "vat": "VAT",
-    "total": "Total"
+    "total": "Total",
+    "saveOrderToAccount": "Save this order to your account",
+    "createAccountForBenefits": "Create an account to enjoy all benefits!",
+    "signUp": "Sign up!"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "asterisk": "*",
