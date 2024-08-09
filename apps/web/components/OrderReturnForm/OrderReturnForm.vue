@@ -7,9 +7,9 @@
     aria-labelledby="return-modal-title"
   >
     <header class="mb-4">
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close()">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close()">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <div v-if="!confirmation">
       <template v-if="currentReturnOrder">
@@ -44,11 +44,11 @@
       </template>
 
       <div class="flex flex-row justify-between mt-5">
-        <SfButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </SfButton>
-        <SfButton @click="initiateReturn()">
+        <UiButton @click="close()" variant="secondary"> {{ t('returns.cancel') }} </UiButton>
+        <UiButton @click="initiateReturn()">
           {{ t('returns.initiateReturn') }}
           <SfIconArrowForward />
-        </SfButton>
+        </UiButton>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfCheckbox, SfIconArrowForward, SfIconClose } from '@storefront-ui/vue';
+import { SfCheckbox, SfIconArrowForward, SfIconClose } from '@storefront-ui/vue';
 import type { OrderReturnFormProps } from './types';
 
 defineProps<OrderReturnFormProps>();

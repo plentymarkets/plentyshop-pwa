@@ -1,6 +1,6 @@
 <template>
   <div class="text-sm py-1">
-    <span class="mr-2 text-secondary-700 font-bold font-headings text-2xl" data-testid="price">
+    <span class="mr-2 text-secondary-500 font-bold font-headings text-2xl" data-testid="price">
       {{ $n(price, 'currency') }}
       <span v-if="showNetPrices">{{ $t('asterisk') }} </span>
     </span>

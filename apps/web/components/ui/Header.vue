@@ -2,11 +2,10 @@
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
       <UiSearch class="hidden md:block flex-1" />
-
       <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
-        <SfButton
+        <UiButton
           v-if="!isLanguageSelectOpen"
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
           :aria-label="t('languageSelector')"
           variant="tertiary"
           square
@@ -16,10 +15,10 @@
           <template #prefix>
             <SfIconLanguage class="relative" />
           </template>
-        </SfButton>
-        <SfButton
+        </UiButton>
+        <UiButton
           v-else
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md cursor-pointer"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md cursor-pointer"
           :aria-label="t('languageSelector')"
           variant="tertiary"
           square
@@ -28,9 +27,9 @@
           <template #prefix>
             <SfIconLanguage class="relative" />
           </template>
-        </SfButton>
-        <SfButton
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+        </UiButton>
+        <UiButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.wishlist)"
           :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })"
@@ -42,13 +41,13 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
               data-testid="wishlist-badge"
             />
           </template>
-        </SfButton>
-        <SfButton
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+        </UiButton>
+        <UiButton
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           :tag="NuxtLink"
           :to="localePath(paths.cart)"
           :aria-label="t('numberInCart', { count: cartItemsCount })"
@@ -59,17 +58,17 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              class="outline outline-primary-700 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-900 flex justify-center"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
               data-testid="cart-badge"
             />
           </template>
-        </SfButton>
+        </UiButton>
         <SfDropdown v-if="isAuthorized" v-model="isAccountDropdownOpen" placement="bottom-end" class="z-50">
           <template #trigger>
-            <SfButton
+            <UiButton
               variant="tertiary"
-              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md"
-              :class="{ 'bg-primary-900': isAccountDropdownOpen }"
+              class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md"
+              :class="{ 'bg-primary-700': isAccountDropdownOpen }"
               @click="accountDropdownToggle()"
               data-testid="account-dropdown-button"
             >
@@ -77,7 +76,7 @@
                 <SfIconPerson />
               </template>
               {{ user.user?.firstName }}
-            </SfButton>
+            </UiButton>
           </template>
           <ul class="rounded bg-white shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2">
             <li v-for="({ label, link }, labelIndex) in accountDropdown" :key="`label-${labelIndex}`">
@@ -99,49 +98,49 @@
             </li>
           </ul>
         </SfDropdown>
-        <SfButton
+        <UiButton
           v-else
           @click="openAuthentication"
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           :aria-label="t('auth.login.openLoginForm')"
           square
         >
           <SfIconPerson />
-        </SfButton>
-        <SfButton
+        </UiButton>
+        <UiButton
           v-if="showConfigurationDrawer"
           @click="open = true"
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 mr-1 -ml-0.5 rounded-md"
+          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           aria-label="Open configuration drawer"
           square
         >
           <SfIconTune />
-        </SfButton>
+        </UiButton>
       </nav>
     </template>
 
     <div v-if="viewport.isLessThan('lg')">
-      <SfButton
+      <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
         @click="toggleLanguageSelect()"
       >
         <SfIconLanguage />
-      </SfButton>
-      <SfButton
+      </UiButton>
+      <UiButton
         variant="tertiary"
-        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-900 rounded-md md:hidden"
+        class="relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
         square
         @click="searchModalOpen"
         :aria-label="t('openSearchModalButtonLabel')"
       >
         <SfIconSearch />
-      </SfButton>
+      </UiButton>
     </div>
   </MegaMenu>
   <LanguageSelector />
@@ -154,9 +153,9 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuthentication" :is-modal="true" />
     <Register v-else @change-view="isLogin = true" @registered="closeAuthentication" :is-modal="true" />
@@ -171,9 +170,9 @@
       aria-labelledby="search-modal-title"
     >
       <header class="mb-4">
-        <SfButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
+        <UiButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
           <SfIconClose class="text-neutral-500" />
-        </SfButton>
+        </UiButton>
         <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
           {{ t('search') }}
         </h3>
@@ -187,7 +186,6 @@
 <script setup lang="ts">
 import {
   SfBadge,
-  SfButton,
   SfDropdown,
   SfIconClose,
   SfIconLanguage,

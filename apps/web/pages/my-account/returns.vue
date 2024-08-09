@@ -49,7 +49,7 @@
             <span class="block typography-text-sm mb-2">{{ orderGetters.getPaymentMethodName(order) }}</span>
           </li>
           <li>
-            <SfButton
+            <UiButton
               :to="localePath(generateOrderDetailsLink(order))"
               :tag="NuxtLink"
               size="sm"
@@ -57,7 +57,7 @@
               class="!px-0"
             >
               {{ $t('account.ordersAndReturns.details') }}
-            </SfButton>
+            </UiButton>
           </li>
           <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
         </ul>
@@ -84,14 +84,14 @@
             <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn) }}</td>
             <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
             <td>
-              <SfButton
+              <UiButton
                 :tag="NuxtLink"
                 size="sm"
                 variant="tertiary"
                 :to="localePath(generateOrderDetailsLink(orderReturn))"
               >
                 {{ $t('account.ordersAndReturns.details') }}
-              </SfButton>
+              </UiButton>
             </td>
           </tr>
         </tbody>
@@ -110,7 +110,7 @@
 
 <script setup lang="ts">
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
-import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
+import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',

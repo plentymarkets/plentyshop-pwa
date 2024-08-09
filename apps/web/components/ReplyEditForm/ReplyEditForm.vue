@@ -32,12 +32,12 @@
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
         <div class="flex justify-end gap-x-4">
-          <SfButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
+          <UiButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="$emit('on-close')">
             {{ t('review.cancel') }}
-          </SfButton>
-          <SfButton type="submit" class="flex-1 md:flex-initial">
+          </UiButton>
+          <UiButton type="submit" class="flex-1 md:flex-initial">
             {{ t('review.saveAnswer') }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </form>
@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import { reviewGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
 import type { ReplyEditFormProps } from './types';

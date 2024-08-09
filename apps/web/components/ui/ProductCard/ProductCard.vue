@@ -73,7 +73,7 @@
           {{ n(oldPrice, 'currency') }}
         </span>
       </div>
-      <SfButton
+      <UiButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -88,17 +88,17 @@
         <span v-else>
           {{ t('addToCartShort') }}
         </span>
-      </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+      </UiButton>
+      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
