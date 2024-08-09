@@ -17,14 +17,13 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <ReviewsAccordion
-            v-if="product"
-            :product="product"
-            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-            @on-list-change="fetchProductReviewAverage(Number(productId))"
-          />
+          <NuxtLazyHydrate when-visible>
+            <ReviewsAccordion
+              :product="product"
+              :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+              @on-list-change="fetchProductReviewAverage(Number(productId))"
+            />
+          </NuxtLazyHydrate>
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
@@ -39,12 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
-
-definePageMeta({
-  layout: false,
-  path: '/:slug*_:itemId',
-});
+import { type Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
 
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
@@ -52,44 +46,34 @@ const route = useRoute();
 const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
+
+definePageMeta({
+  layout: false,
+});
+
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: product, fetchProduct, setTitle, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
-
-await fetchProduct(productParams);
+if (process.server) {
+  await Promise.all([
+    fetchProduct(productParams),
+    fetchProductReviewAverage(Number(productId)),
+    fetchProductReviews(Number(productId)),
+  ]);
+  setProductMetaData(product.value, categoryTree.value[0]);
+} else {
+  await Promise.all([fetchProduct(productParams), fetchProductReviewAverage(Number(productId))]);
+}
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
-
-async function fetchReviews() {
-  const productVariationId = productGetters.getVariationId(product.value);
-  await Promise.all([
-    fetchProductReviews(Number(productId), productVariationId),
-    fetchProductReviewAverage(Number(productId)),
-  ]);
-}
-await fetchReviews();
-
-if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
-
-watch(
-  () => categoryTree.value,
-  (categoriesTree) => {
-    generateBreadcrumbs(categoriesTree);
-
-    const productCategoryId = product.value.defaultCategories?.[0]?.parentCategoryId;
-    if (categoriesTree.length > 0 && productCategoryId) {
-      const categoryTree = categoriesTree.find((categoryTree) => categoryTree.id === productCategoryId);
-      if (categoryTree) setProductMetaData(product.value, categoryTree);
-    }
-  },
-);
-
+setBreadcrumbs();
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.
  */
+
 watch(
   () => product.value.texts.urlPath,
   (value, oldValue) => {
@@ -103,21 +87,4 @@ watch(
     }
   },
 );
-
-useHead({
-  meta: [
-    {
-      name: 'title',
-      content: productGetters.getName(product.value),
-    },
-    {
-      name: 'description',
-      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
-    },
-    {
-      name: 'keywords',
-      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
-    },
-  ],
-});
 </script>

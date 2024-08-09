@@ -1,5 +1,5 @@
-import { type Breadcrumb, type CategoryTreeItem, Product, type ProductParams } from '@plentymarkets/shop-api';
-import { UseProductOrderProperties } from '../useProductOrderProperties/types';
+import type { Breadcrumb, Product, ProductParams } from '@plentymarkets/shop-api';
+import type { UseProductOrderProperties } from '~/composables/useProductOrderProperties';
 
 export interface UseProductState {
   data: Product;
@@ -8,14 +8,14 @@ export interface UseProductState {
 }
 
 export type FetchProduct = (params: ProductParams) => Promise<Product>;
-export type GenerateBreadcrumb = (categoriesTree: CategoryTreeItem[]) => void;
+export type SetBreadcrumbs = () => void;
 
 export interface UseProduct {
   data: Readonly<Ref<UseProductState['data']>>;
   loading: Readonly<Ref<boolean>>;
   breadcrumbs: Readonly<Ref<UseProductState['breadcrumbs']>>;
   fetchProduct: FetchProduct;
-  generateBreadcrumbs: GenerateBreadcrumb;
+  setBreadcrumbs: SetBreadcrumbs;
   setTitle: () => void;
   properties: UseProductOrderProperties;
 }
