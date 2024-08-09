@@ -23,14 +23,11 @@ export const useCheckoutPageAddresses = () => {
     if (event.payload[0]) {
       const cartAddress = ref();
 
-      if (cartShippingAddressId) {
-        cartAddress.value = getShipping(cartShippingAddressId);
-      }
-      if (cartAddress.value) {
-        setCheckoutAddress(cartAddress.value, true);
-      } else {
-        setCheckoutAddress(primaryAddress ?? event.payload[0]);
-      }
+      if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
+
+      cartAddress.value
+        ? setCheckoutAddress(cartAddress.value, true)
+        : setCheckoutAddress(primaryAddress ?? event.payload[0]);
     }
   });
 
@@ -42,14 +39,11 @@ export const useCheckoutPageAddresses = () => {
     if (event.payload[0]) {
       const cartAddress = ref();
 
-      if (cartBillingAddressId) {
-        cartAddress.value = getBilling(cartBillingAddressId);
-      }
-      if (cartAddress.value) {
-        setCheckoutAddress(cartAddress.value, true);
-      } else {
-        setCheckoutAddress(primaryAddress ?? event.payload[0]);
-      }
+      if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
+
+      cartAddress.value
+        ? setCheckoutAddress(cartAddress.value, true)
+        : setCheckoutAddress(primaryAddress ?? event.payload[0]);
     }
   });
 

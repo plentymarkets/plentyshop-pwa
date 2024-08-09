@@ -1,4 +1,5 @@
 import { Address, AddressType } from '@plentymarkets/shop-api';
+
 export const useAddressContainer = (type: AddressType) => {
   const isBilling = type === AddressType.Billing;
   const isShipping = type === AddressType.Shipping;
@@ -9,39 +10,14 @@ export const useAddressContainer = (type: AddressType) => {
   const showNewForm = ref(false);
 
   const sameAsShippingAddress = computed(() => {
-    if (isBilling) {
-      const { checkoutAddress: shippingAddress } = useCheckoutAddress(AddressType.Shipping);
-
-      if (checkoutAddress.value.id === shippingAddress.value.id) {
-        return true;
-      }
-    }
-    return false;
+    return isBilling
+      ? checkoutAddress.value.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value.id
+      : false;
   });
 
   const showSameAsShippingText = computed(() => {
     return sameAsShippingAddress.value && !showNewForm.value && !editing.value && shippingAsBilling.value;
   });
-
-  const handleCheckoutAddressChange = () => {
-    if (hasCheckoutAddress.value) {
-      shippingAsBilling.value = false;
-      showNewForm.value = false;
-    } else {
-      if (isBilling) {
-        showNewForm.value = false;
-      } else {
-        shippingAsBilling.value = true;
-        showNewForm.value = true;
-      }
-    }
-  };
-
-  const handleShippingAsBillingChange = () => {
-    if (isBilling && !hasCheckoutAddress.value) {
-      showNewForm.value = !shippingAsBilling.value;
-    }
-  };
 
   const edit = (address: Address) => {
     if (editing.value) {
@@ -49,16 +25,32 @@ export const useAddressContainer = (type: AddressType) => {
       showNewForm.value = false;
       return;
     }
+
     addressToEdit.value = address;
     editing.value = true;
   };
 
-  watch(checkoutAddress, handleCheckoutAddressChange, { immediate: true });
-  watch(shippingAsBilling, handleShippingAsBillingChange);
+  watch(
+    checkoutAddress,
+    () => {
+      if (hasCheckoutAddress.value) {
+        shippingAsBilling.value = false;
+        showNewForm.value = false;
+        return;
+      }
+
+      showNewForm.value = !isBilling;
+      if (!isBilling) shippingAsBilling.value = true;
+    },
+    { immediate: true },
+  );
+
+  watch(shippingAsBilling, () => {
+    if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;
+  });
+
   watch(sameAsShippingAddress, () => {
-    if (sameAsShippingAddress.value) {
-      shippingAsBilling.value = true;
-    }
+    if (sameAsShippingAddress.value) shippingAsBilling.value = true;
   });
 
   return {

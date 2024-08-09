@@ -3,7 +3,7 @@
     <h2 class="text-neutral-900 text-lg font-bold">
       {{ type === AddressType.Shipping ? $t('shipping.heading') : $t('billing.heading') }}
     </h2>
-    <div>
+    <div class="flex justify-center">
       <AddressSelect @edit="emit('edit', $event)" @new="emit('new')" :type="type" />
       <span v-if="!editing" class="mx-2">|</span>
       <SfTooltip label="Edit address">
@@ -14,7 +14,7 @@
           @click="emit('edit', checkoutAddress)"
         >
           <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
-          <SfIconClose v-else></SfIconClose>
+          <SfIconClose v-else size="sm" />
         </UiButton>
       </SfTooltip>
     </div>
@@ -25,6 +25,7 @@
 import { SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { Address, AddressType } from '@plentymarkets/shop-api';
 import { AddressContainerHeaderProps } from './types';
+
 const { disabled, type } = withDefaults(defineProps<AddressContainerHeaderProps>(), { disabled: false });
 const { checkoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);

@@ -1,9 +1,5 @@
 <template>
-  <div
-    :class="{ 'border border-primary-500 mb-4 pb-1 pt-4': isSelected }"
-    class="pl-4 pr-4 pt-1"
-    data-testid="address-data"
-  >
+  <div :class="{ 'border border-primary-500 mb-4 pt-4': isSelected }" class="pl-4 pr-4 py-1" data-testid="address-data">
     <div class="my-2 flex justify-between">
       <div class="details">
         <AddressDisplay :address="address" />
@@ -28,14 +24,18 @@
       </UiButton>
     </div>
 
-    <UiDivider v-if="!isDefault" class="col-span-3 mx-4 !w-auto md:mx-0 mt-1 mb-4" />
+    <slot v-if="showDivider">
+      <UiDivider class="col-span-3 mx-4 !w-auto md:mx-0 mt-1 mb-4" />
+    </slot>
   </div>
 </template>
+
 <script lang="ts" setup>
 import { SfIconCheckCircle } from '@storefront-ui/vue';
-import type { AddressProps } from './types';
+import { type AddressProps } from './types';
 import { userAddressGetters } from '@plentymarkets/shop-api';
 
-defineProps<AddressProps>();
+const { address, isDefault, isSelected, showDivider } = defineProps<AddressProps>();
+
 defineEmits(['on-edit', 'on-delete', 'make-default']);
 </script>

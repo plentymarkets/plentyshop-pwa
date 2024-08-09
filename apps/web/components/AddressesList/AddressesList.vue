@@ -11,6 +11,7 @@
       :address="address"
       :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
       :is-selected="defaultAddressId === Number(userAddressGetters.getId(address))"
+      :show-divider="!(defaultAddressId === Number(userAddressGetters.getId(address)))"
       @on-edit="editAddress(address)"
       @on-delete="onDelete(address)"
       @make-default="makeDefault(address)"

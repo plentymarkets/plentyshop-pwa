@@ -10,7 +10,7 @@
         name="firstName"
         autocomplete="given-name"
         v-model="firstName"
-        v-bind="firstNameAttribures"
+        v-bind="firstNameAttributes"
         :invalid="Boolean(errors['form.firstName'])"
       />
       <VeeErrorMessage as="span" name="form.firstName" class="flex text-negative-700 text-sm mt-2" />
@@ -20,7 +20,7 @@
       <SfInput
         autocomplete="family-name"
         v-model="lastName"
-        v-bind="lastNameAttribures"
+        v-bind="lastNameAttributes"
         :invalid="Boolean(errors['form.lastName'])"
       />
       <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
@@ -42,7 +42,7 @@
         name="company"
         autocomplete="company"
         v-model="company"
-        v-bind="companyAttribures"
+        v-bind="companyAttributes"
         :invalid="Boolean(errors['form.company'])"
       />
       <VeeErrorMessage as="span" name="form.company" class="flex text-negative-700 text-sm mt-2" />
@@ -52,7 +52,7 @@
         <span class="mr-1">{{ t('form.vatIdLabel') }}</span>
         <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
-      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttribures" :invalid="Boolean(errors['form.vatId'])" />
+      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['form.vatId'])" />
       <VeeErrorMessage as="span" name="form.vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
@@ -62,7 +62,7 @@
         name="streetName"
         autocomplete="address-line1"
         v-model="streetName"
-        v-bind="streetNameAttribures"
+        v-bind="streetNameAttributes"
         :invalid="Boolean(errors['form.streetName'])"
       />
       <VeeErrorMessage as="span" name="form.streetName" class="flex text-negative-700 text-sm mt-2" />
@@ -73,7 +73,7 @@
         name="streetNumber"
         autocomplete="address-line2"
         v-model="apartment"
-        v-bind="apartmentAttribures"
+        v-bind="apartmentAttributes"
         :invalid="Boolean(errors['form.apartment'])"
       />
       <VeeErrorMessage as="span" name="form.apartment" class="flex text-negative-700 text-sm mt-2" />
@@ -83,7 +83,7 @@
       <SfInput
         autocomplete="postal-code"
         v-model="zipCode"
-        v-bind="zipCodeAttribures"
+        v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['form.zipCode'])"
       />
       <VeeErrorMessage as="span" name="form.zipCode" class="flex text-negative-700 text-sm mt-2" />
@@ -94,7 +94,7 @@
         name="city"
         autocomplete="address-level2"
         v-model="city"
-        v-bind="cityAttribures"
+        v-bind="cityAttributes"
         :invalid="Boolean(errors['form.city'])"
       />
       <VeeErrorMessage as="span" name="form.city" class="flex text-negative-700 text-sm mt-2" />
@@ -104,7 +104,7 @@
       <SfSelect
         name="country"
         v-model="country"
-        v-bind="countryAttribures"
+        v-bind="countryAttributes"
         :placeholder="t('form.selectPlaceholder')"
         autocomplete="country-name"
         :invalid="Boolean(errors['form.country'])"
@@ -167,15 +167,15 @@ const { defineField, errors, values, resetForm, validate, setValues } = useForm(
   validationSchema: validationSchema,
 });
 
-const [firstName, firstNameAttribures] = defineField('form.firstName');
-const [lastName, lastNameAttribures] = defineField('form.lastName');
-const [country, countryAttribures] = defineField('form.country');
-const [streetName, streetNameAttribures] = defineField('form.streetName');
-const [apartment, apartmentAttribures] = defineField('form.apartment');
-const [city, cityAttribures] = defineField('form.city');
-const [zipCode, zipCodeAttribures] = defineField('form.zipCode');
-const [vatId, vatIdAttribures] = defineField('form.vatId');
-const [company, companyAttribures] = defineField('form.company');
+const [firstName, firstNameAttributes] = defineField('form.firstName');
+const [lastName, lastNameAttributes] = defineField('form.lastName');
+const [country, countryAttributes] = defineField('form.country');
+const [streetName, streetNameAttributes] = defineField('form.streetName');
+const [apartment, apartmentAttributes] = defineField('form.apartment');
+const [city, cityAttributes] = defineField('form.city');
+const [zipCode, zipCodeAttributes] = defineField('form.zipCode');
+const [vatId, vatIdAttributes] = defineField('form.vatId');
+const [company, companyAttributes] = defineField('form.company');
 
 if (!addAddress) {
   setValues({ form: address as any });
