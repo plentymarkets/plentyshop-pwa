@@ -4,4 +4,5 @@ export type AddressProps = {
   address: Address;
   isDefault: boolean;
   isSelected?: boolean;
+  showDivider?: boolean;
 };

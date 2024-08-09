@@ -36,7 +36,7 @@
       </div>
     </div>
 
-    <ShippingPrivacy v-if="shippingMethods" />
+    <ShippingPrivacy v-if="shippingMethods.length > 0" />
   </div>
 </template>
 <script setup lang="ts">

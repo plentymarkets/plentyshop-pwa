@@ -35,7 +35,8 @@
     "@vee-validate/yup": "^4.13.1",
     "country-flag-icons": "^1.5.12",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "eventemitter3": "^5.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
