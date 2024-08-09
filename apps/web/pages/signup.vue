@@ -69,9 +69,9 @@
 
       <p class="text-sm text-neutral-500 mt-0.5 mb-2">{{ $t('form.asterixHint') }}</p>
 
-      <SfButton type="submit" size="lg" class="w-full">
+      <UiButton type="submit" size="lg" class="w-full">
         {{ $t('auth.signup.createButton') }}
-      </SfButton>
+      </UiButton>
     </form>
 
     <UiModal
@@ -111,16 +111,16 @@
       </UiAlert>
 
       <footer class="flex justify-end">
-        <SfButton :tag="NuxtLink" :to="localePath(paths.home)" class="w-full">
+        <UiButton :tag="NuxtLink" :to="localePath(paths.home)" class="w-full">
           {{ $t('auth.signup.modal.button') }}
-        </SfButton>
+        </UiButton>
       </footer>
     </UiModal>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfCheckbox, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfLink, useDisclosure } from '@storefront-ui/vue';
 
 definePageMeta({
   layout: false,

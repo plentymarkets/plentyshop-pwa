@@ -6,7 +6,7 @@
         class="fixed z-50 w-fit h-fit bottom-[7.3rem] md:bottom-14 left-2 xl:left-auto xl:right-2 shadow-2xl p-3 bg-white rounded overflow-auto"
       >
         <div class="w-full flex flex-col">
-          <SfButton
+          <UiButton
             v-for="(cookieName, index) in foundCookies"
             :key="index"
             class="w-full"
@@ -17,24 +17,24 @@
             @click="removeLookupCookie(index)"
           >
             {{ $t(`PreviewModeBar.${cookieName}`) }}
-          </SfButton>
+          </UiButton>
         </div>
       </div>
 
-      <SfButton
+      <UiButton
         variant="secondary"
         class="z-10 fixed bottom-[4.3rem] md:bottom-2 left-16 right-auto xl:right-16 xl:left-auto bg-white !py-1"
         :aria-label="$t('PreviewModeBar.label')"
         @click="bannerIsHidden = !bannerIsHidden"
       >
         <SfIconVisibility class="my-1" />
-      </SfButton>
+      </UiButton>
     </div>
   </client-only>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconVisibility } from '@storefront-ui/vue';
+import { SfIconVisibility } from '@storefront-ui/vue';
 import type { RemoveLookupCookie } from './types';
 
 const bannerIsHidden = ref(true);

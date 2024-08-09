@@ -31,7 +31,7 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
-            <SfButton
+            <UiButton
               type="submit"
               @click="order"
               :disabled="createOrderLoading || cartLoading || executeOrderLoading"
@@ -46,7 +46,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -56,7 +56,7 @@
 
 <script lang="ts" setup>
 import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
   pageType: 'static',

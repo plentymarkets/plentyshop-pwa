@@ -2064,15 +2064,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@effective/color@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@effective/color@npm:1.0.1"
-  dependencies:
-    culori: ^4.0.1
-  checksum: 24abea88d2c67b6df15db3193a64a58caf908a01cbf6577779c8665d3579e8f8fc83466c856dc18ad5347d2c8c0574cc0e9e652cd611a427d99b0c0662f04e38
-  languageName: node
-  linkType: hard
-
 "@esbuild/aix-ppc64@npm:0.20.2":
   version: 0.20.2
   resolution: "@esbuild/aix-ppc64@npm:0.20.2"
@@ -4551,6 +4542,15 @@ __metadata:
     axios: ^1.6.3
     consola: ^3.0.0
   checksum: ea3e62721deac98394d6fd56a038c20bbf84ac32c87cd66211941c49c6638cc7d16347094a634fe5aced6305bffb7eb0a34f2f24bae2ec0f203bde098afbbb54
+  languageName: node
+  linkType: hard
+
+"@plentymarkets/tailwind-colors@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@plentymarkets/tailwind-colors@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Ftailwind-colors%2F1.0.0%2F00e412f7c1cd700b914e1e6aacda2ac475980a72"
+  dependencies:
+    nanoid: ^3.3.1
+  checksum: db93ef46647a958eb18148008ff732854b238359333d37c22866d3c1d1b57c8d43dda40a9577b8637801a00fb7e47c0f316df44cc79577f73d23e6744589387e
   languageName: node
   linkType: hard
 
@@ -9615,13 +9615,6 @@ __metadata:
   version: 3.1.3
   resolution: "csstype@npm:3.1.3"
   checksum: 8db785cc92d259102725b3c694ec0c823f5619a84741b5c7991b8ad135dfaa66093038a1cc63e03361a6cd28d122be48f2106ae72334e067dd619a51f49eddf7
-  languageName: node
-  linkType: hard
-
-"culori@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "culori@npm:4.0.1"
-  checksum: 73af42280b3496de9c6a98c3b8689664376a014c0a51afbe80ce442773ec197fcc94f39908e7b805a7e722432395ffebaa1c6e4312b9da44032cbca906fbce49
   languageName: node
   linkType: hard
 
@@ -15431,7 +15424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.4, nanoid@npm:^3.3.7":
+"nanoid@npm:^3.3.1, nanoid@npm:^3.3.4, nanoid@npm:^3.3.7":
   version: 3.3.7
   resolution: "nanoid@npm:3.3.7"
   bin:
@@ -21497,7 +21490,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:apps/web"
   dependencies:
-    "@effective/color": ^1.0.1
     "@nuxt/image": ^1.7.0
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/google-fonts": ^3.2.0
@@ -21506,6 +21498,7 @@ __metadata:
     "@nuxtjs/tailwindcss": ^6.12.0
     "@nuxtjs/turnstile": ^0.8.0
     "@pinia/nuxt": ^0.5.1
+    "@plentymarkets/tailwind-colors": ^1.0.0
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
     "@storefront-ui/vue": ^2.6.3
@@ -21521,7 +21514,6 @@ __metadata:
     "@vue/test-utils": ^2.4.6
     "@vueuse/core": ^10.11.0
     axios: ^1.7.2
-    culori: ^4.0.1
     cypress: 12.17.4
     cypress-real-events: ^1.13.0
     cypress-wait-until: ^2.0.1
