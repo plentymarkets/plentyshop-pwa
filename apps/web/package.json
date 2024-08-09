@@ -24,15 +24,13 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
-    "@plentymarkets/tailwind-colors": "^1.0.0",
     "@effective/color": "^1.0.1",
-    "@pinia/nuxt": "^0.5.1",
+    "@plentymarkets/tailwind-colors": "^1.0.0",
     "@vue-storefront/sdk": "^1.5.0",
     "@vueuse/core": "^10.11.0",
     "axios": "^1.7.2",
     "lodash-es": "^4.17.21",
     "nuxt-lazy-hydrate": "^1.0.0",
-    "pinia": "^2.1.7",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

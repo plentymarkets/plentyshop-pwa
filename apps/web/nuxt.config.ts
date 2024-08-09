@@ -78,7 +78,6 @@ export default defineNuxtConfig({
     '@nuxtjs/turnstile',
     'nuxt-lazy-hydrate',
     'nuxt-viewport',
-    '@pinia/nuxt',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
