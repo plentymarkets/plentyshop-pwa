@@ -16,7 +16,7 @@ export interface UseProduct {
   breadcrumbs: Readonly<Ref<UseProductState['breadcrumbs']>>;
   fetchProduct: FetchProduct;
   generateBreadcrumbs: GenerateBreadcrumb;
-  setTitle: () => void;
+  setProductMeta: () => void;
   properties: UseProductOrderProperties;
 }
 
