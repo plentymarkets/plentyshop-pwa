@@ -75,6 +75,5 @@ export const useInitialSetup: UseInitialSetupReturn = () => {
   return {
     setInitialData,
     setInitialDataSSR,
-    ...toRefs(state.value),
   };
 };
