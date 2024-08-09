@@ -63,14 +63,11 @@
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ n(cheapestPrice ?? mainPrice, 'currency') }}</span>
+          <span>{{ n(price, 'currency') }}</span>
           <span v-if="showNetPrices">{{ t('asterisk') }} </span>
         </span>
-        <span
-          v-if="oldPrice && oldPrice !== mainPrice"
-          class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2"
-        >
-          {{ n(oldPrice, 'currency') }}
+        <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
+          {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
       <UiButton
@@ -100,6 +97,7 @@
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { getCrossedPrice, getPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -165,18 +163,15 @@ const addWithLoader = async (productId: number) => {
   }
 };
 
-const mainPrice = computed(() => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
+const specialOffer = getSpecialOffer(product);
 
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
+const price = computed(() =>
+  specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
+    ? specialOffer
+    : productGetters.getCheapestGraduatedPrice(product),
+);
 
-  return 0;
-});
-
-const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
-const oldPrice = productGetters.getRegularPrice(product);
+const crossedPrice = computed(() => (specialOffer ? getPrice(product) : getCrossedPrice(product)) || undefined);
 const NuxtLink = resolveComponent('NuxtLink');
 
 watch(
