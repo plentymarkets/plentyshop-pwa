@@ -53,13 +53,22 @@ const { selectVariation } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: product, fetchProduct, setProductMeta, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
-setTitle();
+setProductMeta();
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+  await Promise.all([
+    fetchProductReviews(Number(productId), productVariationId),
+    fetchProductReviewAverage(Number(productId)),
+  ]);
+}
+await fetchReviews();
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
@@ -103,21 +112,4 @@ watch(
     }
   },
 );
-
-useHead({
-  meta: [
-    {
-      name: 'title',
-      content: productGetters.getName(product.value),
-    },
-    {
-      name: 'description',
-      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
-    },
-    {
-      name: 'keywords',
-      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
-    },
-  ],
-});
 </script>

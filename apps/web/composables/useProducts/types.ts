@@ -1,22 +1,23 @@
-import type { Facet, FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
+import { type Breadcrumb, type CategoryTreeItem, Product, type ProductParams } from '@plentymarkets/shop-api';
+import { UseProductOrderProperties } from '../useProductOrderProperties/types';
 
-export interface UseProductsState {
-  data: Facet;
+export interface UseProductState {
+  data: Product;
   loading: boolean;
-  productsPerPage: number;
-  selectedVariation: Product;
+  breadcrumbs: Breadcrumb[];
 }
 
-export type FetchProducts = (params: FacetSearchCriteria) => Promise<Facet>;
-export type SelectVariation = (product: Product) => void;
+export type FetchProduct = (params: ProductParams) => Promise<Product>;
+export type GenerateBreadcrumb = (categoriesTree: CategoryTreeItem[]) => void;
 
-export interface UseProducts {
-  data: Readonly<Ref<UseProductsState['data']>>;
+export interface UseProduct {
+  data: Readonly<Ref<UseProductState['data']>>;
   loading: Readonly<Ref<boolean>>;
-  productsPerPage: Readonly<Ref<number>>;
-  selectedVariation: Readonly<Ref<UseProductsState['selectedVariation']>>;
-  fetchProducts: FetchProducts;
-  selectVariation: SelectVariation;
+  breadcrumbs: Readonly<Ref<UseProductState['breadcrumbs']>>;
+  fetchProduct: FetchProduct;
+  generateBreadcrumbs: GenerateBreadcrumb;
+  setProductMeta: () => void;
+  properties: UseProductOrderProperties;
 }
 
-export type UseProductsReturn = () => UseProducts;
+export type UseProductReturn = (slug: string) => UseProduct;
