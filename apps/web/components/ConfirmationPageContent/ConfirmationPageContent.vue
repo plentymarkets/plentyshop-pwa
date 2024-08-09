@@ -46,9 +46,9 @@
             {{ t('orderConfirmation.saveOrderToAccount') }}
           </div>
           <div class="font-bold text-center mt-3">{{ t('orderConfirmation.createAccountForBenefits') }}</div>
-          <SfButton variant="primary" class="mt-5 mb-5" @click="isAuthenticationOpen = true">
+          <UiButton variant="primary" class="mt-5 mb-5" @click="isAuthenticationOpen = true">
             {{ t('orderConfirmation.signUp') }}
-          </SfButton>
+          </UiButton>
         </div>
 
         <OrderDocumentsList :order="order" />
@@ -61,9 +61,9 @@
       </div>
     </div>
 
-    <SfButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('continueShopping') }}
-    </SfButton>
+    </UiButton>
   </div>
 
   <UiModal
@@ -74,9 +74,9 @@
     aria-labelledby="login-modal"
   >
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication()">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication()">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <Register
       @registered="closeAuthentication"
@@ -90,7 +90,7 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');

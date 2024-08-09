@@ -1,7 +1,7 @@
 <template>
   <div class="inline-flex flex-col items-center" data-testid="quantity-selector">
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
-      <SfButton
+      <UiButton
         variant="tertiary"
         :disabled="disabled || count <= minValue"
         square
@@ -12,7 +12,7 @@
         @click="dec()"
       >
         <SfIconRemove />
-      </SfButton>
+      </UiButton>
       <input
         :id="inputId"
         v-model="count"
@@ -27,7 +27,7 @@
         @input="handleOnChange"
         :disabled="disabled"
       />
-      <SfButton
+      <UiButton
         variant="tertiary"
         :disabled="disabled || count >= maxValue"
         square
@@ -38,14 +38,14 @@
         @click="inc()"
       >
         <SfIconAdd />
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfButton, SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
+import { SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
 import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
 

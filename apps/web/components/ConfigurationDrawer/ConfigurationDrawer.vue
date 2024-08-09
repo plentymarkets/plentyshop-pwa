@@ -19,11 +19,11 @@
         { 'min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
-      <header class="flex items-center justify-between px-10 py-6 bg-primary-700">
+      <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white"><SfIconTune class="mr-2" /> App Settings</div>
-        <SfButton square variant="tertiary" class="text-white" @click="open = false">
+        <UiButton square variant="tertiary" class="text-white" @click="open = false">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </header>
       <div class="px-5 py-5">
         <h3>Theme</h3>
@@ -58,20 +58,15 @@
 </template>
 
 <script setup lang="ts">
-import {
-  SfDrawer,
-  SfButton,
-  SfIconClose,
-  SfIconTune,
-  SfDrawerPlacement,
-  useTrapFocus,
-  SfCheckbox,
-} from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, SfIconTune, SfDrawerPlacement, useTrapFocus, SfCheckbox } from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();
-const primaryColorReference = ref();
-const secondaryColorReference = ref();
+
+const runtimeConfig = useRuntimeConfig();
+const primaryColorReference = ref(runtimeConfig.public.primaryColor);
+const secondaryColorReference = ref(runtimeConfig.public.secondaryColor);
+
 const { open, updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
 const { showNames } = useNewsletter();
 

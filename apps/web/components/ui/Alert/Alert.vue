@@ -26,7 +26,7 @@ const classes = computed(() => [
   {
     [`text-black ${props.strong ? 'bg-positive-600' : 'bg-positive-100'}`]: props.variant === 'positive',
     [`text-black ${props.strong ? 'bg-negative-600' : 'bg-negative-100'}`]: props.variant === 'negative',
-    [`text-black ${props.strong ? 'bg-secondary-800' : 'bg-secondary-100'}`]: props.variant === 'secondary',
+    [`text-black ${props.strong ? 'bg-secondary-600' : 'bg-secondary-100'}`]: props.variant === 'secondary',
     [`text-black border border-neutral-200 ${props.strong ? 'bg-neutral-600' : 'bg-neutral-100'}`]:
       props.variant === 'neutral',
     [`text-black ${props.strong ? 'bg-warning-600' : 'bg-warning-100'}  `]: props.variant === 'warning',
