@@ -1,5 +1,5 @@
 <template>
-  <SfButton
+  <UiButton
     data-testid="save-address"
     type="button"
     class="min-w-[120px] ml-auto my-2"
@@ -10,12 +10,12 @@
     <span v-else>
       {{ $t('contactInfo.save') }}
     </span>
-  </SfButton>
+  </UiButton>
 </template>
 
 <script setup lang="ts">
 import { type SaveAddressButtonProps } from './types';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 defineProps<SaveAddressButtonProps>();
 </script>

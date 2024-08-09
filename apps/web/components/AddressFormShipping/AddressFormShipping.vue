@@ -120,7 +120,7 @@
       <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
     </label>
     <div class="md:col-span-3 flex">
-      <SfButton
+      <UiButton
         type="button"
         class="max-md:w-1/2 ml-auto"
         variant="tertiary"
@@ -129,14 +129,14 @@
         @click="resetForm"
       >
         {{ t('contactInfo.clearAll') }}
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { Address, AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
+import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 

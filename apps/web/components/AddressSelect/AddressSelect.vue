@@ -1,8 +1,8 @@
 <template>
   <SfTooltip label="Manage your addresses">
-    <SfButton size="sm" variant="tertiary" @click="open">
+    <UiButton size="sm" variant="tertiary" @click="open">
       {{ $t('pickSavedAddress') }}
-    </SfButton>
+    </UiButton>
   </SfTooltip>
 
   <UiModal
@@ -13,9 +13,9 @@
     data-testid="checkout-pick-address-modal"
   >
     <header>
-      <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
         {{ $t('pickSavedAddress') }}
       </h3>
@@ -36,7 +36,7 @@
       />
     </div>
     <div class="flex justify-end w-full">
-      <SfButton
+      <UiButton
         variant="secondary"
         class="mt-10"
         @click="
@@ -45,7 +45,7 @@
         "
       >
         {{ type === AddressType.Shipping ? $t('newShippingAddress') : $t('newBillingAddress') }}
-      </SfButton>
+      </UiButton>
     </div>
   </UiModal>
 </template>
@@ -54,7 +54,7 @@
 import { type AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
-import { SfIconClose, SfButton, useDisclosure, SfTooltip } from '@storefront-ui/vue';
+import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 const { type } = defineProps<AddressSelectProps>();
 const { addresses } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);

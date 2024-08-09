@@ -111,7 +111,7 @@
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
     <div class="md:col-span-3 flex">
-      <SfButton
+      <UiButton
         type="button"
         class="max-md:w-1/2 ml-auto"
         variant="tertiary"
@@ -120,14 +120,14 @@
         @click="resetForm"
       >
         {{ t('contactInfo.clearAll') }}
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { SfButton, SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
+import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 
