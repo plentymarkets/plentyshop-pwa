@@ -38,6 +38,7 @@
 - Wrong display of base prices (https://github.com/plentymarkets/plentyshop-pwa/pull/597)
 - Checkout address buttons in the mobile view have been adjusted (https://github.com/plentymarkets/plentyshop-pwa/pull/574)
 - Accessing category URLs could result in 404 if the language cookie was not set, this has been fixed. (https://github.com/plentymarkets/plentyshop-pwa/pull/602)
+- The side navigation of the automatically generated composables documentation now contains the correct links.
 
 ### 👷 Changed
 

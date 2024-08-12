@@ -30,13 +30,14 @@ v1.6.0 (2024-08-12) <a href="https://github.com/plentymarkets/plentyshop-pwa/com
 - Der REST-Aufruf zum Abrufen der Remote-Konfiguration im Build-Prozess (https://github.com/plentymarkets/plentyshop-pwa/pull/567)
 - Middleware-Aufrufe, die in einer Endlosschleife stecken bleiben (https://github.com/plentymarkets/plentyshop-pwa/pull/576)
 - Doppelte Tailwind-Importe (https://github.com/plentymarkets/plentyshop-pwa/pull/579)
-- Toter Bereich im Viewport für die Navigationsleiste (https://github.com/plentymarkets/plentyshop-pwa/pull/593)
+- Problem behoben, bei dem die Navigationsleiste zwischen 640px und 767px verschwunden ist. (https://github.com/plentymarkets/plentyshop-pwa/pull/593)
 - Kategorie-URL mit Trailing Slash am Ende führt zu 404 (https://github.com/plentymarkets/plentyshop-pwa/pull/586)
 - Fehlende Linkfarbe bei Artikelvariationen (https://github.com/plentymarkets/plentyshop-pwa/pull/589)
 - Paginierung wurde nicht immer aktualisiert (https://github.com/plentymarkets/plentyshop-pwa/pull/591)
 - Falsche Anzeige von Grundpreisen (https://github.com/plentymarkets/plentyshop-pwa/pull/597)
 - Checkout-Adressbuttons in der mobilen Ansicht wurden angepasst (https://github.com/plentymarkets/plentyshop-pwa/pull/574)
 - Der Zugriff auf Kategorie-URLs konnte zu 404 führen, wenn das Sprach-Cookie nicht gesetzt war, dies wurde behoben. (https://github.com/plentymarkets/plentyshop-pwa/pull/602)
+- In der automatisch generierten Dokumentation von Composables enthält die Seitennavigation jetzt die richtigen Verlinkungen.
 
 ### 👷 Geändert
 
