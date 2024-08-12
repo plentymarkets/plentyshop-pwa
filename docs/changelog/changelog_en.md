@@ -34,6 +34,7 @@
 - Added link color on item variation properties
 - Fixed pagination issues with reactivity.
 - Fixed wrongful display of base prices issue.
+- Fixed setting the vsf-locale cookie on ssr.
 
 ### 👷 Changed
 
