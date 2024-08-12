@@ -2,6 +2,9 @@ import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
+// import { categoryTreeGetters, type CategoryTreeItem, Product, type ProductParams } from '@plentymarkets/shop-api';
+// import { productGetters } from '@plentymarkets/shop-api';
+// import { type UseProductReturn, UseProductState, type FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
 
@@ -50,9 +53,9 @@ export const useProduct: UseProductReturn = (slug) => {
    */
   const setBreadcrumbs = () => {
     const { data: categoryTree } = useCategoryTree();
-    const { t } = useI18n();
+    const { $i18n } = useNuxtApp();
 
-    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, t('home'));
+    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, $i18n.t('home'));
   };
 
   /**
