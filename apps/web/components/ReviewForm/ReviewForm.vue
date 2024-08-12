@@ -68,14 +68,19 @@ import { SfRatingButton, SfTextarea, SfInput, useId } from '@storefront-ui/vue';
 import { object, string, number } from 'yup';
 import { useForm } from 'vee-validate';
 import type { ReviewFormProps } from './types';
-import { reviewGetters } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<ReviewFormProps>(), { reviewItem: null });
 const { reviewItem } = toRefs(props);
 const { t } = useI18n();
+const { currentProduct } = useProducts();
+const { createProductReview, setProductReview } = useProductReviews(
+  Number(productGetters.getItemId(currentProduct.value)),
+  productGetters.getVariationId(currentProduct.value),
+);
 
-const emits = defineEmits(['on-close', 'on-submit']);
+const emits = defineEmits(['on-close']);
 
 const validationSchema = toTypedSchema(
   object({
@@ -84,7 +89,7 @@ const validationSchema = toTypedSchema(
       .default(reviewItem.value ? reviewGetters.getReviewRating(reviewItem.value as unknown as ReviewItem) : null),
     title: string()
       .required(t('review.validation.titleRequired'))
-      .default(reviewItem.value ? reviewGetters.getReviewTitle(reviewItem.value as unknown as ReviewItem) : ''),
+      .default(reviewGetters.getReviewTitle(reviewItem.value ?? ({} as ReviewItem))),
     message: string()
       .optional()
       .max(500, t('review.validation.textareaMaxLength'))
@@ -110,18 +115,24 @@ const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.
 
 onMounted(() => (ratingLabelId.value = useId()));
 
-const sendReview = async () => {
-  const form = {
+const sendReview = () => {
+  const params = {
     type: 'review',
-    targetId: 0,
-    feedbackId: reviewItem.value ? reviewGetters.getReviewId(reviewItem.value as unknown as ReviewItem) : 0,
-    ratingValue: ratingValue.value,
-    title: title.value,
+    targetId: productGetters.getVariationId(currentProduct.value),
+    ratingValue: ratingValue.value ?? 0,
+    title: title.value || '',
     message: message.value,
     authorName: authorName.value,
+    feedbackId: Number(reviewGetters.getReviewId(reviewItem.value ?? ({} as ReviewItem))),
   };
 
-  emits('on-submit', form);
+  if (reviewItem.value) {
+    setProductReview(params);
+  } else {
+    createProductReview(params);
+  }
+
+  emits('on-close');
 };
 
 const onSubmit = handleSubmit(() => sendReview());

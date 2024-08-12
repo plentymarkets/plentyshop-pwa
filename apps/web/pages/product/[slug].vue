@@ -20,10 +20,7 @@
           <ReviewsAccordion
             v-if="product"
             :product="product"
-            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
             :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-            @on-list-change="fetchProductReviewAverage(Number(productId))"
           />
         </section>
       </div>
@@ -49,16 +46,16 @@ definePageMeta({
 const { data: categoryTree } = useCategoryTree();
 const { setProductMetaData } = useStructuredData();
 const route = useRoute();
-const { selectVariation } = useProducts();
+const { setCurrentProduct } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
 const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
-selectVariation(productParams.variationId ? product.value : ({} as Product));
+setCurrentProduct(product.value || ({} as Product));
 setTitle();
 
 async function fetchReviews() {
@@ -71,6 +68,10 @@ async function fetchReviews() {
 await fetchReviews();
 
 if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
+
+onUnmounted(() => {
+  clearNuxtState(`useProductReviews-${Number(productId)}`);
+});
 
 watch(
   () => categoryTree.value,

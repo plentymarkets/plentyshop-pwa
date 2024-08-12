@@ -185,10 +185,11 @@ import {
   type ReviewItem,
   type UpdateReviewParams,
   reviewGetters,
+  productGetters,
 } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
-const emits = defineEmits(['on-submit', 'review-updated', 'review-deleted']);
+const emits = defineEmits(['on-submit']);
 const { send } = useNotification();
 const { t } = useI18n();
 const { reviewItem } = toRefs(props);
@@ -202,8 +203,9 @@ const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit }
 const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
 const { isOpen: isReplyDeleteOpen, open: openReplyDelete, close: closeReplyDelete } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
+const { currentProduct } = useProducts();
 const { deleteProductReview, setProductReview } = useProductReviews(
-  Number(reviewItem.value.targetRelation.feedbackRelationTargetId),
+  Number(productGetters.getItemId(currentProduct.value)),
 );
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
@@ -222,12 +224,12 @@ const isEditable = computed(
 
 const deleteReview = async () => {
   closeDeleteReview();
-  if (reviewItem.value.id) await deleteProductReview(reviewItem.value.id).then(() => emits('review-deleted'));
+  if (reviewItem.value.id) await deleteProductReview(reviewItem.value.id);
 };
 
 const editReview = async (form: UpdateReviewParams) => {
   closeReviewEdit();
-  await setProductReview(form).then(() => emits('review-updated'));
+  await setProductReview(form);
   send({ type: 'positive', message: t('review.notification.success') });
 };
 
@@ -244,7 +246,7 @@ const openReplyEditor = (item: ReviewItem) => {
 
 const editReply = async (form: UpdateReviewParams) => {
   closeReplyEdit();
-  await setProductReview(form).then(() => emits('review-updated'));
+  await setProductReview(form);
   send({ type: 'positive', message: t('review.notification.answerSuccess') });
 };
 
@@ -255,6 +257,6 @@ const openReplyDeletion = (item: ReviewItem) => {
 
 const deleteReply = async () => {
   closeReplyDelete();
-  if (replyItem.value.id) await deleteProductReview(replyItem.value.id).then(() => emits('review-deleted'));
+  if (replyItem.value.id) await deleteProductReview(replyItem.value.id);
 };
 </script>
