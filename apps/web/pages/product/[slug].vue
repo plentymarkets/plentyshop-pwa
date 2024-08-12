@@ -32,6 +32,8 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
+
+    <UiReviewModal />
   </NuxtLayout>
 </template>
 
