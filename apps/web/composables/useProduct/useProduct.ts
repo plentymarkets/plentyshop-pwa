@@ -2,9 +2,6 @@ import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { toRefs } from '@vueuse/shared';
 import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
-// import { categoryTreeGetters, type CategoryTreeItem, Product, type ProductParams } from '@plentymarkets/shop-api';
-// import { productGetters } from '@plentymarkets/shop-api';
-// import { type UseProductReturn, UseProductState, type FetchProduct } from '~/composables/useProduct/types';
 
 import { generateBreadcrumbs } from '~/utils/productHelper';
 
