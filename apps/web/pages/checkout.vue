@@ -111,10 +111,9 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { t } = useI18n();
-const { getActiveShippingCountries } = useActiveShippingCountries();
 
 await getCart();
-await getActiveShippingCountries();
+await useActiveShippingCountries().getActiveShippingCountries();
 
 const {
   loadPayment,

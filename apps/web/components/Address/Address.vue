@@ -1,5 +1,9 @@
 <template>
-  <div :class="[isSelected ? 'border border-primary-500 mb-4' : 'mb-4']" class="px-4 py-1" data-testid="address-data">
+  <div
+    :class="{ 'border border-primary-500': isSelected }"
+    class="px-4 py-1 mb-4 rounded-md"
+    data-testid="address-data"
+  >
     <div class="my-2 flex justify-between">
       <div class="details">
         <AddressDisplay :address="address" />
