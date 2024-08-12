@@ -12,7 +12,7 @@
       <div v-else class="flex justify-start items-center mb-10 mt-4">
         <h1 class="font-bold typography-headline-3">{{ currentSectionLabel }}</h1>
 
-        <SfButton
+        <UiButton
           :tag="NuxtLink"
           :to="localePath(paths.account)"
           class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
@@ -23,7 +23,7 @@
             <SfIconArrowBack />
           </template>
           {{ t('account.back') }}
-        </SfButton>
+        </UiButton>
       </div>
 
       <NuxtLazyHydrate when-visible>
@@ -94,7 +94,6 @@ import {
   SfIconPerson,
   SfIconShoppingCart,
   SfListItem,
-  SfButton,
   SfIconArrowBack,
   SfIconChevronRight,
   SfIconFavorite,

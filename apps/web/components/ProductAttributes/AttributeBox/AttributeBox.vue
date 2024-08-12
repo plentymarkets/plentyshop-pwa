@@ -13,7 +13,7 @@
         class="border h-12 border-zinc-300 rounded-md cursor-pointer hover:bg-[#3C3C4226]"
         :class="{
           'text-zinc-400 border-dashed': productAttributeGetters.isAttributeValueDisabled(item),
-          '!border-primary-700 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
+          '!border-primary-500 bg-zinc-100': value === productAttributeGetters.getAttributeValueId(item),
           '!ring-negative-700 !border-negative-700 ring-1': Boolean(errors['selectedValue']),
         }"
         @click="doUpdateValue(productAttributeGetters.getAttributeValueId(item))"
