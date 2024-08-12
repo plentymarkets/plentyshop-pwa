@@ -69,10 +69,6 @@ await fetchReviews();
 
 if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
 
-onUnmounted(() => {
-  clearNuxtState(`useProductReviews-${Number(productId)}`);
-});
-
 watch(
   () => categoryTree.value,
   (categoriesTree) => {

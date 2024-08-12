@@ -19,7 +19,7 @@ import type {
  * ```
  */
 export const useProductReviews: UseProductReviews = (itemId: number, productVariationId?: number) => {
-  const state = useState<UseProductReviewsState>(`useProductReviews-${itemId}`, () => ({
+  const state = useState<UseProductReviewsState>('useProductReviews', () => ({
     data: {} as Review,
     loading: false,
     createdReview: {} as Review,
