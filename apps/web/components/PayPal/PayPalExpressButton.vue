@@ -1,5 +1,6 @@
 <template>
   <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
+  <ApplePayButton totalAmount="10" currenyCode="EUR" onPaymentSuccess="" onPaymentError="" />
 </template>
 
 <script setup lang="ts">
