@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.6.0
+v1.6.0 (2024-08-12) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### TODO 📙 Migrationsanleitung
 
@@ -20,19 +20,35 @@
 
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
-- Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
-- PayPal-Button für PS Lazyload
-
-### Geändert
-
-- Die Konfigurationsdateien für App-, Cookie-, Internationalisierungs- und Tailwind-Einstellungen befinden sich jetzt im Ordner `apps/web/configuration`.
-- Url der Bestellbestätigungsseite von `.../thank-you?[...]` zu `.../confirmation/orderId/accessKey` geändert.
+- Der "Bestellung erneut"-Dialog unterstützt und zeigt Bestelleigenschaften (https://github.com/plentymarkets/plentyshop-pwa/pull/573)
+- Dynamische Metadaten für Produkte und Kategorien (https://github.com/plentymarkets/plentyshop-pwa/pull/582)
+- Artikelbestand wird vor dem "Bestellung erneut"-Dialog überprüft (https://github.com/plentymarkets/plentyshop-pwa/pull/592)
 
 ### 🩹 Behoben
 
-- Ein Fehler beim REST-Aufruf zur Abfrage der Systemkonfiguration wurde behoben.
-- Die Schaltflächen bei den Adressen in der Kasse wurden in der mobilen Ansicht angepasst.
-- Problem behoben, bei dem die Navigationsleiste zwischen 640px und 767px verschwunden ist.
+- PayPal-Skriptladeblockierung des Hauptthreads (https://github.com/plentymarkets/plentyshop-pwa/pull/577)
+- Der REST-Aufruf zum Abrufen der Remote-Konfiguration im Build-Prozess (https://github.com/plentymarkets/plentyshop-pwa/pull/567)
+- Middleware-Aufrufe, die in einer Endlosschleife stecken bleiben (https://github.com/plentymarkets/plentyshop-pwa/pull/576)
+- Doppelte Tailwind-Importe (https://github.com/plentymarkets/plentyshop-pwa/pull/579)
+- Toter Bereich im Viewport für die Navigationsleiste (https://github.com/plentymarkets/plentyshop-pwa/pull/593)
+- Kategorie-URL mit Trailing Slash am Ende führt zu 404 (https://github.com/plentymarkets/plentyshop-pwa/pull/586)
+- Fehlende Linkfarbe bei Artikelvariationen (https://github.com/plentymarkets/plentyshop-pwa/pull/589)
+- Paginierung wurde nicht immer aktualisiert (https://github.com/plentymarkets/plentyshop-pwa/pull/591)
+- Falsche Anzeige von Grundpreisen (https://github.com/plentymarkets/plentyshop-pwa/pull/597)
+- Checkout-Adressbuttons in der mobilen Ansicht wurden angepasst (https://github.com/plentymarkets/plentyshop-pwa/pull/574)
+- Der Zugriff auf Kategorie-URLs konnte zu 404 führen, wenn das Sprach-Cookie nicht gesetzt war, dies wurde behoben. (https://github.com/plentymarkets/plentyshop-pwa/pull/602)
+
+### 👷 Geändert
+
+- Design von Bestelleigenschaften und Eigenschaften wurden angeglichen (https://github.com/plentymarkets/plentyshop-pwa/pull/575)
+- Cookiebar-Icon wurde ersetzt (https://github.com/plentymarkets/plentyshop-pwa/pull/562)
+- Die Konfigurationsdateien für App-, Cookie-, Internationalisierungs- und Tailwind-Einstellungen wurden in den Ordner apps/web/configuration verschoben (https://github.com/plentymarkets/plentyshop-pwa/pull/581)
+- Bewertungen/Feedbacks werden jetzt über API-Microservice geladen (https://github.com/plentymarkets/plentyshop-pwa/pull/578)
+- Die URL der Bestellbestätigungsseite von `.../thank-you?[...]` zu `.../confirmation/orderId/accessKey` (https://github.com/plentymarkets/plentyshop-pwa/pull/590)
+- Deaktivieren der i18n-Browser-Spracherkennung (https://github.com/plentymarkets/plentyshop-pwa/pull/594)
+- Entfernen des Lade-Spinners für Kategoriebilder (https://github.com/plentymarkets/plentyshop-pwa/pull/601)
+
+### Vollständiges Änderungsprotokoll: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 

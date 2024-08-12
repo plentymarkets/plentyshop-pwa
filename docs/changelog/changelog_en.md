@@ -26,6 +26,7 @@
 - Item stock is checked before the order again dialog (https://github.com/plentymarkets/plentyshop-pwa/pull/592)
 
 ### 🩹 Fixed
+
 - PayPal script load blocks main thread (https://github.com/plentymarkets/plentyshop-pwa/pull/577)
 - The REST call to fetch the remote configuration in the build process (https://github.com/plentymarkets/plentyshop-pwa/pull/567)
 - Middleware calls being stuck in an infinite loop (https://github.com/plentymarkets/plentyshop-pwa/pull/576)
@@ -49,7 +50,8 @@
 - Removed category image loading spinner (https://github.com/plentymarkets/plentyshop-pwa/pull/601)
 
 ### ❤️ New Contributors
-* @aoltean-plenty made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/568
+
+- @aoltean-plenty made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/568
 
 **Full Changelog**: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0
 
