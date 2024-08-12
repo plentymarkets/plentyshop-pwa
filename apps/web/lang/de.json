@@ -230,6 +230,7 @@
   "newBillingAddress": "Neue Rechnungsadresse",
   "newShippingAddress": "Neue Lieferadresse",
   "editAddress": "Adresse bearbeiten",
+  "saveUpdatedAddress": "Aktualisierte Adresse speichern",
   "invalidPassword": "Mindestens 8 Zeichen lang und muss mindestens einen Buchstaben und eine Zahl enthalten.",
   "cancellationRights": "Widerrufsrecht",
   "tomorrow": "Morgen",

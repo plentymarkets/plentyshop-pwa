@@ -4,16 +4,19 @@
       {{ type === AddressType.Shipping ? $t('shipping.heading') : $t('billing.heading') }}
     </h2>
     <div class="flex justify-center">
-      <AddressSelect @edit="emit('edit', $event)" @new="emit('new')" :type="type" />
-      <span v-if="!editing" class="mx-2">|</span>
-      <SfTooltip :label="$t('editAddress')">
+      <AddressSelect v-if="!editing" :type="type" @edit="emit('edit', $event)" @new="emit('new')" />
+      <UiButton v-else size="sm" variant="tertiary">{{ $t('saveUpdatedAddress') }}</UiButton>
+      <span class="mx-2 self-center">|</span>
+      <SfTooltip :label="!editing ? $t('editAddress') : ''">
         <UiButton
           v-if="!disabled && checkoutAddress"
           size="sm"
           variant="tertiary"
           @click="emit('edit', checkoutAddress)"
         >
-          <span v-if="!disabled && !editing">{{ $t('contactInfo.edit') }}</span>
+          <template v-if="!disabled && !editing">
+            {{ $t('contactInfo.edit') }}
+          </template>
           <SfIconClose v-else size="sm" />
         </UiButton>
       </SfTooltip>
