@@ -34,14 +34,14 @@
                 </h3>
               </div>
               <p class="text-xs text-center text-">{{ t('basedOnratings', { count: totalReviews }) }}</p>
-              <SfButton
+              <UiButton
                 @click="isAuthorized ? openReviewModal() : openAuthentication()"
                 data-testid="create-review"
                 class="mt-2 mb-4 mx-auto"
                 size="base"
               >
                 {{ t('createCustomerReview') }}
-              </SfButton>
+              </UiButton>
             </div>
 
             <div class="flex flex-col">
@@ -73,9 +73,10 @@
         </p>
         <UiPagination
           v-if="paginatedProductReviews.length > 0"
-          :current-page="getFacetsFromURL().feedbackPage ?? 1"
-          :total-items="totalReviews"
-          :page-size="getFacetsFromURL().feedbacksPerPage ?? 1"
+          :key="pagination.totalCount"
+          :current-page="currentPage"
+          :total-items="pagination.totalCount"
+          :page-size="defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE"
           :max-visible-pages="maxVisiblePages"
           current-page-name="feedbackPage"
         />
@@ -95,9 +96,9 @@
       <h3 class="font-bold typography-headline-4">
         {{ t('review.createReviewFormTitle') }}
       </h3>
-      <SfButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <ReviewForm @on-close="closeReviewModal" @on-submit="saveReview" class="h-fit" />
   </UiModal>
@@ -111,9 +112,9 @@
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
   >
     <header>
-      <SfButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton @click="closeAuthentication" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
     </header>
     <LoginComponent v-if="isLogin" @change-view="isLogin = false" @logged-in="closeAuth" />
     <Register v-else @change-view="isLogin = true" @registered="closeAuth" />
@@ -123,7 +124,6 @@
 <script lang="ts" setup>
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import {
-  SfButton,
   SfIconClose,
   SfIconStarFilled,
   SfLoaderCircular,
@@ -133,10 +133,10 @@ import {
 } from '@storefront-ui/vue';
 import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
 import { CreateReviewParams } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const { product, totalReviews, reviewAverageText, reviewAverageStars } = defineProps<ProductAccordionPropsType>();
 
-const { getFacetsFromURL } = useCategoryFilter();
 const emits = defineEmits(['on-list-change']);
 const isLogin = ref(true);
 const { t } = useI18n();
@@ -162,10 +162,18 @@ const {
   loading: loadingReviews,
 } = useProductReviews(Number(productId));
 
-const { data: productReviewsAverageData, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: productReviewsAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviewsData.value));
-const ratingPercentages = ref([] as number[]);
-const splitRatings = ref([] as number[]);
+const pagination = computed(() => reviewGetters.getReviewPagination(productReviewsData.value));
+const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviewsData.value));
+
+const ratingPercentages = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage.value, true),
+);
+const splitRatings = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage.value),
+);
+
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
 const saveReview = async (form: CreateReviewParams) => {
@@ -184,16 +192,6 @@ async function fetchReviews() {
 }
 
 const deleteReview = () => fetchReviews();
-
-onMounted(() => fetchReviews());
-
-watch(
-  () => productReviewsAverageData.value,
-  (productReviewsAverage) => {
-    ratingPercentages.value = reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage, true);
-    splitRatings.value = reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewsAverage);
-  },
-);
 
 watch(
   () => reviewsOpen.value,

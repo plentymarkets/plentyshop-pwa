@@ -96,11 +96,13 @@ export const useOrderAgain: UseOrderAgainReturn = () => {
       if (
         orderItem.itemVariationId > 0 &&
         state.value.order &&
-        orderGetters.isItemSalableAndActive(state.value.order, orderItem)
+        orderGetters.isItemSalableAndActive(state.value.order, orderItem) &&
+        orderGetters.hasAllOrderPropertiesAvailable(orderItem) &&
+        orderGetters.getOrderAgainOrderItemStock(orderItem) > 0
       ) {
         items.push({
           productId: orderItem.itemVariationId,
-          quantity: orderItem.quantity,
+          quantity: orderGetters.getOrderAgainOrderItemStock(orderItem),
           basketItemOrderParams: properties.length > 0 ? properties : undefined,
         });
       }

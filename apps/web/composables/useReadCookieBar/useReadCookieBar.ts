@@ -1,5 +1,5 @@
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
 

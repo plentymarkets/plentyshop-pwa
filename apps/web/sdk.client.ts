@@ -1,6 +1,26 @@
 import axios, { AxiosError } from 'axios';
 import { SdkHttpError } from '@vue-storefront/sdk';
 
+const VSL_LOCALE_COOKIE = 'vsf-locale';
+
+const updateVsfLocale = (cookie: string, locale: string): string => {
+  let cookieExists = false;
+  const cookies = (cookie ?? '').split(';');
+  const cookiesArray = cookies.map((cookie) => {
+    if (cookie.trim().includes(VSL_LOCALE_COOKIE)) {
+      cookieExists = true;
+      return `${VSL_LOCALE_COOKIE}=${locale}`;
+    }
+    return cookie;
+  });
+
+  if (!cookieExists) {
+    cookiesArray.push(`${VSL_LOCALE_COOKIE}=${locale}`);
+  }
+
+  return cookiesArray.join('; ');
+};
+
 export const httpClient = async (url: any, params: any, config: any) => {
   try {
     const client = axios.create({
@@ -8,18 +28,25 @@ export const httpClient = async (url: any, params: any, config: any) => {
     });
     if (tryUseNuxtApp()) {
       const { token } = useCsrfToken();
-      client.interceptors.response.use((response) => {
-        if (response.headers['x-csrf-token']) {
-          token.value = response.headers['x-csrf-token'];
-        }
-        return response;
-      });
+      const { $i18n } = useNuxtApp();
 
       client.interceptors.request.use((request) => {
         if (token.value) {
           request.headers['x-csrf-token'] = token.value;
         }
+
+        if (process.server) {
+          request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
+        }
+
         return request;
+      });
+
+      client.interceptors.response.use((response) => {
+        if (response.headers['x-csrf-token']) {
+          token.value = response.headers['x-csrf-token'];
+        }
+        return response;
       });
     }
     const { data } = await client(url, {

@@ -23,11 +23,9 @@
           :preload="priority || false"
           :width="imageWidth"
           :height="imageHeight"
-          @load="trackImageLoading"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
         />
-        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
 
       <slot name="wishlistButton">
@@ -73,7 +71,7 @@
           {{ n(oldPrice, 'currency') }}
         </span>
       </div>
-      <SfButton
+      <UiButton
         v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
@@ -88,17 +86,17 @@
         <span v-else>
           {{ t('addToCartShort') }}
         </span>
-      </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+      </UiButton>
+      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
         <span>{{ t('showOptions') }}</span>
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
+import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
 const localePath = useLocalePath();
@@ -132,7 +130,6 @@ const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { send } = useNotification();
 const loading = ref(false);
-const imageLoaded = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const productPath = ref('');
@@ -142,12 +139,7 @@ const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
   productPath.value = localePath(`${path}/${productSlug}`);
 };
 
-onNuxtReady(() => setProductPath(categoryTree.value));
-
-const trackImageLoading = (event: Event) => {
-  const imgElement = event.target as HTMLImageElement;
-  if (imgElement?.complete) imageLoaded.value = true;
-};
+setProductPath(categoryTree.value);
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;

@@ -219,6 +219,7 @@
   "billingAddressRequired": "Please select a billing address.",
   "shippingAddressRequired": "Please select a shipping address.",
   "savedShippingAddress": "Saved shipping adresses",
+  "address": "Addresses",
   "savedBillingAddress": "Saved billing adresses",
   "pickSavedAddress": "Pick saved address",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
@@ -536,7 +537,9 @@
         "priceDown": "Price decreased",
         "notAvailable": "Currently unavailable",
         "buyAgain": "Buy again",
-        "cancel": "Cancel"
+        "cancel": "Cancel",
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
+        "stockLimitation": "only {stock} item(s) available"
       }
     },
     "wishlist": {
@@ -611,7 +614,10 @@
     "subTotal": "Subtotal",
     "shipping": "Shipping",
     "vat": "VAT",
-    "total": "Total"
+    "total": "Total",
+    "saveOrderToAccount": "Save this order to your account",
+    "createAccountForBenefits": "Create an account to enjoy all benefits!",
+    "signUp": "Sign up!"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "asterisk": "*",

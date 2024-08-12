@@ -18,9 +18,9 @@
       data-testid="account-orders-content"
     >
       <h3 class="typography-headline-3 font-bold mt-6 mb-4">{{ t('account.ordersAndReturns.noOrders') }}</h3>
-      <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
+      <UiButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="!ring-neutral-200">
         {{ t('account.ordersAndReturns.continue') }}
-      </SfButton>
+      </UiButton>
     </div>
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
@@ -49,11 +49,14 @@
                 {{ t('account.ordersAndReturns.status') }}
               </p>
               <span class="block typography-text-sm flex-1">{{ orderGetters.getStatus(order) }}</span>
+              <UiButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
+                {{ t('account.ordersAndReturns.details') }}
+              </UiButton>
               <UiDropdown class="relative">
                 <template #trigger>
-                  <SfButton variant="tertiary">
+                  <UiButton variant="tertiary">
                     <SfIconMoreHoriz size="sm" />
-                  </SfButton>
+                  </UiButton>
                 </template>
                 <ul
                   class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
@@ -72,9 +75,6 @@
                   </li>
                 </ul>
               </UiDropdown>
-              <SfButton :tag="NuxtLink" size="sm" variant="tertiary" :to="localePath(generateOrderDetailsLink(order))">
-                {{ t('account.ordersAndReturns.details') }}
-              </SfButton>
             </li>
             <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
           </ul>
@@ -105,11 +105,19 @@
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
               <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
+                <UiButton
+                  :tag="NuxtLink"
+                  size="sm"
+                  variant="tertiary"
+                  :to="localePath(generateOrderDetailsLink(order))"
+                >
+                  {{ t('account.ordersAndReturns.details') }}
+                </UiButton>
                 <UiDropdown class="relative">
                   <template #trigger>
-                    <SfButton variant="tertiary">
+                    <UiButton variant="tertiary">
                       <SfIconMoreHoriz size="sm" />
-                    </SfButton>
+                    </UiButton>
                   </template>
                   <ul
                     class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
@@ -128,14 +136,6 @@
                     </li>
                   </ul>
                 </UiDropdown>
-                <SfButton
-                  :tag="NuxtLink"
-                  size="sm"
-                  variant="tertiary"
-                  :to="localePath(generateOrderDetailsLink(order))"
-                >
-                  {{ t('account.ordersAndReturns.details') }}
-                </SfButton>
               </td>
             </tr>
           </tbody>
@@ -156,7 +156,7 @@
 
 <script setup lang="ts">
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconMoreHoriz, SfListItem, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconMoreHoriz, SfListItem, SfLoaderCircular } from '@storefront-ui/vue';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
@@ -177,11 +177,11 @@ onMounted(() => setMaxVisiblePages(isDesktop.value));
 
 const { fetchCustomerOrders, data, loading } = useCustomerOrders();
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
 
 const generateNewReturnLink = (order: Order) => {
-  return `${paths.accountNewReturn}/${orderGetters.getId(order)}?accessKey=${orderGetters.getAccessKey(order)}`;
+  return `${paths.accountNewReturn}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
 const handleQueryUpdate = async () => {
   await fetchCustomerOrders({

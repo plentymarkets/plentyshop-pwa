@@ -44,7 +44,9 @@
       :unit-name="productGetters.getUnitName(product)"
     />
     <UiBadges class="mt-4" :product="product" :use-availability="true" />
-    <VariationProperties :product="product" />
+    <div class="mt-2 variation-properties">
+      <VariationProperties :product="product" />
+    </div>
     <div class="inline-flex items-center mt-4 mb-2">
       <SfRating
         size="xs"
@@ -53,9 +55,9 @@
         :max="5"
       />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <SfButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
+      <UiButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
         {{ t('showAllReviews') }}
-      </SfButton>
+      </UiButton>
     </div>
     <div
       v-if="productGetters.getShortDescription(product).length > 0"
@@ -83,7 +85,7 @@
           :label="isNotValidVariation || isSalableText"
           class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
         >
-          <SfButton
+          <UiButton
             type="submit"
             data-testid="add-to-cart"
             size="lg"
@@ -99,7 +101,7 @@
                 <SfLoaderCircular size="sm" />
               </div>
             </template>
-          </SfButton>
+          </UiButton>
         </SfTooltip>
       </div>
 
@@ -109,15 +111,26 @@
         <span v-else>{{ t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-
-      <PayPalExpressButton v-if="getCombination()" class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+      <Suspense>
+        <template #default>
+          <PayPalExpressButton
+            v-if="getCombination()"
+            class="mt-4"
+            type="SingleItem"
+            @on-click="paypalHandleAddToCart"
+          />
+        </template>
+        <template #fallback>
+          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+        </template>
+      </Suspense>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
+import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
@@ -161,8 +174,8 @@ const normalPrice =
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(product),
+    productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.basePrice ??
+    productGetters.getDefaultBasePrice(product),
 );
 
 const handleAddToCart = async (quickCheckout = true) => {

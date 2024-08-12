@@ -1,60 +1,52 @@
-@tailwind base;
+@import '_variables';
 
-@layer base {
-  :root {
-    --colors-2-primary-50: 236 255 255;
-    --colors-2-primary-100: 206 251 255;
-    --colors-2-primary-200: 164 247 253;
-    --colors-2-primary-300: 101 237 251;
-    --colors-2-primary-400: 32 219 240;
-    --colors-2-primary-500: 4 190 214;
-    --colors-2-primary-600: 6 151 180;
-    --colors-2-primary-700: 12 121 146;
-    --colors-2-primary-800: 20 98 118;
-    --colors-2-primary-900: 21 80 100;
-    --colors-2-primary-950: 7 51 66;
+:root {
+  --colors-2-primary-50: #{$color-2-primary-50};
+  --colors-2-primary-100: #{$color-2-primary-100};
+  --colors-2-primary-200: #{$color-2-primary-200};
+  --colors-2-primary-300: #{$color-2-primary-300};
+  --colors-2-primary-400: #{$color-2-primary-400};
+  --colors-2-primary-500: #{$color-2-primary-500};
+  --colors-2-primary-600: #{$color-2-primary-600};
+  --colors-2-primary-700: #{$color-2-primary-700};
+  --colors-2-primary-800: #{$color-2-primary-800};
+  --colors-2-primary-900: #{$color-2-primary-900};
 
-    --colors-2-secondary-50: 255 253 231;
-    --colors-2-secondary-100: 255 252 193;
-    --colors-2-secondary-200: 255 247 135;
-    --colors-2-secondary-300: 255 234 66;
-    --colors-2-secondary-400: 255 217 15;
-    --colors-2-secondary-500: 241 192 2;
-    --colors-2-secondary-600: 207 148 0;
-    --colors-2-secondary-700: 165 105 3;
-    --colors-2-secondary-800: 136 82 11;
-    --colors-2-secondary-900: 116 67 15;
-    --colors-2-secondary-950: 68 34 4;
-  }
+  --colors-2-secondary-50: #{$color-2-secondary-50};
+  --colors-2-secondary-100: #{$color-2-secondary-100};
+  --colors-2-secondary-200: #{$color-2-secondary-200};
+  --colors-2-secondary-300: #{$color-2-secondary-300};
+  --colors-2-secondary-400: #{$color-2-secondary-400};
+  --colors-2-secondary-500: #{$color-2-secondary-500};
+  --colors-2-secondary-600: #{$color-2-secondary-600};
+  --colors-2-secondary-700: #{$color-2-secondary-700};
+  --colors-2-secondary-800: #{$color-2-secondary-800};
+  --colors-2-secondary-900: #{$color-2-secondary-900};
 }
 
-@tailwind components;
-@tailwind utilities;
-
-@layer utilities {
-  .scrollbar-hidden {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      @apply hidden;
-    }
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    @apply hidden;
   }
+}
+.grid-areas-product-page {
+  grid-template-areas: 'left-top right' 'left-bottom right';
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
 
-  .grid-areas-product-page {
-    grid-template-areas: 'left-top right' 'left-bottom right';
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: #cccccc;
-    border-radius: 8px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
+.variation-properties {
+  a {
+    color: rgb(var(--colors-2-primary-700));
   }
 }

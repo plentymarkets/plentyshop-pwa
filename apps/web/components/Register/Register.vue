@@ -5,19 +5,19 @@
 
     <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
       <div class="flex items-center gap-2">
-        <SfIconPerson class="text-primary-700" />
+        <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconLocalShipping class="text-primary-700" />
+        <SfIconLocalShipping class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconFavorite class="text-primary-700" />
+        <SfIconFavorite class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.wishlist') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconSchedule class="text-primary-700" />
+        <SfIconSchedule class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
       </div>
     </div>
@@ -30,7 +30,6 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['register.email'])"
-          :disabled="emailAddress"
           name="customerEmail"
           type="email"
           autocomplete="email"
@@ -120,14 +119,14 @@
 
       <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
-      <SfButton type="submit" class="mt-2" :disabled="loading">
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+      <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
+        <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
-      </SfButton>
+      </UiButton>
 
-      <div class="text-center">
+      <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.signup.logInLinkLabel') }}
@@ -139,7 +138,6 @@
 
 <script lang="ts" setup>
 import {
-  SfButton,
   SfLink,
   SfInput,
   SfLoaderCircular,
@@ -154,18 +152,21 @@ import {
 import { useForm } from 'vee-validate';
 import { object, string, boolean, ref as yupReference } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
+import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
 
 const localePath = useLocalePath();
 const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
+const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
 const props = withDefaults(defineProps<RegisterFormParams>(), {
   isModal: false,
+  changeableView: true,
 });
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
@@ -206,6 +207,12 @@ if (props.emailAddress) {
   email.value = props.emailAddress;
 }
 
+const clearTurnstile = () => {
+  turnstile.value = '';
+  turnstileElement.value?.reset();
+};
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const registerUser = async () => {
   if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;
@@ -217,14 +224,12 @@ const registerUser = async () => {
     'cf-turnstile-response': turnstile.value,
   });
 
-  turnstile.value = '';
-  turnstileElement.value?.reset();
-
   if (response?.data.code === 1) {
     send({
       message: t('auth.signup.emailAlreadyExists'),
       type: 'negative',
     });
+    clearTurnstile();
     return;
   }
 
@@ -233,8 +238,22 @@ const registerUser = async () => {
       message: t('auth.signup.success'),
       type: 'positive',
     });
+
+    if (props.order) {
+      await migrateGuestOrder({
+        orderId: props.order?.order.id ?? -1,
+        accessKey: props.order?.order.accessKey ?? '',
+        postcode: props.order?.order.deliveryAddress.postalCode ?? undefined,
+        name: props.order?.order.deliveryAddress.name3 ?? undefined,
+      });
+    }
+
     emits('registered');
-    viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    clearTurnstile();
+
+    if (!props.order) {
+      viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    }
   }
 };
 

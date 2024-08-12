@@ -19,15 +19,13 @@
         />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
-        <SfButton type="submit" class="flex-1"> {{ $t('auth.setNewPassword.button') }} </SfButton>
+        <UiButton type="submit" class="flex-1"> {{ $t('auth.setNewPassword.button') }} </UiButton>
       </div>
     </form>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-
 definePageMeta({
   layout: false,
 });
