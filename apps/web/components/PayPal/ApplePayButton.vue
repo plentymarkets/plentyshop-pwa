@@ -1,10 +1,10 @@
 <template>
-  <div v-if="canMakePayments" @click="initiateApplePay" class="apple-pay-button">
-    <img src="@/assets/apple-pay.svg" alt="Apple Pay" />
-  </div>
+  <div class="apple-pay-button"></div>
 </template>
 
 <script lang="ts" setup>
+import { ApplepayType } from '~/components/PayPal/types';
+
 const { loadScript } = usePayPal();
 const loadApplePay = async () => {
   const scriptElement = document.createElement('script');
@@ -24,8 +24,8 @@ const initiateApplePay = async () => {
       return;
     }
 
-    const applePay = (paypal as any).Applepay();
-    console.log(applePay);
+    const applePay = (paypal as any).Applepay() as ApplepayType;
+
     const paymentRequest = applePay.paymentRequest({
       countryCode: 'DE',
       currencyCode: 'EUR',
@@ -82,8 +82,6 @@ const initiateApplePay = async () => {
 // }
 
 onMounted(() => {
-  console.log('here');
-  loadApplePay();
   initiateApplePay();
 });
 </script>
