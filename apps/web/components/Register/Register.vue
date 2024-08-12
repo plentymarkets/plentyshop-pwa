@@ -5,19 +5,19 @@
 
     <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
       <div class="flex items-center gap-2">
-        <SfIconPerson class="text-primary-700" />
+        <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconLocalShipping class="text-primary-700" />
+        <SfIconLocalShipping class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconFavorite class="text-primary-700" />
+        <SfIconFavorite class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.wishlist') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconSchedule class="text-primary-700" />
+        <SfIconSchedule class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
       </div>
     </div>
@@ -119,12 +119,12 @@
 
       <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
-      <SfButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
+      <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
         <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
-      </SfButton>
+      </UiButton>
 
       <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
@@ -138,7 +138,6 @@
 
 <script lang="ts" setup>
 import {
-  SfButton,
   SfLink,
   SfInput,
   SfLoaderCircular,

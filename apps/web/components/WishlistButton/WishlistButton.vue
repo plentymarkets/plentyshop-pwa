@@ -1,5 +1,5 @@
 <template>
-  <SfButton
+  <UiButton
     variant="tertiary"
     size="sm"
     :aria-label="
@@ -20,12 +20,12 @@
       <SfIconFavorite v-else size="sm" />
       <slot />
     </template>
-  </SfButton>
+  </UiButton>
 </template>
 
 <script setup lang="ts">
 import type { WishlistButtonProps } from '~/components/WishlistButton/types';
-import { SfButton, SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-api';
 
 const props = withDefaults(defineProps<WishlistButtonProps>(), { quantity: 1, discard: false });

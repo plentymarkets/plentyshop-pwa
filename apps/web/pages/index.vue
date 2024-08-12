@@ -30,8 +30,8 @@
           {{ t('homepage.banner.moto3') }}
         </p>
         <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <SfButton size="lg"> {{ t('homepage.banner.orderNow') }}</SfButton>
-          <SfButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</SfButton>
+          <UiButton size="lg"> {{ t('homepage.banner.orderNow') }}</UiButton>
+          <UiButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</UiButton>
         </div>
       </div>
     </div>
@@ -85,7 +85,7 @@
               {{ details.description }}
             </p>
             <NuxtLink to="/">
-              <SfButton class="!bg-black hover:!bg-white hover:!text-black">{{ details.buttonText }}</SfButton>
+              <UiButton class="!bg-black hover:!bg-white hover:!text-black">{{ details.buttonText }}</UiButton>
             </NuxtLink>
           </div>
           <img
@@ -114,7 +114,6 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton } from '@storefront-ui/vue';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
@@ -203,7 +202,7 @@ const displayDetails = computed(() => {
       description: t('homepage.displayDetails.detail3.description'),
       buttonText: t('homepage.displayDetails.detail3.buttonText'),
       reverse: false,
-      backgroundColor: 'bg-secondary-200',
+      backgroundColor: 'bg-secondary-50',
       sizes: {
         lg: {
           width: '358',

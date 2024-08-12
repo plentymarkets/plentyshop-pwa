@@ -13,9 +13,9 @@
         </div>
       </div>
       <div class="absolute right-2 top-2 flex items-center">
-        <SfButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </div>
     </header>
 
@@ -197,10 +197,10 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
         <div class="ml-auto float-right">
-          <SfButton class="mr-2" variant="secondary" @click="close()" size="lg">
+          <UiButton class="mr-2" variant="secondary" @click="close()" size="lg">
             {{ t('account.ordersAndReturns.orderAgain.cancel') }}
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             data-testid="quick-checkout-cart-button"
             @click="addToCart"
             :disabled="loading || loadingAddToCart || !canAddToCart"
@@ -209,7 +209,7 @@
           >
             <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
             <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>
@@ -218,7 +218,6 @@
 
 <script setup lang="ts">
 import {
-  SfButton,
   SfIconClose,
   SfLoaderCircular,
   SfIconError,

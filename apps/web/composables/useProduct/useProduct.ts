@@ -1,6 +1,9 @@
-import { categoryTreeGetters, type CategoryTreeItem, Product, type ProductParams } from '@plentymarkets/shop-api';
+import type { Product, ProductParams } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
-import { type UseProductReturn, UseProductState, type FetchProduct } from '~/composables/useProduct/types';
+import { toRefs } from '@vueuse/shared';
+import type { UseProductReturn, UseProductState, FetchProduct } from '~/composables/useProduct/types';
+
+import { generateBreadcrumbs } from '~/utils/productHelper';
 
 /**
  * @description Composable managing product data
@@ -42,19 +45,14 @@ export const useProduct: UseProductReturn = (slug) => {
   };
 
   /**
-   * @description Function for generating breadcrumbs
-   * @example generateBreadcrumbs()
+   * @description Function for setting breadcrumbs
+   * @example setBreadcrumbs()
    */
-  const generateBreadcrumbs = (categoriesTree: CategoryTreeItem[]) => {
+  const setBreadcrumbs = () => {
+    const { data: categoryTree } = useCategoryTree();
     const { $i18n } = useNuxtApp();
 
-    const breadcrumb = categoryTreeGetters.generateBreadcrumbFromCategory(
-      categoriesTree,
-      Number(productGetters.getCategoryIds(state.value.data)?.[0] ?? 0),
-    );
-    breadcrumb.unshift({ name: $i18n.t('home'), link: '/' });
-    breadcrumb.push({ name: productGetters.getName(state.value.data), link: `#` });
-    state.value.breadcrumbs = breadcrumb;
+    state.value.breadcrumbs = generateBreadcrumbs(categoryTree.value, state.value.data, $i18n.t('home'));
   };
 
   /**
@@ -70,7 +68,7 @@ export const useProduct: UseProductReturn = (slug) => {
 
   return {
     setTitle,
-    generateBreadcrumbs,
+    setBreadcrumbs,
     fetchProduct,
     ...toRefs(state.value),
     properties,

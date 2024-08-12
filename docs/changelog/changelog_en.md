@@ -2,9 +2,24 @@
 
 ## v1.6.0
 
+### TODO 📙 Migration guide
+
+- Because Vue components now use different color weights (see **New** section for details), you have to update your color palettes as follows:
+  - `900` -> `700`
+  - `800` -> `600`
+  - `700` -> `500`
+  - `600` -> `400`
+  - `500` -> `300`
+  - `400` -> `200`
+  - `300` -> `100`
+  - `200` -> `50`
+  - `100` -> `50`
+- Replace all instances of `SfButton` with `UiButton`.
+
 ### 🚀 New
 
 - The app now reads metadata, such as description and keywords, from the environment.
+- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
@@ -15,7 +30,12 @@
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
 - Fixed tailwind css double import.
+- Fixed a deadspot in the viewport for the navigation bar.
 - Added link color on item variation properties
+- Fixed pagination issues with reactivity.
+- Fixed wrongful display of base prices issue.
+- Fixed setting the vsf-locale cookie on ssr.
+- The side navigation of the automatically generated composables documentation now contains the correct links.
 
 ### 👷 Changed
 
@@ -147,6 +167,7 @@
 - Demo images now have different sizes, based on the user's viewport.
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
+- Structure of the useProduct composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

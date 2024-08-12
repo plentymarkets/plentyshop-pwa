@@ -90,7 +90,7 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-secondary-500 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
           {{ n(currentFullPrice || 0, 'currency') }}
         </span>
@@ -108,7 +108,7 @@
       <SfLoaderCircular />
     </div>
 
-    <SfButton
+    <UiButton
       v-else-if="!disabled"
       @click="deleteItem"
       square
@@ -117,15 +117,16 @@
       class="absolute top-2 right-2 bg-white"
     >
       <SfIconClose size="sm" />
-    </SfButton>
+    </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
+import type { Product } from '@plentymarkets/shop-api';
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();
@@ -186,11 +187,10 @@ const debounceQuantity = _.debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-const basePriceSingleValue = computed(() =>
-  props.cartItem?.variation
-    ? productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
-      productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
-    : 0,
+const basePriceSingleValue = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(props.cartItem.variation ?? ({} as Product), props.cartItem.quantity)
+      ?.basePrice ?? productGetters.getDefaultBasePrice(props.cartItem.variation ?? ({} as Product)),
 );
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(props.cartItem)));

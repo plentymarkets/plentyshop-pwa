@@ -37,20 +37,20 @@
       />
     </label>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
-      <SfButton type="reset" variant="secondary" @click="$emit('on-cancel')">
+      <UiButton type="reset" variant="secondary" @click="$emit('on-cancel')">
         {{ t('contactInfo.cancel') }}
-      </SfButton>
-      <SfButton type="submit" class="min-w-[120px]" :disabled="loading">
+      </UiButton>
+      <UiButton type="submit" class="min-w-[120px]" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('account.accountSettings.personalData.changePassword') }}
         </span>
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 <script setup lang="ts">
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
 
 const { send } = useNotification();

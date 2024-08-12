@@ -13,7 +13,7 @@ const DAYS = 100;
 const localeExpireDate = new Date();
 localeExpireDate.setDate(new Date().getDate() + DAYS);
 const { getCategoryTree } = useCategoryTree();
-const { setInitialDataSSR, ssrLocale } = useInitialSetup();
+const { setInitialDataSSR } = useInitialSetup();
 const route = useRoute();
 const { locale } = useI18n();
 const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
@@ -23,7 +23,6 @@ const localePath = useLocalePath();
 
 await setInitialDataSSR();
 vsfLocale.value = locale.value;
-ssrLocale.value = locale.value;
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
