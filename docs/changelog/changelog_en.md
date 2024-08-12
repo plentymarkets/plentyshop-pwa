@@ -166,6 +166,7 @@
 - Demo images now have different sizes, based on the user's viewport.
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
+- Structure of the useProduct composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

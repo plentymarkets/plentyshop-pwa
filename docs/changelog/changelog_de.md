@@ -151,6 +151,7 @@
 - Demo-Bilder haben jetzt verschiedene Größen, basierend auf dem Ansichtsfenster.
 - Das Design der Sitemap wurde angepasst.
 - Es wird jetzt gekennzeichnet, ob ein Eingabefeld optional oder ein Pflichtfeld ist.
+- Struktur der useProduct Composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
