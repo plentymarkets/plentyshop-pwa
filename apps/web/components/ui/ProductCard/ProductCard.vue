@@ -23,11 +23,9 @@
           :preload="priority || false"
           :width="imageWidth"
           :height="imageHeight"
-          @load="trackImageLoading"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
         />
-        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
 
       <slot name="wishlistButton">
@@ -132,7 +130,6 @@ const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { send } = useNotification();
 const loading = ref(false);
-const imageLoaded = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const productPath = ref('');
@@ -142,12 +139,7 @@ const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
   productPath.value = localePath(`${path}/${productSlug}`);
 };
 
-onNuxtReady(() => setProductPath(categoryTree.value));
-
-const trackImageLoading = (event: Event) => {
-  const imgElement = event.target as HTMLImageElement;
-  if (imgElement?.complete) imageLoaded.value = true;
-};
+setProductPath(categoryTree.value);
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
