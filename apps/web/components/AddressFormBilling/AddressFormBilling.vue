@@ -110,18 +110,6 @@
       </SfSelect>
       <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
     </label>
-    <div class="md:col-span-3 flex">
-      <UiButton
-        type="button"
-        class="max-md:w-1/2 ml-auto"
-        variant="tertiary"
-        size="sm"
-        :disabled="isLoading"
-        @click="resetForm"
-      >
-        {{ t('contactInfo.clearAll') }}
-      </UiButton>
-    </div>
   </form>
 </template>
 
@@ -132,7 +120,7 @@ import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 
 const { t } = useI18n();
-const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
+const { onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
 const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
 const validationSchema = toTypedSchema(
@@ -153,7 +141,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { defineField, errors, values, resetForm, validate, setValues } = useForm({
+const { defineField, errors, values, validate, setValues } = useForm({
   validationSchema: validationSchema,
 });
 

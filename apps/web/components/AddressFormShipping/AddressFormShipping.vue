@@ -119,18 +119,6 @@
       <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
       <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
     </label>
-    <div class="md:col-span-3 flex">
-      <UiButton
-        type="button"
-        class="max-md:w-1/2 ml-auto"
-        variant="tertiary"
-        size="sm"
-        :disabled="isLoading"
-        @click="resetForm"
-      >
-        {{ t('contactInfo.clearAll') }}
-      </UiButton>
-    </div>
   </form>
 </template>
 
@@ -140,7 +128,7 @@ import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 
-const { isLoading, onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
+const { onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
 const { shippingAsBilling } = useShippingAsBilling();
 const hasCompany = ref(false);
 const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
@@ -163,7 +151,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { defineField, errors, values, resetForm, validate, setValues } = useForm({
+const { defineField, errors, values, validate, setValues } = useForm({
   validationSchema: validationSchema,
 });
 
