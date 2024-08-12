@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.6.0
+## v1.6.0 (2024-08-12) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO 📙 Migration guide
 
@@ -18,33 +18,40 @@
 
 ### 🚀 New
 
-- The app now reads metadata, such as description and keywords, from the environment.
+- Create an account in the order confirmation of a guest order (https://github.com/plentymarkets/plentyshop-pwa/pull/585)
+- The app now reads metadata, such as description and keywords, from the environment (https://github.com/plentymarkets/plentyshop-pwa/pull/568)
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
-- The order again feature supports and shows order properties.
-- Make the paypal button lazyload for PS
-- Added dynamic metadata for products and categories.
-- Added stock check for the order again feature.
+- The order again dialog supports and shows order properties (https://github.com/plentymarkets/plentyshop-pwa/pull/573)
+- Dynamic metadata for products and categories (https://github.com/plentymarkets/plentyshop-pwa/pull/582)
+- Item stock is checked before the order again dialog (https://github.com/plentymarkets/plentyshop-pwa/pull/592)
 
 ### 🩹 Fixed
-
-- Fixed the REST call to fetch the remote configuration in the build process.
-- Fixed: middleware calls being stuck in an infinite loop
-- Fixed tailwind css double import.
-- Fixed a deadspot in the viewport for the navigation bar.
-- Added link color on item variation properties
-- Fixed pagination issues with reactivity.
-- Fixed wrongful display of base prices issue.
-- Fixed setting the vsf-locale cookie on ssr.
+- PayPal script load blocks main thread (https://github.com/plentymarkets/plentyshop-pwa/pull/577)
+- The REST call to fetch the remote configuration in the build process (https://github.com/plentymarkets/plentyshop-pwa/pull/567)
+- Middleware calls being stuck in an infinite loop (https://github.com/plentymarkets/plentyshop-pwa/pull/576)
+- Tailwind double import (https://github.com/plentymarkets/plentyshop-pwa/pull/579)
+- Dead spot in the viewport for the navigation bar (https://github.com/plentymarkets/plentyshop-pwa/pull/593)
+- Category URL trailing-slash results in 404 (https://github.com/plentymarkets/plentyshop-pwa/pull/586)
+- Added link color on item variation properties (https://github.com/plentymarkets/plentyshop-pwa/pull/589)
+- Fixed pagination issues with reactivity (https://github.com/plentymarkets/plentyshop-pwa/pull/591)
+- Wrong display of base prices (https://github.com/plentymarkets/plentyshop-pwa/pull/597)
+- Checkout address buttons in the mobile view have been adjusted (https://github.com/plentymarkets/plentyshop-pwa/pull/574)
+- Accessing category URLs could result in 404 if the language cookie was not set, this has been fixed. (https://github.com/plentymarkets/plentyshop-pwa/pull/602)
 
 ### 👷 Changed
 
-- Ensure the design of order properties and variation properties is consistent.
-- Cookiebar icon has been replaced
-- Checkout address buttons in the mobile view have been adjusted
-- The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
-- Changes to item reviews logic in order to use the feedback api ms
-- The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
-- Remove cookie browser language detect.
+- Ensure the design of order properties and variation properties is consistent (https://github.com/plentymarkets/plentyshop-pwa/pull/575)
+- Cookiebar icon has been replaced (https://github.com/plentymarkets/plentyshop-pwa/pull/562)
+- The configuration files for app, cookie, internationalization, and Tailwind settings have been moved to the `apps/web/configuration` folder (https://github.com/plentymarkets/plentyshop-pwa/pull/581)
+- Reviews/Feedbacks are now loaded via API microservice (https://github.com/plentymarkets/plentyshop-pwa/pull/578)
+- The order confirmation page URL from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey` (https://github.com/plentymarkets/plentyshop-pwa/pull/590)
+- Deactivate i18n browser language detect (https://github.com/plentymarkets/plentyshop-pwa/pull/594)
+- Removed category image loading spinner (https://github.com/plentymarkets/plentyshop-pwa/pull/601)
+
+### ❤️ New Contributors
+* @aoltean-plenty made their first contribution in https://github.com/plentymarkets/plentyshop-pwa/pull/568
+
+**Full Changelog**: https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
