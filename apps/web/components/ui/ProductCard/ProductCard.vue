@@ -97,7 +97,6 @@
 import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfButton, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
-import { getCrossedPrice, getPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -129,6 +128,8 @@ const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { send } = useNotification();
+const { price, crossedPrice } = useProductPrice(product);
+
 const loading = ref(false);
 const imageLoaded = ref(false);
 const runtimeConfig = useRuntimeConfig();
@@ -163,15 +164,6 @@ const addWithLoader = async (productId: number) => {
   }
 };
 
-const specialOffer = getSpecialOffer(product);
-
-const price = computed(() =>
-  specialOffer && specialOffer < productGetters.getCheapestGraduatedPrice(product)
-    ? specialOffer
-    : productGetters.getCheapestGraduatedPrice(product),
-);
-
-const crossedPrice = computed(() => (specialOffer ? getPrice(product) : getCrossedPrice(product)) || undefined);
 const NuxtLink = resolveComponent('NuxtLink');
 
 watch(

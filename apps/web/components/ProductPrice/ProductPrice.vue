@@ -19,7 +19,6 @@
 <script setup lang="ts">
 import { productBundleGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ProductPriceProps } from '~/components/ProductPrice/types';
-import { getPrice, getCrossedPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const props = defineProps<ProductPriceProps>();
 
@@ -27,13 +26,16 @@ const { getPropertiesPrice } = useProductOrderProperties();
 
 const price = computed(
   () =>
-    (getSpecialOffer(props.product) ||
+    (productGetters.getSpecialOffer(props.product) ||
       productGetters.getGraduatedPriceByQuantity(props.product, 1)?.unitPrice.value ||
       0) + getPropertiesPrice(props.product),
 );
 
 const crossedPrice = computed(
-  () => (getSpecialOffer(props.product) ? getPrice(props.product) : getCrossedPrice(props.product)) || undefined,
+  () =>
+    (productGetters.getSpecialOffer(props.product)
+      ? productGetters.getPrice(props.product)
+      : productGetters.getCrossedPrice(props.product)) || undefined,
 );
 
 const basePriceSingleValue = computed(

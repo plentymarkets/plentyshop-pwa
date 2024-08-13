@@ -129,7 +129,6 @@ import { productGetters, reviewGetters, productBundleGetters } from '@plentymark
 import { SfButton, SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
-import { getCrossedPrice, getSpecialOffer } from '~/utils/pricesHelper';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -157,13 +156,16 @@ resetAttributeFields();
 
 const price = computed(
   () =>
-    (getSpecialOffer(product) ||
+    (productGetters.getSpecialOffer(product) ||
       productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
 );
 
 const crossedPrice = computed(
-  () => (getSpecialOffer(product) ? getPrice(product) : getCrossedPrice(product)) || undefined,
+  () =>
+    (productGetters.getSpecialOffer(product)
+      ? productGetters.getPrice(product)
+      : productGetters.getCrossedPrice(product)) || undefined,
 );
 
 const basePriceSingleValue = computed(

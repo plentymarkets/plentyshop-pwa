@@ -30,7 +30,6 @@
               :name="productGetters.getName(product) ?? ''"
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product, 'half')"
-              :price="actualPrice(product)"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="productGetters.getName(product) ?? ''"
               :image-height="productGetters.getImageHeight(product) ?? 600"
@@ -65,7 +64,6 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
@@ -86,14 +84,4 @@ const viewport = useViewport();
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
 if (viewport.isLessThan('md')) close;
-
-const actualPrice = (product: Product): number => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
-
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
-
-  return 0;
-};
 </script>
