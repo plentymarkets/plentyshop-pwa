@@ -2,19 +2,16 @@ import type { Product } from '@plentymarkets/shop-api';
 import { productGetters } from '@plentymarkets/shop-api';
 
 /**
- * @description Composable for getting an array of `ActiveShippingCountry`.
+ * @description Composable for managing product prices.
  * @example
  * ``` ts
- * const {
- *  data,
- *  loading,
- *  getActiveShippingCountries
- * } = useActiveShippingCountries();
- * getActiveShippingCountries();
+ * const { price, crossedPrice } = useProductPrice();
+ * useProductPrice({} as Product);
  * ```
  */
 
 export const useProductPrice = (product: Product) => {
+  console.log(product);
   const specialOffer = productGetters.getSpecialOffer(product);
 
   const price = computed(() =>
@@ -23,8 +20,8 @@ export const useProductPrice = (product: Product) => {
       : productGetters.getCheapestGraduatedPrice(product),
   );
 
-  const crossedPrice = computed(
-    () => (specialOffer ? productGetters.getPrice(product) : productGetters.getCrossedPrice(product)) || undefined,
+  const crossedPrice = computed(() =>
+    specialOffer ? productGetters.getPrice(product) : productGetters.getCrossedPrice(product),
   );
 
   return {

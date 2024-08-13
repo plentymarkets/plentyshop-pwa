@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <Price :price="price" :crossed-price="crossedPrice" />
+      <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
           t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -150,22 +150,16 @@ const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
+const { crossedPrice } = useProductPrice(product);
 
 resetInvalidFields();
 resetAttributeFields();
 
-const price = computed(
+const priceWithProperties = computed(
   () =>
     (productGetters.getSpecialOffer(product) ||
       productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
-);
-
-const crossedPrice = computed(
-  () =>
-    (productGetters.getSpecialOffer(product)
-      ? productGetters.getPrice(product)
-      : productGetters.getCrossedPrice(product)) || undefined,
 );
 
 const basePriceSingleValue = computed(
