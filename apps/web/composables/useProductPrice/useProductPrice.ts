@@ -11,7 +11,6 @@ import { productGetters } from '@plentymarkets/shop-api';
  */
 
 export const useProductPrice = (product: Product) => {
-  console.log(product);
   const specialOffer = productGetters.getSpecialOffer(product);
 
   const price = computed(() =>
