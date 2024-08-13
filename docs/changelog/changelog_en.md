@@ -34,6 +34,8 @@
 - Added link color on item variation properties
 - Fixed pagination issues with reactivity.
 - Fixed wrongful display of base prices issue.
+- Fixed setting the vsf-locale cookie on ssr.
+- The side navigation of the automatically generated composables documentation now contains the correct links.
 
 ### 👷 Changed
 
@@ -166,6 +168,7 @@
 - Demo images now have different sizes, based on the user's viewport.
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
+- Structure of the useProduct composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
