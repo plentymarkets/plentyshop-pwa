@@ -84,7 +84,7 @@
           {{ t('review.answer') }}
         </UiButton>
       </div>
-      <ReplyForm v-if="isAnswerFormOpen" @on-close="isAnswerFormOpen = false" @on-submit="sendReply" />
+      <ReplyForm v-if="isAnswerFormOpen" :review-item="reviewItem" @on-close="isAnswerFormOpen = false" />
     </div>
   </article>
 
@@ -147,7 +147,7 @@
     <UiButton @click="closeReviewEdit" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
     </UiButton>
-    <ReviewForm :review-item="reviewItem" @on-close="closeReviewEdit" @on-submit="editReview" />
+    <ReviewForm :review-item="reviewItem" @on-close="closeReviewEdit" />
   </UiModal>
 
   <UiModal
@@ -161,7 +161,7 @@
     <UiButton @click="closeReplyEdit" square variant="tertiary" class="absolute right-2 top-2">
       <SfIconClose />
     </UiButton>
-    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" @on-submit="editReply" />
+    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" />
   </UiModal>
 </template>
 
@@ -180,17 +180,9 @@ import {
 import type { ReviewProps } from './types';
 import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
 import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
-import {
-  type CreateReviewParams,
-  type ReviewItem,
-  type UpdateReviewParams,
-  reviewGetters,
-  productGetters,
-} from '@plentymarkets/shop-api';
+import { type ReviewItem, reviewGetters, productGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
-const emits = defineEmits(['on-submit']);
-const { send } = useNotification();
 const { t } = useI18n();
 const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
@@ -204,9 +196,8 @@ const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = 
 const { isOpen: isReplyDeleteOpen, open: openReplyDelete, close: closeReplyDelete } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
 const { currentProduct } = useProducts();
-const { deleteProductReview, setProductReview } = useProductReviews(
-  Number(productGetters.getItemId(currentProduct.value)),
-);
+const { deleteProductReview } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
+
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const isReviewVisibile = reviewGetters.getReviewVisibility(reviewItem.value);
@@ -227,27 +218,9 @@ const deleteReview = async () => {
   if (reviewItem.value.id) await deleteProductReview(reviewItem.value.id);
 };
 
-const editReview = async (form: UpdateReviewParams) => {
-  closeReviewEdit();
-  await setProductReview(form);
-  send({ type: 'positive', message: t('review.notification.success') });
-};
-
-const sendReply = async (form: CreateReviewParams) => {
-  isAnswerFormOpen.value = false;
-  form.targetId = Number(reviewItem.value.id);
-  emits('on-submit', form);
-};
-
 const openReplyEditor = (item: ReviewItem) => {
   openReplyEdit();
   replyItem.value = item;
-};
-
-const editReply = async (form: UpdateReviewParams) => {
-  closeReplyEdit();
-  await setProductReview(form);
-  send({ type: 'positive', message: t('review.notification.answerSuccess') });
 };
 
 const openReplyDeletion = (item: ReviewItem) => {

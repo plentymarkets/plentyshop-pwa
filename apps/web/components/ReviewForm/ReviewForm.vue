@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-[450px] md:max-w-[768px]">
-    <form class="col-span-2" data-testid="create-review-form" @submit.prevent="onSubmit">
+    <form class="col-span-2" data-testid="create-review-form" @submit.prevent="sendReview">
       <div class="flex items-center justify-between">
         <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
           {{ t('review.yourRating') }} *
@@ -115,7 +115,7 @@ const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.
 
 onMounted(() => (ratingLabelId.value = useId()));
 
-const sendReview = () => {
+const sendReview = handleSubmit(() => {
   const params = {
     type: 'review',
     targetId: productGetters.getVariationId(currentProduct.value),
@@ -133,7 +133,5 @@ const sendReview = () => {
   }
 
   emits('on-close');
-};
-
-const onSubmit = handleSubmit(() => sendReview());
+});
 </script>

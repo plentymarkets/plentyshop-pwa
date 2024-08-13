@@ -44,17 +44,28 @@
 import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
+import { defaults } from '~/composables';
+import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
+import type { ReplyFormProps } from '~/components/ReplyForm/types';
 
-const emits = defineEmits(['on-close', 'on-submit']);
+const emits = defineEmits(['on-close']);
+
+const props = defineProps<ReplyFormProps>();
 
 const { t } = useI18n();
-const answerCharacterLimit = 500;
+const { currentProduct } = useProducts();
+const { createProductReview } = useProductReviews(
+  Number(productGetters.getItemId(currentProduct.value)),
+  productGetters.getVariationId(currentProduct.value),
+);
+
+const answerCharacterLimit = defaults.REPLY_CHARACTER_LIMIT;
 const validationSchema = toTypedSchema(
   object({
     authorName: string().optional().default(''),
     message: string()
       .required(t('review.validation.textareaRequired'))
-      .max(500, t('review.validation.textareaMaxLength'))
+      .max(answerCharacterLimit, t('review.validation.textareaMaxLength'))
       .default(''),
   }),
 );
@@ -68,12 +79,18 @@ const [authorName, authorNameAttributes] = defineField('authorName');
 const answerIsAboveLimit = computed(() => (message?.value?.length ?? 0) > answerCharacterLimit);
 const answerCharsCount = computed(() => answerCharacterLimit - (message?.value?.length ?? 0));
 
-const onSubmit = handleSubmit(() =>
-  emits('on-submit', {
-    targetId: 0,
+const onSubmit = handleSubmit(() => {
+  const params = {
+    targetId: Number(reviewGetters.getReviewId(props.reviewItem)),
     authorName: authorName.value,
     message: message.value,
     type: 'reply',
-  }),
-);
+    ratingValue: 0,
+    title: '',
+  };
+
+  createProductReview(params);
+
+  emits('on-close');
+});
 </script>

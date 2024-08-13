@@ -51,10 +51,18 @@ import { object, string } from 'yup';
 import { useForm } from 'vee-validate';
 import type { ReplyEditFormProps } from './types';
 import type { ReviewItem } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
+
 const emits = defineEmits(['on-close', 'on-submit']);
 const props = defineProps<ReplyEditFormProps>();
 const { replyItem } = toRefs(props);
+
 const { t } = useI18n();
+const { currentProduct } = useProducts();
+const { setProductReview } = useProductReviews(
+  Number(productGetters.getItemId(currentProduct.value)),
+  productGetters.getVariationId(currentProduct.value),
+);
 
 const validationSchema = toTypedSchema(
   object({
@@ -79,14 +87,18 @@ const reviewIsAboveLimit = computed(() => (message?.value?.length ?? 0) > review
 const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.length ?? 0));
 
 const sendReply = async () => {
-  const form = {
+  const params = {
     type: 'reply',
-    feedbackId: replyItem.value.id,
+    feedbackId: Number(replyItem?.value?.id || 0),
     message: message.value,
     authorName: authorName.value,
+    ratingValue: 0,
+    title: '',
   };
 
-  emits('on-submit', form);
+  setProductReview(params);
+
+  emits('on-close');
 };
 
 const onSubmit = handleSubmit(() => sendReply());
