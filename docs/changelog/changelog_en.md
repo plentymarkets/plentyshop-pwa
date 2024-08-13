@@ -27,7 +27,7 @@
 
 ### 🩹 Fixed
 
--  Shop logo is now preloaded.
+- Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
 - Fixed tailwind css double import.
