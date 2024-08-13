@@ -139,7 +139,7 @@ const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
   productPath.value = localePath(`${path}/${productSlug}`);
 };
 
-setProductPath(categoryTree.value);
+onNuxtReady(() => setProductPath(categoryTree.value));
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
