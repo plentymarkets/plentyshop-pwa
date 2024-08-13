@@ -19,9 +19,9 @@
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:watch": "vitest",
-    "test:cypress-quarantine": "cypress run --browser chrome --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
-    "test:cypress": "cypress run --browser chrome --headless --spec '__tests__/test/feature/*.cy.{js,jsx,ts,tsx},__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}'",
-    "test:cypress-dev": "cypress open --e2e"
+    "test:cypress-quarantine": "cypress run --browser electron --headless --spec '__tests__/test/quarantine/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress": "cypress run --browser electron --headless --spec '__tests__/test/feature/*.cy.{js,jsx,ts,tsx},__tests__/test/smoke/*.cy.{js,jsx,ts,tsx}'",
+    "test:cypress-dev": "cypress open --e2e --browser electron"
   },
   "dependencies": {
     "@plentymarkets/tailwind-colors": "^1.0.0",
