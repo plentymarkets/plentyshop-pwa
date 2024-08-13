@@ -114,14 +114,14 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType } from '@plentymarkets/shop-api';
 import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 
+const { data: countries } = useActiveShippingCountries();
 const { t } = useI18n();
-const { onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
-const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
+// const { onStartValidation, endValidation } = useAddressForm(AddressType.Billing);
+const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
 const validationSchema = toTypedSchema(
   object({
@@ -141,7 +141,7 @@ const validationSchema = toTypedSchema(
   }),
 );
 
-const { defineField, errors, values, validate, setValues } = useForm({
+const { defineField, errors, setValues } = useForm({
   validationSchema: validationSchema,
 });
 
@@ -166,14 +166,14 @@ const toggleCompany = () => {
 
 if (!addAddress) setValues({ form: address as any });
 
-const unsubscribeValidation = onStartValidation(async () => {
-  const validation = await validate();
+// const unsubscribeValidation = onStartValidation(async () => {
+//   const validation = await validate();
 
-  endValidation({
-    address: values.form as Address,
-    validation: validation as any,
-  });
-});
+//   endValidation({
+//     address: values.form as Address,
+//     validation: validation as any,
+//   });
+// });
 
-onUnmounted(() => unsubscribeValidation());
+// onUnmounted(() => unsubscribeValidation());
 </script>

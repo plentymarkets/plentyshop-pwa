@@ -1,4 +1,4 @@
-import { Address, AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 export const useAddressContainer = (type: AddressType) => {
   const isBilling = type === AddressType.Billing;
@@ -30,20 +30,20 @@ export const useAddressContainer = (type: AddressType) => {
     editing.value = true;
   };
 
-  watch(
-    checkoutAddress,
-    () => {
-      if (hasCheckoutAddress.value) {
-        shippingAsBilling.value = false;
-        showNewForm.value = false;
-        return;
-      }
+  // watch(
+  //   checkoutAddress,
+  //   () => {
+  //     if (hasCheckoutAddress.value) {
+  //       shippingAsBilling.value = false;
+  //       showNewForm.value = false;
+  //       return;
+  //     }
 
-      showNewForm.value = !isBilling;
-      if (!isBilling) shippingAsBilling.value = true;
-    },
-    { immediate: true },
-  );
+  //     showNewForm.value = !isBilling;
+  //     if (!isBilling) shippingAsBilling.value = true;
+  //   },
+  //   { immediate: true },
+  // );
 
   watch(shippingAsBilling, () => {
     if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;

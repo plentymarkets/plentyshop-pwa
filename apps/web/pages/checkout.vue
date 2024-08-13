@@ -13,9 +13,6 @@
         <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
-        <div class="flex w-full -mx-4">
-          <!--  <SaveAddressButton /> -->
-        </div>
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
@@ -95,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { Address, AddressType, cartGetters, paymentProviderGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -111,10 +108,10 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { t } = useI18n();
-
-await getCart();
-await useActiveShippingCountries().getActiveShippingCountries();
-
+const { set: setShippingCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
+const { set: setBillingCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
+const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
+const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
 const {
   loadPayment,
   loadShipping,
@@ -125,7 +122,45 @@ const {
   handlePaymentMethodUpdate,
   shippingPrivacyAgreement,
 } = useCheckoutPagePaymentAndShipping();
-useCheckoutPageAddresses();
+
+const persistShippingAddress = () => {
+  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
+  const primaryAddress = userAddressGetters.getDefault(shippingAddresses.value);
+  const cartAddress = ref();
+
+  if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
+
+  cartAddress.value
+    ? setShippingCheckoutAddress(cartAddress.value, true)
+    : setShippingCheckoutAddress(primaryAddress as Address);
+};
+
+const persistBillingAddress = () => {
+  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
+  const primaryAddress = userAddressGetters.getDefault(billingAddresses.value);
+  const cartAddress = ref();
+
+  if (cartShippingAddressId) cartAddress.value = getBilling(cartShippingAddressId);
+
+  cartAddress.value
+    ? setBillingCheckoutAddress(cartAddress.value, true)
+    : setBillingCheckoutAddress(primaryAddress as Address);
+};
+
+onNuxtReady(async () => {
+  useFetchAdddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress())
+    .catch((error) => useHandleError(error));
+
+  useFetchAdddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+});
+
+await getCart();
+await useActiveShippingCountries().getActiveShippingCountries();
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);

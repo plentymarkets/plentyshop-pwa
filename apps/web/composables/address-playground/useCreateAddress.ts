@@ -13,9 +13,7 @@ export const useCreateAddress = (type: AddressType) => {
         addressData: address,
       });
 
-      const { create } = useAddressStore(type);
-      create(address, data.data);
-
+      useAddressStore(type).create(address, data.data);
       state.value.loading = false;
     } catch (error: any) {
       useHandleError(error);

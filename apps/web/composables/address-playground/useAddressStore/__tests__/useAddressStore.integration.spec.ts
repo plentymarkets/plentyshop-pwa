@@ -71,12 +71,12 @@ describe('Integration test createAddress with store', () => {
         });
 
         const { create } = useCreateAddress(AddressType.Billing);
-        const { onCreate } = useAddressStore(AddressType.Billing);
+        // const { onCreate } = useAddressStore(AddressType.Billing);
         const onCreateSpy = vi.fn();
-        const unsubscribeCreate = onCreate(onCreateSpy);
+        // const unsubscribeCreate = onCreate(onCreateSpy);
         await create(addressFixture);
 
         expect(onCreateSpy).toHaveBeenCalledTimes(1);
-        unsubscribeCreate();
+        // unsubscribeCreate();
     });
 });

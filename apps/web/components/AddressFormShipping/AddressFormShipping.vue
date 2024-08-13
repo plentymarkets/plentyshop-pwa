@@ -1,6 +1,6 @@
 <template>
   <form
-    ref="shippingForm"
+    @submit="submitForm"
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="shipping-address-form"
   >
@@ -11,19 +11,20 @@
         autocomplete="given-name"
         v-model="firstName"
         v-bind="firstNameAttributes"
-        :invalid="Boolean(errors['form.firstName'])"
+        :invalid="Boolean(errors['firstName'])"
       />
-      <VeeErrorMessage as="span" name="form.firstName" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="firstName" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label class="md:col-span-2">
       <UiFormLabel>{{ t('form.lastNameLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         autocomplete="family-name"
         v-model="lastName"
         v-bind="lastNameAttributes"
-        :invalid="Boolean(errors['form.lastName'])"
+        :invalid="Boolean(errors['lastName'])"
       />
-      <VeeErrorMessage as="span" name="form.lastName" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="md:col-span-3">
@@ -43,17 +44,18 @@
         autocomplete="company"
         v-model="company"
         v-bind="companyAttributes"
-        :invalid="Boolean(errors['form.company'])"
+        :invalid="Boolean(errors['company'])"
       />
-      <VeeErrorMessage as="span" name="form.company" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="company" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label v-if="hasCompany" class="md:col-span-2">
       <UiFormLabel class="flex">
         <span class="mr-1">{{ t('form.vatIdLabel') }}</span>
         <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
-      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['form.vatId'])" />
-      <VeeErrorMessage as="span" name="form.vatId" class="flex text-negative-700 text-sm mt-2" />
+      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
+      <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -63,10 +65,11 @@
         autocomplete="address-line1"
         v-model="streetName"
         v-bind="streetNameAttributes"
-        :invalid="Boolean(errors['form.streetName'])"
+        :invalid="Boolean(errors['streetName'])"
       />
-      <VeeErrorMessage as="span" name="form.streetName" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="streetName" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label>
       <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
@@ -74,20 +77,22 @@
         autocomplete="address-line2"
         v-model="apartment"
         v-bind="apartmentAttributes"
-        :invalid="Boolean(errors['form.apartment'])"
+        :invalid="Boolean(errors['apartment'])"
       />
-      <VeeErrorMessage as="span" name="form.apartment" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="apartment" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label>
       <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         autocomplete="postal-code"
         v-model="zipCode"
         v-bind="zipCodeAttributes"
-        :invalid="Boolean(errors['form.zipCode'])"
+        :invalid="Boolean(errors['zipCode'])"
       />
-      <VeeErrorMessage as="span" name="form.zipCode" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label class="md:col-span-2">
       <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
@@ -95,10 +100,11 @@
         autocomplete="address-level2"
         v-model="city"
         v-bind="cityAttributes"
-        :invalid="Boolean(errors['form.city'])"
+        :invalid="Boolean(errors['city'])"
       />
-      <VeeErrorMessage as="span" name="form.city" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="city" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label class="md:col-span-3">
       <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfSelect
@@ -107,14 +113,15 @@
         v-bind="countryAttributes"
         :placeholder="t('form.selectPlaceholder')"
         autocomplete="country-name"
-        :invalid="Boolean(errors['form.country'])"
+        :invalid="Boolean(errors['country'])"
       >
         <option v-for="(shippingCountry, index) in countries" :key="index" :value="shippingCountry.id.toString()">
           {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
-      <VeeErrorMessage as="span" name="form.country" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
+
     <label class="flex items-center gap-2">
       <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
       <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
@@ -123,51 +130,50 @@
 </template>
 
 <script setup lang="ts">
-import { Address, AddressType } from '@plentymarkets/shop-api';
 import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
 import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
+import { Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
-const { onStartValidation, endValidation } = useAddressForm(AddressType.Shipping);
-const { shippingAsBilling } = useShippingAsBilling();
+const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
+
 const hasCompany = ref(false);
-const { countries, address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
+const { data: countries } = useActiveShippingCountries();
+const { shippingAsBilling } = useShippingAsBilling();
+const { addressToSave, save: saveAddress } = useAddressForm(AddressType.Shipping);
+const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
+const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const { t } = useI18n();
+
 const validationSchema = toTypedSchema(
   object({
-    form: object({
-      firstName: string().required(t('errorMessages.requiredField')).default(''),
-      lastName: string().required(t('errorMessages.requiredField')).default(''),
-      country: string().required(t('errorMessages.requiredField')).default(''),
-      streetName: string().required(t('errorMessages.requiredField')).default(''),
-      apartment: string().required(t('errorMessages.requiredField')).default(''),
-      city: string().required(t('errorMessages.requiredField')).default(''),
-      state: string().default('').optional(),
-      zipCode: string().required(t('errorMessages.requiredField')).min(5),
-      primary: boolean().default(false),
-      company: string().optional(),
-      vatId: string().optional(),
-    }),
+    firstName: string().required(t('errorMessages.requiredField')).default(''),
+    lastName: string().required(t('errorMessages.requiredField')).default(''),
+    country: string().required(t('errorMessages.requiredField')).default(''),
+    streetName: string().required(t('errorMessages.requiredField')).default(''),
+    apartment: string().required(t('errorMessages.requiredField')).default(''),
+    city: string().required(t('errorMessages.requiredField')).default(''),
+    state: string().default('').optional(),
+    zipCode: string().required(t('errorMessages.requiredField')).min(5),
+    primary: boolean().default(false),
+    company: string().optional(),
+    vatId: string().optional(),
   }),
 );
 
-const { defineField, errors, values, validate, setValues } = useForm({
-  validationSchema: validationSchema,
-});
+const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 
-const [firstName, firstNameAttributes] = defineField('form.firstName');
-const [lastName, lastNameAttributes] = defineField('form.lastName');
-const [country, countryAttributes] = defineField('form.country');
-const [streetName, streetNameAttributes] = defineField('form.streetName');
-const [apartment, apartmentAttributes] = defineField('form.apartment');
-const [city, cityAttributes] = defineField('form.city');
-const [zipCode, zipCodeAttributes] = defineField('form.zipCode');
-const [vatId, vatIdAttributes] = defineField('form.vatId');
-const [company, companyAttributes] = defineField('form.company');
+const [firstName, firstNameAttributes] = defineField('firstName');
+const [lastName, lastNameAttributes] = defineField('lastName');
+const [country, countryAttributes] = defineField('country');
+const [streetName, streetNameAttributes] = defineField('streetName');
+const [apartment, apartmentAttributes] = defineField('apartment');
+const [city, cityAttributes] = defineField('city');
+const [zipCode, zipCodeAttributes] = defineField('zipCode');
+const [vatId, vatIdAttributes] = defineField('vatId');
+const [company, companyAttributes] = defineField('company');
 
-if (!addAddress) {
-  setValues({ form: address as any });
-}
+if (!addAddress) setValues(address as any);
 
 const toggleCompany = () => {
   hasCompany.value = !hasCompany.value;
@@ -177,14 +183,15 @@ const toggleCompany = () => {
   }
 };
 
-const unsubscribeValidation = onStartValidation(async () => {
-  const validation = await validate();
-
-  endValidation({
-    address: values.form as Address,
-    validation: validation as any,
-  });
+const submitForm = handleSubmit((shippingAddressForm) => {
+  addressToSave.value = shippingAddressForm;
+  saveAddress()
+    .then(() => {
+      setCheckoutAddress(userAddressGetters.getDefault(shippingAddresses.value) as Address, true);
+      return true;
+    })
+    .catch((error) => useHandleError(error));
 });
 
-onUnmounted(() => unsubscribeValidation());
+defineExpose({ validate, submitForm });
 </script>

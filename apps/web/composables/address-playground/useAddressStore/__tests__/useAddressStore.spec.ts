@@ -21,23 +21,23 @@ describe('useAddressStore', () => {
 
 
     it('should set addresses', () => {
-        const { onSet, set, addresses } = useAddressStore(AddressType.Billing);
+        const { set, addresses } = useAddressStore(AddressType.Billing);
         const onSetSpy = vi.fn();
 
-        const unsubscribeCreate = onSet(onSetSpy);
+        // const unsubscribeCreate = onSet(onSetSpy);
 
         set([addressFixture]);
 
         expect(addresses.value).toEqual([addressFixture]);
         expect(onSetSpy).toHaveBeenCalledTimes(1);
-        unsubscribeCreate();
+        // unsubscribeCreate();
     });
 
     it('should destroy address', () => {
-        const { onDestroy, set, destroy, addresses } = useAddressStore(AddressType.Billing);
+        const { set, destroy, addresses } = useAddressStore(AddressType.Billing);
         const onDestroySpy = vi.fn();
 
-        const unsubscribeDelete = onDestroy(onDestroySpy);
+        // const unsubscribeDelete = onDestroy(onDestroySpy);
 
         set([addressFixture]);
 
@@ -45,7 +45,7 @@ describe('useAddressStore', () => {
 
         expect(addresses.value).toEqual([]);
         expect(onDestroySpy).toHaveBeenCalledTimes(1);
-        unsubscribeDelete();
+        // unsubscribeDelete();
     });
 
     it('should get address', () => {
@@ -57,10 +57,10 @@ describe('useAddressStore', () => {
     });
 
     it('should update address', () => {
-        const { onUpdate, set, update, addresses } = useAddressStore(AddressType.Billing);
+        const { set, update, addresses } = useAddressStore(AddressType.Billing);
         const onUpdateSpy = vi.fn();
 
-        const unsubscribeUpdate = onUpdate(onUpdateSpy);
+        // const unsubscribeUpdate = onUpdate(onUpdateSpy);
 
         set([addressFixture]);
 
@@ -68,7 +68,7 @@ describe('useAddressStore', () => {
 
         expect(addresses.value).toEqual([{ ...addressFixture, name1: 'Updated' }]);
         expect(onUpdateSpy).toHaveBeenCalledTimes(1);
-        unsubscribeUpdate();
+        // unsubscribeUpdate();
     });
 
     it('should clear addresses', () => {
@@ -82,14 +82,14 @@ describe('useAddressStore', () => {
     });
 
     it(('should unsubscribe all events'), async () => {
-        const { set, unsubscribeAll, onSet, onDestroy, destroy } = useAddressStore(AddressType.Billing);
+        const { set, destroy } = useAddressStore(AddressType.Billing);
 
         const onSetSpy = vi.fn();
         const onDestroySpy = vi.fn();
-        onSet(onSetSpy);
-        onDestroy(onDestroySpy);
+        // onSet(onSetSpy);
+        // onDestroy(onDestroySpy);
 
-        unsubscribeAll();
+        // unsubscribeAll();
 
         set([addressFixture]);
         destroy(1);
@@ -100,17 +100,17 @@ describe('useAddressStore', () => {
     });
 
     it('should unsubscribe event', () => {
-        const { onCreate, create, addresses } = useAddressStore(AddressType.Billing);
+        const { create, addresses } = useAddressStore(AddressType.Billing);
         const onCreateSpy = vi.fn();
 
-        const unsubscribeCreate = onCreate(onCreateSpy);
+        // const unsubscribeCreate = onCreate(onCreateSpy);
 
         create(addressFixture,[addressFixture]);
 
         expect(addresses.value).toEqual([addressFixture]);
         expect(onCreateSpy).toHaveBeenCalledTimes(1);
 
-        unsubscribeCreate();
+        // unsubscribeCreate();
 
         create(addressFixture, [{ ...addressFixture, id: 2 }]);
 
