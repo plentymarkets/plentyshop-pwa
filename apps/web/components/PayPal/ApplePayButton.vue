@@ -1,87 +1,125 @@
 <template>
-  <div class="apple-pay-button"></div>
+  <div id="applepay-container"></div>
 </template>
 
 <script lang="ts" setup>
 import { ApplepayType } from '~/components/PayPal/types';
 
-const { loadScript } = usePayPal();
-// const loadApplePay = async () => {
-//   const scriptElement = document.createElement('script');
-//   scriptElement.setAttribute('src', 'https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js');
-//   scriptElement.setAttribute('type', 'text/javascript');
-//   document.head.append(scriptElement);
-// };
+async function setupApplepay() {
+  const paypal = window.paypal;
+  const applepay = paypal?.Applepay() as ApplepayType;
+  const { isEligible, countryCode, currencyCode, merchantCapabilities, supportedNetworks } = await applepay.config();
 
-const canMakePayments = ref(false);
-
-const initiateApplePay = async () => {
-  try {
-    const paypal = await loadScript('EUR');
-
-    if (!paypal) {
-      console.error('Paypal sdk failed');
-      return;
+  if (!isEligible) {
+    throw new Error('applepay is not eligible');
+  }
+  const applePayContainer = document.querySelector('#applepay-container');
+  if (applePayContainer) {
+    applePayContainer.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en">';
+    const btnApplePay = document.querySelector('#btn-appl');
+    if (btnApplePay) {
+      btnApplePay.addEventListener('click', onClick);
     }
+  }
+  async function onClick() {
+    console.log({ merchantCapabilities, currencyCode, supportedNetworks });
 
-    const applePay = (paypal as any).Applepay() as ApplepayType;
-
-    const paymentRequest = applePay.paymentRequest({
-      countryCode: 'DE',
-      currencyCode: 'EUR',
+    const paymentRequest = {
+      countryCode,
+      currencyCode: 'USD',
+      merchantCapabilities,
+      supportedNetworks,
+      requiredBillingContactFields: ['name', 'phone', 'email', 'postalAddress'],
+      requiredShippingContactFields: [],
       total: {
-        label: 'Store',
-        amount: 100,
+        label: 'Demo (Card is not charged)',
+        amount: '10.00',
+        type: 'final',
       },
-    });
-
-    const paymentSession = applePay.createPaymentSession(paymentRequest);
-
-    paymentSession.begin();
-
-    paymentSession.onvalidatemerchant = async (event: any) => {
-      try {
-        const validationData = await applePay.validateMerchant({
-          validationUrl: event.validationUrl,
-        });
-        paymentSession.completeMerchantValidation(validationData);
-      } catch (error) {
-        console.error('Merchant validation failed:', error);
-        paymentSession.abort();
-      }
     };
 
-    paymentSession.onpaymentauthorized = async (event: any) => {
-      try {
-        const authorization = event.payment;
-        const paymentResult = await applePay.tokenizePayment(authorization);
+    // eslint-disable-next-line no-undef
+    let session = new ApplePaySession(4, paymentRequest);
 
-        if (paymentResult.error) {
-          throw new Error(paymentResult.error.message);
+    session.onvalidatemerchant = (event) => {
+      applepay
+        .validateMerchant({
+          validationUrl: event.validationURL,
+        })
+        .then((payload) => {
+          session.completeMerchantValidation(payload.merchantSession);
+        })
+        .catch((error) => {
+          console.error(error);
+          session.abort();
+        });
+    };
+
+    session.onpaymentmethodselected = () => {
+      session.completePaymentMethodSelection({
+        newTotal: paymentRequest.total,
+      });
+    };
+
+    session.onpaymentauthorized = async (event) => {
+      try {
+        /* Create Order on the Server Side */
+        const orderResponse = await fetch(`/api/orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!orderResponse.ok) {
+          throw new Error('error creating order');
         }
 
-        // await props.onPaymentSuccess(paymentResult);
-        // paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+        const { id } = await orderResponse.json();
+        console.log({ id });
+        /**
+         * Confirm Payment
+         */
+        await applepay.confirmOrder({
+          orderId: id,
+          token: event.payment.token,
+          billingContact: event.payment.billingContact,
+          shippingContact: event.payment.shippingContact,
+        });
+
+        /*
+         * Capture order (must currently be made on server)
+         */
+        await fetch(`/api/orders/${id}/capture`, {
+          method: 'POST',
+        });
+
+        session.completePayment({
+          status: window.ApplePaySession.STATUS_SUCCESS,
+        });
       } catch (error) {
-        console.error('Payment authorization failed:', error);
-        // props.onPaymentError(error);
-        // paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+        console.error(error);
+        session.completePayment({
+          status: window.ApplePaySession.STATUS_FAILURE,
+        });
       }
     };
 
-    paymentSession.addEventListener('cancel', () => {
-      console.error('Apple pay cancel');
+    session.addEventListener('cancel', () => {
+      console.log('Apple Pay Cancelled !!');
     });
-  } catch (error) {
-    console.error('Apple pay initiation failed:', error);
-  }
-};
 
-if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-  canMakePayments.value = true;
+    session.begin();
+  }
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+  // eslint-disable-next-line no-undef
+  if (ApplePaySession?.supportsVersion(4) && ApplePaySession?.canMakePayments()) {
+    setupApplepay().catch(console.error);
+  }
+});
+
 onMounted(() => {
-  initiateApplePay();
+  setupApplepay();
 });
 </script>
