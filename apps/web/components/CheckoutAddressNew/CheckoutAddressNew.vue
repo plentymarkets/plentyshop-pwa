@@ -4,9 +4,9 @@
       <h2 class="text-neutral-900 text-lg font-bold mb-4">
         {{ heading }}
       </h2>
-      <SfButton v-if="!disabled && addresses.length > 0 && !editMode" size="sm" variant="tertiary" @click="edit">
+      <UiButton v-if="!disabled && addresses.length > 0 && !editMode" size="sm" variant="tertiary" @click="edit">
         {{ t('contactInfo.edit') }}
-      </SfButton>
+      </UiButton>
     </div>
     <div v-if="displayAddress && !editMode" class="mt-2 md:w-[520px]">
       <AddressDisplay :address="displayAddress" />
@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import AddressFormNew from '~/components/AddressFormNew/AddressFormNew.vue';
-import { SfButton } from '@storefront-ui/vue';
 import { CheckoutAddressNewProps } from './types';
 
 const { t } = useI18n();

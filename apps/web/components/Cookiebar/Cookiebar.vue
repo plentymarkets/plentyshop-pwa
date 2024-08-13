@@ -112,7 +112,7 @@
         <!-- action buttons -->
         <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
           <div class="flex-1">
-            <SfButton
+            <UiButton
               class="w-full"
               :aria-disabled="false"
               type="button"
@@ -121,10 +121,10 @@
               data-testid="cookie-bar-accept-all"
             >
               {{ $t('CookieBar.Accept All') }}
-            </SfButton>
+            </UiButton>
           </div>
           <div class="flex-1">
-            <SfButton
+            <UiButton
               class="w-full"
               :aria-disabled="false"
               type="button"
@@ -132,10 +132,10 @@
               @click="setAllCookiesState(false)"
             >
               {{ $t('CookieBar.Reject All') }}
-            </SfButton>
+            </UiButton>
           </div>
           <div class="flex-1">
-            <SfButton
+            <UiButton
               variant="secondary"
               class="w-full"
               :aria-disabled="false"
@@ -144,7 +144,7 @@
               @click="setConsent()"
             >
               {{ $t('CookieBar.Accept Selection') }}
-            </SfButton>
+            </UiButton>
           </div>
         </div>
       </div>
@@ -152,7 +152,7 @@
     <!-- button to open cookie tab -->
     <div v-else class="z-10 h-auto w-12 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2">
       <SfTooltip :label="$t('CookieBar.Cookie Settings')" placement="left">
-        <SfButton
+        <UiButton
           variant="secondary"
           class="!px-3 bg-white"
           :aria-label="$t('CookieBar.Cookie Settings')"
@@ -162,13 +162,13 @@
           <SfIconBase viewBox="0 0 24 24" size="base" class="fill-none">
             <path
               d="M9 16h.01M12 11h.01M7 10h.01M15 16h.01M21 12a9 9 0 1 1-9-9c0 2.761 1.79 5 4 5 0 2.21 2.239 4 5 4z"
-              stroke="#0c7992"
+              :style="{ stroke: 'rgb(var(--colors-2-primary-500) / 1)' }"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
             />
           </SfIconBase>
-        </SfButton>
+        </UiButton>
       </SfTooltip>
     </div>
     <!-- button to open cookie tab -->
@@ -176,7 +176,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfLink, SfButton, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
+import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { Cookie, CookieGroup } from '~/configuration/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');

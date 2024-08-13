@@ -12,12 +12,12 @@
           <span class="font-bold font-headings md:text-lg">
             {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
           </span>
-          <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
               <SfIconTune />
             </template>
             {{ $t('listSettings') }}
-          </SfButton>
+          </UiButton>
         </div>
         <section
           v-if="products"
@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {

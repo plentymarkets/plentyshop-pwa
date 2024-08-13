@@ -5,7 +5,7 @@
     :aria-label="t('pagination')"
     data-testid="pagination"
   >
-    <SfButton
+    <UiButton
       size="lg"
       :aria-label="t('prevAriaLabel')"
       :disabled="pagination.selectedPage <= 1 || disabled"
@@ -17,7 +17,7 @@
         <SfIconChevronLeft />
       </template>
       <span class="hidden sm:inline-flex">{{ t('prev') }}</span>
-    </SfButton>
+    </UiButton>
     <ul class="flex justify-center">
       <li v-if="!pagination.pages.includes(1)">
         <div
@@ -31,7 +31,7 @@
             :class="[
               'px-4 py-3 md:w-12 rounded-md text-neutral-500',
               {
-                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+                'hover:bg-primary-50 hover:text-primary-800 active:bg-primary-50 active:text-primary-700': !disabled,
               },
             ]"
             :aria-current="pagination.selectedPage === 1 || disabled"
@@ -56,7 +56,7 @@
             :class="[
               'px-4 py-3 md:w-12 rounded-md text-neutral-500',
               {
-                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+                'hover:bg-primary-50 hover:text-primary-800 active:bg-primary-50 active:text-primary-700': !disabled,
               },
             ]"
             :aria-current="pagination.endPage - 1 === pagination.selectedPage"
@@ -72,7 +72,7 @@
         <div
           :class="[
             'flex pt-1 border-t-4 border-transparent',
-            { 'font-medium border-t-4 !border-primary-700': pagination.selectedPage === page },
+            { 'font-medium border-t-4 !border-primary-500': pagination.selectedPage === page },
           ]"
         >
           <button
@@ -80,10 +80,10 @@
             :class="[
               'px-4 py-3 md:w-12 text-neutral-500 rounded-md',
               {
-                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+                'hover:bg-primary-50 hover:text-primary-800 active:bg-primary-50 active:text-primary-700': !disabled,
               },
               {
-                '!text-neutral-900 hover:!text-primary-800 active:!text-primary-900': pagination.selectedPage === page,
+                '!text-neutral-900 hover:!text-primary-800 active:!text-primary-700': pagination.selectedPage === page,
               },
             ]"
             :aria-current="pagination.selectedPage === page"
@@ -102,7 +102,7 @@
             :class="[
               'px-4 py-3 md:w-12 rounded-md text-neutral-500',
               {
-                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+                'hover:bg-primary-50 hover:text-primary-800 active:bg-primary-50 active:text-primary-700': !disabled,
               },
             ]"
             :aria-label="t('goToPage', { page: 2 })"
@@ -132,7 +132,7 @@
             :class="[
               'px-4 py-3 md:w-12 rounded-md text-neutral-500',
               {
-                'hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900': !disabled,
+                'hover:bg-primary-50 hover:text-primary-800 active:bg-primary-50 active:text-primary-700': !disabled,
               },
             ]"
             :aria-current="pagination.totalPages === pagination.selectedPage"
@@ -145,7 +145,7 @@
         </div>
       </li>
     </ul>
-    <SfButton
+    <UiButton
       size="lg"
       :aria-label="t('nextAriaLabel')"
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
@@ -157,12 +157,12 @@
       <template #suffix>
         <SfIconChevronRight />
       </template>
-    </SfButton>
+    </UiButton>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
+import { SfIconChevronLeft, SfIconChevronRight, usePagination } from '@storefront-ui/vue';
 import type { PaginationProps } from '~/components/ui/Pagination/types';
 
 const { updatePage } = useCategoryFilter();

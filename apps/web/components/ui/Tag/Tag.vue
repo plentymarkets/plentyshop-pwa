@@ -27,7 +27,7 @@ const sizeClasses = computed(() =>
 const getVariantClasses = computed(() => {
   switch (props.variant) {
     case 'secondary': {
-      return ['text-secondary-800', 'bg-secondary-200'];
+      return ['text-secondary-600', 'bg-secondary-50'];
     }
     case 'negative': {
       return ['text-negative-800', props.strong ? 'bg-negative-200' : 'bg-negative-100'];
@@ -36,7 +36,7 @@ const getVariantClasses = computed(() => {
       return ['text-green-800', props.strong ? 'bg-green-200' : 'bg-green-100'];
     }
     default: {
-      return ['text-primary-800', props.strong ? 'bg-primary-200' : 'bg-primary-100'];
+      return ['text-primary-800', props.strong ? 'bg-primary-50' : 'bg-primary-100'];
     }
   }
 });
