@@ -12,12 +12,21 @@
           <SfIconVisibility v-if="isReviewVisibile" size="sm" class="fill-neutral-400" />
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
-        <SfIconBase @click="openReviewEdit" viewBox="0 0 32 32" size="xs" class="fill-primary-700 cursor-pointer">
+        <SfIconBase
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview, reviewItem)"
+          viewBox="0 0 32 32"
+          size="xs"
+          class="fill-primary-700 cursor-pointer"
+        >
           <path
             d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
           />
         </SfIconBase>
-        <SfIconDelete @click="openDeleteReview" size="sm" class="fill-primary-700 cursor-pointer" />
+        <SfIconDelete
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, reviewItem)"
+          size="sm"
+          class="fill-primary-700 cursor-pointer"
+        />
       </div>
     </div>
 
@@ -62,7 +71,7 @@
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
               <SfIconBase
-                @click="openReplyEditor(reply)"
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply, reply)"
                 viewBox="0 0 38 38"
                 size="xs"
                 class="fill-primary-700 cursor-pointer"
@@ -71,7 +80,11 @@
                   d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
                 />
               </SfIconBase>
-              <SfIconDelete @click="openReplyDeletion(reply)" size="xs" class="fill-primary-700 cursor-pointer" />
+              <SfIconDelete
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
+                size="xs"
+                class="fill-primary-700 cursor-pointer"
+              />
             </div>
             <br />
           </div>
@@ -87,82 +100,6 @@
       <ReplyForm v-if="isAnswerFormOpen" :review-item="reviewItem" @on-close="isAnswerFormOpen = false" />
     </div>
   </article>
-
-  <UiModal
-    v-if="isDeleteReviewOpen"
-    v-model="isDeleteReviewOpen"
-    aria-labelledby="review-delete-modal"
-    tag="section"
-    role="dialog"
-    class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
-  >
-    <UiButton @click="closeDeleteReview" square variant="tertiary" class="absolute right-2 top-2">
-      <SfIconClose />
-    </UiButton>
-    <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteReview') }}</h3>
-    <div class="mb-6">{{ t('review.areYouSure') }}</div>
-
-    <div class="flex gap-x-4">
-      <UiButton @click="closeDeleteReview" type="button" variant="secondary" class="flex-1">
-        {{ t('review.cancel') }}
-      </UiButton>
-      <UiButton @click="deleteReview" type="button" class="flex-1">
-        {{ t('review.deleteReviewConfirmation') }}
-      </UiButton>
-    </div>
-  </UiModal>
-
-  <UiModal
-    v-if="isReplyDeleteOpen"
-    v-model="isReplyDeleteOpen"
-    aria-labelledby="review-delete-modal"
-    tag="section"
-    role="dialog"
-    class="max-h-full w-full overflow-auto md:w-[400px] md:h-fit"
-  >
-    <UiButton @click="closeReplyDelete" square variant="tertiary" class="absolute right-2 top-2">
-      <SfIconClose />
-    </UiButton>
-    <h3 class="font-bold py-2 typography-headline-4">{{ t('review.deleteAnswer') }}</h3>
-    <div class="mb-6">{{ t('review.answerAreYouSure') }}</div>
-
-    <div class="flex gap-x-4">
-      <UiButton @click="closeReplyDelete" type="button" variant="secondary" class="flex-1">
-        {{ t('review.cancel') }}
-      </UiButton>
-      <UiButton @click="deleteReply" type="button" class="flex-1">
-        {{ t('review.deleteReviewConfirmation') }}
-      </UiButton>
-    </div>
-  </UiModal>
-
-  <UiModal
-    v-if="isReviewEditOpen"
-    v-model="isReviewEditOpen"
-    aria-labelledby="review-edit-modal"
-    tag="section"
-    role="dialog"
-    class="h-fit md:w-[500px] m-0 p-0"
-  >
-    <UiButton @click="closeReviewEdit" square variant="tertiary" class="absolute right-2 top-2">
-      <SfIconClose />
-    </UiButton>
-    <ReviewForm :review-item="reviewItem" @on-close="closeReviewEdit" />
-  </UiModal>
-
-  <UiModal
-    v-if="isReplyEditOpen"
-    v-model="isReplyEditOpen"
-    aria-labelledby="reply-edit-modal"
-    tag="section"
-    role="dialog"
-    class="h-fit md:w-[500px] m-0 p-0"
-  >
-    <UiButton @click="closeReplyEdit" square variant="tertiary" class="absolute right-2 top-2">
-      <SfIconClose />
-    </UiButton>
-    <ReplyEditForm :reply-item="replyItem" @on-close="closeReplyEdit" />
-  </UiModal>
 </template>
 
 <script setup lang="ts">
@@ -172,14 +109,10 @@ import {
   SfIconDelete,
   SfIconVisibility,
   SfIconVisibilityOff,
-  SfIconClose,
   SfTooltip,
-  useDisclosure,
   SfIconBase,
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
-import ReviewForm from '~/components/ReviewForm/ReviewForm.vue';
-import ReplyForm from '~/components/ReplyForm/ReplyForm.vue';
 import { type ReviewItem, reviewGetters, productGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<ReviewProps>();
@@ -187,17 +120,12 @@ const { t } = useI18n();
 const { reviewItem } = toRefs(props);
 const isAnswerFormOpen = ref(false);
 const isCollapsed = ref(true);
-const replyItem = ref({} as ReviewItem);
 
-const reviewAuthor = reviewGetters.getReviewAuthor(reviewItem.value) || t('review.anonymous');
-const { isOpen: isDeleteReviewOpen, open: openDeleteReview, close: closeDeleteReview } = useDisclosure();
-const { isOpen: isReviewEditOpen, open: openReviewEdit, close: closeReviewEdit } = useDisclosure();
-const { isOpen: isReplyEditOpen, open: openReplyEdit, close: closeReplyEdit } = useDisclosure();
-const { isOpen: isReplyDeleteOpen, open: openReplyDelete, close: closeReplyDelete } = useDisclosure();
 const { data: sessionData, isAuthorized } = useCustomer();
 const { currentProduct } = useProducts();
-const { deleteProductReview } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
+const { openReviewModal } = useProductReviews(Number(productGetters.getItemId(currentProduct.value)));
 
+const reviewAuthor = computed(() => reviewGetters.getReviewAuthor(reviewItem.value) || t('review.anonymous'));
 const replies = computed(() => reviewGetters.getReviewReplies(reviewItem.value));
 const verifiedPurchase = reviewGetters.getVerifiedPurchase(reviewItem.value);
 const isReviewVisibile = reviewGetters.getReviewVisibility(reviewItem.value);
@@ -212,24 +140,4 @@ const isAnswerEditable = (replyItem: ReviewItem) =>
 const isEditable = computed(
   () => reviewItem.value.sourceRelation[0].feedbackRelationSourceId === sessionData.value.user?.id?.toString(),
 );
-
-const deleteReview = async () => {
-  closeDeleteReview();
-  if (reviewItem.value.id) await deleteProductReview(reviewItem.value.id);
-};
-
-const openReplyEditor = (item: ReviewItem) => {
-  openReplyEdit();
-  replyItem.value = item;
-};
-
-const openReplyDeletion = (item: ReviewItem) => {
-  openReplyDelete();
-  replyItem.value = item;
-};
-
-const deleteReply = async () => {
-  closeReplyDelete();
-  if (replyItem.value.id) await deleteProductReview(replyItem.value.id);
-};
 </script>

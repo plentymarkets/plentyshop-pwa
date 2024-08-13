@@ -8,17 +8,9 @@
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
     :data-testid="dataTestId"
   >
-    <header>
-      <h3 class="font-bold typography-headline-4">
-        {{ t('review.createReviewFormTitle') }}
-      </h3>
-      <UiButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
-        <SfIconClose />
-      </UiButton>
-    </header>
-
     <template v-if="isAuthorized">
-      <ReviewForm @on-close="closeReviewModal" class="h-fit" />
+      <UiDeleteReview v-if="isDeleteModal" />
+      <ReviewForm v-else :review-item="review" />
     </template>
     <template v-else>
       <LoginComponent v-if="isLogin" @change-view="isLogin = false" />
@@ -28,16 +20,21 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const { currentProduct } = useProducts();
 
 const productId = Number(productGetters.getItemId(currentProduct.value));
 
-const { t } = useI18n();
 const { isAuthorized } = useCustomer();
-const { isReviewModalOpen, closeReviewModal } = useProductReviews(productId);
+const { isReviewModalOpen, review, modalType } = useProductReviews(productId);
+
+const isDeleteModal = computed(() =>
+  [defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply].includes(
+    modalType.value,
+  ),
+);
 
 const isLogin = ref(true);
 const dataTestId = computed(() => (isAuthorized.value ? 'review' : 'login') + '-modal');
