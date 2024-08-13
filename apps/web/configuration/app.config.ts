@@ -21,6 +21,5 @@ export const appConfiguration = {
       { rel: 'icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', href: '/favicon.ico' },
     ],
-    script: [{ src: 'https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js' }],
   },
 };

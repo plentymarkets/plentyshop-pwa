@@ -4445,6 +4445,7 @@ __metadata:
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 8.1.0
     "@plentymarkets/shop-api": ^0.50.0
+    "@types/applepayjs": ^14.0.8
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.1
     "@vee-validate/yup": ^4.13.1
@@ -5211,6 +5212,13 @@ __metadata:
     "@tufjs/canonical-json": 2.0.0
     minimatch: ^9.0.4
   checksum: 7a7370ac8dc3c18b66dddca3269d9b9282d891f1c289beb2060649fd50ef74eaa6494bd6d6b3edfe11f0f1efa14ec19c5ec819c7cf1871476c9e002115ffb9a7
+  languageName: node
+  linkType: hard
+
+"@types/applepayjs@npm:^14.0.8":
+  version: 14.0.8
+  resolution: "@types/applepayjs@npm:14.0.8"
+  checksum: 9d4ed907fea8413db0aaf692dda7d14b728ebccf9db4face5c348827ab759e06d2912b7990d803b8d6b36cb1c59ba8598c9b5cb08241b14846dd412d935815ef
   languageName: node
   linkType: hard
 
