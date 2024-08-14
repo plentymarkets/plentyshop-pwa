@@ -3,7 +3,6 @@ import https from 'node:https';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import fetchFavicon from './fetchFavicon';
 
 const environmentFilePath = path.resolve(__dirname, '../.env');
 const environmentTemporaryFilePath = path.resolve(__dirname, '../.env.tmp');
