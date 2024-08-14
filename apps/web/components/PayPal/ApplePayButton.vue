@@ -76,12 +76,15 @@ onMounted(async () => {
   applePay.config().then((config: ConfigResponse) => {
     applePayConfig.value = config;
     if (config.isEligible) {
-      const dom = document.getElementById('apple-pay-button');
-      if (dom) {
-        dom.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en" />';
-        dom.addEventListener('click', () => {
-          applePayPayment();
-        });
+      const applePayButtonContainer = document.getElementById('apple-pay-button');
+      if (applePayButtonContainer) {
+        applePayButtonContainer.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
+        const applePayButton = document.getElementById('btn-appl');
+        if (applePayButton) {
+          applePayButton.addEventListener('click', () => {
+            applePayPayment();
+          });
+        }
       }
     }
   });
