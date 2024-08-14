@@ -15,7 +15,7 @@
     </header>
     <div class="max-w-[450px] md:max-w-[768px]">
       <form class="col-span-2" @submit.prevent="onSubmit">
-        <template v-if="isCreateReviewModal || isUpdateReviewModal" data-testid="rating-section">
+        <div v-if="isCreateReviewModal || isUpdateReviewModal" data-testid="rating-section">
           <div class="flex items-center justify-between">
             <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
               {{ t('review.yourRating') }} *
@@ -30,7 +30,7 @@
             />
           </div>
           <VeeErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
-        </template>
+        </div>
 
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
           <UiFormLabel for="review-title">{{ t('review.title') }} *</UiFormLabel>

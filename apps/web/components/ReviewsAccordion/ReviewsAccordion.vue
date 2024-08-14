@@ -19,12 +19,7 @@
 
         <UiReviewStatistics :product="product" />
 
-        <UiReview
-          v-for="(reviewItem, key) in paginatedProductReviews"
-          :key="key"
-          :review-item="reviewItem"
-          @on-submit="saveReview"
-        />
+        <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
         <p
           v-if="paginatedProductReviews.length === 0"
           data-testid="no-review-text"
@@ -50,7 +45,6 @@
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
-import { CreateReviewParams } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
 const { product } = defineProps<ProductAccordionPropsType>();
@@ -76,8 +70,6 @@ const pagination = computed(() => reviewGetters.getReviewPagination(productRevie
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
-
-const saveReview = async (form: CreateReviewParams) => {};
 
 watch(
   () => reviewsOpen.value,
