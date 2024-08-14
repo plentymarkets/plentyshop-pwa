@@ -58,16 +58,26 @@ export const useProduct: UseProductReturn = (slug) => {
   /**
    * @description Function for setting product title meta data
    */
-  const setTitle = () => {
+  const setProductMeta = () => {
     const title = productGetters.getName(state.value.data);
 
     useHead({
       title,
+      meta: [
+        {
+          name: 'description',
+          content: productGetters.getMetaDescription(state.value.data) || process.env.METADESC,
+        },
+        {
+          name: 'keywords',
+          content: productGetters.getMetaKeywords(state.value.data) || process.env.METAKEYWORDS,
+        },
+      ],
     });
   };
 
   return {
-    setTitle,
+    setProductMeta,
     setBreadcrumbs,
     fetchProduct,
     ...toRefs(state.value),
