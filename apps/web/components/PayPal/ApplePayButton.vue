@@ -35,6 +35,8 @@ const initiateApplePay = async () => {
         supportedNetworks: config.supportedNetworks,
         countryCode: 'DE',
         currencyCode: 'EUR',
+        requiredShippingContactFields: ["name", "phone", "email", "postalAddress"],
+        requiredBillingContactFields: ["postalAddress"],
         total: {
           label: 'Store',
           amount: '100',
