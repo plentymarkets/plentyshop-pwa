@@ -20,25 +20,10 @@ export const useAddressContainer = (type: AddressType) => {
   );
 
   const edit = (address: Address) => {
-    addressToEdit.value = editing.value ? ({} as Address) : address;
-    editing.value = !editing.value;
+    addressToEdit.value = editing.value || showNewForm.value ? ({} as Address) : address;
+    editing.value = !(editing.value || showNewForm.value);
     showNewForm.value = false;
   };
-
-  // watch(
-  //   checkoutAddress,
-  //   () => {
-  //     if (hasCheckoutAddress.value) {
-  //       shippingAsBilling.value = false;
-  //       showNewForm.value = false;
-  //       return;
-  //     }
-
-  //     showNewForm.value = !isBilling;
-  //     if (!isBilling) shippingAsBilling.value = true;
-  //   },
-  //   { immediate: true },
-  // );
 
   watch(shippingAsBilling, () => {
     if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;

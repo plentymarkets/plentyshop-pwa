@@ -33,9 +33,8 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink href="#" class="" @click.prevent="toggleCompany">
-        <span v-if="!hasCompany">{{ t('form.addCompany') }}</span>
-        <span v-else>{{ t('form.removeCompany') }}</span>
+      <SfLink @click="toggleCompany" class="select-none hover:cursor-pointer">
+        {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
       </SfLink>
     </div>
 

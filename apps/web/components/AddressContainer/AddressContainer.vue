@@ -6,16 +6,16 @@
       </h2>
 
       <div class="flex justify-center">
-        <AddressSelect v-if="!editing" :type="type" @new="showNewForm = true" @edit="edit" />
+        <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
         <UiButton v-else @click="validateAndSubmitForm" size="sm" variant="tertiary">
           {{ $t('saveAddress') }}
         </UiButton>
 
         <span class="mx-2 self-center">|</span>
 
-        <SfTooltip :label="!editing ? $t('editAddress') : ''">
+        <SfTooltip :label="!editing && !showNewForm ? $t('editAddress') : ''">
           <UiButton v-if="!disabled && checkoutAddress" @click="edit(checkoutAddress)" size="sm" variant="tertiary">
-            <template v-if="!editing">
+            <template v-if="!editing && !showNewForm">
               {{ $t('contactInfo.edit') }}
             </template>
             <SfIconClose v-else size="sm" />

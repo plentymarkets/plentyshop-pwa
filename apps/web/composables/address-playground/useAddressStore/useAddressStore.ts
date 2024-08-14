@@ -33,26 +33,6 @@ export const useAddressStore = (type: AddressType) => {
     set([]);
   };
 
-  // const onSet = (listener: (event: AddressSetEvent) => void) => {
-  //   eventEmitter.on(EVENTS.SET, listener);
-  //   return () => eventEmitter.off(EVENTS.SET, listener);
-  // };
-
-  // const onCreate = (listener: (event: AddressCreateEvent) => void) => {
-  //   eventEmitter.on(EVENTS.CREATE, listener);
-  //   return () => eventEmitter.off(EVENTS.CREATE, listener);
-  // };
-
-  // const onUpdate = (listener: (event: AddressUpdateEvent) => void) => {
-  //   eventEmitter.on(EVENTS.UPDATE, listener);
-  //   return () => eventEmitter.off(EVENTS.UPDATE, listener);
-  // };
-
-  // const onDestroy = (listener: (event: AddressDestroyEvent) => void) => {
-  //   eventEmitter.on(EVENTS.DESTROY, listener);
-  //   return () => eventEmitter.off(EVENTS.DESTROY, listener);
-  // };
-
   return {
     ...toRefs(state.value),
     set,
