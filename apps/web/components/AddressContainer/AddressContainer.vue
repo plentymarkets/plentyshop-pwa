@@ -6,9 +6,9 @@
       </h2>
 
       <div class="flex justify-center">
-        <AddressSelect v-if="!editing" :type="type" @new="showNewForm = true" />
+        <AddressSelect v-if="!editing" :type="type" @new="showNewForm = true" @edit="edit" />
         <UiButton v-else @click="validateAndSubmitForm" size="sm" variant="tertiary">
-          {{ $t('saveUpdatedAddress') }}
+          {{ $t('saveAddress') }}
         </UiButton>
 
         <span class="mx-2 self-center">|</span>

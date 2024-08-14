@@ -231,7 +231,7 @@
   "newBillingAddress": "New billing address",
   "newShippingAddress": "New shipping address",
   "editAddress": "Edit address",
-  "saveUpdatedAddress": "Save updated address",
+  "saveAddress": "Save address",
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "contactInfo": {

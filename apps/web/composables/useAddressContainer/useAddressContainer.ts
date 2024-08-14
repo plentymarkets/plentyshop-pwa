@@ -15,19 +15,14 @@ export const useAddressContainer = (type: AddressType) => {
       : false;
   });
 
-  const showSameAsShippingText = computed(() => {
-    return sameAsShippingAddress.value && !showNewForm.value && !editing.value && shippingAsBilling.value;
-  });
+  const showSameAsShippingText = computed(
+    () => sameAsShippingAddress.value && !showNewForm.value && !editing.value && shippingAsBilling.value,
+  );
 
   const edit = (address: Address) => {
-    if (editing.value) {
-      editing.value = false;
-      showNewForm.value = false;
-      return;
-    }
-
-    addressToEdit.value = address;
-    editing.value = true;
+    addressToEdit.value = editing.value ? ({} as Address) : address;
+    editing.value = !editing.value;
+    showNewForm.value = false;
   };
 
   // watch(
