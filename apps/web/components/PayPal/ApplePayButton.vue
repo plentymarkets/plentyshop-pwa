@@ -32,7 +32,7 @@ const initiateApplePay = async () => {
 
       const paymentRequest = {
         merchantCapabilities: config.merchantCapabilities,
-        supportedCountries: config.supportedNetworks,
+        supportedNetworks: config.supportedNetworks,
         countryCode: 'DE',
         currencyCode: 'EUR',
         total: {
