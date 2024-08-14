@@ -12,7 +12,16 @@
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
       :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"
-      :image-alt="productGetters.getName(product)"
+      :image-alt="
+        productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ??
+        productGetters.getName(product) ??
+        ''
+      "
+      :image-title="
+        productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ??
+        productGetters.getName(product) ??
+        ''
+      "
       :image-height="productGetters.getImageHeight(product) ?? 600"
       :image-width="productGetters.getImageWidth(product) ?? 600"
       :price="productGetters.getSpecialPrice(product)"
@@ -31,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 

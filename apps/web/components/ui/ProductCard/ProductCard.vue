@@ -18,6 +18,7 @@
         <NuxtImg
           :src="imageUrl"
           :alt="imageAlt"
+          :title="imageTitle"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
@@ -106,6 +107,7 @@ const {
   name,
   imageUrl,
   imageAlt,
+  imageTitle,
   imageWidth,
   imageHeight,
   rating,

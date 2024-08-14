@@ -14,25 +14,26 @@
         @on-scroll="onScroll"
       >
         <div
-          v-for="({ url, cleanImageName, width, height }, index) in images"
+          v-for="(image, index) in images"
           :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
           <NuxtImg
             :id="`gallery-img-${index}`"
-            :alt="cleanImageName ?? ''"
+            :alt="productImageGetters.getImageAlternate(image) ?? productImageGetters.getCleanImageName(image) ?? ''"
+            :title="productImageGetters.getImageName(image) ?? productImageGetters.getCleanImageName(image) ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            :src="url"
+            :src="productImageGetters.getImageUrl(image)"
             sizes="2xs:100vw, md:700px"
             draggable="false"
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="width ?? 600"
-            :height="height ?? 600"
+            :width="productImageGetters.getImageWidth(image) ?? 600"
+            :height="productImageGetters.getImageHeight(image) ?? 600"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -123,6 +124,7 @@ import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
 import { SfScrollable, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
+import { productImageGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ images: ImagesData[] }>();
 

@@ -32,7 +32,16 @@
               :rating="productGetters.getAverageRating(product, 'half')"
               :price="actualPrice(product)"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
-              :image-alt="productGetters.getName(product) ?? ''"
+              :image-alt="
+                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ??
+                productGetters.getName(product) ??
+                ''
+              "
+              :image-title="
+                productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ??
+                productGetters.getName(product) ??
+                ''
+              "
               :image-height="productGetters.getImageHeight(product) ?? 600"
               :image-width="productGetters.getImageWidth(product) ?? 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
@@ -66,7 +75,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
