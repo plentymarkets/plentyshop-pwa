@@ -7,7 +7,7 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasCompany ? t('form.firstNameLabel') : t('form.firstNameLabel') + ' ' + t('form.required') }}
+        {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         name="firstName"
@@ -21,7 +21,7 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasCompany ? t('form.lastNameLabel') : t('form.lastNameLabel') + ' ' + t('form.required') }}
+        {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         autocomplete="family-name"
