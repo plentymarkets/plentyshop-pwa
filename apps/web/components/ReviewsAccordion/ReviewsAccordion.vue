@@ -25,7 +25,11 @@
           :review-item="reviewItem"
           @on-submit="saveReview"
         />
-        <p v-if="paginatedProductReviews.length === 0" class="font-bold leading-6 w-full py-2">
+        <p
+          v-if="paginatedProductReviews.length === 0"
+          data-testid="no-review-text"
+          class="font-bold leading-6 w-full py-2"
+        >
           {{ t('customerReviewsNone') }}
         </p>
         <UiPagination

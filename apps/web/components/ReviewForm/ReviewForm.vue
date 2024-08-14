@@ -15,7 +15,7 @@
     </header>
     <div class="max-w-[450px] md:max-w-[768px]">
       <form class="col-span-2" @submit.prevent="onSubmit">
-        <template v-if="isCreateReviewModal || isUpdateReviewModal">
+        <template v-if="isCreateReviewModal || isUpdateReviewModal" data-testid="rating-section">
           <div class="flex items-center justify-between">
             <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
               {{ t('review.yourRating') }} *

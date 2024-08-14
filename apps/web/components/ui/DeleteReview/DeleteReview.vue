@@ -14,7 +14,7 @@
       <UiButton @click="closeReviewModal" type="button" variant="secondary" class="flex-1">
         {{ t('review.cancel') }}
       </UiButton>
-      <UiButton @click="deleteProductReview" type="button" class="flex-1">
+      <UiButton @click="deleteProductReview" type="button" class="flex-1" data-testid="confirm-delete">
         {{ t('review.deleteReviewConfirmation') }}
       </UiButton>
     </div>
