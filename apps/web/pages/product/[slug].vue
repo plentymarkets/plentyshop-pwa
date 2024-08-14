@@ -9,7 +9,7 @@
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
-            <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
+            <UiPurchaseCard v-if="product" :product="product" />
           </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
@@ -17,14 +17,6 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
-          <ReviewsAccordion
-            v-if="product"
-            :product="product"
-            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
-            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-            @on-list-change="fetchProductReviewAverage(Number(productId))"
-          />
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
@@ -52,21 +44,10 @@ const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setTitle, setBreadcrumbs, breadcrumbs } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
-const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
 selectVariation(productParams.variationId ? product.value : ({} as Product));
 setTitle();
-
-async function fetchReviews() {
-  const productVariationId = productGetters.getVariationId(product.value);
-  await Promise.all([
-    fetchProductReviews(Number(productId), productVariationId),
-    fetchProductReviewAverage(Number(productId)),
-  ]);
-}
-await fetchReviews();
 
 setBreadcrumbs();
 
