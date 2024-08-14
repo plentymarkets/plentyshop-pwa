@@ -75,7 +75,7 @@
             @mouseleave="close()"
             @keydown.esc="focusTrigger(index)"
           >
-            <template v-for="node in activeMenu.children" :key="node.key">
+            <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
                 <ul>
                   <SfListItem
