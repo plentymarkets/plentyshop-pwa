@@ -32,6 +32,7 @@ export const useFetchAdddress = (type: AddressType) => {
 
     state.value.loading = false;
   };
+
   return {
     fetch,
     fetchServer,

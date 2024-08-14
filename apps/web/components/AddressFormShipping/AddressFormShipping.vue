@@ -190,6 +190,11 @@ const submitForm = handleSubmit((shippingAddressForm) => {
       setCheckoutAddress(userAddressGetters.getDefault(shippingAddresses.value) as Address, true);
       return true;
     })
+    .then(() => {
+      useCartShippingMethods().getShippingMethods();
+      usePaymentMethods().fetchPaymentMethods();
+      return true;
+    })
     .catch((error) => useHandleError(error));
 });
 

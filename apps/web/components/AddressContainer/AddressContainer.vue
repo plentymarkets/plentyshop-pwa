@@ -28,7 +28,7 @@
       <template v-if="isShipping">
         <AddressFormShipping v-if="showNewForm" add-address />
         <template v-else-if="hasCheckoutAddress">
-          <AddressFormShipping v-if="editing" ref="addressShippingForm" :address="addressToEdit" />
+          <AddressFormShipping v-if="editing" ref="addressFormShipping" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
       </template>
@@ -54,12 +54,12 @@ import { AddressType } from '@plentymarkets/shop-api';
 
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
 
-const addressShippingForm = ref(null as any);
+const addressFormShipping = ref(null as any);
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
 const { showSameAsShippingText, showNewForm, addressToEdit, isBilling, isShipping, edit } = useAddressContainer(type);
 
 const validateAndSubmitForm = async () => {
-  if (await addressShippingForm.value?.validate()) addressShippingForm.value?.submitForm();
+  if (await addressFormShipping.value?.validate()) addressFormShipping.value?.submitForm();
 };
 </script>

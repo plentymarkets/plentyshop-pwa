@@ -97,7 +97,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import { useCheckoutPagePaymentAndShipping } from '../composables/useCheckoutPagePaymentAndShipping/useCheckoutPagePaymentAndShipping';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
