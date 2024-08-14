@@ -10,6 +10,6 @@ describe('<Review />', () => {
       },
     });
 
-    expect(getByTestId('review'));
+    expect(getByTestId('review-item'));
   });
 });

@@ -20,10 +20,7 @@
           <ReviewsAccordion
             v-if="product"
             :product="product"
-            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
             :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-            @on-list-change="fetchProductReviewAverage(Number(productId))"
           />
         </section>
       </div>
@@ -35,6 +32,8 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
+
+    <UiReviewModal />
   </NuxtLayout>
 </template>
 
@@ -47,16 +46,16 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { selectVariation } = useProducts();
+const { setCurrentProduct } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
 const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
-selectVariation(productParams.variationId ? product.value : ({} as Product));
+setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 
 async function fetchReviews() {

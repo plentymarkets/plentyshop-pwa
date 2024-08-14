@@ -11,7 +11,8 @@ export class MyAccountPageObject extends PageObject {
       cy.get(`[type="email"]`).type(fixture.email, { delay: 0 });
       cy.get(`[type="password"]`).type(fixture.password, { delay: 0 });
     });
-    cy.get(`[type="submit"]`).click();
+
+    cy.getByTestId('login-submit').click();
 
     return this;
   }
