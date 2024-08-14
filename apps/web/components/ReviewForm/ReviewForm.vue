@@ -14,7 +14,7 @@
       </UiButton>
     </header>
     <div class="max-w-[450px] md:max-w-[768px]">
-      <form class="col-span-2">
+      <form class="col-span-2" @submit.prevent="onSubmit">
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
           <div class="flex items-center justify-between">
             <p :id="ratingLabelId" class="typography-label-sm font-medium text-neutral-900">
@@ -81,7 +81,7 @@
           <UiButton @click="closeReviewModal" type="button" variant="secondary" class="flex-1 md:flex-initial">
             {{ t('review.cancel') }}
           </UiButton>
-          <UiButton @click="sendReview()" type="submit" class="flex-1 md:flex-initial">
+          <UiButton type="submit" class="flex-1 md:flex-initial">
             {{ t('review.submitReview') }}
           </UiButton>
         </div>
@@ -109,11 +109,15 @@ const { createProductReview, setProductReview, closeReviewModal, modalType } = u
 );
 
 const reviewCharacterLimit = defaults.REPLY_CHARACTER_LIMIT;
+const isCreateReviewModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.createReview === modalType.value);
+const isUpdateReviewModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview === modalType.value);
+const isReplyUpdateModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply === modalType.value);
 
 const validationSchema = toTypedSchema(
   object({
     ratingValue: number()
       .required(t('review.validation.ratingRequired'))
+      .min(1, t('review.validation.ratingRequired'))
       .default(reviewGetters.getReviewRating(reviewItem.value ?? ({} as ReviewItem))),
     title: string()
       .required(t('review.validation.titleRequired'))
@@ -121,15 +125,29 @@ const validationSchema = toTypedSchema(
     message: string()
       .optional()
       .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
-      .default(reviewItem.value ? reviewGetters.getReviewMessage(reviewItem.value as unknown as ReviewItem) : ''),
+      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
     authorName: string()
       .optional()
-      .default(reviewItem.value ? reviewGetters.getReviewAuthor(reviewItem.value as unknown as ReviewItem) : ''),
+      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
+  }),
+);
+
+const validationSchemaReply = toTypedSchema(
+  object({
+    ratingValue: number().optional(),
+    title: string().optional(),
+    message: string()
+      .required()
+      .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
+      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
+    authorName: string()
+      .optional()
+      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
   }),
 );
 
 const { errors, defineField, handleSubmit } = useForm({
-  validationSchema: validationSchema,
+  validationSchema: isReplyUpdateModal.value ? validationSchemaReply : validationSchema,
 });
 
 const [ratingValue, ratingValueAttributes] = defineField('ratingValue');
@@ -138,15 +156,12 @@ const [message, messageAttributes] = defineField('message');
 const [authorName, authorNameAttributes] = defineField('authorName');
 const ratingLabelId = ref('');
 
-const isCreateReviewModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.createReview === modalType.value);
-const isUpdateReviewModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview === modalType.value);
-const isReplyUpdateModal = computed(() => defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply === modalType.value);
 const reviewIsAboveLimit = computed(() => (message?.value?.length ?? 0) > reviewCharacterLimit);
 const reviewCharsCount = computed(() => reviewCharacterLimit - (message?.value?.length ?? 0));
 
 onMounted(() => (ratingLabelId.value = useId()));
 
-const sendReview = () => {
+const sendReview = async () => {
   const params = {
     type: 'review',
     targetId: productGetters.getVariationId(currentProduct.value),
@@ -163,4 +178,6 @@ const sendReview = () => {
     createProductReview(params);
   }
 };
+
+const onSubmit = handleSubmit(() => sendReview());
 </script>
