@@ -3,6 +3,7 @@ import https from 'node:https';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import fetchFavicon from './fetchFavicon';
 
 const environmentFilePath = path.resolve(__dirname, '../.env');
 const environmentTemporaryFilePath = path.resolve(__dirname, '../.env.tmp');
@@ -56,6 +57,7 @@ const fetchAndWriteRemoteConfiguration = async () => {
   try {
     const { data } = await instance.get(`/rest/storefront/settings/${environmentMap.CONFIG_ID}`);
     writeConfigurationToTemporaryEnvironment(data);
+    return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       console.error('PWA settings error:', error.response?.data.error);
@@ -71,8 +73,9 @@ const convertTemporaryToPermanentEnvironment = () => {
 
 const fetchConfiguration = async () => {
   setupTemporaryEnvironment();
-  await fetchAndWriteRemoteConfiguration();
+  const data = await fetchAndWriteRemoteConfiguration();
   convertTemporaryToPermanentEnvironment();
+  await fetchFavicon(data);
 };
 
 export default fetchConfiguration;
