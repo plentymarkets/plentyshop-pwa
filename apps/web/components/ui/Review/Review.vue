@@ -126,6 +126,7 @@ import {
 } from '@storefront-ui/vue';
 import type { ReviewProps } from './types';
 import { type ReviewItem, reviewGetters, productGetters } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const props = defineProps<ReviewProps>();
 const { t } = useI18n();
