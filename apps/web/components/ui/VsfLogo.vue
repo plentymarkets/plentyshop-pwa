@@ -6,7 +6,7 @@
       class="w-100 h-10 py-2"
       width="150"
       height="40"
-      loading="lazy"
+      preload
     />
   </picture>
 </template>
