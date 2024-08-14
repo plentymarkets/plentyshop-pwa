@@ -177,6 +177,7 @@
 
 <script setup lang="ts">
 import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
+import { defaults } from '~/composables';
 import { Cookie, CookieGroup } from '~/configuration/cookie.config';
 import { paths } from '~/utils/paths';
 
