@@ -6,7 +6,7 @@
       variant="tertiary"
       :class="[
         '!p-1 !pt-3 flex flex-col h-full w-full rounded-none bg-primary-500 text-white hover:text-white hover:bg-primary-800 active:text-white active:bg-primary-700 !text-xs !font-base',
-        { 'text-white bg-primary-700': $route.path === link },
+        { 'text-white bg-primary-700': route.path === link },
       ]"
       size="sm"
       :tag="link ? NuxtLink : undefined"
@@ -39,6 +39,7 @@ import { SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson, SfIc
 import { useCustomer } from '~/composables/useCustomer';
 
 const localePath = useLocalePath();
+const route = useRoute();
 const { t } = useI18n();
 const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();

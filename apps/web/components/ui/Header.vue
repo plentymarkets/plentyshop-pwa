@@ -90,7 +90,7 @@
                 v-else
                 :tag="NuxtLink"
                 :to="link"
-                :class="{ 'bg-neutral-200': $route.path === link }"
+                :class="{ 'bg-neutral-200': route.path === link }"
                 data-testid="account-dropdown-list-item"
               >
                 {{ label }}
@@ -208,6 +208,7 @@ const cartItemsCount = ref(0);
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { t } = useI18n();
+const route = useRoute();
 const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
