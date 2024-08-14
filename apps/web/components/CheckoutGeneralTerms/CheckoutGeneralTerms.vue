@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import { SfCheckbox, SfLink } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 

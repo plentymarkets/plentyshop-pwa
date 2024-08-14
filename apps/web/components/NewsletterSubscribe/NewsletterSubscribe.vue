@@ -113,6 +113,7 @@
 import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
+import { paths } from '~/utils/paths';
 
 const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading, showNames } = useNewsletter();
