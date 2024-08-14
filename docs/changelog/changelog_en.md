@@ -49,6 +49,7 @@
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
 - Remove cookie browser language detect.
 - Set page title for items and categories instead of title metadata
+- Refactor of reviews functionality for better performance and maintainability.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

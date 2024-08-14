@@ -1,6 +1,6 @@
 import type { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
 import type { Facet } from '@plentymarkets/shop-api';
-import { defaults, type SelectVariation } from '~/composables';
+import { defaults, type SetCurrentProduct } from '~/composables';
 import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
 
 /**
@@ -12,11 +12,11 @@ import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/compo
  * ```
  */
 export const useProducts: UseProductsReturn = () => {
-  const state = useState<UseProductsState>('products', () => ({
+  const state = useState<UseProductsState>('useProducts', () => ({
     data: {} as Facet,
     loading: false,
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
-    selectedVariation: {} as Product,
+    currentProduct: {} as Product,
   }));
 
   /**
@@ -50,25 +50,25 @@ export const useProducts: UseProductsReturn = () => {
   };
 
   /**
-   * @description Function for selecting a variation.
+   * @description Function for setting the current product.
    * @param product { Product }
-   * @return SelectVariation
+   * @return SetCurrentProduct
    * @example
    * ``` ts
-   *  selectVariation({} as Product)
+   *  setCurrentProduct({} as Product)
    * ```
    */
-  const selectVariation: SelectVariation = async (product: Product) => {
+  const setCurrentProduct: SetCurrentProduct = async (product: Product) => {
     state.value.loading = true;
 
-    state.value.selectedVariation = product;
+    state.value.currentProduct = product;
 
     state.value.loading = false;
   };
 
   return {
     fetchProducts,
-    selectVariation,
+    setCurrentProduct,
     ...toRefs(state.value),
   };
 };
