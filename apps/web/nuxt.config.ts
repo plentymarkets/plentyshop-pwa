@@ -5,6 +5,7 @@ import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import fetchConfiguration from './build/fetchConfiguration';
 import generateScssVariables from './build/generateScssVariables';
+import fetchFavicon from './build/fetchFavicon';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -44,8 +45,9 @@ export default defineNuxtConfig({
   hooks: {
     'build:before': async () => {
       if (process.env.FETCH_REMOTE_CONFIG === '1') {
-        await fetchConfiguration();
+        const response = await fetchConfiguration();
         generateScssVariables();
+        await fetchFavicon(response);
       } else {
         console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
       }

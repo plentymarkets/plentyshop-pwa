@@ -75,7 +75,7 @@ const fetchConfiguration = async () => {
   setupTemporaryEnvironment();
   const data = await fetchAndWriteRemoteConfiguration();
   convertTemporaryToPermanentEnvironment();
-  await fetchFavicon(data);
+  return data;
 };
 
 export default fetchConfiguration;

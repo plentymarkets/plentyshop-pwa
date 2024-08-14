@@ -1,28 +1,12 @@
 import axios from 'axios';
 import fs from 'node:fs';
 import path from 'node:path';
+import { ConfigItem } from './types/ConfigItem';
 
-interface ConfigItem {
-  configId: number;
-  categoryId: number;
-  key: string;
-  value: string;
-  labelKey: [];
-  type: string;
-  possibleValues: [];
-  defaultValue: string | null;
-}
-
-interface ConfigResponse {
-  control: ConfigItem[];
-  currencies: ConfigItem[];
-  store: ConfigItem[];
-}
-
-const fetchFavicon = async (data: ConfigResponse) => {
+const fetchFavicon = async (data: { [key: string]: Array<ConfigItem> }) => {
   const faviconUrl = data['store'].find((setting: ConfigItem) => setting.key === 'favIcon');
 
-  if (!faviconUrl || !faviconUrl.value) {
+  if (!faviconUrl?.value) {
     console.error('FavIcon URL not found.');
     return;
   }
@@ -33,6 +17,9 @@ const fetchFavicon = async (data: ConfigResponse) => {
   }
 
   try {
+    // eslint-disable-next-line no-console
+    console.log('Fetching favicon from:', faviconUrl.value);
+
     const response = await axios({
       url: faviconUrl.value,
       method: 'GET',
