@@ -1,11 +1,14 @@
 <template>
   <form
     @submit="submitForm"
+    novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="shipping-address-form"
   >
     <label>
-      <UiFormLabel>{{ t('form.firstNameLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>
+        {{ hasCompany ? t('form.firstNameLabel') : t('form.firstNameLabel') + ' ' + t('form.required') }}
+      </UiFormLabel>
       <SfInput
         name="firstName"
         autocomplete="given-name"
@@ -17,7 +20,9 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ t('form.lastNameLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>
+        {{ hasCompany ? t('form.lastNameLabel') : t('form.lastNameLabel') + ' ' + t('form.required') }}
+      </UiFormLabel>
       <SfInput
         autocomplete="family-name"
         v-model="lastName"
@@ -35,10 +40,7 @@
     </div>
 
     <label v-if="hasCompany">
-      <UiFormLabel class="flex">
-        <span class="mr-1">{{ t('form.companyLabel') }}</span>
-        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
-      </UiFormLabel>
+      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
         name="company"
         autocomplete="company"
@@ -50,10 +52,7 @@
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2">
-      <UiFormLabel class="flex">
-        <span class="mr-1">{{ t('form.vatIdLabel') }}</span>
-        <UiFormHelperText>({{ t('form.optional') }})</UiFormHelperText>
-      </UiFormLabel>
+      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
       <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
@@ -147,8 +146,18 @@ const { t } = useI18n();
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: string().required(t('errorMessages.requiredField')).default(''),
-    lastName: string().required(t('errorMessages.requiredField')).default(''),
+    firstName: string().when([], {
+      is: () => !hasCompany.value,
+      // eslint-disable-next-line unicorn/no-thenable
+      then: () => string().required(t('errorMessages.requiredField')).default(''),
+      otherwise: () => string().optional().default(''),
+    }),
+    lastName: string().when([], {
+      is: () => !hasCompany.value,
+      // eslint-disable-next-line unicorn/no-thenable
+      then: () => string().required(t('errorMessages.requiredField')).default(''),
+      otherwise: () => string().optional().default(''),
+    }),
     country: string().required(t('errorMessages.requiredField')).default(''),
     streetName: string().required(t('errorMessages.requiredField')).default(''),
     apartment: string().required(t('errorMessages.requiredField')).default(''),
@@ -156,8 +165,18 @@ const validationSchema = toTypedSchema(
     state: string().default('').optional(),
     zipCode: string().required(t('errorMessages.requiredField')).min(5),
     primary: boolean().default(false),
-    company: string().optional(),
-    vatId: string().optional(),
+    company: string().when([], {
+      is: () => hasCompany.value,
+      // eslint-disable-next-line unicorn/no-thenable
+      then: () => string().required(t('errorMessages.requiredField')).default(''),
+      otherwise: () => string().optional().default(''),
+    }),
+    vatId: string().when([], {
+      is: () => hasCompany.value,
+      // eslint-disable-next-line unicorn/no-thenable
+      then: () => string().required(t('errorMessages.requiredField')).default(''),
+      otherwise: () => string().optional().default(''),
+    }),
   }),
 );
 
@@ -170,8 +189,8 @@ const [streetName, streetNameAttributes] = defineField('streetName');
 const [apartment, apartmentAttributes] = defineField('apartment');
 const [city, cityAttributes] = defineField('city');
 const [zipCode, zipCodeAttributes] = defineField('zipCode');
-const [vatId, vatIdAttributes] = defineField('vatId');
 const [company, companyAttributes] = defineField('company');
+const [vatId, vatIdAttributes] = defineField('vatId');
 
 if (!addAddress) setValues(address as any);
 
