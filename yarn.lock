@@ -21332,6 +21332,7 @@ __metadata:
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
     "@storefront-ui/vue": ^2.6.3
+    "@types/applepayjs": ^14.0.8
     "@types/culori": ^2.1.0
     "@types/lodash-es": ^4.17.12
     "@types/node": ^20.14.9
