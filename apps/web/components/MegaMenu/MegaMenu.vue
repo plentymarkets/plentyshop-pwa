@@ -194,6 +194,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
+import { paths } from '~/utils/paths';
 
 const viewport = useViewport();
 const localePath = useLocalePath();

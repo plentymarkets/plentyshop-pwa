@@ -199,6 +199,7 @@ import {
   useDisclosure,
 } from '@storefront-ui/vue';
 import LanguageSelector from '~/components/LanguageSelector/LanguageSelector.vue';
+import { paths } from '~/utils/paths';
 
 const isLogin = ref(true);
 const { data: cart } = useCart();

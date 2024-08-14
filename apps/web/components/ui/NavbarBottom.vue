@@ -37,10 +37,10 @@
 <script setup lang="ts">
 import { SfBadge, SfIconShoppingCart, SfIconHome, SfIconMenu, SfIconPerson, SfIconFavorite } from '@storefront-ui/vue';
 import { useCustomer } from '~/composables/useCustomer';
-const { wishlistItemIds } = useWishlist();
 
 const localePath = useLocalePath();
 const { t } = useI18n();
+const { wishlistItemIds } = useWishlist();
 const { data: cart } = useCart();
 const { isAuthorized } = useCustomer();
 const { open } = useMegaMenu();
