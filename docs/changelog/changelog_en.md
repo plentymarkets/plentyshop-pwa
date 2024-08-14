@@ -27,6 +27,7 @@
 
 ### 🩹 Fixed
 
+- Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
 - Fixed tailwind css double import.
@@ -46,6 +47,7 @@
 - Changes to item reviews logic in order to use the feedback api ms
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
 - Remove cookie browser language detect.
+- Set page title for items and categories instead of title metadata
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
