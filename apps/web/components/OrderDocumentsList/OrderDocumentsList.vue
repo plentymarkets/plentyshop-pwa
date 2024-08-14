@@ -1,6 +1,6 @@
 <template>
   <div v-if="documents && documents.length > 0" data-testid="documents-list" class="documents-list">
-    <SfButton
+    <UiButton
       v-for="(document, key) in documents"
       :key="key"
       @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
@@ -8,14 +8,13 @@
       variant="secondary"
     >
       {{ getDocumentName(document) }}
-    </SfButton>
+    </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { OrderDocument } from '@plentymarkets/shop-api';
-import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton } from '@storefront-ui/vue';
+import { orderDocumentGetters, orderGetters } from '@plentymarkets/shop-api';
 import type { DocumentsListProps } from './types';
 
 const props = defineProps<DocumentsListProps>();

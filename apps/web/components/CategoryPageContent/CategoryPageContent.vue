@@ -12,12 +12,12 @@
           <span class="font-bold font-headings md:text-lg">
             {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
           </span>
-          <SfButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
               <SfIconTune />
             </template>
             {{ $t('listSettings') }}
-          </SfButton>
+          </UiButton>
         </div>
         <section
           v-if="products"
@@ -29,13 +29,15 @@
               :product="product"
               :name="productGetters.getName(product) ?? ''"
               :rating-count="productGetters.getTotalReviews(product)"
-              :rating="productGetters.getAverageRating(product)"
+              :rating="productGetters.getAverageRating(product, 'half')"
               :price="actualPrice(product)"
-              :image-url="addWebpExtension(productGetters.getCoverImagePreview(product))"
+              :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="productGetters.getName(product) ?? ''"
+              :image-height="productGetters.getImageHeight(product) ?? 600"
+              :image-width="productGetters.getImageWidth(product) ?? 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-              :priority="index === 0"
-              :base-price="productGetters.getDefaultBaseSinglePrice(product)"
+              :priority="index < 5"
+              :base-price="productGetters.getDefaultBasePrice(product)"
               :unit-content="productGetters.getUnitContent(product)"
               :unit-name="productGetters.getUnitName(product)"
               :show-base-price="productGetters.showPricePerUnit(product)"
@@ -43,21 +45,20 @@
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />
-        <NuxtLazyHydrate when-visible>
-          <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
-            <span>{{ $t('asterisk') }}</span>
-            <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
-            <span v-else>{{ $t('itemInclVAT') }}</span>
-            <span>{{ $t('excludedShipping') }}</span>
-          </div>
-          <UiPagination
-            v-if="totalProducts > 0"
-            :current-page="getFacetsFromURL().page ?? 1"
-            :total-items="totalProducts"
-            :page-size="itemsPerPage"
-            :max-visible-pages="maxVisiblePages"
-          />
-        </NuxtLazyHydrate>
+        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+          <span>{{ $t('asterisk') }}</span>
+          <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+          <span v-else>{{ $t('itemInclVAT') }}</span>
+          <span>{{ $t('excludedShipping') }}</span>
+        </div>
+        <UiPagination
+          v-if="totalProducts > 0"
+          :key="`${totalProducts}-${itemsPerPage}`"
+          :current-page="getFacetsFromURL().page ?? 1"
+          :total-items="totalProducts"
+          :page-size="itemsPerPage"
+          :max-visible-pages="maxVisiblePages"
+        />
       </div>
     </div>
   </NarrowContainer>
@@ -65,9 +66,8 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { whenever } from '@vueuse/core';
+import { productGetters } from '@plentymarkets/shop-api';
+import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
 withDefaults(defineProps<CategoryPageContentProps>(), {
@@ -75,17 +75,17 @@ withDefaults(defineProps<CategoryPageContentProps>(), {
 });
 
 const { getFacetsFromURL } = useCategoryFilter();
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
 const { isOpen, open, close } = useDisclosure();
-const { isTablet, isDesktop } = useBreakpoints();
+const viewport = useViewport();
 
-const maxVisiblePages = computed(() => (isDesktop.value ? 5 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
-whenever(isTablet, close);
+if (viewport.isLessThan('md')) close;
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);

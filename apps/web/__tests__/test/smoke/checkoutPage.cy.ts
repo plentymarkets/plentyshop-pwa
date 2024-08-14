@@ -9,16 +9,22 @@ const cart = new CartPageObject();
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 
+beforeEach(() => {
+  cy.clearCookies();
+  cy.setCookie('vsf-locale', 'en');
+  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.visitAndHydrate(paths.home);
+});
+
 describe('Smoke: Checkout Page', () => {
   it('[smoke] Display checkout and place order', () => {
-    cy.visitAndHydrate(paths.home);
-
     homePage.goToCategory();
     productListPage.addToCart()
 
     cart.openCart();
     checkout
         .goToCheckout()
+        .goToGuestCheckout()
         .fillContactInformationForm()
         .addBillingAddress()
         .fillBillingAddressForm()

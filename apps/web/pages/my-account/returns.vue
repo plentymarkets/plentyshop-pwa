@@ -8,13 +8,15 @@
       {{ $t('account.ordersAndReturns.returnsHeading') }}
     </h2>
     <div v-if="!data?.entries.length" class="col-span-3 text-center" data-testid="account-returns-content">
-      <NuxtImg
-        src="/images/returns.png"
-        :alt="$t('account.ordersAndReturns.returnsAltText')"
-        width="192"
-        height="192"
-        class="mx-auto"
-      />
+      <!-- TODO: add image when we find a suitable one in a format that works. -->
+      <!--      <NuxtImg-->
+      <!--        src="/images/returns.png"-->
+      <!--        :alt="$t('account.ordersAndReturns.returnsAltText')"-->
+      <!--        width="192"-->
+      <!--        height="192"-->
+      <!--        class="mx-auto"-->
+      <!--        loading="lazy"-->
+      <!--      />-->
       <h3 class="typography-headline-3 font-bold mt-6 mb-4">
         {{ $t('account.ordersAndReturns.noReturns') }}
       </h3>
@@ -47,7 +49,7 @@
             <span class="block typography-text-sm mb-2">{{ orderGetters.getPaymentMethodName(order) }}</span>
           </li>
           <li>
-            <SfButton
+            <UiButton
               :to="localePath(generateOrderDetailsLink(order))"
               :tag="NuxtLink"
               size="sm"
@@ -55,7 +57,7 @@
               class="!px-0"
             >
               {{ $t('account.ordersAndReturns.details') }}
-            </SfButton>
+            </UiButton>
           </li>
           <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
         </ul>
@@ -82,14 +84,14 @@
             <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn) }}</td>
             <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
             <td>
-              <SfButton
+              <UiButton
                 :tag="NuxtLink"
                 size="sm"
                 variant="tertiary"
                 :to="localePath(generateOrderDetailsLink(orderReturn))"
               >
                 {{ $t('account.ordersAndReturns.details') }}
-              </SfButton>
+              </UiButton>
             </td>
           </tr>
         </tbody>
@@ -107,9 +109,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Order } from '@plentymarkets/shop-api';
-import { orderGetters } from '@plentymarkets/shop-sdk';
-import { useDisclosure, SfLoaderCircular, SfButton } from '@storefront-ui/vue';
+import { type Order, orderGetters } from '@plentymarkets/shop-api';
+import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
@@ -118,20 +119,16 @@ definePageMeta({
 const { data, fetchCustomerReturns, loading } = useCustomerReturns();
 const { isOpen, close } = useDisclosure();
 
-const { isTablet, isDesktop } = useBreakpoints();
+const viewport = useViewport();
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
+const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
+const isTablet = computed(() => viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg'));
 
-watch(isDesktop, (value) => setMaxVisiblePages(value));
 onMounted(() => setMaxVisiblePages(isDesktop.value));
-watch(isTablet, (value) => {
-  if (value && isOpen.value) {
-    close();
-  }
-});
 
 const handleQueryUpdate = async () => {
   await fetchCustomerReturns({
@@ -140,10 +137,16 @@ const handleQueryUpdate = async () => {
 };
 
 const generateOrderDetailsLink = (order: Order) => {
-  return `${paths.thankYou}/?orderId=${orderGetters.getId(order)}&accessKey=${orderGetters.getAccessKey(order)}`;
+  return `${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`;
 };
 
 await handleQueryUpdate();
+
+watch(isDesktop, (value) => setMaxVisiblePages(value));
+
+watch(isTablet, (value) => {
+  if (value && isOpen.value) close();
+});
 
 watch(
   () => route.query,

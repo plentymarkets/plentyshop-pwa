@@ -1,4 +1,4 @@
-import type { CookieGroup } from '~/cookie.config';
+import type { CookieGroup } from '~/configuration/cookie.config';
 
 export interface UseCookieReturn {
   cookieJson: CookieGroup[];

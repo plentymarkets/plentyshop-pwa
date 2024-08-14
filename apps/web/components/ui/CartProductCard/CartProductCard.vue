@@ -1,20 +1,17 @@
 <template>
-  <div
-    class="relative flex border-neutral-200 border-b hover:shadow-[rgba(17,_17,_26,_0.1)_0px_0px_12px] min-w-[320px] p-4 last:mb-0"
-    data-testid="cart-product-card"
-  >
+  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
     <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="path">
-        <!-- TODO: replace default image with an appropriate one.-->
+      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
         <NuxtImg
-          class="w-full h-auto border rounded-md border-neutral-200"
-          :src="addWebpExtension(cartItemImage) || '/images/placeholder.png'"
-          :alt="cartItemImage || ''"
+          ref="img"
+          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
+          :alt="cartGetters.getItemName(cartItem)"
           width="300"
           height="300"
           loading="lazy"
-          format="webp"
+          class="w-full h-auto border rounded-md border-neutral-200"
         />
+        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
     </div>
     <div class="flex flex-col pl-4 min-w-[180px] flex-1">
@@ -22,7 +19,7 @@
         :tag="NuxtLink"
         :to="path"
         variant="secondary"
-        class="no-underline typography-text-sm sm:typography-text-lg"
+        class="w-fit no-underline typography-text-sm sm:typography-text-lg"
       >
         {{ cartGetters.getItemName(cartItem) }}
       </SfLink>
@@ -49,20 +46,23 @@
               <span class="font-medium">{{ attribute.value }}</span>
             </li>
           </ul>
-
           <div
             class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
             v-if="cartItem.basketItemOrderParams.length > 0"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
-            <ul>
-              <CartOrderProperty
-                v-for="property in cartItem.basketItemOrderParams"
-                :key="property.propertyId"
-                :cart-item="cartItem"
-                :basket-item-order-param="property"
-              />
-            </ul>
+            <CartOrderProperty
+              v-for="property in cartItem.basketItemOrderParams"
+              :key="property.propertyId"
+              :cart-item="cartItem"
+              :basket-item-order-param="property"
+            />
+          </div>
+          <div
+            v-if="cartGetters.getVariation(cartItem)"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
+          >
+            <VariationProperties :product="cartGetters.getVariation(cartItem)" />
           </div>
         </div>
       </div>
@@ -90,7 +90,7 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-700 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-secondary-500 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
           {{ n(currentFullPrice || 0, 'currency') }}
         </span>
@@ -103,9 +103,12 @@
         />
       </div>
     </div>
-    <SfLoaderCircular v-if="deleteLoading" />
 
-    <SfButton
+    <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
+      <SfLoaderCircular />
+    </div>
+
+    <UiButton
       v-else-if="!disabled"
       @click="deleteItem"
       square
@@ -114,26 +117,46 @@
       class="absolute top-2 right-2 bg-white"
     >
       <SfIconClose size="sm" />
-    </SfButton>
+    </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
-import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfLoaderCircular, SfIconClose, SfButton } from '@storefront-ui/vue';
+import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
+import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
+import type { Product } from '@plentymarkets/shop-api';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
 const localePath = useLocalePath();
+const imageLoaded = ref(false);
+const img = ref();
+const deleteLoading = ref(false);
+const emit = defineEmits(['load']);
 
 const props = withDefaults(defineProps<CartProductCardProps>(), {
   disabled: false,
 });
-const deleteLoading = ref(false);
+
+onMounted(() => {
+  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+
+  if (imgElement) {
+    if (!imageLoaded.value) {
+      if (imgElement.complete) imageLoaded.value = true;
+      imgElement.addEventListener('load', () => (imageLoaded.value = true));
+    }
+
+    nextTick(() => {
+      if (!imgElement.complete) emit('load');
+    });
+  }
+});
+
 const changeQuantity = async (quantity: string) => {
   await setCartItemQuantity({
     quantity: Number(quantity),
@@ -153,18 +176,21 @@ const deleteItem = async () => {
 const currentFullPrice = computed(() => {
   return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
 });
-
-const cartItemImage = computed(() => cartGetters.getItemImage(props.cartItem));
+const cartItemImage = computed(() => {
+  if (props.cartItem && props.cartItem.variation) {
+    return getImageForViewport(props.cartItem.variation, 'CartProductCard');
+  }
+  return '';
+});
 
 const debounceQuantity = _.debounce(changeQuantity, 500);
 
 const NuxtLink = resolveComponent('NuxtLink');
 
-const basePriceSingleValue = computed(() =>
-  props.cartItem?.variation
-    ? productGetters.getGraduatedPriceByQuantity(props.cartItem.variation, props.cartItem.quantity)?.baseSinglePrice ??
-      productGetters.getDefaultBaseSinglePrice(props.cartItem.variation)
-    : 0,
+const basePriceSingleValue = computed(
+  () =>
+    productGetters.getGraduatedPriceByQuantity(props.cartItem.variation ?? ({} as Product), props.cartItem.quantity)
+      ?.basePrice ?? productGetters.getDefaultBasePrice(props.cartItem.variation ?? ({} as Product)),
 );
 
 const path = computed(() => localePath('/' + cartGetters.getProductPath(props.cartItem)));

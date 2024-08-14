@@ -1,7 +1,9 @@
 <template>
   <form @submit.prevent="submitChangePassword" data-testid="account-forms-password">
     <label class="block">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.currentPassword') }}</UiFormLabel>
+      <UiFormLabel
+        >{{ t('account.accountSettings.personalData.currentPassword') }} {{ $t('form.required') }}</UiFormLabel
+      >
       <UiFormPasswordInput
         name="password"
         autocomplete="current-password"
@@ -10,7 +12,7 @@
       />
     </label>
     <label class="block my-4">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }}</UiFormLabel>
+      <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }} {{ $t('form.required') }}</UiFormLabel>
       <UiFormPasswordInput
         name="password"
         autocomplete="new-password"
@@ -22,7 +24,9 @@
       <UiFormHelperText class="block"> {{ t('account.accountSettings.personalData.passwordHelp') }}</UiFormHelperText>
     </label>
     <label class="block">
-      <UiFormLabel>{{ t('account.accountSettings.personalData.newPasswordAgain') }}</UiFormLabel>
+      <UiFormLabel
+        >{{ t('account.accountSettings.personalData.newPasswordAgain') }} {{ $t('form.required') }}</UiFormLabel
+      >
       <UiFormPasswordInput
         name="password"
         autocomplete="new-password"
@@ -33,20 +37,20 @@
       />
     </label>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">
-      <SfButton type="reset" variant="secondary" @click="$emit('on-cancel')">
+      <UiButton type="reset" variant="secondary" @click="$emit('on-cancel')">
         {{ t('contactInfo.cancel') }}
-      </SfButton>
-      <SfButton type="submit" class="min-w-[120px]" :disabled="loading">
+      </UiButton>
+      <UiButton type="submit" class="min-w-[120px]" :disabled="loading">
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('account.accountSettings.personalData.changePassword') }}
         </span>
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 <script setup lang="ts">
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
 
 const { send } = useNotification();

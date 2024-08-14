@@ -10,9 +10,9 @@
         class="mt-1"
         name="Shipping Privacy"
         :selected="shippingPrivacyAgreement"
-        @update:model-value="changeHint"
+        @update:model-value="(event) => changeHint(Boolean(event))"
       />
-      <label for="checkbox" class="cursor-pointer">
+      <label for="checkbox" class="cursor-pointer select-none">
         {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
       </label>
     </div>
@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { shippingProviderGetters } from '@plentymarkets/shop-sdk';
+import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfCheckbox } from '@storefront-ui/vue';
 
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();

@@ -1,4 +1,36 @@
 {
+  "homepage": {
+    "banner": {
+      "moto1": "Feel the music",
+      "moto2": "New Wireless Pro",
+      "moto3": "Spatial audio. Adjustable ear cups. On-device controls. All-day battery.",
+      "orderNow": "Order now",
+      "showMore": "Show more"
+    },
+    "women": "Women",
+    "men": "Men",
+    "kid": "Kid",
+    "displayDetails": {
+      "detail1": {
+        "title": "Step Out in Style",
+        "subtitle": "Be inspired",
+        "description": "Step out in style with our sunglasses collection",
+        "buttonText": "Discover now"
+      },
+      "detail2": {
+        "title": "Pack it Up",
+        "subtitle": "Be active",
+        "description": "Explore the great outdoors with our backpacks",
+        "buttonText": "Discover now"
+      },
+      "detail3": {
+        "title": "Fresh and Bold",
+        "subtitle": "New collection",
+        "description": "Add a pop of color to your outfit",
+        "buttonText": "Discover now"
+      }
+    }
+  },
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
@@ -16,7 +48,8 @@
     "countryLabel": "Country",
     "streetNameLabel": "Street",
     "streetNumberLabel": "Number",
-    "optional": "Optional",
+    "required": "*",
+    "optional": "optional",
     "cityLabel": "City",
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
@@ -24,6 +57,7 @@
     "selectPlaceholder": "-- Select --",
     "emailLabel": "Email",
     "passwordLabel": "Password",
+    "repeatPasswordLabel": "Repeat Password",
     "passwordHint": "8 or more characters with a mix of letters, numbers and symbols.",
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
@@ -53,6 +87,11 @@
           "name": "consent-cookie",
           "provider": "plentysystems AG",
           "status": "Stores consent selection."
+        },
+        "cloudflareTurnstile": {
+          "name": "Cloudflare Turnstile",
+          "provider": "Cloudflare",
+          "status": "Necessary for Cloudflare’s Turnstile service."
         }
       }
     },
@@ -83,7 +122,14 @@
     "Show less": "Show less",
     "Accept All": "Accept All",
     "Reject All": "Reject All",
-    "Accept Selection": "Accept Selection"
+    "Accept Selection": "Accept Selection",
+    "keys": {
+      "Provider": "Provider",
+      "Status": "Status",
+      "PrivacyPolicy": "Privacy Policy",
+      "Lifespan": "Lifespan",
+      "script": "Script"
+    }
   },
   "PreviewModeBar": {
     "label": "Preview mode control",
@@ -116,6 +162,8 @@
   "max": "Max",
   "total": "Total",
   "goToCheckout": "Go to checkout",
+  "guestCheckout": "Guest checkout",
+  "loginFastCheckout": "Login to checkout faster",
   "delivery": "Shipping",
   "emptyCart": "Your cart is empty",
   "emptyWishlist": "Your wishlist is empty",
@@ -161,6 +209,7 @@
   "back": "Back",
   "placeOrder": "Place order and pay",
   "buy": "Buy",
+  "or": "or",
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
@@ -169,6 +218,13 @@
   "termsRequired": "You have to agree with the terms and conditions.",
   "billingAddressRequired": "Please select a billing address.",
   "shippingAddressRequired": "Please select a shipping address.",
+  "savedShippingAddress": "Saved shipping adresses",
+  "address": "Addresses",
+  "savedBillingAddress": "Saved billing adresses",
+  "pickSavedAddress": "Pick saved address",
+  "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
+  "newBillingAddress": "New billing address",
+  "newShippingAddress": "New shipping address",
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "contactInfo": {
@@ -206,7 +262,7 @@
   "pleaseSelect": "Please Select",
   "addToCart": "Add to cart",
   "itemNotAvailable": "This item is not available.",
-  "showArticle": "Show article",
+  "showOptions": "Show options",
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
   "deletedFromCart": "Item removed from shopping cart",
@@ -309,17 +365,21 @@
   "orderSuccessfulImageAlt": "order successful image",
   "backToCheckout": "Back to Checkout",
   "continueShopping": "Continue shopping",
+  "continueAsGuest": "Continue as guest",
   "orderErrorMessage": "Something went wrong. Try again later.",
   "orderErrorProvider": "Unknown response from payment provider: {paymentType}",
   "orderNumber": "Order ID",
   "returnNumber": "Return ID",
   "productDetails": "Product details",
   "technicalData": "Technical data",
-  "customerReviews": "Customer Reviews",
+  "customerReviews": "Customer reviews",
+  "createCustomerReview": "Create review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
+  "averageRating": "Average rating",
+  "basedOnratings": "Based on {count} review(s)",
   "moreItemsOfThisCategory": "More items of this category",
   "outOfStock": "Out of stock",
   "sale": "Sale",
@@ -335,7 +395,41 @@
     "image": "Slide {index}"
   },
   "review": {
-    "verifiedPurchase": "Verified purchase"
+    "title": "Title",
+    "verifiedPurchase": "Verified purchase",
+    "createReviewFormTitle": "Leave a review",
+    "createAnswerFormTitle": "Leave an answer",
+    "editReviewFormTitle": "Edit review",
+    "editReplyFormTitle": "Edit reply",
+    "yourRating": "Your rating:",
+    "reviewText": "Product review (optional)",
+    "reviewAuthor": "Your name (optional)",
+    "cancel": "Cancel",
+    "submitReview": "Send review",
+    "answer": "Answer",
+    "yourAnswer": "Your answer",
+    "saveAnswer": "Submit answer",
+    "showAnswers": "Show answers",
+    "hideAnswers": "Hide answers",
+    "anonymous": "Anonymous",
+    "areYouSure": "Are you sure you want to delete the review?",
+    "deleteReview": "Delete review?",
+    "deleteReviewConfirmation": "Delete",
+    "answerAreYouSure": "Are you sure you want to delete the answer?",
+    "deleteAnswer": "Delete answer?",
+    "createSuccess": "Review sent",
+    "tooltipVisibilityOn": "Your review is visible",
+    "tooltipVisibilityOff": "Your rating is currently being reviewed",
+    "validation": {
+      "ratingRequired": "Add your rating. ",
+      "titleRequired": "Add your title.",
+      "textareaRequired": "Add your message.",
+      "textareaMaxLength": "Maximum allowed length is 500 characters."
+    },
+    "notification": {
+      "success": "Your review has been submitted.",
+      "answerSuccess": "Your answer has been submitted."
+    }
   },
   "account": {
     "heading": "My Account",
@@ -376,7 +470,8 @@
       "shippingDetails": {
         "newAddress": "New Shipping Address",
         "shippingAddress": "Shipping address"
-      }
+      },
+      "noAddresses": "You don't have any addresses yet"
     },
     "ordersAndReturns": {
       "heading": "Orders & Returns",
@@ -429,7 +524,22 @@
         "shippingMethod": "Shipping method"
       },
       "paymentSummary": {
-        "heading": "Payment Summary"
+        "heading": "Payment Summary",
+        "paymentStatus": "Payment status"
+      },
+      "orderAgain": {
+        "heading": "Buy again",
+        "addToCart": "Add to cart",
+        "subtext": "You can purchase the products from this order again.",
+        "headingChanges": "Change in products",
+        "subtextChanges": "Changes occured since you last ordered",
+        "priceUp": "Price increased",
+        "priceDown": "Price decreased",
+        "notAvailable": "Currently unavailable",
+        "buyAgain": "Buy again",
+        "cancel": "Cancel",
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
+        "stockLimitation": "only {stock} item(s) available"
       }
     },
     "wishlist": {
@@ -441,17 +551,21 @@
   },
   "auth": {
     "login": {
+      "openLoginForm": "Open login form",
       "heading": "Log in to your account",
       "success": "You have been logged in successfully",
       "submitLabel": "Log in",
+      "loginAndContinue": "Login and continue",
       "forgotPasswordLabel": "Forgotten your password?",
       "rememberMeLabel": "Remember me",
       "createAccount": "Don't have an account yet?",
+      "createAccountLater": "Dont worry. You can create an account after your order",
       "createAccountLinkLabel": "Sign up now!"
     },
     "signup": {
-      "heading": "Sign up",
-      "submitLabel": "Sign up",
+      "heading": "Create an account",
+      "subheading": "Sign up now to enjoy awesome benefits",
+      "submitLabel": "Sign up!",
       "alreadyHaveAccount": "Already have an account?",
       "emailAlreadyExists": "This email address is already registered.",
       "logInLinkLabel": "Log in instead",
@@ -462,6 +576,17 @@
         "information": "add information",
         "button": "Go Shopping",
         "imageAlt": "Image to confirm successful signup"
+      },
+      "benefits": {
+        "saveAddresses": "Save multiple addresses",
+        "orderTracking": "Keep track of your orders",
+        "wishlist": "Save items for later everywhere you go",
+        "orderHistory": "Your complete order history in one place"
+      },
+      "passwordValidation": {
+        "characters": "The password must contain at least 8 characters.",
+        "letters": "The password must contain at least one letter.",
+        "numbers": "The password must contain at least one digit."
       }
     },
     "resetPassword": {
@@ -489,7 +614,10 @@
     "subTotal": "Subtotal",
     "shipping": "Shipping",
     "vat": "VAT",
-    "total": "Total"
+    "total": "Total",
+    "saveOrderToAccount": "Save this order to your account",
+    "createAccountForBenefits": "Create an account to enjoy all benefits!",
+    "signUp": "Sign up!"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "asterisk": "*",
@@ -535,6 +663,7 @@
       "message-placeholder": "Your message",
       "asterixHint": "marked fields are required"
     },
+    "success": "Message sent successfully",
     "contactSend": "Send request",
     "clearAll": "Clear all",
     "privacyPolicy": "I hereby confirm that I have read the {privacyPolicy}."
@@ -643,17 +772,25 @@
     "maxCharacters": "Enter a maximum of {max} characters.",
     "missingOrWrongProperties": "The following fields are required or have been filled in incorrectly:",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
+    "turnstileRequired": "Please check the box to verify that you are human.",
     "email": {
       "valid": "This field needs to be a valid email.",
       "required": "Email is required."
     },
     "password": {
       "required": "Password is required.",
-      "valid": "Password must be at least 8 characters long and include at least one letter and one number. "
+      "valid": "Password must be at least 8 characters long and include at least one letter and one number.",
+      "match": "Passwords do not match."
     },
     "newsletter": {
       "firstNameRequired": "First Name is required.",
       "lastNameRequired": "Last Name is required.",
+      "termsRequired": "You must accept the terms and conditions.",
+      "turnstileRequired": "Please check the box to verify that you are human."
+    },
+    "contact": {
+      "nameRequired": "Name is required.",
+      "messageRequired": "Message is required.",
       "termsRequired": "You must accept the terms and conditions.",
       "turnstileRequired": "Please check the box to verify that you are human."
     }
@@ -668,12 +805,12 @@
     "areYouSure": "Are you sure you what to return these items?",
     "commentOptional": "Comment(optional)",
     "tellUsMore": "Tell us more about why you want to return these items...",
-    "initiateReturn":"Initiate Return",
+    "initiateReturn": "Initiate Return",
     "confirmReturn": "Confirm Return",
     "cancel": "Cancel",
     "orderDate": "Order date",
     "returnReason": "Return reason",
-    "returnForOrder":"Return for order",
+    "returnForOrder": "Return for order",
     "selectReturnReason": "Select Return Reason",
     "selectAll": "Select All",
     "successConfirmationMessage": "We have registered your return request. We will keep you updated on the process.",
@@ -681,6 +818,13 @@
   },
   "productAttributes": {
     "seeAvailableOptions": "See available options",
-    "notValidVariation": "Please select a valid variation."
+    "notValidVariation": "Please select a valid variation.",
+    "productInformationMissing": "Product information missing"
+  },
+  "quickCheckout": {
+    "heading": "Added to shopping cart",
+    "subTotal": "Items subtotal",
+    "checkYourCart": "Check your cart",
+    "cartContains": "Your cart contains {count} item | Your cart contains {count} items"
   }
 }

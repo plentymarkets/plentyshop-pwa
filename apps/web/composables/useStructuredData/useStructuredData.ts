@@ -1,7 +1,6 @@
-import { toRefs } from '@vueuse/shared';
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
@@ -34,8 +33,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      url: runtimeConfig.public.apiUrl,
-      logo: runtimeConfig.public.logoUrl,
+      url: runtimeConfig.public.domain,
+      logo: runtimeConfig.public.domain + '/images/logo.png',
     };
     useHead({
       script: [
@@ -68,7 +67,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
-      reviewGetters.getItems(productReviews.value).forEach((reviewItem) => {
+      reviewGetters.getReviewItems(productReviews.value).forEach((reviewItem) => {
         reviews.push({
           '@type': 'Review',
           reviewRating: {
@@ -89,7 +88,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
-      image: productGetters.getCoverImagePreview(product),
+      image: productGetters.getCoverImage(product),
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',

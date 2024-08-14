@@ -1,100 +1,145 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
-      <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ heading }}</h2>
-      <SfButton v-if="!disabled && addresses.length > 0" size="sm" variant="tertiary" @click="edit">
-        {{ $t('contactInfo.edit') }}
-      </SfButton>
+      <h2 class="text-neutral-900 text-lg font-bold">{{ heading }}</h2>
+      <div v-if="!disabled && addressList.length > 0" class="flex items-center">
+        <UiButton v-if="type === AddressType.Billing" size="sm" variant="tertiary" @click="pick">
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedBillingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
+        </UiButton>
+        <UiButton v-if="type === AddressType.Shipping" size="sm" variant="tertiary" @click="pick">
+          <span v-if="viewPort.isGreaterThan('sm')">{{ $t('savedShippingAddress') }}</span>
+          <span v-else>{{ $t('address') }}</span>
+        </UiButton>
+        <div class="h-5 w-px bg-primary-500 mx-2"></div>
+        <UiButton size="sm" variant="tertiary" @click="edit(userAddressGetters.getId(displayAddress))">
+          {{ $t('contactInfo.edit') }}
+        </UiButton>
+      </div>
     </div>
 
-    <div v-if="selectedAddress" class="mt-2 md:w-[520px]">
-      <p>
-        {{ `${userAddressGetters.getFirstName(selectedAddress)} ${userAddressGetters.getLastName(selectedAddress)}` }}
-      </p>
-      <p>{{ userAddressGetters.getPhone(selectedAddress) }}</p>
-      <p>
-        {{ userAddressGetters.getStreetName(selectedAddress) }}
-        {{ userAddressGetters.getStreetNumber(selectedAddress) }}
-      </p>
-      <p>{{ `${userAddressGetters.getCity(selectedAddress)} ${userAddressGetters.getPostCode(selectedAddress)}` }}</p>
+    <div v-if="displayAddress" class="mt-2 md:w-[520px]">
+      <AddressDisplay :key="displayAddress.id" :address="displayAddress" />
     </div>
 
-    <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addresses.length === 0)">
-      <p v-if="addresses.length === 0">{{ description }}</p>
-      <SfButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
+    <div class="w-full md:max-w-[520px]" v-if="!disabled && (isAuthorized || addressList.length === 0)">
+      <p v-if="!displayAddress.id">{{ description }}</p>
+      <UiButton :data-testid="`add-${type}-button`" class="mt-4 w-full md:w-auto" variant="secondary" @click="create">
         {{ buttonText }}
-      </SfButton>
+      </UiButton>
     </div>
 
     <UiModal
       v-if="!disabled"
-      v-model="isOpen"
+      v-model="isOpenPick"
+      tag="section"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="address-modal-title"
+      data-testid="checkout-pick-address-modal"
+    >
+      <header>
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closePick">
+          <SfIconClose />
+        </UiButton>
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+          {{ $t('pickSavedAddress') }}
+        </h3>
+        <h1 class="my-2 mb-6 font-semibold">{{ $t('pickSavedAddressSubtitle') }}</h1>
+      </header>
+      <div class="hover:bg-primary-50" v-for="address in addressList" :key="userAddressGetters.getId(address)">
+        <Address
+          :address="address"
+          :is-selected="displayAddress.id === Number(userAddressGetters.getId(address))"
+          :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
+          @click="setDisplayAddress(address, true)"
+          @on-delete="onDelete(address)"
+          @make-default="makeDefault(address)"
+          @on-edit="edit"
+        />
+      </div>
+      <div class="flex justify-end w-full">
+        <UiButton variant="secondary" v-if="type === AddressType.Billing" class="mt-10" @click="create">
+          {{ $t('newBillingAddress') }}
+        </UiButton>
+        <UiButton variant="secondary" v-if="type === AddressType.Shipping" class="mt-10" @click="create">
+          {{ $t('newShippingAddress') }}
+        </UiButton>
+      </div>
+    </UiModal>
+
+    <UiModal
+      v-if="!disabled"
+      v-model="isOpenEdit"
       tag="section"
       role="dialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
       aria-labelledby="address-modal-title"
+      data-testid="checkout-edit-address-modal"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeEdit">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           {{ heading }}
         </h3>
       </header>
       <AddressForm
         :countries="activeShippingCountries"
-        :saved-address="
-          editMode ? addresses.find((address) => address.id?.toString() === selectedAddress?.id?.toString()) : undefined
-        "
+        :saved-address="addressToEdit"
         :type="type"
         @on-save="saveAddress"
-        @on-close="close"
+        @on-close="closeEdit"
       />
     </UiModal>
   </div>
 </template>
 <script setup lang="ts">
-import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { cartGetters, userAddressGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { CheckoutAddressProps } from '~/components/CheckoutAddress/types';
 
-const { isOpen, open, close } = useDisclosure();
+const { isOpen: isOpenEdit, open: openEdit, close: closeEdit } = useDisclosure();
+const { isOpen: isOpenPick, open: openPick, close: closePick } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { saveAddress: saveBillingAddress } = useAddress(AddressType.Billing);
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
+const viewPort = useViewport();
 const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const props = withDefaults(defineProps<CheckoutAddressProps>(), {
   disabled: false,
 });
-const { data: cart } = useCart();
-const editMode = ref(false);
 
-const cartAddress = computed(() =>
-  props.type === AddressType.Billing
-    ? cartGetters.getCustomerInvoiceAddressId(cart.value)
-    : cartGetters.getCustomerShippingAddressId(cart.value),
-);
-
-const selectedAddress = computed(
-  () =>
-    props.addresses.find((address) => userAddressGetters.getId(address) === cartAddress?.value?.toString()) ??
-    ({} as Address),
-);
-
+const addressToEdit = ref();
 const emit = defineEmits(['on-saved']);
+
+const editMode = ref(false);
+const { setDefault, deleteAddress, defaultAddressId, data, displayAddress, setDisplayAddress } = useAddress(props.type);
+
+const addressList = computed(() => data.value ?? []);
 
 getActiveShippingCountries();
 
 const create = () => {
+  addressToEdit.value = null;
   editMode.value = false;
-  open();
+  openEdit();
 };
 
-const edit = () => {
+const edit = (addressId: string) => {
+  addressToEdit.value = addressList.value.find((address) => userAddressGetters.getId(address) === addressId);
   editMode.value = true;
-  open();
+  openEdit();
+};
+
+const pick = () => {
+  editMode.value = true;
+  openPick();
+};
+
+const close = () => {
+  closeEdit();
+  closePick();
 };
 
 const saveAddress = async (address: Address, useAsShippingAddress: boolean = false) => {
@@ -106,5 +151,13 @@ const saveAddress = async (address: Address, useAsShippingAddress: boolean = fal
   }
   emit('on-saved');
   close();
+};
+
+const onDelete = (address: Address) => {
+  deleteAddress(Number(userAddressGetters.getId(address)));
+};
+
+const makeDefault = (address: Address) => {
+  setDefault(address);
 };
 </script>

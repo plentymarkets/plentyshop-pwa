@@ -41,7 +41,7 @@ export const mockProductReviews: Review = {
         targetRelationName: [],
         feedbackRelationParentTargetId: 1
       },
-      sourceRelation: {
+      sourceRelation: [{
         feedbackId: 'test',
         feedbackRelationType: 'test',
         feedbackRelationSourceId: 'test',
@@ -55,7 +55,7 @@ export const mockProductReviews: Review = {
           updatedAt: 'test',
           authorName: 'test'
         }
-      },
+      }],
       replies: []
     }
   ],
@@ -63,6 +63,7 @@ export const mockProductReviews: Review = {
   pagination: {
     page: '1',
     lastPage: 1,
-    isLastPage: true
+    isLastPage: true,
+    totalCount: 1
   }
 }

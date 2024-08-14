@@ -1,6 +1,5 @@
-import { toRefs } from '@vueuse/shared';
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
 
@@ -12,12 +11,10 @@ const fetchScripts = (scripts: string[]) => {
   scripts.forEach((script: string) => {
     try {
       if (checkIfScriptIsExternal(script)) {
-        fetch(script, { method: 'GET', mode: 'no-cors', credentials: 'same-origin' })
-          .then((response) => response.text())
-          .then((text) => eval(text))
-          .catch(() => {
-            return;
-          });
+        const scriptElement = document.createElement('script');
+        scriptElement.setAttribute('src', script);
+        scriptElement.setAttribute('type', 'text/javascript');
+        document.head.append(scriptElement);
       } else if (cookieScripts[script]) {
         cookieScripts[script]();
       }
@@ -52,7 +49,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   };
 
   const loadThirdPartyScripts = (): void => {
-    if (!process.server) {
+    if (!import.meta.server) {
       state.value.data.groups.forEach((cookieGroup: CookieGroup, groupIndex: number) => {
         cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
           if (cookie.accepted) {

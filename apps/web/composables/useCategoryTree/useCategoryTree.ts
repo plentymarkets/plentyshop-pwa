@@ -1,6 +1,5 @@
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
-import { useSdk } from '~/sdk';
+
 import type { UseCategoryTreeState, UseCategoryTreeMethodsReturn, GetCategoryTree, SetCategoryTree } from './types';
 
 /**
@@ -27,9 +26,8 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
   const getCategoryTree: GetCategoryTree = async () => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.getCategoryTree());
-      useHandleError(error.value);
-      state.value.data = data?.value?.data ?? state.value.data;
+      const data = await useSdk().plentysystems.getCategoryTree();
+      state.value.data = data?.data ?? state.value.data;
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);

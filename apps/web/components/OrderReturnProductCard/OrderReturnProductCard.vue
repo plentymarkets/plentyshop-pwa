@@ -7,17 +7,24 @@
     <div class="md:flex flex-none p-2 w-full">
       <div class="flex md:flex-none w-full md:w-2/3">
         <div class="rounded-md w-[180px] sm:w-[176px] md:w-1/3">
-          <SfLink :tag="NuxtLink" :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')">
+          <SfLink
+            :tag="NuxtLink"
+            :to="localePath(orderGetters.getOrderVariationPath(order, orderItem) ?? '/#')"
+            as="image"
+            class="flex items-center justify-center"
+          >
             <NuxtImg
-              class="h-auto border rounded-md border-neutral-200"
+              ref="img"
               :src="
-                addWebpExtension(orderGetters.getOrderVariationImage(order, orderItem)) || '/images/placeholder.png'
+                addModernImageExtension(orderGetters.getOrderVariationImage(order, orderItem)) ||
+                '/images/placeholder.png'
               "
+              class="h-auto border rounded-md border-neutral-200"
               width="300"
               height="300"
               loading="lazy"
-              format="webp"
             />
+            <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
           </SfLink>
           <UiQuantitySelector
             :key="quantity"
@@ -63,7 +70,7 @@
           <label>
             <span class="pb-1 text-sm font-medium text-neutral-900"> {{ $t('returns.returnReason') }} </span>
             <SfSelect
-              @update:model-value="changeReason($event)"
+              @update:model-value="(event) => changeReason(Number(event))"
               :model-value="String(returnReasonId)"
               size="sm"
               class="h-fit"
@@ -113,18 +120,36 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem } from '@storefront-ui/vue';
+import { orderGetters } from '@plentymarkets/shop-api';
+import { SfLink, SfSelect, SfIconChevronLeft, SfAccordionItem, SfLoaderCircular } from '@storefront-ui/vue';
 import type { OrderSummaryProductCardProps } from './types';
 import _ from 'lodash';
 
-const { addWebpExtension } = useImageUrl();
+const { addModernImageExtension } = useModernImage();
 const { updateQuantity, updateReason, returnData } = useReturnOrder();
 const { returnReasons } = useCustomerReturns();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 const props = defineProps<OrderSummaryProductCardProps>();
 const opened = ref(false);
+const imageLoaded = ref(false);
+const img = ref();
+const emit = defineEmits(['load']);
+
+onMounted(() => {
+  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+
+  if (imgElement) {
+    if (!imageLoaded.value) {
+      if (imgElement.complete) imageLoaded.value = true;
+      imgElement.addEventListener('load', () => (imageLoaded.value = true));
+    }
+
+    nextTick(() => {
+      if (!imgElement.complete) emit('load');
+    });
+  }
+});
 
 const toggleDropdown = () => {
   opened.value = !opened.value;

@@ -1,10 +1,9 @@
-import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerOrdersReturn,
   UseCustomerOrdersState,
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
-import { useSdk } from '~/sdk';
+
 import type { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**

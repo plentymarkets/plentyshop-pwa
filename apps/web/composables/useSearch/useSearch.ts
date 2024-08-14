@@ -1,7 +1,6 @@
 import type { ItemSearchParams, ItemSearchResult } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 import type { UseSearchReturn, UseSearchState, GetSearch } from '~/composables/useSearch/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable for managing products search.
@@ -44,8 +43,19 @@ export const useSearch: UseSearchReturn = () => {
     return state.value.data;
   };
 
+  const searchByTag = async (tagId: string, additionalParams: ItemSearchParams = {}) => {
+    const params = {
+      ...additionalParams,
+      type: 'tag',
+      tagId: tagId,
+    };
+
+    return await getSearch(params);
+  };
+
   return {
     getSearch,
+    searchByTag,
     ...toRefs(state.value),
   };
 };

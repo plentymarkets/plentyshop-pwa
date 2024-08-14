@@ -13,7 +13,7 @@
         <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput :placeholder="$t('coupon.enterCode')" type="text" v-model="couponCode" name="couponCode" required />
         </div>
-        <SfButton
+        <UiButton
           data-testid="couponAdd"
           @click="addCoupon({ couponCode })"
           class="ml-2"
@@ -25,13 +25,13 @@
           <span v-else>
             {{ $t('coupon.apply') }}
           </span>
-        </SfButton>
+        </UiButton>
       </div>
     </SfAccordionItem>
     <div v-else class="flex justify-between my-4">
       <div class="text-primary-800 font-medium flex items-center">{{ couponCode }}</div>
       <div>
-        <SfButton
+        <UiButton
           data-testid="couponRemove"
           @click="handleDeleteCoupon"
           variant="tertiary"
@@ -43,24 +43,15 @@
             {{ $t('coupon.remove') }}
             <SfIconClose />
           </span>
-        </SfButton>
+        </UiButton>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { cartGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfAccordionItem,
-  SfIconChevronLeft,
-  SfIconClose,
-  SfInput,
-  SfButton,
-  SfLoaderCircular,
-} from '@storefront-ui/vue';
-import { ref, onMounted } from 'vue';
-import { useCart } from '~/composables';
+import { cartGetters } from '@plentymarkets/shop-api';
+import { SfAccordionItem, SfIconChevronLeft, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 const openedCoupon = ref(false);
 const couponCode = ref('');
 const { addCoupon, deleteCoupon, loading } = useCoupon();

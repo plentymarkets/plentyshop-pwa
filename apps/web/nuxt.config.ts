@@ -1,5 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import cookieConfig from './cookie.config';
+import { validateApiUrl } from './utils/pathHelper';
+import cookieConfig from './configuration/cookie.config';
+import { nuxtI18nOptions } from './configuration/i18n.config';
+import { appConfiguration } from './configuration/app.config';
+import fetchConfiguration from './build/fetchConfiguration';
+import generateScssVariables from './build/generateScssVariables';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -7,30 +12,81 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  app: {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#018937' },
-      ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/favicon.ico' },
-      ],
-    },
+  app: appConfiguration,
+  experimental: {
+    asyncContext: true,
   },
   appConfig: {
     titleSuffix: 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
-    dirs: ['composables/**', 'utils/**'],
+    dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
+  // eslint-disable-next-line unicorn/expiring-todo-comments
+  // TODO: build is consistently failing because of this. check whether we need pre-render check.
+  nitro: {
+    prerender: {
+      crawlLinks: false,
+    },
+    compressPublicAssets: true,
+  },
+  routeRules: {
+    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+  },
+  site: {
+    url: '',
+  },
+  pages: true,
+  hooks: {
+    'build:before': async () => {
+      if (process.env.FETCH_REMOTE_CONFIG === '1') {
+        await fetchConfiguration();
+        generateScssVariables();
+      } else {
+        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
+      }
+    },
+  },
+  runtimeConfig: {
+    public: {
+      domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
+      apiEndpoint: process.env.API_ENDPOINT,
+      cookieGroups: cookieConfig,
+      showNetPrices: true,
+      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
+      useAvif: process.env?.USE_AVIF === '1' ?? false,
+      useWebp: process.env?.USE_WEBP === '1' ?? false,
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      primaryColor: process.env.PRIMARY || '#0c7992',
+      secondaryColor: process.env.SECONDARY || '#008ebd',
+    },
+  },
+  modules: [
+    '@nuxt/image',
+    '@nuxt/test-utils/module',
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/turnstile',
+    'nuxt-lazy-hydrate',
+    'nuxt-viewport',
+    '@vee-validate/nuxt',
+    '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
+  ],
+  vsf: {
+    middleware: {
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,
@@ -44,84 +100,25 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  modules: [
-    '@nuxtjs/turnstile',
-    '@nuxtjs/sitemap',
-    '@nuxtjs/tailwindcss',
-    [
-      '@nuxtjs/google-fonts',
-      {
-        families: {
-          'Red Hat Display': [400, 500, 700],
-          'Red Hat Text': [300, 400, 500, 700],
-        },
-      },
-    ],
-    [
-      '@nuxtjs/i18n',
-      {
-        locales: [
-          {
-            code: 'en',
-            file: 'en.json',
-          },
-          {
-            code: 'de',
-            file: 'de.json',
-          },
-        ],
-        langDir: 'lang',
-        defaultLocale: 'en',
-        strategy: 'prefix_and_default',
-      },
-    ],
-    [
-      '@vee-validate/nuxt',
-      {
-        autoImports: true,
-        componentNames: {
-          Form: 'VeeForm',
-          Field: 'VeeField',
-          FieldArray: 'VeeFieldArray',
-          ErrorMessage: 'VeeErrorMessage',
-        },
-      },
-    ],
-    '@nuxt/image',
-    '@vite-pwa/nuxt',
-    '@nuxt/test-utils/module',
-    'nuxt-lazy-hydrate',
-  ],
-  // eslint-disable-next-line unicorn/expiring-todo-comments
-  // TODO: build is consistently failing because of this. check whether we need pre-render check.
-  nitro: {
-    prerender: {
-      crawlLinks: false,
+  googleFonts: {
+    families: {
+      'Red Hat Display': { wght: [400, 500, 700] },
+      'Red Hat Text': { wght: [300, 400, 500, 700] },
     },
-    compressPublicAssets: true,
   },
-  turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
-  },
-  routeRules: {
-    '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-  },
-  site: {
-    url: '',
-  },
+  i18n: nuxtI18nOptions,
   sitemap: {
+    autoLastmod: true,
+    xsl: '/sitemap_style.xsl',
     xslColumns: [
       // URL column must always be set, no value needed
       { label: 'URL', width: '75%' },
       { label: 'Last Modified', select: 'sitemap:lastmod', width: '25%' },
     ],
-    autoLastmod: true,
     sitemaps: {
-      content: {
+      'sitemap/content': {
         exclude: [
-          '/en/**', // default language
+          `/${nuxtI18nOptions.defaultLocale}/**`,
           '/search',
           '/offline',
           '/my-account/**',
@@ -130,7 +127,7 @@ export default defineNuxtConfig({
           '/reset-password-success',
           '/cart',
           '/checkout',
-          '/thank-you',
+          '/confirmation',
           '/wishlist',
           '/login',
           '/signup',
@@ -138,30 +135,41 @@ export default defineNuxtConfig({
         ],
         includeAppSources: true,
       },
-      items: {},
-      categories: {},
     },
   },
-  hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
+  tailwindcss: {
+    configPath: '~/configuration/tailwind.config.ts',
+  },
+  turnstile: {
+    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+  },
+  viewport: {
+    breakpoints: {
+      sm: 640,
+      md: 640,
+      lg: 1024,
+    },
+    defaultBreakpoints: {
+      mobile: 'sm',
+      tablet: 'md',
+      desktop: 'lg',
+    },
+    fallbackBreakpoint: 'lg',
+    cookie: {
+      expires: 365,
+      name: 'plenty-viewport',
+      path: '/',
+      sameSite: 'Strict',
+      secure: true,
     },
   },
-  runtimeConfig: {
-    public: {
-      apiUrl: process.env.API_URL ?? 'http://localhost:8181',
-      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
-      cookieGroups: cookieConfig,
-      showNetPrices: true,
-      logoUrl: (process.env.API_URL ?? 'http://localhost:8181') + '/images/logo.png',
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
+  veeValidate: {
+    autoImports: true,
+    componentNames: {
+      Form: 'VeeForm',
+      Field: 'VeeField',
+      FieldArray: 'VeeFieldArray',
+      ErrorMessage: 'VeeErrorMessage',
     },
   },
   pwa: {
@@ -194,7 +202,7 @@ export default defineNuxtConfig({
     manifest: {
       name: 'plentyshop PWA',
       short_name: 'plentyshopPWA',
-      theme_color: '#018937',
+      theme_color: '#0C7992',
       icons: [
         {
           src: 'icons/icon-192x192.png',

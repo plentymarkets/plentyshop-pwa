@@ -1,5 +1,12 @@
 <template>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <h2
+    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+    data-testid="account-orders-heading"
+  >
+    {{ $t('account.accountSettings.section.personalData') }}
+  </h2>
+  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <AccountData
     class="col-span-3"
     :header="$t('account.accountSettings.personalData.yourName')"
@@ -40,9 +47,9 @@
     aria-labelledby="address-modal-title"
   >
     <header>
-      <SfButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="closeModal">
+      <UiButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="closeModal">
         <SfIconClose />
-      </SfButton>
+      </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
         {{ $t(`account.accountSettings.personalData.${openedForm}`) }}
       </h3>
@@ -58,7 +65,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 
 definePageMeta({
@@ -82,6 +89,5 @@ const closeModal = () => {
   lastActiveElement.value.focus();
 };
 
-const { getSession, data: userData } = useCustomer();
-getSession();
+const { data: userData } = useCustomer();
 </script>

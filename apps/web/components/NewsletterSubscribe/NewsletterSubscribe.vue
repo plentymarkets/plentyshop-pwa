@@ -8,15 +8,16 @@
     </p>
 
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-      <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
+      <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <SfInput
             v-model="firstName"
             v-bind="firstNameAttributes"
             :invalid="Boolean(errors['firstName'])"
+            :placeholder="`${t('newsletter.firstName')} **`"
+            :wrapper-class="wrapperClass"
             type="text"
             name="firstName"
-            :placeholder="`${t('newsletter.firstName')} **`"
           />
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -28,9 +29,10 @@
             v-model="lastName"
             v-bind="lastNameAttributes"
             :invalid="Boolean(errors['lastName'])"
+            :placeholder="`${t('newsletter.lastName')} **`"
+            :wrapper-class="wrapperClass"
             type="text"
             name="lastName"
-            :placeholder="`${t('newsletter.lastName')} **`"
           />
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -43,10 +45,11 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['email'])"
+          :placeholder="`${t('newsletter.email')} **`"
+          :wrapper-class="wrapperClass"
           type="email"
           name="email"
           autocomplete="email"
-          :placeholder="`${t('newsletter.email')} **`"
         />
         <div class="h-[2rem]">
           <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
@@ -64,7 +67,7 @@
             data-testid="checkout-terms-checkbox"
           />
           <label for="terms-checkbox" class="text-left leading-5 select-none">
-            <i18n-t keypath="newsletter.policy">
+            <i18n-t keypath="newsletter.policy" scope="global">
               <template #privacyPolicy>
                 <SfLink
                   :href="localePath(paths.privacyPolicy)"
@@ -84,10 +87,10 @@
       </div>
 
       <div class="flex flex-col items-center">
-        <SfButton type="submit" size="lg" :disabled="loading">
+        <UiButton type="submit" size="lg" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <template v-else>{{ t('newsletter.subscribe') }}</template>
-        </SfButton>
+        </UiButton>
 
         <NuxtTurnstile
           v-if="turnstileSiteKey"
@@ -107,32 +110,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
 
 const runtimeConfig = useRuntimeConfig();
-const { subscribe, loading } = useNewsletter();
+const { subscribe, loading, showNames } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: showNewsletterNameForms
+    firstName: showNames.value
       ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
-    lastName: showNewsletterNameForms
+    lastName: showNames.value
       ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),
     privacyPolicy: boolean().oneOf([true], t('errorMessages.newsletter.termsRequired')).default(false),
-    turnstile: string().required(t('errorMessages.newsletter.turnstileRequired')).default(''),
+    turnstile:
+      turnstileSiteKey.length > 0
+        ? string().required(t('errorMessages.newsletter.turnstileRequired')).default('')
+        : string().optional().default(''),
   }),
 );
 

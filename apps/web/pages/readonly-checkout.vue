@@ -1,7 +1,6 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -48,7 +47,7 @@
               class="inline-block mr-2"
             />
             <div>
-              <i18n-t keypath="termsInfo">
+              <i18n-t keypath="termsInfo" scope="global">
                 <template #terms>
                   <SfLink
                     :href="localePath(paths.termsAndConditions)"
@@ -89,7 +88,7 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
-            <SfButton
+            <UiButton
               type="submit"
               @click="order"
               :disabled="createOrderLoading || cartLoading || executeOrderLoading"
@@ -104,7 +103,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -113,12 +112,10 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type PaymentMethod } from '@plentymarkets/shop-api';
-import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({
-  layoutName: 'checkout',
   pageType: 'static',
 });
 
@@ -226,7 +223,7 @@ const order = async () => {
   clearCartItems();
 
   if (data?.order?.id) {
-    navigateTo(localePath('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
   }
 };
 </script>

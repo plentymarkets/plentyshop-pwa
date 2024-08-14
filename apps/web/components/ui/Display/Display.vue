@@ -7,7 +7,7 @@
       <div
         v-for="item in items"
         :key="item.title"
-        class="relative flex md:max-w-screen-3xl md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full first:bg-secondary-200 last:bg-warning-200 even:bg-negative-200"
+        class="relative flex md:max-w-screen-3xl md:[&:not(:first-of-type)]:flex-1 md:first-of-type:w-full first:bg-secondary-50 last:bg-warning-200 even:bg-negative-200"
       >
         <div
           :class="[
@@ -26,9 +26,9 @@
               {{ item.title }}
             </h2>
             <p class="typography-text-base block text-center md:text-left mb-4">{{ item.description }}</p>
-            <SfButton class="!bg-black" :tag="NuxtLink" :to="localePath(paths.category)">
+            <UiButton class="!bg-black" :tag="NuxtLink" :to="localePath(paths.category)">
               {{ item.buttonText }}
-            </SfButton>
+            </UiButton>
           </div>
           <NuxtImg
             :src="item.image"
@@ -37,7 +37,6 @@
             width="300"
             height="300"
             loading="lazy"
-            format="webp"
           />
         </div>
       </div>
@@ -46,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 import type { DisplayProps } from '~/components/ui/Display/types';
 
 defineProps<DisplayProps>();

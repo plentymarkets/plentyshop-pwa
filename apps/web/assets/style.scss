@@ -1,12 +1,52 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '_variables';
+
+:root {
+  --colors-2-primary-50: #{$color-2-primary-50};
+  --colors-2-primary-100: #{$color-2-primary-100};
+  --colors-2-primary-200: #{$color-2-primary-200};
+  --colors-2-primary-300: #{$color-2-primary-300};
+  --colors-2-primary-400: #{$color-2-primary-400};
+  --colors-2-primary-500: #{$color-2-primary-500};
+  --colors-2-primary-600: #{$color-2-primary-600};
+  --colors-2-primary-700: #{$color-2-primary-700};
+  --colors-2-primary-800: #{$color-2-primary-800};
+  --colors-2-primary-900: #{$color-2-primary-900};
+
+  --colors-2-secondary-50: #{$color-2-secondary-50};
+  --colors-2-secondary-100: #{$color-2-secondary-100};
+  --colors-2-secondary-200: #{$color-2-secondary-200};
+  --colors-2-secondary-300: #{$color-2-secondary-300};
+  --colors-2-secondary-400: #{$color-2-secondary-400};
+  --colors-2-secondary-500: #{$color-2-secondary-500};
+  --colors-2-secondary-600: #{$color-2-secondary-600};
+  --colors-2-secondary-700: #{$color-2-secondary-700};
+  --colors-2-secondary-800: #{$color-2-secondary-800};
+  --colors-2-secondary-900: #{$color-2-secondary-900};
+}
 
 .scrollbar-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;
-
   &::-webkit-scrollbar {
-    @apply hidden /* for Chrome, Safari, and Opera */;
+    @apply hidden;
+  }
+}
+.grid-areas-product-page {
+  grid-template-areas: 'left-top right' 'left-bottom right';
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: #cccccc;
+  border-radius: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.variation-properties {
+  a {
+    color: rgb(var(--colors-2-primary-700));
   }
 }

@@ -1,0 +1,32 @@
+name: New release app
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Compress repo to Tar
+        uses: a7ul/tar-action@v1.1.0
+        id: compress
+        with:
+          command: c
+          cwd: ./
+          files: |
+            ./
+          outPath: pwa.tar.gz
+
+      - name: Upload File
+        id: upload
+        uses: JantHsueh/upload-file-action@1.0
+        with:
+          url: "https://pwapublish.plentysystems.com/storeDefaultApplication"
+          forms: '{ "token": "${{ secrets.SUPPLIER_TOKEN }}" }'
+          fileForms: '{ "file": "pwa.tar.gz" }'

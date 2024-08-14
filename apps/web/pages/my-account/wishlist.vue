@@ -1,21 +1,21 @@
 <template>
+  <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
+  <h2
+    class="hidden md:block col-span-3 typography-headline-4 font-bold mx-4 capitalize"
+    data-testid="account-orders-heading"
+  >
+    {{ $t('whishlist') }}
+  </h2>
   <ClientOnly>
-    <div class="relative col-span-4" :class="{ 'pointer-events-none opacity-50': loading }">
-      <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-      <WishlistPageContent v-if="products" :with-header="false" :products="products" />
+    <div class="relative col-span-4">
+      <WishlistPageContent :with-header="false" />
     </div>
   </ClientOnly>
 </template>
 
 <script setup lang="ts">
-import { SfLoaderCircular } from '@storefront-ui/vue';
-
 definePageMeta({
   layout: 'account',
   pageType: 'static',
 });
-
-const { fetchWishlist, data: products, loading } = useWishlist();
-
-fetchWishlist();
 </script>

@@ -11,7 +11,7 @@
         class="flex justify-between bg-white items-center typography-headline-4 md:typography-headline-3 font-bold"
       >
         <h3>{{ $t('account.ordersAndReturns.orderDetails.heading') }}</h3>
-        <SfButton
+        <UiButton
           square
           variant="tertiary"
           :tag="NuxtLink"
@@ -19,7 +19,7 @@
           class="md:absolute md:top-2 md:right-2"
         >
           <SfIconClose class="text-neutral-500" />
-        </SfButton>
+        </UiButton>
       </header>
       <main class="mt-6">
         <ul class="bg-neutral-100 p-4 rounded-md md:columns-2 mb-6">
@@ -152,8 +152,8 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { orderGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 
 const route = useRoute();
 const localePath = useLocalePath();

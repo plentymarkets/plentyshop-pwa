@@ -1,13 +1,12 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >
-    <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
-      <div class="col-span-7 mb-10 md:mb-0">
+    <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
+      <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
@@ -16,9 +15,8 @@
           :heading="t('billing.heading')"
           :description="t('billing.description')"
           :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
+          :addresses="[]"
           :type="AddressType.Billing"
-          @on-saved="loadAddresses"
         />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <CheckoutAddress
@@ -26,9 +24,8 @@
           :heading="t('shipping.heading')"
           :description="t('shipping.description')"
           :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
+          :addresses="[]"
           :type="AddressType.Shipping"
-          @on-saved="loadAddresses"
         />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
@@ -52,21 +49,21 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />
       </div>
-      <div class="col-span-5">
-        <div v-for="cartItem in cart?.items" :key="cartItem.id">
-          <UiCartProductCard :cart-item="cartItem" />
+      <div class="col-span-6 xl:col-span-5">
+        <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
+          <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
         <div class="relative md:sticky md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <PayPalExpressButton
-              type="Checkout"
               v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
               @on-click="validateTerms"
+              type="Checkout"
             />
-            <SfButton
+            <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
               data-testid="place-order-button"
@@ -78,8 +75,8 @@
               <span>
                 {{ t('buy') }}
               </span>
-            </SfButton>
-            <SfButton
+            </UiButton>
+            <UiButton
               v-else
               type="submit"
               @click="order"
@@ -92,7 +89,7 @@
               <span v-else>
                 {{ t('buy') }}
               </span>
-            </SfButton>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -109,15 +106,15 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType } from '@plentymarkets/shop-api';
-import { shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
-  layoutName: 'checkout',
+  layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
@@ -161,7 +158,6 @@ const loadAddresses = async () => {
 };
 
 await loadAddresses();
-await fetchPaymentMethods();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
@@ -193,15 +189,20 @@ const scrollToHTMLObject = (object: string) => {
   });
 };
 
-const validateTerms = (): boolean => {
+const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+  let valid = true;
   setShowErrors(!termsAccepted.value);
 
   if (!termsAccepted.value) {
     scrollToHTMLObject(ID_CHECKBOX);
-    return false;
+    valid = false;
   }
 
-  return true;
+  if (callback) {
+    callback(valid);
+  }
+
+  return valid;
 };
 
 const validateAddresses = () => {
@@ -240,10 +241,9 @@ const handleRegularOrder = async () => {
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
-  clearCartItems();
-
   if (data?.order?.id) {
-    navigateTo(localePath(paths.thankYou + '/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    clearCartItems();
+    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
 };
 

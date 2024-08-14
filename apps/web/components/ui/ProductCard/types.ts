@@ -5,6 +5,8 @@ export type ProductCardProps = {
   name: string;
   imageUrl: string;
   imageAlt?: string;
+  imageWidth: number;
+  imageHeight: number;
   description?: string;
   rating?: number;
   ratingCount?: number;
@@ -14,7 +16,8 @@ export type ProductCardProps = {
   lazy?: boolean;
   unitContent?: number;
   unitName?: string;
-  basePrice?: number;
+  basePrice?: string;
   showBasePrice?: boolean;
   isFromWishlist?: boolean;
+  isFromSlider?: boolean;
 };

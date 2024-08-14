@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { OrderDocument } from '@plentymarkets/shop-api';
 
 export interface UseOrderDocumentState {

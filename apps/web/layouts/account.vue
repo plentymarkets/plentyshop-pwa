@@ -2,7 +2,7 @@
   <NuxtLayout name="default" :breadcrumbs="breadcrumbs">
     <NarrowContainer :class="['mb-20 md:px-0', { 'px-4': !isRoot }]" data-testid="account-layout">
       <h1
-        v-if="isTablet || (!isTablet && isRoot)"
+        v-if="viewport.isGreaterOrEquals('md') || (viewport.isLessThan('md') && isRoot)"
         class="mt-4 mb-10 md:my-10 mx-4 md:mx-0 font-bold typography-headline-3 md:typography-headline-2"
         data-testid="account-layout-heading"
       >
@@ -12,7 +12,7 @@
       <div v-else class="flex justify-start items-center mb-10 mt-4">
         <h1 class="font-bold typography-headline-3">{{ currentSectionLabel }}</h1>
 
-        <SfButton
+        <UiButton
           :tag="NuxtLink"
           :to="localePath(paths.account)"
           class="flex md:hidden whitespace-nowrap justify-self-end ml-auto"
@@ -23,7 +23,7 @@
             <SfIconArrowBack />
           </template>
           {{ t('account.back') }}
-        </SfButton>
+        </UiButton>
       </div>
 
       <NuxtLazyHydrate when-visible>
@@ -94,7 +94,6 @@ import {
   SfIconPerson,
   SfIconShoppingCart,
   SfListItem,
-  SfButton,
   SfIconArrowBack,
   SfIconChevronRight,
   SfIconFavorite,
@@ -102,10 +101,10 @@ import {
 import type { MyAccountSubsection } from '~/layouts/types';
 
 const localePath = useLocalePath();
-const { isTablet } = useBreakpoints();
+const viewport = useViewport();
 const { t } = useI18n();
 const router = useRouter();
-const { isAuthorized, logout } = useCustomer();
+const { logout } = useCustomer();
 
 const sections = computed(() => [
   {
@@ -177,8 +176,6 @@ const breadcrumbs = computed(() => [
 ]);
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-if (!isAuthorized.value) navigateTo(localePath(paths.home));
 
 const logOut = async () => {
   await logout();

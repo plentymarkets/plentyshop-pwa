@@ -46,11 +46,12 @@ export class WishlistObject extends PageObject {
 
   addToCart() {
     this.addToCartTrigger.first().click();
+    cy.wait(1000)
+    cy.getByTestId('quick-checkout-close').click()
     return this;
   }
 
   checkEmptyPage() {
-    this.wishlistPage.getByTestId('empty-wishlist-image').should('be.visible');
     this.wishlistPage.getByTestId('empty-wishlist-text').should('be.visible');
     return this;
   }

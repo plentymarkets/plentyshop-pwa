@@ -5,12 +5,12 @@
         {{ $t('auth.setNewPassword.description') }}
       </p>
       <label class="block mb-4">
-        <UiFormLabel>{{ $t('auth.setNewPassword.password') }}</UiFormLabel>
+        <UiFormLabel>{{ $t('auth.setNewPassword.password') }} {{ $t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
         <UiFormHelperText>{{ $t('auth.setNewPassword.help') }}</UiFormHelperText>
       </label>
       <label>
-        <UiFormLabel>{{ $t('auth.setNewPassword.repeatPassword') }}</UiFormLabel>
+        <UiFormLabel>{{ $t('auth.setNewPassword.repeatPassword') }} {{ $t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
           name="repeatedPassword"
           autocomplete="current-password"
@@ -19,15 +19,13 @@
         />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
-        <SfButton type="submit" class="flex-1"> {{ $t('auth.setNewPassword.button') }} </SfButton>
+        <UiButton type="submit" class="flex-1"> {{ $t('auth.setNewPassword.button') }} </UiButton>
       </div>
     </form>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-
 definePageMeta({
   layout: false,
 });

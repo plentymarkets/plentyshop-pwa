@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-primary-700 font-headings md:text-lg mb-3">
+  <div class="font-bold text-primary-500 font-headings md:text-lg mb-3">
     <span v-if="!orderGetters.isReturn(order)">
       {{ $t('account.ordersAndReturns.orderDetails.heading') }}
     </span>
@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
+import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderDetailsProps } from './types';
 
 defineProps<OrderDetailsProps>();

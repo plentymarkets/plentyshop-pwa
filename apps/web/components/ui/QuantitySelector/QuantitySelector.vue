@@ -1,7 +1,7 @@
 <template>
   <div class="inline-flex flex-col items-center" data-testid="quantity-selector">
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
-      <SfButton
+      <UiButton
         variant="tertiary"
         :disabled="disabled || count <= minValue"
         square
@@ -12,7 +12,7 @@
         @click="dec()"
       >
         <SfIconRemove />
-      </SfButton>
+      </UiButton>
       <input
         :id="inputId"
         v-model="count"
@@ -27,7 +27,7 @@
         @input="handleOnChange"
         :disabled="disabled"
       />
-      <SfButton
+      <UiButton
         variant="tertiary"
         :disabled="disabled || count >= maxValue"
         square
@@ -38,14 +38,14 @@
         @click="inc()"
       >
         <SfIconAdd />
-      </SfButton>
+      </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfButton, SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
+import { SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
 import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
 
@@ -58,13 +58,15 @@ const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorP
   disabled: false,
 });
 
-const inputId = useId();
+const inputId = ref('0');
 const { count, inc, dec, set } = useCounter(value);
 
 const inputClasses = computed(
   () =>
     'appearance-none flex-1 mx-2 w-8 text-center bg-transparent font-medium [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:display-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:display-none [&::-webkit-outer-spin-button]:m-0 [-moz-appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none disabled:placeholder-disabled-900 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm',
 );
+
+onMounted(() => (inputId.value = useId()));
 
 watch(count, (quantity) => {
   emit('changeQuantity', quantity);

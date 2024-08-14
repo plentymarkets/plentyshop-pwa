@@ -4,14 +4,8 @@ import type {
   UseProductOrderPropertiesReturn,
   UseProductOrderPropertiesState,
 } from '~/composables/useProductOrderProperties/types';
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
-import { useSdk } from '~/sdk';
-import type {
-  UploadFileForOrderPropertyResponse,
-  ProductProperty,
-  BasketItemOrderParamsProperty,
-  Product,
-} from '@plentymarkets/shop-api';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
+import type { ProductProperty, BasketItemOrderParamsProperty, Product } from '@plentymarkets/shop-api';
 
 const fileToBase64 = async (file: File): Promise<string | null> => {
   return new Promise((resolve) => {
@@ -35,6 +29,16 @@ const fileToBase64 = async (file: File): Promise<string | null> => {
 
     reader.readAsDataURL(file);
   });
+};
+
+const base64ToBlob = (base64: string, contentType: string): Blob => {
+  const byteCharacters = atob(base64);
+  const byteNumbers: number[] = Array.from({ length: byteCharacters.length });
+  for (let index = 0; index < byteCharacters.length; index++) {
+    byteNumbers[index] = byteCharacters.codePointAt(index) ?? -1;
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  return new Blob([byteArray], { type: contentType });
 };
 
 /**
@@ -100,8 +104,9 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
    * getPropertiesForCart();
    * ```
    */
-  const getPropertiesForCart = (): BasketItemOrderParamsProperty[] => {
-    return state.value.data.filter((property) => property.property.value !== null);
+  const getPropertiesForCart = (): BasketItemOrderParamsProperty[] | undefined => {
+    const result = state.value.data.filter((property) => property.property.value !== null);
+    return result.length > 0 ? result : undefined;
   };
 
   /**
@@ -116,30 +121,32 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
   const getPropertiesPrice: GetPropertiesPrice = (product: Product) => {
     const properties = getPropertiesForCart();
     let price = 0;
-    properties.forEach((property) => {
-      const propertyItem = product.properties?.find(
-        (productProperty) => productProperty.propertyId === property.property.id,
-      );
-      if (propertyItem) {
-        const labels = productPropertyGetters.getOrderPropertyLabel(propertyItem);
-        if (labels.surchargeType === 'incl') {
-          price += productPropertyGetters.getOrderPropertySurcharge(propertyItem);
+    if (properties) {
+      properties.forEach((property) => {
+        const propertyItem = product.properties?.find(
+          (productProperty) => productProperty.propertyId === property.property.id,
+        );
+        if (propertyItem) {
+          const labels = productPropertyGetters.getOrderPropertyLabel(propertyItem);
+          if (labels.surchargeType === 'incl') {
+            price += productPropertyGetters.getOrderPropertySurcharge(propertyItem);
+          }
         }
-      }
-    });
+      });
+    }
     return price;
   };
 
   /**
    * @description Function for uploading a file for the order property.
    * @param file { File }
-   * @return { Promise<UploadFileForOrderPropertyResponse | null> }
+   * @return { Promise<string | null> }
    * @example
    * ``` ts
    * uploadFile(file);
    * ```
    */
-  const uploadFile = async (file: File): Promise<UploadFileForOrderPropertyResponse | null> => {
+  const uploadFile = async (file: File): Promise<string | null> => {
     state.value.loading = true;
 
     const base64String = await fileToBase64(file);
@@ -155,9 +162,29 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
         type: file.type,
       }),
     );
+
     state.value.loading = false;
 
-    return data.value?.data ?? null;
+    return data.value?.data.data ?? null;
+  };
+
+  const downloadFile = async (file: string) => {
+    const split = file.split('/');
+    const { data } = await useAsyncData(() =>
+      useSdk().plentysystems.getOrderPropertyFile({
+        hash: split[0] ?? '',
+        fileName: split[1] ?? '',
+      }),
+    );
+
+    if (data.value?.data) {
+      const blob = base64ToBlob(data.value.data.data.body, data.value.data.data['content-type']);
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    }
+
+    state.value.loading = false;
+    return null;
   };
 
   return {
@@ -167,5 +194,6 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     getPropertiesForCart,
     getPropertiesPrice,
     uploadFile,
+    downloadFile,
   };
 };

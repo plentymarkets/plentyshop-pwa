@@ -19,10 +19,11 @@
         <div v-if="order?.order" id="order-items" class="flex flex-col my-4">
           <div v-for="(item, index) in orderGetters.getItems(order)" :key="item.id">
             <OrderSummaryProductCard
-              v-if="!orderGetters.isBundleItem(item)"
+              v-if="!orderGetters.isBundleItem(item) && !orderGetters.isCouponItem(item)"
               :order="order"
               :order-item="item"
               :index="index"
+              :class="{ 'border-t': index === 0 }"
             />
           </div>
         </div>
@@ -37,30 +38,68 @@
           <OrderPaymentSummary :order="order" />
         </div>
 
+        <div
+          v-if="!isAuthorized"
+          class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full mt-4 text-sm items-center flex flex-col"
+        >
+          <div class="font-bold text-primary-700 font-headings md:text-lg text-center mt-5">
+            {{ t('orderConfirmation.saveOrderToAccount') }}
+          </div>
+          <div class="font-bold text-center mt-3">{{ t('orderConfirmation.createAccountForBenefits') }}</div>
+          <UiButton variant="primary" class="mt-5 mb-5" @click="isAuthenticationOpen = true">
+            {{ t('orderConfirmation.signUp') }}
+          </UiButton>
+        </div>
+
         <OrderDocumentsList :order="order" />
 
         <OrderReturnItems
           v-if="orderGetters.isReturnable(order) && orderGetters.hasReturnableItems(order)"
           :order="order"
         />
+        <OrderAgainButton v-if="isAuthorized" :order="order" />
       </div>
     </div>
 
-    <SfButton :tag="NuxtLink" href="/" class="max-md:w-full mt-6 mb-8" variant="secondary">
+    <UiButton :tag="NuxtLink" :href="localePath(paths.home)" class="max-md:w-full mt-6 mb-8" variant="secondary">
       {{ t('continueShopping') }}
-    </SfButton>
+    </UiButton>
   </div>
+
+  <UiModal
+    v-if="isAuthenticationOpen"
+    v-model="isAuthenticationOpen"
+    tag="section"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+    aria-labelledby="login-modal"
+  >
+    <header>
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication()">
+        <SfIconClose />
+      </UiButton>
+    </header>
+    <Register
+      @registered="closeAuthentication"
+      :order="order"
+      :email-address="orderGetters.getOrderEmail(order)"
+      :is-modal="true"
+      :changeable-view="false"
+    />
+  </UiModal>
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton } from '@storefront-ui/vue';
+import { orderGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();
 const { t } = useI18n();
+const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclosure();
+const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
+const localePath = useLocalePath();
 
 await getActiveShippingCountries();
 </script>

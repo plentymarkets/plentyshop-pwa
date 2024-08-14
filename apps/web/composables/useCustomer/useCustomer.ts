@@ -1,5 +1,4 @@
 import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
-import { toRefs } from '@vueuse/shared';
 import type {
   UseCustomerReturn,
   UseCustomerState,
@@ -10,7 +9,6 @@ import type {
   Logout,
   ChangePassword,
 } from '~/composables/useCustomer/types';
-import { useSdk } from '~/sdk';
 
 /**
  * @description Composable managing Customer data
@@ -40,13 +38,17 @@ export const useCustomer: UseCustomerReturn = () => {
     if (state.value.data?.user?.guestMail) {
       state.value.isGuest = true;
       state.value.isAuthorized = false;
-    } else if (state.value.data?.user?.email) {
+      return;
+    }
+
+    if (state.value.data?.user?.email) {
       state.value.isGuest = false;
       state.value.isAuthorized = true;
-    } else {
-      state.value.isGuest = false;
-      state.value.isAuthorized = false;
+      return;
     }
+
+    state.value.isGuest = false;
+    state.value.isAuthorized = false;
   };
 
   /** Function for getting current user/cart data from session
@@ -61,6 +63,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
+    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
 
     state.value.loading = false;
     return state.value.data;
@@ -108,17 +111,17 @@ export const useCustomer: UseCustomerReturn = () => {
   const login: Login = async (email: string, password: string) => {
     state.value.loading = true;
 
-    const { error } = await useAsyncData(() => useSdk().plentysystems.doLogin({ email: email, password: password }));
-    state.value.loading = false;
-    useHandleError(error.value);
+    try {
+      await useSdk()
+        .plentysystems.doLogin({ email: email, password: password })
+        .then(async () => await getSession());
 
-    if (!error.value) {
-      await getSession();
+      return state.value.isAuthorized;
+    } catch (error) {
+      useHandleError(error as ErrorParams);
+      state.value.loading = false;
+      return false;
     }
-
-    checkUserState();
-
-    return state.value.isAuthorized;
   };
 
   /** Function for user logout.
@@ -137,6 +140,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
     state.value.data.user = null;
     checkUserState();
+    useWishlist().setWishlistItemIds([]);
   };
 
   /** Function for registering a user.
@@ -144,18 +148,13 @@ export const useCustomer: UseCustomerReturn = () => {
    * @return Register
    * @example
    * ``` ts
-   * register({ email: 'example', password: 'example' });
+   * register({ email: 'example', password: 'example', 'cf-turnstile-response': '' });
    * ```
    */
   const register: Register = async (params: RegisterParams) => {
     state.value.loading = true;
 
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doRegisterUser({
-        email: params.email,
-        password: params.password,
-      }),
-    );
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRegisterUser(params));
 
     useHandleError(error.value);
     state.value.loading = false;

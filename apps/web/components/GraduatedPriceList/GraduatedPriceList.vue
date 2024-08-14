@@ -23,7 +23,7 @@
           <div>{{ list.discount }} %</div>
           <SfIconCheck
             v-if="selectedList && list.price === selectedList.price.value"
-            class="ml-auto text-primary-600"
+            class="ml-auto text-primary-400"
           />
         </td>
       </tr>
@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
 import { SfIconCheck } from '@storefront-ui/vue';
 

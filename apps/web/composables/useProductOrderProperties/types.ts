@@ -1,10 +1,4 @@
-import type { Ref } from 'vue';
-import type {
-  UploadFileForOrderPropertyResponse,
-  BasketItemOrderParamsProperty,
-  ProductProperty,
-  Product,
-} from '@plentymarkets/shop-api';
+import type { BasketItemOrderParamsProperty, ProductProperty, Product } from '@plentymarkets/shop-api';
 
 export interface UseProductOrderPropertiesState {
   data: BasketItemOrderParamsProperty[];
@@ -19,9 +13,10 @@ export interface UseProductOrderProperties {
   loading: Ref<UseProductOrderPropertiesState['loading']>;
   setProperties: SetProperties;
   getPropertyById: (id: number) => BasketItemOrderParamsProperty | undefined;
-  getPropertiesForCart: () => BasketItemOrderParamsProperty[];
+  getPropertiesForCart: () => BasketItemOrderParamsProperty[] | undefined;
   getPropertiesPrice: GetPropertiesPrice;
-  uploadFile: (file: File) => Promise<UploadFileForOrderPropertyResponse | null>;
+  uploadFile: (file: File) => Promise<string | null>;
+  downloadFile: (url: string) => Promise<string | null>;
 }
 
 export type UseProductOrderPropertiesReturn = () => UseProductOrderProperties;

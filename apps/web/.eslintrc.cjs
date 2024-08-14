@@ -7,19 +7,26 @@ module.exports = {
   },
   rules: {
     complexity: 0,
-    'vue/max-len': ['warn', {
-      code: 120,
-      ignoreStrings: true,
-      ignoreUrls: true,
-      ignoreTemplateLiterals: true,
-      ignoreHTMLAttributeValues: true
-    }],
     'max-lines-per-function': 'off',
-    'unicorn/no-keyword-prefix': ['error', { disallowedPrefixes: ['new', 'for'] }],
+    'max-statements': 'off',
+    'no-undef': 'off',
+    'no-restricted-imports': [
+      'error',
+      {
+        'paths': [{
+          name: '@storefront-ui/vue',
+          importNames: ['SfButton'],
+          message: `SfButton doesn't conform to the app's design system. Use UiButton instead.`
+        }],
+      },
+    ],
+    'etc/no-deprecated': 'off',
+    'etc/no-internal': 'off',
     'no-secrets/no-secrets': 'off',
+    'unicorn/filename-case': 'off',
+    'unicorn/no-keyword-prefix': ['error', { disallowedPrefixes: ['new', 'for'] }],
     'unicorn/prefer-array-some': 'off',
     'sonarjs/no-duplicate-string': 'off',
-    'max-statements': 'off',
     '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
     'vue/component-tags-order': [
@@ -28,9 +35,14 @@ module.exports = {
         order: ['template', 'script', 'style'],
       },
     ],
+    'vue/max-len': ['warn', {
+      code: 120,
+      ignoreStrings: true,
+      ignoreUrls: true,
+      ignoreTemplateLiterals: true,
+      ignoreHTMLAttributeValues: true
+    }],
     'vue/multi-word-component-names': 'off',
-    'unicorn/filename-case': 'off',
-    'no-undef': 'off',
     'vue/no-setup-props-destructure': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/max-attributes-per-line': 'off',

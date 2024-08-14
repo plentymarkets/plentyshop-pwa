@@ -1,4 +1,3 @@
-import type { Ref } from 'vue';
 import type { Maybe, SfAddress } from '@vue-storefront/unified-data-model';
 
 export interface UseCustomerAddressState {

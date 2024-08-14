@@ -7,29 +7,29 @@
         width="192"
         height="192"
         class="mx-auto mb-6"
+        loading="lazy"
       />
       <h1 class="typography-headline-3 font-bold">{{ $t('auth.resetPassword.heading') }}</h1>
       <i18n-t
         tag="p"
         keypath="auth.resetPassword.thankYou"
+        scope="global"
         class="bg-neutral-100 text-left border border-neutral-200 p-4 rounded-md my-4"
       >
         <span class="font-medium">{{ email }}</span>
       </i18n-t>
-      <SfButton
+      <UiButton
         :to="localePath(paths.authResetPassword)"
         :tag="NuxtLink"
         variant="tertiary"
         data-testid="reset-password-page-reset-button"
       >
         {{ $t('auth.resetPassword.anotherEmail') }}
-      </SfButton>
+      </UiButton>
     </div>
   </NuxtLayout>
 </template>
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
-
 definePageMeta({
   layout: false,
 });

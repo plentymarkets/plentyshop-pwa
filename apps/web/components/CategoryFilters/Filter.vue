@@ -1,7 +1,7 @@
 <template>
   <SfAccordionItem v-if="facet" v-model="open">
     <template #summary>
-      <div class="flex justify-between p-2 mb-2">
+      <div class="flex justify-between p-2 mb-2 select-none">
         <p class="mb-2 font-medium typography-headline-5">{{ facetGetters.getName(facet) }}</p>
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
@@ -28,52 +28,50 @@
       </SfListItem> -->
     </div>
 
-    <div class="mb-4" v-else-if="facetGetters.getType(facet) === 'price'">
-      <form @submit.prevent="updatePriceFilter">
-        <div class="mb-3">
-          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
-        </div>
-        <div class="mb-3">
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
-        </div>
-        <div class="flex">
-          <SfButton
-            type="submit"
-            class="w-full mr-3 h-10"
-            :disabled="minPrice.length === 0 && maxPrice.length === 0"
-            variant="secondary"
-          >
-            <template #prefix>
-              <SfIconCheck />
-            </template>
-            {{ $t('apply') }}
-          </SfButton>
-          <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
-            <SfIconClose />
-          </SfButton>
-        </div>
-      </form>
-    </div>
+    <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
+      <div class="mb-3">
+        <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+      </div>
+      <div class="mb-3">
+        <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+      </div>
+      <div class="flex">
+        <UiButton
+          type="submit"
+          class="w-full mr-3 h-10"
+          :disabled="minPrice.length === 0 && maxPrice.length === 0"
+          variant="secondary"
+        >
+          <template #prefix>
+            <SfIconCheck />
+          </template>
+          {{ $t('apply') }}
+        </UiButton>
+        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+          <SfIconClose />
+        </UiButton>
+      </div>
+    </form>
 
-    <div class="mb-4" v-else>
+    <div v-else class="mb-4">
       <SfListItem
         v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
         :key="index"
         tag="label"
         size="sm"
         :data-testid="'category-filter-' + index"
-        :class="['px-1.5 bg-transparent hover:bg-transparent']"
+        class="px-1.5 bg-transparent hover:bg-transparent"
       >
         <template #prefix>
           <SfCheckbox
-            class="flex items-center"
-            :value="filter"
             v-model="models[filter.id]"
-            :id="filter.name"
+            :value="filter"
+            :id="filter.id"
             @change="facetChange"
+            class="flex items-center"
           />
         </template>
-        <p>
+        <p class="select-none">
           <span class="mr-2 text-sm">{{ filter.name ?? '' }}</span>
           <SfCounter size="sm">{{ filter.count ?? 0 }}</SfCounter>
         </p>
@@ -83,14 +81,11 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-import type { Filter, FilterGroup } from '@plentymarkets/shop-api';
-import { facetGetters } from '@plentymarkets/shop-sdk';
+import { type Filter, type FilterGroup, facetGetters } from '@plentymarkets/shop-api';
 import {
   SfInput,
   SfIconCheck,
   SfIconClose,
-  SfButton,
   SfAccordionItem,
   SfIconChevronLeft,
   SfListItem,
@@ -105,8 +100,7 @@ const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
 const filters = facetGetters.getFilters(props.facet ?? ({} as FilterGroup)) as Filter[];
-const models: Filters = {};
-const currentFacets = computed(() => getFacetsFromURL().facets?.split(',') ?? []);
+const models = ref({} as Filters);
 
 // Price
 const minPrice = ref(getFacetsFromURL().priceMin ?? '');
@@ -126,20 +120,15 @@ function resetPriceFilter() {
 }
 
 const updateFilter = () => {
+  const currentFacets = getFacetsFromURL().facets?.split(',') ?? [];
   for (const filter of filters) {
     const filterId = typeof filter.id === 'string' ? filter.id : filter.id.toString();
 
-    models[filterId] = Boolean(filter.selected) ?? false;
-
-    if (currentFacets.value.includes(filterId)) {
-      models[filterId] = true;
-    }
+    models.value[filterId] = currentFacets.includes(filterId);
   }
 };
 
-const facetChange = () => {
-  updateFilters(models);
-};
+const facetChange = () => updateFilters(models.value);
 
 updateFilter();
 
