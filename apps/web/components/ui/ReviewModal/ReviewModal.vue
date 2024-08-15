@@ -6,7 +6,7 @@
     tag="section"
     role="dialog"
     class="h-full md:w-[500px] md:h-fit m-0 p-0"
-    :data-testid="dataTestId"
+    data-testid="review-modal"
   >
     <template v-if="isAuthorized">
       <UiDeleteReview v-if="isDeleteModal" />
