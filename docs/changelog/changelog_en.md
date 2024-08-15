@@ -20,6 +20,7 @@
 
 - The app now reads metadata, such as description and keywords, from the environment.
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
+- The app can now fetch the Favicon from the plentysystems system.
 - The order again feature supports and shows order properties.
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
@@ -27,6 +28,7 @@
 
 ### 🩹 Fixed
 
+- Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
 - Fixed tailwind css double import.
@@ -46,6 +48,8 @@
 - Changes to item reviews logic in order to use the feedback api ms
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
 - Remove cookie browser language detect.
+- Set page title for items and categories instead of title metadata
+- Refactor of reviews functionality for better performance and maintainability.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

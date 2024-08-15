@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const { login, isAuthorized, loading } = useCustomer();
 const { send } = useNotification();
