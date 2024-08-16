@@ -34,7 +34,7 @@
               <p class="block typography-text-sm font-medium">
                 {{ t('account.ordersAndReturns.orderDate') }}
               </p>
-              <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
+              <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order, locale) }}</span>
             </li>
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.amount') }}</p>
@@ -100,7 +100,7 @@
           <tbody>
             <tr v-for="(order, index) in data.data.entries" :key="index" class="border-b border-neutral-200">
               <td class="lg:py-4 py-2 lg:pr-4 pr-2 lg:whitespace-nowrap">{{ orderGetters.getId(order) }}</td>
-              <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order) }}</td>
+              <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(order, locale) }}</td>
               <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
@@ -163,7 +163,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();
 const route = useRoute();
 const localePath = useLocalePath();
-const { t, n } = useI18n();
+const { t, n, locale } = useI18n();
 const viewport = useViewport();
 const maxVisiblePages = ref(1);
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);

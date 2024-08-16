@@ -21,7 +21,7 @@
             </div>
             <div class="text-neutral-900">
               <span class="font-bold">{{ t('returns.orderDate') }} </span>
-              : {{ orderGetters.getDate(currentReturnOrder) }}
+              : {{ orderGetters.getDate(currentReturnOrder, locale) }}
             </div>
           </div>
           <label
@@ -70,6 +70,7 @@ const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsS
 const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
+const { locale } = useI18n();
 fetchReturnReasons();
 
 const runtimeConfig = useRuntimeConfig();

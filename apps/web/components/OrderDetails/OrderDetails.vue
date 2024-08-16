@@ -31,7 +31,7 @@
         {{ $t('account.ordersAndReturns.returnDate') }}
       </span>
     </p>
-    <p>{{ orderGetters.getDate(order) }}</p>
+    <p>{{ orderGetters.getDate(order, locale) }}</p>
   </div>
   <div class="grid md:grid-cols-2 lg:grid-cols-3 mb-2">
     <p class="font-medium text-base">
@@ -44,6 +44,7 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import type { OrderDetailsProps } from './types';
+const { locale } = useI18n();
 
 defineProps<OrderDetailsProps>();
 </script>

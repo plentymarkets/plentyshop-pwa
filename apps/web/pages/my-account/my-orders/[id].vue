@@ -29,7 +29,7 @@
           </li>
           <li class="my-4 md:mb-0">
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.orderDate') }}</p>
-            <span>{{ orderGetters.getDate(data) }}</span>
+            <span>{{ orderGetters.getDate(data, locale) }}</span>
           </li>
           <li>
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.paymentAmount') }}</p>
@@ -158,6 +158,7 @@ import { paths } from '~/utils/paths';
 
 const route = useRoute();
 const localePath = useLocalePath();
+const { locale } = useI18n();
 
 const { isOpen } = useDisclosure({ initialValue: true });
 

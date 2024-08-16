@@ -40,7 +40,7 @@
             <p class="block typography-text-sm font-medium">
               {{ $t('account.ordersAndReturns.returnDate') }}
             </p>
-            <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order) }}</span>
+            <span class="block typography-text-sm mb-2">{{ orderGetters.getDate(order, locale) }}</span>
           </li>
           <li>
             <p class="block typography-text-sm font-medium">
@@ -81,7 +81,7 @@
         <tbody>
           <tr v-for="orderReturn in data.entries" :key="orderReturn.order.id" class="border-b border-neutral-200">
             <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getId(orderReturn) }}</td>
-            <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn) }}</td>
+            <td class="lg:p-4 p-2 lg:whitespace-nowrap">{{ orderGetters.getDate(orderReturn, locale) }}</td>
             <td class="lg:p-4 p-2">{{ orderGetters.getPaymentMethodName(orderReturn) }}</td>
             <td>
               <UiButton
@@ -124,6 +124,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const maxVisiblePages = ref(1);
 const route = useRoute();
+const { locale } = useI18n();
 const setMaxVisiblePages = (isWide: boolean) => (maxVisiblePages.value = isWide ? 5 : 1);
 const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 const isTablet = computed(() => viewport.isGreaterOrEquals('md') && viewport.isLessThan('lg'));
