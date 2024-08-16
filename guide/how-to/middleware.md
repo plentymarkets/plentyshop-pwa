@@ -1,4 +1,4 @@
-# Middeware configuration
+# Middleware configuration
 
 The middleware is an Express.js server. The server connects the web app and plentysystems system. To connect to a system, you have to provide the API endpoint. Additionally, you have add a security token for authentication.
 
