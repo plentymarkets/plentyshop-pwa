@@ -18,7 +18,7 @@
           <ShippingMethod
             :shipping-methods="shippingMethods"
             :disabled="disableShippingPayment"
-            @update:shipping-method="handleShippingMethodUpdate($event)"
+            @update:shipping-method="handleShippingMethodUpdate"
           />
           <SfLoaderCircular
             v-if="disableShippingPayment"
@@ -29,7 +29,7 @@
           <CheckoutPayment
             :payment-methods="paymentMethods"
             :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate($event)"
+            @update:active-payment="handlePaymentMethodUpdate"
           />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -92,9 +92,15 @@
 </template>
 
 <script setup lang="ts">
-import { Address, AddressType, cartGetters, paymentProviderGetters, userAddressGetters } from '@plentymarkets/shop-api';
+import {
+  type Address,
+  AddressType,
+  cartGetters,
+  paymentProviderGetters,
+  userAddressGetters,
+} from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import _ from 'lodash';
+import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 
@@ -128,10 +134,7 @@ const persistShippingAddress = () => {
   const cartAddress = ref();
 
   if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
-
-  cartAddress.value
-    ? setShippingCheckoutAddress(cartAddress.value, true)
-    : setShippingCheckoutAddress(primaryAddress as Address);
+  setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
 };
 
 const persistBillingAddress = () => {
@@ -140,10 +143,7 @@ const persistBillingAddress = () => {
   const cartAddress = ref();
 
   if (cartShippingAddressId) cartAddress.value = getBilling(cartShippingAddressId);
-
-  cartAddress.value
-    ? setBillingCheckoutAddress(cartAddress.value, true)
-    : setBillingCheckoutAddress(primaryAddress as Address);
+  setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
 };
 
 onNuxtReady(async () => {
@@ -207,7 +207,7 @@ const order = async () => {
 
   if (!validateTerms()) return; */
 
-  const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
+  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
     ? (paypalCardDialog.value = true)

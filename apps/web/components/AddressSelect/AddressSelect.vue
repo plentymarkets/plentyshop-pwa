@@ -29,7 +29,7 @@
       :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
       :is-default="primaryAddressId === Number(userAddressGetters.getId(address))"
       :show-divider="Number(userAddressGetters.getId(checkoutAddress)) !== Number(userAddressGetters.getId(address))"
-      @click="setCheckoutAddress(address), (isOpen = false)"
+      @click="handleSetCheckoutAddress(address)"
       @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
       @make-default="setPrimaryAddress(address), (isOpen = false)"
       @on-edit="
@@ -70,6 +70,18 @@ const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { set: setCheckoutAddress } = useCheckoutAddress(type);
 const { checkoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
+
+const handleSetCheckoutAddress = async (address: Address) => {
+  isOpen.value = false;
+
+  await setCheckoutAddress(address).then(() => {
+    if (type === AddressType.Shipping) {
+      useCartShippingMethods().getShippingMethods();
+      usePaymentMethods().fetchPaymentMethods();
+    }
+    return true;
+  });
+};
 
 const emit = defineEmits<{
   (event: 'edit', address: Address): void;

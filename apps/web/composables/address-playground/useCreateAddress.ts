@@ -15,8 +15,8 @@ export const useCreateAddress = (type: AddressType) => {
 
       useAddressStore(type).create(address, data.data);
       state.value.loading = false;
-    } catch (error: any) {
-      useHandleError(error);
+    } catch (error: unknown) {
+      useHandleError(error as Error);
       state.value.loading = false;
     }
   };

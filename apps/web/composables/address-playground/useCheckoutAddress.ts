@@ -14,16 +14,16 @@ export const useCheckoutAddress = (type: AddressType) => {
         addressId: Number(address.id),
       });
       state.value.loading = false;
-    } catch (error: any) {
-      useHandleError(error);
+    } catch (error: unknown) {
+      useHandleError(error as Error);
       state.value.loading = false;
     }
   };
 
-  const set = (address: Address, clientOnly = false) => {
+  const set = async (address: Address, clientOnly = false) => {
     state.value.checkoutAddress = address;
     if (clientOnly) return;
-    setCheckoutAddress(address);
+    await setCheckoutAddress(address);
   };
 
   const clear = () => {
