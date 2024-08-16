@@ -18,9 +18,9 @@ const fetchFavicon = async (data: { [key: string]: Array<ConfigItem> }) => {
   // eslint-disable-next-line no-console
   console.log('Fetching favicon from:', faviconUrl.value);
 
-  const icoPath = path.resolve(__dirname, `../public/favicon.ico`);
+  const iconPath = path.resolve(__dirname, `../public/favicon.ico`);
 
-  fetchFile(faviconUrl.value, icoPath);
+  fetchFile(faviconUrl.value, iconPath);
 };
 
 export default fetchFavicon;
