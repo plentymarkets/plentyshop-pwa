@@ -39,7 +39,7 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 ### plentysystems
 
 1. Log into your plentysystems system.
-2. Go to **Setup » Client » Your Shop » Online store » Settings**.
+2. Go to **Setup » Client » Your Shop » Online Store Settings**.
 3. Paste the secret key in the **Cloudflare Turnstile Secret key (only PWA)** field.
 4. **Save** the settings.
 
@@ -61,7 +61,7 @@ To disable Turnstile, you have to reset the configurations in the plentysystems 
 ### plentysystems
 
 1. Log into your plentysystems system.
-2. Go to **Setup » Client » Your Shop » Online store » Settings**.
+2. Go to **Setup » Client » Your Shop » Online Store Settings**.
 3. Remove the secret key from the **Cloudflare Turnstile Secret key (only PWA)** field.
 4. **Save** the settings.
 
