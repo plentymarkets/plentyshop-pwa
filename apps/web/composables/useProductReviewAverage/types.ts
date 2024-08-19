@@ -13,4 +13,4 @@ export interface UseProductReviewsAverageReturn {
   fetchProductReviewAverage: FetchProductReviewAverage;
 }
 
-export type UseProductReviewAverage = (itemId: string) => UseProductReviewsAverageReturn;
+export type UseProductReviewAverage = (itemId: number) => UseProductReviewsAverageReturn;
