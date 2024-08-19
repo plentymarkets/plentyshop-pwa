@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts" setup>
-import {ApplepayType, ConfigResponse} from '~/components/PayPal/types';
-import {cartGetters} from "@plentymarkets/shop-api";
+import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
+import { cartGetters } from '@plentymarkets/shop-api';
 
 const { loadScript } = usePayPal();
 const { data: cart } = useCart();
@@ -32,11 +32,11 @@ const applePayPayment = async () => {
       supportedNetworks: applePayConfig.value.supportedNetworks,
       countryCode: 'DE',
       currencyCode: currency.value,
-      requiredShippingContactFields: ["name", "phone", "email", "postalAddress"],
-      requiredBillingContactFields: ["postalAddress"],
+      requiredShippingContactFields: ['name', 'phone', 'email', 'postalAddress'],
+      requiredBillingContactFields: ['postalAddress'],
       total: {
         label: 'Store',
-        amount: '100',
+        amount: cart.value.toString(),
       },
     } as ApplePayJS.ApplePayPaymentRequest;
 
@@ -73,20 +73,22 @@ const applePayPayment = async () => {
 // }
 
 onMounted(async () => {
-  applePay.config().then((config: ConfigResponse) => {
-    applePayConfig.value = config;
-    if (config.isEligible) {
-      const applePayButtonContainer = document.getElementById('apple-pay-button');
-      if (applePayButtonContainer) {
-        applePayButtonContainer.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
-        const applePayButton = document.getElementById('btn-appl');
-        if (applePayButton) {
-          applePayButton.addEventListener('click', () => {
-            applePayPayment();
-          });
+  await loadApplePay().then(() => {
+    applePay.config().then((config: ConfigResponse) => {
+      applePayConfig.value = config;
+      if (config.isEligible) {
+        const applePayButtonContainer = document.getElementById('apple-pay-button');
+        if (applePayButtonContainer) {
+          applePayButtonContainer.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
+          const applePayButton = document.getElementById('btn-appl');
+          if (applePayButton) {
+            applePayButton.addEventListener('click', () => {
+              applePayPayment();
+            });
+          }
         }
       }
-    }
-  });
+    });
+  })
 });
 </script>
