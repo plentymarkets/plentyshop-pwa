@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
-import {cartGetters, orderGetters} from '@plentymarkets/shop-api';
+import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
 const { loadScript, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
@@ -29,7 +29,20 @@ const applePayPayment = async () => {
     return;
   }
   try {
-    const paymentSession = new ApplePaySession(3, applePayConfig);
+    const paymentRequest = {
+      countryCode: applePayConfig.countryCode,
+      merchantCapabilities: applePayConfig.merchantCapabilities,
+      supportedNetworks: applePayConfig.supportedNetworks,
+      currencyCode: currency,
+      // requiredShippingContactFields: ['name', 'phone', 'email', 'postalAddress'],
+      // requiredBillingContactFields: ['postalAddress'],
+      total: {
+        type: 'final',
+        amount: cart.value.amount,
+      },
+    } as ApplePayJS.ApplePayPaymentRequest;
+
+    const paymentSession = new ApplePaySession(3, paymentRequest);
 
     paymentSession.begin();
 
@@ -66,10 +79,10 @@ const applePayPayment = async () => {
     paymentSession.addEventListener('cancel', () => {
       console.error('Apple pay cancel');
     });
-  } catch (_e) {
-    console.error(_e);
+  } catch (error) {
+    console.error(error);
   }
-}
+};
 
 // if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
 //   canMakePayments.value = true;
@@ -80,10 +93,11 @@ onMounted(async () => {
     applePay.config().then((config: ConfigResponse) => {
       applePayConfig.value = config;
       if (config.isEligible) {
-        const applePayButtonContainer = document.getElementById('apple-pay-button');
+        const applePayButtonContainer = document.querySelector('#apple-pay-button');
         if (applePayButtonContainer) {
-          applePayButtonContainer.innerHTML = '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
-          const applePayButton = document.getElementById('btn-appl');
+          applePayButtonContainer.innerHTML =
+            '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
+          const applePayButton = document.querySelector('#btn-appl');
           if (applePayButton) {
             applePayButton.addEventListener('click', () => {
               applePayPayment();
@@ -92,6 +106,6 @@ onMounted(async () => {
         }
       }
     });
-  })
+  });
 });
 </script>
