@@ -8,6 +8,7 @@ const environmentFilePath = path.resolve(__dirname, '../.env');
 const environmentTemporaryFilePath = path.resolve(__dirname, '../.env.tmp');
 
 const environmentMap = {
+  FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
   API_ENDPOINT: process.env.API_ENDPOINT,
   API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
   CONFIG_ID: process.env.CONFIG_ID,
@@ -18,6 +19,7 @@ const setupTemporaryEnvironment = () => {
 
   for (const [key, value] of Object.entries(environmentMap)) {
     requiredEnvironmentData += `${key}=${value}\n`;
+    if (key === 'FETCH_REMOTE_CONFIG') continue;
     if (!value) {
       console.error(`Missing or invalid required environment variable: ${key}`);
       return;
@@ -56,6 +58,7 @@ const fetchAndWriteRemoteConfiguration = async () => {
   try {
     const { data } = await instance.get(`/rest/storefront/settings/${environmentMap.CONFIG_ID}`);
     writeConfigurationToTemporaryEnvironment(data);
+    return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       console.error('PWA settings error:', error.response?.data.error);
@@ -71,8 +74,9 @@ const convertTemporaryToPermanentEnvironment = () => {
 
 const fetchConfiguration = async () => {
   setupTemporaryEnvironment();
-  await fetchAndWriteRemoteConfiguration();
+  const data = await fetchAndWriteRemoteConfiguration();
   convertTemporaryToPermanentEnvironment();
+  return data;
 };
 
 export default fetchConfiguration;

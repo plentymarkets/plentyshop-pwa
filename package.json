@@ -30,7 +30,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.50.0",
+    "@plentymarkets/shop-api": "^0.50.3",
     "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/yup": "^4.13.1",
     "country-flag-icons": "^1.5.12",
@@ -56,14 +56,14 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
-    "nuxt": "^3.12.2",
+    "nuxt": "^3.12.4",
     "nuxt-viewport": "^2.1.5",
     "playwright-core": "^1.45.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "rollup": "^3.29.4",
     "turbo": "1.13.4",
-    "typescript": "5.4.5",
+    "typescript": "5.5.4",
     "vitest": "^1.6.0",
     "wait-on": "^7.2.0"
   },
