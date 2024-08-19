@@ -90,6 +90,7 @@
                 {{ t('buy') }}
               </span>
             </UiButton>
+            <PayPalApplePayButton />
           </OrderSummary>
         </div>
       </div>

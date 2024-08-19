@@ -4,10 +4,12 @@
 
 <script lang="ts" setup>
 import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
-import { cartGetters } from '@plentymarkets/shop-api';
+import {cartGetters, orderGetters} from '@plentymarkets/shop-api';
 
-const { loadScript } = usePayPal();
-const { data: cart } = useCart();
+const { loadScript, executeOrder } = usePayPal();
+const { createOrder } = useMakeOrder();
+const { data: cart, clearCartItems } = useCart();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const applePayConfig = ref<ConfigResponse | null>(null);
 const paypal = await loadScript(currency.value);
@@ -20,27 +22,14 @@ const loadApplePay = async () => {
   document.head.append(scriptElement);
 };
 
-const canMakePayments = ref(false);
+//const canMakePayments = ref(false);
 
 const applePayPayment = async () => {
   if (!applePayConfig.value) {
     return;
   }
   try {
-    const paymentRequest = {
-      merchantCapabilities: applePayConfig.value.merchantCapabilities,
-      supportedNetworks: applePayConfig.value.supportedNetworks,
-      countryCode: 'DE',
-      currencyCode: currency.value,
-      requiredShippingContactFields: ['name', 'phone', 'email', 'postalAddress'],
-      requiredBillingContactFields: ['postalAddress'],
-      total: {
-        label: 'Store',
-        amount: cart.value.toString(),
-      },
-    } as ApplePayJS.ApplePayPaymentRequest;
-
-    const paymentSession = new ApplePaySession(3, paymentRequest);
+    const paymentSession = new ApplePaySession(3, applePayConfig);
 
     paymentSession.begin();
 
@@ -57,7 +46,21 @@ const applePayPayment = async () => {
     };
 
     paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
-      console.log(event);
+      const order = createOrder({
+        paymentId: cart.value.methodOfPaymentId,
+        shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      });
+      console.log('Order was created', order);
+
+      await executeOrder({
+        mode: 'paypal',
+        plentyOrderId: Number.parseInt(orderGetters.getId(await order)),
+        paypalTransactionId: String(event.payment.token),
+      });
+      console.log('Order was executed');
+
+      clearCartItems();
+      console.log('Items clear');
     };
 
     paymentSession.addEventListener('cancel', () => {
