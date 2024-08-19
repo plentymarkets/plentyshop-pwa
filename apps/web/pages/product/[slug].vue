@@ -9,7 +9,7 @@
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
-            <UiPurchaseCard v-if="product" :product="product" />
+            <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
           </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
@@ -17,6 +17,11 @@
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
           </NuxtLazyHydrate>
+          <ReviewsAccordion
+            v-if="product"
+            :product="product"
+            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+          />
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
@@ -27,6 +32,8 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
+
+    <UiReviewModal />
   </NuxtLayout>
 </template>
 
@@ -39,15 +46,26 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { selectVariation } = useProducts();
+const { setCurrentProduct } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setTitle, setBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
+const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
-selectVariation(productParams.variationId ? product.value : ({} as Product));
-setTitle();
+setCurrentProduct(product.value || ({} as Product));
+setProductMeta();
+
+async function fetchReviews() {
+  const productVariationId = productGetters.getVariationId(product.value);
+  await Promise.all([
+    fetchProductReviews(Number(productId), productVariationId),
+    fetchProductReviewAverage(Number(productId)),
+  ]);
+}
+await fetchReviews();
 
 setBreadcrumbs();
 
@@ -69,21 +87,4 @@ watch(
     }
   },
 );
-
-useHead({
-  meta: [
-    {
-      name: 'title',
-      content: productGetters.getName(product.value),
-    },
-    {
-      name: 'description',
-      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
-    },
-    {
-      name: 'keywords',
-      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
-    },
-  ],
-});
 </script>

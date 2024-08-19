@@ -47,6 +47,23 @@
     <div class="mt-2 variation-properties">
       <VariationProperties :product="product" />
     </div>
+    <div class="inline-flex items-center mt-4 mb-2">
+      <SfRating
+        size="xs"
+        :half-increment="true"
+        :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+        :max="5"
+      />
+      <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
+      <UiButton
+        variant="tertiary"
+        @click="scrollToReviews"
+        class="ml-2 text-xs text-neutral-500 cursor-pointer"
+        data-testid="show-reviews"
+      >
+        {{ t('showAllReviews') }}
+      </UiButton>
+    </div>
     <div
       v-if="productGetters.getShortDescription(product).length > 0"
       class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
@@ -125,7 +142,7 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
-const { product } = defineProps<PurchaseCardProps>();
+const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();

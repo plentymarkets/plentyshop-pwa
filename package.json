@@ -30,7 +30,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.50.0",
+    "@plentymarkets/shop-api": "^0.51.1",
     "@types/applepayjs": "^14.0.8",
     "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/yup": "^4.13.1",
