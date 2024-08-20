@@ -14,7 +14,7 @@ describe('<Gallery />', () => {
           urlSecondPreview: '',
           cleanImageName: '',
           path: '',
-          names: [],
+          names: [''],
           position: 1
         }],
       },
