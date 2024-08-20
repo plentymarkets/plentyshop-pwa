@@ -20,8 +20,8 @@
         >
           <NuxtImg
             :id="`gallery-img-${index}`"
-            :alt="productImageGetters.getImageAlternate(image) ?? productImageGetters.getCleanImageName(image) ?? ''"
-            :title="productImageGetters.getImageName(image) ?? productImageGetters.getCleanImageName(image) ?? ''"
+            :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) ?? ''"
+            :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) ?? ''"
             :aria-hidden="activeIndex !== index"
             fit="fill"
             class="object-contain h-full w-full"
