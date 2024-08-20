@@ -66,13 +66,14 @@ const applePayPayment = async () => {
     paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
       console.log('paymentauthorized');
 
-      createTransaction('PAYPAL')
+      createTransaction('applepay')
         .then((transaction) => {
           createOrder({
             paymentId: cart.value.methodOfPaymentId,
             shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
           })
             .then((order) => {
+              console.log('order creation');
               applePay
                 .confirmOrder({
                   // eslint-disable-next-line promise/always-return
@@ -82,13 +83,16 @@ const applePayPayment = async () => {
                   shippingContact: event.payment.shippingContact,
                 })
                 .then(() => {
+                  console.log('confirm order');
                   executeOrder({
                     mode: 'paypal',
                     plentyOrderId: Number.parseInt(orderGetters.getId(order)),
                     // eslint-disable-next-line promise/always-return
                     paypalTransactionId: transaction?.id ?? '',
                   });
+                  console.log('before complete');
                   paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+                  console.log('after complete');
                   navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
                 })
                 .catch((error) => {
