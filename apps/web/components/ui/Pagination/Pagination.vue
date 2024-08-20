@@ -12,6 +12,7 @@
       variant="tertiary"
       class="gap-3"
       @click="previousPage"
+      data-testid="pagination-previous"
     >
       <template #prefix>
         <SfIconChevronLeft />
@@ -152,6 +153,7 @@
       variant="tertiary"
       class="gap-3"
       @click="nextPage"
+      data-testid="pagination-next"
     >
       <span class="hidden sm:inline-flex">{{ t('next') }}</span>
       <template #suffix>

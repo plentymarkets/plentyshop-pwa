@@ -65,6 +65,8 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="review-modal"] textarea[name="message"]').type('This is a review message.');
     cy.get('[data-testid="review-modal"] button[type="submit"]').click();
 
+    cy.wait('@postReview')
+
     return this;
   }
 
@@ -110,31 +112,50 @@ export class ReviewPageObject extends PageObject{
   }
 
   removeReview() {
-    cy.get('[data-testid="remove-review-button"]').click();
+    cy.get('[data-testid="remove-review-button"]').first().click();
     cy.get('[data-testid="confirm-delete"]').click();
+    cy.wait('@deleteReview')
+
+    return this;
+  }
+
+  removeMultipleReviews(count: number) {
+    for (let i = 0; i < count; i++) {
+      this.removeReview();
+      cy.wait(0.5)
+    }
 
     return this;
   }
 
   addMultipleReviews(count: number) {
     for (let i = 0; i < count; i++) {
+      this.clickAddReviewButton()
       this.postReview(`Review ${i + 1}`);
+      cy.wait(0.5)
     }
 
     return this;
   }
 
   checkPaginationVisible() {
-    cy.get('[data-testid="pagination"]').should('be.visible');
+    cy.get('[data-testid="pagination"]').should('exist').scrollIntoView();
 
     return this;
   }
 
-  navigateThroughPages() {
-    cy.get('[data-testid="pagination-next"]').click();
-    cy.get('[data-testid="pagination-prev"]').click();
-    cy.get('[data-testid="pagination-page"]').first().click();
+  checkNumberOfItemsPerPage(expectedCount: number) {
+    cy.get('[data-testid="review-item"]').should('have.length', expectedCount);
+    return this;
+  }
 
+  navigateToNextPage() {
+    cy.get('[data-testid="pagination-next"]').click();
+    return this;
+  }
+
+  navigateToPreviousPage() {
+    cy.get('[data-testid="pagination-previous"]').click();
     return this;
   }
 }
