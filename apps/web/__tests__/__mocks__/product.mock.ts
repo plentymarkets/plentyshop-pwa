@@ -24,12 +24,7 @@ export const ProductMock = {
                 {
                     "url": "https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/full/gear-headphones-01.png",
                     "width": 1430,
-                    "names": {
-                        "alternate": "Headphones Capybara",
-                        "imageId": 0,
-                        "lang": "de",
-                        "name": "Headphones Capybara",
-                    },
+                    "names": [],
                     "urlSecondPreview": "https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/secondPreview/gear-headphones-01.png",
                     "urlPreview": "https://cdn02.plentymarkets.com/mevofvd5omld/item/images/157/preview/gear-headphones-01.png",
                     "height": 1430,
