@@ -133,6 +133,8 @@ const persistShippingAddress = () => {
   const primaryAddress = userAddressGetters.getDefault(shippingAddresses.value);
   const cartAddress = ref();
 
+  console.log('cartShippingAddressId', cartShippingAddressId, 'primaryAddressId', primaryAddress?.id);
+
   if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
   setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
 };

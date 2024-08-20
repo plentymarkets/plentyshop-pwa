@@ -10,8 +10,6 @@ export const useAddressForm = (type: AddressType) => {
   }));
 
   const save = async () => {
-    console.log('state.value.addressToSave', state.value.addressToSave);
-
     if (!state.value.addressToSave) return true;
     state.value.isLoading = true;
 

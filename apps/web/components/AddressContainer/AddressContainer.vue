@@ -13,7 +13,7 @@
 
         <span v-if="showNewForm || hasCheckoutAddress" class="mx-2 self-center">|</span>
 
-        <SfTooltip :label="!editing && !showNewForm ? $t('editAddress') : ''">
+        <SfTooltip v-if="showNewForm || hasCheckoutAddress" :label="!editing && !showNewForm ? $t('editAddress') : ''">
           <UiButton
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
             @click="edit(checkoutAddress)"
@@ -84,15 +84,13 @@ const edit = (address: Address) => {
 };
 
 const validateAndSubmitForm = async () => {
-  if (await addressFormShipping.value?.validate()) {
-    addressFormShipping.value?.submitForm();
+  const formData = await addressFormShipping.value?.validate();
+
+  if (formData.valid) {
+    await addressFormShipping.value?.submitForm();
     if (showNewForm.value) showNewForm.value = false;
   }
 };
-
-watch(checkoutAddress, () => {
-  console.log(type, 'checkoutAddress', checkoutAddress.value);
-});
 
 watch(shippingAsBilling, () => {
   if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;

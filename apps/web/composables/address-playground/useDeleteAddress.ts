@@ -13,12 +13,10 @@ export const useDeleteAddress = (type: AddressType) => {
         addressId,
       });
 
-      const { destroy } = useAddressStore(type);
-      destroy(addressId);
-
+      useAddressStore(type).destroy(addressId);
       state.value.loading = false;
-    } catch (error: any) {
-      useHandleError(error);
+    } catch (error: unknown) {
+      useHandleError(error as Error);
       state.value.loading = false;
     }
   };

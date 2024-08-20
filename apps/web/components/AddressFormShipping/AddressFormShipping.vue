@@ -206,9 +206,12 @@ const submitForm = handleSubmit((shippingAddressForm) => {
 
   saveAddress()
     .then(async () => {
-      console.log('shippingAddresses', shippingAddresses.value);
-
-      await setCheckoutAddress(userAddressGetters.getDefault(shippingAddresses.value) as Address, addAddress === false);
+      await setCheckoutAddress(
+        addAddress
+          ? (shippingAddresses.value[0] as Address)
+          : (userAddressGetters.getDefault(shippingAddresses.value) as Address),
+        addAddress === false,
+      );
       return true;
     })
     .then(() => {

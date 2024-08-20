@@ -34,12 +34,9 @@
       :is-default="primaryAddressId === Number(userAddressGetters.getId(address))"
       :show-divider="Number(userAddressGetters.getId(checkoutAddress)) !== Number(userAddressGetters.getId(address))"
       @click="handleSetCheckoutAddress(address)"
-      @on-delete="deleteAddress(Number(userAddressGetters.getId(address)))"
-      @make-default="setPrimaryAddress(address), (isOpen = false)"
-      @on-edit="
-        emit('edit', address);
-        close();
-      "
+      @on-delete="handleDeleteAddress(address)"
+      @make-default="handleSetDefaultAddress(address)"
+      @on-edit="emitEditAddressEvent(address)"
       class="group hover:bg-primary-50"
     >
       <UiDivider class="col-span-3 mx-4 !w-auto md:mx-0 group-hover:opacity-0" />
@@ -61,10 +58,10 @@ import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
 const { type } = defineProps<AddressSelectProps>();
 
-const { addresses } = useAddressStore(type);
+const { addresses, get: getAddress } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
-const { checkoutAddress, set: setCheckoutAddress } = useCheckoutAddress(type);
+const { checkoutAddress, set: setCheckoutAddress, clear: clearCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
 
 const emit = defineEmits<{
@@ -74,6 +71,11 @@ const emit = defineEmits<{
 
 const emitNewAddressEvent = () => {
   emit('new');
+  close();
+};
+
+const emitEditAddressEvent = (address: Address) => {
+  emit('edit', address);
   close();
 };
 
@@ -96,5 +98,31 @@ const handleSetCheckoutAddress = async (address: Address) => {
     }
     return true;
   });
+};
+
+const handleDeleteAddress = async (address: Address) => {
+  await deleteAddress(Number(userAddressGetters.getId(address)));
+
+  const upgradedAddress =
+    primaryAddressId.value === address.id
+      ? addresses.value.length > 1
+        ? addresses.value[0]
+        : null
+      : (getAddress(primaryAddressId.value) as Address);
+
+  upgradedAddress === null
+    ? clearCheckoutAddress()
+    : await setCheckoutAddress(getAddress(primaryAddressId.value) as Address).then(() => {
+        if (type === AddressType.Shipping) {
+          useCartShippingMethods().getShippingMethods();
+          usePaymentMethods().fetchPaymentMethods();
+        }
+        return true;
+      });
+};
+
+const handleSetDefaultAddress = (address: Address) => {
+  setPrimaryAddress(address);
+  isOpen.value = false;
 };
 </script>
