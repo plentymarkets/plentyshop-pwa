@@ -67,8 +67,7 @@ const { type } = defineProps<AddressSelectProps>();
 const { addresses } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
-const { set: setCheckoutAddress } = useCheckoutAddress(type);
-const { checkoutAddress } = useCheckoutAddress(type);
+const { checkoutAddress, set: setCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
 
 const handleSetCheckoutAddress = async (address: Address) => {
