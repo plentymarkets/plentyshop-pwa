@@ -44,10 +44,10 @@ const applePayPayment = async () => {
     } as ApplePayJS.ApplePayPaymentRequest;
 
     const paymentSession = new ApplePaySession(3, paymentRequest);
-
-    paymentSession.begin();
+    console.log('paymentSession', paymentSession);
 
     paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
+      console.log('validate merchant');
       try {
         const validationData = await applePay.validateMerchant({
           validationUrl: event.validationURL,
@@ -60,6 +60,7 @@ const applePayPayment = async () => {
     };
 
     paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
+      console.log('paymentauthorized');
       const order = createOrder({
         paymentId: cart.value.methodOfPaymentId,
         shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -80,6 +81,8 @@ const applePayPayment = async () => {
     paymentSession.addEventListener('cancel', () => {
       console.error('Apple pay cancel');
     });
+
+    paymentSession.begin();
   } catch (error) {
     console.error(error);
   }
@@ -93,6 +96,7 @@ onMounted(async () => {
   await loadApplePay().then(() => {
     applePay.config().then((config: ConfigResponse) => {
       applePayConfig.value = config;
+      console.log('this is the config', config);
       if (config.isEligible) {
         const applePayButtonContainer = document.querySelector('#apple-pay-button');
         if (applePayButtonContainer) {
