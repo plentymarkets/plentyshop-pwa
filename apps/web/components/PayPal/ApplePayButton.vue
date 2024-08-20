@@ -39,7 +39,7 @@ const applePayPayment = async () => {
       total: {
         type: 'final',
         label: 'Store',
-        amount: cart.value.basketAmount,
+        amount: '10',
       },
     } as ApplePayJS.ApplePayPaymentRequest;
 
