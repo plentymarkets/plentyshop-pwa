@@ -66,13 +66,18 @@ const applePayPayment = async () => {
       createOrder({
         paymentId: cart.value.methodOfPaymentId,
         shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-      }).then((order) => {
-        executeOrder({
-          mode: 'paypal',
-          plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-          paypalTransactionId: String(event.payment.token),
+      })
+        .then((order) => {
+          executeOrder({
+            mode: 'paypal',
+            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+            paypalTransactionId: String(event.payment.token),
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          paymentSession.abort();
         });
-      });
       clearCartItems();
       console.log('Items clear');
     };
