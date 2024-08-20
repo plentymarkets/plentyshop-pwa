@@ -6,7 +6,7 @@
 import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
-const { loadScript, executeOrder } = usePayPal();
+const { loadScript, executeOrder, createTransaction } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { data: cart, clearCartItems } = useCart();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -14,6 +14,7 @@ const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppCo
 const applePayConfig = ref<ConfigResponse | null>(null);
 const paypal = await loadScript(currency.value);
 const applePay = (paypal as any).Applepay() as ApplepayType;
+const localePath = useLocalePath();
 
 const loadApplePay = async () => {
   const scriptElement = document.createElement('script');
@@ -69,15 +70,39 @@ const applePayPayment = async () => {
         shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
       })
         .then((order) => {
-          executeOrder({
-            mode: 'paypal',
-            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-            paypalTransactionId: String(event.payment.token),
-          });
+          createTransaction('paypal')
+            .then((transaction) => {
+              applePay
+                .confirmOrder({
+                  // eslint-disable-next-line promise/always-return
+                  orderId: transaction?.id ?? '',
+                  token: event.payment.token,
+                  billingContact: event.payment.billingContact,
+                  shippingContact: event.payment.shippingContact,
+                })
+                .then(() => {
+                  executeOrder({
+                    mode: 'paypal',
+                    plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+                    // eslint-disable-next-line promise/always-return
+                    paypalTransactionId: transaction?.id ?? '',
+                  });
+                  paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+                  navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+                })
+                .catch((error) => {
+                  console.error(error);
+                  paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+              paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+            });
         })
         .catch((error) => {
           console.error(error);
-          paymentSession.abort();
+          paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         });
       clearCartItems();
       console.log('Items clear');
