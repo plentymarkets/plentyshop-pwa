@@ -3,6 +3,7 @@ import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
+import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 import fetchConfiguration from './build/fetchConfiguration';
 import generateScssVariables from './build/generateScssVariables';
 import fetchFavicon from './build/fetchFavicon';
@@ -104,12 +105,7 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  googleFonts: {
-    families: {
-      'Red Hat Display': { wght: [400, 500, 700] },
-      'Red Hat Text': { wght: [300, 400, 500, 700] },
-    },
-  },
+  googleFonts: fontFamilyNuxtConfig,
   i18n: nuxtI18nOptions,
   sitemap: {
     autoLastmod: true,
