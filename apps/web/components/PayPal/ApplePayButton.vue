@@ -66,7 +66,7 @@ const applePayPayment = async () => {
     paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
       console.log('paymentauthorized');
 
-      createTransaction('applepay')
+      createTransaction('paypal')
         .then((transaction) => {
           createOrder({
             paymentId: cart.value.methodOfPaymentId,
