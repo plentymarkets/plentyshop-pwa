@@ -39,41 +39,40 @@ const applePayPayment = async () => {
       total: {
         type: 'final',
         label: 'Store',
-        amount: '10',
+        amount: cartGetters.getTotals(cart.value).total.toString(),
       },
     } as ApplePayJS.ApplePayPaymentRequest;
 
     const paymentSession = new ApplePaySession(3, paymentRequest);
     console.log('paymentSession', paymentSession);
 
-    paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
+    paymentSession.onvalidatemerchant = (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
       console.log('validate merchant');
-      try {
-        const validationData = await applePay.validateMerchant({
+      applePay
+        .validateMerchant({
           validationUrl: event.validationURL,
+        })
+        .then((validationData) => {
+          paymentSession.completeMerchantValidation(validationData);
+        })
+        .catch((error) => {
+          console.error(error);
+          paymentSession.abort();
         });
-        paymentSession.completeMerchantValidation(validationData);
-      } catch (error) {
-        console.error('Merchant validation failed:', error);
-        paymentSession.abort();
-      }
     };
 
-    paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
+    paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
       console.log('paymentauthorized');
-      const order = createOrder({
+      createOrder({
         paymentId: cart.value.methodOfPaymentId,
         shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      }).then((order) => {
+        executeOrder({
+          mode: 'paypal',
+          plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+          paypalTransactionId: String(event.payment.token),
+        });
       });
-      console.log('Order was created', order);
-
-      await executeOrder({
-        mode: 'paypal',
-        plentyOrderId: Number.parseInt(orderGetters.getId(await order)),
-        paypalTransactionId: String(event.payment.token),
-      });
-      console.log('Order was executed');
-
       clearCartItems();
       console.log('Items clear');
     };
