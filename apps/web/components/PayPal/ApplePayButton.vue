@@ -30,16 +30,16 @@ const applePayPayment = async () => {
   }
   try {
     const paymentRequest = {
-      countryCode: applePayConfig.countryCode,
-      merchantCapabilities: applePayConfig.merchantCapabilities,
-      supportedNetworks: applePayConfig.supportedNetworks,
+      countryCode: applePayConfig.value?.countryCode,
+      merchantCapabilities: applePayConfig.value?.merchantCapabilities,
+      supportedNetworks: applePayConfig.value?.supportedNetworks,
       currencyCode: currency.value,
       requiredShippingContactFields: ['name', 'phone', 'email', 'postalAddress'],
       requiredBillingContactFields: ['postalAddress'],
       total: {
         type: 'final',
         label: 'Store',
-        amount: cart.value.amount,
+        amount: cart.value.basketAmount,
       },
     } as ApplePayJS.ApplePayPaymentRequest;
 
