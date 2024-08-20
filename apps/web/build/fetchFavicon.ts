@@ -1,6 +1,5 @@
-import axios from 'axios';
-import fs from 'node:fs';
 import path from 'node:path';
+import fetchFile from './helpers/fetchFileHelper';
 import { ConfigItem } from './types/ConfigItem';
 
 const fetchFavicon = async (data: { [key: string]: Array<ConfigItem> }) => {
@@ -16,23 +15,12 @@ const fetchFavicon = async (data: { [key: string]: Array<ConfigItem> }) => {
     return;
   }
 
-  try {
-    // eslint-disable-next-line no-console
-    console.log('Fetching favicon from:', faviconUrl.value);
+  // eslint-disable-next-line no-console
+  console.log('Fetching favicon from:', faviconUrl.value);
 
-    const response = await axios({
-      url: faviconUrl.value,
-      method: 'GET',
-      responseType: 'arraybuffer',
-    });
+  const iconPath = path.resolve(__dirname, `../public/favicon.ico`);
 
-    const imageBuffer = response.data;
-    const icoPath = path.resolve(__dirname, `../public/favicon.ico`);
-
-    fs.writeFileSync(icoPath, imageBuffer);
-  } catch (error) {
-    console.error('Error during the request:', error);
-  }
+  fetchFile(faviconUrl.value, iconPath);
 };
 
 export default fetchFavicon;
