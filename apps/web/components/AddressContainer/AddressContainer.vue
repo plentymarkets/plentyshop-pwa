@@ -36,17 +36,23 @@
           <AddressFormShipping v-if="editing" ref="addressFormShipping" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <template v-else>{{ $t('account.accountSettings.noAddresses') }}</template>
+        <div v-else class="mt-2">
+          {{ $t('account.accountSettings.noAddresses') }}
+        </div>
       </template>
 
       <template v-if="isBilling">
-        <AddressFormBilling v-if="showNewForm" add-address />
+        <AddressFormBilling v-if="showNewForm" ref="addressFormBilling" add-address />
         <template v-else-if="hasCheckoutAddress && !showSameAsShippingText">
-          <AddressFormBilling v-if="editing" :address="addressToEdit" />
+          <AddressFormBilling v-if="editing" ref="addressFormBilling" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-if="showSameAsShippingText" class="mt-2">
-          {{ $t('addressContainer.sameAsShippingAddress') }}
+        <div v-if="showSameAsShippingText || (!hasCheckoutAddress && !showSameAsShippingText)" class="mt-2">
+          {{
+            $t(
+              showSameAsShippingText ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses',
+            )
+          }}
         </div>
       </template>
     </div>
@@ -68,6 +74,7 @@ const { shippingAsBilling } = useShippingAsBilling();
 const addressToEdit = ref({} as Address);
 const showNewForm = ref(false);
 const addressFormShipping = ref(null as any);
+const addressFormBilling = ref(null as any);
 
 const sameAsShippingAddress = computed(() =>
   isBilling ? checkoutAddress.value?.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value?.id : false,
@@ -84,10 +91,12 @@ const edit = (address: Address) => {
 };
 
 const validateAndSubmitForm = async () => {
-  const formData = await addressFormShipping.value?.validate();
+  const formData = isShipping
+    ? await addressFormShipping.value?.validate()
+    : await addressFormBilling.value?.validate();
 
   if (formData.valid) {
-    await addressFormShipping.value?.submitForm();
+    isShipping ? await addressFormShipping.value?.submitForm() : await addressFormBilling.value?.submitForm();
     if (showNewForm.value) showNewForm.value = false;
   }
 };
@@ -96,7 +105,11 @@ watch(shippingAsBilling, () => {
   if (isBilling && !hasCheckoutAddress.value) showNewForm.value = !shippingAsBilling.value;
 });
 
-watch(sameAsShippingAddress, () => {
-  if (sameAsShippingAddress.value) shippingAsBilling.value = true;
-});
+watch(
+  sameAsShippingAddress,
+  () => {
+    if (sameAsShippingAddress.value) shippingAsBilling.value = true;
+  },
+  { immediate: true },
+);
 </script>

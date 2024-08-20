@@ -113,8 +113,12 @@ const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { t } = useI18n();
-const { set: setShippingCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
-const { set: setBillingCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
+const { set: setShippingCheckoutAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(
+  AddressType.Shipping,
+);
+const { set: setBillingCheckoutAddress, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(
+  AddressType.Billing,
+);
 const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
 const {
@@ -191,15 +195,16 @@ const openPayPalCardDialog = async () => {
 };
 
 const handleRegularOrder = async () => {
-  const data = await createOrder({
-    paymentId: paymentMethods.value.selected,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
+  console.log('hasShippingAddress', hasShippingAddress.value, 'hasBillingAddress', hasBillingAddress.value);
 
-  if (data?.order?.id) {
-    clearCartItems();
-    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
-  }
+  // const data = await createOrder({
+  //   paymentId: paymentMethods.value.selected,
+  //   shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+  // });
+  // if (data?.order?.id) {
+  //   clearCartItems();
+  //   navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+  // }
 };
 
 const order = async () => {
