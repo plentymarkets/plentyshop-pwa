@@ -1,7 +1,11 @@
 <template>
   <SfTooltip :label="$t('manageAddresses')">
-    <UiButton size="sm" variant="tertiary" @click="open">
-      {{ $t('pickSavedAddress') }}
+    <UiButton size="sm" variant="tertiary" @click="handleAddressButtonTrigger">
+      {{
+        addresses.length > 0
+          ? $t('pickSavedAddress')
+          : $t(type === AddressType.Shipping ? 'newShippingAddress' : 'newBillingAddress')
+      }}
     </UiButton>
   </SfTooltip>
 
@@ -42,14 +46,7 @@
     </Address>
 
     <div class="flex justify-end w-full">
-      <UiButton
-        variant="secondary"
-        class="mt-10"
-        @click="
-          emit('new');
-          close();
-        "
-      >
+      <UiButton variant="secondary" class="mt-10" @click="emitNewAddressEvent">
         {{ type === AddressType.Shipping ? $t('newShippingAddress') : $t('newBillingAddress') }}
       </UiButton>
     </div>
@@ -70,6 +67,25 @@ const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { checkoutAddress, set: setCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
 
+const emit = defineEmits<{
+  (event: 'edit', address: Address): void;
+  (event: 'new'): void;
+}>();
+
+const emitNewAddressEvent = () => {
+  emit('new');
+  close();
+};
+
+const handleAddressButtonTrigger = () => {
+  if (addresses.value.length > 0) {
+    open();
+    return;
+  }
+
+  emitNewAddressEvent();
+};
+
 const handleSetCheckoutAddress = async (address: Address) => {
   isOpen.value = false;
 
@@ -81,9 +97,4 @@ const handleSetCheckoutAddress = async (address: Address) => {
     return true;
   });
 };
-
-const emit = defineEmits<{
-  (event: 'edit', address: Address): void;
-  (event: 'new'): void;
-}>();
 </script>

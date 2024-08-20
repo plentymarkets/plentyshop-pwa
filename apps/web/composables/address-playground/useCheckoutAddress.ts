@@ -31,7 +31,7 @@ export const useCheckoutAddress = (type: AddressType) => {
   };
 
   const hasCheckoutAddress = computed(() => {
-    return Number(state.value.checkoutAddress.id) > 0;
+    return Number(state.value.checkoutAddress?.id) > 0;
   });
 
   return {

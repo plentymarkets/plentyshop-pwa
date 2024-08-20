@@ -11,10 +11,15 @@
           {{ $t('saveAddress') }}
         </UiButton>
 
-        <span class="mx-2 self-center">|</span>
+        <span v-if="showNewForm || hasCheckoutAddress" class="mx-2 self-center">|</span>
 
         <SfTooltip :label="!editing && !showNewForm ? $t('editAddress') : ''">
-          <UiButton v-if="!disabled && checkoutAddress" @click="edit(checkoutAddress)" size="sm" variant="tertiary">
+          <UiButton
+            v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
+            @click="edit(checkoutAddress)"
+            size="sm"
+            variant="tertiary"
+          >
             <template v-if="!editing && !showNewForm">
               {{ $t('contactInfo.edit') }}
             </template>
@@ -31,6 +36,7 @@
           <AddressFormShipping v-if="editing" ref="addressFormShipping" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
+        <template v-else>{{ $t('account.accountSettings.noAddresses') }}</template>
       </template>
 
       <template v-if="isBilling">
@@ -59,12 +65,12 @@ const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
-const addressToEdit: Ref<Address> = ref({} as Address);
+const addressToEdit = ref({} as Address);
 const showNewForm = ref(false);
 const addressFormShipping = ref(null as any);
 
 const sameAsShippingAddress = computed(() =>
-  isBilling ? checkoutAddress.value.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value.id : false,
+  isBilling ? checkoutAddress.value?.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value?.id : false,
 );
 
 const showSameAsShippingText = computed(
