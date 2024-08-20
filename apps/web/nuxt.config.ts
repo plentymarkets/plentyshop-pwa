@@ -7,6 +7,7 @@ import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 import fetchConfiguration from './build/fetchConfiguration';
 import generateScssVariables from './build/generateScssVariables';
 import fetchFavicon from './build/fetchFavicon';
+import fetchLogo from './build/fetchLogo';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -49,6 +50,7 @@ export default defineNuxtConfig({
         const response = await fetchConfiguration();
         generateScssVariables();
         await fetchFavicon(response);
+        await fetchLogo(response);
       } else {
         console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
       }
