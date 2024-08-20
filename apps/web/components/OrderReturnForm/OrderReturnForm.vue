@@ -71,11 +71,11 @@ const { t } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
 const { locale } = useI18n();
-fetchReturnReasons();
-
 const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
+
+fetchReturnReasons();
 
 const close = () => {
   confirmation.value = false;

@@ -159,10 +159,9 @@ import { paths } from '~/utils/paths';
 const route = useRoute();
 const localePath = useLocalePath();
 const { locale } = useI18n();
-
 const { isOpen } = useDisclosure({ initialValue: true });
-
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);
+
 onMounted(async () => {
   // without nextTick data on first click does not load data
   await nextTick();
