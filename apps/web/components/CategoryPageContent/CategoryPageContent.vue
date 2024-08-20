@@ -33,8 +33,8 @@
               :price="actualPrice(product)"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="
-                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ??
-                productGetters.getName(product) ??
+                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+                productGetters.getName(product) ||
                 ''
               "
               :image-title="
