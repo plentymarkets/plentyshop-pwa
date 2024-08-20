@@ -33,7 +33,7 @@ const applePayPayment = async () => {
       countryCode: applePayConfig.countryCode,
       merchantCapabilities: applePayConfig.merchantCapabilities,
       supportedNetworks: applePayConfig.supportedNetworks,
-      currencyCode: currency,
+      currencyCode: currency.value,
       requiredShippingContactFields: ['name', 'phone', 'email', 'postalAddress'],
       requiredBillingContactFields: ['postalAddress'],
       total: {
