@@ -53,7 +53,8 @@ const applePayPayment = async () => {
           validationUrl: event.validationURL,
         })
         .then((validationData) => {
-          paymentSession.completeMerchantValidation(validationData);
+          console.log(validationData);
+          paymentSession.completeMerchantValidation(validationData.merchantSession);
         })
         .catch((error) => {
           console.error(error);
