@@ -129,23 +129,25 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 const persistShippingAddress = () => {
-  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
-  const primaryAddress = userAddressGetters.getDefault(shippingAddresses.value);
   const cartAddress = ref();
-
-  console.log('cartShippingAddressId', cartShippingAddressId, 'primaryAddressId', primaryAddress?.id);
+  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
+  const primaryAddress =
+    shippingAddresses.value.length > 0 ? userAddressGetters.getDefault(shippingAddresses.value) : undefined;
 
   if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
-  setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+  if (cartAddress.value || primaryAddress)
+    setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
 };
 
 const persistBillingAddress = () => {
-  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
-  const primaryAddress = userAddressGetters.getDefault(billingAddresses.value);
   const cartAddress = ref();
+  const cartBillingAddressId = cartGetters.getCustomerInvoiceAddressId(cart.value);
+  const primaryAddress =
+    billingAddresses.value.length > 0 ? userAddressGetters.getDefault(billingAddresses.value) : undefined;
 
-  if (cartShippingAddressId) cartAddress.value = getBilling(cartShippingAddressId);
-  setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+  if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
+  if (cartAddress.value || primaryAddress)
+    setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
 };
 
 onNuxtReady(async () => {
