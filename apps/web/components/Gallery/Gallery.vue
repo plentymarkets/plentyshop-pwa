@@ -32,8 +32,8 @@
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="productImageGetters.getImageWidth(image) ?? 600"
-            :height="productImageGetters.getImageHeight(image) ?? 600"
+            :width="productImageGetters.getImageWidth(image) || 600"
+            :height="productImageGetters.getImageHeight(image) || 600"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
