@@ -13,8 +13,8 @@
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
       :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"
       :image-alt="
-        productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ??
-        productGetters.getName(product) ??
+        productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+        productGetters.getName(product) ||
         ''
       "
       :image-title="
