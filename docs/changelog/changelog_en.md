@@ -26,6 +26,7 @@
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
 - Added stock check for the order again feature.
+- Added dynamic title and alternate for product images
 
 ### 🩹 Fixed
 
