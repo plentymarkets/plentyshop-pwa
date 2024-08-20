@@ -88,9 +88,7 @@ const handleAddressButtonTrigger = () => {
   emitNewAddressEvent();
 };
 
-const handleSetCheckoutAddress = async (address: Address) => {
-  isOpen.value = false;
-
+const persistCheckoutAddress = async (address: Address) => {
   await setCheckoutAddress(address).then(() => {
     if (type === AddressType.Shipping) {
       useCartShippingMethods().getShippingMethods();
@@ -100,25 +98,22 @@ const handleSetCheckoutAddress = async (address: Address) => {
   });
 };
 
+const handleSetCheckoutAddress = async (address: Address) => {
+  isOpen.value = false;
+  persistCheckoutAddress(address);
+};
+
 const handleDeleteAddress = async (address: Address) => {
   await deleteAddress(Number(userAddressGetters.getId(address)));
 
   const upgradedAddress =
     primaryAddressId.value === address.id
-      ? addresses.value.length > 1
+      ? addresses.value.length > 0
         ? addresses.value[0]
         : null
       : (getAddress(primaryAddressId.value) as Address);
 
-  upgradedAddress === null
-    ? clearCheckoutAddress()
-    : await setCheckoutAddress(getAddress(primaryAddressId.value) as Address).then(() => {
-        if (type === AddressType.Shipping) {
-          useCartShippingMethods().getShippingMethods();
-          usePaymentMethods().fetchPaymentMethods();
-        }
-        return true;
-      });
+  upgradedAddress === null ? clearCheckoutAddress() : persistCheckoutAddress(upgradedAddress as Address);
 };
 
 const handleSetDefaultAddress = (address: Address) => {
