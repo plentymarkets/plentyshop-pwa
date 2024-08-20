@@ -43,7 +43,7 @@ const applePayPayment = async () => {
       },
     } as ApplePayJS.ApplePayPaymentRequest;
 
-    const paymentSession = new ApplePaySession(3, paymentRequest);
+    const paymentSession = new ApplePaySession(14, paymentRequest);
     console.log('paymentSession', paymentSession);
 
     paymentSession.onvalidatemerchant = (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
