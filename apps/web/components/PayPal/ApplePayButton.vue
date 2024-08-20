@@ -67,12 +67,12 @@ const applePayPayment = async () => {
       console.log('paymentauthorized');
 
       createTransaction('applepay')
-        .then((order) => {
+        .then((transaction) => {
           createOrder({
             paymentId: cart.value.methodOfPaymentId,
             shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
           })
-            .then((transaction) => {
+            .then((order) => {
               applePay
                 .confirmOrder({
                   // eslint-disable-next-line promise/always-return
