@@ -41,6 +41,7 @@
 - Fixed wrongful display of base prices issue.
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
+- Fixed editing author name on reviews and replies with added e2e
 
 ### 👷 Changed
 
