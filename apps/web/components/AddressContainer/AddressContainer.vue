@@ -77,7 +77,10 @@ const addressFormShipping = ref(null as any);
 const addressFormBilling = ref(null as any);
 
 const sameAsShippingAddress = computed(() =>
-  isBilling ? checkoutAddress.value?.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value?.id : false,
+  isBilling
+    ? checkoutAddress.value?.id &&
+      checkoutAddress.value?.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value?.id
+    : false,
 );
 
 const showSameAsShippingText = computed(
