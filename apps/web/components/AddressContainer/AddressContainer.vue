@@ -2,7 +2,7 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
-        {{ type === AddressType.Shipping ? $t('shipping.heading') : $t('billing.heading') }}
+        {{ isShipping ? $t('shipping.heading') : $t('billing.heading') }}
       </h2>
 
       <div class="flex justify-center">

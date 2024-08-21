@@ -1,11 +1,7 @@
 <template>
-  <SfTooltip :label="$t('manageAddresses')">
+  <SfTooltip :label="tooltipLabel">
     <UiButton size="sm" variant="tertiary" @click="handleAddressButtonTrigger">
-      {{
-        addresses.length > 0
-          ? $t('pickSavedAddress')
-          : $t(type === AddressType.Shipping ? 'newShippingAddress' : 'newBillingAddress')
-      }}
+      {{ buttonLabel }}
     </UiButton>
   </SfTooltip>
 
@@ -17,18 +13,18 @@
     data-testid="checkout-pick-address-modal"
   >
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+      <UiButton @click="close" square variant="tertiary" class="absolute right-2 top-2">
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
-        {{ $t('pickSavedAddress') }}
+        {{ t('pickSavedAddress') }}
       </h3>
-      <h1 class="my-2 mb-6 font-semibold">{{ $t('pickSavedAddressSubtitle') }}</h1>
+      <h1 class="my-2 mb-6 font-semibold">{{ t('pickSavedAddressSubtitle') }}</h1>
     </header>
 
     <Address
-      v-for="address in addresses"
-      :key="userAddressGetters.getId(address)"
+      v-for="(address, index) in addresses"
+      :key="`${type}-${index}`"
       :address="address"
       :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
       :is-default="primaryAddressId === Number(userAddressGetters.getId(address))"
@@ -44,7 +40,7 @@
 
     <div class="flex justify-end w-full">
       <UiButton variant="secondary" class="mt-10" @click="emitNewAddressEvent">
-        {{ type === AddressType.Shipping ? $t('newShippingAddress') : $t('newBillingAddress') }}
+        {{ type === AddressType.Shipping ? t('newShippingAddress') : t('newBillingAddress') }}
       </UiButton>
     </div>
   </UiModal>
@@ -58,6 +54,7 @@ import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
 const { type } = defineProps<AddressSelectProps>();
 
+const { t } = useI18n();
 const { addresses, get: getAddress } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
@@ -68,6 +65,20 @@ const emit = defineEmits<{
   (event: 'edit', address: Address): void;
   (event: 'new'): void;
 }>();
+
+const tooltipLabel = computed(() =>
+  addresses.value.length > 0
+    ? t('manageAddresses')
+    : type === AddressType.Shipping
+      ? t('shipping.addButton')
+      : t('billing.addButton'),
+);
+
+const buttonLabel = computed(() =>
+  addresses.value.length > 0
+    ? t('pickSavedAddress')
+    : t(type === AddressType.Shipping ? 'newShippingAddress' : 'newBillingAddress'),
+);
 
 const emitNewAddressEvent = () => {
   emit('new');

@@ -5,11 +5,13 @@ export const useFetchAdddress = (type: AddressType) => {
     loading: false,
   }));
 
+  const { set: setAddressStore } = useAddressStore(type);
+
   const fetch = async () => {
     try {
       state.value.loading = true;
       const data = await useSdk().plentysystems.getAddresses({ typeId: type });
-      useAddressStore(type).set(data.data);
+      setAddressStore(data.data);
       state.value.loading = false;
     } catch (error: unknown) {
       useHandleError(error as Error);
@@ -24,7 +26,7 @@ export const useFetchAdddress = (type: AddressType) => {
     );
 
     useHandleError(error.value);
-    useAddressStore(type).set(data.value?.data || []);
+    setAddressStore(data.value?.data || []);
 
     if (data.value?.data) {
       usePrimaryAddress(type).primaryAddressId.value = data.value?.data.find((item) => item.primary === true)?.id || -1;

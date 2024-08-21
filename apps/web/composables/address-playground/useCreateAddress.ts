@@ -13,7 +13,7 @@ export const useCreateAddress = (type: AddressType) => {
         addressData: address,
       });
 
-      useAddressStore(type).create(address, data.data);
+      useAddressStore(type).set(data.data);
       state.value.loading = false;
     } catch (error: unknown) {
       useHandleError(error as Error);

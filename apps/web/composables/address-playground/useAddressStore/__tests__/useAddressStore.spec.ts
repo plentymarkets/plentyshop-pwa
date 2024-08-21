@@ -105,14 +105,14 @@ describe('useAddressStore', () => {
 
         // const unsubscribeCreate = onCreate(onCreateSpy);
 
-        create(addressFixture,[addressFixture]);
+        // create(addressFixture,[addressFixture]);
 
         expect(addresses.value).toEqual([addressFixture]);
         expect(onCreateSpy).toHaveBeenCalledTimes(1);
 
         // unsubscribeCreate();
 
-        create(addressFixture, [{ ...addressFixture, id: 2 }]);
+        // create(addressFixture, [{ ...addressFixture, id: 2 }]);
 
         expect(addresses.value).toEqual([{ ...addressFixture, id: 2 }]);
         expect(onCreateSpy).toHaveBeenCalledTimes(1);

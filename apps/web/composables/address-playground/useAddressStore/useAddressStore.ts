@@ -10,8 +10,8 @@ export const useAddressStore = (type: AddressType) => {
     state.value.addresses = addresses;
   };
 
-  const create = (payload: Address, addresses: Address[]) => {
-    state.value.addresses = addresses;
+  const create = (address: Address) => {
+    state.value.addresses.push(address);
   };
 
   const get = (addressId: number) => {
@@ -20,18 +20,14 @@ export const useAddressStore = (type: AddressType) => {
 
   const update = (address: Address) => {
     const index = state.value.addresses.findIndex((a: Address) => a.id === address.id);
-    if (index !== -1) {
-      state.value.addresses[index] = address;
-    }
+    if (index !== -1) state.value.addresses[index] = address;
   };
 
   const destroy = (addressId: number) => {
     state.value.addresses = state.value.addresses.filter((address: Address) => address.id !== addressId);
   };
 
-  const clear = () => {
-    set([]);
-  };
+  const clear = () => set([]);
 
   return {
     ...toRefs(state.value),
