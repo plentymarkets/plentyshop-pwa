@@ -8,7 +8,7 @@
     </p>
 
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-      <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
+      <div v-if="displayNewsletterFormNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <SfInput
             v-model="firstName"
@@ -123,6 +123,7 @@ const { t } = useI18n();
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
+const displayNewsletterFormNames = computed(() => runtimeConfig.public.newsletterFormNames).value;
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(

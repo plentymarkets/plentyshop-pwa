@@ -100,7 +100,7 @@
       </div>
     </div>
     <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe />
+      <NewsletterSubscribe v-if="shouldDisplayComponent" />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
@@ -136,6 +136,8 @@ const getSizeForViewport = (sizes: Sizes) => {
   return sizes[breakpoint];
 };
 
+const runtimeConfig = useRuntimeConfig();
+
 watch(
   () => categoryTree.value,
   async () => {
@@ -144,6 +146,7 @@ watch(
   },
   { immediate: true },
 );
+const shouldDisplayComponent = computed(() => runtimeConfig.public.newsletterForm).value;
 const displayDetails = computed(() => {
   return [
     {
