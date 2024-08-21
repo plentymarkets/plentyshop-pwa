@@ -138,9 +138,12 @@ const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { 
 const hasCompany = ref(false);
 const { data: countries } = useActiveShippingCountries();
 const { shippingAsBilling } = useShippingAsBilling();
-const { addressToSave, save: saveAddress } = useAddressForm(AddressType.Shipping);
+const { addressToSave: shippingAddressToSave, save: saveShippingAddress } = useAddressForm(AddressType.Shipping);
+const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
-const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
+const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
+const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
+const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { t } = useI18n();
 
 const validationSchema = toTypedSchema(
@@ -202,17 +205,42 @@ const toggleCompany = () => {
 };
 
 const submitForm = handleSubmit((shippingAddressForm) => {
-  addressToSave.value = shippingAddressForm as Address;
-  if (addAddress) addressToSave.value.primary = true;
+  shippingAddressToSave.value = shippingAddressForm as Address;
+  if (addAddress) shippingAddressToSave.value.primary = true;
 
-  saveAddress()
+  saveShippingAddress()
     .then(async () => {
-      await setCheckoutAddress(
+      if (shippingAsBilling.value) {
+        billingAddressToSave.value = shippingAddressForm as Address;
+        if (addAddress) billingAddressToSave.value.primary = true;
+        await saveBillingAddress();
+      }
+      return true;
+    })
+    .then(async () => {
+      await setShippingAddress(
         addAddress
           ? (shippingAddresses.value[0] as Address)
           : (userAddressGetters.getDefault(shippingAddresses.value) as Address),
         addAddress === false,
       );
+
+      usePrimaryAddress(AddressType.Shipping).primaryAddressId.value =
+        shippingAddresses.value?.find((item) => item.primary === true)?.id || -1;
+      return true;
+    })
+    .then(async () => {
+      if (shippingAsBilling.value) {
+        await setBillingAddress(
+          addAddress
+            ? (billingAddresses.value[0] as Address)
+            : (userAddressGetters.getDefault(billingAddresses.value) as Address),
+          false,
+        );
+
+        usePrimaryAddress(AddressType.Billing).primaryAddressId.value =
+          billingAddresses.value?.find((item) => item.primary === true)?.id || -1;
+      }
       return true;
     })
     .then(() => {
