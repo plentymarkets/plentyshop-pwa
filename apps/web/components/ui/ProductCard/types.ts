@@ -5,6 +5,7 @@ export type ProductCardProps = {
   name: string;
   imageUrl: string;
   imageAlt?: string;
+  imageTitle?: string;
   imageWidth: number;
   imageHeight: number;
   description?: string;
