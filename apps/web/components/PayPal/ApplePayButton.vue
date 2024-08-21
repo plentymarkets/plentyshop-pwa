@@ -74,13 +74,10 @@ const applePayPayment = async () => {
           })
             .then((order) => {
               console.log('order creation');
-              console.log(
-                'test',
-                transaction?.id,
-                event.payment.token,
-                event.payment.billingContact,
-                event.payment.shippingContact,
-              );
+              console.log('transactionid', transaction?.id);
+              console.log('event token', event.payment.token);
+              console.log('billing', event.payment.billingContact);
+              console.log('shipping', event.payment.shippingContact);
               applePay
                 .confirmOrder({
                   // eslint-disable-next-line promise/always-return
