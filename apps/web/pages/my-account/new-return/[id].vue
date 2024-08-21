@@ -50,6 +50,8 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
 import { useReturnOrder } from '~/composables/useReturnOrder';
+import { paths } from '~/utils/paths';
+
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');

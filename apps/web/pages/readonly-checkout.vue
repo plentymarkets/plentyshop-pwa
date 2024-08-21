@@ -114,6 +114,7 @@
 <script lang="ts" setup>
 import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 definePageMeta({
   pageType: 'static',

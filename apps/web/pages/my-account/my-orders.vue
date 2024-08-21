@@ -157,6 +157,7 @@
 <script setup lang="ts">
 import { type Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconMoreHoriz, SfListItem, SfLoaderCircular } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const { openOrderAgainModal, order: selectedOrder } = useOrderAgain();

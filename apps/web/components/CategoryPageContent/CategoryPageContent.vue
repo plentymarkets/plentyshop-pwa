@@ -31,9 +31,18 @@
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product, 'half')"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
-              :image-alt="productGetters.getName(product) ?? ''"
-              :image-height="productGetters.getImageHeight(product) ?? 600"
-              :image-width="productGetters.getImageWidth(product) ?? 600"
+              :image-alt="
+                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+                productGetters.getName(product) ||
+                ''
+              "
+              :image-title="
+                productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
+                productGetters.getName(product) ||
+                ''
+              "
+              :image-height="productGetters.getImageHeight(product) || 600"
+              :image-width="productGetters.getImageWidth(product) || 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index < 5"
               :base-price="productGetters.getDefaultBasePrice(product)"
@@ -64,7 +73,7 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 

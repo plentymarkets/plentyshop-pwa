@@ -121,6 +121,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfCheckbox, SfLink, useDisclosure } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 definePageMeta({
   layout: false,
