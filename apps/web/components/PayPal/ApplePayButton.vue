@@ -66,7 +66,7 @@ const applePayPayment = async () => {
     paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
       console.log('paymentauthorized');
 
-      createTransaction('paypal')
+      createTransaction('applepay')
         .then((transaction) => {
           createOrder({
             paymentId: cart.value.methodOfPaymentId,
@@ -74,6 +74,13 @@ const applePayPayment = async () => {
           })
             .then((order) => {
               console.log('order creation');
+              console.log(
+                'test',
+                transaction?.id,
+                event.payment.token,
+                event.payment.billingContact,
+                event.payment.shippingContact,
+              );
               applePay
                 .confirmOrder({
                   // eslint-disable-next-line promise/always-return
