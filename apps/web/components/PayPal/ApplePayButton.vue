@@ -23,8 +23,6 @@ const loadApplePay = async () => {
   document.head.append(scriptElement);
 };
 
-//const canMakePayments = ref(false);
-
 const applePayPayment = async () => {
   if (!applePayConfig.value) {
     return;
@@ -45,16 +43,13 @@ const applePayPayment = async () => {
     } as ApplePayJS.ApplePayPaymentRequest;
 
     const paymentSession = new ApplePaySession(14, paymentRequest);
-    console.log('paymentSession', paymentSession);
 
     paymentSession.onvalidatemerchant = (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
-      console.log('validate merchant');
       applePay
         .validateMerchant({
           validationUrl: event.validationURL,
         })
         .then((validationData) => {
-          console.log(validationData);
           paymentSession.completeMerchantValidation(validationData.merchantSession);
         })
         .catch((error) => {
@@ -64,8 +59,6 @@ const applePayPayment = async () => {
     };
 
     paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
-      console.log('paymentauthorized');
-
       createTransaction('applepay')
         .then((transaction) => {
           createOrder({
@@ -73,11 +66,6 @@ const applePayPayment = async () => {
             shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
           })
             .then((order) => {
-              console.log('order creation');
-              //  console.log('transactionid', transaction?.id);
-              console.log('event token', event.payment.token);
-              console.log('billing', event.payment.billingContact);
-              console.log('shipping', event.payment.shippingContact);
               try {
                 applePay
                   .confirmOrder({
@@ -86,18 +74,17 @@ const applePayPayment = async () => {
                     billingContact: event.payment.billingContact,
                   })
                   .then(() => {
-                    console.log('confirm order');
                     executeOrder({
                       mode: 'paypal',
                       plentyOrderId: Number.parseInt(orderGetters.getId(order)),
                       // eslint-disable-next-line promise/always-return
                       paypalTransactionId: transaction?.id ?? '',
                     });
-                    console.log('before complete');
+
                     paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-                    console.log('after complete');
+
                     clearCartItems();
-                    console.log('Items clear');
+
                     navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
                   })
                   .catch((error) => {
@@ -105,7 +92,7 @@ const applePayPayment = async () => {
                     paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
                   });
               } catch (error) {
-                console.error('Unexpected error:', error);
+                console.error(error);
               }
             })
             .catch((error) => {
@@ -129,29 +116,29 @@ const applePayPayment = async () => {
   }
 };
 
-// if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-//   canMakePayments.value = true;
-// }
-
 onMounted(async () => {
   await loadApplePay().then(() => {
-    applePay.config().then((config: ConfigResponse) => {
-      applePayConfig.value = config;
-      console.log('this is the config', config);
-      if (config.isEligible) {
-        const applePayButtonContainer = document.querySelector('#apple-pay-button');
-        if (applePayButtonContainer) {
-          applePayButtonContainer.innerHTML =
-            '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
-          const applePayButton = document.querySelector('#btn-appl');
-          if (applePayButton) {
-            applePayButton.addEventListener('click', () => {
-              applePayPayment();
-            });
+    applePay
+      .config()
+      .then((config: ConfigResponse) => {
+        applePayConfig.value = config;
+        if (config.isEligible) {
+          const applePayButtonContainer = document.querySelector('#apple-pay-button');
+          if (applePayButtonContainer) {
+            applePayButtonContainer.innerHTML =
+              '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
+            const applePayButton = document.querySelector('#btn-appl');
+            if (applePayButton) {
+              applePayButton.addEventListener('click', () => {
+                applePayPayment();
+              });
+            }
           }
         }
-      }
-    });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   });
 });
 </script>
