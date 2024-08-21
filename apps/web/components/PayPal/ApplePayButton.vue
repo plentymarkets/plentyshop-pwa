@@ -83,7 +83,6 @@ const applePayPayment = async () => {
                   orderId: transaction?.id ?? '',
                   token: event.payment.token,
                   billingContact: event.payment.billingContact,
-                  shippingContact: event.payment.shippingContact,
                 })
                 .then(() => {
                   console.log('confirm order');
