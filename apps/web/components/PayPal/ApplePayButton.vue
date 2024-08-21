@@ -78,29 +78,35 @@ const applePayPayment = async () => {
               console.log('event token', event.payment.token);
               console.log('billing', event.payment.billingContact);
               console.log('shipping', event.payment.shippingContact);
-              applePay
-                .confirmOrder({
-                  orderId: transaction?.id ?? '',
-                  token: event.payment.token,
-                  billingContact: event.payment.billingContact,
-                })
-                .then(() => {
-                  console.log('confirm order');
-                  executeOrder({
-                    mode: 'paypal',
-                    plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-                    // eslint-disable-next-line promise/always-return
-                    paypalTransactionId: transaction?.id ?? '',
+              try {
+                applePay
+                  .confirmOrder({
+                    orderId: transaction?.id ?? '',
+                    token: event.payment.token,
+                    billingContact: event.payment.billingContact,
+                  })
+                  .then(() => {
+                    console.log('confirm order');
+                    executeOrder({
+                      mode: 'paypal',
+                      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+                      // eslint-disable-next-line promise/always-return
+                      paypalTransactionId: transaction?.id ?? '',
+                    });
+                    console.log('before complete');
+                    paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
+                    console.log('after complete');
+                    clearCartItems();
+                    console.log('Items clear');
+                    navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
                   });
-                  console.log('before complete');
-                  paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-                  console.log('after complete');
-                  navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
-                })
-                .catch((error) => {
-                  console.error(error);
-                  paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-                });
+              } catch (error) {
+                console.error('Unexpected error:', error);
+              }
             })
             .catch((error) => {
               console.error(error);
@@ -111,8 +117,6 @@ const applePayPayment = async () => {
           console.error(error);
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         });
-      clearCartItems();
-      console.log('Items clear');
     };
 
     paymentSession.addEventListener('cancel', () => {
