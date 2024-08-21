@@ -35,7 +35,7 @@ describe('Reviews functionality check.', () => {
     reviewPage
         .checkReviewModalVisible()
         .checkReviewModalElementsVisible()
-        .postReview('Great product!')
+        .postReview('Great product!', 'John Doe')
         .checkReviewPostedSuccessfully()
         .checkEditRemoveButtonsVisible()
         .addReply()
@@ -47,5 +47,27 @@ describe('Reviews functionality check.', () => {
         // .addMultipleReviews(10 + 1)
         // .checkPaginationVisible()
         // .navigateThroughPages()
+  });
+
+  it('Edit review item.', () => {
+    homePage.goToCategory();
+    productListPage.goToProduct();
+
+    reviewPage
+        .scrollToReviews()
+        .clickAddReviewButton()
+
+    myAccount.successLogin();
+
+    reviewPage
+        .postReview('Product was great', 'Jane Doe')
+        .clickEditReviewButton()
+        .editReview('Title edited', 'John Doe', 'This is an edited review message.')
+        .checkReviewEditedSuccessfully('John Doe', 'This is an edited review message.')
+        .addReply()
+        .checkReplyAddedSuccessfully()
+        .editReply('John Doe edited', 'Thank you! edited')
+        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
+        .removeReview()
   });
 });
