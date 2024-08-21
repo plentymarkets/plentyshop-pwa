@@ -202,7 +202,8 @@ const toggleCompany = () => {
 };
 
 const submitForm = handleSubmit((shippingAddressForm) => {
-  addressToSave.value = shippingAddressForm;
+  addressToSave.value = shippingAddressForm as Address;
+  if (addAddress) addressToSave.value.primary = true;
 
   saveAddress()
     .then(async () => {

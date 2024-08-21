@@ -196,7 +196,7 @@ const toggleCompany = () => {
 };
 
 const submitForm = handleSubmit((billingAddressForm) => {
-  addressToSave.value = billingAddressForm;
+  addressToSave.value = billingAddressForm as Address;
 
   saveAddress()
     .then(async () => {

@@ -6,7 +6,7 @@ export const useAddressForm = (type: AddressType) => {
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
     open: false,
-    addressToSave: {},
+    addressToSave: {} as Address,
   }));
 
   const save = async () => {
