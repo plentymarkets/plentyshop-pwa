@@ -1,13 +1,13 @@
 <template>
   <div data-testid="checkout-address" class="md:px-4 py-6">
-    <div class="flex md:items-center flex-col md:flex-row justify-between mb-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
         {{ isShipping ? $t('shipping.heading') : $t('billing.heading') }}
       </h2>
 
-      <div class="flex justify-center">
+      <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
-        <UiButton v-else @click="validateAndSubmitForm" size="sm" variant="tertiary">
+        <UiButton v-else @click="validateAndSubmitForm" size="sm" variant="secondary">
           {{ $t('saveAddress') }}
         </UiButton>
 
@@ -18,7 +18,7 @@
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
             @click="edit(checkoutAddress)"
             size="sm"
-            variant="tertiary"
+            variant="secondary"
           >
             <template v-if="!editing && !showNewForm">
               {{ $t('contactInfo.edit') }}

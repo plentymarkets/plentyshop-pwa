@@ -1,6 +1,6 @@
 <template>
   <SfTooltip :label="tooltipLabel">
-    <UiButton size="sm" variant="tertiary" @click="handleAddressButtonTrigger">
+    <UiButton size="sm" variant="secondary" @click="handleAddressButtonTrigger">
       {{ buttonLabel }}
     </UiButton>
   </SfTooltip>
