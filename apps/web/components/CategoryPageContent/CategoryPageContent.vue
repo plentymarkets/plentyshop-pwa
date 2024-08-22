@@ -94,7 +94,7 @@ const viewport = useViewport();
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
-if (viewport.isLessThan('md')) close;
+if (viewport.isLessThan('md')) close();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);
