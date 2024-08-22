@@ -2,9 +2,9 @@
   <div class="mx-4" data-testid="account-data">
     <div class="flex justify-between my-2 mx-4 md:mx-0 px-4 md:px-0">
       <h2 class="typography-headline-4 font-medium">{{ header }}</h2>
-      <SfButton v-if="showEditButton" variant="tertiary" size="sm" class="self-start" @click="$emit('on-click')">
+      <UiButton v-if="showEditButton" variant="tertiary" size="sm" class="self-start" @click="$emit('on-click')">
         {{ buttonText }}
-      </SfButton>
+      </UiButton>
     </div>
     <div class="my-2 mx-4 md:mx-0 px-4 md:px-0">
       <slot />
@@ -13,7 +13,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
 import type { AccountDataProps } from '~/components/AccountData/types';
 
 withDefaults(defineProps<AccountDataProps>(), {

@@ -13,9 +13,9 @@
         </div>
       </div>
       <div class="absolute right-2 top-2 flex items-center">
-        <SfButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </div>
     </header>
 
@@ -116,7 +116,9 @@
               </div>
               <div class="w-full flex flex-wrap gap-2">
                 <SfListItem
-                  v-if="orderGetters.getOrderAgainAvailability(item)"
+                  v-if="
+                    orderGetters.getOrderAgainAvailability(item) && orderGetters.getOrderAgainAvailabilityName(item)
+                  "
                   size="sm"
                   class="text-xs font-medium rounded-md !w-fit !cursor-text !px-2 grid"
                   :class="[orderGetters.getOrderAgainAvailabilityClass(item)]"
@@ -128,13 +130,29 @@
                   {{ orderGetters.getOrderAgainAvailabilityName(item) }}
                 </SfListItem>
                 <UiTag
-                  v-if="!orderGetters.isItemSalableAndActive(order, item)"
+                  v-if="
+                    !orderGetters.isItemSalableAndActive(order, item) ||
+                    orderGetters.getOrderAgainOrderItemStock(item) === 0
+                  "
                   variant="negative"
                   size="sm"
                   class="!font-medium"
                 >
                   <SfIconError size="xs" />
                   <span>{{ t('account.ordersAndReturns.orderAgain.notAvailable') }}</span>
+                </UiTag>
+                <UiTag
+                  v-else-if="orderGetters.getOrderAgainOrderItemStock(item) < orderGetters.getItemQty(item)"
+                  variant="negative"
+                  size="sm"
+                  class="!font-medium"
+                >
+                  <SfIconError size="xs" />
+                  <span>{{
+                    t('account.ordersAndReturns.orderAgain.stockLimitation', {
+                      stock: orderGetters.getOrderAgainOrderItemStock(item),
+                    })
+                  }}</span>
                 </UiTag>
                 <UiTag
                   v-else-if="!orderGetters.hasAllOrderPropertiesAvailable(item)"
@@ -179,10 +197,10 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
         <div class="ml-auto float-right">
-          <SfButton class="mr-2" variant="secondary" @click="close()" size="lg">
+          <UiButton class="mr-2" variant="secondary" @click="close()" size="lg">
             {{ t('account.ordersAndReturns.orderAgain.cancel') }}
-          </SfButton>
-          <SfButton
+          </UiButton>
+          <UiButton
             data-testid="quick-checkout-cart-button"
             @click="addToCart"
             :disabled="loading || loadingAddToCart || !canAddToCart"
@@ -191,7 +209,7 @@
           >
             <SfLoaderCircular v-if="loadingAddToCart" class="flex justify-center items-center" size="sm" />
             <span v-else>{{ t('account.ordersAndReturns.orderAgain.addToCart') }}</span>
-          </SfButton>
+          </UiButton>
         </div>
       </div>
     </div>
@@ -200,7 +218,6 @@
 
 <script setup lang="ts">
 import {
-  SfButton,
   SfIconClose,
   SfLoaderCircular,
   SfIconError,

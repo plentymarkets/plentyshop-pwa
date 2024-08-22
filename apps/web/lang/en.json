@@ -538,7 +538,8 @@
         "notAvailable": "Currently unavailable",
         "buyAgain": "Buy again",
         "cancel": "Cancel",
-        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available"
+        "orderPropertyNotAvailableOrChanged": "Item properties changed or are no longer available",
+        "stockLimitation": "only {stock} item(s) available"
       }
     },
     "wishlist": {
@@ -613,7 +614,10 @@
     "subTotal": "Subtotal",
     "shipping": "Shipping",
     "vat": "VAT",
-    "total": "Total"
+    "total": "Total",
+    "saveOrderToAccount": "Save this order to your account",
+    "createAccountForBenefits": "Create an account to enjoy all benefits!",
+    "signUp": "Sign up!"
   },
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "asterisk": "*",

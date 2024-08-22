@@ -1,11 +1,18 @@
 <template>
-  <div class="w-full">
-    <div class="font-semibold">
+  <div class="w-full flex row variation-property-html">
+    <div v-if="productPropertyGetters.getPropertyName(variationProperty)" class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </div>
-    <div>
-      <div v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
+    <div
+      v-if="
+        productPropertyGetters.getPropertyName(variationProperty) &&
+        productPropertyGetters.getPropertyValue(variationProperty)
+      "
+      class="mr-1"
+    >
+      :
     </div>
+    <div v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
   </div>
 </template>
 

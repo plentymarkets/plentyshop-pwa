@@ -5,7 +5,6 @@ export const appConfiguration = {
       lang: 'en',
     },
     meta: [
-      { name: 'title', content: process.env.METATITLE || 'plentyShop PWA Demo' },
       { name: 'shop-name', content: 'plentyShop PWA Demo' },
       { name: 'description', content: process.env.METADESC || 'Demo shop for plentyShop PWA' },
       { name: 'keywords', content: process.env.METAKEYWORDS || 'plentysystems, plentyshop, pwa' },

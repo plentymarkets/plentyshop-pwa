@@ -87,10 +87,10 @@
       </div>
 
       <div class="flex flex-col items-center">
-        <SfButton type="submit" size="lg" :disabled="loading">
+        <UiButton type="submit" size="lg" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <template v-else>{{ t('newsletter.subscribe') }}</template>
-        </SfButton>
+        </UiButton>
 
         <NuxtTurnstile
           v-if="turnstileSiteKey"
@@ -110,9 +110,10 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string, boolean } from 'yup';
+import { paths } from '~/utils/paths';
 
 const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading, showNames } = useNewsletter();

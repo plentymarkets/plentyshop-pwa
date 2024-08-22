@@ -1,29 +1,32 @@
-import { getTailwindColorsOklch, oklchToRgb } from '~/utils/tailwindHelper';
-import type { TailwindColors } from './types';
+import { getPaletteFromColor, TailwindPalette } from '~/utils/tailwindHelper';
+import { SetColorProperties, UpdateColorPalette, UseConfigurationDraerMethodsReturn } from './types';
 
 const open = ref(false);
 
-const setColorProperties = (type: string, tailwindColors: TailwindColors) => {
-  tailwindColors.forEach((color) => {
-    if (color.value) {
-      const rgb = oklchToRgb(color.value);
-      document.documentElement.style.setProperty(`--colors-2-${type}-${color.weight}`, rgb);
+const setColorProperties: SetColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+  tailwindPalette.forEach((shade) => {
+    if (shade.rgb) {
+      document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
     }
   });
 };
 
-const updatePrimaryColor = (hexColor: string) => {
-  const tailwindColors = getTailwindColorsOklch(hexColor);
+const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
+  const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
+    ...color,
+  }));
 
   setColorProperties('primary', tailwindColors);
 };
 
-const updateSecondaryColor = (hexColor: string) => {
-  const tailwindColors = getTailwindColorsOklch(hexColor);
+const updateSecondaryColor: UpdateColorPalette = (hexColor: string) => {
+  const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
+    ...color,
+  }));
 
   setColorProperties('secondary', tailwindColors);
 };
 
-export const useConfigurationDrawer = () => {
+export const useConfigurationDrawer: UseConfigurationDraerMethodsReturn = () => {
   return { open, updatePrimaryColor, updateSecondaryColor };
 };

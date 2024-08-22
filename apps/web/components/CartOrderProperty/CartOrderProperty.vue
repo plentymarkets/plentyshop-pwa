@@ -1,5 +1,5 @@
 <template>
-  <div v-if="property" class="list-item list-disc ml-4">
+  <div v-if="property" class="ml-4">
     <span class="font-bold">
       {{ basketItemOrderParam.name }}
       <span v-if="productPropertyGetters.getOrderPropertyLabel(property).surchargeType">

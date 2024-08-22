@@ -17,7 +17,7 @@
         :id="`prop-${orderPropertyId}`"
         v-model="value"
         v-bind="valueAttributes"
-        class="bg-white outline-none rounded-md ring-1 ring-neutral-200 text-neutral-500 hover:ring-primary-700 focus:ring-primary-700 active:ring-2 focus:ring-2 h-[80px] w-full p-2"
+        class="bg-white outline-none rounded-md ring-1 ring-neutral-200 text-neutral-500 hover:ring-primary-500 focus:ring-primary-500 active:ring-2 focus:ring-2 h-[80px] w-full p-2"
         :class="{ '!ring-negative-700 ring-2': isOrderPropertyRequired && Boolean(errors['value']) }"
       />
       <SfInput

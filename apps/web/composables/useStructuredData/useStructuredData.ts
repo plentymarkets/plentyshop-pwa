@@ -60,8 +60,10 @@ export const useStructuredData: useStructuredDataReturn = () => {
    */
   const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
-    const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
-    const { data: reviewAverage } = useProductReviewAverage(productGetters.getItemId(product));
+    const productId = Number(productGetters.getItemId(product));
+
+    const { data: productReviews } = useProductReviews(productId);
+    const { data: reviewAverage } = useProductReviewAverage(productId);
 
     const manufacturer = product.item.manufacturer as { name: string };
     let reviews = null;

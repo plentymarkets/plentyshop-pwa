@@ -14,11 +14,11 @@
     </label>
 
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
-      <SfButton @click="resetForm()" type="reset" class="md:mr-4" variant="secondary">
+      <UiButton @click="resetForm()" type="reset" class="md:mr-4" variant="secondary">
         {{ t('contactInfo.clear') }}
-      </SfButton>
+      </UiButton>
 
-      <SfButton
+      <UiButton
         type="submit"
         data-testid="contact-information-save-button"
         class="min-w-[120px] mb-4 md:mb-0"
@@ -26,13 +26,13 @@
       >
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
         <template v-else>{{ t('contactInfo.save') }}</template>
-      </SfButton>
+      </UiButton>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { useForm } from 'vee-validate';
 import { object, string } from 'yup';
 

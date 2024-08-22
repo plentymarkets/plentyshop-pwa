@@ -32,13 +32,13 @@
       />
     </template>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
+      <UiButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
         {{ t('account.back') }}
-      </SfButton>
-      <SfButton @click="initiateReturn()">
+      </UiButton>
+      <UiButton @click="initiateReturn()">
         {{ t('returns.initiateReturn') }}
         <SfIconArrowForward />
-      </SfButton>
+      </UiButton>
     </div>
   </div>
   <div v-else class="col-span-3 mt-8">
@@ -48,8 +48,10 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
+import { SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
 import { useReturnOrder } from '~/composables/useReturnOrder';
+import { paths } from '~/utils/paths';
+
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
