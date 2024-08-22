@@ -15,6 +15,7 @@ export const useNewsletter: UseNewsletterReturn = () => {
   const state = useState<UseNewsletterState>('useNewsletter', () => ({
     loading: false,
     showNames: runtimeConfig.public.newsletterFromShowNames,
+    showNewsletter: runtimeConfig.public.newsletterForm,
   }));
 
   /**

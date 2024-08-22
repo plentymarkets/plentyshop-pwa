@@ -72,8 +72,6 @@ export default defineNuxtConfig({
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
       newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
-      newsletterFormNames:
-        process.env.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
     },
   },
   modules: [
