@@ -29,6 +29,7 @@
 - Added stock check for the order again feature.
 - Unify html nodes on category page to use h6 node
 - Added dynamic title and alternate for product images
+- Added e2e tests for reviews pagination.
 
 ### 🩹 Fixed
 
