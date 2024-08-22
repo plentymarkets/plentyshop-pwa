@@ -159,7 +159,6 @@ onMounted(() => {
       });
     }
   } else {
-    // TODO: Notify user that PayPal creditcard is not available
     confirmCancel();
   }
 });
