@@ -125,6 +125,11 @@ onMounted(() => {
         });
         loading.value = false;
       },
+      style: {
+        '.invalid': {
+          color: 'red',
+        },
+      },
     });
 
     if (cardFields.isEligible()) {
@@ -146,7 +151,12 @@ onMounted(() => {
       expiry.render('#expiration-date');
 
       button?.addEventListener('click', () => {
-        cardFields.submit();
+        cardFields.submit().catch((error) => {
+          send({
+            type: 'negative',
+            message: error.toString(),
+          });
+        });
       });
     }
   } else emit('confirmCancel');
