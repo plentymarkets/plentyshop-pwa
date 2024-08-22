@@ -7,7 +7,7 @@
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
-        <UiButton v-else @click="validateAndSubmitForm" size="sm" variant="secondary">
+        <UiButton v-else @click="validateAndSubmitForm" variant="secondary">
           {{ $t('saveAddress') }}
         </UiButton>
 
@@ -19,13 +19,12 @@
           <UiButton
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
             @click="edit(checkoutAddress)"
-            size="sm"
             variant="secondary"
           >
             <template v-if="!editing && !showNewForm">
               {{ $t('contactInfo.edit') }}
             </template>
-            <SfIconClose v-else size="sm" />
+            <SfIconClose v-else />
           </UiButton>
         </SfTooltip>
       </div>
