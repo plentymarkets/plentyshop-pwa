@@ -10,7 +10,7 @@
           </div>
           <div class="text-neutral-900">
             <span class="font-bold">{{ t('returns.orderDate') }}</span>
-            <span>: {{ orderGetters.getDate(currentReturnOrder) }}</span>
+            <span>: {{ orderGetters.getDate(currentReturnOrder, locale) }}</span>
           </div>
         </div>
         <label
@@ -55,7 +55,7 @@ import { paths } from '~/utils/paths';
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { t } = useI18n();
+const { t, locale } = useI18n();
 definePageMeta({
   layout: 'account',
   pageType: 'static',
