@@ -11,9 +11,11 @@
           {{ $t('saveAddress') }}
         </UiButton>
 
-        <span v-if="showNewForm || hasCheckoutAddress" class="mx-2 self-center">|</span>
-
-        <SfTooltip v-if="showNewForm || hasCheckoutAddress" :label="!editing && !showNewForm ? $t('editAddress') : ''">
+        <SfTooltip
+          v-if="showNewForm || hasCheckoutAddress"
+          class="ml-2"
+          :label="!editing && !showNewForm ? $t('editAddress') : ''"
+        >
           <UiButton
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
             @click="edit(checkoutAddress)"
