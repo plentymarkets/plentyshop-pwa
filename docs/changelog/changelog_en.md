@@ -28,6 +28,7 @@
 - Added dynamic metadata for products and categories.
 - Added stock check for the order again feature.
 - Added dynamic title and alternate for product images
+- Added e2e tests for reviews pagination.
 
 ### 🩹 Fixed
 
