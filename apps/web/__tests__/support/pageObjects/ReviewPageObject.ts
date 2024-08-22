@@ -132,7 +132,7 @@ export class ReviewPageObject extends PageObject{
   addMultipleReviews(count: number) {
     for (let i = 0; i < count; i++) {
       this.clickAddReviewButton()
-      this.postReview(`Review ${i + 1}`);
+      this.postReview(`Review ${i + 1}`, 'John Doe');
       cy.wait(0.5)
     }
 

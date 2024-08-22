@@ -41,8 +41,13 @@ describe('Reviews functionality check.', () => {
         .postReview('Great product!', 'John Doe')
         .checkReviewPostedSuccessfully()
         .checkEditRemoveButtonsVisible()
+        .clickEditReviewButton()
+        .editReview('Title edited', 'John Doe', 'This is an edited review message.')
+        .checkReviewEditedSuccessfully('John Doe', 'This is an edited review message.')
         .addReply()
         .checkReplyAddedSuccessfully()
+        .editReply('John Doe edited', 'Thank you! edited')
+        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
         .removeReply()
         .checkReplyRemovedSuccessfully()
         .removeReview()
@@ -55,27 +60,5 @@ describe('Reviews functionality check.', () => {
         .navigateToPreviousPage()
         .removeMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
         .checkNoReviewTextVisible()
-  });
-
-  it('Edit review item.', () => {
-    homePage.goToCategory();
-    productListPage.goToProduct();
-
-    reviewPage
-        .scrollToReviews()
-        .clickAddReviewButton()
-
-    myAccount.successLogin();
-
-    reviewPage
-        .postReview('Product was great', 'Jane Doe')
-        .clickEditReviewButton()
-        .editReview('Title edited', 'John Doe', 'This is an edited review message.')
-        .checkReviewEditedSuccessfully('John Doe', 'This is an edited review message.')
-        .addReply()
-        .checkReplyAddedSuccessfully()
-        .editReply('John Doe edited', 'Thank you! edited')
-        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
-        .removeReview()
   });
 });
