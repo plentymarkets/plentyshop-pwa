@@ -1,8 +1,8 @@
 <template>
   <header>
-    <SfButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="$emit('confirmCancel')">
+    <UiButton type="button" square variant="tertiary" class="absolute right-2 top-2" @click="$emit('confirmCancel')">
       <SfIconClose />
-    </SfButton>
+    </UiButton>
     <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-6">
       {{ t('checkoutPayment.creditCard') }}
     </h3>
