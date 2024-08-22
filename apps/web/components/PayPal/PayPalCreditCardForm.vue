@@ -146,8 +146,7 @@ onMounted(() => {
       expiry.render('#expiration-date');
 
       button?.addEventListener('click', () => {
-        cardFields
-          .submit();
+        cardFields.submit();
       });
     }
   } else emit('confirmCancel');
