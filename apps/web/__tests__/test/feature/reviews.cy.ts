@@ -16,6 +16,24 @@ beforeEach(() => {
   cy.intercept('/plentysystems/deleteReview').as('deleteReview');
   cy.intercept('/plentysystems/doReview').as('postReview');
 
+
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  cy.visitAndHydrate(paths.authLogin);
+
+  myAccount.successLogin();
+  cy.wait('@doLogin').visitAndHydrate(paths.home);
+  homePage.goToCategory();
+  productListPage.goToProduct();
+
+  cy.get('body').then(($body) => {
+    const reviewLength = $body.find('[data-testid="review-item"]').length;
+
+    for (let i = 0; i < reviewLength; i++) {
+        reviewPage.removeReview();
+    }
+  });
+
+  myAccount.clickTopBarLogoutButton();
   cy.visitAndHydrate(paths.home);
 });
 
