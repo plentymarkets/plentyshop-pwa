@@ -39,15 +39,15 @@
 
     <div class="flex justify-between mt-5">
       <div>
-        <SfButton @click="confirmCancel" type="button" variant="secondary">{{ t('paypal.unbrandedCancel') }}</SfButton>
+        <UiButton @click="confirmCancel" type="button" variant="secondary">{{ t('paypal.unbrandedCancel') }}</UiButton>
       </div>
       <div>
-        <SfButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
+        <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
           <span v-else>
             {{ t('paypal.unbrandedPay') }}
           </span>
-        </SfButton>
+        </UiButton>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@
 
 <script lang="ts" setup>
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { CardFieldsOnApproveData } from '@paypal/paypal-js';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -113,13 +113,18 @@ onMounted(() => {
           clearCartItems();
 
           navigateTo(
-            localePath(paths.thankYou + '/?orderId=' + order.order.id + '&accessKey=' + order.order.accessKey),
+            localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
           );
         }
         loading.value = false;
       },
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      onError() {},
+      onError(err: Record<string, unknown>) {
+        send({
+          type: 'negative',
+          message: err.toString(),
+        });
+        loading.value = false;
+      },
     });
 
     if (cardFields.isEligible()) {
@@ -142,20 +147,7 @@ onMounted(() => {
 
       button?.addEventListener('click', () => {
         cardFields
-          .submit()
-          // eslint-disable-next-line promise/always-return
-          .then(() => {
-            send({
-              type: 'positive',
-              message: 'Kein Fehler',
-            });
-          })
-          .catch(() => {
-            send({
-              type: 'negative',
-              message: 'Fehler',
-            });
-          });
+          .submit();
       });
     }
   } else emit('confirmCancel');

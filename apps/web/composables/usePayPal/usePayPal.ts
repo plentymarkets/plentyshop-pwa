@@ -57,7 +57,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    */
   const loadConfig: LoadConfig = async () => {
     if (!state.value.loadedConfig) {
-      const { data } = await useAsyncData('paypalLoadConfig', () => useSdk().plentysystems.getPayPalDataClientToken());
+      const { data } = await useAsyncData('paypalLoadConfig', () =>
+        useSdk().plentysystems.getPayPalMerchantAndClientIds(),
+      );
       state.value.config = data.value?.data ?? null;
       state.value.isAvailable = !!state.value.config;
       state.value.loadedConfig = true;
@@ -83,7 +85,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
       try {
         state.value.paypalScript = await loadPayPalScript({
           clientId: paypalGetters.getClientId(state.value.config),
-          dataClientToken: paypalGetters.getClientToken(state.value.config),
+          merchantId: paypalGetters.getMerchantId(state.value.config),
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components: 'messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
