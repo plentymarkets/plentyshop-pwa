@@ -5,8 +5,10 @@ export const useAddressForm = (type: AddressType) => {
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
+    add: false,
     open: false,
     addressToSave: {} as Address,
+    addressToEdit: {} as Address,
   }));
 
   const save = async () => {

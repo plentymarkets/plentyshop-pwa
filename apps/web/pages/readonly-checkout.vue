@@ -10,9 +10,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Shipping" />
+        <AddressContainer disabled :type="AddressType.Shipping" :key="0" id="shipping-address" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Billing" />
+        <AddressContainer disabled :type="AddressType.Billing" :key="1" id="billing-address" />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
           <ShippingMethod :shipping-methods="shippingMethods" disabled />

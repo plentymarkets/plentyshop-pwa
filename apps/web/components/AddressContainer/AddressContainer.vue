@@ -70,10 +70,8 @@ const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { 
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
-const { open: editing } = useAddressForm(type);
+const { addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
-const addressToEdit = ref({} as Address);
-const showNewForm = ref(false);
 const addressFormShipping = ref(null as any);
 const addressFormBilling = ref(null as any);
 

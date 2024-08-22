@@ -80,6 +80,7 @@
         </div>
       </div>
     </div>
+
     <UiModal
       v-model="paypalCardDialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -87,6 +88,34 @@
       disable-click-away
     >
       <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
+    </UiModal>
+
+    <UiModal
+      v-if="showBuyDialog"
+      v-model="showBuyDialog"
+      :disable-click-away="showBuyDialog"
+      :disable-esc="showBuyDialog"
+      tag="section"
+      role="dialog"
+      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      aria-labelledby="address-modal-title"
+    >
+      <header>
+        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
+          {{ t('checkoutConfirmationTitle') }}
+        </h3>
+      </header>
+      <main>
+        <div>{{ t('checkoutConfirmationSubTitle') }}</div>
+      </main>
+      <footer class="flex justify-end mt-7">
+        <UiButton @click="keepEditing" variant="secondary">
+          {{ t('checkoutConfirmationEdit') }}
+        </UiButton>
+        <UiButton @click="closeFormsAndProceed" variant="secondary" class="ml-2">{{
+          t('checkoutConfirmationProceed')
+        }}</UiButton>
+      </footer>
     </UiModal>
   </NuxtLayout>
 </template>
@@ -121,6 +150,17 @@ const { set: setBillingCheckoutAddress, hasCheckoutAddress: hasBillingAddress } 
 );
 const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
+const {
+  addressToEdit: shippingAddressToEdit,
+  add: showNewShippingForm,
+  open: editingShippingAddress,
+} = useAddressForm(AddressType.Shipping);
+const {
+  addressToEdit: billingAddressToEdit,
+  add: showNewBillingForm,
+  open: editingBillingAddress,
+} = useAddressForm(AddressType.Billing);
+const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   loadPayment,
   loadShipping,
@@ -169,17 +209,46 @@ onNuxtReady(async () => {
 await getCart();
 await useActiveShippingCountries().getActiveShippingCountries();
 
+const showBuyDialog = ref(false);
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
 });
+
 const paypalCreditCardPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
-const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
+
+const anyAddressFormIsOpen = computed(
+  () =>
+    showNewShippingForm.value ||
+    editingShippingAddress.value ||
+    showNewBillingForm.value ||
+    editingBillingAddress.value,
+);
+
+const keepEditing = () => (showBuyDialog.value = false);
+
+const closeFormsAndProceed = () => {
+  if (showNewShippingForm.value) showNewShippingForm.value = false;
+  if (showNewBillingForm.value) showNewBillingForm.value = false;
+
+  if (editingShippingAddress.value) {
+    editingShippingAddress.value = false;
+    shippingAddressToEdit.value = {} as Address;
+  }
+
+  if (editingBillingAddress.value) {
+    editingBillingAddress.value = false;
+    billingAddressToEdit.value = {} as Address;
+  }
+
+  showBuyDialog.value = false;
+};
 
 const openPayPalCardDialog = async () => {
   /* try {
@@ -208,6 +277,11 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
+  if (anyAddressFormIsOpen.value) {
+    showBuyDialog.value = true;
+    return;
+  }
+
   /* try {
     await validateAndSaveAddresses();
   } catch {
