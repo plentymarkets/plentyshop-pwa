@@ -118,10 +118,10 @@ onMounted(() => {
         }
         loading.value = false;
       },
-      onError(err: Record<string, unknown>) {
+      onError() {
         send({
           type: 'negative',
-          message: err.toString(),
+          message: t('paypal.errorMessageCreditCard'),
         });
         loading.value = false;
       },
@@ -151,12 +151,7 @@ onMounted(() => {
       expiry.render('#expiration-date');
 
       button?.addEventListener('click', () => {
-        cardFields.submit().catch((error) => {
-          send({
-            type: 'negative',
-            message: error.toString(),
-          });
-        });
+        cardFields.submit();
       });
     }
   } else emit('confirmCancel');
