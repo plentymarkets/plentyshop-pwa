@@ -72,6 +72,10 @@ const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppCo
 const paypal = await loadScript(currency.value);
 const cardHolder = ref('');
 
+const confirmCancel = () => {
+  emit('confirmCancel');
+};
+
 // eslint-disable-next-line sonarjs/cognitive-complexity
 onMounted(() => {
   let paypalOrderId: string = '';
@@ -154,10 +158,9 @@ onMounted(() => {
         cardFields.submit();
       });
     }
-  } else emit('confirmCancel');
+  } else {
+    // TODO: Notify user that PayPal creditcard is not available
+    confirmCancel();
+  }
 });
-
-const confirmCancel = () => {
-  emit('confirmCancel');
-};
 </script>
