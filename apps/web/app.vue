@@ -21,6 +21,7 @@ const { setStaticPageMeta } = useCanonical();
 const { isAuthorized } = useCustomer();
 const localePath = useLocalePath();
 
+await setInitialDataSSR();
 vsfLocale.value = locale.value;
 
 if (route?.meta.pageType === 'static') setStaticPageMeta();
@@ -42,7 +43,6 @@ const watchAuthRoutes = (authenticated: boolean) => {
 
 onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
-  await setInitialDataSSR();
   watchAuthRoutes(isAuthorized.value);
 });
 
