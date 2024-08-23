@@ -9,14 +9,14 @@
     />
     <p class="mt-8 font-medium">{{ $t('emptyStateText') }}</p>
     <p class="mt-4">{{ $t('emptyStateText2') }}</p>
-    <SfButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="mt-4">
+    <UiButton :tag="NuxtLink" :to="localePath(paths.category)" variant="secondary" class="mt-4">
       {{ $t('allProductsLinkText') }}
-    </SfButton>
+    </UiButton>
   </section>
 </template>
 
 <script setup lang="ts">
-import { SfButton } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 

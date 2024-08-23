@@ -23,7 +23,7 @@
           <div>{{ list.discount }} %</div>
           <SfIconCheck
             v-if="selectedList && list.price === selectedList.price.value"
-            class="ml-auto text-primary-600"
+            class="ml-auto text-primary-400"
           />
         </td>
       </tr>

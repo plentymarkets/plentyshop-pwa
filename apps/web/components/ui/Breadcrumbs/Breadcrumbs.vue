@@ -5,7 +5,7 @@
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
           <SfDropdown v-model="dropdownOpened" strategy="absolute" placement="bottom-start" @update:model-value="close">
             <template #trigger>
-              <SfButton
+              <UiButton
                 class="relative w-5 h-5 !p-0 rounded-sm outline-secondary-600 hover:bg-transparent active:bg-transparent"
                 :aria-label="$t('breadcrumbsDropdownText')"
                 variant="tertiary"
@@ -16,10 +16,10 @@
                 <template #prefix>
                   <SfIconMoreHoriz
                     size="sm"
-                    class="text-neutral-500 hover:text-primary-700 active:text-primary-800 active:bg-transparent"
+                    class="text-neutral-500 hover:text-primary-500 active:text-primary-800 active:bg-transparent"
                   />
                 </template>
-              </SfButton>
+              </UiButton>
             </template>
             <ol class="px-4 py-2 rounded-md shadow-md border-neutral-100 bg-white" data-testid="breadcrumbs-dropdown">
               <li v-for="item in breadcrumbs" :key="item.name" class="py-2 last-of-type:hidden">
@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfDropdown, SfButton, SfLink, SfIconMoreHoriz } from '@storefront-ui/vue';
+import { SfDropdown, SfLink, SfIconMoreHoriz } from '@storefront-ui/vue';
 import type { BreadcrumbsProps } from '~/components/ui/Breadcrumbs/types';
 
 defineProps<BreadcrumbsProps>();

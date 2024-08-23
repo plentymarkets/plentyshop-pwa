@@ -2,8 +2,12 @@
 import { validateApiUrl } from './utils/pathHelper';
 import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
-import fetchConfiguration from './build/fetchConfiguration';
 import { appConfiguration } from './configuration/app.config';
+import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
+import fetchConfiguration from './build/fetchConfiguration';
+import generateScssVariables from './build/generateScssVariables';
+import fetchFavicon from './build/fetchFavicon';
+import fetchLogo from './build/fetchLogo';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -41,7 +45,16 @@ export default defineNuxtConfig({
   },
   pages: true,
   hooks: {
-    'build:before': async () => await fetchConfiguration(),
+    'build:before': async () => {
+      if (process.env.FETCH_REMOTE_CONFIG === '1') {
+        const response = await fetchConfiguration();
+        generateScssVariables();
+        await fetchFavicon(response);
+        await fetchLogo(response);
+      } else {
+        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
+      }
+    },
   },
   runtimeConfig: {
     public: {
@@ -56,6 +69,8 @@ export default defineNuxtConfig({
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      primaryColor: process.env.PRIMARY || '#0c7992',
+      secondaryColor: process.env.SECONDARY || '#008ebd',
     },
   },
   modules: [
@@ -90,12 +105,7 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  googleFonts: {
-    families: {
-      'Red Hat Display': { wght: [400, 500, 700] },
-      'Red Hat Text': { wght: [300, 400, 500, 700] },
-    },
-  },
+  googleFonts: fontFamilyNuxtConfig,
   i18n: nuxtI18nOptions,
   sitemap: {
     autoLastmod: true,

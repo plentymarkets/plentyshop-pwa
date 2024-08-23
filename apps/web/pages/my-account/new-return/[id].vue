@@ -10,7 +10,7 @@
           </div>
           <div class="text-neutral-900">
             <span class="font-bold">{{ t('returns.orderDate') }}</span>
-            <span>: {{ orderGetters.getDate(currentReturnOrder) }}</span>
+            <span>: {{ orderGetters.getDate(currentReturnOrder, locale) }}</span>
           </div>
         </div>
         <label
@@ -32,13 +32,13 @@
       />
     </template>
     <div class="flex flex-row justify-between mt-5">
-      <SfButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
+      <UiButton :tag="NuxtLink" :to="localePath(paths.accountMyOrders)" @close="close()" variant="secondary">
         {{ t('account.back') }}
-      </SfButton>
-      <SfButton @click="initiateReturn()">
+      </UiButton>
+      <UiButton @click="initiateReturn()">
         {{ t('returns.initiateReturn') }}
         <SfIconArrowForward />
-      </SfButton>
+      </UiButton>
     </div>
   </div>
   <div v-else class="col-span-3 mt-8">
@@ -48,12 +48,14 @@
 
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
-import { SfButton, SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
+import { SfIconArrowForward, SfCheckbox } from '@storefront-ui/vue';
 import { useReturnOrder } from '~/composables/useReturnOrder';
+import { paths } from '~/utils/paths';
+
 const route = useRoute();
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
-const { t } = useI18n();
+const { t, locale } = useI18n();
 definePageMeta({
   layout: 'account',
   pageType: 'static',

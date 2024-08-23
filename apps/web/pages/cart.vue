@@ -17,7 +17,7 @@
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
         <OrderSummary :cart="cart">
           <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
-          <SfButton
+          <UiButton
             data-testid="checkout-button"
             :tag="NuxtLink"
             :to="goToCheckout()"
@@ -25,7 +25,7 @@
             class="w-full mb-4 md:mb-0"
           >
             {{ $t('goToCheckout') }}
-          </SfButton>
+          </UiButton>
           <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
         </OrderSummary>
       </div>
@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({ pageType: 'static' });
 

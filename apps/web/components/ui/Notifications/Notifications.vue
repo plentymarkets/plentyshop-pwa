@@ -53,7 +53,7 @@ const classMapper = {
   negative:
     'text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900',
   secondary:
-    'text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900',
+    'text-secondary-500 hover:bg-secondary-50 active:bg-secondary-100 hover:text-secondary-600 active:text-secondary-700',
 };
 
 const getButtonClasses = (notification: Notification) => classMapper[notification.type] ?? '';

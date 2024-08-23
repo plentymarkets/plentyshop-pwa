@@ -58,6 +58,7 @@ const fetchAndWriteRemoteConfiguration = async () => {
   try {
     const { data } = await instance.get(`/rest/storefront/settings/${environmentMap.CONFIG_ID}`);
     writeConfigurationToTemporaryEnvironment(data);
+    return data;
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       console.error('PWA settings error:', error.response?.data.error);
@@ -72,14 +73,10 @@ const convertTemporaryToPermanentEnvironment = () => {
 };
 
 const fetchConfiguration = async () => {
-  if (environmentMap.FETCH_REMOTE_CONFIG === undefined || environmentMap.FETCH_REMOTE_CONFIG !== '1') {
-    console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
-    return;
-  }
-
   setupTemporaryEnvironment();
-  await fetchAndWriteRemoteConfiguration();
+  const data = await fetchAndWriteRemoteConfiguration();
   convertTemporaryToPermanentEnvironment();
+  return data;
 };
 
 export default fetchConfiguration;

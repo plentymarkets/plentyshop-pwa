@@ -44,7 +44,7 @@ const normalPrice =
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(props.product, 1)?.baseSinglePrice ??
-    productGetters.getDefaultBaseSinglePrice(props.product),
+    productGetters.getGraduatedPriceByQuantity(props.product, 1)?.basePrice ??
+    productGetters.getDefaultBasePrice(props.product),
 );
 </script>
