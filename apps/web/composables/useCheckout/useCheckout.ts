@@ -6,29 +6,6 @@ const ID_CHECKBOX = '#terms-checkbox';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 const ID_BILLING_ADDRESS = '#billing-address';
 
-// const save = async () => {
-/* if (state.value.combineShippingAndBilling && shippingOpen.value) return saveShippingAndBilling();
-  if (shippingOpen.value) toSave.push(saveShipping());
-  if (billingOpen.value) toSave.push(saveBilling()); */
-// };
-
-// const validateAndSaveAddresses = async () => {
-/* if (!hasOpenForms.value) {
-    return new Promise((resolve) => resolve(true));
-  }
-
-  return new Promise((resolve, reject) => {
-    save()
-      .then(() => {
-        return resolve(true);
-      })
-      .catch(() => {
-        scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-        return reject(new Error('Failed to validate address'));
-      });
-  }); */
-// };
-
 export const useCheckout = (cacheKey = '') => {
   const state = useState('useCheckout' + cacheKey, () => ({
     combineShippingAndBilling: true,
@@ -38,7 +15,6 @@ export const useCheckout = (cacheKey = '') => {
   const showBuyDialog = ref(false);
   const { data: cart, getCart, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
   const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
   const { set: setShippingCheckoutAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(
@@ -134,14 +110,12 @@ export const useCheckout = (cacheKey = '') => {
     cart,
     getCart,
     cartLoading,
-    // save,
     showBuyDialog,
     anyAddressFormIsOpen,
     persistShippingAddress,
     persistBillingAddress,
     keepEditing,
     closeFormsAndProceed,
-    // validateAndSaveAddresses,
     validateTerms,
   };
 };

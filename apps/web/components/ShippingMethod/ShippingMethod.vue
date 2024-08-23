@@ -36,23 +36,16 @@
       </div>
     </div>
 
-    <ShippingPrivacy
-      v-if="
-        shippingMethods.length > 0 &&
-        selectedMethod &&
-        shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)
-      "
-    />
+    <ShippingPrivacy v-if="showShippingPrivacy" />
   </div>
 </template>
+
 <script setup lang="ts">
 import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
-withDefaults(defineProps<ShippingMethodProps>(), {
-  disabled: false,
-});
+const { shippingMethods, disabled } = withDefaults(defineProps<ShippingMethodProps>(), { disabled: false });
 
 const emit = defineEmits<CheckoutShippingEmits>();
 
@@ -60,6 +53,13 @@ const { data: cart } = useCart();
 const { t, n } = useI18n();
 const { selectedMethod } = useCartShippingMethods();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
+
+const showShippingPrivacy = computed(
+  () =>
+    shippingMethods.length > 0 &&
+    selectedMethod.value &&
+    shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value),
+);
 
 const updateShippingMethod = (shippingId: string) => {
   radioModel.value = shippingId;

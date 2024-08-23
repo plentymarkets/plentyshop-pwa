@@ -135,6 +135,8 @@ definePageMeta({
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { fetchPaymentMethods } = usePaymentMethods();
+const { getShippingMethods } = useCartShippingMethods();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
@@ -157,7 +159,7 @@ const {
   selectedPaymentId,
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
-  shippingPrivacyAgreement,
+  validateShippingTerms,
 } = useCheckoutPagePaymentAndShipping();
 
 onNuxtReady(async () => {
@@ -173,6 +175,8 @@ onNuxtReady(async () => {
 });
 
 await getCart();
+await getShippingMethods();
+await fetchPaymentMethods();
 await useActiveShippingCountries().getActiveShippingCountries();
 
 const paypalCardDialog = ref(false);
@@ -215,18 +219,10 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
-  if (anyAddressFormIsOpen.value) {
-    showBuyDialog.value = true;
+  if (anyAddressFormIsOpen.value || !validateShippingTerms() || !validateTerms()) {
+    if (anyAddressFormIsOpen.value) showBuyDialog.value = true;
     return;
   }
-
-  // try {
-  //   await validateAndSaveAddresses();
-  // } catch {
-  //   return;
-  // }
-
-  if (!validateTerms()) return;
 
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
