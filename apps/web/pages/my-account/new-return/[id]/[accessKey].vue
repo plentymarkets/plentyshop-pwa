@@ -104,7 +104,7 @@ onMounted(async () => {
   await nextTick();
   await fetchOrder({
     orderId: route.params.id as string,
-    accessKey: route.query.accessKey as string,
+    accessKey: route.params.accessKey as string,
   });
   if (data.value) {
     setCurrentReturnOrder(data.value);
