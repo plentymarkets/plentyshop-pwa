@@ -121,46 +121,32 @@
 </template>
 
 <script setup lang="ts">
-import {
-  type Address,
-  AddressType,
-  cartGetters,
-  paymentProviderGetters,
-  userAddressGetters,
-} from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import { AddressType, paymentProviderGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { t } = useI18n();
-const { set: setShippingCheckoutAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(
-  AddressType.Shipping,
-);
-const { set: setBillingCheckoutAddress, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(
-  AddressType.Billing,
-);
-const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
-const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
-const {
-  addressToEdit: shippingAddressToEdit,
-  add: showNewShippingForm,
-  open: editingShippingAddress,
-} = useAddressForm(AddressType.Shipping);
-const {
-  addressToEdit: billingAddressToEdit,
-  add: showNewBillingForm,
-  open: editingBillingAddress,
-} = useAddressForm(AddressType.Billing);
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
+const {
+  showBuyDialog,
+  anyAddressFormIsOpen,
+  persistShippingAddress,
+  persistBillingAddress,
+  keepEditing,
+  closeFormsAndProceed,
+  validateTerms,
+} = useCheckout();
+
 const {
   loadPayment,
   loadShipping,
@@ -171,28 +157,6 @@ const {
   handlePaymentMethodUpdate,
   shippingPrivacyAgreement,
 } = useCheckoutPagePaymentAndShipping();
-
-const persistShippingAddress = () => {
-  const cartAddress = ref();
-  const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
-  const primaryAddress =
-    shippingAddresses.value.length > 0 ? userAddressGetters.getDefault(shippingAddresses.value) : undefined;
-
-  if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
-  if (cartAddress.value || primaryAddress)
-    setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
-};
-
-const persistBillingAddress = () => {
-  const cartAddress = ref();
-  const cartBillingAddressId = cartGetters.getCustomerInvoiceAddressId(cart.value);
-  const primaryAddress =
-    billingAddresses.value.length > 0 ? userAddressGetters.getDefault(billingAddresses.value) : undefined;
-
-  if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
-  if (cartAddress.value || primaryAddress)
-    setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
-};
 
 onNuxtReady(async () => {
   useFetchAdddress(AddressType.Shipping)
@@ -209,7 +173,6 @@ onNuxtReady(async () => {
 await getCart();
 await useActiveShippingCountries().getActiveShippingCountries();
 
-const showBuyDialog = ref(false);
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 
@@ -222,33 +185,6 @@ const paypalCreditCardPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
-
-const anyAddressFormIsOpen = computed(
-  () =>
-    showNewShippingForm.value ||
-    editingShippingAddress.value ||
-    showNewBillingForm.value ||
-    editingBillingAddress.value,
-);
-
-const keepEditing = () => (showBuyDialog.value = false);
-
-const closeFormsAndProceed = () => {
-  if (showNewShippingForm.value) showNewShippingForm.value = false;
-  if (showNewBillingForm.value) showNewBillingForm.value = false;
-
-  if (editingShippingAddress.value) {
-    editingShippingAddress.value = false;
-    shippingAddressToEdit.value = {} as Address;
-  }
-
-  if (editingBillingAddress.value) {
-    editingBillingAddress.value = false;
-    billingAddressToEdit.value = {} as Address;
-  }
-
-  showBuyDialog.value = false;
-};
 
 const openPayPalCardDialog = async () => {
   /* try {
@@ -264,7 +200,7 @@ const openPayPalCardDialog = async () => {
 };
 
 const handleRegularOrder = async () => {
-  console.log('hasShippingAddress', hasShippingAddress.value, 'hasBillingAddress', hasBillingAddress.value);
+  console.log('hasShippingAddress', 'hasBillingAddress');
 
   // const data = await createOrder({
   //   paymentId: paymentMethods.value.selected,
@@ -282,13 +218,13 @@ const order = async () => {
     return;
   }
 
-  /* try {
-    await validateAndSaveAddresses();
-  } catch {
-    return;
-  }
+  // try {
+  //   await validateAndSaveAddresses();
+  // } catch {
+  //   return;
+  // }
 
-  if (!validateTerms()) return; */
+  if (!validateTerms()) return;
 
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 

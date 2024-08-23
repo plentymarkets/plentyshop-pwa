@@ -7,7 +7,7 @@
           v-for="method in shippingMethods"
           :key="shippingProviderGetters.getParcelServicePresetId(method)"
           :disabled="disabled"
-          @click="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
+          @click.once="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
           tag="label"
           children-tag="div"
           class="border rounded-md items-start select-none"
