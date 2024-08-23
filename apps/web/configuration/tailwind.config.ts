@@ -2,6 +2,7 @@ import sfTypography from '@storefront-ui/typography';
 import { tailwindConfig } from '@storefront-ui/vue/tailwind-config';
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import { fontFamilyDisplay, fontFamilyText } from './fontFamily.config';
 
 export default {
   presets: [tailwindConfig],
@@ -9,8 +10,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['"Red Hat Display"', ...defaultTheme.fontFamily.sans],
-        body: ['"Red Hat Text"', ...defaultTheme.fontFamily.sans],
+        display: [`${fontFamilyDisplay}`, ...defaultTheme.fontFamily.sans],
+        body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
       },
       colors: {
         primary: {

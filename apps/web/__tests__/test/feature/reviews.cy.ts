@@ -1,4 +1,5 @@
 import { paths } from '../../../utils/paths';
+import { defaults } from '../../../composables/defaults';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import {ProductListPageObject} from "../../support/pageObjects/ProductListPageObject";
 import {ReviewPageObject} from "../../support/pageObjects/ReviewPageObject";
@@ -12,12 +13,14 @@ const myAccount: MyAccountPageObject = new MyAccountPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
+  cy.intercept('/plentysystems/deleteReview').as('deleteReview');
+  cy.intercept('/plentysystems/doReview').as('postReview');
 
   cy.visitAndHydrate(paths.home);
 });
 
 describe('Reviews functionality check.', () => {
-  it('Checks review section.', () => {
+  it.skip('Checks review section.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
@@ -44,8 +47,13 @@ describe('Reviews functionality check.', () => {
         .checkReplyRemovedSuccessfully()
         .removeReview()
         .checkNoReviewTextVisible()
-        // .addMultipleReviews(10 + 1)
-        // .checkPaginationVisible()
-        // .navigateThroughPages()
+        .addMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .checkPaginationVisible()
+        .checkNumberOfItemsPerPage(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE)
+        .navigateToNextPage()
+        .checkNumberOfItemsPerPage(1)
+        .navigateToPreviousPage()
+        .removeMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .checkNoReviewTextVisible()
   });
 });

@@ -24,7 +24,7 @@
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
-          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="index">
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
@@ -32,9 +32,18 @@
               :rating="productGetters.getAverageRating(product, 'half')"
               :price="actualPrice(product)"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
-              :image-alt="productGetters.getName(product) ?? ''"
-              :image-height="productGetters.getImageHeight(product) ?? 600"
-              :image-width="productGetters.getImageWidth(product) ?? 600"
+              :image-alt="
+                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+                productGetters.getName(product) ||
+                ''
+              "
+              :image-title="
+                productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
+                productGetters.getName(product) ||
+                ''
+              "
+              :image-height="productGetters.getImageHeight(product) || 600"
+              :image-width="productGetters.getImageWidth(product) || 600"
               :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
               :priority="index < 5"
               :base-price="productGetters.getDefaultBasePrice(product)"
@@ -66,7 +75,7 @@
 
 <script setup lang="ts">
 import type { Product } from '@plentymarkets/shop-api';
-import { productGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
 import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
@@ -85,7 +94,7 @@ const viewport = useViewport();
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
-if (viewport.isLessThan('md')) close;
+if (viewport.isLessThan('md')) close();
 
 const actualPrice = (product: Product): number => {
   const price = productGetters.getPrice(product);
