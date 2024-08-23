@@ -71,7 +71,7 @@ jobs:
         env:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
-          DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
+          CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
 
       - uses: actions/upload-artifact@v3
         if: failure()
