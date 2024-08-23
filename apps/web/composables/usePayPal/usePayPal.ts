@@ -88,7 +88,8 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
           merchantId: paypalGetters.getMerchantId(state.value.config),
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
-          components: 'applepay,messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
+          components:
+            'applepay,messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
           locale: localePayPal,
           commit: commit,
         });
