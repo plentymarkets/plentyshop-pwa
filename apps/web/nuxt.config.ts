@@ -63,7 +63,8 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       showNetPrices: true,
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
+      newsletterFromShowNames:
+        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
