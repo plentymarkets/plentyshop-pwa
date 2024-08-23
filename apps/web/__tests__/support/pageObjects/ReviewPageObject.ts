@@ -123,7 +123,7 @@ export class ReviewPageObject extends PageObject{
   removeMultipleReviews(count: number) {
     for (let i = 0; i < count; i++) {
       this.removeReview();
-      cy.wait(0.5)
+      cy.wait(1000)
     }
 
     return this;
@@ -133,7 +133,7 @@ export class ReviewPageObject extends PageObject{
     for (let i = 0; i < count; i++) {
       this.clickAddReviewButton()
       this.postReview(`Review ${i + 1}`, 'John Doe');
-      cy.wait(0.5)
+      cy.wait(1000)
     }
 
     return this;
@@ -199,4 +199,15 @@ export class ReviewPageObject extends PageObject{
 
     return this;
   }
+
+  deleteAllReviews() {
+    cy.wait(1000);
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-testid="review-item"]').length) {
+        this.removeReview();
+
+        this.deleteAllReviews();
+      }
+    });
+  };
 }

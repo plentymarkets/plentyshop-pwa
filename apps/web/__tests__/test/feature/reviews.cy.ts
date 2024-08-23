@@ -25,13 +25,7 @@ beforeEach(() => {
   homePage.goToCategory();
   productListPage.goToProduct();
 
-  cy.get('body').then(($body) => {
-    const reviewLength = $body.find('[data-testid="review-item"]').length;
-
-    for (let i = 0; i < reviewLength; i++) {
-        reviewPage.removeReview();
-    }
-  });
+  reviewPage.deleteAllReviews();
 
   myAccount.clickTopBarLogoutButton();
   cy.visitAndHydrate(paths.home);
