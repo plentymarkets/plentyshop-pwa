@@ -16,7 +16,6 @@ beforeEach(() => {
   cy.intercept('/plentysystems/deleteReview').as('deleteReview');
   cy.intercept('/plentysystems/doReview').as('postReview');
 
-
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   cy.visitAndHydrate(paths.authLogin);
 
@@ -32,7 +31,7 @@ beforeEach(() => {
 });
 
 describe('Reviews functionality check.', () => {
-  it.skip('Checks review section.', () => {
+  it('Checks review section.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
