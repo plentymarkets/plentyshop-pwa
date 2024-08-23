@@ -2,19 +2,19 @@
   <div data-testid="checkout-address" class="md:px-4 py-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-4">
       <h2 class="text-neutral-900 text-lg font-bold">
-        {{ isShipping ? $t('shipping.heading') : $t('billing.heading') }}
+        {{ isShipping ? t('shipping.heading') : t('billing.heading') }}
       </h2>
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
         <UiButton v-else @click="validateAndSubmitForm" variant="secondary">
-          {{ $t('saveAddress') }}
+          {{ t('saveAddress') }}
         </UiButton>
 
         <SfTooltip
           v-if="showNewForm || hasCheckoutAddress"
           class="ml-2"
-          :label="!editing && !showNewForm ? $t('editAddress') : ''"
+          :label="!editing && !showNewForm ? t('editAddress') : ''"
         >
           <UiButton
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
@@ -22,7 +22,7 @@
             variant="secondary"
           >
             <template v-if="!editing && !showNewForm">
-              {{ $t('contactInfo.edit') }}
+              {{ t('contactInfo.edit') }}
             </template>
             <SfIconClose v-else />
           </UiButton>
@@ -38,7 +38,7 @@
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
         <div v-else class="mt-2">
-          {{ $t('account.accountSettings.noAddresses') }}
+          {{ t('account.accountSettings.noAddresses') }}
         </div>
       </template>
 
@@ -48,13 +48,7 @@
           <AddressFormBilling v-if="editing" ref="addressFormBilling" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-if="showSameAsShippingText || (!hasCheckoutAddress && !showSameAsShippingText)" class="mt-2">
-          {{
-            $t(
-              showSameAsShippingText ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses',
-            )
-          }}
-        </div>
+        <div v-if="showDynamicAddressText" class="mt-2">{{ dynamicAddressText }}</div>
       </template>
     </div>
   </div>
@@ -67,6 +61,7 @@ import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
 
+const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
@@ -77,13 +72,22 @@ const addressFormBilling = ref(null as any);
 
 const sameAsShippingAddress = computed(() =>
   isBilling
-    ? checkoutAddress.value?.id &&
+    ? checkoutAddress.value?.id !== undefined &&
       checkoutAddress.value?.id === useCheckoutAddress(AddressType.Shipping).checkoutAddress.value?.id
     : false,
 );
 
 const showSameAsShippingText = computed(
   () => sameAsShippingAddress.value && !showNewForm.value && !editing.value && shippingAsBilling.value,
+);
+
+const showDynamicAddressText = computed(
+  () =>
+    showSameAsShippingText.value || (!hasCheckoutAddress.value && !showSameAsShippingText.value && !showNewForm.value),
+);
+
+const dynamicAddressText = computed(() =>
+  t(showSameAsShippingText.value ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
 );
 
 const edit = (address: Address) => {
