@@ -92,6 +92,7 @@
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
+import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
 defineProps<ConfirmationPageContentProps>();

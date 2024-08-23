@@ -20,10 +20,7 @@
           <ReviewsAccordion
             v-if="product"
             :product="product"
-            :review-average-text="reviewGetters.getAverageRating(productReviewAverage, 'tenth')"
-            :review-average-stars="reviewGetters.getAverageRating(productReviewAverage, 'half')"
             :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
-            @on-list-change="fetchProductReviewAverage(Number(productId))"
           />
         </section>
       </div>
@@ -35,6 +32,8 @@
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
+
+    <UiReviewModal />
   </NuxtLayout>
 </template>
 
@@ -46,20 +45,18 @@ definePageMeta({
   path: '/:slug*_:itemId',
 });
 
-const { data: categoryTree } = useCategoryTree();
-const { setProductMetaData } = useStructuredData();
 const route = useRoute();
-const { selectVariation } = useProducts();
+const { setCurrentProduct } = useProducts();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
-const { data: product, fetchProduct, setTitle, generateBreadcrumbs, breadcrumbs } = useProduct(productId);
-const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(productId);
+const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
+const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
 const { fetchProductReviews } = useProductReviews(Number(productId));
 
 await fetchProduct(productParams);
-selectVariation(productParams.variationId ? product.value : ({} as Product));
-setTitle();
+setCurrentProduct(product.value || ({} as Product));
+setProductMeta();
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
@@ -70,20 +67,7 @@ async function fetchReviews() {
 }
 await fetchReviews();
 
-if (categoryTree.value.length > 0) generateBreadcrumbs(categoryTree.value);
-
-watch(
-  () => categoryTree.value,
-  (categoriesTree) => {
-    generateBreadcrumbs(categoriesTree);
-
-    const productCategoryId = product.value.defaultCategories?.[0]?.parentCategoryId;
-    if (categoriesTree.length > 0 && productCategoryId) {
-      const categoryTree = categoriesTree.find((categoryTree) => categoryTree.id === productCategoryId);
-      if (categoryTree) setProductMetaData(product.value, categoryTree);
-    }
-  },
-);
+setBreadcrumbs();
 
 // eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
@@ -103,21 +87,4 @@ watch(
     }
   },
 );
-
-useHead({
-  meta: [
-    {
-      name: 'title',
-      content: productGetters.getName(product.value),
-    },
-    {
-      name: 'description',
-      content: productGetters.getMetaDescription(product.value) || process.env.METADESC,
-    },
-    {
-      name: 'keywords',
-      content: productGetters.getMetaKeywords(product.value) || process.env.METAKEYWORDS,
-    },
-  ],
-});
 </script>

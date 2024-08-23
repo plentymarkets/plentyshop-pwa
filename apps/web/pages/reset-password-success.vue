@@ -30,6 +30,8 @@
   </NuxtLayout>
 </template>
 <script setup lang="ts">
+import { paths } from '~/utils/paths';
+
 definePageMeta({
   layout: false,
 });

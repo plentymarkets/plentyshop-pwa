@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import { paths } from '~/utils/paths';
+
 const localePath = useLocalePath();
 
 defineProps<{

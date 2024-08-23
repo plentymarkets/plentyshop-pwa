@@ -21,7 +21,7 @@
             </div>
             <div class="text-neutral-900">
               <span class="font-bold">{{ t('returns.orderDate') }} </span>
-              : {{ orderGetters.getDate(currentReturnOrder) }}
+              : {{ orderGetters.getDate(currentReturnOrder, locale) }}
             </div>
           </div>
           <label
@@ -67,14 +67,14 @@ const emit = defineEmits(['close']);
 
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
   useReturnOrder();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const { fetchReturnReasons } = useCustomerReturns();
 const { send } = useNotification();
-fetchReturnReasons();
-
 const runtimeConfig = useRuntimeConfig();
 const confirmation = ref(false);
 const selectAllItems = ref(false);
+
+fetchReturnReasons();
 
 const close = () => {
   confirmation.value = false;

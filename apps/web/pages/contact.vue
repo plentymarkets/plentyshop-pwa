@@ -132,6 +132,7 @@
 import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
 import { useForm } from 'vee-validate';
+import { paths } from '~/utils/paths';
 
 definePageMeta({
   layout: false,

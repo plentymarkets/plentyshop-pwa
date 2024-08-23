@@ -95,6 +95,7 @@ import { SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
 import { cartGetters, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
+import { paths } from '~/utils/paths';
 
 defineProps<QuickCheckoutProps>();
 

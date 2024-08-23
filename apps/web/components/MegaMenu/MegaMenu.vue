@@ -6,7 +6,7 @@
     >
       <div class="flex items-center">
         <UiButton
-          v-if="viewport.isLessThan('ld')"
+          v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
           aria-label="Close menu"
@@ -75,7 +75,7 @@
             @mouseleave="close()"
             @keydown.esc="focusTrigger(index)"
           >
-            <template v-for="node in activeMenu.children" :key="node.key">
+            <template v-for="node in activeMenu.children" :key="node.id">
               <template v-if="node.childCount === 0">
                 <ul>
                   <SfListItem
@@ -194,6 +194,7 @@ import {
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
+import { paths } from '~/utils/paths';
 
 const viewport = useViewport();
 const localePath = useLocalePath();

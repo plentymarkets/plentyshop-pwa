@@ -55,7 +55,12 @@
         :max="5"
       />
       <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-      <UiButton variant="tertiary" @click="scrollToReviews" class="ml-2 text-xs text-neutral-500 cursor-pointer">
+      <UiButton
+        variant="tertiary"
+        @click="scrollToReviews"
+        class="ml-2 text-xs text-neutral-500 cursor-pointer"
+        data-testid="show-reviews"
+      >
         {{ t('showAllReviews') }}
       </UiButton>
     </div>
