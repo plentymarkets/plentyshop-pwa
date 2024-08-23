@@ -1,5 +1,4 @@
 import { paths } from '../../../utils/paths';
-import { defaults } from '../../../composables/defaults';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import {ProductListPageObject} from "../../support/pageObjects/ProductListPageObject";
 import {ReviewPageObject} from "../../support/pageObjects/ReviewPageObject";
@@ -29,6 +28,8 @@ beforeEach(() => {
   myAccount.clickTopBarLogoutButton();
   cy.visitAndHydrate(paths.home);
 });
+
+
 
 describe('Reviews functionality check.', () => {
   it('Checks review section.', () => {
@@ -63,13 +64,13 @@ describe('Reviews functionality check.', () => {
         .checkReplyRemovedSuccessfully()
         .removeReview()
         .checkNoReviewTextVisible()
-        .addMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
         .checkPaginationVisible()
-        .checkNumberOfItemsPerPage(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE)
+        .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
         .navigateToNextPage()
         .checkNumberOfItemsPerPage(1)
         .navigateToPreviousPage()
-        .removeMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
         .checkNoReviewTextVisible()
   });
 });
