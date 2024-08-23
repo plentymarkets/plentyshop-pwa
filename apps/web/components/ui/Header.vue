@@ -144,7 +144,6 @@
     </div>
   </MegaMenu>
   <LanguageSelector />
-  <UiNotifications />
   <UiModal
     v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen"
     v-model="isAuthenticationOpen"
