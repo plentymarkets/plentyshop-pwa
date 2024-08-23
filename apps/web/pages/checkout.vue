@@ -134,10 +134,12 @@ definePageMeta({
 
 const { t } = useI18n();
 const localePath = useLocalePath();
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
+  cart,
+  getCart,
+  cartLoading,
   showBuyDialog,
   anyAddressFormIsOpen,
   persistShippingAddress,
