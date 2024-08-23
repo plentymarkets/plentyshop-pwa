@@ -11,7 +11,7 @@ export default defineConfig({
   video: false,
   chromeWebSecurity: false,
   env: {
-    DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10
+    DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 10,
   },
   e2e: {
     setupNodeEvents(on, config) {
