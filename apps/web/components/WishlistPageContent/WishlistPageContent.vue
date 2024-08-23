@@ -26,9 +26,18 @@
             :rating="productGetters.getAverageRating(product, 'half')"
             :price="actualPrice(product)"
             :image-url="addModernImageExtension(getImageForViewport(product, 'Wishlist'))"
-            :image-alt="productGetters.getName(product) ?? ''"
-            :image-height="productGetters.getImageHeight(product) ?? 600"
-            :image-width="productGetters.getImageWidth(product) ?? 600"
+            :image-alt="
+              productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+              productGetters.getName(product) ||
+              ''
+            "
+            :image-title="
+              productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
+              productGetters.getName(product) ||
+              ''
+            "
+            :image-height="productGetters.getImageHeight(product) || 600"
+            :image-width="productGetters.getImageWidth(product) || 600"
             :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
             :priority="index < 5"
             :base-price="productGetters.getDefaultBasePrice(product)"
@@ -59,7 +68,7 @@
 </template>
 
 <script setup lang="ts">
-import { type Product, productGetters } from '@plentymarkets/shop-api';
+import { type Product, productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
