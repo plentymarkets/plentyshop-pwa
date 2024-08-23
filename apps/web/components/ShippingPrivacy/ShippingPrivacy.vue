@@ -1,22 +1,17 @@
 <template>
-  <ClientOnly>
-    <div
-      v-if="selectedMethod && shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)"
-      class="my-6 md:col-span-3 flex items-start gap-2"
-    >
-      <SfCheckbox
-        id="checkbox"
-        :value="shippingPrivacyAgreement"
-        class="mt-1"
-        name="Shipping Privacy"
-        :selected="shippingPrivacyAgreement"
-        @update:model-value="(event) => changeHint(Boolean(event))"
-      />
-      <label for="checkbox" class="cursor-pointer select-none">
-        {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
-      </label>
-    </div>
-  </ClientOnly>
+  <div class="my-6 md:col-span-3 flex items-start gap-2">
+    <SfCheckbox
+      id="checkbox"
+      :value="shippingPrivacyAgreement"
+      class="mt-1"
+      name="Shipping Privacy"
+      :selected="shippingPrivacyAgreement"
+      @update:model-value="(event) => changeHint(Boolean(event))"
+    />
+    <label for="checkbox" class="cursor-pointer select-none">
+      {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}
+    </label>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -26,11 +21,9 @@ import { SfCheckbox } from '@storefront-ui/vue';
 const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
 const { selectedMethod } = useCartShippingMethods();
 
-const parcelServiceInformation = computed(() => {
-  return selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '';
-});
+const parcelServiceInformation = computed(() =>
+  selectedMethod.value ? shippingProviderGetters.getShippingMethodName(selectedMethod.value) : '',
+);
 
-const changeHint = (value: boolean) => {
-  setShippingPrivacyAgreement(value);
-};
+const changeHint = (value: boolean) => setShippingPrivacyAgreement(value);
 </script>

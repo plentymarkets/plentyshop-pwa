@@ -4,10 +4,10 @@
     <div class="mt-4">
       <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
         <SfListItem
-          v-for="method in shippingMethods"
-          :key="shippingProviderGetters.getParcelServicePresetId(method)"
+          v-for="(method, index) in shippingMethods"
+          :key="`shipping-method-${index}`"
           :disabled="disabled"
-          @click.once="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
+          @click.prevent="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
           tag="label"
           children-tag="div"
           class="border rounded-md items-start select-none"
@@ -36,7 +36,13 @@
       </div>
     </div>
 
-    <ShippingPrivacy v-if="shippingMethods.length > 0" />
+    <ShippingPrivacy
+      v-if="
+        shippingMethods.length > 0 &&
+        selectedMethod &&
+        shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod)
+      "
+    />
   </div>
 </template>
 <script setup lang="ts">
@@ -47,10 +53,13 @@ import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 withDefaults(defineProps<ShippingMethodProps>(), {
   disabled: false,
 });
+
 const emit = defineEmits<CheckoutShippingEmits>();
+
 const { data: cart } = useCart();
-const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
 const { t, n } = useI18n();
+const { selectedMethod } = useCartShippingMethods();
+const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
 
 const updateShippingMethod = (shippingId: string) => {
   radioModel.value = shippingId;
