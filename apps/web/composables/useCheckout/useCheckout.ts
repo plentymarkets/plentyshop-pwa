@@ -12,29 +12,14 @@ export const useCheckout = (cacheKey = '') => {
     init: false,
   }));
 
-  const showBuyDialog = ref(false);
   const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
   const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
-  const { set: setShippingCheckoutAddress, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(
-    AddressType.Shipping,
-  );
-  const { set: setBillingCheckoutAddress, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(
-    AddressType.Billing,
-  );
-
-  const {
-    addressToEdit: shippingAddressToEdit,
-    add: showNewShippingForm,
-    open: editingShippingAddress,
-  } = useAddressForm(AddressType.Shipping);
-
-  const {
-    addressToEdit: billingAddressToEdit,
-    add: showNewBillingForm,
-    open: editingBillingAddress,
-  } = useAddressForm(AddressType.Billing);
+  const { add: showNewShippingForm, open: editingShippingAddress } = useAddressForm(AddressType.Shipping);
+  const { add: showNewBillingForm, open: editingBillingAddress } = useAddressForm(AddressType.Billing);
+  const { set: setShippingCheckout, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
+  const { set: setBillingCheckout, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(AddressType.Billing);
 
   const anyAddressFormIsOpen = computed(
     () =>
@@ -44,29 +29,29 @@ export const useCheckout = (cacheKey = '') => {
       editingBillingAddress.value,
   );
 
-  const keepEditing = () => {
-    showBuyDialog.value = false;
+  const backToFormEditing = () => {
+    const classList = ['bg-gray-100', 'rounded-md'];
+    const opacityClass = 'opacity-0';
+    const targetId =
+      showNewShippingForm.value || editingShippingAddress.value ? ID_SHIPPING_ADDRESS : ID_BILLING_ADDRESS;
 
-    scrollToHTMLObject(
-      showNewShippingForm.value || editingShippingAddress.value ? ID_SHIPPING_ADDRESS : ID_BILLING_ADDRESS,
+    const targetElement = document.querySelector(targetId);
+    const firstDivider = document.querySelector('#top-billing-divider');
+    const secondDivider = document.querySelector(
+      targetId === ID_SHIPPING_ADDRESS ? '#top-shipping-divider' : '#bottom-billing-divider',
     );
-  };
 
-  const closeFormsAndProceed = () => {
-    if (showNewShippingForm.value) showNewShippingForm.value = false;
-    if (showNewBillingForm.value) showNewBillingForm.value = false;
+    scrollToHTMLObject(targetId);
 
-    if (editingShippingAddress.value) {
-      editingShippingAddress.value = false;
-      shippingAddressToEdit.value = {} as Address;
-    }
+    targetElement?.classList.add(...classList);
+    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
 
-    if (editingBillingAddress.value) {
-      editingBillingAddress.value = false;
-      billingAddressToEdit.value = {} as Address;
-    }
+    setTimeout(() => {
+      targetElement?.classList.remove(...classList);
+      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
+    }, 1000);
 
-    showBuyDialog.value = false;
+    return false;
   };
 
   const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
@@ -91,7 +76,7 @@ export const useCheckout = (cacheKey = '') => {
 
     if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
     if (cartAddress.value || primaryAddress)
-      setShippingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+      setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
   };
 
   const persistBillingAddress = () => {
@@ -103,7 +88,7 @@ export const useCheckout = (cacheKey = '') => {
     if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
 
     if (cartAddress.value || primaryAddress)
-      setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+      setBillingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
   };
 
   return {
@@ -112,14 +97,12 @@ export const useCheckout = (cacheKey = '') => {
     getCart,
     clearCartItems,
     cartLoading,
-    showBuyDialog,
     anyAddressFormIsOpen,
     persistShippingAddress,
     hasShippingAddress,
     persistBillingAddress,
     hasBillingAddress,
-    keepEditing,
-    closeFormsAndProceed,
+    backToFormEditing,
     validateTerms,
   };
 };

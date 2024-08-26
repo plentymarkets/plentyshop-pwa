@@ -9,11 +9,12 @@
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-shipping-divider" />
         <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-billing-divider" />
         <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" id="bottom-billing-divider" />
+
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :shipping-methods="shippingMethods"
@@ -89,34 +90,6 @@
     >
       <PayPalCreditCardForm @confirm-cancel="paypalCardDialog = false" />
     </UiModal>
-
-    <UiModal
-      v-if="showBuyDialog"
-      v-model="showBuyDialog"
-      :disable-click-away="showBuyDialog"
-      :disable-esc="showBuyDialog"
-      tag="section"
-      role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
-      aria-labelledby="address-modal-title"
-    >
-      <header>
-        <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
-          {{ t('checkoutConfirmationTitle') }}
-        </h3>
-      </header>
-      <main>
-        <div>{{ t('checkoutConfirmationSubTitle') }}</div>
-      </main>
-      <footer class="flex justify-end mt-7">
-        <UiButton @click="keepEditing" variant="secondary">
-          {{ t('checkoutConfirmationEdit') }}
-        </UiButton>
-        <UiButton @click="closeFormsAndProceed" variant="secondary" class="ml-2">{{
-          t('checkoutConfirmationProceed')
-        }}</UiButton>
-      </footer>
-    </UiModal>
   </NuxtLayout>
 </template>
 
@@ -144,14 +117,12 @@ const {
   getCart,
   clearCartItems,
   cartLoading,
-  showBuyDialog,
   anyAddressFormIsOpen,
   persistShippingAddress,
   hasShippingAddress,
   persistBillingAddress,
   hasBillingAddress,
-  keepEditing,
-  closeFormsAndProceed,
+  backToFormEditing,
   validateTerms,
 } = useCheckout();
 
@@ -195,7 +166,14 @@ const paypalCreditCardPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 
+const readyToBuy = () => {
+  if (anyAddressFormIsOpen.value) return backToFormEditing();
+  return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
+};
+
 const openPayPalCardDialog = async () => {
+  if (!readyToBuy()) return;
+
   /* try {
     await validateAndSaveAddresses();
   } catch {
@@ -221,12 +199,7 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
-  if (anyAddressFormIsOpen.value || !validateTerms()) {
-    if (anyAddressFormIsOpen.value) showBuyDialog.value = true;
-    return;
-  }
-
-  if (!hasShippingAddress.value || !hasBillingAddress.value) return;
+  if (!readyToBuy()) return;
 
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
