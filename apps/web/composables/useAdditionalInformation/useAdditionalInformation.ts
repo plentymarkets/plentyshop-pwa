@@ -67,7 +67,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const setShippingPrivacyAgreement: SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => {
     state.value.loading = true;
     state.value.shippingPrivacyAgreement = shippingPrivacyAgreement;
-    setShippingPrivacyAgreementErrors(!shippingPrivacyAgreement);
+    // setShippingPrivacyAgreementErrors(!shippingPrivacyAgreement);
     state.value.loading = false;
   };
 

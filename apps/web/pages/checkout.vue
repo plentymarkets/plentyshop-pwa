@@ -163,7 +163,6 @@ const {
   selectedPaymentId,
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
-  validateShippingTerms,
 } = useCheckoutPagePaymentAndShipping();
 
 onNuxtReady(async () => {
@@ -222,7 +221,7 @@ const handleRegularOrder = async () => {
 };
 
 const order = async () => {
-  if (anyAddressFormIsOpen.value || !validateShippingTerms() || !validateTerms()) {
+  if (anyAddressFormIsOpen.value || !validateTerms()) {
     if (anyAddressFormIsOpen.value) showBuyDialog.value = true;
     return;
   }

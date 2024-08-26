@@ -215,7 +215,7 @@
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
   "or": "oder",
-  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
+  "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis. *",
   "termsAndConditions": "AGB",
   "privacyPolicy": "Datenschutzerklärung",
   "privacyPolicyRequired": "Bitte die Checkbox zur Datenschutzerklärung bestätigen.",

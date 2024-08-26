@@ -43,6 +43,7 @@
         </i18n-t>
       </label>
     </div>
+    <div class="text-sm text-neutral-500 mb-2 ml-7">* {{ $t('contact.form.asterixHint') }}</div>
     <div v-if="showErrors" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
   </div>
 </template>
