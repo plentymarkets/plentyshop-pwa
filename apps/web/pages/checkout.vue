@@ -90,6 +90,10 @@
                 {{ t('buy') }}
               </span>
             </UiButton>
+            <PayPalApplePayButton
+              v-if="selectedPaymentId === paypalPaymentId"
+              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+            />
           </OrderSummary>
         </div>
       </div>

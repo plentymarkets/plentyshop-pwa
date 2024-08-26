@@ -1,11 +1,21 @@
 <template>
-  <div class="apple-pay-button"></div>
+  <div id="apple-pay-button"></div>
 </template>
 
 <script lang="ts" setup>
-import { ApplepayType } from '~/components/PayPal/types';
+import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
+import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
-const { loadScript } = usePayPal();
+const { loadScript, executeOrder, createTransaction } = usePayPal();
+const { createOrder } = useMakeOrder();
+const { data: cart, clearCartItems } = useCart();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
+const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
+const applePayConfig = ref<ConfigResponse | null>(null);
+const paypal = await loadScript(currency.value);
+const applePay = (paypal as any).Applepay() as ApplepayType;
+const localePath = useLocalePath();
+
 const loadApplePay = async () => {
   const scriptElement = document.createElement('script');
   scriptElement.setAttribute('src', 'https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js');
@@ -13,75 +23,122 @@ const loadApplePay = async () => {
   document.head.append(scriptElement);
 };
 
-const canMakePayments = ref(false);
-
-const initiateApplePay = async () => {
+const applePayPayment = async () => {
+  if (!applePayConfig.value) {
+    return;
+  }
   try {
-    const paypal = await loadScript('EUR');
-
-    if (!paypal) {
-      console.error('Paypal sdk failed');
-      return;
-    }
-
-    const applePay = (paypal as any).Applepay() as ApplepayType;
-
-    const paymentRequest = applePay.paymentRequest({
-      countryCode: 'DE',
-      currencyCode: 'EUR',
+    const paymentRequest = {
+      countryCode: applePayConfig.value?.countryCode,
+      merchantCapabilities: applePayConfig.value?.merchantCapabilities,
+      supportedNetworks: applePayConfig.value?.supportedNetworks,
+      currencyCode: currency.value,
+      requiredShippingContactFields: [],
+      requiredBillingContactFields: ['postalAddress'],
       total: {
+        type: 'final',
         label: 'Store',
-        amount: 100,
+        amount: cartGetters.getTotals(cart.value).total.toString(),
       },
-    });
+    } as ApplePayJS.ApplePayPaymentRequest;
 
-    const paymentSession = applePay.createPaymentSession(paymentRequest);
+    const paymentSession = new ApplePaySession(14, paymentRequest);
 
-    paymentSession.begin();
-
-    paymentSession.onvalidatemerchant = async (event: any) => {
-      try {
-        const validationData = await applePay.validateMerchant({
-          validationUrl: event.validationUrl,
+    paymentSession.onvalidatemerchant = (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
+      applePay
+        .validateMerchant({
+          validationUrl: event.validationURL,
+        })
+        .then((validationData) => {
+          paymentSession.completeMerchantValidation(validationData.merchantSession);
+        })
+        .catch((error) => {
+          console.error(error);
+          paymentSession.abort();
         });
-        paymentSession.completeMerchantValidation(validationData);
-      } catch (error) {
-        console.error('Merchant validation failed:', error);
-        paymentSession.abort();
-      }
     };
 
-    paymentSession.onpaymentauthorized = async (event: any) => {
-      try {
-        const authorization = event.payment;
-        const paymentResult = await applePay.tokenizePayment(authorization);
+    paymentSession.onpaymentauthorized = (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
+      createTransaction('applepay')
+        .then((transaction) => {
+          createOrder({
+            paymentId: cart.value.methodOfPaymentId,
+            shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+          })
+            .then((order) => {
+              try {
+                applePay
+                  .confirmOrder({
+                    orderId: transaction?.id ?? '',
+                    token: event.payment.token,
+                    billingContact: event.payment.billingContact,
+                  })
+                  .then(() => {
+                    executeOrder({
+                      mode: 'paypal',
+                      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+                      // eslint-disable-next-line promise/always-return
+                      paypalTransactionId: transaction?.id ?? '',
+                    });
 
-        if (paymentResult.error) {
-          throw new Error(paymentResult.error.message);
-        }
+                    paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
 
-        // await props.onPaymentSuccess(paymentResult);
-        // paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-      } catch (error) {
-        console.error('Payment authorization failed:', error);
-        // props.onPaymentError(error);
-        // paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
-      }
+                    clearCartItems();
+
+                    navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+                  })
+                  .catch((error) => {
+                    console.error(error);
+                    paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+                  });
+              } catch (error) {
+                console.error(error);
+              }
+            })
+            .catch((error) => {
+              console.error(error);
+              paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+          paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
+        });
     };
 
     paymentSession.addEventListener('cancel', () => {
       console.error('Apple pay cancel');
     });
+
+    paymentSession.begin();
   } catch (error) {
-    console.error('Apple pay initiation failed:', error);
+    console.error(error);
   }
 };
 
-// if (window.ApplePaySession && ApplePaySession.canMakePayments()) {
-//   canMakePayments.value = true;
-// }
-
-onMounted(() => {
-  initiateApplePay();
+onMounted(async () => {
+  await loadApplePay().then(() => {
+    applePay
+      .config()
+      .then((config: ConfigResponse) => {
+        applePayConfig.value = config;
+        if (config.isEligible) {
+          const applePayButtonContainer = document.querySelector('#apple-pay-button');
+          if (applePayButtonContainer) {
+            applePayButtonContainer.innerHTML =
+              '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en"/>';
+            const applePayButton = document.querySelector('#btn-appl');
+            if (applePayButton) {
+              applePayButton.addEventListener('click', () => {
+                applePayPayment();
+              });
+            }
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  });
 });
 </script>
