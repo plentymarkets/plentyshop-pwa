@@ -42,10 +42,13 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
   const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
     const route = useRoute();
+    const config = useRuntimeConfig().public;
+
     try {
       const { data, error } = await useAsyncData(() =>
         useSdk().plentysystems.getReview({
           itemId: itemId,
+          feedbacksPerPage: config.defaultItemsPerPage,
           page: Number(route.query.feedbackPage) || 1,
         }),
       );
