@@ -32,7 +32,7 @@
           :key="pagination.totalCount"
           :current-page="currentPage"
           :total-items="pagination.totalCount"
-          :page-size="defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE"
+          :page-size="config.defaultItemsPerPage"
           :max-visible-pages="maxVisiblePages"
           current-page-name="feedbackPage"
         />
@@ -45,7 +45,6 @@
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import { type ProductAccordionPropsType } from '~/components/ReviewsAccordion/types';
-import { defaults } from '~/composables';
 
 const { product } = defineProps<ProductAccordionPropsType>();
 
@@ -54,6 +53,8 @@ const { t } = useI18n();
 const viewport = useViewport();
 const reviewsOpen = ref(true);
 const route = useRoute();
+
+const config = useRuntimeConfig().public;
 
 const productId = Number(productGetters.getItemId(product));
 const productVariationId = productGetters.getVariationId(product);

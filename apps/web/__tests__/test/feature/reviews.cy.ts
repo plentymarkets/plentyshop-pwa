@@ -1,5 +1,4 @@
 import { paths } from '../../../utils/paths';
-import { defaults } from '../../../composables/defaults';
 import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import {ProductListPageObject} from "../../support/pageObjects/ProductListPageObject";
 import {ReviewPageObject} from "../../support/pageObjects/ReviewPageObject";
@@ -16,11 +15,24 @@ beforeEach(() => {
   cy.intercept('/plentysystems/deleteReview').as('deleteReview');
   cy.intercept('/plentysystems/doReview').as('postReview');
 
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  cy.visitAndHydrate(paths.authLogin);
+
+  myAccount.successLogin();
+  cy.wait('@doLogin').visitAndHydrate(paths.home);
+  homePage.goToCategory();
+  productListPage.goToProduct();
+
+  reviewPage.deleteAllReviews();
+
+  myAccount.clickTopBarLogoutButton();
   cy.visitAndHydrate(paths.home);
 });
 
+
+
 describe('Reviews functionality check.', () => {
-  it.skip('Checks review section.', () => {
+  it('Checks review section.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
@@ -38,22 +50,27 @@ describe('Reviews functionality check.', () => {
     reviewPage
         .checkReviewModalVisible()
         .checkReviewModalElementsVisible()
-        .postReview('Great product!')
+        .postReview('Great product!', 'John Doe')
         .checkReviewPostedSuccessfully()
         .checkEditRemoveButtonsVisible()
+        .clickEditReviewButton()
+        .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
+        .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
         .addReply()
         .checkReplyAddedSuccessfully()
+        .editReply('John Doe edited', 'Thank you! edited')
+        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
         .removeReply()
         .checkReplyRemovedSuccessfully()
         .removeReview()
         .checkNoReviewTextVisible()
-        .addMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
         .checkPaginationVisible()
-        .checkNumberOfItemsPerPage(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE)
+        .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
         .navigateToNextPage()
         .checkNumberOfItemsPerPage(1)
         .navigateToPreviousPage()
-        .removeMultipleReviews(defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE + 1)
+        .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
         .checkNoReviewTextVisible()
   });
 });

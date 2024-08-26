@@ -2,7 +2,7 @@
   <article class="w-full p-4 mb-4 border rounded-md" data-testid="review-item">
     <div class="w-full flex">
       <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
-        <span class="mr-2 text-xs text-neutral-700">{{ reviewAuthor }}</span>
+        <span class="mr-2 text-xs text-neutral-700" data-testid="review-item-authorName">{{ reviewAuthor }}</span>
         <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
         {{ t('review.verifiedPurchase') }}
       </div>
@@ -33,7 +33,7 @@
     </div>
 
     <header>
-      <p class="font-medium mb-2">{{ reviewGetters.getReviewTitle(reviewItem) }}</p>
+      <p class="font-medium mb-2" data-testid="review-item-title">{{ reviewGetters.getReviewTitle(reviewItem) }}</p>
       <div class="flex items-center pr-2 pb-2 text-xs text-neutral-500">
         <SfRating :value="reviewGetters.getReviewRating(reviewItem) ?? undefined" :max="5" size="xs" class="mr-2" />
         {{ $d(new Date(reviewGetters.getReviewDate(reviewItem))) }}
@@ -63,7 +63,7 @@
         >
           <div class="flex items-center mb-2 text-xs">
             <div class="w-full">
-              <span class="font-medium">
+              <span class="font-medium" data-testid="reply-item-authorName">
                 {{ reply.authorName || t('review.anonymous') }}
               </span>
               <span class="pl-2 text-neutral-500">{{ $d(new Date(reviewGetters.getReplyDate(reply))) }}</span>
