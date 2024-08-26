@@ -200,13 +200,14 @@ const submitForm = handleSubmit((billingAddressForm) => {
 
   saveAddress()
     .then(async () => {
-      await setCheckoutAddress(
-        addAddress
-          ? (billingAddresses.value[0] as Address)
-          : (userAddressGetters.getDefault(billingAddresses.value) as Address),
-        addAddress === false,
+      return Boolean(
+        await setCheckoutAddress(
+          addAddress
+            ? (billingAddresses.value[0] as Address)
+            : (userAddressGetters.getDefault(billingAddresses.value) as Address),
+          addAddress === false,
+        ),
       );
-      return true;
     })
     .catch((error) => useHandleError(error));
 });

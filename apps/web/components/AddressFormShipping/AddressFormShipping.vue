@@ -204,50 +204,56 @@ const toggleCompany = () => {
   }
 };
 
+const handleSaveShippingAsBilling = async (shippingAddressForm: Address) => {
+  if (shippingAsBilling.value) {
+    billingAddressToSave.value = shippingAddressForm as Address;
+    if (addAddress) billingAddressToSave.value.primary = true;
+    await saveBillingAddress();
+  }
+};
+
+const handleShippingPrimaryAddress = async () => {
+  if (shippingAddresses.value.length > 0) {
+    await setShippingAddress(
+      addAddress
+        ? (shippingAddresses.value[0] as Address)
+        : (userAddressGetters.getDefault(shippingAddresses.value) as Address),
+      addAddress === false,
+    );
+
+    usePrimaryAddress(AddressType.Shipping).primaryAddressId.value =
+      shippingAddresses.value?.find((item) => item.primary === true)?.id || -1;
+  }
+};
+
+const handleBillingPrimaryAddress = async () => {
+  if (shippingAsBilling.value && billingAddresses.value.length > 0) {
+    await setBillingAddress(
+      addAddress
+        ? (billingAddresses.value[0] as Address)
+        : (userAddressGetters.getDefault(billingAddresses.value) as Address),
+      false,
+    );
+
+    usePrimaryAddress(AddressType.Billing).primaryAddressId.value =
+      billingAddresses.value?.find((item) => item.primary === true)?.id || -1;
+  }
+};
+
+const handleShippingAndPaymentRefresh = async () => {
+  await useCartShippingMethods().getShippingMethods();
+  await usePaymentMethods().fetchPaymentMethods();
+};
+
 const submitForm = handleSubmit((shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
   if (addAddress) shippingAddressToSave.value.primary = true;
 
   saveShippingAddress()
-    .then(async () => {
-      if (shippingAsBilling.value) {
-        billingAddressToSave.value = shippingAddressForm as Address;
-        if (addAddress) billingAddressToSave.value.primary = true;
-        await saveBillingAddress();
-      }
-      return true;
-    })
-    .then(async () => {
-      await setShippingAddress(
-        addAddress
-          ? (shippingAddresses.value[0] as Address)
-          : (userAddressGetters.getDefault(shippingAddresses.value) as Address),
-        addAddress === false,
-      );
-
-      usePrimaryAddress(AddressType.Shipping).primaryAddressId.value =
-        shippingAddresses.value?.find((item) => item.primary === true)?.id || -1;
-      return true;
-    })
-    .then(async () => {
-      if (shippingAsBilling.value) {
-        await setBillingAddress(
-          addAddress
-            ? (billingAddresses.value[0] as Address)
-            : (userAddressGetters.getDefault(billingAddresses.value) as Address),
-          false,
-        );
-
-        usePrimaryAddress(AddressType.Billing).primaryAddressId.value =
-          billingAddresses.value?.find((item) => item.primary === true)?.id || -1;
-      }
-      return true;
-    })
-    .then(() => {
-      useCartShippingMethods().getShippingMethods();
-      usePaymentMethods().fetchPaymentMethods();
-      return true;
-    })
+    .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
+    .then(() => handleShippingPrimaryAddress())
+    .then(() => handleBillingPrimaryAddress())
+    .then(() => handleShippingAndPaymentRefresh())
     .catch((error) => useHandleError(error));
 });
 

@@ -101,6 +101,7 @@ export const useCheckout = (cacheKey = '') => {
       billingAddresses.value.length > 0 ? userAddressGetters.getDefault(billingAddresses.value) : undefined;
 
     if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
+
     if (cartAddress.value || primaryAddress)
       setBillingCheckoutAddress(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
   };

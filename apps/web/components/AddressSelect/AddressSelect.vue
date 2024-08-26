@@ -100,7 +100,7 @@ const handleAddressButtonTrigger = () => {
 };
 
 const persistCheckoutAddress = async (address: Address) => {
-  if (checkoutAddress.value.id === address.id) return;
+  if (checkoutAddress.value?.id === address.id) return;
 
   await setCheckoutAddress(address).then(() => {
     if (type === AddressType.Shipping) {
