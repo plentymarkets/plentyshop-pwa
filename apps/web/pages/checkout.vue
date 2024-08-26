@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('backToCart')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :back-label-desktop="$t('backToCart')"
+    :back-label-mobile="$t('back')"
+    :heading="$t('checkout')"
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
@@ -60,7 +60,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <span>
-                {{ t('buy') }}
+                {{ $t('buy') }}
               </span>
             </UiButton>
             <UiButton
@@ -74,7 +74,7 @@
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('buy') }}
+                {{ $t('buy') }}
               </span>
             </UiButton>
           </OrderSummary>
@@ -105,7 +105,6 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { t } = useI18n();
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { fetchPaymentMethods } = usePaymentMethods();
