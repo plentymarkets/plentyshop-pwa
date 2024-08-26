@@ -106,6 +106,7 @@
 
 ### 👷 Changed
 
+- Added file variation property file link
 - Changed shortDescription to return empty string
 - Improved display of reviews rating average
 - Removed unnecessary hover state from cart items
