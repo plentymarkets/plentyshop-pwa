@@ -50,6 +50,7 @@
           v-bind="authorNameAttributes"
           :invalid="Boolean(errors['authorName'])"
           name="authorName"
+          data-testid="input-authorName"
           id="review-author"
         />
         <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
