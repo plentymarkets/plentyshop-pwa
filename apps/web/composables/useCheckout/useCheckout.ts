@@ -13,7 +13,7 @@ export const useCheckout = (cacheKey = '') => {
   }));
 
   const showBuyDialog = ref(false);
-  const { data: cart, getCart, loading: cartLoading } = useCart();
+  const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
   const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
@@ -110,11 +110,14 @@ export const useCheckout = (cacheKey = '') => {
     ...toRefs(state.value),
     cart,
     getCart,
+    clearCartItems,
     cartLoading,
     showBuyDialog,
     anyAddressFormIsOpen,
     persistShippingAddress,
+    hasShippingAddress,
     persistBillingAddress,
+    hasBillingAddress,
     keepEditing,
     closeFormsAndProceed,
     validateTerms,

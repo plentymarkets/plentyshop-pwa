@@ -137,15 +137,19 @@ const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { fetchPaymentMethods } = usePaymentMethods();
 const { getShippingMethods } = useCartShippingMethods();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
   getCart,
+  clearCartItems,
   cartLoading,
   showBuyDialog,
   anyAddressFormIsOpen,
   persistShippingAddress,
+  hasShippingAddress,
   persistBillingAddress,
+  hasBillingAddress,
   keepEditing,
   closeFormsAndProceed,
   validateTerms,
@@ -206,16 +210,15 @@ const openPayPalCardDialog = async () => {
 };
 
 const handleRegularOrder = async () => {
-  console.log('hasShippingAddress', 'hasBillingAddress');
+  const data = await createOrder({
+    paymentId: paymentMethods.value.selected,
+    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+  });
 
-  // const data = await createOrder({
-  //   paymentId: paymentMethods.value.selected,
-  //   shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  // });
-  // if (data?.order?.id) {
-  //   clearCartItems();
-  //   navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
-  // }
+  if (data?.order?.id) {
+    clearCartItems();
+    navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
+  }
 };
 
 const order = async () => {
@@ -223,6 +226,8 @@ const order = async () => {
     if (anyAddressFormIsOpen.value) showBuyDialog.value = true;
     return;
   }
+
+  if (!hasShippingAddress.value || !hasBillingAddress.value) return;
 
   const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
 
