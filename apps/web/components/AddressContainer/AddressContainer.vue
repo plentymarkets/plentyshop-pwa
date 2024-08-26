@@ -7,7 +7,7 @@
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
-        <UiButton v-else @click="validateAndSubmitForm" variant="secondary">
+        <UiButton v-else @click="validateAndSubmitForm" :disabled="formIsLoading" variant="secondary">
           {{ t('saveAddress') }}
         </UiButton>
 
@@ -19,6 +19,7 @@
           <UiButton
             v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
             @click="edit(checkoutAddress)"
+            :disabled="formIsLoading"
             variant="secondary"
           >
             <template v-if="!editing && !showNewForm">
@@ -65,7 +66,7 @@ const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
-const { addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
+const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
 const addressFormShipping = ref(null as any);
 const addressFormBilling = ref(null as any);
