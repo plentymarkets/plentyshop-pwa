@@ -51,6 +51,7 @@ const applePayPayment = async () => {
         })
         .then((validationData) => {
           paymentSession.completeMerchantValidation(validationData.merchantSession);
+          return null;
         })
         .catch((error) => {
           console.error(error);
@@ -86,6 +87,8 @@ const applePayPayment = async () => {
                     clearCartItems();
 
                     navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
+
+                    return null;
                   })
                   .catch((error) => {
                     console.error(error);
@@ -94,11 +97,13 @@ const applePayPayment = async () => {
               } catch (error) {
                 console.error(error);
               }
+              return null;
             })
             .catch((error) => {
               console.error(error);
               paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
             });
+          return null;
         })
         .catch((error) => {
           console.error(error);
@@ -135,6 +140,7 @@ onMounted(async () => {
             }
           }
         }
+        return null;
       })
       .catch((error) => {
         console.error(error);
