@@ -58,8 +58,8 @@ export class ReviewPageObject extends PageObject{
     return this;
   }
 
-  postReview(title: string) {
-    cy.get('[data-testid="review-modal"] input[name="authorName"]').type(title);
+  postReview(title: string, authorName: string) {
+    cy.get('[data-testid="review-modal"] input[name="authorName"]').type(authorName);
     cy.get('[data-testid="review-modal"] input[name="title"]').type(title);
     cy.get('[data-testid="ratingbutton"] label').click({multiple: true});
     cy.get('[data-testid="review-modal"] textarea[name="message"]').type('This is a review message.');
@@ -72,6 +72,7 @@ export class ReviewPageObject extends PageObject{
 
   checkReviewPostedSuccessfully() {
     cy.get('[data-testid="review-item"]').should('contain', 'This is a review message.');
+    cy.get('[data-testid="review-item-authorName"]').should('contain', 'John Doe');
 
     return this;
   }
@@ -122,7 +123,7 @@ export class ReviewPageObject extends PageObject{
   removeMultipleReviews(count: number) {
     for (let i = 0; i < count; i++) {
       this.removeReview();
-      cy.wait(0.5)
+      cy.wait(1000)
     }
 
     return this;
@@ -131,8 +132,8 @@ export class ReviewPageObject extends PageObject{
   addMultipleReviews(count: number) {
     for (let i = 0; i < count; i++) {
       this.clickAddReviewButton()
-      this.postReview(`Review ${i + 1}`);
-      cy.wait(0.5)
+      this.postReview(`Review ${i + 1}`, 'John Doe');
+      cy.wait(1000)
     }
 
     return this;
@@ -158,4 +159,55 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="pagination-previous"]').click();
     return this;
   }
+
+
+  clickEditReviewButton() {
+    cy.get('[data-testid="edit-review-button"]').click();
+
+    return this;
+  }
+
+  editReview(title: string, authorName: string, message: string) {
+    cy.get('[data-testid="review-modal"] input[name="authorName"]').clear().type(authorName);
+    cy.get('[data-testid="review-modal"] input[name="title"]').clear().type(title);
+    cy.get('[data-testid="ratingbutton"] label').click({multiple: true});
+    cy.get('[data-testid="review-modal"] textarea[name="message"]').clear().type(message);
+    cy.get('[data-testid="review-modal"] button[type="submit"]').click();
+
+    return this;
+  }
+
+  checkReviewEditedSuccessfully(authorName: string, message: string) {
+    cy.get('[data-testid="review-item"]').should('contain', message);
+    cy.get('[data-testid="review-item-authorName"]').should('contain', authorName);
+
+    return this
+  }
+
+  editReply(authorName: string, message: string) {
+    cy.get('[data-testid="edit-reply-button"]').click();
+    cy.get('[data-testid="review-modal"] input[name="authorName"]').clear().type(authorName);
+    cy.get('[data-testid="review-modal"] textarea[name="message"]').clear().type(message);
+    cy.get('[data-testid="review-modal"] button[type="submit"]').click();
+
+    return this;
+  }
+
+  checkReplyEditedSuccessfully(authorName: string, message: string) {
+    cy.get('[data-testid="reply-item"]').should('contain', message);
+    cy.get('[data-testid="reply-item-authorName"]').should('contain', authorName);
+
+    return this;
+  }
+
+  deleteAllReviews() {
+    cy.wait(1000);
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-testid="review-item"]').length) {
+        this.removeReview();
+
+        this.deleteAllReviews();
+      }
+    });
+  };
 }
