@@ -55,6 +55,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    */
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const { getCategoryUrlFromRoute } = useLocalization();
+    const config = useRuntimeConfig().public;
 
     return {
       categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
@@ -62,7 +63,7 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
       sort: route.query.sort?.toString(),
       facets: route.query.facets?.toString(),
       feedbackPage: Number(route.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
-      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || defaults.DEFAULT_FEEDBACK_ITEMS_PER_PAGE,
+      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
       itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
       term: route.query.term?.toString(),
       priceMin: route.query.priceMin?.toString(),
