@@ -1,5 +1,6 @@
 <template>
   <Body class="font-body" :class="bodyClass" />
+  <UiNotifications />
   <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
   <NuxtLayout>
     <NuxtPage />

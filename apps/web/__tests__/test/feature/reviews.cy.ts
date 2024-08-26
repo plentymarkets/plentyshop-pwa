@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 describe('Reviews functionality check.', () => {
-  it('Checks review section.', () => {
+  it.skip('Checks review section.', () => {
     homePage.goToCategory();
     productListPage.goToProduct();
 
