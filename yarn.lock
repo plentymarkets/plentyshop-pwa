@@ -4291,7 +4291,6 @@ __metadata:
     cross-env: ^7.0.3
     cypress-iframe: ^1.0.1
     dotenv: ^16.4.5
-    eventemitter3: ^5.0.1
     happy-dom: ^14.12.3
     husky: ^8.0.3
     is-ci: ^3.0.1
