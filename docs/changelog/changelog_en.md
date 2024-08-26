@@ -15,6 +15,7 @@
   - `200` -> `50`
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
+- Implement Applepay as a payment method
 
 ### 🚀 New
 
