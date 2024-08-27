@@ -1,6 +1,4 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { useCheckout } from '../useCheckout';
-import { useCheckoutAddress } from '../../address-playground/useCheckoutAddress';
 
 const addressFixture = {
     id: 1, 
