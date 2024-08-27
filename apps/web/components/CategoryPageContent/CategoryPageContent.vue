@@ -24,7 +24,7 @@
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
-          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="index">
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
@@ -92,5 +92,5 @@ const viewport = useViewport();
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
-if (viewport.isLessThan('md')) close;
+if (viewport.isLessThan('md')) close();
 </script>

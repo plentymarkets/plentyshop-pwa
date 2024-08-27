@@ -27,7 +27,9 @@
 - Make the paypal button lazyload for PS
 - Added dynamic metadata for products and categories.
 - Added stock check for the order again feature.
+- Unify html nodes on category page to use h6 node
 - Added dynamic title and alternate for product images
+- Added e2e tests for reviews pagination.
 
 ### 🩹 Fixed
 
@@ -41,6 +43,7 @@
 - Fixed wrongful display of base prices issue.
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
+- Fixed editing author name on reviews and replies with added e2e
 - Fixed wrongful display of base prices issue.
 
 ### 👷 Changed
@@ -54,6 +57,7 @@
 - Remove cookie browser language detect.
 - Set page title for items and categories instead of title metadata
 - Refactor of reviews functionality for better performance and maintainability.
+- PayPal: We now use card fields instead of hosting fields for credit card payments.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -175,6 +179,7 @@
 - Demo images now have different sizes, based on the user's viewport.
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
+- Structure of the useProduct composable
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

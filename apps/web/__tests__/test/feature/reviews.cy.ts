@@ -12,9 +12,24 @@ const myAccount: MyAccountPageObject = new MyAccountPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
+  cy.intercept('/plentysystems/deleteReview').as('deleteReview');
+  cy.intercept('/plentysystems/doReview').as('postReview');
 
+  cy.intercept('/plentysystems/doLogin').as('doLogin');
+  cy.visitAndHydrate(paths.authLogin);
+
+  myAccount.successLogin();
+  cy.wait('@doLogin').visitAndHydrate(paths.home);
+  homePage.goToCategory();
+  productListPage.goToProduct();
+
+  reviewPage.deleteAllReviews();
+
+  myAccount.clickTopBarLogoutButton();
   cy.visitAndHydrate(paths.home);
 });
+
+
 
 describe('Reviews functionality check.', () => {
   it('Checks review section.', () => {
@@ -35,17 +50,27 @@ describe('Reviews functionality check.', () => {
     reviewPage
         .checkReviewModalVisible()
         .checkReviewModalElementsVisible()
-        .postReview('Great product!')
+        .postReview('Great product!', 'John Doe')
         .checkReviewPostedSuccessfully()
         .checkEditRemoveButtonsVisible()
+        .clickEditReviewButton()
+        .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
+        .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
         .addReply()
         .checkReplyAddedSuccessfully()
+        .editReply('John Doe edited', 'Thank you! edited')
+        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
         .removeReply()
         .checkReplyRemovedSuccessfully()
         .removeReview()
         .checkNoReviewTextVisible()
-        // .addMultipleReviews(10 + 1)
-        // .checkPaginationVisible()
-        // .navigateThroughPages()
+        .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
+        .checkPaginationVisible()
+        .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
+        .navigateToNextPage()
+        .checkNumberOfItemsPerPage(1)
+        .navigateToPreviousPage()
+        .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
+        .checkNoReviewTextVisible()
   });
 });
