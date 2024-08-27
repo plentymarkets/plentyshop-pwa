@@ -30,7 +30,7 @@ export const useCheckout = (cacheKey = '') => {
   );
 
   const backToFormEditing = () => {
-    const classList = ['bg-gray-100', 'rounded-md'];
+    const classList = ['bg-primary-50', 'rounded-md'];
     const opacityClass = 'opacity-0';
     const targetId =
       showNewShippingForm.value || editingShippingAddress.value ? ID_SHIPPING_ADDRESS : ID_BILLING_ADDRESS;
