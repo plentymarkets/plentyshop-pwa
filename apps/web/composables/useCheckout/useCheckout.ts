@@ -14,6 +14,7 @@ export const useCheckout = (cacheKey = '') => {
 
   const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+  const { shippingAsBilling } = useShippingAsBilling();
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
   const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
   const {
@@ -84,8 +85,12 @@ export const useCheckout = (cacheKey = '') => {
       shippingAddresses.value.length > 0 ? userAddressGetters.getDefault(shippingAddresses.value) : undefined;
 
     if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
-    if (cartAddress.value || primaryAddress)
+    if (cartAddress.value || primaryAddress) {
       setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+    } else {
+      showNewShippingForm.value = true;
+      shippingAsBilling.value = true;
+    }
   };
 
   const persistBillingAddress = () => {

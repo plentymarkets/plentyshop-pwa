@@ -145,16 +145,17 @@ const handleSetCheckoutAddress = async (address: Address) => {
 };
 
 const handleDeleteAddress = async (address: Address) => {
-  await deleteAddress(Number(userAddressGetters.getId(address)));
+  await deleteAddress(Number(userAddressGetters.getId(address))).then(() => {
+    const upgradedAddress =
+      primaryAddressId.value === address.id
+        ? addresses.value.length > 0
+          ? addresses.value[0]
+          : null
+        : (getAddress(primaryAddressId.value) as Address);
 
-  const upgradedAddress =
-    primaryAddressId.value === address.id
-      ? addresses.value.length > 0
-        ? addresses.value[0]
-        : null
-      : (getAddress(primaryAddressId.value) as Address);
-
-  upgradedAddress === null ? clearCheckoutAddress() : persistCheckoutAddress(upgradedAddress as Address);
+    upgradedAddress === null ? clearCheckoutAddress() : persistCheckoutAddress(upgradedAddress as Address);
+    return true;
+  });
 };
 
 const handleSetDefaultAddress = (address: Address) => {

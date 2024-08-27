@@ -121,7 +121,7 @@
     </label>
 
     <label class="flex items-center gap-2">
-      <SfCheckbox name="combineShippingBilling" v-model="shippingAsBilling" />
+      <SfCheckbox id="use-shipping-as-billing" v-model="shippingAsBilling" />
       <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
     </label>
   </form>
