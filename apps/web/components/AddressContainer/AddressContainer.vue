@@ -7,7 +7,7 @@
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
-        <UiButton v-else @click="validateAndSubmitForm" :disabled="formIsLoading" variant="secondary">
+        <UiButton :data-testid="'save-address-' + type" v-else @click="validateAndSubmitForm" :disabled="formIsLoading" variant="secondary">
           {{ t('saveAddress') }}
         </UiButton>
 

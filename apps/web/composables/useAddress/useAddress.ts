@@ -3,6 +3,7 @@ import { type DeleteAddress, type SetDefault } from '~/composables/useAddress/ty
 import { type UseAddressReturn, type GetAddresses, type SaveAddress, UseAddressMethodsState } from './types';
 
 /**
+ * @deprecated use `useAddressStore`, `useCheckoutAddress`, `useCreateAddress`, `usePrimaryAddress`, `useFetchAddress`, `useDeleteAddress` instead 
  * @description Composable for working with addresses in the current user session.
  * The composable covers two types of addresses, billing and shipping.
  * @example

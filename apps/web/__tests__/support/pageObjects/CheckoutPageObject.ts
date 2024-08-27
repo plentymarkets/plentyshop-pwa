@@ -1,4 +1,5 @@
 import { PageObject } from "./PageObject";
+import { useShippingAsBilling } from '../../../composables/useShippingAsBilling/useShippingAsBilling';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -25,8 +26,8 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('contact-information-form').find('input');
   }
 
-  get modalSaveButton() {
-    return cy.getByTestId('save-address');
+  get saveShipping() {
+    return cy.getByTestId('save-address-2');
   }
 
   get contactInformationFormSaveButton() {
@@ -66,10 +67,6 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('input').find('input[name="lastName"]');
   }
 
-  get phoneInput() {
-    return cy.getByTestId('input').find('input[name="phone"]');
-  }
-
   get countrySelect() {
     return cy.getByTestId('select').find('select[name="country"]');
   }
@@ -91,7 +88,11 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get postalCodeInput() {
-    return cy.getByTestId('input').find('input[name="postalCode"]');
+    return cy.getByTestId('input').find('input[name="zipCode"]');
+  }
+
+  get useShippingAsBilling() {
+    return cy.getByTestId('use-shipping-as-billing');
   }
 
   goToGuestCheckout() {
@@ -158,7 +159,7 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillBillingAddressForm() {
+  fillShippingAddressForm() {
     return this.fillAddressForm();
   }
 
@@ -185,10 +186,6 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillShippingAddressForm() {
-    return this.fillAddressForm();
-  }
-
   fillAddressForm() {
     cy.getFixture('addressForm').then((fixture) => {
       this.fillForm(fixture);
@@ -199,14 +196,13 @@ export class CheckoutPageObject extends PageObject {
   fillForm(fixture: any) {
     this.firstNameInput.type(fixture.firstName);
     this.lastNameInput.type(fixture.lastName);
-    this.phoneInput.type(fixture.phoneNumber);
     this.countrySelect.select(fixture.country);
     this.streetNameInput.type(fixture.streetName);
     this.streetNumberInput.type(fixture.apartment);
     this.cityInput.type(fixture.city);
     // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
-    this.modalSaveButton.click({ force: true });
+    this.saveShipping.click({ force: true });
     return this;
   }
 }

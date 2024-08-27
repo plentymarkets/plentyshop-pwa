@@ -24,6 +24,7 @@
         {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
       </UiFormLabel>
       <SfInput
+        name="lastName"
         autocomplete="family-name"
         v-model="lastName"
         v-bind="lastNameAttributes"
@@ -83,6 +84,7 @@
     <label>
       <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
       <SfInput
+        name="zipCode"
         autocomplete="postal-code"
         v-model="zipCode"
         v-bind="zipCodeAttributes"
@@ -121,7 +123,7 @@
     </label>
 
     <label class="flex items-center gap-2">
-      <SfCheckbox id="use-shipping-as-billing" v-model="shippingAsBilling" />
+      <SfCheckbox data-testid="use-shipping-as-billing" v-model="shippingAsBilling" />
       <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
     </label>
   </form>
