@@ -1,15 +1,16 @@
 import { AddressType } from "@plentymarkets/shop-api";
 
 const addressFixture = {
-    id: 1, name1: 'Test',
-    firstName: null,
-    lastName: null,
-    streetName: null,
-    apartment: null,
-    city: '',
-    country: undefined,
-    zipCode: '',
-    phoneNumber: undefined,
+    id: 1, 
+    name1: 'Test',
+    firstName: 'Max',
+    lastName: 'Power',
+    streetName: 'Test street',
+    apartment: '1',
+    city: 'Kassel',
+    country: '1',
+    zipCode: '12345',
+    phoneNumber: '1231244534654',
     primary: 0
 };
 
@@ -19,103 +20,51 @@ describe('useAddressStore', () => {
         clearNuxtState();
     });
 
-
     it('should set addresses', () => {
-        const { set, addresses } = useAddressStore(AddressType.Billing);
-        const onSetSpy = vi.fn();
-
-        // const unsubscribeCreate = onSet(onSetSpy);
-
+        const type = AddressType.Billing;
+        const { set, addresses } = useAddressStore(type);
         set([addressFixture]);
-
         expect(addresses.value).toEqual([addressFixture]);
-        expect(onSetSpy).toHaveBeenCalledTimes(1);
-        // unsubscribeCreate();
     });
 
-    it('should destroy address', () => {
-        const { set, destroy, addresses } = useAddressStore(AddressType.Billing);
-        const onDestroySpy = vi.fn();
+    it('should create address', () => {
+        const type = AddressType.Billing;
+        const { create, addresses } = useAddressStore(type);
+        create(addressFixture);
 
-        // const unsubscribeDelete = onDestroy(onDestroySpy);
-
-        set([addressFixture]);
-
-        destroy(1);
-
-        expect(addresses.value).toEqual([]);
-        expect(onDestroySpy).toHaveBeenCalledTimes(1);
-        // unsubscribeDelete();
+        const address = addresses.value[0];
+        expect(address).toEqual(addressFixture);
     });
 
     it('should get address', () => {
-        const { set, get } = useAddressStore(AddressType.Billing);
-
+        const type = AddressType.Billing;
+        const { get, set } = useAddressStore(type);
         set([addressFixture]);
-
-        expect(get(1)).toEqual(addressFixture);
+        expect(get(addressFixture.id)).toEqual(addressFixture);
     });
 
     it('should update address', () => {
-        const { set, update, addresses } = useAddressStore(AddressType.Billing);
-        const onUpdateSpy = vi.fn();
-
-        // const unsubscribeUpdate = onUpdate(onUpdateSpy);
-
+        const type = AddressType.Billing;
+        const { update, get, set } = useAddressStore(type);
         set([addressFixture]);
+        const updatedAddress = { ...addressFixture, name1: 'Updated' };
+        update(updatedAddress);
+        expect(get(addressFixture.id)).toEqual(updatedAddress);
+    });
 
-        update({ ...addressFixture, name1: 'Updated' });
-
-        expect(addresses.value).toEqual([{ ...addressFixture, name1: 'Updated' }]);
-        expect(onUpdateSpy).toHaveBeenCalledTimes(1);
-        // unsubscribeUpdate();
+    it('should destroy address', () => {
+        const type = AddressType.Billing;
+        const { destroy, get, set } = useAddressStore(type);
+        set([addressFixture]);
+        destroy(addressFixture.id);
+        expect(get(addressFixture.id)).toBeUndefined();
     });
 
     it('should clear addresses', () => {
-        const { set, clear, addresses } = useAddressStore(AddressType.Billing);
-
+        const type = AddressType.Billing;
+        const { set, clear, addresses } = useAddressStore(type);
         set([addressFixture]);
-
         clear();
-
         expect(addresses.value).toEqual([]);
     });
-
-    it(('should unsubscribe all events'), async () => {
-        const { set, destroy } = useAddressStore(AddressType.Billing);
-
-        const onSetSpy = vi.fn();
-        const onDestroySpy = vi.fn();
-        // onSet(onSetSpy);
-        // onDestroy(onDestroySpy);
-
-        // unsubscribeAll();
-
-        set([addressFixture]);
-        destroy(1);
-
-        expect(onSetSpy).toHaveBeenCalledTimes(0);
-        expect(onDestroySpy).toHaveBeenCalledTimes(0);
-
-    });
-
-    it('should unsubscribe event', () => {
-        const { create, addresses } = useAddressStore(AddressType.Billing);
-        const onCreateSpy = vi.fn();
-
-        // const unsubscribeCreate = onCreate(onCreateSpy);
-
-        // create(addressFixture,[addressFixture]);
-
-        expect(addresses.value).toEqual([addressFixture]);
-        expect(onCreateSpy).toHaveBeenCalledTimes(1);
-
-        // unsubscribeCreate();
-
-        // create(addressFixture, [{ ...addressFixture, id: 2 }]);
-
-        expect(addresses.value).toEqual([{ ...addressFixture, id: 2 }]);
-        expect(onCreateSpy).toHaveBeenCalledTimes(1);
-    });
-
 });
