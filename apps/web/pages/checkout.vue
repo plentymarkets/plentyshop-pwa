@@ -46,7 +46,7 @@
             <PayPalExpressButton
               v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="console.log('todo')"
+              @on-click="validateTerms"
               type="Checkout"
             />
             <UiButton
