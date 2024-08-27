@@ -116,6 +116,19 @@ describe('useCheckout', () => {
 
     it.todo('should go back backToFormEditing');
 
+    it('should show forms open if there are no addresses', () => {
+        useAddressStore.mockImplementation(() => {
+            return {
+                get: () => null,
+                addresses: ref([])
+            }
+        });
+
+        const { anyAddressFormIsOpen } = useCheckout();
+
+        expect(anyAddressFormIsOpen.value).toBeTruthy();
+    });
+
     it('should test if terms are accepted', () => {
 
         useAgreementCheckbox.mockImplementation(() => {
