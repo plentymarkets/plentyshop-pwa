@@ -47,6 +47,7 @@
 
 ### 👷 Changed
 
+- Addresses: We’ve enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
