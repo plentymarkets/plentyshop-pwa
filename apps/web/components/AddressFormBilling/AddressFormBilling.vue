@@ -195,20 +195,20 @@ const toggleCompany = () => {
   }
 };
 
+const syncCheckoutAddress = async () => {
+  await setCheckoutAddress(
+    addAddress
+      ? (billingAddresses.value[0] as Address)
+      : (userAddressGetters.getDefault(billingAddresses.value) as Address),
+    addAddress === false,
+  );
+};
+
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
 
   saveAddress()
-    .then(async () => {
-      return Boolean(
-        await setCheckoutAddress(
-          addAddress
-            ? (billingAddresses.value[0] as Address)
-            : (userAddressGetters.getDefault(billingAddresses.value) as Address),
-          addAddress === false,
-        ),
-      );
-    })
+    .then(() => syncCheckoutAddress())
     .catch((error) => useHandleError(error));
 });
 
