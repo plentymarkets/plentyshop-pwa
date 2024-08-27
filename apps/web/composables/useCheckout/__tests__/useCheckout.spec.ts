@@ -186,7 +186,7 @@ describe('useCheckout', () => {
         expect(useCheckoutAddressSpy).toHaveBeenCalledWith(addressFixture, true);
     });
 
-    it('should use the primary address when cart address is not set', () => {
+    it('should use the primary address when cart address is not set for shipping', () => {
         const useCheckoutAddressSpy = vi.fn();
         useCart.mockImplementation(() => {
             return {
@@ -216,6 +216,74 @@ describe('useCheckout', () => {
         persistShippingAddress();
 
         expect(useCheckoutAddressSpy).toHaveBeenCalledWith(shippingAddresses[0], false);
+    });
+
+    it('should set initial state when persisting billing address', () => {
+        const setInitialStateSpy = vi.fn();
+        useAddressForm.mockImplementation(() => {
+            return {
+                setInitialState: setInitialStateSpy,
+            }
+        });
+        const { persistBillingAddress } = useCheckout();
+        persistBillingAddress();
+        expect(setInitialStateSpy).toHaveBeenCalled();
+    });
+
+    it('should use the cart address id first when persisting billing address', () => {
+        const useCheckoutAddressSpy = vi.fn();
+        useCart.mockImplementation(() => {
+            return {
+                data: ref({
+                    customerShippingAddressId: '123',
+                    customerInvoiceAddressId: '321'
+                })
+            }
+        });
+
+        useCheckoutAddress.mockImplementation(() => {
+            return {
+                set: useCheckoutAddressSpy
+            }
+        });
+
+        const { persistBillingAddress } = useCheckout();
+
+        persistBillingAddress();
+
+        expect(useCheckoutAddressSpy).toHaveBeenCalledWith(addressFixture, true);
+    });
+
+    it('should use the primary address when cart address is not set for billing', () => {
+        const useCheckoutAddressSpy = vi.fn();
+        useCart.mockImplementation(() => {
+            return {
+                data: ref({
+                    customerShippingAddressId: null,
+                    customerInvoiceAddressId: null
+                })
+            }
+        });
+
+        useCheckoutAddress.mockImplementation(() => {
+            return {
+                set: useCheckoutAddressSpy
+            }
+        });
+
+        const billingAddresses = [ {...addressFixture, primary: 1, id: '100'}, {...addressFixture, primary: 0, id: '101'}];
+
+        useAddressStore.mockImplementation(() => {
+            return {
+                addresses: ref(billingAddresses)
+            }
+        });
+
+        const { persistBillingAddress } = useCheckout();
+
+        persistBillingAddress();
+
+        expect(useCheckoutAddressSpy).toHaveBeenCalledWith(billingAddresses[0], false);
     });
 
 });
