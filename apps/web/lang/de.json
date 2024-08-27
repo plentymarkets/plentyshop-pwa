@@ -34,12 +34,14 @@
   "billing": {
     "heading": "Rechnungsadresse",
     "description": "Fügen Sie eine Rechnungsadresse hinzu. Sie werden die Rechnung an die oben angegebene E-Mail-Adresse erhalten.",
-    "addButton": "Rechnungsadresse hinzufügen"
+    "addButton": "Rechnungsadresse hinzufügen",
+    "methodChanged": "Die von Ihnen ausgewählte Zahlungsart ist nicht mehr verfügbar."
   },
   "shipping": {
     "heading": "Lieferadresse",
     "description": "Fügen Sie eine Lieferadresse hinzu, um Versanddetails anzuzeigen.",
-    "addButton": "Lieferadresse hinzufügen"
+    "addButton": "Lieferadresse hinzufügen",
+    "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar."
   },
   "form": {
     "firstNameLabel": "Vorname",

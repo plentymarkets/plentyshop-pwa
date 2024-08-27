@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { type AddressSelectProps } from './types';
-import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
@@ -60,6 +60,10 @@ const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { checkoutAddress, set: setCheckoutAddress, clear: clearCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
+const { data: customerData, getSession } = useCustomer();
+const { data: cartData } = useCart();
+const { selectedMethod } = useCartShippingMethods();
+const { send } = useNotification();
 
 const emit = defineEmits<{
   (event: 'edit', address: Address): void;
@@ -99,20 +103,33 @@ const handleAddressButtonTrigger = () => {
   emitNewAddressEvent();
 };
 
+const notifyIfShippingChanged = () => {
+  if (
+    selectedMethod.value &&
+    shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
+      shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
+  ) {
+    send({ message: t('shipping.methodChanged'), type: 'warning' });
+  }
+};
+
+const notifyIfBillingChanged = () => {
+  if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
+    send({ message: t('billing.methodChanged'), type: 'warning' });
+    cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
+  }
+};
+
 const refreshAddressDependencies = async () => {
   if (type === AddressType.Shipping) {
-    const { data: customerData, getSession } = useCustomer();
-    const { data: cartData } = useCart();
-
     await Promise.all([
       getSession(),
       useCartShippingMethods().getShippingMethods(),
       usePaymentMethods().fetchPaymentMethods(),
     ]);
 
-    if (cartData.value) {
-      cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
-    }
+    notifyIfShippingChanged();
+    notifyIfBillingChanged();
   }
 };
 

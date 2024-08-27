@@ -34,12 +34,14 @@
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
-    "addButton": "Add billing address"
+    "addButton": "Add billing address",
+    "methodChanged": "The selected payment method is not available anymore."
   },
   "shipping": {
     "heading": "Shipping Address",
     "description": "Add a shipping address to view shipping details.",
-    "addButton": "Add shipping address"
+    "addButton": "Add shipping address",
+    "methodChanged": "The selected shipping method is not available anymore."
   },
   "form": {
     "firstNameLabel": "First Name",
