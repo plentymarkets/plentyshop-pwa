@@ -175,15 +175,6 @@ const readyToBuy = () => {
 const openPayPalCardDialog = async () => {
   if (!readyToBuy()) return;
 
-  /* try {
-    await validateAndSaveAddresses();
-  } catch {
-    return;
-  }
-  if (!validateTerms()) {
-    return;
-  } */
-
   paypalCardDialog.value = true;
 };
 
