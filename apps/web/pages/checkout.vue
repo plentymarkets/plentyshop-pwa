@@ -14,7 +14,6 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-billing-divider" />
         <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" id="bottom-billing-divider" />
-
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :shipping-methods="shippingMethods"
@@ -59,9 +58,7 @@
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <span>
-                {{ $t('buy') }}
-              </span>
+              {{ $t('buy') }}
             </UiButton>
             <UiButton
               v-else
@@ -73,9 +70,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-              <span v-else>
-                {{ $t('buy') }}
-              </span>
+              <template v-else>{{ $t('buy') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
