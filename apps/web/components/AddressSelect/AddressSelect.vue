@@ -99,16 +99,27 @@ const handleAddressButtonTrigger = () => {
   emitNewAddressEvent();
 };
 
+const refreshAddressDependencies = async () => {
+  if (type === AddressType.Shipping) {
+    const { data: customerData, getSession } = useCustomer();
+    const { data: cartData } = useCart();
+
+    await Promise.all([
+      getSession(),
+      useCartShippingMethods().getShippingMethods(),
+      usePaymentMethods().fetchPaymentMethods(),
+    ]);
+
+    if (cartData.value) {
+      cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
+    }
+  }
+};
+
 const persistCheckoutAddress = async (address: Address) => {
   if (checkoutAddress.value?.id === address.id) return;
 
-  await setCheckoutAddress(address).then(() => {
-    if (type === AddressType.Shipping) {
-      useCartShippingMethods().getShippingMethods();
-      usePaymentMethods().fetchPaymentMethods();
-    }
-    return true;
-  });
+  await setCheckoutAddress(address).then(() => refreshAddressDependencies());
 };
 
 const handleSetCheckoutAddress = async (address: Address) => {

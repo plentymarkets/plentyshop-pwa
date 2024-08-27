@@ -107,8 +107,6 @@ definePageMeta({
 
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { fetchPaymentMethods } = usePaymentMethods();
-const { getShippingMethods } = useCartShippingMethods();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
@@ -147,10 +145,14 @@ onNuxtReady(async () => {
     .catch((error) => useHandleError(error));
 });
 
-await getCart();
-await getShippingMethods();
-await fetchPaymentMethods();
-await useActiveShippingCountries().getActiveShippingCountries();
+await getCart().then(
+  async () =>
+    await Promise.all([
+      useCartShippingMethods().getShippingMethods(),
+      usePaymentMethods().fetchPaymentMethods(),
+      useActiveShippingCountries().getActiveShippingCountries(),
+    ]),
+);
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
