@@ -1,44 +1,221 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
-import { AddressType } from '@plentymarkets/shop-api';
+import { useCheckout } from '../useCheckout';
+import { useCheckoutAddress } from '../../address-playground/useCheckoutAddress';
 
-const { useCustomer } = vi.hoisted(() => {
+const addressFixture = {
+    id: 1, 
+    name1: 'Test',
+    firstName: 'Max',
+    lastName: 'Power',
+    streetName: 'Test street',
+    apartment: '1',
+    city: 'Kassel',
+    country: '1',
+    zipCode: '12345',
+    phoneNumber: '1231244534654',
+    primary: 0
+};
+
+const { useCart } = vi.hoisted(() => {
     return {
-        useCustomer: vi.fn().mockReturnValue({})
+        useCart: vi.fn().mockReturnValue({})
     }
 });
 
-const { useAddress } = vi.hoisted(() => {
+const { useAddressForm } = vi.hoisted(() => {
     return {
-        useAddress: vi.fn().mockReturnValue({})
+        useAddressForm: vi.fn().mockReturnValue({})
     }
 });
 
-
-mockNuxtImport('useCustomer', () => {
-    return useCustomer
+const { useAgreementCheckbox } = vi.hoisted(() => {
+    return {
+        useAgreementCheckbox: vi.fn().mockReturnValue({})
+    }
 });
 
-mockNuxtImport('useAddress', () => {
-    return useAddress
+const { useAddressStore } = vi.hoisted(() => {
+    return {
+        useAddressStore: vi.fn().mockReturnValue({})
+    }
 });
 
-beforeEach(() => {
-    useAddress.mockImplementation(() => {
-        return {
-            displayAddress: ref({ id: null}),
-            hasDisplayAddress: ref(false)
-        }
-    })
+const { useCheckoutAddress } = vi.hoisted(() => {
+    return {
+        useCheckoutAddress: vi.fn().mockReturnValue({})
+    }
 });
 
+mockNuxtImport('useCheckoutAddress', () => {
+    return useCheckoutAddress
+});
 
+mockNuxtImport('useAddressStore', () => {
+    return useAddressStore
+});
 
-afterEach(() => {
-    vi.resetAllMocks();
-    vi.clearAllMocks();
+mockNuxtImport('useAgreementCheckbox', () => {
+    return useAgreementCheckbox
+});
+
+mockNuxtImport('useAddressForm', () => {
+    return useAddressForm
+});
+
+mockNuxtImport('useCart', () => {
+    return useCart
 });
 
 
 describe('useCheckout', () => {
+
+    afterEach(() => {
+        clearNuxtState();
+        vi.resetAllMocks();
+    });
+
+    beforeEach(() => {
+        useAddressForm.mockImplementation(() => {
+            return {
+                open: ref(true),
+                add: ref(true),
+                setInitialState: vi.fn(),
+            }
+        });
+        useAgreementCheckbox.mockImplementation(() => {
+            return {
+                checkboxValue: ref(false),
+                setShowErrors: vi.fn()
+            }
+        });
+        useCart.mockImplementation(() => {
+            return {
+                data: ref({
+                    customerShippingAddressId: '123',
+                    customerInvoiceAddressId: '321'
+                })
+            }
+        });
+        useAddressStore.mockImplementation(() => {
+            return {
+                get: () => addressFixture,
+                addresses: ref([addressFixture])
+            }
+        });
+        useCheckoutAddress.mockImplementation(() => {
+            return {
+                set: vi.fn()
+            }
+        });
+    });
+
+
+    it('should check if any form is open', () => {
+        const { anyAddressFormIsOpen } = useCheckout();
+
+        expect(anyAddressFormIsOpen.value).toBeTruthy();
+    });
+
+    it.todo('should go back backToFormEditing');
+
+    it('should test if terms are accepted', () => {
+
+        useAgreementCheckbox.mockImplementation(() => {
+            return {
+                checkboxValue: ref(true),
+                setShowErrors: vi.fn()
+            }
+        });
+        const { validateTerms } = useCheckout();
+        const callback = vi.fn();
+
+        validateTerms(callback);
+
+        expect(callback).toHaveBeenCalledWith(true);
+    });
+
+    it('should test if terms are not accepted', () => {
+        useAgreementCheckbox.mockImplementation(() => {
+            return {
+                checkboxValue: ref(false),
+                setShowErrors: vi.fn()
+            }
+        });
+        const { validateTerms } = useCheckout();
+        const callback = vi.fn();
+
+        validateTerms(callback);
+
+        expect(callback).toHaveBeenCalledWith(false);
+    });
+
+    it('should set initial state when persisting shipping address', () => {
+        const setInitialStateSpy = vi.fn();
+        useAddressForm.mockImplementation(() => {
+            return {
+                setInitialState: setInitialStateSpy,
+            }
+        });
+        const { persistShippingAddress } = useCheckout();
+        persistShippingAddress();
+        expect(setInitialStateSpy).toHaveBeenCalled();
+    });
+
+
+    it('should use the cart address id first when persisting shipping address', () => {
+        const useCheckoutAddressSpy = vi.fn();
+        useCart.mockImplementation(() => {
+            return {
+                data: ref({
+                    customerShippingAddressId: '123',
+                    customerInvoiceAddressId: '321'
+                })
+            }
+        });
+
+        useCheckoutAddress.mockImplementation(() => {
+            return {
+                set: useCheckoutAddressSpy
+            }
+        });
+
+        const { persistShippingAddress } = useCheckout();
+
+        persistShippingAddress();
+
+        expect(useCheckoutAddressSpy).toHaveBeenCalledWith(addressFixture, true);
+    });
+
+    it('should use the primary address when cart address is not set', () => {
+        const useCheckoutAddressSpy = vi.fn();
+        useCart.mockImplementation(() => {
+            return {
+                data: ref({
+                    customerShippingAddressId: null,
+                    customerInvoiceAddressId: null
+                })
+            }
+        });
+
+        useCheckoutAddress.mockImplementation(() => {
+            return {
+                set: useCheckoutAddressSpy
+            }
+        });
+
+        const shippingAddresses = [ {...addressFixture, primary: 1, id: '100'}, {...addressFixture, primary: 0, id: '101'}];
+
+        useAddressStore.mockImplementation(() => {
+            return {
+                addresses: ref(shippingAddresses)
+            }
+        });
+
+        const { persistShippingAddress } = useCheckout();
+
+        persistShippingAddress();
+
+        expect(useCheckoutAddressSpy).toHaveBeenCalledWith(shippingAddresses[0], false);
+    });
 
 });
