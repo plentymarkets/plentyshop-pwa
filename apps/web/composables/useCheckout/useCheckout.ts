@@ -16,8 +16,16 @@ export const useCheckout = (cacheKey = '') => {
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
   const { addresses: billingAddresses, get: getBilling } = useAddressStore(AddressType.Billing);
-  const { add: showNewShippingForm, open: editingShippingAddress } = useAddressForm(AddressType.Shipping);
-  const { add: showNewBillingForm, open: editingBillingAddress } = useAddressForm(AddressType.Billing);
+  const {
+    add: showNewShippingForm,
+    open: editingShippingAddress,
+    setInitialState: setShippingInitialState,
+  } = useAddressForm(AddressType.Shipping);
+  const {
+    add: showNewBillingForm,
+    open: editingBillingAddress,
+    setInitialState: setBillingInitialState,
+  } = useAddressForm(AddressType.Billing);
   const { set: setShippingCheckout, hasCheckoutAddress: hasShippingAddress } = useCheckoutAddress(AddressType.Shipping);
   const { set: setBillingCheckout, hasCheckoutAddress: hasBillingAddress } = useCheckoutAddress(AddressType.Billing);
 
@@ -69,6 +77,7 @@ export const useCheckout = (cacheKey = '') => {
   };
 
   const persistShippingAddress = () => {
+    setShippingInitialState();
     const cartAddress = ref();
     const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
     const primaryAddress =
@@ -80,6 +89,7 @@ export const useCheckout = (cacheKey = '') => {
   };
 
   const persistBillingAddress = () => {
+    setBillingInitialState();
     const cartAddress = ref();
     const cartBillingAddressId = cartGetters.getCustomerInvoiceAddressId(cart.value);
     const primaryAddress =

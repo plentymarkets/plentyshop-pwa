@@ -11,6 +11,14 @@ export const useAddressForm = (type: AddressType) => {
     addressToEdit: {} as Address,
   }));
 
+  const setInitialState = () => {
+    state.value.isLoading = false;
+    state.value.add = false;
+    state.value.open = false;
+    state.value.addressToSave = {} as Address;
+    state.value.addressToEdit = {} as Address;
+  };
+
   const save = async () => {
     if (!state.value.addressToSave) return true;
     state.value.isLoading = true;
@@ -22,6 +30,7 @@ export const useAddressForm = (type: AddressType) => {
   };
 
   return {
+    setInitialState,
     save,
     ...toRefs(state.value),
   };
