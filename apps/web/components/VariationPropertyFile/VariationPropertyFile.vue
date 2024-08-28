@@ -3,9 +3,9 @@
     <div class="font-semibold">
       {{ productPropertyGetters.getPropertyName(variationProperty) }}
     </div>
-    <a target="_blank" :href="productPropertyGetters.getPropertyDownloadLink(variationProperty)">
+    <NuxtLink target="_blank" :to="productPropertyGetters.getPropertyDownloadLink(variationProperty)">
       {{ productPropertyGetters.getPropertyValue(variationProperty) }}
-    </a>
+    </NuxtLink>
   </div>
 </template>
 
