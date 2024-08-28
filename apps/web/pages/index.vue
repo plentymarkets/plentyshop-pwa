@@ -140,7 +140,7 @@ const getSizeForViewport = (sizes: Sizes) => {
 
 const mediaData = ref({
   image: 'https://placehold.co/600x400',
-  text: true,
+  text: '<h4>Lorem Ipsum Dolor</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Test</li></ul>',
 });
 
 watch(
