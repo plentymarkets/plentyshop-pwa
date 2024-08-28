@@ -128,10 +128,15 @@ export class CheckoutPageObject extends PageObject {
   }
 
   placeOrderButton() {
+    cy.intercept('/plentysystems/doAdditionalInformation').as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
+
     this.placeOrderButtons.click();
+
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+
     return this;
 }
-
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
@@ -160,7 +165,15 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillShippingAddressForm() {
-    return this.fillAddressForm();
+    cy.intercept('/plentysystems/setCheckoutAddress').as('setCheckoutAddress')
+      .intercept('/plentysystems/getShippingProvider').as('getShippingProvider')
+      .intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
+
+    this.fillAddressForm();
+
+    cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
+
+    return this;
   }
 
   fillCreditCardForm() {
