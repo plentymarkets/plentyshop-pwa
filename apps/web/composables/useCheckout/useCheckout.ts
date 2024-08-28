@@ -64,17 +64,13 @@ export const useCheckout = (cacheKey = '') => {
   };
 
   const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
-    let valid = true;
-    setShowErrors(!termsAccepted.value);
+    const isValid = termsAccepted.value;
 
-    if (!termsAccepted.value) {
-      scrollToHTMLObject(ID_CHECKBOX);
-      valid = false;
-    }
+    setShowErrors(!isValid);
+    if (!isValid) scrollToHTMLObject(ID_CHECKBOX);
+    callback?.(isValid);
 
-    if (callback) callback(valid);
-
-    return valid;
+    return isValid;
   };
 
   const persistShippingAddress = async () => {

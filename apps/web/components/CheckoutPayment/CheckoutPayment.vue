@@ -32,7 +32,7 @@
 import { SfIconCreditCard } from '@storefront-ui/vue';
 import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
-const { paymentMethods, disabled } = withDefaults(defineProps<CheckoutPaymentProps>(), { disabled: false });
+withDefaults(defineProps<CheckoutPaymentProps>(), { disabled: false });
 const { data: cart } = useCart();
 const emit = defineEmits<CheckoutPaymentEmits>();
 </script>
