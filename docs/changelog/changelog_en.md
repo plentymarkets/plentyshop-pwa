@@ -44,6 +44,7 @@
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
 - Fixed editing author name on reviews and replies with added e2e
+- Fixed the issue with the plentyID-cookie in the PWA live preview
 
 ### 👷 Changed
 
