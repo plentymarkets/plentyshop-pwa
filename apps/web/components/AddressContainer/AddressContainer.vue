@@ -28,9 +28,7 @@
             :disabled="formIsLoading"
             variant="secondary"
           >
-            <template v-if="!editing && !showNewForm">
-              {{ t('contactInfo.edit') }}
-            </template>
+            <template v-if="!editing && !showNewForm">{{ t('contactInfo.edit') }}</template>
             <SfIconClose v-else />
           </UiButton>
         </SfTooltip>
@@ -44,9 +42,7 @@
           <AddressFormShipping v-if="editing" ref="addressFormShipping" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-else class="mt-2">
-          {{ t('account.accountSettings.noAddresses') }}
-        </div>
+        <div v-else class="mt-2">{{ t('account.accountSettings.noAddresses') }}</div>
       </template>
 
       <template v-if="isBilling">

@@ -77,7 +77,7 @@ export const useCheckout = (cacheKey = '') => {
     return valid;
   };
 
-  const persistShippingAddress = () => {
+  const persistShippingAddress = async () => {
     setShippingInitialState();
     const cartAddress = ref();
     const cartShippingAddressId = cartGetters.getCustomerShippingAddressId(cart.value);
@@ -86,14 +86,14 @@ export const useCheckout = (cacheKey = '') => {
 
     if (cartShippingAddressId) cartAddress.value = getShipping(cartShippingAddressId);
     if (cartAddress.value || primaryAddress) {
-      setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+      await setShippingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
     } else {
       showNewShippingForm.value = true;
       shippingAsBilling.value = true;
     }
   };
 
-  const persistBillingAddress = () => {
+  const persistBillingAddress = async () => {
     setBillingInitialState();
     const cartAddress = ref();
     const cartBillingAddressId = cartGetters.getCustomerInvoiceAddressId(cart.value);
@@ -103,7 +103,7 @@ export const useCheckout = (cacheKey = '') => {
     if (cartBillingAddressId) cartAddress.value = getBilling(cartBillingAddressId);
 
     if (cartAddress.value || primaryAddress)
-      setBillingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
+      await setBillingCheckout(cartAddress.value ?? (primaryAddress as Address), cartAddress.value !== undefined);
   };
 
   return {

@@ -1,4 +1,4 @@
-import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
+import { AdditionalInformationParams } from '@plentymarkets/shop-api';
 
 export interface UseAdditionalInformationState {
   data: null;
@@ -22,5 +22,4 @@ export interface UseAdditionalInformation {
   setShippingPrivacyAgreement: SetShippingPrivacyAgreement;
   setShippingPrivacyAgreementErrors: SetShippingPrivacyAgreementErrors;
 }
-
 export type DoAdditionalInformationReturn = () => UseAdditionalInformation;

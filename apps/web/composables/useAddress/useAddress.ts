@@ -1,5 +1,5 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import { type DeleteAddress, type SetDefault } from '~/composables/useAddress/types';
+import { type DeleteAddress, type SetDefault } from './types';
 import { type UseAddressReturn, type GetAddresses, type SaveAddress, UseAddressMethodsState } from './types';
 
 /**
@@ -159,7 +159,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     if (createdAddress) {
       setDisplayAddress(createdAddress);
       if (combineShippingBilling) {
-        setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
+        await setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
       }
     }
 

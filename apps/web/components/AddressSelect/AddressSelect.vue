@@ -1,8 +1,6 @@
 <template>
   <SfTooltip :label="tooltipLabel">
-    <UiButton variant="secondary" @click="handleAddressButtonTrigger">
-      {{ buttonLabel }}
-    </UiButton>
+    <UiButton @click="handleAddressButtonTrigger" variant="secondary">{{ buttonLabel }}</UiButton>
   </SfTooltip>
 
   <UiModal
@@ -141,11 +139,11 @@ const persistCheckoutAddress = async (address: Address) => {
 
 const handleSetCheckoutAddress = async (address: Address) => {
   isOpen.value = false;
-  persistCheckoutAddress(address);
+  await persistCheckoutAddress(address);
 };
 
 const handleDeleteAddress = async (address: Address) => {
-  await deleteAddress(Number(userAddressGetters.getId(address))).then(() => {
+  await deleteAddress(Number(userAddressGetters.getId(address))).then(async () => {
     const upgradedAddress =
       primaryAddressId.value === address.id
         ? addresses.value.length > 0
@@ -153,7 +151,7 @@ const handleDeleteAddress = async (address: Address) => {
           : null
         : (getAddress(primaryAddressId.value) as Address);
 
-    upgradedAddress === null ? clearCheckoutAddress() : persistCheckoutAddress(upgradedAddress as Address);
+    upgradedAddress ? await persistCheckoutAddress(upgradedAddress as Address) : clearCheckoutAddress();
     return true;
   });
 };

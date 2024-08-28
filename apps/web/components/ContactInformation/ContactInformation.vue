@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import type { ContactInformationProps } from '~/components/ContactInformation/types';
+import { type ContactInformationProps } from './types';
 
 const { disabled } = withDefaults(defineProps<ContactInformationProps>(), { disabled: false });
 

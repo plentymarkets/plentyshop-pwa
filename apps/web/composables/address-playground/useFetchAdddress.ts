@@ -28,7 +28,7 @@ export const useFetchAdddress = (type: AddressType) => {
     useHandleError(error.value);
     setAddressStore(data.value?.data || []);
 
-    if (data.value?.data) {
+    if (data.value?.data?.length) {
       usePrimaryAddress(type).primaryAddressId.value = data.value?.data.find((item) => item.primary === true)?.id || -1;
     }
 

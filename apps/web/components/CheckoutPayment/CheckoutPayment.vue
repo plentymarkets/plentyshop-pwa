@@ -21,7 +21,7 @@
             <span class="font-medium">{{ $t('checkoutPayment.creditCard') }}</span>
           </span>
           <NuxtImg v-else :src="icon" :alt="name" class="!h-[40px]" loading="lazy" />
-          <p class="text-xs mt-2 text-neutral-500">{{ name }}</p>
+          <span class="text-xs mt-2 text-neutral-500">{{ name }}</span>
         </span>
       </label>
     </div>
@@ -30,9 +30,9 @@
 
 <script setup lang="ts">
 import { SfIconCreditCard } from '@storefront-ui/vue';
-import type { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
+import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
-withDefaults(defineProps<CheckoutPaymentProps>(), { disabled: false });
+const { paymentMethods, disabled } = withDefaults(defineProps<CheckoutPaymentProps>(), { disabled: false });
 const { data: cart } = useCart();
 const emit = defineEmits<CheckoutPaymentEmits>();
 </script>

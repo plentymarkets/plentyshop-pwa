@@ -113,7 +113,11 @@
         autocomplete="country-name"
         :invalid="Boolean(errors['country'])"
       >
-        <option v-for="(shippingCountry, index) in countries" :key="index" :value="shippingCountry.id.toString()">
+        <option
+          v-for="(shippingCountry, index) in countries"
+          :key="`billing-country-${index}`"
+          :value="shippingCountry.id.toString()"
+        >
           {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
@@ -124,8 +128,8 @@
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
-import { AddressFormProps } from './types';
-import { Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { type AddressFormProps } from './types';
+import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
@@ -161,7 +165,7 @@ const syncCheckoutAddress = async () => {
     addAddress
       ? (billingAddresses.value[0] as Address)
       : (userAddressGetters.getDefault(billingAddresses.value) as Address),
-    addAddress === false,
+    !addAddress,
   );
 };
 

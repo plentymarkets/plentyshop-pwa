@@ -1,5 +1,4 @@
-import { PageObject } from "./PageObject";
-import { useShippingAsBilling } from '../../../composables/useShippingAsBilling/useShippingAsBilling';
+import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -40,8 +39,7 @@ export class CheckoutPageObject extends PageObject {
 
   get displaySuccessPages() {
     return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
-}
-
+  }
 
   get inputField() {
     return cy.getByTestId('contact-information-form').children('[type="email"]');
@@ -128,15 +126,17 @@ export class CheckoutPageObject extends PageObject {
   }
 
   placeOrderButton() {
-    cy.intercept('/plentysystems/doAdditionalInformation').as('doAdditionalInformation')
-      .intercept('/plentysystems/doPreparePayment').as('doPreparePayment');
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment');
 
     this.placeOrderButtons.click();
 
     cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
 
     return this;
-}
+  }
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
@@ -165,9 +165,12 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillShippingAddressForm() {
-    cy.intercept('/plentysystems/setCheckoutAddress').as('setCheckoutAddress')
-      .intercept('/plentysystems/getShippingProvider').as('getShippingProvider')
-      .intercept('/plentysystems/getPaymentProviders').as('getPaymentProviders');
+    cy.intercept('/plentysystems/setCheckoutAddress')
+      .as('setCheckoutAddress')
+      .intercept('/plentysystems/getShippingProvider')
+      .as('getShippingProvider')
+      .intercept('/plentysystems/getPaymentProviders')
+      .as('getPaymentProviders');
 
     this.fillAddressForm();
 
@@ -193,7 +196,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   checkCreditCard() {
-    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider')
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.getByTestId('payment-method-6008').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
