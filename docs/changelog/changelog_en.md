@@ -47,6 +47,7 @@
 
 ### 👷 Changed
 
+- Added file variation property file link
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
@@ -107,7 +108,6 @@
 
 ### 👷 Changed
 
-- Added file variation property file link
 - Changed shortDescription to return empty string
 - Improved display of reviews rating average
 - Removed unnecessary hover state from cart items
