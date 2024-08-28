@@ -110,6 +110,8 @@
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
     </NuxtLazyHydrate>
+
+    <UiMediaCard :image="mediaData.image" :text="mediaData.text" />
   </div>
 </template>
 
@@ -135,6 +137,11 @@ const getSizeForViewport = (sizes: Sizes) => {
   const breakpoint = viewport.breakpoint.value as SizeKey;
   return sizes[breakpoint];
 };
+
+const mediaData = ref({
+  image: 'https://placehold.co/600x400',
+  text: true,
+});
 
 watch(
   () => categoryTree.value,
