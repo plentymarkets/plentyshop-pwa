@@ -3,7 +3,7 @@ import { object, string, boolean } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
   const { create } = useCreateAddress(type);
-  const { t } = useI18n();
+  const { $i18n } = useNuxtApp();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -37,32 +37,32 @@ export const useAddressForm = (type: AddressType) => {
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
-        then: () => string().required(t('errorMessages.requiredField')).default(''),
+        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
-        then: () => string().required(t('errorMessages.requiredField')).default(''),
+        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
-      country: string().required(t('errorMessages.requiredField')).default(''),
-      streetName: string().required(t('errorMessages.requiredField')).default(''),
-      apartment: string().required(t('errorMessages.requiredField')).default(''),
-      city: string().required(t('errorMessages.requiredField')).default(''),
+      country: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      city: string().required($i18n.t('errorMessages.requiredField')).default(''),
       state: string().default('').optional(),
-      zipCode: string().required(t('errorMessages.requiredField')).min(5),
+      zipCode: string().required($i18n.t('errorMessages.requiredField')).min(5),
       primary: boolean().default(false),
       company: string().when([], {
         is: () => state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
-        then: () => string().required(t('errorMessages.requiredField')).default(''),
+        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       vatId: string().when([], {
         is: () => state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
-        then: () => string().required(t('errorMessages.requiredField')).default(''),
+        then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
     }),
