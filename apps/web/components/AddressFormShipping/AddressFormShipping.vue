@@ -7,7 +7,7 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
+        {{ hasShippingCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         name="firstName"
@@ -21,7 +21,7 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
+        {{ hasShippingCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         name="lastName"
@@ -35,12 +35,12 @@
 
     <div class="md:col-span-3">
       <SfLink @click="toggleCompany" class="select-none hover:cursor-pointer">
-        {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
+        {{ !hasShippingCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
       </SfLink>
     </div>
 
-    <label v-if="hasCompany">
-      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
+    <label v-if="hasShippingCompany">
+      <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="company"
         autocomplete="company"
@@ -51,14 +51,14 @@
       <VeeErrorMessage as="span" name="company" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
-    <label v-if="hasCompany" class="md:col-span-2">
-      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
+    <label v-if="hasShippingCompany" class="md:col-span-2">
+      <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
       <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="streetName"
         autocomplete="address-line1"
@@ -70,7 +70,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="streetNumber"
         autocomplete="address-line2"
@@ -82,7 +82,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="zipCode"
         autocomplete="postal-code"
@@ -94,7 +94,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="city"
         autocomplete="address-level2"
@@ -106,12 +106,12 @@
     </label>
 
     <label class="md:col-span-3">
-      <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
         v-model="country"
         v-bind="countryAttributes"
-        :placeholder="t('form.selectPlaceholder')"
+        :placeholder="$t('form.selectPlaceholder')"
         autocomplete="country-name"
         :invalid="Boolean(errors['country'])"
       >
@@ -124,67 +124,33 @@
 
     <label class="flex items-center gap-2">
       <SfCheckbox data-testid="use-shipping-as-billing" v-model="shippingAsBilling" />
-      <span class="cursor-pointer select-none">{{ t('form.useAsBillingLabel') }}</span>
+      <span class="cursor-pointer select-none">{{ $t('form.useAsBillingLabel') }}</span>
     </label>
   </form>
 </template>
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
-import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 import { Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
-const hasCompany = ref(false);
 const { data: countries } = useActiveShippingCountries();
 const { shippingAsBilling } = useShippingAsBilling();
-const { addressToSave: shippingAddressToSave, save: saveShippingAddress } = useAddressForm(AddressType.Shipping);
-const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
-const { t } = useI18n();
+const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
+const {
+  hasCompany: hasShippingCompany,
+  addressToSave: shippingAddressToSave,
+  save: saveShippingAddress,
+  validationSchema: shippingSchema,
+} = useAddressForm(AddressType.Shipping);
 
-const validationSchema = toTypedSchema(
-  object({
-    firstName: string().when([], {
-      is: () => !hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    lastName: string().when([], {
-      is: () => !hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    country: string().required(t('errorMessages.requiredField')).default(''),
-    streetName: string().required(t('errorMessages.requiredField')).default(''),
-    apartment: string().required(t('errorMessages.requiredField')).default(''),
-    city: string().required(t('errorMessages.requiredField')).default(''),
-    state: string().default('').optional(),
-    zipCode: string().required(t('errorMessages.requiredField')).min(5),
-    primary: boolean().default(false),
-    company: string().when([], {
-      is: () => hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    vatId: string().when([], {
-      is: () => hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-  }),
-);
-
-const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
+const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -199,8 +165,8 @@ const [vatId, vatIdAttributes] = defineField('vatId');
 if (!addAddress) setValues(address as any);
 
 const toggleCompany = () => {
-  hasCompany.value = !hasCompany.value;
-  if (!hasCompany.value) {
+  hasShippingCompany.value = !hasShippingCompany.value;
+  if (!hasShippingCompany.value) {
     company.value = '';
     vatId.value = '';
   }

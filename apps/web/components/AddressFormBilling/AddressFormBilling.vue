@@ -7,7 +7,7 @@
   >
     <label>
       <UiFormLabel>
-        {{ hasCompany ? t('form.firstNameLabel') : `${t('form.firstNameLabel')} ${t('form.required')}` }}
+        {{ hasCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         name="firstName"
@@ -21,7 +21,7 @@
 
     <label class="md:col-span-2">
       <UiFormLabel>
-        {{ hasCompany ? t('form.lastNameLabel') : `${t('form.lastNameLabel')} ${t('form.required')}` }}
+        {{ hasCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
         autocomplete="family-name"
@@ -34,12 +34,12 @@
 
     <div class="md:col-span-3">
       <SfLink @click="toggleCompany" class="select-none hover:cursor-pointer">
-        {{ !hasCompany ? t('form.addCompany') : t('form.removeCompany') }}
+        {{ !hasCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
       </SfLink>
     </div>
 
     <label v-if="hasCompany">
-      <UiFormLabel>{{ t('form.companyLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="company"
         autocomplete="company"
@@ -51,13 +51,13 @@
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2">
-      <UiFormLabel>{{ t('form.vatIdLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
       <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ t('form.streetNameLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="streetName"
         autocomplete="address-line1"
@@ -69,7 +69,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ t('form.streetNumberLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="streetNumber"
         autocomplete="address-line2"
@@ -81,7 +81,7 @@
     </label>
 
     <label>
-      <UiFormLabel>{{ t('form.postalCodeLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         autocomplete="postal-code"
         v-model="zipCode"
@@ -92,7 +92,7 @@
     </label>
 
     <label class="md:col-span-2">
-      <UiFormLabel>{{ t('form.cityLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
         name="city"
         autocomplete="address-level2"
@@ -104,12 +104,12 @@
     </label>
 
     <label class="md:col-span-3">
-      <UiFormLabel>{{ t('form.countryLabel') }} {{ t('form.required') }}</UiFormLabel>
+      <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
         name="country"
         v-model="country"
         v-bind="countryAttributes"
-        :placeholder="t('form.selectPlaceholder')"
+        :placeholder="$t('form.selectPlaceholder')"
         autocomplete="country-name"
         :invalid="Boolean(errors['country'])"
       >
@@ -124,54 +124,15 @@
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
-import { object, string, boolean } from 'yup';
 import { AddressFormProps } from './types';
 import { Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
 
-const hasCompany = ref(false);
 const { data: countries } = useActiveShippingCountries();
-const { addressToSave, save: saveAddress } = useAddressForm(AddressType.Billing);
+const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
-const { t } = useI18n();
-
-const validationSchema = toTypedSchema(
-  object({
-    firstName: string().when([], {
-      is: () => !hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    lastName: string().when([], {
-      is: () => !hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    country: string().required(t('errorMessages.requiredField')).default(''),
-    streetName: string().required(t('errorMessages.requiredField')).default(''),
-    apartment: string().required(t('errorMessages.requiredField')).default(''),
-    city: string().required(t('errorMessages.requiredField')).default(''),
-    state: string().default('').optional(),
-    zipCode: string().required(t('errorMessages.requiredField')).min(5),
-    primary: boolean().default(false),
-    company: string().when([], {
-      is: () => hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-    vatId: string().when([], {
-      is: () => hasCompany.value,
-      // eslint-disable-next-line unicorn/no-thenable
-      then: () => string().required(t('errorMessages.requiredField')).default(''),
-      otherwise: () => string().optional().default(''),
-    }),
-  }),
-);
 
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 
