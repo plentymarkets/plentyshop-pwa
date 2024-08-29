@@ -49,6 +49,7 @@
 
 ### 👷 Changed
 
+- Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
