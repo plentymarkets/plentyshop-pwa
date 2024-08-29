@@ -100,7 +100,7 @@
       </div>
     </div>
     <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe />
+      <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
@@ -144,6 +144,7 @@ watch(
   },
   { immediate: true },
 );
+const { showNewsletter } = useNewsletter();
 const displayDetails = computed(() => {
   return [
     {

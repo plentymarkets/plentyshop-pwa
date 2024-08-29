@@ -4277,7 +4277,7 @@ __metadata:
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 8.1.0
-    "@plentymarkets/shop-api": ^0.53.1
+    "@plentymarkets/shop-api": ^0.55.0
     "@types/applepayjs": ^14.0.8
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.1
@@ -4309,14 +4309,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.53.1":
-  version: 0.53.1
-  resolution: "@plentymarkets/shop-api@npm:0.53.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.53.1%2Ff14aa099243ae1a9b920dff7011d182c223b8f68"
+"@plentymarkets/shop-api@npm:^0.55.0":
+  version: 0.55.0
+  resolution: "@plentymarkets/shop-api@npm:0.55.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.55.0%2F98c7bb1762547e2d057f58a34c9cb0ed2fcbe111"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.7.5
     consola: ^3.2.3
-  checksum: 5a4198c0f9dcdf47e78c2dce315c53f17fbd60fab30abc71d75cb42e3ed2f143dc4b45d158aedcb3d2f66f469fa4d93022846206f5ba18de1d404b5a3c1174ed
+  checksum: 3fc15f68183c5c00415c1cdffd026894f4e1f4a79b791b06b754962c300172caea612c92d31a42056a7d03aa9dd419d7901175f2eba1e5f259c477ebc25748f2
   languageName: node
   linkType: hard
 
@@ -20143,7 +20143,7 @@ __metadata:
 
 "typescript@patch:typescript@5.5.4#~builtin<compat/typescript>":
   version: 5.5.4
-  resolution: "typescript@patch:typescript@npm%3A5.5.4#~builtin<compat/typescript>::version=5.5.4&hash=29ae49"
+  resolution: "typescript@patch:typescript@npm%3A5.5.4#~builtin<compat/typescript>::version=5.5.4&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
@@ -20153,7 +20153,7 @@ __metadata:
 
 "typescript@patch:typescript@^4.6.4 || ^5.2.2#~builtin<compat/typescript>":
   version: 5.5.2
-  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=29ae49"
+  resolution: "typescript@patch:typescript@npm%3A5.5.2#~builtin<compat/typescript>::version=5.5.2&hash=14eedb"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
