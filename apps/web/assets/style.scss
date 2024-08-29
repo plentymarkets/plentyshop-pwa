@@ -50,3 +50,10 @@
     color: rgb(var(--colors-2-primary-700));
   }
 }
+
+apple-pay-button {
+  --apple-pay-button-width: 100%;
+  --apple-pay-button-height: 50px;
+  --apple-pay-button-border-radius: 7px;
+  --apple-pay-button-box-sizing: border-box;
+}

@@ -91,8 +91,8 @@
               </span>
             </UiButton>
             <PayPalApplePayButton
-              v-if="selectedPaymentId === paypalPaymentId"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
             />
           </OrderSummary>
         </div>
