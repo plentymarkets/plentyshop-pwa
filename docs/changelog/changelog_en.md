@@ -30,6 +30,7 @@
 - Unify html nodes on category page to use h6 node
 - Added dynamic title and alternate for product images
 - Added e2e tests for reviews pagination.
+- Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
 
 ### 🩹 Fixed
