@@ -22,6 +22,7 @@ import type { VariationPropertiesProps, ComponentsMapper } from './types';
 import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
 import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
+import VariationPropertyFile from '../VariationPropertyFile/VariationPropertyFile.vue';
 
 const props = defineProps<VariationPropertiesProps>();
 const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
@@ -37,6 +38,7 @@ const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
   int: VariationPropertyText,
   float: VariationPropertyText,
+  file: VariationPropertyFile,
   string: VariationPropertyText,
   html: VariationPropertyHtml,
   date: VariationPropertyDate,

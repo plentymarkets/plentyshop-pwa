@@ -32,6 +32,8 @@
 - Unify html nodes on category page to use h6 node
 - Added dynamic title and alternate for product images
 - Added e2e tests for reviews pagination.
+- Added canonical meta tags to product items
+- Added variation properties for quick checkout, considering order process visibility.
 
 ### 🩹 Fixed
 
@@ -45,9 +47,13 @@
 - Fixed wrongful display of base prices issue.
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
+- Fixed editing author name on reviews and replies with added e2e
+- Fixed the issue with the plentyID-cookie in the PWA live preview
+- Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 
 ### 👷 Changed
 
+- Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted

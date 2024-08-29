@@ -4277,7 +4277,7 @@ __metadata:
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 8.1.0
-    "@plentymarkets/shop-api": ^0.52.0
+    "@plentymarkets/shop-api": ^0.55.0
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.1
     "@vee-validate/yup": ^4.13.1
@@ -4308,14 +4308,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.52.0":
-  version: 0.52.0
-  resolution: "@plentymarkets/shop-api@npm:0.52.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.52.0%2F3b0cccfd03836c805a9dbcd4d98dfc4833c159e9"
+"@plentymarkets/shop-api@npm:^0.55.0":
+  version: 0.55.0
+  resolution: "@plentymarkets/shop-api@npm:0.55.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.55.0%2F98c7bb1762547e2d057f58a34c9cb0ed2fcbe111"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
-    axios: ^1.6.3
-    consola: ^3.0.0
-  checksum: 303737965d2897d52b1710028eae395d8194215429262ef49742a7d8af89fc153b70de8cab8516db8a1a75c655fc99a0ceb65da6a87db8def9e8358f23f37906
+    axios: ^1.7.5
+    consola: ^3.2.3
+  checksum: 3fc15f68183c5c00415c1cdffd026894f4e1f4a79b791b06b754962c300172caea612c92d31a42056a7d03aa9dd419d7901175f2eba1e5f259c477ebc25748f2
   languageName: node
   linkType: hard
 
@@ -7416,7 +7416,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.6.3, axios@npm:^1.7.2":
+"axios@npm:^1.6.1, axios@npm:^1.7.2":
   version: 1.7.2
   resolution: "axios@npm:1.7.2"
   dependencies:
@@ -7424,6 +7424,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: e457e2b0ab748504621f6fa6609074ac08c824bf0881592209dfa15098ece7e88495300e02cd22ba50b3468fd712fe687e629dcb03d6a3f6a51989727405aedf
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "axios@npm:1.7.5"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 2859fe01437cf133eee35571abc1d4b5224bb13e530e66cb3581ca226e170541dd5eef9f46abb41592cee0a2f54930c9e4978354e0cf1064748fc20d9a05e9d5
   languageName: node
   linkType: hard
 
@@ -8963,7 +8974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"consola@npm:^3.0.0, consola@npm:^3.2.3":
+"consola@npm:^3.2.3":
   version: 3.2.3
   resolution: "consola@npm:3.2.3"
   checksum: 32ec70e177dd2385c42e38078958cc7397be91db21af90c6f9faa0b16168b49b1c61d689338604bbb2d64370b9347a35f42a9197663a913d3a405bb0ce728499

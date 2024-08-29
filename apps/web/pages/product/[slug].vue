@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { Product, productGetters, reviewGetters } from '@plentymarkets/shop-api';
+import { Product, productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: false,
@@ -47,12 +47,14 @@ definePageMeta({
 
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
+const { setProductMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
 const { fetchProductReviews } = useProductReviews(Number(productId));
+const { data: categoryTree } = useCategoryTree();
 
 await fetchProduct(productParams);
 setCurrentProduct(product.value || ({} as Product));
@@ -86,5 +88,19 @@ watch(
       });
     }
   },
+);
+
+watch(
+  () => categoryTree.value,
+  (categoriesTree) => {
+    const productCategoryId = productGetters.getParentCategoryId(product.value);
+    if (categoriesTree.length > 0 && productCategoryId) {
+      const categoryTree = categoriesTree.find(
+        (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
+      );
+      if (categoryTree) setProductMetaData(product.value, categoryTree);
+    }
+  },
+  { immediate: true },
 );
 </script>
