@@ -133,10 +133,8 @@ const applePayPayment = async () => {
 onMounted(async () => {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   await loadApplePay().then(() => {
-    if (ApplePaySession.canMakePayments()) {
+    if (typeof ApplePaySession !== 'undefined' && ApplePaySession.canMakePayments()) {
       isApplepayLoaded = true;
-    } else {
-      console.error('This device is not capable of making Apple Pay payments');
     }
     const applePay = (paypal as any).Applepay() as ApplepayType;
     applePay
@@ -148,8 +146,6 @@ onMounted(async () => {
           if (applePayButtonContainer) {
             applePayButtonContainer.innerHTML =
               '<apple-pay-button id="btn-appl" buttonstyle="black" type="buy" locale="en" />';
-
-            await nextTick();
 
             const applePayButton = document.querySelector('#btn-appl');
             if (applePayButton) {
