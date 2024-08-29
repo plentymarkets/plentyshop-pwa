@@ -131,6 +131,7 @@ const applePayPayment = async () => {
 };
 
 onMounted(async () => {
+  // eslint-disable-next-line sonarjs/cognitive-complexity
   await loadApplePay().then(() => {
     if (ApplePaySession.canMakePayments()) {
       isApplepayLoaded = true;
