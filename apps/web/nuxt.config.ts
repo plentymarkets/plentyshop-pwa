@@ -63,7 +63,6 @@ export default defineNuxtConfig({
       cookieGroups: cookieConfig,
       showNetPrices: true,
       turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
       useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
@@ -71,6 +70,9 @@ export default defineNuxtConfig({
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
+      newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
+      newsletterFormShowNames:
+        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
     },
   },
