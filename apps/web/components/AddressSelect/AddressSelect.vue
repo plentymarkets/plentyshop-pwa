@@ -46,22 +46,18 @@
 
 <script setup lang="ts">
 import { type AddressSelectProps } from './types';
-import { AddressType, shippingProviderGetters, userAddressGetters } from '@plentymarkets/shop-api';
+import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
 const { type } = defineProps<AddressSelectProps>();
 
 const { t } = useI18n();
-const { addresses, get: getAddress } = useAddressStore(type);
+const { addresses, get: getAddress, refreshAddressDependencies } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { checkoutAddress, set: setCheckoutAddress, clear: clearCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
-const { data: customerData, getSession } = useCustomer();
-const { data: cartData } = useCart();
-const { selectedMethod } = useCartShippingMethods();
-const { send } = useNotification();
 
 const emit = defineEmits<{
   (event: 'edit', address: Address): void;
@@ -101,44 +97,14 @@ const handleAddressButtonTrigger = () => {
   emitNewAddressEvent();
 };
 
-const notifyIfShippingChanged = () => {
-  if (
-    selectedMethod.value &&
-    shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
-      shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
-  ) {
-    send({ message: t('shipping.methodChanged'), type: 'warning' });
-  }
-};
-
-const notifyIfBillingChanged = () => {
-  if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
-    send({ message: t('billing.methodChanged'), type: 'warning' });
-    cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
-  }
-};
-
-const refreshAddressDependencies = async () => {
-  if (type === AddressType.Shipping) {
-    await Promise.all([
-      getSession(),
-      useCartShippingMethods().getShippingMethods(),
-      usePaymentMethods().fetchPaymentMethods(),
-    ]);
-
-    notifyIfShippingChanged();
-    notifyIfBillingChanged();
-  }
-};
-
 const persistCheckoutAddress = async (address: Address) => {
+  isOpen.value = false;
   if (checkoutAddress.value?.id === address.id) return;
 
   await setCheckoutAddress(address).then(() => refreshAddressDependencies());
 };
 
 const handleSetCheckoutAddress = async (address: Address) => {
-  isOpen.value = false;
   await persistCheckoutAddress(address);
 };
 

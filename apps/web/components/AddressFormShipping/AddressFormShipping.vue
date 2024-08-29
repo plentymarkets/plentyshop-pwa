@@ -142,7 +142,7 @@ const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { 
 
 const { data: countries } = useActiveShippingCountries();
 const { shippingAsBilling } = useShippingAsBilling();
-const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
+const { addresses: shippingAddresses, refreshAddressDependencies } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
@@ -212,11 +212,6 @@ const handleBillingPrimaryAddress = async () => {
   }
 };
 
-const handleShippingAndPaymentRefresh = async () => {
-  await useCartShippingMethods().getShippingMethods();
-  await usePaymentMethods().fetchPaymentMethods();
-};
-
 const submitForm = handleSubmit((shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
   if (addAddress) shippingAddressToSave.value.primary = true;
@@ -225,7 +220,7 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
-    .then(() => handleShippingAndPaymentRefresh())
+    .then(() => refreshAddressDependencies())
     .catch((error) => useHandleError(error));
 });
 

@@ -46,7 +46,7 @@
             <PayPalExpressButton
               v-if="selectedPaymentId === paypalPaymentId"
               :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="validateTerms"
+              @on-click="handlePayPalExpress"
               type="Checkout"
             />
             <UiButton
@@ -183,6 +183,10 @@ const handleRegularOrder = async () => {
     clearCartItems();
     navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
+};
+
+const handlePayPalExpress = () => {
+  if (!readyToBuy()) return;
 };
 
 const order = async () => {
