@@ -14,7 +14,7 @@ const fetchLogo = async (data: { [key: string]: Array<ConfigItem> }) => {
   console.log('Fetching logo from:', logoUrl.value);
 
   const fileType = logoUrl.value.split('.').pop();
-  const logoPath = path.resolve(__dirname, `../public/logo.${fileType}`);
+  const logoPath = path.resolve(__dirname, `../public/images/logo.${fileType}`);
 
   fetchFile(logoUrl.value, logoPath);
 };
