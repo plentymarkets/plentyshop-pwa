@@ -34,7 +34,7 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink @click="toggleCompany" class="select-none hover:cursor-pointer">
+      <SfLink @click="hasShippingCompany = !hasShippingCompany" class="select-none hover:cursor-pointer">
         {{ !hasShippingCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
       </SfLink>
     </div>
@@ -42,19 +42,24 @@
     <label v-if="hasShippingCompany">
       <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
-        name="company"
+        name="companyName"
         autocomplete="company"
-        v-model="company"
-        v-bind="companyAttributes"
-        :invalid="Boolean(errors['company'])"
+        v-model="companyName"
+        v-bind="companyNameAttributes"
+        :invalid="Boolean(errors['companyName'])"
       />
-      <VeeErrorMessage as="span" name="company" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2">
       <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
-      <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
+      <SfInput
+        autocomplete="vatNumber"
+        v-model="vatNumber"
+        v-bind="vatNumberAttributes"
+        :invalid="Boolean(errors['vatNumber'])"
+      />
+      <VeeErrorMessage as="span" name="vatNumber" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -142,7 +147,7 @@ const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { 
 
 const { data: countries } = useActiveShippingCountries();
 const { shippingAsBilling } = useShippingAsBilling();
-const { addresses: shippingAddresses, refreshAddressDependencies } = useAddressStore(AddressType.Shipping);
+const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
@@ -152,6 +157,7 @@ const {
   addressToSave: shippingAddressToSave,
   save: saveShippingAddress,
   validationSchema: shippingSchema,
+  refreshAddressDependencies,
 } = useAddressForm(AddressType.Shipping);
 
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
@@ -163,23 +169,23 @@ const [streetName, streetNameAttributes] = defineField('streetName');
 const [apartment, apartmentAttributes] = defineField('apartment');
 const [city, cityAttributes] = defineField('city');
 const [zipCode, zipCodeAttributes] = defineField('zipCode');
-const [company, companyAttributes] = defineField('company');
-const [vatId, vatIdAttributes] = defineField('vatId');
+const [companyName, companyNameAttributes] = defineField('companyName');
+const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
-if (!addAddress) setValues(address as any);
-
-const toggleCompany = () => {
-  hasShippingCompany.value = !hasShippingCompany.value;
-  if (!hasShippingCompany.value) {
-    company.value = '';
-    vatId.value = '';
-  }
-};
+if (!addAddress) {
+  hasShippingCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
+  setValues(address as any);
+}
 
 const handleSaveShippingAsBilling = async (shippingAddressForm: Address) => {
   if (shippingAsBilling.value) {
     billingAddressToSave.value = shippingAddressForm as Address;
     if (addAddress) billingAddressToSave.value.primary = true;
+    if (!hasShippingCompany.value) {
+      billingAddressToSave.value.companyName = '';
+      billingAddressToSave.value.vatNumber = '';
+    }
+
     await saveBillingAddress();
   }
 };
@@ -214,7 +220,12 @@ const handleBillingPrimaryAddress = async () => {
 
 const submitForm = handleSubmit((shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
+
   if (addAddress) shippingAddressToSave.value.primary = true;
+  if (!hasShippingCompany.value) {
+    shippingAddressToSave.value.companyName = '';
+    shippingAddressToSave.value.vatNumber = '';
+  }
 
   saveShippingAddress()
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))

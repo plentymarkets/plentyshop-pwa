@@ -33,7 +33,7 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink @click="toggleCompany" class="select-none hover:cursor-pointer">
+      <SfLink @click="hasCompany = !hasCompany" class="select-none hover:cursor-pointer">
         {{ !hasCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
       </SfLink>
     </div>
@@ -41,19 +41,24 @@
     <label v-if="hasCompany">
       <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
-        name="company"
+        name="companyName"
         autocomplete="company"
-        v-model="company"
-        v-bind="companyAttributes"
-        :invalid="Boolean(errors['company'])"
+        v-model="companyName"
+        v-bind="companyNameAttributes"
+        :invalid="Boolean(errors['companyName'])"
       />
-      <VeeErrorMessage as="span" name="company" class="flex text-negative-700 text-sm mt-2" />
+      <VeeErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label v-if="hasCompany" class="md:col-span-2">
       <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput autocomplete="vatId" v-model="vatId" v-bind="vatIdAttributes" :invalid="Boolean(errors['vatId'])" />
-      <VeeErrorMessage as="span" name="vatId" class="flex text-negative-700 text-sm mt-2" />
+      <SfInput
+        autocomplete="vatNumber"
+        v-model="vatNumber"
+        v-bind="vatNumberAttributes"
+        :invalid="Boolean(errors['vatNumber'])"
+      />
+      <VeeErrorMessage as="span" name="vatNumber" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -147,18 +152,13 @@ const [streetName, streetNameAttributes] = defineField('streetName');
 const [apartment, apartmentAttributes] = defineField('apartment');
 const [city, cityAttributes] = defineField('city');
 const [zipCode, zipCodeAttributes] = defineField('zipCode');
-const [company, companyAttributes] = defineField('company');
-const [vatId, vatIdAttributes] = defineField('vatId');
+const [companyName, companyNameAttributes] = defineField('companyName');
+const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
-if (!addAddress) setValues(address as any);
-
-const toggleCompany = () => {
-  hasCompany.value = !hasCompany.value;
-  if (!hasCompany.value) {
-    company.value = '';
-    vatId.value = '';
-  }
-};
+if (!addAddress) {
+  hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
+  setValues(address as any);
+}
 
 const syncCheckoutAddress = async () => {
   await setCheckoutAddress(
@@ -171,6 +171,12 @@ const syncCheckoutAddress = async () => {
 
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
+
+  if (addAddress) addressToSave.value.primary = true;
+  if (!hasCompany.value) {
+    addressToSave.value.companyName = '';
+    addressToSave.value.vatNumber = '';
+  }
 
   saveAddress()
     .then(() => syncCheckoutAddress())

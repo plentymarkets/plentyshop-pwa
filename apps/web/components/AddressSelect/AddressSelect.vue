@@ -53,11 +53,12 @@ import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 const { type } = defineProps<AddressSelectProps>();
 
 const { t } = useI18n();
-const { addresses, get: getAddress, refreshAddressDependencies } = useAddressStore(type);
+const { addresses, get: getAddress } = useAddressStore(type);
 const { deleteAddress } = useDeleteAddress(type);
 const { primaryAddressId, set: setPrimaryAddress } = usePrimaryAddress(type);
 const { checkoutAddress, set: setCheckoutAddress, clear: clearCheckoutAddress } = useCheckoutAddress(type);
 const { isOpen, open, close } = useDisclosure();
+const { refreshAddressDependencies } = useAddressForm(AddressType.Shipping);
 
 const emit = defineEmits<{
   (event: 'edit', address: Address): void;

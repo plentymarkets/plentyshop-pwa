@@ -1,9 +1,14 @@
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import { type Address, AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { object, string, boolean } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
   const { create } = useCreateAddress(type);
   const { $i18n } = useNuxtApp();
+  const { selectedMethod, getShippingMethods } = useCartShippingMethods();
+  const { fetchPaymentMethods } = usePaymentMethods();
+  const { data: customerData, getSession } = useCustomer();
+  const { data: cartData } = useCart();
+  const { send } = useNotification();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -53,13 +58,13 @@ export const useAddressForm = (type: AddressType) => {
       state: string().default('').optional(),
       zipCode: string().required($i18n.t('errorMessages.requiredField')).min(5),
       primary: boolean().default(false),
-      company: string().when([], {
+      companyName: string().when([], {
         is: () => state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
-      vatId: string().when([], {
+      vatNumber: string().when([], {
         is: () => state.value.hasCompany,
         // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
@@ -68,10 +73,36 @@ export const useAddressForm = (type: AddressType) => {
     }),
   );
 
+  const notifyIfShippingChanged = () => {
+    if (
+      selectedMethod.value &&
+      shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
+        shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
+    ) {
+      send({ message: $i18n.t('shipping.methodChanged'), type: 'warning' });
+    }
+  };
+
+  const notifyIfBillingChanged = () => {
+    if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
+      send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
+      cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
+    }
+  };
+
+  const refreshAddressDependencies = async () => {
+    if (type === AddressType.Shipping) {
+      await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
+      notifyIfShippingChanged();
+      notifyIfBillingChanged();
+    }
+  };
+
   return {
     setInitialState,
     save,
     validationSchema,
+    refreshAddressDependencies,
     ...toRefs(state.value),
   };
 };
