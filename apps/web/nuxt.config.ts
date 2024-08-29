@@ -72,6 +72,7 @@ export default defineNuxtConfig({
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
+      homepageCategory: process.env.HOMEPAGE ?? false,
     },
   },
   modules: [
