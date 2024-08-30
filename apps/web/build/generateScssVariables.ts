@@ -1,6 +1,16 @@
+import dotenv from 'dotenv';
 import fs from 'node:fs';
 import path from 'node:path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { getPaletteFromColor, TailwindPalette } from '../utils/tailwindHelper';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+});
 
 const primaryColor = process.env.PRIMARY || '#0c7992';
 const secondaryColor = process.env.SECONDARY || '#008ebd';
@@ -22,6 +32,7 @@ const prepareConfigFile = (primaryPalette: TailwindPalette, secondaryPalette: Ta
 };
 
 const generateScssVariables = () => {
+  console.log('Generating SCSS variables...', primaryColor, secondaryColor);
   const primaryTailwindColors = getPaletteFromColor('primary', primaryColor);
   const secondaryTailwindColors = getPaletteFromColor('secondary', secondaryColor);
   const scssContent = prepareConfigFile(primaryTailwindColors, secondaryTailwindColors);
@@ -31,6 +42,7 @@ const generateScssVariables = () => {
 
   fs.mkdirSync(scssVariablesDirectory, { recursive: true });
   fs.writeFileSync(scssVariablesFilePath, scssContent, 'utf8');
+  console.log('SCSS variables generated.');
 };
 
 export default generateScssVariables;

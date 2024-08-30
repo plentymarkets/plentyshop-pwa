@@ -3,6 +3,16 @@ import https from 'node:https';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import dotenv from 'dotenv';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+});
 
 const environmentFilePath = path.resolve(__dirname, '../.env');
 const environmentTemporaryFilePath = path.resolve(__dirname, '../.env.tmp');
@@ -30,6 +40,7 @@ const setupTemporaryEnvironment = () => {
 };
 
 const writeConfigurationToTemporaryEnvironment = (data: Array<Array<{ [key: string]: string }>>) => {
+  console.log('Writing remote configuration to temporary environment file...');
   const environmentVariables = fs.readFileSync(environmentTemporaryFilePath, 'utf8').split(os.EOL);
 
   for (const category in data) {
@@ -41,6 +52,8 @@ const writeConfigurationToTemporaryEnvironment = (data: Array<Array<{ [key: stri
   }
 
   fs.writeFileSync(environmentTemporaryFilePath, environmentVariables.join(os.EOL));
+
+  console.log('Remote configuration written to temporary environment file.');
 };
 
 const fetchAndWriteRemoteConfiguration = async () => {
