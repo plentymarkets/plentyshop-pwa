@@ -1,4 +1,4 @@
-export interface ConfigItem {
+export interface ConfigurationEntry {
   configId: number;
   categoryId: number;
   key: string;
@@ -9,7 +9,7 @@ export interface ConfigItem {
   defaultValue: string | null;
 }
 
-type ConfigurationCategory = Array<ConfigItem>;
+type ConfigurationCategory = Array<ConfigurationEntry>;
 
 export type ConfigurationResponse = {
   [key: string]: ConfigurationCategory;

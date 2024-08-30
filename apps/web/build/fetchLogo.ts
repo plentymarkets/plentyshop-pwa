@@ -1,9 +1,9 @@
 import path from 'node:path';
 import fetchFile from './helpers/fetchFileHelper';
-import { ConfigItem } from './types/ConfigItem';
+import { ConfigurationEntry } from './types/ConfigurationResponse';
 
-const fetchLogo = async (data: { [key: string]: Array<ConfigItem> }) => {
-  const logoUrl = data['store'].find((setting: ConfigItem) => setting.key === 'logo');
+const fetchLogo = async (data: { [key: string]: Array<ConfigurationEntry> }) => {
+  const logoUrl = data['store'].find((setting: ConfigurationEntry) => setting.key === 'logo');
 
   if (!logoUrl?.value) {
     console.error('Logo URL not found.');

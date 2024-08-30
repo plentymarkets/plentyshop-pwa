@@ -1,9 +1,9 @@
 import path from 'node:path';
 import fetchFile from './helpers/fetchFileHelper';
-import { ConfigItem } from './types/ConfigItem';
+import { ConfigurationEntry } from './types/ConfigurationResponse';
 
-const fetchFavicon = async (data: { [key: string]: Array<ConfigItem> }) => {
-  const faviconUrl = data['store'].find((setting: ConfigItem) => setting.key === 'favIcon');
+const fetchFavicon = async (data: { [key: string]: Array<ConfigurationEntry> }) => {
+  const faviconUrl = data['store'].find((setting: ConfigurationEntry) => setting.key === 'favIcon');
 
   if (!faviconUrl?.value) {
     console.error('FavIcon URL not found.');
