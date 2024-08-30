@@ -37,6 +37,7 @@
 
 ### 🩹 Fixed
 
+- Item image now loads image url based on format and viewport
 - Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
