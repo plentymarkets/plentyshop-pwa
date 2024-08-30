@@ -8,3 +8,9 @@ export interface ConfigItem {
   possibleValues: [];
   defaultValue: string | null;
 }
+
+type ConfigurationCategory = Array<ConfigItem>;
+
+export type ConfigurationResponse = {
+  [key: string]: ConfigurationCategory;
+};

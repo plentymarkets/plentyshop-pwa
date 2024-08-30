@@ -12,9 +12,6 @@ dotenv.config({
   path: path.resolve(__dirname, '../.env'),
 });
 
-const primaryColor = process.env.PRIMARY || '#0c7992';
-const secondaryColor = process.env.SECONDARY || '#008ebd';
-
 const prepareConfigFile = (primaryPalette: TailwindPalette, secondaryPalette: TailwindPalette) => {
   let scssContent = '';
 
@@ -31,7 +28,7 @@ const prepareConfigFile = (primaryPalette: TailwindPalette, secondaryPalette: Ta
   return scssContent;
 };
 
-const generateScssVariables = () => {
+const generateScssVariables = (primaryColor: string, secondaryColor: string) => {
   console.log('Generating SCSS variables...', primaryColor, secondaryColor);
   const primaryTailwindColors = getPaletteFromColor('primary', primaryColor);
   const secondaryTailwindColors = getPaletteFromColor('secondary', secondaryColor);
