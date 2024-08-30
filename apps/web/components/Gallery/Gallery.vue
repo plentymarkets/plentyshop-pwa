@@ -26,8 +26,13 @@
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            :src="productImageGetters.getImageUrl(image)"
-            sizes="2xs:100vw, md:700px"
+            :srcset="`
+              ${productImageGetters.getImageUrlSecondPreview(image)}  300w,
+              ${productImageGetters.getImageUrlPreview(image)}  700w,
+              ${productImageGetters.getImageUrlMiddle(image)}  720w,
+              ${productImageGetters.getImageUrl(image)}  1400w,
+              `
+            "
             draggable="false"
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
