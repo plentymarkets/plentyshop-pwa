@@ -27,7 +27,7 @@
             class="object-contain h-full w-full"
             :quality="80"
             :srcset="`
-              ${productImageGetters.getImageUrlSecondPreview(image)}  300w,
+              ${productImageGetters.getImageUrlSecondPreview(image)}  370w,
               ${productImageGetters.getImageUrlPreview(image)}  700w,
               ${productImageGetters.getImageUrlMiddle(image)}  720w,
               ${productImageGetters.getImageUrl(image)}  1400w,
