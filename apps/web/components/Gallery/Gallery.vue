@@ -26,6 +26,7 @@
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
+            sizes="(min-width: 1760px) 719px, (min-width: 1440px) calc(17.67vw + 412px), (min-width: 920px) calc(50vw - 56px), (min-width: 780px) calc(49.17vw - 39px), 100vw"
             :srcset="`
               ${productImageGetters.getImageUrlSecondPreview(image)}  370w,
               ${productImageGetters.getImageUrlPreview(image)}  700w,
