@@ -6,8 +6,8 @@ import { fetchFavicon } from './fetchFavicon';
 import { fetchLogo } from './fetchLogo';
 import generateScssVariables from './generateScssVariables';
 import { ConfigurationResponse } from './types/ConfigurationResponse';
-import { LocalToFileWriter } from './classes/LocalToFileWriter';
-import { CdnToFileWriter } from './classes/CdnToFileWriter';
+import { DataToFileWriter } from './fileWriters/DataToFileWriter';
+import { CdnToFileWriter } from './fileWriters/CdnToFileWriter';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -31,7 +31,7 @@ if (process.env.FETCH_REMOTE_CONFIG === '1') {
       primary: findValueInResponseByKey(response, 'styling', 'primary'),
       secondary: findValueInResponseByKey(response, 'styling', 'secondary'),
     },
-    new LocalToFileWriter(),
+    new DataToFileWriter(),
   );
 
   await fetchFavicon(findValueInResponseByKey(response, 'store', 'favicon'), new CdnToFileWriter());

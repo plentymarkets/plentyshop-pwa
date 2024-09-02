@@ -3,10 +3,10 @@ import { writeFileSync } from 'node:fs';
 import { Writer } from '../types/Writer';
 
 export class CdnToFileWriter implements Writer {
-  async write(data: string, destination: string) {
+  async write(url: string, destination: string) {
     try {
       const response = await axios({
-        url: data,
+        url: url,
         method: 'GET',
         responseType: 'arraybuffer',
       });
