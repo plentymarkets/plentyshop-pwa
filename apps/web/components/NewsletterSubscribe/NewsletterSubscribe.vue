@@ -13,14 +13,14 @@
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
             <SfInput
-                v-model="firstName"
-                v-bind="firstNameAttributes"
-                :invalid="Boolean(errors['firstName'])"
-                :placeholder="`${t('newsletter.firstName')} **`"
-                :wrapper-class="wrapperClass"
-                type="text"
-                id="newsletter-first-name"
-                name="firstName"
+              v-model="firstName"
+              v-bind="firstNameAttributes"
+              :invalid="Boolean(errors['firstName'])"
+              :placeholder="`${t('newsletter.firstName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-first-name"
+              name="firstName"
             />
           </label>
           <div class="h-[2rem]">
@@ -32,14 +32,14 @@
           <label for="newsletter-last-name">
             <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
             <SfInput
-                v-model="lastName"
-                v-bind="lastNameAttributes"
-                :invalid="Boolean(errors['lastName'])"
-                :placeholder="`${t('newsletter.lastName')} **`"
-                :wrapper-class="wrapperClass"
-                type="text"
-                id="newsletter-last-name"
-                name="lastName"
+              v-model="lastName"
+              v-bind="lastNameAttributes"
+              :invalid="Boolean(errors['lastName'])"
+              :placeholder="`${t('newsletter.lastName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-last-name"
+              name="lastName"
             />
           </label>
           <div class="h-[2rem]">
