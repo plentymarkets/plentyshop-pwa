@@ -2,7 +2,7 @@
   <div class="address-display">
     <p>
       {{
-        userAddressGetters.getCompanyName(address) ??
+        userAddressGetters.getCompanyName(address) ||
         `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}`
       }}
     </p>
