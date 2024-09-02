@@ -14,3 +14,8 @@ type ConfigurationCategory = Array<ConfigurationEntry>;
 export type ConfigurationResponse = {
   [key: string]: ConfigurationCategory;
 };
+
+export type BaseColors = {
+  primary: string;
+  secondary: string;
+};

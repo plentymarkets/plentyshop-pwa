@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { writeFileSync } from 'node:fs';
-import { Writer } from '../types/Writer';
+import { Writer } from './types';
 
 export class CdnToFileWriter implements Writer {
   async write(url: string, destination: string) {

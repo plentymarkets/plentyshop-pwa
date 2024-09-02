@@ -1,42 +1,18 @@
-import dotenv from 'dotenv';
-import path, { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import fetchConfiguration from './fetchConfiguration';
-import { fetchFavicon } from './fetchFavicon';
-import { fetchLogo } from './fetchLogo';
-import generateScssVariables from './generateScssVariables';
-import { ConfigurationResponse } from './types/ConfigurationResponse';
-import { DataToFileWriter } from './fileWriters/DataToFileWriter';
-import { CdnToFileWriter } from './fileWriters/CdnToFileWriter';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-dotenv.config({
-  path: path.resolve(__dirname, '../.env'),
-});
-
-const findValueInResponseByKey = (response: ConfigurationResponse, category: string, key: string) => {
-  const foundEntry = response[category].find((entry) => entry.key === key);
-  return foundEntry ? foundEntry.value : '';
-};
-
-console.log('Fetching remote configuration...');
+import { SystemConfiguration } from './configurator/SystemConfiguration';
+import { AppConfigurator } from './configurator/AppConfigurator';
+import { AssetDownloader } from './configurator/AssetDownloader';
 
 if (process.env.FETCH_REMOTE_CONFIG === '1') {
-  const response = await fetchConfiguration();
+  console.log('Fetching remote configuration...');
+  const systemConfiguration = new SystemConfiguration();
+  await systemConfiguration.fetch();
 
-  generateScssVariables(
-    {
-      primary: findValueInResponseByKey(response, 'styling', 'primary'),
-      secondary: findValueInResponseByKey(response, 'styling', 'secondary'),
-    },
-    new DataToFileWriter(),
-  );
+  const appConfigurator = new AppConfigurator();
+  appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
 
-  await fetchFavicon(findValueInResponseByKey(response, 'store', 'favicon'), new CdnToFileWriter());
-
-  await fetchLogo(findValueInResponseByKey(response, 'store', 'logo'), new CdnToFileWriter());
+  const assetDownloader = new AssetDownloader();
+  await assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
+  await assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
 } else {
   console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
 }
