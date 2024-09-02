@@ -32,8 +32,7 @@
               ${productImageGetters.getImageUrlPreview(image)}  700w,
               ${productImageGetters.getImageUrlMiddle(image)}  720w,
               ${productImageGetters.getImageUrl(image)}  1400w,
-              `
-            "
+              `"
             draggable="false"
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
