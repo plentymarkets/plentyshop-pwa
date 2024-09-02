@@ -34,6 +34,7 @@
 - Added e2e tests for reviews pagination.
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
+- Added label tags for inputs in `NewsletterSubscribe.vue` component
 
 ### 🩹 Fixed
 
