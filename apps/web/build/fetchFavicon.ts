@@ -1,26 +1,26 @@
-import path from 'node:path';
-import fetchFile from './helpers/fetchFileHelper';
-import { ConfigurationEntry } from './types/ConfigurationResponse';
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Writer } from './types/Writer';
 
-const fetchFavicon = async (data: { [key: string]: Array<ConfigurationEntry> }) => {
-  const faviconUrl = data['store'].find((setting: ConfigurationEntry) => setting.key === 'favIcon');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  if (!faviconUrl?.value) {
-    console.error('FavIcon URL not found.');
-    return;
+export const fetchFavicon = async (faviconUrl: string, writer: Writer): Promise<string> => {
+  if (!faviconUrl) {
+    console.warn('FavIcon URL not found.');
+    return '';
   }
 
-  if (!faviconUrl.value.endsWith('.ico')) {
+  if (!faviconUrl.endsWith('.ico')) {
     console.error('The URL does not point to a .ico file. Aborting the download.');
-    return;
+    return '';
   }
 
-  // eslint-disable-next-line no-console
-  console.log('Fetching favicon from:', faviconUrl.value);
+  console.log('Fetching favicon from:', faviconUrl);
 
   const iconPath = path.resolve(__dirname, `../public/favicon.ico`);
 
-  fetchFile(faviconUrl.value, iconPath);
-};
+  writer.write(faviconUrl, iconPath);
 
-export default fetchFavicon;
+  return iconPath;
+};

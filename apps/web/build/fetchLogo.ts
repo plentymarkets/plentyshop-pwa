@@ -1,22 +1,22 @@
-import path from 'node:path';
-import fetchFile from './helpers/fetchFileHelper';
-import { ConfigurationEntry } from './types/ConfigurationResponse';
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Writer } from './types/Writer';
 
-const fetchLogo = async (data: { [key: string]: Array<ConfigurationEntry> }) => {
-  const logoUrl = data['store'].find((setting: ConfigurationEntry) => setting.key === 'logo');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-  if (!logoUrl?.value) {
-    console.error('Logo URL not found.');
-    return;
+export const fetchLogo = async (logoUrl: string, writer: Writer): Promise<string> => {
+  if (!logoUrl) {
+    console.warn('Logo URL not found.');
+    return '';
   }
 
-  // eslint-disable-next-line no-console
-  console.log('Fetching logo from:', logoUrl.value);
+  console.log('Fetching logo from:', logoUrl);
 
-  const fileType = logoUrl.value.split('.').pop();
+  const fileType = logoUrl.split('.').pop();
   const logoPath = path.resolve(__dirname, `../public/logo.${fileType}`);
 
-  fetchFile(logoUrl.value, logoPath);
-};
+  writer.write(logoUrl, logoPath);
 
-export default fetchLogo;
+  return logoPath;
+};
