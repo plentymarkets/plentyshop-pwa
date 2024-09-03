@@ -81,7 +81,6 @@
         >
           {{ $t('goToCheckout') }}
         </UiButton>
-        {{ isReady }}
         <div v-if="isReady">
           <OrDivider class="my-4" />
           <PayPalExpressButton class="w-full text-center" type="CartPreview" />
