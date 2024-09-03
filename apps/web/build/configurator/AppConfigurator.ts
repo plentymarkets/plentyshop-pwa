@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
-import { BaseColors } from './types';
+import { BaseColors, ConfigurationEntry, ConfigurationResponse } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import { readFileSync, writeFileSync, copyFile, unlink } from 'node:fs';
 import { Writer } from '../writers/types';
@@ -78,13 +78,13 @@ export class AppConfigurator {
     writeFileSync(this.environmentTemporaryFilePath, requiredEnvironmentData);
   };
 
-  private writeConfigurationToTemporaryEnvironment = (data: Array<Array<{ [key: string]: string }>>) => {
+  private writeConfigurationToTemporaryEnvironment = (data: ConfigurationResponse) => {
     console.log('Writing remote configuration to temporary environment file...');
     const environmentVariables = readFileSync(this.environmentTemporaryFilePath, 'utf8').split(os.EOL);
 
     for (const category in data) {
       if (Array.isArray(data[category])) {
-        data[category].forEach((item: { [key: string]: string }) => {
+        data[category].forEach((item: ConfigurationEntry) => {
           environmentVariables.push(`${item.key.toUpperCase()}="${item.value}"`);
         });
       }
@@ -100,7 +100,7 @@ export class AppConfigurator {
     unlink(this.environmentTemporaryFilePath, () => {});
   };
 
-  generateEnvironment = (data: any): void => {
+  generateEnvironment = (data: ConfigurationResponse): void => {
     this.setupTemporaryEnvironment();
     this.writeConfigurationToTemporaryEnvironment(data);
     this.convertTemporaryToPermanentEnvironment();
