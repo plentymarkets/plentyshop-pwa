@@ -35,6 +35,7 @@
 - Added e2e tests for reviews pagination.
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
+- Added better contrast background for `Verfied purchase` text in feedback
 
 ### 🩹 Fixed
 

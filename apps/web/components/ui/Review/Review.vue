@@ -1,10 +1,14 @@
 <template>
   <article class="w-full p-4 mb-4 border rounded-md" data-testid="review-item">
     <div class="w-full flex">
-      <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
-        <span class="mr-2 text-xs text-neutral-700" data-testid="review-item-authorName">{{ reviewAuthor }}</span>
-        <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
+      <div class="flex items-center w-2/3 text-xs truncate text-neutral-400 mb-2">
+        <span class="mr-2 text-xs text-neutral-700" data-testid="review-item-authorName">
+          {{ reviewAuthor }}
+        </span>
+        <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-800 ">
+          <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
         {{ t('review.verifiedPurchase') }}
+        </span>
       </div>
 
       <div v-if="isEditable" class="w-1/3 flex justify-end items-center space-x-3">
