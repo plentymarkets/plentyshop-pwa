@@ -10,13 +10,18 @@ export const httpClient = async (url: any, params: any, config: any) => {
     if (tryUseNuxtApp()) {
       const { token } = useCsrfToken();
       const { $i18n } = useNuxtApp();
+      const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
 
       client.interceptors.request.use((request) => {
         if (token.value) {
           request.headers['x-csrf-token'] = token.value;
         }
 
-        if (process.server) {
+        if (referrerId) {
+          request.headers['referrerID'] = referrerId;
+        }
+
+        if (import.meta.server) {
           request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
         }
 
