@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const { getScript, createTransaction, approveOrder, executeOrder, isReady } = usePayPal();
+const { getScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -121,7 +121,6 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
 };
 
 const createButton = () => {
-  console.log(paypalScript.value);
   if (paypalScript.value) {
     if (paypalButton.value) {
       paypalButton.value.innerHTML = '';
