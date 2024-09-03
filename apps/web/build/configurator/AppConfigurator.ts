@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import os from 'node:os';
-import { DataToFileWriter } from '../writers/DataToFileWriter';
 import { BaseColors } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import { readFileSync, writeFileSync, copyFile, unlink } from 'node:fs';
+import { Writer } from '../writers/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +15,7 @@ dotenv.config({
 });
 
 export class AppConfigurator {
-  private writer: DataToFileWriter;
+  private writer: Writer;
 
   private environmentFilePath = path.resolve(__dirname, '../../.env');
   private environmentTemporaryFilePath = path.resolve(__dirname, '../../.env.tmp');
@@ -27,8 +27,8 @@ export class AppConfigurator {
     CONFIG_ID: process.env.CONFIG_ID,
   };
 
-  constructor() {
-    this.writer = new DataToFileWriter();
+  constructor(writer: Writer) {
+    this.writer = writer;
   }
 
   private generateScssFileContent = (primaryPalette: TailwindPalette, secondaryPalette: TailwindPalette) => {

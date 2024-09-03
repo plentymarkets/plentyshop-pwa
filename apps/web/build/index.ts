@@ -4,6 +4,8 @@ import dotenv from 'dotenv';
 import { SystemConfiguration } from './configurator/SystemConfiguration';
 import { AppConfigurator } from './configurator/AppConfigurator';
 import { AssetDownloader } from './configurator/AssetDownloader';
+import { CdnToFileWriter } from './writers/CdnToFileWriter';
+import { DataToFileWriter } from './writers/DataToFileWriter';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,11 +20,13 @@ const main = async () => {
     const systemConfiguration = new SystemConfiguration();
     await systemConfiguration.fetch();
 
-    const appConfigurator = new AppConfigurator();
+    const dataWriter = new DataToFileWriter();
+    const appConfigurator = new AppConfigurator(dataWriter);
     appConfigurator.generateEnvironment(systemConfiguration.getResponse());
     appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
 
-    const assetDownloader = new AssetDownloader();
+    const cdnWriter = new CdnToFileWriter();
+    const assetDownloader = new AssetDownloader(cdnWriter);
     await assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
     await assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
   } else {

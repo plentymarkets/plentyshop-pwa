@@ -1,15 +1,15 @@
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { CdnToFileWriter } from '../writers/CdnToFileWriter';
 import { FileTypeValidator } from '../validators/FileTypeValidator';
+import { Writer } from '../writers/types';
 
 export class AssetDownloader {
   private __filename = fileURLToPath(import.meta.url);
   private __dirname = dirname(this.__filename);
-  private writer: CdnToFileWriter;
+  private writer: Writer;
 
-  constructor() {
-    this.writer = new CdnToFileWriter();
+  constructor(writer: Writer) {
+    this.writer = writer;
   }
 
   async downloadFavicon(url: string) {
