@@ -3,9 +3,10 @@ import { fileURLToPath } from 'node:url';
 import { FileTypeValidator } from '../validators/FileTypeValidator';
 import { Writer } from '../writers/types';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 export class AssetDownloader {
-  private __filename = fileURLToPath(import.meta.url);
-  private __dirname = dirname(this.__filename);
   private writer: Writer;
 
   constructor(writer: Writer) {
@@ -17,7 +18,7 @@ export class AssetDownloader {
       console.warn('The URL does not point to a .ico file. Aborting the download.');
       return;
     }
-    const iconPath = path.resolve(this.__dirname, `../../public/favicon.ico`);
+    const iconPath = path.resolve(__dirname, `../../public/favicon.ico`);
     await this.writer.write(url, iconPath);
   }
 
@@ -27,7 +28,7 @@ export class AssetDownloader {
       return;
     }
     const fileType = url.split('.').pop();
-    const logoPath = path.resolve(this.__dirname, `../../public/logo.${fileType}`);
+    const logoPath = path.resolve(__dirname, `../../public/logo.${fileType}`);
     await this.writer.write(url, logoPath);
   }
 }
