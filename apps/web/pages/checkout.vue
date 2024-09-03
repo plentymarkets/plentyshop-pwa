@@ -72,6 +72,10 @@
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ $t('buy') }}</template>
             </UiButton>
+            <PayPalApplePayButton
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
           </OrderSummary>
         </div>
       </div>
