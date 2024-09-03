@@ -13,22 +13,22 @@ export class AssetDownloader {
     this.writer = writer;
   }
 
-  async downloadFavicon(url: string) {
+  downloadFavicon(url: string) {
     if (!FileTypeValidator.isIcon(url)) {
       console.warn('The URL does not point to a .ico file. Aborting the download.');
       return;
     }
     const iconPath = path.resolve(__dirname, `../../public/favicon.ico`);
-    await this.writer.write(url, iconPath);
+    this.writer.write(url, iconPath);
   }
 
-  async downloadLogo(url: string) {
+  downloadLogo(url: string) {
     if (!FileTypeValidator.isImage(url)) {
       console.warn('The URL does not point to an image file. Aborting the download.');
       return;
     }
     const fileType = url.split('.').pop();
     const logoPath = path.resolve(__dirname, `../../public/logo.${fileType}`);
-    await this.writer.write(url, logoPath);
+    this.writer.write(url, logoPath);
   }
 }

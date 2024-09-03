@@ -27,8 +27,8 @@ const main = async () => {
 
     const cdnWriter = new CdnToFileWriter();
     const assetDownloader = new AssetDownloader(cdnWriter);
-    await assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
-    await assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
+    assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
+    assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
   } else {
     console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
   }
