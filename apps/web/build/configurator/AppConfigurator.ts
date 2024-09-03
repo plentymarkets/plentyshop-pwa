@@ -1,10 +1,8 @@
 import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import os from 'node:os';
-import { BaseColors, ConfigurationEntry, ConfigurationResponse } from './types';
+import { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
-import { readFileSync, writeFileSync, copyFile, unlink } from 'node:fs';
 import { Writer } from '../writers/types';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -16,9 +14,6 @@ dotenv.config({
 
 export class AppConfigurator {
   private writer: Writer;
-
-  private environmentFilePath = path.resolve(__dirname, '../../.env');
-  private environmentTemporaryFilePath = path.resolve(__dirname, '../../.env.tmp');
 
   private environmentMap = {
     FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
@@ -63,46 +58,44 @@ export class AppConfigurator {
     return scssContent;
   };
 
-  private setupTemporaryEnvironment = () => {
-    let requiredEnvironmentData = '';
+  private isValidEnvironment = (): boolean => {
+    let isValidEnvironment = true;
 
-    for (const [key, value] of Object.entries(this.environmentMap)) {
-      requiredEnvironmentData += `${key}=${value}\n`;
-      if (key === 'FETCH_REMOTE_CONFIG') continue;
+    Object.entries(this.environmentMap).forEach(([key, value]) => {
       if (!value) {
         console.error(`Missing or invalid required environment variable: ${key}`);
-        return;
+        isValidEnvironment = false;
       }
+    });
+
+    return isValidEnvironment;
+  };
+
+  private generateEnvironmentFileContent = (data: ConfigurationResponse): string => {
+    let environmentContent = '';
+
+    Object.entries(this.environmentMap).forEach(([key, value]) => {
+      environmentContent += `${key}=${value}\n`;
+    });
+
+    Object.values(data).forEach((category: ConfigurationCategory) => {
+      category.forEach((entry: ConfigurationEntry) => {
+        environmentContent += `${entry.key.toUpperCase()}="${entry.value}"\n`;
+      });
+    });
+
+    return environmentContent;
+  };
+
+  generateEnvironment = (data: ConfigurationResponse): string => {
+    const environmentFilePath = path.resolve(__dirname, '../../.env');
+    let environmentContent = '';
+
+    if (this.isValidEnvironment()) {
+      environmentContent = this.generateEnvironmentFileContent(data);
+      this.writer.write(environmentContent, environmentFilePath);
     }
 
-    writeFileSync(this.environmentTemporaryFilePath, requiredEnvironmentData);
-  };
-
-  private writeConfigurationToTemporaryEnvironment = (data: ConfigurationResponse) => {
-    console.log('Writing remote configuration to temporary environment file...');
-    const environmentVariables = readFileSync(this.environmentTemporaryFilePath, 'utf8').split(os.EOL);
-
-    for (const category in data) {
-      if (Array.isArray(data[category])) {
-        data[category].forEach((item: ConfigurationEntry) => {
-          environmentVariables.push(`${item.key.toUpperCase()}="${item.value}"`);
-        });
-      }
-    }
-
-    writeFileSync(this.environmentTemporaryFilePath, environmentVariables.join(os.EOL));
-
-    console.log('Remote configuration written to temporary environment file.');
-  };
-
-  private convertTemporaryToPermanentEnvironment = () => {
-    copyFile(this.environmentTemporaryFilePath, this.environmentFilePath, () => {});
-    unlink(this.environmentTemporaryFilePath, () => {});
-  };
-
-  generateEnvironment = (data: ConfigurationResponse): void => {
-    this.setupTemporaryEnvironment();
-    this.writeConfigurationToTemporaryEnvironment(data);
-    this.convertTemporaryToPermanentEnvironment();
+    return environmentContent;
   };
 }

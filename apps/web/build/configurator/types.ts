@@ -9,7 +9,7 @@ export interface ConfigurationEntry {
   defaultValue: string | null;
 }
 
-type ConfigurationCategory = Array<ConfigurationEntry>;
+export type ConfigurationCategory = Array<ConfigurationEntry>;
 
 export type ConfigurationResponse = {
   [key: string]: ConfigurationCategory;
