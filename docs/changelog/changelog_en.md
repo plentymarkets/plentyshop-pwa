@@ -34,6 +34,7 @@
 - Added e2e tests for reviews pagination.
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
+- Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 
 ### 🩹 Fixed
 
