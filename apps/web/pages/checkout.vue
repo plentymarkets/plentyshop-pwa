@@ -90,11 +90,14 @@
                 {{ t('buy') }}
               </span>
             </UiButton>
+            <PayPalApplePayButton
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
             <PayPalPayLaterBanner
               v-if="selectedPaymentId === paypalPaymentId || selectedPaymentId === paypalCreditCardPaymentId"
               placement="payment"
-              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
-            />
+              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
           </OrderSummary>
         </div>
       </div>
