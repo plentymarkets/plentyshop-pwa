@@ -1,5 +1,5 @@
 import {
-  UseCategoryTemplate,
+  FetchCategoryTemplate,
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
 } from '~/composables/useCategoryTemplate/types';
@@ -10,18 +10,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     loading: false,
   }));
 
-  const runtimeConfig = useRuntimeConfig();
-
-  // const fetchCategoryTemplate: FetchCategoryTemplate = async () => {
-  //   state.value.loading = true;
-  //
-  //   return await useSdk().plentysystems.getCategoryTemplate(runtimeConfig.public.homepageCategory)
-  //     // .then(({ data }) => {
-  //     //   state.value.data = data ?? state.value.data;
-  //     //   state.value.loading = false;
-  //     //   return state.value.data;
-  //     // });
-  // };
+  const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
+    state.value.loading = true;
+    const { data } = await useSdk().plentysystems.getCategoryTemplate({ id: categoryId });
+    state.value.loading = false;
+    state.value.data = data;
+    return data;
+  };
 
   return {
     fetchCategoryTemplate,
