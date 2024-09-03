@@ -1,17 +1,12 @@
 export class FileTypeValidator {
-  private static readonly allowedFileTypes = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'avif', 'webp'];
-
   public static isImage(fileName: string): boolean {
+    const allowedImageTypes = ['png', 'jpg', 'jpeg', 'gif', 'svg', 'avif', 'webp'];
     const fileType = fileName.split('.').pop();
-
-    if (!fileType) {
-      return false;
-    }
-
-    return FileTypeValidator.allowedFileTypes.includes(fileType);
+    return fileType ? allowedImageTypes.includes(fileType) : false;
   }
 
   public static isIcon(fileName: string): boolean {
-    return fileName.split('.').pop() === 'ico';
+    const fileType = fileName.split('.').pop();
+    return fileType === 'ico';
   }
 }
