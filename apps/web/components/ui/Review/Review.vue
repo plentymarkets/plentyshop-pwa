@@ -5,9 +5,9 @@
         <span class="mr-2 text-xs text-neutral-700" data-testid="review-item-authorName">
           {{ reviewAuthor }}
         </span>
-        <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-800 ">
+        <span class="inline-flex rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-800">
           <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
-        {{ t('review.verifiedPurchase') }}
+          {{ t('review.verifiedPurchase') }}
         </span>
       </div>
 
