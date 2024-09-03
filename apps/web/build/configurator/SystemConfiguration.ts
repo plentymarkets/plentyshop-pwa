@@ -3,19 +3,13 @@ import https from 'node:https';
 import { ConfigurationResponse, BaseColors } from './types';
 
 export class SystemConfiguration {
-  private environmentMap = {
-    API_ENDPOINT: process.env.API_ENDPOINT,
-    API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
-    CONFIG_ID: process.env.CONFIG_ID,
-  };
-
   private axiosRequestConfig: AxiosRequestConfig = {
-    baseURL: this.environmentMap.API_ENDPOINT,
-    url: `/rest/storefront/settings/${this.environmentMap.CONFIG_ID}`,
+    baseURL: process.env.API_ENDPOINT,
+    url: `/rest/storefront/settings/${process.env.CONFIG_ID}`,
     method: 'GET',
     withCredentials: true,
     headers: {
-      'X-Security-Token': this.environmentMap.API_SECURITY_TOKEN,
+      'X-Security-Token': process.env.API_SECURITY_TOKEN,
     },
     httpsAgent: new https.Agent({
       rejectUnauthorized: false,

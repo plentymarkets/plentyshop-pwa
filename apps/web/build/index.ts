@@ -1,11 +1,12 @@
+import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import dotenv from 'dotenv';
 import { SystemConfiguration } from './configurator/SystemConfiguration';
 import { AppConfigurator } from './configurator/AppConfigurator';
 import { AssetDownloader } from './configurator/AssetDownloader';
 import { CdnToFileWriter } from './writers/CdnToFileWriter';
 import { DataToFileWriter } from './writers/DataToFileWriter';
+import { BuildLoggerInstance } from './logs/Logger';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -16,24 +17,25 @@ dotenv.config({
 
 const main = async () => {
   if (process.env.FETCH_REMOTE_CONFIG === '1') {
-    console.log('Fetching remote configuration...');
+    BuildLoggerInstance.info('Fetching remote configuration...');
     const systemConfiguration = new SystemConfiguration();
     await systemConfiguration.fetch();
 
     const dataWriter = new DataToFileWriter();
-    const appConfigurator = new AppConfigurator(dataWriter);
+    const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
     appConfigurator.generateEnvironment(systemConfiguration.getResponse());
     appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
 
     const cdnWriter = new CdnToFileWriter();
-    const assetDownloader = new AssetDownloader(cdnWriter);
+    const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
     assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
     assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
   } else {
-    console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
+    BuildLoggerInstance.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
   }
 };
 
-await main().catch((error: unknown) => {
-  console.error('An error occurred:', error);
+// eslint-disable-next-line etc/no-implicit-any-catch
+await main().catch((error: Error) => {
+  BuildLoggerInstance.error('An error occurred:', error);
 });

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import { Writer } from '../writers/types';
+import { Logger } from '../logs/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -13,17 +14,18 @@ dotenv.config({
 });
 
 export class AppConfigurator {
-  private writer: Writer;
-
   private environmentMap = {
     FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
     API_ENDPOINT: process.env.API_ENDPOINT,
     API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
     CONFIG_ID: process.env.CONFIG_ID,
   };
+  private writer: Writer;
+  private logger: Logger;
 
-  constructor(writer: Writer) {
+  constructor(writer: Writer, logger: Logger) {
     this.writer = writer;
+    this.logger = logger;
   }
 
   private generateScssFileContent = (primaryPalette: TailwindPalette, secondaryPalette: TailwindPalette) => {
@@ -43,7 +45,9 @@ export class AppConfigurator {
   };
 
   generateScssVariables = (colors: BaseColors): string => {
-    console.log('Generating SCSS variables...', colors.primary, colors.secondary);
+    this.logger.info(
+      `Generating SCSS variables with primary color: ${colors.primary} and secondary color: ${colors.secondary}`,
+    );
 
     const primaryTailwindColors = getPaletteFromColor('primary', colors.primary);
     const secondaryTailwindColors = getPaletteFromColor('secondary', colors.secondary);
@@ -52,8 +56,6 @@ export class AppConfigurator {
     const scssVariablesFilePath = path.resolve(__dirname, '../../assets/_variables.scss');
 
     this.writer.write(scssContent, scssVariablesFilePath);
-
-    console.log('SCSS variables generated.');
 
     return scssContent;
   };
@@ -92,6 +94,7 @@ export class AppConfigurator {
     let environmentContent = '';
 
     if (this.isValidEnvironment()) {
+      this.logger.info('Generating environment file...');
       environmentContent = this.generateEnvironmentFileContent(data);
       this.writer.write(environmentContent, environmentFilePath);
     }
