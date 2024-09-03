@@ -21,12 +21,12 @@ const main = async () => {
     const systemConfiguration = new SystemConfiguration();
     await systemConfiguration.fetch();
 
-    const dataWriter = new DataToFileWriter();
+    const dataWriter = new DataToFileWriter(BuildLoggerInstance);
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
     appConfigurator.generateEnvironment(systemConfiguration.getResponse());
     appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
 
-    const cdnWriter = new CdnToFileWriter();
+    const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
     assetDownloader.downloadFavicon(systemConfiguration.getFaviconUrl());
     assetDownloader.downloadLogo(systemConfiguration.getLogoUrl());
