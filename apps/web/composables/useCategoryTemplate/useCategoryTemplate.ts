@@ -10,6 +10,17 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     loading: false,
   }));
 
+  /**
+   * @description Function for fetching the category template from a category id
+   * @param categoryId
+   * @return CategoryTemplate
+   * @example
+   * ``` ts
+   * fetchCategoryTemplate({
+   *    id: 16
+   * })
+   * ```
+   */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
     state.value.loading = true;
     const { data } = await useSdk().plentysystems.getCategoryTemplate({ id: categoryId });

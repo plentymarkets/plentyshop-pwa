@@ -59,32 +59,28 @@ const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
-const getDefaultHomepageTemplate = () => {
-  return {
-    id: 100,
-    hero: [
-      { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
-      { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
-      { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
-    ],
-    valueProposition: { text: '', image: '' },
-    featured: [
-      { headline: '', categoryId: 1 },
-      { headline: '', categoryId: 2 },
-    ],
-  };
+const getDefaultHomepageTemplate = {
+  id: 100,
+  hero: [
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+  ],
+  valueProposition: { text: '', image: '' },
+  featured: [
+    { headline: '', categoryId: 1 },
+    { headline: '', categoryId: 2 },
+  ],
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate()));
+const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate));
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
-  const { fetchCategoryTemplate } = useCategoryTemplate();
   const { data } = await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
   homepageTemplate.value = data;
 }
-
-console.error('Homepage JSON', homepageTemplate.value);
 
 type Size = {
   width: string;
