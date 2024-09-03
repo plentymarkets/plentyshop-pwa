@@ -1,13 +1,31 @@
+import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import os from 'node:os';
 import { DataToFileWriter } from '../writers/DataToFileWriter';
 import { BaseColors } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
+import { readFileSync, writeFileSync, copyFile, unlink } from 'node:fs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({
+  path: path.resolve(__dirname, '../.env'),
+});
 
 export class AppConfigurator {
-  private __filename = fileURLToPath(import.meta.url);
-  private __dirname = dirname(this.__filename);
   private writer: DataToFileWriter;
+
+  private environmentFilePath = path.resolve(__dirname, '../../.env');
+  private environmentTemporaryFilePath = path.resolve(__dirname, '../../.env.tmp');
+
+  private environmentMap = {
+    FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
+    API_ENDPOINT: process.env.API_ENDPOINT,
+    API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
+    CONFIG_ID: process.env.CONFIG_ID,
+  };
 
   constructor() {
     this.writer = new DataToFileWriter();
@@ -36,12 +54,55 @@ export class AppConfigurator {
     const secondaryTailwindColors = getPaletteFromColor('secondary', colors.secondary);
 
     const scssContent = this.generateScssFileContent(primaryTailwindColors, secondaryTailwindColors);
-    const scssVariablesFilePath = path.resolve(this.__dirname, '../../assets/_variables.scss');
+    const scssVariablesFilePath = path.resolve(__dirname, '../../assets/_variables.scss');
 
     this.writer.write(scssContent, scssVariablesFilePath);
 
     console.log('SCSS variables generated.');
 
     return scssContent;
+  };
+
+  private setupTemporaryEnvironment = () => {
+    let requiredEnvironmentData = '';
+
+    for (const [key, value] of Object.entries(this.environmentMap)) {
+      requiredEnvironmentData += `${key}=${value}\n`;
+      if (key === 'FETCH_REMOTE_CONFIG') continue;
+      if (!value) {
+        console.error(`Missing or invalid required environment variable: ${key}`);
+        return;
+      }
+    }
+
+    writeFileSync(this.environmentTemporaryFilePath, requiredEnvironmentData);
+  };
+
+  private writeConfigurationToTemporaryEnvironment = (data: Array<Array<{ [key: string]: string }>>) => {
+    console.log('Writing remote configuration to temporary environment file...');
+    const environmentVariables = readFileSync(this.environmentTemporaryFilePath, 'utf8').split(os.EOL);
+
+    for (const category in data) {
+      if (Array.isArray(data[category])) {
+        data[category].forEach((item: { [key: string]: string }) => {
+          environmentVariables.push(`${item.key.toUpperCase()}="${item.value}"`);
+        });
+      }
+    }
+
+    writeFileSync(this.environmentTemporaryFilePath, environmentVariables.join(os.EOL));
+
+    console.log('Remote configuration written to temporary environment file.');
+  };
+
+  private convertTemporaryToPermanentEnvironment = () => {
+    copyFile(this.environmentTemporaryFilePath, this.environmentFilePath, () => {});
+    unlink(this.environmentTemporaryFilePath, () => {});
+  };
+
+  generateEnvironment = (data: any): void => {
+    this.setupTemporaryEnvironment();
+    this.writeConfigurationToTemporaryEnvironment(data);
+    this.convertTemporaryToPermanentEnvironment();
   };
 }
