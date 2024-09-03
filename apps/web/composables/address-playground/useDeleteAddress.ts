@@ -8,12 +8,12 @@ export const useDeleteAddress = (type: AddressType) => {
   const deleteAddress = async (addressId: number) => {
     state.value.loading = true;
     try {
+      useAddressStore(type).destroy(addressId);
       await useSdk().plentysystems.deleteAddress({
         typeId: type,
         addressId,
       });
 
-      useAddressStore(type).destroy(addressId);
       state.value.loading = false;
     } catch (error: unknown) {
       useHandleError(error as Error);

@@ -23,7 +23,13 @@
       <UiButton variant="tertiary" size="sm" class="self-start" @click.stop="emit('on-delete')">
         {{ $t('account.accountSettings.delete') }}
       </UiButton>
-      <UiButton v-if="!isDefault" variant="tertiary" size="sm" class="self-start" @click.stop="emit('make-default')">
+      <UiButton
+        v-if="!isDefault && !isGuest"
+        variant="tertiary"
+        size="sm"
+        class="self-start"
+        @click.stop="emit('make-default')"
+      >
         {{ $t('account.accountSettings.makeDefault') }}
       </UiButton>
     </div>
@@ -41,5 +47,6 @@ import { userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, isDefault, isSelected, showDivider } = defineProps<AddressProps>();
 
+const { isGuest } = useCustomer();
 const emit = defineEmits(['on-edit', 'on-delete', 'make-default']);
 </script>
