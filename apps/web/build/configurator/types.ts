@@ -1,4 +1,4 @@
-export interface ConfigurationEntry {
+export type ConfigurationEntry = {
   configId: number;
   categoryId: number;
   key: string;
@@ -7,7 +7,7 @@ export interface ConfigurationEntry {
   type: string;
   possibleValues: [];
   defaultValue: string | null;
-}
+};
 
 export type ConfigurationCategory = Array<ConfigurationEntry>;
 
