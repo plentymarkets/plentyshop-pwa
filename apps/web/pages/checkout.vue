@@ -90,6 +90,10 @@
                 {{ t('buy') }}
               </span>
             </UiButton>
+            <PayPalApplePayButton
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
           </OrderSummary>
         </div>
       </div>
