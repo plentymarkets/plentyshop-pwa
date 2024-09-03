@@ -1,6 +1,6 @@
-import {loadScript as loadPayPalScript} from '@paypal/paypal-js';
-import type {PayPalCaptureOrderParams, PayPalExecuteParams} from '@plentymarkets/shop-api';
-import {paypalGetters} from '@plentymarkets/shop-api';
+import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
+import type { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
+import { paypalGetters } from '@plentymarkets/shop-api';
 
 import type {
   ApproveOrder,
@@ -109,20 +109,17 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
       (script) => script.currency === currency && script.locale === localePayPal && script.commit === commit,
     );
 
-    if (import.meta.server) {
-      return null;
-    }
+    if (import.meta.server) return null;
 
     if (script) {
       state.value.isReady = true;
+      return script.script;
     } else {
       const paypalScript = await loadScript(currency, localePayPal, commit);
       state.value.paypalScripts.push({ script: paypalScript, currency, locale: localePayPal, commit });
       state.value.isReady = true;
       return paypalScript;
     }
-
-    return script.script;
   };
 
   /**
