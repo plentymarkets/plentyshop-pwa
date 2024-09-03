@@ -90,6 +90,11 @@
                 {{ t('buy') }}
               </span>
             </UiButton>
+            <PayPalPayLaterBanner
+              v-if="selectedPaymentId === paypalPaymentId || selectedPaymentId === paypalCreditCardPaymentId"
+              placement="payment"
+              :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
+            />
           </OrderSummary>
         </div>
       </div>
@@ -106,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';

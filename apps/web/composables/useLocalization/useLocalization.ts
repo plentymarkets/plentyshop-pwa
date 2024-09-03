@@ -92,13 +92,15 @@ export const useLocalization = createSharedComposable(() => {
    * @example switchLocale('en')
    */
   const switchLocale = async (language: string) => {
-    const { $i18n } = useNuxtApp();
     const { getCart } = useCart();
-    const { setLocaleCookie } = $i18n;
+    const DAYS = 100;
+    const localeExpireDate = new Date();
+    localeExpireDate.setDate(new Date().getDate() + DAYS);
+    const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
 
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
-    setLocaleCookie(language);
+    vsfLocale.value = language;
     toggle();
     await getCart().then(
       async () =>

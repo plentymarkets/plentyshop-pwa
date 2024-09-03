@@ -118,12 +118,10 @@
       </div>
       <Suspense>
         <template #default>
-          <PayPalExpressButton
-            v-if="getCombination() && productGetters.isSalable(product)"
-            class="mt-4"
-            type="SingleItem"
-            @on-click="paypalHandleAddToCart"
-          />
+          <div v-if="getCombination() && productGetters.isSalable(product)">
+            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+            <PayPalPayLaterBanner placement="product" :amount="currentActualPrice * quantitySelectorValue" />
+          </div>
         </template>
         <template #fallback>
           <SfLoaderCircular class="flex justify-center items-center" size="sm" />

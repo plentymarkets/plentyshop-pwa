@@ -12,18 +12,27 @@ import type {
 export const PayPalPaymentKey = 'PAYPAL';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
 
+export type PayPalScript = {
+  script: PayPalNamespace | null;
+  locale: string;
+  currency: string;
+  commit: boolean;
+};
+
 export interface UsePayPalState {
-  paypalScript: PayPalNamespace | null;
+  paypalScripts: PayPalScript[];
   order: PayPalCreateOrder | null;
   config: PayPalConfigResponse | null;
   loadedConfig: boolean;
   loading: boolean;
   isAvailable: boolean;
+  isReady: boolean;
 }
 
 export type LoadConfig = () => Promise<void>;
 export type GetLocale = (locale: string) => string;
-export type LoadScript = (currency: string, commit?: boolean) => Promise<PayPalNamespace | null>;
+export type GetScript = (currency: string, commit?: boolean) => Promise<PayPalNamespace | null>;
+export type LoadScript = (currency: string, locale: string, commit?: boolean) => Promise<PayPalNamespace | null>;
 export type CreateTransaction = (fundingSource: string) => Promise<PayPalCreateOrder | null>;
 export type ApproveOrder = (orderID: string, payerID: string) => Promise<PayPalApproveOrder | null>;
 export type ExecuteOrder = (params: PayPalExecuteParams) => Promise<PayPalExecutePayment | null>;
@@ -34,13 +43,14 @@ export interface UsePayPalMethods {
   loading: Readonly<Ref<boolean>>;
   isAvailable: Readonly<Ref<boolean>>;
   loadedConfig: Readonly<Ref<boolean>>;
-  loadScript: LoadScript;
+  isReady: Readonly<Ref<boolean>>;
   createTransaction: CreateTransaction;
   approveOrder: ApproveOrder;
   executeOrder: ExecuteOrder;
   createCreditCardTransaction: CreateCreditCardTransaction;
   captureOrder: CaptureOrder;
   loadConfig: LoadConfig;
+  getScript: GetScript;
 }
 
 export type UsePayPalMethodsReturn = () => UsePayPalMethods;

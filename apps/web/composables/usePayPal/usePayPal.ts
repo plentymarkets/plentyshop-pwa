@@ -1,19 +1,20 @@
-import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import type { PayPalCaptureOrderParams, PayPalExecuteParams } from '@plentymarkets/shop-api';
+import {loadScript as loadPayPalScript} from '@paypal/paypal-js';
+import type {PayPalCaptureOrderParams, PayPalExecuteParams} from '@plentymarkets/shop-api';
+import {paypalGetters} from '@plentymarkets/shop-api';
 
 import type {
-  UsePayPalMethodsReturn,
+  ApproveOrder,
+  CaptureOrder,
+  CreateCreditCardTransaction,
   CreateTransaction,
   ExecuteOrder,
-  LoadScript,
-  UsePayPalState,
-  ApproveOrder,
-  CreateCreditCardTransaction,
-  CaptureOrder,
-  LoadConfig,
   GetLocale,
+  GetScript,
+  LoadConfig,
+  LoadScript,
+  UsePayPalMethodsReturn,
+  UsePayPalState,
 } from './types';
-import { paypalGetters } from '@plentymarkets/shop-api';
 
 const getLocaleForPayPal: GetLocale = (locale: string) => {
   // eslint-disable-next-line sonarjs/no-small-switch
@@ -40,11 +41,12 @@ const getLocaleForPayPal: GetLocale = (locale: string) => {
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
     loading: false,
-    paypalScript: null,
+    paypalScripts: [],
     order: null,
     config: null,
     loadedConfig: false,
     isAvailable: false,
+    isReady: false,
   }));
 
   /**
@@ -69,6 +71,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   /**
    * @description Function for get the PayPal sdk script.
    * @param currency string
+   * @param locale string
    * @param commit boolean
    * @return LoadScript
    * @example
@@ -76,23 +79,19 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * loadScript('EUR');
    * ```
    */
-  const loadScript: LoadScript = async (currency: string, commit = false) => {
-    const { $i18n } = useNuxtApp();
-    const localePayPal = getLocaleForPayPal($i18n.locale.value);
-
+  const loadScript: LoadScript = async (currency: string, locale: string, commit = false) => {
     await loadConfig();
     if (state.value.config && paypalGetters.getClientId(state.value.config)) {
       try {
-        state.value.paypalScript = await loadPayPalScript({
+        return await loadPayPalScript({
           clientId: paypalGetters.getClientId(state.value.config),
           merchantId: paypalGetters.getMerchantId(state.value.config),
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components: 'messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
-          locale: localePayPal,
+          locale: locale,
           commit: commit,
         });
-        return state.value.paypalScript;
       } catch {
         // eslint-disable-next-line unicorn/expiring-todo-comments
         // TODO: Handle error (not loading sdk)
@@ -100,6 +99,29 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     }
 
     return null;
+  };
+
+  const getScript: GetScript = async (currency: string, commit = false) => {
+    const { $i18n } = useNuxtApp();
+    const localePayPal = getLocaleForPayPal($i18n.locale.value);
+    const script = state.value.paypalScripts.find(
+      (script) => script.currency === currency && script.locale === localePayPal && script.commit === commit,
+    );
+
+    if (import.meta.server) {
+      return null;
+    }
+
+    if (script) {
+      state.value.isReady = true;
+    } else {
+      const paypalScript = await loadScript(currency, localePayPal, commit);
+      state.value.paypalScripts.push({ script: paypalScript, currency, locale: localePayPal, commit });
+      state.value.isReady = true;
+      return paypalScript;
+    }
+
+    return script.script;
   };
 
   /**
@@ -227,9 +249,9 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     createTransaction,
     executeOrder,
     loadConfig,
-    loadScript,
     createCreditCardTransaction,
     captureOrder,
+    getScript,
     ...toRefs(state.value),
   };
 };
