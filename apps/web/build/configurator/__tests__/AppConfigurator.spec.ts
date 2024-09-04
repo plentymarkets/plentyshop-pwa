@@ -1,10 +1,10 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AppConfigurator } from '../AppConfigurator';
-import { BaseColors } from '..//types';
+import { BaseColors, ConfigurationResponse } from '..//types';
 import { Writer } from '../../writers/types';
 import { Logger } from '../../logs/types';
 
-describe('AppConfigurator', () => {
+describe('[AppConfigurator] generate SCSS variables', () => {
     const writer: Writer = {
         write: vi.fn(),
     };
@@ -14,7 +14,7 @@ describe('AppConfigurator', () => {
         error: vi.fn(),
     };
 
-    it('should generate SCSS variables for a Tailwind palette from a primary and a secondary colors', () => {
+    it('should generate SCSS variables for a Tailwind palette from a primary and a secondary color', () => {
         const configurator = new AppConfigurator(writer, logger);
         const writerSpy = vi.spyOn(writer, 'write');
         const loggerSpy = vi.spyOn(logger, 'info');
@@ -52,5 +52,116 @@ $color-2-secondary-900: 2 1 55;
         expect(scssContent).toBe(EXPECTED);
         expect(loggerSpy).toHaveBeenCalledOnce();
         expect(writerSpy).toHaveBeenCalledOnce();
+        expect(writerSpy).toHaveBeenCalledWith(EXPECTED, expect.any(String));
+    });
+});
+
+describe('[AppConfigurator] generate environment configuration', () => {
+    const writer: Writer = {
+        write: vi.fn(),
+    };
+    const logger: Logger = {
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+    };
+
+    beforeEach(() => {
+        vi.resetModules();
+        process.env.FETCH_REMOTE_CONFIG = 'true';
+        process.env.API_ENDPOINT = 'https://api.example.com';
+        process.env.API_SECURITY_TOKEN = 'securetoken';
+        process.env.CONFIG_ID = 'config123';
+    });
+
+    afterEach(() => {
+        delete process.env.FETCH_REMOTE_CONFIG;
+        delete process.env.API_ENDPOINT;
+        delete process.env.API_SECURITY_TOKEN;
+        delete process.env.CONFIG_ID;
+    });
+
+    it('should generate environment file content with valid environment variables', () => {
+        const configurator = new AppConfigurator(writer, logger);
+        const loggerSpy = vi.spyOn(logger, 'info');
+        const writerSpy = vi.spyOn(writer, 'write');
+        const data: ConfigurationResponse = {
+            category1: [
+                {
+                    key: 'key1',
+                    value: 'value1',
+                    configId: 0,
+                    categoryId: 0,
+                    labelKey: [],
+                    type: '',
+                    possibleValues: [],
+                    defaultValue: null
+                },
+                {
+                    key: 'key2',
+                    value: 'value2',
+                    configId: 0,
+                    categoryId: 0,
+                    labelKey: [],
+                    type: '',
+                    possibleValues: [],
+                    defaultValue: null
+                },
+            ],
+        };
+
+        const EXPECTED = 
+`FETCH_REMOTE_CONFIG=true
+API_ENDPOINT=https://api.example.com
+API_SECURITY_TOKEN=securetoken
+CONFIG_ID=1
+KEY1="value1"
+KEY2="value2"
+`;
+
+        const environmentContent = configurator.generateEnvironment(data);
+
+        expect(environmentContent).toBe(EXPECTED);
+        expect(loggerSpy).toHaveBeenCalledOnce();
+        expect(writerSpy).toHaveBeenCalledOnce();
+        expect(writerSpy).toHaveBeenCalledWith(EXPECTED, expect.any(String));
+    });
+
+    it('should not generate environment file content with missing environment variables', () => {
+        delete process.env.API_SECURITY_TOKEN;
+
+        const configurator = new AppConfigurator(writer, logger);
+        const loggerSpy = vi.spyOn(logger, 'info');
+        const writerSpy = vi.spyOn(writer, 'write');
+        const data: ConfigurationResponse = {
+            category1: [
+                {
+                    key: 'key1',
+                    value: 'value1',
+                    configId: 0,
+                    categoryId: 0,
+                    labelKey: [],
+                    type: '',
+                    possibleValues: [],
+                    defaultValue: null
+                },
+                {
+                    key: 'key2',
+                    value: 'value2',
+                    configId: 0,
+                    categoryId: 0,
+                    labelKey: [],
+                    type: '',
+                    possibleValues: [],
+                    defaultValue: null
+                },
+            ],
+        };
+
+        const environmentContent = configurator.generateEnvironment(data);
+
+        expect(environmentContent).toBe('');
+        expect(loggerSpy).not.toHaveBeenCalled();
+        expect(writerSpy).not.toHaveBeenCalled();
     });
 });
