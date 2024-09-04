@@ -1,5 +1,5 @@
 <template>
-  <div class="relative w-full min-h-[600px]">
+  <div class="relative min-h-[600px]">
     <UiHeroCarousel :head-phones="headPhones" :background="background" :items="heroItems"></UiHeroCarousel>
   </div>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
