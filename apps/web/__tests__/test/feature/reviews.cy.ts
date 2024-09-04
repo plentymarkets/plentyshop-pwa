@@ -3,11 +3,13 @@ import { HomePageObject } from '../../support/pageObjects/HomePageObject';
 import {ProductListPageObject} from "../../support/pageObjects/ProductListPageObject";
 import {ReviewPageObject} from "../../support/pageObjects/ReviewPageObject";
 import {MyAccountPageObject} from "../../support/pageObjects/MyAccountPageObject";
+import {CookieBarObject} from "../../support/pageObjects/CookieBarObject";
 
 const homePage = new HomePageObject();
 const productListPage = new ProductListPageObject();
 const reviewPage = new ReviewPageObject();
 const myAccount: MyAccountPageObject = new MyAccountPageObject();
+const cookieBar = new CookieBarObject();
 
 beforeEach(() => {
   cy.clearCookies();
@@ -33,6 +35,7 @@ beforeEach(() => {
 
 describe('Reviews functionality check.', () => {
   it('Checks review section.', () => {
+    cookieBar.acceptAll();
     homePage.goToCategory();
     productListPage.goToProduct();
 

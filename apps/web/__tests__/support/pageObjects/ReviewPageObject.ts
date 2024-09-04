@@ -89,6 +89,8 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="review-answer-form"] textarea[name="message"]').type('Thank you!');
     cy.get('[data-testid="review-answer-form"] button[type="submit"]').click();
 
+    cy.wait('@postReview')
+
     return this;
   }
 
@@ -102,6 +104,8 @@ export class ReviewPageObject extends PageObject{
   removeReply() {
     cy.get('[data-testid="remove-reply-button"]').click();
     cy.get('[data-testid="confirm-delete"]').click();
+
+    cy.wait('@deleteReview')
 
     return this;
   }
