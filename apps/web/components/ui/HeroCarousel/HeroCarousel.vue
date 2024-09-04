@@ -13,7 +13,7 @@
     <div class="max-w-[1536px] mx-auto">
       <SfScrollable :buttons-placement="'block'" :direction="'horizontal'" class="flex overflow-hidden">
         <div v-for="(item, index) in props.items" :key="index" class="min-w-full flex-shrink-0">
-          <HeroSlide :slideData="item" />
+          <HeroSlide :slide-data="item" />
         </div>
       </SfScrollable>
     </div>
