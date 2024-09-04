@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AppConfigurator } from '../AppConfigurator';
-import { BaseColors, ConfigurationResponse } from '..//types';
+import { BaseColors, ConfigurationResponse } from '../types';
 import { Writer } from '../../writers/types';
 import { Logger } from '../../logs/types';
 
@@ -71,7 +71,7 @@ describe('[AppConfigurator] generate environment configuration', () => {
         process.env.FETCH_REMOTE_CONFIG = 'true';
         process.env.API_ENDPOINT = 'https://api.example.com';
         process.env.API_SECURITY_TOKEN = 'securetoken';
-        process.env.CONFIG_ID = 'config123';
+        process.env.CONFIG_ID = '1';
     });
 
     afterEach(() => {
