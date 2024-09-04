@@ -1,8 +1,8 @@
 <template>
   <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
-    <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
+    <h2 class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
       {{ t('newsletter.heading') }}
-    </p>
+    </h2>
     <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
       {{ t('newsletter.info') }}
     </p>
@@ -10,30 +10,38 @@
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
       <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
-          <SfInput
-            v-model="firstName"
-            v-bind="firstNameAttributes"
-            :invalid="Boolean(errors['firstName'])"
-            :placeholder="`${t('newsletter.firstName')} **`"
-            :wrapper-class="wrapperClass"
-            type="text"
-            name="firstName"
-          />
+          <label for="newsletter-first-name">
+            <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
+            <SfInput
+              v-model="firstName"
+              v-bind="firstNameAttributes"
+              :invalid="Boolean(errors['firstName'])"
+              :placeholder="`${t('newsletter.firstName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-first-name"
+              name="firstName"
+            />
+          </label>
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
 
         <div class="sm:ml-[1rem]">
-          <SfInput
-            v-model="lastName"
-            v-bind="lastNameAttributes"
-            :invalid="Boolean(errors['lastName'])"
-            :placeholder="`${t('newsletter.lastName')} **`"
-            :wrapper-class="wrapperClass"
-            type="text"
-            name="lastName"
-          />
+          <label for="newsletter-last-name">
+            <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
+            <SfInput
+              v-model="lastName"
+              v-bind="lastNameAttributes"
+              :invalid="Boolean(errors['lastName'])"
+              :placeholder="`${t('newsletter.lastName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-last-name"
+              name="lastName"
+            />
+          </label>
           <div class="h-[2rem]">
             <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
@@ -41,16 +49,20 @@
       </div>
 
       <div class="grid grid-cols-1">
-        <SfInput
-          v-model="email"
-          v-bind="emailAttributes"
-          :invalid="Boolean(errors['email'])"
-          :placeholder="`${t('newsletter.email')} **`"
-          :wrapper-class="wrapperClass"
-          type="email"
-          name="email"
-          autocomplete="email"
-        />
+        <label for="newsletter-email">
+          <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
+          <SfInput
+            v-model="email"
+            v-bind="emailAttributes"
+            :invalid="Boolean(errors['email'])"
+            :placeholder="`${t('newsletter.email')} **`"
+            :wrapper-class="wrapperClass"
+            type="email"
+            id="newsletter-email"
+            name="email"
+            autocomplete="email"
+          />
+        </label>
         <div class="h-[2rem]">
           <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
