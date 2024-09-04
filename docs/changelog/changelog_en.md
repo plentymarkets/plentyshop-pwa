@@ -36,6 +36,7 @@
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
 - Added better contrast for `Verfied purchase` text in feedback.
+- Added label tags for inputs in `NewsletterSubscribe.vue` component.
 
 ### 🩹 Fixed
 
