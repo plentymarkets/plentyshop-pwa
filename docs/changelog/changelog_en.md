@@ -37,6 +37,7 @@
 - Added variation properties for quick checkout, considering order process visibility.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Added cache-control for all images in order to solve "serve static assets" problem.
 
 ### 🩹 Fixed
 
