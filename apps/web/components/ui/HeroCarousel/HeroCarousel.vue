@@ -12,14 +12,8 @@
 
     <div class="max-w-[1536px] mx-auto">
       <SfScrollable :buttons-placement="'block'" :direction="'horizontal'" class="flex overflow-hidden">
-        <div
-          v-for="(item, index) in props.items"
-          :key="index"
-          class="min-w-full flex-shrink-0"
-        >
-          <HeroSlide
-            :slideData="item"
-          />
+        <div v-for="(item, index) in props.items" :key="index" class="min-w-full flex-shrink-0">
+          <HeroSlide :slideData="item" />
         </div>
       </SfScrollable>
     </div>
@@ -51,6 +45,6 @@ const getSizeForViewport = (sizes: Sizes | undefined): Size => {
 }
 
 .overflow-hidden {
-  overflow: hidden; /* Prevent overflow of slides */
+  overflow: hidden;
 }
 </style>
