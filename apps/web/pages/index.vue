@@ -59,6 +59,29 @@ const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
+const getDefaultHomepageTemplate = {
+  id: 100,
+  hero: [
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+  ],
+  valueProposition: { text: '', image: '' },
+  featured: [
+    { headline: '', categoryId: 1 },
+    { headline: '', categoryId: 2 },
+  ],
+};
+
+const runtimeConfig = useRuntimeConfig();
+const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate));
+const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+const { fetchCategoryTemplate } = useCategoryTemplate();
+if (typeof homepageCategoryId === 'number') {
+  const { data } = await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+  homepageTemplate.value = data;
+}
+
 type Size = {
   width: string;
   height: string;
