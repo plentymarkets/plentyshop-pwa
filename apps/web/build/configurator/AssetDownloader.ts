@@ -33,7 +33,7 @@ export class AssetDownloader {
     }
     this.logger.info('Downloading logo...');
     const fileType = url.split('.').pop();
-    const logoPath = path.resolve(__dirname, `../../public/logo.${fileType}`);
+    const logoPath = path.resolve(__dirname, `../../public/images/logo.${fileType}`);
     this.writer.write(url, logoPath);
   }
 }
