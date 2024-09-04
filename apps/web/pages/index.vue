@@ -27,6 +27,45 @@ const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
+const getDefaultHomepageTemplate = {
+  id: 100,
+  hero: [
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+  ],
+  valueProposition: { text: '', image: '' },
+  featured: [
+    { headline: '', categoryId: 1 },
+    { headline: '', categoryId: 2 },
+  ],
+};
+
+const runtimeConfig = useRuntimeConfig();
+const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate));
+const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+const { fetchCategoryTemplate } = useCategoryTemplate();
+if (typeof homepageCategoryId === 'number') {
+  const { data } = await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+  homepageTemplate.value = data;
+}
+
+type Size = {
+  width: string;
+  height: string;
+};
+type Sizes = {
+  lg: Size;
+  md: Size;
+  sm: Size;
+};
+type SizeKey = keyof Sizes;
+
+const getSizeForViewport = (sizes: Sizes) => {
+  const breakpoint = viewport.breakpoint.value as SizeKey;
+  return sizes[breakpoint];
+};
+
 const mediaData = ref({
   image: 'https://placehold.co/600x400',
   text: '<h4>Lorem Ipsum Dolor</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Test</li></ul>',
