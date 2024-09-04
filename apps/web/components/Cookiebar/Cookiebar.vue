@@ -2,7 +2,7 @@
   <client-only>
     <div
       v-if="visible"
-      class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 xl:bottom-2 shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
+      class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
     >
       <div v-if="!furtherSettingsOn">
         <!-- cookie info -->
@@ -102,7 +102,7 @@
       <!-- further settings / back button -->
       <div>
         <div class="text-center mt-2">
-          <SfLink v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
+          <SfLink class="text-2xl md:text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
             {{ $t('CookieBar.Further Settings') }}
           </SfLink>
           <SfLink v-else href="#" @click="furtherSettingsOn = false">
@@ -113,7 +113,7 @@
         <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
           <div class="flex-1">
             <UiButton
-              class="w-full"
+              class="w-full h-12"
               :aria-disabled="false"
               type="button"
               :aria-label="$t('CookieBar.Accept All')"
@@ -125,7 +125,7 @@
           </div>
           <div class="flex-1">
             <UiButton
-              class="w-full"
+              class="w-full h-12"
               :aria-disabled="false"
               type="button"
               :aria-label="$t('CookieBar.Reject All')"
@@ -137,7 +137,7 @@
           <div class="flex-1">
             <UiButton
               variant="secondary"
-              class="w-full"
+              class="w-full h-12"
               :aria-disabled="false"
               type="button"
               :aria-label="$t('CookieBar.Accept Selection')"
