@@ -11,7 +11,7 @@ Cypress.on("window:before:load", win => {
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if (ignoreErrors.some(ignore => err.message.includes(ignore))) {
+  if (ignoreErrors.some(ignore => err.message.includes(ignore) || err.stack?.includes(ignore))) {
     return false;
   }
 
