@@ -1,4 +1,3 @@
-<!-- HeroSlide.vue -->
 <template>
   <div class="flex md:flex-row md:items-center w-full">
     <div class="">
@@ -34,6 +33,6 @@ const props = defineProps<{
 <style scoped>
 .flex {
   display: flex;
-  width: 100%; /* Ensure each slide takes the full width */
+  width: 100%;
 }
 </style>
