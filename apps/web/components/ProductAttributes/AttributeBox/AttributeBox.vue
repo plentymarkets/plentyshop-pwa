@@ -1,12 +1,10 @@
 <template>
   <div>
-    <label
-      :for="'attribute-' + productAttributeGetters.getAttributeId(attribute)"
-      class="leading-5 text-sm text-zinc-900"
-    >
+    <div class="leading-5 text-sm text-zinc-900">
       {{ productAttributeGetters.getAttributeName(attribute) }}
-    </label>
-    <div :id="'attribute-' + productAttributeGetters.getAttributeId(attribute)" class="w-full flex gap-4 flex-wrap">
+    </div>
+
+    <div class="w-full flex gap-4 flex-wrap">
       <div
         v-for="item in productAttributeGetters.getAttributeValues(attribute)"
         :key="productAttributeGetters.getAttributeValueId(item)"
