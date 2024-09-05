@@ -59,6 +59,7 @@
 - Fixed the issue with the plentyID-cookie in the PWA live preview
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
 
 ### 👷 Changed
 
