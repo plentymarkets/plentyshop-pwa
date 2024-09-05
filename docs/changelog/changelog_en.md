@@ -19,6 +19,7 @@
 
 ### 🚀 New
 
+- The app now uses Referrer ID in order to display the appropiate price change.
 - The app now reads metadata, such as description and keywords, from the environment.
 - The app now reads which Google Fonts to use from the environment.
 - The app now reads whether to display the newsletter signup form on the homepage from the environment.
@@ -36,6 +37,8 @@
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
+- Added better contrast for `Verfied purchase` text in feedback.
+- Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 
@@ -55,6 +58,7 @@
 - Fixed the issue with the plentyID-cookie in the PWA live preview
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
 
 ### 👷 Changed
 
