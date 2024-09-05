@@ -36,6 +36,10 @@
 - Added e2e tests for reviews pagination.
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
+- Added labels for both min and max price filters
+- Changed font size of wishlist icon counter and cart icon counter
+- Added better contrast for `Verfied purchase` text in feedback.
+- Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 
@@ -55,6 +59,7 @@
 - Fixed the issue with the plentyID-cookie in the PWA live preview
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
 
 ### 👷 Changed
 
