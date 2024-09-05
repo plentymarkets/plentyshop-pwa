@@ -93,6 +93,10 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('use-shipping-as-billing');
   }
 
+  get shippingAsBillingText() {
+    return cy.getByTestId('address-info-text-1');
+  }
+
   goToGuestCheckout() {
     this.goToGuestCheckoutButton.click();
     return this;
@@ -177,6 +181,11 @@ export class CheckoutPageObject extends PageObject {
     cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
 
     return this;
+  }
+
+  shouldShowShippingAsBillingText() {
+    this.shippingAsBillingText.contains('Same as shipping address');
+    return this; 
   }
 
   fillCreditCardForm() {

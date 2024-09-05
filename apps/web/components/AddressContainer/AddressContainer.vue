@@ -51,7 +51,7 @@
           <AddressFormBilling v-if="editing" ref="addressFormBilling" :address="addressToEdit" />
           <AddressDisplay v-else :address="checkoutAddress" />
         </template>
-        <div v-if="showDynamicAddressText" class="mt-2">{{ dynamicAddressText }}</div>
+        <div v-if="showDynamicAddressText" :data-testid="'address-info-text-' + type" class="mt-2">{{ dynamicAddressText }}</div>
       </template>
     </div>
   </div>
