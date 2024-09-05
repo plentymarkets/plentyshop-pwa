@@ -1,7 +1,6 @@
 const ignoreErrors = [
   'zoid',
-  'paypal_js_sdk_v5_unhandled_exception',
-  'Cannot read properties of undefined (reading \'clickUrl\')'
+  'paypal',
 ];
 
 Cypress.on("window:before:load", win => {
