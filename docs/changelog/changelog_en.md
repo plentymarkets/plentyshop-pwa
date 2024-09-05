@@ -19,6 +19,7 @@
 
 ### 🚀 New
 
+- The app now uses Referrer ID in order to display the appropiate price change.
 - The app now reads metadata, such as description and keywords, from the environment.
 - The app now reads which Google Fonts to use from the environment.
 - The app now reads whether to display the newsletter signup form on the homepage from the environment.
@@ -54,6 +55,7 @@
 - Fixed editing author name on reviews and replies with added e2e
 - Fixed the issue with the plentyID-cookie in the PWA live preview
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
+- Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
 
 ### 👷 Changed
 
