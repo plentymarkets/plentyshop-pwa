@@ -156,7 +156,7 @@ onMounted(() => {
       expiry.render('#expiration-date');
 
       const name = cardFields.NameField({
-        placeholder: 'Name',
+        placeholder: t('contact.form.nameLabel'),
       });
       name.render('#credit-card-name');
 
