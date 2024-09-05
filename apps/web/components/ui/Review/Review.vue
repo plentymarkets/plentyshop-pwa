@@ -3,8 +3,8 @@
     <div class="w-full flex">
       <div class="w-2/3 text-xs truncate text-neutral-400 mb-2">
         <span class="mr-2 text-xs text-neutral-700" data-testid="review-item-authorName">{{ reviewAuthor }}</span>
-        <span class="text-green-800">
-          <SfIconCheck v-if="verifiedPurchase" size="xs" class="mr-1" />
+        <span v-if="verifiedPurchase" class="text-green-800">
+          <SfIconCheck size="xs" class="mr-1" />
           {{ t('review.verifiedPurchase') }}
         </span>
       </div>
