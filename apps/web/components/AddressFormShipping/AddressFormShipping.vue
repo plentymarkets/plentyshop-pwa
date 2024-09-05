@@ -176,6 +176,10 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 if (!addAddress) {
   hasShippingCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
   setValues(address as any);
+  if (!hasShippingCompany.value) {
+    companyName.value = '';
+    vatNumber.value = '';
+  }
 }
 
 const handleSaveShippingAsBilling = async (shippingAddressForm: Address) => {
