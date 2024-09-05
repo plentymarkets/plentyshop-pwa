@@ -37,6 +37,7 @@
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
 - Added better contrast for `Verfied purchase` text in feedback.
+- Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 
