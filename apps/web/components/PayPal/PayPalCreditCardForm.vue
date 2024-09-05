@@ -10,7 +10,7 @@
   <div class="payment-container" id="pay-container">
     <div class="row">
       <div class="grid-cols-12">
-        <span class="text-sm font-medium">{{ t('paypal.unbrandedCardNumber') }}</span>
+        <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCardNumber') }} *</UiFormLabel>
         <div id="card-number"></div>
       </div>
     </div>
@@ -18,13 +18,13 @@
     <div class="grid grid-cols-2 gap-x-5 mt-5">
       <div>
         <div class="grid-cols-12">
-          <span class="text-sm font-medium">{{ t('paypal.unbrandedExpirationDate') }}</span>
+          <UiFormLabel class="pl-2">{{ t('paypal.unbrandedExpirationDate') }} *</UiFormLabel>
           <div id="expiration-date"></div>
         </div>
       </div>
       <div>
         <div class="grid-cols-12">
-          <span class="text-sm font-medium">{{ t('paypal.unbrandedCvv') }}</span>
+          <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCvv') }} *</UiFormLabel>
           <div id="credit-card-cvv"></div>
         </div>
       </div>
@@ -32,12 +32,14 @@
 
     <div class="row mt-5">
       <label class="hosted-fields--label">
-        <span class="text-sm font-medium">{{ t('paypal.unbrandedNameOnCard') }}</span>
-        <SfInput id="credit-card-name" v-model="cardHolder" class="hosted-field" />
+        <UiFormLabel class="pl-2">{{ t('paypal.unbrandedNameOnCard') }}</UiFormLabel>
+        <div id="credit-card-name"></div>
       </label>
     </div>
 
-    <div class="flex justify-between mt-5">
+    <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
+
+    <div class="flex justify-end gap-x-4 mt-6">
       <div>
         <UiButton @click="confirmCancel" type="button" variant="secondary">{{ t('paypal.unbrandedCancel') }}</UiButton>
       </div>
@@ -55,7 +57,7 @@
 
 <script lang="ts" setup>
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import { SfIconClose, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
 import { CardFieldsOnApproveData } from '@paypal/paypal-js';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -70,7 +72,6 @@ const { t } = useI18n();
 
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await loadScript(currency.value);
-const cardHolder = ref('');
 
 const confirmCancel = () => {
   emit('confirmCancel');
@@ -153,6 +154,11 @@ onMounted(() => {
         placeholder: 'MM/YY',
       });
       expiry.render('#expiration-date');
+
+      const name = cardFields.NameField({
+        placeholder: 'Name',
+      });
+      name.render('#credit-card-name');
 
       button?.addEventListener('click', () => {
         cardFields.submit();
