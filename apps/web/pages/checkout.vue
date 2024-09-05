@@ -167,7 +167,7 @@ await loadAddresses();
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
-const applePayAvailable = computed(() => process.client && (window as any).ApplePaySession);
+const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
