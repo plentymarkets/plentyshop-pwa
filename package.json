@@ -21,6 +21,7 @@
     "format:fix": "prettier --write \"**/*.{ts,vue,css,scss,md}\"",
     "clean": "npx rimraf ./**/node_modules && rm yarn.lock",
     "clean:hard": "npx rimraf ./**/node_modules && npx rimraf ./**/lib && rm yarn.lock && npx rimraf ./**/.turbo && npx rimraf ./**/.nuxt",
+    "clean:logs": "npx rimraf ./**/*.log",
     "test": "yarn turbo:disable-telemetry && turbo run test",
     "test:watch": "yarn turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "yarn turbo:disable-telemetry && npx turbo run test:coverage",
@@ -30,7 +31,7 @@
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.56.0",
+    "@plentymarkets/shop-api": "^0.58.0",
     "@types/applepayjs": "^14.0.8",
     "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/yup": "^4.13.1",
