@@ -4,10 +4,6 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
-import fetchConfiguration from './build/fetchConfiguration';
-import generateScssVariables from './build/generateScssVariables';
-import fetchFavicon from './build/fetchFavicon';
-import fetchLogo from './build/fetchLogo';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -44,18 +40,6 @@ export default defineNuxtConfig({
     url: '',
   },
   pages: true,
-  hooks: {
-    'build:before': async () => {
-      if (process.env.FETCH_REMOTE_CONFIG === '1') {
-        const response = await fetchConfiguration();
-        generateScssVariables();
-        await fetchFavicon(response);
-        await fetchLogo(response);
-      } else {
-        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
-      }
-    },
-  },
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
