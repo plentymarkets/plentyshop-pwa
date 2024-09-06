@@ -103,6 +103,8 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   };
 
   const getScript: GetScript = async (currency: string, commit = false) => {
+    state.value.isReady = false;
+
     const { $i18n } = useNuxtApp();
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
     const script = state.value.paypalScripts.find(
