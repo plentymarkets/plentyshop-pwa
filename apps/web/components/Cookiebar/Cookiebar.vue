@@ -74,7 +74,7 @@
                     <div class="w-3/4">
                       <template v-if="propKey === 'PrivacyPolicy'">
                         <!-- TODO -->
-                        <SfLink :tag="NuxtLink" :link="localePath(paths.privacyPolicy)">
+                        <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
                           {{ $t('CookieBar.Privacy Settings') }}
                         </SfLink>
                       </template>
