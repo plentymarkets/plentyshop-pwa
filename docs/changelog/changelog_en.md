@@ -61,6 +61,7 @@
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
 - Fixed orphaned form label on product page attributes.
 - Fixed cookie bar privacy link not working properly.
+- Fixed minor styling errors in the credit card form in the checkout and the rating form on the product page.
 
 ### 👷 Changed
 

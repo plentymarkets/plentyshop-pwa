@@ -40,6 +40,7 @@
 - Problem behoben, bei dem die Navigationsleiste zwischen 640px und 767px verschwunden ist.
 - In der automatisch generierten Dokumentation von Composables enthält die Seitennavigation jetzt die richtigen Verlinkungen.
 - Problem behoben, dass beim Abfragen der Konfiguration von plentysystems, Updates erst beim zweiten Durchlauf des Build-Prozesses angewandt wurden.
+- Kleinere Stylingfehler in der Kreditkarten-Form im Checkout und der Bewertungs-Form auf der Produktseite behoben.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
