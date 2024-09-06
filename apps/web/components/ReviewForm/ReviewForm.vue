@@ -33,7 +33,7 @@
         </div>
 
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
-          <UiFormLabel class="mt-2" or="review-title">{{ t('review.title') }} *</UiFormLabel>
+          <UiFormLabel class="mt-2" for="review-title">{{ t('review.title') }} *</UiFormLabel>
           <SfInput
             v-model="title"
             v-bind="titleAttributes"
@@ -44,7 +44,7 @@
           <VeeErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
         </template>
 
-        <UiFormLabel class="mt-4" or="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
+        <UiFormLabel class="mt-4" for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
         <SfInput
           v-model="authorName"
           v-bind="authorNameAttributes"
