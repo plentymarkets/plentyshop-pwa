@@ -26,12 +26,15 @@
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            sizes="(min-width: 1760px) 719px, (min-width: 1440px) calc(17.67vw + 412px), (min-width: 920px) calc(50vw - 56px), (min-width: 780px) calc(49.17vw - 39px), 100vw"
+            sizes="(max-width: 370px) 370px,
+                  (max-width: 700px) 700px,
+                  (max-width: 720px) 720px,
+                  (max-width: 720px) 1400px"
             :srcset="`
-              ${productImageGetters.getImageUrlSecondPreview(image)}  370w,
-              ${productImageGetters.getImageUrlPreview(image)}  700w,
-              ${productImageGetters.getImageUrlMiddle(image)}  720w,
-              ${productImageGetters.getImageUrl(image)}  1400w,
+              ${productImageGetters.getImageUrlSecondPreview(image)} 370w,
+              ${productImageGetters.getImageUrlPreview(image)} 700w,
+              ${productImageGetters.getImageUrlMiddle(image)} 720w,
+              ${productImageGetters.getImageUrl(image)} 1400w,
               `"
             draggable="false"
             :loading="index === 0 ? 'eager' : 'lazy'"
