@@ -26,16 +26,8 @@
             fit="fill"
             class="object-contain h-full w-full"
             :quality="80"
-            sizes="(max-width: 370px) 370px,
-                  (max-width: 700px) 700px,
-                  (max-width: 720px) 720px,
-                  (max-width: 720px) 1400px"
-            :srcset="`
-              ${productImageGetters.getImageUrlSecondPreview(image)} 370w,
-              ${productImageGetters.getImageUrlPreview(image)} 700w,
-              ${productImageGetters.getImageUrlMiddle(image)} 720w,
-              ${productImageGetters.getImageUrl(image)} 1400w,
-              `"
+            :srcset="getSourceSet(image)"
+            sizes="2xs:370px xs:720px sm:740px md:1400px"
             draggable="false"
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
@@ -146,6 +138,20 @@ const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
 const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
 
+const getSourceSet = (image: ImagesData) => {
+  const dpr = 2;
+  const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
+  const preview = productImageGetters.getImageUrlPreview(image);
+  const middle = productImageGetters.getImageUrlMiddle(image);
+  const full = productImageGetters.getImageUrl(image);
+
+  return `
+    ${secondPreview} ${370 * dpr}w,
+    ${preview} ${700 * dpr}w,
+    ${middle} ${720 * dpr}w,
+    ${full} ${1400 * dpr}w
+  `;
+};
 onMounted(() => {
   nextTick(() => {
     for (const [index] of props.images.entries()) {
