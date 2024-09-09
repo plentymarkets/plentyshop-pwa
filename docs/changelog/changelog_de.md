@@ -28,6 +28,7 @@
 - Das Logo kann jetzt vom plentysystems-System geladen werden.
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 - PayPal-Button für PS Lazyload
+- Googlepay payment method
 
 ### Geändert
 
