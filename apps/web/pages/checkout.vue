@@ -94,6 +94,10 @@
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
               @button-clicked="validateTerms"
             />
+            <PayPalGooglePayButton
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
           </OrderSummary>
         </div>
       </div>
