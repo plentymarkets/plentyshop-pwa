@@ -179,6 +179,7 @@ if (!addAddress) {
   if (!hasShippingCompany.value) {
     companyName.value = '';
     vatNumber.value = '';
+    console.log('here');
   }
 }
 
