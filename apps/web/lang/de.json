@@ -631,8 +631,8 @@
   },
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "asterisk": "*",
-  "itemExclVAT": "inkl. ges. MwSt",
-  "itemInclVAT": "zzgl. ges. MwSt.",
+  "itemExclVAT": "zzgl. ges. MwSt",
+  "itemInclVAT": "inkl. ges. MwSt",
   "excludedShipping": "zzgl. Versandkosten",
   "lang": {
     "en": "Englisch",
