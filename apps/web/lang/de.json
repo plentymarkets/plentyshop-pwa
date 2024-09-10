@@ -13,23 +13,31 @@
     "displayDetails": {
       "detail1": {
         "title": "Stilvoll heraustreten",
+        "alt": "Schritt in Stil - Sonnenbrillen-Kollektion für einen modischen Look",
         "subtitle": "Lassen Sie sich inspirieren",
         "description": "Treten Sie stilvoll mit unserer Sonnenbrillenkollektion auf",
         "buttonText": "Jetzt entdecken"
       },
       "detail2": {
         "title": "Packen Sie Es",
+        "alt": "Pack es ein - Entdecke die Outdoor-Welt mit unserer Rucksack-Kollektion",
         "subtitle": "Seien Sie aktiv",
         "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
         "buttonText": "Jetzt entdecken"
       },
       "detail3": {
         "title": "Frisch und Kühn",
+        "alt": "Frisch und Kühn - Setze Akzente mit Farbe in deinem Outfit",
         "subtitle": "Neue Kollektion",
         "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
         "buttonText": "Jetzt entdecken"
       }
-    }
+    },
+    "womenHomepageCategory": "Frauenkategorie auf der Startseite",
+    "menHomepageCategory": "Männerkategorie auf der Startseite",
+    "kidHomepageCategory": "Kinderkategorie auf der Startseite",
+    "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
+    "headPhones": "Neue Wireless Pro Kopfhörer mit räumlichem Audio und ganztägiger Akkulaufzeit"
   },
   "billing": {
     "heading": "Rechnungsadresse",
@@ -268,7 +276,9 @@
   "deletedFromCart": "Artikel aus dem Warenkorb entfernt",
   "search": "Suche",
   "openSearchModalButtonLabel": "Suche öffnen",
-  "vsfHomepage": "VSF Homepage",
+  "closeMenu": "Menü schließen",
+  "openConfigurationDrawer": "Konfigurationsschublade öffnen",
+  "goToHomepage": "Zur Startseite gehen",
   "home": "Startseite",
   "products": "Produkte",
   "cart": "Warenkorb",
