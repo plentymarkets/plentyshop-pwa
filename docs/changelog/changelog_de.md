@@ -20,6 +20,7 @@
 ### 🚀 Hinzugefügt
 
 - Metadaten wie Meta-Beschreibung und -Schlüsselwörter werden jetzt aus den Umgebungsvariablen gelesen.
+- Daten für das Open Graph-Protokoll werden jetzt aus Umgebungsvariablen gelesen. Dabei handelt es sich um den Titel, das Bild, und den Endpunkt.
 - Die zu nutzenden Google Fonts werden jetzt aus den Umgebungsvariablen gelesen.
 - Die Anzeige des Formulars zur Newsletteranmeldung ist jetzt abhängig von den Umgebungsvariablen.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
@@ -39,6 +40,8 @@
 - Die Schaltflächen bei den Adressen in der Kasse wurden in der mobilen Ansicht angepasst.
 - Problem behoben, bei dem die Navigationsleiste zwischen 640px und 767px verschwunden ist.
 - In der automatisch generierten Dokumentation von Composables enthält die Seitennavigation jetzt die richtigen Verlinkungen.
+- Problem behoben, dass beim Abfragen der Konfiguration von plentysystems, Updates erst beim zweiten Durchlauf des Build-Prozesses angewandt wurden.
+- Kleinere Stylingfehler in der Kreditkarten-Form im Checkout und der Bewertungs-Form auf der Produktseite behoben.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 

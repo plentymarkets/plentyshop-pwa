@@ -33,7 +33,7 @@
         </div>
 
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
-          <UiFormLabel for="review-title">{{ t('review.title') }} *</UiFormLabel>
+          <UiFormLabel class="mt-2" for="review-title">{{ t('review.title') }} *</UiFormLabel>
           <SfInput
             v-model="title"
             v-bind="titleAttributes"
@@ -44,7 +44,7 @@
           <VeeErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
         </template>
 
-        <UiFormLabel for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
+        <UiFormLabel class="mt-4" for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
         <SfInput
           v-model="authorName"
           v-bind="authorNameAttributes"
@@ -71,14 +71,14 @@
           :invalid="Boolean(errors['message'])"
           size="lg"
           name="message"
-          class="w-full"
+          class="w-full max-h-80 min-h-16"
         />
         <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
         <div v-if="!reviewIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ reviewCharsCount }}</div>
 
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
-        <div class="flex justify-end gap-x-4">
+        <div class="flex justify-end gap-x-4 mt-6">
           <UiButton @click="closeReviewModal" type="button" variant="secondary" class="flex-1 md:flex-initial">
             {{ t('review.cancel') }}
           </UiButton>
