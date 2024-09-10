@@ -19,7 +19,9 @@
 
 ### 🚀 New
 
+- The app now uses Referrer ID in order to display the appropiate price change.
 - The app now reads metadata, such as description and keywords, from the environment.
+- The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
 - The app now reads which Google Fonts to use from the environment.
 - The app now reads whether to display the newsletter signup form on the homepage from the environment.
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
@@ -35,6 +37,10 @@
 - Added e2e tests for reviews pagination.
 - Added canonical meta tags to product items
 - Added variation properties for quick checkout, considering order process visibility.
+- Added labels for both min and max price filters
+- Changed font size of wishlist icon counter and cart icon counter
+- Added better contrast for `Verfied purchase` text in feedback.
+- Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Added cache-control for all images in order to solve "serve static assets" problem.
@@ -55,6 +61,10 @@
 - Fixed the issue with the plentyID-cookie in the PWA live preview
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
+- Fixed cookie bar privacy link not working properly.
+- Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed DE translation regarding VAT.
 
 ### 👷 Changed
 

@@ -30,10 +30,16 @@
 
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
-        <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+        <label for="min">
+          <UiFormLabel class="text-start">{{ $t('min') }}</UiFormLabel>
+          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+        </label>
       </div>
       <div class="mb-3">
-        <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+        <label for="max">
+          <UiFormLabel class="text-start">{{ $t('max') }}</UiFormLabel>
+          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+        </label>
       </div>
       <div class="flex">
         <UiButton
