@@ -43,6 +43,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
+  const runtimeConfig = useRuntimeConfig();
 
   cartLoading.value = true;
 
@@ -53,6 +54,10 @@ const setInitialDataSSR: SetInitialData = async () => {
       setCart(data.session?.basket as Cart);
       setCategoryTree(data.categories);
       setWishlistItemIds(data?.session?.basket?.itemWishListIds || []);
+
+      if (!runtimeConfig.public.turnstileSiteKey) {
+        runtimeConfig.public.turnstileSiteKey = data.turnstileSiteKey;
+      }
     }
   } catch (error) {
     useHandleError(error as ErrorParams);
