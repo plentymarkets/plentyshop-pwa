@@ -43,6 +43,8 @@
 - Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Optimize aria labels and alt texts on homepage
+- Added cache-control for all images in order to solve "serve static assets" problem.
 - Implement Googlepay payment method
 
 ### 🩹 Fixed

@@ -9,7 +9,7 @@
           v-if="viewport.isLessThan('lg')"
           variant="tertiary"
           square
-          aria-label="Close menu"
+          :aria-label="t('closeMenu')"
           class="mr-5 bg-transparent hover:bg-primary-800 hover:text-white active:bg-primary-700 active:text-white"
           @click="openMenu([])"
         >
@@ -18,7 +18,7 @@
 
         <NuxtLink
           :to="localePath(paths.home)"
-          aria-label="Sf Homepage"
+          :aria-label="t('goToHomepage')"
           class="flex shrink-0 w-full h-8 lg:w-48 lg:h-8 items-center mr-auto text-white md:mr-10 focus-visible:outline focus-visible:outline-offset focus-visible:rounded-sm"
         >
           <UiVsfLogo />
@@ -128,7 +128,7 @@
         <nav>
           <div class="flex items-center justify-between p-4 border-b border-b-neutral-200 border-b-solid">
             <p class="typography-text-base font-medium">Browse products</p>
-            <UiButton variant="tertiary" square aria-label="Close menu" class="ml-2" @click="close()">
+            <UiButton variant="tertiary" square :aria-label="t('closeMenu')" class="ml-2" @click="close()">
               <SfIconClose class="text-neutral-500" />
             </UiButton>
           </div>
@@ -196,6 +196,7 @@ import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
 import { paths } from '~/utils/paths';
 
+const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { buildCategoryMenuLink } = useLocalization();
