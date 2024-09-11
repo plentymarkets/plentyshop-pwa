@@ -33,9 +33,9 @@
         "buttonText": "Jetzt entdecken"
       }
     },
-    "womenHomepageCategory": "Frauenkategorie auf der Startseite",
-    "menHomepageCategory": "Männerkategorie auf der Startseite",
-    "kidHomepageCategory": "Kinderkategorie auf der Startseite",
+    "womenHomepageCategory": "Kategorie Frauen auf der Startseite",
+    "menHomepageCategory": "Kategorie Männer auf der Startseite",
+    "kidHomepageCategory": "Kategorie Kinder auf der Startseite",
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
     "headPhones": "Neue Wireless Pro Kopfhörer mit räumlichem Audio und ganztägiger Akkulaufzeit"
   },
@@ -277,7 +277,7 @@
   "search": "Suche",
   "openSearchModalButtonLabel": "Suche öffnen",
   "closeMenu": "Menü schließen",
-  "openConfigurationDrawer": "Konfigurationsschublade öffnen",
+  "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "goToHomepage": "Zur Startseite gehen",
   "home": "Startseite",
   "products": "Produkte",
