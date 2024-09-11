@@ -163,7 +163,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillCreditCardForm() {
-
+    //
     cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
 
     cy.iframe('[title=paypal_card_expiry_field]').find('.card-field-expiry').type('12/27');
