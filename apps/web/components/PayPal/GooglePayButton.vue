@@ -11,7 +11,7 @@
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
-let isGooglePayLoaded = false;
+let isGooglePayLoaded = true;
 let countryCodeString = 'DE';
 const { loadScript, executeOrder, createTransaction, captureOrder } = usePayPal();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
