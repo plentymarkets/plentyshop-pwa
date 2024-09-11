@@ -35,7 +35,7 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
-    '/images/**': { headers: { 'cache-control': `max-age=86400` } },
+    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
