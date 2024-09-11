@@ -205,6 +205,7 @@ onMounted(async () => {
   await loadGooglePay().then(() => {
     if (google && (paypal as any).Googlepay) {
       onGooglePayLoaded().catch(console.error);
+      return null;
     }
   });
 });
