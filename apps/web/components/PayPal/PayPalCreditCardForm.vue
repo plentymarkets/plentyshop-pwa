@@ -31,10 +31,8 @@
     </div>
 
     <div class="row mt-5">
-      <label class="hosted-fields--label">
-        <UiFormLabel class="pl-2">{{ t('paypal.unbrandedNameOnCard') }}</UiFormLabel>
-        <div id="credit-card-name"></div>
-      </label>
+      <UiFormLabel class="pl-2">{{ t('paypal.unbrandedNameOnCard') }}</UiFormLabel>
+      <div id="credit-card-name"></div>
     </div>
 
     <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>

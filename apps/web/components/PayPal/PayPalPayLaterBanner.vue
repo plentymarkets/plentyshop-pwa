@@ -1,25 +1,5 @@
 <template>
-  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid">
-    <div
-      v-if="bannerTextStylePlacements.includes(placement)"
-      data-pp-message
-      data-pp-style-layout="text"
-      data-pp-style-logo-type="inline"
-      data-pp-style-text-color="black"
-      data-pp-style-text-size="12"
-      :data-pp-amount="amount"
-      :data-pp-placement="placement"
-    />
-    <div
-      v-else-if="bannerLogoStylePlacements.includes(placement)"
-      data-pp-message
-      data-pp-style-color="white-no-border"
-      data-pp-style-layout="flex"
-      data-pp-style-ratio="8x1"
-      :data-pp-amount="amount"
-      :data-pp-placement="placement"
-    />
-  </div>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid"></div>
 </template>
 
 <script setup lang="ts">
@@ -30,23 +10,58 @@ import { v4 as uuid } from 'uuid';
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const { isReady, getScript } = usePayPal();
-defineProps<PayPalPayLaterBannerType>();
+const props = defineProps<PayPalPayLaterBannerType>();
 
 const bannerTextStylePlacements = ['product', 'cart', 'payment'];
-const bannerLogoStylePlacements = ['home', 'category'];
 
 const paypalUuid = uuid();
+const isTextStyle = ref(bannerTextStylePlacements.includes(props.placement));
 
-onMounted(() => {
-  nextTick(() => {
-    if (!isReady.value) {
-      getScript(currency.value);
+const renderMessage = async () => {
+  await nextTick(async () => {
+    const script = await getScript(currency.value);
+
+    if (script && script.Messages) {
+      await script
+        .Messages({
+          amount: props.amount,
+          placement: props.placement,
+          style: {
+            layout: isTextStyle ? 'text' : 'flex',
+            color: isTextStyle ? undefined : 'white-no-border',
+            ratio: isTextStyle ? undefined : '8x1',
+            text: {
+              color: isTextStyle ? 'black' : undefined,
+              size: isTextStyle ? 12 : undefined,
+            },
+          },
+        })
+        .render('#paypal-messaging-' + paypalUuid)
+        // eslint-disable-next-line no-unused-vars
+        .catch((_error) => {
+          console.error('Failed to render PayPal Pay Later banner', _error);
+        });
     }
   });
+};
+
+const removeMessage = () => {
+  const message = document.querySelector('#paypal-messaging-' + paypalUuid);
+  message?.setHTMLUnsafe('');
+};
+
+onMounted(() => {
+  renderMessage();
 });
 
 onUnmounted(() => {
-  const script = document.querySelector('#paypal-messaging-' + paypalUuid);
-  script?.remove();
+  removeMessage();
 });
+
+watch(
+  () => currency.value,
+  () => {
+    renderMessage();
+  },
+);
 </script>
