@@ -46,6 +46,7 @@
 - Added cache-control for all images in order to solve "serve static assets" problem.
 
 ### 🩹 Fixed
+
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
