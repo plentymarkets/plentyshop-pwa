@@ -189,13 +189,13 @@ export class CheckoutPageObject extends PageObject {
   }
 
   fillCreditCardForm() {
-    cy.iframe('#braintree-hosted-field-number').find('#credit-card-number').type('4868719460707704');
+    cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
 
-    cy.iframe('#braintree-hosted-field-expirationDate').find('.expirationDate').type('12/27');
+    cy.iframe('[title=paypal_card_expiry_field]').find('.card-field-expiry').type('12/27');
 
-    cy.iframe('#braintree-hosted-field-cvv').find('.cvv').type('123');
+    cy.iframe('[title=paypal_card_cvv_field]').find('.card-field-cvv').type('123');
 
-    cy.get('#credit-card-name').focus().type('John Doe');
+    cy.iframe('[title=paypal_card_name_field]').find('.card-field-name').type('John Doe');
     return this;
   }
 
