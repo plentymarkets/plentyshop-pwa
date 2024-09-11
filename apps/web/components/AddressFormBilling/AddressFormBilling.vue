@@ -158,6 +158,10 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 if (!addAddress) {
   hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
   setValues(address as any);
+  if (!hasCompany.value) {
+    companyName.value = '';
+    vatNumber.value = '';
+  }
 }
 
 const syncCheckoutAddress = async () => {
