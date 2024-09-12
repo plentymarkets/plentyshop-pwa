@@ -13,31 +13,23 @@
     "displayDetails": {
       "detail1": {
         "title": "Stilvoll heraustreten",
-        "alt": "Schritt in Stil - Sonnenbrillen-Kollektion für einen modischen Look",
         "subtitle": "Lassen Sie sich inspirieren",
         "description": "Treten Sie stilvoll mit unserer Sonnenbrillenkollektion auf",
         "buttonText": "Jetzt entdecken"
       },
       "detail2": {
         "title": "Packen Sie Es",
-        "alt": "Pack es ein - Entdecke die Outdoor-Welt mit unserer Rucksack-Kollektion",
         "subtitle": "Seien Sie aktiv",
         "description": "Erkunden Sie die große Natur mit unseren Rucksäcken",
         "buttonText": "Jetzt entdecken"
       },
       "detail3": {
         "title": "Frisch und Kühn",
-        "alt": "Frisch und Kühn - Setze Akzente mit Farbe in deinem Outfit",
         "subtitle": "Neue Kollektion",
         "description": "Fügen Sie Ihrem Outfit einen Farbtupfer hinzu",
         "buttonText": "Jetzt entdecken"
       }
-    },
-    "womenHomepageCategory": "Kategorie Frauen auf der Startseite",
-    "menHomepageCategory": "Kategorie Männer auf der Startseite",
-    "kidHomepageCategory": "Kategorie Kinder auf der Startseite",
-    "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
-    "headPhones": "Neue Wireless Pro Kopfhörer mit räumlichem Audio und ganztägiger Akkulaufzeit"
+    }
   },
   "billing": {
     "heading": "Rechnungsadresse",
@@ -178,7 +170,6 @@
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "backToShopping": "Zurück zum Einkaufen",
   "allFromCategory": "Alle {name}",
-  "passwordVisibilty": "Sichtbarkeit des Passworts",
   "listSettings": "Listeneinstellungen",
   "closeListSettings": "Listeneinstellungen schließen",
   "clearFilters": "Alle Filter löschen",
@@ -277,9 +268,7 @@
   "deletedFromCart": "Artikel aus dem Warenkorb entfernt",
   "search": "Suche",
   "openSearchModalButtonLabel": "Suche öffnen",
-  "closeMenu": "Menü schließen",
-  "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
-  "goToHomepage": "Zur Startseite gehen",
+  "vsfHomepage": "VSF Homepage",
   "home": "Startseite",
   "products": "Produkte",
   "cart": "Warenkorb",
@@ -485,6 +474,7 @@
       "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
+      "actions": "Aktionen",
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
       "returnId": "Retouren-ID",
