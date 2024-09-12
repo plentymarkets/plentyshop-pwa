@@ -485,6 +485,7 @@
       "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
+      "actions": "Aktionen",
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
       "returnId": "Retouren-ID",
