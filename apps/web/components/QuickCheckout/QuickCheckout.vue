@@ -5,7 +5,7 @@
     v-model="isOpen"
     tag="section"
     class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto"
-    aria-labelledby="quick-checkout-modal"
+    aria-label="quick-checkout-modal"
   >
     <header>
       <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
@@ -46,13 +46,13 @@
         </div>
 
         <div class="mt-4 typography-text-xs flex gap-1">
+          test
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
           <span>{{ t('excludedShipping') }}</span>
         </div>
-
-        <VariationProperties :product="lastUpdatedProduct" />
+        <!-- <VariationProperties :product="lastUpdatedProduct" /> -->
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
