@@ -47,7 +47,7 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
+      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
       useAvif: process.env?.USE_AVIF === '1' ?? false,
       useWebp: process.env?.USE_WEBP === '1' ?? false,
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
@@ -129,7 +129,7 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+    siteKey: process.env?.TURNSTILESITEKEY,
   },
   viewport: {
     breakpoints: {
