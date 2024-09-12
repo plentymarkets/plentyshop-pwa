@@ -10,16 +10,16 @@ export type Sizes = {
 };
 
 export type HeroItem = {
-  subtitle: string;
-  title: string;
-  description: string;
-  primaryButtonLink: string;
-  primaryButtonText: string;
   image: string;
-  backgroundSizes: Sizes;
+  tagline: string;
+  heading: string;
+  description: string;
+  callToAction: string;
+  link: string;
+  backgroundSizes?: Sizes;
 };
 export type HeroCarouselProps = {
   headPhones: { image: string; sizes: Sizes };
   background: { image: string; sizes: Sizes };
-  items: HeroItem[];
+  hero: HeroItem[];
 };

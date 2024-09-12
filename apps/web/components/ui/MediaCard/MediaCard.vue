@@ -27,4 +27,5 @@ const props = defineProps({
   },
 });
 const showComponent = computed(() => props.image || props.text);
+console.log("test media", props.image, props.text)
 </script>

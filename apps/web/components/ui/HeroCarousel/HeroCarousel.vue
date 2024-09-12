@@ -1,5 +1,5 @@
 <template>
-  <SfScrollable buttons-placement="floating" class="pb-4 overflow-hidden" data-testid="product-slider">
+  <CustomScrollable buttons-placement="floating" class="pb-4" data-testid="product-slider">
     <div class="absolute w-full h-full z-[-1]">
       <img
         :src="props.background?.image"
@@ -11,19 +11,20 @@
     </div>
 
     <div class="max-w-[1536px] mx-auto">
-      <SfScrollable :buttons-placement="'block'" :direction="'horizontal'" class="flex overflow-hidden">
-        <div v-for="(item, index) in props.items" :key="index" class="min-w-full flex-shrink-0">
+      <CustomScrollable :buttons-placement="'block'" :direction="'horizontal'" class="flex overflow-hidden">
+        <div v-for="(item, index) in props.hero" :key="index" class="min-w-full flex-shrink-0">
           <HeroSlide :slide-data="item" />
         </div>
-      </SfScrollable>
+      </CustomScrollable>
     </div>
-  </SfScrollable>
+  </CustomScrollable>
 </template>
 
 <script setup lang="ts">
 import { SfScrollable } from '@storefront-ui/vue';
 import { HeroCarouselProps, Size, Sizes } from '~/components/ui/HeroCarousel/types';
 import HeroSlide from './HeroSlide.vue';
+import CustomScrollable from '~/components/ui/CustomScrollable/CustomScrollable.vue';
 
 const props = defineProps<HeroCarouselProps>();
 const viewport = useViewport();

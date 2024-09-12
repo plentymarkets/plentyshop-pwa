@@ -1,6 +1,6 @@
 <template>
   <div class="relative min-h-[600px]">
-    <UiHeroCarousel :head-phones="headPhones" :background="background" :items="heroItems"></UiHeroCarousel>
+    <UiHeroCarousel :head-phones="headPhones" :background="background" :hero="formattedHeroItems"></UiHeroCarousel>
   </div>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
     <NuxtLazyHydrate when-visible>
@@ -42,14 +42,44 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate));
+const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
-  const { data } = await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
-  homepageTemplate.value = data;
+  const { data } = await fetchCategoryTemplate(homepageCategoryId);
+  const parsedData = JSON.parse(data);
+  console.log('parsed data', parsedData)
+
+  if (parsedData) {
+    homepageTemplate.value = {
+      id: parsedData.id,
+      hero: parsedData.hero || [],
+      valueProposition: parsedData.valueProposition,
+      featured: parsedData.featured,
+    };
+  }
 }
 
+const formattedHeroItems = ref<HeroItem[]>(
+  homepageTemplate.value.hero.map((item) => ({
+    image: item.image,
+    tagline: item.tagline,
+    heading: item.heading,
+    description: item.description,
+    callToAction: item.callToAction,
+    link: item.link,
+    backgroundSizes: {
+      lg: { width: '4000', height: '600' },
+      md: { width: '1024', height: '600' },
+      sm: { width: '640', height: '752' },
+    },
+  })),
+);
+const mediaData = ref({
+  image:  homepageTemplate.value.valueProposition.image,
+  text: homepageTemplate.value.valueProposition.text
+});
+console.log('media', mediaData);
 type Size = {
   width: string;
   height: string;
@@ -66,11 +96,6 @@ const getSizeForViewport = (sizes: Sizes) => {
   return sizes[breakpoint];
 };
 
-const mediaData = ref({
-  image: 'https://placehold.co/600x400',
-  text: '<h4>Lorem Ipsum Dolor</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Test</li></ul>',
-});
-
 watch(
   () => categoryTree.value,
   async () => {
@@ -79,164 +104,6 @@ watch(
   },
   { immediate: true },
 );
-const heroItems: HeroItem[] = [
-  {
-    subtitle: 'New Wireless Pro',
-    title: 'New Wireless Pro',
-    description: 'Spatial audio. Adjustable ear cups. On-device controls. All-day battery.',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-  {
-    subtitle: 'This is a demo subtitle',
-    title: 'This is a demo title',
-    description: 'Imagine a description here',
-    primaryButtonLink: '',
-    primaryButtonText: 'Order now',
-    image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  },
-];
 const headPhones = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
   sizes: {
