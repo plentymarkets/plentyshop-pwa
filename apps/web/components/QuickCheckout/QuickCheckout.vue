@@ -52,13 +52,12 @@
         </div>
 
         <div class="mt-4 typography-text-xs flex gap-1">
-          test
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
           <span>{{ t('excludedShipping') }}</span>
         </div>
-        <!-- <VariationProperties :product="lastUpdatedProduct" /> -->
+        <VariationProperties :product="lastUpdatedProduct" />
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
