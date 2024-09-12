@@ -113,7 +113,7 @@
           @click="open = true"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          aria-label="Open configuration drawer"
+          :aria-label="t('openConfigurationDrawer')"
           square
         >
           <SfIconTune />

@@ -1,7 +1,7 @@
 <template>
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
-      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center">
+      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center variation-properties">
         <ClientOnly>
           <Component
             v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
