@@ -43,7 +43,6 @@
 - Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
-- Make the download file link from item checkout colored blue.
 - Optimize aria labels and alt texts on homepage
 - Added cache-control for all images in order to solve "serve static assets" problem.
 
@@ -81,6 +80,7 @@
 - Set page title for items and categories instead of title metadata
 - Refactor of reviews functionality for better performance and maintainability.
 - PayPal: We now use card fields instead of hosting fields for credit card payments.
+- Change the file item property color to blue in the quick checkout.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
