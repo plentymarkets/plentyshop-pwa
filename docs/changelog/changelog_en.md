@@ -44,6 +44,8 @@
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
+- Optimize aria labels and alt texts on homepage
+- Added cache-control for all images in order to solve "serve static assets" problem.
 
 ### 🩹 Fixed
 
@@ -64,6 +66,7 @@
 - Fixed orphaned form label on product page attributes.
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed DE translation regarding VAT.
 
 ### 👷 Changed
 
