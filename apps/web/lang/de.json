@@ -185,6 +185,7 @@
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "backToShopping": "Zurück zum Einkaufen",
   "allFromCategory": "Alle {name}",
+  "passwordVisibilty": "Sichtbarkeit des Passworts",
   "listSettings": "Listeneinstellungen",
   "closeListSettings": "Listeneinstellungen schließen",
   "clearFilters": "Alle Filter löschen",
@@ -494,6 +495,7 @@
       "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
+      "actions": "Aktionen",
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
       "returnId": "Retouren-ID",
