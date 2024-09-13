@@ -1,40 +1,6 @@
 <template>
   <div class="relative min-h-[600px]">
-    <div class="absolute w-full h-full z-[-1]">
-      <img
-        :src="background.image"
-        :width="getSizeForViewport(background.sizes).width"
-        :height="getSizeForViewport(background.sizes).height"
-        alt="Hero background"
-        class="absolute top-0 left-0 w-full h-full object-cover"
-      />
-    </div>
-    <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px]">
-      <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
-        <img
-          :src="headPhones.image"
-          :width="getSizeForViewport(headPhones.sizes).width"
-          :height="getSizeForViewport(headPhones.sizes).height"
-          alt="Headphones"
-          class="h-full object-cover object-left"
-        />
-      </div>
-      <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
-        <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
-          {{ t('homepage.banner.moto1') }}
-        </p>
-        <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          {{ t('homepage.banner.moto2') }}
-        </h1>
-        <p class="typography-text-base md:typography-text-lg">
-          {{ t('homepage.banner.moto3') }}
-        </p>
-        <div class="flex flex-col md:flex-row gap-4 mt-6">
-          <UiButton size="lg"> {{ t('homepage.banner.orderNow') }}</UiButton>
-          <UiButton size="lg" variant="secondary" class="bg-white"> {{ t('homepage.banner.showMore') }}</UiButton>
-        </div>
-      </div>
-    </div>
+    <UiHeroCarousel :background="background" :hero="formattedHeroItems"></UiHeroCarousel>
   </div>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
     <NuxtLazyHydrate when-visible>
@@ -53,6 +19,8 @@
 </template>
 
 <script lang="ts" setup>
+import { HeroItem } from '~/components/ui/HeroCarousel/types';
+
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
@@ -74,35 +42,41 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref(JSON.stringify(getDefaultHomepageTemplate));
+const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
-  const { data } = await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
-  homepageTemplate.value = data;
+  const { data } = await fetchCategoryTemplate(homepageCategoryId);
+  const parsedData = JSON.parse(data);
+  if (parsedData) {
+    homepageTemplate.value = {
+      id: parsedData.id,
+      hero: parsedData.hero || [],
+      valueProposition: parsedData.valueProposition,
+      featured: parsedData.featured,
+    };
+  }
 }
 
-type Size = {
-  width: string;
-  height: string;
-};
-type Sizes = {
-  lg: Size;
-  md: Size;
-  sm: Size;
-};
-type SizeKey = keyof Sizes;
-
-const getSizeForViewport = (sizes: Sizes) => {
-  const breakpoint = viewport.breakpoint.value as SizeKey;
-  return sizes[breakpoint];
-};
-
+const formattedHeroItems = ref<HeroItem[]>(
+  homepageTemplate.value.hero.map((item) => ({
+    image: item.image,
+    tagline: item.tagline,
+    heading: item.heading,
+    description: item.description,
+    callToAction: item.callToAction,
+    link: item.link,
+    backgroundSizes: {
+      lg: { width: '4000', height: '600' },
+      md: { width: '1024', height: '600' },
+      sm: { width: '640', height: '752' },
+    },
+  })),
+);
 const mediaData = ref({
-  image: 'https://placehold.co/600x400',
-  text: '<h4>Lorem Ipsum Dolor</h4><p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p><ul><li>Test</li></ul>',
+  image: homepageTemplate.value.valueProposition.image,
+  text: homepageTemplate.value.valueProposition.text,
 });
-
 watch(
   () => categoryTree.value,
   async () => {
@@ -111,24 +85,6 @@ watch(
   },
   { immediate: true },
 );
-
-const headPhones = {
-  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-  sizes: {
-    lg: {
-      width: '800',
-      height: '600',
-    },
-    md: {
-      width: '800',
-      height: '600',
-    },
-    sm: {
-      width: '640',
-      height: '480',
-    },
-  },
-};
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
   sizes: {
@@ -152,11 +108,6 @@ useHead({
     {
       rel: 'preload',
       href: background.image,
-      as: 'image',
-    },
-    {
-      rel: 'preload',
-      href: headPhones.image,
       as: 'image',
     },
   ],
