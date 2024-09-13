@@ -1,5 +1,9 @@
 <template>
-  <CustomScrollable buttons-placement="floating" class="pb-4" data-testid="product-slider">
+  <CustomScrollable
+    :buttons-placement="props.hero.length > 1 ? 'floating' : 'none'"
+    class="pb-4"
+    data-testid="product-slider"
+  >
     <div class="absolute w-full h-full z-[-1] overflow-hidden">
       <img
         :src="props.background?.image"
@@ -11,7 +15,11 @@
     </div>
 
     <div class="w-full max-w-[1536px] mx-auto px-4">
-      <CustomScrollable :buttons-placement="props.hero.length > 1 ? 'block' : 'none'" :direction="'horizontal'" class="flex overflow-hidden &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+      <CustomScrollable
+        :buttons-placement="props.hero.length > 1 ? 'block' : 'none'"
+        :direction="'horizontal'"
+        class="flex overflow-hidden &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      >
         <div v-for="(item, index) in props.hero" :key="index" class="w-full flex-shrink-0">
           <HeroSlide :slide-data="item" />
         </div>
@@ -37,14 +45,3 @@ const getSizeForViewport = (sizes: Sizes | undefined): Size => {
 };
 </script>
 
-<style scoped>
-.w-full {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.overflow-hidden {
-  overflow: hidden;
-}
-</style>

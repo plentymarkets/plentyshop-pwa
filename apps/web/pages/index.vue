@@ -1,6 +1,6 @@
 <template>
   <div class="relative min-h-[600px]">
-    <UiHeroCarousel :head-phones="headPhones" :background="background" :hero="formattedHeroItems"></UiHeroCarousel>
+    <UiHeroCarousel :background="background" :hero="formattedHeroItems"></UiHeroCarousel>
   </div>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
     <NuxtLazyHydrate when-visible>
@@ -48,8 +48,6 @@ const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
   const parsedData = JSON.parse(data);
-  console.log('parsed data', parsedData)
-
   if (parsedData) {
     homepageTemplate.value = {
       id: parsedData.id,
@@ -79,23 +77,6 @@ const mediaData = ref({
   image:  homepageTemplate.value.valueProposition.image,
   text: homepageTemplate.value.valueProposition.text
 });
-console.log('media', mediaData);
-type Size = {
-  width: string;
-  height: string;
-};
-type Sizes = {
-  lg: Size;
-  md: Size;
-  sm: Size;
-};
-type SizeKey = keyof Sizes;
-
-const getSizeForViewport = (sizes: Sizes) => {
-  const breakpoint = viewport.breakpoint.value as SizeKey;
-  return sizes[breakpoint];
-};
-
 watch(
   () => categoryTree.value,
   async () => {
@@ -104,23 +85,6 @@ watch(
   },
   { immediate: true },
 );
-const headPhones = {
-  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-  sizes: {
-    lg: {
-      width: '800',
-      height: '600',
-    },
-    md: {
-      width: '800',
-      height: '600',
-    },
-    sm: {
-      width: '640',
-      height: '480',
-    },
-  },
-};
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
   sizes: {
@@ -144,11 +108,6 @@ useHead({
     {
       rel: 'preload',
       href: background.image,
-      as: 'image',
-    },
-    {
-      rel: 'preload',
-      href: headPhones.image,
       as: 'image',
     },
   ],

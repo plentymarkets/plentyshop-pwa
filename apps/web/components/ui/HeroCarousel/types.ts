@@ -19,7 +19,6 @@ export type HeroItem = {
   backgroundSizes?: Sizes;
 };
 export type HeroCarouselProps = {
-  headPhones: { image: string; sizes: Sizes };
   background: { image: string; sizes: Sizes };
   hero: HeroItem[];
 };
