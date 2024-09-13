@@ -11,8 +11,6 @@ beforeEach(() => {
   cy.intercept('/plentysystems/getProduct').as('getProduct');
 
   cy.clearCookies();
-  cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
 });
 
 describe('Feature: Language Selector', () => {
@@ -71,8 +69,13 @@ describe('Feature: Language Selector', () => {
       url: string = paths.home,
       width: number = 390,
       height: number = 844,
+      acceptCookie = true
   ) {
     cy.visitAndHydrate(paths.home);
     cy.viewport(width, height)
+
+    if (acceptCookie) {
+      cookieBar.acceptAll();
+    }
   }
 });
