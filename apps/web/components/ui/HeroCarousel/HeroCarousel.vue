@@ -44,4 +44,3 @@ const getSizeForViewport = (sizes: Sizes | undefined): Size => {
   return sizes[breakpoint] || { width: '0', height: '0' };
 };
 </script>
-

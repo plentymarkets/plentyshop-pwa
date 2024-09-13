@@ -16,11 +16,7 @@
     </div>
 
     <div class="flex-shrink-0 w-full md:w-1/2">
-      <img
-        :src="props.slideData.image"
-        :alt="props.slideData.heading"
-        class="w-full h-auto object-cover"
-      />
+      <img :src="props.slideData.image" :alt="props.slideData.heading" class="w-full h-auto object-cover" />
     </div>
   </div>
 </template>
@@ -33,4 +29,3 @@ const props = defineProps<{
   slideData: HeroItem;
 }>();
 </script>
-

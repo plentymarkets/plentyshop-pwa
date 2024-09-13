@@ -74,8 +74,8 @@ const formattedHeroItems = ref<HeroItem[]>(
   })),
 );
 const mediaData = ref({
-  image:  homepageTemplate.value.valueProposition.image,
-  text: homepageTemplate.value.valueProposition.text
+  image: homepageTemplate.value.valueProposition.image,
+  text: homepageTemplate.value.valueProposition.text,
 });
 watch(
   () => categoryTree.value,
