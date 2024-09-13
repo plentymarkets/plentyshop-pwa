@@ -1,6 +1,6 @@
 <template>
   <CustomScrollable buttons-placement="floating" class="pb-4" data-testid="product-slider">
-    <div class="absolute w-full h-full z-[-1]">
+    <div class="absolute w-full h-full z-[-1] overflow-hidden">
       <img
         :src="props.background?.image"
         :width="getSizeForViewport(props.background?.sizes).width"
@@ -10,9 +10,9 @@
       />
     </div>
 
-    <div class="max-w-[1536px] mx-auto">
-      <CustomScrollable :buttons-placement="'block'" :direction="'horizontal'" class="flex overflow-hidden">
-        <div v-for="(item, index) in props.hero" :key="index" class="min-w-full flex-shrink-0">
+    <div class="w-full max-w-[1536px] mx-auto px-4">
+      <CustomScrollable :buttons-placement="props.hero.length > 1 ? 'block' : 'none'" :direction="'horizontal'" class="flex overflow-hidden &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div v-for="(item, index) in props.hero" :key="index" class="w-full flex-shrink-0">
           <HeroSlide :slide-data="item" />
         </div>
       </CustomScrollable>
@@ -21,7 +21,6 @@
 </template>
 
 <script setup lang="ts">
-import { SfScrollable } from '@storefront-ui/vue';
 import { HeroCarouselProps, Size, Sizes } from '~/components/ui/HeroCarousel/types';
 import HeroSlide from './HeroSlide.vue';
 import CustomScrollable from '~/components/ui/CustomScrollable/CustomScrollable.vue';

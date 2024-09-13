@@ -1,6 +1,6 @@
 <template>
-  <div class="flex md:flex-row md:items-center w-full">
-    <div class="">
+  <div class="flex flex-col-reverse md:flex-row md:items-center w-full">
+    <div class="flex-1 p-4">
       <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
         {{ props.slideData.tagline }}
       </p>
@@ -15,8 +15,12 @@
       </div>
     </div>
 
-    <div class="flex-shrink-0">
-      <img :src="props.slideData.image" :alt="props.slideData.heading" class="w-full h-auto object-cover" />
+    <div class="flex-shrink-0 w-full md:w-1/2">
+      <img
+        :src="props.slideData.image"
+        :alt="props.slideData.heading"
+        class="w-full h-auto object-cover"
+      />
     </div>
   </div>
 </template>
@@ -31,8 +35,4 @@ const props = defineProps<{
 </script>
 
 <style scoped>
-.flex {
-  display: flex;
-  width: 100%;
-}
 </style>
