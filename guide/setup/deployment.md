@@ -82,7 +82,7 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 
 | Name      | Value |
 | ----------- | ----------- |
-| `Config`  | CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTER_FORM_SHOW_NAMES=1 <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
+| `Config`  | TURNSTILESITEKEY="0x4AAAAAAANx3aXDh7UR35x0" <br> NEWSLETTERFORMNAMES=true <br> USE_WEBP=0 <br> VALIDATE_RETURN_REASONS=1 |
 
 
 
