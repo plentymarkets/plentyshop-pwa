@@ -46,9 +46,11 @@
 - Optimize aria labels and alt texts on homepage
 - Added cache-control for all images in order to solve "serve static assets" problem.
 - Added table header in the MyAccount.
+- Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 
 ### 🩹 Fixed
 
+- Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
