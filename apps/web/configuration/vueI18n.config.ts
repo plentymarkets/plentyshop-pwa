@@ -1,5 +1,5 @@
 export default {
-  fallbackLocale: 'en',
+  fallbackLocale: 'de',
   detectBrowserLanguage: false,
   numberFormats: {
     en: {
