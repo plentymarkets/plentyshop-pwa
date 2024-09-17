@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { SdkHttpError } from '@vue-storefront/sdk';
 import { updateVsfLocale } from './utils/sdkClientHelper';
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const createHttpClient = () => {
   const client = axios.create({ withCredentials: true });
 
