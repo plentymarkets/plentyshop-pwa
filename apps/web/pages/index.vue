@@ -30,9 +30,7 @@ definePageMeta({ pageType: 'static' });
 const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
-    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
-    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
-    { image: '', tagline: '', heading: '', description: '', callToAction: '', link: '' },
+    { image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`, tagline: t('homepage.banner.moto1'), heading: t('homepage.banner.moto2'), description: t('homepage.banner.moto3'), callToAction: t('homepage.banner.orderNow'), link: '' },
   ],
   valueProposition: { text: '', image: '' },
   featured: [
