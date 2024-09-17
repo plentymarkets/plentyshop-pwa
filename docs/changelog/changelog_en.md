@@ -45,10 +45,14 @@
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Optimize aria labels and alt texts on homepage
 - Added cache-control for all images in order to solve "serve static assets" problem.
+- Added table header in the MyAccount.
+- Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 - Implement Googlepay payment method
 
 ### 🩹 Fixed
 
+- Fixed addtobasket overlay accesibilty issues
+- Fixed login page accesibilty issues
 - Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
@@ -81,6 +85,8 @@
 - Set page title for items and categories instead of title metadata
 - Refactor of reviews functionality for better performance and maintainability.
 - PayPal: We now use card fields instead of hosting fields for credit card payments.
+- Change the file item property color to blue in the quick checkout.
+- Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

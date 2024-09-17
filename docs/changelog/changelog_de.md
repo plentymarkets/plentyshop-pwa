@@ -34,6 +34,7 @@
 
 - Die Konfigurationsdateien für App-, Cookie-, Internationalisierungs- und Tailwind-Einstellungen befinden sich jetzt im Ordner `apps/web/configuration`.
 - Url der Bestellbestätigungsseite von `.../thank-you?[...]` zu `.../confirmation/orderId/accessKey` geändert.
+- Name der Umgebungsvariable von Cloudflare Turnstile Sitekey angepasst, um Kompatibilität mit der Systemkonfiguration herzustellen.
 
 ### 🩹 Behoben
 
