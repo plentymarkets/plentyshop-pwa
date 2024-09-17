@@ -5,7 +5,7 @@
     v-model="isOpen"
     tag="section"
     class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto"
-    aria-labelledby="quick-checkout-modal"
+    aria-label="quick-checkout-modal"
   >
     <header>
       <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
@@ -13,7 +13,13 @@
       </h2>
       <div class="absolute right-2 top-2 flex items-center">
         <span v-if="hasTimer" class="mr-2 text-gray-400">{{ timer }}s</span>
-        <UiButton data-testid="quick-checkout-close" square variant="tertiary" @click="close">
+        <UiButton
+          :aria-label="$t('closeDialog')"
+          data-testid="quick-checkout-close"
+          square
+          variant="tertiary"
+          @click="close"
+        >
           <SfIconClose />
         </UiButton>
       </div>
@@ -52,7 +58,7 @@
           <span>{{ t('excludedShipping') }}</span>
         </div>
 
-        <VariationProperties :product="product" />
+        <VariationProperties :product="lastUpdatedProduct" />
       </div>
       <div class="py-8 px-10">
         <div class="mb-8">
@@ -103,7 +109,7 @@ const { t, n } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
-const { data: cart } = useCart();
+const { data: cart, lastUpdatedProduct } = useCart();
 const { isAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();

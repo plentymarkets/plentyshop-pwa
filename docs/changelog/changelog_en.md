@@ -15,11 +15,15 @@
   - `200` -> `50`
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
+- Update the variable name `NEWSLETTER_FORM_SHOW_NAMES` to `NEWSLETTERFORMNAMES` in your environment.
 
 ### 🚀 New
 
+- The app now uses Referrer ID in order to display the appropiate price change.
 - The app now reads metadata, such as description and keywords, from the environment.
+- The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
 - The app now reads which Google Fonts to use from the environment.
+- The app now reads whether to display the newsletter signup form on the homepage from the environment.
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
 - The app can now fetch the Favicon from the plentysystems system.
 - The app can now fetch the logo from the plentysystems system.
@@ -28,11 +32,26 @@
 - Added dynamic metadata for products and categories.
 - Added stock check for the order again feature.
 - Unify html nodes on category page to use h6 node
+- Implement Applepay as a payment method
 - Added dynamic title and alternate for product images
 - Added e2e tests for reviews pagination.
+- Added canonical meta tags to product items
+- Added variation properties for quick checkout, considering order process visibility.
+- Added labels for both min and max price filters
+- Changed font size of wishlist icon counter and cart icon counter
+- Added better contrast for `Verfied purchase` text in feedback.
+- Changed font size of wishlist icon counter and cart icon counter.
+- Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
+- Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Optimize aria labels and alt texts on homepage
+- Added cache-control for all images in order to solve "serve static assets" problem.
+- Added table header in the MyAccount.
+- Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 
 ### 🩹 Fixed
 
+- Fixed addtobasket overlay accesibilty issues
+- Fixed login page accesibilty issues
 - Shop logo is now preloaded.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed: middleware calls being stuck in an infinite loop
@@ -44,9 +63,17 @@
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
 - Fixed editing author name on reviews and replies with added e2e
+- Fixed the issue with the plentyID-cookie in the PWA live preview
+- Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
+- Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
+- Fixed cookie bar privacy link not working properly.
+- Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed DE translation regarding VAT.
 
 ### 👷 Changed
 
+- Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
 - Checkout address buttons in the mobile view have been adjusted
@@ -57,6 +84,8 @@
 - Set page title for items and categories instead of title metadata
 - Refactor of reviews functionality for better performance and maintainability.
 - PayPal: We now use card fields instead of hosting fields for credit card payments.
+- Change the file item property color to blue in the quick checkout.
+- Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

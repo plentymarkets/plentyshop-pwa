@@ -12,7 +12,7 @@
       </section>
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe />
+      <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
     <UiMediaCard :image="mediaData.image" :text="mediaData.text" />
   </div>
@@ -85,6 +85,8 @@ watch(
   },
   { immediate: true },
 );
+const { showNewsletter } = useNewsletter();
+
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
   sizes: {

@@ -4,10 +4,6 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
-import fetchConfiguration from './build/fetchConfiguration';
-import generateScssVariables from './build/generateScssVariables';
-import fetchFavicon from './build/fetchFavicon';
-import fetchLogo from './build/fetchLogo';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -39,38 +35,29 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
   },
   pages: true,
-  hooks: {
-    'build:before': async () => {
-      if (process.env.FETCH_REMOTE_CONFIG === '1') {
-        const response = await fetchConfiguration();
-        generateScssVariables();
-        await fetchFavicon(response);
-        await fetchLogo(response);
-      } else {
-        console.warn(`Fetching PWA settings is disabled! Set FETCH_REMOTE_CONFIG in .env file.`);
-      }
-    },
-  },
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
-      useAvif: process.env?.USE_AVIF === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
-      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
-      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
+      useAvif: process.env?.USE_AVIF === '1',
+      useWebp: process.env?.USE_WEBP === '1',
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
+      newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
+      newsletterFormShowNames:
+        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
     },
@@ -143,7 +130,7 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+    siteKey: process.env?.TURNSTILESITEKEY,
   },
   viewport: {
     breakpoints: {
