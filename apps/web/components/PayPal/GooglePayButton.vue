@@ -162,7 +162,6 @@ async function processPayment(paymentData: google.payments.api.PaymentData) {
 
     const { status } = await (paypal as any).Googlepay().confirmOrder({
       orderId: transaction.id,
-      token: paymentData.token,
       paymentMethodData: paymentData.paymentMethodData,
     });
 
