@@ -8,11 +8,11 @@
 </template>
 
 <script lang="ts" setup>
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { GooglePayPayerActionData, PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
 let isGooglePayLoaded = true;
-let countryCodeString = 'DE';
+let countryCodeString = '';
 const { loadScript, executeOrder, createTransaction, captureOrder } = usePayPal();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { createOrder } = useMakeOrder();
@@ -72,7 +72,9 @@ async function getGooglePaymentDataRequest() {
   return paymentDataRequest;
 }
 
-function onPaymentAuthorized(paymentData: any): Promise<google.payments.api.PaymentAuthorizationResult> {
+function onPaymentAuthorized(
+  paymentData: google.payments.api.PaymentData,
+): Promise<google.payments.api.PaymentAuthorizationResult> {
   return new Promise<google.payments.api.PaymentAuthorizationResult>((resolve) => {
     processPayment(paymentData)
       // eslint-disable-next-line promise/always-return
@@ -148,7 +150,7 @@ async function onGooglePaymentButtonClicked() {
   });
 }
 
-async function processPayment(paymentData: any) {
+async function processPayment(paymentData: google.payments.api.PaymentData) {
   try {
     const transaction = await createTransaction('paypal');
     if (!transaction || !transaction.id) throw new Error('Transaction creation failed.');
@@ -170,7 +172,7 @@ async function processPayment(paymentData: any) {
         .Googlepay()
         .initiatePayerAction({ orderId: order.order.id })
         // eslint-disable-next-line promise/always-return
-        .then(async (data: any) => {
+        .then(async (data: GooglePayPayerActionData) => {
           await captureOrder({
             paypalOrderId: data.paypalOrderId,
             paypalPayerId: data.paypalPayerId,
@@ -192,11 +194,11 @@ async function processPayment(paymentData: any) {
     navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
 
     return { transactionState: 'SUCCESS' };
-  } catch (error: any) {
+  } catch (error: unknown) {
     return {
       transactionState: 'ERROR',
       error: {
-        message: error.message,
+        message: error,
       },
     };
   }
