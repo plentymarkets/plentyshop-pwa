@@ -43,7 +43,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
-
+  const { getCategoryTree } = useCategoryTree();
   cartLoading.value = true;
 
   try {
@@ -51,9 +51,9 @@ const setInitialDataSSR: SetInitialData = async () => {
     if (data) {
       setUser(data.session as SessionResult);
       setCart(data.session?.basket as Cart);
-      setCategoryTree(data.categories);
       setWishlistItemIds(data?.session?.basket?.itemWishListIds || []);
     }
+    await getCategoryTree();
   } catch (error) {
     useHandleError(error as ErrorParams);
   } finally {
