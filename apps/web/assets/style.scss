@@ -57,3 +57,12 @@ apple-pay-button {
   --apple-pay-button-border-radius: 7px;
   --apple-pay-button-box-sizing: border-box;
 }
+
+#google-pay-button {
+  div {
+    button {
+      width: 100% !important;
+      display: block;
+    }
+  }
+}

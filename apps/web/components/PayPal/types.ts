@@ -121,7 +121,19 @@ export type ValidateMerchantResponse = {
   paypalDebugId: null | string;
 };
 
+export type GooglePayPayerActionData = {
+  paypalOrderId: string;
+  paypalPayerId: string;
+  orderID: string;
+};
+
 export type ApplepayType = {
+  config(): Promise<ConfigResponse>;
+  validateMerchant(argument0: ValidateMerchantParams): Promise<ValidateMerchantResponse>;
+  confirmOrder(argument0: ConfirmOrderParams): Promise<void>;
+};
+
+export type GooglepayType = {
   config(): Promise<ConfigResponse>;
   validateMerchant(argument0: ValidateMerchantParams): Promise<ValidateMerchantResponse>;
   confirmOrder(argument0: ConfirmOrderParams): Promise<void>;
