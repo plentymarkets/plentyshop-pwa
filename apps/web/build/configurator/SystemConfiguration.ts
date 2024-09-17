@@ -34,8 +34,14 @@ export class SystemConfiguration {
 
   getBaseColors(): BaseColors {
     return {
-      primary: this.findValueInResponseByKey('styling', 'primary') ?? '#0c7992',
-      secondary: this.findValueInResponseByKey('styling', 'secondary') ?? '#008ebd',
+      primary:
+        this.findValueInResponseByKey('styling', 'primary') === ''
+          ? '#0c7992'
+          : this.findValueInResponseByKey('styling', 'primary'),
+      secondary:
+        this.findValueInResponseByKey('styling', 'secondary') === ''
+          ? '#008ebd'
+          : this.findValueInResponseByKey('styling', 'secondary'),
     };
   }
 
