@@ -9,10 +9,12 @@ const createHttpClient = () => {
     const { token } = useCsrfToken();
     const { $i18n } = useNuxtApp();
     const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
+    const noCache = useRoute().query?.noCache?.toString() ?? '';
 
     client.interceptors.request.use((request) => {
       if (token.value) request.headers['x-csrf-token'] = token.value;
       if (referrerId) request.headers['referrerID'] = referrerId;
+      if (noCache) request.headers['noCache'] = noCache;
       if (import.meta.server) {
         request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
       }
