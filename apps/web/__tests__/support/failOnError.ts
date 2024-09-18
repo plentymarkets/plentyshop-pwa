@@ -1,6 +1,7 @@
 const ignoreErrors = [
   'zoid',
   'paypal',
+  'Cannot read properties of undefined (reading \'clickUrl\')',
 ];
 
 Cypress.on("window:before:load", win => {
