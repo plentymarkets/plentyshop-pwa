@@ -30,7 +30,7 @@ const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
-const paypalUuid = ref();
+const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
 const checkOnClickEvent = (): boolean => {
@@ -130,9 +130,7 @@ const createButton = () => {
   }
 };
 
-const bindUuid = async () => (paypalUuid.value = uuid());
-
-onMounted(async () => await bindUuid().then(() => createButton()));
+onMounted(() => createButton());
 
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);

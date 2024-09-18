@@ -59,14 +59,17 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * ```
    */
   const loadConfig = async () => {
-    if (state.value.loadedConfig) return Promise.resolve();
-    return useSdk().plentysystems.getPayPalMerchantAndClientIds().then((data) => {
-      if (data.data) {
-        state.value.config = data.data ?? null;
-        state.value.isAvailable = !!state.value.config;
-        state.value.loadedConfig = true;
-      }
-    });
+    if (state.value.loadedConfig) return;
+    return useSdk()
+      .plentysystems.getPayPalMerchantAndClientIds()
+      .then((data) => {
+        // eslint-disable-next-line promise/always-return
+        if (data.data) {
+          state.value.config = data.data ?? null;
+          state.value.isAvailable = !!state.value.config;
+          state.value.loadedConfig = true;
+        }
+      });
   };
 
   /**
