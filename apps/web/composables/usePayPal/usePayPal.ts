@@ -58,15 +58,15 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
    * loadConfig();
    * ```
    */
-  const loadConfig: LoadConfig = async () => {
-    if (!state.value.loadedConfig) {
-      const { data } = await useAsyncData('paypalLoadConfig', () =>
-        useSdk().plentysystems.getPayPalMerchantAndClientIds(),
-      );
-      state.value.config = data.value?.data ?? null;
-      state.value.isAvailable = !!state.value.config;
-      state.value.loadedConfig = true;
-    }
+  const loadConfig = async () => {
+    if (state.value.loadedConfig) return Promise.resolve();
+    return useSdk().plentysystems.getPayPalMerchantAndClientIds().then((data) => {
+      if (data.data) {
+        state.value.config = data.data ?? null;
+        state.value.isAvailable = !!state.value.config;
+        state.value.loadedConfig = true;
+      }
+    });
   };
 
   /**
