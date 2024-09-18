@@ -65,5 +65,15 @@ export const mockProductReviews: Review = {
     lastPage: 1,
     isLastPage: true,
     totalCount: 1
-  }
+  },
+  counts: {
+    ratingsCountOf1: 0,
+    ratingsCountOf2: 0,
+    ratingsCountOf3: 0,
+    ratingsCountOf4: 0,
+    ratingsCountOf5: 0,
+    ratingsCountTotal: 0,
+    averageValue: 0,
+    highestCount: 0,
+  },
 }

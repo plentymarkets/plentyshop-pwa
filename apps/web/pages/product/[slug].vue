@@ -9,7 +9,7 @@
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
-            <UiPurchaseCard v-if="product" :product="product" :review-average="productReviewAverage" />
+            <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
           </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
@@ -20,7 +20,7 @@
           <ReviewsAccordion
             v-if="product"
             :product="product"
-            :total-reviews="reviewGetters.getTotalReviews(productReviewAverage)"
+            :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
         </section>
       </div>
@@ -53,8 +53,10 @@ const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
 const { data: product, fetchProduct, setProductMeta, setBreadcrumbs, breadcrumbs } = useProduct(productId);
 const { data: productReviewAverage, fetchProductReviewAverage } = useProductReviewAverage(Number(productId));
-const { fetchProductReviews } = useProductReviews(Number(productId));
+const { data: productReviews, fetchProductReviews } = useProductReviews(Number(productId));
 const { data: categoryTree } = useCategoryTree();
+
+const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams);
 setCurrentProduct(product.value || ({} as Product));

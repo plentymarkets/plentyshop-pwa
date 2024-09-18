@@ -1,6 +1,6 @@
-import type { Product, ReviewAverage } from '@plentymarkets/shop-api';
+import type {Product, ReviewAverage, ReviewCounts} from '@plentymarkets/shop-api';
 
 export type PurchaseCardProps = {
   product: Product;
-  reviewAverage: ReviewAverage;
+  reviewAverage: ReviewCounts;
 };
