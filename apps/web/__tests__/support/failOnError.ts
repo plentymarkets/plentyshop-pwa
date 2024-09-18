@@ -1,7 +1,6 @@
 const ignoreErrors = [
   'zoid',
   'paypal',
-  'Cannot read properties of undefined (reading \'clickUrl\')',
   'turnstile',
 ];
 
