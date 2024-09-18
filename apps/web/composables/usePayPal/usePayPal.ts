@@ -41,7 +41,8 @@ const getLocaleForPayPal: GetLocale = (locale: string) => {
 export const usePayPal: UsePayPalMethodsReturn = () => {
   const state = useState<UsePayPalState>('usePayPal', () => ({
     loading: false,
-    paypalScripts: [],
+    paypalScript: null,
+    loadingScripts: {},
     order: null,
     config: null,
     loadedConfig: false,
@@ -103,25 +104,36 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
   };
 
   const getScript: GetScript = async (currency: string, commit = false) => {
-    state.value.isReady = false;
-
     const { $i18n } = useNuxtApp();
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
-    const script = state.value.paypalScripts.find(
-      (script) => script.currency === currency && script.locale === localePayPal && script.commit === commit,
-    );
+    const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
-    if (import.meta.server) return null;
-
-    if (script) {
-      state.value.isReady = true;
-      return script.script;
-    } else {
-      const paypalScript = await loadScript(currency, localePayPal, commit);
-      state.value.paypalScripts.push({ script: paypalScript, currency, locale: localePayPal, commit });
-      state.value.isReady = true;
-      return paypalScript;
+    if (state.value.loadingScripts[scriptKey] !== undefined) {
+      return await state.value.loadingScripts[scriptKey];
     }
+
+    if (
+      state.value.paypalScript &&
+      state.value.paypalScript.currency === currency &&
+      state.value.paypalScript.locale === localePayPal &&
+      state.value.paypalScript.commit === commit
+    ) {
+      return state.value.paypalScript.script;
+    }
+
+    state.value.isReady = false;
+    state.value.paypalScript = null;
+    state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)
+      .then((paypalScript) => {
+        state.value.paypalScript = { script: paypalScript, currency, locale: localePayPal, commit };
+        state.value.isReady = true;
+        return paypalScript;
+      })
+      .finally(() => {
+        delete state.value.loadingScripts[scriptKey];
+      });
+
+    return await state.value.loadingScripts[scriptKey];
   };
 
   /**

@@ -26,8 +26,10 @@
           >
             {{ $t('goToCheckout') }}
           </UiButton>
-          <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
-          <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+          <client-only>
+            <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
+            <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+          </client-only>
         </OrderSummary>
       </div>
     </div>

@@ -19,8 +19,13 @@ export type PayPalScript = {
   commit: boolean;
 };
 
+export type PayPalLoadScript = {
+  [key: string]: Promise<PayPalNamespace | null>;
+};
+
 export interface UsePayPalState {
-  paypalScripts: PayPalScript[];
+  paypalScript: PayPalScript | null;
+  loadingScripts: PayPalLoadScript;
   order: PayPalCreateOrder | null;
   config: PayPalConfigResponse | null;
   loadedConfig: boolean;
