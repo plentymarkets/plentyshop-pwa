@@ -37,7 +37,7 @@
             :base-price="basePriceSingleValue"
             :unit-content="productGetters.getUnitContent(cartItem.variation)"
             :unit-name="productGetters.getUnitName(cartItem.variation)"
-          />    
+          />
         </div>
         <div class="my-2">
           <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
