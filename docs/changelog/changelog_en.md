@@ -51,6 +51,7 @@
 
 ### 🩹 Fixed
 
+- Fixed basket accesibilty issues
 - Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
