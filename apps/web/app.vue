@@ -52,8 +52,7 @@ watch(
 watch(
   () => locale.value,
   async (locale: string) => {
-    vsfLocale.value = locale;
-
+    setVsfLocale(locale);
     await getCategoryTree();
   },
 );
