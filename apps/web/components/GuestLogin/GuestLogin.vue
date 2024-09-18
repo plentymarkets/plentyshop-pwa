@@ -19,7 +19,7 @@
         </div>
         <div class="w-[400px] mt-4">
           <form @submit.prevent="loginUser">
-            <h1 class="font-bold text-lg">{{ $t('loginFastCheckout') }}</h1>
+            <h2 class="font-bold text-lg">{{ $t('loginFastCheckout') }}</h2>
             <label>
               <UiFormLabel class="w-full mt-4">{{ $t('form.emailLabel') }}</UiFormLabel>
               <SfInput class="w-full" name="email" type="email" autocomplete="email" v-model="email" required />

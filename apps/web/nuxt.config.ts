@@ -47,18 +47,19 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      useAvif: process.env?.USE_AVIF === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
-      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
-      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
+      useAvif: process.env?.USE_AVIF === '1',
+      useWebp: process.env?.USE_WEBP === '1',
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
       newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
       newsletterFormShowNames:
         process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
+      headerLogo: process.env.LOGO || '/images/logo.svg',
     },
   },
   modules: [
@@ -129,7 +130,7 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+    siteKey: process.env?.TURNSTILESITEKEY,
   },
   viewport: {
     breakpoints: {

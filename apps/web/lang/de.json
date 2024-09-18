@@ -178,6 +178,7 @@
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "backToShopping": "Zurück zum Einkaufen",
   "allFromCategory": "Alle {name}",
+  "passwordVisibilty": "Sichtbarkeit des Passworts",
   "listSettings": "Listeneinstellungen",
   "closeListSettings": "Listeneinstellungen schließen",
   "clearFilters": "Alle Filter löschen",
@@ -277,6 +278,7 @@
   "search": "Suche",
   "openSearchModalButtonLabel": "Suche öffnen",
   "closeMenu": "Menü schließen",
+  "closeDialog": "Dialogfenster schließen",
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "goToHomepage": "Zur Startseite gehen",
   "home": "Startseite",
@@ -484,6 +486,7 @@
       "noAddresses": "Es sind noch keine Addresse vorhanden."
     },
     "ordersAndReturns": {
+      "actions": "Aktionen",
       "heading": "Bestellungen & Retouren",
       "orderId": "Auftrags-ID",
       "returnId": "Retouren-ID",
