@@ -3,6 +3,15 @@ import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import { useDisclosure } from '@storefront-ui/vue';
 
+const setVsfLocale = (locale: string) => {
+  const DAYS = 100;
+  const localeExpireDate = new Date();
+  localeExpireDate.setDate(new Date().getDate() + DAYS);
+
+  const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
+  vsfLocale.value = locale;
+};
+
 export const useLocalization = createSharedComposable(() => {
   const { isOpen: isOpen, toggle } = useDisclosure();
   /**
@@ -93,14 +102,10 @@ export const useLocalization = createSharedComposable(() => {
    */
   const switchLocale = async (language: string) => {
     const { getCart } = useCart();
-    const DAYS = 100;
-    const localeExpireDate = new Date();
-    localeExpireDate.setDate(new Date().getDate() + DAYS);
-    const vsfLocale = useCookie('vsf-locale', { expires: localeExpireDate });
-
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
-    vsfLocale.value = language;
+
+    setVsfLocale(language);
     toggle();
     await getCart().then(
       async () =>
@@ -119,5 +124,6 @@ export const useLocalization = createSharedComposable(() => {
     isOpen,
     toggle,
     switchLocale,
+    setVsfLocale,
   };
 });

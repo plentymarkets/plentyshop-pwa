@@ -109,7 +109,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
     if (state.value.loadingScripts[scriptKey] !== undefined) {
-      return await state.value.loadingScripts[scriptKey];
+      return state.value.loadingScripts[scriptKey];
     }
 
     if (
@@ -133,7 +133,7 @@ export const usePayPal: UsePayPalMethodsReturn = () => {
         delete state.value.loadingScripts[scriptKey];
       });
 
-    return await state.value.loadingScripts[scriptKey];
+    return state.value.loadingScripts[scriptKey];
   };
 
   /**
