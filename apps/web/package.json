@@ -4,8 +4,8 @@
   "version": "1.2.0",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
+    "build": "tsx ./build/index.ts && nuxt build",
+    "dev": "tsx ./build/index.ts && nuxt dev",
     "start": "nuxt start",
     "generate": "nuxt generate",
     "docs:dev": "yarn publish-typedoc && vitepress dev docs",
@@ -59,14 +59,15 @@
     "eslint-config-prettier": "^9.1.0",
     "happy-dom": "^12.10.3",
     "msw": "^2.3.1",
-    "nuxt": "^3.12.4",
+    "nuxt": "^3.13.1",
     "sass": "^1.77.6",
+    "tsx": "^4.19.0",
     "typedoc": "^0.26.2",
     "typedoc-plugin-markdown": "^4.1.0",
     "typedoc-vitepress-theme": "1.0.0",
     "vitepress": "^1.2.3",
     "vitest": "^1.6.0",
-    "vue-tsc": "^2.0.29",
+    "vue-tsc": "^2.1.6",
     "vuepress": "^2.0.0-rc.14"
   }
 }

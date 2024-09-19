@@ -115,7 +115,7 @@
       <Suspense>
         <template #default>
           <PayPalExpressButton
-            v-if="getCombination()"
+            v-if="getCombination() && productGetters.isSalable(product)"
             class="mt-4"
             type="SingleItem"
             @on-click="paypalHandleAddToCart"

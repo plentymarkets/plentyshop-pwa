@@ -5,7 +5,7 @@
         :src="background.image"
         :width="getSizeForViewport(background.sizes).width"
         :height="getSizeForViewport(background.sizes).height"
-        alt="Hero background"
+        :alt="background.alt"
         class="absolute top-0 left-0 w-full h-full object-cover"
       />
     </div>
@@ -15,7 +15,7 @@
           :src="headPhones.image"
           :width="getSizeForViewport(headPhones.sizes).width"
           :height="getSizeForViewport(headPhones.sizes).height"
-          alt="Headphones"
+          :alt="headPhones.alt"
           class="h-full object-cover object-left"
         />
       </div>
@@ -39,16 +39,16 @@
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
     <div class="flex flex-wrap gap-4 lg:gap-6 lg:flex-no-wrap justify-center my-10">
       <div
-        v-for="{ title, image } in categories"
+        v-for="{ title, ariaLabel, image } in categories"
         :key="title"
         role="img"
-        :aria-label="title"
+        :aria-label="ariaLabel"
         :aria-labelledby="`image-${title}`"
         class="relative flex-col min-w-[140px] max-w-[360px] justify-center group"
       >
         <img
           :src="image"
-          :alt="title"
+          :alt="ariaLabel"
           format="avif"
           class="rounded-full bg-neutral-100 group-hover:shadow-xl group-active:shadow-none"
           width="360"
@@ -90,7 +90,7 @@
           </div>
           <img
             :src="details.image"
-            :alt="details.title"
+            :alt="details.alt"
             :width="getSizeForViewport(details.sizes).width"
             :height="getSizeForViewport(details.sizes).height"
             class="self-end object-contain"
@@ -100,7 +100,7 @@
       </div>
     </div>
     <NuxtLazyHydrate when-visible>
-      <NewsletterSubscribe />
+      <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
@@ -144,11 +144,13 @@ watch(
   },
   { immediate: true },
 );
+const { showNewsletter } = useNewsletter();
 const displayDetails = computed(() => {
   return [
     {
       image: `/images/${viewport.breakpoint.value}/homepage-display-1.avif`,
       title: t('homepage.displayDetails.detail1.title'),
+      alt: t('homepage.displayDetails.detail1.alt'),
       subtitle: t('homepage.displayDetails.detail1.subtitle'),
       description: t('homepage.displayDetails.detail1.description'),
       buttonText: t('homepage.displayDetails.detail1.buttonText'),
@@ -175,6 +177,7 @@ const displayDetails = computed(() => {
     {
       image: `/images/${viewport.breakpoint.value}/homepage-display-2.avif`,
       title: t('homepage.displayDetails.detail2.title'),
+      alt: t('homepage.displayDetails.detail2.alt'),
       subtitle: t('homepage.displayDetails.detail2.subtitle'),
       description: t('homepage.displayDetails.detail2.description'),
       buttonText: t('homepage.displayDetails.detail2.buttonText'),
@@ -198,6 +201,7 @@ const displayDetails = computed(() => {
     {
       image: `/images/${viewport.breakpoint.value}/homepage-display-3.avif`,
       title: t('homepage.displayDetails.detail3.title'),
+      alt: t('homepage.displayDetails.detail3.alt'),
       subtitle: t('homepage.displayDetails.detail3.subtitle'),
       description: t('homepage.displayDetails.detail3.description'),
       buttonText: t('homepage.displayDetails.detail3.buttonText'),
@@ -222,6 +226,7 @@ const displayDetails = computed(() => {
 });
 const headPhones = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
+  alt: t('homepage.headPhones'),
   sizes: {
     lg: {
       width: '800',
@@ -239,6 +244,7 @@ const headPhones = {
 };
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
+  alt: t('homepage.background'),
   sizes: {
     lg: {
       width: '4000',
@@ -257,14 +263,17 @@ const background = {
 const categories = [
   {
     title: t('homepage.women'),
+    ariaLabel: t('homepage.womenHomepageCategory'),
     image: '/images/homepage-women-category.avif',
   },
   {
     title: t('homepage.men'),
+    ariaLabel: t('homepage.menHomepageCategory'),
     image: '/images/homepage-men-category.avif',
   },
   {
     title: t('homepage.kid'),
+    ariaLabel: t('homepage.kidHomepageCategory'),
     image: '/images/homepage-kid-category.avif',
   },
 ];

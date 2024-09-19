@@ -1,7 +1,7 @@
 <template>
   <div v-for="(group, groupIndex) in variationPropertyGroups" :key="`group-${groupIndex}`">
     <template v-for="(variationProperty, propIndex) in group.properties" :key="`group-prop-${propIndex}`">
-      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center">
+      <div v-if="propertyHasNameOrValue(variationProperty)" class="flex items-center variation-properties">
         <ClientOnly>
           <Component
             v-if="componentsMapper[productPropertyGetters.getPropertyCast(variationProperty)]"
@@ -22,6 +22,7 @@ import type { VariationPropertiesProps, ComponentsMapper } from './types';
 import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
 import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
 import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
+import VariationPropertyFile from '../VariationPropertyFile/VariationPropertyFile.vue';
 
 const props = defineProps<VariationPropertiesProps>();
 const propertyHasNameOrValue = (variationProperty: VariationProperty) => {
@@ -37,6 +38,7 @@ const componentsMapper: ComponentsMapper = {
   text: VariationPropertyText,
   int: VariationPropertyText,
   float: VariationPropertyText,
+  file: VariationPropertyFile,
   string: VariationPropertyText,
   html: VariationPropertyHtml,
   date: VariationPropertyDate,

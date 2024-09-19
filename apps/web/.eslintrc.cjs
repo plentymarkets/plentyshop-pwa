@@ -47,4 +47,12 @@ module.exports = {
     'vue/singleline-html-element-content-newline': 'off',
     'vue/max-attributes-per-line': 'off',
   },
+  overrides: [
+    {
+      files: 'build/**/*.ts',
+      rules: {
+        'no-console': 'off',
+      },
+    }
+  ]
 };
