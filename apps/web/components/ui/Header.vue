@@ -149,10 +149,9 @@
     v-model="isAuthenticationOpen"
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
-    aria-labelledby="login-modal"
   >
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
+      <UiButton :aria-label="$t('closeDialog')" square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
         <SfIconClose />
       </UiButton>
     </header>

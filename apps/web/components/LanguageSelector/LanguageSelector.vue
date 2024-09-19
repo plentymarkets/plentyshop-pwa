@@ -8,7 +8,6 @@
       v-model="isOpen"
       tag="section"
       class="w-full bg-white !max-h-fit relative !rounded-none"
-      aria-labelledby="language-modal"
     >
       <div class="flex justify-center">
         <div v-for="locale in localeCodes" :key="locale">
