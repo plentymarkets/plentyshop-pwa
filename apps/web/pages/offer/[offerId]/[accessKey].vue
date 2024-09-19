@@ -3,38 +3,29 @@
     name="checkout"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :heading="t('documents.Offer')"
   >
     <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="billing-address"
-          :heading="t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          :addresses="billingAddress"
-          :type="AddressType.Billing"
-          disabled
-        />
+        <div class="px-4 py-6">
+          <h1 class="font-bold text-lg mb-2">{{ t('billing.heading') }}</h1>
+          <AddressDisplay :address="billingAddress" />
+        </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :addresses="shippingAddress"
-          :type="AddressType.Shipping"
-          disabled
-        />
+        <div class="px-4 py-6">
+          <h1 class="font-bold text-lg mb-2">{{ t('shipping.heading') }}</h1>
+          <AddressDisplay :address="shippingAddress" />
+        </div>
+
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
-          <ShippingMethod :shipping-methods="shippingMethods" disabled />
+          <ShippingMethod :shipping-methods="shippingMethod" disabled />
 
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment :payment-methods="paymentMethods" disabled />
+          <CheckoutPayment :payment-methods="paymentMethod" disabled />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
@@ -96,7 +87,7 @@
           <UiButton type="submit" :disabled="offerLoading" size="lg" class="w-full mb-4 md:mb-0 cursor-pointer">
             <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
-              {{ t('buy') }}
+              {{ t('acceptOffer') }}
             </span>
           </UiButton>
           <UiButton
@@ -109,7 +100,7 @@
           >
             <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
-              {{ t('buy') }}
+              {{ t('declineOffer') }}
             </span>
           </UiButton>
           <!-- </OrderSummary> -->
@@ -120,7 +111,7 @@
 </template>
 
 <script lang="ts" setup>
-import { shippingProviderGetters, offerGetters, AddressType } from '@plentymarkets/shop-api';
+import { shippingProviderGetters, offerGetters, PaymentProviders } from '@plentymarkets/shop-api';
 import { SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 
@@ -136,8 +127,8 @@ const route = useRoute();
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
-const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
-const { data: paymentMethodData, fetchPaymentMethods } = usePaymentMethods();
+const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 
 const loadOffer = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
@@ -155,11 +146,25 @@ await fetchPaymentMethods();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
-const shippingAddress = ref(offerGetters.getShippingAddress(offer.value));
-const billingAddress = ref(offerGetters.getBillingAddress(offer.value));
+const shippingAddress = computed(() => offerGetters.getShippingAddress(offer.value));
+const billingAddress = computed(() => offerGetters.getBillingAddress(offer.value));
+const shippingMethod = computed(() => {
+  const allShippingProviders = shippingProviderGetters.getShippingProviders(shippingMethodData.value);
+  const selectedShippingMethodName = offerGetters.getShippingMethodName(offer.value);
+  return allShippingProviders.filter((provider) => provider.parcelServicePresetName === selectedShippingMethodName);
+});
+const paymentMethod = computed(() => {
+  const allPaymentProviders = paymentMethodData.value.list;
+  const selectedPaymentMethodName = offerGetters.getPaymentMethodName(offer.value);
+  const filteredProviders = allPaymentProviders.filter((provider) => provider.name === selectedPaymentMethodName);
+  return {
+    list: filteredProviders,
+    selected: filteredProviders.length > 0 ? 0 : -1,
+  } as PaymentProviders;
+});
 
-const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value);
+await saveShippingMethod(shippingMethod.value[0].parcelServiceId);
+await savePaymentMethod(paymentMethod.value.list[0].id);
 
 const scrollToHTMLObject = (object: string) => {
   const element = document.querySelector(object) as HTMLElement;

@@ -218,6 +218,8 @@
   "back": "Back",
   "placeOrder": "Place order and pay",
   "buy": "Buy",
+  "acceptOffer": "Accept offer and pay",
+  "declineOffer": "Decline offer",
   "or": "or",
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
   "termsAndConditions": "Terms and Conditions",

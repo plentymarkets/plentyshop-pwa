@@ -218,6 +218,8 @@
   "back": "Zurück",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
+  "acceptOffer": "Angebot annehmen und bezahlen",
+  "declineOffer": "Angebot ablehnen",
   "or": "oder",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis.",
   "termsAndConditions": "AGB",
