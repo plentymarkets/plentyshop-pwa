@@ -47,6 +47,7 @@
 - Added cache-control for all images in order to solve "serve static assets" problem.
 - Added table header in the MyAccount.
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
+- Disable api caching with query param `noCache=1`
 
 ### 🩹 Fixed
 
