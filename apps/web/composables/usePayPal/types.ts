@@ -34,7 +34,6 @@ export interface UsePayPalState {
   isReady: boolean;
 }
 
-export type LoadConfig = () => Promise<void>;
 export type GetLocale = (locale: string) => string;
 export type GetScript = (currency: string, commit?: boolean) => Promise<PayPalNamespace | null>;
 export type LoadScript = (currency: string, locale: string, commit?: boolean) => Promise<PayPalNamespace | null>;
@@ -54,7 +53,6 @@ export interface UsePayPalMethods {
   executeOrder: ExecuteOrder;
   createCreditCardTransaction: CreateCreditCardTransaction;
   captureOrder: CaptureOrder;
-  loadConfig: LoadConfig;
   getScript: GetScript;
 }
 
