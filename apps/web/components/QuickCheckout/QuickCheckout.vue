@@ -87,11 +87,9 @@
         >
           {{ $t('goToCheckout') }}
         </UiButton>
-        <div v-if="isPayPalReady">
-          <OrDivider class="my-4" />
-          <PayPalExpressButton class="w-full text-center" type="CartPreview" />
-          <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
-        </div>
+        <OrDivider class="my-4" v-if="isPayPalReady" />
+        <PayPalExpressButton class="w-full text-center" type="CartPreview" />
+        <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
       </div>
     </div>
   </UiModal>
