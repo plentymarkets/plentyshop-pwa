@@ -24,7 +24,6 @@
       "
       :image-height="productGetters.getImageHeight(product) || 600"
       :image-width="productGetters.getImageWidth(product) || 600"
-      :price="productGetters.getSpecialPrice(product)"
       :rating-count="productGetters.getTotalReviews(product)"
       :rating="productGetters.getAverageRating(product, 'half')"
       is-from-slider
