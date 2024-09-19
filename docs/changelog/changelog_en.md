@@ -87,6 +87,7 @@
 - PayPal: We now use card fields instead of hosting fields for credit card payments.
 - Change the file item property color to blue in the quick checkout.
 - Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
+- Optimize review average fetch by eliminating it and getting the data from the reviews request instead.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
