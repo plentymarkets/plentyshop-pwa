@@ -10,7 +10,6 @@ import type {
   ExecuteOrder,
   GetLocale,
   GetScript,
-  LoadConfig,
   LoadScript,
   UsePayPalMethodsReturn,
   UsePayPalState,
