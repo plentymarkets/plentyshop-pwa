@@ -57,11 +57,9 @@ const { t } = useI18n();
 const { data: productReviewAverage } = useProductReviewAverage(productId);
 const { openReviewModal } = useProductReviews(productId);
 
-const reviewAverageText = computed(() => reviewGetters.getAverageRating(props.counts, 'tenth'));;
+const reviewAverageText = computed(() => reviewGetters.getAverageRating(props.counts, 'tenth'));
 const reviewAverageStars = computed(() => reviewGetters.getAverageRating(props.counts, 'half'));
 const totalReviews = computed(() => reviewGetters.getTotalReviews(props.counts));
-const ratingPercentages = computed(() =>
-    reviewGetters.getReviewCountsOrPercentagesByRatingDesc(props.counts, true),
-);
+const ratingPercentages = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(props.counts, true));
 const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(props.counts));
 </script>
