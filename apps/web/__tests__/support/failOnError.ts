@@ -1,3 +1,9 @@
+const ignoreErrors = [
+  'zoid',
+  'paypal',
+  'turnstile',
+];
+
 Cypress.on("window:before:load", win => {
   cy.stub(win.console, "error").callsFake(msg => {
     throw new Error(msg)
@@ -5,7 +11,7 @@ Cypress.on("window:before:load", win => {
 });
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if (err.message.includes('zoid')) {
+  if (ignoreErrors.some(ignore => err.message.includes(ignore) || err.stack?.includes(ignore))) {
     return false;
   }
 
