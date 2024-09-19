@@ -51,6 +51,7 @@
 
 ### 🩹 Fixed
 
+- Fixed broken aria reference in cournty select and login modal
 - Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
