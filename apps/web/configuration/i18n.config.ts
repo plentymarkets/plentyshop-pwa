@@ -15,6 +15,7 @@ if (process.env.ACTIVELANGUAGEGERMAN === 'true') {
     file: 'de.json',
   });
 }
+
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: localeObject,
   langDir: 'lang',
