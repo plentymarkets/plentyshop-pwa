@@ -36,6 +36,7 @@ export * from './useMegaMenu';
 export * from './useModernImage';
 export * from './useNewsletter';
 export * from './useNotification';
+export * from './useOffer';
 export * from './useOrderDocument';
 export * from './usePaymentMethods';
 export * from './usePayPal';
