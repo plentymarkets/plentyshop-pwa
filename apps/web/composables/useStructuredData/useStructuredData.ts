@@ -60,6 +60,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
    */
   const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
+    const { price, crossedPrice } = useProductPrice(product);
     const productId = Number(productGetters.getItemId(product));
 
     const { data: productReviews } = useProductReviews(productId);
@@ -107,13 +108,13 @@ export const useStructuredData: useStructuredDataReturn = () => {
       offers: {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),
-        price: productGetters.getPrice(product).special,
+        price: Number(price.value),
         priceValidUntil: productGetters.getVariationAvailableUntil(product),
         url: null,
         priceSpecification: [
           {
             '@type': 'UnitPriceSpecification',
-            price: productGetters.getPrice(product).special,
+            price: Number(price.value),
             priceCurrency: productGetters.getSpecialPriceCurrency(product),
             priceType: 'SalePrice',
             referenceQuantity: {
@@ -147,7 +148,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
-        price: productGetters.getRegularPrice(product),
+        price: Number(crossedPrice.value),
         priceCurrency: productGetters.getRegularPriceCurrency(product),
         priceType: 'ListPrice',
         referenceQuantity: {
