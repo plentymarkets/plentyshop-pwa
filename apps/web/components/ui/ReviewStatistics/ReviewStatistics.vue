@@ -54,7 +54,6 @@ const props = defineProps<ReviewStatisticsProps>();
 const productId = Number(productGetters.getItemId(props.product));
 
 const { t } = useI18n();
-const { data: productReviewAverage } = useProductReviewAverage(productId);
 const { openReviewModal } = useProductReviews(productId);
 
 const reviewAverageText = computed(() => reviewGetters.getAverageRating(props.counts, 'tenth'));
