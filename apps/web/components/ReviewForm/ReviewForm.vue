@@ -29,7 +29,7 @@
               class="p-1 gap-x-2"
             />
           </div>
-          <VeeErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
+          <ErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
         </div>
 
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
@@ -41,7 +41,7 @@
             name="title"
             id="review-title"
           />
-          <VeeErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
+          <ErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
         </template>
 
         <UiFormLabel class="mt-4" for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
@@ -53,7 +53,7 @@
           data-testid="input-authorName"
           id="review-author"
         />
-        <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
+        <ErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
 
         <UiFormLabel for="review-message" class="mt-4">
           <template v-if="isReplyUpdateModal">
@@ -73,7 +73,7 @@
           name="message"
           class="w-full max-h-80 min-h-16"
         />
-        <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
+        <ErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
         <div v-if="!reviewIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ reviewCharsCount }}</div>
 
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
@@ -94,7 +94,8 @@
 <script lang="ts" setup>
 import { SfRatingButton, SfTextarea, SfInput, SfIconClose, useId } from '@storefront-ui/vue';
 import { object, string, number } from 'yup';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import type { ReviewFormProps } from './types';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
