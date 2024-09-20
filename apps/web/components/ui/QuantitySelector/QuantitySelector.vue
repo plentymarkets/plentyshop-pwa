@@ -51,12 +51,12 @@ import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/typ
 
 const emit = defineEmits(['changeQuantity']);
 
-const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorProps>(), {
-  value: 1,
-  minValue: 1,
-  maxValue: Number.POSITIVE_INFINITY,
-  disabled: false,
-});
+const {
+  value = 1,
+  minValue = 1,
+  maxValue = Number.POSITIVE_INFINITY,
+  disabled = false,
+} = defineProps<QuantitySelectorProps>();
 
 const inputId = ref('0');
 const { count, inc, dec, set } = useCounter(value);
