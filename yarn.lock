@@ -4010,6 +4010,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nuxtjs/turnstile@npm:^0.9.6":
+  version: 0.9.6
+  resolution: "@nuxtjs/turnstile@npm:0.9.6"
+  dependencies:
+    "@nuxt/kit": ^3.13.1
+    defu: ^6.1.4
+    pathe: ^1.1.2
+  peerDependencies:
+    "@nuxt/scripts": ^0.6.0 || ^0.7.0 || ^0.8.0 || ^0.9.0
+  checksum: b439f57f97c27b0a9c10d83c8c42471593f8b8fa804f698cf37471c29a914beadc9967cf83c763f0bc6c726d0d77c836ecc4e70df21d186891e350c1ad3b3631
+  languageName: node
+  linkType: hard
+
 "@one-ini/wasm@npm:0.1.1":
   version: 0.1.1
   resolution: "@one-ini/wasm@npm:0.1.1"
@@ -21100,7 +21113,7 @@ __metadata:
     "@nuxtjs/i18n": 8.3.1
     "@nuxtjs/sitemap": ^5.2.2
     "@nuxtjs/tailwindcss": ^6.12.0
-    "@nuxtjs/turnstile": ^0.8.0
+    "@nuxtjs/turnstile": ^0.9.6
     "@plentymarkets/tailwind-colors": ^1.0.0
     "@savvywombat/tailwindcss-grid-areas": ^3.1.0
     "@storefront-ui/typography": ^2.6.1
