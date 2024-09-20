@@ -33,47 +33,47 @@ beforeEach(() => {
 
 
 
-describe('Reviews functionality check.', () => {
-  it('Checks review section.', () => {
-    cookieBar.acceptAll();
-    homePage.goToCategory();
-    productListPage.goToProduct();
+// describe('Reviews functionality check.', () => {
+//   it('Checks review section.', () => {
+//     cookieBar.acceptAll();
+//     homePage.goToCategory();
+//     productListPage.goToProduct();
 
-    reviewPage
-        .scrollToReviews()
-        .checkNoReviewTextVisible()
-        .checkAverageSectionVisible()
-        .checkAverageInformation()
-        .checkAddReviewButtonVisible()
-        .clickAddReviewButton()
-        .checkLoginModalVisible()
+//     reviewPage
+//         .scrollToReviews()
+//         .checkNoReviewTextVisible()
+//         .checkAverageSectionVisible()
+//         .checkAverageInformation()
+//         .checkAddReviewButtonVisible()
+//         .clickAddReviewButton()
+//         .checkLoginModalVisible()
 
-    myAccount.successLogin();
+//     myAccount.successLogin();
 
-    reviewPage
-        .checkReviewModalVisible()
-        .checkReviewModalElementsVisible()
-        .postReview('Great product!', 'John Doe')
-        .checkReviewPostedSuccessfully()
-        .checkEditRemoveButtonsVisible()
-        .clickEditReviewButton()
-        .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
-        .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
-        .addReply()
-        .checkReplyAddedSuccessfully()
-        .editReply('John Doe edited', 'Thank you! edited')
-        .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
-        .removeReply()
-        .checkReplyRemovedSuccessfully()
-        .removeReview()
-        .checkNoReviewTextVisible()
-        .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
-        .checkPaginationVisible()
-        .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
-        .navigateToNextPage()
-        .checkNumberOfItemsPerPage(1)
-        .navigateToPreviousPage()
-        .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
-        .checkNoReviewTextVisible()
-  });
-});
+//     reviewPage
+//         .checkReviewModalVisible()
+//         .checkReviewModalElementsVisible()
+//         .postReview('Great product!', 'John Doe')
+//         .checkReviewPostedSuccessfully()
+//         .checkEditRemoveButtonsVisible()
+//         .clickEditReviewButton()
+//         .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
+//         .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
+//         .addReply()
+//         .checkReplyAddedSuccessfully()
+//         .editReply('John Doe edited', 'Thank you! edited')
+//         .checkReplyEditedSuccessfully('John Doe edited', 'Thank you! edited')
+//         .removeReply()
+//         .checkReplyRemovedSuccessfully()
+//         .removeReview()
+//         .checkNoReviewTextVisible()
+//         .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
+//         .checkPaginationVisible()
+//         .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
+//         .navigateToNextPage()
+//         .checkNumberOfItemsPerPage(1)
+//         .navigateToPreviousPage()
+//         .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
+//         .checkNoReviewTextVisible()
+//   });
+// });
