@@ -12,7 +12,7 @@
       size="sm"
       class="font-normal text-sm"
     />
-    <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
+    <ErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
 
     <UiFormLabel for="reply-msg" class="mt-4">{{ t('review.yourAnswer') }} *</UiFormLabel>
     <SfTextarea
@@ -24,7 +24,7 @@
       size="lg"
       class="w-full"
     />
-    <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
+    <ErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
     <div v-if="!answerIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ answerCharsCount }}</div>
 
     <p class="text-sm text-neutral-500 mb-2">* {{ t('contact.form.asterixHint') }}</p>
@@ -43,7 +43,8 @@
 <script setup lang="ts">
 import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { defaults } from '~/composables';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ReplyFormProps } from '~/components/ReplyForm/types';

@@ -32,7 +32,7 @@
 
       <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
-    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
+    <ErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
@@ -40,7 +40,8 @@
 import { SfInput } from '@storefront-ui/vue';
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyInputProps } from './types';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 const props = defineProps<OrderPropertyInputProps>();
