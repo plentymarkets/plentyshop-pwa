@@ -145,9 +145,7 @@ const paymentMethod = computed(() => {
   } as PaymentProviders;
 });
 
-console.log(shippingMethod.value);
 await saveShippingMethod(shippingMethod.value[0].parcelServicePresetId);
-
 await savePaymentMethod(paymentMethod.value.list[0].id);
 
 const ID_CHECKBOX = '#terms-checkbox';
