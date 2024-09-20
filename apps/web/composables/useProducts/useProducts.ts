@@ -33,6 +33,9 @@ export const useProducts: UseProductsReturn = () => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
+
+    if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
+
     const { data } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;

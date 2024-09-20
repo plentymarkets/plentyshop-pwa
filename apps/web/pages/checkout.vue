@@ -57,12 +57,18 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <PayPalExpressButton
-              v-if="selectedPaymentId === paypalPaymentId"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="validateTerms"
-              type="Checkout"
-            />
+            <client-only v-if="selectedPaymentId === paypalPaymentId">
+              <PayPalExpressButton
+                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+                @on-click="validateTerms"
+                type="Checkout"
+              />
+              <PayPalPayLaterBanner
+                placement="payment"
+                :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
+                :commit="true"
+              />
+            </client-only>
             <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
@@ -91,6 +97,7 @@
               </span>
             </UiButton>
             <PayPalApplePayButton
+              v-if="applePayAvailable"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
               @button-clicked="validateTerms"
             />
@@ -110,7 +117,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
@@ -161,6 +168,7 @@ await loadAddresses();
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
 const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
+const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const handleShippingMethodUpdate = async (shippingMethodId: string) => {
   await saveShippingMethod(Number(shippingMethodId));
