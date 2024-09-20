@@ -46,7 +46,6 @@ jobs:
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
           API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
-          TURNSTILESITEKEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
           ${{ vars.CONFIG }}
           EOT
 
