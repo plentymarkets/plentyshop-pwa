@@ -51,6 +51,7 @@
 
 ### 🩹 Fixed
 
+- Resize favicon to 3 kb
 - Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
