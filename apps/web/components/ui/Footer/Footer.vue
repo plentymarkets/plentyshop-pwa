@@ -42,7 +42,7 @@ import { SfLink, SfListItem } from '@storefront-ui/vue';
 import { categories, companyName } from '~/mocks';
 import type { FooterProps } from './types';
 
-const { simplifiedFooter } = withDefaults(defineProps<FooterProps>(), { simplifiedFooter: false });
+const { simplifiedFooter = false } = defineProps<FooterProps>();
 
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
