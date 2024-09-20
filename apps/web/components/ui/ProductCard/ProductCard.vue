@@ -103,26 +103,21 @@ const {
   product,
   name,
   imageUrl,
-  imageAlt,
+  imageAlt = '',
   imageTitle,
   imageWidth,
   imageHeight,
   rating,
   ratingCount,
   priority,
-  lazy,
+  lazy = true,
   unitContent,
   unitName,
   basePrice,
   showBasePrice,
-  isFromWishlist,
-  isFromSlider,
-} = withDefaults(defineProps<ProductCardProps>(), {
-  lazy: true,
-  imageAlt: '',
-  isFromWishlist: false,
-  isFromSlider: false,
-});
+  isFromWishlist = false,
+  isFromSlider = false,
+} = defineProps<ProductCardProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
