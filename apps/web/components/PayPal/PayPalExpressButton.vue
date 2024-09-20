@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
-const { loadScript, createTransaction, approveOrder, executeOrder } = usePayPal();
+const { getScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -30,8 +30,8 @@ const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
-const paypalUuid = ref();
-const paypalScript = ref<PayPalNamespace | null>(await loadScript(currency.value, isCommit));
+const paypalUuid = ref(uuid());
+const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
 const checkOnClickEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
@@ -130,12 +130,10 @@ const createButton = () => {
   }
 };
 
-const bindUuid = async () => (paypalUuid.value = uuid());
-
-onMounted(async () => await bindUuid().then(() => createButton()));
+onMounted(() => createButton());
 
 watch(currency, async () => {
-  paypalScript.value = await loadScript(currency.value, isCommit);
+  paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
 });
 </script>

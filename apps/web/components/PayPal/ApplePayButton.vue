@@ -12,13 +12,13 @@ import { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/compone
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
 let isApplepayLoaded = false;
-const { loadScript, executeOrder, createTransaction } = usePayPal();
+const { getScript, executeOrder, createTransaction } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { data: cart, clearCartItems } = useCart();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const applePayConfig = ref<ConfigResponse | null>(null);
-const paypal = await loadScript(currency.value);
+const paypal = await getScript(currency.value);
 const localePath = useLocalePath();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;

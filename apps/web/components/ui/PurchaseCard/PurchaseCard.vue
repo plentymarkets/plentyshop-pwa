@@ -73,7 +73,7 @@
     <ProductAttributes :product="product" />
     <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-    <div class="py-4">
+    <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
           :value="quantitySelectorValue"
@@ -114,12 +114,10 @@
       </div>
       <Suspense>
         <template #default>
-          <PayPalExpressButton
-            v-if="getCombination() && productGetters.isSalable(product)"
-            class="mt-4"
-            type="SingleItem"
-            @on-click="paypalHandleAddToCart"
-          />
+          <div v-if="getCombination() && productGetters.isSalable(product)">
+            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+          </div>
         </template>
         <template #fallback>
           <SfLoaderCircular class="flex justify-center items-center" size="sm" />
