@@ -275,7 +275,7 @@
   "addToCartShort": "Add",
   "addedToCart": "Item added to Cart",
   "deletedFromCart": "Item removed from shopping cart",
-  "removeItem": "Remove item",
+  "removeItemFromBasket": "Remove item from basket",
   "search": "Search",
   "openSearchModalButtonLabel": "Open item search",
   "closeMenu": "Close Menu",

@@ -112,7 +112,7 @@
       v-else-if="!disabled"
       @click="deleteItem"
       square
-      :aria-label="t('removeItem')"
+      :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="absolute top-2 right-2 bg-white"
