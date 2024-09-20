@@ -154,7 +154,7 @@ export default defineNuxtConfig({
     },
   },
   veeValidate: {
-    autoImports: true,
+    autoImports: false,
     componentNames: {
       Form: 'VeeForm',
       Field: 'VeeField',
