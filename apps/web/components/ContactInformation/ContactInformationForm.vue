@@ -10,7 +10,7 @@
         type="email"
         autocomplete="email"
       />
-      <VeeErrorMessage as="span" name="cart.customerEmail" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="cart.customerEmail" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
@@ -33,7 +33,8 @@
 
 <script setup lang="ts">
 import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 const emit = defineEmits(['on-save']);
