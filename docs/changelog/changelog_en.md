@@ -51,6 +51,7 @@
 
 ### 🩹 Fixed
 
+- Fixed broken aria reference in cournty select and login modal
 - Resize favicon to 3 kb
 - Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
