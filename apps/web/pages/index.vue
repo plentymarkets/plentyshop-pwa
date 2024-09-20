@@ -2,6 +2,11 @@
   <div class="relative min-h-[600px]">
     <UiHeroCarousel :background="background" :hero="formattedHeroItems"></UiHeroCarousel>
   </div>
+  <NuxtLazyHydrate when-visible>
+    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
+      <UiMediaCard :image="mediaData.image" :text="mediaData.text" />
+    </div>
+  </NuxtLazyHydrate>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10">
     <NuxtLazyHydrate when-visible>
       <section class="mx-4 mt-28 mb-20 overflow-hidden">
@@ -14,7 +19,6 @@
     <NuxtLazyHydrate when-visible>
       <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
-    <UiMediaCard :image="mediaData.image" :text="mediaData.text" />
   </div>
 </template>
 
