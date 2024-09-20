@@ -71,6 +71,7 @@
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
 - Fixed DE translation regarding VAT.
+- Fixed wrong price issues.
 
 ### 👷 Changed
 
