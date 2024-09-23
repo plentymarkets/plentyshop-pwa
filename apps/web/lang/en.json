@@ -234,7 +234,7 @@
   "termsRequired": "You have to agree with the terms and conditions.",
   "billingAddressRequired": "Please select a billing address.",
   "shippingAddressRequired": "Please select a shipping address.",
-  "savedShippingAddress": "Saved shipping adresses",
+  "savedShippingAddress": "Saved addresses",
   "address": "Addresses",
   "manageAddresses": "Manage your addresses",
   "savedBillingAddress": "Saved billing adresses",

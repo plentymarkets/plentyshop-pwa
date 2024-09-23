@@ -16,7 +16,7 @@
         v-bind="firstNameAttributes"
         :invalid="Boolean(errors['firstName'])"
       />
-      <VeeErrorMessage as="span" name="firstName" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="firstName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -30,7 +30,7 @@
         v-bind="lastNameAttributes"
         :invalid="Boolean(errors['lastName'])"
       />
-      <VeeErrorMessage as="span" name="lastName" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="lastName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <div class="md:col-span-3">
@@ -48,7 +48,7 @@
         v-bind="companyNameAttributes"
         :invalid="Boolean(errors['companyName'])"
       />
-      <VeeErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="companyName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label v-if="hasShippingCompany" class="md:col-span-2">
@@ -59,7 +59,7 @@
         v-bind="vatNumberAttributes"
         :invalid="Boolean(errors['vatNumber'])"
       />
-      <VeeErrorMessage as="span" name="vatNumber" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="vatNumber" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -71,7 +71,7 @@
         v-bind="streetNameAttributes"
         :invalid="Boolean(errors['streetName'])"
       />
-      <VeeErrorMessage as="span" name="streetName" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="streetName" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label>
@@ -83,7 +83,7 @@
         v-bind="apartmentAttributes"
         :invalid="Boolean(errors['apartment'])"
       />
-      <VeeErrorMessage as="span" name="apartment" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="apartment" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label>
@@ -95,7 +95,7 @@
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
       />
-      <VeeErrorMessage as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="zipCode" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-2">
@@ -107,7 +107,7 @@
         v-bind="cityAttributes"
         :invalid="Boolean(errors['city'])"
       />
-      <VeeErrorMessage as="span" name="city" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="city" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="md:col-span-3">
@@ -128,7 +128,7 @@
           {{ shippingCountry.currLangName }}
         </option>
       </SfSelect>
-      <VeeErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
+      <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
     </label>
 
     <label class="flex items-center gap-2">
@@ -140,7 +140,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
 import { type AddressFormProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
