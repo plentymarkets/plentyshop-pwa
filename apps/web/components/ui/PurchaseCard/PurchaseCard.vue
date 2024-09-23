@@ -25,11 +25,7 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <Price
-        :price="currentActualPrice"
-        :normal-price="normalPrice"
-        :old-price="productGetters.getPrice(product).regular ?? 0"
-      />
+      <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
           t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -77,7 +73,7 @@
     <ProductAttributes :product="product" />
     <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-    <div class="py-4">
+    <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
           :value="quantitySelectorValue"
@@ -118,12 +114,10 @@
       </div>
       <Suspense>
         <template #default>
-          <PayPalExpressButton
-            v-if="getCombination() && productGetters.isSalable(product)"
-            class="mt-4"
-            type="SingleItem"
-            @on-click="paypalHandleAddToCart"
-          />
+          <div v-if="getCombination() && productGetters.isSalable(product)">
+            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+          </div>
         </template>
         <template #fallback>
           <SfLoaderCircular class="flex justify-center items-center" size="sm" />
@@ -159,23 +153,17 @@ const { t } = useI18n();
 const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
+const { crossedPrice } = useProductPrice(product);
 
 resetInvalidFields();
 resetAttributeFields();
 
-const currentActualPrice = computed(
+const priceWithProperties = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-      productGetters.getPrice(product)?.special ??
-      productGetters.getPrice(product)?.regular ??
+    (productGetters.getSpecialOffer(product) ||
+      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
 );
-
-const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-  productGetters.getPrice(product)?.special ??
-  productGetters.getPrice(product)?.regular ??
-  0;
 
 const basePriceSingleValue = computed(
   () =>

@@ -47,7 +47,6 @@ jobs:
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
           API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
           DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1
-          CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0" >> apps/web/.env
           ${{ vars.CONFIG }}
           EOT
 

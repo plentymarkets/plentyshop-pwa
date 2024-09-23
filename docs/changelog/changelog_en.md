@@ -43,13 +43,18 @@
 - Changed font size of wishlist icon counter and cart icon counter.
 - Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Optimize aria labels and alt texts on homepage
 - Added cache-control for all images in order to solve "serve static assets" problem.
 - Added table header in the MyAccount.
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
+- Disable api caching with query param `noCache=1`
 
 ### 🩹 Fixed
 
+- Fixed basket accesibilty issues
+- Fixed broken aria reference in cournty select and login modal
+- Resize favicon to 3 kb
 - Fixed addtobasket overlay accesibilty issues
 - Fixed login page accesibilty issues
 - Shop logo is now preloaded.
@@ -70,6 +75,7 @@
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
 - Fixed DE translation regarding VAT.
+- Fixed wrong price issues.
 
 ### 👷 Changed
 

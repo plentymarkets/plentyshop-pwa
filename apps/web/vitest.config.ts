@@ -14,11 +14,10 @@ export default defineVitestConfig({
     clearMocks: true,
     setupFiles: './vitest.config.setup.ts',
     include: ['**/*/?(*.)+(spec|test).[jt]s'],
-    onConsoleLog: (log): any => {
+    onConsoleLog: (log: string): boolean | void => {
       if (silenceLogsFromSuspenseComponent(log)) {
         return false;
       }
-      return log;
     },
   },
 });

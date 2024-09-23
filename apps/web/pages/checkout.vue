@@ -43,12 +43,18 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <PayPalExpressButton
-              v-if="selectedPaymentId === paypalPaymentId"
-              :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-              @on-click="handlePayPalExpress"
-              type="Checkout"
-            />
+            <client-only v-if="selectedPaymentId === paypalPaymentId">
+              <PayPalExpressButton
+                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+                @on-click="handlePayPalExpress"
+                type="Checkout"
+              />
+              <PayPalPayLaterBanner
+                placement="payment"
+                :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
+                :commit="true"
+              />
+            </client-only>
             <UiButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               type="submit"
@@ -73,6 +79,7 @@
               <template v-else>{{ $t('buy') }}</template>
             </UiButton>
             <PayPalApplePayButton
+              v-if="applePayAvailable"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
               @button-clicked="validateTerms"
             />
@@ -97,7 +104,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 import { keyBy } from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import { AddressType, paymentProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -165,6 +172,8 @@ const paypalCreditCardPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
+
+const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const readyToBuy = () => {
   if (anyAddressFormIsOpen.value) return backToFormEditing();

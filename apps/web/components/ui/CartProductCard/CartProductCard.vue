@@ -90,7 +90,7 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-500 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
           {{ n(currentFullPrice || 0, 'currency') }}
         </span>
@@ -105,13 +105,14 @@
     </div>
 
     <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
-      <SfLoaderCircular />
+      <SfLoaderCircular aria-label="loading" />
     </div>
 
     <UiButton
       v-else-if="!disabled"
       @click="deleteItem"
       square
+      :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="absolute top-2 right-2 bg-white"
