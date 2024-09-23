@@ -4,10 +4,10 @@
       <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
         {{ props.slideData.tagline }}
       </p>
-      <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
+      <h1 class="typography-display-2 md:typography-display-1 lg:typography-display-1 md:leading-[55px] lg:leading-[56px] font-bold mt-2 mb-4">
         {{ props.slideData.heading }}
       </h1>
-      <p class="typography-text-base md:typography-text-lg">
+      <p class="typography-text-base md:typography-text-sm md:leading-[1.5] lg:leading-[1.4]">
         {{ props.slideData.description }}
       </p>
       <div class="flex flex-col md:flex-row gap-4 mt-6">

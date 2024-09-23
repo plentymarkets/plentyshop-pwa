@@ -83,12 +83,21 @@ const { containerRef, state, getNextButtonProps, getPrevButtonProps } = useScrol
       direction,
       activeIndex,
       reduceMotion,
-      drag,
+      drag: false,
       isActiveIndexCentered,
     }),
-    onDragStart: (data) => emit('onDragStart', data),
-    onDragEnd: (data) => emit('onDragEnd', data),
-    onScroll: (data) => emit('onScroll', data),
+    onDragStart: (data) => {
+      emit('onDragStart', data);
+      return false;
+    },
+    onDragEnd: (data) => {
+      emit('onDragEnd', data);
+      return false;
+    },
+    onScroll: (data) => {
+      emit('onScroll', data);
+      return false;
+    },
     onPrev: (data) => emit('onPrev', data),
     onNext: (data) => emit('onNext', data),
   })),
@@ -112,7 +121,7 @@ const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPla
       size="lg"
       square
       :class="[
-        '!rounded-full bg-white hidden md:block !ring-neutral-500 !text-neutral-500',
+        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
         {
           'mr-4': isBlock && isHorizontal,
           'mb-4 rotate-90': isBlock && !isHorizontal,
@@ -133,13 +142,15 @@ const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPla
       :class="[
         'motion-safe:scroll-smooth w-full',
         {
-          'overflow-x-auto flex': isHorizontal,
-          'overflow-y-auto flex flex-col': !isHorizontal,
+          'overflow-x-hidden flex': isHorizontal,
+          'overflow-y-hidden flex flex-col': !isHorizontal,
           'cursor-grab': state.isDragged,
         },
       ]"
       v-bind="{ ...$attrs, ...props }"
       :disabled="prevDisabled"
+      @mousedown.prevent
+      @touchstart.prevent
     >
       <slot />
     </component>
@@ -154,7 +165,7 @@ const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPla
       size="lg"
       square
       :class="[
-        '!rounded-full bg-white hidden md:block !ring-neutral-500 !text-neutral-500',
+        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
         {
           'ml-4': isBlock && isHorizontal,
           'mt-4 rotate-90': isBlock && !isHorizontal,
@@ -171,4 +182,3 @@ const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPla
     </SfButton>
   </div>
 </template>
-

@@ -16,6 +16,7 @@
 
     <div class="w-full max-w-[1536px] mx-auto px-4">
       <CustomScrollable
+        is-active-index-centered
         :buttons-placement="props.hero.length > 1 ? 'block' : 'none'"
         :direction="'horizontal'"
         class="flex overflow-hidden &::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
