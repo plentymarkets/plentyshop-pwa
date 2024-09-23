@@ -32,6 +32,7 @@
 - Implement Applepay as a payment method.
 - Added variation properties for quick checkout, considering order process visibility.
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
+- Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
 
 #### SEO
@@ -44,7 +45,6 @@
 
 #### Page speed
 
-- PayPal: We now use card fields instead of hosting fields for credit card payments.
 - Added cache-control for all static images to improve caching policy.
 - PayPal button is lazyloaded to improve performance.
 - Shop logo is now preloaded.
