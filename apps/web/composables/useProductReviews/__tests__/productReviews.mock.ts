@@ -73,7 +73,7 @@ export const mockProductReviews: Review = {
     ratingsCountOf4: 0,
     ratingsCountOf5: 0,
     ratingsCountTotal: 0,
-    averageValue: 0,
+    averageValue: "0.00",
     highestCount: 0,
   },
 }
