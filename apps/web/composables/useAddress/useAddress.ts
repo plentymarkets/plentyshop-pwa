@@ -1,8 +1,9 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import type { DeleteAddress, SetDefault } from '~/composables/useAddress/types';
-import type { UseAddressReturn, GetAddresses, SaveAddress, UseAddressMethodsState } from './types';
+import { type DeleteAddress, type SetDefault } from './types';
+import { type UseAddressReturn, type GetAddresses, type SaveAddress, UseAddressMethodsState } from './types';
 
 /**
+ * @deprecated use `useAddressStore`, `useCheckoutAddress`, `useCreateAddress`, `usePrimaryAddress`, `useFetchAddress`, `useDeleteAddress` instead
  * @description Composable for working with addresses in the current user session.
  * The composable covers two types of addresses, billing and shipping.
  * @example
@@ -58,8 +59,17 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     state.value.useAsShippingAddress = billingId === shippingId;
   });
 
-  const hasDisplayAddress = () => {
-    return state.value?.displayAddress?.id;
+  const hasDisplayAddress = computed(() => {
+    return Boolean(state.value?.displayAddress?.id);
+  });
+
+  const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
+    state.value.loading = true;
+    await useSdk().plentysystems.setCheckoutAddress({
+      typeId: typeId,
+      addressId: addressId,
+    });
+    state.value.loading = false;
   };
 
   const setDefaultAddress = () => {
@@ -97,7 +107,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
   };
 
   const setInitialDisplayAddress = (): void => {
-    if (hasDisplayAddress()) return;
+    if (hasDisplayAddress.value) return;
 
     state.value.loading = true;
 
@@ -131,7 +141,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     return state.value.data;
   };
 
-  const saveAddress: SaveAddress = async (address: Address) => {
+  const saveAddress: SaveAddress = async (address: Address, combineShippingBilling = false) => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData(type.toString(), () =>
@@ -144,12 +154,15 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     useHandleError(error.value);
     state.value.loading = false;
 
-    const lastAddress = data?.value?.data?.at(-1);
-    if (lastAddress) {
-      address.id = lastAddress.id ?? undefined;
+    const createdAddress = data.value?.data[0];
+
+    if (createdAddress) {
+      setDisplayAddress(createdAddress);
+      if (combineShippingBilling) {
+        await setCheckoutAddress(AddressType.Billing, Number(userAddressGetters.getId(createdAddress)));
+      }
     }
 
-    setDisplayAddress(address);
     state.value.data = data.value?.data ?? state.value.data;
 
     return state.value.data ?? [];
@@ -180,15 +193,6 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     return state.value.data;
   };
 
-  const setCheckoutAddress = async (typeId: AddressType, addressId: number) => {
-    state.value.loading = true;
-    await useSdk().plentysystems.setCheckoutAddress({
-      typeId: typeId,
-      addressId: addressId,
-    });
-    state.value.loading = false;
-  };
-
   return {
     setDisplayAddress,
     getAddresses,
@@ -196,6 +200,7 @@ export const useAddress: UseAddressReturn = (type: AddressType, cacheKey = '') =
     setDefault,
     deleteAddress,
     setCheckoutAddress,
+    hasDisplayAddress,
     ...toRefs(state.value),
   };
 };
