@@ -140,6 +140,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink, SfCheckbox } from '@storefront-ui/vue';
+import { useForm } from 'vee-validate';
 import { type AddressFormProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 

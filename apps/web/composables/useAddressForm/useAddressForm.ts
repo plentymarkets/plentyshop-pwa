@@ -1,4 +1,5 @@
 import { type Address, AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 
 export const useAddressForm = (type: AddressType) => {
