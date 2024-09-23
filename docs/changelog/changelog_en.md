@@ -52,6 +52,7 @@
 
 ### 🩹 Fixed
 
+- Fixed lodash named import for debounce
 - Fixed basket accesibilty issues
 - Fixed broken aria reference in cournty select and login modal
 - Resize favicon to 3 kb
