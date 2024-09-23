@@ -1,6 +1,6 @@
 <template>
   <NarrowContainer class="mb-20 px-4 md:px-0" data-testid="category-layout">
-    <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ title }}</h1>
+    <h1 class="my-10 font-bold typography-headline-3 md:typography-headline-2">{{ reactiveProps.title.value }}</h1>
     <div class="md:flex gap-6" data-testid="category-page-content">
       <CategorySidebar :is-open="isOpen" @close="close">
         <NuxtLazyHydrate when-visible>
@@ -10,7 +10,12 @@
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold font-headings md:text-lg">
-            {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
+            {{
+              $t('numberOfProducts', {
+                count: reactiveProps.products.value?.length ?? 0,
+                total: reactiveProps.totalProducts.value,
+              })
+            }}
           </span>
           <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
@@ -20,11 +25,11 @@
           </UiButton>
         </div>
         <section
-          v-if="products"
+          v-if="reactiveProps.products.value?.length"
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
-          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="index">
+          <NuxtLazyHydrate when-visible v-for="(product, index) in reactiveProps.products.value" :key="index">
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
@@ -53,18 +58,18 @@
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />
-        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="reactiveProps.totalProducts.value > 0">
           <span>{{ $t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
           <span v-else>{{ $t('itemInclVAT') }}</span>
           <span>{{ $t('excludedShipping') }}</span>
         </div>
         <UiPagination
-          v-if="totalProducts > 0"
-          :key="`${totalProducts}-${itemsPerPage}`"
+          v-if="reactiveProps.totalProducts.value > 0"
+          :key="`${reactiveProps.totalProducts.value}-${reactiveProps.itemsPerPage.value}`"
           :current-page="getFacetsFromURL().page ?? 1"
-          :total-items="totalProducts"
-          :page-size="itemsPerPage"
+          :total-items="reactiveProps.totalProducts.value"
+          :page-size="reactiveProps.itemsPerPage.value"
           :max-visible-pages="maxVisiblePages"
         />
       </div>
@@ -75,11 +80,10 @@
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
-withDefaults(defineProps<CategoryPageContentProps>(), {
-  itemsPerPage: 24,
-});
+const props = withDefaults(defineProps<CategoryPageContentProps>(), { itemsPerPage: 24 });
+const reactiveProps = toRefs(props);
 
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
