@@ -27,7 +27,7 @@ describe('Smoke: PayPal credit card order', () => {
       .goToGuestCheckout()
       .fillContactInformationForm()
       .addBillingAddress()
-      .fillBillingAddressForm()
+      .fillShippingAddressForm()
       .acceptTerms()
       .checkCreditCard()
       .placeOrderButton()

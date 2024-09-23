@@ -79,6 +79,7 @@
 
 ### 👷 Changed
 
+- Addresses: We’ve enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
 - Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
 - Cookiebar icon has been replaced
