@@ -144,7 +144,7 @@ import { useForm } from 'vee-validate';
 import { type AddressFormProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
-const { address, addAddress } = withDefaults(defineProps<AddressFormProps>(), { addAddress: false });
+const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
 const { data: countries } = useActiveShippingCountries();
