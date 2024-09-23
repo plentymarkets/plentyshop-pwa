@@ -1,7 +1,7 @@
 <template>
   <NuxtLazyHydrate when-visible>
-    <template v-if="Object.keys(data).length > 0">
-      <OfferPageContent :offer="data" :offer-loading="loadingOffer.value" />
+    <template v-if="Object.keys(data).length > 0 && typeof data !== 'string'">
+      <OfferPageContent :offer="data" :offer-loading="loadingOffer.value" @accept="accept" @decline="decline" />
     </template>
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
@@ -17,13 +17,14 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { data, loading: offerLoading, error, fetchOffer } = useOffer();
+const { data, loading: offerLoading, error, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
+const localePath = useLocalePath();
+const { t } = useI18n();
 
 const loadOffer = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
-
   await fetchOffer({
     offerId: route.params.offerId as string,
     accessKey: route.params.accessKey as string,
@@ -52,4 +53,29 @@ if (error.value) {
 
 await loadOffer();
 const loadingOffer = computed(() => offerLoading);
+
+const decline = async (text: string) => {
+  await declineOffer({
+    offerId: route.params.offerId as string,
+    accessKey: route.params.accessKey as string,
+    text: text as string,
+  });
+
+  navigateTo(localePath(paths.cart));
+  send({
+    type: 'positive',
+    message: t('contact.success'),
+  });
+};
+
+const accept = async () => {
+  await acceptOffer({
+    offerId: route.params.offerId as string,
+    accessKey: route.params.accessKey as string,
+  });
+
+  if (!error.value) {
+    navigateTo(localePath(paths.confirmation + '/' + route.params.offerId + '/' + route.params.accessKey));
+  }
+};
 </script>

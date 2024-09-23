@@ -84,7 +84,13 @@
         >
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <!-- <OrderSummary v-if="offer" :cart="offer"> -->
-          <UiButton type="submit" :disabled="offerLoading" size="lg" class="w-full mb-4 md:mb-0 cursor-pointer">
+          <UiButton
+            type="submit"
+            @click="order"
+            :disabled="offerLoading"
+            size="lg"
+            class="w-full mb-4 md:mb-0 cursor-pointer"
+          >
             <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ t('acceptOffer') }}
@@ -93,8 +99,8 @@
           <UiButton
             type="submit"
             variant="secondary"
-            @click="order"
             :disabled="offerLoading"
+            @click="toggleModal"
             size="lg"
             class="w-full mt-4 md:mb-0 cursor-pointer"
           >
@@ -104,6 +110,48 @@
             </span>
           </UiButton>
           <!-- </OrderSummary> -->
+
+          <UiModal
+            class="h-full w-full overflow-auto md:w-[700px] md:h-fit"
+            aria-labelledby="address-modal-title"
+            v-model="openModal"
+          >
+            <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="toggleModal">
+              <SfIconClose />
+            </UiButton>
+            <h1 class="font-bold text-xl mb-2">Decline Offer</h1>
+            <p class="mb-4">How can we improve?</p>
+            <p>Comment (optional)</p>
+            <textarea
+              class="w-full min-h-32 min-w-96 border-2 rounded-md p-4"
+              v-model="declineText"
+              placeholder="Write your concerns here..."
+            ></textarea>
+            <div class="flex space-x-4">
+              <UiButton
+                type="submit"
+                variant="primary"
+                :disabled="offerLoading"
+                @click="toggleModal"
+                size="lg"
+                class="w-full mt-4 md:mb-0 cursor-pointer"
+              >
+                <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
+                <span v-else> Cancel </span>
+              </UiButton>
+              <UiButton
+                type="submit"
+                variant="secondary"
+                :disabled="offerLoading"
+                @click="handleDecline"
+                size="lg"
+                class="w-full mt-4 md:mb-0 cursor-pointer"
+              >
+                <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
+                <span v-else> Decline offer </span>
+              </UiButton>
+            </div>
+          </UiModal>
         </div>
       </div>
     </div>
@@ -112,7 +160,7 @@
 
 <script lang="ts" setup>
 import { shippingProviderGetters, offerGetters, PaymentProviders } from '@plentymarkets/shop-api';
-import { SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { OfferPageContentProps } from './types';
 
@@ -122,6 +170,9 @@ const localePath = useLocalePath();
 const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const props = defineProps<OfferPageContentProps>();
+const emit = defineEmits(['accept', 'decline']);
+const openModal = ref(false);
+const declineText = ref('');
 
 await getShippingMethods();
 await fetchPaymentMethods();
@@ -190,5 +241,14 @@ const order = async () => {
   if (redirectBack() || !validateTerms()) {
     return;
   }
+  emit('accept');
+};
+
+const handleDecline = async () => {
+  emit('decline', declineText.value);
+};
+
+const toggleModal = () => {
+  openModal.value = !openModal.value;
 };
 </script>
