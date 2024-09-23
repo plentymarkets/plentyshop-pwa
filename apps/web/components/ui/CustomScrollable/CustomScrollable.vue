@@ -1,8 +1,82 @@
+<template>
+  <div :class="['items-center', 'relative', isHorizontal ? 'flex' : 'flex-col h-full inline-flex', wrapperClass]">
+    <slot
+      v-if="$slots.previousButton && buttonsPlacement !== SfScrollableButtonsPlacement.none"
+      v-bind="getPrevButtonProps"
+      name="previousButton"
+    />
+    <SfButton
+      v-else-if="buttonsPlacement !== SfScrollableButtonsPlacement.none"
+      variant="secondary"
+      size="lg"
+      square
+      :class="[
+        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
+        {
+          'mr-4': isBlock && isHorizontal,
+          'mb-4 rotate-90': isBlock && !isHorizontal,
+          'absolute left-4 z-10': isFloating && isHorizontal,
+          'absolute top-4 rotate-90 z-10': isFloating && !isHorizontal,
+        },
+        isFloating ? 'disabled:hidden' : 'disabled:!ring-disabled-300 disabled:!text-disabled-500',
+      ]"
+      v-bind="getPrevButtonProps"
+      :disabled="prevDisabled || getPrevButtonProps.disabled"
+      :aria-label="buttonPrevAriaLabel"
+    >
+      <SfIconChevronLeft />
+    </SfButton>
+    <component
+      :is="tag"
+      ref="containerRef"
+      :class="[
+        'motion-safe:scroll-smooth w-full',
+        {
+          'overflow-x-hidden flex': isHorizontal,
+          'overflow-y-hidden flex flex-col': !isHorizontal,
+          'cursor-grab': state.isDragged,
+        },
+      ]"
+      v-bind="{ ...$attrs, ...props }"
+      :disabled="prevDisabled"
+      @mousedown.prevent
+    >
+      <slot />
+    </component>
+    <slot
+      v-if="$slots.nextButton && buttonsPlacement !== SfScrollableButtonsPlacement.none"
+      v-bind="getNextButtonProps"
+      name="nextButton"
+    />
+    <SfButton
+      v-else-if="buttonsPlacement !== SfScrollableButtonsPlacement.none"
+      variant="secondary"
+      size="lg"
+      square
+      :class="[
+        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
+        {
+          'ml-4': isBlock && isHorizontal,
+          'mt-4 rotate-90': isBlock && !isHorizontal,
+          'absolute right-4 z-10': isFloating && isHorizontal,
+          'absolute bottom-4 rotate-90 z-10': isFloating && !isHorizontal,
+        },
+        isFloating ? 'disabled:hidden' : 'disabled:!ring-disabled-300 disabled:!text-disabled-500',
+      ]"
+      v-bind="getNextButtonProps"
+      :disabled="nextDisabled || getNextButtonProps.disabled"
+      :aria-label="buttonNextAriaLabel"
+    >
+      <SfIconChevronRight />
+    </SfButton>
+  </div>
+</template>
 <script lang="ts">
 export default {
   inheritAttrs: false,
 };
 </script>
+
 <script lang="ts" setup>
 import { computed, toRefs, type PropType, type ConcreteComponent, reactive } from 'vue';
 import {
@@ -49,11 +123,11 @@ const props = defineProps({
   },
   prevDisabled: {
     type: Boolean,
-    default: undefined,
+    default: false,
   },
   nextDisabled: {
     type: Boolean,
-    default: undefined,
+    default: false,
   },
   isActiveIndexCentered: {
     type: Boolean,
@@ -107,78 +181,3 @@ const isHorizontal = computed(() => props.direction === SfScrollableDirection.ho
 const isFloating = computed(() => props.buttonsPlacement === SfScrollableButtonsPlacement.floating);
 const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPlacement.block);
 </script>
-
-<template>
-  <div :class="['items-center', 'relative', isHorizontal ? 'flex' : 'flex-col h-full inline-flex', wrapperClass]">
-    <slot
-      v-if="$slots.previousButton && buttonsPlacement !== SfScrollableButtonsPlacement.none"
-      v-bind="getPrevButtonProps"
-      name="previousButton"
-    />
-    <SfButton
-      v-else-if="buttonsPlacement !== SfScrollableButtonsPlacement.none"
-      variant="secondary"
-      size="lg"
-      square
-      :class="[
-        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
-        {
-          'mr-4': isBlock && isHorizontal,
-          'mb-4 rotate-90': isBlock && !isHorizontal,
-          'absolute left-4 z-10': isFloating && isHorizontal,
-          'absolute top-4 rotate-90 z-10': isFloating && !isHorizontal,
-        },
-        isFloating ? 'disabled:hidden' : 'disabled:!ring-disabled-300 disabled:!text-disabled-500',
-      ]"
-      v-bind="getPrevButtonProps"
-      :disabled="prevDisabled || getPrevButtonProps.disabled"
-      :aria-label="buttonPrevAriaLabel"
-    >
-      <SfIconChevronLeft />
-    </SfButton>
-    <component
-      :is="tag"
-      ref="containerRef"
-      :class="[
-        'motion-safe:scroll-smooth w-full',
-        {
-          'overflow-x-hidden flex': isHorizontal,
-          'overflow-y-hidden flex flex-col': !isHorizontal,
-          'cursor-grab': state.isDragged,
-        },
-      ]"
-      v-bind="{ ...$attrs, ...props }"
-      :disabled="prevDisabled"
-      @mousedown.prevent
-      @touchstart.prevent
-    >
-      <slot />
-    </component>
-    <slot
-      v-if="$slots.nextButton && buttonsPlacement !== SfScrollableButtonsPlacement.none"
-      v-bind="getNextButtonProps"
-      name="nextButton"
-    />
-    <SfButton
-      v-else-if="buttonsPlacement !== SfScrollableButtonsPlacement.none"
-      variant="secondary"
-      size="lg"
-      square
-      :class="[
-        '!rounded-full bg-white !ring-neutral-500 !text-neutral-500',
-        {
-          'ml-4': isBlock && isHorizontal,
-          'mt-4 rotate-90': isBlock && !isHorizontal,
-          'absolute right-4 z-10': isFloating && isHorizontal,
-          'absolute bottom-4 rotate-90 z-10': isFloating && !isHorizontal,
-        },
-        isFloating ? 'disabled:hidden' : 'disabled:!ring-disabled-300 disabled:!text-disabled-500',
-      ]"
-      v-bind="getNextButtonProps"
-      :disabled="nextDisabled || getNextButtonProps.disabled"
-      :aria-label="buttonNextAriaLabel"
-    >
-      <SfIconChevronRight />
-    </SfButton>
-  </div>
-</template>
