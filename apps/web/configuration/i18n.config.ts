@@ -1,20 +1,7 @@
 import type { NuxtI18nOptions } from '@nuxtjs/i18n';
+import { getLocaleObject } from './localeConfig';
 
-const localeObject = [];
-
-if (process.env.ACTIVELANGUAGEENGLISH === 'true') {
-  localeObject.push({
-    code: 'en',
-    file: 'en.json',
-  });
-}
-
-if (process.env.ACTIVELANGUAGEGERMAN === 'true') {
-  localeObject.push({
-    code: 'de',
-    file: 'de.json',
-  });
-}
+const localeObject = getLocaleObject();
 
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: localeObject,
