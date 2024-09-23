@@ -46,7 +46,6 @@
 #### Page speed
 
 - Added cache-control for all static images to improve caching policy.
-- PayPal button is lazyloaded to improve performance.
 - Shop logo is now preloaded.
 
 #### Accessibility Improvements
