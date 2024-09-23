@@ -101,7 +101,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import { keyBy } from 'lodash';
+import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
@@ -205,7 +205,7 @@ const handlePayPalExpress = () => {
 const order = async () => {
   if (!readyToBuy()) return;
 
-  const paymentMethodsById = keyBy(paymentMethods.value.list, 'id');
+  const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
     ? (paypalCardDialog.value = true)
