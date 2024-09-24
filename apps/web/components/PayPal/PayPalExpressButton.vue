@@ -137,7 +137,7 @@ onMounted(() => {
       paypalScript.value = script;
       createButton();
     });
-  }, 2000);
+  }, 6500);
 });
 
 watch(currency, async () => {
