@@ -69,7 +69,6 @@ const {
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
 const pagination = computed(() => reviewGetters.getReviewPagination(productReviews.value));
 const currentPage = computed(() => reviewGetters.getCurrentReviewsPage(productReviews.value));
-const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 10 : 1));
 
