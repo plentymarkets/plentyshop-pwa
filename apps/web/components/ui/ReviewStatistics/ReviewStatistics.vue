@@ -60,6 +60,8 @@ const countsProductReviews = computed(() => reviewGetters.getReviewCounts(produc
 const reviewAverageText = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'tenth'));
 const reviewAverageStars = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'half'));
 const totalReviews = computed(() => reviewGetters.getTotalReviews(countsProductReviews.value));
-const ratingPercentages = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(countsProductReviews.value, true));
+const ratingPercentages = computed(() =>
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(countsProductReviews.value, true),
+);
 const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(countsProductReviews.value));
 </script>
