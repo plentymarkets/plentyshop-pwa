@@ -17,7 +17,7 @@ const textStylePlacements = ['product', 'cart', 'payment'];
 const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(props.placement));
 
-const renderMessage = async () => {
+const renderMessage = () => {
   // eslint-disable-next-line promise/catch-or-return
   getScript(currency.value, props.commit ?? false).then((script) => {
     // eslint-disable-next-line promise/always-return
@@ -36,11 +36,7 @@ const renderMessage = async () => {
             },
           },
         })
-        .render('#paypal-messaging-' + paypalUuid)
-        // eslint-disable-next-line no-unused-vars
-        .catch((_error) => {
-          console.error('Failed to render PayPal Pay Later banner', _error);
-        });
+        .render('#paypal-messaging-' + paypalUuid);
     }
   });
 };

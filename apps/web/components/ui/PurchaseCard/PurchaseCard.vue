@@ -116,7 +116,7 @@
         <template #default>
           <div v-if="getCombination() && productGetters.isSalable(product)">
             <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
-            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+            <!-- <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" /> -->
           </div>
         </template>
         <template #fallback>
