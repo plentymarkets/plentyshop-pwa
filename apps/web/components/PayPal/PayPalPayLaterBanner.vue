@@ -35,7 +35,6 @@ const renderMessage = async () => {
           },
         })
         .render('#paypal-messaging-' + paypalUuid.value)
-        // eslint-disable-next-line no-unused-vars
         .catch((_error) => {
           console.error('Failed to render PayPal Pay Later banner', _error);
         });
