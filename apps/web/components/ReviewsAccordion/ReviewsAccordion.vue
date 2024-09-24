@@ -1,6 +1,6 @@
 <template>
   <div
-    ref="accordionReference"
+    ref="reviewArea"
     class="relative col-span-5 md:sticky md:top-10 h-fit"
     :class="{ 'pointer-events-none opacity-50': loadingReviews }"
   >
@@ -58,12 +58,12 @@ const config = useRuntimeConfig().public;
 
 const productId = Number(productGetters.getItemId(product));
 const productVariationId = productGetters.getVariationId(product);
-const accordionReference = ref<HTMLElement | null>(null);
 
 const {
   data: productReviews,
   loading: loadingReviews,
   fetchReviews,
+  reviewArea,
 } = useProductReviews(productId, productVariationId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
@@ -82,7 +82,7 @@ watch(
 watch(
   () => route.query.feedbackPage,
   async () => {
-    if (accordionReference.value) accordionReference.value.scrollIntoView({ behavior: 'smooth' });
+    if (reviewArea.value) reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   },
 );
 

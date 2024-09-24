@@ -24,6 +24,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     data: {} as Review,
     loading: false,
     review: {} as ReviewItem,
+    reviewArea: null,
     isReviewModalOpen: false,
     modalType: '',
   }));
