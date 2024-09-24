@@ -2,7 +2,7 @@
   <div data-testid="contact-information" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold mb-4">{{ $t('contactInfo.heading') }}</h2>
-      <UiButton v-if="!disabled && cart.customerEmail && !isAuthorized" size="sm" variant="tertiary" @click="open">
+      <UiButton v-if="!disabled && cart.customerEmail && !isAuthorized" variant="secondary" @click="open">
         {{ $t('contactInfo.edit') }}
       </UiButton>
     </div>
@@ -39,13 +39,13 @@
 
 <script lang="ts" setup>
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import type { ContactInformationProps } from '~/components/ContactInformation/types';
+import { type ContactInformationProps } from './types';
 
-const { disabled } = withDefaults(defineProps<ContactInformationProps>(), { disabled: false });
+const { disabled = false } = defineProps<ContactInformationProps>();
 
-const { data, loginAsGuest, getSession, isAuthorized } = useCustomer();
+const { data: sessionData, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
-const cart = ref({ customerEmail: data.value?.user?.email ?? data.value?.user?.guestMail ?? '' });
+const cart = ref({ customerEmail: sessionData.value?.user?.email ?? sessionData.value?.user?.guestMail ?? '' });
 const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
   await loginAsGuest(email);
@@ -54,16 +54,11 @@ const saveContactInformation = async (email: string) => {
 };
 
 watch(
-  () => data.value?.user,
+  () => sessionData.value?.user,
   (userData) => {
     cart.value.customerEmail = userData?.email ?? userData?.guestMail ?? '';
+    cart.value.customerEmail ? close() : open();
   },
-  { immediate: true },
-);
-
-watch(
-  () => cart.value.customerEmail,
-  (cartCustomerEmail) => (cartCustomerEmail ? close() : open()),
   { immediate: true },
 );
 </script>

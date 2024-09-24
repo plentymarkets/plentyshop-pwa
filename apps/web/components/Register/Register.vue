@@ -34,7 +34,7 @@
           type="email"
           autocomplete="email"
         />
-        <VeeErrorMessage as="span" name="register.email" class="flex text-negative-700 text-sm mt-2" />
+        <ErrorMessage as="span" name="register.email" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <label>
@@ -47,7 +47,7 @@
           v-bind="passwordAttributes"
           :invalid="Boolean(errors['register.password'])"
         />
-        <!-- <VeeErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
+        <!-- <ErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
       </label>
       <label>
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }}</UiFormLabel>
@@ -59,7 +59,7 @@
           v-bind="repeatPasswordAttributes"
           :invalid="Boolean(errors['register.repeatPassword'])"
         />
-        <VeeErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
+        <ErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <div class="text-xs">
@@ -106,7 +106,7 @@
           {{ t('form.required') }}
         </label>
       </div>
-      <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
+      <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
         v-if="turnstileSiteKey"
@@ -117,7 +117,7 @@
         class="mt-4 flex justify-center"
       />
 
-      <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
+      <ErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
       <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
         <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
@@ -149,7 +149,8 @@ import {
   SfIconCheck,
   SfIconClose,
 } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean, ref as yupReference } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
 import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';

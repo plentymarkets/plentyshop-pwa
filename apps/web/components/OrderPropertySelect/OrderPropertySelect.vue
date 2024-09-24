@@ -31,7 +31,7 @@
       <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
 
-    <VeeErrorMessage
+    <ErrorMessage
       v-if="isOrderPropertyRequired"
       as="span"
       name="selectedValue"
@@ -46,7 +46,8 @@ import type { OrderPropertySelectProps } from './types';
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertySelectionValue } from '@plentymarkets/shop-api';
 import { object, string } from 'yup';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 
 const props = defineProps<OrderPropertySelectProps>();
 const productProperty = props.productProperty;
