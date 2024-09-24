@@ -65,7 +65,7 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="review-modal"] textarea[name="message"]').type('This is a review message.');
     cy.get('[data-testid="review-modal"] button[type="submit"]').click();
 
-    cy.wait('@postReview')
+    cy.wait(['@postReview', '@getReview']);
 
     return this;
   }
@@ -89,7 +89,7 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="review-answer-form"] textarea[name="message"]').type('Thank you!');
     cy.get('[data-testid="review-answer-form"] button[type="submit"]').click();
 
-    cy.wait('@postReview')
+    cy.wait(['@postReview', '@getReview']);
 
     return this;
   }
@@ -104,8 +104,7 @@ export class ReviewPageObject extends PageObject{
   removeReply() {
     cy.get('[data-testid="remove-reply-button"]').click();
     cy.get('[data-testid="confirm-delete"]').click();
-
-    cy.wait('@deleteReview')
+    cy.wait(['@deleteReview', '@getReview'])
 
     return this;
   }
@@ -119,7 +118,7 @@ export class ReviewPageObject extends PageObject{
   removeReview() {
     cy.get('[data-testid="remove-review-button"]').first().click();
     cy.get('[data-testid="confirm-delete"]').click();
-    cy.wait('@deleteReview')
+    cy.wait(['@deleteReview', '@getReview'])
 
     return this;
   }
@@ -177,6 +176,7 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="ratingbutton"] label').click({multiple: true});
     cy.get('[data-testid="review-modal"] textarea[name="message"]').clear().type(message);
     cy.get('[data-testid="review-modal"] button[type="submit"]').click();
+    cy.wait(['@setReview', '@getReview']);
 
     return this;
   }
@@ -193,6 +193,7 @@ export class ReviewPageObject extends PageObject{
     cy.get('[data-testid="review-modal"] input[name="authorName"]').clear().type(authorName);
     cy.get('[data-testid="review-modal"] textarea[name="message"]').clear().type(message);
     cy.get('[data-testid="review-modal"] button[type="submit"]').click();
+    cy.wait(['@setReview', '@getReview']);
 
     return this;
   }
