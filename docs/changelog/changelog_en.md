@@ -99,6 +99,7 @@
 - Refactor of reviews functionality for better performance and maintainability.
 - Change the file item property color to blue in the quick checkout.
 - Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
+- Eliminate the separate review average fetch by retrieving data directly from the reviews request.
 - Resize demo favicon to 3 kb.
 
 ### 🏡 Chore
