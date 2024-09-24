@@ -1,6 +1,5 @@
-import type { Product, ReviewCounts } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 
 export type ReviewStatisticsProps = {
   product: Product;
-  counts: ReviewCounts;
 };
