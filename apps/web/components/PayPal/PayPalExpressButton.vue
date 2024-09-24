@@ -31,7 +31,7 @@ const TypeCheckout = 'Checkout';
 
 const isCommit = type.value === TypeCheckout;
 const paypalUuid = ref(uuid());
-const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
+const paypalScript = ref<PayPalNamespace | null>(null);
 
 const checkOnClickEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
@@ -130,7 +130,13 @@ const createButton = () => {
   }
 };
 
-onMounted(() => createButton());
+onMounted(() => {
+  // eslint-disable-next-line promise/always-return,promise/catch-or-return
+  getScript(currency.value, isCommit).then((script) => {
+    paypalScript.value = script;
+    createButton();
+  });
+});
 
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);

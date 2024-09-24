@@ -18,29 +18,31 @@ const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(props.placement));
 
 const renderMessage = async () => {
-  const script = await getScript(currency.value, props.commit ?? false);
-
-  if (script && script.Messages) {
-    await script
-      .Messages({
-        amount: props.amount,
-        placement: props.placement,
-        style: {
-          layout: isTextStyle.value ? 'text' : 'flex',
-          color: isTextStyle.value ? 'white-no-border' : 'blue',
-          ratio: isTextStyle.value ? undefined : '8x1',
-          text: {
-            color: isTextStyle.value ? 'black' : undefined,
-            size: isTextStyle.value ? 12 : undefined,
+  // eslint-disable-next-line promise/catch-or-return
+  getScript(currency.value, props.commit ?? false).then((script) => {
+    // eslint-disable-next-line promise/always-return
+    if (script && script.Messages) {
+      script
+        .Messages({
+          amount: props.amount,
+          placement: props.placement,
+          style: {
+            layout: isTextStyle.value ? 'text' : 'flex',
+            color: isTextStyle.value ? 'white-no-border' : 'blue',
+            ratio: isTextStyle.value ? undefined : '8x1',
+            text: {
+              color: isTextStyle.value ? 'black' : undefined,
+              size: isTextStyle.value ? 12 : undefined,
+            },
           },
-        },
-      })
-      .render('#paypal-messaging-' + paypalUuid)
-      // eslint-disable-next-line no-unused-vars
-      .catch((_error) => {
-        console.error('Failed to render PayPal Pay Later banner', _error);
-      });
-  }
+        })
+        .render('#paypal-messaging-' + paypalUuid)
+        // eslint-disable-next-line no-unused-vars
+        .catch((_error) => {
+          console.error('Failed to render PayPal Pay Later banner', _error);
+        });
+    }
+  });
 };
 
 onMounted(() => {
