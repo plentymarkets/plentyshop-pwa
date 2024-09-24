@@ -30,11 +30,6 @@
       </div>
     </div>
 
-    <div class="row mt-5">
-      <UiFormLabel class="pl-2">{{ t('paypal.unbrandedNameOnCard') }}</UiFormLabel>
-      <div id="credit-card-name"></div>
-    </div>
-
     <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
     <div class="flex justify-end gap-x-4 mt-6">
@@ -151,11 +146,6 @@ onMounted(() => {
         placeholder: 'MM/YY',
       });
       expiry.render('#expiration-date');
-
-      const name = cardFields.NameField({
-        placeholder: t('contact.form.nameLabel'),
-      });
-      name.render('#credit-card-name');
 
       button?.addEventListener('click', () => {
         cardFields.submit();

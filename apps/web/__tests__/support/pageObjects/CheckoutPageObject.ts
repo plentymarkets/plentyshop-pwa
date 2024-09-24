@@ -195,7 +195,6 @@ export class CheckoutPageObject extends PageObject {
 
     cy.iframe('[title=paypal_card_cvv_field]').find('.card-field-cvv').type('123');
 
-    cy.iframe('[title=paypal_card_name_field]').find('.card-field-name').type('John Doe');
     return this;
   }
 
