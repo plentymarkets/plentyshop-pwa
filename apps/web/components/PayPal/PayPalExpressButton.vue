@@ -131,13 +131,11 @@ const createButton = () => {
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    // eslint-disable-next-line promise/always-return,promise/catch-or-return
-    getScript(currency.value, isCommit).then((script) => {
-      paypalScript.value = script;
-      createButton();
-    });
-  }, 6500);
+  // eslint-disable-next-line promise/always-return,promise/catch-or-return
+  getScript(currency.value, isCommit).then((script) => {
+    paypalScript.value = script;
+    createButton();
+  });
 });
 
 watch(currency, async () => {
