@@ -68,7 +68,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
   };
 
   const fetchReviews = async () => {
-    await Promise.all([fetchProductReviews(itemId, productVariationId)]);
+    await fetchProductReviews(itemId, productVariationId);
   };
 
   const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {

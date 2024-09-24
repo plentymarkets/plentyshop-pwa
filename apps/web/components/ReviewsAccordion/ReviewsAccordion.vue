@@ -17,7 +17,7 @@
           </h2>
         </template>
 
-        <UiReviewStatistics :product="product" :counts="countsProductReviews" />
+        <UiReviewStatistics :product="product" />
 
         <UiReview v-for="(reviewItem, key) in paginatedProductReviews" :key="key" :review-item="reviewItem" />
         <p
