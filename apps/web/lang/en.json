@@ -42,12 +42,14 @@
   "billing": {
     "heading": "Billing Address",
     "description": "Add a billing address. You will receive the invoice to the email address provided above.",
-    "addButton": "Add billing address"
+    "addButton": "Add billing address",
+    "methodChanged": "The selected payment method is not available anymore."
   },
   "shipping": {
     "heading": "Shipping Address",
     "description": "Add a shipping address to view shipping details.",
-    "addButton": "Add shipping address"
+    "addButton": "Add shipping address",
+    "methodChanged": "The selected shipping method is not available anymore."
   },
   "form": {
     "firstNameLabel": "First Name",
@@ -62,6 +64,7 @@
     "stateLabel": "State",
     "postalCodeLabel": "Zip Code",
     "useAsShippingLabel": "Use as shipping address",
+    "useAsBillingLabel": "Use as billing address",
     "selectPlaceholder": "-- Select --",
     "emailLabel": "Email",
     "passwordLabel": "Password",
@@ -70,7 +73,11 @@
     "termsAndConditionsLabel": "I declare that I have read and accept the {terms}",
     "privacyPolicyLabel": "Please accept the {privacyPolicy}.",
     "subscriptionLabel": "I wish to receive occasional emails about special offers, new products and exclusive promotions. I can cancel my subscription at any time. (Optional)",
-    "asterixHint": "* marked consents are required"
+    "asterixHint": "* marked consents are required",
+    "addCompany": "+ Add company data",
+    "removeCompany": "- Remove company data",
+    "companyLabel": "Company",
+    "vatIdLabel": "VAT ID"
   },
   "CookieBar": {
     "about": {
@@ -219,7 +226,7 @@
   "placeOrder": "Place order and pay",
   "buy": "Buy",
   "or": "or",
-  "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply.",
+  "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply. *",
   "termsAndConditions": "Terms and Conditions",
   "privacyPolicy": "Privacy Policy",
   "cancellationRights": "Cancellation rights",
@@ -229,11 +236,14 @@
   "shippingAddressRequired": "Please select a shipping address.",
   "savedShippingAddress": "Saved shipping adresses",
   "address": "Addresses",
+  "manageAddresses": "Manage your addresses",
   "savedBillingAddress": "Saved billing adresses",
-  "pickSavedAddress": "Pick saved address",
+  "pickSavedAddress": "Saved addresses",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "newBillingAddress": "New billing address",
   "newShippingAddress": "New shipping address",
+  "editAddress": "Edit address",
+  "saveAddress": "Save address",
   "invalidPassword": "At least 8 characters long and must contain at least one letter and one number.",
   "tomorrow": "Tomorrow",
   "contactInfo": {
@@ -840,5 +850,8 @@
     "subTotal": "Items subtotal",
     "checkYourCart": "Check your cart",
     "cartContains": "Your cart contains {count} item | Your cart contains {count} items"
+  },
+  "addressContainer": {
+    "sameAsShippingAddress": "Same as shipping address"
   }
 }
