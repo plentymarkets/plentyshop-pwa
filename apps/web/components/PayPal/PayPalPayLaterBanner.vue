@@ -43,8 +43,8 @@ const renderMessage = async () => {
   }
 };
 
-onMounted(() => {
-  renderMessage();
+onNuxtReady(async () => {
+  await renderMessage();
 });
 
 watch(
