@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -25,8 +25,8 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('contact-information-form').find('input');
   }
 
-  get modalSaveButton() {
-    return cy.getByTestId('save-address');
+  get saveShipping() {
+    return cy.getByTestId('save-address-2');
   }
 
   get contactInformationFormSaveButton() {
@@ -39,8 +39,7 @@ export class CheckoutPageObject extends PageObject {
 
   get displaySuccessPages() {
     return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
-}
-
+  }
 
   get inputField() {
     return cy.getByTestId('contact-information-form').children('[type="email"]');
@@ -66,10 +65,6 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('input').find('input[name="lastName"]');
   }
 
-  get phoneInput() {
-    return cy.getByTestId('input').find('input[name="phone"]');
-  }
-
   get countrySelect() {
     return cy.getByTestId('select').find('select[name="country"]');
   }
@@ -91,7 +86,15 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get postalCodeInput() {
-    return cy.getByTestId('input').find('input[name="postalCode"]');
+    return cy.getByTestId('input').find('input[name="zipCode"]');
+  }
+
+  get useShippingAsBilling() {
+    return cy.getByTestId('use-shipping-as-billing');
+  }
+
+  get shippingAsBillingText() {
+    return cy.getByTestId('address-info-text-1');
   }
 
   goToGuestCheckout() {
@@ -127,10 +130,17 @@ export class CheckoutPageObject extends PageObject {
   }
 
   placeOrderButton() {
-    this.placeOrderButtons.click();
-    return this;
-}
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment');
 
+    this.placeOrderButtons.click();
+
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+
+    return this;
+  }
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
@@ -158,8 +168,24 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillBillingAddressForm() {
-    return this.fillAddressForm();
+  fillShippingAddressForm() {
+    cy.intercept('/plentysystems/setCheckoutAddress')
+      .as('setCheckoutAddress')
+      .intercept('/plentysystems/getShippingProvider')
+      .as('getShippingProvider')
+      .intercept('/plentysystems/getPaymentProviders')
+      .as('getPaymentProviders');
+
+    this.fillAddressForm();
+
+    cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
+
+    return this;
+  }
+
+  shouldShowShippingAsBillingText() {
+    this.shippingAsBillingText.contains('Same as shipping address');
+    return this; 
   }
 
   fillCreditCardForm() {
@@ -179,14 +205,10 @@ export class CheckoutPageObject extends PageObject {
   }
 
   checkCreditCard() {
-    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider')
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.getByTestId('payment-method-6008').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
-  }
-
-  fillShippingAddressForm() {
-    return this.fillAddressForm();
   }
 
   fillAddressForm() {
@@ -199,14 +221,13 @@ export class CheckoutPageObject extends PageObject {
   fillForm(fixture: any) {
     this.firstNameInput.type(fixture.firstName);
     this.lastNameInput.type(fixture.lastName);
-    this.phoneInput.type(fixture.phoneNumber);
     this.countrySelect.select(fixture.country);
     this.streetNameInput.type(fixture.streetName);
     this.streetNumberInput.type(fixture.apartment);
     this.cityInput.type(fixture.city);
     // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
-    this.modalSaveButton.click({ force: true });
+    this.saveShipping.click({ force: true });
     return this;
   }
 }

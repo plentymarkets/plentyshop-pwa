@@ -1,38 +1,24 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('backToCart')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :back-label-desktop="$t('backToCart')"
+    :back-label-mobile="$t('back')"
+    :heading="$t('checkout')"
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="billing-address"
-          :heading="t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          :addresses="[]"
-          :type="AddressType.Billing"
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :addresses="[]"
-          :type="AddressType.Shipping"
-        />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-shipping-divider" />
+        <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
+        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-billing-divider" />
+        <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
+        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" id="bottom-billing-divider" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod
             :shipping-methods="shippingMethods"
             :disabled="disableShippingPayment"
-            @update:shipping-method="handleShippingMethodUpdate($event)"
+            @update:shipping-method="handleShippingMethodUpdate"
           />
           <SfLoaderCircular
             v-if="disableShippingPayment"
@@ -43,7 +29,7 @@
           <CheckoutPayment
             :payment-methods="paymentMethods"
             :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate($event)"
+            @update:active-payment="handlePaymentMethodUpdate"
           />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
@@ -60,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="validateTerms"
+                @on-click="handlePayPalExpress"
                 type="Checkout"
               />
               <PayPalPayLaterBanner
@@ -78,9 +64,7 @@
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <span>
-                {{ t('buy') }}
-              </span>
+              {{ $t('buy') }}
             </UiButton>
             <UiButton
               v-else
@@ -92,9 +76,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-              <span v-else>
-                {{ t('buy') }}
-              </span>
+              <template v-else>{{ $t('buy') }}</template>
             </UiButton>
             <PayPalApplePayButton
               v-if="applePayAvailable"
@@ -105,6 +87,7 @@
         </div>
       </div>
     </div>
+
     <UiModal
       v-model="paypalCardDialog"
       class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -117,134 +100,95 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
 
-const ID_CHECKBOX = '#terms-checkbox';
-const ID_BILLING_ADDRESS = '#billing-address';
-const ID_SHIPPING_ADDRESS = '#shipping-address';
-
 const localePath = useLocalePath();
-const { send } = useNotification();
-const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { data: shippingAddresses, getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const {
-  loading: loadShipping,
-  data: shippingMethodData,
-  getShippingMethods,
-  saveShippingMethod,
-} = useCartShippingMethods();
-const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement, setShippingPrivacyAgreement } = useAdditionalInformation();
-const { t } = useI18n();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
+const {
+  cart,
+  getCart,
+  clearCartItems,
+  cartLoading,
+  anyAddressFormIsOpen,
+  persistShippingAddress,
+  hasShippingAddress,
+  persistBillingAddress,
+  hasBillingAddress,
+  backToFormEditing,
+  validateTerms,
+} = useCheckout();
+
+const {
+  loadPayment,
+  loadShipping,
+  paymentMethods,
+  shippingMethods,
+  selectedPaymentId,
+  handleShippingMethodUpdate,
+  handlePaymentMethodUpdate,
+} = useCheckoutPagePaymentAndShipping();
+
+onNuxtReady(async () => {
+  useFetchAdddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress())
+    .catch((error) => useHandleError(error));
+
+  useFetchAdddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+});
+
+await getCart().then(
+  async () =>
+    await Promise.all([
+      useCartShippingMethods().getShippingMethods(),
+      usePaymentMethods().fetchPaymentMethods(),
+      useActiveShippingCountries().getActiveShippingCountries(),
+    ]),
+);
+
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-const paypalPaymentId = computed(() =>
-  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalPaymentKey),
-);
-const paypalCreditCardPaymentId = computed(() =>
-  paymentProviderGetters.getIdByPaymentKey(paymentMethodData.value.list, PayPalCreditCardPaymentKey),
-);
 
-const loadAddresses = async () => {
-  await getCart();
-  await Promise.all([getBillingAddresses(), getShippingAddresses(), getShippingMethods(), fetchPaymentMethods()]);
-};
+const paypalPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
+});
 
-await loadAddresses();
+const paypalCreditCardPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
+});
 
-const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value);
-const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
 const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
-const handleShippingMethodUpdate = async (shippingMethodId: string) => {
-  await saveShippingMethod(Number(shippingMethodId));
-  await fetchPaymentMethods();
-  await getCart();
-
-  setShippingPrivacyAgreement(false);
+const readyToBuy = () => {
+  if (anyAddressFormIsOpen.value) return backToFormEditing();
+  return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
 };
 
-const handlePaymentMethodUpdate = async (paymentMethodId: number) => {
-  await savePaymentMethod(paymentMethodId);
-  await getShippingMethods();
-};
-
-const scrollToHTMLObject = (object: string) => {
-  const element = document.querySelector(object) as HTMLElement;
-  const elementOffset = element?.offsetTop ?? 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: elementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
-const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
-  let valid = true;
-  setShowErrors(!termsAccepted.value);
-
-  if (!termsAccepted.value) {
-    scrollToHTMLObject(ID_CHECKBOX);
-    valid = false;
-  }
-
-  if (callback) {
-    callback(valid);
-  }
-
-  return valid;
-};
-
-const validateAddresses = () => {
-  if (billingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('billingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_BILLING_ADDRESS);
-    return false;
-  }
-
-  if (shippingAddresses.value.length === 0) {
-    send({
-      type: 'negative',
-      message: t('shippingAddressRequired'),
-    });
-    scrollToHTMLObject(ID_SHIPPING_ADDRESS);
-    return false;
-  }
-
-  return true;
-};
-
-const openPayPalCardDialog = () => {
-  if (!validateAddresses() || !validateTerms()) {
-    return;
-  }
+const openPayPalCardDialog = async () => {
+  if (!readyToBuy()) return;
 
   paypalCardDialog.value = true;
 };
 
 const handleRegularOrder = async () => {
   const data = await createOrder({
-    paymentId: paymentMethodData.value.selected,
+    paymentId: paymentMethods.value.selected,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
   });
 
@@ -254,8 +198,12 @@ const handleRegularOrder = async () => {
   }
 };
 
+const handlePayPalExpress = () => {
+  if (!readyToBuy()) return;
+};
+
 const order = async () => {
-  if (!validateAddresses() || !validateTerms()) return;
+  if (!readyToBuy()) return;
 
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 

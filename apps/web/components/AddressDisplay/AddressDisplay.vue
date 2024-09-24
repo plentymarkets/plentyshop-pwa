@@ -1,7 +1,10 @@
 <template>
   <div class="address-display">
     <p>
-      {{ `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}` }}
+      {{
+        userAddressGetters.getCompanyName(address) ||
+        `${userAddressGetters.getFirstName(address)} ${userAddressGetters.getLastName(address)}`
+      }}
     </p>
     <p>{{ userAddressGetters.getPhone(address) }}</p>
     <p>
