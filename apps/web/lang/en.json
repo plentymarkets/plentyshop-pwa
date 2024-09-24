@@ -238,7 +238,7 @@
   "address": "Addresses",
   "manageAddresses": "Manage your addresses",
   "savedBillingAddress": "Saved billing adresses",
-  "pickSavedAddress": "Pick saved address",
+  "pickSavedAddress": "Saved addresses",
   "pickSavedAddressSubtitle": "Select one of your saved addresses or create a new one",
   "newBillingAddress": "New billing address",
   "newShippingAddress": "New shipping address",
