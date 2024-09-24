@@ -3,6 +3,7 @@
     :buttons-placement="props.hero.length > 1 ? 'floating' : 'none'"
     class="pb-4"
     data-testid="product-slider"
+    drag
   >
     <div class="absolute w-full h-full z-[-1] overflow-hidden">
       <img

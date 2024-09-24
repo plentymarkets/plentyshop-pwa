@@ -34,12 +34,44 @@ definePageMeta({ pageType: 'static' });
 const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
-    { image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`, tagline: t('homepage.banner.moto1'), heading: t('homepage.banner.moto2'), description: t('homepage.banner.moto3'), callToAction: t('homepage.banner.orderNow'), link: '' },
+    {
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      tagline: 'Test',
+      heading: 'Woohoo, this works',
+      description: 'Description here',
+      callToAction: 'click',
+      link: '',
+    },
+    {
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/pexels-chevanon-1108099.jpg',
+      tagline: 'test slide 2',
+      heading: 'new heading',
+      description: 'imagine an description here',
+      callToAction: 'click again',
+      link: '',
+    },
+    {
+      image: '',
+      tagline: '',
+      heading: '',
+      description: '',
+      callToAction: '',
+      link: '',
+    },
   ],
-  valueProposition: { text: '', image: '' },
+  valueProposition: {
+    text: "<h3 class='test'>Text value for value proposition text</h3> ",
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/doggos__1_.jpg',
+  },
   featured: [
-    { headline: '', categoryId: 1 },
-    { headline: '', categoryId: 2 },
+    {
+      headline: '',
+      categoryId: 1,
+    },
+    {
+      headline: '',
+      categoryId: 2,
+    },
   ],
 };
 
