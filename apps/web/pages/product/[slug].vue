@@ -64,10 +64,7 @@ setProductMeta();
 
 async function fetchReviews() {
   const productVariationId = productGetters.getVariationId(product.value);
-  await Promise.all([
-    fetchProductReviews(Number(productId), productVariationId),
-    fetchProductReviewAverage(Number(productId)),
-  ]);
+  await fetchProductReviews(Number(productId), productVariationId);
 }
 await fetchReviews();
 
