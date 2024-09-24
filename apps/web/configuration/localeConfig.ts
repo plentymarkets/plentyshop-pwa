@@ -1,42 +1,27 @@
+import { LocaleObject } from '@nuxtjs/i18n';
+import path from 'node:path';
+import * as fs from 'node:fs';
+
 export const getLocaleObject = () => {
-  if (process.env.ACTIVELANGUAGEENGLISH === undefined) {
-    process.env.ACTIVELANGUAGEENGLISH = 'true';
-  }
+  const localeObject: LocaleObject[] = [
+    { code: 'en', file: 'en.json' },
+    { code: 'de', file: 'de.json' },
+  ];
 
-  if (process.env.ACTIVELANGUAGEGERMAN === undefined) {
-    process.env.ACTIVELANGUAGEGERMAN = 'true';
-  }
+  if (process.env.LANGUAGELIST !== undefined) {
+    const languageList = process.env.LANGUAGELIST.split(',');
+    languageList.forEach((language) => {
+      if (language === 'en' || language === 'de') return;
 
-  const localeObject = [];
+      const languageFile = path.resolve(__dirname, `../lang/${language}.json`);
 
-  switch (`${process.env.ACTIVELANGUAGEENGLISH}-${process.env.ACTIVELANGUAGEGERMAN}`) {
-    case 'true-false': {
-      localeObject.push({
-        code: 'en',
-        file: 'en.json',
-      });
-      break;
-    }
-    case 'false-true': {
-      localeObject.push({
-        code: 'de',
-        file: 'de.json',
-      });
-      break;
-    }
-    case 'true-true': {
-      localeObject.push(
-        {
-          code: 'en',
-          file: 'en.json',
-        },
-        {
-          code: 'de',
-          file: 'de.json',
-        },
-      );
-      break;
-    }
+      if (fs.existsSync(languageFile)) {
+        localeObject.push({
+          code: language,
+          file: `${language}.json`,
+        });
+      }
+    });
   }
 
   return localeObject;
