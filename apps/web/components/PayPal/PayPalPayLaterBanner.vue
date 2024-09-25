@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isReady && paypalUuid" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
 </template>
 
 <script setup lang="ts">
@@ -14,45 +14,50 @@ const props = defineProps<PayPalPayLaterBannerType>();
 
 const textStylePlacements = ['product', 'cart', 'payment'];
 
-const paypalUuid = ref(uuid());
+const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(props.placement));
 
 const renderMessage = async () => {
-  await getScript(currency.value, props.commit ?? false).then(async (script) => {
-    if (script && script?.Messages) {
-      await script
-        .Messages({
-          amount: props.amount,
-          placement: props.placement,
-          style: {
-            layout: isTextStyle.value ? 'text' : 'flex',
-            color: isTextStyle.value ? 'white-no-border' : 'blue',
-            ratio: isTextStyle.value ? undefined : '8x1',
-            text: {
-              color: isTextStyle.value ? 'black' : undefined,
-              size: isTextStyle.value ? 12 : undefined,
-            },
-          },
-        })
-        .render('#paypal-messaging-' + paypalUuid.value)
-        .catch((_error) => {
-          console.error('Failed to render PayPal Pay Later banner', _error);
-        });
-    }
+  const script = await getScript(currency.value, props.commit ?? false);
 
-    return true;
-  });
+  if (script && script.Messages) {
+    await script
+      .Messages({
+        amount: props.amount,
+        placement: props.placement,
+        style: {
+          layout: isTextStyle.value ? 'text' : 'flex',
+          color: isTextStyle.value ? 'white-no-border' : 'blue',
+          ratio: isTextStyle.value ? undefined : '8x1',
+          text: {
+            color: isTextStyle.value ? 'black' : undefined,
+            size: isTextStyle.value ? 12 : undefined,
+          },
+        },
+      })
+      .render('#paypal-messaging-' + paypalUuid)
+      // eslint-disable-next-line no-unused-vars
+      .catch((_error) => {
+        console.error('Failed to render PayPal Pay Later banner', _error);
+      });
+  }
 };
 
-onNuxtReady(async () => await renderMessage());
+onMounted(() => {
+  renderMessage();
+});
 
 watch(
   () => currency.value,
-  async () => await renderMessage(),
+  () => {
+    renderMessage();
+  },
 );
 
 watch(
   () => props.amount,
-  async () => await renderMessage(),
+  () => {
+    renderMessage();
+  },
 );
 </script>

@@ -1,19 +1,23 @@
 import { loadScript as loadPayPalScript } from '@paypal/paypal-js';
-import {
+import type {
   PayPalCaptureOrderParams,
   PayPalConfigResponse,
   PayPalCreateOrder,
   PayPalExecuteParams,
 } from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
-import { type PayPalLoadScript, type PayPalScript } from '~/composables';
+import { PayPalLoadScript, PayPalScript } from '~/composables';
 
 const getLocaleForPayPal = (locale: string) => {
-  const localeMap: { [key: string]: string } = {
-    de: 'de_DE',
-  };
-
-  return localeMap[locale] || 'en_US';
+  // eslint-disable-next-line sonarjs/no-small-switch
+  switch (locale) {
+    case 'de': {
+      return 'de_DE';
+    }
+    default: {
+      return 'en_US';
+    }
+  }
 };
 
 /**
