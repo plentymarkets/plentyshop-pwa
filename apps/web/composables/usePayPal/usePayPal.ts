@@ -77,10 +77,11 @@ export const usePayPal = () => {
     if (!clientId) return null;
 
     const cacheKey = `${currency}_${locale}_${commit}`;
-    if (scriptCache.has(cacheKey)) return scriptCache.get(cacheKey) || null;
+
+    if (scriptCache.size > 0 && scriptCache.has(cacheKey)) return scriptCache.get(cacheKey) || null;
 
     try {
-      const paypalScript = await loadPayPalScript({
+      return await loadPayPalScript({
         clientId,
         currency,
         commit,
@@ -88,8 +89,6 @@ export const usePayPal = () => {
         components:
           'applepay,messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
       });
-      scriptCache.set(cacheKey, paypalScript);
-      return paypalScript;
     } catch (error) {
       handleError(error, 'loadScript');
       return null;
@@ -101,9 +100,7 @@ export const usePayPal = () => {
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
-    if (state.value.loadingScripts[scriptKey] !== undefined) {
-      return state.value.loadingScripts[scriptKey];
-    }
+    if (state.value.loadingScripts[scriptKey] !== undefined) return state.value.loadingScripts[scriptKey];
 
     if (
       state.value.paypalScript &&
