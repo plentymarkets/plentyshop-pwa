@@ -1,4 +1,5 @@
 <template>
+
   <CustomScrollable
     :buttons-placement="props.hero.length > 1 ? 'floating' : 'none'"
     class="pb-4"
@@ -34,7 +35,6 @@
 import { HeroCarouselProps, Size, Sizes } from '~/components/ui/HeroCarousel/types';
 import HeroSlide from './HeroSlide.vue';
 import CustomScrollable from '~/components/ui/CustomScrollable/CustomScrollable.vue';
-
 const props = defineProps<HeroCarouselProps>();
 const viewport = useViewport();
 type SizeKey = keyof Sizes;
