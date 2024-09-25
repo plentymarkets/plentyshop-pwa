@@ -32,14 +32,13 @@
       :class="[
         'motion-safe:scroll-smooth w-full',
         {
-          'overflow-x-hidden flex': isHorizontal,
-          'overflow-y-hidden flex flex-col': !isHorizontal,
+          'overflow-x-auto flex': isHorizontal,
+          'overflow-y-auto flex flex-col': !isHorizontal,
           'cursor-grab': state.isDragged,
         },
       ]"
       v-bind="{ ...$attrs, ...props }"
       :disabled="prevDisabled"
-      @mousedown.prevent
     >
       <slot />
     </component>
@@ -157,20 +156,17 @@ const { containerRef, state, getNextButtonProps, getPrevButtonProps } = useScrol
       direction,
       activeIndex,
       reduceMotion,
-      drag: false,
+      drag,
       isActiveIndexCentered,
     }),
     onDragStart: (data) => {
       emit('onDragStart', data);
-      return false;
     },
     onDragEnd: (data) => {
       emit('onDragEnd', data);
-      return false;
     },
     onScroll: (data) => {
       emit('onScroll', data);
-      return false;
     },
     onPrev: (data) => emit('onPrev', data),
     onNext: (data) => emit('onNext', data),
@@ -180,4 +176,5 @@ const { containerRef, state, getNextButtonProps, getPrevButtonProps } = useScrol
 const isHorizontal = computed(() => props.direction === SfScrollableDirection.horizontal);
 const isFloating = computed(() => props.buttonsPlacement === SfScrollableButtonsPlacement.floating);
 const isBlock = computed(() => props.buttonsPlacement === SfScrollableButtonsPlacement.block);
+
 </script>

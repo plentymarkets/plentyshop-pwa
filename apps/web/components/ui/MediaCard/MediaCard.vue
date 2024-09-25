@@ -1,9 +1,7 @@
 <template>
   <div
     v-if="showComponent"
-    :class="
-      image ? 'flex flex-col md:flex-row items-center md:items-start py-5' : 'flex justify-center items-center py-5'
-    "
+    :class="image ? 'flex flex-col md:flex-row items-center md:items-start' : 'flex justify-center items-center'"
   >
     <div v-if="image" :class="text ? 'w-full md:w-1/2 mb-4 md:mb-0' : 'w-full'">
       <img :src="image" alt="Media Image" class="w-full h-auto object-cover" />

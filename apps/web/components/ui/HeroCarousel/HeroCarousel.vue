@@ -1,8 +1,10 @@
 <template>
+
   <CustomScrollable
     :buttons-placement="props.hero.length > 1 ? 'floating' : 'none'"
     class="pb-4"
     data-testid="product-slider"
+    drag
   >
     <div class="absolute w-full h-full z-[-1] overflow-hidden">
       <img
@@ -33,7 +35,6 @@
 import { HeroCarouselProps, Size, Sizes } from '~/components/ui/HeroCarousel/types';
 import HeroSlide from './HeroSlide.vue';
 import CustomScrollable from '~/components/ui/CustomScrollable/CustomScrollable.vue';
-
 const props = defineProps<HeroCarouselProps>();
 const viewport = useViewport();
 type SizeKey = keyof Sizes;
