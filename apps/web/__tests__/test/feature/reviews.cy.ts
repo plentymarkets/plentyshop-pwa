@@ -16,6 +16,8 @@ beforeEach(() => {
   cy.setCookie('vsf-locale', 'en');
   cy.intercept('/plentysystems/deleteReview').as('deleteReview');
   cy.intercept('/plentysystems/doReview').as('postReview');
+  cy.intercept('/plentysystems/setReview').as('setReview');
+  cy.intercept('/plentysystems/getReview').as('getReview');
 
   cy.intercept('/plentysystems/doLogin').as('doLogin');
   cy.visitAndHydrate(paths.authLogin);
@@ -40,6 +42,7 @@ describe('Reviews functionality check.', () => {
     productListPage.goToProduct();
 
     reviewPage
+        .waitFor(['@getReview'])
         .scrollToReviews()
         .checkNoReviewTextVisible()
         .checkAverageSectionVisible()
