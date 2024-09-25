@@ -12,12 +12,12 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
           <h1 class="font-bold text-lg mb-2">{{ t('billing.heading') }}</h1>
-          <AddressDisplay :address="billingAddress" />
+          <AddressDisplay v-if="billingAddress" :address="billingAddress" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
           <h1 class="font-bold text-lg mb-2">{{ t('shipping.heading') }}</h1>
-          <AddressDisplay :address="shippingAddress" />
+          <AddressDisplay v-if="shippingAddress" :address="shippingAddress" />
         </div>
 
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
