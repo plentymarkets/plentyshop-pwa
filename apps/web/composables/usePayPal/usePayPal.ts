@@ -55,7 +55,7 @@ export const usePayPal = () => {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getPayPalMerchantAndClientIds());
 
     if (data && data.value) {
-      state.value.config = data.value as unknown as PayPalConfigResponse;
+      state.value.config = data.value.data as unknown as PayPalConfigResponse;
       state.value.isAvailable = !!data.value;
     }
 
@@ -71,6 +71,7 @@ export const usePayPal = () => {
    */
   const loadScript = async (currency: string, locale: string, commit = false): Promise<PayPalNamespace | null> => {
     await loadConfig();
+
     const clientId = state.value.config ? paypalGetters.getClientId(state.value.config) : null;
 
     if (!clientId) return null;
@@ -130,7 +131,7 @@ export const usePayPal = () => {
 
   /**
    * Wrapper function for handling async API calls with error handling.
-   * @param requestFunc Function
+   * @param requestFunction
    * @param context string
    * @returns Promise<any>
    */

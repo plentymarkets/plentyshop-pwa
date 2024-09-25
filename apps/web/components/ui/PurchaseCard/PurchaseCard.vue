@@ -112,17 +112,13 @@
         <span v-else>{{ t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-      <Suspense>
-        <template #default>
-          <div v-if="getCombination() && productGetters.isSalable(product)">
-            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
-            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
-          </div>
-        </template>
-        <template #fallback>
-          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-        </template>
-      </Suspense>
+      <div v-if="getCombination() && productGetters.isSalable(product)">
+        <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+        <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+      </div>
+      <template v-else>
+        <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+      </template>
     </div>
   </form>
 </template>
