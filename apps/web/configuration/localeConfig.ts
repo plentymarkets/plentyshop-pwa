@@ -3,7 +3,7 @@ import path from 'node:path';
 import * as fs from 'node:fs';
 
 export const getLocaleObject = () => {
-  const localeObject: LocaleObject[] = [
+  let localeObject: LocaleObject[] = [
     { code: 'en', file: 'en.json' },
     { code: 'de', file: 'de.json' },
   ];
@@ -11,7 +11,7 @@ export const getLocaleObject = () => {
   if (process.env.LANGUAGELIST !== undefined) {
     const languageList = process.env.LANGUAGELIST.split(',');
     languageList.forEach((language) => {
-      if (language === 'en' || language === 'de') return;
+      localeObject = [];
 
       const languageFile = path.resolve(__dirname, `../lang/${language}.json`);
 
@@ -22,6 +22,13 @@ export const getLocaleObject = () => {
         });
       }
     });
+
+    if (localeObject.length === 0) {
+      localeObject = [
+        { code: 'en', file: 'en.json' },
+        { code: 'de', file: 'de.json' },
+      ];
+    }
   }
 
   return localeObject;
