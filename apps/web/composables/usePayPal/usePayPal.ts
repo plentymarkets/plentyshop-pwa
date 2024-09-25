@@ -1,29 +1,11 @@
 import { loadScript as loadPayPalScript, PayPalNamespace } from '@paypal/paypal-js';
+import { PayPalState } from './types';
 import {
   PayPalCaptureOrderParams,
   PayPalConfigResponse,
-  PayPalCreateOrder,
   PayPalExecuteParams,
   paypalGetters,
 } from '@plentymarkets/shop-api';
-
-interface PayPalScript {
-  script: PayPalNamespace | null;
-  currency: string;
-  locale: string;
-  commit: boolean;
-}
-
-interface PayPalState {
-  loading: boolean;
-  paypalScript: PayPalScript | null;
-  loadingScripts: Record<string, Promise<PayPalNamespace | null>>;
-  order: PayPalCreateOrder | null;
-  config: PayPalConfigResponse | null;
-  loadedConfig: boolean;
-  isAvailable: boolean;
-  isReady: boolean;
-}
 
 const handleError = (error: unknown, context: string) => {
   if (error) console.error(`Error in ${context}:`, error);
