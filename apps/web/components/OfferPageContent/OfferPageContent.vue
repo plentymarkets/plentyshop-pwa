@@ -22,44 +22,18 @@
 
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
-          <div class="realtive pb-4">
-            <h1 class="font-bold text-lg ml-4 mt-6">VersandKosten</h1>
-            <div class="w-auto max-w-[400px] min-w-[250px] flex justify-between border rounded-md p-2 m-2">
-              <div class="flex items-center flex-row gap-2">
-                <SfRadio :checked="true" class="mr-2 flex items-center" />
-                <span>{{ offerGetters.getShippingMethodName(offer) }}</span>
-              </div>
-              <span class="ml-auto flex items-center">{{
-                getShippingAmount(offerGetters.getShippingMethodCosts(offer))
-              }}</span>
-            </div>
-          </div>
-
+          <UiShippingOptionItem
+            :shipping-name="offerGetters.getShippingMethodName(offer)"
+            :shipping-cost="offerGetters.getShippingMethodCosts(offer)"
+            :checked="true"
+          />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <div class="relative pb-4">
-            <h1 class="font-bold text-lg ml-4 mt-6">Bezahlmethode</h1>
-            <div class="w-auto max-w-[400px] min-w-[250px] m-2 pl-1">
-              <input
-                type="radio"
-                name="payment_method"
-                class="peer sr-only"
-                :data-testid="`payment-method-hier noch id`"
-                :checked="true"
-                :disabled="true"
-              />
-              <span
-                class="h-20 flex flex-col items-center justify-center py-4 px-4 cursor-pointer rounded-md border border-neutral-200 -outline-offset-2 hover:border-primary-50 hover:bg-primary-50 peer-focus:border-primary-50 peer-focus:bg-primary-50 active:border-primary-100 active:bg-primary-50 peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary-500 peer-disabled:opacity-50 peer-disabled:bg-neutral-100 peer-disabled:border-neutral-200 peer-disabled:cursor-not-allowed peer-disabled:[&_img]:grayscale"
-              >
-                <NuxtImg
-                  :src="offer.paymentMethodIcon"
-                  :alt="offer.paymentMethodName"
-                  class="!h-[40px]"
-                  loading="lazy"
-                />
-                <span class="text-xs mt-2 text-neutral-500">{{ offer.paymentMethodName }}</span>
-              </span>
-            </div>
-          </div>
+          <UiPaymentOptionItem
+            :payment-method-icon-path="offerGetters.getPaymentMethodIconPath(offer)"
+            :payment-method-name="offerGetters.getPaymentMethodName(offer)"
+            :checked="true"
+            :disabled="true"
+          />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
@@ -119,8 +93,8 @@
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <div class="border rounded-md p-4 shadow-lg">
             <div class="flex justify-between mb-4">
-              <p class="font-bold text-xl">Bestellübersicht</p>
-              <p class="font-medium">(Artikel {{ Object.keys(offer.order.orderItems).length - 1 }})</p>
+              <p class="font-bold text-xl">{{ t('orderSummary') }}</p>
+              <p class="font-medium">{{ t('itemsInCart', offerGetters.getOfferItemsCount(offer)) }}</p>
             </div>
             <OrderTotals :order="offer" />
             <UiButton
@@ -132,7 +106,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('acceptOffer') }}
+                {{ t('offer.accept') }}
               </span>
             </UiButton>
             <UiButton
@@ -145,7 +119,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('declineOffer') }}
+                {{ t('offer.decline') }}
               </span>
             </UiButton>
           </div>
@@ -158,13 +132,13 @@
             <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="toggleModal">
               <SfIconClose />
             </UiButton>
-            <h1 class="font-bold text-xl mb-2">Decline Offer</h1>
-            <p class="mb-4">How can we improve?</p>
-            <p>Comment (optional)</p>
+            <h1 class="font-bold text-xl mb-2">{{ t('offer.decline') }}</h1>
+            <p class="mb-4">{{ t('offer.declineDialogSubline') }}</p>
+            <p>{{ t('returns.commentOptional') }}</p>
             <textarea
               class="w-full min-h-32 min-w-96 border-2 rounded-md p-4"
               v-model="declineText"
-              placeholder="Write your concerns here..."
+              :placeholder="t('offer.inputPlaceholder')"
             ></textarea>
             <div class="flex space-x-4">
               <UiButton
@@ -176,7 +150,7 @@
                 class="w-full mt-4 md:mb-0 cursor-pointer"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> Cancel </span>
+                <span v-else> {{ t('offer.cancel') }} </span>
               </UiButton>
               <UiButton
                 type="submit"
@@ -187,7 +161,7 @@
                 class="w-full mt-4 md:mb-0 cursor-pointer"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> Decline offer </span>
+                <span v-else> {{ t('offer.decline') }} </span>
               </UiButton>
             </div>
           </UiModal>
@@ -198,43 +172,23 @@
 </template>
 
 <script lang="ts" setup>
-import { offerGetters, PaymentProviders } from '@plentymarkets/shop-api';
-import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose, SfRadio } from '@storefront-ui/vue';
+import { offerGetters } from '@plentymarkets/shop-api';
+import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { OfferPageContentProps } from './types';
 
 const { send } = useNotification();
-const { t, n } = useI18n();
+const { t } = useI18n();
 const localePath = useLocalePath();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const props = defineProps<OfferPageContentProps>();
 const emit = defineEmits(['accept', 'decline']);
 const openModal = ref(false);
 const declineText = ref('');
 
-await fetchPaymentMethods();
-
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const shippingAddress = computed(() => offerGetters.getShippingAddress(props.offer));
 const billingAddress = computed(() => offerGetters.getBillingAddress(props.offer));
-
-const paymentMethod = computed(() => {
-  const allPaymentProviders = paymentMethodData.value.list;
-  const selectedPaymentMethodName = offerGetters.getPaymentMethodName(props.offer);
-  const filteredProviders = allPaymentProviders.filter((provider) => provider.name === selectedPaymentMethodName);
-  return {
-    list: filteredProviders,
-    selected: filteredProviders.length > 0 ? 0 : -1,
-  } as PaymentProviders;
-});
-
-const getShippingAmount = (amount: string) => {
-  return amount === '0' ? t('shippingMethod.free') : n(Number(amount), 'currency');
-};
-
-
-await savePaymentMethod(paymentMethod.value.list[0].id);
 
 const ID_CHECKBOX = '#terms-checkbox';
 
@@ -262,10 +216,10 @@ const validateTerms = (): boolean => {
 };
 
 const redirectBack = () => {
-  if (!props.offer) {
+  if (offerGetters.getOfferItemsCount(props.offer) === 0) {
     send({
-      type: 'neutral',
-      message: t('emptyCart'),
+      type: 'negative',
+      message: t('offer.emptyOffer'),
     });
 
     navigateTo(localePath(paths.cart));

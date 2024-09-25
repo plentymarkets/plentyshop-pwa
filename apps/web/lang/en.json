@@ -225,8 +225,6 @@
   "back": "Back",
   "placeOrder": "Place order and pay",
   "buy": "Buy",
-  "acceptOffer": "Accept offer and pay",
-  "declineOffer": "Decline offer",
   "or": "or",
   "termsInfo": "Our {terms}, {cancellationRights} and {privacyPolicy} apply. *",
   "termsAndConditions": "Terms and Conditions",
@@ -455,6 +453,14 @@
       "success": "Your review has been submitted.",
       "answerSuccess": "Your answer has been submitted."
     }
+  },
+  "offer": {
+    "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
+    "inputPlaceholder": "Please share your reason for declining...",
+    "accept": "Accept offer and pay",
+    "decline": "Decline offer",
+    "cancel": "Cancel",
+    "emptyOffer": "Offer is missing items"
   },
   "account": {
     "heading": "My Account",

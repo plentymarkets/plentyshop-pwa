@@ -225,8 +225,6 @@
   "back": "Zurück",
   "placeOrder": "Bestellung aufgeben und bezahlen",
   "buy": "Kaufen",
-  "acceptOffer": "Angebot annehmen und bezahlen",
-  "declineOffer": "Angebot ablehnen",
   "or": "oder",
   "termsInfo": "Es gelten unsere {terms}. Bitte nehmen Sie unser {cancellationRights} und {privacyPolicy} zur Kenntnis. *",
   "termsAndConditions": "AGB",
@@ -455,6 +453,14 @@
       "success": "Ihre Bewertung wurde übermittelt.",
       "answerSuccess": "Ihre Antwort wurde übermittelt."
     }
+  },
+  "offer": {
+    "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",
+    "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
+    "accept": "Angebot annehmen und bezahlen",
+    "decline": "Angebot ablehnen",
+    "cancel": "Abbrechen",
+    "emptyOffer": "Das Angebot beinhaltet keine Produkte"
   },
   "account": {
     "heading": "Mein Konto",
