@@ -9,10 +9,12 @@
         class="absolute top-0 left-0 w-full h-full object-cover"
       />
     </div>
-    <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px] mb-10">
+    <div
+      class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px] mb-10 text-center"
+    >
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
-          :src="homepageTemplate.hero.image"
+          :src="formattedHeroItems[0].image"
           :width="getSizeForViewport(headPhones.sizes).width"
           :height="getSizeForViewport(headPhones.sizes).height"
           :alt="headPhones.alt"
@@ -21,13 +23,13 @@
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
-          {{ t('homepage.banner.moto1') }}
+          {{ formattedHeroItems[0].tagline }}
         </p>
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
-          {{ t('homepage.banner.moto2') }}
+          {{ formattedHeroItems[0].heading }}
         </h1>
         <p class="typography-text-base md:typography-text-lg">
-          {{ t('homepage.banner.moto3') }}
+          {{ formattedHeroItems[0].description }}
         </p>
       </div>
     </div>
@@ -53,6 +55,7 @@
 </template>
 
 <script lang="ts" setup>
+import { HeroItem } from '~/components/ui/HeroCarousel/types';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
@@ -143,6 +146,22 @@ const mediaData = ref({
   image: homepageTemplate.value.valueProposition.image,
   text: homepageTemplate.value.valueProposition.text,
 });
+
+const formattedHeroItems = ref<HeroItem[]>(
+  homepageTemplate.value.hero.map((item) => ({
+    image: item.image,
+    tagline: item.tagline,
+    heading: item.heading,
+    description: item.description,
+    callToAction: item.callToAction,
+    link: item.link,
+    backgroundSizes: {
+      lg: { width: '4000', height: '600' },
+      md: { width: '1024', height: '600' },
+      sm: { width: '640', height: '752' },
+    },
+  })),
+);
 watch(
   () => categoryTree.value,
   async () => {
