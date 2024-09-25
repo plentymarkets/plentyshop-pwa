@@ -22,10 +22,44 @@
 
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
-          <ShippingMethod :shipping-methods="shippingMethod" disabled />
+          <div class="realtive pb-4">
+            <h1 class="font-bold text-lg ml-4 mt-6">VersandKosten</h1>
+            <div class="w-auto max-w-[400px] min-w-[250px] flex justify-between border rounded-md p-2 m-2">
+              <div class="flex items-center flex-row gap-2">
+                <SfRadio :checked="true" class="mr-2 flex items-center" />
+                <span>{{ offerGetters.getShippingMethodName(offer) }}</span>
+              </div>
+              <span class="ml-auto flex items-center">{{
+                getShippingAmount(offerGetters.getShippingMethodCosts(offer))
+              }}</span>
+            </div>
+          </div>
 
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment :payment-methods="paymentMethod" disabled />
+          <div class="relative pb-4">
+            <h1 class="font-bold text-lg ml-4 mt-6">Bezahlmethode</h1>
+            <div class="w-auto max-w-[400px] min-w-[250px] m-2 pl-1">
+              <input
+                type="radio"
+                name="payment_method"
+                class="peer sr-only"
+                :data-testid="`payment-method-hier noch id`"
+                :checked="true"
+                :disabled="true"
+              />
+              <span
+                class="h-20 flex flex-col items-center justify-center py-4 px-4 cursor-pointer rounded-md border border-neutral-200 -outline-offset-2 hover:border-primary-50 hover:bg-primary-50 peer-focus:border-primary-50 peer-focus:bg-primary-50 active:border-primary-100 active:bg-primary-50 peer-checked:outline peer-checked:outline-2 peer-checked:outline-primary-500 peer-disabled:opacity-50 peer-disabled:bg-neutral-100 peer-disabled:border-neutral-200 peer-disabled:cursor-not-allowed peer-disabled:[&_img]:grayscale"
+              >
+                <NuxtImg
+                  :src="offer.paymentMethodIcon"
+                  :alt="offer.paymentMethodName"
+                  class="!h-[40px]"
+                  loading="lazy"
+                />
+                <span class="text-xs mt-2 text-neutral-500">{{ offer.paymentMethodName }}</span>
+              </span>
+            </div>
+          </div>
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <div class="text-sm mx-4 md:pb-0">
@@ -83,33 +117,38 @@
           :class="{ 'pointer-events-none opacity-50': offerLoading }"
         >
           <SfLoaderCircular v-if="offerLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-          <!-- <OrderSummary v-if="offer" :cart="offer"> -->
-          <UiButton
-            type="submit"
-            @click="order"
-            :disabled="offerLoading"
-            size="lg"
-            class="w-full mb-4 md:mb-0 cursor-pointer"
-          >
-            <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ t('acceptOffer') }}
-            </span>
-          </UiButton>
-          <UiButton
-            type="submit"
-            variant="secondary"
-            :disabled="offerLoading"
-            @click="toggleModal"
-            size="lg"
-            class="w-full mt-4 md:mb-0 cursor-pointer"
-          >
-            <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ t('declineOffer') }}
-            </span>
-          </UiButton>
-          <!-- </OrderSummary> -->
+          <div class="border rounded-md p-4 shadow-lg">
+            <div class="flex justify-between mb-4">
+              <p class="font-bold text-xl">Bestellübersicht</p>
+              <p class="font-medium">(Artikel {{ Object.keys(offer.order.orderItems).length - 1 }})</p>
+            </div>
+            <OrderTotals :order="offer" />
+            <UiButton
+              type="submit"
+              @click="order"
+              :disabled="offerLoading"
+              size="lg"
+              class="w-full mb-4 md:mb-0 cursor-pointer mt-4"
+            >
+              <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
+              <span v-else>
+                {{ t('acceptOffer') }}
+              </span>
+            </UiButton>
+            <UiButton
+              type="submit"
+              variant="secondary"
+              :disabled="offerLoading"
+              @click="toggleModal"
+              size="lg"
+              class="w-full mt-4 md:mb-0 cursor-pointer"
+            >
+              <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
+              <span v-else>
+                {{ t('declineOffer') }}
+              </span>
+            </UiButton>
+          </div>
 
           <UiModal
             class="h-full w-full overflow-auto md:w-[700px] md:h-fit"
@@ -159,33 +198,27 @@
 </template>
 
 <script lang="ts" setup>
-import { shippingProviderGetters, offerGetters, PaymentProviders } from '@plentymarkets/shop-api';
-import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { offerGetters, PaymentProviders } from '@plentymarkets/shop-api';
+import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose, SfRadio } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { OfferPageContentProps } from './types';
 
 const { send } = useNotification();
-const { t } = useI18n();
+const { t, n } = useI18n();
 const localePath = useLocalePath();
-const { data: shippingMethodData, getShippingMethods, saveShippingMethod } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const props = defineProps<OfferPageContentProps>();
 const emit = defineEmits(['accept', 'decline']);
 const openModal = ref(false);
 const declineText = ref('');
 
-await getShippingMethods();
 await fetchPaymentMethods();
 
 const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const shippingAddress = computed(() => offerGetters.getShippingAddress(props.offer));
 const billingAddress = computed(() => offerGetters.getBillingAddress(props.offer));
-const shippingMethod = computed(() => {
-  const allShippingProviders = shippingProviderGetters.getShippingProviders(shippingMethodData.value);
-  const selectedShippingMethodName = offerGetters.getShippingMethodName(props.offer);
-  return allShippingProviders.filter((provider) => provider.parcelServicePresetName === selectedShippingMethodName);
-});
+
 const paymentMethod = computed(() => {
   const allPaymentProviders = paymentMethodData.value.list;
   const selectedPaymentMethodName = offerGetters.getPaymentMethodName(props.offer);
@@ -196,7 +229,11 @@ const paymentMethod = computed(() => {
   } as PaymentProviders;
 });
 
-await saveShippingMethod(shippingMethod.value[0].parcelServicePresetId);
+const getShippingAmount = (amount: string) => {
+  return amount === '0' ? t('shippingMethod.free') : n(Number(amount), 'currency');
+};
+
+
 await savePaymentMethod(paymentMethod.value.list[0].id);
 
 const ID_CHECKBOX = '#terms-checkbox';
