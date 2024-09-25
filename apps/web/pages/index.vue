@@ -116,7 +116,8 @@
 </template>
 
 <script lang="ts" setup>
-//import { HeroItem } from '~/components/ui/HeroCarousel/types';
+// import { HeroItem } from '~/components/ui/HeroCarousel/types';
+import { useCategoryTemplate } from '~/composables';
 
 const viewport = useViewport();
 const { t } = useI18n();
@@ -131,6 +132,19 @@ interface HeroItem {
   description: string;
   callToAction: string;
   link: string;
+}
+
+interface CategoryTemplate {
+  id: number;
+  hero: HeroItem[];
+  valueProposition: {
+    text: string;
+    image: string;
+  };
+  featured: {
+    headline: string;
+    categoryId: number;
+  }[];
 }
 
 interface Background {
@@ -167,6 +181,14 @@ const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
     {
+      image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
+      tagline: t('homepage.banner.moto1'),
+      heading: t('homepage.banner.moto2'),
+      description: t('homepage.banner.moto3'),
+      callToAction: t('homepage.banner.orderNow'),
+      link: '',
+    },
+    {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
       tagline: 'Test',
       heading: 'Woohoo, this works',
@@ -192,8 +214,8 @@ const getDefaultHomepageTemplate = {
     },
   ],
   valueProposition: {
-    // text: "<div class='flex flex-col justify-center mt-5 sm:mt-20 mt-0 sm:p-0 p-5'><span class='text-xl font-bold mb-2'>The new Pwa shop</span><h3 class='text-2xl font-semibold mb-4'>Text value for value proposition text</h3><p class='text-base mb-6'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p><ul class='list-disc list-inside'><li>Lorem ipsum dolor sit amet</li><li>Consetetur sadipscing elitr</li><li>Sed diam nonumy eirmod tempor</li><li>At vero eos et accusam</li></ul></div>",
-    // image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/doggos__1_.jpg',
+    text: "<div class='flex flex-col justify-center mt-5 sm:mt-20 mt-0 sm:p-0 p-5'><span class='text-xl font-bold mb-2'>The new Pwa shop</span><h3 class='text-2xl font-semibold mb-4'>Text value for value proposition text</h3><p class='text-base mb-6'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p><ul class='list-disc list-inside'><li>Lorem ipsum dolor sit amet</li><li>Consetetur sadipscing elitr</li><li>Sed diam nonumy eirmod tempor</li><li>At vero eos et accusam</li></ul></div>",
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/doggos__1_.jpg',
   },
   featured: [
     {
@@ -213,7 +235,7 @@ const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data);
+  const parsedData: CategoryTemplate = JSON.parse(data);
   if (parsedData) {
     homepageTemplate.value = {
       id: parsedData.id,
