@@ -24,6 +24,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     data: {} as Review,
     loading: false,
     review: {} as ReviewItem,
+    reviewArea: null,
     isReviewModalOpen: false,
     modalType: '',
   }));
@@ -55,6 +56,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       useHandleError(error.value);
       state.value.data.feedbacks = data?.value?.data?.feedbacks ?? state.value.data.feedbacks;
       state.value.data.pagination = data?.value?.data?.pagination ?? state.value.data.pagination;
+      state.value.data.counts = data?.value?.data?.counts ?? state.value.data.counts;
       state.value.loading = false;
       return state.value.data;
     } catch (error: unknown) {
@@ -67,9 +69,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
   };
 
   const fetchReviews = async () => {
-    const { fetchProductReviewAverage } = useProductReviewAverage(itemId);
-
-    await Promise.all([fetchProductReviews(itemId, productVariationId), fetchProductReviewAverage(itemId)]);
+    await fetchProductReviews(itemId, productVariationId);
   };
 
   const createProductReview: CreateProductReview = async (params: CreateReviewParams) => {

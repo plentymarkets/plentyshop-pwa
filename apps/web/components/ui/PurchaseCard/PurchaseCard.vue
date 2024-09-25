@@ -73,7 +73,7 @@
     <ProductAttributes :product="product" />
     <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-    <div class="py-4">
+    <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
           :value="quantitySelectorValue"
@@ -114,12 +114,10 @@
       </div>
       <Suspense>
         <template #default>
-          <PayPalExpressButton
-            v-if="getCombination() && productGetters.isSalable(product)"
-            class="mt-4"
-            type="SingleItem"
-            @on-click="paypalHandleAddToCart"
-          />
+          <div v-if="getCombination() && productGetters.isSalable(product)">
+            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
+            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+          </div>
         </template>
         <template #fallback>
           <SfLoaderCircular class="flex justify-center items-center" size="sm" />
@@ -156,6 +154,7 @@ const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
+const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 
 resetInvalidFields();
 resetAttributeFields();
@@ -234,20 +233,6 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const scrollToReviewsAccordion = () => {
-  const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
-  const customerReviewsAccordionElementOffset =
-    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: customerReviewsAccordionElementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
@@ -256,6 +241,8 @@ const scrollToReviews = () => {
     openReviewsAccordion();
   }
 
-  scrollToReviewsAccordion();
+  if (reviewArea.value) {
+    reviewArea.value.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 </script>
