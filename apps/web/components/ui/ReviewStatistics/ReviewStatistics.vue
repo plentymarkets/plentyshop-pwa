@@ -54,14 +54,14 @@ const props = defineProps<ReviewStatisticsProps>();
 const productId = Number(productGetters.getItemId(props.product));
 
 const { t } = useI18n();
-const { data: productReviewAverage } = useProductReviewAverage(productId);
-const { openReviewModal } = useProductReviews(productId);
+const { data: productReviews, openReviewModal } = useProductReviews(productId);
+const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
-const reviewAverageText = computed(() => reviewGetters.getAverageRating(productReviewAverage.value, 'tenth'));
-const reviewAverageStars = computed(() => reviewGetters.getAverageRating(productReviewAverage.value, 'half'));
-const totalReviews = computed(() => reviewGetters.getTotalReviews(productReviewAverage.value));
+const reviewAverageText = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'tenth'));
+const reviewAverageStars = computed(() => reviewGetters.getAverageRating(countsProductReviews.value, 'half'));
+const totalReviews = computed(() => reviewGetters.getTotalReviews(countsProductReviews.value));
 const ratingPercentages = computed(() =>
-  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewAverage.value, true),
+  reviewGetters.getReviewCountsOrPercentagesByRatingDesc(countsProductReviews.value, true),
 );
-const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(productReviewAverage.value));
+const splitRatings = computed(() => reviewGetters.getReviewCountsOrPercentagesByRatingDesc(countsProductReviews.value));
 </script>

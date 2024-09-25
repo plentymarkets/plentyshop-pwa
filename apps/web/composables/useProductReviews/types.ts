@@ -4,6 +4,7 @@ export interface UseProductReviewsState {
   data: Review;
   loading: boolean;
   review?: ReviewItem | null;
+  reviewArea: HTMLElement | null;
   isReviewModalOpen: boolean;
   modalType: string;
 }
@@ -25,6 +26,7 @@ export interface UseProductReviewsReturn {
   createProductReview: CreateProductReview;
   setProductReview: SetProductReview;
   fetchReviews: FetchReviews;
+  reviewArea: Readonly<Ref<UseProductReviewsState['reviewArea']>>;
   isReviewModalOpen: Readonly<Ref<UseProductReviewsState['isReviewModalOpen']>>;
   modalType: Readonly<Ref<UseProductReviewsState['modalType']>>;
   openReviewModal: OpenReviewModal;
