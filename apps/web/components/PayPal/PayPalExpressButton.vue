@@ -4,17 +4,22 @@
 
 <script setup lang="ts">
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import type { FUNDING_SOURCE, OnApproveData, OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
+import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
+const paypalUuid = ref(uuid());
+const paypalScript = ref<PayPalNamespace | null>(null);
+
 const { getScript, createTransaction, approveOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
+
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
+
 const emits = defineEmits<{
   (event: 'on-click', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
@@ -27,12 +32,9 @@ const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
 const isCommit = type === TypeCheckout;
-const paypalUuid = ref(uuid());
-const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
 const checkOnClickEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
-
   return !!(props && props['onOnClick']);
 };
 
@@ -58,7 +60,7 @@ const onClick = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.url)
+  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.data?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (type === TypeCheckout) {
@@ -100,19 +102,20 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
-        // TODO: handle error
+        console.error('Error occurred during PayPal Button rendering.'); // Add error handling
       },
       async createOrder() {
         const order = await createTransaction(fundingSource);
-        return order?.id ?? '';
+        return order?.data?.id ?? '';
       },
       async onApprove(data) {
         await onApprove(data);
       },
     });
 
-    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value.id);
+    if (button.isEligible() && paypalButton.value) {
+      button.render('#' + paypalButton.value.id);
+    }
   }
 };
 
@@ -126,7 +129,10 @@ const createButton = () => {
   }
 };
 
-onMounted(() => createButton());
+onNuxtReady(async () => {
+  paypalScript.value = await getScript(currency.value, isCommit);
+  createButton();
+});
 
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);

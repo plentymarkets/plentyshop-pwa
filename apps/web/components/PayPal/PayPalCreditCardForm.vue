@@ -79,8 +79,8 @@ onMounted(() => {
       async createOrder() {
         loading.value = true;
         const data = await createCreditCardTransaction();
-        paypalOrderId = data?.id ?? '';
-        paypalPayerId = data?.payPalPayerId ?? '';
+        paypalOrderId = data?.data?.id ?? '';
+        paypalPayerId = data?.data?.payPalPayerId ?? '';
         return paypalOrderId ?? '';
       },
       async onApprove(data: CardFieldsOnApproveData) {
@@ -88,10 +88,10 @@ onMounted(() => {
           paypalOrderId: data.orderID,
           paypalPayerId: paypalPayerId,
         });
-        if (capture?.error) {
+        if (capture?.data?.error) {
           send({
             type: 'negative',
-            message: capture.error,
+            message: capture.data.error,
           });
           loading.value = false;
           return;
