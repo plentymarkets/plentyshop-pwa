@@ -81,11 +81,7 @@
         </div>
       </div>
       <div class="col-span-5">
-        <div v-for="offerItem in offer?.order.orderItems" :key="offerItem.id">
-          <div v-if="offerItem.typeId != 6">
-            <OrderSummaryProductCard :order-item="offerItem" :order="offer"></OrderSummaryProductCard>
-          </div>
-        </div>
+        <UiOfferProductCard :offer="offer" />
         <div
           class="relative md:sticky mt-4 md:top-20 h-fit"
           :class="{ 'pointer-events-none opacity-50': offerLoading }"
