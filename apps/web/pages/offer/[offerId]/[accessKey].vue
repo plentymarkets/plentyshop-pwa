@@ -3,6 +3,8 @@
     <template v-if="Object.keys(data).length > 0 && typeof data !== 'string'">
       <OfferPageContent :offer="data" :offer-loading="loadingOffer.value" @accept="accept" @decline="decline" />
     </template>
+  </NuxtLazyHydrate>
+  <NuxtLazyHydrate when-visible>
     <template v-if="error">
       <SoftLogin :error="error" @submit="loadOffer" />
     </template>
