@@ -1,5 +1,5 @@
 import { Offer } from '@plentymarkets/shop-api';
 
-export type OfferItemProductVardProps = {
+export type OfferProductCardProps = {
   offer: Offer;
 };
