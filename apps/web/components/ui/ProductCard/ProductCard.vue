@@ -70,7 +70,7 @@
         </span>
       </div>
       <UiButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || productGetters.getCanDirectlyAddToCart(product)"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
