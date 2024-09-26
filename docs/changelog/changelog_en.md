@@ -39,7 +39,7 @@
 - Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
 - Added Manufacturer and EU Responsible information to product page.
-- Added a page to present offers in the webshop. On this page, offers can also be accepted or rejected directly. If the offer is accepted, an order is created directly.
+- A new page was added to the webshop for presenting offers. Users can accept or reject offers directly on this page, and upon acceptance, an order is automatically created.
 
 #### SEO
 

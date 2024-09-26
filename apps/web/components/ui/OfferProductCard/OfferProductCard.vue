@@ -23,7 +23,7 @@
         >
           {{ variation.texts.name1 }}
         </SfLink>
-        <p>{{ formatPrice(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? 0) }} }}</p>
+        <p>{{ formatPrice(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? 0) }}</p>
         <UiBadges v-if="variation" :product="variation" :use-availability="true" :use-tags="false" />
 
         <p class="flex justify-end self-end text-yellow-600 font-bold text-lg pt-6">
