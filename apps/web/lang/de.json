@@ -398,6 +398,7 @@
   "customerReviews": "Kundenrezensionen",
   "createCustomerReview": "Bewertung abgeben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
+  "legalDetails": "TBD",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
   "showAllReviews": "Alle Bewertungen anzeigen",
@@ -702,6 +703,9 @@
     "lastName": "Nachname",
     "email": "E-Mail"
   },
+  "productLegalDetailsHeader": "TBD",
+  "email": "E-Mail",
+  "phone": "Telefonnummer",
   "coupon": {
     "name": "Gutschein",
     "title": "Haben sie einen Gutscheincode?",
