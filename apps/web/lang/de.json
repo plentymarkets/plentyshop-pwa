@@ -850,6 +850,8 @@
   },
   "manufacturer": {
     "noResponsibleInformation": "TBD",
-    "noInformation": "TBD"
+    "noInformation": "TBD",
+    "euResponsibleTabName": "TBD",
+    "manufacturerTabName": "TBD"
   }
 }

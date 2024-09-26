@@ -850,6 +850,8 @@
   },
   "manufacturer": {
     "noResponsibleInformation": "No Information available for responsible person",
-    "noInformation": "No Information available for manufacturer"
+    "noInformation": "No Information available for manufacturer",
+    "euResponsibleTabName": "EU Responsible person",
+    "manufacturerTabName": "Manufacturer"
   }
 }

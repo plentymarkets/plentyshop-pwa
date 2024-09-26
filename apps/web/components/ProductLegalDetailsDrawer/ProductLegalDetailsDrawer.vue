@@ -68,8 +68,8 @@ const { t } = useI18n();
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const tabs = [
-  { label: 'EU Responsible Person', component: ManufacturerResponsibleInfo, disabled: false },
-  { label: 'Manufacturer', component: ManufacturerInformation, disabled: false },
+  { label: t('manufacturer.euResponsibleTabName'), component: ManufacturerResponsibleInfo, disabled: false },
+  { label: t('manufacturer.manufacturerTabName'), component: ManufacturerInformation, disabled: false },
 ];
 
 const activeTabIndex = ref(0);
