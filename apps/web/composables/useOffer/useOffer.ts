@@ -8,10 +8,16 @@ export const useOffer: UseOfferReturn = () => {
     error: null,
   }));
 
-  const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
+  const handleApiCall = async (apiCall: () => Promise<any>) => {
     state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getOffer(params));
+    const { data, error } = await useAsyncData(apiCall);
     useHandleError(error.value);
+
+    return { data: data, error: error };
+  };
+
+  const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
+    const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params));
 
     if (data.value?.data && typeof data.value === 'object' && 'error' in data.value.data) {
       const errorData = data.value?.data as GetOfferError;
@@ -27,9 +33,7 @@ export const useOffer: UseOfferReturn = () => {
   };
 
   const declineOffer: DeclineOffer = async (params: OfferSearchParams) => {
-    state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doRejectOffer(params));
-    useHandleError(error.value);
+    const { data } = await handleApiCall(() => useSdk().plentysystems.doRejectOffer(params));
 
     const offerData = data.value?.data as string;
     state.value.data = offerData;
@@ -39,9 +43,7 @@ export const useOffer: UseOfferReturn = () => {
   };
 
   const acceptOffer: AcceptOffer = async (params: OfferSearchParams) => {
-    state.value.loading = true;
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAcceptOffer(params));
-    useHandleError(error.value);
+    const { data } = await handleApiCall(() => useSdk().plentysystems.doAcceptOffer(params));
 
     const offerData = data.value?.data as Offer;
     state.value.data = offerData?.order ? offerData : ({} as Offer);
