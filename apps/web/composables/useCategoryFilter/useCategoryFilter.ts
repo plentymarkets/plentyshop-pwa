@@ -1,4 +1,4 @@
-import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 

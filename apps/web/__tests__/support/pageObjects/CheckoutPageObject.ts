@@ -142,6 +142,11 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  placeCreditCartOrder() {
+    this.placeOrderButtons.click();
+    return this;
+  }
+
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
     this.thankYouBanner.should('be.visible');

@@ -318,16 +318,6 @@
   "category": "Category",
   "imageOfSth": "Image of {name}",
   "categories": {
-    "howToBuy": {
-      "label": "Order process",
-      "subcategories": {
-        "paymentMethods": "Payment methods",
-        "orderPickup": "Order pickup",
-        "purchaseStatus": "Purchase status",
-        "trackOrders": "Track orders",
-        "returns": "Returns"
-      }
-    },
     "help": {
       "label": "Help",
       "subcategories": {
@@ -398,6 +388,7 @@
   "customerReviews": "Customer reviews",
   "createCustomerReview": "Create review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
+  "legalDetails": "EU responsible person - click for details",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
@@ -702,6 +693,9 @@
     "lastName": "Last Name",
     "email": "Email"
   },
+  "productLegalDetailsHeader": "Product Legal Details",
+  "email": "Email",
+  "phone": "Phone",
   "coupon": {
     "name": "Coupon",
     "title": "Have a coupon code?",
@@ -853,5 +847,11 @@
   },
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
+  },
+  "manufacturer": {
+    "noResponsibleInformation": "No Information available for responsible person",
+    "noInformation": "No Information available for manufacturer",
+    "euResponsibleTabName": "EU Responsible person",
+    "manufacturerTabName": "Manufacturer"
   }
 }
