@@ -331,6 +331,7 @@
 ### Fixed
 
 - Removed demo how-to-buy section from footer.
+- Fixed Order properties responsiveness bug
 - Addresses in the checkout now update properly.
 - The PayPal buttons now show the correct text depending on the location of the button.
 - The mega menu no longer displays categories without a label.
