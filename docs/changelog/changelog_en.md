@@ -34,6 +34,7 @@
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
+- Added a page to present offers in the webshop. On this page, offers can also be accepted or rejected directly. If the offer is accepted, an order is created directly.
 
 #### SEO
 

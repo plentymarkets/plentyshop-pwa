@@ -28,6 +28,7 @@
 - Das Logo kann jetzt vom plentysystems-System geladen werden.
 - Die "Erneut kaufen"-Funktionalität unterstützt Artikeleigenschaften.
 - PayPal-Button für PS Lazyload
+- Hinzugefügt wurde eine Seite um Angebote im Webshop zu präsentieren. Auf dieser können Angebote auch direkt angenommen oder abgelehnt werden. Bei Annahme des Angebots wird direkt eine Bestellung erstellt.
 
 ### Geändert
 
