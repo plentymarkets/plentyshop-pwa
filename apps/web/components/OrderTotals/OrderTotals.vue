@@ -27,10 +27,10 @@
   </div>
   <UiDivider class="mt-2 mb-2" />
   <div class="grid grid-cols-2">
-    <p class="font-medium text-base" :class="order.order.typeId === 7 ? 'font-bold text-xl' : ''">
+    <p class="font-medium text-base" :class="{ 'font-bold text-xl': order.order.typeId === 7 }">
       {{ t('orderConfirmation.total') }}:
     </p>
-    <p class="text-right" :class="order.order.typeId === 7 ? 'font-bold text-xl' : ''">
+    <p class="text-right" :class="{ 'font-bold text-xl': order.order.typeId === 7 }">
       {{ n(orderGetters.getTotal(order.totals), 'currency') }}
     </p>
   </div>
