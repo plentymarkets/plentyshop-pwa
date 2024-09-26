@@ -34,6 +34,7 @@
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
+- Added Manufacturer and EU Responsible information to product page.
 - Added a page to present offers in the webshop. On this page, offers can also be accepted or rejected directly. If the offer is accepted, an order is created directly.
 
 #### SEO
@@ -331,6 +332,8 @@
 
 ### Fixed
 
+- Removed demo how-to-buy section from footer.
+- Fixed Order properties responsiveness bug
 - Addresses in the checkout now update properly.
 - The PayPal buttons now show the correct text depending on the location of the button.
 - The mega menu no longer displays categories without a label.

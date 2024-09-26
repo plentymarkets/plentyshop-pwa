@@ -318,16 +318,6 @@
   "category": "Kategorie",
   "imageOfSth": "Bild von {name}",
   "categories": {
-    "howToBuy": {
-      "label": "Bestellvorgang",
-      "subcategories": {
-        "paymentMethods": "Zahlungsarten",
-        "orderPickup": "Abholung",
-        "purchaseStatus": "Bestellstatus",
-        "trackOrders": "Bestellungen verfolgen",
-        "returns": "Retouren"
-      }
-    },
     "help": {
       "label": "Hilfe",
       "subcategories": {
@@ -398,6 +388,7 @@
   "customerReviews": "Kundenrezensionen",
   "createCustomerReview": "Bewertung abgeben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
+  "legalDetails": "TBD",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
   "showAllReviews": "Alle Bewertungen anzeigen",
@@ -710,6 +701,9 @@
     "lastName": "Nachname",
     "email": "E-Mail"
   },
+  "productLegalDetailsHeader": "TBD",
+  "email": "E-Mail",
+  "phone": "Telefonnummer",
   "coupon": {
     "name": "Gutschein",
     "title": "Haben sie einen Gutscheincode?",
@@ -861,5 +855,11 @@
   },
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
+  },
+  "manufacturer": {
+    "noResponsibleInformation": "TBD",
+    "noInformation": "TBD",
+    "euResponsibleTabName": "TBD",
+    "manufacturerTabName": "TBD"
   }
 }
