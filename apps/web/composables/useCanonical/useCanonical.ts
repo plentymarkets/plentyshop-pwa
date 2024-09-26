@@ -1,7 +1,9 @@
-import type { UseCanonicalReturn } from './types';
-import type { StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
-import type { Facet } from '@plentymarkets/shop-api';
-import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import { type UseCanonicalReturn } from './types';
+import { type StaticPageMeta, type CategoriesPageMeta, UseCanonicalState } from './types';
+import { Facet } from '@plentymarkets/shop-api';
+import { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import { LocaleObject } from '@nuxtjs/i18n';
+
 /**
  * @description Composable managing canonical data
  * @returns UseCanonicalReturn
@@ -67,7 +69,7 @@ export const useCanonical: UseCanonicalReturn = () => {
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
 
-    const alternateLocales = locales.value.map((item: any) => {
+    const alternateLocales = locales.value.map((item: LocaleObject) => {
       return {
         rel: 'alternate',
         hreflang: item.code,
@@ -102,10 +104,10 @@ export const useCanonical: UseCanonicalReturn = () => {
     state.value.loading = true;
     const route = useRoute();
     const localePath = useLocalePath();
-    const { locale } = useI18n();
+    const { $i18n } = useNuxtApp();
     const runtimeConfig = useRuntimeConfig();
 
-    const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, locale.value)}`;
+    const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;
     useHead({
       link: [
         {
@@ -123,7 +125,7 @@ export const useCanonical: UseCanonicalReturn = () => {
               hreflang: key,
               href:
                 key === `x-default`
-                  ? `${runtimeConfig.public.domain}${localePath(route.fullPath, locale.value)}`
+                  ? `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`
                   : `${runtimeConfig.public.domain}${localePath(route.fullPath, key)}`,
             },
           ],
