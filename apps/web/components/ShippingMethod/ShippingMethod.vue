@@ -45,7 +45,7 @@ import { shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
 
-const { shippingMethods, disabled } = withDefaults(defineProps<ShippingMethodProps>(), { disabled: false });
+const { shippingMethods, disabled = false } = defineProps<ShippingMethodProps>();
 
 const emit = defineEmits<CheckoutShippingEmits>();
 

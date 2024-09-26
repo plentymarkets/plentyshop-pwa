@@ -41,10 +41,7 @@ const { login, loading, getSession } = useCustomer();
 const { send } = useNotification();
 const { t } = useI18n();
 
-const props = withDefaults(defineProps<LoginProps>(), {
-  isSoftLogin: false,
-  isModal: false,
-});
+const { isSoftLogin = false, isModal = false } = defineProps<LoginProps>();
 const emits = defineEmits(['loggedIn', 'change-view']);
 
 const loadAddresses = async () => {
@@ -61,7 +58,7 @@ const loginUser = async () => {
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
-    if (!props.isSoftLogin) {
+    if (!isSoftLogin) {
       const currentURL = window.location.href;
       if (currentURL.includes(paths.checkout)) {
         await loadAddresses();

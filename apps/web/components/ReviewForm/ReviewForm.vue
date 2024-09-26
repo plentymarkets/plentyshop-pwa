@@ -101,8 +101,7 @@ import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
-const props = withDefaults(defineProps<ReviewFormProps>(), { reviewItem: null });
-const { reviewItem } = toRefs(props);
+const { reviewItem = null } = defineProps<ReviewFormProps>();
 const { t } = useI18n();
 const { currentProduct } = useProducts();
 const { createProductReview, setProductReview, closeReviewModal, modalType } = useProductReviews(
@@ -120,17 +119,17 @@ const validationSchema = toTypedSchema(
     ratingValue: number()
       .required(t('review.validation.ratingRequired'))
       .min(1, t('review.validation.ratingRequired'))
-      .default(reviewGetters.getReviewRating(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewRating(reviewItem ?? ({} as ReviewItem))),
     title: string()
       .required(t('review.validation.titleRequired'))
-      .default(reviewGetters.getReviewTitle(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewTitle(reviewItem ?? ({} as ReviewItem))),
     message: string()
       .optional()
       .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
-      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewMessage(reviewItem ?? ({} as ReviewItem))),
     authorName: string()
       .optional()
-      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewAuthor(reviewItem ?? ({} as ReviewItem))),
   }),
 );
 
@@ -141,10 +140,10 @@ const validationSchemaReply = toTypedSchema(
     message: string()
       .required()
       .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
-      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewMessage(reviewItem ?? ({} as ReviewItem))),
     authorName: string()
       .optional()
-      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewAuthor(reviewItem ?? ({} as ReviewItem))),
   }),
 );
 
@@ -171,10 +170,10 @@ const sendReview = async () => {
     title: title.value || '',
     message: message.value,
     authorName: authorName.value,
-    feedbackId: Number(reviewGetters.getReviewId(reviewItem.value ?? ({} as ReviewItem))),
+    feedbackId: Number(reviewGetters.getReviewId(reviewItem ?? ({} as ReviewItem))),
   };
 
-  if (reviewItem.value) {
+  if (reviewItem) {
     setProductReview(params);
   } else {
     createProductReview(params);

@@ -6,7 +6,7 @@ const localeObject = getLocaleObject();
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: localeObject,
   langDir: 'lang',
-  defaultLocale: process.env.DEFAULTLANGUAGE ?? 'en',
+  defaultLocale: (process.env.DEFAULTLANGUAGE ?? 'en').toLowerCase(),
   strategy: 'prefix_and_default',
   vueI18n: '~/configuration/vueI18n.config.ts',
   detectBrowserLanguage: false,

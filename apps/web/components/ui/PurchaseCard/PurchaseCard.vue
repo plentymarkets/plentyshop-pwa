@@ -130,8 +130,8 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
-import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -154,6 +154,7 @@ const quantitySelectorValue = ref(1);
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
+const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 
 resetInvalidFields();
 resetAttributeFields();
@@ -232,20 +233,6 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const scrollToReviewsAccordion = () => {
-  const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
-  const customerReviewsAccordionElementOffset =
-    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: customerReviewsAccordionElementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
 
@@ -254,6 +241,8 @@ const scrollToReviews = () => {
     openReviewsAccordion();
   }
 
-  scrollToReviewsAccordion();
+  if (reviewArea.value) {
+    reviewArea.value.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 </script>

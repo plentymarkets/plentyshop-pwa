@@ -1,9 +1,5 @@
 <template>
-  <div
-    ref="accordionReference"
-    class="relative col-span-5 md:sticky md:top-10 h-fit"
-    :class="{ 'pointer-events-none opacity-50': loadingReviews }"
-  >
+  <div ref="reviewArea" class="relative col-span-5 h-fit" :class="{ 'pointer-events-none opacity-50': loadingReviews }">
     <SfLoaderCircular v-if="loadingReviews" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
 
     <div data-testid="reviews-accordion" id="customerReviewsAccordion">
@@ -58,12 +54,12 @@ const config = useRuntimeConfig().public;
 
 const productId = Number(productGetters.getItemId(product));
 const productVariationId = productGetters.getVariationId(product);
-const accordionReference = ref<HTMLElement | null>(null);
 
 const {
   data: productReviews,
   loading: loadingReviews,
   fetchReviews,
+  reviewArea,
 } = useProductReviews(productId, productVariationId);
 
 const paginatedProductReviews = computed(() => reviewGetters.getReviewItems(productReviews.value));
@@ -82,7 +78,7 @@ watch(
 watch(
   () => route.query.feedbackPage,
   async () => {
-    if (accordionReference.value) accordionReference.value.scrollIntoView({ behavior: 'smooth' });
+    if (reviewArea.value) reviewArea.value.scrollIntoView({ behavior: 'smooth' });
   },
 );
 

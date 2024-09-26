@@ -105,14 +105,16 @@ import type { AddressFormProps } from '~/components/AddressForm/types';
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
 
-const props = withDefaults(defineProps<AddressFormProps>(), {
-  useAsShippingDefault: true,
-});
+const {
+  type,
+  savedAddress: propertySavedAddress,
+  countries,
+  useAsShippingDefault = true,
+} = defineProps<AddressFormProps>();
 
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
-const useAsShippingAddress = ref(props.useAsShippingDefault);
-
-const savedAddress = props.savedAddress || ({} as Address);
+const useAsShippingAddress = ref(useAsShippingDefault);
+const savedAddress = propertySavedAddress || ({} as Address);
 
 const defaultValues = ref({
   firstName: userAddressGetters.getFirstName(savedAddress),
@@ -144,7 +146,7 @@ const clearInputs = () => {
 
 const states = computed(() => {
   const selectedCountry = defaultValues.value.country;
-  return props.countries.find((country) => country.id === Number(selectedCountry))?.states ?? [];
+  return countries.find((country) => country.id === Number(selectedCountry))?.states ?? [];
 });
 
 defineEmits(['on-save', 'on-close']);

@@ -2,7 +2,7 @@ export const appConfiguration = {
   head: {
     viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
     htmlAttrs: {
-      lang: process.env.DEFAULTLANGUAGE ?? 'en',
+      lang:(process.env.DEFAULTLANGUAGE ?? 'en').toLowerCase(),
     },
     meta: [
       { name: 'shop-name', content: 'plentyShop PWA Demo' },
