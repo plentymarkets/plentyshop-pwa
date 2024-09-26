@@ -46,7 +46,6 @@
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
 import { Product, productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
-import { useProductLegalDetailsDrawer } from '~/composables/useProductLegalDetailsDrawer';
 
 definePageMeta({
   layout: false,

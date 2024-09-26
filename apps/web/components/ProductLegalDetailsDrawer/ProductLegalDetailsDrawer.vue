@@ -26,20 +26,19 @@
         aria-orientation="horizontal"
         class="flex gap-2 border-b border-b-neutral-200 p-4 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       >
-        <button
+        <UiButton
           v-for="(tab, index) in tabs"
           :key="tab.label"
           type="button"
           role="tab"
+          :variant="isActiveTab(index) ? 'primary' : 'secondary'"
           :aria-selected="isActiveTab(index)"
           :aria-controls="`tabpanel-${index}`"
           :disabled="tab.disabled"
-          class="px-4 py-2 rounded-md font-medium whitespace-nowrap text-neutral-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900 disabled:text-disabled-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
-          :class="{ '!bg-neutral-100 !text-black': isActiveTab(index) }"
           @click="setActiveTab(index)"
         >
           {{ tab.label }}
-        </button>
+        </UiButton>
       </div>
 
       <div
@@ -49,7 +48,7 @@
         :id="`tabpanel-${index}`"
         :aria-labelledby="`tab-${index}`"
         v-show="isActiveTab(index)"
-        class="p-4 text-neutral-500"
+        class="p-4"
       >
         <component :is="tab.component" :product="product" />
       </div>
