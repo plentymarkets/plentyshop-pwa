@@ -16,7 +16,7 @@
     <p v-if="manufacturerResponsibleInfo.email">{{ t('email') }}: {{ manufacturerResponsibleInfo.email }}</p>
   </div>
   <div v-else>
-    {{ t('manufacturer.no-responsible-information') }}
+    {{ t('manufacturer.noResponsibleInformation') }}
   </div>
 </template>
 

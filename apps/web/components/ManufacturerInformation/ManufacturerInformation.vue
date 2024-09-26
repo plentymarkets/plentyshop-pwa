@@ -4,7 +4,7 @@
     <p v-if="manufacturerExternalName">{{ manufacturerExternalName }}</p>
   </div>
   <div v-else>
-    {{ t('manufacturer.no-information') }}
+    {{ t('manufacturer.noInformation') }}
   </div>
 </template>
 

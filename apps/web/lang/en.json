@@ -847,5 +847,9 @@
   },
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"
+  },
+  "manufacturer": {
+    "noResponsibleInformation": "No Information available for responsible person",
+    "noInformation": "No Information available for manufacturer"
   }
 }

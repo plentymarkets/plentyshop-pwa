@@ -847,5 +847,9 @@
   },
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
+  },
+  "manufacturer": {
+    "noResponsibleInformation": "TBD",
+    "noInformation": "TBD"
   }
 }
