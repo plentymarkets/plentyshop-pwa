@@ -15,8 +15,6 @@
 <script setup lang="ts">
 import type { AccountDataProps } from '~/components/AccountData/types';
 
-withDefaults(defineProps<AccountDataProps>(), {
-  showEditButton: false,
-});
+const { showEditButton = false } = defineProps<AccountDataProps>();
 defineEmits(['on-click']);
 </script>

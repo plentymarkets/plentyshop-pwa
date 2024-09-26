@@ -166,10 +166,7 @@ const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
-const props = withDefaults(defineProps<RegisterFormParams>(), {
-  isModal: false,
-  changeableView: true,
-});
+const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
@@ -205,8 +202,8 @@ const [repeatPassword, repeatPasswordAttributes] = defineField('register.repeatP
 const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
-if (props.emailAddress) {
-  email.value = props.emailAddress;
+if (emailAddress) {
+  email.value = emailAddress;
 }
 
 const clearTurnstile = () => {
@@ -241,19 +238,19 @@ const registerUser = async () => {
       type: 'positive',
     });
 
-    if (props.order) {
+    if (order) {
       await migrateGuestOrder({
-        orderId: props.order?.order.id ?? -1,
-        accessKey: props.order?.order.accessKey ?? '',
-        postcode: props.order?.order.deliveryAddress.postalCode ?? undefined,
-        name: props.order?.order.deliveryAddress.name3 ?? undefined,
+        orderId: order?.order.id ?? -1,
+        accessKey: order?.order.accessKey ?? '',
+        postcode: order?.order.deliveryAddress.postalCode ?? undefined,
+        name: order?.order.deliveryAddress.name3 ?? undefined,
       });
     }
 
     emits('registered');
     clearTurnstile();
 
-    if (!props.order) {
+    if (!order) {
       viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
     }
   }

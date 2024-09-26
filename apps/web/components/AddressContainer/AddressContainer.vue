@@ -64,7 +64,7 @@ import { SfIconClose, SfTooltip } from '@storefront-ui/vue';
 import { type AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
-const { disabled, type } = withDefaults(defineProps<AddressContainerProps>(), { disabled: false });
+const { disabled = false, type } = defineProps<AddressContainerProps>();
 
 const { t } = useI18n();
 const isBilling = type === AddressType.Billing;
