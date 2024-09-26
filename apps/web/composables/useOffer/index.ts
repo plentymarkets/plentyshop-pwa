@@ -1,3 +1,3 @@
-export * from './useOffer.js';
+export * from './useOffer';
 
-export * from './types.js';
+export * from './types';
