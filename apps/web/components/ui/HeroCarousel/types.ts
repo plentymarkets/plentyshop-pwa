@@ -22,4 +22,3 @@ export type HeroCarouselProps = {
   background: { image: string; sizes: Sizes };
   hero: HeroItem[];
 };
-
