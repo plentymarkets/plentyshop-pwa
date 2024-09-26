@@ -112,7 +112,7 @@
         <span v-else>{{ t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-      <div v-if="isMounted && getCombination() && productGetters.isSalable(product)">
+      <div v-if="getCombination() && productGetters.isSalable(product)">
         <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
         <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
       </div>
@@ -128,10 +128,7 @@ import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
-
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
-
-const isMounted = ref(false);
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -250,8 +247,4 @@ const scrollToReviews = () => {
 
   scrollToReviewsAccordion();
 };
-
-onMounted(() => {
-  isMounted.value = true;
-});
 </script>
