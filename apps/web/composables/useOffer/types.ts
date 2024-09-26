@@ -6,7 +6,7 @@ export interface UseOfferState {
   error: GetOfferError | null;
 }
 
-export type FetchOffer = (params: OfferSearchParams) => Promise<Offer | null>;
+export type FetchOffer = (params: OfferSearchParams) => Promise<Offer | string>;
 export type DeclineOffer = (params: OfferSearchParams) => Promise<string | null>;
 export type AcceptOffer = (params: OfferSearchParams) => Promise<Offer | null>;
 

@@ -45,8 +45,15 @@ const NuxtLink = resolveComponent('NuxtLink');
 const { n } = useI18n();
 
 const filteredOffer = computed(() => {
-  const OfferNew = props.offer;
-  OfferNew.order.orderItems = OfferNew.order.orderItems.filter((item) => item.typeId !== 6);
-  return OfferNew;
+  const {
+    order: { orderItems },
+    order,
+  } = props.offer;
+  const filteredItems = orderItems.filter((item) => item.typeId !== 6);
+
+  return {
+    ...props.offer,
+    order: { ...order, orderItems: filteredItems },
+  };
 });
 </script>

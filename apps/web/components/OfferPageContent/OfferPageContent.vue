@@ -225,10 +225,7 @@ const redirectBack = () => {
 };
 
 const order = async () => {
-  if (redirectBack() || !validateTerms()) {
-    return;
-  }
-  emit('accept');
+  if (!redirectBack() && validateTerms()) emit('accept');
 };
 
 const handleDecline = async () => {
