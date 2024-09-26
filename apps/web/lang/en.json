@@ -318,16 +318,6 @@
   "category": "Category",
   "imageOfSth": "Image of {name}",
   "categories": {
-    "howToBuy": {
-      "label": "Order process",
-      "subcategories": {
-        "paymentMethods": "Payment methods",
-        "orderPickup": "Order pickup",
-        "purchaseStatus": "Purchase status",
-        "trackOrders": "Track orders",
-        "returns": "Returns"
-      }
-    },
     "help": {
       "label": "Help",
       "subcategories": {
