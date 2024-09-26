@@ -9,10 +9,9 @@ export const getLocaleObject = () => {
   ];
 
   if (process.env.LANGUAGELIST !== undefined) {
+    localeObject = [];
     const languageList = process.env.LANGUAGELIST.split(',');
     languageList.forEach((language) => {
-      localeObject = [];
-
       const languageFile = path.resolve(__dirname, `../lang/${language}.json`);
 
       if (fs.existsSync(languageFile)) {
