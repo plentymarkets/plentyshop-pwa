@@ -28,7 +28,7 @@
         <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
           {{ formattedHeroItems[0].heading }}
         </h1>
-        <p class="typography-text-base md:typography-text-lg">
+        <p class="typography-text-base md:typography-text-lg text-center md:text-left">
           {{ formattedHeroItems[0].description }}
         </p>
       </div>
@@ -42,7 +42,7 @@
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
     <NuxtLazyHydrate when-visible>
       <section class="mb-10 overflow-hidden">
-        <p data-testid="recommended-products" class="mb-4 typography-text-lg">
+        <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
           {{ t('moreItemsOfThisCategory') }}
         </p>
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
@@ -86,9 +86,11 @@ const getDefaultHomepageTemplate = {
   hero: [
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
-      tagline: 'Test',
-      heading: 'Woohoo, this works',
-      description: 'Description here',
+      tagline: 'Fell the music',
+      heading: 'Your Sound, Elevated',
+      description:
+        "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.\n" +
+        '\n',
       callToAction: 'click',
       link: '',
     },
@@ -110,8 +112,8 @@ const getDefaultHomepageTemplate = {
     },
   ],
   valueProposition: {
-    text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>The new Pwa shop</span><h3 class='text-2xl font-semibold mb-4'>Text value for value proposition text</h3><p class='text-base mb-6'>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p><ul class='list-disc list-inside'><li>Lorem ipsum dolor sit amet</li><li>Consetetur sadipscing elitr</li><li>Sed diam nonumy eirmod tempor</li><li>At vero eos et accusam</li></ul></div>",
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/doggos__1_.jpg',
+    text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h3 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h3><p class='text-base mb-6'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/casti.jpg',
   },
   featured: [
     {
