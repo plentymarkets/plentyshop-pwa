@@ -58,6 +58,7 @@
 </template>
 
 <script lang="ts" setup>
+import { HeroItem } from '~/components/ui/HeroCarousel/types';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
