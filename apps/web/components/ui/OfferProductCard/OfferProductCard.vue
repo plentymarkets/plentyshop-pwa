@@ -1,11 +1,11 @@
 <template>
-  <div v-for="(variation, variationId, key) in offer.variations" :key="variationId">
+  <div v-for="(variation, variationId, key) in props.offer.variations" :key="variationId">
     <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0">
       <div class="overflow-hidden rounded-md w-[100px] sm:w-[176px] mb-2">
-        <SfLink :tag="NuxtLink" :to="offer.itemURLs[variationId]" class="flex items-center justify-center">
+        <SfLink :tag="NuxtLink" :to="offer.itemURLs[variationId.toString()]" class="flex items-center justify-center">
           <NuxtImg
             ref="img"
-            :src="offer.itemImages[variationId] || '/images/placeholder.png'"
+            :src="getImageSource(variationId.toString())"
             :alt="'name placeholder'"
             width="300"
             height="300"
@@ -23,13 +23,11 @@
         >
           {{ variation.texts.name1 }}
         </SfLink>
-        <p>
-          {{ n(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? '', 'currency') }}
-        </p>
+        <p>{{ formatPrice(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? 0) }} }}</p>
         <UiBadges v-if="variation" :product="variation" :use-availability="true" :use-tags="false" />
 
         <p class="flex justify-end self-end text-yellow-600 font-bold text-lg pt-6">
-          {{ n(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? '', 'currency') }}
+          {{ formatPrice(filteredOffer.order.orderItems[key]?.amounts[0].priceOriginalGross ?? 0) }}
         </p>
       </div>
     </div>
@@ -56,4 +54,12 @@ const filteredOffer = computed(() => {
     order: { ...order, orderItems: filteredItems },
   };
 });
+
+const getImageSource = (variationId: string) => {
+  return props.offer.itemImages[variationId] || '/images/placeholder.png';
+};
+
+const formatPrice = (price: number) => {
+  return n(price, 'currency');
+};
 </script>
