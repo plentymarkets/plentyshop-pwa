@@ -31,6 +31,9 @@
         <p class="typography-text-base md:typography-text-lg text-center md:text-left">
           {{ formattedHeroItems[0].description }}
         </p>
+        <div class="flex flex-col md:flex-row gap-4 mt-6">
+          <UiButton size="lg">{{ formattedHeroItems[0].callToAction }}</UiButton>
+        </div>
       </div>
     </div>
   </div>
@@ -91,7 +94,7 @@ const getDefaultHomepageTemplate = {
       description:
         "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.\n" +
         '\n',
-      callToAction: 'click',
+      callToAction: 'Order Now"',
       link: '',
     },
     {
