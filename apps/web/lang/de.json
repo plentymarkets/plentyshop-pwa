@@ -318,16 +318,6 @@
   "category": "Kategorie",
   "imageOfSth": "Bild von {name}",
   "categories": {
-    "howToBuy": {
-      "label": "Bestellvorgang",
-      "subcategories": {
-        "paymentMethods": "Zahlungsarten",
-        "orderPickup": "Abholung",
-        "purchaseStatus": "Bestellstatus",
-        "trackOrders": "Bestellungen verfolgen",
-        "returns": "Retouren"
-      }
-    },
     "help": {
       "label": "Hilfe",
       "subcategories": {
