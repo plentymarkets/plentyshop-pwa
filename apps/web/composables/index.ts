@@ -54,5 +54,6 @@ export * from './useStructuredData';
 export * from './useValidatorAggregator';
 export * from './useWishlist';
 export * from './usePageTitle';
+export * from './useCategoryTemplate';
 export * from './useCheckout';
 export * from './useAddressForm';

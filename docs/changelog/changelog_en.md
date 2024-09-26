@@ -1,5 +1,9 @@
 # Changelog plentyshopPWA
 
+## v1.7.0
+
+- New Homepage is now customizable via Category Template GET Call.
+
 ## v1.6.0
 
 ### TODO 📙 Migration guide
