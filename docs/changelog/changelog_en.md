@@ -34,7 +34,7 @@
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
-- Added Manufacturer and EU Responsible information to product page. 
+- Added Manufacturer and EU Responsible information to product page.
 
 #### SEO
 
