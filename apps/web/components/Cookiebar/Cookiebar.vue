@@ -98,10 +98,9 @@
         </div>
       </template>
     </div>
-    <!-- further settings / back button -->
     <div>
       <div class="text-center mt-2">
-        <SfLink class="text-2xl md:text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
+        <SfLink class="text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
           {{ $t('CookieBar.Further Settings') }}
         </SfLink>
         <SfLink v-else href="#" @click="furtherSettingsOn = false">
