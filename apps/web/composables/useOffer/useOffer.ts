@@ -23,7 +23,8 @@ export const useOffer: UseOfferReturn = () => {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
     }
-    if (data.value?.data && typeof data.value === 'object' && 'order' in data.value.data) {
+    
+    if (typeof data.value?.data === 'object' && 'order' in data.value.data) {
       const offerData = data.value?.data as Offer;
       state.value.data = offerData?.order ? offerData : ({} as Offer);
     }
