@@ -1,14 +1,15 @@
-import { Data, GetOfferError, Offer, OfferSearchParams } from '@plentymarkets/shop-api';
+import { Data, GetOfferError, Offer, OfferSearchParams, Order } from '@plentymarkets/shop-api';
 import { AcceptOffer, DeclineOffer, FetchOffer, UseOfferReturn } from './types';
 
 export const useOffer: UseOfferReturn = () => {
   const state = useState<UseOfferState>('useOffer-', () => ({
     data: {} as Offer | string,
+    relatedOrder: null,
     loading: false,
     error: null,
   }));
 
-  const handleApiCall = async (apiCall: () => Promise<Data<Offer | GetOfferError | string>>) => {
+  const handleApiCall = async (apiCall: () => Promise<Data<Offer | GetOfferError | string | Order>>) => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(apiCall);
     useHandleError(error.value);
@@ -44,11 +45,11 @@ export const useOffer: UseOfferReturn = () => {
   const acceptOffer: AcceptOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.doAcceptOffer(params));
 
-    const offerData = data.value?.data as Offer;
-    state.value.data = offerData?.order ? offerData : ({} as Offer);
+    const offerData = data.value?.data as Order;
+    state.value.relatedOrder = offerData?.order ? offerData : null;
 
     state.value.loading = false;
-    return state.value.data;
+    return state.value.relatedOrder;
   };
 
   return {
