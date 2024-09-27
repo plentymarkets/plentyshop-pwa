@@ -35,7 +35,7 @@ export const useOffer: UseOfferReturn = () => {
   const declineOffer: DeclineOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.doRejectOffer(params));
 
-    state.value.data = data.value?.data as string;
+    state.value.data = data.value?.data ? (data.value.data as string) : '';
 
     state.value.loading = false;
     return state.value.data;
