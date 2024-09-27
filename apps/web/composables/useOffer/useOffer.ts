@@ -19,7 +19,7 @@ export const useOffer: UseOfferReturn = () => {
   const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params));
 
-    if (data.value?.data && typeof data.value === 'object' && 'error' in data.value.data) {
+    if (typeof data.value?.data === 'object' && 'error' in data.value.data) {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
     }
