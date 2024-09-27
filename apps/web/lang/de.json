@@ -127,7 +127,7 @@
     },
     "marketing": {
       "label": "Marketing",
-      "description": "Marketing-Cookies werden von Drittanbietern und Publishern verwendet, um personalisierte Werbung anzuzeigen. Sie tun dies, indem sie Besucher über Websites hinweg verfolgen."
+      "description": "Marketing-Cookies werden von Drittanbietern und Publishern verwendet, um personalisierte Werbung anzuzeigen. Sie tun dies, indem Sie Besucher über Websites hinweg verfolgen."
     },
     "Cookie Settings": "Cookie-Einstellungen",
     "Privacy Settings": "Datenschutzeinstellungen",
@@ -383,12 +383,12 @@
   "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
   "orderNumber": "Auftrags-ID",
   "returnNumber": "Rückgabe-ID",
-  "productDetails": "Produkt-Details",
+  "productDetails": "Produktdetails",
   "technicalData": "Technische Daten",
   "customerReviews": "Kundenrezensionen",
   "createCustomerReview": "Bewertung abgeben",
   "customerReviewsNone": "Es hat noch niemand eine Bewertung für dieses Produkt abgegeben",
-  "legalDetails": "TBD",
+  "legalDetails": "Rechtliche Informationen",
   "loadingReviews": "Kundenrezensionen werden geladen...",
   "reviewsCount": "{Anzahl} Bewertungen",
   "showAllReviews": "Alle Bewertungen anzeigen",
@@ -693,12 +693,12 @@
     "lastName": "Nachname",
     "email": "E-Mail"
   },
-  "productLegalDetailsHeader": "TBD",
+  "productLegalDetailsHeader": "Rechtliche Informationen",
   "email": "E-Mail",
   "phone": "Telefonnummer",
   "coupon": {
     "name": "Gutschein",
-    "title": "Haben sie einen Gutscheincode?",
+    "title": "Haben Sie einen Gutscheincode?",
     "enterCode": "Gutschein-Code eingeben",
     "apply": "Einlösen",
     "remove": "Entfernen",
@@ -730,7 +730,7 @@
     "errorBasketItemMaximumQuantityReachedForItem": "Die maximale Bestellmenge dieses Artikels wurde überschritten.",
     "errorBasketItemMaximumQuantityReachedForVariation": "Die maximale Bestellmenge dieser Variante wurde überschritten.",
     "errorBasketItemMinimumQuantityNotReachedForVariation": "Die Mindestbestellmenge dieser Variante wurde nicht erreicht.",
-    "errorCreateOrderRetryTimeNotReached": "Beim Anlegen des Auftrags ist ein Fehler aufgetreten. Bitte versuchen sie es in 30 Sekunden erneut.",
+    "errorCreateOrderRetryTimeNotReached": "Beim Anlegen des Auftrags ist ein Fehler aufgetreten. Bitte versuchen Sie es in 30 Sekunden erneut.",
     "errorVatService": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Bitte wenden Sie sich an den Shop-Betreiber.",
     "errorVatNumberValidation": "Die Umsatzsteuer-Identifikationsnummer ist ungültig. Bitte entfernen Sie alle Leer- und Sonderzeichen.",
     "errorVatServiceFallback": "Die Umsatzsteuer-Identifikationsnummer konnte nicht bestätigt werden. Der Auftrag wird erneut geprüft.",
@@ -849,9 +849,9 @@
     "sameAsShippingAddress": "Entspricht der Lieferadresse"
   },
   "manufacturer": {
-    "noResponsibleInformation": "TBD",
-    "noInformation": "TBD",
-    "euResponsibleTabName": "TBD",
-    "manufacturerTabName": "TBD"
+    "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
+    "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
+    "euResponsibleTabName": "EU Verantwortliche Person",
+    "manufacturerTabName": "Hersteller"
   }
 }

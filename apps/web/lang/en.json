@@ -388,7 +388,7 @@
   "customerReviews": "Customer reviews",
   "createCustomerReview": "Create review",
   "customerReviewsNone": "Nobody has submitted a review for this product yet",
-  "legalDetails": "EU responsible person - click for details",
+  "legalDetails": "EU Responsible Person - click for details",
   "loadingReviews": "Loading Reviews...",
   "reviewsCount": "{count} reviews",
   "showAllReviews": "Show all reviews",
@@ -849,9 +849,9 @@
     "sameAsShippingAddress": "Same as shipping address"
   },
   "manufacturer": {
-    "noResponsibleInformation": "No Information available for responsible person",
-    "noInformation": "No Information available for manufacturer",
-    "euResponsibleTabName": "EU Responsible person",
+    "noResponsibleInformation": "No information available for Responsible Person",
+    "noInformation": "No information available for manufacturer",
+    "euResponsibleTabName": "EU Responsible Person",
     "manufacturerTabName": "Manufacturer"
   }
 }
