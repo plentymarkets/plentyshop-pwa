@@ -132,7 +132,7 @@
             <p class="mb-4">{{ t('offer.declineDialogSubline') }}</p>
             <p>{{ t('returns.commentOptional') }}</p>
             <textarea
-              class="w-full min-h-32 min-w-96 border-2 rounded-md p-4"
+              class="w-full min-h-32 md:min-w-96 border-2 rounded-md p-4"
               v-model="declineText"
               :placeholder="t('offer.inputPlaceholder')"
             ></textarea>
