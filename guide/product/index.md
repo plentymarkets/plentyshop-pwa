@@ -23,7 +23,7 @@ Based on the e-commerce framework Alokai, plentyShop PWA offers great performanc
 
 ## Demo
 
-*Coming soon*
+Have a look at our official [plentyShop PWA Demo Shop](https://plentyshop.plentymarkets.com/).
 
 ## How to read this documentation
 
