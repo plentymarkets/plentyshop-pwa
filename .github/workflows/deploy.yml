@@ -122,6 +122,14 @@ jobs:
           cache: yarn
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+            yarn config set nodeLinker node-modules
       - name: Install dependencies
         run: yarn install
       - name: Build with VitePress
