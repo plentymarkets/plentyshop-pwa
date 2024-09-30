@@ -18,5 +18,6 @@ export const appConfiguration = {
       { rel: 'icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', href: '/favicon.ico' },
     ],
+    title: process.env.STORENAME || 'plentyShop PWA',
   },
 };
