@@ -43,7 +43,6 @@ export const usePayPal = () => {
 
   /**
    * @description Function to get the PayPal config.
-   * @return Promise<boolean>
    * @example
    * ``` ts
    * loadConfig();
