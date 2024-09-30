@@ -4,12 +4,22 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
+import path from 'node:path';
 
 export default defineNuxtConfig({
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,
+  },
+  vite: {
+    resolve: {
+      alias: {
+        '#blokkli/types': path.resolve(__dirname, '../../node_modules/@blokkli/editor/types.d.ts'),
+        '#blokkli/mtypes': path.resolve(__dirname, '../../node_modules/@blokkli/editor/types.d.mts'),
+        '@blokkli': path.resolve(__dirname, '../../node_modules/@blokkli/editor'),
+      },
+    },
   },
   app: appConfiguration,
   experimental: {
@@ -76,7 +86,12 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
+    '@blokkli/editor',
   ],
+
+  blokkli: {
+    itemEntityType: 'block',
+  },
   vsf: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
