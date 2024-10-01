@@ -21,6 +21,8 @@
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
 - Update the variable name `NEWSLETTER_FORM_SHOW_NAMES` to `NEWSLETTERFORMNAMES` in your environment.
+- Update the variable name `USE_AVIF` to `IMAGEAVIF` in your environment.
+- Update the variable name `USE_WEBP` to `IMAGEWEBP` in your environment.
 
 ### 🚀 New
 
