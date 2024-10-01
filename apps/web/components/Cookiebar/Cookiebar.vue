@@ -1,14 +1,14 @@
 <template>
   <div
     v-if="visible"
-    class="fixed h-[520px] sm:h-auto max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 shadow-2xl p-3 bg-white rounded overflow-auto end-0 sm:top-auto"
+    class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto end-0 sm:top-auto"
   >
     <div v-if="!furtherSettingsOn" class="h-3/5">
       <!-- cookie info -->
       <div class="font-medium text-center">
         {{ $t(cookieGroups?.barTitle) }}
       </div>
-      <div class="leading-relaxed overflow-y-scroll h-4/5 pb-5">
+      <div class="leading-relaxed overflow-y-scroll h-[295px] pb-5">
         {{ $t(cookieGroups?.barDescription) }}
 
         <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
