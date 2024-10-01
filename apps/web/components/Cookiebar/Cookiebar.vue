@@ -9,7 +9,7 @@
         {{ $t(cookieGroups?.barTitle) }}
       </div>
       <div class="leading-relaxed overflow-y-scroll h-4/5 pb-5">
-          {{ $t(cookieGroups?.barDescription) }}
+        {{ $t(cookieGroups?.barDescription) }}
 
         <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
           {{ $t('CookieBar.Privacy Settings') }}
@@ -212,8 +212,8 @@ const getCookiePropertyValue = (cookie: Cookie, propertyKey: string) => {
 </script>
 <style>
 @media screen and (max-width: 500px) {
-   .cookieBarHeightForMobile {
-     height: 512.77px;
-    }
+  .cookieBarHeightForMobile {
+    height: 512.77px;
+  }
 }
 </style>
