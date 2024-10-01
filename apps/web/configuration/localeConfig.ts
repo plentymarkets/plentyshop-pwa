@@ -11,8 +11,21 @@ export const getLocaleObject = () => {
   if (process.env.LANGUAGELIST !== undefined) {
     localeObject = [];
     const languageList = process.env.LANGUAGELIST.split(',');
+    const defaultLanguage = process.env.DEFAULTLANGUAGE;
+
+    if (
+      process.env.DEFAULTLANGUAGE &&
+      languageList.find((language) => language === process.env.DEFAULTLANGUAGE) === undefined
+    ) {
+      languageList.push(process.env.DEFAULTLANGUAGE);
+    }
+
     languageList.forEach((language) => {
       const languageFile = path.resolve(__dirname, `../lang/${language}.json`);
+
+      if (language === defaultLanguage && !fs.existsSync(languageFile)) {
+        fs.writeFileSync(languageFile, '{}');
+      }
 
       if (fs.existsSync(languageFile)) {
         localeObject.push({
