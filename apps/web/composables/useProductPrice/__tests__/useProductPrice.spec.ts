@@ -1,12 +1,32 @@
 import { Product } from '@plentymarkets/shop-api';
 import { ProductPriceFixture } from '../../../__tests__/__mocks__/product-price.mock';
 
-let product = { ...ProductPriceFixture, prices: { ...ProductPriceFixture.prices, specialOffer: { unitPrice: { value: 0 } } } };
+const productWithPrices = {
+    ...ProductPriceFixture,
+    prices: {
+        ...ProductPriceFixture.prices,
+        specialOffer: { unitPrice: { value: 0 } },
+        rrp: { unitPrice: { value: 120 } },
+        graduatedPrices: [
+            {
+                price: {
+                    value: 90,
+                    formatted: "EUR 90.00"
+                },
+                unitPrice: {
+                    value: 90,
+                    formatted: "EUR 90.00"
+                },
+            }
+        ]
+    }
+};
 
+let product = { ...productWithPrices };
 describe('useProductPrice', () => {
 
     beforeEach(() => {
-        product = { ...ProductPriceFixture, prices: { ...ProductPriceFixture.prices, specialOffer: { unitPrice: { value: 0 } } } };
+        product = { ...productWithPrices };
     });
 
     it('should return price (first graduated price)', () => {
@@ -29,7 +49,8 @@ describe('useProductPrice', () => {
         expect(price.value).toBe(90);
     });
 
-    it ('should return crossed price' , () => {
+    it('should return crossed price', () => {
+        product.prices.specialOffer.unitPrice.value = 0;
         const { crossedPrice } = useProductPrice(product as Product);
 
         expect(crossedPrice.value).toBe(120);
