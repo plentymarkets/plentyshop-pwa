@@ -45,6 +45,7 @@
 
 #### SEO
 
+- The app now reads the head title and title suffix from the environment.
 - The app now reads metadata for products and categories, from the environment.
 - The app now reads title and alternate for product images, from the environment.
 - The app now reads metadata, such as description and keywords, from the environment.

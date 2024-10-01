@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: 'plentyshop PWA',
+    titleSuffix: process.env.STORENAME || 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
