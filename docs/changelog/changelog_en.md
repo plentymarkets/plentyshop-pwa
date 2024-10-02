@@ -4,6 +4,9 @@
 
 - New Homepage is now customizable via Category Template GET Call.
 - Fixed my orders actions paddings and cookie bar link sizes.
+- Text and content adaptations
+- Added bank details to the order confirmation page if the payment method is cash in advance.
+- Language is now customizable
 
 ## v1.6.0
 
@@ -115,6 +118,7 @@
 
 ### 🏡 Chore
 
+- Removed unnecessary vue imports
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 - Added e2e tests for reviews pagination.
 

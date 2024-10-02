@@ -9,9 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { productGetters } from '@plentymarkets/shop-api';
-import type { ManufacturerInformationProps } from '~/components/ManufacturerInformation/types';
+import { type ManufacturerInformationProps } from '~/components/ManufacturerInformation/types';
 
 const props = defineProps<ManufacturerInformationProps>();
 const { t } = useI18n();
