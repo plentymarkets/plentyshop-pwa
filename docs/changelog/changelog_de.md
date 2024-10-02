@@ -3,6 +3,7 @@
 ## v1.7.0
 
 - Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
+- Text- und Inhaltsanpassungen
 
 ## v1.6.0
 
