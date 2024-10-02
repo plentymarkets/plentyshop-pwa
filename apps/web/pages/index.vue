@@ -90,7 +90,7 @@ const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard-resized.avif',
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
