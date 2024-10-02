@@ -36,6 +36,7 @@
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderShippingSummary :order="order" />
           <OrderPaymentSummary :order="order" />
+          <OrderBankDetails :bank-details="orderGetters.getOrderPaymentBankDetails(order)" />
         </div>
 
         <div
