@@ -114,6 +114,7 @@
 
 ### 🏡 Chore
 
+- Removed unnecessary vue imports
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 - Added e2e tests for reviews pagination.
 
