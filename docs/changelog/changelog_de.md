@@ -1,5 +1,9 @@
 # Changelog plentyshopPWA
 
+## v1.7.0
+
+- Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
+
 ## v1.6.0
 
 ### TODO 📙 Migrationsanleitung
@@ -16,6 +20,8 @@
   - `100` -> `50`
 - Ersetze alle Vorkommen von `SfButton` mit `UiButton`.
 - Aktualisiere den Namen der Umgebungsvariablen `NEWSLETTER_FORM_SHOW_NAMES` zu `NEWSLETTERFORMNAMES`.
+- Aktualisiere den Namen der Umgebungsvariablen `USE_AVIF` zu `IMAGEAVIF`.
+- Aktualisiere den Namen der Umgebungsvariablen `USE_WEBP` zu `IMAGEWEBP`.
 
 ### 🚀 Hinzugefügt
 

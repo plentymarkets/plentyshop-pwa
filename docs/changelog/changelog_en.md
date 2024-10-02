@@ -1,5 +1,10 @@
 # Changelog plentyshopPWA
 
+## v1.7.0
+
+- New Homepage is now customizable via Category Template GET Call.
+- Fixed my orders actions paddings and cookie bar link sizes.
+
 ## v1.6.0
 
 ### TODO 📙 Migration guide
@@ -16,6 +21,8 @@
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
 - Update the variable name `NEWSLETTER_FORM_SHOW_NAMES` to `NEWSLETTERFORMNAMES` in your environment.
+- Update the variable name `USE_AVIF` to `IMAGEAVIF` in your environment.
+- Update the variable name `USE_WEBP` to `IMAGEWEBP` in your environment.
 
 ### 🚀 New
 
@@ -38,6 +45,7 @@
 
 #### SEO
 
+- The app now reads the head title and title suffix from the environment.
 - The app now reads metadata for products and categories, from the environment.
 - The app now reads title and alternate for product images, from the environment.
 - The app now reads metadata, such as description and keywords, from the environment.
@@ -106,6 +114,7 @@
 
 ### 🏡 Chore
 
+- Removed unnecessary vue imports
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 - Added e2e tests for reviews pagination.
 

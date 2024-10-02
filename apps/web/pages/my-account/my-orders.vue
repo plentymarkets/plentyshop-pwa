@@ -104,7 +104,7 @@
               <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
+              <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
                 <UiButton
                   :tag="NuxtLink"
                   size="sm"

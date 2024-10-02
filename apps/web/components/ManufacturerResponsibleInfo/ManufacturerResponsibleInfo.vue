@@ -21,9 +21,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { productGetters } from '@plentymarkets/shop-api';
-import type { ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
+import { type ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
 
 const props = defineProps<ManufacturerResponsibleInfoProps>();
 const { t } = useI18n();
