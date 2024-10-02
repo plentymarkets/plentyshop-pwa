@@ -36,7 +36,10 @@
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderShippingSummary :order="order" />
           <OrderPaymentSummary :order="order" />
-          <OrderBankDetails :bank-details="orderGetters.getOrderPaymentBankDetails(order)" />
+          <OrderBankDetails
+            v-if="orderGetters.getOrderPaymentBankDetails(order)"
+            :bank-details="orderGetters.getOrderPaymentBankDetails(order) as OrderPaymentBankDetails"
+          />
         </div>
 
         <div
@@ -90,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderGetters, OrderPaymentBankDetails } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
 import type { ConfirmationPageContentProps } from './types';
 import { paths } from '~/utils/paths';
