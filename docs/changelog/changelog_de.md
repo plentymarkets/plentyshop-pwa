@@ -5,6 +5,7 @@
 - Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
 - Text- und Inhaltsanpassungen
 - Die Sprache ist jetzt anpassbar
+- Fügen Sie das richtige Standardbild für die Medienkarte hinzu
 
 ## v1.6.0
 

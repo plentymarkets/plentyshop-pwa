@@ -6,6 +6,7 @@
 - Fixed my orders actions paddings and cookie bar link sizes.
 - Text and content adaptations
 - Language is now customizable
+- Add correct default image for media card
 
 ## v1.6.0
 
