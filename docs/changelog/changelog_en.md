@@ -4,6 +4,7 @@
 
 - New Homepage is now customizable via Category Template GET Call.
 - Fixed my orders actions paddings and cookie bar link sizes.
+- Text and content adaptations
 
 ## v1.6.0
 
