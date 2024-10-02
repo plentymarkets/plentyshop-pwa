@@ -5,6 +5,7 @@
 - Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
 - Text- und Inhaltsanpassungen
 - Die Sprache ist jetzt anpassbar
+
 ## v1.6.0
 
 ### TODO 📙 Migrationsanleitung
