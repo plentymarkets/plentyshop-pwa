@@ -4237,7 +4237,7 @@ __metadata:
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 8.1.0
-    "@plentymarkets/shop-api": ^0.64.0
+    "@plentymarkets/shop-api": ^0.64.1
     "@types/applepayjs": ^14.0.8
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.2
@@ -4269,14 +4269,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.64.0":
-  version: 0.64.0
-  resolution: "@plentymarkets/shop-api@npm:0.64.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.64.0%2Fec04299ace9c7413367291f892907f2776ba6f8a"
+"@plentymarkets/shop-api@npm:^0.64.1":
+  version: 0.64.1
+  resolution: "@plentymarkets/shop-api@npm:0.64.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.64.1%2F4c811505fa8c7c76fe8d1fa0b98cb2cb8a416e81"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
-    axios: ^1.7.5
+    axios: ^1.7.7
     consola: ^3.2.3
-  checksum: 3570b77d1e2c29dcd577bda60db1adc64ecd9a8454a387f1452760276a64a56f427bf2cf87e2091b7bc0bbcd1fd2185c0697206a71a453903c3b89e0c04e35a2
+  checksum: 6bf961b9ab82b34d56875685f6d561298ad1474e75a30b57621458dcbf936a3a18ec2c7908a08a8309a5a04a16df7701062f34c394e9b6ad7e23cb8eca61cea3
   languageName: node
   linkType: hard
 
@@ -7236,7 +7236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.7.2, axios@npm:^1.7.5":
+"axios@npm:^1.6.1, axios@npm:^1.7.2":
   version: 1.7.5
   resolution: "axios@npm:1.7.5"
   dependencies:
@@ -7244,6 +7244,17 @@ __metadata:
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
   checksum: 2859fe01437cf133eee35571abc1d4b5224bb13e530e66cb3581ca226e170541dd5eef9f46abb41592cee0a2f54930c9e4978354e0cf1064748fc20d9a05e9d5
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.7.7":
+  version: 1.7.7
+  resolution: "axios@npm:1.7.7"
+  dependencies:
+    follow-redirects: ^1.15.6
+    form-data: ^4.0.0
+    proxy-from-env: ^1.1.0
+  checksum: 882d4fe0ec694a07c7f5c1f68205eb6dc5a62aecdb632cc7a4a3d0985188ce3030e0b277e1a8260ac3f194d314ae342117660a151fabffdc5081ca0b5a8b47fe
   languageName: node
   linkType: hard
 
