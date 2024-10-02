@@ -18,14 +18,16 @@
           :width="getSizeForViewport(headPhones.sizes).width"
           :height="getSizeForViewport(headPhones.sizes).height"
           :alt="headPhones.alt"
-          class="h-full object-cover object-left"
+          class="h-full object-cover object-left md:h-full md:object-contain"
         />
       </div>
       <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
         <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
           {{ formattedHeroItems[0].tagline }}
         </p>
-        <h1 class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold mt-2 mb-4">
+        <h1
+          class="typography-display-2 md:typography-display-1 md:leading-[67.5px] font-bold text-center md:text-left mt-2 mb-4"
+        >
           {{ formattedHeroItems[0].heading }}
         </h1>
         <p class="typography-text-base md:typography-text-lg text-center md:text-left">
@@ -88,35 +90,19 @@ const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
-      tagline: 'Fell the music',
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard-resized.avif',
+      tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
         "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.\n" +
         '\n',
-      callToAction: 'Order Now"',
-      link: '',
-    },
-    {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/pexels-chevanon-1108099.jpg',
-      tagline: 'test slide 2',
-      heading: 'new heading',
-      description: 'imagine an description here',
-      callToAction: 'click again',
-      link: '',
-    },
-    {
-      image: '',
-      tagline: '',
-      heading: '',
-      description: '',
-      callToAction: '',
+      callToAction: 'Order Now',
       link: '',
     },
   ],
   valueProposition: {
     text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h3 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h3><p class='text-base mb-6'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/casti.jpg',
+    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
   },
   featured: [
     {
