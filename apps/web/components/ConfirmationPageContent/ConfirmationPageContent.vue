@@ -36,10 +36,7 @@
         <div class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full my-4 text-sm">
           <OrderShippingSummary :order="order" />
           <OrderPaymentSummary :order="order" />
-          <OrderBankDetails
-            v-if="orderGetters.getOrderPaymentBankDetails(order)"
-            :bank-details="orderGetters.getOrderPaymentBankDetails(order) as OrderPaymentBankDetails"
-          />
+          <OrderBankDetails v-if="bankDetails" :bank-details="bankDetails" />
         </div>
 
         <div
@@ -93,18 +90,19 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters, OrderPaymentBankDetails } from '@plentymarkets/shop-api';
+import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import type { ConfirmationPageContentProps } from './types';
+import { type ConfirmationPageContentProps } from './types';
 import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
-defineProps<ConfirmationPageContentProps>();
+const { order } = defineProps<ConfirmationPageContentProps>();
 const { t } = useI18n();
 const { isOpen: isAuthenticationOpen, toggle: closeAuthentication } = useDisclosure();
 const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const localePath = useLocalePath();
+const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
 
 await getActiveShippingCountries();
 </script>
