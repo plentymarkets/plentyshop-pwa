@@ -3,13 +3,9 @@ import path from 'node:path';
 import * as fs from 'node:fs';
 
 export const getLocaleObject = () => {
-  let localeObject: LocaleObject[] = [
-    { code: 'en', file: 'en.json' },
-    { code: 'de', file: 'de.json' },
-  ];
+  let localeObject: LocaleObject[] = [];
 
   if (process.env.LANGUAGELIST !== undefined) {
-    localeObject = [];
     const languageList = process.env.LANGUAGELIST.split(',');
     const defaultLanguage = process.env.DEFAULTLANGUAGE;
 
@@ -34,13 +30,13 @@ export const getLocaleObject = () => {
         });
       }
     });
+  }
 
-    if (localeObject.length === 0) {
-      localeObject = [
-        { code: 'en', file: 'en.json' },
-        { code: 'de', file: 'de.json' },
-      ];
-    }
+  if (localeObject.length === 0) {
+    localeObject = [
+      { code: 'en', file: 'en.json' },
+      { code: 'de', file: 'de.json' },
+    ];
   }
 
   return localeObject;
