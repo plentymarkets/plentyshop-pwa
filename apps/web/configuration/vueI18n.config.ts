@@ -1,5 +1,5 @@
 export default {
-  fallbackLocale: (process.env.DEFAULTLANGUAGE ?? 'en').toLowerCase(),
+  fallbackLocale: process.env.DEFAULTLANGUAGE ?? 'en',
   detectBrowserLanguage: false,
   numberFormats: {
     en: {
