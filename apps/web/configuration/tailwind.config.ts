@@ -9,6 +9,14 @@ export default {
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
   theme: {
     extend: {
+      sfTypography: () => ({
+        'display-1': {
+          fontFamily: 'inherit',
+        },
+        'display-2': {
+          fontFamily: 'inherit',
+        },
+      }),
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
       },
