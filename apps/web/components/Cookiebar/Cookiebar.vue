@@ -81,8 +81,8 @@
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{
                         getCookiePropertyValue(cookie, propKey).startsWith('CookieBar.')
-                        ? $t(getCookiePropertyValue(cookie, propKey))
-                        : getCookiePropertyValue(cookie, propKey)
+                          ? $t(getCookiePropertyValue(cookie, propKey))
+                          : getCookiePropertyValue(cookie, propKey)
                       }}
                     </template>
                   </div>
