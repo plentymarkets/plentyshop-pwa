@@ -8,6 +8,10 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 
+### 👷 Changed
+
+- Change the mobile design of the cookie bar layout
+
 ## v1.6.0
 
 ### TODO 📙 Migration guide
