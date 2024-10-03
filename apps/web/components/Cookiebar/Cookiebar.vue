@@ -24,6 +24,7 @@
               v-model="cookieGroup.accepted"
               @update:model-value="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
+              class="md:h-6 md:w-6"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
               {{ $t(cookieGroup.name) }}
@@ -111,7 +112,7 @@
       <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
         <div class="flex-1">
           <UiButton
-            class="w-full h-10"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Accept All')"
@@ -123,7 +124,7 @@
         </div>
         <div class="flex-1">
           <UiButton
-            class="w-full h-10"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Reject All')"
@@ -135,7 +136,7 @@
         <div class="flex-1">
           <UiButton
             variant="secondary"
-            class="w-full h-10"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Accept Selection')"
