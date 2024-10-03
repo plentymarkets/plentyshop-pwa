@@ -32,7 +32,7 @@
         </template>
       </div>
     </div>
-    <div v-else class="sm:h-1/2 max-sm:h-full overflow-y-auto h-80 pb-2">
+    <div v-else class="max-sm:h-[400px] overflow-y-auto h-80 pb-2">
       <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex">
         <div v-if="cookieGroup?.cookies?.length" class="mb-2 bg-gray-100 p-2">
           <SfCheckbox
@@ -70,7 +70,7 @@
                   <div class="w-1/4">
                     {{ $t(`CookieBar.keys.${propKey}`) }}
                   </div>
-                  <div class="w-3/4">
+                  <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
                       <!-- TODO -->
                       <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
@@ -80,8 +80,8 @@
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{
                         getCookiePropertyValue(cookie, propKey).startsWith('CookieBar.')
-                          ? $t(getCookiePropertyValue(cookie, propKey))
-                          : getCookiePropertyValue(cookie, propKey)
+                        ? $t(getCookiePropertyValue(cookie, propKey))
+                        : getCookiePropertyValue(cookie, propKey)
                       }}
                     </template>
                   </div>
