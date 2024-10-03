@@ -8,6 +8,10 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 
+### 👷 Changed
+
+- Change the mobile design of the cookie bar layout
+
 ## v1.6.0
 
 ### TODO 📙 Migration guide
@@ -98,7 +102,6 @@
 
 ### 👷 Changed
 
-- Change the mobile design of the cookie bar layout
 - Addresses: Enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
 - Unify html nodes on category page to use `h6` node.
 - Added display of file properties with download links for items.
