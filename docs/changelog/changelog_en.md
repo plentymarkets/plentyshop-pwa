@@ -5,6 +5,8 @@
 - New Homepage is now customizable via Category Template GET Call.
 - Fixed my orders actions paddings and cookie bar link sizes.
 - Text and content adaptations
+- Added bank details to the order confirmation page if the payment method is cash in advance.
+- Language is now customizable
 
 ## v1.6.0
 
