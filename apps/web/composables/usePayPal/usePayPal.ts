@@ -23,7 +23,6 @@ export const usePayPal = () => {
     isReady: false,
   }));
 
-  const scriptCache = new Map<string, PayPalNamespace | null>();
   const localeMap: Record<string, string> = { de: 'de_DE' };
   const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
 
@@ -45,7 +44,7 @@ export const usePayPal = () => {
   };
 
   /**
-   * Loads the PayPal script and caches it.
+   * Loads the PayPal script.
    * @param currency string
    * @param locale string
    * @param commit boolean
@@ -57,10 +56,6 @@ export const usePayPal = () => {
     const clientId = state.value.config ? paypalGetters.getClientId(state.value.config) : null;
 
     if (!clientId) return null;
-
-    const cacheKey = `${currency}_${locale}_${commit}`;
-
-    if (scriptCache.size > 0 && scriptCache.has(cacheKey)) return scriptCache.get(cacheKey) || null;
 
     try {
       return await loadPayPalScript({
