@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isReady && paypalUuid" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +15,7 @@ const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerTy
 
 const textStylePlacements = ['product', 'cart', 'payment'];
 
-const paypalUuid = ref(uuid());
+const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(placement));
 
 const renderPayPalMessage = async (script: PayPalNamespace | null) => {
@@ -34,7 +34,7 @@ const renderPayPalMessage = async (script: PayPalNamespace | null) => {
       },
     });
 
-    const banner = document.querySelector('#paypal-messaging-' + paypalUuid.value);
+    const banner = document.querySelector('#paypal-messaging-' + paypalUuid);
     if (banner) await message.render('#' + banner.id);
   }
 };

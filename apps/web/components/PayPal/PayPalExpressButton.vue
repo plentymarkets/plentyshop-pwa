@@ -102,7 +102,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        console.error('Error occurred during PayPal Button rendering.'); // Add error handling
+        console.error('Error occurred during PayPal Button rendering.');
       },
       async createOrder() {
         const order = await createTransaction(fundingSource);
