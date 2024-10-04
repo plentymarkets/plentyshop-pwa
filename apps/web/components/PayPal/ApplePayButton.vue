@@ -70,7 +70,7 @@ const applePayPayment = async () => {
     paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
       try {
         const transaction = await createTransaction('applepay');
-        if (!transaction || !transaction.data.id) throw new Error('Transaction creation failed.');
+        if (!transaction || !transaction.id) throw new Error('Transaction creation failed.');
 
         const order = await createOrder({
           paymentId: cart.value.methodOfPaymentId,
@@ -80,7 +80,7 @@ const applePayPayment = async () => {
 
         try {
           await applePay.confirmOrder({
-            orderId: transaction.data.id,
+            orderId: transaction.id,
             token: event.payment.token,
             billingContact: event.payment.billingContact,
           });
@@ -92,7 +92,7 @@ const applePayPayment = async () => {
         await executeOrder({
           mode: 'paypal',
           plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-          paypalTransactionId: transaction.data.id,
+          paypalTransactionId: transaction.id,
         });
 
         paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);

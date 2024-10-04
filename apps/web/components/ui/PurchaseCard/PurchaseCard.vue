@@ -111,12 +111,10 @@
         <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-      <PayPalExpressButton v-if="showPayPalButtons" type="SingleItem" @on-click="paypalHandleAddToCart" class="mt-4" />
-      <PayPalPayLaterBanner
-        v-if="showPayPalButtons"
-        placement="product"
-        :amount="priceWithProperties * quantitySelectorValue"
-      />
+      <template v-if="showPayPalButtons">
+        <PayPalExpressButton type="SingleItem" @on-click="paypalHandleAddToCart" class="mt-4" />
+        <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+      </template>
     </div>
   </form>
 </template>

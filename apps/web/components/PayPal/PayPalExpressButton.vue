@@ -60,7 +60,7 @@ const onClick = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.data?.url)
+  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (type === TypeCheckout) {
@@ -106,7 +106,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       async createOrder() {
         const order = await createTransaction(fundingSource);
-        return order?.data?.id ?? '';
+        return order?.id ?? '';
       },
       async onApprove(data) {
         await onApprove(data);
