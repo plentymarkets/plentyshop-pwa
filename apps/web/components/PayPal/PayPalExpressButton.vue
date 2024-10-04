@@ -102,7 +102,8 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        console.error('Error occurred during PayPal Button rendering.');
+        // eslint-disable-next-line unicorn/expiring-todo-comments
+        // TODO: handle error
       },
       async createOrder() {
         const order = await createTransaction(fundingSource);
@@ -113,9 +114,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
     });
 
-    if (button.isEligible() && paypalButton.value) {
-      button.render('#' + paypalButton.value.id);
-    }
+    if (button.isEligible() && paypalButton.value) button.render('#' + paypalButton.value.id);
   }
 };
 

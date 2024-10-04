@@ -8,6 +8,10 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 
+### 🩹 Fixed
+
+- Incorrect display of the PayPal loader
+
 ### 👷 Changed
 
 - Change the mobile design of the cookie bar layout
