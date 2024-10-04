@@ -1,14 +1,14 @@
 <template>
   <div
     v-if="visible"
-    class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto top-0 sm:top-auto"
+    class="fixed max-sm:flex max-sm:flex-col max-sm:justify-between z-50 w-full xl:w-3/5 xl:right-2 bottom-0 max-md:bottom-[3.9rem] shadow-2xl p-3 bg-white rounded overflow-auto end-0 sm:top-auto"
   >
     <div v-if="!furtherSettingsOn">
       <!-- cookie info -->
       <div class="font-medium text-center">
         {{ $t(cookieGroups?.barTitle) }}
       </div>
-      <div class="leading-relaxed pb-5">
+      <div class="leading-relaxed overflow-y-scroll sm:h-auto h-[295px] pb-5">
         {{ $t(cookieGroups?.barDescription) }}
 
         <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
@@ -16,14 +16,15 @@
         </SfLink>
       </div>
       <!-- checkboxes -->
-      <div v-if="cookieJson" class="grid sm:grid-cols-4 xs:grid-cols-3">
+      <div v-if="cookieJson" class="flex sm:grid sm:grid-cols-4">
         <template v-for="(cookieGroup, index) in cookieJson.groups" :key="index">
-          <div v-if="cookieGroup?.cookies?.length" class="sm:mb-5 mb-2 pr-2 flex items-center">
+          <div v-if="cookieGroup?.cookies?.length" class="mb-2 flex items-center ml-2 p-1">
             <SfCheckbox
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
               @update:model-value="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
+              class="md:h-6 md:w-6"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
               {{ $t(cookieGroup.name) }}
@@ -32,7 +33,7 @@
         </template>
       </div>
     </div>
-    <div v-else class="max-sm:h-full overflow-y-auto h-80 pb-2">
+    <div v-else class="max-sm:h-[400px] overflow-y-auto h-80 pb-2">
       <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex">
         <div v-if="cookieGroup?.cookies?.length" class="mb-2 bg-gray-100 p-2">
           <SfCheckbox
@@ -70,7 +71,7 @@
                   <div class="w-1/4">
                     {{ $t(`CookieBar.keys.${propKey}`) }}
                   </div>
-                  <div class="w-3/4">
+                  <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
                       <!-- TODO -->
                       <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
@@ -98,10 +99,9 @@
         </div>
       </template>
     </div>
-    <!-- further settings / back button -->
     <div>
       <div class="text-center mt-2">
-        <SfLink class="text-2xl md:text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
+        <SfLink class="text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
           {{ $t('CookieBar.Further Settings') }}
         </SfLink>
         <SfLink v-else href="#" @click="furtherSettingsOn = false">
@@ -112,7 +112,7 @@
       <div class="w-full flex flex-col xl:flex-row mt-5 gap-2 mb-2">
         <div class="flex-1">
           <UiButton
-            class="w-full h-12"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Accept All')"
@@ -124,7 +124,7 @@
         </div>
         <div class="flex-1">
           <UiButton
-            class="w-full h-12"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Reject All')"
@@ -136,7 +136,7 @@
         <div class="flex-1">
           <UiButton
             variant="secondary"
-            class="w-full h-12"
+            class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
             :aria-label="$t('CookieBar.Accept Selection')"
