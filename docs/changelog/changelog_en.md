@@ -95,6 +95,7 @@
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
+- Display fonts now use the configured font family.
 
 ### 👷 Changed
 
@@ -114,6 +115,7 @@
 - Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
 - Eliminate the separate review average fetch by retrieving data directly from the reviews request.
 - Resize demo favicon to 3 kb.
+- The whole application uses the same font family now.
 
 ### 🏡 Chore
 
