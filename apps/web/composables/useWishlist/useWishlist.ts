@@ -9,7 +9,10 @@ import type {
   IsWishlistItem,
   InteractWithWishlist,
   SetWishlistItemIds,
+  IsWishlistItemMainVariation,
+  SetWishlistVariationIds,
 } from '~/composables/useWishlist/types';
+import {WishlistVariation} from "../../../../../plentymarkets-sdk/packages/api-client/src/types/api/wishlist";
 
 /**
  * @description Composable for managing wishlist.
@@ -26,6 +29,7 @@ export const useWishlist: UseWishlistReturn = () => {
     data: [] as WishlistItem[],
     loading: false,
     wishlistItemIds: [] as string[],
+    wishlistVariationIds: [] as WishlistVariation[],
   }));
 
   /**
@@ -44,6 +48,9 @@ export const useWishlist: UseWishlistReturn = () => {
       .then(({ data }) => {
         state.value.data = data ?? state.value.data;
         state.value.loading = false;
+        const itemIds = data ?? state.value.wishlistItemIds;
+        setWishlistItemIds(itemIds.map((wishlistItem) => wishlistItem.variation.id.toString()));
+
         return state.value.data;
       });
   };
@@ -65,6 +72,19 @@ export const useWishlist: UseWishlistReturn = () => {
         state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
       );
     }
+  };
+
+  /**
+   * @description Function for setting the wishlist variation ids.
+   * @return SetWishlistVariationIds
+   * @example
+   * ``` ts
+   *  setWishlistVariationIds([{variationId: 1, canDirectlyAddToCart: 0}, {variationId: 2, canDirectlyAddToCart: 1}]);
+   * ```
+   * @param wishlistItemIds
+   */
+  const setWishlistVariationIds: SetWishlistVariationIds = (wishlistItems = []) => {
+    state.value.wishlistVariationIds = wishlistItems.map((item) => item);
   };
 
   /**
@@ -126,7 +146,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return !!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item);
+    return (!!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item));
   };
 
   /**
@@ -155,6 +175,17 @@ export const useWishlist: UseWishlistReturn = () => {
         ));
   };
 
+  const isWishlistItemMainVariation: IsWishlistItem = (variationId: number) => {
+    const isMainVariationId = !!state.value.wishlistVariationIds?.find((item: WishlistVariation) => {
+      console.log("item.variationId === variationId: ", item.variationId === variationId);
+      console.log("Number(item.canDirectlyAddToCart) === 0: ", Number(item.canDirectlyAddToCart) === 0);
+
+      return (item.variationId === variationId) && (Number(item.canDirectlyAddToCart) === 0);
+    });
+
+    return isMainVariationId;
+  };
+
   return {
     fetchWishlist,
     addWishlistItem,
@@ -162,6 +193,8 @@ export const useWishlist: UseWishlistReturn = () => {
     deleteWishlistItem,
     isWishlistItem,
     interactWithWishlist,
+    isWishlistItemMainVariation,
+    setWishlistVariationIds,
     ...toRefs(state.value),
   };
 };

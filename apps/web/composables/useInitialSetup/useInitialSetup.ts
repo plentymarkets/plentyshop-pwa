@@ -42,7 +42,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setUser } = useCustomer();
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
-  const { setWishlistItemIds } = useWishlist();
+  const { setWishlistItemIds, setWishlistVariationIds } = useWishlist();
 
   cartLoading.value = true;
 
@@ -52,7 +52,18 @@ const setInitialDataSSR: SetInitialData = async () => {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
-      setWishlistItemIds(data.value.data.session?.basket?.itemWishListIds || []);
+      const wishlistIdsFromSession = data.value.data.session?.basket?.itemWishListIds || [];
+      const wishlistIdsJSON = JSON.parse(
+          JSON.stringify(wishlistIdsFromSession)
+      );
+      const wishlistIds = [];
+      const wishlistVariationIds = [];
+      for (let i = 0; i < wishlistIdsJSON.length; i++) {
+        wishlistIds.push(wishlistIdsJSON[i].variationId);
+        wishlistVariationIds.push(wishlistIdsJSON[i]);
+      }
+      setWishlistItemIds(wishlistIds || []);
+      setWishlistVariationIds(wishlistVariationIds || []);
     }
   } catch (error) {
     useHandleError(error as ErrorParams);

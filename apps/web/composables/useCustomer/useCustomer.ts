@@ -63,7 +63,15 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
-    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
+    const wishlistIdsFromSession = state.value.data?.basket?.itemWishListIds || [];
+    const wishlistIdsJSON = JSON.parse(
+        JSON.stringify(wishlistIdsFromSession)
+    );
+    const wishlistIds = [];
+    for (let i = 0; i < wishlistIdsJSON.length; i++) {
+      wishlistIds.push(wishlistIdsJSON[i].variationId);
+    }
+    useWishlist().setWishlistItemIds(wishlistIds || []);
 
     state.value.loading = false;
     return state.value.data;
