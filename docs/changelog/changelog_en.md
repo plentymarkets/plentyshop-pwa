@@ -1,5 +1,17 @@
 # Changelog plentyshopPWA
 
+## v1.7.0
+
+- New Homepage is now customizable via Category Template GET Call.
+- Fixed my orders actions paddings and cookie bar link sizes.
+- Text and content adaptations
+- Added bank details to the order confirmation page if the payment method is cash in advance.
+- Language is now customizable
+
+### 👷 Changed
+
+- Change the mobile design of the cookie bar layout
+
 ## v1.6.0
 
 ### TODO 📙 Migration guide
@@ -16,6 +28,8 @@
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
 - Update the variable name `NEWSLETTER_FORM_SHOW_NAMES` to `NEWSLETTERFORMNAMES` in your environment.
+- Update the variable name `USE_AVIF` to `IMAGEAVIF` in your environment.
+- Update the variable name `USE_WEBP` to `IMAGEWEBP` in your environment.
 
 ### 🚀 New
 
@@ -34,9 +48,11 @@
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
 - It is possible to disable api caching with query param `noCache=1` for debugging purposes.
+- Added Manufacturer and EU Responsible information to product page.
 
 #### SEO
 
+- The app now reads the head title and title suffix from the environment.
 - The app now reads metadata for products and categories, from the environment.
 - The app now reads title and alternate for product images, from the environment.
 - The app now reads metadata, such as description and keywords, from the environment.
@@ -105,6 +121,7 @@
 
 ### 🏡 Chore
 
+- Removed unnecessary vue imports
 - Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
 - Added e2e tests for reviews pagination.
 
@@ -330,6 +347,8 @@
 
 ### Fixed
 
+- Removed demo how-to-buy section from footer.
+- Fixed Order properties responsiveness bug
 - Addresses in the checkout now update properly.
 - The PayPal buttons now show the correct text depending on the location of the button.
 - The mega menu no longer displays categories without a label.

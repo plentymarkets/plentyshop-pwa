@@ -2,7 +2,7 @@ export const appConfiguration = {
   head: {
     viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
     htmlAttrs: {
-      lang: 'en',
+      lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
       { name: 'shop-name', content: 'plentyShop PWA Demo' },
@@ -18,5 +18,6 @@ export const appConfiguration = {
       { rel: 'icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', href: '/favicon.ico' },
     ],
+    title: process.env.STORENAME || 'plentyShop PWA',
   },
 };

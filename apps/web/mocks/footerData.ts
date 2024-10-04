@@ -1,30 +1,5 @@
 export const categories = [
   {
-    key: 'howToBuy',
-    subcategories: [
-      {
-        key: 'paymentMethods',
-        link: paths.home,
-      },
-      {
-        key: 'orderPickup',
-        link: paths.home,
-      },
-      {
-        key: 'purchaseStatus',
-        link: paths.home,
-      },
-      {
-        key: 'trackOrders',
-        link: paths.home,
-      },
-      {
-        key: 'returns',
-        link: paths.home,
-      },
-    ],
-  },
-  {
     key: 'legal',
     subcategories: [
       {
