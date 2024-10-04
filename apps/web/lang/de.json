@@ -651,6 +651,14 @@
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
   "or": "oder",
+  "offerForm": {
+    "offer": "Angebot",
+    "declineOffer": "Angebot ablehnen",
+    "acceptOffer": "Angebot annehmen",
+    "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
+    "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",
+    "cancel": "Abbrechen"
+  },
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
