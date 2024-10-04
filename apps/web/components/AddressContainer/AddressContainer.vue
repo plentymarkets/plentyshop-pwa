@@ -6,7 +6,13 @@
       </h2>
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
-        <AddressSelect v-if="!editing && !showNewForm" :type="type" @new="showNewForm = true" @edit="edit" />
+        <AddressSelect
+          v-if="!editing && !showNewForm"
+          :type="type"
+          :disabled="disabled"
+          @new="showNewForm = true"
+          @edit="edit"
+        />
         <UiButton
           :data-testid="'save-address-' + type"
           v-else
@@ -20,14 +26,9 @@
         <SfTooltip
           v-if="showNewForm || hasCheckoutAddress"
           class="ml-2"
-          :label="!editing && !showNewForm ? t('editAddress') : ''"
+          :label="!editing && !showNewForm && !disabled ? t('editAddress') : ''"
         >
-          <UiButton
-            v-if="(!disabled && checkoutAddress) || (!checkoutAddress && showNewForm)"
-            @click="edit(checkoutAddress)"
-            :disabled="formIsLoading"
-            variant="secondary"
-          >
+          <UiButton @click="edit(checkoutAddress)" :disabled="formIsLoading || disabled" variant="secondary">
             <template v-if="!editing && !showNewForm">{{ t('contactInfo.edit') }}</template>
             <SfIconClose v-else />
           </UiButton>
@@ -96,6 +97,7 @@ const dynamicAddressText = computed(() =>
 );
 
 const edit = (address: Address) => {
+  if (disabled) return;
   addressToEdit.value = editing.value || showNewForm.value ? ({} as Address) : address;
   editing.value = !(editing.value || showNewForm.value);
   showNewForm.value = false;

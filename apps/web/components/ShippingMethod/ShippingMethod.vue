@@ -62,6 +62,7 @@ const showShippingPrivacy = computed(
 );
 
 const updateShippingMethod = (shippingId: string) => {
+  if (disabled) return;
   radioModel.value = shippingId;
   emit('update:shippingMethod', radioModel.value);
 };
