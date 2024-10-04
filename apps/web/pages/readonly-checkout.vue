@@ -148,8 +148,6 @@ const order = async () => {
 
   clearCartItems();
 
-  if (data?.order?.id) {
-    navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
-  }
+  if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
 };
 </script>
