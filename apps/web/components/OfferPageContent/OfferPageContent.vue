@@ -3,7 +3,7 @@
     name="checkout"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
-    :heading="t('documents.Offer')"
+    :heading="t('offerForm.offer')"
   >
     <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
@@ -102,7 +102,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('offer.accept') }}
+                {{ t('offerForm.acceptOffer') }}
               </span>
             </UiButton>
             <UiButton
@@ -115,7 +115,7 @@
             >
               <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
               <span v-else>
-                {{ t('offer.decline') }}
+                {{ t('offerForm.declineOffer') }}
               </span>
             </UiButton>
           </div>
@@ -128,13 +128,13 @@
             <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="toggleModal">
               <SfIconClose />
             </UiButton>
-            <h1 class="font-bold text-xl mb-2">{{ t('offer.decline') }}</h1>
-            <p class="mb-4">{{ t('offer.declineDialogSubline') }}</p>
+            <h1 class="font-bold text-xl mb-2">{{ t('offerForm.declineOffer') }}</h1>
+            <p class="mb-4">{{ t('offerForm.declineDialogSubline') }}</p>
             <p>{{ t('returns.commentOptional') }}</p>
             <textarea
               class="w-full min-h-32 md:min-w-96 border-2 rounded-md p-4"
               v-model="declineText"
-              :placeholder="t('offer.inputPlaceholder')"
+              :placeholder="t('offerForm.inputPlaceholder')"
             ></textarea>
             <div class="flex space-x-4">
               <UiButton
@@ -146,7 +146,7 @@
                 class="w-full mt-4 md:mb-0 cursor-pointer"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> {{ t('offer.cancel') }} </span>
+                <span v-else> {{ t('offerForm.cancel') }} </span>
               </UiButton>
               <UiButton
                 type="submit"
@@ -157,7 +157,7 @@
                 class="w-full mt-4 md:mb-0 cursor-pointer"
               >
                 <SfLoaderCircular v-if="offerLoading" class="flex justify-center items-center" size="sm" />
-                <span v-else> {{ t('offer.decline') }} </span>
+                <span v-else> {{ t('offerForm.declineOffer') }} </span>
               </UiButton>
             </div>
           </UiModal>
