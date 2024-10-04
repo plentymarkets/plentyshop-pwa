@@ -117,7 +117,7 @@ await loadAddresses();
 await getShippingMethods();
 await fetchPaymentMethods();
 await savePaymentMethod(
-  paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id || 0,
+  paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id ?? 0,
 );
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
@@ -148,6 +148,8 @@ const order = async () => {
 
   clearCartItems();
 
-  if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+  if (data?.order?.id) {
+    navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+  }
 };
 </script>
