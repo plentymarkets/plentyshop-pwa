@@ -1,6 +1,6 @@
 <template>
   <NuxtLazyHydrate when-visible>
-    <template v-if="Object.keys(data).length > 0 && typeof data !== 'string'">
+    <template v-if="Object.keys(data).length > 0 && typeof data === 'object' && !('message' in data)">
       <OfferPageContent :offer="data" @accept="accept" @decline="decline" />
     </template>
   </NuxtLazyHydrate>
