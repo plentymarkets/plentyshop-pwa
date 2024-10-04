@@ -11,18 +11,18 @@ import { PayPalNamespace } from '@paypal/paypal-js';
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const { isReady, getScript } = usePayPal();
-const props = defineProps<PayPalPayLaterBannerType>();
+const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerType>();
 
 const textStylePlacements = ['product', 'cart', 'payment'];
 
 const paypalUuid = ref(uuid());
-const isTextStyle = ref(textStylePlacements.includes(props.placement));
+const isTextStyle = ref(textStylePlacements.includes(placement));
 
 const renderPayPalMessage = async (script: PayPalNamespace | null) => {
   if (script && script.Messages) {
     const message = script.Messages({
-      amount: props.amount,
-      placement: props.placement,
+      amount: amount,
+      placement: placement,
       style: {
         layout: isTextStyle.value ? 'text' : 'flex',
         color: isTextStyle.value ? 'white-no-border' : 'blue',
@@ -34,16 +34,17 @@ const renderPayPalMessage = async (script: PayPalNamespace | null) => {
       },
     });
 
-    if (message) await message.render('#paypal-messaging-' + paypalUuid.value);
+    const banner = document.querySelector('#paypal-messaging-' + paypalUuid.value);
+    if (banner) await message.render('#' + banner.id);
   }
 };
 
 const renderMessage = async () => {
   try {
-    const script = await getScript(currency.value, props.commit ?? false);
+    const script = await getScript(currency.value, commit);
     await renderPayPalMessage(script);
-  } catch (_error) {
-    console.error('Failed to render PayPal Pay Later banner', _error);
+  } catch (error) {
+    console.error('Failed to render PayPal Pay Later banner', error);
   }
 };
 
@@ -55,7 +56,7 @@ watch(
 );
 
 watch(
-  () => props.amount,
+  () => amount,
   async () => await renderMessage(),
 );
 </script>
