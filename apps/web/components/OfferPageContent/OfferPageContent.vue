@@ -135,7 +135,7 @@
               class="w-full min-h-32 md:min-w-96 border-2 rounded-md p-4"
               v-model="declineText"
               :placeholder="t('offerForm.inputPlaceholder')"
-            ></textarea>
+            />
             <div class="flex space-x-4">
               <UiButton
                 type="submit"
@@ -173,6 +173,7 @@ import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-u
 import { paths } from '~/utils/paths';
 import { OfferPageContentProps } from './types';
 
+const { loading: offerLoading } = useOffer();
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();

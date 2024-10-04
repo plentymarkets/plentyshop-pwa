@@ -1,7 +1,7 @@
 <template>
   <NuxtLazyHydrate when-visible>
     <template v-if="Object.keys(data).length > 0 && typeof data !== 'string'">
-      <OfferPageContent :offer="data" :offer-loading="loadingOffer.value" @accept="accept" @decline="decline" />
+      <OfferPageContent :offer="data" @accept="accept" @decline="decline" />
     </template>
   </NuxtLazyHydrate>
   <NuxtLazyHydrate when-visible>
@@ -17,7 +17,7 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { data, loading: offerLoading, error, fetchOffer, declineOffer, acceptOffer } = useOffer();
+const { data, error, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
 const localePath = useLocalePath();
@@ -52,7 +52,6 @@ if (error.value) {
 }
 
 await loadOffer();
-const loadingOffer = computed(() => offerLoading);
 
 const decline = async (text: string) => {
   await declineOffer({
