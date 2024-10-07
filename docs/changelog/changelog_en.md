@@ -71,7 +71,7 @@
 - Changed contrast for `Verfied purchase` text in feedback to increase accessibility.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Added labels for both min and max price filters.
-- Changed font size of wishlist icon counter and cart icon counter.
+- Increased size of wishlist and cart icon counter.
 - Changed size for the cookie bar elements to increase accessibility.
 - Fixed basket accesibilty issues.
 - Fixed broken aria reference in cournty select and login modal.
@@ -100,7 +100,6 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
-- Fixed cart and wishlist count badge size.
 
 ### 👷 Changed
 
