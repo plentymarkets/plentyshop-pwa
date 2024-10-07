@@ -19,7 +19,7 @@ const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(placement));
 
 const renderPayPalMessage = async (script: PayPalNamespace | null) => {
-  if (script && script.Messages) {
+  if (script?.Messages) {
     const message = script.Messages({
       amount: amount,
       placement: placement,
@@ -40,12 +40,9 @@ const renderPayPalMessage = async (script: PayPalNamespace | null) => {
 };
 
 const renderMessage = async () => {
-  try {
-    const script = await getScript(currency.value, commit);
-    await renderPayPalMessage(script);
-  } catch (error) {
-    console.error('Failed to render PayPal Pay Later banner', error);
-  }
+  await getScript(currency.value, commit)
+    .then(async (script) => await renderPayPalMessage(script))
+    .catch((error) => useHandleError(error));
 };
 
 onNuxtReady(async () => await renderMessage());
