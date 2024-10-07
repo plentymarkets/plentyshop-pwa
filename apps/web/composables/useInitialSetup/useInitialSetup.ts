@@ -56,9 +56,9 @@ const setInitialDataSSR: SetInitialData = async () => {
       const wishlistIdsJSON = JSON.parse(JSON.stringify(wishlistIdsFromSession));
       const wishlistIds = [];
       const wishlistVariationIds = [];
-      for (let i = 0; i < wishlistIdsJSON.length; i++) {
-        wishlistIds.push(wishlistIdsJSON[i].variationId);
-        wishlistVariationIds.push(wishlistIdsJSON[i]);
+      for (const wishlistObject of wishlistIdsJSON) {
+        wishlistIds.push(wishlistObject.variationId);
+        wishlistVariationIds.push(wishlistObject);
       }
       setWishlistItemIds(wishlistIds || []);
       setWishlistVariationIds(wishlistVariationIds || []);

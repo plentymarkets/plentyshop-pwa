@@ -31,6 +31,25 @@ export const useWishlist: UseWishlistReturn = () => {
   }));
 
   /**
+   * @description Function for setting the wishlist item ids.
+   * @return SetWishlistItemIds
+   * @example
+   * ``` ts
+   *  setWishlistItemIds(['1', '2']);
+   * ```
+   * @param wishlistItemIds
+   */
+  const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
+    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
+
+    if (state.value.data.length > 0) {
+      state.value.data = state.value.data.filter((wishListItem) =>
+          state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
+      );
+    }
+  };
+
+  /**
    * @description Function for fetching products.
    * @return FetchWishlist
    * @example
@@ -51,25 +70,6 @@ export const useWishlist: UseWishlistReturn = () => {
 
         return state.value.data;
       });
-  };
-
-  /**
-   * @description Function for setting the wishlist item ids.
-   * @return SetWishlistItemIds
-   * @example
-   * ``` ts
-   *  setWishlistItemIds(['1', '2']);
-   * ```
-   * @param wishlistItemIds
-   */
-  const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
-    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
-
-    if (state.value.data.length > 0) {
-      state.value.data = state.value.data.filter((wishListItem) =>
-        state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
-      );
-    }
   };
 
   /**

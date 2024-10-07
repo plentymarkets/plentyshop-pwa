@@ -66,8 +66,8 @@ export const useCustomer: UseCustomerReturn = () => {
     const wishlistIdsFromSession = state.value.data?.basket?.itemWishListIds || [];
     const wishlistIdsJSON = JSON.parse(JSON.stringify(wishlistIdsFromSession));
     const wishlistIds = [];
-    for (let i = 0; i < wishlistIdsJSON.length; i++) {
-      wishlistIds.push(wishlistIdsJSON[i].variationId);
+    for (const wishlistObject of wishlistIdsJSON) {
+      wishlistIds.push(wishlistObject.variationId);
     }
     useWishlist().setWishlistItemIds(wishlistIds || []);
 
