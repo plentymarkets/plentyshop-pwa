@@ -100,6 +100,7 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
+- Fixed cart and wishlist count badge size.
 
 ### 👷 Changed
 
