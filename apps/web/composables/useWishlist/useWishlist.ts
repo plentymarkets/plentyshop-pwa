@@ -44,7 +44,7 @@ export const useWishlist: UseWishlistReturn = () => {
 
     if (state.value.data.length > 0) {
       state.value.data = state.value.data.filter((wishListItem) =>
-          state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
+        state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
       );
     }
   };
