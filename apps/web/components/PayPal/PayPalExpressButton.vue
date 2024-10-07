@@ -19,14 +19,14 @@ const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
-const { type, disabled = false } = defineProps<PaypalButtonPropsType>();
+const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
-const isCommit = type === TypeCheckout;
+const isCommit = props.type === TypeCheckout;
 const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
@@ -37,8 +37,15 @@ const checkonValidationCallbackEvent = (): boolean => {
 };
 
 const onInit = (actions: OnInitActions) => {
-  if (type === TypeCheckout) {
-    disabled ? actions.disable() : actions.enable();
+  if (props.type === TypeCheckout) {
+    props.disabled ? actions.disable() : actions.enable();
+    watch(props, (propertyValues) => {
+      if (propertyValues.disabled) {
+        actions.disable();
+      } else {
+        actions.enable();
+      }
+    });
   } else {
     actions.enable();
   }
@@ -58,10 +65,10 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.url)
+  if ((props.type === TypeCartPreview || props.type === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
-  if (type === TypeCheckout) {
+  if (props.type === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -85,7 +92,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
     const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
-        label: type === TypeCartPreview || type === TypeSingleItem ? 'checkout' : 'buynow',
+        label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
         color: 'blue',
       },
       fundingSource: fundingSource,
