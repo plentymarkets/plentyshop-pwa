@@ -1,4 +1,4 @@
-import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
+import type { AddWishlistItemResponse, WishlistItem, WishlistVariation } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
@@ -11,7 +11,6 @@ import type {
   SetWishlistItemIds,
   SetWishlistVariationIds,
 } from '~/composables/useWishlist/types';
-import {WishlistVariation} from "../../../../../plentymarkets-sdk/packages/api-client/src/types/api/wishlist";
 
 /**
  * @description Composable for managing wishlist.
@@ -145,7 +144,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return (!!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item));
+    return !!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item);
   };
 
   /**

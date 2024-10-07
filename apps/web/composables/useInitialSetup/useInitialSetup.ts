@@ -53,9 +53,7 @@ const setInitialDataSSR: SetInitialData = async () => {
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
       const wishlistIdsFromSession = data.value.data.session?.basket?.itemWishListIds || [];
-      const wishlistIdsJSON = JSON.parse(
-          JSON.stringify(wishlistIdsFromSession)
-      );
+      const wishlistIdsJSON = JSON.parse(JSON.stringify(wishlistIdsFromSession));
       const wishlistIds = [];
       const wishlistVariationIds = [];
       for (let i = 0; i < wishlistIdsJSON.length; i++) {

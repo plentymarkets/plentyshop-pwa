@@ -1,16 +1,16 @@
 import type {
   WishlistItem,
+  WishlistVariation,
   AddWishlistItemParams,
   AddWishlistItemResponse,
   DeleteWishlistItemParams,
 } from '@plentymarkets/shop-api';
-import {WishlistVariation} from "../../../../../plentymarkets-sdk/packages/api-client/src/types/api/wishlist";
 
 export interface UseWishlistState {
   data: WishlistItem[];
   loading: boolean;
   wishlistItemIds: string[];
-  wishlistVariationIds: WishlistVariation[]
+  wishlistVariationIds: WishlistVariation[];
 }
 
 export type FetchWishlist = () => Promise<WishlistItem[]>;
