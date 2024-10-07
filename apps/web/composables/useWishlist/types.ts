@@ -19,7 +19,6 @@ export type DeleteWishlistItem = (params: DeleteWishlistItemParams) => Promise<b
 export type IsWishlistItem = (variationId: number) => boolean;
 export type InteractWithWishlist = (variationId: number, quantity: number) => Promise<void>;
 export type SetWishlistItemIds = (wishlistItemIds: string[]) => void;
-export type IsWishlistItemMainVariation = (variationId: number) => boolean;
 export type SetWishlistVariationIds = (wishlistItems: any[]) => void;
 
 export interface UseWishlist {
@@ -32,7 +31,6 @@ export interface UseWishlist {
   isWishlistItem: IsWishlistItem;
   setWishlistItemIds: SetWishlistItemIds;
   interactWithWishlist: InteractWithWishlist;
-  isWishlistItemMainVariation: IsWishlistItemMainVariation;
   setWishlistVariationIds: SetWishlistVariationIds;
 }
 

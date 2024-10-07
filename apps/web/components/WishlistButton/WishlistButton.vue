@@ -30,7 +30,7 @@ import { productGetters } from '@plentymarkets/shop-api';
 
 const { product, quantity = 1, discard = false } = defineProps<WishlistButtonProps>();
 const { t } = useI18n();
-const { isWishlistItem, isWishlistItemMainVariation, interactWithWishlist, loading: wishlistLoading } = useWishlist();
+const { isWishlistItem, interactWithWishlist, loading: wishlistLoading } = useWishlist();
 const actionLoading = ref(false);
 
 const productName = computed(() => productGetters.getName(product));

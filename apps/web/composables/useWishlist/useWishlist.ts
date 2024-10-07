@@ -9,7 +9,6 @@ import type {
   IsWishlistItem,
   InteractWithWishlist,
   SetWishlistItemIds,
-  IsWishlistItemMainVariation,
   SetWishlistVariationIds,
 } from '~/composables/useWishlist/types';
 import {WishlistVariation} from "../../../../../plentymarkets-sdk/packages/api-client/src/types/api/wishlist";
@@ -175,17 +174,6 @@ export const useWishlist: UseWishlistReturn = () => {
         ));
   };
 
-  const isWishlistItemMainVariation: IsWishlistItem = (variationId: number) => {
-    const isMainVariationId = !!state.value.wishlistVariationIds?.find((item: WishlistVariation) => {
-      console.log("item.variationId === variationId: ", item.variationId === variationId);
-      console.log("Number(item.canDirectlyAddToCart) === 0: ", Number(item.canDirectlyAddToCart) === 0);
-
-      return (item.variationId === variationId) && (Number(item.canDirectlyAddToCart) === 0);
-    });
-
-    return isMainVariationId;
-  };
-
   return {
     fetchWishlist,
     addWishlistItem,
@@ -193,7 +181,6 @@ export const useWishlist: UseWishlistReturn = () => {
     deleteWishlistItem,
     isWishlistItem,
     interactWithWishlist,
-    isWishlistItemMainVariation,
     setWishlistVariationIds,
     ...toRefs(state.value),
   };
