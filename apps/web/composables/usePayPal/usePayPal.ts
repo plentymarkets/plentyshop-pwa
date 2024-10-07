@@ -92,6 +92,7 @@ export const usePayPal = () => {
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
     if (state.value.loadingScripts[scriptKey] !== undefined) {
+      state.value.isReady = true;
       return state.value.loadingScripts[scriptKey];
     }
 
