@@ -53,13 +53,6 @@ watch(
   },
 );
 
-if (error.value) {
-  send({
-    type: 'negative',
-    message: error.value.error.message,
-  });
-}
-
 await loadOffer();
 
 const decline = async (text: string) => {
