@@ -16,40 +16,47 @@ const { data: cart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
 const emits = defineEmits<{
-  (event: 'on-click', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
-const { type, disabled = false } = defineProps<PaypalButtonPropsType>();
+const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
 const TypeCartPreview = 'CartPreview';
 const TypeSingleItem = 'SingleItem';
 const TypeCheckout = 'Checkout';
 
-const isCommit = type === TypeCheckout;
+const isCommit = props.type === TypeCheckout;
 const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
-const checkOnClickEvent = (): boolean => {
+const checkonValidationCallbackEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
 
-  return !!(props && props['onOnClick']);
+  return !!(props && props['onValidationCallback']);
 };
 
 const onInit = (actions: OnInitActions) => {
-  if (type === TypeCheckout) {
-    disabled ? actions.disable() : actions.enable();
+  if (props.type === TypeCheckout) {
+    props.disabled ? actions.disable() : actions.enable();
+    watch(props, (propertyValues) => {
+      if (propertyValues.disabled) {
+        actions.disable();
+      } else {
+        actions.enable();
+      }
+    });
   } else {
     actions.enable();
   }
 };
 
-const onClick = async () => {
+const onValidationCallback = async () => {
   return await new Promise<boolean>((resolve) => {
-    if (!checkOnClickEvent()) {
+    if (!checkonValidationCallbackEvent()) {
       resolve(true);
     }
-    emits('on-click', async (successfully) => {
+    emits('validation-callback', async (successfully) => {
       resolve(successfully);
     });
   });
@@ -58,10 +65,10 @@ const onClick = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
-  if ((type === TypeCartPreview || type === TypeSingleItem) && result?.url)
+  if ((props.type === TypeCartPreview || props.type === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
-  if (type === TypeCheckout) {
+  if (props.type === TypeCheckout) {
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -85,12 +92,12 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
     const button = paypalScript.value?.Buttons({
       style: {
         layout: 'vertical',
-        label: type === TypeCartPreview || type === TypeSingleItem ? 'checkout' : 'buynow',
+        label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
         color: 'blue',
       },
       fundingSource: fundingSource,
       async onClick(data, actions) {
-        const success = await onClick();
+        const success = await onValidationCallback();
         if (!success) {
           return actions.reject();
         }
