@@ -46,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="handlePayPalExpress"
+                @validation-callback="handlePayPalExpress"
                 type="Checkout"
               />
               <PayPalPayLaterBanner

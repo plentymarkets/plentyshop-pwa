@@ -16,7 +16,7 @@ const { data: cart, clearCartItems } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const localePath = useLocalePath();
 const emits = defineEmits<{
-  (event: 'on-click', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
 
 const { type, disabled = false } = defineProps<PaypalButtonPropsType>();
@@ -30,10 +30,10 @@ const isCommit = type === TypeCheckout;
 const paypalUuid = ref(uuid());
 const paypalScript = ref<PayPalNamespace | null>(await getScript(currency.value, isCommit));
 
-const checkOnClickEvent = (): boolean => {
+const checkonValidationCallbackEvent = (): boolean => {
   const props = currentInstance?.vnode.props;
 
-  return !!(props && props['onOnClick']);
+  return !!(props && props['onValidationCallback']);
 };
 
 const onInit = (actions: OnInitActions) => {
@@ -44,12 +44,12 @@ const onInit = (actions: OnInitActions) => {
   }
 };
 
-const onClick = async () => {
+const onValidationCallback = async () => {
   return await new Promise<boolean>((resolve) => {
-    if (!checkOnClickEvent()) {
+    if (!checkonValidationCallbackEvent()) {
       resolve(true);
     }
-    emits('on-click', async (successfully) => {
+    emits('validation-callback', async (successfully) => {
       resolve(successfully);
     });
   });
@@ -90,7 +90,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       },
       fundingSource: fundingSource,
       async onClick(data, actions) {
-        const success = await onClick();
+        const success = await onValidationCallback();
         if (!success) {
           return actions.reject();
         }
