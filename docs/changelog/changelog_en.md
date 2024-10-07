@@ -14,6 +14,7 @@
 
 ### 👷 Changed
 
+- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Change the mobile design of the cookie bar layout
 
 ## v1.6.0

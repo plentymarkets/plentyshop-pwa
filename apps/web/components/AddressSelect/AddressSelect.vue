@@ -1,9 +1,10 @@
 <template>
   <SfTooltip :label="tooltipLabel">
-    <UiButton @click="handleAddressButtonTrigger" variant="secondary">{{ buttonLabel }}</UiButton>
+    <UiButton :disabled="disabled" @click="handleAddressButtonTrigger" variant="secondary">{{ buttonLabel }}</UiButton>
   </SfTooltip>
 
   <UiModal
+    v-if="!disabled"
     v-model="isOpen"
     tag="section"
     class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -50,7 +51,7 @@ import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
-const { type } = defineProps<AddressSelectProps>();
+const { disabled = false, type } = defineProps<AddressSelectProps>();
 
 const { t } = useI18n();
 const { addresses, get: getAddress } = useAddressStore(type);
@@ -66,15 +67,17 @@ const emit = defineEmits<{
 }>();
 
 const tooltipLabel = computed(() =>
-  addresses.value.length > 0
-    ? t('manageAddresses')
-    : type === AddressType.Shipping
-      ? t('shipping.addButton')
-      : t('billing.addButton'),
+  disabled
+    ? ''
+    : addresses.value.length > 0
+      ? t('manageAddresses')
+      : type === AddressType.Shipping
+        ? t('shipping.addButton')
+        : t('billing.addButton'),
 );
 
 const buttonLabel = computed(() =>
-  addresses.value.length > 0
+  disabled || addresses.value.length > 0
     ? t('pickSavedAddress')
     : t(type === AddressType.Shipping ? 'newShippingAddress' : 'newBillingAddress'),
 );
@@ -90,6 +93,7 @@ const emitEditAddressEvent = (address: Address) => {
 };
 
 const handleAddressButtonTrigger = () => {
+  if (disabled) return;
   if (addresses.value.length > 0) {
     open();
     return;
