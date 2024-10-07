@@ -76,6 +76,7 @@
     <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
+          :min-value="productGetters.getMinimumOrderQuantity(product)"
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
           class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
@@ -150,7 +151,7 @@ const {
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-const quantitySelectorValue = ref(1);
+const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
