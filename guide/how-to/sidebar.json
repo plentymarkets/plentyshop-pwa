@@ -24,6 +24,10 @@
                 "link": "/guide/how-to/cookie.md"
             },
             {
+                "text": "Homepage content",
+                "link": "/guide/how-to/homepage.md"
+            },
+            {
                 "text": "Bot protection",
                 "link": "/guide/how-to/bot-protection.md"
             },
