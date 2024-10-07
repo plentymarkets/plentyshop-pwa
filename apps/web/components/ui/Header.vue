@@ -41,8 +41,10 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-xs"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
               data-testid="wishlist-badge"
+              placement="top-right"
+              :max="99"
             />
           </template>
         </UiButton>
@@ -58,8 +60,10 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-xs"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center"
               data-testid="cart-badge"
+              placement="top-right"
+              :max="99"
             />
           </template>
         </UiButton>
