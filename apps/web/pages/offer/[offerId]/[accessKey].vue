@@ -20,8 +20,17 @@ definePageMeta({
 const { data, error, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
+const router = useRouter();
 const localePath = useLocalePath();
 const { t } = useI18n();
+
+function redirectBack() {
+  if (window.history.length > 2) {
+    router.go(-1);
+  } else {
+    navigateTo(localePath(paths.home));
+  }
+}
 
 const loadOffer = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
@@ -60,7 +69,7 @@ const decline = async (text: string) => {
     text: text as string,
   });
 
-  navigateTo(localePath(paths.cart));
+  redirectBack();
   send({
     type: 'positive',
     message: t('contact.success'),
