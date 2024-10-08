@@ -112,7 +112,7 @@
         <span>{{ t('excludedShipping') }}</span>
       </div>
       <template v-if="showPayPalButtons">
-        <PayPalExpressButton type="SingleItem" @on-click="paypalHandleAddToCart" class="mt-4" />
+        <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
         <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
       </template>
     </div>
