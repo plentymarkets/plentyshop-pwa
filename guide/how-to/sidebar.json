@@ -30,10 +30,6 @@
             {
                 "text": "Bot protection",
                 "link": "/guide/how-to/bot-protection.md"
-            },
-            {
-                "text": "Custom Icon",
-                "link": "/guide/how-to/custom-icon.md"
             }
         ]
     },
@@ -48,6 +44,10 @@
             {
                 "text": "Form validation",
                 "link": "/guide/how-to/form-validation.md"
+            },
+            {
+                "text": "Custom Icon",
+                "link": "/guide/how-to/custom-icon.md"
             }
         ]
     }
