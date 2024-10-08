@@ -25,11 +25,7 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 
 function redirectBack() {
-  if (window.history.length > 2) {
-    router.go(-1);
-  } else {
-    navigateTo(localePath(paths.home));
-  }
+  window?.history?.length > 2 ? router.go(-1) : navigateTo(localePath(paths.home));
 }
 
 const loadOffer = async (type?: string, value?: string) => {
