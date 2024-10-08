@@ -96,7 +96,7 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
       style: {
         layout: 'vertical',
         label: props.type === TypeCartPreview || props.type === TypeSingleItem ? 'checkout' : 'buynow',
-        color: 'blue',
+        color: 'gold',
       },
       fundingSource: fundingSource,
       async onClick(data, actions) {
