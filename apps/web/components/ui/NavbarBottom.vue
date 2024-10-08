@@ -20,13 +20,13 @@
             v-if="label === t('cart')"
             :content="cartItemsCount"
             :max="99"
-            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-[12px] leading-[12px] min-w-[16px] min-h-[16px]"
+            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-[13px] leading-[12px] min-w-[16px] min-h-[16px]"
           />
           <SfBadge
             v-if="label === t('wishlist')"
             :content="wishlistItemIds.length"
             :max="99"
-            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-[12px] leading-[12px] min-w-[16px] min-h-[16px]"
+            class="translate-x-[5px] translate-y-[-3px] outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-[13px] leading-[12px] min-w-[16px] min-h-[16px]"
             data-testid="wishlist-badge"
           />
         </div>
