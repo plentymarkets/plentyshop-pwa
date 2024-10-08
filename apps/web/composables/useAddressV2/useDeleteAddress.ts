@@ -1,4 +1,5 @@
 import { AddressType } from '@plentymarkets/shop-api';
+import { PlentyError } from '~/sdk.client';
 
 export const useDeleteAddress = (type: AddressType) => {
   const state = useState('useDeleteAddress' + type, () => ({
@@ -16,7 +17,7 @@ export const useDeleteAddress = (type: AddressType) => {
 
       state.value.loading = false;
     } catch (error: unknown) {
-      useHandleError(error as Error);
+      useHandleError(error as PlentyError);
       state.value.loading = false;
     }
   };

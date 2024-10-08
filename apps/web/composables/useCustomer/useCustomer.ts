@@ -9,6 +9,7 @@ import type {
   Logout,
   ChangePassword,
 } from '~/composables/useCustomer/types';
+import { PlentyError } from '~/sdk.client';
 
 /**
  * @description Composable managing Customer data
@@ -118,7 +119,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
       return state.value.isAuthorized;
     } catch (error) {
-      useHandleError(error as ErrorParams);
+      useHandleError(error as PlentyError);
       state.value.loading = false;
       return false;
     }

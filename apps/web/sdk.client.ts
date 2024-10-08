@@ -31,13 +31,33 @@ const createHttpClient = () => {
   return client;
 };
 
-const handleHttpError = (error: unknown) => {
-  const axiosError = error as AxiosError;
-  console.error(error);
+export interface PlentyErrorParams {
+  code: string;
+  message: string;
+  cause: any;
+}
 
-  throw new SdkHttpError({
-    statusCode: Number(axiosError?.response?.status),
-    message: axiosError.response?.statusText ?? axiosError.message,
+export class PlentyError {
+
+  public code: string = '';
+  public message: string = '';
+  public cause: any = null
+  constructor(
+    errorParams: PlentyErrorParams
+  ) {
+    this.code = errorParams.code;
+    this.message = errorParams.message;
+    this.cause = errorParams.cause;
+  }
+}
+
+const handleHttpError = (error: unknown) => {
+  const axiosError = error as any;
+  console.log(error);
+
+  throw new PlentyError({
+    code: axiosError?.response?.data?.error?.code ?? axiosError?.response?.status ?? axiosError.status,
+    message: axiosError?.response?.data?.error?.message ?? axiosError?.response?.statusText ?? axiosError.message,
     cause: axiosError.response?.data ?? {},
   });
 };

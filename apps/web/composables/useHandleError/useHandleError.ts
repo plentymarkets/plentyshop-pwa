@@ -1,16 +1,7 @@
 import { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
-import { Notification } from '../useNotification';
+import { PlentyError } from '~/sdk.client';
 
-const defaultError: ErrorParams = {
-  statusCode: 500,
-  message: 'An error occurred',
-  cause: {},
-};
-
-const errorCodes = {
-  401: 'Unauthorized',
-};
 
 /**
  * @description Composable for handling errors.
@@ -24,33 +15,30 @@ const errorCodes = {
  * });
  * ```
  */
-export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => {
+export const useHandleError: UseHandleError = (error: PlentyError | NuxtError<unknown> | null) => {
   if (error && import.meta.client) {
     const { send } = useNotification();
-    let message = defaultError.message;
-    let type: Notification['type'] = 'negative';
-    let persist = true;
-    let cause: any = {};
+    const type = 'negative';
+    const persist = true;
+    console.log(error);
 
-    if (error.cause) {
-      cause = error.cause;
-    }
-    if (error.statusCode && errorCodes[error.statusCode as keyof typeof errorCodes]) {
-      message = errorCodes[error.statusCode as keyof typeof errorCodes];
-    } else if (cause?.warn) {
-      message = cause.warn.message;
-      type = 'warning';
-      persist = false;
-    } else if (cause && cause?.message) {
-      message = cause.message;
+    if (error instanceof PlentyError) {
+      const message = `${error.code}: ${error.message}`;
+
+      send({
+        type,
+        message,
+        persist,
+      });
     } else {
-      message = error.message;
+      const nuxtError = error as any;
+      const message = `${nuxtError?.status}: ${nuxtError.statusText}`;
+      
+      send({
+        type,
+        message,
+        persist,
+      });
     }
-
-    send({
-      type,
-      message,
-      persist,
-    });
   }
 };
