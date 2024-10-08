@@ -38,6 +38,8 @@ export const useAddressForm = (type: AddressType) => {
     return true;
   };
 
+  const shippingCountryId = computed(() => customerData.value?.basket?.shippingCountryId?.toString() || '');
+
   const validationSchema = toTypedSchema(
     object({
       firstName: string().when([], {
@@ -52,7 +54,7 @@ export const useAddressForm = (type: AddressType) => {
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
-      country: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      country: string().required($i18n.t('errorMessages.requiredField')).default(shippingCountryId.value),
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
