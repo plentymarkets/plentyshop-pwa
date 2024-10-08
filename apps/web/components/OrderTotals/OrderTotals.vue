@@ -27,10 +27,10 @@
   </div>
   <UiDivider class="mt-2 mb-2" />
   <div class="grid grid-cols-2">
-    <p class="font-medium text-base" :class="{ 'font-bold text-xl': order.order.typeId === 7 }">
+    <p class="font-medium text-base" :class="{ 'font-bold text-xl': isOrderTypeOffer }">
       {{ t('orderConfirmation.total') }}:
     </p>
-    <p class="text-right" :class="{ 'font-bold text-xl': order.order.typeId === 7 }">
+    <p class="text-right" :class="{ 'font-bold text-xl': isOrderTypeOffer }">
       {{ n(orderGetters.getTotal(order.totals), 'currency') }}
     </p>
   </div>
@@ -47,6 +47,7 @@ const getShippingAmount = (amount: number) => {
   return amount === 0 ? t('shippingMethod.free') : n(Number(amount), 'currency');
 };
 
+const isOrderTypeOffer = props.order.order.typeId === 7;
 const additionalCostsWithoutTax = orderGetters.getAdditionalCostsWithTax(props.order);
 const additionalCostsWithTax = orderGetters.getAdditionalCostsWithoutTax(props.order);
 </script>
