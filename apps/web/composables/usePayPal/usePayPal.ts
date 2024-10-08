@@ -8,17 +8,8 @@ import type {
 import { paypalGetters } from '@plentymarkets/shop-api';
 import { PayPalLoadScript, PayPalScript } from '~/composables';
 
-const getLocaleForPayPal = (locale: string) => {
-  // eslint-disable-next-line sonarjs/no-small-switch
-  switch (locale) {
-    case 'de': {
-      return 'de_DE';
-    }
-    default: {
-      return 'en_US';
-    }
-  }
-};
+const localeMap: Record<string, string> = { de: 'de_DE' };
+const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
 
 /**
  * @description Composable for managing PayPal interaction.
@@ -101,6 +92,7 @@ export const usePayPal = () => {
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
     if (state.value.loadingScripts[scriptKey] !== undefined) {
+      state.value.isReady = true;
       return state.value.loadingScripts[scriptKey];
     }
 
