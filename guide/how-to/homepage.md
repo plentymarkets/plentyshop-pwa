@@ -89,6 +89,8 @@ If you're new to JSON, you can find strong tool support online. [This editor](ht
 ```
 :::
 
+The `id` serves as identifier for the template as a whole. Don't modify it while filling in the other information.
+
 The rest of this section describes the individual blocks.
 
 ### Hero banner
