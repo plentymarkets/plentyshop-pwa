@@ -3,7 +3,7 @@
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
       <SfTooltip
         v-if="count <= minValue"
-        :label="$t('minimumValue', minValue)"
+        :label="$t('minimumOrderQuantity', minValue)"
         placement="left"
         :show-arrow="true"
         class="flex"

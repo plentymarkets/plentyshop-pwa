@@ -719,6 +719,7 @@
   "productDetails": "Product details",
   "productLegalDetailsHeader": "Product Legal Details",
   "products": "Products",
+  "minimumOrderQuantity": "Minimum order quantity: {count}",
   "quantitySelector": "Quantity Selector",
   "quantitySelectorDecrease": "Decrease value",
   "quantitySelectorIncrease": "Increase value",
