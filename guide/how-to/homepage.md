@@ -16,7 +16,7 @@ Setting up the homepage consists of two parts:
 1. Go to **Item » Category**.
 2. Create a new category.
 3. In the category, open the **Template** tab.
-4. Enter your homepage information as described in the [Templates section](#templates).
+4. Enter your homepage information as described in the [Templates section](#templates). If you decide to use the recommended editor, copy your template by clicking on **Copy > Copy formatted**.
 5. **Save** the category.
  
 Carry out steps 4 and 5 for every language your shop offers.
@@ -119,7 +119,7 @@ To configure the category to promote this way, insert a block with the following
 | `headline`      | Name of the category     |
 | `description`  | Description of the category     |
 | `callToAction` | Text used for the button that opens the link     |
-| `link`         | Link to the category in the form `/my-category`     |
+| `link`         | The **URL name** of the category in the form `/my-category`     |
 
 ### Value proposition
 
