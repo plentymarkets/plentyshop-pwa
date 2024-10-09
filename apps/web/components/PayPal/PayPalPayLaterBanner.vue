@@ -6,58 +6,54 @@
 import { PayPalPayLaterBannerType } from '~/components/PayPal/types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
+import { PayPalNamespace } from '@paypal/paypal-js';
 
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const { isReady, getScript } = usePayPal();
-const props = defineProps<PayPalPayLaterBannerType>();
+const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerType>();
 
 const textStylePlacements = ['product', 'cart', 'payment'];
 
 const paypalUuid = uuid();
-const isTextStyle = ref(textStylePlacements.includes(props.placement));
+const isTextStyle = ref(textStylePlacements.includes(placement));
 
-const renderMessage = async () => {
-  const script = await getScript(currency.value, props.commit ?? false);
-
-  if (script && script.Messages) {
-    await script
-      .Messages({
-        amount: props.amount,
-        placement: props.placement,
-        style: {
-          layout: isTextStyle.value ? 'text' : 'flex',
-          color: isTextStyle.value ? 'white-no-border' : 'blue',
-          ratio: isTextStyle.value ? undefined : '8x1',
-          text: {
-            color: isTextStyle.value ? 'black' : undefined,
-            size: isTextStyle.value ? 12 : undefined,
-          },
+const renderPayPalMessage = async (script: PayPalNamespace | null) => {
+  if (script?.Messages) {
+    const message = script.Messages({
+      amount: amount,
+      placement: placement,
+      style: {
+        layout: isTextStyle.value ? 'text' : 'flex',
+        color: isTextStyle.value ? 'white-no-border' : 'blue',
+        ratio: isTextStyle.value ? undefined : '8x1',
+        text: {
+          color: isTextStyle.value ? 'black' : undefined,
+          size: isTextStyle.value ? 12 : undefined,
         },
-      })
-      .render('#paypal-messaging-' + paypalUuid)
-      // eslint-disable-next-line no-unused-vars
-      .catch((_error) => {
-        console.error('Failed to render PayPal Pay Later banner', _error);
-      });
+      },
+    });
+
+    const banner = document.querySelector('#paypal-messaging-' + paypalUuid);
+    if (banner) await message.render('#' + banner.id);
   }
 };
 
-onMounted(() => {
-  renderMessage();
-});
+const renderMessage = async () => {
+  await getScript(currency.value, commit)
+    .then(async (script) => await renderPayPalMessage(script))
+    .catch((error) => useHandleError(error));
+};
+
+onNuxtReady(async () => await renderMessage());
 
 watch(
   () => currency.value,
-  () => {
-    renderMessage();
-  },
+  async () => await renderMessage(),
 );
 
 watch(
-  () => props.amount,
-  () => {
-    renderMessage();
-  },
+  () => amount,
+  async () => await renderMessage(),
 );
 </script>
