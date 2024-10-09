@@ -46,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="handlePayPalExpress"
+                @validation-callback="handlePayPalExpress"
                 type="Checkout"
               />
               <PayPalPayLaterBanner
@@ -105,6 +105,7 @@ import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
+import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -198,8 +199,10 @@ const handleRegularOrder = async () => {
   }
 };
 
-const handlePayPalExpress = () => {
-  if (!readyToBuy()) return;
+const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
+  if (callback) {
+    callback(readyToBuy());
+  }
 };
 
 const order = async () => {
