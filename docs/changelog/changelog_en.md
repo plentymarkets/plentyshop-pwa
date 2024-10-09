@@ -8,8 +8,13 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 
+### 🩹 Fixed
+
+- Incorrect display of the PayPal loader
+
 ### 👷 Changed
 
+- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Change the mobile design of the cookie bar layout
 - Modified manufacturer data appearance
 
@@ -72,7 +77,7 @@
 - Changed contrast for `Verfied purchase` text in feedback to increase accessibility.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Added labels for both min and max price filters.
-- Changed font size of wishlist icon counter and cart icon counter.
+- Increased size of wishlist and cart icon counter.
 - Changed size for the cookie bar elements to increase accessibility.
 - Fixed basket accesibilty issues.
 - Fixed broken aria reference in cournty select and login modal.
@@ -100,6 +105,7 @@
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
+- Display fonts now use the configured font family.
 
 ### 👷 Changed
 
@@ -119,6 +125,7 @@
 - Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
 - Eliminate the separate review average fetch by retrieving data directly from the reviews request.
 - Resize demo favicon to 3 kb.
+- The whole application uses the same font family now.
 
 ### 🏡 Chore
 
@@ -247,6 +254,7 @@
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
 - Structure of the useProduct composable
+- Value proposition elements have been updated to receive indication if the image should be on the left or right.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

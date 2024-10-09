@@ -45,6 +45,11 @@
   background-color: #f1f1f1;
 }
 
+@media (min-width: 1024px) {
+  .padding-right-desktop {
+    padding-right: 3.1rem;
+  }
+}
 .variation-properties {
   a {
     color: rgb(var(--colors-2-primary-700));
