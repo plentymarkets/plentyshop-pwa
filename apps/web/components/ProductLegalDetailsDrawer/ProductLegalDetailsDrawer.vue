@@ -5,6 +5,7 @@
       v-model="open"
       :placement="placement"
       :class="[
+        'w-128',
         'bg-neutral-50',
         'border',
         'border-gray-300',
