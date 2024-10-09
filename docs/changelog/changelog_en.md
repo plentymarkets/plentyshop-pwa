@@ -11,6 +11,7 @@
 ### 🩹 Fixed
 
 - Incorrect display of the PayPal loader
+- Base price display on minimum order quantity.
 
 ### 👷 Changed
 
