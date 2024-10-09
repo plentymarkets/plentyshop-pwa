@@ -8,10 +8,15 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 
+### 🩹 Fixed
+
+- Incorrect display of the PayPal loader
+
 ### 👷 Changed
 
 - Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Change the mobile design of the cookie bar layout
+- Modified manufacturer data appearance
 
 ## v1.6.0
 
