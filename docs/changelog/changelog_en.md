@@ -1,23 +1,5 @@
 # Changelog plentyshopPWA
 
-## v1.7.0
-
-- New Homepage is now customizable via Category Template GET Call.
-- Fixed my orders actions paddings and cookie bar link sizes.
-- Text and content adaptations
-- Added bank details to the order confirmation page if the payment method is cash in advance.
-- Language is now customizable
-
-### 🩹 Fixed
-
-- Incorrect display of the PayPal loader
-
-### 👷 Changed
-
-- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
-- Change the mobile design of the cookie bar layout
-- Modified manufacturer data appearance
-
 ## v1.6.0
 
 ### TODO 📙 Migration guide
@@ -41,20 +23,30 @@
 
 #### Functionality
 
-- The app now uses Referrer ID in order to display the appropiate price change.
-- The app now reads which Google Fonts to use from the environment.
-- The app now reads whether to display the newsletter signup form on the homepage from the environment.
-- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
-- The app can now fetch the Favicon from the plentysystems system.
-- The app can now fetch the logo from the plentysystems system.
+- The app now uses referrer ID in order to display the appropiate price change.
 - The order again feature supports and shows order properties.
 - Added stock check for the order again feature.
+- It is possible to disable api caching with query param `noCache=1` for debugging purposes.
+- Added manufacturer and EU responsible information to product page.
+- Fixed my orders actions paddings and cookie bar link sizes.
+
+#### Payment
+
 - Implement Applepay as a payment method.
 - Added variation properties for quick checkout, considering order process visibility.
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
-- It is possible to disable api caching with query param `noCache=1` for debugging purposes.
-- Added Manufacturer and EU Responsible information to product page.
+- Added bank details to the order confirmation page if the payment method is cash in advance.
+
+#### Configuration
+
+- The app can now fetch the Favicon from the plentysystems system.
+- The app can now fetch the logo from the plentysystems system.
+- The app now reads which Google Fonts to use from the environment.
+- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
+- The app now reads the internationalisation configuration from the environment. This includes the available languages and the default language.
+- The app now reads whether to display the newsletter signup form on the homepage from the environment.
+- The homepage template can now be configured via a category template.
 
 #### SEO
 
@@ -106,10 +98,12 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
+- Incorrect display of the PayPal loader
 
 ### 👷 Changed
 
 - Addresses: Enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
+- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Unify html nodes on category page to use `h6` node.
 - Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
@@ -126,6 +120,8 @@
 - Eliminate the separate review average fetch by retrieving data directly from the reviews request.
 - Resize demo favicon to 3 kb.
 - The whole application uses the same font family now.
+- Change the mobile design of the cookie bar layout
+- Modified manufacturer data appearance
 
 ### 🏡 Chore
 
