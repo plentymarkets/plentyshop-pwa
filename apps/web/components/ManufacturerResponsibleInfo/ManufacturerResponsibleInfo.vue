@@ -31,7 +31,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { manufacturerGetters, productGetters } from '@plentymarkets/shop-api';
 import type { ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
 
