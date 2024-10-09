@@ -70,7 +70,7 @@
         </span>
       </div>
       <UiButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
+        v-if="isFromWishlist ? wishlistGetters.getCanDirectlyAddToCart(product) : productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
@@ -93,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
+import { CategoryTreeItem, productGetters, wishlistGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 

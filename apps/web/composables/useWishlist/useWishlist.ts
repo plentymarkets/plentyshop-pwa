@@ -9,7 +9,6 @@ import type {
   IsWishlistItem,
   InteractWithWishlist,
   SetWishlistItemIds,
-  SetWishlistVariationIds,
 } from '~/composables/useWishlist/types';
 
 /**
@@ -35,18 +34,18 @@ export const useWishlist: UseWishlistReturn = () => {
    * @return SetWishlistItemIds
    * @example
    * ``` ts
-   *  setWishlistItemIds(['1', '2']);
+   *  setWishlistItemIds([1006 => 0, 1065 => 1]);
    * ```
    * @param wishlistItemIds
    */
   const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
-    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
+    state.value.wishlistItemIds = wishlistItemIds;
 
-    if (state.value.data.length > 0) {
-      state.value.data = state.value.data.filter((wishListItem) =>
-        state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
-      );
-    }
+    // if (state.value.data.length > 0) {
+    //   state.value.data = state.value.data.filter((wishListItem) =>
+    //     state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
+    //   );
+    // }
   };
 
   /**
@@ -70,19 +69,6 @@ export const useWishlist: UseWishlistReturn = () => {
 
         return state.value.data;
       });
-  };
-
-  /**
-   * @description Function for setting the wishlist variation ids.
-   * @return SetWishlistVariationIds
-   * @example
-   * ``` ts
-   *  setWishlistVariationIds([{variationId: 1, canDirectlyAddToCart: 0}, {variationId: 2, canDirectlyAddToCart: 1}]);
-   * ```
-   * @param wishlistItemIds
-   */
-  const setWishlistVariationIds: SetWishlistVariationIds = (wishlistItems = []) => {
-    state.value.wishlistVariationIds = wishlistItems.map((item) => item);
   };
 
   /**
@@ -144,7 +130,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return !!state.value.wishlistItemIds?.find((item: string) => variationId.toString() === item);
+    return !!state.value.wishlistItemIds?.find((value: number, index: number) => variationId.toString() === index);
   };
 
   /**
@@ -180,7 +166,6 @@ export const useWishlist: UseWishlistReturn = () => {
     deleteWishlistItem,
     isWishlistItem,
     interactWithWishlist,
-    setWishlistVariationIds,
     ...toRefs(state.value),
   };
 };
