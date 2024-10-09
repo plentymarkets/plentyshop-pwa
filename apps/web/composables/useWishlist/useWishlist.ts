@@ -1,5 +1,6 @@
 import type { AddWishlistItemResponse, WishlistItem, WishlistVariation } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
+import { wishlistGetters } from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
   UseWishlistReturn,
@@ -25,8 +26,7 @@ export const useWishlist: UseWishlistReturn = () => {
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
-    wishlistItemIds: [] as string[],
-    wishlistVariationIds: [] as WishlistVariation[],
+    wishlistItemIds: [] as WishlistVariation[],
   }));
 
   /**
@@ -34,18 +34,20 @@ export const useWishlist: UseWishlistReturn = () => {
    * @return SetWishlistItemIds
    * @example
    * ``` ts
-   *  setWishlistItemIds([1006 => 0, 1065 => 1]);
+   *  setWishlistItemIds([{'1006': 0}, {'1065': 1}]);
    * ```
    * @param wishlistItemIds
    */
   const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
     state.value.wishlistItemIds = wishlistItemIds;
+    console.log(wishlistItemIds);
 
-    // if (state.value.data.length > 0) {
-    //   state.value.data = state.value.data.filter((wishListItem) =>
-    //     state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
-    //   );
-    // }
+    if (state.value.data.length > 0) {
+      state.value.data = state.value.data.filter((wishListItem: WishlistItem) => {
+              return wishlistItemIds.find((wishlistVariation: WishlistVariation) =>
+                  wishlistVariation.hasOwnProperty(wishListItem.variation.id));
+          });
+    }
   };
 
   /**
@@ -65,7 +67,11 @@ export const useWishlist: UseWishlistReturn = () => {
         state.value.data = data ?? state.value.data;
         state.value.loading = false;
         const itemIds = data ?? state.value.wishlistItemIds;
-        setWishlistItemIds(itemIds.map((wishlistItem) => wishlistItem.variation.id.toString()));
+        setWishlistItemIds(itemIds.map((wishlistItem: WishlistItem) => {
+            let variationObject = {} as WishlistVariation;
+            variationObject[wishlistItem.variation.id.toString()] = wishlistGetters.getFlagCanDirectlyAddToCart(wishlistItem);
+            return variationObject;
+        }));
 
         return state.value.data;
       });
@@ -89,7 +95,10 @@ export const useWishlist: UseWishlistReturn = () => {
     return await useSdk()
       .plentysystems.doAddWishlistItem(params)
       .then(({ data }) => {
-        setWishlistItemIds([...state.value.wishlistItemIds, params.variationId.toString()]);
+          let variationObject = {} as WishlistVariation;
+          variationObject[data.data.variationId] = data.data.canDirectlyAddToCart;
+          state.value.wishlistItemIds.push(variationObject);
+        setWishlistItemIds(state.value.wishlistItemIds);
         state.value.loading = false;
         return data || ({} as AddWishlistItemResponse);
       });
@@ -112,7 +121,9 @@ export const useWishlist: UseWishlistReturn = () => {
     return await useSdk()
       .plentysystems.deleteWishlistItem(params)
       .then(({ data }) => {
-        setWishlistItemIds(state.value.wishlistItemIds.filter((id: string) => id !== params.variationId.toString()));
+        setWishlistItemIds(state.value.wishlistItemIds.filter((wishlistVariation: WishlistVariation) => {
+          return !wishlistVariation.hasOwnProperty(params.variationId);
+        }));
         state.value.loading = false;
         return !!data;
       });
@@ -129,9 +140,29 @@ export const useWishlist: UseWishlistReturn = () => {
    *  })
    * ```
    */
+
   const isWishlistItem: IsWishlistItem = (variationId: number) => {
-    return !!state.value.wishlistItemIds?.find((value: number, index: number) => variationId.toString() === index);
+      console.log(state.value.wishlistItemIds);
+
+      const route = useRoute();
+      if (route.params.itemId) {
+          const { productParams } = createProductParams(route.params);
+          console.log(productParams);
+          console.log(state.value.wishlistItemIds);
+
+          return !!state.value.wishlistItemIds?.find((wishlistVariation: WishlistVariation) => {
+              return wishlistVariation.hasOwnProperty(variationId) && productParams.hasOwnProperty(variationId);
+          });
+      }
+
+    return false;
+
   };
+
+  // const isVariation: boolean = (variationId: number) => {
+  //
+  //
+  // }
 
   /**
    * @description Function for determining whether an item should be added or deleted from the wishlist.
