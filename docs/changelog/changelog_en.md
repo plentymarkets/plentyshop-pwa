@@ -23,20 +23,22 @@
 
 #### Functionality
 
-- The app now uses referrer ID in order to display the appropiate price change.
-- The order again feature supports and shows order properties.
-- Added stock check for the order again feature.
-- It is possible to disable api caching with query param `noCache=1` for debugging purposes.
-- Added manufacturer and EU responsible information to product page.
-- Fixed my orders actions paddings and cookie bar link sizes.
+- Product pages now display the manufacturer and EU responsible.
+- The app now takes into consideration the referrer ID to display the correct price.
+- Reorders now support order properties.
+- Reorders now check for available stock.
+
+#### Dev tools
+
+- For debugging, you can now disable API caching with the query param `noCache=1`.
 
 #### Payment
 
-- Implement Applepay as a payment method.
-- Added variation properties for quick checkout, considering order process visibility.
-- Added PayPal pay later banners on product, cart, checkout and quick checkout.
+- PayPal's Pay Later banner is now displayed on product pages, the cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
-- Added bank details to the order confirmation page if the payment method is cash in advance.
+- Apple Pay is now available as a payment method via PayPal.
+- The quick checkout now displays variation properties.
+- The order confirmation page now displays bank details if the payment method is cash in advance.
 
 #### Configuration
 
@@ -64,17 +66,12 @@
 
 #### Accessibility Improvements
 
-- Optimize aria labels and alt texts on homepage.
 - Added table header in the MyAccount.
 - Changed contrast for `Verfied purchase` text in feedback to increase accessibility.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
 - Added labels for both min and max price filters.
 - Increased size of wishlist and cart icon counter.
 - Changed size for the cookie bar elements to increase accessibility.
-- Fixed basket accesibilty issues.
-- Fixed broken aria reference in cournty select and login modal.
-- Fixed addtobasket overlay accesibilty issues.
-- Fixed login page accesibilty issues.
 
 ### 🩹 Fixed
 
@@ -99,6 +96,11 @@
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
 - Incorrect display of the PayPal loader
+- Fixed my orders actions paddings and cookie bar link sizes.
+- Fixed basket accesibilty issues.
+- Fixed broken aria reference in cournty select and login modal.
+- Fixed addtobasket overlay accesibilty issues.
+- Fixed login page accesibilty issues.
 
 ### 👷 Changed
 
