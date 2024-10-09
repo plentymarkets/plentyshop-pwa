@@ -16,6 +16,7 @@
 
 - Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Change the mobile design of the cookie bar layout
+- Modified manufacturer data appearance
 
 ## v1.6.0
 
