@@ -1,11 +1,5 @@
 # Changelog plentyshopPWA
 
-## v1.7.0
-
-- Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
-- Text- und Inhaltsanpassungen
-- Die Sprache ist jetzt anpassbar
-
 ## v1.6.0
 
 ### TODO 📙 Migrationsanleitung
@@ -24,6 +18,123 @@
 - Aktualisiere den Namen der Umgebungsvariablen `NEWSLETTER_FORM_SHOW_NAMES` zu `NEWSLETTERFORMNAMES`.
 - Aktualisiere den Namen der Umgebungsvariablen `USE_AVIF` zu `IMAGEAVIF`.
 - Aktualisiere den Namen der Umgebungsvariablen `USE_WEBP` zu `IMAGEWEBP`.
+
+### 🚀 New
+
+#### Functionality
+
+- Auf Produktseiten wird jetzt der Hersteller und EU-Verantwortliche angezeigt.
+- Bei der Preisberechnung wird jetzt die Referrer-ID berücksichtigt.
+- Beim erneuten Kaufen werden jetzt Bestelleigenschaften unterstützt.
+- Beim erneuten Kaufen wird jetzt der Warenbestand geprüft.
+
+#### Dev tools
+
+- Zum Debuggen kann das API-Caching mit dem Query-Paramter `noCache=1` deaktiviert werden.
+
+#### Payment
+
+- Das Banner Später bezahlen von PayPal wird jetzt auf den Produktseiten sowie im Warenkorb, der Kasse und der Schnellkasse angezeigt.
+- Die Kreditkarteninformationen im PayPal-Formular wurden aktualisiert.
+- Apple Pay steht jetzt über PayPal als Zahlungsart zur Verfügung.
+- In der Schnellkasse werden jetzt Varianteneigenschaften angezeigt.
+- Beim Kauf mit Vorkasse werden auf der Bestellbestätigung jetzt die Bankdaten angezeigt.
+
+#### Configuration
+
+- Das Favicon kann jetzt vom plentysystems System abgerufen werden.
+- Das Logo kann jetzt vom plentysystems System abgerufen werden.
+- Die Google Fonts-Schriftart kann jetzt über Umgebungsvariablen konfiguriert werden.
+- Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
+- Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
+- Über Umgebungsvariablen kann jetzt konfiguriert werden, ob das Formular zur Newsletter-Anmeldung auf der Startseite angezeigt wird.
+- Das Template der Startseite kann jetzt über ein Kategorie-Template angepasst werden.
+
+<!-- CONTINUE FROM HERE -->
+
+#### SEO
+
+- The app now reads the head title and title suffix from the environment.
+- The app now reads metadata for products and categories, from the environment.
+- The app now reads title and alternate for product images, from the environment.
+- The app now reads metadata, such as description and keywords, from the environment.
+- The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
+- Added canonical meta tags to product items.
+
+#### Page speed
+
+- Added cache-control for all static images to improve caching policy.
+- Shop logo is now preloaded.
+
+#### Accessibility Improvements
+
+- Added table header in the MyAccount.
+- Changed contrast for `Verfied purchase` text in feedback to increase accessibility.
+- Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Added labels for both min and max price filters.
+- Increased size of wishlist and cart icon counter.
+- Changed size for the cookie bar elements to increase accessibility.
+
+### 🩹 Fixed
+
+- Fixed `withDefaults() is unnecessary when using destructure with defineProps()` terminal error.
+- Fixed the REST call to fetch the remote configuration in the build process.
+- Fixed middleware calls being stuck in an infinite loop.
+- Fixed tailwind css double import.
+- Fixed a deadspot in the viewport for the navigation bar.
+- Added link color on item variation properties.
+- Fixed pagination issues with reactivity.
+- Fixed wrongful display of base prices.
+- Fixed setting the vsf-locale cookie on ssr.
+- The side navigation of the automatically generated composables documentation now contains the correct links.
+- Fixed editing author name on reviews and replies with added e2e.
+- Fixed the issue with the plentyID-cookie in the PWA live preview.
+- Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
+- Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed orphaned form label on product page attributes.
+- Fixed cookie bar privacy link not working properly.
+- Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed DE translation regarding VAT.
+- Fixed wrong price issues.
+- Display fonts now use the configured font family.
+- Incorrect display of the PayPal loader
+- Fixed my orders actions paddings and cookie bar link sizes.
+- Fixed basket accesibilty issues.
+- Fixed broken aria reference in cournty select and login modal.
+- Fixed addtobasket overlay accesibilty issues.
+- Fixed login page accesibilty issues.
+
+### 👷 Changed
+
+- Addresses: Enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
+- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
+- Unify html nodes on category page to use `h6` node.
+- Added display of file properties with download links for items.
+- Ensure the design of order properties and variation properties is consistent.
+- Cookiebar icon has been replaced.
+- Checkout address buttons in the mobile view have been adjusted.
+- The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
+- Changes to item reviews logic in order to use the feedback api microservice.
+- The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
+- Remove cookie browser language detect.
+- Set page `title` for items and categories instead of `meta-title`.
+- Refactor of reviews functionality for better performance and maintainability.
+- Change the file item property color to blue in the quick checkout.
+- Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
+- Eliminate the separate review average fetch by retrieving data directly from the reviews request.
+- Resize demo favicon to 3 kb.
+- The whole application uses the same font family now.
+- Change the mobile design of the cookie bar layout
+- Modified manufacturer data appearance
+
+### 🏡 Chore
+
+- Removed unnecessary vue imports
+- Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
+- Added e2e tests for reviews pagination.
+
+## v1.6.0
+
 
 ### 🚀 Hinzugefügt
 
