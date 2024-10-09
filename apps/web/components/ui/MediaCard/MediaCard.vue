@@ -1,10 +1,14 @@
 <template>
   <div v-if="showComponent" :class="['flex flex-col md:flex-row items-center', positionClass]">
-    <div v-if="image" :class="['w-full', 'md:w-1/2', { 'mb-4': text }]">
+    <div v-if="image && image.trim() !== ''" :class="['w-full', 'md:w-1/2', { 'mb-4': text }]">
       <img :src="image" alt="Media Image" class="w-full h-auto object-cover" />
     </div>
 
-    <div v-if="text" :class="['w-full', 'md:w-1/2', 'md:pl-8', { 'text-center': !image }]" v-html="text"></div>
+    <div
+      v-if="text && text.trim() !== ''"
+      :class="['w-full', textWidthClass, 'md:pl-8', textAlignmentClass]"
+      v-html="text"
+    ></div>
   </div>
 </template>
 
@@ -25,7 +29,13 @@ const props = defineProps({
   },
 });
 
-const showComponent = computed(() => props.image || props.text);
+const showComponent = computed(() => {
+  return (props.image && props.image.trim() !== '') || (props.text && props.text.trim() !== '');
+});
 
+const textWidthClass = computed(() => {
+  return !props.image || props.image.trim() === '' ? 'w-full' : 'md:w-1/2';
+});
 const positionClass = computed(() => (props.alignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'));
+const textAlignmentClass = computed(() => (!props.image || props.image.trim() === '' ? 'text-center' : ''));
 </script>

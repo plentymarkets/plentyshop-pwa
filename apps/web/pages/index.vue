@@ -41,7 +41,9 @@
   </div>
   <NuxtLazyHydrate when-visible>
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <UiMediaCard :image="mediaData.image" :text="mediaData.text" :alignment="mediaData.alignment" />
+      <div v-for="(item, index) in mediaData" :key="index">
+        <UiMediaCard :image="item.image" :text="item.text" :alignment="item.alignment" />
+      </div>
     </div>
   </NuxtLazyHydrate>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -61,6 +63,7 @@
 
 <script lang="ts" setup>
 import { HeroItem } from '~/components/ui/HeroCarousel/types';
+import { MediaItem } from '~/components/ui/MediaCard/types';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
@@ -100,11 +103,13 @@ const getDefaultHomepageTemplate = {
       link: '',
     },
   ],
-  valueProposition: {
-    text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h3 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h3><p class='text-base mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
-    image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-    alignment: 'left',
-  },
+  valueProposition: [
+    {
+      text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h3 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h3><p class='text-base mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+      alignment: 'left',
+    },
+  ],
   featured: [
     {
       headline: '',
@@ -133,12 +138,13 @@ if (typeof homepageCategoryId === 'number') {
     };
   }
 }
-
-const mediaData = ref({
-  image: homepageTemplate.value.valueProposition.image,
-  text: homepageTemplate.value.valueProposition.text,
-  alignment: homepageTemplate.value.valueProposition.alignment,
-});
+const mediaData = ref(
+  homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
+    image: media.image,
+    text: media.text,
+    alignment: media.alignment,
+  })),
+);
 
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
