@@ -14,7 +14,9 @@
         {{ manufacturerInfo.street }} {{ manufacturerInfo.houseNo }}
       </p>
       <p v-if="manufacturerInfo.postcode || manufacturerInfo.town || manufacturerInfo.country">
-        {{ manufacturerInfo.postcode }} {{ manufacturerInfo.town }},&nbsp;{{ manufacturerInfo.country }}
+        {{ manufacturerInfo.postcode }}
+        <span v-if="manufacturerInfo.town"> {{ manufacturerInfo.town }},&nbsp;</span>
+        {{ manufacturerInfo.country }}
       </p>
       <p v-if="manufacturerInfo.phoneNumber">{{ t('phone') }}: {{ manufacturerInfo.phoneNumber }}</p>
       <p v-if="manufacturerInfo.faxNumber">{{ t('fax') }}: {{ manufacturerInfo.faxNumber }}</p>
@@ -38,6 +40,7 @@ const props = defineProps<ManufacturerInformationProps>();
 const { t } = useI18n();
 
 const manufacturer = productGetters.getManufacturer(props.product);
+const country = manufacturerGetters.getManufacturerCountry(manufacturer);
 
 const manufacturerInfo = computed(() => {
   return {
@@ -47,7 +50,7 @@ const manufacturerInfo = computed(() => {
     houseNo: manufacturerGetters.getManufacturerHouseNo(manufacturer),
     postcode: manufacturerGetters.getManufacturerPostCode(manufacturer),
     town: manufacturerGetters.getManufacturerTown(manufacturer),
-    country: manufacturerGetters.getManufacturerCountry(manufacturer),
+    country: Object.keys(country).length > 0 ? country : null,
     email: manufacturerGetters.getManufacturerEmail(manufacturer),
     phoneNumber: manufacturerGetters.getManufacturerPhoneNumber(manufacturer),
     faxNumber: manufacturerGetters.getManufacturerFaxNumber(manufacturer),

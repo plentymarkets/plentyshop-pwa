@@ -17,7 +17,8 @@
           manufacturerResponsibleInfo.country
         "
       >
-        {{ manufacturerResponsibleInfo.postCode }} {{ manufacturerResponsibleInfo.town }},&nbsp;
+        {{ manufacturerResponsibleInfo.postCode }}
+        <span v-if="manufacturerResponsibleInfo.town"> {{ manufacturerResponsibleInfo.town }},&nbsp;</span>
         {{ manufacturerResponsibleInfo.country }}
       </p>
       <p v-if="manufacturerResponsibleInfo.phoneNo">{{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}</p>
@@ -38,6 +39,7 @@ const props = defineProps<ManufacturerResponsibleInfoProps>();
 const { t } = useI18n();
 
 const manufacturer = productGetters.getManufacturer(props.product);
+const country = manufacturerGetters.getManufacturerResponsibleCountry(manufacturer);
 
 const manufacturerResponsibleInfo = computed(() => ({
   name: manufacturerGetters.getManufacturerResponsibleName(manufacturer),
@@ -45,7 +47,7 @@ const manufacturerResponsibleInfo = computed(() => ({
   houseNo: manufacturerGetters.getManufacturerResponsibleHouseNo(manufacturer),
   postCode: manufacturerGetters.getManufacturerResponsiblePostCode(manufacturer),
   town: manufacturerGetters.getManufacturerResponsibleTown(manufacturer),
-  country: manufacturerGetters.getManufacturerResponsibleCountry(manufacturer),
+  country: Object.keys(country).length > 0 ? country : null,
   email: manufacturerGetters.getManufacturerResponsibleEmail(manufacturer),
   phoneNo: manufacturerGetters.getManufacturerResponsiblePhoneNo(manufacturer),
 }));
