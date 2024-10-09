@@ -70,7 +70,11 @@
         </span>
       </div>
       <UiButton
-        v-if="isFromWishlist ? wishlistGetters.getCanDirectlyAddToCart(product) : productGetters.canBeAddedToCartFromCategoryPage(product)"
+        v-if="
+          isFromWishlist
+            ? wishlistGetters.getCanDirectlyAddToCart(product)
+            : productGetters.canBeAddedToCartFromCategoryPage(product)
+        "
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
