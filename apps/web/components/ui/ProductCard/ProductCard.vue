@@ -72,7 +72,7 @@
       <UiButton
         v-if="
           isFromWishlist
-            ? wishlistGetters.getCanDirectlyAddToCart(product)
+            ? wishlistGetters.canDirectlyAddToCart(product)
             : productGetters.canBeAddedToCartFromCategoryPage(product)
         "
         size="sm"

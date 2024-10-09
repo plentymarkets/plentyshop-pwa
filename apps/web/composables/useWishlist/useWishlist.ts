@@ -7,7 +7,6 @@ import type {
   UseWishlistState,
   DeleteWishlistItem,
   AddWishlistItem,
-  IsWishlistItem,
   InteractWithWishlist,
   SetWishlistItemIds,
 } from '~/composables/useWishlist/types';
@@ -26,7 +25,7 @@ export const useWishlist: UseWishlistReturn = () => {
   const state = useState<UseWishlistState>('wishlist', () => ({
     data: [] as WishlistItem[],
     loading: false,
-    wishlistItemIds: [] as WishlistVariation[],
+    wishlistItemIds: {} as WishlistVariation,
   }));
 
   /**
@@ -38,16 +37,8 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    * @param wishlistItemIds
    */
-  const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
+  const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds: WishlistVariation = {}) => {
     state.value.wishlistItemIds = wishlistItemIds;
-    console.log(wishlistItemIds);
-
-    if (state.value.data.length > 0) {
-      state.value.data = state.value.data.filter((wishListItem: WishlistItem) => {
-              return wishlistItemIds.find((wishlistVariation: WishlistVariation) =>
-                  wishlistVariation.hasOwnProperty(wishListItem.variation.id));
-          });
-    }
   };
 
   /**
@@ -61,20 +52,24 @@ export const useWishlist: UseWishlistReturn = () => {
   const fetchWishlist: FetchWishlist = async () => {
     state.value.loading = true;
 
-    return await useSdk()
-      .plentysystems.getWishlist()
-      .then(({ data }) => {
-        state.value.data = data ?? state.value.data;
-        state.value.loading = false;
-        const itemIds = data ?? state.value.wishlistItemIds;
-        setWishlistItemIds(itemIds.map((wishlistItem: WishlistItem) => {
-            let variationObject = {} as WishlistVariation;
-            variationObject[wishlistItem.variation.id.toString()] = wishlistGetters.getFlagCanDirectlyAddToCart(wishlistItem);
-            return variationObject;
-        }));
+    try {
+      const { data } = await useSdk().plentysystems.getWishlist();
 
-        return state.value.data;
+      state.value.data = data ?? [];
+
+      const wishlistItemIds: WishlistVariation = {};
+
+      state.value.data.forEach((wishlistItem: WishlistItem) => {
+        const variationId = wishlistItem.variation.id.toString();
+        wishlistItemIds[variationId] = wishlistGetters.getCanDirectlyAddToCart(wishlistItem);
       });
+
+      setWishlistItemIds(wishlistItemIds);
+
+      return state.value.data;
+    } finally {
+      state.value.loading = false;
+    }
   };
 
   /**
@@ -92,16 +87,16 @@ export const useWishlist: UseWishlistReturn = () => {
   const addWishlistItem: AddWishlistItem = async (params: AddWishlistItemParams) => {
     state.value.loading = true;
 
-    return await useSdk()
-      .plentysystems.doAddWishlistItem(params)
-      .then(({ data }) => {
-          let variationObject = {} as WishlistVariation;
-          variationObject[data.data.variationId] = data.data.canDirectlyAddToCart;
-          state.value.wishlistItemIds.push(variationObject);
-        setWishlistItemIds(state.value.wishlistItemIds);
-        state.value.loading = false;
-        return data || ({} as AddWishlistItemResponse);
-      });
+    try {
+      const { data } = await useSdk().plentysystems.doAddWishlistItem(params);
+
+      state.value.wishlistItemIds[data.data.variationId] = data.data.canDirectlyAddToCart;
+      setWishlistItemIds(state.value.wishlistItemIds);
+
+      return data || ({} as AddWishlistItemResponse);
+    } finally {
+      state.value.loading = false;
+    }
   };
 
   /**
@@ -118,15 +113,21 @@ export const useWishlist: UseWishlistReturn = () => {
   const deleteWishlistItem: DeleteWishlistItem = async (params: DeleteWishlistItemParams) => {
     state.value.loading = true;
 
-    return await useSdk()
-      .plentysystems.deleteWishlistItem(params)
-      .then(({ data }) => {
-        setWishlistItemIds(state.value.wishlistItemIds.filter((wishlistVariation: WishlistVariation) => {
-          return !wishlistVariation.hasOwnProperty(params.variationId);
-        }));
-        state.value.loading = false;
-        return !!data;
-      });
+    try {
+      const { data } = await useSdk().plentysystems.deleteWishlistItem(params);
+
+      const variationKey = params.variationId.toString();
+
+      if (state.value.wishlistItemIds && variationKey in state.value.wishlistItemIds) {
+        delete state.value.wishlistItemIds[variationKey];
+      }
+
+      setWishlistItemIds(state.value.wishlistItemIds || {});
+
+      return data;
+    } finally {
+      state.value.loading = false;
+    }
   };
 
   /**
@@ -140,29 +141,31 @@ export const useWishlist: UseWishlistReturn = () => {
    *  })
    * ```
    */
+  const isWishlistItem = (variationId: number) => {
+    const route = useRoute();
+    const { itemId } = route.params || {};
+    const isProductPage = Boolean(itemId);
+    let isOverviewPage = true;
+    let currentVariationId: string | number | undefined;
 
-  const isWishlistItem: IsWishlistItem = (variationId: number) => {
-      console.log(state.value.wishlistItemIds);
+    if (isProductPage) {
+      const { productParams } = createProductParams(route.params);
+      currentVariationId = Number(productParams.variationId);
+      isOverviewPage = !currentVariationId;
+    }
 
-      const route = useRoute();
-      if (route.params.itemId) {
-          const { productParams } = createProductParams(route.params);
-          console.log(productParams);
-          console.log(state.value.wishlistItemIds);
+    const wishlistItems = state.value.wishlistItemIds || {};
 
-          return !!state.value.wishlistItemIds?.find((wishlistVariation: WishlistVariation) => {
-              return wishlistVariation.hasOwnProperty(variationId) && productParams.hasOwnProperty(variationId);
-          });
-      }
+    if (!(variationId in wishlistItems)) {
+      return false;
+    }
 
-    return false;
+    const canDirectlyAddToCart = Number(wishlistItems[variationId]);
 
+    return isOverviewPage
+      ? canDirectlyAddToCart === 0
+      : currentVariationId === variationId && canDirectlyAddToCart === 1;
   };
-
-  // const isVariation: boolean = (variationId: number) => {
-  //
-  //
-  // }
 
   /**
    * @description Function for determining whether an item should be added or deleted from the wishlist.
