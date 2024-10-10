@@ -5,6 +5,7 @@ import type {
   AddWishlistItemResponse,
   DeleteWishlistItemParams,
 } from '@plentymarkets/shop-api';
+import { Product } from '@plentymarkets/shop-api';
 
 export interface UseWishlistState {
   data: WishlistItem[];
@@ -17,7 +18,7 @@ export type AddWishlistItem = (params: AddWishlistItemParams) => Promise<AddWish
 export type DeleteWishlistItem = (params: DeleteWishlistItemParams) => Promise<boolean>;
 export type IsWishlistItem = (variationId: number) => boolean;
 export type CanBeDirectlyAddedToCart = (variationId: number) => boolean;
-export type ProductCanBeAddedToWishlist = (variationId: number) => boolean;
+export type ProductCanBeAddedToWishlist = (product: Product) => boolean;
 export type InteractWithWishlist = (variationId: number, quantity: number, isTrulyInWishlist: boolean) => Promise<void>;
 export type SetWishlistItemIds = (wishlistItemIds: WishlistVariation) => void;
 

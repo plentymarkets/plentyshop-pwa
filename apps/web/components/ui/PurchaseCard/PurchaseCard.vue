@@ -17,12 +17,11 @@
             'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
               viewport.isLessThan('lg'),
           }"
-          :is-truly-in-wishlist="!productCanBeAddedToWishlist(productGetters.getVariationId(product))"
+          :is-truly-in-wishlist="!productCanBeAddedToWishlist(product)"
         >
           <template v-if="viewport.isGreaterOrEquals('lg')">
             {{
-              !isWishlistItem(productGetters.getVariationId(product)) ||
-              productCanBeAddedToWishlist(productGetters.getVariationId(product))
+              !isWishlistItem(productGetters.getVariationId(product)) || productCanBeAddedToWishlist(product)
                 ? t('addToWishlist')
                 : t('removeFromWishlist')
             }}

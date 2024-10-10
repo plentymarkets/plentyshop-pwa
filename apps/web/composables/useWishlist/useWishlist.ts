@@ -1,6 +1,6 @@
 import type { AddWishlistItemResponse, WishlistItem, WishlistVariation } from '@plentymarkets/shop-api';
 import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
-import { wishlistGetters } from '@plentymarkets/shop-api';
+import { productGetters, wishlistGetters, Product } from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
   UseWishlistReturn,
@@ -156,14 +156,15 @@ export const useWishlist: UseWishlistReturn = () => {
 
   /**
    * @description Function for determining whether an product can be directly added to wishlist.
-   * @param variationId
+   * @param product
    * @return boolean
    * @example
    * ``` ts
    *  productCanBeAddedToWishlist(1)
    * ```
    */
-  const productCanBeAddedToWishlist = (variationId: number): boolean => {
+  const productCanBeAddedToWishlist = (product: Product): boolean => {
+    const variationId = productGetters.getVariationId(product);
     const route = useRoute();
     const { itemId } = route.params || {};
     const isProductPage = Boolean(itemId);
@@ -173,7 +174,7 @@ export const useWishlist: UseWishlistReturn = () => {
 
       const { productParams } = createProductParams(route.params);
       const currentVariationId = Number(productParams.variationId);
-      const isOverviewPage = !currentVariationId;
+      const isOverviewPage = !currentVariationId && !productGetters.canBeAddedToCartFromCategoryPage(product);
 
       return isOverviewPage ? canDirectlyAddToCart : currentVariationId === variationId && !canDirectlyAddToCart;
     }
