@@ -36,7 +36,6 @@
 
 - Das Banner Später bezahlen von PayPal wird jetzt auf den Produktseiten sowie im Warenkorb, der Kasse und der Schnellkasse angezeigt.
 - Die Kreditkarteninformationen im PayPal-Formular wurden aktualisiert.
-- Apple Pay steht jetzt über PayPal als Zahlungsart zur Verfügung.
 - In der Schnellkasse werden jetzt Varianteneigenschaften angezeigt.
 - Beim Kauf mit Vorkasse werden auf der Bestellbestätigung jetzt die Bankdaten angezeigt.
 

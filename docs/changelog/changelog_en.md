@@ -36,7 +36,6 @@
 
 - PayPal's Pay Later banner is now displayed on product pages, the cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
-- Apple Pay is now available as a payment method via PayPal.
 - The quick checkout now displays variation properties.
 - The order confirmation page now displays bank details if the payment method is cash in advance.
 
