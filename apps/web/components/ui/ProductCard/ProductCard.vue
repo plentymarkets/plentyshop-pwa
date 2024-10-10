@@ -93,7 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 
@@ -128,14 +128,10 @@ const { price, crossedPrice } = useProductPrice(product);
 const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
-const productPath = ref('');
-const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
-  const path = productGetters.getCategoryUrlPath(product, categoriesTree);
-  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`;
-  productPath.value = localePath(`${path}/${productSlug}`);
-};
 
-setProductPath(categoryTree.value);
+const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
+const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
+const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
@@ -154,9 +150,4 @@ const addWithLoader = async (productId: number) => {
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-watch(
-  () => categoryTree.value,
-  (categoriesTree) => setProductPath(categoriesTree),
-);
 </script>
