@@ -17,7 +17,7 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { data, error, fetchOffer, declineOffer, acceptOffer } = useOffer();
+const { data, error, relatedOrder, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
 const router = useRouter();
@@ -72,7 +72,9 @@ const accept = async () => {
   });
 
   if (!error.value) {
-    navigateTo(localePath(paths.confirmation + '/' + route.params.offerId + '/' + route.params.accessKey));
+    navigateTo(
+      localePath(paths.confirmation + '/' + relatedOrder.value?.order.id + '/' + relatedOrder.value?.order.accessKey),
+    );
   }
 };
 </script>

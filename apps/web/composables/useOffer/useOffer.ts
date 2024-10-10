@@ -43,8 +43,8 @@ export const useOffer: UseOfferReturn = () => {
   const acceptOffer: AcceptOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.doAcceptOffer(params));
 
-    const offerData = data.value?.data as Order;
-    state.value.relatedOrder = offerData?.order ? offerData : null;
+    const orderData = data.value?.data as Order;
+    state.value.relatedOrder = orderData?.order ? orderData : null;
 
     state.value.loading = false;
     return state.value.relatedOrder;
