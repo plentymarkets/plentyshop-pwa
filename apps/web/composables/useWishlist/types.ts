@@ -16,7 +16,9 @@ export type FetchWishlist = () => Promise<WishlistItem[]>;
 export type AddWishlistItem = (params: AddWishlistItemParams) => Promise<AddWishlistItemResponse>;
 export type DeleteWishlistItem = (params: DeleteWishlistItemParams) => Promise<boolean>;
 export type IsWishlistItem = (variationId: number) => boolean;
-export type InteractWithWishlist = (variationId: number, quantity: number) => Promise<void>;
+export type CanBeDirectlyAddedToCart = (variationId: number) => boolean;
+export type ProductCanBeAddedToWishlist = (variationId: number) => boolean;
+export type InteractWithWishlist = (variationId: number, quantity: number, isTrulyInWishlist: boolean) => Promise<void>;
 export type SetWishlistItemIds = (wishlistItemIds: WishlistVariation) => void;
 
 export interface UseWishlist {
@@ -27,6 +29,8 @@ export interface UseWishlist {
   addWishlistItem: AddWishlistItem;
   deleteWishlistItem: DeleteWishlistItem;
   isWishlistItem: IsWishlistItem;
+  canBeDirectlyAddedToCart: CanBeDirectlyAddedToCart;
+  productCanBeAddedToWishlist: ProductCanBeAddedToWishlist;
   setWishlistItemIds: SetWishlistItemIds;
   interactWithWishlist: InteractWithWishlist;
 }

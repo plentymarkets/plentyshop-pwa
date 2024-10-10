@@ -91,7 +91,6 @@ export const useWishlist: UseWishlistReturn = () => {
       const { data } = await useSdk().plentysystems.doAddWishlistItem(params);
 
       state.value.wishlistItemIds[data.data.variationId] = data.data.canDirectlyAddToCart;
-      setWishlistItemIds(state.value.wishlistItemIds);
 
       return data || ({} as AddWishlistItemResponse);
     } finally {
@@ -123,8 +122,6 @@ export const useWishlist: UseWishlistReturn = () => {
         delete state.value.wishlistItemIds[variationKey];
       }
 
-      setWishlistItemIds(state.value.wishlistItemIds || {});
-
       return data;
     } finally {
       state.value.loading = false;
@@ -137,41 +134,58 @@ export const useWishlist: UseWishlistReturn = () => {
    * @return IsWishlistItem
    * @example
    * ``` ts
-   *  isWishlistItem({
-   *    variationId: 1
-   *  })
+   *  isWishlistItem(1)
    * ```
    */
-  const isWishlistItem = (variationId: number) => {
+  const isWishlistItem = (variationId: number): boolean => {
+    return variationId in state.value.wishlistItemIds;
+  };
+
+  /**
+   * @description Function for determining whether an item can be directly added to cart.
+   * @param variationId
+   * @return boolean
+   * @example
+   * ``` ts
+   *  canBeDirectlyAddedToCart(1)
+   * ```
+   */
+  const canBeDirectlyAddedToCart = (variationId: number): boolean => {
+    return !!state.value.wishlistItemIds[variationId];
+  };
+
+  /**
+   * @description Function for determining whether an product can be directly added to wishlist.
+   * @param variationId
+   * @return boolean
+   * @example
+   * ``` ts
+   *  productCanBeAddedToWishlist(1)
+   * ```
+   */
+  const productCanBeAddedToWishlist = (variationId: number): boolean => {
     const route = useRoute();
     const { itemId } = route.params || {};
     const isProductPage = Boolean(itemId);
-    let isOverviewPage = true;
-    let currentVariationId: string | number | undefined;
 
     if (isProductPage) {
+      const canDirectlyAddToCart = canBeDirectlyAddedToCart(variationId);
+
       const { productParams } = createProductParams(route.params);
-      currentVariationId = Number(productParams.variationId);
-      isOverviewPage = !currentVariationId;
+      const currentVariationId = Number(productParams.variationId);
+      const isOverviewPage = !currentVariationId;
+
+      return isOverviewPage ? canDirectlyAddToCart : currentVariationId === variationId && !canDirectlyAddToCart;
     }
 
-    const wishlistItems = state.value.wishlistItemIds || {};
-
-    if (!(variationId in wishlistItems)) {
-      return false;
-    }
-
-    const canDirectlyAddToCart = Number(wishlistItems[variationId]);
-
-    return isOverviewPage
-      ? canDirectlyAddToCart === 0
-      : currentVariationId === variationId && canDirectlyAddToCart === 1;
+    return true;
   };
 
   /**
    * @description Function for determining whether an item should be added or deleted from the wishlist.
    * @param variationId
    * @param quantity
+   * @param isTrulyInWishlist
    * @return InteractWithWishlist
    * @example
    * ``` ts
@@ -181,11 +195,15 @@ export const useWishlist: UseWishlistReturn = () => {
    *  })
    * ```
    */
-  const interactWithWishlist: InteractWithWishlist = async (variationId: number, quantity = 1) => {
+  const interactWithWishlist: InteractWithWishlist = async (
+    variationId: number,
+    quantity = 1,
+    isTrulyInWishlist = false,
+  ) => {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
 
-    await (isWishlistItem(variationId)
+    await (isWishlistItem(variationId) && isTrulyInWishlist
       ? deleteWishlistItem({ variationId }).then(() =>
           send({ type: 'positive', message: $i18n.t('wishlistInteraction.delete') }),
         )
@@ -201,6 +219,8 @@ export const useWishlist: UseWishlistReturn = () => {
     deleteWishlistItem,
     isWishlistItem,
     interactWithWishlist,
+    canBeDirectlyAddedToCart,
+    productCanBeAddedToWishlist,
     ...toRefs(state.value),
   };
 };

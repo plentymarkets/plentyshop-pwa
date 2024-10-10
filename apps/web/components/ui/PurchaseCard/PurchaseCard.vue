@@ -17,9 +17,15 @@
             'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
               viewport.isLessThan('lg'),
           }"
+          :is-truly-in-wishlist="!productCanBeAddedToWishlist(productGetters.getVariationId(product))"
         >
           <template v-if="viewport.isGreaterOrEquals('lg')">
-            {{ !isWishlistItem(productGetters.getVariationId(product)) ? t('addToWishlist') : t('removeFromWishlist') }}
+            {{
+              !isWishlistItem(productGetters.getVariationId(product)) ||
+              productCanBeAddedToWishlist(productGetters.getVariationId(product))
+                ? t('addToWishlist')
+                : t('removeFromWishlist')
+            }}
           </template>
         </WishlistButton>
       </div>
@@ -142,7 +148,7 @@ const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(1);
-const { isWishlistItem } = useWishlist();
+const { isWishlistItem, productCanBeAddedToWishlist } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
