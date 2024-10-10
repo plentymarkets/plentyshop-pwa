@@ -41,9 +41,13 @@
   </div>
   <NuxtLazyHydrate when-visible>
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <div v-for="(item, index) in mediaData" :key="index">
-        <UiMediaCard :image="item.image" :text="item.text" :alignment="item.alignment" />
-      </div>
+      <UiMediaCard
+        v-for="(item, index) in mediaData"
+        :key="index"
+        :image="item.image"
+        :text="item.text"
+        :alignment="item.alignment"
+      />
     </div>
   </NuxtLazyHydrate>
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
