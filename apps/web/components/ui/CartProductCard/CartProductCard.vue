@@ -98,7 +98,7 @@
           :disabled="disabled"
           @change-quantity="debounceQuantity"
           :value="cartGetters.getItemQty(cartItem)"
-          :min-value="1"
+          :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           class="mt-4 sm:mt-0"
         />
       </div>
