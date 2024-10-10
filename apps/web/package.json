@@ -33,6 +33,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@blokkli/editor": "^1.0.3",
     "@nuxt/image": "^1.7.0",
     "@nuxt/test-utils": "^3.13.1",
     "@nuxtjs/google-fonts": "^3.2.0",

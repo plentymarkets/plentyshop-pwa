@@ -1,9 +1,10 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs"],
+    "types": ["@nuxt/types", "vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs"],
     "verbatimModuleSyntax": false,
   },
+  
   "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
   "typedocOptions": {
     "entryPoints": ["composables/index.ts"],
