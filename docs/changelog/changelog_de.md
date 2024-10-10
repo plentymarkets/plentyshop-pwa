@@ -23,6 +23,7 @@
 
 #### Funktionen
 
+- Hinzugefügt wurde eine Seite um Angebote im Webshop zu präsentieren. Auf dieser können Angebote auch direkt angenommen oder abgelehnt werden. Bei Annahme des Angebots wird direkt eine Bestellung erstellt.
 - Auf Produktseiten wird jetzt der EU-Verantwortliche des Herstellers angezeigt.
 - Bei der Preisberechnung wird jetzt die Referrer-ID berücksichtigt.
 - Beim erneuten Kaufen werden jetzt Bestelleigenschaften unterstützt.

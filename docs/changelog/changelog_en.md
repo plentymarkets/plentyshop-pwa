@@ -29,6 +29,7 @@
 
 #### Functionality
 
+- A new page was added to the webshop for presenting offers. Users can accept or reject offers directly on this page, and upon acceptance, an order is automatically created.
 - Product pages now display the EU responsible person of the manufacturer.
 - The app now takes into consideration the referrer ID to display the correct price.
 - Reorders now support order properties.
