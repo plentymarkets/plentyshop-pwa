@@ -78,11 +78,11 @@
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ $t('buy') }}</template>
             </UiButton>
-            <PayPalApplePayButton
+            <!-- <PayPalApplePayButton
               v-if="applePayAvailable"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
               @button-clicked="validateTerms"
-            />
+            /> -->
           </OrderSummary>
         </div>
       </div>
@@ -174,7 +174,7 @@ const paypalCreditCardPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 
-const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
+// const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const readyToBuy = () => {
   if (anyAddressFormIsOpen.value) return backToFormEditing();

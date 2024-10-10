@@ -51,7 +51,6 @@
 - The app can now fetch the logo from the plentysystems system.
 - The order again feature supports and shows order properties.
 - Added stock check for the order again feature.
-- Implement Applepay as a payment method.
 - Added variation properties for quick checkout, considering order process visibility.
 - Added PayPal pay later banners on product, cart, checkout and quick checkout.
 - Updated the PayPal form for credit card information.
