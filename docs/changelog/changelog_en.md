@@ -8,6 +8,7 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 - Optimization fixes
+- The footer and `shop-name` meta field now use the shop name.
 
 ### 🩹 Fixed
 
@@ -107,6 +108,7 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
+- Base price display on minimum order quantity.
 
 ### 👷 Changed
 
