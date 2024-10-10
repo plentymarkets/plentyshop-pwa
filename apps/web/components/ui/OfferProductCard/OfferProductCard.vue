@@ -31,7 +31,7 @@
         <UiBadges v-if="variation" :product="variation" :use-availability="true" :use-tags="false" />
 
         <p class="flex justify-end self-end text-yellow-600 font-bold text-lg pt-6">
-          {{ formatPrice(offerGetters.getOfferItemOriginalPrice(filteredOffer.order.orderItems[key])) }}
+          {{ formatPrice(offerGetters.getOfferItemOriginalPriceWithQuantity(filteredOffer.order.orderItems[key])) }}
         </p>
       </div>
     </div>

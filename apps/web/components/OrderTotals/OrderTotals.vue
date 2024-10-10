@@ -37,7 +37,7 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderGetters, offerGetters } from '@plentymarkets/shop-api';
 import type { OrderTotalsPropsType } from './types';
 
 const props = defineProps<OrderTotalsPropsType>();
@@ -47,7 +47,7 @@ const getShippingAmount = (amount: number) => {
   return amount === 0 ? t('shippingMethod.free') : n(Number(amount), 'currency');
 };
 
-const isOrderTypeOffer = props.order.order.typeId === 7;
+const isOrderTypeOffer = offerGetters.isTypeOffer(props.order);
 const additionalCostsWithoutTax = orderGetters.getAdditionalCostsWithTax(props.order);
 const additionalCostsWithTax = orderGetters.getAdditionalCostsWithoutTax(props.order);
 </script>

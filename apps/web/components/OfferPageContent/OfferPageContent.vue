@@ -90,7 +90,9 @@
           <div class="border rounded-md p-4 shadow-lg">
             <div class="flex justify-between mb-4">
               <p class="font-bold text-xl">{{ t('orderSummary') }}</p>
-              <p class="font-medium">{{ t('itemsInCart', offerGetters.getOfferItemsCount(offer)) }}</p>
+              <p class="font-medium">
+                {{ t('itemsInCart', offerGetters.getItemsCountInOffer(offer.order.orderItems)) }}
+              </p>
             </div>
             <OrderTotals :order="offer" />
             <UiButton
