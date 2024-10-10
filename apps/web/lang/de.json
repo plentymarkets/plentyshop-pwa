@@ -648,10 +648,10 @@
     "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "euResponsibleTabName": "EU Verantwortliche Person",
     "manufacturerTabName": "Hersteller",
-    "logoAlt": "Hersteller Logo",
+    "logoAlt": "Herstellerlogo",
     "header": "Angaben zum Hersteller",
     "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts.",
-    "responsibleHeader": "Verantwortliche Stelle in der EU",
+    "responsibleHeader": "Verantwortliche Person in der EU",
     "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass das Produkt allen notwendigen Vorschriften entspricht."
   },
   "max": "Max.",

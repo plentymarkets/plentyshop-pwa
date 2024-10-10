@@ -648,10 +648,10 @@
     "noInformation": "No information available for manufacturer",
     "euResponsibleTabName": "EU Responsible Person",
     "manufacturerTabName": "Manufacturer",
-    "logoAlt": "Herstellerlogo",
-    "header": "Manufacturer Details",
+    "logoAlt": "Manufacturer logo",
+    "header": "Manufacturer details",
     "subtitle": "Manufacturer information includes the address and additional details about the producer of the product.",
-    "responsibleHeader": "Responsible Entity in the EU",
+    "responsibleHeader": "Responsible Person in the EU",
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations."
   },
   "max": "Max",
