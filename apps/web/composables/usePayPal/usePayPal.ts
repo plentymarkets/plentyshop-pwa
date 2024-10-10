@@ -73,7 +73,7 @@ export const usePayPal = () => {
           currency: currency,
           dataPartnerAttributionId: 'Plenty_Cart_PWA_PPCP',
           components:
-            'applepay,messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
+            'messages,buttons,funding-eligibility,card-fields,payment-fields,marks&enable-funding=paylater',
           locale: locale,
           commit: commit,
         });
