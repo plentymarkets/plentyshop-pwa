@@ -58,7 +58,7 @@ const decline = async (text: string) => {
     text: text as string,
   });
 
-  redirectBack();
+  navigateTo(localePath(paths.home));
   send({
     type: 'positive',
     message: t('contact.success'),
