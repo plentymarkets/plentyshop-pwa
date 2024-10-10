@@ -20,7 +20,6 @@ definePageMeta({
 const { data, error, relatedOrder, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
-const router = useRouter();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
