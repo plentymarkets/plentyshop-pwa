@@ -4,11 +4,7 @@
       <img :src="image" alt="Media Image" width="728" height="485" class="w-full h-auto object-cover" />
     </div>
 
-    <div
-      v-if="text && text.trim() !== ''"
-      :class="['w-full', textWidthClass, 'md:pl-8', textAlignmentClass]"
-      v-html="text"
-    ></div>
+    <div v-if="text && text.trim() !== ''" :class="['w-full', textWidthClass, textAlignmentClass]" v-html="text"></div>
   </div>
 </template>
 
