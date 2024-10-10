@@ -4,8 +4,6 @@ import {
   SetCartItemQuantityParams,
   DeleteCartItemParams,
   CartItem,
-  Product,
-  cartGetters,
 } from '@plentymarkets/shop-api';
 import {
   type UseCartReturn,
@@ -55,7 +53,7 @@ export const useCart: UseCartReturn = () => {
     data: {} as Cart,
     useAsShippingAddress: true,
     loading: false,
-    lastUpdatedProduct: {} as Product,
+    lastUpdatedCartItem: {} as CartItem,
   }));
 
   /**
@@ -127,7 +125,7 @@ export const useCart: UseCartReturn = () => {
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
       if (item) {
-        state.value.lastUpdatedProduct = cartGetters.getVariation(item) || ({} as Product);
+        state.value.lastUpdatedCartItem = item;
       }
 
       return !!data.value;
