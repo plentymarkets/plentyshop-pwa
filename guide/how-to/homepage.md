@@ -34,7 +34,8 @@ plentyShop PWA only uses the template of the homepage category. You don't have t
 5. In the **Homepage** section, determine the following:
     * Pick your homepage category
     * Activate or deactivate the newsletter sign-up form
-6. **Build** the application.
+6. **Save** the settings.
+7. **Build** the application.
 
 :::info One-time build
 As long as you don't change the homepage category, you don't have to rebuild the application to update the page contents. The page updates with any change you make to the category template.
@@ -55,6 +56,8 @@ Our template uses a format called JSON. JSON is a data exchange format, where ea
 
 :::tip Tool support
 If you're new to JSON, you can find strong tool support online. [This editor](https://jsoneditoronline.org/), for example, alerts you when there's a syntax problem. You can also use the **tree** view for safe editing.
+
+![JSON Editor Online with the example template. The tabs for switching between different editing views are highlighted.](/images/guide/json-editor-online.png)
 :::
 
 ::: details Template
@@ -71,10 +74,12 @@ If you're new to JSON, you can find strong tool support online. [This editor](ht
       "link": ""
     }
   ],
-  "valueProposition": {
+  "valueProposition": [
+    {
     "image": "",
     "text": ""
-  },
+    }
+  ],
   "featured": [
     {
       "headline": "",
@@ -127,19 +132,21 @@ This block allows you to introduce yourself to visitors and lay out what sets yo
 
 ![An example of a value proposition. It features an image of headphones on the left and a sales pitch on the right.](/images/guide/homepage-hero-value-proposition.png)
 
-There's a single value proposition block.
+You can place the value proposition block any number of times. Blocks have to be separated by comma.
 
 ```json
-"valueProposition": {
+{
   "image": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-  "text": "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h3 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h3><p class='text-base mb-6'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>"
+  "alignment": "left",
+  "text": "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='text-base mb-6 padding-right-desktop md:typography-text-lg'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside md:typography-text-lg'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>"
 }
 ```
 
 | Key   | Value |
 |-------|-------|
 | `image` | Link to an image that supports your value proposition.     |
-| `text`  | Supports both regular text and HTML formatting. If you want to style elements, note that the shop uses [TailwindCSS](https://tailwindcss.com/docs/utility-first). So for example, instead of `h1`, you would apply `class="text-2xl"` to your element.     |
+| `alignment` | Determines the position of the image. By default, the image is displayed on the left side.    |
+| `text`  | Supports both regular text and HTML formatting. If you want to style elements, note that the shop uses [TailwindCSS](https://tailwindcss.com/docs/utility-first). So for example, instead of `h1`, you would apply `class="text-2xl"` to your element. If you're not familiar with Tailwind's class-based styling system, you can use [Tailwind Play](https://play.tailwindcss.com/q0NOnu4vok) to preview your text block.     |
 
 ### Featured categories
 
@@ -160,3 +167,7 @@ You can promote as many categories this way as you want. For every category you 
 |------------|-------|
 | `headline`   | Text to introduce the category     |
 | `categoryId` | ID of the category whose products to display     |
+
+::: tip
+Once you've set up your template for the first time, remember to complete the [App configuration](#app-configuration) to connect your template to your shop.
+:::
