@@ -12,7 +12,6 @@
 ### 🩹 Fixed
 
 - Incorrect display of the PayPal loader
-- Base price display on minimum order quantity.
 
 ### 👷 Changed
 
@@ -108,6 +107,7 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
+- Base price display on minimum order quantity.
 
 ### 👷 Changed
 
