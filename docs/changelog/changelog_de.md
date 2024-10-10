@@ -6,7 +6,7 @@
 - Text- und Inhaltsanpassungen
 - Die Sprache ist jetzt anpassbar
 - Optimierungskorrekturen
-- Verwenden Sie den Storenamen in der Fußzeile und im Shop-Metafeld
+- Der Shop-Name wird jetzt in der Fußzeile und im Metafeld `shop-name` verwendet.
 
 ## v1.6.0
 

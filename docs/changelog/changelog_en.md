@@ -8,7 +8,7 @@
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
 - Optimization fixes
-- Use Storename in footer and shop meta field
+- The footer and `shop-name` meta field now use the shop name.
 
 ### 🩹 Fixed
 
