@@ -119,6 +119,7 @@ export const useWishlist: UseWishlistReturn = () => {
       const variationKey = params.variationId.toString();
 
       if (state.value.wishlistItemIds && variationKey in state.value.wishlistItemIds) {
+        state.value.data = state.value.data.filter((item) => item.variation.id !== params.variationId);
         delete state.value.wishlistItemIds[variationKey];
       }
 
