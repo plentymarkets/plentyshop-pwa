@@ -7,6 +7,8 @@
 - Text and content adaptations
 - Added bank details to the order confirmation page if the payment method is cash in advance.
 - Language is now customizable
+- Optimization fixes
+- The footer and `shop-name` meta field now use the shop name.
 
 ### 🩹 Fixed
 
@@ -16,6 +18,7 @@
 
 - Addresses in read-only checkout are now displayed as non-editable and appear disabled.
 - Change the mobile design of the cookie bar layout
+- Modified manufacturer data appearance
 
 ## v1.6.0
 
@@ -105,6 +108,7 @@
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
 - Display fonts now use the configured font family.
+- Base price display on minimum order quantity.
 
 ### 👷 Changed
 
@@ -254,6 +258,7 @@
 - Mark optional and required form fields.
 - Structure of the useProduct composable
 - Value proposition elements have been updated to receive indication if the image should be on the left or right.
+- Value proposition allows now for multiple entries.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

@@ -5,6 +5,8 @@
 - Die neue Homepage kann jetzt über den GET-Aufruf der Kategorievorlage angepasst werden.
 - Text- und Inhaltsanpassungen
 - Die Sprache ist jetzt anpassbar
+- Optimierungskorrekturen
+- Der Shop-Name wird jetzt in der Fußzeile und im Metafeld `shop-name` verwendet.
 
 ## v1.6.0
 
