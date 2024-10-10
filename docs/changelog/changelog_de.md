@@ -19,20 +19,20 @@
 - Aktualisiere den Namen der Umgebungsvariablen `USE_AVIF` zu `IMAGEAVIF`.
 - Aktualisiere den Namen der Umgebungsvariablen `USE_WEBP` zu `IMAGEWEBP`.
 
-### 🚀 New
+### 🚀 Hinzugefügt
 
-#### Functionality
+#### Funktionen
 
-- Auf Produktseiten wird jetzt der Hersteller und EU-Verantwortliche angezeigt.
+- Auf Produktseiten wird jetzt der EU-Verantwortliche des Herstellers angezeigt.
 - Bei der Preisberechnung wird jetzt die Referrer-ID berücksichtigt.
 - Beim erneuten Kaufen werden jetzt Bestelleigenschaften unterstützt.
 - Beim erneuten Kaufen wird jetzt der Warenbestand geprüft.
 
-#### Dev tools
+#### Entwicklerwerkzeug
 
 - Zum Debuggen kann das API-Caching mit dem Query-Paramter `noCache=1` deaktiviert werden.
 
-#### Payment
+#### Bezahlung
 
 - Das Banner Später bezahlen von PayPal wird jetzt auf den Produktseiten sowie im Warenkorb, der Kasse und der Schnellkasse angezeigt.
 - Die Kreditkarteninformationen im PayPal-Formular wurden aktualisiert.
@@ -40,7 +40,7 @@
 - In der Schnellkasse werden jetzt Varianteneigenschaften angezeigt.
 - Beim Kauf mit Vorkasse werden auf der Bestellbestätigung jetzt die Bankdaten angezeigt.
 
-#### Configuration
+#### Konfiguration
 
 - Das Favicon kann jetzt vom plentysystems System abgerufen werden.
 - Das Logo kann jetzt vom plentysystems System abgerufen werden.
@@ -125,7 +125,7 @@
 - Das mobile Design des Cookie-Bar-Layouts wurde geändert.
 - Das Erscheinungsbild der Herstellerdaten wurde geändert.
 
-### 🏡 Chore
+### 🏡 Aufräumen
 
 - Nicht verwendete Vue-Importe wurden entfernt.
 - Nuxt wurde auf Version 3.13.1 (Vue Version 3.5.0) aktualisiert. Dadurch verbessern sich Performance und Stabilität.

@@ -23,7 +23,7 @@
 
 #### Functionality
 
-- Product pages now display the manufacturer and EU responsible.
+- Product pages now display the EU responsible person of the manufacturer.
 - The app now takes into consideration the referrer ID to display the correct price.
 - Reorders now support order properties.
 - Reorders now check for available stock.
