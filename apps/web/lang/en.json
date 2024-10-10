@@ -686,7 +686,8 @@
     "acceptOffer": "Accept offer",
     "inputPlaceholder": "Please share your reason for declining...",
     "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "missingEmail": "No email address has been provided."
   },
   "orderConfirmation": {
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
