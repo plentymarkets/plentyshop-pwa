@@ -49,6 +49,7 @@
 - The app now reads the internationalisation configuration from the environment. This includes the available languages and the default language.
 - The app now reads whether to display the newsletter signup form on the homepage from the environment.
 - The homepage template can now be configured via a category template.
+- The footer and `shop-name` meta field now use the shop name.
 
 #### SEO
 
@@ -94,6 +95,7 @@
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
 - Fixed DE translation regarding VAT.
 - Fixed wrong price issues.
+- Base price display on minimum order quantity.
 - Display fonts now use the configured font family.
 - Incorrect display of the PayPal loader
 - Fixed my orders actions paddings and cookie bar link sizes.
@@ -252,6 +254,7 @@
 - Mark optional and required form fields.
 - Structure of the useProduct composable
 - Value proposition elements have been updated to receive indication if the image should be on the left or right.
+- Value proposition allows now for multiple entries.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 

@@ -49,6 +49,7 @@
 - Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
 - Über Umgebungsvariablen kann jetzt konfiguriert werden, ob das Formular zur Newsletter-Anmeldung auf der Startseite angezeigt wird.
 - Das Template der Startseite kann jetzt über ein Kategorie-Template angepasst werden.
+- Der Shop-Name wird jetzt in der Fußzeile und im Metafeld `shop-name` verwendet.
 
 #### SEO
 
@@ -84,6 +85,7 @@
 - Paginierungsprobleme mit Reaktivität wurden behoben.
 - Die falsche Anzeige der Grundpreise wurde behoben.
 - Probleme mit falschen Preisen behoben.
+- Anzeige des Grundpreises bei der Mindestbestellmenge.
 - Das Setzen des vsf-locale-Cookies auf SSR wurde behoben.
 - Die Seitennavigation der automatisch generierten Composables-Dokumentation enthält jetzt die richtigen Links.
 - Die Bearbeitung des Autorennamens in Rezensionen und Antworten wurde korrigiert.
