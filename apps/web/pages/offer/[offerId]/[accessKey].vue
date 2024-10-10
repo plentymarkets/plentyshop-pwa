@@ -24,10 +24,6 @@ const router = useRouter();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-function redirectBack() {
-  window?.history?.length > 2 ? router.go(-1) : navigateTo(localePath(paths.home));
-}
-
 const loadOffer = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
   await fetchOffer({
