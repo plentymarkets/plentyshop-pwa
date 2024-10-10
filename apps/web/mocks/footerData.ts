@@ -34,5 +34,3 @@ export const categories = [
     ],
   },
 ];
-
-export const companyName = `© PLENTYSYSTEMS AG ${new Date().getFullYear()}`;
