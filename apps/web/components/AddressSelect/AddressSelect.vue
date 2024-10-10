@@ -51,7 +51,7 @@ import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { type Address } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
-const { disabled = false, type } = defineProps<AddressSelectProps>();
+const { disabled, type } = defineProps<AddressSelectProps>();
 
 const { t } = useI18n();
 const { addresses, get: getAddress } = useAddressStore(type);
