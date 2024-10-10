@@ -112,7 +112,7 @@
 - Cookiebar icon has been replaced.
 - Checkout address buttons in the mobile view have been adjusted.
 - The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
-- Changes to item reviews logic in order to use the feedback api microservice.
+- Changes to item reviews logic in order to use the new feedback API.
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
 - Remove cookie browser language detect.
 - Set page `title` for items and categories instead of `meta-title`.
@@ -122,14 +122,13 @@
 - Eliminate the separate review average fetch by retrieving data directly from the reviews request.
 - Resize demo favicon to 3 kb.
 - The whole application uses the same font family now.
-- Change the mobile design of the cookie bar layout
-- Modified manufacturer data appearance
+- Change the mobile design of the cookie bar layout.
+- Modified manufacturer data appearance.
 
 ### 🏡 Chore
 
-- Removed unnecessary vue imports
-- Updated Nuxt to 3.13.1 (includes vue 3.5.0) for increased performance and stability.
-- Added e2e tests for reviews pagination.
+- Removed unnecessary Vue imports
+- Updated Nuxt to 3.13.1 (includes Vue 3.5.0) for increased performance and stability.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
