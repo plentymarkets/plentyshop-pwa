@@ -680,6 +680,15 @@
   "openConfigurationDrawer": "Open configuration drawer",
   "openSearchModalButtonLabel": "Open item search",
   "or": "or",
+  "offerForm": {
+    "offer": "Offer",
+    "declineOffer": "Decline offer",
+    "acceptOffer": "Accept offer",
+    "inputPlaceholder": "Please share your reason for declining...",
+    "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
+    "cancel": "Cancel",
+    "missingEmail": "No email address has been provided."
+  },
   "orderConfirmation": {
     "confirmationSendTo": "A confirmation with all details has been sent to {email}",
     "createAccountForBenefits": "Create an account to enjoy all benefits!",
