@@ -65,7 +65,7 @@ const ID_CHECKBOX = '#terms-checkbox';
 const { isAuthorized, getSession } = useCustomer();
 const { data: cart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { data: shippingAddresses } = useAddress(AddressType.Shipping);
+const { data: shippingAddresses, saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
@@ -100,6 +100,12 @@ onNuxtReady(async () => {
     await getBillingAddresses().then(
       async () => await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true),
     );
+
+    if (shippingAddresses.value.length === 0) {
+      billingAddresses.value.length > 0
+        ? await saveShippingAddress(billingAddresses.value[0])
+        : navigateTo(localePath(paths.cart));
+    }
 
     await Promise.all([
       getShippingMethods(),
