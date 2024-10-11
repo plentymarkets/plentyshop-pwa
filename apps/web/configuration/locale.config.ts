@@ -19,7 +19,7 @@ export const getLocaleObject = () => {
     languageList.forEach((language) => {
       const languageFile = path.resolve(__dirname, `../lang/${language}.json`);
 
-      if (language === defaultLanguage && !fs.existsSync(languageFile)) {
+      if (!fs.existsSync(languageFile)) {
         fs.writeFileSync(languageFile, '{}');
       }
 
