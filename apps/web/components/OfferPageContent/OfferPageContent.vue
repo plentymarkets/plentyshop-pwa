@@ -150,7 +150,7 @@
             <div class="flex space-x-4">
               <UiButton
                 type="submit"
-                variant="primary"
+                variant="secondary"
                 :disabled="offerLoading"
                 @click="toggleModal"
                 size="lg"
@@ -161,7 +161,7 @@
               </UiButton>
               <UiButton
                 type="submit"
-                variant="secondary"
+                variant="primary"
                 :disabled="offerLoading"
                 @click="handleDecline"
                 size="lg"
