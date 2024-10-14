@@ -51,9 +51,7 @@
     </div>
   </NuxtLazyHydrate>
 
-  <NuxtLazyHydrate when-visible>
-    <Swipper></Swipper>
-  </NuxtLazyHydrate>
+  <Swipper />
 
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
     <NuxtLazyHydrate when-visible>
@@ -64,7 +62,7 @@
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
     </NuxtLazyHydrate>
-    <NuxtLazyHydrate when-visible>
+    <NuxtLazyHydrate nuxt-lazy-load>
       <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
   </div>

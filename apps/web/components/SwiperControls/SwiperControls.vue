@@ -4,5 +4,5 @@
 </template>
 
 <script setup lang="ts">
-const swiper = useSwiper()
+const swiper = useSwiper();
 </script>

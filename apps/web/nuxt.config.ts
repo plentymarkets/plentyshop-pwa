@@ -6,6 +6,11 @@ import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 
 export default defineNuxtConfig({
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => tag.startsWith('swiper-'),
+    },
+  },
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
