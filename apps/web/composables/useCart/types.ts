@@ -1,11 +1,16 @@
-import type { Cart, DoAddItemParams, DeleteCartItemParams, SetCartItemQuantityParams } from '@plentymarkets/shop-api';
-import { Product } from '@plentymarkets/shop-api';
+import type {
+  Cart,
+  DoAddItemParams,
+  DeleteCartItemParams,
+  SetCartItemQuantityParams,
+  CartItem,
+} from '@plentymarkets/shop-api';
 
 export interface UseCartState {
   data: Cart;
   useAsShippingAddress: boolean;
   loading: boolean;
-  lastUpdatedProduct: Product;
+  lastUpdatedCartItem: CartItem;
 }
 
 export type GetCart = () => Promise<Cart>;
@@ -27,7 +32,7 @@ export interface UseCart {
   setCartItemQuantity: SetCartItemQuantity;
   setCart: SetCart;
   clearCartItems: ClearCartItems;
-  lastUpdatedProduct: Readonly<Ref<UseCartState['lastUpdatedProduct']>>;
+  lastUpdatedCartItem: Readonly<Ref<UseCartState['lastUpdatedCartItem']>>;
 }
 
 export type UseCartReturn = () => UseCart;

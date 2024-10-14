@@ -47,7 +47,7 @@
 
         <ProductPrice :product="product" />
 
-        <div class="mb-4 font-normal typography-text-sm whitespace-pre" data-testid="product-description">
+        <div class="mb-4 font-normal typography-text-sm" data-testid="product-description">
           {{ productGetters.getShortDescription(product) }}
         </div>
 
@@ -98,7 +98,7 @@
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import { cartGetters, productGetters } from '@plentymarkets/shop-api';
+import { cartGetters, Product, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';
 
@@ -108,7 +108,7 @@ const { t, n } = useI18n();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const localePath = useLocalePath();
-const { data: cart, lastUpdatedProduct } = useCart();
+const { data: cart, lastUpdatedCartItem } = useCart();
 const { isReady: isPayPalReady, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
@@ -119,6 +119,8 @@ onMounted(() => {
   loadConfig();
 });
 onUnmounted(() => endTimer());
+
+const lastUpdatedProduct = computed(() => cartGetters.getVariation(lastUpdatedCartItem.value) || ({} as Product));
 
 const totals = computed(() => {
   const totalsData = cartGetters.getTotals(cart.value);
