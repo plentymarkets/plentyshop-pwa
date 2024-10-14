@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import https from 'node:https';
-import { ConfigurationResponse, BaseColors } from './types';
+import { ConfigurationResponse, BaseColors, Languages } from './types';
 
 export class SystemConfiguration {
   private axiosRequestConfig: AxiosRequestConfig = {
@@ -51,5 +51,12 @@ export class SystemConfiguration {
 
   getLogoUrl(): string {
     return this.findValueInResponseByKey('store', 'logo');
+  }
+
+  getLanugages(): Languages {
+    return {
+      default: this.findValueInResponseByKey('languages', 'defaultLanguage'),
+      activated: this.findValueInResponseByKey('languages', 'languageList'),
+    };
   }
 }
