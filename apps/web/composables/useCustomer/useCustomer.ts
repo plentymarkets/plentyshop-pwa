@@ -9,7 +9,7 @@ import type {
   Logout,
   ChangePassword,
 } from '~/composables/useCustomer/types';
-import { PlentyError } from '~/sdk.client';
+import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing Customer data
@@ -119,7 +119,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
       return state.value.isAuthorized;
     } catch (error) {
-      useHandleError(error as PlentyError);
+      useHandleError(error as ApiError);
       state.value.loading = false;
       return false;
     }

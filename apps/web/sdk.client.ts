@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { updateVsfLocale } from './utils/sdkClientHelper';
+import { ApiError } from '@plentymarkets/shop-api';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const createHttpClient = () => {
@@ -30,33 +31,12 @@ const createHttpClient = () => {
   return client;
 };
 
-export interface PlentyErrorParams {
-  key: string;
-  code: string;
-  message: string;
-  cause: any;
-}
-
-export class PlentyError {
-  public key = '';
-  public code = '';
-  public message = '';
-  public cause: any = null;
-
-  constructor(errorParams: PlentyErrorParams) {
-    this.key = errorParams.key;
-    this.code = errorParams.code;
-    this.message = errorParams.message;
-    this.cause = errorParams.cause;
-  }
-}
-
 const handleHttpError = (error: unknown) => {
   const axiosError = error as any;
   const data = axiosError?.response?.data?.data || axiosError?.response?.data;
 
   // eslint-disable-next-line etc/throw-error
-  throw new PlentyError({
+  throw new ApiError({
     key: data?.key || 'unknownError',
     code: axiosError?.response?.data?.error?.code ?? axiosError?.response?.status ?? axiosError.status,
     message: data?.message ?? axiosError.message ?? '',

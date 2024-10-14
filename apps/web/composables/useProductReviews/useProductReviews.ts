@@ -8,7 +8,7 @@ import type {
   CreateProductReview,
 } from './types';
 import { reviewGetters } from '@plentymarkets/shop-api';
-import { PlentyError } from '~/sdk.client';
+import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data
@@ -61,7 +61,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       state.value.loading = false;
       return state.value.data;
     } catch (error: unknown) {
-      useHandleError(error as PlentyError);
+      useHandleError(error as ApiError);
     }
     return state.value.data;
   };

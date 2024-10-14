@@ -1,5 +1,5 @@
 import { AddressType } from '@plentymarkets/shop-api';
-import { PlentyError } from '~/sdk.client';
+import { ApiError } from '@plentymarkets/shop-api';
 
 export const useFetchAdddress = (type: AddressType) => {
   const state = useState('useFetchAdddress' + type, () => ({
@@ -15,7 +15,7 @@ export const useFetchAdddress = (type: AddressType) => {
       setAddressStore(data.data);
       state.value.loading = false;
     } catch (error: unknown) {
-      useHandleError(error as PlentyError);
+      useHandleError(error as ApiError);
       state.value.loading = false;
     }
   };

@@ -1,6 +1,6 @@
 import { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
-import { PlentyError } from '~/sdk.client';
+import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for handling errors.
@@ -14,14 +14,14 @@ import { PlentyError } from '~/sdk.client';
  * });
  * ```
  */
-export const useHandleError: UseHandleError = (error: PlentyError | NuxtError<unknown> | null) => {
+export const useHandleError: UseHandleError = (error: ApiError | NuxtError<unknown> | null) => {
   if (error && import.meta.client) {
     const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const type = 'negative';
     const persist = true;
 
-    if (error instanceof PlentyError) {
+    if (error instanceof ApiError) {
       const translationKey = `storefrontError.${error.key}`;
       const message = error.key && $i18n.te(translationKey) ? $i18n.t(translationKey) : error.message;
       send({
