@@ -10,7 +10,8 @@ describe('AppConfigurator', () => {
 
     beforeEach(() => {
         writerMock = {
-            write: vi.fn()
+            write: vi.fn(),
+            writeMissing: vi.fn()
         };
         loggerMock = {
             info: vi.fn(),
@@ -159,6 +160,22 @@ KEY2="value2"
             expect(environmentContent).toBe('');
             expect(loggerSpy).not.toHaveBeenCalled();
             expect(writerSpy).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('generate language files', () => {
+        it('should generate language files for the given language list', () => {
+            const configurator = new AppConfigurator(writerMock, loggerMock);
+            const writerSpy = vi.spyOn(writerMock, 'writeMissing');
+            const loggerSpy = vi.spyOn(loggerMock, 'info');
+            const languages = {
+                default: 'en',
+                activated: 'en,de',
+            }
+
+            configurator.generateLanguageFiles(languages);
+            expect(loggerSpy).toHaveBeenCalledOnce();
+            expect(writerSpy).toHaveBeenCalledTimes(3);
         });
     });
 });

@@ -13,6 +13,10 @@
 - Fixed an issue where product path was not reactive when category was changed.
 - Automatically generate a language file for every active language, not just the default language.
 
+### 👷 Changed
+
+- Generating missing language files based on the language configuration from the environment has been moved to the build script. The locale configuration is now based on the language files in the `lang` directory.
+
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO 📙 Migration guide

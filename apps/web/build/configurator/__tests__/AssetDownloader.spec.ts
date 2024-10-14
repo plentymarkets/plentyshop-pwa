@@ -12,7 +12,8 @@ describe('AssetDownloader', () => {
 
   beforeEach(() => {
     writerMock = {
-      write: vi.fn()
+      write: vi.fn(),
+      writeMissing: vi.fn()
     };
     loggerMock = {
       info: vi.fn(),
