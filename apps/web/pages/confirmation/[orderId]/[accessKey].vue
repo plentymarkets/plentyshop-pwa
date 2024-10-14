@@ -3,6 +3,8 @@
     <template v-if="data">
       <ConfirmationPageContent :order="data" />
     </template>
+  </NuxtLazyHydrate>
+  <NuxtLazyHydrate when-visible>
     <template v-if="error">
       <SoftLogin :error="error" @submit="loadOrder" />
     </template>
