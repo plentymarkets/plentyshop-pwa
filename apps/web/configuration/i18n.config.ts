@@ -1,8 +1,9 @@
+import path from 'node:path';
 import type { NuxtI18nOptions } from '@nuxtjs/i18n';
 import { getLocaleObject } from './locale.config';
 import { readdirSync } from 'node:fs';
 
-const languages = readdirSync('../lang')
+const languages = readdirSync(path.resolve(__dirname, '../lang'))
   .map((file: string) => file.replace('.json', ''))
   .join(',');
 
