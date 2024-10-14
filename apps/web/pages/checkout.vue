@@ -7,7 +7,6 @@
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
-        <UiButton @click="clearCsrf()">asdasdas</UiButton>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-shipping-divider" />
@@ -112,11 +111,6 @@ definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
 });
-
-const { token } = useCsrfToken();
-const clearCsrf = () => {
-  token.value = 'xxx';
-};
 
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
