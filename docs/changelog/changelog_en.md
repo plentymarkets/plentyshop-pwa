@@ -2,6 +2,12 @@
 
 ## v1.x.x (yyyy-mm-dd)
 
+### 🚀 New
+
+#### Functionality
+
+- You can now modify Shipping Addresses during the read-only checkout process.
+
 ### 🩹 Fixed
 
 - Fixed an issue where product path was not reactive when category was changed.
