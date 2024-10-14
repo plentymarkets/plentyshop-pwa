@@ -1,7 +1,12 @@
 import type { NuxtI18nOptions } from '@nuxtjs/i18n';
 import { getLocaleObject } from './locale.config';
+import { readdirSync } from 'node:fs';
 
-const localeObject = getLocaleObject();
+const languages = readdirSync('../lang')
+  .map((file: string) => file.replace('.json', ''))
+  .join(',');
+
+const localeObject = getLocaleObject(languages);
 
 export const nuxtI18nOptions: NuxtI18nOptions = {
   locales: localeObject,
