@@ -4257,6 +4257,7 @@ __metadata:
     is-ci: ^3.0.1
     lint-staged: ^14.0.1
     nuxt: ^3.13.2
+    nuxt-swiper: ^1.2.2
     nuxt-viewport: ^2.1.5
     playwright-core: ^1.45.1
     prettier: ^3.3.2
@@ -15589,6 +15590,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nuxt-swiper@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "nuxt-swiper@npm:1.2.2"
+  dependencies:
+    "@nuxt/kit": ^3.7.0
+    swiper: ^10.2.0
+  checksum: 9573c01f9d1182628a59a6b267472a5dff5448dd21e4473982c1dafd512171e7f98dd8ef468d101da371281a90f32104d235a38124dad8088246808e63a2f807
+  languageName: node
+  linkType: hard
+
 "nuxt-viewport@npm:^2.1.5":
   version: 2.1.5
   resolution: "nuxt-viewport@npm:2.1.5"
@@ -18915,6 +18926,13 @@ __metadata:
   bin:
     svgo: ./bin/svgo
   checksum: a3f8aad597dec13ab24e679c4c218147048dc1414fe04e99447c5f42a6e077b33d712d306df84674b5253b98c9b84dfbfb41fdd08552443b04946e43d03e054e
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^10.2.0":
+  version: 10.3.1
+  resolution: "swiper@npm:10.3.1"
+  checksum: 9a785930ca0ab0683d7e5e116c25a38e1f8818d6f9e93848125bdf3e1874e12a6c3b9f4e9c54668e4accc2440a6f031de98cfc01a1b0068c77f8de4115034e4d
   languageName: node
   linkType: hard
 

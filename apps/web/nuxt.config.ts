@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
+    'nuxt-swiper',
   ],
   vsf: {
     middleware: {
