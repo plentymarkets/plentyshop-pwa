@@ -837,6 +837,11 @@
     "reviewsDown": "Kundenbewertung ⬇",
     "reviewsUp": "Kundenbewertung ⬆"
   },
+  "storefrontError": {
+    "login": {
+      "userIsBlocked": "Nutzer ist gesperrt"
+    }
+  },
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
   "successInfoReturnHeader": "Vielen Dank für Ihre Retoure!",

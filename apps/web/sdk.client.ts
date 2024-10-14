@@ -1,5 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { SdkHttpError } from '@vue-storefront/sdk';
+import axios, { AxiosRequestConfig } from 'axios';
 import { updateVsfLocale } from './utils/sdkClientHelper';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
@@ -32,19 +31,20 @@ const createHttpClient = () => {
 };
 
 export interface PlentyErrorParams {
+  key: string;
   code: string;
   message: string;
   cause: any;
 }
 
 export class PlentyError {
+  public key = '';
+  public code = '';
+  public message = '';
+  public cause: any = null;
 
-  public code: string = '';
-  public message: string = '';
-  public cause: any = null
-  constructor(
-    errorParams: PlentyErrorParams
-  ) {
+  constructor(errorParams: PlentyErrorParams) {
+    this.key = errorParams.key;
     this.code = errorParams.code;
     this.message = errorParams.message;
     this.cause = errorParams.cause;
@@ -53,12 +53,14 @@ export class PlentyError {
 
 const handleHttpError = (error: unknown) => {
   const axiosError = error as any;
-  console.log(error);
+  const data = axiosError?.response?.data?.data || axiosError?.response?.data;
 
+  // eslint-disable-next-line etc/throw-error
   throw new PlentyError({
+    key: data?.key || 'unknownError',
     code: axiosError?.response?.data?.error?.code ?? axiosError?.response?.status ?? axiosError.status,
-    message: axiosError?.response?.data?.error?.message ?? axiosError?.response?.statusText ?? axiosError.message,
-    cause: axiosError.response?.data ?? {},
+    message: data?.message ?? axiosError.message ?? '',
+    cause: data?.errors ?? {},
   });
 };
 

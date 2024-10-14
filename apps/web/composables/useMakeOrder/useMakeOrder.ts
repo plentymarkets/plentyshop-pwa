@@ -93,7 +93,10 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       default: {
-        useNotification().send({ message: $i18n.t('orderErrorProvider', { paymentType: paymentType }) , type: 'negative' });
+        useNotification().send({
+          message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
+          type: 'negative',
+        });
         break;
       }
     }

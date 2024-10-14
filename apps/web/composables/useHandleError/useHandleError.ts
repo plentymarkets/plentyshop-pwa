@@ -2,7 +2,6 @@ import { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
 import { PlentyError } from '~/sdk.client';
 
-
 /**
  * @description Composable for handling errors.
  * @param error { SdkHttpError }
@@ -17,14 +16,14 @@ import { PlentyError } from '~/sdk.client';
  */
 export const useHandleError: UseHandleError = (error: PlentyError | NuxtError<unknown> | null) => {
   if (error && import.meta.client) {
+    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
     const type = 'negative';
     const persist = true;
-    console.log(error);
 
     if (error instanceof PlentyError) {
-      const message = `${error.code}: ${error.message}`;
-
+      const translationKey = `storefrontError.${error.key}`;
+      const message = error.key && $i18n.te(translationKey) ? $i18n.t(translationKey) : error.message;
       send({
         type,
         message,
@@ -33,7 +32,7 @@ export const useHandleError: UseHandleError = (error: PlentyError | NuxtError<un
     } else {
       const nuxtError = error as any;
       const message = `${nuxtError?.status}: ${nuxtError.statusText}`;
-      
+
       send({
         type,
         message,

@@ -837,6 +837,11 @@
     "reviewsDown": "Item reviews ⬇",
     "reviewsUp": "Item reviews ⬆"
   },
+  "storefrontError": {
+    "login": {
+      "userIsBlocked": "User is blocked"
+    }
+  },
   "successInfoMessage": "Your order was completed successfully.",
   "successInfoOrderHeader": "Thank you for your order!",
   "successInfoReturnHeader": "Thank you for your return!",
