@@ -12,6 +12,7 @@
 ### 👷 Changed
 
 - Generating missing language files based on the language configuration from the environment has been moved to the build script. The locale configuration is now based on the language files in the `lang` directory.
+- Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
