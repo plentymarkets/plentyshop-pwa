@@ -24,7 +24,23 @@ import { defineProps } from 'vue';
 import { HeroItem } from './types';
 import { SwiperPagination, SwiperNavigation } from '#imports';
 
+const handleArrowsVisibility = () => {
+  const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
+  const previousButton = document.querySelector('.swiper-button-prev') as HTMLElement;
+
+  if (window.innerWidth < 768) {
+    if (nextButton) nextButton.style.display = 'none';
+    if (previousButton) previousButton.style.display = 'none';
+  } else {
+    if (nextButton) nextButton.style.display = 'block';
+    if (previousButton) previousButton.style.display = 'block';
+  }
+};
+
 onMounted(() => {
+  handleArrowsVisibility();
+  window.addEventListener('resize', handleArrowsVisibility);
+
   const nextButton = document.querySelector('.swiper-button-next');
   const previousButton = document.querySelector('.swiper-button-prev');
   const activePagination = document.querySelector('.swiper-pagination-bullet-active');
@@ -57,3 +73,11 @@ defineProps<{
   heroProps: HeroItem[];
 }>();
 </script>
+<style scoped>
+@media (max-width: 767px) {
+  .swiper-button-prev,
+  .swiper-button-next {
+    display: none;
+  }
+}
+</style>
