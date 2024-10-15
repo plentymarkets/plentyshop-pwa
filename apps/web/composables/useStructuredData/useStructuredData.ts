@@ -66,7 +66,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
 
-    const manufacturer = product.item.manufacturer as { name: string };
+    const manufacturer = productGetters.getManufacturer(product);
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -97,7 +97,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       disambiguatingDescription: '',
       manufacturer: {
         '@type': 'Organization',
-        name: manufacturer.name,
+        name: manufacturer.externalName,
       },
       review: reviews,
       aggregateRating: {
