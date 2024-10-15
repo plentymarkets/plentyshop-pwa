@@ -22,8 +22,8 @@
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
-          :width="imageWidth"
-          :height="imageHeight"
+          :width="getWidth()"
+          :height="getHeight()"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
         />
@@ -132,6 +132,20 @@ const showNetPrices = runtimeConfig.public.showNetPrices;
 const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+
+const getWidth = () => {
+  if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
+    return imageWidth;
+  }
+  return undefined;
+}
+
+const getHeight = () => {
+  if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
+    return imageHeight;
+  }
+  return undefined;
+}
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
