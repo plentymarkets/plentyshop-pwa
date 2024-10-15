@@ -185,7 +185,7 @@ const getWidth = (image: ImagesData, imageUrl: string) => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
     return imageWidth;
   }
-  return;
+  return '';
 };
 
 const getHeight = (image: ImagesData, imageUrl: string) => {
@@ -193,7 +193,7 @@ const getHeight = (image: ImagesData, imageUrl: string) => {
   if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
     return imageHeight;
   }
-  return;
+  return '';
 };
 
 const onChangeIndex = (index: number) => {
