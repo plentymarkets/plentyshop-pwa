@@ -1,5 +1,5 @@
 <template>
-  <div class="md:flex md:flex-row-reverse md:justify-center max-w-[1536px] mx-auto md:min-h-[600px] mb-10 text-center">
+  <div class="md:flex md:flex-row-reverse md:justify-center mx-auto mb-10 text-center">
     <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
       <img
         :src="heroItem.image"
@@ -18,7 +18,7 @@
       >
         {{ heroItem.heading }}
       </h1>
-      <p class="typography-text-base md:typography-text-lg text-center md:text-left">
+      <p class="typography-text-base md:typography-text-lg text-center md:text-left font-normal">
         {{ heroItem.description }}
       </p>
       <div class="flex flex-col md:flex-row gap-4 mt-6">

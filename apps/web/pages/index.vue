@@ -13,7 +13,8 @@
     </div>
   </NuxtLazyHydrate>
 
-  <TestSwipper />
+  <!-- <TestSwipper />
+  <Swipper /> -->
 
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
     <NuxtLazyHydrate when-visible>
