@@ -608,32 +608,32 @@
   "itemsInCart": "(Artikel: {count})",
   "itemsSubtotal": "Zwischensumme der Artikel",
   "lang": {
-    "de": "Deutsch",
-    "en": "Englisch",
     "bg": "Bulgarisch",
-    "fr": "Französisch",
-    "it": "Italienisch",
-    "es": "Spanisch",
-    "tr": "Türkisch",
-    "nl": "Niederländisch",
-    "pl": "Polnisch",
-    "pt": "Portugiesisch",
-    "no": "Norwegisch",
-    "ro": "Rumänisch",
-    "dk": "Dänisch",
-    "se": "Schwedisch",
-    "cz": "Tschechisch",
-    "ru": "Russisch",
-    "sk": "Slowakisch",
     "cn": "Chinesisch",
-    "vn": "Vietnamesisch",
+    "cz": "Tschechisch",
+    "de": "Deutsch",
+    "dk": "Dänisch",
+    "ee": "Estnisch",
+    "en": "Englisch",
+    "es": "Spanisch",
     "fi": "Finnisch",
+    "fr": "Französisch",
+    "hr": "Kroatisch",
+    "hu": "Ungarisch",
     "ie": "Irisch",
+    "it": "Italienisch",
     "lt": "Litauisch",
     "lv": "Lettisch",
-    "ee": "Estnisch",
-    "hr": "Kroatisch",
-    "hu": "Ungarisch"
+    "nl": "Niederländisch",
+    "no": "Norwegisch",
+    "pl": "Polnisch",
+    "pt": "Portugiesisch",
+    "ro": "Rumänisch",
+    "ru": "Russisch",
+    "se": "Schwedisch",
+    "sk": "Slowakisch",
+    "tr": "Türkisch",
+    "vn": "Vietnamesisch"
   },
   "languageSelector": "Sprachauswahl öffnen",
   "legalDetails": "Rechtliche Informationen",
@@ -644,18 +644,19 @@
   "lowestPrice": "Niedrigster Preis der letzten 30 Tage: {price}",
   "manageAddresses": "Verwalten Sie Ihre Adressen",
   "manufacturer": {
-    "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
-    "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "euResponsibleTabName": "EU Verantwortliche Person",
-    "manufacturerTabName": "Hersteller",
-    "logoAlt": "Hersteller Logo",
     "header": "Angaben zum Hersteller",
-    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts.",
+    "logoAlt": "Hersteller Logo",
+    "manufacturerTabName": "Hersteller",
+    "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
+    "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
     "responsibleHeader": "Verantwortliche Stelle in der EU",
-    "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass das Produkt allen notwendigen Vorschriften entspricht."
+    "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass das Produkt allen notwendigen Vorschriften entspricht.",
+    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts."
   },
   "max": "Max.",
   "min": "Min.",
+  "minimumOrderQuantity": "Minimale Bestellmenge: {count}",
   "moreItemsOfThisCategory": "Weitere Artikel in dieser Kategorie",
   "myCart": "Mein Warenkorb",
   "newBillingAddress": "Neue Rechnungsadresse",
@@ -677,18 +678,18 @@
   "numberInCart": "{count} Produkte im Warenkorb",
   "numberInWishlist": "{count} Produkte in der Wunschliste",
   "numberOfProducts": "{count} Produkte von {total} Produkten",
+  "offerForm": {
+    "acceptOffer": "Angebot annehmen",
+    "cancel": "Abbrechen",
+    "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",
+    "declineOffer": "Angebot ablehnen",
+    "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
+    "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt.",
+    "offer": "Angebot"
+  },
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
   "or": "oder",
-  "offerForm": {
-    "offer": "Angebot",
-    "declineOffer": "Angebot ablehnen",
-    "acceptOffer": "Angebot annehmen",
-    "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
-    "declineDialogSubline": "Helfen Sie uns, uns zu verbessern, indem Sie uns mitteilen, warum Sie das Angebot abgelehnt haben.",
-    "cancel": "Abbrechen",
-    "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt."
-  },
   "orderConfirmation": {
     "confirmationSendTo": "Eine Bestätigung mit allen Details wurde an {email} gesendet",
     "createAccountForBenefits": "Erstellen Sie ein Konto, um alle Vorteile zu nutzen!",
@@ -757,7 +758,6 @@
   "productDetails": "Produktdetails",
   "productLegalDetailsHeader": "Rechtliche Informationen",
   "products": "Produkte",
-  "minimumOrderQuantity": "Minimale Bestellmenge: {count}",
   "quantitySelector": "Mengeneingabe",
   "quantitySelectorDecrease": "Menge reduzieren",
   "quantitySelectorIncrease": "Menge erhöhen",
@@ -877,9 +877,44 @@
     "reviewsUp": "Kundenbewertung ⬆"
   },
   "storefrontError": {
+    "address": {
+      "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
+      "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
+      "validationFailed": "Die Adresse ist ungültig."
+    },
+    "cart": {
+      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden."
+    },
+    "contact": {
+      "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
+      "missingContactOrUnexpectedFormat": "Fehlende Kontaktangaben oder unerwartetes Format.",
+      "unexpectedAddressFormat": "Unerwartetes Adressformat"
+    },
+    "contactMail": {
+      "failed": "Nachricht konnte nicht gesendet werden."
+    },
+    "coupon": {
+      "applyFailed": "Der Coupon konnte nicht eingelöst werden."
+    },
     "login": {
+      "failed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"
-    }
+    },
+    "newsletter": {
+      "createFailed": "Der Newsletter konnte nicht abonniert werden."
+    },
+    "order": {
+      "additionalAuthRequiredName": "Für diese Bestellung ist eine Bestätigung des verwendeten Vornamens, Nachnamens oder Firmennamens erforderlich.",
+      "additionalAuthenticationRequired": "Für diese Bestellung ist eine zusätzliche Authentifizierung notwendig.",
+      "additionalAuthenticationRequiredLogin": "Für diese Bestellung ist das erneute einloggen notwendig.",
+      "additionalAuthenticationRequiredPostcode": "Für diese Bestellung ist die Bestätigung der verwendenten Postleitzahl notwendig.",
+      "createFailed": "Die Bestellung konnte nicht erstellt werden.",
+      "loadOrdersFailed": "Die Bestellungen konnten nicht geladen werden.",
+      "migrateUnauthorized": "Die Bestellung konnte nicht zu deinem Account hinzugefügt werden.",
+      "notFound": "Die Bestellung existiert nicht.",
+      "softLoginFailed": "Die angegebenen Daten sind ungültig."
+    },
+    "unknownError": "Es ist ein unbekannter Fehler aufgetreten."
   },
   "successInfoMessage": "Ihre Bestellung wurde erfolgreich abgeschlossen.",
   "successInfoOrderHeader": "Vielen Dank für Ihre Bestellung!",
