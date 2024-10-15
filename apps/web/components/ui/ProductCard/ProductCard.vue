@@ -137,15 +137,15 @@ const getWidth = () => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
     return imageWidth;
   }
-  return undefined;
-}
+  return;
+};
 
 const getHeight = () => {
   if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
     return imageHeight;
   }
-  return undefined;
-}
+  return;
+};
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;

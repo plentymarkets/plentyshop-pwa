@@ -41,7 +41,7 @@
     </div>
 
     <div class="md:-order-1 overflow-hidden flex-shrink-0 basis-auto">
-    <SfScrollable
+      <SfScrollable
         ref="thumbsReference"
         wrapper-class="hidden md:inline-flex"
         direction="vertical"
@@ -185,16 +185,16 @@ const getWidth = (image: ImagesData, imageUrl: string) => {
   if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
     return imageWidth;
   }
-  return undefined;
-}
+  return;
+};
 
 const getHeight = (image: ImagesData, imageUrl: string) => {
   const imageHeight = productImageGetters.getImageHeight(image) || 600;
   if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
     return imageHeight;
   }
-  return undefined;
-}
+  return;
+};
 
 const onChangeIndex = (index: number) => {
   stop();
