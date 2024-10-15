@@ -32,8 +32,8 @@
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="productImageGetters.getImageWidth(image) || 600"
-            :height="productImageGetters.getImageHeight(image) || 600"
+            :width="getWidth(image, productImageGetters.getImageUrl(image))"
+            :height="getHeight(image, productImageGetters.getImageUrl(image))"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="md:-order-1 overflow-hidden flex-shrink-0 basis-auto">
-      <SfScrollable
+    <SfScrollable
         ref="thumbsReference"
         wrapper-class="hidden md:inline-flex"
         direction="vertical"
@@ -179,6 +179,22 @@ const registerThumbsWatch = (
 
 registerThumbsWatch(firstThumbReference, firstVisibleThumbnailIntersected);
 registerThumbsWatch(lastThumbReference, lastVisibleThumbnailIntersected);
+
+const getWidth = (image: ImagesData, imageUrl: string) => {
+  const imageWidth = productImageGetters.getImageWidth(image) || 600;
+  if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
+    return imageWidth;
+  }
+  return undefined;
+}
+
+const getHeight = (image: ImagesData, imageUrl: string) => {
+  const imageHeight = productImageGetters.getImageHeight(image) || 600;
+  if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
+    return imageHeight;
+  }
+  return undefined;
+}
 
 const onChangeIndex = (index: number) => {
   stop();
