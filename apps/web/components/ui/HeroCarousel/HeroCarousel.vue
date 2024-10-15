@@ -1,7 +1,7 @@
 <template>
   <div>
     <Swiper
-      :modules="[SwiperPagination, SwiperNavigation]"
+      :modules="[Pagination, Navigation]"
       :slides-per-view="1"
       :navigation="true"
       :loop="true"
@@ -22,7 +22,15 @@
 <script setup lang="ts">
 import { defineProps } from 'vue';
 import { HeroItem } from './types';
-import { SwiperPagination, SwiperNavigation } from '#imports';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Pagination } from 'swiper/modules';
+// import 'swiper/css';
+// import 'swiper/css/navigation';
+// import 'swiper/css/pagination';
+
+import '@/assets/swiper.min.css';
+import '@/assets/navigation.min.css';
+import '@/assets/pagination.min.css';
 
 const handleArrowsVisibility = () => {
   const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
@@ -73,11 +81,3 @@ defineProps<{
   heroProps: HeroItem[];
 }>();
 </script>
-<style scoped>
-@media (max-width: 767px) {
-  .swiper-button-prev,
-  .swiper-button-next {
-    display: none;
-  }
-}
-</style>
