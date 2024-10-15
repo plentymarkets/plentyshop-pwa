@@ -2,6 +2,10 @@
 
 ## v1.x.x (yyyy-mm-dd)
 
+### New
+
+- Added a new request header for configId and added no cache to environment variables.
+
 ### 🩹 Fixed
 
 - Fixed an issue where product path was not reactive when category was changed.
