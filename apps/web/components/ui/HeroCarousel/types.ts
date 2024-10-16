@@ -11,6 +11,7 @@ export type Sizes = {
 
 export type HeroItem = {
   image: string;
+  alt: string;
   tagline: string;
   heading: string;
   description: string;

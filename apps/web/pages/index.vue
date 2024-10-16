@@ -15,9 +15,9 @@
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           :src="formattedHeroItems[0].image"
-          :width="getSizeForViewport(headPhones.sizes).width"
-          :height="getSizeForViewport(headPhones.sizes).height"
-          :alt="headPhones.alt"
+          :width="getSizeForViewport(formattedHeroItems[0].backgroundSizes).width"
+          :height="getSizeForViewport(formattedHeroItems[0].backgroundSizes).height"
+          :alt="formattedHeroItems[0].alt"
           class="h-full object-cover object-left md:h-full md:object-contain"
         />
       </div>
@@ -98,6 +98,7 @@ const getDefaultHomepageTemplate = {
   hero: [
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      alt: 'Headphones',
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
@@ -153,6 +154,7 @@ const mediaData = ref(
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
     image: item.image,
+    alt: item.alt,
     tagline: item.tagline,
     heading: item.heading,
     description: item.description,
@@ -165,6 +167,11 @@ const formattedHeroItems = ref<HeroItem[]>(
     },
   })),
 );
+
+console.error('homepageTemplate', homepageTemplate.value);
+console.error('mediaData', mediaData.value);
+console.error('formattedHeroItems', formattedHeroItems.value);
+
 watch(
   () => categoryTree.value,
   async () => {
