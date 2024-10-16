@@ -1,5 +1,6 @@
 export const useShippingAsBilling = () => {
   const state = useState('useShippingAsBilling', () => ({
+    disabled: false,
     shippingAsBilling: false,
   }));
 
