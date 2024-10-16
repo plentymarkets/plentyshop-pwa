@@ -904,7 +904,7 @@
       "createFailed": "Der Newsletter konnte nicht abonniert werden."
     },
     "order": {
-      "additionalAuthRequiredName": "Für diese Bestellung ist eine Bestätigung des verwendeten Nachnamens oder Firmennamens erforderlich.",
+      "additionalAuthRequiredName": "Für diese Bestellung ist eine Bestätigung des verwendeten Nachnamens erforderlich.",
       "additionalAuthenticationRequired": "Für diese Bestellung ist eine zusätzliche Authentifizierung notwendig.",
       "additionalAuthenticationRequiredLogin": "Für diese Bestellung ist das erneute einloggen notwendig.",
       "additionalAuthenticationRequiredPostcode": "Für diese Bestellung ist die Bestätigung der verwendenten Postleitzahl notwendig.",
