@@ -1,4 +1,5 @@
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { ApiError } from '@plentymarkets/shop-api';
 
 export const usePrimaryAddress = (type: AddressType) => {
   const state = useState('usePrimaryAddress' + type, () => ({
@@ -16,7 +17,7 @@ export const usePrimaryAddress = (type: AddressType) => {
       state.value.primaryAddressId = Number(userAddressGetters.getId(address));
       state.value.loading = false;
     } catch (error: unknown) {
-      useHandleError(error as Error);
+      useHandleError(error as ApiError);
       state.value.loading = false;
     }
   };
