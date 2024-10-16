@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
+    page-type="static"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -55,17 +56,18 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, Order, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({ pageType: 'static' });
-
 const ID_CHECKBOX = '#terms-checkbox';
-
-const { isAuthorized, getSession } = useCustomer();
+const { isAuthorized } = useCustomer();
 const { data: cart, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { data: shippingAddresses, saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
+const {
+  data: shippingAddresses,
+  getAddresses: getShippingAddresses,
+  saveAddress: saveShippingAddress,
+} = useAddress(AddressType.Shipping);
 const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
@@ -76,8 +78,7 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const { fetchServer } = useFetchAdddress(AddressType.Shipping);
-const { persistShippingAddress } = useCheckout();
+const { persistShippingAddress, persistBillingAddress } = useCheckout();
 
 const cartIsEmpty = computed(() => !cart.value?.items || cart.value?.items?.length === 0);
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
@@ -88,36 +89,60 @@ const redirectToCart = () => {
   navigateTo(localePath(paths.cart));
 };
 
-onNuxtReady(async () => {
-  try {
-    await getSession();
-    if (cartIsEmpty.value) redirectToCart();
+const fetchShippingAndPaymentMethods = async () => {
+  await Promise.all([
+    getShippingMethods(),
+    fetchPaymentMethods().then(
+      async () =>
+        await savePaymentMethod(paymentMethodData?.value?.list?.find((method) => method.name === 'PayPal')?.id || 0),
+    ),
+    useActiveShippingCountries().getActiveShippingCountries(),
+  ]);
+};
 
-    isAuthorized.value
-      ? await fetchServer().then(async () => await persistShippingAddress())
-      : await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
+const handleAuthUserInit = async () => {
+  useFetchAdddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress())
+    .catch((error) => useHandleError(error));
 
-    await getBillingAddresses().then(
-      async () => await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true),
-    );
+  useFetchAdddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
 
-    if (shippingAddresses.value.length === 0) {
-      billingAddresses.value.length > 0
-        ? await saveShippingAddress(billingAddresses.value[0])
-        : navigateTo(localePath(paths.cart));
-    }
+  await fetchShippingAndPaymentMethods();
+};
 
-    await Promise.all([
-      getShippingMethods(),
-      fetchPaymentMethods().then(
-        async () =>
-          await savePaymentMethod(paymentMethodData?.value?.list?.find((method) => method.name === 'PayPal')?.id || 0),
-      ),
-      useActiveShippingCountries().getActiveShippingCountries(),
-    ]);
-  } catch (error) {
-    useHandleError(error as Error);
+const setClientCheckoutAddress = async () => {
+  await useCheckoutAddress(AddressType.Shipping)
+    .set(shippingAddresses.value[0], true)
+    .then(async () => await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true))
+    .catch((error) => useHandleError(error));
+};
+
+const handleGuestUserInit = async () => {
+  await getShippingAddresses()
+    .then(async () => await getBillingAddresses())
+    .catch((error) => useHandleError(error));
+
+  if (shippingAddresses.value.length === 0) {
+    billingAddresses.value.length > 0
+      ? await saveShippingAddress(billingAddresses.value[0], true)
+      : navigateTo(localePath(paths.cart));
   }
+
+  await setClientCheckoutAddress();
+  await fetchShippingAndPaymentMethods();
+};
+
+onNuxtReady(async () => {
+  if (cartIsEmpty.value) {
+    redirectToCart();
+    return;
+  }
+
+  isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });
 
 const scrollToTerms = () => {
@@ -126,25 +151,29 @@ const scrollToTerms = () => {
 };
 
 const order = async () => {
-  if (cartIsEmpty.value) redirectToCart();
+  if (cartIsEmpty.value) {
+    redirectToCart();
+    return;
+  }
+
   if (!termsAccepted.value) {
     scrollToTerms();
     return;
   }
 
-  const data = await createOrder({
+  await createOrder({
     paymentId: cart.value.methodOfPaymentId,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
-
-  await executeOrder({
-    mode: 'paypal',
-    plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-    paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-  });
-
-  clearCartItems();
-
-  if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+  }).then(
+    async (data: Order) =>
+      await executeOrder({
+        mode: 'paypal',
+        plentyOrderId: Number.parseInt(orderGetters.getId(data)),
+        paypalTransactionId: route?.query?.orderId?.toString() ?? '',
+      }).finally(() => {
+        clearCartItems();
+        if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+      }),
+  );
 };
 </script>

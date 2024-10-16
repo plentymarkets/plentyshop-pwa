@@ -240,7 +240,7 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     .then(() => handleSaveShippingAsBilling(shippingAddressForm as Address))
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
-    .then(() => refreshAddressDependencies())
+    .then(() => refreshAddressDependencies(!disabledShippingAsBilling.value))
     .catch((error) => useHandleError(error));
 });
 

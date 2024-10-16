@@ -74,8 +74,9 @@ export const useAddressForm = (type: AddressType) => {
     }),
   );
 
-  const notifyIfShippingChanged = () => {
+  const notifyIfShippingChanged = (shouldNotify: boolean) => {
     if (
+      shouldNotify &&
       selectedMethod.value &&
       shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
         shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
@@ -84,18 +85,18 @@ export const useAddressForm = (type: AddressType) => {
     }
   };
 
-  const notifyIfBillingChanged = () => {
+  const notifyIfBillingChanged = (shouldNotify: boolean) => {
     if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
-      send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
       cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
+      if (shouldNotify) send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
     }
   };
 
-  const refreshAddressDependencies = async () => {
+  const refreshAddressDependencies = async (shouldNotify = true) => {
     if (type === AddressType.Shipping) {
       await Promise.all([getSession(), getShippingMethods(), fetchPaymentMethods()]);
-      notifyIfShippingChanged();
-      notifyIfBillingChanged();
+      notifyIfShippingChanged(shouldNotify);
+      notifyIfBillingChanged(shouldNotify);
     }
   };
 
