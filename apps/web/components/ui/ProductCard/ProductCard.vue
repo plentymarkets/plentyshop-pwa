@@ -96,6 +96,7 @@
 import { productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { defaults } from '~/composables';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -131,13 +132,13 @@ const path = computed(() => productGetters.getCategoryUrlPath(product, categoryT
 const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
 const getWidth = () => {
-  if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
+  if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth;
   }
   return '';
 };
 const getHeight = () => {
-  if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
+  if (imageHeight && imageHeight > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageHeight;
   }
   return '';

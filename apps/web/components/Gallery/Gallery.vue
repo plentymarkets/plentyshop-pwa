@@ -125,6 +125,7 @@ import { SfScrollable, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular }
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
 import { productImageGetters } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const props = defineProps<{ images: ImagesData[] }>();
 
@@ -182,7 +183,7 @@ registerThumbsWatch(lastThumbReference, lastVisibleThumbnailIntersected);
 
 const getWidth = (image: ImagesData, imageUrl: string) => {
   const imageWidth = productImageGetters.getImageWidth(image) || 600;
-  if (imageWidth && imageWidth > 0 && imageUrl.includes('/full/')) {
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageWidth;
   }
   return '';
@@ -190,7 +191,7 @@ const getWidth = (image: ImagesData, imageUrl: string) => {
 
 const getHeight = (image: ImagesData, imageUrl: string) => {
   const imageHeight = productImageGetters.getImageHeight(image) || 600;
-  if (imageHeight && imageHeight > 0 && imageUrl.includes('/full/')) {
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
     return imageHeight;
   }
   return '';
