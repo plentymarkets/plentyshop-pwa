@@ -904,7 +904,7 @@
       "createFailed": "The newsletter could not be subscribed to."
     },
     "order": {
-      "additionalAuthRequiredName": "Confirmation of the first name, last name or company name used is required for this order.",
+      "additionalAuthRequiredName": "Confirmation of the last name is required to access this order.",
       "additionalAuthenticationRequired": "Additional authentication is required for this order.",
       "additionalAuthenticationRequiredLogin": "For this order it is necessary to log in again.",
       "additionalAuthenticationRequiredPostcode": "Confirmation of the zip code used is required for this order.",
