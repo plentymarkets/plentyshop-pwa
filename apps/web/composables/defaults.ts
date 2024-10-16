@@ -14,6 +14,7 @@ const DEFAULT_REVIEW_MODAL_TYPES = {
   deleteReview: 'delete-review',
   deleteReply: 'delete-reply',
 };
+const IMAGE_LINK_SUFIX = '/full/';
 
 export const defaults = {
   DEFAULT_ITEMS_PER_PAGE,
@@ -26,4 +27,5 @@ export const defaults = {
   PREVIEW_COOKIES,
   REPLY_CHARACTER_LIMIT,
   DEFAULT_REVIEW_MODAL_TYPES,
+  IMAGE_LINK_SUFIX,
 };
