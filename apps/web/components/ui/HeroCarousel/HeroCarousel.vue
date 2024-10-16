@@ -24,13 +24,13 @@ import { defineProps } from 'vue';
 import { HeroItem } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
-// import 'swiper/css';
+//import 'swiper/css';
 // import 'swiper/css/navigation';
 // import 'swiper/css/pagination';
 
-import '@/assets/swiper.min.css';
-import '@/assets/navigation.min.css';
-import '@/assets/pagination.min.css';
+import '@/assets/libraries/swiper/swiper.min.css';
+import '@/assets/libraries/swiper/navigation.min.css';
+import '@/assets/libraries/swiper/pagination.min.css';
 
 const handleArrowsVisibility = () => {
   const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
