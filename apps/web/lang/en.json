@@ -883,7 +883,7 @@
       "validationFailed": "The address is invalid."
     },
     "cart": {
-      "failedToRemoveItem": "The article could not be removed."
+      "failedToRemoveItem": "The item could not be removed."
     },
     "contact": {
       "emailAlreadyExists": "The e-mail address already exists.",
