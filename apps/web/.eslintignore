@@ -1,6 +1,6 @@
 nuxt.config.js
 jest.setup.ts
 cypress.config.ts
-assets/libraries/navigation.min.css
-assets/libraries/pagination.min.css
-assets/libraries/swiper.min.css
+/assets/libraries/navigation.min.css
+/assets/libraries/pagination.min.css
+/assets/libraries/swiper.min.css
