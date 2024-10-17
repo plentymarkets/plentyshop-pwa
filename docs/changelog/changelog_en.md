@@ -1,7 +1,8 @@
 # Changelog plentyshopPWA
 
-##  v1.6.1
-- Added new carousel compoment via Swipper library 
+## v1.6.1
+
+- Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
 

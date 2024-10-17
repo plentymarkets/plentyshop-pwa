@@ -22,7 +22,7 @@ cache
 .temp
 dist
 
-lang
+
 # testing
 coverage
 
