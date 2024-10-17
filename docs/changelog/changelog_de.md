@@ -1,5 +1,11 @@
 # Changelog plentyshopPWA
 
+## v1.6.1
+
+- Neue Karussellkomponente über die Swipper-Bibliothek hinzugefügt
+- Neues useCarousel Composable mit Karusselllogik erstellt
+- Minimierte und bereinigte Swiper-CSS-Dateien zur Geschwindigkeitsoptimierung
+
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### TODO 📙 Migrationsanleitung
