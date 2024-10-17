@@ -22,7 +22,7 @@
         <ProductRecommendedProducts cache-key="homepage" :category-id="recommendedProductsCategoryId" />
       </section>
     </NuxtLazyHydrate>
-    <NuxtLazyHydrate nuxt-lazy-load>
+    <NuxtLazyHydrate when-visible>
       <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
   </div>
