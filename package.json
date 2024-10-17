@@ -37,7 +37,8 @@
     "@vee-validate/yup": "^4.13.2",
     "country-flag-icons": "^1.5.12",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "nuxt-swiper": "^1.2.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",

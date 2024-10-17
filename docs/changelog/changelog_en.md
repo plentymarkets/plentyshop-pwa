@@ -2,6 +2,10 @@
 
 ## v1.x.x (yyyy-mm-dd)
 
+- Added new carousel compoment via Swipper library
+- Created new useCarousel composable holding Carousel logic
+- Minified and purged swiper css files for speed optimization
+
 ### New
 
 - Added a new request header for configId and added no cache to environment variables.
