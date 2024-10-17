@@ -16,6 +16,7 @@
 
 ### 👷 Changed
 
+- The `height` and `width` attributes that where set in terra ui are used only for full size images of an item.
 - Generating missing language files based on the language configuration from the environment has been moved to the build script. The locale configuration is now based on the language files in the `lang` directory.
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 
