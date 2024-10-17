@@ -15,9 +15,9 @@
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           :src="formattedHeroItems[0].image"
-          :width="getSizeForViewport(headPhones.sizes).width"
-          :height="getSizeForViewport(headPhones.sizes).height"
-          :alt="headPhones.alt"
+          :width="getSizeForViewport(formattedHeroItems[0].backgroundSizes).width"
+          :height="getSizeForViewport(formattedHeroItems[0].backgroundSizes).height"
+          :alt="formattedHeroItems[0].alt"
           class="h-full object-cover object-left md:h-full md:object-contain"
         />
       </div>
@@ -68,36 +68,19 @@
 <script lang="ts" setup>
 import { HeroItem } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
+import { extractImageName } from '~/utils/urlHelper';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
-const headPhones = {
-  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-  alt: t('homepage.headPhones'),
-  sizes: {
-    lg: {
-      width: '800',
-      height: '600',
-    },
-    md: {
-      width: '800',
-      height: '600',
-    },
-    sm: {
-      width: '640',
-      height: '480',
-    },
-  },
-};
-
-const getDefaultHomepageTemplate = {
+const defaultHomepageTemplate = {
   id: 100,
   hero: [
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      alt: 'Headphones',
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
@@ -127,8 +110,9 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
+const homepageTemplate = ref<typeof defaultHomepageTemplate>(defaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
@@ -142,6 +126,7 @@ if (typeof homepageCategoryId === 'number') {
     };
   }
 }
+
 const mediaData = ref(
   homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
     image: media.image,
@@ -153,6 +138,7 @@ const mediaData = ref(
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
     image: item.image,
+    alt: item.alt ?? extractImageName(item.image),
     tagline: item.tagline,
     heading: item.heading,
     description: item.description,
@@ -165,6 +151,7 @@ const formattedHeroItems = ref<HeroItem[]>(
     },
   })),
 );
+
 watch(
   () => categoryTree.value,
   async () => {
