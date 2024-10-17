@@ -13,9 +13,6 @@
     </div>
   </NuxtLazyHydrate>
 
-  <!-- <TestSwipper />
-  <Swipper /> -->
-
   <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
     <NuxtLazyHydrate when-visible>
       <section class="mb-10 overflow-hidden">
@@ -152,14 +149,6 @@ export type Sizes = {
   sm: Size;
 };
 
-type SizeKey = keyof Sizes;
-
-const getSizeForViewport = (sizes: Sizes | undefined): Size => {
-  if (!sizes) return { width: '0', height: '0' };
-  const breakpoint = viewport.breakpoint.value as SizeKey;
-
-  return sizes[breakpoint] || { width: '0', height: '0' };
-};
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
   alt: t('homepage.background'),
