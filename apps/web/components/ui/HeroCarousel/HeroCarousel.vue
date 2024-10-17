@@ -1,9 +1,9 @@
 <template>
   <div>
     <Swiper
-      :modules="[Pagination, Navigation]"
+      :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
-      :navigation="true"
+      :navigation="enableModules ? true : false"
       :loop="true"
       :autoplay="{
         delay: 3000,
@@ -24,60 +24,14 @@ import { defineProps } from 'vue';
 import { HeroItem } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
-//import 'swiper/css';
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
-
+const { onSlideChange } = useCarousel();
 import '@/assets/libraries/swiper/swiper.min.css';
 import '@/assets/libraries/swiper/navigation.min.css';
 import '@/assets/libraries/swiper/pagination.min.css';
 
-const handleArrowsVisibility = () => {
-  const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
-  const previousButton = document.querySelector('.swiper-button-prev') as HTMLElement;
-
-  if (window.innerWidth < 768) {
-    if (nextButton) nextButton.style.display = 'none';
-    if (previousButton) previousButton.style.display = 'none';
-  } else {
-    if (nextButton) nextButton.style.display = 'block';
-    if (previousButton) previousButton.style.display = 'block';
-  }
-};
-
-onMounted(() => {
-  handleArrowsVisibility();
-  window.addEventListener('resize', handleArrowsVisibility);
-
-  const nextButton = document.querySelector('.swiper-button-next');
-  const previousButton = document.querySelector('.swiper-button-prev');
-  const activePagination = document.querySelector('.swiper-pagination-bullet-active');
-
-  if (nextButton) {
-    nextButton.classList.add('!text-primary-500');
-  }
-  if (previousButton) {
-    previousButton.classList.add('!text-primary-500');
-  }
-
-  if (activePagination) {
-    activePagination.classList.add('!bg-primary-500');
-  }
-});
-
-const onSlideChange = () => {
-  const paginationBullets = document.querySelectorAll('.swiper-pagination-bullet');
-  paginationBullets.forEach((bullet) => {
-    bullet.classList.remove('!bg-primary-500');
-  });
-
-  const linkActivePagination = document.querySelector('.swiper-pagination-bullet-active');
-  if (linkActivePagination) {
-    linkActivePagination.classList.add('!bg-primary-500');
-  }
-};
-
-defineProps<{
+const props = defineProps<{
   heroProps: HeroItem[];
 }>();
+
+const enableModules = computed(() => props.heroProps.length > 1);
 </script>
