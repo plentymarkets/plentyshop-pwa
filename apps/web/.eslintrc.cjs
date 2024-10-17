@@ -5,6 +5,7 @@ module.exports = {
     tsconfigRootDir: __dirname,
     extraFileExtensions: ['.vue'],
   },
+  ignorePatterns: ["*.min.js", "*.min.css"],
   rules: {
     complexity: 0,
     'max-lines-per-function': 'off',
