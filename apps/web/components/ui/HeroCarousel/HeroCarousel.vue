@@ -11,6 +11,7 @@
       }"
       pagination
       @slide-change="onSlideChange"
+      wrapper-class="md:px-7 lg:px-11"
     >
       <SwiperSlide v-for="(heroItem, index) in heroProps" :key="index" style="height: 100%">
         <HeroContent :hero-item="heroItem" />
