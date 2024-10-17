@@ -68,32 +68,14 @@
 <script lang="ts" setup>
 import { HeroItem } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
+import { extractImageName } from '~/utils/urlHelper';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
-const headPhones = {
-  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-  alt: t('homepage.headPhones'),
-  sizes: {
-    lg: {
-      width: '800',
-      height: '600',
-    },
-    md: {
-      width: '800',
-      height: '600',
-    },
-    sm: {
-      width: '640',
-      height: '480',
-    },
-  },
-};
-
-const getDefaultHomepageTemplate = {
+const defaultHomepageTemplate = {
   id: 100,
   hero: [
     {
@@ -128,8 +110,9 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
+const homepageTemplate = ref<typeof defaultHomepageTemplate>(defaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
@@ -143,6 +126,7 @@ if (typeof homepageCategoryId === 'number') {
     };
   }
 }
+
 const mediaData = ref(
   homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
     image: media.image,
@@ -154,7 +138,7 @@ const mediaData = ref(
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
     image: item.image,
-    alt: item.alt,
+    alt: item.alt ?? extractImageName(item.image),
     tagline: item.tagline,
     heading: item.heading,
     description: item.description,
@@ -167,10 +151,6 @@ const formattedHeroItems = ref<HeroItem[]>(
     },
   })),
 );
-
-console.error('homepageTemplate', homepageTemplate.value);
-console.error('mediaData', mediaData.value);
-console.error('formattedHeroItems', formattedHeroItems.value);
 
 watch(
   () => categoryTree.value,
