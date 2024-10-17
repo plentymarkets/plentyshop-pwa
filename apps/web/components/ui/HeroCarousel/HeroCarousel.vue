@@ -10,7 +10,7 @@
       wrapper-class="md:px-7 lg:px-11"
     >
       <SwiperSlide v-for="(heroItem, index) in heroItemProps" :key="index" class="h-100">
-        <HeroContent :hero-item-props="heroItem" />
+        <UiHeroContent :hero-item-props="heroItem" />
       </SwiperSlide>
     </Swiper>
   </div>
