@@ -1,17 +1,7 @@
-import { onMounted, onBeforeUnmount } from 'vue';
-
-const handleArrowsVisibility = () => {
-  const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
-  const previousButton = document.querySelector('.swiper-button-prev') as HTMLElement;
+import { onMounted } from 'vue';
+const handleArrows = () => {
   const viewport = useViewport();
-  const isMobile = viewport.isLessThan('md');
-  if (isMobile) {
-    if (nextButton) nextButton.style.display = 'none';
-    if (previousButton) previousButton.style.display = 'none';
-  } else {
-    if (nextButton) nextButton.style.display = 'block';
-    if (previousButton) previousButton.style.display = 'block';
-  }
+  return !viewport.isLessThan('md');
 };
 
 const applySwiperStyles = () => {
@@ -45,17 +35,12 @@ const onSlideChange = () => {
 
 export const useCarousel = () => {
   onMounted(() => {
-    handleArrowsVisibility();
     applySwiperStyles();
-    window.addEventListener('resize', handleArrowsVisibility);
-  });
-
-  onBeforeUnmount(() => {
-    window.removeEventListener('resize', handleArrowsVisibility);
+    window.addEventListener('resize', applySwiperStyles);
   });
 
   return {
-    handleArrowsVisibility,
+    handleArrows,
     applySwiperStyles,
     onSlideChange,
   };

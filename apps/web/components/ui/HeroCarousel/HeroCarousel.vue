@@ -3,7 +3,7 @@
     <Swiper
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
-      :navigation="enableModules ? true : false"
+      :navigation="enableModules && handleArrows() ? true : false"
       :loop="true"
       pagination
       @slide-change="onSlideChange"
@@ -21,7 +21,7 @@ import { defineProps } from 'vue';
 import { HeroItem } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
-const { onSlideChange } = useCarousel();
+const { handleArrows, onSlideChange } = useCarousel();
 import '@/assets/libraries/swiper/swiper.min.css';
 import '@/assets/libraries/swiper/navigation.min.css';
 import '@/assets/libraries/swiper/pagination.min.css';
