@@ -1,10 +1,7 @@
 <template>
   <div>
     <UiHeader />
-    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
-      <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-    </NarrowContainer>
-    <main>
+    <main class="min-h-screen">
       <slot />
     </main>
     <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
