@@ -21,7 +21,6 @@ node_modules
 cache
 .temp
 dist
-lang
 # testing
 coverage
 
