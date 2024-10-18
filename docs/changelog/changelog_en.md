@@ -6,6 +6,7 @@
 
 - You can now modify Shipping Addresses during the read-only checkout process.
 - Added a new request header for configId and added no cache to environment variables.
+- Implement new notification design
 
 ### 🩹 Fixed
 
