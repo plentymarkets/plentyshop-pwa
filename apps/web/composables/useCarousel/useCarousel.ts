@@ -3,8 +3,9 @@ import { onMounted, onBeforeUnmount } from 'vue';
 const handleArrowsVisibility = () => {
   const nextButton = document.querySelector('.swiper-button-next') as HTMLElement;
   const previousButton = document.querySelector('.swiper-button-prev') as HTMLElement;
-
-  if (window.innerWidth < 768) {
+  const viewport = useViewport();
+  const isMobile = viewport.isLessThan('md');
+  if (isMobile) {
     if (nextButton) nextButton.style.display = 'none';
     if (previousButton) previousButton.style.display = 'none';
   } else {
