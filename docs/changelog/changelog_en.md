@@ -9,6 +9,7 @@
 ### New
 
 - Added a new request header for configId and added no cache to environment variables.
+- Implement new notification design
 
 ### 🩹 Fixed
 
