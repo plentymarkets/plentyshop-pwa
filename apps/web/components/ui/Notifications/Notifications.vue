@@ -80,7 +80,7 @@ const iconMapper = {
     component: SfIconError,
     class: 'mt-2 mr-2 text-negative-700 shrink-0',
   },
-  neutral: null, // No icon for neutral variant
+  neutral: null,
 };
 
 const getIconComponent = (notification: Notification) => iconMapper[notification.type]?.component ?? null;
