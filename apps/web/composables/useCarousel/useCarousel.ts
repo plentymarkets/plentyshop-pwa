@@ -4,17 +4,8 @@ const handleArrows = () => {
   return !viewport.isLessThan('md');
 };
 
-const applySwiperStyles = () => {
-  const nextButton = document.querySelector('.swiper-button-next');
-  const previousButton = document.querySelector('.swiper-button-prev');
+const applyPaginationStyles = () => {
   const activePagination = document.querySelector('.swiper-pagination-bullet-active');
-
-  if (nextButton) {
-    nextButton.classList.add('!text-primary-500');
-  }
-  if (previousButton) {
-    previousButton.classList.add('!text-primary-500');
-  }
 
   if (activePagination) {
     activePagination.classList.add('!bg-primary-500');
@@ -35,13 +26,13 @@ const onSlideChange = () => {
 
 export const useCarousel = () => {
   onMounted(() => {
-    applySwiperStyles();
-    window.addEventListener('resize', applySwiperStyles);
+    applyPaginationStyles();
+    window.addEventListener('resize', applyPaginationStyles);
   });
 
   return {
     handleArrows,
-    applySwiperStyles,
+    applyPaginationStyles,
     onSlideChange,
   };
 };

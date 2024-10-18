@@ -34,12 +34,6 @@ export default {
           '900': 'rgb(var(--colors-2-primary-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-primary-950) / <alpha-value>)',
         },
-        '!primary': {
-          '500': 'rgb(var(--colors-2-primary-500) / <alpha-value>) !important',
-        },
-        '!bg-primary': {
-          '500': 'rgb(var(--colors-2-primary-500) / <alpha-value>) !important',
-        },
         secondary: {
           '50': 'rgb(var(--colors-2-secondary-50) / <alpha-value>)',
           '100': 'rgb(var(--colors-2-secondary-100) / <alpha-value>)',
