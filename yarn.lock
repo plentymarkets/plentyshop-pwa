@@ -7230,7 +7230,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.1, axios@npm:^1.7.2":
+"axios@npm:^1.6.1":
   version: 1.7.5
   resolution: "axios@npm:1.7.5"
   dependencies:
@@ -21126,7 +21126,7 @@ __metadata:
     "@vue-storefront/unified-data-model": ^0.18.1
     "@vue/test-utils": ^2.4.6
     "@vueuse/core": ^10.11.0
-    axios: ^1.7.2
+    axios: ^1.7.7
     cypress: 13.15.0
     cypress-real-events: ^1.13.0
     cypress-wait-until: ^2.0.1
