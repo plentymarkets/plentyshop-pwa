@@ -3,7 +3,7 @@
     <Swiper
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
-      :navigation="enableModules && handleArrows() ? true : false"
+      :navigation="enableModules && handleArrows()"
       :loop="true"
       pagination
       @slide-change="onSlideChange"
