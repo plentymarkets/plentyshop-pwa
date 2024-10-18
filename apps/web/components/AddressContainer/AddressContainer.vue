@@ -72,7 +72,7 @@ const isBilling = type === AddressType.Billing;
 const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
-const { disabled: disabledShippingAsBilling, shippingAsBilling } = useShippingAsBilling();
+const { shippingAsBilling } = useShippingAsBilling();
 const addressFormShipping = ref(null as any);
 const addressFormBilling = ref(null as any);
 
@@ -121,10 +121,7 @@ watch(shippingAsBilling, () => {
 watch(
   sameAsShippingAddress,
   () => {
-    if (sameAsShippingAddress.value) {
-      shippingAsBilling.value = true;
-      disabledShippingAsBilling.value = disabled;
-    }
+    if (sameAsShippingAddress.value) shippingAsBilling.value = true;
   },
   { immediate: true },
 );

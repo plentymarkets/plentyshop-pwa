@@ -117,9 +117,8 @@ const handleGuestUserInit = async () => {
     .then(async () => await getBillingAddresses())
     .catch((error) => useHandleError(error));
 
-  shippingAddresses.value.length === 0 && billingAddresses.value.length > 0
-    ? await saveAddress(billingAddresses.value[0], true)
-    : navigateTo(localePath(paths.cart));
+  if (billingAddresses.value.length === 0) navigateTo(localePath(paths.cart));
+  if (shippingAddresses.value.length === 0) await saveAddress(billingAddresses.value[0], true);
 
   await setClientCheckoutAddress();
   await fetchShippingAndPaymentMethods();
