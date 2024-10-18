@@ -15,9 +15,9 @@
       <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
         <img
           :src="formattedHeroItems[0].image"
-          :width="getSizeForViewport(headPhones.sizes).width"
-          :height="getSizeForViewport(headPhones.sizes).height"
-          :alt="headPhones.alt"
+          :width="getSizeForViewport(formattedHeroItems[0].backgroundSizes).width"
+          :height="getSizeForViewport(formattedHeroItems[0].backgroundSizes).height"
+          :alt="formattedHeroItems[0].alt"
           class="h-full object-cover object-left md:h-full md:object-contain"
         />
       </div>
@@ -45,6 +45,7 @@
         v-for="(item, index) in mediaData"
         :key="index"
         :image="item.image"
+        :alt="item.alt"
         :text="item.text"
         :alignment="item.alignment"
       />
@@ -68,36 +69,19 @@
 <script lang="ts" setup>
 import { HeroItem } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
+import { extractImageName } from '~/utils/urlHelper';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
-const headPhones = {
-  image: `/images/${viewport.breakpoint.value}/homepage-hero-headphones.avif`,
-  alt: t('homepage.headPhones'),
-  sizes: {
-    lg: {
-      width: '800',
-      height: '600',
-    },
-    md: {
-      width: '800',
-      height: '600',
-    },
-    sm: {
-      width: '640',
-      height: '480',
-    },
-  },
-};
-
-const getDefaultHomepageTemplate = {
+const defaultHomepageTemplate = {
   id: 100,
   hero: [
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      alt: 'Headphones',
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
@@ -111,6 +95,7 @@ const getDefaultHomepageTemplate = {
     {
       text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='text-base mb-6 padding-right-desktop md:typography-text-lg'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside md:typography-text-lg'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+      alt: 'Headphones',
       alignment: 'left',
     },
   ],
@@ -127,8 +112,9 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
+const homepageTemplate = ref<typeof defaultHomepageTemplate>(defaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
@@ -142,9 +128,11 @@ if (typeof homepageCategoryId === 'number') {
     };
   }
 }
-const mediaData = ref(
+
+const mediaData = ref<MediaItem[]>(
   homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
     image: media.image,
+    alt: media.alt ?? extractImageName(media.image),
     text: media.text,
     alignment: media.alignment,
   })),
@@ -153,6 +141,7 @@ const mediaData = ref(
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
     image: item.image,
+    alt: item.alt ?? extractImageName(item.image),
     tagline: item.tagline,
     heading: item.heading,
     description: item.description,
@@ -165,6 +154,7 @@ const formattedHeroItems = ref<HeroItem[]>(
     },
   })),
 );
+
 watch(
   () => categoryTree.value,
   async () => {
