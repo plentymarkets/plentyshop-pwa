@@ -5,6 +5,11 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
+    <div class="sm:min-h-[56px] min-h-[59px]">
+      <NarrowContainer v-if="!loading && breadcrumbs?.length" class="p-4 md:px-0">
+        <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
+      </NarrowContainer>
+    </div>
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
     <CategoryPageContent
       v-if="productsCatalog?.products"

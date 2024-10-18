@@ -9,6 +9,7 @@
 
 ### 🩹 Fixed
 
+- Fixed content layout shift error in category page
 - Fixed an issue where product path was not reactive when category was changed.
 - Automatically generate a language file for every active language, not just the default language.
 - Soft login was still shown after successfully authenticating on the order confirmation page.
