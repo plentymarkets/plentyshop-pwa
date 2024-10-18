@@ -1,4 +1,3 @@
-import { onMounted } from 'vue';
 const handleArrows = () => {
   const viewport = useViewport();
   return !viewport.isLessThan('md');

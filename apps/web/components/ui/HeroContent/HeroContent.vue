@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import { HeroItem } from '../HeroCarousel/types';
 
 defineProps<{

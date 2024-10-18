@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import { HeroItem } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
