@@ -35,18 +35,12 @@
             <UiButton
               type="submit"
               @click="order"
-              :disabled="createOrderLoading || cartLoading || executeOrderLoading"
+              :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular
-                v-if="createOrderLoading || cartLoading || executeOrderLoading"
-                class="flex justify-center items-center"
-                size="sm"
-              />
-              <span v-else>
-                {{ t('buy') }}
-              </span>
+              <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
@@ -62,12 +56,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 const ID_CHECKBOX = '#terms-checkbox';
 const { isAuthorized } = useCustomer();
 const { data: cart, clearCartItems, loading: cartLoading } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const {
-  data: shippingAddresses,
-  getAddresses: getShippingAddresses,
-  saveAddress: saveShippingAddress,
-} = useAddress(AddressType.Shipping);
 const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
@@ -79,10 +67,13 @@ const { t } = useI18n();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: shippingAddresses, getAddresses: getShippingAddresses, saveAddress } = useAddress(AddressType.Shipping);
 
 const cartIsEmpty = computed(() => !cart.value?.items || cart.value?.items?.length === 0);
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
+const interactionDisabled = computed(() => createOrderLoading.value || cartLoading.value || executeOrderLoading.value);
 
 const redirectToCart = () => {
   send({ type: 'neutral', message: t('emptyCart') });
@@ -126,11 +117,9 @@ const handleGuestUserInit = async () => {
     .then(async () => await getBillingAddresses())
     .catch((error) => useHandleError(error));
 
-  if (shippingAddresses.value.length === 0) {
-    billingAddresses.value.length > 0
-      ? await saveShippingAddress(billingAddresses.value[0], true)
-      : navigateTo(localePath(paths.cart));
-  }
+  shippingAddresses.value.length === 0 && billingAddresses.value.length > 0
+    ? await saveAddress(billingAddresses.value[0], true)
+    : navigateTo(localePath(paths.cart));
 
   await setClientCheckoutAddress();
   await fetchShippingAndPaymentMethods();
