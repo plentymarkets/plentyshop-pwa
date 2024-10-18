@@ -140,6 +140,8 @@ const scrollToTerms = () => {
 };
 
 const order = async () => {
+  if (interactionDisabled.value) return;
+
   if (cartIsEmpty.value) {
     redirectToCart();
     return;
