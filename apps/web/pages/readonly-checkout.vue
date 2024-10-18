@@ -1,6 +1,7 @@
 <template>
   <NuxtLayout
     name="checkout"
+    page-type="static"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
@@ -10,9 +11,9 @@
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation disabled />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Shipping" :key="0" id="shipping-address" />
+        <AddressContainer :disabled="false" :type="AddressType.Shipping" :key="0" id="shipping-address" />
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <AddressContainer disabled :type="AddressType.Billing" :key="1" id="billing-address" />
+        <AddressContainer :disabled="true" :type="AddressType.Billing" :key="1" id="billing-address" />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative">
           <ShippingMethod :shipping-methods="shippingMethods" disabled />
@@ -34,18 +35,12 @@
             <UiButton
               type="submit"
               @click="order"
-              :disabled="createOrderLoading || cartLoading || executeOrderLoading"
+              :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular
-                v-if="createOrderLoading || cartLoading || executeOrderLoading"
-                class="flex justify-center items-center"
-                size="sm"
-              />
-              <span v-else>
-                {{ t('buy') }}
-              </span>
+              <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
@@ -55,23 +50,12 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, Order, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({
-  pageType: 'static',
-});
-
 const ID_CHECKBOX = '#terms-checkbox';
-
-const { getSession } = useCustomer();
+const { isAuthorized } = useCustomer();
 const { data: cart, clearCartItems, loading: cartLoading } = useCart();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const {
-  data: shippingAddresses,
-  getAddresses: getShippingAddresses,
-  saveAddress: saveShippingAddress,
-} = useAddress(AddressType.Shipping);
 const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
 const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
@@ -82,72 +66,104 @@ const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+const { persistShippingAddress, persistBillingAddress } = useCheckout();
+const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
+const { data: shippingAddresses, getAddresses: getShippingAddresses, saveAddress } = useAddress(AddressType.Shipping);
 
-const loadAddresses = async () => {
-  await getBillingAddresses();
-  await getShippingAddresses();
-
-  if (shippingAddresses.value.length === 0) {
-    billingAddresses.value.length > 0
-      ? await saveShippingAddress(billingAddresses.value[0])
-      : navigateTo(localePath(paths.cart));
-  }
-
-  await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
-  await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
-  await getShippingMethods();
-};
-
-const redirectBack = () => {
-  if (cart.value.items?.length === 0) {
-    send({
-      type: 'neutral',
-      message: t('emptyCart'),
-    });
-
-    navigateTo(localePath(paths.cart));
-    return true;
-  }
-  return false;
-};
-
-await getSession();
-redirectBack();
-await loadAddresses();
-await getShippingMethods();
-await fetchPaymentMethods();
-await savePaymentMethod(
-  paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id ?? 0,
-);
-
+const cartIsEmpty = computed(() => !cart.value?.items || cart.value?.items?.length === 0);
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
+const interactionDisabled = computed(() => createOrderLoading.value || cartLoading.value || executeOrderLoading.value);
 
-const validateTerms = (): boolean => {
-  if (!termsAccepted.value) {
-    scrollToHTMLObject(ID_CHECKBOX);
-    setShowErrors(true);
-    return false;
+const redirectToCart = () => {
+  send({ type: 'neutral', message: t('emptyCart') });
+  navigateTo(localePath(paths.cart));
+};
+
+const fetchShippingAndPaymentMethods = async () => {
+  await Promise.all([
+    getShippingMethods(),
+    fetchPaymentMethods().then(
+      async () =>
+        await savePaymentMethod(paymentMethodData?.value?.list?.find((method) => method.name === 'PayPal')?.id || 0),
+    ),
+    useActiveShippingCountries().getActiveShippingCountries(),
+  ]);
+};
+
+const handleAuthUserInit = async () => {
+  useFetchAdddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress())
+    .catch((error) => useHandleError(error));
+
+  useFetchAdddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+
+  await fetchShippingAndPaymentMethods();
+};
+
+const setClientCheckoutAddress = async () => {
+  await useCheckoutAddress(AddressType.Shipping)
+    .set(shippingAddresses.value[0], true)
+    .then(async () => await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true))
+    .catch((error) => useHandleError(error));
+};
+
+const handleGuestUserInit = async () => {
+  await getShippingAddresses()
+    .then(async () => await getBillingAddresses())
+    .catch((error) => useHandleError(error));
+
+  if (billingAddresses.value.length === 0) navigateTo(localePath(paths.cart));
+  if (shippingAddresses.value.length === 0) await saveAddress(billingAddresses.value[0], true);
+
+  await setClientCheckoutAddress();
+  await fetchShippingAndPaymentMethods();
+};
+
+onNuxtReady(async () => {
+  if (cartIsEmpty.value) {
+    redirectToCart();
+    return;
   }
-  return true;
+
+  isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
+});
+
+const scrollToTerms = () => {
+  scrollToHTMLObject(ID_CHECKBOX);
+  setShowErrors(true);
 };
 
 const order = async () => {
-  if (redirectBack() || !validateTerms()) return;
+  if (interactionDisabled.value) return;
 
-  const data = await createOrder({
+  if (cartIsEmpty.value) {
+    redirectToCart();
+    return;
+  }
+
+  if (!termsAccepted.value) {
+    scrollToTerms();
+    return;
+  }
+
+  await createOrder({
     paymentId: cart.value.methodOfPaymentId,
     shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
-
-  await executeOrder({
-    mode: 'paypal',
-    plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-    paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-  });
-
-  clearCartItems();
-
-  if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+  }).then(
+    async (data: Order) =>
+      await executeOrder({
+        mode: 'paypal',
+        plentyOrderId: Number.parseInt(orderGetters.getId(data)),
+        paypalTransactionId: route?.query?.orderId?.toString() ?? '',
+      }).finally(() => {
+        clearCartItems();
+        if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+      }),
+  );
 };
 </script>
