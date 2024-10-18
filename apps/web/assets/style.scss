@@ -62,3 +62,11 @@ apple-pay-button {
   --apple-pay-button-border-radius: 7px;
   --apple-pay-button-box-sizing: border-box;
 }
+
+.swiper-button-prev {
+  color: rgb(var(--colors-2-primary-500)) !important;
+}
+
+.swiper-button-next {
+  color: rgb(var(--colors-2-primary-500)) !important;
+}

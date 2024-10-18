@@ -2,7 +2,11 @@
 
 ## v1.x.x (yyyy-mm-dd)
 
-### 🚀 New
+- Added new carousel compoment via Swipper library
+- Created new useCarousel composable holding Carousel logic
+- Minified and purged swiper css files for speed optimization
+
+### New
 
 - You can now modify Shipping Addresses during the read-only checkout process.
 - Added a new request header for configId and added no cache to environment variables.
