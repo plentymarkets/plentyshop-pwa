@@ -32,7 +32,6 @@ let paymentsClient: google.payments.api.PaymentsClient | null = null,
 async function getGooglePayConfig() {
   if (googlepayConfig === null) {
     googlepayConfig = await (paypal as any).Googlepay().config();
-    console.log(googlepayConfig);
   }
   return googlepayConfig;
 }
@@ -68,6 +67,7 @@ async function getGooglePaymentDataRequest() {
   paymentDataRequest.merchantInfo = merchantInfo;
   return paymentDataRequest;
 }
+/*
 function onPaymentAuthorized(
   paymentData: google.payments.api.PaymentData,
 ): Promise<google.payments.api.PaymentAuthorizationResult> {
@@ -89,7 +89,7 @@ function onPaymentAuthorized(
       });
   });
 }
-/*
+
 function getGooglePaymentsClient() {
   if (paymentsClient === null) {
     paymentsClient = new google.payments.api.PaymentsClient({
