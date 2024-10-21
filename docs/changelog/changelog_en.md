@@ -5,6 +5,7 @@
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
+- Implement mobile payment selection
 
 ### New
 
