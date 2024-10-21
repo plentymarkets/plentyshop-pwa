@@ -148,6 +148,18 @@ You can place the value proposition block any number of times. Blocks have to be
 | `alignment` | Determines the position of the image. By default, the image is displayed on the left side.    |
 | `text`  | Supports both regular text and HTML formatting. If you want to style elements, note that the shop uses [TailwindCSS](https://tailwindcss.com/docs/utility-first). So for example, instead of `h1`, you would apply `class="text-2xl"` to your element. If you're not familiar with Tailwind's class-based styling system, you can use [Tailwind Play](https://play.tailwindcss.com/q0NOnu4vok) to preview your text block.     |
 
+#### Text block examples
+
+This section contains example textblocks. You can use them as a starting point for the `text` property of the value proposition.
+
+::: details FAQ
+![An FAQ block built with TailwindCSS. The block consists of an accordion with a single question-answer pair.](/images/guide/homepage-tailwind-faq.png)
+
+```html
+<div class="container mx-auto"><details class="border-2 border-solid border-neutral-200 rounded-md shadow-md p-4 [&_svg]:open:-rotate-180"><summary class="flex cursor-pointer list-none items-center gap-4"><div><svg class="rotate-0 transform text-neutral-500 transition-all duration-300" fill="none" height="20" width="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div><div class="text-2xl">Frequently Asked Question</div></summary><p class="mt-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus quis malesuada nisi. Cras elementum, dui non ornare pharetra, urna libero finibus risus, quis euismod nunc erat a nisl. Vivamus interdum quam et mauris suscipit, eget venenatis libero hendrerit. Duis gravida tortor dolor, ac placerat dolor pellentesque nec. Sed sollicitudin magna nec nisi aliquam, id mattis sapien auctor. Integer consequat dictum odio ut consequat. Donec hendrerit sem tincidunt fermentum commodo. Morbi auctor purus magna, a pharetra sapien dignissim sit amet. Vestibulum iaculis luctus nibh, eget tempus nibh tempor non. Nunc tempus et odio ut consequat. Nullam vel tempor erat. Praesent erat risus, ullamcorper sit amet ornare a, maximus eget risus.</p></details></div>
+```
+:::
+
 ### Featured categories
 
 Featured categories show off the products of the provided category in a slider format. Each category is introduced via a headline.
