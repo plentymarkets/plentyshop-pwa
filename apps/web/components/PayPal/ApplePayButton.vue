@@ -1,9 +1,4 @@
 <template>
-  <div class="flex items-center justify-center w-full my-2" v-if="isApplepayLoaded">
-    <div class="border-t-2 flex-grow"></div>
-    <p class="px-2 text-sm uppercase text-gray-400">{{ $t('or') }}</p>
-    <div class="border-t-2 flex-grow"></div>
-  </div>
   <div id="apple-pay-button"></div>
 </template>
 
@@ -11,7 +6,6 @@
 import { ApplepayType, ConfigResponse, PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 
-let isApplepayLoaded = false;
 const { getScript, executeOrder, createTransaction } = usePayPal();
 const { createOrder } = useMakeOrder();
 const { data: cart, clearCartItems } = useCart();
@@ -119,9 +113,6 @@ const applePayPayment = async () => {
 onMounted(async () => {
   // eslint-disable-next-line sonarjs/cognitive-complexity
   await loadApplePay().then(() => {
-    if (typeof ApplePaySession !== 'undefined' && ApplePaySession.canMakePayments()) {
-      isApplepayLoaded = true;
-    }
     const applePay = (paypal as any).Applepay() as ApplepayType;
     applePay
       .config()
