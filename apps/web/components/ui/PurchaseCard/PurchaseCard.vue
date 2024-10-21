@@ -196,10 +196,7 @@ const handleAddToCart = async (quickCheckout = true) => {
   };
 
   const added = await addToCart(params);
-  if (added) {
-    if (quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
-    send({ message: t('addedToCart'), type: 'positive' });
-  }
+  if (added && quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
   return added;
 };
 

@@ -123,7 +123,6 @@ const {
 const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
-const { send } = useNotification();
 const { price, crossedPrice } = useProductPrice(product);
 const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
@@ -154,7 +153,6 @@ const addWithLoader = async (productId: number) => {
     });
 
     openQuickCheckout(product, 1);
-    send({ message: t('addedToCart'), type: 'positive' });
   } finally {
     loading.value = false;
   }
