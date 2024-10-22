@@ -29,19 +29,34 @@
 </template>
 
 <script lang="ts" setup>
-import { HeroItem } from '~/components/ui/HeroCarousel/types';
+import { HeroItem, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
+
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
+const getCurrentSizeKey = (): SizeKey => {
+  return viewport.breakpoint.value as SizeKey;
+};
+
+const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
+  return imageSizes[sizeKey];
+};
+
+
 const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
+        "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+      },
+      textAlignment: 'left',
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
       description:
@@ -51,7 +66,12 @@ const getDefaultHomepageTemplate = {
       link: '',
     },
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
+        "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+      },
+      textAlignment: 'left',
       tagline: 'Experience Sound Freedom',
       heading: 'Wireless. Effortless. Seamless.',
       description:
@@ -60,7 +80,12 @@ const getDefaultHomepageTemplate = {
       link: '',
     },
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
+        "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+      },
+      textAlignment: 'left',
       tagline: 'Amplify Your Space',
       heading: 'Big Sound, Compact Design',
       description:
@@ -113,20 +138,25 @@ const mediaData = ref(
 );
 
 const formattedHeroItems = ref<HeroItem[]>(
-  homepageTemplate.value.hero.map((item) => ({
-    image: item.image,
-    tagline: item.tagline,
-    heading: item.heading,
-    description: item.description,
-    callToAction: item.callToAction,
-    link: item.link,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  })),
+  homepageTemplate.value.hero.map((item) => {
+    const currentSizeKey = getCurrentSizeKey();
+    return {
+      image: resolveImage(item.image, currentSizeKey),
+      textAlignment: item.textAlignment,
+      tagline: item.tagline,
+      heading: item.heading,
+      description: item.description,
+      callToAction: item.callToAction,
+      link: item.link,
+      backgroundSizes: {
+        lg: { width: '4000', height: '600' },
+        md: { width: '1024', height: '600' },
+        sm: { width: '640', height: '752' },
+      },
+    };
+  })
 );
+
 watch(
   () => categoryTree.value,
   async () => {
@@ -136,17 +166,6 @@ watch(
   { immediate: true },
 );
 const { showNewsletter } = useNewsletter();
-export type Size = {
-  width: string;
-  height: string;
-};
-
-export type Sizes = {
-  lg: Size;
-  md: Size;
-  sm: Size;
-};
-
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
   alt: t('homepage.background'),

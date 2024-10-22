@@ -3,20 +3,19 @@ export type Size = {
   height: string;
 };
 
-export type Sizes = {
-  lg: Size;
-  md: Size;
-  sm: Size;
-};
+export type SizeKey = 'lg' | 'md' | 'sm';
+
+export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
 export type HeroItem = {
   image: string;
+  textAlignment: string;
   tagline: string;
   heading: string;
   description: string;
   callToAction: string;
   link: string;
-  backgroundSizes?: Sizes;
+  backgroundSizes: Sizes;
 };
 export type HeroCarouselProps = {
   background: { image: string; sizes: Sizes };
