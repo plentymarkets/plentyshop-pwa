@@ -124,6 +124,7 @@ const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product);
+const { send } = useNotification();
 const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -151,8 +152,11 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-
-    openQuickCheckout(product, 1);
+    if(runtimeConfig.public.enableQuickCheckoutTimer) {
+      openQuickCheckout(product, 1);
+    } else {
+      send({ message: t('addedToCart'), type: 'positive' });
+    }
   } finally {
     loading.value = false;
   }
