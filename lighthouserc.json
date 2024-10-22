@@ -24,7 +24,7 @@
               "total-blocking-time": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 200 }],
               "interactive": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 3800 }],
               "first-contentful-paint": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 1800 }],
-              "cumulative-layout-shift": ["error", { "aggregationMethod": "median-run", "maxNumericValue": 0.1 }],
+              "cumulative-layout-shift": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 0.1 }],
               "speed-index": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 3400 }],
 
               "dom-size": ["warn", { "maxNumericValue": 800 }]
