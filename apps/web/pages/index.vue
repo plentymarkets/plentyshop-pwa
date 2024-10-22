@@ -46,6 +46,12 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
   return imageSizes[sizeKey];
 };
 
+const backgroundSizes = {
+  lg: { width: '4000', height: '600' },
+  md: { width: '1024', height: '600' },
+  sm: { width: '640', height: '752' },
+  xs: { width: '250', height: '250' },
+};
 
 const getDefaultHomepageTemplate = {
   id: 100,
@@ -54,7 +60,8 @@ const getDefaultHomepageTemplate = {
       image: {
         "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
         "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
-        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif",
+        "xs":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
       },
       textAlignment: 'left',
       tagline: 'Feel the music',
@@ -69,7 +76,8 @@ const getDefaultHomepageTemplate = {
       image: {
         "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
         "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
-        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif",
+        "xs":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
       },
       textAlignment: 'left',
       tagline: 'Experience Sound Freedom',
@@ -83,7 +91,8 @@ const getDefaultHomepageTemplate = {
       image: {
         "lg":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif",
         "md":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif",
-        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
+        "sm":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif",
+        "xs":"https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif"
       },
       textAlignment: 'left',
       tagline: 'Amplify Your Space',
@@ -148,11 +157,13 @@ const formattedHeroItems = ref<HeroItem[]>(
       description: item.description,
       callToAction: item.callToAction,
       link: item.link,
-      backgroundSizes: {
+      backgroundSizes:{
         lg: { width: '4000', height: '600' },
         md: { width: '1024', height: '600' },
         sm: { width: '640', height: '752' },
+        xs: { width: '250', height: '250' },
       },
+      actualBackgroundSize: currentSizeKey,
     };
   })
 );

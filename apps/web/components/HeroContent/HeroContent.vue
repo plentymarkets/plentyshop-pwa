@@ -1,10 +1,11 @@
 <template>
   <div class="md:flex md:flex-row-reverse md:justify-center mx-auto mb-10 text-center">
     <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
+      <h1>oana</h1>
       <img
         :src="heroItemProps.image"
-        :width="heroItemProps.backgroundSizes?.lg.width"
-        :height="heroItemProps.backgroundSizes?.lg.height"
+        :width="heroItemProps.backgroundSizes.lg.width"
+        :height="heroItemProps.backgroundSizes.lg.height"
         alt="test"
         class="h-full object-cover object-left md:h-full md:object-contain"
       />
