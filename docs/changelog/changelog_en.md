@@ -18,6 +18,7 @@
 - Soft login was still shown after successfully authenticating on the order confirmation page.
 - Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
 - Headlines now use the configured font.
+- Fixed layout shift metric.
 
 ### 👷 Changed
 
