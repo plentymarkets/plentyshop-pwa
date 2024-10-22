@@ -152,7 +152,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-    if(runtimeConfig.public.enableQuickCheckoutTimer) {
+    if (runtimeConfig.public.enableQuickCheckoutTimer) {
       openQuickCheckout(product, 1);
     } else {
       send({ message: t('addedToCart'), type: 'positive' });
