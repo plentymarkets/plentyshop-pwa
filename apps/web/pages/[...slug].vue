@@ -49,7 +49,9 @@ const handleQueryUpdate = async () => {
   }
 };
 
-await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+onNuxtReady(async () => {
+  await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+});
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
