@@ -1,7 +1,6 @@
 const ignoreErrors = [
   'zoid',
   'paypal',
-  'turnstile',
 ];
 
 Cypress.on("window:before:load", win => {
