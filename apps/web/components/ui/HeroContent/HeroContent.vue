@@ -25,7 +25,8 @@
       </h1>
       <p
         class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
-        :class="heroItemProps?.descriptionColor">
+        :class="heroItemProps?.descriptionColor"
+      >
         {{ heroItemProps.description }}
       </p>
       <div class="flex flex-col md:flex-row gap-4 mt-6">

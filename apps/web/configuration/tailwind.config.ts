@@ -10,7 +10,7 @@ export default {
   safelist: [
     {
       pattern: /text-\w+-\d+/,
-    }
+    },
   ],
   theme: {
     extend: {
