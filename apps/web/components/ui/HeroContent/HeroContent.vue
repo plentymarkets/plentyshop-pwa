@@ -11,15 +11,21 @@
     </div>
 
     <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
-      <p class="typography-text-xs md:typography-text-sm font-bold tracking-widest text-neutral-500 uppercase">
+      <p
+        class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
+        :class="heroItemProps?.taglineColor"
+      >
         {{ heroItemProps.tagline }}
       </p>
       <h1
         class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
+        :class="heroItemProps?.headingColor"
       >
         {{ heroItemProps.heading }}
       </h1>
-      <p class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal">
+      <p
+        class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
+        :class="heroItemProps?.descriptionColor">
         {{ heroItemProps.description }}
       </p>
       <div class="flex flex-col md:flex-row gap-4 mt-6">

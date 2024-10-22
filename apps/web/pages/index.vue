@@ -43,28 +43,37 @@ const getDefaultHomepageTemplate = {
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
       tagline: 'Feel the music',
+      taglineColor: 'text-black',
       heading: 'Your Sound, Elevated',
+      headingColor: 'text-black',
       description:
         "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.\n" +
         '\n',
+      descriptionColor: 'text-black',
       callToAction: 'Order Now',
       link: '',
     },
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
       tagline: 'Experience Sound Freedom',
+      taglineColor: 'text-black',
       heading: 'Wireless. Effortless. Seamless.',
+      headingColor: 'text-black',
       description:
         'Unleash your audio with our state-of-the-art wireless earbuds. Designed for all-day comfort and uncompromised sound quality, these earbuds deliver crisp highs and deep bass, letting you enjoy your music without any distractions. Discover freedom with a perfect fit, long battery life, and intuitive controls.',
+      descriptionColor: 'text-black',
       callToAction: 'Shop Earbuds',
       link: '',
     },
     {
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
       tagline: 'Amplify Your Space',
+      taglineColor: 'text-black',
       heading: 'Big Sound, Compact Design',
+      headingColor: 'text-black',
       description:
         "Transform your space with our portable speakers that pack a punch. Crafted for superior sound performance, these speakers are perfect for home or on the go. With easy connectivity and a sleek design, elevate your listening experience whether you're indoors or outdoors.",
+      descriptionColor: 'text-black',
       callToAction: 'Browse Speakers',
       link: '',
     },
@@ -116,8 +125,11 @@ const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => ({
     image: item.image,
     tagline: item.tagline,
+    taglineColor: item.taglineColor,
     heading: item.heading,
+    headingColor: item.headingColor,
     description: item.description,
+    descriptionColor: item.descriptionColor,
     callToAction: item.callToAction,
     link: item.link,
     backgroundSizes: {
