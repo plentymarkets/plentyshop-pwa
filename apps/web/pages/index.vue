@@ -135,7 +135,7 @@ const mediaData = ref(
 
 const formattedHeroItems = ref<HeroItem[]>(
   homepageTemplate.value.hero.map((item) => {
-    const currentSizeKey = getCurrentSizeKey();
+    const currentSizeKey = getCurrentSizeKey() as SizeKey;
     return {
       image: resolveImage(item.image, currentSizeKey),
       tagline: item.tagline,

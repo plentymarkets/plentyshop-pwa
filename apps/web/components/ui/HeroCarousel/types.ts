@@ -15,6 +15,7 @@ export type HeroItem = {
   callToAction: string;
   link: string;
   backgroundSizes?: Sizes;
+  actualBackgroundSize: SizeKey;
 };
 export type HeroCarouselProps = {
   background: { image: string; sizes: Sizes };
