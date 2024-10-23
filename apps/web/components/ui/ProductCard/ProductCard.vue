@@ -144,7 +144,7 @@ const getHeight = () => {
   return '';
 };
 
-const addWithLoader = async (productId: number) => {
+const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
 
   try {
@@ -152,7 +152,7 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-    if (runtimeConfig.public.enableQuickCheckoutTimer) {
+    if (quickCheckout) {
       openQuickCheckout(product, 1);
     } else {
       send({ message: t('addedToCart'), type: 'positive' });
