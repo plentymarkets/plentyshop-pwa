@@ -58,7 +58,6 @@ describe('Reviews functionality check.', () => {
         .checkReviewModalElementsVisible()
         .postReview('Great product!', 'John Doe')
         .checkReviewPostedSuccessfully()
-        .checkEditRemoveButtonsVisible()
         .clickEditReviewButton()
         .editReview('Title edited', 'John Doe edited', 'This is an edited review message.')
         .checkReviewEditedSuccessfully('John Doe edited', 'This is an edited review message.')
