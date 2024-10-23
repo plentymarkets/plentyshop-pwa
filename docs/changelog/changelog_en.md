@@ -10,6 +10,7 @@
 
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
+- It's now possible to change the font color of the hero banner via a template property.
 
 ### 🩹 Fixed
 
