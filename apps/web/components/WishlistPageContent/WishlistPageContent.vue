@@ -63,6 +63,12 @@
         {{ $t('emptyWishlist') }}
       </h2>
     </div>
+    <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="products.length > 0">
+      <span>{{ $t('asterisk') }}</span>
+      <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+      <span v-else>{{ $t('itemInclVAT') }}</span>
+      <span>{{ $t('excludedShipping') }}</span>
+    </div>
   </NarrowContainer>
 </template>
 
@@ -71,6 +77,8 @@ import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();

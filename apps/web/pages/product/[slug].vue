@@ -23,10 +23,12 @@
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
 
-          <p @click="openDrawer()" class="font-bold leading-6 w-full p-4 flex cursor-pointer">
-            <span>{{ t('legalDetails') }}</span>
-            <SfIconChevronRight />
-          </p>
+          <div class="p-4 flex">
+            <p @click="openDrawer()" class="font-bold leading-6 cursor-pointer">
+              <span>{{ t('legalDetails') }}</span>
+              <SfIconChevronRight />
+            </p>
+          </div>
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
