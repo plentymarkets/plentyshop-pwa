@@ -3,10 +3,10 @@
     <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
       <img
         :src="heroItemProps.image"
-        :width="heroItemProps.backgroundSizes?.lg.width"
-        :height="heroItemProps.backgroundSizes?.lg.height"
+        :width="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].width"
+        :height="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].height"
         alt="test"
-        class="h-full object-cover object-left md:h-full md:object-contain"
+        class="h-full m-auto md:h-full md:object-contain"
       />
     </div>
 
@@ -30,9 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { HeroItem } from '../HeroCarousel/types';
+import { HeroItem, SizeKey } from '../HeroCarousel/types';
 
 defineProps<{
   heroItemProps: HeroItem;
+  currentSizeKey: SizeKey;
 }>();
 </script>
