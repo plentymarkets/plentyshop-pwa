@@ -4,23 +4,23 @@
   </picture>
 </template>
 
-<script setup lang="ts">
-const imageExtension = useRuntimeConfig().public.headerLogo.split('.').pop();
-const imagePath = '/images/logo.' + imageExtension;
+<!--<script setup lang="ts">-->
+<!--const imageExtension = useRuntimeConfig().public.headerLogo.split('.').pop();-->
+<!--const imagePath = '/images/logo.' + imageExtension;-->
 
-if (process.client) {
-  const img = new Image();
-  img.src = imagePath;
+<!--if (process.client) {-->
+<!--  const img = new Image();-->
+<!--  img.src = imagePath;-->
 
-  img.onload = function () {
-    const width = img.width;
-    const height = img.height;
-    console.log(`Width: ${width}, Height: ${height}`);
-  };
-}
-</script>
+<!--  img.onload = function () {-->
+<!--    const width = img.width;-->
+<!--    const height = img.height;-->
+<!--    console.log(`Width: ${width}, Height: ${height}`);-->
+<!--  };-->
+<!--}-->
+<!--</script>-->
 
-<!-- <script setup lang="ts">
+ <script setup lang="ts">
 const imageExtension = useRuntimeConfig().public.headerLogo.split('.').pop();
 const imagePath = '/images/logo.' + imageExtension;
 
@@ -37,7 +37,7 @@ if (process.client) {
     let desiredWidth;
     if (aspectRatio > 1.5) {
       // Wider logos get a smaller width
-      desiredWidth = 250;
+      desiredWidth = 200;
     } else if (aspectRatio < 1) {
       // Taller logos can take a larger width
       desiredWidth = 150;
@@ -59,4 +59,4 @@ if (process.client) {
     }
   };
 }
-</script> -->
+</script>
