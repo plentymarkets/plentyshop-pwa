@@ -1,3 +1,4 @@
+import { ApiError } from '@plentymarkets/shop-api';
 import { NuxtError } from 'nuxt/app';
 
 export type ErrorParams = {
@@ -9,4 +10,4 @@ export type ErrorParams = {
   cause?: unknown;
 };
 
-export type UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => void;
+export type UseHandleError = (error: ApiError | NuxtError<unknown> | null) => void;

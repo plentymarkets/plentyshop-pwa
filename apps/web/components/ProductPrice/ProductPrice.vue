@@ -17,24 +17,26 @@
 </template>
 
 <script setup lang="ts">
-import { productBundleGetters, productGetters } from '@plentymarkets/shop-api';
+import { productBundleGetters, productGetters, cartGetters } from '@plentymarkets/shop-api';
 import type { ProductPriceProps } from '~/components/ProductPrice/types';
 
 const props = defineProps<ProductPriceProps>();
 
 const { getPropertiesPrice } = useProductOrderProperties();
 const { crossedPrice } = useProductPrice(props.product);
+const { lastUpdatedCartItem } = useCart();
 
 const priceWithProperties = computed(
   () =>
     (productGetters.getSpecialOffer(props.product) ||
-      productGetters.getGraduatedPriceByQuantity(props.product, 1)?.unitPrice.value ||
+      productGetters.getGraduatedPriceByQuantity(props.product, cartGetters.getItemQty(lastUpdatedCartItem.value))
+        ?.unitPrice.value ||
       0) + getPropertiesPrice(props.product),
 );
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(props.product, 1)?.basePrice ??
-    productGetters.getDefaultBasePrice(props.product),
+    productGetters.getGraduatedPriceByQuantity(props.product, cartGetters.getItemQty(lastUpdatedCartItem.value))
+      ?.basePrice ?? productGetters.getDefaultBasePrice(props.product),
 );
 </script>

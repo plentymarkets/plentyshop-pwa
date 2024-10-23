@@ -27,13 +27,17 @@
   </div>
   <UiDivider class="mt-2 mb-2" />
   <div class="grid grid-cols-2">
-    <p class="font-medium text-base">{{ t('orderConfirmation.total') }}:</p>
-    <p class="text-right">{{ n(orderGetters.getTotal(order.totals), 'currency') }}</p>
+    <p class="font-medium text-base" :class="{ 'font-bold text-xl': isOrderTypeOffer }">
+      {{ t('orderConfirmation.total') }}:
+    </p>
+    <p class="text-right" :class="{ 'font-bold text-xl': isOrderTypeOffer }">
+      {{ n(orderGetters.getTotal(order.totals), 'currency') }}
+    </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-api';
+import { orderGetters, offerGetters } from '@plentymarkets/shop-api';
 import type { OrderTotalsPropsType } from './types';
 
 const props = defineProps<OrderTotalsPropsType>();
@@ -43,6 +47,7 @@ const getShippingAmount = (amount: number) => {
   return amount === 0 ? t('shippingMethod.free') : n(Number(amount), 'currency');
 };
 
+const isOrderTypeOffer = offerGetters.isTypeOffer(props.order);
 const additionalCostsWithoutTax = orderGetters.getAdditionalCostsWithTax(props.order);
 const additionalCostsWithTax = orderGetters.getAdditionalCostsWithoutTax(props.order);
 </script>

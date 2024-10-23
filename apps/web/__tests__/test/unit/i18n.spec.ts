@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { getLocaleObject } from '../../../configuration/locale.config'
 
 const en = require('../../../lang/en.json')
 const de = require('../../../lang/de.json')
@@ -22,6 +23,20 @@ describe('i18n', () => {
         valuesDe.forEach(value => {
             hasText(value);
         })
+    });
+});
+
+describe('locale configuration', () => {
+    it('should create a locale configuration for each language', () => {
+        const languages = 'en,de,fr';
+        const EXPECTED = [
+            { code: 'en', file: 'en.json' },
+            { code: 'de', file: 'de.json' },
+            { code: 'fr', file: 'fr.json' },
+          ];
+        const localeObject = getLocaleObject(languages);
+
+        expect(localeObject).toEqual(EXPECTED);
     });
 });
 

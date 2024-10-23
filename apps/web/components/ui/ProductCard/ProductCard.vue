@@ -22,8 +22,8 @@
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
-          :width="imageWidth"
-          :height="imageHeight"
+          :width="getWidth()"
+          :height="getHeight()"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
         />
@@ -93,9 +93,10 @@
 </template>
 
 <script setup lang="ts">
-import { CategoryTreeItem, productGetters } from '@plentymarkets/shop-api';
+import { productGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { defaults } from '~/composables';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -124,18 +125,24 @@ const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
 const { send } = useNotification();
 const { price, crossedPrice } = useProductPrice(product);
-
 const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
-const productPath = ref('');
-const setProductPath = (categoriesTree: CategoryTreeItem[]) => {
-  const path = productGetters.getCategoryUrlPath(product, categoriesTree);
-  const productSlug = productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`;
-  productPath.value = localePath(`${path}/${productSlug}`);
+const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
+const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
+const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+const getWidth = () => {
+  if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageWidth;
+  }
+  return '';
 };
-
-setProductPath(categoryTree.value);
+const getHeight = () => {
+  if (imageHeight && imageHeight > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageHeight;
+  }
+  return '';
+};
 
 const addWithLoader = async (productId: number) => {
   loading.value = true;
@@ -154,9 +161,4 @@ const addWithLoader = async (productId: number) => {
 };
 
 const NuxtLink = resolveComponent('NuxtLink');
-
-watch(
-  () => categoryTree.value,
-  (categoriesTree) => setProductPath(categoriesTree),
-);
 </script>

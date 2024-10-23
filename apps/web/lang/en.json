@@ -608,32 +608,32 @@
   "itemsInCart": "(Items: {count})",
   "itemsSubtotal": "Items subtotal",
   "lang": {
-    "de": "German",
-    "en": "English",
     "bg": "Bulgarian",
-    "fr": "French",
-    "it": "Italian",
-    "es": "Spanish",
-    "tr": "Turkish",
-    "nl": "Dutch",
-    "pl": "Polish",
-    "pt": "Portuguese",
-    "no": "Norwegian",
-    "ro": "Romanian",
-    "dk": "Danish",
-    "se": "Swedish",
-    "cz": "Czech",
-    "ru": "Russian",
-    "sk": "Slovak",
     "cn": "Chinese",
-    "vn": "Vietnamese",
+    "cz": "Czech",
+    "de": "German",
+    "dk": "Danish",
+    "ee": "Estonian",
+    "en": "English",
+    "es": "Spanish",
     "fi": "Finnish",
+    "fr": "French",
+    "hr": "Croatian",
+    "hu": "Hungarian",
     "ie": "Irish",
+    "it": "Italian",
     "lt": "Lithuanian",
     "lv": "Latvian",
-    "ee": "Estonian",
-    "hr": "Croatian",
-    "hu": "Hungarian"
+    "nl": "Dutch",
+    "no": "Norwegian",
+    "pl": "Polish",
+    "pt": "Portuguese",
+    "ro": "Romanian",
+    "ru": "Russian",
+    "se": "Swedish",
+    "sk": "Slovak",
+    "tr": "Turkish",
+    "vn": "Vietnamese"
   },
   "languageSelector": "Open language select",
   "legalDetails": "EU Responsible Person - click for details",
@@ -644,18 +644,19 @@
   "lowestPrice": "Lowest price of the last 30 days: {price}",
   "manageAddresses": "Manage your addresses",
   "manufacturer": {
-    "noResponsibleInformation": "No information available for Responsible Person",
-    "noInformation": "No information available for manufacturer",
     "euResponsibleTabName": "EU Responsible Person",
-    "manufacturerTabName": "Manufacturer",
-    "logoAlt": "Manufacturer logo",
     "header": "Manufacturer details",
-    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product.",
+    "logoAlt": "Manufacturer logo",
+    "manufacturerTabName": "Manufacturer",
+    "noInformation": "No information available for manufacturer",
+    "noResponsibleInformation": "No information available for Responsible Person",
     "responsibleHeader": "Responsible Person in the EU",
-    "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations."
+    "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
+    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product."
   },
   "max": "Max",
   "min": "Min",
+  "minimumOrderQuantity": "Minimum order quantity: {count}",
   "moreItemsOfThisCategory": "More items of this category",
   "myCart": "My Cart",
   "newBillingAddress": "New billing address",
@@ -677,6 +678,15 @@
   "numberInCart": "{count} product in cart",
   "numberInWishlist": "{count} products in wishlist",
   "numberOfProducts": "{count} Products out of {total} Products",
+  "offerForm": {
+    "acceptOffer": "Accept offer",
+    "cancel": "Cancel",
+    "declineDialogSubline": "Help us improve by sharing why you declined the offer.",
+    "declineOffer": "Decline offer",
+    "inputPlaceholder": "Please share your reason for declining...",
+    "missingEmail": "No email address has been provided.",
+    "offer": "Offer"
+  },
   "openConfigurationDrawer": "Open configuration drawer",
   "openSearchModalButtonLabel": "Open item search",
   "or": "or",
@@ -865,6 +875,46 @@
     "priceUp": "Price ⬆",
     "reviewsDown": "Item reviews ⬇",
     "reviewsUp": "Item reviews ⬆"
+  },
+  "storefrontError": {
+    "address": {
+      "createFailed": "Saving the address has failed.",
+      "deleteFailed": "The deletion of the address failed.",
+      "validationFailed": "The address is invalid."
+    },
+    "cart": {
+      "failedToRemoveItem": "The item could not be removed."
+    },
+    "contact": {
+      "emailAlreadyExists": "The e-mail address already exists.",
+      "missingContactOrUnexpectedFormat": "Missing contact data or unexpected format.",
+      "unexpectedAddressFormat": "Unexpected address format"
+    },
+    "contactMail": {
+      "failed": "Message could not be sent."
+    },
+    "coupon": {
+      "applyFailed": "The coupon could not be redeemed."
+    },
+    "login": {
+      "failed": "Invalid login data",
+      "userIsBlocked": "User is blocked"
+    },
+    "newsletter": {
+      "createFailed": "The newsletter could not be subscribed to."
+    },
+    "order": {
+      "additionalAuthRequiredName": "Confirmation of the last name is required to access this order.",
+      "additionalAuthenticationRequired": "Additional authentication is required for this order.",
+      "additionalAuthenticationRequiredLogin": "For this order it is necessary to log in again.",
+      "additionalAuthenticationRequiredPostcode": "Confirmation of the zip code used is required for this order.",
+      "createFailed": "The order could not be created.",
+      "loadOrdersFailed": "The orders could not be loaded.",
+      "migrateUnauthorized": "The order could not be added to your account.",
+      "notFound": "The order does not exist.",
+      "softLoginFailed": "The provided data is invalid."
+    },
+    "unknownError": "An unknown error has occurred."
   },
   "successInfoMessage": "Your order was completed successfully.",
   "successInfoOrderHeader": "Thank you for your order!",
