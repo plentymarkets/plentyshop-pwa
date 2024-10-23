@@ -2,6 +2,7 @@
 
 ## v1.x.x (yyyy-mm-dd)
 
+- Added tax and shipping note in wishlist page
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
@@ -18,6 +19,7 @@
 - Soft login was still shown after successfully authenticating on the order confirmation page.
 - Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
 - Headlines now use the configured font.
+- Fixed layout shift on category page.
 
 ### 👷 Changed
 
