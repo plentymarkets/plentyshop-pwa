@@ -645,12 +645,12 @@
   "manageAddresses": "Manage your addresses",
   "manufacturer": {
     "euResponsibleTabName": "EU Responsible Person",
-    "header": "Manufacturer Details",
-    "logoAlt": "Herstellerlogo",
+    "header": "Manufacturer details",
+    "logoAlt": "Manufacturer logo",
     "manufacturerTabName": "Manufacturer",
     "noInformation": "No information available for manufacturer",
     "noResponsibleInformation": "No information available for Responsible Person",
-    "responsibleHeader": "Responsible Entity in the EU",
+    "responsibleHeader": "Responsible Person in the EU",
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
     "subtitle": "Manufacturer information includes the address and additional details about the producer of the product."
   },
