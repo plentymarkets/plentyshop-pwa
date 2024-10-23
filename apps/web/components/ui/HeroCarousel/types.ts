@@ -12,11 +12,11 @@ export type Sizes = {
 export type HeroItem = {
   image: string;
   tagline: string;
-  taglineColor?: string;
+  taglineColor: string;
   heading: string;
-  headingColor?: string;
+  headingColor: string;
   description: string;
-  descriptionColor?: string;
+  descriptionColor: string;
   callToAction: string;
   link: string;
   backgroundSizes?: Sizes;
