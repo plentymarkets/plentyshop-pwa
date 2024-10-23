@@ -6,7 +6,7 @@
         :width="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].width"
         :height="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].height"
         alt="test"
-        class="h-full object-cover object-left md:h-full md:object-contain"
+        class="h-full m-auto md:h-full md:object-contain"
       />
     </div>
 

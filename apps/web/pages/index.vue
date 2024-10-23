@@ -48,10 +48,10 @@ const getDefaultHomepageTemplate = {
   hero: [
     {
       image: {
-        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif',
-        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif',
-        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
-        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
       },
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
@@ -63,10 +63,10 @@ const getDefaultHomepageTemplate = {
     },
     {
       image: {
-        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif',
-        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif',
-        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
-        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
       },
       tagline: 'Experience Sound Freedom',
       heading: 'Wireless. Effortless. Seamless.',
@@ -77,10 +77,10 @@ const getDefaultHomepageTemplate = {
     },
     {
       image: {
-        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-L800.avif',
-        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-m600-1024.avif',
-        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
-        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/hp-hero-var1-s600.avif',
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
       },
       tagline: 'Amplify Your Space',
       heading: 'Big Sound, Compact Design',
