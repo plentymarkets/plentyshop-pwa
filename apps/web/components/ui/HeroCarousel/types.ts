@@ -8,16 +8,16 @@ export type SizeKey = 'lg' | 'md' | 'sm' | 'xs';
 export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
 export type HeroItem = {
-  image: string;
-  tagline: string;
-  taglineColor: string;
-  heading: string;
-  headingColor: string;
-  description: string;
-  descriptionColor: string;
-  callToAction: string;
-  link: string;
-  backgroundSizes?: Sizes;
+  image?: string;
+  tagline?: string;
+  taglineColor?: string;
+  heading?: string;
+  headingColor?: string;
+  description?: string;
+  descriptionColor?: string;
+  callToAction?: string;
+  link?: string;
+  backgroundSizes: Sizes;
   actualBackgroundSize: SizeKey;
 };
 export type HeroCarouselProps = {
