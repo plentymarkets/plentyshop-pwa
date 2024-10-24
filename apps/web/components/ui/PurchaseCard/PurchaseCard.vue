@@ -76,6 +76,7 @@
     <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
+          :min-value="productGetters.getMinimumOrderQuantity(product)"
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
           class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
@@ -108,21 +109,13 @@
 
       <div class="mt-4 typography-text-xs flex gap-1">
         <span>{{ t('asterisk') }}</span>
-        <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-        <span v-else>{{ t('itemInclVAT') }}</span>
+        <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-      <Suspense>
-        <template #default>
-          <div v-if="getCombination() && productGetters.isSalable(product)">
-            <PayPalExpressButton class="mt-4" type="SingleItem" @on-click="paypalHandleAddToCart" />
-            <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
-          </div>
-        </template>
-        <template #fallback>
-          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-        </template>
-      </Suspense>
+      <template v-if="showPayPalButtons">
+        <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
+        <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+      </template>
     </div>
   </form>
 </template>
@@ -133,11 +126,10 @@ import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } 
 import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
-
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -150,7 +142,7 @@ const {
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-const quantitySelectorValue = ref(1);
+const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
@@ -205,8 +197,11 @@ const handleAddToCart = async (quickCheckout = true) => {
 
   const added = await addToCart(params);
   if (added) {
-    if (quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
-    send({ message: t('addedToCart'), type: 'positive' });
+    if (quickCheckout) {
+      openQuickCheckout(product, quantitySelectorValue.value);
+    } else {
+      send({ message: t('addedToCart'), type: 'positive' });
+    }
   }
   return added;
 };
@@ -235,6 +230,7 @@ const openReviewsAccordion = () => {
 
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {

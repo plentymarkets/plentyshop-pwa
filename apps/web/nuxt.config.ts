@@ -61,6 +61,9 @@ export default defineNuxtConfig({
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
+      storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
+      noCache: process.env.NO_CACHE || '',
+      configId: process.env.CONFIG_ID || '',
     },
   },
   modules: [
@@ -135,6 +138,7 @@ export default defineNuxtConfig({
   },
   viewport: {
     breakpoints: {
+      xs: 380,
       sm: 640,
       md: 640,
       lg: 1024,
@@ -212,6 +216,7 @@ export default defineNuxtConfig({
         },
       ],
     },
+
     registerWebManifestInRouteRules: true,
   },
 });

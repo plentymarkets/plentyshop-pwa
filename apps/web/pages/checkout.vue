@@ -46,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @on-click="handlePayPalExpress"
+                @validation-callback="handlePayPalExpress"
                 type="Checkout"
               />
               <PayPalPayLaterBanner
@@ -78,11 +78,11 @@
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ $t('buy') }}</template>
             </UiButton>
-            <PayPalApplePayButton
+            <!-- <PayPalApplePayButton
               v-if="applePayAvailable"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
               @button-clicked="validateTerms"
-            />
+            /> -->
           </OrderSummary>
         </div>
       </div>
@@ -105,6 +105,7 @@ import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
+import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -173,7 +174,7 @@ const paypalCreditCardPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 
-const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
+// const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const readyToBuy = () => {
   if (anyAddressFormIsOpen.value) return backToFormEditing();
@@ -198,8 +199,10 @@ const handleRegularOrder = async () => {
   }
 };
 
-const handlePayPalExpress = () => {
-  if (!readyToBuy()) return;
+const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
+  if (callback) {
+    callback(readyToBuy());
+  }
 };
 
 const order = async () => {

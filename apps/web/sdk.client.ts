@@ -1,6 +1,6 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { SdkHttpError } from '@vue-storefront/sdk';
+import axios, { AxiosRequestConfig } from 'axios';
 import { updateVsfLocale } from './utils/sdkClientHelper';
+import { ApiError } from '@plentymarkets/shop-api';
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
 const createHttpClient = () => {
@@ -9,13 +9,16 @@ const createHttpClient = () => {
   if (tryUseNuxtApp()) {
     const { token } = useCsrfToken();
     const { $i18n } = useNuxtApp();
+    const runtimeConfig = useRuntimeConfig();
     const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
-    const noCache = useRoute().query?.noCache?.toString() ?? '';
+    const noCache = runtimeConfig.public.noCache || useRoute().query?.noCache?.toString() || '';
+    const configId = runtimeConfig.public.configId;
 
     client.interceptors.request.use((request) => {
       if (token.value) request.headers['x-csrf-token'] = token.value;
       if (referrerId) request.headers['referrerID'] = referrerId;
       if (noCache) request.headers['noCache'] = noCache;
+      if (configId) request.headers['x-config-id'] = configId;
       if (import.meta.server) {
         request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
       }
@@ -32,13 +35,15 @@ const createHttpClient = () => {
 };
 
 const handleHttpError = (error: unknown) => {
-  const axiosError = error as AxiosError;
-  console.error(error);
+  const axiosError = error as any;
+  const data = axiosError?.response?.data?.data || axiosError?.response?.data;
 
-  throw new SdkHttpError({
-    statusCode: Number(axiosError?.response?.status),
-    message: axiosError.response?.statusText ?? axiosError.message,
-    cause: axiosError.response?.data ?? {},
+  // eslint-disable-next-line etc/throw-error
+  throw new ApiError({
+    key: data?.key || 'unknownError',
+    code: axiosError?.response?.data?.error?.code ?? axiosError?.response?.status ?? axiosError.status,
+    message: data?.message ?? axiosError.message ?? '',
+    cause: data?.errors ?? {},
   });
 };
 

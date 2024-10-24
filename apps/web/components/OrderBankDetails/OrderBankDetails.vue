@@ -1,5 +1,5 @@
 <template>
-  <div v-if="bankDetails" class="mt-4">
+  <div class="mt-4">
     <h2 class="font-medium text-base">{{ t('account.ordersAndReturns.orderDetails.bankDetails.heading') }}</h2>
     <p>
       {{ t('account.ordersAndReturns.orderDetails.bankDetails.accountOwner') }}:
