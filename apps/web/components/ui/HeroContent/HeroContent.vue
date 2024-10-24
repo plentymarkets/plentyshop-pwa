@@ -13,19 +13,19 @@
     <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
       <p
         class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
-        :style="{color: heroItemProps.taglineColor}"
+        :style="{ color: heroItemProps.taglineColor }"
       >
         {{ heroItemProps.tagline }}
       </p>
       <h1
         class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
-        :style="{color: heroItemProps.headingColor}"
+        :style="{ color: heroItemProps.headingColor }"
       >
         {{ heroItemProps.heading }}
       </h1>
       <p
         class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
-        :style="{color: heroItemProps.descriptionColor}"
+        :style="{ color: heroItemProps.descriptionColor }"
       >
         {{ heroItemProps.description }}
       </p>
