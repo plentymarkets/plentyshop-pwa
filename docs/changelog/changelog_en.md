@@ -6,12 +6,14 @@
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
+- Fluid logo container + max-width and max-height addaptation
 
 ### New
 
 - When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
+- Adding the ability to have alt text for images.
 
 ### 🩹 Fixed
 

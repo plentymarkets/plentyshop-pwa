@@ -9,6 +9,7 @@ export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
 export type HeroItem = {
   image: string;
+  alt: string;
   tagline: string;
   heading: string;
   description: string;

@@ -7,6 +7,7 @@
         v-for="(item, index) in mediaData"
         :key="index"
         :image="item.image"
+        :alt="item.alt"
         :text="item.text"
         :alignment="item.alignment"
       />
@@ -31,6 +32,7 @@
 <script lang="ts" setup>
 import { HeroItem, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
+import { extractImageName } from '~/utils/urlHelper';
 const viewport = useViewport();
 const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
@@ -43,7 +45,7 @@ const getCurrentSizeKey = (): SizeKey => {
 const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
   return imageSizes[sizeKey];
 };
-const getDefaultHomepageTemplate = {
+const defaultHomepageTemplate = {
   id: 100,
   hero: [
     {
@@ -52,6 +54,7 @@ const getDefaultHomepageTemplate = {
         md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
         sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
         xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+        alt: 'Headphones',
       },
       tagline: 'Feel the music',
       heading: 'Your Sound, Elevated',
@@ -67,6 +70,7 @@ const getDefaultHomepageTemplate = {
         md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
         sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
         xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+        alt: 'Headphones',
       },
       tagline: 'Experience Sound Freedom',
       heading: 'Wireless. Effortless. Seamless.',
@@ -81,6 +85,7 @@ const getDefaultHomepageTemplate = {
         md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
         sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
         xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+        alt: 'Headphones',
       },
       tagline: 'Amplify Your Space',
       heading: 'Big Sound, Compact Design',
@@ -94,6 +99,7 @@ const getDefaultHomepageTemplate = {
     {
       text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='typography-text-sm md:typography-text-lg mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg '><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
       image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+      alt: 'Headphones',
       alignment: 'left',
     },
   ],
@@ -110,7 +116,7 @@ const getDefaultHomepageTemplate = {
 };
 
 const runtimeConfig = useRuntimeConfig();
-const homepageTemplate = ref<typeof getDefaultHomepageTemplate>(getDefaultHomepageTemplate);
+const homepageTemplate = ref<typeof defaultHomepageTemplate>(defaultHomepageTemplate);
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const { fetchCategoryTemplate } = useCategoryTemplate();
 if (typeof homepageCategoryId === 'number') {
@@ -125,9 +131,11 @@ if (typeof homepageCategoryId === 'number') {
     };
   }
 }
-const mediaData = ref(
+
+const mediaData = ref<MediaItem[]>(
   homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
     image: media.image,
+    alt: media.alt ?? extractImageName(media.image),
     text: media.text,
     alignment: media.alignment,
   })),
@@ -138,6 +146,7 @@ const formattedHeroItems = ref<HeroItem[]>(
     const currentSizeKey = getCurrentSizeKey() as SizeKey;
     return {
       image: resolveImage(item.image, currentSizeKey),
+      alt: item.image.alt ?? extractImageName(resolveImage(item.image, currentSizeKey)),
       tagline: item.tagline,
       heading: item.heading,
       description: item.description,
@@ -153,6 +162,7 @@ const formattedHeroItems = ref<HeroItem[]>(
     };
   }),
 );
+
 watch(
   () => categoryTree.value,
   async () => {
