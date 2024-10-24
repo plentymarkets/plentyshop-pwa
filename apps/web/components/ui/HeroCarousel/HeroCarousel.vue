@@ -7,10 +7,9 @@
       :loop="true"
       pagination
       @slide-change="onSlideChange"
-      wrapper-class="md:px-7 lg:px-11"
     >
-      <SwiperSlide v-for="(heroItem, index) in heroItemProps" :key="index">
-        <UiHeroContent :hero-item-props="heroItem" />
+      <SwiperSlide v-for="(heroItem, index) in heroItemProps" :key="index" class="md:px-7 lg:px-15">
+        <UiHeroContent :hero-item-props="heroItem" :current-size-key="heroItem.actualBackgroundSize" />
       </SwiperSlide>
     </Swiper>
   </div>
