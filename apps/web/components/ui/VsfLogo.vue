@@ -8,6 +8,7 @@
       :height="imgHeight"
       class="max-h-[100px] max-w-[200px]"
       ref="logo"
+      preload
     />
   </picture>
 </template>
