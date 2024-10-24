@@ -1,43 +1,30 @@
 <template>
   <picture>
-    <img id="logo" :src="imagePath" alt="Header Logo" style="object-fit: contain" />
+    <img
+      id="logo"
+      :src="imagePath"
+      alt="Header Logo"
+      :width="imgWidth"
+      :height="imgHeight"
+      class="max-h-[100px] max-w-[200px]"
+      ref="logo"
+    />
   </picture>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const imageExtension = useRuntimeConfig().public.headerLogo.split('.').pop();
 const imagePath = '/images/logo.' + imageExtension;
+const logo = ref<HTMLImageElement | null>(null);
+const imgWidth = ref<string>('');
+const imgHeight = ref<string>('');
 
-if (process.client) {
-  const setLogoDimensions = (img: HTMLImageElement) => {
-    const intrinsicWidth = img.width;
-    const intrinsicHeight = img.height;
-    const aspectRatio = intrinsicWidth / intrinsicHeight;
-
-    console.log(`Aspect Ratio: ${aspectRatio}`);
-
-    // Desired width logic
-    const desiredWidth = aspectRatio > 1.5 ? 250 : 150;
-    const newHeight = desiredWidth / aspectRatio;
-
-    console.log(`Original Width: ${intrinsicWidth}, Original Height: ${intrinsicHeight}`);
-    console.log(`New Width: ${desiredWidth}, New Height: ${newHeight}`);
-
-    // Apply dimensions to the logo element
-    const logoElement = document.getElementById('logo');
-    if (logoElement) {
-      logoElement.style.width = `${desiredWidth}px`;
-      logoElement.style.height = `${newHeight}px`;
-    }
-  };
-
-  onMounted(() => {
-    const img = new Image();
-    img.src = imagePath;
-
-    img.onload = () => setLogoDimensions(img);
-  });
-}
+onMounted(() => {
+  if (logo.value) {
+    imgWidth.value = logo.value.clientWidth + 'px';
+    imgHeight.value = logo.value.clientHeight + 'px';
+  }
+});
 </script>
