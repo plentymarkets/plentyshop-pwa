@@ -161,7 +161,6 @@ const {
   validationSchema: shippingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Shipping);
-// const countries = computed(() => getDefaultCountries());
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
 const [firstName, firstNameAttributes] = defineField('firstName');
