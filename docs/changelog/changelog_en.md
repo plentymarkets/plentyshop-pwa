@@ -6,7 +6,7 @@
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
-- Fluid logo container + max-width and max-height addaptation 
+- Fluid logo container + max-width and max-height addaptation
 
 ### New
 
