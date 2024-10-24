@@ -14,6 +14,7 @@
 
 ### 🩹 Fixed
 
+- Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
 - Automatically generate a language file for every active language, not just the default language.
