@@ -897,7 +897,7 @@
       "applyFailed": "The coupon could not be redeemed."
     },
     "login": {
-      "failed": "Invalid login data",
+      "loginFailed": "Invalid login data",
       "userIsBlocked": "User is blocked"
     },
     "newsletter": {
