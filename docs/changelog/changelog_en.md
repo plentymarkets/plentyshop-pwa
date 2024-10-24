@@ -10,6 +10,7 @@
 
 ### New
 
+- When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
 - Adding the ability to have alt text for images.

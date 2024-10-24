@@ -119,11 +119,11 @@
         :invalid="Boolean(errors['country'])"
       >
         <option
-          v-for="(shippingCountry, index) in countries"
+          v-for="(billingCountry, index) in countries"
           :key="`billing-country-${index}`"
-          :value="shippingCountry.id.toString()"
+          :value="billingCountry.id.toString()"
         >
-          {{ shippingCountry.currLangName }}
+          {{ billingCountry.currLangName }}
         </option>
       </SfSelect>
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
@@ -139,12 +139,13 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
-const { data: countries } = useActiveShippingCountries();
+const { useGeoRegulatedCountries, getDefaultCountries, getGeoRegulatedCountries } = useAggregatedCountries();
 const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
-
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
+
+const countries = computed(() => (useGeoRegulatedCountries ? getGeoRegulatedCountries() : getDefaultCountries()));
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');

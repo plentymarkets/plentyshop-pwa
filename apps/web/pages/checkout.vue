@@ -141,12 +141,12 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 onNuxtReady(async () => {
-  useFetchAdddress(AddressType.Shipping)
+  useFetchAddress(AddressType.Shipping)
     .fetchServer()
     .then(() => persistShippingAddress())
     .catch((error) => useHandleError(error));
 
-  useFetchAdddress(AddressType.Billing)
+  useFetchAddress(AddressType.Billing)
     .fetchServer()
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
@@ -157,7 +157,7 @@ await getCart().then(
     await Promise.all([
       useCartShippingMethods().getShippingMethods(),
       usePaymentMethods().fetchPaymentMethods(),
-      useActiveShippingCountries().getActiveShippingCountries(),
+      useAggregatedCountries().getAggregatedCountries(),
     ]),
 );
 
