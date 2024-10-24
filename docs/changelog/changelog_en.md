@@ -14,7 +14,7 @@
 
 ### 🩹 Fixed
 
-- Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.```
+- Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
 - Automatically generate a language file for every active language, not just the default language.
