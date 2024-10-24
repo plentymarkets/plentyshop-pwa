@@ -26,8 +26,8 @@ const imgWidth = ref<string>('');
 const imgHeight = ref<string>('');
 onMounted(() => {
   if (logo.value) {
-    imgWidth.value = logo.value.clientWidth + 'px';
-    imgHeight.value = logo.value.clientHeight + 'px';
+    imgWidth.value = logo.value.clientWidth + '';
+    imgHeight.value = logo.value.clientHeight + '';
   }
 });
 </script>
