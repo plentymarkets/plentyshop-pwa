@@ -7,11 +7,6 @@ import { fontFamilyText } from './fontFamily.config';
 export default {
   presets: [tailwindConfig],
   content: ['./**/*.vue', '../../node_modules/@storefront-ui/vue/**/*.{js,mjs}'],
-  safelist: [
-    {
-      pattern: /text-\w+(-\d{2,3})?/,
-    },
-  ],
   theme: {
     extend: {
       sfTypography: () => ({
