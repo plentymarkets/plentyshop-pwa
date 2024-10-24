@@ -95,10 +95,12 @@
           {{ n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
+          ref="quantitySelectorReference"
           :disabled="disabled"
           @change-quantity="debounceQuantity"
-          :value="cartGetters.getItemQty(cartItem)"
+          :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
+          :max-value="maximumOrderQuantity"
           class="mt-4 sm:mt-0"
         />
       </div>
@@ -125,21 +127,25 @@
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
-import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
+import _ from 'lodash';
+
+const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
+const emit = defineEmits(['load']);
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
-const { setCartItemQuantity, deleteCartItem } = useCart();
+const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
 const localePath = useLocalePath();
+
 const imageLoaded = ref(false);
 const img = ref();
 const deleteLoading = ref(false);
-const emit = defineEmits(['load']);
-
-const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
+const quantitySelectorReference = ref(null as any);
+const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
+const maximumOrderQuantity = ref();
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
@@ -156,13 +162,41 @@ onMounted(() => {
   }
 });
 
-const changeQuantity = async (quantity: string) => {
+const handleMaximumQuantityCheck = async (quantityCast: number) => {
+  if (!cartData.value?.itemQuantity || quantityCast <= cartData.value.itemQuantity) {
+    maximumOrderQuantity.value = undefined;
+    return;
+  }
+
+  maximumOrderQuantity.value = cartData.value.itemQuantity;
+
+  if (quantitySelectorReference.value) {
+    const event = new Event('input');
+    Object.defineProperty(event, 'target', {
+      value: { value: maximumOrderQuantity.value },
+      writable: true,
+    });
+    quantitySelectorReference.value.handleOnChange(event);
+  }
+
   await setCartItemQuantity({
-    quantity: Number(quantity),
+    quantity: maximumOrderQuantity.value,
     cartItemId: cartItem.id,
     productId: cartItem.variationId,
   });
 };
+
+const changeQuantity = async (quantity: string) => {
+  const quantityCast = Number(quantity);
+  if (Number.isNaN(quantityCast) || quantityCast === cartData.value.itemQuantity) return;
+
+  await setCartItemQuantity({
+    quantity: quantityCast,
+    cartItemId: cartItem.id,
+    productId: cartItem.variationId,
+  }).then(async () => await handleMaximumQuantityCheck(quantityCast));
+};
+
 const deleteItem = async () => {
   deleteLoading.value = true;
   await deleteCartItem({
@@ -175,6 +209,7 @@ const deleteItem = async () => {
 const currentFullPrice = computed(() => {
   return cartGetters.getCartItemPrice(cartItem) * cartGetters.getItemQty(cartItem);
 });
+
 const cartItemImage = computed(() => {
   if (cartItem && cartItem.variation) {
     return getImageForViewport(cartItem.variation, 'CartProductCard');
