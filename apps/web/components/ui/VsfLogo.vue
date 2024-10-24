@@ -4,7 +4,7 @@
       <NuxtImg :src="imagePath" alt="Logo" class="w-100 h-10 py-2" width="150" height="40" preload />
     </template>
     <template v-else>
-      <NuxtImg
+      <img
         id="logo"
         :src="imagePath"
         alt="Header Logo"
@@ -21,13 +21,11 @@
 <script setup lang="ts">
 const imageExtension = useRuntimeConfig().public.headerLogo.split('.').pop();
 const imagePath = '/images/logo.' + imageExtension;
-
 const logo = ref<HTMLImageElement | null>(null);
-const imgWidth = ref<string>('auto');
-const imgHeight = ref<string>('auto');
-
+const imgWidth = ref<string>('');
+const imgHeight = ref<string>('');
 onMounted(() => {
-  if (logo.value && imageExtension !== 'svg') {
+  if (logo.value) {
     imgWidth.value = logo.value.clientWidth + 'px';
     imgHeight.value = logo.value.clientHeight + 'px';
   }
