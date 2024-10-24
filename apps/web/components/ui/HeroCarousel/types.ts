@@ -9,6 +9,7 @@ export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
 export type HeroItem = {
   image?: string;
+  alt?: string;
   tagline?: string;
   taglineColor?: string;
   heading?: string;
@@ -20,6 +21,7 @@ export type HeroItem = {
   backgroundSizes: Sizes;
   actualBackgroundSize: SizeKey;
 };
+
 export type HeroCarouselProps = {
   background: { image: string; sizes: Sizes };
   hero: HeroItem[];

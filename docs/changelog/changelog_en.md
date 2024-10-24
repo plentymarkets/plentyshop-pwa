@@ -6,11 +6,13 @@
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
+- Fluid logo container + max-width and max-height addaptation
 
 ### New
 
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
+- Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
 
 ### 🩹 Fixed

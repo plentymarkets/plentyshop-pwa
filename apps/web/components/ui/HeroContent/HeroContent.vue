@@ -5,7 +5,7 @@
         :src="heroItemProps.image"
         :width="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].width"
         :height="heroItemProps.backgroundSizes && heroItemProps.backgroundSizes[currentSizeKey].height"
-        alt="test"
+        :alt="heroItemProps.alt"
         class="h-full m-auto md:h-full md:object-contain"
       />
     </div>
