@@ -646,7 +646,7 @@
   "manufacturer": {
     "euResponsibleTabName": "EU Verantwortliche Person",
     "header": "Angaben zum Hersteller",
-    "logoAlt": "Hersteller Logo",
+    "logoAlt": "Herstellerlogo",
     "manufacturerTabName": "Hersteller",
     "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
