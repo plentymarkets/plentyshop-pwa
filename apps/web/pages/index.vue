@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts" setup>
-import { HeroItem } from '~/components/ui/HeroCarousel/types';
+import { HeroItem, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItem } from '~/components/ui/MediaCard/types';
 const viewport = useViewport();
 const { t } = useI18n();
@@ -37,11 +37,22 @@ const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
 
+const getCurrentSizeKey = (): SizeKey => {
+  return viewport.breakpoint.value as SizeKey;
+};
+const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
+  return imageSizes[sizeKey];
+};
 const getDefaultHomepageTemplate = {
   id: 100,
   hero: [
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+      },
       tagline: 'Feel the music',
       taglineColor: 'text-black',
       heading: 'Your Sound, Elevated',
@@ -54,7 +65,12 @@ const getDefaultHomepageTemplate = {
       link: '',
     },
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+      },
       tagline: 'Experience Sound Freedom',
       taglineColor: 'text-black',
       heading: 'Wireless. Effortless. Seamless.',
@@ -66,7 +82,12 @@ const getDefaultHomepageTemplate = {
       link: '',
     },
     {
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+      image: {
+        lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+        md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-md.avif',
+        sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-sm.avif',
+        xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-xs.avif',
+      },
       tagline: 'Amplify Your Space',
       taglineColor: 'text-black',
       heading: 'Big Sound, Compact Design',
@@ -122,22 +143,27 @@ const mediaData = ref(
 );
 
 const formattedHeroItems = ref<HeroItem[]>(
-  homepageTemplate.value.hero.map((item) => ({
-    image: item.image,
-    tagline: item.tagline,
-    taglineColor: item.taglineColor,
-    heading: item.heading,
-    headingColor: item.headingColor,
-    description: item.description,
-    descriptionColor: item.descriptionColor,
-    callToAction: item.callToAction,
-    link: item.link,
-    backgroundSizes: {
-      lg: { width: '4000', height: '600' },
-      md: { width: '1024', height: '600' },
-      sm: { width: '640', height: '752' },
-    },
-  })),
+  homepageTemplate.value.hero.map((item) => {
+    const currentSizeKey = getCurrentSizeKey() as SizeKey;
+    return {
+      image: resolveImage(item.image, currentSizeKey),
+      tagline: item.tagline,
+      taglineColor: item.taglineColor,
+      heading: item.heading,
+      headingColor: item.headingColor,
+      description: item.description,
+      descriptionColor: item.descriptionColor,
+      callToAction: item.callToAction,
+      link: item.link,
+      backgroundSizes: {
+        lg: { width: '4000', height: '600' },
+        md: { width: '1024', height: '600' },
+        sm: { width: '640', height: '752' },
+        xs: { width: '250', height: '250' },
+      },
+      actualBackgroundSize: currentSizeKey,
+    };
+  }),
 );
 watch(
   () => categoryTree.value,
@@ -148,16 +174,6 @@ watch(
   { immediate: true },
 );
 const { showNewsletter } = useNewsletter();
-export type Size = {
-  width: string;
-  height: string;
-};
-
-export type Sizes = {
-  lg: Size;
-  md: Size;
-  sm: Size;
-};
 
 const background = {
   image: `/images/${viewport.breakpoint.value}/homepage-hero-bg.avif`,
