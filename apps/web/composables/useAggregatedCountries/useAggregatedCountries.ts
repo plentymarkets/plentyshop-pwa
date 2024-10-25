@@ -1,5 +1,5 @@
 import { type AggregatedCountries } from '@plentymarkets/shop-api';
-import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type GetAggregatedCountries } from './types';
+import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, FetchAggregatedCountries } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:
@@ -12,21 +12,22 @@ import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type Ge
  *  data,
  *  loading,
  *  useGeoRegulatedCountries,
- *  getAggregatedCountries,
- *  getDefaultCountries,
- *  getGeoRegulatedCountries,
+ *  fetchAggregatedCountries,
+ *  defaultCountries,
+ *  geoRegulatedCountries,
  * } = useAggregatedCountries();
  * ```
  */
 export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   const state = useState<UseAggregatedCountriesState>('useAggregatedCountries', () => ({
-    data: {} as AggregatedCountries,
+    data: {
+      default: [],
+      geoRegulated: [],
+    } as AggregatedCountries,
     loading: false,
   }));
 
-  const useGeoRegulatedCountries = state.value.data?.geoRegulated?.length > 0;
-
-  const getAggregatedCountries: GetAggregatedCountries = async () => {
+  const fetchAggregatedCountries: FetchAggregatedCountries = async () => {
     state.value.loading = true;
 
     const { data, error } = await useAsyncData('getAggregatedCountries', () =>
@@ -41,14 +42,15 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return state.value.data;
   };
 
-  const getDefaultCountries = () => (state.value.data?.default?.length > 0 ? state.value.data.default : []);
-  const getGeoRegulatedCountries = () => (useGeoRegulatedCountries ? state.value.data.geoRegulated : []);
+  const defaultCountries = () => state.value.data.default;
+  const geoRegulatedCountries = () => state.value.data.geoRegulated;
+  const useGeoRegulatedCountries = geoRegulatedCountries().length > 0;
 
   return {
+    fetchAggregatedCountries,
+    defaultCountries,
+    geoRegulatedCountries,
     useGeoRegulatedCountries,
-    getAggregatedCountries,
-    getDefaultCountries,
-    getGeoRegulatedCountries,
     ...toRefs(state.value),
   };
 };

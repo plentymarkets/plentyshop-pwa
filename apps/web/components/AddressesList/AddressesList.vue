@@ -75,7 +75,7 @@ const {
   loading,
 } = useAddress(type);
 
-await useAggregatedCountries().getAggregatedCountries();
+await useAggregatedCountries().fetchAggregatedCountries();
 await getAddresses();
 
 const selectedAddress = ref();

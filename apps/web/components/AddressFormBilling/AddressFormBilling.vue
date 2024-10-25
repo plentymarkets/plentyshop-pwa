@@ -139,13 +139,13 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
-const { useGeoRegulatedCountries, getDefaultCountries, getGeoRegulatedCountries } = useAggregatedCountries();
+const { useGeoRegulatedCountries, defaultCountries, geoRegulatedCountries } = useAggregatedCountries();
 const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 
-const countries = computed(() => (useGeoRegulatedCountries ? getGeoRegulatedCountries() : getDefaultCountries()));
+const countries = computed(() => (useGeoRegulatedCountries ? geoRegulatedCountries() : defaultCountries()));
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');

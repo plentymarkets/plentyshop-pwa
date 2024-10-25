@@ -5,15 +5,15 @@ export interface UseAggregatedCountriesState {
   loading: boolean;
 }
 
-export type GetAggregatedCountries = () => Promise<AggregatedCountries>;
+export type FetchAggregatedCountries = () => Promise<AggregatedCountries>;
 
 export interface UseAggregatedCountries {
   data: Readonly<Ref<UseAggregatedCountriesState['data']>>;
   loading: Readonly<Ref<boolean>>;
+  fetchAggregatedCountries: FetchAggregatedCountries;
+  defaultCountries: () => ActiveShippingCountry[];
+  geoRegulatedCountries: () => GeoRegulatedCountry[];
   useGeoRegulatedCountries: boolean;
-  getAggregatedCountries: GetAggregatedCountries;
-  getDefaultCountries: () => ActiveShippingCountry[];
-  getGeoRegulatedCountries: () => GeoRegulatedCountry[];
 }
 
 export type UseAggregatedCountriesReturn = () => UseAggregatedCountries;

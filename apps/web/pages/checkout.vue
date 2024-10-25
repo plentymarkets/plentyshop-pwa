@@ -157,7 +157,7 @@ await getCart().then(
     await Promise.all([
       useCartShippingMethods().getShippingMethods(),
       usePaymentMethods().fetchPaymentMethods(),
-      useAggregatedCountries().getAggregatedCountries(),
+      useAggregatedCountries().fetchAggregatedCountries(),
     ]),
 );
 

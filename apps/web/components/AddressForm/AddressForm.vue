@@ -110,12 +110,12 @@ import type { AddressFormProps } from '~/components/AddressForm/types';
 
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
-const { useGeoRegulatedCountries, getDefaultCountries, getGeoRegulatedCountries } = useAggregatedCountries();
+const { useGeoRegulatedCountries, defaultCountries, geoRegulatedCountries } = useAggregatedCountries();
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 
 const countries = computed(() =>
-  type === AddressType.Billing && useGeoRegulatedCountries ? getGeoRegulatedCountries() : getDefaultCountries(),
+  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries() : defaultCountries(),
 );
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 const useAsShippingAddress = ref(useAsShippingDefault);
