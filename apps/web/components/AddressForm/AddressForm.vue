@@ -99,10 +99,10 @@
 
 <script setup lang="ts">
 import {
-  ActiveShippingCountry,
+  type ActiveShippingCountry,
   type Address,
   AddressType,
-  GeoRegulatedCountry,
+  type GeoRegulatedCountry,
   userAddressGetters,
 } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
