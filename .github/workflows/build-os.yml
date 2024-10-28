@@ -22,12 +22,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Enable corepack
-        run: corepack enable
-
-      - name: Set yarn version
         run: |
-          yarn set version stable
-          yarn set version 3.6.4
+          corepack enable
+          corepack use yarn@3.6.4
 
       - name: Setup node
         uses: actions/setup-node@v3
