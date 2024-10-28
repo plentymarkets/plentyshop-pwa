@@ -13,20 +13,14 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        # os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest]
 
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set nodeLinker node-modules
-          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -46,6 +40,13 @@ jobs:
         run: |
           yarn set version stable
           yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
 
       - name: Set environment
         run: |
