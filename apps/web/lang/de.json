@@ -898,7 +898,7 @@
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
     "login": {
-      "failed": "Zugangsdaten ungültig",
+      "loginFailed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"
     },
     "newsletter": {

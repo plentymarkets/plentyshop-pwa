@@ -6,15 +6,19 @@
 - Added new carousel compoment via Swipper library
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
+- Fluid logo container + max-width and max-height addaptation
 
 ### New
 
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
+- Adding the ability to have alt text for images.
+- It's now possible to change the font color of the hero banner via a template property.
 
 ### 🩹 Fixed
 
 - Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
+- Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
 - Automatically generate a language file for every active language, not just the default language.
