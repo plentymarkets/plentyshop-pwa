@@ -1,6 +1,8 @@
 <template>
   <div>
-    <UiToolbar v-if="isPreview" />
+    <client-only>
+      <UiToolbar v-show="isPreview" />
+    </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -29,4 +31,14 @@ const viewport = useViewport();
 setLogoMeta();
 
 const isPreview = ref(true);
+
+onMounted(() => {
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('edit') && urlParams.get('edit') === 'true') {
+    sessionStorage.setItem('isPreview', 'true');
+  }
+
+  const previewValue = sessionStorage.getItem('isPreview');
+  isPreview.value = previewValue === 'true';
+});
 </script>
