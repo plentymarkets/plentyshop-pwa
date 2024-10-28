@@ -121,7 +121,7 @@
         :invalid="Boolean(errors['country'])"
       >
         <option
-          v-for="(shippingCountry, index) in defaultCountries"
+          v-for="(shippingCountry, index) in defaultCountries()"
           :key="`shipping-country-${index}`"
           :value="shippingCountry.id.toString()"
         >
