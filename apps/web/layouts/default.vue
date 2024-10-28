@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UiToolbar v-if="isPreview" />
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -26,4 +27,6 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 setLogoMeta();
+
+const isPreview = ref(true);
 </script>
