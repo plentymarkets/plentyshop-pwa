@@ -837,6 +837,7 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
+  "unsavedAddress": "You have an Address that has not been saved",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {

@@ -10,6 +10,7 @@
 
 ### New
 
+- Clicking "Buy" with an unsaved Address will now display a notification.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
 - Adding the ability to have alt text for images.
