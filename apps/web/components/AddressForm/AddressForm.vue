@@ -106,16 +106,20 @@ import {
   userAddressGetters,
 } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import type { AddressFormProps } from '~/components/AddressForm/types';
-
-const { loading: loadBilling } = useAddress(AddressType.Billing);
-const { loading: loadShipping } = useAddress(AddressType.Shipping);
-const { useGeoRegulatedCountries, defaultCountries, geoRegulatedCountries } = useAggregatedCountries();
+import { type AddressFormProps } from '~/components/AddressForm/types';
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 
+const { loading: loadBilling } = useAddress(AddressType.Billing);
+const { loading: loadShipping } = useAddress(AddressType.Shipping);
+const {
+  useGeoRegulatedCountries,
+  default: defaultCountries,
+  geoRegulated: geoRegulatedCountries,
+} = useAggregatedCountries();
+
 const countries = computed(() =>
-  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries : defaultCountries,
+  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries.value : defaultCountries.value,
 );
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 const useAsShippingAddress = ref(useAsShippingDefault);

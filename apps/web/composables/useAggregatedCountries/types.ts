@@ -1,18 +1,18 @@
-import { ActiveShippingCountry, GeoRegulatedCountry, type AggregatedCountries } from '@plentymarkets/shop-api';
+import { AggregatedCountries } from '@plentymarkets/shop-api';
 
 export interface UseAggregatedCountriesState {
-  data: AggregatedCountries;
+  default: AggregatedCountries['default'];
+  geoRegulated: AggregatedCountries['geoRegulated'];
   loading: boolean;
 }
 
-export type FetchAggregatedCountries = () => Promise<AggregatedCountries>;
+export type FetchAggregatedCountries = () => Promise<void>;
 
 export interface UseAggregatedCountries {
-  data: Readonly<Ref<UseAggregatedCountriesState['data']>>;
+  default: Readonly<Ref<UseAggregatedCountriesState['default']>>;
+  geoRegulated: Readonly<Ref<UseAggregatedCountriesState['geoRegulated']>>;
   loading: Readonly<Ref<boolean>>;
   fetchAggregatedCountries: FetchAggregatedCountries;
-  defaultCountries: ActiveShippingCountry[];
-  geoRegulatedCountries: GeoRegulatedCountry[];
   useGeoRegulatedCountries: boolean;
 }
 

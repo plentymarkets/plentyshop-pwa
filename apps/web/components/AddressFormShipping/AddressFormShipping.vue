@@ -147,7 +147,7 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
-const { defaultCountries } = useAggregatedCountries();
+const { default: defaultCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);

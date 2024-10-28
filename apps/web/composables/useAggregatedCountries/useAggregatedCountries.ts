@@ -1,5 +1,5 @@
 import { type AggregatedCountries } from '@plentymarkets/shop-api';
-import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, FetchAggregatedCountries } from './types';
+import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type FetchAggregatedCountries } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:
@@ -9,21 +9,18 @@ import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, FetchAg
  * @example
  * ``` ts
  * const {
- *  data,
+ *  default,
+ *  geoRegulated,
  *  loading,
- *  useGeoRegulatedCountries,
  *  fetchAggregatedCountries,
- *  defaultCountries,
- *  geoRegulatedCountries,
+ *  useGeoRegulatedCountries,
  * } = useAggregatedCountries();
  * ```
  */
 export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   const state = useState<UseAggregatedCountriesState>('useAggregatedCountries', () => ({
-    data: {
-      default: [],
-      geoRegulated: [],
-    } as AggregatedCountries,
+    default: [] as AggregatedCountries['default'],
+    geoRegulated: [] as AggregatedCountries['geoRegulated'],
     loading: false,
   }));
 
@@ -36,20 +33,18 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
 
     useHandleError(error.value);
 
-    if (data.value?.data) state.value.data = data.value.data;
-    state.value.loading = false;
+    if (data.value?.data) {
+      state.value.default = data.value.data.default;
+      state.value.geoRegulated = data.value.data.geoRegulated;
+    }
 
-    return state.value.data;
+    state.value.loading = false;
   };
 
-  const defaultCountries = state.value.data.default;
-  const geoRegulatedCountries = state.value.data.geoRegulated;
-  const useGeoRegulatedCountries = geoRegulatedCountries.length > 0;
+  const useGeoRegulatedCountries = state.value.geoRegulated.length > 0;
 
   return {
     fetchAggregatedCountries,
-    defaultCountries,
-    geoRegulatedCountries,
     useGeoRegulatedCountries,
     ...toRefs(state.value),
   };
