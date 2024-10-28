@@ -145,7 +145,7 @@ const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
 
-const countries = computed(() => (useGeoRegulatedCountries ? geoRegulatedCountries() : defaultCountries()));
+const countries = computed(() => (useGeoRegulatedCountries ? geoRegulatedCountries : defaultCountries));
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');

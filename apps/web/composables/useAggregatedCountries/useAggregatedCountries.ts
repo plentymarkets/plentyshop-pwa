@@ -42,9 +42,9 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     return state.value.data;
   };
 
-  const defaultCountries = () => state.value.data.default;
-  const geoRegulatedCountries = () => state.value.data.geoRegulated;
-  const useGeoRegulatedCountries = geoRegulatedCountries().length > 0;
+  const defaultCountries = state.value.data.default;
+  const geoRegulatedCountries = state.value.data.geoRegulated;
+  const useGeoRegulatedCountries = geoRegulatedCountries.length > 0;
 
   return {
     fetchAggregatedCountries,

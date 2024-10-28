@@ -115,7 +115,7 @@ const { useGeoRegulatedCountries, defaultCountries, geoRegulatedCountries } = us
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 
 const countries = computed(() =>
-  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries() : defaultCountries(),
+  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries : defaultCountries,
 );
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 const useAsShippingAddress = ref(useAsShippingDefault);

@@ -11,8 +11,8 @@ export interface UseAggregatedCountries {
   data: Readonly<Ref<UseAggregatedCountriesState['data']>>;
   loading: Readonly<Ref<boolean>>;
   fetchAggregatedCountries: FetchAggregatedCountries;
-  defaultCountries: () => ActiveShippingCountry[];
-  geoRegulatedCountries: () => GeoRegulatedCountry[];
+  defaultCountries: ActiveShippingCountry[];
+  geoRegulatedCountries: GeoRegulatedCountry[];
   useGeoRegulatedCountries: boolean;
 }
 
