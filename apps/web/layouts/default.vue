@@ -29,7 +29,6 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 setLogoMeta();
-
 const isPreview = ref(true);
 
 onMounted(() => {
