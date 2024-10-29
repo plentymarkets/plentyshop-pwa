@@ -1,5 +1,5 @@
 <template>
-  <Editor v-if="editorState.isEditing" />
+  <Editor v-if="isEditing" />
   <div v-else class="content">
     <UiHeroCarousel :hero-item-props="formattedHeroItems" />
 
@@ -41,7 +41,7 @@ const { t } = useI18n();
 const { data: categoryTree } = useCategoryTree();
 const recommendedProductsCategoryId = ref('');
 definePageMeta({ pageType: 'static' });
-const editorState = inject('editorState') as { isEditing: boolean };
+const isEditing = useEditor();
 
 const getCurrentSizeKey = (): SizeKey => {
   return viewport.breakpoint.value as SizeKey;
