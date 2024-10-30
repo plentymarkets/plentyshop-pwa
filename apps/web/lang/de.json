@@ -884,7 +884,8 @@
       "validationFailed": "Die Adresse ist ungültig."
     },
     "cart": {
-      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden."
+      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
+      "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
