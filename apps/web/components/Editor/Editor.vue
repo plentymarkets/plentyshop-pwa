@@ -29,45 +29,14 @@
 </template>
 
 <script setup lang="ts">
+import { heroData } from './heroData';
+import { mediaData } from './mediaData';
 const jsonText = ref(
   JSON.stringify(
     {
       id: 22,
-      hero: [
-        {
-          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
-          tagline: 'Feel the music harder',
-          heading: 'Your Sound, Elevated',
-          description:
-            "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
-          callToAction: 'Order Now',
-          link: '',
-        },
-        {
-          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
-          tagline: 'Experience Sound Freedom',
-          heading: 'Wireless. Effortless. Seamless.',
-          description:
-            'Unleash your audio with our state-of-the-art wireless earbuds. Designed for all-day comfort and uncompromised sound quality, these earbuds deliver crisp highs and deep bass, letting you enjoy your music without any distractions. Discover freedom with a perfect fit, long battery life, and intuitive controls.',
-          callToAction: 'Shop Earbuds',
-        },
-        {
-          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
-          tagline: 'Amplify Your Space',
-          heading: 'Big Sound, Compact Design',
-          description:
-            "Transform your space with our portable speakers that pack a punch. Crafted for superior sound performance, these speakers are perfect for home or on the go. With easy connectivity and a sleek design, elevate your listening experience whether you're indoors or outdoors.",
-          callToAction: 'Browse Speakers',
-          link: '',
-        },
-      ],
-      valueProposition: [
-        {
-          text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='text-base mb-6 padding-right-desktop typography-text-sm md:typography-text-lg '>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
-          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-          alignment: 'left',
-        },
-      ],
+      hero: heroData,
+      valueProposition: mediaData,
       featured: [
         {
           headline: '',
