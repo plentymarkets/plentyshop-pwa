@@ -837,6 +837,7 @@
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "unsavedAddress": "Die eingegebene Adresse wurde noch nicht gespeichert.",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
   "shipping": {

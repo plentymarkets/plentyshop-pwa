@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('checkout')"
+    :back-label-desktop="t('backToCart')"
+    :back-label-mobile="t('back')"
+    :heading="t('checkout')"
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
@@ -64,7 +64,7 @@
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              {{ $t('buy') }}
+              {{ t('buy') }}
             </UiButton>
             <UiButton
               v-else
@@ -76,7 +76,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ $t('buy') }}</template>
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
             <!-- <PayPalApplePayButton
               v-if="applePayAvailable"
@@ -112,6 +112,8 @@ definePageMeta({
   pageType: 'static',
 });
 
+const { send } = useNotification();
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
@@ -177,7 +179,11 @@ const paypalCreditCardPaymentId = computed(() => {
 // const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const readyToBuy = () => {
-  if (anyAddressFormIsOpen.value) return backToFormEditing();
+  if (anyAddressFormIsOpen.value) {
+    send({ type: 'secondary', message: t('unsavedAddress') });
+    return backToFormEditing();
+  }
+
   return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
 };
 
