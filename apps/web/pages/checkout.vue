@@ -161,7 +161,7 @@ await Promise.all([
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-
+const processingOrder = ref(false);
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -206,6 +206,7 @@ const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
 const order = async () => {
   if (!readyToBuy()) return;
 
+  processingOrder.value = true;
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
@@ -213,5 +214,7 @@ const order = async () => {
     : await handleRegularOrder();
 };
 
-watch(cartIsEmpty, async () => await navigateTo(localePath(paths.cart)));
+watch(cartIsEmpty, async () => {
+  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+});
 </script>
