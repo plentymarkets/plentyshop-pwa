@@ -29,8 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted } from 'vue';
-
 const jsonText = ref(
   JSON.stringify(
     {
