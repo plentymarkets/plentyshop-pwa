@@ -1,6 +1,6 @@
 import { ref, watch, computed } from 'vue';
-import { HeroItem, SizeKey } from '~/composables/useHomepageData/types';
-import { MediaItem } from '~/composables/useHomepageData/types';
+import { HeroContentProps, SizeKey } from '~/components/ui/HeroCarousel/types';
+import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import { useCategoryTree, useCategoryTemplate } from '~/composables';
 import homepageTemplateData from './homepageTemplateData.json';
 
@@ -35,7 +35,7 @@ export default async function useHomepageData() {
   const getCurrentSizeKey = (): SizeKey => viewport.breakpoint.value as SizeKey;
 
   const mediaData = computed(() =>
-    homepageTemplate.value.valueProposition.map((media: MediaItem) => ({
+    homepageTemplate.value.valueProposition.map((media: MediaItemProps) => ({
       image: media.image,
       text: media.text,
       alignment: media.alignment,
@@ -43,7 +43,7 @@ export default async function useHomepageData() {
     })),
   );
 
-  const formattedHeroItems = computed<HeroItem[]>(() => {
+  const formattedHeroItems = computed<HeroContentProps[]>(() => {
     const currentSizeKey = getCurrentSizeKey();
     return homepageTemplate.value.hero.map((item) => {
       return {
@@ -60,7 +60,7 @@ export default async function useHomepageData() {
           xs: { width: '250', height: '250' },
         },
         actualBackgroundSize: currentSizeKey,
-      } as HeroItem;
+      } as HeroContentProps;
     });
   });
 
