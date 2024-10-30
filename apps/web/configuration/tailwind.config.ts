@@ -16,6 +16,24 @@ export default {
         'display-2': {
           fontFamily: 'inherit',
         },
+        'headline-1': {
+          fontFamily: 'inherit',
+        },
+        'headline-2': {
+          fontFamily: 'inherit',
+        },
+        'headline-3': {
+          fontFamily: 'inherit',
+        },
+        'headline-4': {
+          fontFamily: 'inherit',
+        },
+        'headline-5': {
+          fontFamily: 'inherit',
+        },
+        'headline-6': {
+          fontFamily: 'inherit',
+        },
       }),
       fontFamily: {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],

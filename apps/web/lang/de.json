@@ -646,7 +646,7 @@
   "manufacturer": {
     "euResponsibleTabName": "EU Verantwortliche Person",
     "header": "Angaben zum Hersteller",
-    "logoAlt": "Hersteller Logo",
+    "logoAlt": "Herstellerlogo",
     "manufacturerTabName": "Hersteller",
     "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
@@ -837,6 +837,7 @@
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "unsavedAddress": "Die eingegebene Adresse wurde noch nicht gespeichert.",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
   "shipping": {
@@ -883,7 +884,8 @@
       "validationFailed": "Die Adresse ist ungültig."
     },
     "cart": {
-      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden."
+      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
+      "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
@@ -897,7 +899,7 @@
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
     "login": {
-      "failed": "Zugangsdaten ungültig",
+      "loginFailed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"
     },
     "newsletter": {

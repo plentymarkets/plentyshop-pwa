@@ -645,12 +645,12 @@
   "manageAddresses": "Manage your addresses",
   "manufacturer": {
     "euResponsibleTabName": "EU Responsible Person",
-    "header": "Manufacturer Details",
-    "logoAlt": "Herstellerlogo",
+    "header": "Manufacturer details",
+    "logoAlt": "Manufacturer logo",
     "manufacturerTabName": "Manufacturer",
     "noInformation": "No information available for manufacturer",
     "noResponsibleInformation": "No information available for Responsible Person",
-    "responsibleHeader": "Responsible Entity in the EU",
+    "responsibleHeader": "Responsible Person in the EU",
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
     "subtitle": "Manufacturer information includes the address and additional details about the producer of the product."
   },
@@ -837,6 +837,7 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
+  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {
@@ -883,7 +884,8 @@
       "validationFailed": "The address is invalid."
     },
     "cart": {
-      "failedToRemoveItem": "The item could not be removed."
+      "failedToRemoveItem": "The item could not be removed.",
+      "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
     "contact": {
       "emailAlreadyExists": "The e-mail address already exists.",
@@ -897,7 +899,7 @@
       "applyFailed": "The coupon could not be redeemed."
     },
     "login": {
-      "failed": "Invalid login data",
+      "loginFailed": "Invalid login data",
       "userIsBlocked": "User is blocked"
     },
     "newsletter": {
