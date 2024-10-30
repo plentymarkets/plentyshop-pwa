@@ -16,6 +16,7 @@
 - Implement new notification design
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
+- Implement new payment methods: Google Pay and Apple Pay.
 
 ### 🩹 Fixed
 
