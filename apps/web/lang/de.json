@@ -884,7 +884,7 @@
     },
     "cart": {
       "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
-      "reachedMaximumQuantity": "Dieser Artikel ist in einer maximalen Menge von {maximumQuantity} Stück verfügbar"
+      "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
