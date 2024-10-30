@@ -18,6 +18,7 @@
 
 ### 🩹 Fixed
 
+- Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
 - Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
