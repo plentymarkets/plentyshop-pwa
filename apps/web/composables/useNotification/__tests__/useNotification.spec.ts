@@ -84,7 +84,7 @@ describe('useNotification', () => {
 
         expect(data.value.length).toBe(1);
         
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
         expect(data.value.length).toBe(1);
 
         await new Promise((resolve) => setTimeout(resolve, 1100));
