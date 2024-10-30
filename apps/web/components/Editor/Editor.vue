@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-xl mx-auto p-4">
-    <div class="flex items-start border rounded-md overflow-hidden">
-      <div class="bg-gray-100 text-gray-500 text-right pr-4 pt-2 font-mono text-sm w-10 select-none">
+  <div class="mx-auto p-5">
+    <div ref="container" class="flex items-start border rounded-md overflow-hidden shadow-lg max-h-96">
+      <div class="bg-primary-500 text-white text-right pr-4 pt-2 font-mono text-sm w-10">
         <div v-for="line in lineCount" :key="line">{{ line }}</div>
       </div>
       <textarea
@@ -10,24 +10,76 @@
         @paste="handlePaste"
         @keydown.tab.prevent="insertTab"
         ref="textarea"
-        class="w-full p-2 font-mono text-sm border-none resize-none outline-none"
+        class="w-full h-full p-2 font-mono text-sm border-none resize-none outline-none"
         placeholder="Edit JSON here..."
       ></textarea>
     </div>
-    <button
-      @click="formatJson"
-      class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
-    >
-      Format JSON
-    </button>
+    <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md"> Format JSON </UiButton>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-const jsonText = ref('');
+import { ref, computed, nextTick, onMounted } from 'vue';
+
+const jsonText = ref(
+  JSON.stringify(
+    {
+      id: 22,
+      hero: [
+        {
+          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+          tagline: 'Feel the music harder',
+          heading: 'Your Sound, Elevated',
+          description:
+            "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
+          callToAction: 'Order Now',
+          link: '',
+        },
+        {
+          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+          tagline: 'Experience Sound Freedom',
+          heading: 'Wireless. Effortless. Seamless.',
+          description:
+            'Unleash your audio with our state-of-the-art wireless earbuds. Designed for all-day comfort and uncompromised sound quality, these earbuds deliver crisp highs and deep bass, letting you enjoy your music without any distractions. Discover freedom with a perfect fit, long battery life, and intuitive controls.',
+          callToAction: 'Shop Earbuds',
+          link: '',
+        },
+        {
+          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
+          tagline: 'Amplify Your Space',
+          heading: 'Big Sound, Compact Design',
+          description:
+            "Transform your space with our portable speakers that pack a punch. Crafted for superior sound performance, these speakers are perfect for home or on the go. With easy connectivity and a sleek design, elevate your listening experience whether you're indoors or outdoors.",
+          callToAction: 'Browse Speakers',
+          link: '',
+        },
+      ],
+      valueProposition: [
+        {
+          text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='text-base mb-6 padding-right-desktop typography-text-sm md:typography-text-lg '>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
+          image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+          alignment: 'left',
+        },
+      ],
+      featured: [
+        {
+          headline: '',
+          categoryId: 1,
+        },
+        {
+          headline: '',
+          categoryId: 2,
+        },
+      ],
+    },
+    null,
+    2,
+  ),
+);
 const errorMessage = ref('');
 const textarea = ref(null);
+const container = ref<HTMLElement | null>(null);
 
 const lineCount = computed(() => {
   return jsonText.value ? jsonText.value.split('\n').length : 1;
@@ -57,6 +109,7 @@ const handleInput = () => {
 
 const handlePaste = () => {
   nextTick(() => {
+    validateJson();
     resizeTextarea();
   });
 };
@@ -81,5 +134,11 @@ const insertTab = (event: KeyboardEvent) => {
     target.selectionStart = target.selectionEnd = start + 2;
   });
 };
-onMounted(resizeTextarea);
+
+onMounted(() => {
+  resizeTextarea();
+  if (container.value) {
+    container.value.style.overflow = 'auto';
+  }
+});
 </script>
