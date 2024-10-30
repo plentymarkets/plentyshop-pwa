@@ -1,6 +1,10 @@
 <template>
   <div class="mx-auto p-5">
-    <div ref="container" class="flex items-start border rounded-md overflow-hidden shadow-lg max-h-96">
+    <div
+      ref="container"
+      class="flex items-start border rounded-md overflow-hidden shadow-lg"
+      style="max-height: 500px; overflow: auto"
+    >
       <div class="bg-primary-500 text-white text-right pr-4 pt-2 font-mono text-sm w-10">
         <div v-for="line in lineCount" :key="line">{{ line }}</div>
       </div>
@@ -14,7 +18,12 @@
         placeholder="Edit JSON here..."
       ></textarea>
     </div>
-    <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md"> Format JSON </UiButton>
+    <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md bg-blue-500 hover:bg-blue-600">
+      Format JSON
+    </UiButton>
+    <UiButton @click="clearText" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-red-500 hover:bg-red-600">
+      Clear Text
+    </UiButton>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
   </div>
 </template>
@@ -43,7 +52,6 @@ const jsonText = ref(
           description:
             'Unleash your audio with our state-of-the-art wireless earbuds. Designed for all-day comfort and uncompromised sound quality, these earbuds deliver crisp highs and deep bass, letting you enjoy your music without any distractions. Discover freedom with a perfect fit, long battery life, and intuitive controls.',
           callToAction: 'Shop Earbuds',
-          link: '',
         },
         {
           image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/homepage-hero-headphones.avif',
@@ -123,6 +131,10 @@ const formatJson = () => {
   } catch (error: any) {
     errorMessage.value = 'Invalid JSON: ' + error.message;
   }
+};
+
+const clearText = () => {
+  jsonText.value = '';
 };
 
 const insertTab = (event: KeyboardEvent) => {
