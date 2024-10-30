@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { HeroItem } from './types';
+import { HeroItem } from '~/composables/useHomepageData';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
 const { handleArrows, onSlideChange } = useCarousel();

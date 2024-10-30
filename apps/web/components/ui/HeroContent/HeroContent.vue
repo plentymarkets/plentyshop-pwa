@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { HeroItem, SizeKey } from '../HeroCarousel/types';
+import { HeroItem, SizeKey } from '~/composables/useHomepageData';
 
 defineProps<{
   heroItemProps: HeroItem;
