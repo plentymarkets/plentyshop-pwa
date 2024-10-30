@@ -228,6 +228,8 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  const cartIsEmpty = computed(() => !state.value.data?.items?.length);
+
   return {
     setCart,
     clearCartItems,
@@ -236,6 +238,7 @@ export const useCart: UseCartReturn = () => {
     addItemsToCart,
     deleteCartItem,
     getCart,
+    cartIsEmpty,
     ...toRefs(state.value),
   };
 };

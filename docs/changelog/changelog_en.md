@@ -10,6 +10,7 @@
 
 ### New
 
+- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
 - When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design

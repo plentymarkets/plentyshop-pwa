@@ -110,6 +110,7 @@ import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
+  middleware: ['reject-empty-checkout'],
 });
 
 const localePath = useLocalePath();
@@ -118,7 +119,7 @@ const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
-  getCart,
+  cartIsEmpty,
   clearCartItems,
   cartLoading,
   anyAddressFormIsOpen,
@@ -152,14 +153,11 @@ onNuxtReady(async () => {
     .catch((error) => useHandleError(error));
 });
 
-await getCart().then(
-  async () =>
-    await Promise.all([
-      useCartShippingMethods().getShippingMethods(),
-      usePaymentMethods().fetchPaymentMethods(),
-      useAggregatedCountries().fetchAggregatedCountries(),
-    ]),
-);
+await Promise.all([
+  useCartShippingMethods().getShippingMethods(),
+  usePaymentMethods().fetchPaymentMethods(),
+  useAggregatedCountries().fetchAggregatedCountries(),
+]);
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
@@ -214,4 +212,6 @@ const order = async () => {
     ? (paypalCardDialog.value = true)
     : await handleRegularOrder();
 };
+
+watch(cartIsEmpty, async () => await navigateTo(localePath(paths.cart)));
 </script>
