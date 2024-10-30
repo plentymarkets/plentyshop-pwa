@@ -36,6 +36,7 @@
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
+- Increased default notification timeout from 3 to 5 seconds.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
