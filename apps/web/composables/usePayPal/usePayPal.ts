@@ -4,12 +4,20 @@ import type {
   PayPalConfigResponse,
   PayPalCreateOrder,
   PayPalExecuteParams,
+  PayPalGetOrderDetailsParams,
 } from '@plentymarkets/shop-api';
 import { paypalGetters } from '@plentymarkets/shop-api';
 import { PayPalLoadScript, PayPalScript } from '~/composables';
 
 const localeMap: Record<string, string> = { de: 'de_DE' };
 const getLocaleForPayPal = (locale: string): string => localeMap[locale] || 'en_US';
+
+const getOrder = async (params: PayPalGetOrderDetailsParams) => {
+  const { data, error } = await useAsyncData(() => useSdk().plentysystems.getPayPalOrderDetails(params));
+  useHandleError(error.value);
+
+  return data.value?.data ?? null;
+};
 
 /**
  * @description Composable for managing PayPal interaction.
@@ -248,6 +256,7 @@ export const usePayPal = () => {
     createCreditCardTransaction,
     captureOrder,
     getScript,
+    getOrder,
     ...toRefs(state.value),
   };
 };
