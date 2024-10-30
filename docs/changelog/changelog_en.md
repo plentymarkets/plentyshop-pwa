@@ -10,7 +10,7 @@
 
 ### New
 
-- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
+- Clicking "Buy" with an unsaved Address will now display a notification.
 - When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
@@ -36,6 +36,7 @@
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
+- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
