@@ -1,7 +1,4 @@
-import { ref, nextTick, onMounted, watch } from 'vue';
-
-export function useJsonEditor(initialJson: string) {
-  const containerHeight = 500;
+export const useJsonEditor = (initialJson: string) => {
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
@@ -71,7 +68,6 @@ export function useJsonEditor(initialJson: string) {
   watch(jsonText, updateLineCount);
 
   return {
-    containerHeight,
     jsonText,
     errorMessage,
     lineCount,
@@ -83,4 +79,4 @@ export function useJsonEditor(initialJson: string) {
     purgeJson,
     clearText,
   };
-}
+};

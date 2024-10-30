@@ -1,9 +1,8 @@
 <template>
   <div class="mx-auto p-5">
-    <div class="flex items-start border rounded-md shadow-lg" style="max-height: 500px; overflow: hidden">
+    <div class="flex items-start border rounded-md shadow-lg max-h-[500px] overflow-hidden">
       <div
-        class="bg-primary-500 text-white text-right pr-4 pt-2 font-mono text-sm w-10"
-        :style="{ height: `${containerHeight}px`, overflowY: 'auto' }"
+        class="bg-primary-500 text-white text-right pr-4 pt-2 font-mono text-sm w-10 h-[500px] overflow-y-auto"
         ref="lineNumberContainer"
       >
         <div v-for="line in lineCount" :key="line">{{ line }}</div>
@@ -13,8 +12,7 @@
         @input="handleInput"
         @scroll="syncScroll"
         ref="textarea"
-        class="w-full p-2 font-mono text-sm border-none resize-none outline-none"
-        :style="{ height: `${containerHeight}px` }"
+        class="w-full p-2 font-mono text-sm border-none resize-none outline-none h-[500px]"
         placeholder="Edit JSON here..."
       ></textarea>
     </div>
@@ -22,7 +20,7 @@
       Format JSON
     </UiButton>
     <UiButton @click="purgeJson" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
-      Purge JSON
+      Minify JSON
     </UiButton>
     <UiButton @click="clearText" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-red-500 hover:bg-red-600">
       Clear Text
@@ -56,7 +54,6 @@ const initialJson = JSON.stringify(
 );
 
 const {
-  containerHeight,
   jsonText,
   errorMessage,
   lineCount,
