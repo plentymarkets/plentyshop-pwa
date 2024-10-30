@@ -23,7 +23,6 @@ export const useApplePay = () => {
   const state = useState(`useApplePay`, () => ({
     scriptLoaded: false,
     script: {} as ApplepayType,
-    paymentSession: null as ApplePaySession | null,
     config: {} as ConfigResponse,
   }));
 
@@ -113,6 +112,11 @@ export const useApplePay = () => {
             showErrorNotification(error?.toString() ?? 'Error during order confirmation');
             return;
           }
+
+          await captureOrder({
+            paypalOrderId: transaction.id,
+            paypalPayerId: transaction.payPalPayerId,
+          });
 
           await executeOrder({
             mode: 'paypal',
