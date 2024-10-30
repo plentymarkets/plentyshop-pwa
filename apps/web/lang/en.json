@@ -837,7 +837,7 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
-  "unsavedAddress": "You have an Address that has not been saved",
+  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {
