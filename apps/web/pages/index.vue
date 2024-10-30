@@ -7,6 +7,7 @@
         v-for="(item, index) in mediaData"
         :key="index"
         :image="item.image"
+        :alt="item.alt"
         :text="item.text"
         :alignment="item.alignment"
       />

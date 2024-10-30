@@ -28,8 +28,3 @@ export type MediaItem = {
   alt: string;
   alignment: string;
 };
-
-export type HeroCarouselProps = {
-  background: { image: string; sizes: Sizes };
-  hero: HeroItem[];
-};
