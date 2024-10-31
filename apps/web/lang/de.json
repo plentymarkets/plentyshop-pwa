@@ -426,6 +426,7 @@
   "editAddress": "Adresse bearbeiten",
   "email": "E-Mail",
   "emptyCart": "Ihr Warenkorb ist leer",
+  "emptyCartNotification": "Sie haben keine Artikel in Ihrem Warenkorb",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
