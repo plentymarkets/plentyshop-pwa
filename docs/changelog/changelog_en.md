@@ -7,6 +7,7 @@
 - Created new useCarousel composable holding Carousel logic
 - Minified and purged swiper css files for speed optimization
 - Fluid logo container + max-width and max-height addaptation
+- Fix cls mobile
 
 ### New
 
@@ -37,6 +38,8 @@
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
 - The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
+- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
+- Increased default notification timeout from 3 to 5 seconds.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

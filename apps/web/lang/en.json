@@ -426,6 +426,7 @@
   "editAddress": "Edit address",
   "email": "Email",
   "emptyCart": "Your cart is empty",
+  "emptyCartNotification": "You don't have any items in your cart",
   "emptyCartImgAlt": "Image of an empty cart",
   "emptyStateAltText": "Image that describes that no products were found",
   "emptyStateText": "We no longer have products in this category.",
