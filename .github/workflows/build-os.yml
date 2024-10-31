@@ -21,8 +21,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup node
         if: matrix.os == 'windows-latest'
@@ -51,6 +49,8 @@ jobs:
           yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
           yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
           yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set environment
         run: |
