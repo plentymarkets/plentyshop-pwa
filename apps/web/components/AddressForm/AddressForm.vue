@@ -98,20 +98,29 @@
 </template>
 
 <script setup lang="ts">
-import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import {
+  type ActiveShippingCountry,
+  type Address,
+  AddressType,
+  type GeoRegulatedCountry,
+  userAddressGetters,
+} from '@plentymarkets/shop-api';
 import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import type { AddressFormProps } from '~/components/AddressForm/types';
+import { type AddressFormProps } from '~/components/AddressForm/types';
+
+const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
-
 const {
-  type,
-  savedAddress: propertySavedAddress,
-  countries,
-  useAsShippingDefault = true,
-} = defineProps<AddressFormProps>();
+  useGeoRegulatedCountries,
+  default: defaultCountries,
+  geoRegulated: geoRegulatedCountries,
+} = useAggregatedCountries();
 
+const countries = computed(() =>
+  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries.value : defaultCountries.value,
+);
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 const useAsShippingAddress = ref(useAsShippingDefault);
 const savedAddress = propertySavedAddress || ({} as Address);
@@ -146,7 +155,11 @@ const clearInputs = () => {
 
 const states = computed(() => {
   const selectedCountry = defaultValues.value.country;
-  return countries.find((country) => country.id === Number(selectedCountry))?.states ?? [];
+  return (
+    countries.value.find(
+      (country: ActiveShippingCountry | GeoRegulatedCountry) => country.id === Number(selectedCountry),
+    )?.states ?? []
+  );
 });
 
 defineEmits(['on-save', 'on-close']);

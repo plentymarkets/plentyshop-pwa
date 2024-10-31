@@ -37,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { HeroItem, SizeKey } from '../HeroCarousel/types';
+import { HeroContentProps, SizeKey } from '../HeroCarousel/types';
 
 defineProps<{
-  heroItemProps: HeroItem;
+  heroItemProps: HeroContentProps;
   currentSizeKey: SizeKey;
 }>();
 </script>

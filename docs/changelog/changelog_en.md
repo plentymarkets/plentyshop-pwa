@@ -11,6 +11,8 @@
 
 ### New
 
+- Clicking "Buy" with an unsaved Address will now display a notification.
+- When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
 - Adding the ability to have alt text for images.
@@ -18,6 +20,7 @@
 
 ### 🩹 Fixed
 
+- Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
 - Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
@@ -358,6 +361,7 @@
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
+- Refactored index.vue
 
 ## New Contributors
 

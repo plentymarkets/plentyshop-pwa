@@ -837,6 +837,7 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
+  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {
@@ -883,7 +884,8 @@
       "validationFailed": "The address is invalid."
     },
     "cart": {
-      "failedToRemoveItem": "The item could not be removed."
+      "failedToRemoveItem": "The item could not be removed.",
+      "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
     "contact": {
       "emailAlreadyExists": "The e-mail address already exists.",

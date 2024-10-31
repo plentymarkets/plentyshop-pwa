@@ -121,7 +121,7 @@
         :invalid="Boolean(errors['country'])"
       >
         <option
-          v-for="(shippingCountry, index) in countries"
+          v-for="(shippingCountry, index) in defaultCountries"
           :key="`shipping-country-${index}`"
           :value="shippingCountry.id.toString()"
         >
@@ -147,7 +147,7 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
-const { data: countries } = useActiveShippingCountries();
+const { default: defaultCountries } = useAggregatedCountries();
 const { shippingAsBilling } = useShippingAsBilling();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
@@ -161,7 +161,6 @@ const {
   validationSchema: shippingSchema,
   refreshAddressDependencies,
 } = useAddressForm(AddressType.Shipping);
-
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: shippingSchema });
 
 const [firstName, firstNameAttributes] = defineField('firstName');
