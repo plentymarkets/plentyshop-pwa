@@ -12,7 +12,7 @@ export const useCheckout = (cacheKey = '') => {
     init: false,
   }));
 
-  const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
+  const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
   const { shippingAsBilling } = useShippingAsBilling();
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
@@ -105,6 +105,7 @@ export const useCheckout = (cacheKey = '') => {
   return {
     ...toRefs(state.value),
     cart,
+    cartIsEmpty,
     getCart,
     clearCartItems,
     cartLoading,
