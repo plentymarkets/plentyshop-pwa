@@ -4,10 +4,10 @@
       <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="toggleEdit">
         {{ isEditing ? $t('editMode.stopEdit') : $t('editMode.edit') }}
       </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="$emit('on-click')">
+      <UiButton variant="secondary" :size="buttonSize" class="self-start">
         {{ $t('editMode.save') }}
       </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="$emit('on-click')">
+      <UiButton variant="secondary" :size="buttonSize" class="self-start">
         {{ $t('editMode.publish') }}
       </UiButton>
     </div>
