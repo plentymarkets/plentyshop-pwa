@@ -955,10 +955,10 @@
     "save": "Save",
     "edit": "Edit",
     "publish": "Publish",
-    "stopEdit": "Stop editing",
-    "formatJson": "Format JSON",
-    "minifyJson": "Minify JSON",
-    "clearJson": "Clear JSON",
-   "editJsonPlaceholder": "Edit JSON here..."
+    "stopEdit": "Cancel",
+    "formatJson": "Format template",
+    "minifyJson": "Minify template",
+    "clearJson": "Clear template",
+   "editJsonPlaceholder": "Edit JSON template..."
   }
 }

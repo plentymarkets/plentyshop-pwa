@@ -954,11 +954,11 @@
   "editMode": {
     "save": "Speichern",
     "edit": "Bearbeiten",
-    "publish": "Bearbeiten",
-    "stopEdit": "Stop Bearbeiten",
-    "formatJson": "JSON formatieren",
-    "minifyJson": "JSON minimieren",
-    "clearJson": "JSON löschen",
-    "editJsonPlaceholder": "Bearbeiten Sie JSON hier..."
+    "publish": "Veröffentlichen",
+    "stopEdit": "Abbrechen",
+    "formatJson": "Template formatieren",
+    "minifyJson": "Template minimieren",
+    "clearJson": "Template löschen",
+    "editJsonPlaceholder": "JSON-Template eingeben..."
   }
 }
