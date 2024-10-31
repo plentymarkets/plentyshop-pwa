@@ -8,6 +8,7 @@
 - Minified and purged swiper css files for speed optimization
 - Fluid logo container + max-width and max-height addaptation
 - Fix cls mobile
+- Edit mode toolbar + Json editor Front End
 
 ### New
 
