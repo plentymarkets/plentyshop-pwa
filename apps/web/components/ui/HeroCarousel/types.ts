@@ -7,7 +7,7 @@ export type SizeKey = 'lg' | 'md' | 'sm' | 'xs';
 
 export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
-export type HeroItem = {
+export type HeroContentProps = {
   image?: string;
   alt?: string;
   tagline?: string;
@@ -20,9 +20,4 @@ export type HeroItem = {
   link?: string;
   backgroundSizes: Sizes;
   actualBackgroundSize: SizeKey;
-};
-
-export type HeroCarouselProps = {
-  background: { image: string; sizes: Sizes };
-  hero: HeroItem[];
 };
