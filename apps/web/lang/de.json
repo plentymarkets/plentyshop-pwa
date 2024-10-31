@@ -1,6 +1,6 @@
 {
   "orderConfirmationPaymentStatus": {
-    "unpaid": "nicht bezahlt",
+    "unpaid": "Nicht bezahlt",
     "fullyPaid": "Bezahlt",
     "overpaid": "Überzahlt",
     "partlyPaid": "Teilweise bezahlt",
