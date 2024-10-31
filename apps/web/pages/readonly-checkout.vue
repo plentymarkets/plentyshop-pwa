@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="t('backToCart')"
-    :back-label-mobile="t('back')"
-    :heading="t('checkout')"
+    :back-label-desktop="$t('backToCart')"
+    :back-label-mobile="$t('back')"
+    :heading="$t('checkout')"
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
@@ -44,7 +44,7 @@
                 size="sm"
               />
               <span v-else>
-                {{ t('buy') }}
+                {{ $t('buy') }}
               </span>
             </UiButton>
           </OrderSummary>
@@ -65,7 +65,7 @@ definePageMeta({
 const ID_CHECKBOX = '#terms-checkbox';
 
 const { getSession } = useCustomer();
-const { data: cart, clearCartItems, loading: cartLoading } = useCart();
+const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
   data: shippingAddresses,
@@ -78,8 +78,6 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const route = useRoute();
-const { send } = useNotification();
-const { t } = useI18n();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 
@@ -98,21 +96,8 @@ const loadAddresses = async () => {
   await getShippingMethods();
 };
 
-const redirectBack = () => {
-  if (cart.value.items?.length === 0) {
-    send({
-      type: 'neutral',
-      message: t('emptyCart'),
-    });
-
-    navigateTo(localePath(paths.cart));
-    return true;
-  }
-  return false;
-};
-
 await getSession();
-redirectBack();
+if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
 await loadAddresses();
 await getShippingMethods();
 await fetchPaymentMethods();
@@ -133,7 +118,8 @@ const validateTerms = (): boolean => {
 };
 
 const order = async () => {
-  if (redirectBack() || !validateTerms()) return;
+  if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
+  if (!validateTerms()) return;
 
   const data = await createOrder({
     paymentId: cart.value.methodOfPaymentId,
