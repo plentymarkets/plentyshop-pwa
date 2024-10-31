@@ -30,24 +30,11 @@ const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 setLogoMeta();
 const isPreview = ref(false);
-
 onMounted(() => {
-  // const urlParams = new URLSearchParams(window.location.search);
-  // if (urlParams.has('edit') && urlParams.get('edit') === 'true') {
-  //   sessionStorage.setItem('isPreview',   'true');
-  // }
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
 
-  // const previewValue = sessionStorage.getItem('isPreview');
-  // isPreview.value = previewValue === 'true';
-
-  // I want to show the toolbar only if there is cookie named pwa set
-
-  // Log all cookies
-  console.log('All cookies:', document.cookie);
-
-  const cookieExists = document.cookie.split('; ').some((cookie) => cookie.trim().startsWith('plenty-viewport='));
-
-  isPreview.value = cookieExists;
-  console.log('Cookie exists:', cookieExists);
+  const cookieExists = document.cookie.split('; ').some((cookie) => cookie.trim().startsWith('pwa='));
+  isPreview.value = cookieExists || (showConfigurationDrawer as boolean);
 });
 </script>

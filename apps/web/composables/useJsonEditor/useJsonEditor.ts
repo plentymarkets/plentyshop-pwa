@@ -1,4 +1,4 @@
-export const useJsonEditor = (initialJson: string) => {
+export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
