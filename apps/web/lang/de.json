@@ -1,4 +1,12 @@
 {
+  "orderConfirmationPaymentStatus": {
+    "unpaid": "nicht bezahlt",
+    "fullyPaid": "Bezahlt",
+    "overpaid": "Überzahlt",
+    "partlyPaid": "Teilweise bezahlt",
+    "prepaid": "Im Voraus bezahlt",
+    "unknown": "Fehler beim abrufen des Zahlungsstatus"
+  },
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
