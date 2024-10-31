@@ -24,10 +24,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup node
+        if: matrix.os == 'windows-latest'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5'
+
       - name: Enable corepack
-        run: |
-          corepack enable
-          corepack use yarn@3.6.4
+        run: corepack enable
 
       - name: Setup node
         uses: actions/setup-node@v3
