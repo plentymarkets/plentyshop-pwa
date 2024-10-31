@@ -44,9 +44,6 @@ onNuxtReady(async () => {
   watchAuthRoutes(isAuthorized.value);
 });
 
-// const editorState = useEditor();
-// provide('editorState', editorState);
-
 watch(
   () => isAuthorized.value,
   (authenticated: boolean) => watchAuthRoutes(authenticated),
