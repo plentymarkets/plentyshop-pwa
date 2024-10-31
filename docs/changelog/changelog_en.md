@@ -16,7 +16,6 @@
 - Implement new notification design
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
-- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
 
 ### 🩹 Fixed
 
@@ -37,6 +36,7 @@
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
+- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

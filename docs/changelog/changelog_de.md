@@ -21,8 +21,6 @@
 
 ### 🚀 Hinzugefügt
 
-- Für den Zahlungsstatus einer Bestellung ist jetzt einen zweiter Wert verfügbar, der es Ihnen ermöglicht, benutzerdefinierte Übersetzungen für die verschiedenen Zahlungszustände zu definieren.
-
 #### Funktionen
 
 - Hinzugefügt wurde eine Seite um Angebote im Webshop zu präsentieren. Auf dieser können Angebote auch direkt angenommen oder abgelehnt werden. Bei Annahme des Angebots wird direkt eine Bestellung erstellt.
