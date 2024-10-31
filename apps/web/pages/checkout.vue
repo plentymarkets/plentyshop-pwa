@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('checkout')"
+    :back-label-desktop="t('backToCart')"
+    :back-label-mobile="t('back')"
+    :heading="t('checkout')"
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
@@ -64,7 +64,7 @@
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              {{ $t('buy') }}
+              {{ t('buy') }}
             </UiButton>
             <UiButton
               v-else
@@ -76,7 +76,7 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ $t('buy') }}</template>
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
             <!-- <PayPalApplePayButton
               v-if="applePayAvailable"
@@ -110,15 +110,18 @@ import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
+  middleware: ['reject-empty-checkout'],
 });
 
+const { send } = useNotification();
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
-  getCart,
+  cartIsEmpty,
   clearCartItems,
   cartLoading,
   anyAddressFormIsOpen,
@@ -152,18 +155,15 @@ onNuxtReady(async () => {
     .catch((error) => useHandleError(error));
 });
 
-await getCart().then(
-  async () =>
-    await Promise.all([
-      useCartShippingMethods().getShippingMethods(),
-      usePaymentMethods().fetchPaymentMethods(),
-      useAggregatedCountries().fetchAggregatedCountries(),
-    ]),
-);
+await Promise.all([
+  useCartShippingMethods().getShippingMethods(),
+  usePaymentMethods().fetchPaymentMethods(),
+  useAggregatedCountries().fetchAggregatedCountries(),
+]);
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-
+const processingOrder = ref(false);
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -177,7 +177,11 @@ const paypalCreditCardPaymentId = computed(() => {
 // const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
 
 const readyToBuy = () => {
-  if (anyAddressFormIsOpen.value) return backToFormEditing();
+  if (anyAddressFormIsOpen.value) {
+    send({ type: 'secondary', message: t('unsavedAddress') });
+    return backToFormEditing();
+  }
+
   return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
 };
 
@@ -208,10 +212,15 @@ const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
 const order = async () => {
   if (!readyToBuy()) return;
 
+  processingOrder.value = true;
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
     ? (paypalCardDialog.value = true)
     : await handleRegularOrder();
 };
+
+watch(cartIsEmpty, async () => {
+  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+});
 </script>
