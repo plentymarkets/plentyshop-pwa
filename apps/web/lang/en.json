@@ -418,8 +418,8 @@
   "editAddress": "Edit address",
   "email": "Email",
   "emptyCart": "Your cart is empty",
-  "emptyCartNotification": "You don't have any items in your cart",
   "emptyCartImgAlt": "Image of an empty cart",
+  "emptyCartNotification": "You don't have any items in your cart",
   "emptyStateAltText": "Image that describes that no products were found",
   "emptyStateText": "We no longer have products in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
@@ -504,6 +504,7 @@
       "required": "Password is required.",
       "valid": "Password must be at least 8 characters long and include at least one letter and one number."
     },
+    "paymentFailed": "The payment has failed. Please try again.",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
@@ -838,7 +839,6 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
-  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {
@@ -928,6 +928,7 @@
   "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
   "total": "Total",
+  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "validation": {
     "heading": "To complete order:",
     "missingBillingAddress": "add billing address",

@@ -85,12 +85,13 @@ export const useGooglePay = () => {
     const { data: cart, clearCartItems } = useCart();
     const { shippingPrivacyAgreement } = useAdditionalInformation();
     const { createOrder } = useMakeOrder();
+    const { t } = useI18n();
 
     state.value.paymentLoading = true;
 
     const transaction = await createCreditCardTransaction();
     if (!transaction || !transaction.id) {
-      showErrorNotification('Failed to create transaction');
+      showErrorNotification(t('storefrontError.order.createFailed'));
       return;
     }
 
@@ -101,10 +102,10 @@ export const useGooglePay = () => {
 
     if (status === 'PAYER_ACTION_REQUIRED') {
       await state.value.script.initiatePayerAction({ orderId: transaction.id });
-      const paypalOrder = (await getOrder({
+      const paypalOrder = await getOrder({
         paypalOrderId: transaction.id,
         payPalPayerId: transaction.payPalPayerId,
-      })) as any;
+      });
       status = paypalOrder?.result?.status || 'ERROR';
     }
 
@@ -120,7 +121,7 @@ export const useGooglePay = () => {
       });
 
       if (!order || !order.order || !order.order.id) {
-        showErrorNotification('Failed to create plenty order');
+        showErrorNotification(t('storefrontError.order.createFailed'));
         return;
       }
 
@@ -136,7 +137,7 @@ export const useGooglePay = () => {
 
       return { transactionState: 'SUCCESS' };
     } else {
-      showErrorNotification('Payment failed');
+      showErrorNotification(t('errorMessages.paymentFailed'));
       return { transactionState: 'ERROR' };
     }
   };

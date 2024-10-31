@@ -68,6 +68,7 @@ export const useApplePay = () => {
     const { data: cart, clearCartItems } = useCart();
     const localePath = useLocalePath();
     const { shippingPrivacyAgreement } = useAdditionalInformation();
+    const { t } = useI18n();
 
     try {
       const paymentRequest = createPaymentRequest();
@@ -89,7 +90,7 @@ export const useApplePay = () => {
         try {
           const transaction = await createCreditCardTransaction();
           if (!transaction || !transaction.id) {
-            showErrorNotification('Transaction creation failed');
+            showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
@@ -98,7 +99,7 @@ export const useApplePay = () => {
             shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
           });
           if (!order || !order.order || !order.order.id) {
-            showErrorNotification('Order creation failed');
+            showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
 
@@ -109,7 +110,7 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
-            showErrorNotification(error?.toString() ?? 'Error during order confirmation');
+            showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
             return;
           }
 
@@ -130,13 +131,13 @@ export const useApplePay = () => {
 
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
-          showErrorNotification(error?.toString() ?? 'Error during payment process');
+          showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
       };
 
       paymentSession.addEventListener('cancel', () => {
-        console.error('Apple pay cancel');
+        paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
       });
 
       paymentSession.begin();
