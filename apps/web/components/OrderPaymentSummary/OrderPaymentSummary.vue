@@ -11,7 +11,7 @@
   <p>{{ orderGetters.getPaymentMethodName(order) }}</p>
 
   <h2 class="font-medium text-base mt-4">{{ $t('account.ordersAndReturns.paymentSummary.paymentStatus') }}</h2>
-  <p data-testid="order-payment-status">{{ orderGetters.getPaymentStatus(order) }}</p>
+  <p data-testid="order-payment-status">{{ $t(orderGetters.getPaymentStatusKey(order)) }}</p>
 </template>
 
 <script setup lang="ts">
