@@ -37,6 +37,7 @@
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
+- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
 - In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
 - Increased default notification timeout from 3 to 5 seconds.
 
