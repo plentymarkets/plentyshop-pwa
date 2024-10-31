@@ -16,6 +16,7 @@
 - Implement new notification design
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
+- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
 
 ### 🩹 Fixed
 

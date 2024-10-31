@@ -3672,7 +3672,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:3.13.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.12.1, @nuxt/kit@npm:^3.12.2, @nuxt/kit@npm:^3.13.1, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.4, @nuxt/kit@npm:^3.8.2, @nuxt/kit@npm:^3.9.0":
+"@nuxt/kit@npm:3.13.2, @nuxt/kit@npm:^3.10.3, @nuxt/kit@npm:^3.11.2, @nuxt/kit@npm:^3.12.1, @nuxt/kit@npm:^3.12.2, @nuxt/kit@npm:^3.13.1, @nuxt/kit@npm:^3.13.2, @nuxt/kit@npm:^3.3.2, @nuxt/kit@npm:^3.7.0, @nuxt/kit@npm:^3.7.4, @nuxt/kit@npm:^3.9.0":
   version: 3.13.2
   resolution: "@nuxt/kit@npm:3.13.2"
   dependencies:
@@ -4237,7 +4237,7 @@ __metadata:
     "@nuxt/test-utils": ^3.13.1
     "@nuxtjs/turnstile": ^0.8.0
     "@paypal/paypal-js": 8.1.0
-    "@plentymarkets/shop-api": ^0.69.2
+    "@plentymarkets/shop-api": ^0.70.0
     "@types/applepayjs": ^14.0.8
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.2
@@ -4270,14 +4270,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.69.2":
-  version: 0.69.2
-  resolution: "@plentymarkets/shop-api@npm:0.69.2::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.69.2%2F30647f7862c0944605b240584e041457ca19fba4"
+"@plentymarkets/shop-api@npm:^0.70.0":
+  version: 0.70.0
+  resolution: "@plentymarkets/shop-api@npm:0.70.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.70.0%2F2f278cfc772ef9d0af21e270e2c68bc0e0edb6c0"
   dependencies:
     "@vue-storefront/middleware": ^3.10.0
     axios: ^1.7.7
     consola: ^3.2.3
-  checksum: fa5e4a0156d84365069dead6138c838cfca5fbcce9b4b0b45b627610883445653b645469352d4b8a8728062f525e543922d35dbfb1e90634e5e59584179cf8ec
+  checksum: 54a045a55a17183a4addf2ebc6a7e668947bcd205c5500826ec478da0ed23e740c64df991923c716cc5c14d13252f3e1696936b262c187a48319e8246936f8cd
   languageName: node
   linkType: hard
 
@@ -5767,24 +5767,26 @@ __metadata:
   linkType: hard
 
 "@vee-validate/nuxt@npm:^4.13.2":
-  version: 4.13.2
-  resolution: "@vee-validate/nuxt@npm:4.13.2"
+  version: 4.14.6
+  resolution: "@vee-validate/nuxt@npm:4.14.6"
   dependencies:
-    "@nuxt/kit": ^3.8.2
+    "@nuxt/kit": ^3.13.2
     local-pkg: ^0.5.0
-    vee-validate: 4.13.2
-  checksum: 7d9543cb53bc3fb3f403a836f3cadadd1abeaf34347c268300ad27d1b092e9b744130aea5ee40d6cce69434135c6c141a7bab15d26ea5f2106a645a59092a9d4
+    vee-validate: 4.14.6
+  checksum: 76bea61986b1ef48b4e2d8569e7c4cd718902ce93f9b446ca809b62657a85c9d5af855de8eec7cd4867dba1710f843acee0f5eb19195b3e430e1fe0176ca779e
   languageName: node
   linkType: hard
 
 "@vee-validate/yup@npm:^4.13.2":
-  version: 4.13.2
-  resolution: "@vee-validate/yup@npm:4.13.2"
+  version: 4.14.6
+  resolution: "@vee-validate/yup@npm:4.14.6"
   dependencies:
     type-fest: ^4.8.3
-    vee-validate: 4.13.2
+    vee-validate: 4.14.6
     yup: ^1.3.2
-  checksum: 336785a77f33cd0ab3eecc9ee3e19ab83e10a1ad8173d240ca88ecd49c6bb35d5b30aba77c036d338aba817c29802a6323e389e52b2e31d27063a94b481fb0dc
+  peerDependencies:
+    yup: ^1.3.2
+  checksum: f51618cd8a31c38b04729c6984913757eda84b5bce73414ad5e46593bde85e7261553a5452fc83ce607871f9848fbbc309a33938ef614d6da5137732e911b2f4
   languageName: node
   linkType: hard
 
@@ -6229,7 +6231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.6.1, @vue/devtools-api@npm:^6.6.3, @vue/devtools-api@npm:^6.6.4":
+"@vue/devtools-api@npm:^6.5.0, @vue/devtools-api@npm:^6.6.3, @vue/devtools-api@npm:^6.6.4":
   version: 6.6.4
   resolution: "@vue/devtools-api@npm:6.6.4"
   checksum: beccd79c7c7794ea511e35581fbbe5411d3c5d63b2418bc3771efc66959966df4cbfc391ff5954028e2728eb0f0e37b41722e1c39fde61295f2814a143d2ef0e
@@ -6242,6 +6244,15 @@ __metadata:
   dependencies:
     "@vue/devtools-kit": ^7.3.4
   checksum: 5b1cb61809c16a009904b9f52255e6236923aa18fd50b4e765723854b4e25c973e09c9c061c11db71765a40ca5e25906394362e0fda45372d10ee3b4bf11fa42
+  languageName: node
+  linkType: hard
+
+"@vue/devtools-api@npm:^7.5.2":
+  version: 7.6.1
+  resolution: "@vue/devtools-api@npm:7.6.1"
+  dependencies:
+    "@vue/devtools-kit": ^7.6.1
+  checksum: efc84e4810d5ad00752048a8958ae51bd639a0699aa5273ff1fab7ff4682091ba949f23d3fb406721af1a054da63cb2c1af54684c3eacdd0f9a82098f73c76be
   languageName: node
   linkType: hard
 
@@ -6291,12 +6302,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vue/devtools-kit@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@vue/devtools-kit@npm:7.6.1"
+  dependencies:
+    "@vue/devtools-shared": ^7.6.1
+    birpc: ^0.2.19
+    hookable: ^5.5.3
+    mitt: ^3.0.1
+    perfect-debounce: ^1.0.0
+    speakingurl: ^14.0.1
+    superjson: ^2.2.1
+  checksum: 67c466f3c3b88aefc0dc24ce0fb24a61b4f25c7751d21e892bc43e42169a49228a03563acd1365aa49097a78757542d2f865f9c2253a795e0ef70cc6f7458726
+  languageName: node
+  linkType: hard
+
 "@vue/devtools-shared@npm:^7.4.4, @vue/devtools-shared@npm:^7.4.5":
   version: 7.4.5
   resolution: "@vue/devtools-shared@npm:7.4.5"
   dependencies:
     rfdc: ^1.4.1
   checksum: 7d7e14c566009f7710b8bbc222646d9eda77014c0be99f9353ef45e2bb75e73f7f2deddc6b4ef83a5f96a54a1ae49133ca1b78e114161e0e4f2c59f1805e694c
+  languageName: node
+  linkType: hard
+
+"@vue/devtools-shared@npm:^7.6.1":
+  version: 7.6.1
+  resolution: "@vue/devtools-shared@npm:7.6.1"
+  dependencies:
+    rfdc: ^1.4.1
+  checksum: 4c1ed94374b82227d78469d49c7eee91fa05359d73d3f6ce6d1663a71c8dd5df75b31e6c1017e4a32ddc829556b14f2eb00bfcaf84412bfa9777a70d91bb5cef
   languageName: node
   linkType: hard
 
@@ -7787,6 +7822,13 @@ __metadata:
   version: 0.2.17
   resolution: "birpc@npm:0.2.17"
   checksum: 300fa92714bd62c91070669e9f0389252891c6cf774c1a68fb557736c94a432d8a31e85069bce414f445369518391b1bd83757e27a5e34691089988981ebf2d6
+  languageName: node
+  linkType: hard
+
+"birpc@npm:^0.2.19":
+  version: 0.2.19
+  resolution: "birpc@npm:0.2.19"
+  checksum: aeb18f375def3168148482f7afff0ec48e9ced52ffc932a7fa64d39a51974c5e44e230063237b2ae674c5d19e5e747faca6cb4fecb8b67155d6487ca63fbd2a8
   languageName: node
   linkType: hard
 
@@ -20497,15 +20539,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vee-validate@npm:4.13.2":
-  version: 4.13.2
-  resolution: "vee-validate@npm:4.13.2"
+"vee-validate@npm:4.14.6":
+  version: 4.14.6
+  resolution: "vee-validate@npm:4.14.6"
   dependencies:
-    "@vue/devtools-api": ^6.6.1
+    "@vue/devtools-api": ^7.5.2
     type-fest: ^4.8.3
   peerDependencies:
     vue: ^3.4.26
-  checksum: f484e528c8b8b7d07a0412bf02183197e96c8273821327877c8c3de7d70e43bcabe3e4fc2d6a1dad311cf8cd08456d83821f12f40da16aa4843002e5d77c3f9b
+  checksum: db8fc36015223c7141bb844b3b066fb3269361a03f387157fad0397ca9564cdce78a6eb0790f95a319cd2bfdce48524f7c8c3a7c247f170581ee47ea87748e1f
   languageName: node
   linkType: hard
 
