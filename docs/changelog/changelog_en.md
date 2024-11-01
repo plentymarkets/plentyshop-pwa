@@ -29,6 +29,7 @@
 - Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
 - Headlines now use the configured font.
 - Fixed layout shift on category page.
+- The build script failed on Windows because of incompatibilities between file name pattern and operating system. The file name pattern now works on Windows.
 
 ### 👷 Changed
 
