@@ -46,7 +46,6 @@
         </h3>
       </header>
       <AddressForm
-        :countries="activeShippingCountries"
         :saved-address="selectedAddress"
         :use-as-shipping-default="false"
         :type="type"
@@ -65,7 +64,6 @@ import { type AddressesListProps } from './types';
 const { type, editAddressText, addAddressText } = defineProps<AddressesListProps>();
 
 const { isOpen, open, close } = useDisclosure();
-const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const {
   data: addresses,
@@ -77,7 +75,7 @@ const {
   loading,
 } = useAddress(type);
 
-await getActiveShippingCountries();
+await useAggregatedCountries().fetchAggregatedCountries();
 await getAddresses();
 
 const selectedAddress = ref();
