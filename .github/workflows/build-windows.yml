@@ -1,30 +1,21 @@
-name: OS Build
+name: Windows Build
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
 
 jobs:
-  build:
-    strategy:
-      matrix:
-        # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [windows-latest]
-
-    runs-on: ${{ matrix.os }}
+  build:        
+    runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup node
-        if: matrix.os == 'windows-latest'
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.5'
 
@@ -32,7 +23,7 @@ jobs:
         run: corepack enable
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.5'
           cache: 'yarn'
@@ -43,37 +34,16 @@ jobs:
           yarn set version stable
           yarn set version 3.6.4
 
-      - name: Setup .yarnrc.yml
+      - name: Setup .yarnrc.yml (All OS)
         run: |
           yarn config set nodeLinker node-modules
           yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
           yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-      
-      - name: Setup .yarnrc.yml (Linux & MacOS)
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-        run: yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+          yarn config set npmScopes.plentymarkets.npmAuthToken $env:NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Setup .yarnrc.yml (Windows)
-        if: matrix.os == 'windows-latest'
-        run: yarn config set npmScopes.plentymarkets.npmAuthToken $env:NODE_AUTH_TOKEN
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set environment (Linux & MacOS)
-        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
-        run: |
-          touch apps/web/.env
-          cat <<EOT >> apps/web/.env
-          API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
-          DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1
-          ${{ vars.CONFIG }}
-          EOT
 
       - name: Set environment (Windows)
-        if: matrix.os == 'windows-latest'
         run: |
           New-Item -ItemType File -Path apps/web/.env -Force
           Add-Content -Path apps/web/.env -Value "API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}"
