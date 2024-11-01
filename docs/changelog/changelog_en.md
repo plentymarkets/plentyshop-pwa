@@ -18,6 +18,7 @@
 - Implement new notification design
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
+- Display product titles without global suffix when available, maintaining backward compatibility.
 
 ### 🩹 Fixed
 

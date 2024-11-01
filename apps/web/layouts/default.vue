@@ -24,7 +24,6 @@
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
 defineProps<DefaultLayoutProps>();
-usePageTitle();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
