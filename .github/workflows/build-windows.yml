@@ -1,0 +1,60 @@
+name: Windows Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:        
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # When using Corepack and yarn on Windows, it's necessary to set up the node version twice. Otherwise the version doesn't match the engine specified in package.json.
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.5'
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.5'
+          cache: 'yarn'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Set yarn version
+        run: |
+          yarn set version stable
+          yarn set version 3.6.4
+
+      - name: Setup .yarnrc.yml
+        run: |
+          yarn config set nodeLinker node-modules
+          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
+          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+          yarn config set npmScopes.plentymarkets.npmAuthToken $env:NODE_AUTH_TOKEN
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set environment
+        run: |
+          New-Item -ItemType File -Path apps/web/.env -Force
+          Add-Content -Path apps/web/.env -Value "API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}"
+          Add-Content -Path apps/web/.env -Value "API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com"
+          Add-Content -Path apps/web/.env -Value "DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1"
+        shell: pwsh
+
+      - name: Install dependencies
+        run: yarn --immutable
+
+      - name: Build app
+        run: |
+          yarn build
