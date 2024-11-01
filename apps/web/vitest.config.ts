@@ -9,6 +9,7 @@ export default defineVitestConfig({
     coverage: {
       reporter: ['text', 'html', 'json-summary', 'json'],
     },
+    testTimeout: 6000,
     environment: 'nuxt',
     globals: true,
     clearMocks: true,

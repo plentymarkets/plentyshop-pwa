@@ -110,6 +110,7 @@ import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
+  middleware: ['reject-empty-checkout'],
 });
 
 const { send } = useNotification();
@@ -120,7 +121,7 @@ const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
-  getCart,
+  cartIsEmpty,
   clearCartItems,
   cartLoading,
   anyAddressFormIsOpen,
@@ -154,18 +155,15 @@ onNuxtReady(async () => {
     .catch((error) => useHandleError(error));
 });
 
-await getCart().then(
-  async () =>
-    await Promise.all([
-      useCartShippingMethods().getShippingMethods(),
-      usePaymentMethods().fetchPaymentMethods(),
-      useAggregatedCountries().fetchAggregatedCountries(),
-    ]),
-);
+await Promise.all([
+  useCartShippingMethods().getShippingMethods(),
+  usePaymentMethods().fetchPaymentMethods(),
+  useAggregatedCountries().fetchAggregatedCountries(),
+]);
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-
+const processingOrder = ref(false);
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -214,10 +212,15 @@ const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
 const order = async () => {
   if (!readyToBuy()) return;
 
+  processingOrder.value = true;
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
     ? (paypalCardDialog.value = true)
     : await handleRegularOrder();
 };
+
+watch(cartIsEmpty, async () => {
+  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+});
 </script>
