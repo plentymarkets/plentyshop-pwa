@@ -61,7 +61,8 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set environment
+      - name: Set environment (Linux & MacOS)
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'macos-latest'
         run: |
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
@@ -70,6 +71,16 @@ jobs:
           DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1
           ${{ vars.CONFIG }}
           EOT
+
+      - name: Set environment (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          New-Item -ItemType File -Path apps/web/.env -Force
+          Add-Content -Path apps/web/.env -Value "API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}"
+          Add-Content -Path apps/web/.env -Value "API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com"
+          Add-Content -Path apps/web/.env -Value "DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1"
+          Add-Content -Path apps/web/.env -Value "${{ vars.CONFIG }}"
+        shell: pwsh
 
       - name: Install dependencies
         run: yarn --immutable
