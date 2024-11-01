@@ -34,7 +34,7 @@ jobs:
           yarn set version stable
           yarn set version 3.6.4
 
-      - name: Setup .yarnrc.yml (All OS)
+      - name: Setup .yarnrc.yml
         run: |
           yarn config set nodeLinker node-modules
           yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
@@ -43,7 +43,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set environment (Windows)
+      - name: Set environment
         run: |
           New-Item -ItemType File -Path apps/web/.env -Force
           Add-Content -Path apps/web/.env -Value "API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}"
