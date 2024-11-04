@@ -3,20 +3,19 @@ import { HeroContentProps, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import { useCategoryTree, useCategoryTemplate } from '~/composables';
 import homepageTemplateData from './homepageTemplateData.json';
-// import { UseHomepageData, UseHomepageDataState } from '~/composables/useHomepageData/types';
 
 const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
   return imageSizes[sizeKey] || '';
 };
-export const useHomepageData: UseHomepageData = () => {
-  const state = useState<UseHomepageData>('UseHomepageData');
-  state.data = [];
-  state.loading = false;
-  state.showErrors = false;
+// export const useHomepageData: UseHomepageData = () => {
+//   const state = useState<UseHomepageData>('UseHomepageData');
+//   state.data = [];
+//   state.loading = false;
+//   state.showErrors = false;
 
-}
+// }
 
-const useHomepageData = async () => {
+export const useHomepageData = async () => {
   const viewport = useViewport();
   const { data: categoryTree } = useCategoryTree();
   const recommendedProductsCategoryId = ref('');

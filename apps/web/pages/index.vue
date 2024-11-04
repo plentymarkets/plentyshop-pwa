@@ -16,6 +16,11 @@
       </div>
     </NuxtLazyHydrate>
 
+    <div>
+      <h1>Content</h1>
+      {{ fieldData }}
+    </div>
+
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <section class="mb-10 overflow-hidden">
@@ -36,6 +41,8 @@
 const isEditing = useEditor();
 
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
+
+const { fieldData } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
