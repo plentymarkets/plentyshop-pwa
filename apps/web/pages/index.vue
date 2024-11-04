@@ -1,5 +1,5 @@
 <template>
-  <Editor v-if="isEditing" />
+  <Editor v-if="isEditing" :hero-item-props="formattedHeroItems" :media-data-props="mediaData" />
   <div v-else class="content">
     <UiHeroCarousel :hero-item-props="formattedHeroItems" />
 
@@ -40,4 +40,5 @@ const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await u
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
+
 </script>

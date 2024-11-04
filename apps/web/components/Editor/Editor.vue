@@ -30,14 +30,18 @@
 </template>
 
 <script setup lang="ts">
-import { heroData } from './heroData';
-import { mediaData } from './mediaData';
+import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
+import { MediaItemProps } from '~/components/ui/MediaCard/types';
 
+const props = defineProps<{
+  heroItemProps: Array<HeroContentProps>;
+  mediaDataProps: Array<MediaItemProps>;
+}>();
 const initialJson = JSON.stringify(
   {
     id: 22,
-    hero: heroData,
-    valueProposition: mediaData,
+    hero: props.heroItemProps,
+    valueProposition: props.mediaDataProps,
     featured: [
       {
         headline: '',

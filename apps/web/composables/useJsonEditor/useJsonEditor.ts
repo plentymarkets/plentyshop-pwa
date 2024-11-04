@@ -5,6 +5,7 @@ export const useJsonEditor = (initialJson: string) => {
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
   const jsonText = ref(initialJson);
+  const { heroItemProps, mediaDataProps, updateHeroItems, updateMediaData } = useHomepageEditorData();
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -29,6 +30,10 @@ export const useJsonEditor = (initialJson: string) => {
   };
 
   const handleInput = () => {
+    const parsedData = JSON.parse(jsonText.value);
+    console.log("input", parsedData.hero);
+    updateHeroItems(parsedData.hero);
+    updateMediaData(parsedData.media);
     validateJson();
     updateLineCount();
   };

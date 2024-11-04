@@ -43,4 +43,5 @@ defineProps<{
   heroItemProps: HeroContentProps;
   currentSizeKey: SizeKey;
 }>();
+
 </script>
