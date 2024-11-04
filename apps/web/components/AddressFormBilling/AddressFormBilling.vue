@@ -139,6 +139,8 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
+const { isGuest } = useCustomer();
+const { shippingAsBilling } = useShippingAsBilling();
 const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
@@ -150,6 +152,7 @@ const {
 } = useAggregatedCountries();
 
 const countries = computed(() => (useGeoRegulatedCountries ? geoRegulatedCountries.value : defaultCountries.value));
+const guestHasShippingAsBilling = isGuest.value && shippingAsBilling.value;
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -171,8 +174,10 @@ if (!addAddress) {
 }
 
 const syncCheckoutAddress = async () => {
+  if (guestHasShippingAsBilling) shippingAsBilling.value = false;
+
   await setCheckoutAddress(
-    addAddress
+    addAddress || guestHasShippingAsBilling
       ? (billingAddresses.value[0] as Address)
       : (userAddressGetters.getDefault(billingAddresses.value) as Address),
     !addAddress,
@@ -182,6 +187,7 @@ const syncCheckoutAddress = async () => {
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
 
+  if (guestHasShippingAsBilling && !addAddress) delete addressToSave.value?.id;
   if (addAddress) addressToSave.value.primary = true;
   if (!hasCompany.value) {
     addressToSave.value.companyName = '';
