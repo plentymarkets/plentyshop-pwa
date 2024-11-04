@@ -65,6 +65,7 @@ const loginUser = async () => {
         await getSession();
       }
     }
+    window.location.reload();
   }
 };
 </script>
