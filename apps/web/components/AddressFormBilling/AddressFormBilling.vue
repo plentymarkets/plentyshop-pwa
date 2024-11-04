@@ -174,14 +174,14 @@ if (!addAddress) {
 }
 
 const syncCheckoutAddress = async () => {
-  if (guestHasShippingAsBilling) shippingAsBilling.value = false;
-
   await setCheckoutAddress(
     addAddress || guestHasShippingAsBilling
       ? (billingAddresses.value[0] as Address)
       : (userAddressGetters.getDefault(billingAddresses.value) as Address),
     !addAddress,
   );
+
+  if (guestHasShippingAsBilling) shippingAsBilling.value = false;
 };
 
 const submitForm = handleSubmit((billingAddressForm) => {

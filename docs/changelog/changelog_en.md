@@ -22,7 +22,7 @@
 
 ### 🩹 Fixed
 
-- Fixed an unhandled scenario where a guest user trying to edit a billing address while having the same shipping address.
+- Addressed an unhandled scenario in which a guest user attempts to modify their billing address while using the same address for shipping.
 - Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
 - Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
