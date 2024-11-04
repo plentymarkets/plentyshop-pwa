@@ -164,25 +164,25 @@ const checkPayPalPaymentsEligible = async () => {
   }
 };
 
+await Promise.all([
+  useCartShippingMethods().getShippingMethods(),
+  usePaymentMethods().fetchPaymentMethods(),
+  useAggregatedCountries().fetchAggregatedCountries(),
+]);
+
 onNuxtReady(async () => {
-  useFetchAddress(AddressType.Shipping)
+  await useFetchAddress(AddressType.Shipping)
     .fetchServer()
     .then(() => persistShippingAddress())
     .catch((error) => useHandleError(error));
 
-  useFetchAddress(AddressType.Billing)
+  await useFetchAddress(AddressType.Billing)
     .fetchServer()
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
 
   await checkPayPalPaymentsEligible();
 });
-
-await Promise.all([
-  useCartShippingMethods().getShippingMethods(),
-  usePaymentMethods().fetchPaymentMethods(),
-  useAggregatedCountries().fetchAggregatedCountries(),
-]);
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
