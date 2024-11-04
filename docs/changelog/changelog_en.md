@@ -9,6 +9,7 @@
 - Fluid logo container + max-width and max-height addaptation
 - Fix cls mobile
 - Edit mode toolbar + Json editor Front End
+- Reload page after login so the customer class affects prices and categories
 
 ### New
 
