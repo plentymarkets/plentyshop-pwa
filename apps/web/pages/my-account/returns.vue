@@ -115,6 +115,7 @@ import { useDisclosure, SfLoaderCircular } from '@storefront-ui/vue';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 
 const { data, fetchCustomerReturns, loading } = useCustomerReturns();

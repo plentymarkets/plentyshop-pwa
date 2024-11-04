@@ -17,7 +17,6 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 const { isAuthorized } = useCustomer();
-const localePath = useLocalePath();
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);
@@ -25,29 +24,16 @@ setVsfLocale(locale.value);
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
-const authOnlyRoutes = new Set([
-  localePath(paths.accountPersonalData),
-  localePath(paths.accountBillingDetails),
-  localePath(paths.accountShippingDetails),
-  localePath(paths.accountMyOrders),
-  localePath(paths.accountMyWishlist),
-  localePath(paths.accountReturns),
-  localePath(paths.accountNewReturn),
-]);
-
-const watchAuthRoutes = (authenticated: boolean) => {
-  if (authOnlyRoutes.has(localePath(route.path)) && !authenticated) navigateTo(localePath(paths.home));
-};
 
 onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
-  watchAuthRoutes(isAuthorized.value);
 });
 
-watch(
+// can be removed once we reload the page after login
+/* watch(
   () => isAuthorized.value,
   (authenticated: boolean) => watchAuthRoutes(authenticated),
-);
+); */
 
 watch(
   () => locale.value,
