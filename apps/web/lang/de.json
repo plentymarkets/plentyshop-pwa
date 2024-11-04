@@ -951,5 +951,15 @@
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
-  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
+  "editMode": {
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "stopEdit": "Abbrechen",
+    "formatJson": "Template formatieren",
+    "minifyJson": "Template minimieren",
+    "clearJson": "Template löschen",
+    "editJsonPlaceholder": "JSON-Template eingeben..."
+  }
 }

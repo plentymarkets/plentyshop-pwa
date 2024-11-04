@@ -8,6 +8,7 @@
 - Minified and purged swiper css files for speed optimization
 - Fluid logo container + max-width and max-height addaptation
 - Fix cls mobile
+- Edit mode toolbar + Json editor Front End
 
 ### New
 
@@ -18,6 +19,7 @@
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
 - Implement new payment methods: Google Pay and Apple Pay.
+- Display product titles without global suffix when available, maintaining backward compatibility.
 
 ### 🩹 Fixed
 
@@ -30,6 +32,7 @@
 - Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
 - Headlines now use the configured font.
 - Fixed layout shift on category page.
+- The build script failed on Windows because of incompatibilities between file name pattern and operating system. The file name pattern now works on Windows.
 
 ### 👷 Changed
 
