@@ -37,25 +37,11 @@ const props = defineProps<{
   heroItemProps: Array<HeroContentProps>;
   mediaDataProps: Array<MediaItemProps>;
 }>();
-const initialJson = JSON.stringify(
-  {
-    id: 22,
-    hero: props.heroItemProps,
-    valueProposition: props.mediaDataProps,
-    featured: [
-      {
-        headline: '',
-        categoryId: 1,
-      },
-      {
-        headline: '',
-        categoryId: 2,
-      },
-    ],
-  },
-  null,
-  2,
-);
+
+const initialJson = JSON.stringify({
+  hero: props.heroItemProps,
+  valueProposition: props.mediaDataProps,
+});
 
 const {
   jsonText,

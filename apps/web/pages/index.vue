@@ -35,10 +35,8 @@
 <script lang="ts" setup async>
 const isEditing = useEditor();
 
-import useHomepageData from '~/composables/useHomepageData/useHomepageData';
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
-
 </script>
