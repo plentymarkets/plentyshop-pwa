@@ -8,17 +8,22 @@
 - Minified and purged swiper css files for speed optimization
 - Fluid logo container + max-width and max-height addaptation
 - Newsletter email confirmation
+- Fix cls mobile
+- Edit mode toolbar + Json editor Front End
 
 ### New
 
+- Clicking "Buy" with an unsaved Address will now display a notification.
 - When an EU country is selected as the shipping country, all EU countries become available as billing options.
 - Added a new request header for configId and added no cache to environment variables.
 - Implement new notification design
 - Adding the ability to have alt text for images.
 - It's now possible to change the font color of the hero banner via a template property.
+- Display product titles without global suffix when available, maintaining backward compatibility.
 
 ### 🩹 Fixed
 
+- Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
 - Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
 - Fixed an accessibility issue where the font size was too small.
 - Fixed an issue where product path was not reactive when category was changed.
@@ -27,6 +32,7 @@
 - Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
 - Headlines now use the configured font.
 - Fixed layout shift on category page.
+- The build script failed on Windows because of incompatibilities between file name pattern and operating system. The file name pattern now works on Windows.
 
 ### 👷 Changed
 
@@ -35,6 +41,9 @@
 - Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
 - Manufacturer visual improvments
 - Changed manufacturer translation text.
+- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
+- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
+- Increased default notification timeout from 3 to 5 seconds.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -359,6 +368,7 @@
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
+- Refactored index.vue
 
 ## New Contributors
 

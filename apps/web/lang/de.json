@@ -1,4 +1,12 @@
 {
+  "orderConfirmationPaymentStatus": {
+    "unpaid": "Nicht bezahlt",
+    "fullyPaid": "Bezahlt",
+    "overpaid": "Überzahlt",
+    "partlyPaid": "Teilweise bezahlt",
+    "prepaid": "Im Voraus bezahlt",
+    "unknown": "Fehler beim abrufen des Zahlungsstatus"
+  },
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
@@ -418,6 +426,7 @@
   "editAddress": "Adresse bearbeiten",
   "email": "E-Mail",
   "emptyCart": "Ihr Warenkorb ist leer",
+  "emptyCartNotification": "Sie haben keine Artikel in Ihrem Warenkorb",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
@@ -837,6 +846,7 @@
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "unsavedAddress": "Die eingegebene Adresse wurde noch nicht gespeichert.",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
   "shipping": {
@@ -883,7 +893,8 @@
       "validationFailed": "Die Adresse ist ungültig."
     },
     "cart": {
-      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden."
+      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
+      "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
@@ -943,5 +954,15 @@
   "emailConfirmation": {
     "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
     "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
+  },
+  "editMode": {
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "stopEdit": "Abbrechen",
+    "formatJson": "Template formatieren",
+    "minifyJson": "Template minimieren",
+    "clearJson": "Template löschen",
+    "editJsonPlaceholder": "JSON-Template eingeben..."
   }
 }

@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { HeroItem } from './types';
+import { HeroContentProps } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Pagination } from 'swiper/modules';
 const { handleArrows, onSlideChange } = useCarousel();
@@ -25,7 +25,7 @@ import '@/assets/libraries/swiper/navigation.min.css';
 import '@/assets/libraries/swiper/pagination.min.css';
 
 const { heroItemProps } = defineProps<{
-  heroItemProps: HeroItem[];
+  heroItemProps: HeroContentProps[];
 }>();
 
 const enableModules = computed(() => heroItemProps.length > 1);

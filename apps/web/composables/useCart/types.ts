@@ -33,6 +33,7 @@ export interface UseCart {
   setCart: SetCart;
   clearCartItems: ClearCartItems;
   lastUpdatedCartItem: Readonly<Ref<UseCartState['lastUpdatedCartItem']>>;
+  cartIsEmpty: ComputedRef<boolean>;
 }
 
 export type UseCartReturn = () => UseCart;
