@@ -16,7 +16,6 @@ const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
-const { isAuthorized } = useCustomer();
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);
