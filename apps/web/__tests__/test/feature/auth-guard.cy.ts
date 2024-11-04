@@ -55,13 +55,10 @@ describe('Auth Guard', () => {
         const myAccount = new MyAccountPageObject();
 
         cy.intercept('/plentysystems/doLogin').as('doLogin');
-        cy.intercept('/plentysystems/getSession').as('getSession');
         cy.visitAndHydrate(paths.authLogin);
         myAccount.successLogin();
 
         cy.wait('@doLogin');
-        cy.wait('@getSession');
-        cy.wait(1000);
         
         guardedRoutes.forEach(route => {
             cy.visitAndHydrate(route);
