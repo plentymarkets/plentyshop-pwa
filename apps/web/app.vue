@@ -24,7 +24,6 @@ setVsfLocale(locale.value);
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
-
 onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
