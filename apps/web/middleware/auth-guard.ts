@@ -9,11 +9,7 @@
 export default defineNuxtRouteMiddleware(async () => {
   const { isAuthorized, getSession } = useCustomer();
   const localePath = useLocalePath();
-
-  // if the user is or was authorized once we don't need to load the login state
-  // if the user is not authorized following rest calls will fail or wont return any data
-  if (isAuthorized.value) return;
-
+  
   await getSession();
 
   if (!isAuthorized.value) {
