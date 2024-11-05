@@ -1,4 +1,12 @@
 {
+  "orderConfirmationPaymentStatus": {
+    "unpaid": "Nicht bezahlt",
+    "fullyPaid": "Bezahlt",
+    "overpaid": "Überzahlt",
+    "partlyPaid": "Teilweise bezahlt",
+    "prepaid": "Im Voraus bezahlt",
+    "unknown": "Fehler beim abrufen des Zahlungsstatus"
+  },
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
@@ -418,6 +426,7 @@
   "editAddress": "Adresse bearbeiten",
   "email": "E-Mail",
   "emptyCart": "Ihr Warenkorb ist leer",
+  "emptyCartNotification": "Sie haben keine Artikel in Ihrem Warenkorb",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "emptyStateAltText": "Bild, das beschreibt, dass keine Produkte gefunden wurden",
   "emptyStateText": "Wir haben keine Produkte mehr in dieser Kategorie.",
@@ -646,7 +655,7 @@
   "manufacturer": {
     "euResponsibleTabName": "EU Verantwortliche Person",
     "header": "Angaben zum Hersteller",
-    "logoAlt": "Hersteller Logo",
+    "logoAlt": "Herstellerlogo",
     "manufacturerTabName": "Hersteller",
     "noInformation": "Es sind keine Informationen zum Hersteller verfügbar.",
     "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
@@ -837,6 +846,7 @@
   "saveAddress": "Adresse speichern",
   "savedBillingAddress": "Gespeicherte Rechnungsadressen",
   "savedShippingAddress": "Gespeicherte Lieferadressen",
+  "unsavedAddress": "Die eingegebene Adresse wurde noch nicht gespeichert.",
   "scrollTop": "Nach oben scrollen",
   "search": "Suche",
   "shipping": {
@@ -883,7 +893,8 @@
       "validationFailed": "Die Adresse ist ungültig."
     },
     "cart": {
-      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden."
+      "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
+      "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },
     "contact": {
       "emailAlreadyExists": "Die E-Mail Adresse existiert bereits.",
@@ -897,7 +908,7 @@
       "applyFailed": "Der Coupon konnte nicht eingelöst werden."
     },
     "login": {
-      "failed": "Zugangsdaten ungültig",
+      "loginFailed": "Zugangsdaten ungültig",
       "userIsBlocked": "Nutzer ist gesperrt"
     },
     "newsletter": {
@@ -939,5 +950,15 @@
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
-  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
+  "editMode": {
+    "save": "Speichern",
+    "edit": "Bearbeiten",
+    "publish": "Veröffentlichen",
+    "stopEdit": "Abbrechen",
+    "formatJson": "Template formatieren",
+    "minifyJson": "Template minimieren",
+    "clearJson": "Template löschen",
+    "editJsonPlaceholder": "JSON-Template eingeben..."
+  }
 }

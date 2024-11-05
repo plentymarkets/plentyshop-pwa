@@ -123,8 +123,8 @@ const {
 const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
 const { addToCart } = useCart();
-const { send } = useNotification();
 const { price, crossedPrice } = useProductPrice(product);
+const { send } = useNotification();
 const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
@@ -144,7 +144,7 @@ const getHeight = () => {
   return '';
 };
 
-const addWithLoader = async (productId: number) => {
+const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
 
   try {
@@ -152,9 +152,11 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-
-    openQuickCheckout(product, 1);
-    send({ message: t('addedToCart'), type: 'positive' });
+    if (quickCheckout) {
+      openQuickCheckout(product, 1);
+    } else {
+      send({ message: t('addedToCart'), type: 'positive' });
+    }
   } finally {
     loading.value = false;
   }
