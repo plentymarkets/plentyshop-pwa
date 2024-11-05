@@ -1,11 +1,14 @@
+import { ref, watch, onMounted, nextTick } from 'vue';
+import { useState } from '#app';
+
 export const useJsonEditor = (initialJson: string) => {
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
-  const jsonText = ref(initialJson);
-  const { heroItemProps, mediaDataProps, updateHeroItems, updateMediaData } = useHomepageEditorData();
+  const jsonText = useState<string>('jsonText', () => initialJson);
+  const { updateHeroItems, updateMediaData } = useHomepageEditorData();
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -31,7 +34,6 @@ export const useJsonEditor = (initialJson: string) => {
 
   const handleInput = () => {
     const parsedData = JSON.parse(jsonText.value);
-    console.log("input", parsedData.hero);
     updateHeroItems(parsedData.hero);
     updateMediaData(parsedData.media);
     validateJson();

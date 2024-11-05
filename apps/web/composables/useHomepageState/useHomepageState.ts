@@ -1,4 +1,5 @@
 import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
+import { toRefs } from 'vue';
 
 export const useHomePageState: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>(`useHomepageState`, () => ({
@@ -7,16 +8,10 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     showErrors: false,
   }));
 
-
-  const fieldData = state.value.data;
-
-  const checkData = () => {
-    console.log(fieldData);
-  };
+  const fieldData = ref([]);
 
   return {
-    fieldData,
-    checkData,
     ...toRefs(state.value),
+    fieldData: fieldData,
   };
 };

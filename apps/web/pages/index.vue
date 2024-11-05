@@ -41,7 +41,6 @@
 const isEditing = useEditor();
 
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
-
 const { fieldData } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
