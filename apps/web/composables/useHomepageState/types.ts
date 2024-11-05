@@ -20,8 +20,14 @@ export interface UseHomepageMethods {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Readonly<Ref<boolean>>;
   showErrors: Readonly<Ref<boolean>>;
-  fieldData: Readonly<Ref<UseAddressMethodsState['data']>>;
+  fieldData: Readonly<Ref<never[]>>;
+  jsonText: Readonly<Ref<string>>;
+  jsonState: Readonly<
+    Ref<{
+      mediaData: ComputedRef<MediaItemProps[]>;
+      formattedHeroItems: ComputedRef<HeroContentProps[]>;
+    }>
+  >;
 }
-export type DoHomepageData = () => UseHomepageDataState;
 
 export type UseHomepageDataReturn = () => UseHomepageMethods;

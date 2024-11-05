@@ -1,12 +1,12 @@
 <template>
-  <Editor v-if="isEditing" :hero-item-props="formattedHeroItems" :media-data-props="mediaData" />
+  <Editor v-if="isEditing" :hero-item-props="jsonState.formattedHeroItems" :media-data-props="jsonState.mediaData" />
   <div v-else class="content">
-    <UiHeroCarousel :hero-item-props="formattedHeroItems" />
+    <UiHeroCarousel :hero-item-props="jsonState.formattedHeroItems" />
 
     <NuxtLazyHydrate when-visible>
       <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
-          v-for="(item, index) in mediaData"
+          v-for="(item, index) in jsonState.mediaData"
           :key="index"
           :image="item.image"
           :alt="item.alt"
@@ -18,7 +18,6 @@
 
     <div>
       <h1>Content</h1>
-      {{ fieldData }}
     </div>
 
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -40,8 +39,8 @@
 <script lang="ts" setup async>
 const isEditing = useEditor();
 
-const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
-const { fieldData } = useHomePageState();
+const { recommendedProductsCategoryId } = await useHomepageData();
+const { jsonState } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
