@@ -65,4 +65,18 @@ describe('Auth Guard', () => {
             cy.url().should('include', route);
         });
     });
+
+    it('should redirect back to protected page after successful login', () => {
+        const myAccount = new MyAccountPageObject();
+
+        cy.visit(paths.accountPersonalData);
+        cy.url().should('include', `${paths.authLogin}?redirect=${paths.accountPersonalData}`);
+
+        cy.intercept('/plentysystems/doLogin').as('doLogin');
+        myAccount.successLogin();
+
+        cy.wait('@doLogin');
+        cy.url().should('include', paths.accountPersonalData);
+    });
+
 });
