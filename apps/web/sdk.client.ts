@@ -13,12 +13,15 @@ const createHttpClient = () => {
     const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
     const noCache = runtimeConfig.public.noCache || useRoute().query?.noCache?.toString() || '';
     const configId = runtimeConfig.public.configId;
+    const pwaHashCookie = useCookie('pwa');
 
     client.interceptors.request.use((request) => {
       if (token.value) request.headers['x-csrf-token'] = token.value;
       if (referrerId) request.headers['referrerID'] = referrerId;
       if (noCache) request.headers['noCache'] = noCache;
       if (configId) request.headers['x-config-id'] = configId;
+      if (pwaHashCookie) request.headers['x-pwa-edit-hash'] = pwaHashCookie.value;
+
       if (import.meta.server) {
         request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
       }
