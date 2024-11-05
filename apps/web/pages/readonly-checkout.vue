@@ -50,12 +50,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, ApiError, Order, type PaymentMethod, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, ApiError, Order, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const ID_CHECKBOX = '#terms-checkbox';
 const { isAuthorized } = useCustomer();
-const { getSession } = useCustomer();
 const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
@@ -72,33 +71,7 @@ const route = useRoute();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
-const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { data: shippingAddresses, getAddresses: getShippingAddresses, saveAddress } = useAddress(AddressType.Shipping);
 const { getActiveShippingCountries } = useActiveShippingCountries();
-
-// const loadAddresses = async () => {
-//   await getBillingAddresses();
-//   await getShippingAddresses();
-//
-//   if (shippingAddresses.value.length === 0) {
-//     billingAddresses.value.length > 0
-//       ? await saveShippingAddress(billingAddresses.value[0])
-//       : navigateTo(localePath(paths.cart));
-//   }
-//
-//   await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
-//   await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
-//   await getShippingMethods();
-// };
-//
-// await getSession();
-// if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
-// await loadAddresses();
-// await getShippingMethods();
-// await fetchPaymentMethods();
-// await savePaymentMethod(
-//   paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id ?? 0,
-// );
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
@@ -148,7 +121,7 @@ const handleGuestUserInit = async () => {
     await getShippingAddresses();
     await getBillingAddresses();
 
-    if (billingAddresses.value.length === 0) navigateTo(localePath(paths.cart));
+    if (billingAddresses.value.length === 0) await navigateTo(localePath(paths.cart));
     if (shippingAddresses.value.length === 0) await saveShippingAddress(billingAddresses.value[0], true);
 
     await setClientCheckoutAddress();
@@ -159,6 +132,8 @@ const handleGuestUserInit = async () => {
 };
 
 onNuxtReady(async () => {
+  // await getSession();
+  // if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
   isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });
 
@@ -188,7 +163,7 @@ const order = async () => {
     });
 
     clearCartItems();
-    if (data?.order?.id) navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+    if (data?.order?.id) await navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
   } catch (error) {
     useHandleError(error as ApiError);
   }
