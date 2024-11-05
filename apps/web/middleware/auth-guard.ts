@@ -6,13 +6,19 @@
  * If the user is not authorized, the user will be redirected to the login page.
  */
 
-export default defineNuxtRouteMiddleware(async () => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const { isAuthorized, getSession } = useCustomer();
   const localePath = useLocalePath();
-  
+
   await getSession();
 
   if (!isAuthorized.value) {
-    return navigateTo(localePath(paths.authLogin));
+    const targetUrl = to.fullPath;
+    return navigateTo({
+      path: localePath(paths.authLogin),
+      query: {
+        redirect: targetUrl,
+      },
+    });
   }
 });
