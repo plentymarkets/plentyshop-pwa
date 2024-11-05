@@ -7,16 +7,10 @@ import homepageTemplateData from './homepageTemplateData.json';
 const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
   return imageSizes[sizeKey] || '';
 };
-// export const useHomepageData: UseHomepageData = () => {
-//   const state = useState<UseHomepageData>('UseHomepageData');
-//   state.data = [];
-//   state.loading = false;
-//   state.showErrors = false;
-
-// }
 
 export const useHomepageData = async () => {
   const viewport = useViewport();
+  const { setFormattedHeroItems, setMediaData } = useHomePageState();
   const { data: categoryTree } = useCategoryTree();
   const recommendedProductsCategoryId = ref('');
 
@@ -49,7 +43,6 @@ export const useHomepageData = async () => {
       alt: media.alt,
     })),
   );
-
   const formattedHeroItems = computed<HeroContentProps[]>(() => {
     const currentSizeKey = getCurrentSizeKey();
     return homepageTemplate.value.hero.map((item) => {
@@ -70,6 +63,9 @@ export const useHomepageData = async () => {
       } as HeroContentProps;
     });
   });
+ console.log('formattedHeroItems', formattedHeroItems.value);
+  setFormattedHeroItems(formattedHeroItems.value);
+  setMediaData(mediaData.value);
 
   watch(
     () => categoryTree.value,

@@ -1,7 +1,7 @@
 <template>
-  <Editor v-if="isEditing" :hero-item-props="formattedHeroItems" :media-data-props="mediaData" />
+  <Editor v-if="isEditing" />
   <div v-else class="content">
-    <UiHeroCarousel :hero-item-props="formattedHeroItems" />
+    <UiHeroCarousel :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
       <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -15,12 +15,6 @@
         />
       </div>
     </NuxtLazyHydrate>
-
-    <div>
-      <h1>Content</h1>
-      {{ fieldData }}
-    </div>
-
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <section class="mb-10 overflow-hidden">
@@ -38,11 +32,13 @@
 </template>
 
 <script lang="ts" setup async>
+import { useHomePageState } from '~/composables/useHomepageState/useHomepageState';
+
 const isEditing = useEditor();
 
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
+const { hero } = useHomePageState();
 
-const { fieldData } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();

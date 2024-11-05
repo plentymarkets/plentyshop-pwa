@@ -3,6 +3,7 @@ export const useJsonEditor = (initialJson: string) => {
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
   const lineNumberContainer = ref<HTMLElement | null>(null);
+  const { setFormattedHeroItems, setMediaData, setHomepageTemplate } = useHomePageState();
 
   const jsonText = ref(initialJson);
   const { heroItemProps, mediaDataProps, updateHeroItems, updateMediaData } = useHomepageEditorData();
@@ -32,8 +33,8 @@ export const useJsonEditor = (initialJson: string) => {
   const handleInput = () => {
     const parsedData = JSON.parse(jsonText.value);
     console.log("input", parsedData.hero);
-    updateHeroItems(parsedData.hero);
-    updateMediaData(parsedData.media);
+    setFormattedHeroItems(parsedData.hero);
+    setMediaData(parsedData.media);
     validateJson();
     updateLineCount();
   };

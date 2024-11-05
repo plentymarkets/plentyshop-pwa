@@ -30,18 +30,28 @@
 </template>
 
 <script setup lang="ts">
-import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
+import { useHomePageState } from '~/composables/useHomepageState/useHomepageState';
 
-const props = defineProps<{
-  heroItemProps: Array<HeroContentProps>;
-  mediaDataProps: Array<MediaItemProps>;
-}>();
-
-const initialJson = JSON.stringify({
-  hero: props.heroItemProps,
-  valueProposition: props.mediaDataProps,
-});
+const { hero, mediaData } = useHomePageState();
+const initialJson = JSON.stringify(
+  {
+    id: 22,
+    hero: hero,
+    valueProposition: mediaData,
+    featured: [
+      {
+        headline: '',
+        categoryId: 1,
+      },
+      {
+        headline: '',
+        categoryId: 2,
+      },
+    ],
+  },
+  null,
+  2,
+);
 
 const {
   jsonText,

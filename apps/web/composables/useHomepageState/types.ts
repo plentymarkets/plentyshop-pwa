@@ -8,6 +8,8 @@ export interface HomeData {
 }
 
 export interface UseHomepageDataState {
+  mediaData: MediaItemProps[];
+  hero: HeroContentProps[];
   data: HomeData[];
   loading: boolean;
   showErrors: boolean;
@@ -20,7 +22,9 @@ export interface UseHomepageMethods {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Readonly<Ref<boolean>>;
   showErrors: Readonly<Ref<boolean>>;
-  fieldData: Readonly<Ref<UseAddressMethodsState['data']>>;
+  setHomepageTemplate: Readonly<Ref<HomeData[]>>;
+  setFormattedHeroItems: FormattedHeroItems;
+  setMediaData: MediaData;
 }
 export type DoHomepageData = () => UseHomepageDataState;
 

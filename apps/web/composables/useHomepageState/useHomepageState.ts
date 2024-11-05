@@ -1,22 +1,32 @@
-import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
+import { MediaItemProps } from '~/components/ui/MediaCard/types';
+import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 
-export const useHomePageState: UseHomepageDataReturn = () => {
-  const state = useState<UseHomepageDataState>(`useHomepageState`, () => ({
+export const useHomePageState = () => {
+  const state = useState<UseHomepageDataState>('useHomepageState', () => ({
     data: [] as HomeData[],
+    hero: [] as HeroContentProps[],
+    mediaData: [] as MediaItemProps[],
     loading: false,
     showErrors: false,
   }));
 
+  const setFormattedHeroItems = (items: HeroContentProps[]) => {
+    state.value.hero = items;
+    console.log('state.value.hero', state.value.hero);
+  };
 
-  const fieldData = state.value.data;
+  const setMediaData = (media: MediaItemProps[]) => {
+    state.value.mediaData = media;
+  };
 
-  const checkData = () => {
-    console.log(fieldData);
+  const setHomepageTemplate = (template: HomeData[]) => {
+    state.value.data = template;
   };
 
   return {
-    fieldData,
-    checkData,
     ...toRefs(state.value),
+    setFormattedHeroItems,
+    setMediaData,
+    setHomepageTemplate,
   };
 };
