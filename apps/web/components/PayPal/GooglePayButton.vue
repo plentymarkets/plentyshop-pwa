@@ -22,6 +22,7 @@ const {
   processPayment,
   getIsReadyToPayRequest,
 } = useGooglePay();
+const { t } = useI18n();
 const emits = defineEmits<{
   (event: 'button-clicked', callback: PayPalAddToCartCallback): Promise<void>;
 }>();
@@ -36,7 +37,7 @@ async function onGooglePaymentButtonClicked() {
           // eslint-disable-next-line promise/no-nesting
           processPayment(paymentData).catch((error: Error) => {
             useNotification().send({
-              message: error.message || 'An error occurred while processing the payment. Please try again.',
+              message: error.message || t('errorMessages.paymentFailed'),
               type: 'negative',
             });
             paymentLoading.value = false;
@@ -45,7 +46,7 @@ async function onGooglePaymentButtonClicked() {
         })
         .catch((error: Error) => {
           useNotification().send({
-            message: error.message || 'An error occurred while processing the payment. Please try again.',
+            message: error.message || t('errorMessages.paymentFailed'),
             type: 'negative',
           });
           paymentLoading.value = false;
