@@ -66,6 +66,7 @@ $color-2-secondary-900: 2 1 55;
         beforeEach(() => {
             vi.resetModules();
             process.env.FETCH_REMOTE_CONFIG = 'true';
+            process.env.API_URL = 'https://api.example.com'
             process.env.API_ENDPOINT = 'https://api.example.com';
             process.env.API_SECURITY_TOKEN = 'securetoken';
             process.env.CONFIG_ID = '1';
@@ -73,6 +74,7 @@ $color-2-secondary-900: 2 1 55;
         
         afterEach(() => {
             delete process.env.FETCH_REMOTE_CONFIG;
+            delete process.env.API_URL;
             delete process.env.API_ENDPOINT;
             delete process.env.API_SECURITY_TOKEN;
             delete process.env.CONFIG_ID;
@@ -109,6 +111,7 @@ $color-2-secondary-900: 2 1 55;
             
             const EXPECTED = 
 `FETCH_REMOTE_CONFIG=true
+API_URL=https://api.example.com
 API_ENDPOINT=https://api.example.com
 API_SECURITY_TOKEN=securetoken
 CONFIG_ID=1
