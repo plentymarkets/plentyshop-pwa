@@ -57,3 +57,4 @@ export * from './usePageTitle';
 export * from './useCategoryTemplate';
 export * from './useCheckout';
 export * from './useAddressForm';
+export * from './useProcessingOrder';
