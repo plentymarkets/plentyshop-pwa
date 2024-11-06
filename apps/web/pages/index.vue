@@ -35,7 +35,8 @@
 <script lang="ts" setup async>
 const isEditing = useEditor();
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
-definePageMeta({ pageType: 'static' });
+definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
+
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
 </script>
