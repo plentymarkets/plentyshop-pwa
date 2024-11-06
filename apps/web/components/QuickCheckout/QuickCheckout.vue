@@ -76,7 +76,7 @@
           class="w-full mb-3"
           variant="secondary"
         >
-          {{ $t('quickCheckout.checkYourCart') }}
+          {{ t('quickCheckout.checkYourCart') }}
         </UiButton>
 
         <UiButton
@@ -85,10 +85,10 @@
           size="lg"
           class="w-full mb-4 md:mb-0"
         >
-          {{ $t('goToCheckout') }}
+          {{ t('goToCheckout') }}
         </UiButton>
         <OrDivider class="my-4" v-if="isPayPalReady" />
-        <PayPalExpressButton class="w-full text-center" type="CartPreview" />
+        <PayPalExpressButton class="w-full text-center" type="CartPreview" @on-approved="isOpen = false" />
         <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
       </div>
     </div>
