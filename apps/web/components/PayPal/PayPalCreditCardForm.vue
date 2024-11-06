@@ -107,6 +107,7 @@ onMounted(() => {
         });
 
         if (order?.order?.id) {
+          useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
           navigateTo(

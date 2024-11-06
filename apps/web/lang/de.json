@@ -490,6 +490,9 @@
     "notificationsWarningOverselling": "Die gewählte Menge übersteigt den verfügbaren Warenbestand. :stock sind zur Zeit auf Lager; :oversellingAmount werden nachgeliefert."
   },
   "errorMessages": {
+    "checkout": {
+      "missingAddress": "Bitte geben Sie Ihre Adresse ein, um mit dem Bezahlvorgang fortzufahren."
+    },
     "contact": {
       "messageRequired": "Nachricht ist erforderlich.",
       "nameRequired": "Name ist erforderlich.",
