@@ -6,6 +6,9 @@
 
 - Newsletter email confirmation
 
+### 🩹 Fixed
+- Reload page after login so the customer class affects prices and categories
+
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
@@ -21,7 +24,6 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
-- Reload page after login so the customer class affects prices and categories
 
 ### 🩹 Fixed
 
