@@ -79,25 +79,15 @@ export const useGooglePay = () => {
   };
 
   const processPayment = async (paymentData: google.payments.api.PaymentData) => {
-    console.log('processPayment');
     if (!state.value.script) return;
-    console.log('processPayment 0-1');
     const localePath = useLocalePath();
-    console.log('processPayment 0-2');
     const { createCreditCardTransaction, getOrder, captureOrder, executeOrder } = usePayPal();
-    console.log('processPayment 0-3');
     const { data: cart, clearCartItems } = useCart();
-    console.log('processPayment 0-4');
     const { shippingPrivacyAgreement } = useAdditionalInformation();
-    console.log('processPayment 0-5');
     const { createOrder } = useMakeOrder();
-    console.log('processPayment 0-6');
     const { $i18n } = useNuxtApp();
-    console.log('processPayment 0-7');
 
     state.value.paymentLoading = true;
-
-    console.log('processPayment 1');
 
     const transaction = await createCreditCardTransaction();
     if (!transaction || !transaction.id) {
@@ -105,14 +95,10 @@ export const useGooglePay = () => {
       return;
     }
 
-    console.log('processPayment 2');
-
     let { status } = await state.value.script.confirmOrder({
       orderId: transaction.id,
       paymentMethodData: paymentData.paymentMethodData,
     });
-
-    console.log('processPayment 3');
 
     if (status === 'PAYER_ACTION_REQUIRED') {
       await state.value.script.initiatePayerAction({ orderId: transaction.id });
@@ -122,8 +108,6 @@ export const useGooglePay = () => {
       });
       status = paypalOrder?.result?.status || 'ERROR';
     }
-
-    console.log('processPayment 4');
 
     if (status === 'APPROVED') {
       await captureOrder({
