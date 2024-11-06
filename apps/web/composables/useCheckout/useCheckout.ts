@@ -63,12 +63,11 @@ export const useCheckout = (cacheKey = '') => {
     return false;
   };
 
-  const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+  const validateTerms = (): boolean => {
     const isValid = termsAccepted.value;
 
     setShowErrors(!isValid);
     if (!isValid) scrollToHTMLObject(ID_CHECKBOX);
-    callback?.(isValid);
 
     return isValid;
   };
