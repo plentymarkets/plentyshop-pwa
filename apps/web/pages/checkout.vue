@@ -66,6 +66,16 @@
             >
               {{ t('buy') }}
             </UiButton>
+            <PayPalApplePayButton
+              v-else-if="selectedPaymentId === paypalApplePayPaymentId"
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
+            <PayPalGooglePayButton
+              v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="validateTerms"
+            />
             <UiButton
               v-else
               type="submit"
@@ -78,11 +88,6 @@
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
-            <!-- <PayPalApplePayButton
-              v-if="applePayAvailable"
-              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
-              @button-clicked="validateTerms"
-            /> -->
           </OrderSummary>
         </div>
       </div>
@@ -103,7 +108,12 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import {
+  PayPalCreditCardPaymentKey,
+  PayPalPaymentKey,
+  PayPalGooglePayKey,
+  PayPalApplePayKey,
+} from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
@@ -143,17 +153,16 @@ const {
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
 
-onNuxtReady(async () => {
-  useFetchAddress(AddressType.Shipping)
-    .fetchServer()
-    .then(() => persistShippingAddress())
-    .catch((error) => useHandleError(error));
+const checkPayPalPaymentsEligible = async () => {
+  if (import.meta.client) {
+    const googlePayAvailable = await useGooglePay().checkIsEligible();
+    const applePayAvailable = await useApplePay().checkIsEligible();
 
-  useFetchAddress(AddressType.Billing)
-    .fetchServer()
-    .then(() => persistBillingAddress())
-    .catch((error) => useHandleError(error));
-});
+    if (googlePayAvailable || applePayAvailable) {
+      await usePaymentMethods().fetchPaymentMethods();
+    }
+  }
+};
 
 await Promise.all([
   useCartShippingMethods().getShippingMethods(),
@@ -161,9 +170,23 @@ await Promise.all([
   useAggregatedCountries().fetchAggregatedCountries(),
 ]);
 
+onNuxtReady(async () => {
+  await useFetchAddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress())
+    .catch((error) => useHandleError(error));
+
+  await useFetchAddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+
+  await checkPayPalPaymentsEligible();
+});
+
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-const processingOrder = ref(false);
+const { processingOrder } = useProcessingOrder();
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -174,7 +197,14 @@ const paypalCreditCardPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 
-// const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
+const paypalGooglePayPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
+});
+const paypalApplePayPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
+});
 
 const readyToBuy = () => {
   if (anyAddressFormIsOpen.value) {

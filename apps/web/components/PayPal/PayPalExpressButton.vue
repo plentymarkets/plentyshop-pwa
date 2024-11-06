@@ -72,6 +72,7 @@ const onApprove = async (data: OnApproveData) => {
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (props.type === TypeCheckout) {
+    useProcessingOrder().processingOrder.value = true;
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
