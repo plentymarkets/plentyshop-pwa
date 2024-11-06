@@ -33,6 +33,7 @@
 - Headlines now use the configured font.
 - Fixed layout shift on category page.
 - The build script failed on Windows because of incompatibilities between file name pattern and operating system. The file name pattern now works on Windows.
+- The build script now adds the `API_URL` to the environment if it exists.
 
 ### 👷 Changed
 
