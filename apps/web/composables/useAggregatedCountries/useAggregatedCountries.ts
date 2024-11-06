@@ -3,8 +3,9 @@ import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type Fe
 
 /**
  * @description Composable for getting `AggregatedCountries`:
- * - Active shipping countries
+ * - Default shipping countries
  * - EU geo-regulated countries
+ * - A combined list of countries
  *
  * @example
  * ``` ts
@@ -14,6 +15,7 @@ import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type Fe
  *  loading,
  *  fetchAggregatedCountries,
  *  useGeoRegulatedCountries,
+ *  billingCountries,
  * } = useAggregatedCountries();
  * ```
  */
