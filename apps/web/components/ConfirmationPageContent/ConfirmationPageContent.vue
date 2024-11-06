@@ -103,6 +103,7 @@ const { isAuthorized } = useCustomer();
 const { getActiveShippingCountries } = useActiveShippingCountries();
 const localePath = useLocalePath();
 const bankDetails = orderGetters.getOrderPaymentBankDetails(order);
+useProcessingOrder().processingOrder.value = false;
 
 await getActiveShippingCountries();
 </script>
