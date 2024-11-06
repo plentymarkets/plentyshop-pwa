@@ -31,8 +31,9 @@
 
 <script setup lang="ts">
 const { data } = useHomePageState();
+import { JsonData } from './types';
 
-const cleanJsonData = (data: any) => {
+const cleanJsonData = (data: JsonData): JsonData => {
   if (data._object) {
     data = data._object;
   }
@@ -62,5 +63,4 @@ const {
   purgeJson,
   clearText,
 } = useJsonEditor(initialJson);
-
 </script>

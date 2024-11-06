@@ -35,8 +35,8 @@ export const useJsonEditor = (initialJson: string) => {
       setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
-    } catch {
-      errorMessage.value = 'Invalid JSON:';
+    } catch (error: any) {
+      errorMessage.value = 'Invalid JSON:' + error.message;
     }
   };
 
