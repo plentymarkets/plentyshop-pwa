@@ -14,6 +14,7 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
+- Added Google Pay and Apple Pay as new payment methods.
 
 ### 🩹 Fixed
 
