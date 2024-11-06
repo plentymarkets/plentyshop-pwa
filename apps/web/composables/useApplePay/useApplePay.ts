@@ -110,6 +110,7 @@ export const useApplePay = () => {
               billingContact: event.payment.billingContact,
             });
           } catch (error) {
+            console.log(error);
             showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
             return;
           }
@@ -131,6 +132,7 @@ export const useApplePay = () => {
 
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
+          console.log(error);
           showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
           paymentSession.completePayment(ApplePaySession.STATUS_FAILURE);
         }
