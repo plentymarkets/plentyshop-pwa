@@ -491,7 +491,7 @@
   },
   "errorMessages": {
     "checkout": {
-      "missingAddress": "Please add your address to continue with the checkout."
+      "missingAddress": "Please provide your address to continue with the checkout."
     },
     "contact": {
       "messageRequired": "Message is required.",

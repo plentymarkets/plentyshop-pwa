@@ -141,6 +141,7 @@ const {
   hasBillingAddress,
   backToFormEditing,
   validateTerms,
+  scrollToShippingAddress,
 } = useCheckout();
 
 const {
@@ -214,6 +215,7 @@ const readyToBuy = () => {
 
   if (!hasShippingAddress.value || !hasBillingAddress.value) {
     send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    scrollToShippingAddress();
     return false;
   }
 

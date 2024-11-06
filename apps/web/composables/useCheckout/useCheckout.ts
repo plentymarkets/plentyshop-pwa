@@ -5,6 +5,10 @@ const ID_CHECKBOX = '#terms-checkbox';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 const ID_BILLING_ADDRESS = '#billing-address';
 
+const scrollToShippingAddress = () => {
+  scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+};
+
 export const useCheckout = (cacheKey = '') => {
   const state = useState('useCheckout' + cacheKey, () => ({
     combineShippingAndBilling: true,
@@ -114,5 +118,6 @@ export const useCheckout = (cacheKey = '') => {
     hasBillingAddress,
     backToFormEditing,
     validateTerms,
+    scrollToShippingAddress,
   };
 };
