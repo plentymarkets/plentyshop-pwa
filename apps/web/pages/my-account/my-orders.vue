@@ -172,6 +172,7 @@ const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 
 onMounted(() => setMaxVisiblePages(isDesktop.value));
