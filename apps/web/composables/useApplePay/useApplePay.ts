@@ -27,6 +27,7 @@ export const useApplePay = () => {
   }));
 
   const initialize = async () => {
+    console.log('initialize');
     const { data: cart } = useCart();
     const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
     const { getScript } = usePayPal();
@@ -41,11 +42,12 @@ export const useApplePay = () => {
 
     state.value.script = (script as any).Applepay() as ApplepayType;
     state.value.config = await state.value.script.config();
-
+    console.log('initialize done');
     return true;
   };
 
   const createPaymentRequest = () => {
+    console.log('createPaymentRequest');
     const { data: cart } = useCart();
     return {
       countryCode: state.value.config.countryCode,
@@ -63,6 +65,7 @@ export const useApplePay = () => {
   };
 
   const processPayment = () => {
+    console.log('processPayment');
     const { createOrder } = useMakeOrder();
     const { createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
     const { data: cart, clearCartItems } = useCart();
@@ -74,12 +77,16 @@ export const useApplePay = () => {
       const paymentRequest = createPaymentRequest();
       const paymentSession = new ApplePaySession(14, paymentRequest);
 
+      console.log('processPayment 1');
+
       paymentSession.onvalidatemerchant = async (event: ApplePayJS.ApplePayValidateMerchantEvent) => {
+        console.log('processPayment onvalidatemerchant');
         try {
           const validationData = await state.value.script.validateMerchant({
             validationUrl: event.validationURL,
           });
           paymentSession.completeMerchantValidation(validationData.merchantSession);
+          console.log('processPayment onvalidatemerchant validated');
         } catch (error) {
           console.error(error);
           paymentSession.abort();
@@ -87,13 +94,14 @@ export const useApplePay = () => {
       };
 
       paymentSession.onpaymentauthorized = async (event: ApplePayJS.ApplePayPaymentAuthorizedEvent) => {
+        console.log('processPayment onpaymentauthorized');
         try {
           const transaction = await createCreditCardTransaction();
           if (!transaction || !transaction.id) {
             showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
-
+          console.log('processPayment onpaymentauthorized 1');
           const order = await createOrder({
             paymentId: cart.value.methodOfPaymentId,
             shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
@@ -102,7 +110,7 @@ export const useApplePay = () => {
             showErrorNotification(t('storefrontError.order.createFailed'));
             return;
           }
-
+          console.log('processPayment onpaymentauthorized 2');
           try {
             await state.value.script.confirmOrder({
               orderId: transaction.id,
@@ -114,7 +122,7 @@ export const useApplePay = () => {
             showErrorNotification(error?.toString() ?? t('errorMessages.paymentFailed'));
             return;
           }
-
+          console.log('processPayment onpaymentauthorized 3');
           await captureOrder({
             paypalOrderId: transaction.id,
             paypalPayerId: transaction.payPalPayerId,
@@ -127,7 +135,7 @@ export const useApplePay = () => {
           });
 
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
-
+          console.log('processPayment onpaymentauthorized 4');
           clearCartItems();
 
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));

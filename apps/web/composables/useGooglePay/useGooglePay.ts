@@ -79,6 +79,7 @@ export const useGooglePay = () => {
   };
 
   const processPayment = async (paymentData: google.payments.api.PaymentData) => {
+    console.log('processPayment');
     if (!state.value.script) return;
     const localePath = useLocalePath();
     const { createCreditCardTransaction, getOrder, captureOrder, executeOrder } = usePayPal();
@@ -89,16 +90,22 @@ export const useGooglePay = () => {
 
     state.value.paymentLoading = true;
 
+    console.log('processPayment 1');
+
     const transaction = await createCreditCardTransaction();
     if (!transaction || !transaction.id) {
       showErrorNotification(t('storefrontError.order.createFailed'));
       return;
     }
 
+    console.log('processPayment 2');
+
     let { status } = await state.value.script.confirmOrder({
       orderId: transaction.id,
       paymentMethodData: paymentData.paymentMethodData,
     });
+
+    console.log('processPayment 3');
 
     if (status === 'PAYER_ACTION_REQUIRED') {
       await state.value.script.initiatePayerAction({ orderId: transaction.id });
@@ -108,6 +115,8 @@ export const useGooglePay = () => {
       });
       status = paypalOrder?.result?.status || 'ERROR';
     }
+
+    console.log('processPayment 4');
 
     if (status === 'APPROVED') {
       await captureOrder({
