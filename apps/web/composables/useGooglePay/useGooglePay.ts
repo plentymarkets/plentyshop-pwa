@@ -86,6 +86,7 @@ export const useGooglePay = () => {
     const { shippingPrivacyAgreement } = useAdditionalInformation();
     const { createOrder } = useMakeOrder();
     const { $i18n } = useNuxtApp();
+    const { processingOrder } = useProcessingOrder();
 
     state.value.paymentLoading = true;
 
@@ -131,6 +132,7 @@ export const useGooglePay = () => {
         paypalTransactionId: transaction.id,
       });
 
+      processingOrder.value = true;
       clearCartItems();
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
       state.value.paymentLoading = false;

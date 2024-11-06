@@ -63,6 +63,7 @@ export const useApplePay = () => {
   };
 
   const processPayment = () => {
+    const { processingOrder } = useProcessingOrder();
     const { createOrder } = useMakeOrder();
     const { createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
     const { data: cart, clearCartItems } = useCart();
@@ -80,7 +81,7 @@ export const useApplePay = () => {
             validationUrl: event.validationURL,
           });
           paymentSession.completeMerchantValidation(validationData.merchantSession);
-        } catch (error) {
+        } catch {
           paymentSession.abort();
         }
       };
@@ -124,6 +125,7 @@ export const useApplePay = () => {
             paypalTransactionId: transaction.id,
           });
 
+          processingOrder.value = true;
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
           clearCartItems();
 
