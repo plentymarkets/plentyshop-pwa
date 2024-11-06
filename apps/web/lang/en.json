@@ -490,6 +490,9 @@
     "notificationsWarningOverselling": "The selected quantity exceeds the available stock. :stock are currently in stock; :oversellingAmount will be supplied later."
   },
   "errorMessages": {
+    "checkout": {
+      "missingAddress": "Please add your address to continue with the checkout."
+    },
     "contact": {
       "messageRequired": "Message is required.",
       "nameRequired": "Name is required.",

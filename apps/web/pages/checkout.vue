@@ -212,7 +212,12 @@ const readyToBuy = () => {
     return backToFormEditing();
   }
 
-  return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
+  if (!hasShippingAddress.value || !hasBillingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    return false;
+  }
+
+  return validateTerms();
 };
 
 const openPayPalCardDialog = async () => {
