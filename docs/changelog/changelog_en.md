@@ -3,10 +3,10 @@
 ## v1.x.x (yyyy-mm-dd)
 
 ### 👷 Changed
+
 - Newsletter email confirmation
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
-
 
 ### New
 

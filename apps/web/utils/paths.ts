@@ -25,5 +25,4 @@ export const paths = {
   legalDisclosure: '/legal-disclosure',
   privacyPolicy: '/privacy-policy',
   cancellationForm: '/cancellation-form',
-  newsletterConfirmation: '/newsletter-confirmation',
 };
