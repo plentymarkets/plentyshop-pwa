@@ -4239,6 +4239,7 @@ __metadata:
     "@paypal/paypal-js": 8.1.0
     "@plentymarkets/shop-api": ^0.72.1
     "@types/applepayjs": ^14.0.8
+    "@types/googlepay": ^0.7.6
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.2
     "@vee-validate/yup": ^4.13.2
@@ -4973,6 +4974,13 @@ __metadata:
     "@types/jsonfile": "*"
     "@types/node": "*"
   checksum: 242cb84157631f057f76495c8220707541882c00a00195b603d937fb55e471afecebcb089bab50233ed3a59c69fd68bf65c1f69dd7fafe2347e139cc15b9b0e5
+  languageName: node
+  linkType: hard
+
+"@types/googlepay@npm:^0.7.6":
+  version: 0.7.6
+  resolution: "@types/googlepay@npm:0.7.6"
+  checksum: 6874d432fbf0badb9af24911d6c8fa446ed91e63267b83a281da3a79f591fd3bbe85656c03859adfd6de21f8d0355acdc515ba810515569ccdd40d1c4c40cdab
   languageName: node
   linkType: hard
 
