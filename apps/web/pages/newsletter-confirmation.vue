@@ -8,18 +8,17 @@
 </template>
 
 <script setup lang="ts">
-const { confirmEmail } = useNewsletter();
+const { confirmEmail } = useNewsletterConfirmation();
 const route = useRoute();
 definePageMeta({
   layout: 'default',
   pageType: 'static',
 });
 let emailConfirmed = false;
-const response = await confirmEmail({
-  newsletterEmailId: route.params.newsletterEmailId.toString(),
-  authString: route.params.authString.toString(),
-});
-if (response) {
-  emailConfirmed = true;
+if (route.query.newsletterEmailId && route.query.authString) {
+  const response = await confirmEmail(route.query.newsletterEmailId.toString(), route.query.authString.toString());
+  if (response && response.data) {
+    emailConfirmed = true;
+  }
 }
 </script>

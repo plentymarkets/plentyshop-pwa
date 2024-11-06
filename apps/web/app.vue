@@ -56,16 +56,4 @@ watch(
     await getCategoryTree();
   },
 );
-
-watch(
-  () => route.query,
-  (query) => {
-    if (query.ActionCall === 'WebActionConfirmNewsletter') {
-      // eslint-disable-next-line no-unused-vars
-      const { ActionCall, ...theRestQuery } = query;
-      navigateTo({ path: paths.emailConfirmation, query: theRestQuery });
-    }
-  },
-  { immediate: true },
-);
 </script>

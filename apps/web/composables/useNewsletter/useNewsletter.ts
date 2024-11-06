@@ -1,10 +1,5 @@
 import type { NewsletterParams } from '@plentymarkets/shop-api';
-import type {
-  UseNewsletterReturn,
-  UseNewsletterState,
-  Subscribe,
-  EmailConfirmationOptin,
-} from '~/composables/useNewsletter/types';
+import type { UseNewsletterReturn, UseNewsletterState, Subscribe } from '~/composables/useNewsletter/types';
 
 /**
  * @description Composable for subscribing/unsubscribing to newsletter.
@@ -44,18 +39,8 @@ export const useNewsletter: UseNewsletterReturn = () => {
     return !!data.value?.data;
   };
 
-  const confirmEmail: EmailConfirmationOptin = async (newsletterEmailId, authString) => {
-    const { data, error } = await useAsyncData(() =>
-      useSdk().plentysystems.doEmailConfirmation({
-        newsletterEmailId: newsletterEmailId,
-        authString: authString,
-      }),
-    );
-  };
-
   return {
     subscribe,
-    confirmEmail,
     ...toRefs(state.value),
   };
 };

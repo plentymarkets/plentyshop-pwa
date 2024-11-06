@@ -16,5 +16,3 @@ export interface UseNewsletter {
 }
 
 export type UseNewsletterReturn = () => UseNewsletter;
-
-export type EmailConfirmationOptin = (newsletterEmailId: string, authString: string) => Promise<void>;
