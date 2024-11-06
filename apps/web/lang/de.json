@@ -1,12 +1,4 @@
 {
-  "orderConfirmationPaymentStatus": {
-    "unpaid": "Nicht bezahlt",
-    "fullyPaid": "Bezahlt",
-    "overpaid": "Überzahlt",
-    "partlyPaid": "Teilweise bezahlt",
-    "prepaid": "Im Voraus bezahlt",
-    "unknown": "Fehler beim abrufen des Zahlungsstatus"
-  },
   "CookieBar": {
     "Accept All": "Alles akzeptieren",
     "Accept Selection": "Auswahl akzeptieren",
@@ -424,6 +416,16 @@
     "correctionDocuments": "Korrekturbeleg"
   },
   "editAddress": "Adresse bearbeiten",
+  "editMode": {
+    "clearJson": "Template löschen",
+    "edit": "Bearbeiten",
+    "editJsonPlaceholder": "JSON-Template eingeben...",
+    "formatJson": "Template formatieren",
+    "minifyJson": "Template minimieren",
+    "publish": "Veröffentlichen",
+    "save": "Speichern",
+    "stopEdit": "Abbrechen"
+  },
   "email": "E-Mail",
   "emptyCart": "Ihr Warenkorb ist leer",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
@@ -562,6 +564,9 @@
   "goToCheckout": "Zur Kasse",
   "goToHomepage": "Zur Startseite gehen",
   "goToPage": "Zur Seite navigieren {page}",
+  "googlePay": {
+    "paymentInProgress": "Zahlung in Bearbeitung..."
+  },
   "graduatedPrices": {
     "discount": "RABATT",
     "price": "PREIS",
@@ -710,6 +715,14 @@
     "subTotal": "Zwischensumme",
     "total": "Summe",
     "vat": "MwSt."
+  },
+  "orderConfirmationPaymentStatus": {
+    "fullyPaid": "Bezahlt",
+    "overpaid": "Überzahlt",
+    "partlyPaid": "Teilweise bezahlt",
+    "prepaid": "Im Voraus bezahlt",
+    "unknown": "Fehler beim abrufen des Zahlungsstatus",
+    "unpaid": "Nicht bezahlt"
   },
   "orderErrorMessage": "Etwas ging schief. Versuchen Sie es später noch einmal.",
   "orderErrorProvider": "Unbekannte Antwort des Zahlungsanbieters: {paymentType}",
@@ -951,15 +964,5 @@
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
-  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "editMode": {
-    "save": "Speichern",
-    "edit": "Bearbeiten",
-    "publish": "Veröffentlichen",
-    "stopEdit": "Abbrechen",
-    "formatJson": "Template formatieren",
-    "minifyJson": "Template minimieren",
-    "clearJson": "Template löschen",
-    "editJsonPlaceholder": "JSON-Template eingeben..."
-  }
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
 }

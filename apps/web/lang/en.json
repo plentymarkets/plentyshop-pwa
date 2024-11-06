@@ -1,12 +1,4 @@
 {
-  "orderConfirmationPaymentStatus": {
-    "unpaid": "Not paid",
-    "fullyPaid": "Paid",
-    "overpaid": "Overpaid",
-    "partlyPaid": "Partially paid",
-    "prepaid": "Prepaid",
-    "unknown": "Error retrieving payment status"
-  },
   "CookieBar": {
     "Accept All": "Accept All",
     "Accept Selection": "Accept Selection",
@@ -424,6 +416,16 @@
     "correctionDocuments": "Correction Documents"
   },
   "editAddress": "Edit address",
+  "editMode": {
+    "clearJson": "Clear template",
+    "edit": "Edit",
+    "editJsonPlaceholder": "Edit JSON template...",
+    "formatJson": "Format template",
+    "minifyJson": "Minify template",
+    "publish": "Publish",
+    "save": "Save",
+    "stopEdit": "Cancel"
+  },
   "email": "Email",
   "emptyCart": "Your cart is empty",
   "emptyCartImgAlt": "Image of an empty cart",
@@ -562,6 +564,9 @@
   "goToCheckout": "Go to checkout",
   "goToHomepage": "Go to Homepage",
   "goToPage": "Navigate to Page {page}",
+  "googlePay": {
+    "paymentInProgress": "Payment in progress..."
+  },
   "graduatedPrices": {
     "discount": "DISCOUNT",
     "price": "PRICE",
@@ -710,6 +715,14 @@
     "subTotal": "Subtotal",
     "total": "Total",
     "vat": "VAT"
+  },
+  "orderConfirmationPaymentStatus": {
+    "fullyPaid": "Paid",
+    "overpaid": "Overpaid",
+    "partlyPaid": "Partially paid",
+    "prepaid": "Prepaid",
+    "unknown": "Error retrieving payment status",
+    "unpaid": "Not paid"
   },
   "orderErrorMessage": "Something went wrong. Try again later.",
   "orderErrorProvider": "Unknown response from payment provider: {paymentType}",
@@ -951,15 +964,5 @@
     "add": "The item was added to your wish list.",
     "delete": "The item was removed from your wish list."
   },
-  "youAreOfflineText": "It seems you are currently offline, check your internet connection",
-  "editMode": {
-    "save": "Save",
-    "edit": "Edit",
-    "publish": "Publish",
-    "stopEdit": "Cancel",
-    "formatJson": "Format template",
-    "minifyJson": "Minify template",
-    "clearJson": "Clear template",
-   "editJsonPlaceholder": "Edit JSON template..."
-  }
+  "youAreOfflineText": "It seems you are currently offline, check your internet connection"
 }
