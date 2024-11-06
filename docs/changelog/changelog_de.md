@@ -1,5 +1,47 @@
 # Changelog plentyshopPWA
 
+## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 🚀 Neu
+
+- Ist die Adresse beim Klicken auf **Kaufen** nicht gespeichert, wird jetzt eine Benachrichtigung angezeigt.
+- Wenn ein EU-Land als Versandland ausgewählt wird, sind jetzt alle EU-Länder als in der Rechnungsadresse verfügbar.
+- Die Anzeige des Produkttitels wurde für SEO-Zwecke verbessert. Wenn kein produktspezifischer Titel verfügbar ist, wird der Standardtitel verwendet.
+- Hinweise zu Steuer und Versand wurden zur Wunschliste hinzugefügt.
+- Ein neuer Request-Header für `configId` wurde hinzugefügt.
+- Die Umgebungsvariable `NO_CACHE` zum Deaktivieren des Cachings wurde hinzugefügt.
+- Der Hero-Banner und die Medienkarte unterstützen jetzt Alt-Texte für Bilder.
+- Es ist jetzt möglich, die Schriftfarbe im Hero-Banner über eine Template-Eigenschaft anzupassen.
+- Eine neue Karussell-Komponente wurde hinzugefügt.
+- Eine Bearbeitungsmodus-Toolbar und ein JSON-Editor für das Frontend wurden hinzugefügt. Die Toolbar ist zur Zeit nur in Teilen funktional. Weitere Funktionen werden in einer kommenden Version hinzugefügt.
+
+### 🩹 Behoben
+
+- Das Erhöhen der Menge über den maximalen Lagerbestand hinaus leert jetzt nicht mehr den Warenkorb.
+- Die Benachrichtigung zum Hinzufügen von Artikeln zum Warenkorb wurde von Artikel- und Kategorieseiten entfernt, wenn der Schnellkauf nicht vorhanden ist.
+- Die Barrierefreiheit der Warenkorb- und Wunschlistenseiten wurde durch Erhöhung der Schriftgröße verbessert.
+- Ein Problem wurde behoben, bei dem der Produktpfad nicht reaktiv war, wenn die Kategorie geändert wurde.
+- Der Build generiert jetzt automatisch eine Sprachdatei für jede aktive Sprache, nicht nur für die Standardsprache.
+- Ein Problem wurde behoben, bei dem der Soft-Login nach erfolgreicher Authentifizierung auf der Bestellbestätigungsseite weiterhin angezeigt wurde.
+- Herstellerdaten wurden korrigiert, um `externalName` anstelle von `name` in strukturierten Daten zu verwenden.
+- Überschriften wurden aktualisiert, um die konfigurierte Schriftart zu verwenden.
+- Layout-Verschiebung auf der Kategorieseite wurde behoben.
+- Ein Fehler im Build-Skript, der auf Windows zu fehlerhaften Dateinamen geführt hat, wurde behoben.
+- Das Build-Skript fügt jetzt die Variable `API_URL` zur Umgebung hinzu, falls sie existiert.
+
+### 👷 Geändert
+
+- Das Design von Benachrichtigungen wurde angepasst.
+- Die Anzeigezeit für Benachrichtigungen wurde von 3 auf 5 Sekunden erhöht.
+- Die `height`- und `width`-Attribute, die in Terra-UI gesetzt sind, werden jetzt nur noch für Vollbilder eines Artikels verwendet.
+- Das Generieren fehlender Sprachdateien wurde in das Build-Skript verschoben. Welche Dateien generiert werden ergbit sich aus den Umgebungsvariablen. Die Locale-Konfiguration basiert jetzt auf den Sprachdateien im `lang`-Verzeichnis.
+- Es gab erste Schritte zum Vereinheitlichen der Fehlerbehandlung von SDK/API. Fehler geben jetzt Schlüssel zurück, die im Frontend übersetzt werden können.
+- Die Darstellung der Hersteller wurde verbessert.
+- Den Übersetzungstext der Hersteller wurde aktualisiert.
+- Der Zahlungsstatus eines Auftrags unterstützt jetzt ein zweites Argument. Dies ermöglicht eine benutzerdefinierte Übersetzungen für verschiedene Zahlungszustände.
+- Wenn der Warenkorb während des Checkout-Prozesses leer ist, wird der Benutzer jetzt zum Warenkorb weitergeleitet.
+- Der Logo-Container ist jetzt flexibler und passt sich an das verwendete Logo an.
+
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### TODO 📙 Migrationsanleitung
