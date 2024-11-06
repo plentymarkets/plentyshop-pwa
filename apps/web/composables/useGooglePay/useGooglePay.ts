@@ -81,12 +81,19 @@ export const useGooglePay = () => {
   const processPayment = async (paymentData: google.payments.api.PaymentData) => {
     console.log('processPayment');
     if (!state.value.script) return;
+    console.log('processPayment 0-1');
     const localePath = useLocalePath();
+    console.log('processPayment 0-2');
     const { createCreditCardTransaction, getOrder, captureOrder, executeOrder } = usePayPal();
+    console.log('processPayment 0-3');
     const { data: cart, clearCartItems } = useCart();
+    console.log('processPayment 0-4');
     const { shippingPrivacyAgreement } = useAdditionalInformation();
+    console.log('processPayment 0-5');
     const { createOrder } = useMakeOrder();
+    console.log('processPayment 0-6');
     const { t } = useI18n();
+    console.log('processPayment 0-7');
 
     state.value.paymentLoading = true;
 
