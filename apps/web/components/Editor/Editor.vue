@@ -13,17 +13,17 @@
         @scroll="syncScroll"
         ref="textarea"
         class="w-full p-2 font-mono text-sm border-none resize-none outline-none h-[500px]"
-        placeholder="Edit JSON here..."
+        :placeholder="$t('editMode.editJsonPlaceholder')"
       ></textarea>
     </div>
     <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md bg-blue-500 hover:bg-blue-600">
-      Format JSON
+      {{ $t('editMode.formatJson') }}
     </UiButton>
     <UiButton @click="purgeJson" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
-      Minify JSON
+      {{ $t('editMode.minifyJson') }}
     </UiButton>
     <UiButton @click="clearText" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-red-500 hover:bg-red-600">
-      Clear Text
+      {{ $t('editMode.clearJson') }}
     </UiButton>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
   </div>

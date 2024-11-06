@@ -59,10 +59,14 @@ export const useProduct: UseProductReturn = (slug) => {
    * @description Function for setting product title meta data
    */
   const setProductMeta = () => {
-    const title = productGetters.getName(state.value.data);
+    const { titleSuffix } = useAppConfig();
+
+    const title =
+      productGetters.getTitle(state.value.data) || `${productGetters.getName(state.value.data)} | ${titleSuffix}`;
 
     useHead({
       title,
+      titleTemplate: '',
       meta: [
         {
           name: 'description',

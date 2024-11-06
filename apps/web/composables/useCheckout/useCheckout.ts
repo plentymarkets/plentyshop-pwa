@@ -1,10 +1,13 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_CHECKBOX = '#terms-checkbox';
 const ID_SHIPPING_ADDRESS = '#shipping-address';
 const ID_BILLING_ADDRESS = '#billing-address';
+
+const scrollToShippingAddress = () => {
+  scrollToHTMLObject(ID_SHIPPING_ADDRESS);
+};
 
 export const useCheckout = (cacheKey = '') => {
   const state = useState('useCheckout' + cacheKey, () => ({
@@ -12,7 +15,7 @@ export const useCheckout = (cacheKey = '') => {
     init: false,
   }));
 
-  const { data: cart, getCart, clearCartItems, loading: cartLoading } = useCart();
+  const { data: cart, cartIsEmpty, getCart, clearCartItems, loading: cartLoading } = useCart();
   const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
   const { shippingAsBilling } = useShippingAsBilling();
   const { addresses: shippingAddresses, get: getShipping } = useAddressStore(AddressType.Shipping);
@@ -63,12 +66,11 @@ export const useCheckout = (cacheKey = '') => {
     return false;
   };
 
-  const validateTerms = (callback?: PayPalAddToCartCallback): boolean => {
+  const validateTerms = (): boolean => {
     const isValid = termsAccepted.value;
 
     setShowErrors(!isValid);
     if (!isValid) scrollToHTMLObject(ID_CHECKBOX);
-    callback?.(isValid);
 
     return isValid;
   };
@@ -105,6 +107,7 @@ export const useCheckout = (cacheKey = '') => {
   return {
     ...toRefs(state.value),
     cart,
+    cartIsEmpty,
     getCart,
     clearCartItems,
     cartLoading,
@@ -115,5 +118,6 @@ export const useCheckout = (cacheKey = '') => {
     hasBillingAddress,
     backToFormEditing,
     validateTerms,
+    scrollToShippingAddress,
   };
 };

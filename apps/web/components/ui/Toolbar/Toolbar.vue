@@ -11,10 +11,12 @@
 
 <script setup lang="ts">
 const isEditing = useEditor();
+
 const viewport = useViewport();
 const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
+
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };

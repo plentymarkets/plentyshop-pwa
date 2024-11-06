@@ -154,7 +154,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   displayFullyPaid() {
-    this.orderPaymentStatus.contains('fullyPaid');
+    this.orderPaymentStatus.contains('Paid');
     return this;
   }
 
