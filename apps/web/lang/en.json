@@ -1,12 +1,4 @@
 {
-  "orderConfirmationPaymentStatus": {
-    "unpaid": "Not paid",
-    "fullyPaid": "Paid",
-    "overpaid": "Overpaid",
-    "partlyPaid": "Partially paid",
-    "prepaid": "Prepaid",
-    "unknown": "Error retrieving payment status"
-  },
   "CookieBar": {
     "Accept All": "Accept All",
     "Accept Selection": "Accept Selection",
@@ -424,10 +416,20 @@
     "correctionDocuments": "Correction Documents"
   },
   "editAddress": "Edit address",
+  "editMode": {
+    "clearJson": "Clear template",
+    "edit": "Edit",
+    "editJsonPlaceholder": "Edit JSON template...",
+    "formatJson": "Format template",
+    "minifyJson": "Minify template",
+    "publish": "Publish",
+    "save": "Save",
+    "stopEdit": "Cancel"
+  },
   "email": "Email",
   "emptyCart": "Your cart is empty",
-  "emptyCartNotification": "You don't have any items in your cart",
   "emptyCartImgAlt": "Image of an empty cart",
+  "emptyCartNotification": "You don't have any items in your cart",
   "emptyStateAltText": "Image that describes that no products were found",
   "emptyStateText": "We no longer have products in this category.",
   "emptyStateText2": "Have not found what you are looking for?",
@@ -488,6 +490,9 @@
     "notificationsWarningOverselling": "The selected quantity exceeds the available stock. :stock are currently in stock; :oversellingAmount will be supplied later."
   },
   "errorMessages": {
+    "checkout": {
+      "missingAddress": "Please provide your address to continue with the checkout."
+    },
     "contact": {
       "messageRequired": "Message is required.",
       "nameRequired": "Name is required.",
@@ -512,6 +517,7 @@
       "required": "Password is required.",
       "valid": "Password must be at least 8 characters long and include at least one letter and one number."
     },
+    "paymentFailed": "The payment has failed. Please try again.",
     "pleaseFillOutAllFields": "Please fill out all these fields.",
     "requiredField": "This is a mandatory field.",
     "turnstileRequired": "Please check the box to verify that you are human.",
@@ -561,6 +567,9 @@
   "goToCheckout": "Go to checkout",
   "goToHomepage": "Go to Homepage",
   "goToPage": "Navigate to Page {page}",
+  "googlePay": {
+    "paymentInProgress": "Payment in progress..."
+  },
   "graduatedPrices": {
     "discount": "DISCOUNT",
     "price": "PRICE",
@@ -710,6 +719,14 @@
     "total": "Total",
     "vat": "VAT"
   },
+  "orderConfirmationPaymentStatus": {
+    "fullyPaid": "Paid",
+    "overpaid": "Overpaid",
+    "partlyPaid": "Partially paid",
+    "prepaid": "Prepaid",
+    "unknown": "Error retrieving payment status",
+    "unpaid": "Not paid"
+  },
   "orderErrorMessage": "Something went wrong. Try again later.",
   "orderErrorProvider": "Unknown response from payment provider: {paymentType}",
   "orderNumber": "Order ID",
@@ -846,7 +863,6 @@
   "saveAddress": "Save address",
   "savedBillingAddress": "Saved billing adresses",
   "savedShippingAddress": "Saved shipping adresses",
-  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "scrollTop": "Scroll to top",
   "search": "Search",
   "shipping": {
@@ -936,6 +952,7 @@
   "termsRequired": "You have to agree with the terms and conditions.",
   "tomorrow": "Tomorrow",
   "total": "Total",
+  "unsavedAddress": "The address you entered has not yet been saved. Click Save address to proceed with the checkout.",
   "validation": {
     "heading": "To complete order:",
     "missingBillingAddress": "add billing address",
@@ -950,15 +967,5 @@
     "add": "The item was added to your wish list.",
     "delete": "The item was removed from your wish list."
   },
-  "youAreOfflineText": "It seems you are currently offline, check your internet connection",
-  "editMode": {
-    "save": "Save",
-    "edit": "Edit",
-    "publish": "Publish",
-    "stopEdit": "Cancel",
-    "formatJson": "Format template",
-    "minifyJson": "Minify template",
-    "clearJson": "Clear template",
-   "editJsonPlaceholder": "Edit JSON template..."
-  }
+  "youAreOfflineText": "It seems you are currently offline, check your internet connection"
 }

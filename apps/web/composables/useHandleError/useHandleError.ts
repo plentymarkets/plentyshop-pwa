@@ -30,8 +30,7 @@ export const useHandleError: UseHandleError = (error: ApiError | NuxtError<unkno
         persist,
       });
     } else {
-      const nuxtError = error as any;
-      const message = `${nuxtError?.status}: ${nuxtError.statusText}`;
+      const message = $i18n.t('storefrontError.unknownError');
 
       send({
         type,
