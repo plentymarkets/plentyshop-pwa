@@ -30,18 +30,25 @@
 </template>
 
 <script setup lang="ts">
-import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
+const { data } = useHomePageState();
 
-const props = defineProps<{
-  heroItemProps: Array<HeroContentProps>;
-  mediaDataProps: Array<MediaItemProps>;
-}>();
+const cleanJsonData = (data: any) => {
+  if (data._object) {
+    data = data._object;
+  }
 
-const initialJson = JSON.stringify({
-  hero: props.heroItemProps,
-  valueProposition: props.mediaDataProps,
-});
+  if (data.data) {
+    data = data.data;
+  }
+
+  delete data._key;
+  delete data.__v_isRef;
+
+  return data;
+};
+
+const cleanedData = cleanJsonData(data);
+const initialJson = JSON.stringify(cleanedData, null, 2);
 
 const {
   jsonText,

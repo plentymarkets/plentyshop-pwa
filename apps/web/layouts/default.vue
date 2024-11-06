@@ -43,11 +43,8 @@ onMounted(() => {
   // I want to show the toolbar only if there is cookie named pwa set
 
   // Log all cookies
-  console.log('All cookies:', document.cookie);
-
   const cookieExists = document.cookie.split('; ').some((cookie) => cookie.trim().startsWith('plenty-viewport='));
 
   isPreview.value = cookieExists;
-  console.log('Cookie exists:', cookieExists);
 });
 </script>

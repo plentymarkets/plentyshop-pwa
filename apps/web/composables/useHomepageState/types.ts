@@ -13,15 +13,13 @@ export interface UseHomepageDataState {
   showErrors: boolean;
 }
 
-export type FormattedHeroItems = HeroContentProps[];
-export type MediaData = MediaItemProps[];
-
-export interface UseHomepageMethods {
+export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Readonly<Ref<boolean>>;
   showErrors: Readonly<Ref<boolean>>;
-  fieldData: Readonly<Ref<UseAddressMethodsState['data']>>;
+  fetchData: () => Promise<void>;
+  // fieldData: Readonly<Ref<UseHomepageDataState['data']>>;
 }
 export type DoHomepageData = () => UseHomepageDataState;
 
-export type UseHomepageDataReturn = () => UseHomepageMethods;
+export type UseHomepageDataReturn = () => UseHomepage;
