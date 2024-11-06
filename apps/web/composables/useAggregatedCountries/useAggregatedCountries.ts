@@ -42,11 +42,15 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   };
 
   const useGeoRegulatedCountries = state.value.geoRegulated.length > 0;
-  const billingCountries = computed(() =>
-    useGeoRegulatedCountries
-      ? [...state.value.default, ...state.value.geoRegulated].sort((a, b) => a.id - b.id)
-      : state.value.default,
-  );
+  const billingCountries = computed(() => {
+    if (!useGeoRegulatedCountries) return state.value.default;
+
+    const uniqueCountries = new Map(
+      [...state.value.default, ...state.value.geoRegulated].map((country) => [country.id, country]),
+    );
+
+    return [...uniqueCountries.values()].sort((first, second) => first.id - second.id);
+  });
 
   return {
     fetchAggregatedCountries,
