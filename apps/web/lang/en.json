@@ -427,6 +427,10 @@
     "stopEdit": "Cancel"
   },
   "email": "Email",
+  "emailConfirmation": {
+    "newsletterOptInMessage": "Your email address has been confirmed.",
+    "newsletterOptInMessageError": "There was an error on confirming your email."
+  },
   "emptyCart": "Your cart is empty",
   "emptyCartImgAlt": "Image of an empty cart",
   "emptyCartNotification": "You don't have any items in your cart",
@@ -687,7 +691,7 @@
     "lastName": "Last Name",
     "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
     "subscribe": "Subscribe To Newsletter",
-    "success": "Newsletter successfully subscribed"
+    "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
   },
   "next": "Next",
   "nextAriaLabel": "Navigate to next page",
@@ -967,9 +971,5 @@
     "add": "The item was added to your wish list.",
     "delete": "The item was removed from your wish list."
   },
-  "youAreOfflineText": "It seems you are currently offline, check your internet connection",
-  "emailConfirmation": {
-    "newsletterOptInMessage": "Your email address has been confirmed.",
-    "newsletterOptInMessageError": "There was an error on confirming your email."
-  }
+  "youAreOfflineText": "It seems you are currently offline, check your internet connection"
 }

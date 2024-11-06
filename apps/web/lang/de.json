@@ -427,6 +427,10 @@
     "stopEdit": "Abbrechen"
   },
   "email": "E-Mail",
+  "emailConfirmation": {
+    "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
+    "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
+  },
   "emptyCart": "Ihr Warenkorb ist leer",
   "emptyCartImgAlt": "Bild eines leeren Warenkorbs",
   "emptyCartNotification": "Sie haben keine Artikel in Ihrem Warenkorb",
@@ -687,7 +691,7 @@
     "lastName": "Nachname",
     "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
     "subscribe": "Newsletter abonnieren",
-    "success": "Newsletter erfolgreich abonniert"
+    "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
   },
   "next": "Nächste",
   "nextAriaLabel": "Zur nächsten Seite navigieren",
@@ -967,9 +971,5 @@
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
-  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "emailConfirmation": {
-    "newsletterOptInMessage": "Ihre E-Mail-Adresse wurde bestätigt.",
-    "newsletterOptInMessageError": "Beim Bestätigen Ihrer E-Mail ist ein Fehler aufgetreten."
-  }
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
 }
