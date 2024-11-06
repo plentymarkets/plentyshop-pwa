@@ -429,7 +429,7 @@
   "email": "Email",
   "emailConfirmation": {
     "newsletterOptInMessage": "Your email address has been confirmed.",
-    "newsletterOptInMessageError": "There was an error on confirming your email."
+    "newsletterOptInMessageError": "An error occurred while confirming your email."
   },
   "emptyCart": "Your cart is empty",
   "emptyCartImgAlt": "Image of an empty cart",
