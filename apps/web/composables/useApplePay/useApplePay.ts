@@ -81,7 +81,6 @@ export const useApplePay = () => {
           });
           paymentSession.completeMerchantValidation(validationData.merchantSession);
         } catch (error) {
-          console.error(error);
           paymentSession.abort();
         }
       };
@@ -140,8 +139,8 @@ export const useApplePay = () => {
       });
 
       paymentSession.begin();
-    } catch (error) {
-      console.error(error);
+    } catch {
+      /* error */
     }
   };
 

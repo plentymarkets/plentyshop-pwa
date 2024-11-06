@@ -36,7 +36,6 @@ async function onGooglePaymentButtonClicked() {
         .then((paymentData: google.payments.api.PaymentData) => {
           // eslint-disable-next-line promise/no-nesting
           processPayment(paymentData).catch((error: Error) => {
-            console.log(error);
             useNotification().send({
               message: error.message || t('errorMessages.paymentFailed'),
               type: 'negative',
@@ -46,7 +45,6 @@ async function onGooglePaymentButtonClicked() {
           return true;
         })
         .catch((error: Error) => {
-          console.log(error);
           useNotification().send({
             message: error.message || t('errorMessages.paymentFailed'),
             type: 'negative',
@@ -66,8 +64,8 @@ const addGooglePayButton = () => {
     if (theContainer) {
       theContainer.append(button);
     }
-  } catch (error) {
-    console.error(error);
+  } catch {
+    /* empty */
   }
 };
 
@@ -77,8 +75,8 @@ const onGooglePayLoaded = async () => {
     if (response.result) {
       addGooglePayButton();
     }
-  } catch (error) {
-    console.error(error);
+  } catch {
+    /* empty */
   }
 };
 

@@ -21,7 +21,6 @@ const renderButton = async () => {
       if (applePayButton) {
         applePayButton.addEventListener('click', async () => {
           await emits('button-clicked', async (successfully) => {
-            console.log('button-clicked', successfully);
             if (successfully) {
               processPayment();
             }
