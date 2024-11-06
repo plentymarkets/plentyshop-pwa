@@ -1,8 +1,11 @@
 <template>
-  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4" data-testid="gallery">
+  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4 relative" data-testid="gallery">
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
+      ref="my-input"
+      @mouseover="mouse = true"
+      @mouseleave="mouse = false"
     >
       <SfScrollable
         class="flex items-center snap-x snap-mandatory scrollbar-hidden w-full h-full"
@@ -18,23 +21,26 @@
           :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
-          <NuxtImg
-            :id="`gallery-img-${index}`"
-            :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
-            :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
-            :aria-hidden="activeIndex !== index"
-            fit="fill"
-            class="object-contain h-full w-full"
-            :quality="80"
-            :src="productImageGetters.getImageUrl(image)"
-            sizes="2xs:100vw, md:700px"
-            draggable="false"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
-            @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="getWidth(image, productImageGetters.getImageUrl(image))"
-            :height="getHeight(image, productImageGetters.getImageUrl(image))"
-          />
+          <Drift>
+            <NuxtImg
+              :id="`gallery-img-${index}`"
+              :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
+              :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
+              :aria-hidden="activeIndex !== index"
+              fit="fill"
+              class="object-contain h-full w-full demo-trigger"
+              :data-zoom="productImageGetters.getImageUrl(image)"
+              :quality="80"
+              :src="productImageGetters.getImageUrl(image)"
+              sizes="2xs:100vw, md:700px"
+              draggable="false"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              @load="updateImageStatusFor(`gallery-img-${index}`)"
+              :width="getWidth(image, productImageGetters.getImageUrl(image))"
+              :height="getHeight(image, productImageGetters.getImageUrl(image))"
+            />
+          </Drift>
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
       </SfScrollable>
@@ -116,6 +122,7 @@
         />
       </div>
     </div>
+    <div class="detail" :class="{ active: mouse }"></div>
   </div>
 </template>
 
@@ -127,6 +134,7 @@ import type { ImagesData } from '@plentymarkets/shop-api';
 import { productImageGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
+const mouse = ref(false);
 const props = defineProps<{ images: ImagesData[] }>();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
@@ -218,3 +226,18 @@ const assignReference = (element: Element | ComponentPublicInstance | null, inde
   if (index === 0) firstThumbReference.value = element as HTMLButtonElement;
 };
 </script>
+
+<style scoped>
+.detail {
+  position: absolute;
+}
+.detail.active {
+  height: 100%;
+  width: 600px;
+  top: 0;
+  background: white;
+  margin-left: 100%;
+  z-index: 10;
+  border: 1px solid black;
+}
+</style>
