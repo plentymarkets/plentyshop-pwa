@@ -42,10 +42,16 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   };
 
   const useGeoRegulatedCountries = state.value.geoRegulated.length > 0;
+  const billingCountries = computed(() =>
+    useGeoRegulatedCountries
+      ? [...state.value.default, ...state.value.geoRegulated].sort((a, b) => a.id - b.id)
+      : state.value.default,
+  );
 
   return {
     fetchAggregatedCountries,
     useGeoRegulatedCountries,
+    billingCountries,
     ...toRefs(state.value),
   };
 };

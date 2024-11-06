@@ -119,7 +119,7 @@
         :invalid="Boolean(errors['country'])"
       >
         <option
-          v-for="(billingCountry, index) in countries"
+          v-for="(billingCountry, index) in billingCountries"
           :key="`billing-country-${index}`"
           :value="billingCountry.id.toString()"
         >
@@ -145,14 +145,7 @@ const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAd
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
-const {
-  useGeoRegulatedCountries,
-  default: defaultCountries,
-  geoRegulated: geoRegulatedCountries,
-} = useAggregatedCountries();
-
-const countries = computed(() => (useGeoRegulatedCountries ? geoRegulatedCountries.value : defaultCountries.value));
-const guestHasShippingAsBilling = isGuest.value && shippingAsBilling.value;
+const { billingCountries } = useAggregatedCountries();
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -172,6 +165,8 @@ if (!addAddress) {
     vatNumber.value = '';
   }
 }
+
+const guestHasShippingAsBilling = isGuest.value && shippingAsBilling.value;
 
 const syncCheckoutAddress = async () => {
   await setCheckoutAddress(
