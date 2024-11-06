@@ -70,3 +70,12 @@ apple-pay-button {
 .swiper-button-next {
   color: rgb(var(--colors-2-primary-500)) !important;
 }
+
+#google-pay-button {
+  div {
+    button {
+      width: 100% !important;
+      display: block;
+    }
+  }
+}

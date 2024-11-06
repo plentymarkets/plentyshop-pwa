@@ -1,49 +1,47 @@
 # Changelog plentyshopPWA
 
-## v1.x.x (yyyy-mm-dd)
-
-- Added tax and shipping note in wishlist page
-- Added new carousel compoment via Swipper library
-- Created new useCarousel composable holding Carousel logic
-- Minified and purged swiper css files for speed optimization
-- Fluid logo container + max-width and max-height addaptation
-- Fix cls mobile
-- Edit mode toolbar + Json editor Front End
+## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
-- Clicking "Buy" with an unsaved Address will now display a notification.
-- When an EU country is selected as the shipping country, all EU countries become available as billing options.
-- Added a new request header for configId and added no cache to environment variables.
-- Implement new notification design
-- Adding the ability to have alt text for images.
-- It's now possible to change the font color of the hero banner via a template property.
-- Display product titles without global suffix when available, maintaining backward compatibility.
+- Google Pay and Apple Pay are now available as payment methods in the checkout.
+- Clicking the **Buy** button with an unsaved address now displays a notification.
+- To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
+- The product title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
+- Added tax and shipping note to the wishlist page.
+- Added a new request header for the `configId`.
+- Added the environment variable `NO_CACHE` for disabling caching.
+- The hero banner and media card now support alt text properties for images.
+- Enabled font color customization for the hero banner via a template property.
+- Added a new carousel compoment.
+- Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
 
 ### 🩹 Fixed
 
-- Fixed an issue where increasing quantity over maximum stock will lead to cart being cleared.
-- Removed the "Add to Cart" notification from the item and category pages when the quick checkout modal is not present.
-- Fixed an accessibility issue where the font size was too small.
-- Fixed an issue where product path was not reactive when category was changed.
-- Automatically generate a language file for every active language, not just the default language.
-- Soft login was still shown after successfully authenticating on the order confirmation page.
-- Fixed an issue where manufacturer data was introducing 'name' into structured data instead of 'externalName'.
-- Headlines now use the configured font.
-- Fixed layout shift on category page.
-- The build script failed on Windows because of incompatibilities between file name pattern and operating system. The file name pattern now works on Windows.
+- Fixed an issue where increasing the quantity beyond maximum stock would clear the cart.
+- Removed the "Add to Cart" notification from item and category pages when the quick checkout modal is not present.
+- Improved accessibility for the cart and wishlist pages by increasing the font size.
+- Fixed an issue where the product path was not reactive when the category was changed.
+- The build now automatically generates a language file for every active language, not just the default language.
+- Resolved an issue where the soft login was still shown after successful authentication on the order confirmation page.
+- Corrected manufacturer data to use `externalName` instead of `name` in structured data.
+- Updated headlines to use the configured font.
+- Fixed layout shift on the category page.
+- Resolved build script failure on Windows due to file name pattern incompatibilities.
 - The build script now adds the `API_URL` to the environment if it exists.
 
 ### 👷 Changed
 
-- The `height` and `width` attributes that where set in terra ui are used only for full size images of an item.
-- Generating missing language files based on the language configuration from the environment has been moved to the build script. The locale configuration is now based on the language files in the `lang` directory.
-- Started to unify the SDK/API error handling. Errors do now return keys that can be translated in the frontend.
-- Manufacturer visual improvments
-- Changed manufacturer translation text.
-- The payment status on an order now supports a second argument, allowing you to define custom translations for the different payment states.
-- In cases where the basket is empty during the checkout process, the system will now redirect to `/cart` and display a notification.
+- Implemented a new notification design.
 - Increased default notification timeout from 3 to 5 seconds.
+- The `height` and `width` attributes set in Terra UI are now used only for full-size images of an item.
+- Moved the generation of missing language files based on the environment's language configuration to the build script. The locale configuration is now based on the language files in the `lang` directory.
+- Started unifying SDK/API error handling. Errors now return keys that can be translated in the frontend.
+- Improved manufacturer visuals.
+- Updated manufacturer translation text.
+- Added support for a second argument to the payment status on an order. This allows you to define custom translations for different payment states.
+- When trying to access the checkout with an empty cart, or if the user empties the cart during the checkout process, the user is now redirected to the cart.
+- The logo container is now more flexible and adapts to the dimensions of the provided logo.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
