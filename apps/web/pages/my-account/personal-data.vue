@@ -71,6 +71,7 @@ import { unrefElement } from '@vueuse/core';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();
