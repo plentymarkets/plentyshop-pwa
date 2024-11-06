@@ -42,6 +42,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   };
 
   const useGeoRegulatedCountries = state.value.geoRegulated.length > 0;
+
   const billingCountries = computed(() => {
     if (!useGeoRegulatedCountries) return state.value.default;
 
