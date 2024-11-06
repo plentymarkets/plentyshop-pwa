@@ -186,7 +186,7 @@ onNuxtReady(async () => {
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-const processingOrder = ref(false);
+const { processingOrder } = useProcessingOrder();
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
