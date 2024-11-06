@@ -1,5 +1,4 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_CHECKBOX = '#terms-checkbox';
