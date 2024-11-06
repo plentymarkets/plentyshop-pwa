@@ -5,8 +5,8 @@
 ### New
 
 - Clicking the **Buy** button with an unsaved address now displays a notification.
-- Selecting an EU country as the shipping country now makes all EU countries available as billing options.
-- Improved the product title display for SEO purposes. Reverts to the default if no product specific title is available.
+- To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
+- The product title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
 - Added tax and shipping note to the wishlist page.
 - Added a new request header for the `configId`.
 - Added the environment variable `NO_CACHE` for disabling caching.
@@ -39,7 +39,7 @@
 - Improved manufacturer visuals.
 - Updated manufacturer translation text.
 - Added support for a second argument to the payment status on an order. This allows you to define custom translations for different payment states.
-- If the cart is empty during the checkout process, the user is now redirected to the cart.
+- When trying to access the checkout with an empty cart, or if the user empties the cart during the checkout process, the user is now redirected to the cart.
 - The logo container is now more flexible and adapts to the dimensions of the provided logo.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>

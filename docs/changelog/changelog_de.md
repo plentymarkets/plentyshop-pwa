@@ -5,7 +5,8 @@
 ### 🚀 Neu
 
 - Ist die Adresse beim Klicken auf **Kaufen** nicht gespeichert, wird jetzt eine Benachrichtigung angezeigt.
-- Wenn ein EU-Land als Versandland ausgewählt wird, sind jetzt alle EU-Länder als in der Rechnungsadresse verfügbar.
+- Zum Einhalten der Geoblocking-Verordnung sind beim Auswählen eines EU-Lands als Versandland jetzt alle EU-Länder in der Rechnungsadresse verfügbar.
+- Die Anzeige des Produkttitels unterstützt nun individualisierte Titel. Der Produkttitel kann am Artikel gepflegt werden. Wird so kein Produkttitel gesetzt, wird standardmäßig "Artikelname | Firmenname" verwendet.
 - Die Anzeige des Produkttitels wurde für SEO-Zwecke verbessert. Wenn kein produktspezifischer Titel verfügbar ist, wird der Standardtitel verwendet.
 - Hinweise zu Steuer und Versand wurden zur Wunschliste hinzugefügt.
 - Ein neuer Request-Header für `configId` wurde hinzugefügt.
@@ -39,7 +40,7 @@
 - Die Darstellung der Hersteller wurde verbessert.
 - Den Übersetzungstext der Hersteller wurde aktualisiert.
 - Der Zahlungsstatus eines Auftrags unterstützt jetzt ein zweites Argument. Dies ermöglicht eine benutzerdefinierte Übersetzungen für verschiedene Zahlungszustände.
-- Wenn der Warenkorb während des Checkout-Prozesses leer ist, wird der Benutzer jetzt zum Warenkorb weitergeleitet.
+- Beim Versuch den Checkout mit einem leeren Warenkorb aufzurufen oder wenn der Warenkorb während des Checkout-Prozesses geleert wird, wird der Benutzer jetzt zum Warenkorb weitergeleitet.
 - Der Logo-Container ist jetzt flexibler und passt sich an das verwendete Logo an.
 
 ## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
