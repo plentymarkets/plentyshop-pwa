@@ -27,12 +27,6 @@ onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
-// can be removed once we reload the page after login
-/* watch(
-  () => isAuthorized.value,
-  (authenticated: boolean) => watchAuthRoutes(authenticated),
-); */
-
 watch(
   () => locale.value,
   async (locale: string) => {
