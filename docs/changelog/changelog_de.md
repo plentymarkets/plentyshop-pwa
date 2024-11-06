@@ -5,6 +5,7 @@
 ### 🚀 Neu
 
 - Ist die Adresse beim Klicken auf **Kaufen** nicht gespeichert, wird jetzt eine Benachrichtigung angezeigt.
+- Google Pay und Apple Pay sind ab sofort als Zahlungsarten im Checkout verfügbar.
 - Zum Einhalten der Geoblocking-Verordnung sind beim Auswählen eines EU-Lands als Versandland jetzt alle EU-Länder in der Rechnungsadresse verfügbar.
 - Die Anzeige des Produkttitels unterstützt nun individualisierte Titel. Der Produkttitel kann am Artikel gepflegt werden. Wird so kein Produkttitel gesetzt, wird standardmäßig "Artikelname | Firmenname" verwendet.
 - Die Anzeige des Produkttitels wurde für SEO-Zwecke verbessert. Wenn kein produktspezifischer Titel verfügbar ist, wird der Standardtitel verwendet.
