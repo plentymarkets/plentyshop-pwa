@@ -1,9 +1,10 @@
 import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
-import { toRefs, ref } from 'vue';
+import { toRefs, ref, watch } from 'vue';
 import { SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import homepageTemplateData from '~/composables/useHomepageData/homepageTemplateData.json';
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
+
 /**
  * @description Composable managing homepage data
  * @returns UseHomepageDataReturn
@@ -107,15 +108,22 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     console.log('setFormattedHeroItems', state.value.data);
   };
 
-  // const setMediaData = (media: MediaItemProps[]) => {
-  //   state.value.data[0].valueProposition = media;
-  // };
+  watch(
+    () => state.value.data,
+    (updatedData) => {
+      if (updatedData.length > 0) {
+        const firstItem = updatedData[0];
+        hero.value = firstItem.hero;
+        valueProposition.value = firstItem.valueProposition;
+      }
+    },
+    { deep: true },
+  );
 
   return {
     fetchData,
     ...toRefs(state.value),
     setFormattedHeroItems,
-  //  setMediaData,
     hero,
     valueProposition,
   };

@@ -30,12 +30,14 @@ export const useJsonEditor = (initialJson: string) => {
   };
 
   const handleInput = () => {
-    console.log('input', jsonText.value);
-    const parsedData = JSON.parse(jsonText.value);
-    console.log('input', parsedData);
-    setFormattedHeroItems(parsedData);
-    validateJson();
-    updateLineCount();
+    try {
+      const parsedData = JSON.parse(jsonText.value);
+      setFormattedHeroItems(parsedData);
+      validateJson();
+      updateLineCount();
+    } catch {
+      errorMessage.value = 'Invalid JSON:';
+    }
   };
 
   const formatJson = () => {
