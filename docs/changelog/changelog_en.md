@@ -4,6 +4,7 @@
 
 ### New
 
+- Google Pay and Apple Pay are now available as payment methods in the checkout.
 - Clicking the **Buy** button with an unsaved address now displays a notification.
 - To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
 - The product title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
@@ -14,7 +15,6 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
-- Google Pay and Apple Pay are now available as payment methods in the checkout.
 
 ### 🩹 Fixed
 
