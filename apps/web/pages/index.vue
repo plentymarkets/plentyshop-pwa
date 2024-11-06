@@ -1,12 +1,12 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <UiHeroCarousel :hero-item-props="formattedHeroItems" />
+    <UiHeroCarousel :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
       <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
-          v-for="(item, index) in mediaData"
+          v-for="(item, index) in valueProposition"
           :key="index"
           :image="item.image"
           :alt="item.alt"
@@ -41,11 +41,15 @@
 const isEditing = useEditor();
 
 const { formattedHeroItems, mediaData, recommendedProductsCategoryId } = await useHomepageData();
-const { data, loading, fetchData } = useHomePageState();
+const { data, loading, hero, valueProposition, fetchData } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
 
-fetchData();
-
+onMounted(async () => {
+  await fetchData();
+  console.log('data', data);
+  console.log('hero', hero);
+  console.log('valueProposition', valueProposition);
+});
 </script>

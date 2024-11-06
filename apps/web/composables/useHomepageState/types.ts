@@ -18,7 +18,9 @@ export interface UseHomepage {
   loading: Readonly<Ref<boolean>>;
   showErrors: Readonly<Ref<boolean>>;
   fetchData: () => Promise<void>;
-  // fieldData: Readonly<Ref<UseHomepageDataState['data']>>;
+  hero: Readonly<Ref<HeroContentProps[]>>;
+  valueProposition: Readonly<Ref<MediaItemProps[]>>;
+  // setFormattedHeroItems: () => HeroContentProps[];
 }
 export type DoHomepageData = () => UseHomepageDataState;
 

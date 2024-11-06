@@ -3,7 +3,7 @@ import { toRefs, ref } from 'vue';
 import { SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import homepageTemplateData from '~/composables/useHomepageData/homepageTemplateData.json';
-
+import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 /**
  * @description Composable managing homepage data
  * @returns UseHomepageDataReturn
@@ -73,7 +73,10 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     showErrors: false,
   }));
 
-  const fetchData = async () => {
+  const hero = ref<HeroContentProps[]>([]);
+  const valueProposition = ref<MediaItemProps[]>([]);
+
+  const fetchData = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
@@ -91,21 +94,18 @@ export const useHomePageState: UseHomepageDataReturn = () => {
 
     state.value.data.push(homeData);
     state.value.loading = false;
+
     if (state.value.data.length > 0) {
       const firstItem = state.value.data[0];
-      const hero = firstItem.hero;
-      const valueProposition = firstItem.valueProposition;
-      console.log('Homepage data:', state.value.data);
-
-      console.log('Hero:', hero);
-      console.log('Value Proposition:', valueProposition);
-    } else {
-      console.log('No data available');
+      hero.value = firstItem.hero;
+      valueProposition.value = firstItem.valueProposition;
     }
   };
 
   return {
     fetchData,
     ...toRefs(state.value),
+    hero,
+    valueProposition,
   };
 };
