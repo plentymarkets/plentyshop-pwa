@@ -29,13 +29,8 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType } from '@plentymarkets/shop-api';
 import { SfLink, SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import type { LoginProps } from './types';
-
-const { getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
-const { getAddresses: getShippingAddresses } = useAddress(AddressType.Shipping);
-const { getShippingMethods } = useCartShippingMethods();
 
 const { login, loading, getSession } = useCustomer();
 const { send } = useNotification();
@@ -43,12 +38,6 @@ const { t } = useI18n();
 
 const { isSoftLogin = false, isModal = false } = defineProps<LoginProps>();
 const emits = defineEmits(['loggedIn', 'change-view']);
-
-const loadAddresses = async () => {
-  await getBillingAddresses();
-  await getShippingAddresses();
-  await getShippingMethods();
-};
 
 const email = ref('');
 const password = ref('');
