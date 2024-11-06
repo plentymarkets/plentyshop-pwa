@@ -46,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @validation-callback="handlePayPalExpress"
+                @validation-callback="handleReadyToBuy"
                 type="Checkout"
               />
               <PayPalPayLaterBanner
@@ -69,12 +69,12 @@
             <PayPalApplePayButton
               v-else-if="selectedPaymentId === paypalApplePayPaymentId"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
-              @button-clicked="validateTerms"
+              @button-clicked="handleReadyToBuy"
             />
             <PayPalGooglePayButton
               v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
               :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
-              @button-clicked="validateTerms"
+              @button-clicked="handleReadyToBuy"
             />
             <UiButton
               v-else
@@ -141,6 +141,7 @@ const {
   hasBillingAddress,
   backToFormEditing,
   validateTerms,
+  scrollToShippingAddress,
 } = useCheckout();
 
 const {
@@ -212,7 +213,13 @@ const readyToBuy = () => {
     return backToFormEditing();
   }
 
-  return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
+  if (!hasShippingAddress.value || !hasBillingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    scrollToShippingAddress();
+    return false;
+  }
+
+  return validateTerms();
 };
 
 const openPayPalCardDialog = async () => {
@@ -233,7 +240,7 @@ const handleRegularOrder = async () => {
   }
 };
 
-const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
+const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
   if (callback) {
     callback(readyToBuy());
   }
