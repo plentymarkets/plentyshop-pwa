@@ -1,3 +1,4 @@
+const { setFormattedHeroItems } = useHomePageState();
 export const useJsonEditor = (initialJson: string) => {
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
@@ -29,7 +30,10 @@ export const useJsonEditor = (initialJson: string) => {
   };
 
   const handleInput = () => {
+    console.log('input', jsonText.value);
     const parsedData = JSON.parse(jsonText.value);
+    console.log('input', parsedData);
+    setFormattedHeroItems(parsedData);
     validateJson();
     updateLineCount();
   };

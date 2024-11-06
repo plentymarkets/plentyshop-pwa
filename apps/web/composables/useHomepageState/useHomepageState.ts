@@ -102,9 +102,20 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     }
   };
 
+  const setFormattedHeroItems = (item: any) => {
+    state.value.data = item;
+    console.log('setFormattedHeroItems', state.value.data);
+  };
+
+  // const setMediaData = (media: MediaItemProps[]) => {
+  //   state.value.data[0].valueProposition = media;
+  // };
+
   return {
     fetchData,
     ...toRefs(state.value),
+    setFormattedHeroItems,
+  //  setMediaData,
     hero,
     valueProposition,
   };

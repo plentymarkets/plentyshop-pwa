@@ -21,6 +21,8 @@ export interface UseHomepage {
   hero: Readonly<Ref<HeroContentProps[]>>;
   valueProposition: Readonly<Ref<MediaItemProps[]>>;
   // setFormattedHeroItems: () => HeroContentProps[];
+  setFormattedHeroItems: (items: any) => void;
+  // setMediaData: (media: MediaItemProps[]) => void;
 }
 export type DoHomepageData = () => UseHomepageDataState;
 
