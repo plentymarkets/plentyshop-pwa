@@ -92,7 +92,7 @@ export const useGooglePay = () => {
     console.log('processPayment 0-5');
     const { createOrder } = useMakeOrder();
     console.log('processPayment 0-6');
-    const { t } = useI18n();
+    const { $i18n } = useNuxtApp();
     console.log('processPayment 0-7');
 
     state.value.paymentLoading = true;
@@ -101,7 +101,7 @@ export const useGooglePay = () => {
 
     const transaction = await createCreditCardTransaction();
     if (!transaction || !transaction.id) {
-      showErrorNotification(t('storefrontError.order.createFailed'));
+      showErrorNotification($i18n.t('storefrontError.order.createFailed'));
       return;
     }
 
@@ -137,7 +137,7 @@ export const useGooglePay = () => {
       });
 
       if (!order || !order.order || !order.order.id) {
-        showErrorNotification(t('storefrontError.order.createFailed'));
+        showErrorNotification($i18n.t('storefrontError.order.createFailed'));
         return;
       }
 
@@ -153,7 +153,7 @@ export const useGooglePay = () => {
 
       return { transactionState: 'SUCCESS' };
     } else {
-      showErrorNotification(t('errorMessages.paymentFailed'));
+      showErrorNotification($i18n.t('errorMessages.paymentFailed'));
       return { transactionState: 'ERROR' };
     }
   };
