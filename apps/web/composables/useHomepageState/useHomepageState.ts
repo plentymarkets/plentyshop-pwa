@@ -21,17 +21,44 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
 const homepageTemplate = ref(homepageTemplateData);
 const runtimeConfig = useRuntimeConfig();
 
+// const fetchHomepageTemplate = async (homepageCategoryId: number) => {
+//   const { fetchCategoryTemplate } = useCategoryTemplate();
+//   const { data } = await fetchCategoryTemplate(homepageCategoryId);
+//   const parsedData = JSON.parse(data);
+//   if (parsedData) {
+//     homepageTemplate.value = {
+//       id: parsedData.id,
+//       hero: parsedData.hero || [],
+//       valueProposition: parsedData.valueProposition,
+//       featured: parsedData.featured,
+//     };
+//   }
+// };
+const isEmptyObject = (obj: any) => {
+  return Object.keys(obj).length === 0;
+};
 const fetchHomepageTemplate = async (homepageCategoryId: number) => {
   const { fetchCategoryTemplate } = useCategoryTemplate();
+
+  if (typeof homepageCategoryId !== 'number') {
+    console.log('homepageCategoryId is not a number; using default template data');
+    homepageTemplate.value = homepageTemplateData;
+    return;
+  }
+
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data);
-  if (parsedData) {
+  const parsedData = JSON.parse(data || '{}');
+
+  if (parsedData && !isEmptyObject(parsedData)) {
     homepageTemplate.value = {
       id: parsedData.id,
       hero: parsedData.hero || [],
       valueProposition: parsedData.valueProposition,
       featured: parsedData.featured,
     };
+  } else {
+    console.log('parsedData is empty or invalid; using default template data');
+    homepageTemplate.value = homepageTemplateData;
   }
 };
 
@@ -80,10 +107,7 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const fetchData = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    if (typeof homepageCategoryId === 'number') {
-      await fetchHomepageTemplate(homepageCategoryId);
-    }
-
+    await fetchHomepageTemplate(homepageCategoryId);
     const mediaData = formatMediaData();
     const formattedHeroItems = formatHeroItems();
 
