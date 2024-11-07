@@ -20,7 +20,7 @@
         {{ manufacturerResponsibleInfo.postCode }}
         <span v-if="manufacturerResponsibleInfo.town"> {{ manufacturerResponsibleInfo.town }}</span>
         <span v-if="manufacturerResponsibleInfo.town && manufacturerResponsibleInfo.country">, &nbsp;</span>
-        <span v-if="manufacturerResponsibleInfo.country">{{ manufacturerResponsibleInfo.country }}</span>
+        <span v-if="manufacturerResponsibleInfo.country">{{ manufacturerResponsibleInfo.country.name }}</span>
       </p>
       <p v-if="manufacturerResponsibleInfo.phoneNo">{{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}</p>
       <p v-if="manufacturerResponsibleInfo.email">{{ t('email') }}: {{ manufacturerResponsibleInfo.email }}</p>

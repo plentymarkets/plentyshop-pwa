@@ -4,32 +4,20 @@
       <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="toggleEdit">
         {{ isEditing ? 'Preview' : 'Edit' }}
       </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="saveChanges"> Save </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start" @click="$emit('on-click')">
-        Publish
-      </UiButton>
+      <UiButton variant="secondary" :size="buttonSize" class="self-start"> Save </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
-import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
-import { useHomepageEditorData } from '~/composables/useHomepageEditorData/useHomepageEditorData';
 const isEditing = useEditor();
+
 const viewport = useViewport();
 const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
-const { heroItemProps, mediaDataProps } = useHomepageEditorData();
-const formattedHeroItems = ref<HeroContentProps[]>([]);
-const mediaData = ref<MediaItemProps[]>([]);
+
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
-};
-const saveChanges = () => {
-  formattedHeroItems.value = [...heroItemProps.value];
-  console.log('heroItemProps', heroItemProps);
-  console.log('formattedHeroItems', formattedHeroItems);
 };
 </script>

@@ -14,6 +14,12 @@ import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
  * ```
  */
 
+/**
+ * @description Resolves the image URL based on the provided size key
+ * @param imageSizes Record of image URLs keyed by size
+ * @param sizeKey The size key to resolve the image for
+ * @returns The resolved image URL
+ */
 const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
   return imageSizes[sizeKey] || '';
 };
@@ -21,6 +27,10 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
 const homepageTemplate = ref(homepageTemplateData);
 const runtimeConfig = useRuntimeConfig();
 
+/**
+ * @description Fetches the homepage template data for a given category ID
+ * @param homepageCategoryId The ID of the homepage category to fetch the template for
+ */
 const isEmptyObject = (obj: any) => {
   return Object.keys(obj).length === 0;
 };
@@ -46,6 +56,10 @@ const fetchHomepageTemplate = async (homepageCategoryId: number) => {
       : homepageTemplateData;
 };
 
+/**
+ * @description Formats the hero items for the homepage
+ * @returns An array of formatted hero items
+ */
 const formatHeroItems = () => {
   return homepageTemplate.value.hero.map((item) => {
     const viewport = useViewport();
@@ -69,6 +83,10 @@ const formatHeroItems = () => {
   });
 };
 
+/**
+ * @description Formats the media data for the homepage
+ * @returns An array of formatted media items
+ */
 const formatMediaData = () => {
   return homepageTemplate.value.valueProposition.map((media: MediaItemProps) => ({
     image: media.image,
@@ -88,6 +106,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const hero = ref<HeroContentProps[]>([]);
   const valueProposition = ref<MediaItemProps[]>([]);
 
+  /**
+   * @description Fetches the homepage data and updates the state
+   */
   const fetchData = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
@@ -111,10 +132,15 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     }
   };
 
-  const setFormattedHeroItems = (item: any) => {
+  /**
+   * @description Sets the formatted hero items in the state
+   * @param item An array of HomeData objects
+   */
+  const setFormattedHeroItems = (item: HomeData[]) => {
     state.value.data = item;
   };
 
+  // Watch for changes in state.value.data and update hero and valueProposition
   watch(
     () => state.value.data,
     (updatedData) => {

@@ -1,9 +1,9 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('checkout')"
+    :back-label-desktop="t('backToCart')"
+    :back-label-mobile="t('back')"
+    :heading="t('checkout')"
   >
     <div v-if="cart" class="lg:grid lg:grid-cols-12 lg:gap-x-6">
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
@@ -46,7 +46,7 @@
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableShippingPayment || cartLoading"
-                @validation-callback="handlePayPalExpress"
+                @validation-callback="handleReadyToBuy"
                 type="Checkout"
               />
               <PayPalPayLaterBanner
@@ -64,8 +64,18 @@
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              {{ $t('buy') }}
+              {{ t('buy') }}
             </UiButton>
+            <PayPalApplePayButton
+              v-else-if="selectedPaymentId === paypalApplePayPaymentId"
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="handleReadyToBuy"
+            />
+            <PayPalGooglePayButton
+              v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
+              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              @button-clicked="handleReadyToBuy"
+            />
             <UiButton
               v-else
               type="submit"
@@ -76,13 +86,8 @@
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ $t('buy') }}</template>
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
-            <!-- <PayPalApplePayButton
-              v-if="applePayAvailable"
-              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
-              @button-clicked="validateTerms"
-            /> -->
           </OrderSummary>
         </div>
       </div>
@@ -103,22 +108,30 @@
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { PayPalCreditCardPaymentKey, PayPalPaymentKey } from '~/composables/usePayPal/types';
+import {
+  PayPalCreditCardPaymentKey,
+  PayPalPaymentKey,
+  PayPalGooglePayKey,
+  PayPalApplePayKey,
+} from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
   pageType: 'static',
+  middleware: ['reject-empty-checkout'],
 });
 
+const { send } = useNotification();
+const { t } = useI18n();
 const localePath = useLocalePath();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
-  getCart,
+  cartIsEmpty,
   clearCartItems,
   cartLoading,
   anyAddressFormIsOpen,
@@ -128,6 +141,7 @@ const {
   hasBillingAddress,
   backToFormEditing,
   validateTerms,
+  scrollToShippingAddress,
 } = useCheckout();
 
 const {
@@ -140,30 +154,40 @@ const {
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
 
+const checkPayPalPaymentsEligible = async () => {
+  if (import.meta.client) {
+    const googlePayAvailable = await useGooglePay().checkIsEligible();
+    const applePayAvailable = await useApplePay().checkIsEligible();
+
+    if (googlePayAvailable || applePayAvailable) {
+      await usePaymentMethods().fetchPaymentMethods();
+    }
+  }
+};
+
+await Promise.all([
+  useCartShippingMethods().getShippingMethods(),
+  usePaymentMethods().fetchPaymentMethods(),
+  useAggregatedCountries().fetchAggregatedCountries(),
+]);
+
 onNuxtReady(async () => {
-  useFetchAddress(AddressType.Shipping)
+  await useFetchAddress(AddressType.Shipping)
     .fetchServer()
     .then(() => persistShippingAddress())
     .catch((error) => useHandleError(error));
 
-  useFetchAddress(AddressType.Billing)
+  await useFetchAddress(AddressType.Billing)
     .fetchServer()
     .then(() => persistBillingAddress())
     .catch((error) => useHandleError(error));
-});
 
-await getCart().then(
-  async () =>
-    await Promise.all([
-      useCartShippingMethods().getShippingMethods(),
-      usePaymentMethods().fetchPaymentMethods(),
-      useAggregatedCountries().fetchAggregatedCountries(),
-    ]),
-);
+  await checkPayPalPaymentsEligible();
+});
 
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
-
+const { processingOrder } = useProcessingOrder();
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -174,11 +198,28 @@ const paypalCreditCardPaymentId = computed(() => {
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalCreditCardPaymentKey);
 });
 
-// const applePayAvailable = computed(() => import.meta.client && (window as any).ApplePaySession);
+const paypalGooglePayPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalGooglePayKey);
+});
+const paypalApplePayPaymentId = computed(() => {
+  if (!paymentMethods.value.list) return null;
+  return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalApplePayKey);
+});
 
 const readyToBuy = () => {
-  if (anyAddressFormIsOpen.value) return backToFormEditing();
-  return !(!validateTerms() || !hasShippingAddress.value || !hasBillingAddress.value);
+  if (anyAddressFormIsOpen.value) {
+    send({ type: 'secondary', message: t('unsavedAddress') });
+    return backToFormEditing();
+  }
+
+  if (!hasShippingAddress.value || !hasBillingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    scrollToShippingAddress();
+    return false;
+  }
+
+  return validateTerms();
 };
 
 const openPayPalCardDialog = async () => {
@@ -199,7 +240,7 @@ const handleRegularOrder = async () => {
   }
 };
 
-const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
+const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
   if (callback) {
     callback(readyToBuy());
   }
@@ -208,10 +249,15 @@ const handlePayPalExpress = (callback?: PayPalAddToCartCallback) => {
 const order = async () => {
   if (!readyToBuy()) return;
 
+  processingOrder.value = true;
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
     ? (paypalCardDialog.value = true)
     : await handleRegularOrder();
 };
+
+watch(cartIsEmpty, async () => {
+  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+});
 </script>

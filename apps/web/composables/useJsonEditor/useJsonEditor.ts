@@ -1,3 +1,4 @@
+export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
 const { setFormattedHeroItems } = useHomePageState();
 export const useJsonEditor = (initialJson: string) => {
   const errorMessage = ref('');
@@ -35,8 +36,8 @@ export const useJsonEditor = (initialJson: string) => {
       setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
-    } catch {
-      errorMessage.value = 'Invalid JSON:';
+    } catch (error: any) {
+      errorMessage.value = 'Invalid JSON:' + error.message;
     }
   };
 
