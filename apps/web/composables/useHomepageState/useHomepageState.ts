@@ -35,16 +35,15 @@ const fetchHomepageTemplate = async (homepageCategoryId: number) => {
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
   const parsedData = JSON.parse(data || '{}');
 
-  if (parsedData && !isEmptyObject(parsedData)) {
-    homepageTemplate.value = {
-      id: parsedData.id,
-      hero: parsedData.hero || [],
-      valueProposition: parsedData.valueProposition,
-      featured: parsedData.featured,
-    };
-  } else {
-    homepageTemplate.value = homepageTemplateData;
-  }
+  homepageTemplate.value =
+    parsedData && !isEmptyObject(parsedData)
+      ? {
+          id: parsedData.id,
+          hero: parsedData.hero || [],
+          valueProposition: parsedData.valueProposition,
+          featured: parsedData.featured,
+        }
+      : homepageTemplateData;
 };
 
 const formatHeroItems = () => {
