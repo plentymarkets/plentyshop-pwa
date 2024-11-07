@@ -2,6 +2,7 @@
   <Body class="font-body" :class="bodyClass" />
   <UiNotifications />
   <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
+  <NuxtLoadingIndicator />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
