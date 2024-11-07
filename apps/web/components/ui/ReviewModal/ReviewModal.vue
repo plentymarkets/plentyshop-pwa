@@ -13,7 +13,7 @@
       <ReviewForm v-else :review-item="review" />
     </template>
     <template v-else>
-      <LoginComponent v-if="isLogin" @change-view="isLogin = false" skipReload />
+      <LoginComponent v-if="isLogin" @change-view="isLogin = false" skip-reload />
       <Register v-else @change-view="isLogin = true" />
     </template>
   </UiModal>
