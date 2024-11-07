@@ -29,6 +29,10 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('save-address-2');
   }
 
+  get saveBilling() {
+    return cy.getByTestId('save-address-1');
+  }
+
   get contactInformationFormSaveButton() {
     return cy.getByTestId('contact-information-save-button');
   }
@@ -47,6 +51,11 @@ export class CheckoutPageObject extends PageObject {
 
   get modal() {
     return cy.getByTestId('checkout-edit-address-modal');
+  }
+
+   editBillingAddress() {
+    cy.getByTestId('edit-address-1').click();
+    return this;
   }
 
   get thankYouBanner() {
@@ -190,7 +199,7 @@ export class CheckoutPageObject extends PageObject {
 
   shouldShowShippingAsBillingText() {
     this.shippingAsBillingText.contains('Same as shipping address');
-    return this; 
+    return this;
   }
 
   fillCreditCardForm() {

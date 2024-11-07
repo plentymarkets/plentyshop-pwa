@@ -29,4 +29,22 @@ describe('Checkout Addresses', () => {
         .fillShippingAddressForm()
         .shouldShowShippingAsBillingText();
   });
+
+  it.only('should be able to edit the billing address as a guest user if selected same as shipping', () => {
+    homePage.goToCategory();
+    productListPage.addToCart()
+
+    cart.openCart();
+    checkout
+        .goToCheckout()
+        .goToGuestCheckout()
+        .fillContactInformationForm()
+        .fillShippingAddressForm()
+        .shouldShowShippingAsBillingText()
+        .editBillingAddress();
+    checkout.firstNameInput.clear();
+    checkout.firstNameInput.type('John Guest Edit');
+    checkout.saveBilling.click({ force: true });
+    cy.get('#billing-address').should('contain', 'John Guest Edit');
+  });
 });
