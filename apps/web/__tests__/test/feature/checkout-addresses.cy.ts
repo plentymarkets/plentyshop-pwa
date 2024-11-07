@@ -30,7 +30,7 @@ describe('Checkout Addresses', () => {
         .shouldShowShippingAsBillingText();
   });
 
-  it.only('should be able to edit the billing address as a guest user if selected same as shipping', () => {
+  it('should be able to edit the billing address as a guest user if selected same as shipping', () => {
     homePage.goToCategory();
     productListPage.addToCart()
 
