@@ -28,6 +28,7 @@
 
 ### 🩹 Fixed
 
+- Addressed an unhandled scenario in which a guest user attempts to modify their billing address while using the same address for shipping.
 - Fixed an issue where increasing the quantity beyond maximum stock would clear the cart.
 - Removed the "Add to Cart" notification from item and category pages when the quick checkout modal is not present.
 - Improved accessibility for the cart and wishlist pages by increasing the font size.
