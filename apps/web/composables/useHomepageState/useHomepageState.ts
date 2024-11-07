@@ -26,6 +26,7 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
 
 const homepageTemplate = ref(homepageTemplateData);
 const runtimeConfig = useRuntimeConfig();
+const { isEditingDisabled } = useEditor();
 
 /**
  * @description Fetches the homepage template data for a given category ID
@@ -36,12 +37,6 @@ const isEmptyObject = (obj: any) => {
 };
 const fetchHomepageTemplate = async (homepageCategoryId: number) => {
   const { fetchCategoryTemplate } = useCategoryTemplate();
-
-  if (typeof homepageCategoryId !== 'number') {
-    homepageTemplate.value = homepageTemplateData;
-    return;
-  }
-
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
   const parsedData = JSON.parse(data || '{}');
 
@@ -112,7 +107,12 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const fetchData = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    await fetchHomepageTemplate(homepageCategoryId);
+    if (typeof homepageCategoryId === 'number') {
+      await fetchHomepageTemplate(homepageCategoryId);
+    } else {
+      isEditingDisabled.value = true;
+    }
+
     const mediaData = formatMediaData();
     const formattedHeroItems = formatHeroItems();
 
@@ -148,6 +148,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
         const firstItem = updatedData[0];
         hero.value = firstItem.hero;
         valueProposition.value = firstItem.valueProposition;
+      } else {
+        hero.value = [];
+        valueProposition.value = [];
       }
     },
     { deep: true },

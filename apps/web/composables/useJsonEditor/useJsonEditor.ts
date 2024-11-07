@@ -1,6 +1,8 @@
-export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
-const { setFormattedHeroItems } = useHomePageState();
+import { ref, watch, onMounted, nextTick } from 'vue';
+
 export const useJsonEditor = (initialJson: string) => {
+  const { setFormattedHeroItems } = useHomePageState();
+
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
@@ -32,12 +34,18 @@ export const useJsonEditor = (initialJson: string) => {
 
   const handleInput = () => {
     try {
+      if (jsonText.value.trim() === '') {
+        const noData: [] = [];
+        setFormattedHeroItems(noData);
+        updateLineCount();
+        return;
+      }
       const parsedData = JSON.parse(jsonText.value);
       setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
     } catch (error: any) {
-      errorMessage.value = 'Invalid JSON:' + error.message;
+      errorMessage.value = 'Invalid JSON: ' + error.message;
     }
   };
 
@@ -66,6 +74,8 @@ export const useJsonEditor = (initialJson: string) => {
   const clearText = () => {
     jsonText.value = '';
     errorMessage.value = '';
+    const noData: [] = [];
+    setFormattedHeroItems(noData);
     updateLineCount();
   };
 
