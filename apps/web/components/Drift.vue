@@ -1,10 +1,5 @@
 <template>
   <article class="demo-area">
-    <!--      <img-->
-    <!--        class="demo-trigger"-->
-    <!--        src="https://demos.imgix.net/wristwatch.jpg?w=200&ch=DPR&dpr=2&border=1,ddd"-->
-    <!--        data-zoom="https://demos.imgix.net/wristwatch.jpg?w=1000&ch=DPR&dpr=2"-->
-    <!--      />-->
     <slot></slot>
   </article>
 </template>
@@ -18,7 +13,11 @@ onMounted(() => {
 
   new Drift(demoTrigger, {
     paneContainer: paneContainer,
-    inlinePane: 1,
+    containInline: true,
+    zoomFactor: 3,
+    hoverBoundingBox: true,
+    inlinePane: 375,
+    handleTouch: true,
   });
 });
 </script>
@@ -34,13 +33,6 @@ onMounted(() => {
   width: 65%;
   margin-left: 5%;
   float: left;
-  button {
-    vertical-align: middle;
-    opacity: 0.5;
-    cursor: unset;
-    background: $color_invert_chrome_tint;
-    margin-left: 1em;
-  }
 }
 
 @media (max-width: 610px) {
@@ -71,5 +63,14 @@ onMounted(() => {
   h3 {
     margin-top: 20px;
   }
+}
+</style>
+
+<style>
+.drift-bounding-box {
+  border: none !important;
+  background: rgba(0, 0, 0, 0.5) !important;
+  width: 135px !important;
+  height: 135px !important;
 }
 </style>

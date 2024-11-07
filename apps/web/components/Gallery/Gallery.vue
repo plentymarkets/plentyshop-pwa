@@ -4,8 +4,6 @@
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
       ref="my-input"
-      @mouseover="mouse = true"
-      @mouseleave="mouse = false"
     >
       <SfScrollable
         class="flex items-center snap-x snap-mandatory scrollbar-hidden w-full h-full"
@@ -39,6 +37,8 @@
               @load="updateImageStatusFor(`gallery-img-${index}`)"
               :width="getWidth(image, productImageGetters.getImageUrl(image))"
               :height="getHeight(image, productImageGetters.getImageUrl(image))"
+              @mouseover="mouse = true"
+              @mouseleave="mouse = false"
             />
           </Drift>
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
@@ -233,7 +233,7 @@ const assignReference = (element: Element | ComponentPublicInstance | null, inde
 }
 .detail.active {
   height: 100%;
-  width: 600px;
+  width: 75%;
   top: 0;
   background: white;
   margin-left: 100%;
