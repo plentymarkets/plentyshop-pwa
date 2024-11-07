@@ -113,7 +113,6 @@ export const useHomePageState: UseHomepageDataReturn = () => {
 
   const setFormattedHeroItems = (item: any) => {
     state.value.data = item;
-    console.log('setFormattedHeroItems', state.value.data);
   };
 
   watch(
