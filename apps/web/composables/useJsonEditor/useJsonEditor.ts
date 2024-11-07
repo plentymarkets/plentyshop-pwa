@@ -1,4 +1,3 @@
-export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
 const { setFormattedHeroItems } = useHomePageState();
 export const useJsonEditor = (initialJson: string) => {
   const errorMessage = ref('');

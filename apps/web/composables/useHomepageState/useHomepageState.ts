@@ -118,9 +118,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     state.value.loading = false;
 
     if (state.value.data.length > 0) {
-      const firstItem = state.value.data[0];
-      hero.value = firstItem.hero;
-      valueProposition.value = firstItem.valueProposition;
+      const homepage = state.value.data[0];
+      hero.value = homepage.hero;
+      valueProposition.value = homepage.valueProposition;
     }
   };
 
@@ -137,9 +137,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     () => state.value.data,
     (updatedData) => {
       if (updatedData.length > 0) {
-        const firstItem = updatedData[0];
-        hero.value = firstItem.hero;
-        valueProposition.value = firstItem.valueProposition;
+        const homepage = updatedData[0];
+        hero.value = homepage.hero;
+        valueProposition.value = homepage.valueProposition;
       }
     },
     { deep: true },

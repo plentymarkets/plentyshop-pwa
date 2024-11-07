@@ -48,5 +48,6 @@ const { t } = useI18n();
 
 onMounted(async () => {
   await fetchData();
+  // console.log(data);
 });
 </script>
