@@ -28,7 +28,12 @@
           class="ml-2"
           :label="!editing && !showNewForm && !disabled ? t('editAddress') : ''"
         >
-          <UiButton @click="edit(checkoutAddress)" :disabled="formIsLoading || disabled" variant="secondary" :data-testid="'edit-address-' + type">
+          <UiButton
+            @click="edit(checkoutAddress)"
+            :disabled="formIsLoading || disabled"
+            variant="secondary"
+            :data-testid="'edit-address-' + type"
+          >
             <template v-if="!editing && !showNewForm">{{ t('contactInfo.edit') }}</template>
             <SfIconClose v-else />
           </UiButton>
