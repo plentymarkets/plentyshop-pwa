@@ -1,12 +1,12 @@
 <template>
   <form
     @submit.prevent="handleAddToCart()"
-    class="p-4 xl:p-6 md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
+    class="md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
     <div class="relative">
       <div class="drift-zoom-image">
-        <section>
+        <section class="p-4 xl:p-6">
           <div class="grid grid-cols-[2fr_1fr] mt-4">
             <h1 class="font-bold typography-headline-4" data-testid="product-name">
               {{ productGetters.getName(product) }}

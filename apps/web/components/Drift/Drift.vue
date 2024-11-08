@@ -6,9 +6,12 @@
 
 <script setup lang="ts">
 import Drift from 'drift-zoom';
+import type { DriftProps } from '~/components/Drift/types';
+
+const { index } = defineProps<DriftProps>();
 
 onMounted(() => {
-  let demoTrigger = document.querySelector('.demo-trigger') as HTMLElement;
+  let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
   let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
   new Drift(demoTrigger, {
@@ -18,16 +21,12 @@ onMounted(() => {
     hoverBoundingBox: true,
     inlinePane: 375,
     handleTouch: true,
+    touchDelay: 200,
   });
 });
 </script>
 
 <style scoped>
-.demo-trigger {
-  display: inline-block;
-  width: 30%;
-}
-
 .detail {
   position: relative;
   width: 65%;

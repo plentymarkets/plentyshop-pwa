@@ -19,14 +19,14 @@
           :key="`image-${index}-thumbnail`"
           class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
         >
-          <Drift>
+          <Drift :index="index">
             <NuxtImg
               :id="`gallery-img-${index}`"
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
               :aria-hidden="activeIndex !== index"
               fit="fill"
-              class="object-contain h-full w-full demo-trigger"
+              :class="`object-contain h-full w-full demo-trigger-${index}`"
               :data-zoom="productImageGetters.getImageUrl(image)"
               :quality="80"
               :src="productImageGetters.getImageUrl(image)"
