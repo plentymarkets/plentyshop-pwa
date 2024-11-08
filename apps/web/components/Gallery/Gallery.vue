@@ -37,8 +37,6 @@
               @load="updateImageStatusFor(`gallery-img-${index}`)"
               :width="getWidth(image, productImageGetters.getImageUrl(image))"
               :height="getHeight(image, productImageGetters.getImageUrl(image))"
-              @mouseover="mouse = true"
-              @mouseleave="mouse = false"
             />
           </Drift>
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
@@ -122,7 +120,7 @@
         />
       </div>
     </div>
-    <div class="detail" :class="{ active: mouse }"></div>
+    <div v-if="isMobile" class="drift-zoom-image" />
   </div>
 </template>
 
@@ -134,8 +132,8 @@ import type { ImagesData } from '@plentymarkets/shop-api';
 import { productImageGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
-const mouse = ref(false);
 const props = defineProps<{ images: ImagesData[] }>();
+const viewport = useViewport();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
@@ -146,6 +144,7 @@ const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
 const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
+const isMobile = computed(() => viewport.isLessThan('md'));
 
 onMounted(() => {
   nextTick(() => {
@@ -226,18 +225,3 @@ const assignReference = (element: Element | ComponentPublicInstance | null, inde
   if (index === 0) firstThumbReference.value = element as HTMLButtonElement;
 };
 </script>
-
-<style scoped>
-.detail {
-  position: absolute;
-}
-.detail.active {
-  height: 100%;
-  width: 75%;
-  top: 0;
-  background: white;
-  margin-left: 100%;
-  z-index: 10;
-  border: 1px solid black;
-}
-</style>

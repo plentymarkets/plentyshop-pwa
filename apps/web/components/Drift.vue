@@ -9,7 +9,7 @@ import Drift from 'drift-zoom';
 
 onMounted(() => {
   let demoTrigger = document.querySelector('.demo-trigger') as HTMLElement;
-  let paneContainer = document.querySelector('.detail') as HTMLElement;
+  let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
   new Drift(demoTrigger, {
     paneContainer: paneContainer,
@@ -67,10 +67,14 @@ onMounted(() => {
 </style>
 
 <style>
+.drift-zoom-pane {
+  background: white;
+}
+
 .drift-bounding-box {
   border: none !important;
   background: rgba(0, 0, 0, 0.5) !important;
-  width: 135px !important;
-  height: 135px !important;
+  width: 160px !important;
+  height: 160px !important;
 }
 </style>
