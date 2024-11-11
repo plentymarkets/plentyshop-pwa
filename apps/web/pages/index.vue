@@ -1,6 +1,9 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
+    <div class="flex items-center justify-center h-full mt-5">
+      <SfLoaderCircular v-if="!heroLoaded" class="animate-spin" size="4xl" />
+    </div>
     <UiHeroCarousel v-if="heroLoaded" :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
@@ -15,12 +18,6 @@
         />
       </div>
     </NuxtLazyHydrate>
-
-    <!-- <div>
-      <h1>Content</h1>
-      {{ data }}
-    </div> -->
-
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <section class="mb-10 overflow-hidden">
@@ -38,6 +35,7 @@
 </template>
 
 <script lang="ts" setup async>
+import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing } = useEditor();
 const { recommendedProductsCategoryId } = await useHomepageData();
 const { hero, valueProposition, fetchData } = useHomePageState();
