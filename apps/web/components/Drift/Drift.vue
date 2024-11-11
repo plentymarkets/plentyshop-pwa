@@ -10,6 +10,8 @@ import './Drift.scss';
 import type { DriftProps } from '~/components/Drift/types';
 
 const { index } = defineProps<DriftProps>();
+const viewport = useViewport();
+const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 
 onMounted(() => {
   let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
@@ -18,11 +20,11 @@ onMounted(() => {
   new Drift(demoTrigger, {
     paneContainer: paneContainer,
     containInline: true,
-    zoomFactor: 3,
+    zoomFactor: isDesktop.value ? 3 : 2,
     hoverBoundingBox: true,
     handleTouch: true,
     touchDelay: 300,
-    inlineOffsetY: -85,
+    inlinePane: 768,
     injectBaseStyles: true,
   });
 });
