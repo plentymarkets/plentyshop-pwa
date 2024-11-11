@@ -2,6 +2,7 @@ import {
   FetchCategoryTemplate,
   UseCategoryTemplateReturn,
   UseCategoryTemplateState,
+  SetCategoryTemplate,
 } from '~/composables/useCategoryTemplate/types';
 
 export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
@@ -29,8 +30,20 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
     return data;
   };
 
+  const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
+    state.value.loading = true;
+    const { data } = await useSdk().plentysystems.setCategoryTemplate({
+      id: categoryId,
+      content: content,
+    });
+    state.value.loading = false;
+    state.value.data = data;
+    return data;
+  };
+
   return {
     fetchCategoryTemplate,
+    setCategoryTemplate,
     ...toRefs(state.value),
   };
 };

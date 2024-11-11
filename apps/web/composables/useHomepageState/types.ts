@@ -18,6 +18,7 @@ export interface UseHomepage {
   loading: Readonly<Ref<boolean>>;
   showErrors: Readonly<Ref<boolean>>;
   fetchData: () => Promise<void>;
+  saveData: () => Promise<void>;
   hero: Readonly<Ref<HeroContentProps[]>>;
   valueProposition: Readonly<Ref<MediaItemProps[]>>;
   setFormattedHeroItems: (items: HomeData[]) => void;

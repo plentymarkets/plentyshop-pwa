@@ -133,6 +133,15 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   };
 
   /**
+   * @description Saves the homepage data
+   */
+  const saveData = async (): Promise<void> => {
+    const { setCategoryTemplate } = useCategoryTemplate();
+    const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+    await setCategoryTemplate(homepageCategoryId, JSON.stringify(state.value.data));
+  };
+
+  /**
    * @description Sets the formatted hero items in the state
    * @param item An array of HomeData objects
    */
@@ -158,6 +167,7 @@ export const useHomePageState: UseHomepageDataReturn = () => {
 
   return {
     fetchData,
+    saveData,
     ...toRefs(state.value),
     setFormattedHeroItems,
     hero,

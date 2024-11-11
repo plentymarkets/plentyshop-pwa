@@ -10,7 +10,13 @@
       >
         {{ isEditing ? 'Preview' : 'Edit' }}
       </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start" :disabled="isEditingDisabled">
+      <UiButton
+        variant="secondary"
+        :size="buttonSize"
+        class="self-start"
+        :disabled="isEditingDisabled"
+        @click="saveData"
+      >
         Save
       </UiButton>
     </div>
@@ -24,6 +30,8 @@ const viewport = useViewport();
 const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
+
+const { saveData } = useHomePageState();
 
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
