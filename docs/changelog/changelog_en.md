@@ -3,6 +3,7 @@
 ## v1.x.x (yyyy-mm-dd)
 
 ### New
+
 - Added PWA cookie hash to sdk client
 
 ### 👷 Changed
