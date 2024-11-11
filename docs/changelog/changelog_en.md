@@ -8,6 +8,7 @@
 
 ### 🩹 Fixed
 
+- Load more accurate images sizes for product page.
 - Reload page after login so the customer class affects prices and categories
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
@@ -130,7 +131,6 @@
 
 ### 🩹 Fixed
 
-- Item image now loads image url based on format and viewport
 - Fixed `withDefaults() is unnecessary when using destructure with defineProps()` terminal error.
 - Fixed the REST call to fetch the remote configuration in the build process.
 - Fixed middleware calls being stuck in an infinite loop.
