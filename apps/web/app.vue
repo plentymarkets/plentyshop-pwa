@@ -2,7 +2,7 @@
   <Body class="font-body" :class="bodyClass" />
   <UiNotifications />
   <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
-  <NuxtLoadingIndicator />
+  <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
