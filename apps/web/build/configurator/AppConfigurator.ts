@@ -16,6 +16,7 @@ dotenv.config({
 export class AppConfigurator {
   private environmentMap = {
     FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
+    API_URL: process.env.API_URL,
     API_ENDPOINT: process.env.API_ENDPOINT,
     API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
     CONFIG_ID: process.env.CONFIG_ID,

@@ -112,15 +112,9 @@ const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } 
 
 const { loading: loadBilling } = useAddress(AddressType.Billing);
 const { loading: loadShipping } = useAddress(AddressType.Shipping);
-const {
-  useGeoRegulatedCountries,
-  default: defaultCountries,
-  geoRegulated: geoRegulatedCountries,
-} = useAggregatedCountries();
+const { billingCountries, default: defaultCountries } = useAggregatedCountries();
 
-const countries = computed(() =>
-  type === AddressType.Billing && useGeoRegulatedCountries ? geoRegulatedCountries.value : defaultCountries.value,
-);
+const countries = computed(() => (type === AddressType.Billing ? billingCountries.value : defaultCountries.value));
 const isCartUpdateLoading = computed(() => loadBilling.value || loadShipping.value);
 const useAsShippingAddress = ref(useAsShippingDefault);
 const savedAddress = propertySavedAddress || ({} as Address);
