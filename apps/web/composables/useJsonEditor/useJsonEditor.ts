@@ -79,7 +79,6 @@ export const useJsonEditor = (initialJson: string) => {
     jsonText.value = '';
     errorMessage.value = '';
     const noData: [] = [];
-    isEditingDisabled.value = true;
     setFormattedHeroItems(noData);
     updateLineCount();
   };
