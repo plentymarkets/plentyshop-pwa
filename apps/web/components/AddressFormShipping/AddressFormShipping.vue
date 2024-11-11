@@ -117,11 +117,13 @@
         v-model="country"
         v-bind="countryAttributes"
         :placeholder="$t('form.selectPlaceholder')"
-        autocomplete="country-name"
         :invalid="Boolean(errors['country'])"
+        wrapper-class-name="bg-white"
+        class="!ring-1 !ring-neutral-200"
+        autocomplete="country-name"
       >
         <option
-          v-for="(shippingCountry, index) in defaultCountries"
+          v-for="(shippingCountry, index) in shippingCountries"
           :key="`shipping-country-${index}`"
           :value="shippingCountry.id.toString()"
         >
@@ -147,7 +149,7 @@ import { type Address, AddressType, userAddressGetters } from '@plentymarkets/sh
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
-const { default: defaultCountries } = useAggregatedCountries();
+const { default: shippingCountries } = useAggregatedCountries();
 const { disabled: disabledShippingAsBilling, shippingAsBilling } = useShippingAsBilling();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);

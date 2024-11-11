@@ -55,6 +55,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const ID_CHECKBOX = '#terms-checkbox';
 const { isAuthorized } = useCustomer();
+const { getSession } = useCustomer();
 const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
@@ -71,7 +72,6 @@ const route = useRoute();
 const localePath = useLocalePath();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
 const { persistShippingAddress, persistBillingAddress } = useCheckout();
-const { getActiveShippingCountries } = useActiveShippingCountries();
 
 const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
 const paymentMethods = computed(() => paymentMethodData.value);
@@ -81,7 +81,7 @@ const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
 const fetchShippingAndPaymentMethods = async () => {
   try {
     await Promise.all([
-      getActiveShippingCountries(),
+      useAggregatedCountries().fetchAggregatedCountries(),
       getShippingMethods(),
       fetchPaymentMethods().then(
         async () =>
@@ -132,8 +132,8 @@ const handleGuestUserInit = async () => {
 };
 
 onNuxtReady(async () => {
-  // await getSession();
-  // if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
+  await getSession();
+  if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
   isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });
 
