@@ -5,6 +5,7 @@
 ### New
 
 - Added PWA cookie hash to sdk client
+- Added progress loading indicator animation when navigating between pages.
 
 ### 👷 Changed
 
