@@ -20,7 +20,7 @@ const createHttpClient = () => {
       if (referrerId) request.headers['referrerID'] = referrerId;
       if (noCache) request.headers['noCache'] = noCache;
       if (configId) request.headers['x-config-id'] = configId;
-      if (pwaHashCookie) request.headers['x-pwa-edit-hash'] = pwaHashCookie.value;
+      if (pwaHashCookie.value) request.headers['x-pwa-edit-hash'] = pwaHashCookie.value;
 
       if (import.meta.server) {
         request.headers['cookie'] = updateVsfLocale(request.headers['cookie'], $i18n.locale.value);
