@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts" setup async>
-const isEditing = useEditor();
+const { isEditing } = useEditor();
 
 const { recommendedProductsCategoryId } = await useHomepageData();
 const { hero, valueProposition, fetchData } = useHomePageState();

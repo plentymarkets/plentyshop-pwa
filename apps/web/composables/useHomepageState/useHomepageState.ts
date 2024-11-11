@@ -26,23 +26,29 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
 
 const homepageTemplate = ref(homepageTemplateData);
 const runtimeConfig = useRuntimeConfig();
+const { isEditingDisabled } = useEditor();
 
 /**
  * @description Fetches the homepage template data for a given category ID
  * @param homepageCategoryId The ID of the homepage category to fetch the template for
  */
+const isEmptyObject = (obj: any) => {
+  return Object.keys(obj).length === 0;
+};
 const fetchHomepageTemplate = async (homepageCategoryId: number) => {
   const { fetchCategoryTemplate } = useCategoryTemplate();
   const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data);
-  if (parsedData) {
-    homepageTemplate.value = {
-      id: parsedData.id,
-      hero: parsedData.hero || [],
-      valueProposition: parsedData.valueProposition,
-      featured: parsedData.featured,
-    };
-  }
+  const parsedData = JSON.parse(data || '{}');
+
+  homepageTemplate.value =
+    parsedData && !isEmptyObject(parsedData)
+      ? {
+          id: parsedData.id,
+          hero: parsedData.hero || [],
+          valueProposition: parsedData.valueProposition,
+          featured: parsedData.featured,
+        }
+      : homepageTemplateData;
 };
 
 /**
@@ -103,6 +109,8 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
       await fetchHomepageTemplate(homepageCategoryId);
+    } else {
+      isEditingDisabled.value = true;
     }
 
     const mediaData = formatMediaData();
@@ -118,9 +126,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     state.value.loading = false;
 
     if (state.value.data.length > 0) {
-      const homepage = state.value.data[0];
-      hero.value = homepage.hero;
-      valueProposition.value = homepage.valueProposition;
+      const firstItem = state.value.data[0];
+      hero.value = firstItem.hero;
+      valueProposition.value = firstItem.valueProposition;
     }
   };
 
@@ -137,9 +145,12 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     () => state.value.data,
     (updatedData) => {
       if (updatedData.length > 0) {
-        const homepage = updatedData[0];
-        hero.value = homepage.hero;
-        valueProposition.value = homepage.valueProposition;
+        const firstItem = updatedData[0];
+        hero.value = firstItem.hero;
+        valueProposition.value = firstItem.valueProposition;
+      } else {
+        hero.value = [];
+        valueProposition.value = [];
       }
     },
     { deep: true },
