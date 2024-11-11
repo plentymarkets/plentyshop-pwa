@@ -24,7 +24,6 @@
             :name="productGetters.getName(product) ?? ''"
             :rating-count="productGetters.getTotalReviews(product)"
             :rating="productGetters.getAverageRating(product, 'half')"
-            :price="actualPrice(product)"
             :image-url="addModernImageExtension(getImageForViewport(product, 'Wishlist'))"
             :image-alt="
               productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
@@ -64,26 +63,26 @@
         {{ $t('emptyWishlist') }}
       </h2>
     </div>
+    <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="products.length > 0">
+      <span>{{ $t('asterisk') }}</span>
+      <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+      <span v-else>{{ $t('itemInclVAT') }}</span>
+      <span>{{ $t('excludedShipping') }}</span>
+    </div>
   </NarrowContainer>
 </template>
 
 <script setup lang="ts">
-import { type Product, productGetters, productImageGetters } from '@plentymarkets/shop-api';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
-withDefaults(defineProps<WishlistPageContentProps>(), { withHeader: true });
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
+const { withHeader = true } = defineProps<WishlistPageContentProps>();
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
 const { fetchWishlist, data: products, loading } = useWishlist();
-
-const actualPrice = (product: Product): number => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
-  return 0;
-};
 
 fetchWishlist();
 </script>

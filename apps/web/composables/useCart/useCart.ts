@@ -4,8 +4,7 @@ import {
   SetCartItemQuantityParams,
   DeleteCartItemParams,
   CartItem,
-  Product,
-  cartGetters,
+  CartItemError,
 } from '@plentymarkets/shop-api';
 import {
   type UseCartReturn,
@@ -40,6 +39,10 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
   return nextCart;
 };
 
+const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
+  return 'availableStock' in data;
+};
+
 /**
  * @description Composable for managing cart.
  * @returns UseCartReturn
@@ -55,7 +58,7 @@ export const useCart: UseCartReturn = () => {
     data: {} as Cart,
     useAsShippingAddress: true,
     loading: false,
-    lastUpdatedProduct: {} as Product,
+    lastUpdatedCartItem: {} as CartItem,
   }));
 
   /**
@@ -127,7 +130,7 @@ export const useCart: UseCartReturn = () => {
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
       if (item) {
-        state.value.lastUpdatedProduct = cartGetters.getVariation(item) || ({} as Product);
+        state.value.lastUpdatedCartItem = item;
       }
 
       return !!data.value;
@@ -188,9 +191,19 @@ export const useCart: UseCartReturn = () => {
           cartItemId: params.cartItemId,
         }),
       );
+
       useHandleError(error.value);
 
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      if (isCartItemError(data.value?.data as unknown as Cart | CartItemError)) {
+        const { $i18n } = useNuxtApp();
+        const { send } = useNotification();
+        const responseData = data?.value?.data as CartItemError;
+        state.value.data.itemQuantity = responseData.availableStock;
+
+        send({ message: $i18n.t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
+      } else {
+        state.value.data = migrateVariationData(state.value.data, data?.value?.data as Cart) ?? state.value.data;
+      }
 
       return state.value.data;
     } catch (error) {
@@ -230,6 +243,8 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  const cartIsEmpty = computed(() => !state.value.data?.items?.length);
+
   return {
     setCart,
     clearCartItems,
@@ -238,6 +253,7 @@ export const useCart: UseCartReturn = () => {
     addItemsToCart,
     deleteCartItem,
     getCart,
+    cartIsEmpty,
     ...toRefs(state.value),
   };
 };

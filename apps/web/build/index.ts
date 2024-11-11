@@ -25,6 +25,7 @@ const main = async () => {
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
     appConfigurator.generateEnvironment(systemConfiguration.getResponse());
     appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
+    appConfigurator.generateLanguageFiles(systemConfiguration.getLanugages());
 
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);

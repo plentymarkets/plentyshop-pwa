@@ -14,11 +14,12 @@
         <OrDivider />
         <div v-if="isAvailable">
           <PayPalExpressButton v-if="!loginSubmit" class="mt-4" type="CartPreview" />
+          <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
           <OrDivider />
         </div>
         <div class="w-[400px] mt-4">
           <form @submit.prevent="loginUser">
-            <h1 class="font-bold text-lg">{{ $t('loginFastCheckout') }}</h1>
+            <h2 class="font-bold text-lg">{{ $t('loginFastCheckout') }}</h2>
             <label>
               <UiFormLabel class="w-full mt-4">{{ $t('form.emailLabel') }}</UiFormLabel>
               <SfInput class="w-full" name="email" type="email" autocomplete="email" v-model="email" required />
@@ -54,9 +55,11 @@
 <script setup lang="ts">
 import { SfInput, SfLoaderCircular } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
+import { cartGetters } from '@plentymarkets/shop-api';
 
 const { login, isAuthorized, loading } = useCustomer();
 const { send } = useNotification();
+const { data: cart } = useCart();
 const { isAvailable, loadConfig } = usePayPal();
 const { t } = useI18n();
 const localePath = useLocalePath();

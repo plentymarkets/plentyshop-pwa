@@ -1,6 +1,60 @@
 # Changelog plentyshopPWA
 
-## v1.6.0
+## v1.x.x (yyyy-mm-dd)
+
+### 👷 Changed
+
+- Newsletter email confirmation
+
+### 🩹 Fixed
+
+- Reload page after login so the customer class affects prices and categories
+
+## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Google Pay and Apple Pay are now available as payment methods in the checkout.
+- Clicking the **Buy** button with an unsaved address now displays a notification.
+- To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
+- The product title display now supports custom titles. You can set the custom title on the item. If no custom title is set, the default "Item name | Company name" is used.
+- Added tax and shipping note to the wishlist page.
+- Added a new request header for the `configId`.
+- Added the environment variable `NO_CACHE` for disabling caching.
+- The hero banner and media card now support alt text properties for images.
+- Enabled font color customization for the hero banner via a template property.
+- Added a new carousel compoment.
+- Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
+
+### 🩹 Fixed
+
+- Addressed an unhandled scenario in which a guest user attempts to modify their billing address while using the same address for shipping.
+- Fixed an issue where increasing the quantity beyond maximum stock would clear the cart.
+- Removed the "Add to Cart" notification from item and category pages when the quick checkout modal is not present.
+- Improved accessibility for the cart and wishlist pages by increasing the font size.
+- Fixed an issue where the product path was not reactive when the category was changed.
+- The build now automatically generates a language file for every active language, not just the default language.
+- Resolved an issue where the soft login was still shown after successful authentication on the order confirmation page.
+- Corrected manufacturer data to use `externalName` instead of `name` in structured data.
+- Updated headlines to use the configured font.
+- Fixed layout shift on the category page.
+- Resolved build script failure on Windows due to file name pattern incompatibilities.
+- The build script now adds the `API_URL` to the environment if it exists.
+
+### 👷 Changed
+
+- Implemented a new notification design.
+- Increased default notification timeout from 3 to 5 seconds.
+- The `height` and `width` attributes set in Terra UI are now used only for full-size images of an item.
+- Moved the generation of missing language files based on the environment's language configuration to the build script. The locale configuration is now based on the language files in the `lang` directory.
+- Started unifying SDK/API error handling. Errors now return keys that can be translated in the frontend.
+- Improved manufacturer visuals.
+- Updated manufacturer translation text.
+- Added support for a second argument to the payment status on an order. This allows you to define custom translations for different payment states.
+- When trying to access the checkout with an empty cart, or if the user empties the cart during the checkout process, the user is now redirected to the cart.
+- The logo container is now more flexible and adapts to the dimensions of the provided logo.
+
+## v1.6.0 (2024-10-10) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.5.0...v1.6.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### TODO 📙 Migration guide
 
@@ -16,68 +70,123 @@
   - `100` -> `50`
 - Replace all instances of `SfButton` with `UiButton`.
 - Update the variable name `NEWSLETTER_FORM_SHOW_NAMES` to `NEWSLETTERFORMNAMES` in your environment.
+- Update the variable name `USE_AVIF` to `IMAGEAVIF` in your environment.
+- Update the variable name `USE_WEBP` to `IMAGEWEBP` in your environment.
 
 ### 🚀 New
 
-- The app now uses Referrer ID in order to display the appropiate price change.
-- The app now reads metadata, such as description and keywords, from the environment.
-- The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
-- The app now reads which Google Fonts to use from the environment.
-- The app now reads whether to display the newsletter signup form on the homepage from the environment.
-- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
+#### Functionality
+
+- A new page was added to the webshop for presenting offers. Users can accept or reject offers directly on this page, and upon acceptance, an order is automatically created.
+- Product pages now display the EU responsible person of the manufacturer.
+- The app now takes into consideration the referrer ID to display the correct price.
+- Reorders now support order properties.
+- Reorders now check for available stock.
+
+#### Dev tools
+
+- For debugging, you can now disable API caching with the query param `noCache=1`.
+
+#### Payment
+
+- PayPal's Pay Later banner is now displayed on product pages, the cart, checkout and quick checkout.
+- Updated the PayPal form for credit card information.
+- The quick checkout now displays variation properties.
+- The order confirmation page now displays bank details if the payment method is cash in advance.
+
+#### Configuration
+
 - The app can now fetch the Favicon from the plentysystems system.
 - The app can now fetch the logo from the plentysystems system.
-- The order again feature supports and shows order properties.
-- Make the paypal button lazyload for PS
-- Added dynamic metadata for products and categories.
-- Added stock check for the order again feature.
-- Unify html nodes on category page to use h6 node
-- Implement Applepay as a payment method
-- Added dynamic title and alternate for product images
-- Added e2e tests for reviews pagination.
-- Added canonical meta tags to product items
-- Added variation properties for quick checkout, considering order process visibility.
-- Added labels for both min and max price filters
-- Changed font size of wishlist icon counter and cart icon counter
-- Added better contrast for `Verfied purchase` text in feedback.
-- Changed font size of wishlist icon counter and cart icon counter.
-- Added the appropriate size for the cookie bar elements in order to pass the Google PSI.
+- The app now reads which Google Fonts to use from the environment.
+- The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
+- The app now reads the internationalisation configuration from the environment. This includes the available languages and the default language.
+- The app now reads whether to display the newsletter signup form on the homepage from the environment.
+- The homepage template can now be configured via a category template.
+- The footer and `shop-name` meta field now use the shop name.
+
+#### SEO
+
+- The app now reads the head title and title suffix from the environment.
+- The app now reads metadata for products and categories, from the environment.
+- The app now reads title and alternate for product images, from the environment.
+- The app now reads metadata, such as description and keywords, from the environment.
+- The app now reads the minimum required Open Graph data, that is the title, image, and endpoint, from the environment.
+- Added canonical meta tags to product items.
+
+#### Page speed
+
+- Added cache-control for all static images to improve caching policy.
+- Shop logo is now preloaded.
+
+#### Accessibility Improvements
+
+- Added table header in the MyAccount.
+- Changed contrast for `Verfied purchase` text in feedback to increase accessibility.
 - Added label tags for inputs in `NewsletterSubscribe.vue` component.
+- Added labels for both min and max price filters.
+- Increased size of wishlist and cart icon counter.
+- Changed size for the cookie bar elements to increase accessibility.
 
 ### 🩹 Fixed
 
 - Item image now loads image url based on format and viewport
 - Shop logo is now preloaded.
+- Fixed `withDefaults() is unnecessary when using destructure with defineProps()` terminal error.
 - Fixed the REST call to fetch the remote configuration in the build process.
-- Fixed: middleware calls being stuck in an infinite loop
+- Fixed middleware calls being stuck in an infinite loop.
 - Fixed tailwind css double import.
 - Fixed a deadspot in the viewport for the navigation bar.
-- Added link color on item variation properties
+- Added link color on item variation properties.
 - Fixed pagination issues with reactivity.
-- Fixed wrongful display of base prices issue.
+- Fixed wrongful display of base prices.
 - Fixed setting the vsf-locale cookie on ssr.
 - The side navigation of the automatically generated composables documentation now contains the correct links.
-- Fixed editing author name on reviews and replies with added e2e
-- Fixed the issue with the plentyID-cookie in the PWA live preview
+- Fixed editing author name on reviews and replies with added e2e.
+- Fixed the issue with the plentyID-cookie in the PWA live preview.
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
 - Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
 - Fixed orphaned form label on product page attributes.
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
+- Fixed DE translation regarding VAT.
+- Fixed wrong price issues.
+- Base price display on minimum order quantity.
+- Display fonts now use the configured font family.
+- Incorrect display of the PayPal loader
+- Fixed my orders actions paddings and cookie bar link sizes.
+- Fixed basket accesibilty issues.
+- Fixed broken aria reference in cournty select and login modal.
+- Fixed addtobasket overlay accesibilty issues.
+- Fixed login page accesibilty issues.
 
 ### 👷 Changed
 
+- Addresses: Enhanced `Address` interaction with a new, streamlined design, improved UX, and a more intuitive structure.
+- Addresses in read-only checkout are now displayed as non-editable and appear disabled.
+- Unify html nodes on category page to use `h6` node.
 - Added display of file properties with download links for items.
 - Ensure the design of order properties and variation properties is consistent.
-- Cookiebar icon has been replaced
-- Checkout address buttons in the mobile view have been adjusted
+- Cookiebar icon has been replaced.
+- Checkout address buttons in the mobile view have been adjusted.
 - The configuration files for app, cookie, interntaionlisation, and Tailwind settings have been moved to the `apps/web/configuration` folder.
-- Changes to item reviews logic in order to use the feedback api ms
+- Changes to item reviews logic in order to use the new feedback API.
 - The order confirmation page url from `.../thank-you?[...]` to `.../confirmation/orderId/accessKey`.
 - Remove cookie browser language detect.
-- Set page title for items and categories instead of title metadata
+- Set page `title` for items and categories instead of `meta-title`.
 - Refactor of reviews functionality for better performance and maintainability.
-- PayPal: We now use card fields instead of hosting fields for credit card payments.
+- Change the file item property color to blue in the quick checkout.
+- Changed the name of the Cloudflare Turnstile Sitekey environment variable to make it compatible with the system configuration.
+- Eliminate the separate review average fetch by retrieving data directly from the reviews request.
+- Resize demo favicon to 3 kb.
+- The whole application uses the same font family now.
+- Change the mobile design of the cookie bar layout.
+- Modified manufacturer data appearance.
+
+### 🏡 Chore
+
+- Removed unnecessary Vue imports
+- Updated Nuxt to 3.13.1 (includes Vue 3.5.0) for increased performance and stability.
 
 ## v1.5.0 (2024-07-19) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.4.1...v1.5.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -200,6 +309,8 @@
 - The design of the sitemap has been adjusted.
 - Mark optional and required form fields.
 - Structure of the useProduct composable
+- Value proposition elements have been updated to receive indication if the image should be on the left or right.
+- Value proposition allows now for multiple entries.
 
 ## v1.4.0 (2024-04-15) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0" target="_blank" rel="noopener">
 
@@ -268,6 +379,7 @@
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
+- Refactored index.vue
 
 ## New Contributors
 
@@ -301,6 +413,8 @@
 
 ### Fixed
 
+- Removed demo how-to-buy section from footer.
+- Fixed Order properties responsiveness bug
 - Addresses in the checkout now update properly.
 - The PayPal buttons now show the correct text depending on the location of the button.
 - The mega menu no longer displays categories without a label.

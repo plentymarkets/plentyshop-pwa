@@ -30,13 +30,6 @@
       </div>
     </div>
 
-    <div class="row mt-5">
-      <label class="hosted-fields--label">
-        <UiFormLabel class="pl-2">{{ t('paypal.unbrandedNameOnCard') }}</UiFormLabel>
-        <div id="credit-card-name"></div>
-      </label>
-    </div>
-
     <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
     <div class="flex justify-end gap-x-4 mt-6">
@@ -63,15 +56,14 @@ import { CardFieldsOnApproveData } from '@paypal/paypal-js';
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
 const { send } = useNotification();
-const { loadScript, createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
+const { getScript, createCreditCardTransaction, captureOrder, executeOrder } = usePayPal();
 const { createOrder } = useMakeOrder();
 const loading = ref(false);
 const emit = defineEmits(['confirmPayment', 'confirmCancel']);
 const localePath = useLocalePath();
 const { t } = useI18n();
-
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
-const paypal = await loadScript(currency.value);
+const paypal = await getScript(currency.value);
 
 const confirmCancel = () => {
   emit('confirmCancel');
@@ -115,6 +107,7 @@ onMounted(() => {
         });
 
         if (order?.order?.id) {
+          useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
           navigateTo(
@@ -154,11 +147,6 @@ onMounted(() => {
         placeholder: 'MM/YY',
       });
       expiry.render('#expiration-date');
-
-      const name = cardFields.NameField({
-        placeholder: t('contact.form.nameLabel'),
-      });
-      name.render('#credit-card-name');
 
       button?.addEventListener('click', () => {
         cardFields.submit();

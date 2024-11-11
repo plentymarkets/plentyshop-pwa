@@ -2,11 +2,11 @@
   <NuxtLayout
     name="checkout"
     :back-to-cart="false"
-    :back-label-desktop="$t('back')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('myCart')"
+    :back-label-desktop="t('back')"
+    :back-label-mobile="t('back')"
+    :heading="t('myCart')"
   >
-    <div v-if="cartNotEmpty" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
+    <div v-if="!cartIsEmpty" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
       <div class="col-span-7 mb-2 md:mb-0">
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
@@ -24,28 +24,36 @@
             size="lg"
             class="w-full mb-4 md:mb-0"
           >
-            {{ $t('goToCheckout') }}
+            {{ t('goToCheckout') }}
           </UiButton>
-          <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
+          <client-only>
+            <PayPalExpressButton :disabled="loading" class="mt-4" type="CartPreview" />
+            <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+          </client-only>
         </OrderSummary>
       </div>
     </div>
     <div v-else class="flex items-center justify-center flex-col pt-24 pb-32" data-testid="cart-page-content">
-      <h2 class="mt-8 typography-headline-3 font-bold">{{ $t('emptyCart') }}</h2>
+      <h2 class="mt-8 typography-headline-3 font-bold">{{ t('emptyCart') }}</h2>
     </div>
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import { cartGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
+const { send } = useNotification();
+const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { isAuthorized } = useCustomer();
-const { data: cart, loading } = useCart();
-const cartNotEmpty = computed(() => (cart.value?.items?.length ?? 0) > 0);
+const { data: cart, cartIsEmpty, loading } = useCart();
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
+onNuxtReady(() => {
+  if (cartIsEmpty.value) send({ type: 'neutral', message: t('emptyCartNotification') });
+});
 </script>

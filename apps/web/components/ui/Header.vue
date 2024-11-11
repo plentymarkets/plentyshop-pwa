@@ -41,8 +41,10 @@
             <SfIconFavorite />
             <SfBadge
               :content="wishlistItemIds.length"
-              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-xs !leading-3"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="wishlist-badge"
+              placement="top-right"
+              :max="99"
             />
           </template>
         </UiButton>
@@ -58,8 +60,10 @@
             <SfIconShoppingCart />
             <SfBadge
               :content="cartItemsCount"
-              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center text-xs !leading-3"
+              class="outline outline-primary-500 bg-white !text-neutral-900 group-hover:outline-primary-800 group-active:outline-primary-700 flex justify-center items-center text-xs min-w-[16px] min-h-[16px]"
               data-testid="cart-badge"
+              placement="top-right"
+              :max="99"
             />
           </template>
         </UiButton>
@@ -113,7 +117,7 @@
           @click="open = true"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
-          aria-label="Open configuration drawer"
+          :aria-label="t('openConfigurationDrawer')"
           square
         >
           <SfIconTune />
@@ -149,10 +153,15 @@
     v-model="isAuthenticationOpen"
     tag="section"
     class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
-    aria-labelledby="login-modal"
   >
     <header>
-      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeAuthentication">
+      <UiButton
+        :aria-label="$t('closeDialog')"
+        square
+        variant="tertiary"
+        class="absolute right-2 top-2"
+        @click="closeAuthentication"
+      >
         <SfIconClose />
       </UiButton>
     </header>

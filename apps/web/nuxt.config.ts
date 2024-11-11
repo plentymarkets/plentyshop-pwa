@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: 'plentyshop PWA',
+    titleSuffix: process.env.STORENAME || 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
@@ -46,18 +47,23 @@ export default defineNuxtConfig({
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
       showNetPrices: true,
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      useAvif: process.env?.USE_AVIF === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
-      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
-      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1' ?? false,
+      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
+      useAvif: process.env?.IMAGEAVIF === 'true',
+      useWebp: process.env?.IMAGEWEBP === 'true',
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       primaryColor: process.env.PRIMARY || '#0c7992',
       secondaryColor: process.env.SECONDARY || '#008ebd',
       newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
       newsletterFormShowNames:
         process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
+      headerLogo: process.env.LOGO || '/images/logo.svg',
+      homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
+      storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
+      noCache: process.env.NO_CACHE || '',
+      configId: process.env.CONFIG_ID || '',
     },
   },
   modules: [
@@ -128,10 +134,11 @@ export default defineNuxtConfig({
     configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+    siteKey: process.env?.TURNSTILESITEKEY,
   },
   viewport: {
     breakpoints: {
+      xs: 380,
       sm: 640,
       md: 640,
       lg: 1024,
@@ -151,7 +158,7 @@ export default defineNuxtConfig({
     },
   },
   veeValidate: {
-    autoImports: true,
+    autoImports: false,
     componentNames: {
       Form: 'VeeForm',
       Field: 'VeeField',
@@ -209,6 +216,7 @@ export default defineNuxtConfig({
         },
       ],
     },
+
     registerWebManifestInRouteRules: true,
   },
 });

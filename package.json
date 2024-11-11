@@ -27,17 +27,19 @@
     "test:coverage": "yarn turbo:disable-telemetry && npx turbo run test:coverage",
     "test:cypress-quarantine": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"yarn start\"",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress\" \"yarn start\"",
-    "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn dev\"",
+    "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn start\"",
     "lhci:mobile": "lhci autorun"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.58.0",
+    "@plentymarkets/shop-api": "^0.72.3",
     "@types/applepayjs": "^14.0.8",
-    "@vee-validate/nuxt": "^4.13.1",
-    "@vee-validate/yup": "^4.13.1",
+    "@types/googlepay": "^0.7.6",
+    "@vee-validate/nuxt": "^4.13.2",
+    "@vee-validate/yup": "^4.13.2",
     "country-flag-icons": "^1.5.12",
     "cross-env": "^7.0.3",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "nuxt-swiper": "^1.2.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
@@ -58,15 +60,15 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
-    "nuxt": "^3.12.4",
+    "nuxt": "^3.13.2",
     "nuxt-viewport": "^2.1.5",
     "playwright-core": "^1.45.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
     "rollup": "^3.29.4",
     "turbo": "1.13.4",
-    "typescript": "5.5.4",
-    "vitest": "^1.6.0",
+    "typescript": "5.6.2",
+    "vitest": "^2.1.1",
     "wait-on": "^7.2.0"
   },
   "engines": {

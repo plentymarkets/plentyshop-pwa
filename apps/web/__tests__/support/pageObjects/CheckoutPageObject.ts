@@ -1,4 +1,4 @@
-import { PageObject } from "./PageObject";
+import { PageObject } from './PageObject';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -25,8 +25,12 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('contact-information-form').find('input');
   }
 
-  get modalSaveButton() {
-    return cy.getByTestId('save-address');
+  get saveShipping() {
+    return cy.getByTestId('save-address-2');
+  }
+
+  get saveBilling() {
+    return cy.getByTestId('save-address-1');
   }
 
   get contactInformationFormSaveButton() {
@@ -39,8 +43,7 @@ export class CheckoutPageObject extends PageObject {
 
   get displaySuccessPages() {
     return cy.get('[data-testid="order-success-page"]', { timeout: 60000 });
-}
-
+  }
 
   get inputField() {
     return cy.getByTestId('contact-information-form').children('[type="email"]');
@@ -48,6 +51,11 @@ export class CheckoutPageObject extends PageObject {
 
   get modal() {
     return cy.getByTestId('checkout-edit-address-modal');
+  }
+
+   editBillingAddress() {
+    cy.getByTestId('edit-address-1').click();
+    return this;
   }
 
   get thankYouBanner() {
@@ -64,10 +72,6 @@ export class CheckoutPageObject extends PageObject {
 
   get lastNameInput() {
     return cy.getByTestId('input').find('input[name="lastName"]');
-  }
-
-  get phoneInput() {
-    return cy.getByTestId('input').find('input[name="phone"]');
   }
 
   get countrySelect() {
@@ -91,7 +95,15 @@ export class CheckoutPageObject extends PageObject {
   }
 
   get postalCodeInput() {
-    return cy.getByTestId('input').find('input[name="postalCode"]');
+    return cy.getByTestId('input').find('input[name="zipCode"]');
+  }
+
+  get useShippingAsBilling() {
+    return cy.getByTestId('use-shipping-as-billing');
+  }
+
+  get shippingAsBillingText() {
+    return cy.getByTestId('address-info-text-1');
   }
 
   goToGuestCheckout() {
@@ -127,10 +139,22 @@ export class CheckoutPageObject extends PageObject {
   }
 
   placeOrderButton() {
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment');
+
+    this.placeOrderButtons.click();
+
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment');
+
+    return this;
+  }
+
+  placeCreditCartOrder() {
     this.placeOrderButtons.click();
     return this;
-}
-
+  }
 
   displaySuccessPage() {
     this.displaySuccessPages.should('be.visible');
@@ -139,7 +163,7 @@ export class CheckoutPageObject extends PageObject {
   }
 
   displayFullyPaid() {
-    this.orderPaymentStatus.contains('fullyPaid');
+    this.orderPaymentStatus.contains('Paid');
     return this;
   }
 
@@ -158,18 +182,33 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillBillingAddressForm() {
-    return this.fillAddressForm();
+  fillShippingAddressForm() {
+    cy.intercept('/plentysystems/setCheckoutAddress')
+      .as('setCheckoutAddress')
+      .intercept('/plentysystems/getShippingProvider')
+      .as('getShippingProvider')
+      .intercept('/plentysystems/getPaymentProviders')
+      .as('getPaymentProviders');
+
+    this.fillAddressForm();
+
+    cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
+
+    return this;
+  }
+
+  shouldShowShippingAsBillingText() {
+    this.shippingAsBillingText.contains('Same as shipping address');
+    return this;
   }
 
   fillCreditCardForm() {
-    cy.iframe('#braintree-hosted-field-number').find('#credit-card-number').type('4868719460707704');
+    cy.iframe('[title=paypal_card_number_field]').find('.card-field-number').first().type('4868719460707704');
 
-    cy.iframe('#braintree-hosted-field-expirationDate').find('.expirationDate').type('12/27');
+    cy.iframe('[title=paypal_card_expiry_field]').find('.card-field-expiry').type('12/27');
 
-    cy.iframe('#braintree-hosted-field-cvv').find('.cvv').type('123');
+    cy.iframe('[title=paypal_card_cvv_field]').find('.card-field-cvv').type('123');
 
-    cy.get('#credit-card-name').focus().type('John Doe');
     return this;
   }
 
@@ -179,14 +218,10 @@ export class CheckoutPageObject extends PageObject {
   }
 
   checkCreditCard() {
-    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider')
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
     cy.getByTestId('payment-method-6008').check({ force: true });
     cy.wait('@setPaymentProvider');
     return this;
-  }
-
-  fillShippingAddressForm() {
-    return this.fillAddressForm();
   }
 
   fillAddressForm() {
@@ -199,14 +234,13 @@ export class CheckoutPageObject extends PageObject {
   fillForm(fixture: any) {
     this.firstNameInput.type(fixture.firstName);
     this.lastNameInput.type(fixture.lastName);
-    this.phoneInput.type(fixture.phoneNumber);
     this.countrySelect.select(fixture.country);
     this.streetNameInput.type(fixture.streetName);
     this.streetNumberInput.type(fixture.apartment);
     this.cityInput.type(fixture.city);
     // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
-    this.modalSaveButton.click({ force: true });
+    this.saveShipping.click({ force: true });
     return this;
   }
 }

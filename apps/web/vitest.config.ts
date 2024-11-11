@@ -9,16 +9,16 @@ export default defineVitestConfig({
     coverage: {
       reporter: ['text', 'html', 'json-summary', 'json'],
     },
+    testTimeout: 6000,
     environment: 'nuxt',
     globals: true,
     clearMocks: true,
     setupFiles: './vitest.config.setup.ts',
     include: ['**/*/?(*.)+(spec|test).[jt]s'],
-    onConsoleLog: (log): any => {
+    onConsoleLog: (log: string): boolean | void => {
       if (silenceLogsFromSuspenseComponent(log)) {
         return false;
       }
-      return log;
     },
   },
 });

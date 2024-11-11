@@ -1,7 +1,7 @@
 import type { Cart, SessionResult } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
-import type { ErrorParams } from '../useHandleError';
+import { ApiError } from '@plentymarkets/shop-api';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData
@@ -23,7 +23,7 @@ const setInitialData: SetInitialData = async () => {
       setCart(data.basket as Cart);
     }
   } catch (error) {
-    useHandleError(error as ErrorParams);
+    useHandleError(error as ApiError);
   } finally {
     cartLoading.value = false;
   }
@@ -47,15 +47,15 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
 
   try {
-    const { data } = await useSdk().plentysystems.getInit();
-    if (data) {
-      setUser(data.session as SessionResult);
-      setCart(data.session?.basket as Cart);
-      setCategoryTree(data.categories);
-      setWishlistItemIds(data?.session?.basket?.itemWishListIds || []);
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
+    if (data.value?.data) {
+      setUser(data.value.data.session as SessionResult);
+      setCart(data.value.data.session?.basket as Cart);
+      setCategoryTree(data.value.data.categories);
+      setWishlistItemIds(data.value.data.session?.basket?.itemWishListIds || []);
     }
   } catch (error) {
-    useHandleError(error as ErrorParams);
+    useHandleError(error as ApiError);
   } finally {
     cartLoading.value = false;
   }

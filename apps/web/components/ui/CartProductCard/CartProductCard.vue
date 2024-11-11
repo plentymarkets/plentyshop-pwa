@@ -90,28 +90,31 @@
       <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
         <span
           v-if="currentFullPrice"
-          class="text-secondary-500 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
+          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
         >
           {{ n(currentFullPrice || 0, 'currency') }}
         </span>
         <UiQuantitySelector
+          ref="quantitySelectorReference"
           :disabled="disabled"
           @change-quantity="debounceQuantity"
-          :value="cartGetters.getItemQty(cartItem)"
-          :min-value="1"
+          :value="itemQuantitySelector"
+          :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
+          :max-value="maximumOrderQuantity"
           class="mt-4 sm:mt-0"
         />
       </div>
     </div>
 
     <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
-      <SfLoaderCircular />
+      <SfLoaderCircular aria-label="loading" />
     </div>
 
     <UiButton
       v-else-if="!disabled"
       @click="deleteItem"
       square
+      :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="absolute top-2 right-2 bg-white"
@@ -124,23 +127,25 @@
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
-import _ from 'lodash';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
+import _ from 'lodash';
+
+const { cartItem, disabled = false } = defineProps<CartProductCardProps>();
+const emit = defineEmits(['load']);
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();
-const { setCartItemQuantity, deleteCartItem } = useCart();
+const { data: cartData, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
 const { t, n } = useI18n();
 const localePath = useLocalePath();
+
 const imageLoaded = ref(false);
 const img = ref();
 const deleteLoading = ref(false);
-const emit = defineEmits(['load']);
-
-const props = withDefaults(defineProps<CartProductCardProps>(), {
-  disabled: false,
-});
+const quantitySelectorReference = ref(null as any);
+const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
+const maximumOrderQuantity = ref();
 
 onMounted(() => {
   const imgElement = (img.value?.$el as HTMLImageElement) || null;
@@ -157,28 +162,57 @@ onMounted(() => {
   }
 });
 
-const changeQuantity = async (quantity: string) => {
+const handleMaximumQuantityCheck = async (quantityCast: number) => {
+  if (!cartData.value?.itemQuantity || quantityCast <= cartData.value.itemQuantity) {
+    maximumOrderQuantity.value = undefined;
+    return;
+  }
+
+  maximumOrderQuantity.value = cartData.value.itemQuantity;
+
+  if (quantitySelectorReference.value) {
+    const event = new Event('input');
+    Object.defineProperty(event, 'target', {
+      value: { value: maximumOrderQuantity.value },
+      writable: true,
+    });
+    quantitySelectorReference.value.handleOnChange(event);
+  }
+
   await setCartItemQuantity({
-    quantity: Number(quantity),
-    cartItemId: props.cartItem.id,
-    productId: props.cartItem.variationId,
+    quantity: maximumOrderQuantity.value,
+    cartItemId: cartItem.id,
+    productId: cartItem.variationId,
   });
 };
+
+const changeQuantity = async (quantity: string) => {
+  const quantityCast = Number(quantity);
+  if (Number.isNaN(quantityCast) || quantityCast === cartData.value.itemQuantity) return;
+
+  await setCartItemQuantity({
+    quantity: quantityCast,
+    cartItemId: cartItem.id,
+    productId: cartItem.variationId,
+  }).then(async () => await handleMaximumQuantityCheck(quantityCast));
+};
+
 const deleteItem = async () => {
   deleteLoading.value = true;
   await deleteCartItem({
-    cartItemId: props.cartItem.id,
+    cartItemId: cartItem.id,
   });
   send({ message: t('deletedFromCart'), type: 'positive' });
   deleteLoading.value = false;
 };
 
 const currentFullPrice = computed(() => {
-  return cartGetters.getCartItemPrice(props.cartItem) * cartGetters.getItemQty(props.cartItem);
+  return cartGetters.getCartItemPrice(cartItem) * cartGetters.getItemQty(cartItem);
 });
+
 const cartItemImage = computed(() => {
-  if (props.cartItem && props.cartItem.variation) {
-    return getImageForViewport(props.cartItem.variation, 'CartProductCard');
+  if (cartItem && cartItem.variation) {
+    return getImageForViewport(cartItem.variation, 'CartProductCard');
   }
   return '';
 });
@@ -189,9 +223,9 @@ const NuxtLink = resolveComponent('NuxtLink');
 
 const basePriceSingleValue = computed(
   () =>
-    productGetters.getGraduatedPriceByQuantity(props.cartItem.variation ?? ({} as Product), props.cartItem.quantity)
-      ?.basePrice ?? productGetters.getDefaultBasePrice(props.cartItem.variation ?? ({} as Product)),
+    productGetters.getGraduatedPriceByQuantity(cartItem.variation ?? ({} as Product), cartItem.quantity)?.basePrice ??
+    productGetters.getDefaultBasePrice(cartItem.variation ?? ({} as Product)),
 );
 
-const path = computed(() => localePath('/' + cartGetters.getProductPath(props.cartItem)));
+const path = computed(() => localePath('/' + cartGetters.getProductPath(cartItem)));
 </script>

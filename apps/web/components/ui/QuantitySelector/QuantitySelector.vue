@@ -1,7 +1,28 @@
 <template>
   <div class="inline-flex flex-col items-center" data-testid="quantity-selector">
     <div class="flex border border-neutral-300 rounded-md h-full w-full">
+      <SfTooltip
+        v-if="count <= minValue"
+        :label="$t('minimumOrderQuantity', minValue)"
+        placement="left"
+        :show-arrow="true"
+        class="flex"
+      >
+        <UiButton
+          variant="tertiary"
+          :disabled="disabled || count <= minValue"
+          square
+          class="rounded-r-none"
+          :aria-controls="inputId"
+          :aria-label="$t('quantitySelectorDecrease')"
+          data-testid="quantity-selector-decrease-button"
+          @click="dec()"
+        >
+          <SfIconRemove />
+        </UiButton>
+      </SfTooltip>
       <UiButton
+        v-else
         variant="tertiary"
         :disabled="disabled || count <= minValue"
         square
@@ -45,18 +66,18 @@
 
 <script setup lang="ts">
 import { clamp } from '@storefront-ui/shared';
-import { SfIconAdd, SfIconRemove, useId } from '@storefront-ui/vue';
+import { SfIconAdd, SfIconRemove, SfTooltip, useId } from '@storefront-ui/vue';
 import { useCounter } from '@vueuse/core';
 import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
 
 const emit = defineEmits(['changeQuantity']);
 
-const { value, minValue, maxValue } = withDefaults(defineProps<QuantitySelectorProps>(), {
-  value: 1,
-  minValue: 1,
-  maxValue: Number.POSITIVE_INFINITY,
-  disabled: false,
-});
+const {
+  value = 1,
+  minValue = 1,
+  maxValue = Number.POSITIVE_INFINITY,
+  disabled = false,
+} = defineProps<QuantitySelectorProps>();
 
 const inputId = ref('0');
 const { count, inc, dec, set } = useCounter(value);
@@ -77,4 +98,6 @@ const handleOnChange = (event: Event) => {
   const nextValue = Number.parseFloat(currentValue);
   set(clamp(nextValue, minValue, maxValue));
 };
+
+defineExpose({ handleOnChange });
 </script>

@@ -88,12 +88,15 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useHandleError({ message: paymentValue });
+        useNotification().send({ message: paymentValue, type: 'negative' });
         break;
       }
 
       default: {
-        useHandleError({ message: $i18n.t('orderErrorProvider', { paymentType: paymentType }) });
+        useNotification().send({
+          message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
+          type: 'negative',
+        });
         break;
       }
     }

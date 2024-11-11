@@ -32,8 +32,8 @@
             :loading="index === 0 ? 'eager' : 'lazy'"
             :fetchpriority="index === 0 ? 'high' : 'auto'"
             @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="productImageGetters.getImageWidth(image) || 600"
-            :height="productImageGetters.getImageHeight(image) || 600"
+            :width="getWidth(image, productImageGetters.getImageUrl(image))"
+            :height="getHeight(image, productImageGetters.getImageUrl(image))"
           />
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
@@ -125,6 +125,7 @@ import { SfScrollable, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular }
 import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
 import { productImageGetters } from '@plentymarkets/shop-api';
+import { defaults } from '~/composables';
 
 const props = defineProps<{ images: ImagesData[] }>();
 
@@ -193,6 +194,22 @@ const registerThumbsWatch = (
 
 registerThumbsWatch(firstThumbReference, firstVisibleThumbnailIntersected);
 registerThumbsWatch(lastThumbReference, lastVisibleThumbnailIntersected);
+
+const getWidth = (image: ImagesData, imageUrl: string) => {
+  const imageWidth = productImageGetters.getImageWidth(image) || 600;
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageWidth;
+  }
+  return '';
+};
+
+const getHeight = (image: ImagesData, imageUrl: string) => {
+  const imageHeight = productImageGetters.getImageHeight(image) || 600;
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageHeight;
+  }
+  return '';
+};
 
 const onChangeIndex = (index: number) => {
   stop();

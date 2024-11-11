@@ -25,11 +25,7 @@
       </div>
     </div>
     <div class="flex space-x-2">
-      <Price
-        :price="currentActualPrice"
-        :normal-price="normalPrice"
-        :old-price="productGetters.getPrice(product).regular ?? 0"
-      />
+      <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
       <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
         <UiTag :size="'sm'" :variant="'secondary'">{{
           t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
@@ -77,9 +73,10 @@
     <ProductAttributes :product="product" />
     <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
-    <div class="py-4">
+    <div class="mt-4">
       <div class="flex flex-col md:flex-row flex-wrap gap-4">
         <UiQuantitySelector
+          :min-value="productGetters.getMinimumOrderQuantity(product)"
           :value="quantitySelectorValue"
           @change-quantity="changeQuantity"
           class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
@@ -112,23 +109,13 @@
 
       <div class="mt-4 typography-text-xs flex gap-1">
         <span>{{ t('asterisk') }}</span>
-        <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
-        <span v-else>{{ t('itemInclVAT') }}</span>
+        <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
         <span>{{ t('excludedShipping') }}</span>
       </div>
-      <Suspense>
-        <template #default>
-          <PayPalExpressButton
-            v-if="getCombination() && productGetters.isSalable(product)"
-            class="mt-4"
-            type="SingleItem"
-            @on-click="paypalHandleAddToCart"
-          />
-        </template>
-        <template #fallback>
-          <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-        </template>
-      </Suspense>
+      <template v-if="showPayPalButtons">
+        <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
+        <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
+      </template>
     </div>
   </form>
 </template>
@@ -136,14 +123,13 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
-import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
-
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
+const runtimeConfig = useRuntimeConfig();
+const showNetPrices = runtimeConfig.public.showNetPrices;
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -156,26 +142,21 @@ const {
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
-const quantitySelectorValue = ref(1);
+const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
+const { crossedPrice } = useProductPrice(product);
+const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 
 resetInvalidFields();
 resetAttributeFields();
 
-const currentActualPrice = computed(
+const priceWithProperties = computed(
   () =>
-    (productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-      productGetters.getPrice(product)?.special ??
-      productGetters.getPrice(product)?.regular ??
+    (productGetters.getSpecialOffer(product) ||
+      productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.unitPrice.value ||
       0) + getPropertiesPrice(product),
 );
-
-const normalPrice =
-  productGetters.getGraduatedPriceByQuantity(product, quantitySelectorValue.value)?.price.value ??
-  productGetters.getPrice(product)?.special ??
-  productGetters.getPrice(product)?.regular ??
-  0;
 
 const basePriceSingleValue = computed(
   () =>
@@ -216,8 +197,11 @@ const handleAddToCart = async (quickCheckout = true) => {
 
   const added = await addToCart(params);
   if (added) {
-    if (quickCheckout) openQuickCheckout(product, quantitySelectorValue.value);
-    send({ message: t('addedToCart'), type: 'positive' });
+    if (quickCheckout) {
+      openQuickCheckout(product, quantitySelectorValue.value);
+    } else {
+      send({ message: t('addedToCart'), type: 'positive' });
+    }
   }
   return added;
 };
@@ -244,28 +228,17 @@ const openReviewsAccordion = () => {
   customerReviewsClickElement?.click();
 };
 
-const scrollToReviewsAccordion = () => {
-  const customerReviewsAccordionElement = document.querySelector('#customerReviewsAccordion') as HTMLElement;
-  const customerReviewsAccordionElementOffset =
-    customerReviewsAccordionElement?.getBoundingClientRect()?.top + document.documentElement.scrollTop || 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: customerReviewsAccordionElementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
-
 const isSalableText = computed(() => (productGetters.isSalable(product) ? '' : t('itemNotAvailable')));
 const isNotValidVariation = computed(() => (getCombination() ? '' : t('productAttributes.notValidVariation')));
+const showPayPalButtons = computed(() => Boolean(getCombination()) && productGetters.isSalable(product));
 
 const scrollToReviews = () => {
   if (!isReviewsAccordionOpen()) {
     openReviewsAccordion();
   }
 
-  scrollToReviewsAccordion();
+  if (reviewArea.value) {
+    reviewArea.value.scrollIntoView({ behavior: 'smooth' });
+  }
 };
 </script>

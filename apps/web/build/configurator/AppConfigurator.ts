@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse } from './types';
+import { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse, Languages } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import { Writer } from '../writers/types';
 import { Logger } from '../logs/types';
@@ -16,6 +16,7 @@ dotenv.config({
 export class AppConfigurator {
   private environmentMap = {
     FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
+    API_URL: process.env.API_URL,
     API_ENDPOINT: process.env.API_ENDPOINT,
     API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
     CONFIG_ID: process.env.CONFIG_ID,
@@ -100,5 +101,21 @@ export class AppConfigurator {
     }
 
     return environmentContent;
+  };
+
+  generateLanguageFiles = (languages: Languages): void => {
+    this.logger.info('Generating language files...');
+
+    const fileData = '{}';
+    const languageFilesPath = path.resolve(__dirname, '../../lang');
+    const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
+
+    this.writer.writeMissing(fileData, defaultLanguageFile);
+
+    languages.activated.split(',').forEach((language) => {
+      const languageFile = path.resolve(languageFilesPath, `${language}.json`);
+
+      this.writer.writeMissing(fileData, languageFile);
+    });
   };
 }

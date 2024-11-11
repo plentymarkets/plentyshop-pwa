@@ -2,10 +2,10 @@ export const appConfiguration = {
   head: {
     viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
     htmlAttrs: {
-      lang: 'en',
+      lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'shop-name', content: 'plentyShop PWA Demo' },
+      { name: 'shop-name', content: process.env.STORENAME || 'PLENTYSYSTEMS AG' },
       { name: 'description', content: process.env.METADESC || 'Demo shop for plentyShop PWA' },
       { name: 'keywords', content: process.env.METAKEYWORDS || 'plentysystems, plentyshop, pwa' },
       { name: 'theme-color', content: '#0C7992' },
@@ -18,5 +18,6 @@ export const appConfiguration = {
       { rel: 'icon', href: '/favicon.ico' },
       { rel: 'apple-touch-icon', href: '/favicon.ico' },
     ],
+    title: process.env.STORENAME || 'plentyShop PWA',
   },
 };

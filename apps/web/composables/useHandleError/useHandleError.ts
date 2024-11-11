@@ -1,16 +1,6 @@
 import { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
-import { Notification } from '../useNotification';
-
-const defaultError: ErrorParams = {
-  statusCode: 500,
-  message: 'An error occurred',
-  cause: {},
-};
-
-const errorCodes = {
-  401: 'Unauthorized',
-};
+import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable for handling errors.
@@ -24,33 +14,29 @@ const errorCodes = {
  * });
  * ```
  */
-export const useHandleError: UseHandleError = (error: ErrorParams | NuxtError<unknown> | null) => {
+export const useHandleError: UseHandleError = (error: ApiError | NuxtError<unknown> | null) => {
   if (error && import.meta.client) {
+    const { $i18n } = useNuxtApp();
     const { send } = useNotification();
-    let message = defaultError.message;
-    let type: Notification['type'] = 'negative';
-    let persist = true;
-    let cause: any = {};
+    const type = 'negative';
+    const persist = true;
 
-    if (error.cause) {
-      cause = error.cause;
-    }
-    if (error.statusCode && errorCodes[error.statusCode as keyof typeof errorCodes]) {
-      message = errorCodes[error.statusCode as keyof typeof errorCodes];
-    } else if (cause?.warn) {
-      message = cause.warn.message;
-      type = 'warning';
-      persist = false;
-    } else if (cause && cause?.message) {
-      message = cause.message;
+    if (error instanceof ApiError) {
+      const translationKey = `storefrontError.${error.key}`;
+      const message = error.key && $i18n.te(translationKey) ? $i18n.t(translationKey) : error.message;
+      send({
+        type,
+        message,
+        persist,
+      });
     } else {
-      message = error.message;
-    }
+      const message = $i18n.t('storefrontError.unknownError');
 
-    send({
-      type,
-      message,
-      persist,
-    });
+      send({
+        type,
+        message,
+        persist,
+      });
+    }
   }
 };

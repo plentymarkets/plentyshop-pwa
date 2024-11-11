@@ -10,7 +10,12 @@
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
           <span class="font-bold font-headings md:text-lg">
-            {{ $t('numberOfProducts', { count: products?.length ?? 0, total: totalProducts }) }}
+            {{
+              $t('numberOfProducts', {
+                count: products?.length ?? 0,
+                total: totalProducts,
+              })
+            }}
           </span>
           <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
@@ -20,7 +25,7 @@
           </UiButton>
         </div>
         <section
-          v-if="products"
+          v-if="products?.length"
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
@@ -30,7 +35,6 @@
               :name="productGetters.getName(product) ?? ''"
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product, 'half')"
-              :price="actualPrice(product)"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="
                 productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
@@ -74,14 +78,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 
-withDefaults(defineProps<CategoryPageContentProps>(), {
-  itemsPerPage: 24,
-});
+const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
@@ -95,14 +96,4 @@ const viewport = useViewport();
 const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
 
 if (viewport.isLessThan('md')) close();
-
-const actualPrice = (product: Product): number => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
-
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
-
-  return 0;
-};
 </script>

@@ -94,7 +94,7 @@
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.amount') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.shippingDate') }}</th>
               <th class="lg:p-4 p-2 font-medium">{{ t('account.ordersAndReturns.status') }}</th>
-              <th class="lg:py-4 py-2 lg:pl-4 pl-2"></th>
+              <th class="lg:py-4 py-2 lg:pl-4 pl-2 font-medium">{{ t('account.ordersAndReturns.actions') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -104,7 +104,7 @@
               <td class="lg:p-4 p-2">{{ n(orderGetters.getPrice(order), 'currency') }}</td>
               <td class="lg:p-4 p-2">{{ orderGetters.getShippingDate(order) ?? '' }}</td>
               <td class="lg:p-4 p-2 lg:whitespace-nowrap w-full">{{ orderGetters.getStatus(order) }}</td>
-              <td class="py-1.5 lg:pl-4 pl-2 text-right w-full flex">
+              <td class="py-1.5 lg:pl-1.5 pl-2 text-right w-full flex">
                 <UiButton
                   :tag="NuxtLink"
                   size="sm"
@@ -172,6 +172,7 @@ const isDesktop = computed(() => viewport.isGreaterOrEquals('lg'));
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 
 onMounted(() => setMaxVisiblePages(isDesktop.value));

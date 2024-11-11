@@ -29,7 +29,7 @@
               class="p-1 gap-x-2"
             />
           </div>
-          <VeeErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
+          <ErrorMessage as="div" name="ratingValue" class="text-negative-700 text-sm -mt-3 mb-2" />
         </div>
 
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
@@ -41,7 +41,7 @@
             name="title"
             id="review-title"
           />
-          <VeeErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
+          <ErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
         </template>
 
         <UiFormLabel class="mt-4" for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
@@ -53,7 +53,7 @@
           data-testid="input-authorName"
           id="review-author"
         />
-        <VeeErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
+        <ErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
 
         <UiFormLabel for="review-message" class="mt-4">
           <template v-if="isReplyUpdateModal">
@@ -73,7 +73,7 @@
           name="message"
           class="w-full max-h-80 min-h-16"
         />
-        <VeeErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
+        <ErrorMessage as="div" name="message" class="text-negative-700 text-sm mt-1" />
         <div v-if="!reviewIsAboveLimit" class="text-xs text-neutral-500 text-right">{{ reviewCharsCount }}</div>
 
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
@@ -94,14 +94,14 @@
 <script lang="ts" setup>
 import { SfRatingButton, SfTextarea, SfInput, SfIconClose, useId } from '@storefront-ui/vue';
 import { object, string, number } from 'yup';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import type { ReviewFormProps } from './types';
 import { productGetters, reviewGetters } from '@plentymarkets/shop-api';
 import type { ReviewItem } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
-const props = withDefaults(defineProps<ReviewFormProps>(), { reviewItem: null });
-const { reviewItem } = toRefs(props);
+const { reviewItem = null } = defineProps<ReviewFormProps>();
 const { t } = useI18n();
 const { currentProduct } = useProducts();
 const { createProductReview, setProductReview, closeReviewModal, modalType } = useProductReviews(
@@ -119,17 +119,17 @@ const validationSchema = toTypedSchema(
     ratingValue: number()
       .required(t('review.validation.ratingRequired'))
       .min(1, t('review.validation.ratingRequired'))
-      .default(reviewGetters.getReviewRating(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewRating(reviewItem ?? ({} as ReviewItem))),
     title: string()
       .required(t('review.validation.titleRequired'))
-      .default(reviewGetters.getReviewTitle(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewTitle(reviewItem ?? ({} as ReviewItem))),
     message: string()
       .optional()
       .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
-      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewMessage(reviewItem ?? ({} as ReviewItem))),
     authorName: string()
       .optional()
-      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewAuthor(reviewItem ?? ({} as ReviewItem))),
   }),
 );
 
@@ -140,10 +140,10 @@ const validationSchemaReply = toTypedSchema(
     message: string()
       .required()
       .max(reviewCharacterLimit, t('review.validation.textareaMaxLength'))
-      .default(reviewGetters.getReviewMessage(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewMessage(reviewItem ?? ({} as ReviewItem))),
     authorName: string()
       .optional()
-      .default(reviewGetters.getReviewAuthor(reviewItem.value ?? ({} as ReviewItem))),
+      .default(reviewGetters.getReviewAuthor(reviewItem ?? ({} as ReviewItem))),
   }),
 );
 
@@ -170,10 +170,10 @@ const sendReview = async () => {
     title: title.value || '',
     message: message.value,
     authorName: authorName.value,
-    feedbackId: Number(reviewGetters.getReviewId(reviewItem.value ?? ({} as ReviewItem))),
+    feedbackId: Number(reviewGetters.getReviewId(reviewItem ?? ({} as ReviewItem))),
   };
 
-  if (reviewItem.value) {
+  if (reviewItem) {
     setProductReview(params);
   } else {
     createProductReview(params);

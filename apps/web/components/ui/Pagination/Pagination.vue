@@ -170,12 +170,14 @@ import type { PaginationProps } from '~/components/ui/Pagination/types';
 const { updatePage } = useCategoryFilter();
 const { t } = useI18n();
 
-const props = withDefaults(defineProps<PaginationProps>(), {
-  currentPageName: 'page',
-  disabled: false,
-});
-
-const { currentPage, currentPageName, pageSize, totalItems, maxVisiblePages: maxVisiblePagesProperty } = props;
+const {
+  currentPage,
+  currentPageName = 'page',
+  pageSize,
+  totalItems,
+  maxVisiblePages: maxVisiblePagesProperty,
+  disabled = false,
+} = defineProps<PaginationProps>();
 
 const pagination = computed(() =>
   reactive(
