@@ -33,7 +33,8 @@ onMounted(() => {
   const config = useRuntimeConfig().public;
   const showConfigurationDrawer = config.showConfigurationDrawer;
 
-  const cookieExists = document.cookie.split('; ').some((cookie) => cookie.trim().startsWith('pwa='));
+  const pwaCookie = useCookie('pwa');
+  const cookieExists = !!pwaCookie.value;
   isPreview.value = cookieExists || (showConfigurationDrawer as boolean);
 });
 </script>
