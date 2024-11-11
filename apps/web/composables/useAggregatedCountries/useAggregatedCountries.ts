@@ -48,11 +48,14 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
   const billingCountries = computed(() => {
     if (!useGeoRegulatedCountries) return state.value.default;
 
+    const { locale } = useI18n();
     const uniqueCountries = new Map(
       [...state.value.default, ...state.value.geoRegulated].map((country) => [country.id, country]),
     );
 
-    return [...uniqueCountries.values()].sort((first, second) => first.id - second.id);
+    return [...uniqueCountries.values()].sort((firstCountry, secondCountry) =>
+      firstCountry.currLangName.localeCompare(secondCountry.currLangName, locale.value),
+    );
   });
 
   return {
