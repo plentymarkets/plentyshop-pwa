@@ -19,8 +19,6 @@ onMounted(() => {
     hoverBoundingBox: true,
     handleTouch: true,
     touchDelay: 300,
-    inlinePane: 769,
-    inlineOffsetY: -85,
     injectBaseStyles: true,
   });
 });
