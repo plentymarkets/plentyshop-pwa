@@ -1,6 +1,6 @@
-const { setFormattedHeroItems } = useHomePageState();
 export const useJsonEditor = (initialJson: string) => {
   const { setFormattedHeroItems } = useHomePageState();
+  const { isEditingDisabled } = useEditor();
 
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
@@ -26,8 +26,10 @@ export const useJsonEditor = (initialJson: string) => {
     try {
       JSON.parse(jsonText.value);
       errorMessage.value = '';
+      isEditingDisabled.value = false;
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingDisabled.value = true;
     }
   };
 
@@ -45,6 +47,7 @@ export const useJsonEditor = (initialJson: string) => {
       updateLineCount();
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingDisabled.value = true;
     }
   };
 
@@ -56,6 +59,7 @@ export const useJsonEditor = (initialJson: string) => {
       nextTick(updateLineCount);
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingDisabled.value = true;
     }
   };
 
@@ -67,6 +71,7 @@ export const useJsonEditor = (initialJson: string) => {
       nextTick(updateLineCount);
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingDisabled.value = true;
     }
   };
 

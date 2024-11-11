@@ -1,7 +1,7 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <UiHeroCarousel :hero-item-props="hero" />
+    <UiHeroCarousel v-if="heroLoaded" :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
       <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -39,15 +39,16 @@
 
 <script lang="ts" setup async>
 const { isEditing } = useEditor();
-
 const { recommendedProductsCategoryId } = await useHomepageData();
 const { hero, valueProposition, fetchData } = useHomePageState();
 definePageMeta({ pageType: 'static' });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
 
+const heroLoaded = ref(false);
+
 onMounted(async () => {
   await fetchData();
-  // console.log(data);
+  heroLoaded.value = true;
 });
 </script>

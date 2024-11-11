@@ -10,7 +10,9 @@
       >
         {{ isEditing ? 'Preview' : 'Edit' }}
       </UiButton>
-      <UiButton variant="secondary" :size="buttonSize" class="self-start"> Save </UiButton>
+      <UiButton variant="secondary" :size="buttonSize" class="self-start" :disabled="isEditingDisabled">
+        Save
+      </UiButton>
     </div>
   </div>
 </template>
