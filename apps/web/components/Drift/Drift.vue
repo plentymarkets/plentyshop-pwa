@@ -21,9 +21,9 @@ onMounted(() => {
     zoomFactor: 3,
     hoverBoundingBox: true,
     handleTouch: true,
-    touchDelay: 200,
+    touchDelay: 300,
     inlineOffsetY: -85,
-    injectBaseStyles: true, // Ensure base styles are injected
+    injectBaseStyles: true,
   });
 });
 </script>
