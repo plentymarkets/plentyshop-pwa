@@ -3,7 +3,6 @@
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
-      ref="my-input"
     >
       <SfScrollable
         class="flex items-center snap-x snap-mandatory scrollbar-hidden w-full h-full"
@@ -29,8 +28,8 @@
               :class="`object-contain h-full w-full demo-trigger-${index}`"
               :data-zoom="productImageGetters.getImageUrl(image)"
               :quality="80"
-              :src="productImageGetters.getImageUrl(image)"
-              sizes="2xs:100vw, md:700px"
+              :srcset="getSourceSet(image)"
+              sizes="2xs:370px xs:720px sm:740px md:1400px"
               draggable="false"
               :loading="index === 0 ? 'eager' : 'lazy'"
               :fetchpriority="index === 0 ? 'high' : 'auto'"
@@ -146,6 +145,20 @@ const activeIndex = ref(0);
 const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
 const isMobile = computed(() => viewport.isLessThan('md'));
 
+const getSourceSet = (image: ImagesData) => {
+  const dpr = 2;
+  const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
+  const preview = productImageGetters.getImageUrlPreview(image);
+  const middle = productImageGetters.getImageUrlMiddle(image);
+  const full = productImageGetters.getImageUrl(image);
+
+  return `
+    ${secondPreview} ${370 * dpr}w,
+    ${preview} ${700 * dpr}w,
+    ${middle} ${720 * dpr}w,
+    ${full} ${1400 * dpr}w
+  `;
+};
 onMounted(() => {
   nextTick(() => {
     for (const [index] of props.images.entries()) {

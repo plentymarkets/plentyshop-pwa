@@ -59,6 +59,7 @@ const { t, locale } = useI18n();
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 const { currentReturnOrder, hasMinimumQuantitySelected, hasQuantityAndNoReasonsSelected, selectAll, cleanReturnData } =
   useReturnOrder();
