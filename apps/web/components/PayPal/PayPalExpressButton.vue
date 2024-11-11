@@ -22,6 +22,7 @@ const localePath = useLocalePath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'on-approved'): void;
 }>();
 
 const props = defineProps<PaypalButtonPropsType>();
@@ -68,10 +69,13 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
+  emits('on-approved');
+
   if ((props.type === TypeCartPreview || props.type === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (props.type === TypeCheckout) {
+    useProcessingOrder().processingOrder.value = true;
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
       shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
