@@ -46,7 +46,6 @@ import { cartGetters } from '@plentymarkets/shop-api';
 definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { send } = useNotification();
 const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
