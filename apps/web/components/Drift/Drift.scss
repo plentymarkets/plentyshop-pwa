@@ -95,7 +95,10 @@
   background: rgba(0, 0, 0, 0.5);
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
-  min-height: 500px;
+
+  @media (min-width: 768px) {
+    min-height: 500px;
+  }
 }
 .drift-zoom-pane.drift-opening {
   animation: a 0.18s ease-out;

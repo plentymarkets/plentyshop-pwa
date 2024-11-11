@@ -20,7 +20,6 @@ onMounted(() => {
     containInline: true,
     zoomFactor: 3,
     hoverBoundingBox: true,
-    inlinePane: 375,
     handleTouch: true,
     touchDelay: 200,
     inlineOffsetY: -85,
