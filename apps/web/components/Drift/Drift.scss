@@ -100,9 +100,13 @@ img {
   user-select: none;
 }
 .drift-zoom-pane {
-  background: rgba(0, 0, 0, 0.5);
+  background: white;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
+
+  img {
+    object-fit: none !important;
+  }
 
   @media (min-width: 768px) {
     min-height: 500px;
