@@ -41,7 +41,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
-    state.value.step = ORDER_STEPS.PREPARE_ORDER ;
+    state.value.step = ORDER_STEPS.PREPARE_ORDER;
 
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
@@ -105,7 +105,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useNotification().send({ message: paymentValue, type: 'negative' })
+        useNotification().send({ message: paymentValue, type: 'negative' });
         state.value.step = ORDER_STEPS.ERROR;
         break;
       }
