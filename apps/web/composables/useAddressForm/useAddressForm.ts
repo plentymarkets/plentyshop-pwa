@@ -10,7 +10,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: customerData, getSession } = useCustomer();
   const { data: cartData } = useCart();
   const { send } = useNotification();
-  const { disabled: disabledShippingAsBilling } = useShippingAsBilling();
+  const { restrictedAddresses } = useShippingAsBilling();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -79,7 +79,7 @@ export const useAddressForm = (type: AddressType) => {
 
   const notifyIfShippingChanged = () => {
     if (
-      !disabledShippingAsBilling.value &&
+      !restrictedAddresses.value &&
       selectedMethod.value &&
       shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
         shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
@@ -91,7 +91,7 @@ export const useAddressForm = (type: AddressType) => {
   const notifyIfBillingChanged = () => {
     if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
       cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
-      if (!disabledShippingAsBilling.value) send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
+      if (!restrictedAddresses.value) send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
     }
   };
 

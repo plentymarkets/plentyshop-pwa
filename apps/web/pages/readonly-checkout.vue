@@ -132,7 +132,6 @@ const handleGuestUserInit = async () => {
 };
 
 onNuxtReady(async () => {
-  await getSession();
   if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
   isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });
@@ -142,13 +141,24 @@ const scrollToTerms = () => {
   setShowErrors(true);
 };
 
-const order = async () => {
-  if (interactionDisabled.value) return;
-  if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
+const readyToOrder = async () => {
+  if (interactionDisabled.value) return false;
+
+  if (cartIsEmpty.value) {
+    await navigateTo(localePath(paths.cart));
+    return false;
+  }
+
   if (!termsAccepted.value) {
     scrollToTerms();
-    return;
+    return false;
   }
+
+  return true;
+};
+
+const order = async () => {
+  if (!(await readyToOrder())) return;
 
   try {
     const data: Order = await createOrder({

@@ -3,7 +3,7 @@ export const useShippingAsBilling = () => {
   const localePath = useLocalePath();
 
   const state = useState('useShippingAsBilling', () => ({
-    disabled: route.fullPath.includes(localePath(paths.readonlyCheckout)),
+    restrictedAddresses: route.fullPath.includes(localePath(paths.readonlyCheckout)),
     shippingAsBilling: false,
   }));
 
