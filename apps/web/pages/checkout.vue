@@ -45,7 +45,7 @@
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
-                :disabled="!termsAccepted || disableBuyButton || paypalCardDialog"
+                :disabled="!termsAccepted || disableBuyButton"
                 @validation-callback="handleReadyToBuy"
                 type="Checkout"
               />
@@ -60,7 +60,7 @@
               type="submit"
               data-testid="place-order-button"
               @click="openPayPalCardDialog"
-              :disabled="disableBuyButton"
+              :disabled="disableBuyButton || paypalCardDialog"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
@@ -118,7 +118,6 @@ import {
 } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
-import { computed } from 'vue';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
@@ -272,7 +271,9 @@ const order = async () => {
 };
 
 watch(cartIsEmpty, async () => {
-  send({ type: 'neutral', message: t('emptyCartNotification') });
-  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+  if (!processingOrder.value) {
+    send({ type: 'neutral', message: t('emptyCartNotification') });
+    await navigateTo(localePath(paths.cart));
+  }
 });
 </script>
