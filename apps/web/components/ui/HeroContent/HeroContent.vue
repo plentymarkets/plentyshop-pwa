@@ -30,7 +30,9 @@
         {{ heroItemProps.description }}
       </p>
       <div class="flex flex-col md:flex-row gap-4 mt-6">
-        <UiButton size="lg">{{ heroItemProps.callToAction }}</UiButton>
+        <UiButton :tag="NuxtLink" :to="localePath(props.heroItemProps.link ?? '')" size="lg">{{
+          heroItemProps.callToAction
+        }}</UiButton>
       </div>
     </div>
   </div>
@@ -39,8 +41,12 @@
 <script setup lang="ts">
 import { HeroContentProps, SizeKey } from '../HeroCarousel/types';
 
-defineProps<{
+const props = defineProps<{
   heroItemProps: HeroContentProps;
   currentSizeKey: SizeKey;
 }>();
+
+const localePath = useLocalePath();
+
+const NuxtLink = resolveComponent('NuxtLink');
 </script>
