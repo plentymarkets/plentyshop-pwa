@@ -9,6 +9,7 @@
 ### 👷 Changed
 
 - Newsletter email confirmation
+- The checkout buy button now displays the current order step to enhance user experience during the order process. (preparing order, preparing payment, creating order, executing payment, order created, loading confirmation page)
 
 ### 🩹 Fixed
 
