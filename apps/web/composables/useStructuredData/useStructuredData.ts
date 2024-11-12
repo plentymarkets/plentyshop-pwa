@@ -87,7 +87,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      // sku: sku,
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
@@ -99,6 +98,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Organization',
         name: manufacturer.externalName,
       },
+      sku: productGetters.getSku(product),
       review: reviews,
       aggregateRating: {
         '@type': 'AggregateRating',
