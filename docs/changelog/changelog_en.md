@@ -5,6 +5,7 @@
 ### New
 
 - Added PWA cookie hash to sdk client
+- Added Zoom functionality to product images.
 
 ### 👷 Changed
 
