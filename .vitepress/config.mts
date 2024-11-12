@@ -74,11 +74,10 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/plentymarkets/plentyshop-pwa' },
-      { icon: 'linkedin', link: 'https://www.linkedin.com/company/plentysystems/' },
-      { icon: 'facebook', link: 'https://www.facebook.com/plentymarkets' },
-      { icon: 'instagram', link: 'https://www.instagram.com/plentysystems' },
-      { icon: 'youtube', link: 'https://www.youtube.com/channel/UCauJsvmhbPNp6ii7tCGwxMg' },
-      { icon: 'twitter', link: 'https://twitter.com/plentymarkets'}
+      { icon: 'linkedin', link: 'https://www.linkedin.com/company/plentyone-ecommerce/' },
+      { icon: 'facebook', link: 'https://www.facebook.com/plentyonecommerce/' },
+      { icon: 'instagram', link: 'https://www.instagram.com/plentyone_ecommerce/' },
+      { icon: 'youtube', link: 'https://www.youtube.com/@PlentyONE_ecommerce' }
     ],
 
     search: {
