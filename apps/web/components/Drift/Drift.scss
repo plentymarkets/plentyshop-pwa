@@ -91,21 +91,25 @@
     transform: scale(1);
   }
 }
-img {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+
+.gallery-image {
+  img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
 }
+
 .drift-zoom-pane {
   background: white;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
 
   img {
-    object-fit: none !important;
+    object-fit: contain !important;
   }
 
   @media (min-width: 768px) {
