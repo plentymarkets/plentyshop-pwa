@@ -46,14 +46,10 @@ import { cartGetters } from '@plentymarkets/shop-api';
 definePageMeta({ pageType: 'static' });
 
 const NuxtLink = resolveComponent('NuxtLink');
-const { send } = useNotification();
 const { t } = useI18n();
 const viewport = useViewport();
 const localePath = useLocalePath();
 const { isAuthorized } = useCustomer();
 const { data: cart, cartIsEmpty, loading } = useCart();
 const goToCheckout = () => (isAuthorized.value ? localePath(paths.checkout) : localePath(paths.guestLogin));
-onNuxtReady(() => {
-  if (cartIsEmpty.value) send({ type: 'neutral', message: t('emptyCartNotification') });
-});
 </script>
