@@ -202,7 +202,6 @@ const disableBuyButton = computed(
     processingOrder.value,
 );
 
-
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);

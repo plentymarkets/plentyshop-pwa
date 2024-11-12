@@ -28,7 +28,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
   const setStep = (step: string) => {
     state.value.step = step;
-  }
+  };
 
   /**
    * @description Function for creating an order
