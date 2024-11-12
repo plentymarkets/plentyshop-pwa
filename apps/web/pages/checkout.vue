@@ -258,6 +258,9 @@ const order = async () => {
 };
 
 watch(cartIsEmpty, async () => {
-  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+  if (!processingOrder.value) {
+    send({ type: 'neutral', message: t('emptyCartNotification') });
+    await navigateTo(localePath(paths.cart));
+  }
 });
 </script>
