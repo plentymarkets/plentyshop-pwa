@@ -158,8 +158,6 @@ const {
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
 
-const disableBuyButton = computed(() => createOrderLoading.value || disableShippingPayment.value || cartLoading.value || navigationInProgress.value || processingOrder.value);
-
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
     const googlePayAvailable = await useGooglePay().checkIsEligible();
@@ -194,6 +192,16 @@ onNuxtReady(async () => {
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const { processingOrder } = useProcessingOrder();
+
+const disableBuyButton = computed(
+  () =>
+    createOrderLoading.value ||
+    disableShippingPayment.value ||
+    cartLoading.value ||
+    navigationInProgress.value ||
+    processingOrder.value,
+);
+
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
