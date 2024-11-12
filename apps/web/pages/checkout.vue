@@ -85,7 +85,10 @@
               data-testid="place-order-button"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+              <template v-if="createOrderLoading">
+                <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+                {{ t(step) }}
+              </template>
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
           </OrderSummary>
@@ -126,7 +129,7 @@ definePageMeta({
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
-const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { loading: createOrderLoading, createOrder, step } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {

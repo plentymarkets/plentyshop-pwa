@@ -285,6 +285,13 @@
   "billingAddressRequired": "Please select a billing address.",
   "breadcrumbsDropdownText": "Show more breadcrumbs",
   "buy": "Buy",
+  "checkoutBuyButton": {
+    "prepareOrder": "Preparing order",
+    "preparePayment": "Preparing payment",
+    "executingPayment": "Executing payment",
+    "orderCreated": "Order created",
+    "error": "Faild to create order"
+  },
   "cancellationRights": "Cancellation rights",
   "cart": "Cart",
   "categories": {

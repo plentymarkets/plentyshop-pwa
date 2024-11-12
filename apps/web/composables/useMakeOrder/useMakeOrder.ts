@@ -1,6 +1,15 @@
 import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
 import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 
+const ORDER_STEPS = {
+  BUY: 'buy',
+  PREPARE_ORDER: 'checkoutBuyButton.prepareOrder',
+  PREPARE_PAYMENT: 'checkoutBuyButton.preparePayment',
+  EXECUTING_PAYMENT: 'checkoutBuyButton.executingPayment',
+  SUCCESS: 'checkoutBuyButton.orderCreated',
+  ERROR: 'checkoutBuyButton.error',
+};
+
 /**
  * @description Composable for managing order creation.
  * @return UseMakeOrderReturn
@@ -13,6 +22,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
   const state = useState<UseMakeOrderState>('useMakeOrder', () => ({
     data: {} as Order,
     loading: false,
+    step: ORDER_STEPS.BUY,
   }));
 
   /**
@@ -31,6 +41,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
+    state.value.step = ORDER_STEPS.PREPARE_ORDER ;
+
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
         orderContactWish: null,
@@ -39,6 +51,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
         templateType: 'checkout',
       }),
     );
+
+    state.value.step = ORDER_STEPS.PREPARE_ORDER;
 
     const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
       useSdk().plentysystems.doPreparePayment(),
@@ -56,10 +70,13 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       if (error.value) {
         state.value.loading = false;
+        state.value.step = ORDER_STEPS.ERROR;
         return {} as Order;
       }
 
       state.value.data = data.value?.data ?? state.value.data;
+
+      state.value.step = ORDER_STEPS.EXECUTING_PAYMENT;
 
       await useAsyncData(() =>
         useSdk().plentysystems.doExecutePayment({
@@ -88,7 +105,8 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useNotification().send({ message: paymentValue, type: 'negative' });
+        useNotification().send({ message: paymentValue, type: 'negative' })
+        state.value.step = ORDER_STEPS.ERROR;
         break;
       }
 
@@ -97,9 +115,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
           message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
           type: 'negative',
         });
+        state.value.step = ORDER_STEPS.ERROR;
         break;
       }
     }
+
+    state.value.step = ORDER_STEPS.SUCCESS;
 
     state.value.loading = false;
     return state.value.data;
