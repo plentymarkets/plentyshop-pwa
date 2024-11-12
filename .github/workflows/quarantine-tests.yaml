@@ -21,7 +21,7 @@ jobs:
         run: corepack enable
 
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20.5'
           cache: 'yarn'
@@ -63,7 +63,7 @@ jobs:
           PAYPAL_EMAIL: ${{ secrets.PAYPAL_EMAIL }}
           PAYPAL_PASSWORD: ${{ secrets.PAYPAL_PASSWORD }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
