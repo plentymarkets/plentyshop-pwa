@@ -52,7 +52,9 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
       [...state.value.default, ...state.value.geoRegulated].map((country) => [country.id, country]),
     );
 
-    return [...uniqueCountries.values()].sort((first, second) => first.id - second.id);
+    return [...uniqueCountries.values()].sort((firstCountry, secondCountry) =>
+      firstCountry.currLangName.localeCompare(secondCountry.currLangName, useI18n().locale.value),
+    );
   });
 
   return {
