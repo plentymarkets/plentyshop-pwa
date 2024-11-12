@@ -3,11 +3,11 @@
 layout: home
 
 hero:
-  name: "plentyShop PWA"
+  name: "PlentyONE Onlineshop"
   text: "Documentation"
   image:
     src: /logo.png
-    alt: plentyShop PWA
+    alt: PlentyONE Onlineshop
   actions:
     - theme: brand
       text: Get started

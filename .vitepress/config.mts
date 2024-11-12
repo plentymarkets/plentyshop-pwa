@@ -9,8 +9,8 @@ import typedocSidebarApi from '../reference/api/typedoc-sidebar.json';
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   head: [['link', { rel: 'icon', href: '/favicon.png' }]],
-  title: "plentyShop PWA Docs",
-  description: "Documentation for plentyShop PWA, built with VueJS, Nuxt 3 and Alokai.",
+  title: "PlentyONE Onlineshop Docs",
+  description: "Documentation for PlentyONE Onlineshop, built with VueJS, Nuxt 3 and Alokai.",
   cleanUrls: true,
   ignoreDeadLinks: true,
   themeConfig: {

@@ -2,7 +2,7 @@
 
 The homepage of your online shop is like the shopping window of a brick-and-mortar store. It is your opportunity to tell customers about who you are, what you sell, and what sets you apart from the competition.
 
-plentyShop PWA provides a pre-defined layout for the homepage. You provide the data to fill this layout.
+PlentyONE Onlineshop provides a pre-defined layout for the homepage. You provide the data to fill this layout.
 
 ## Setup
 
@@ -22,7 +22,7 @@ Setting up the homepage consists of two parts:
 Carry out steps 4 and 5 for every language your shop offers.
 
 :::tip No additional category configuration
-plentyShop PWA only uses the template of the homepage category. You don't have to update any of the category's other settings.
+PlentyONE Onlineshop only uses the template of the homepage category. You don't have to update any of the category's other settings.
 :::
 
 ### App configuration
