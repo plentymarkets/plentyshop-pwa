@@ -286,10 +286,12 @@
   "breadcrumbsDropdownText": "Show more breadcrumbs",
   "buy": "Buy",
   "checkoutBuyButton": {
-    "prepareOrder": "Preparing order",
-    "preparePayment": "Preparing payment",
-    "executingPayment": "Executing payment",
-    "orderCreated": "Order created",
+    "prepareOrder": "preparing order",
+    "preparePayment": "preparing payment",
+    "creatingOrder": "creating order",
+    "executingPayment": "executing payment",
+    "orderCreated": "order created",
+    "navigateToConfirmation": "loading confirmation page",
     "error": "Failed to create order"
   },
   "cancellationRights": "Cancellation rights",

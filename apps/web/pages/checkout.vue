@@ -85,9 +85,9 @@
               data-testid="place-order-button"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <template v-if="createOrderLoading">
+              <template v-if="createOrderLoading || navigationInProgress || processingOrder">
                 <SfLoaderCircular class="flex justify-center items-center" size="sm" />
-                {{ t(step) }}
+                {{ t(orderStep) }}
               </template>
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
@@ -129,7 +129,7 @@ definePageMeta({
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
-const { loading: createOrderLoading, createOrder, step } = useMakeOrder();
+const { loading: createOrderLoading, createOrder, step: orderStep, setStep: setOrderStep } = useMakeOrder();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
@@ -202,6 +202,7 @@ const disableBuyButton = computed(
     processingOrder.value,
 );
 
+
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -250,6 +251,7 @@ const handleRegularOrder = async () => {
 
   if (data?.order?.id) {
     clearCartItems();
+    setOrderStep('checkoutBuyButton.navigateToConfirmation');
     navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
 };

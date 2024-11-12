@@ -5,6 +5,7 @@ const ORDER_STEPS = {
   BUY: 'buy',
   PREPARE_ORDER: 'checkoutBuyButton.prepareOrder',
   PREPARE_PAYMENT: 'checkoutBuyButton.preparePayment',
+  CREATING_ORDER: 'checkoutBuyButton.creatingOrder',
   EXECUTING_PAYMENT: 'checkoutBuyButton.executingPayment',
   SUCCESS: 'checkoutBuyButton.orderCreated',
   ERROR: 'checkoutBuyButton.error',
@@ -25,6 +26,10 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     step: ORDER_STEPS.BUY,
   }));
 
+  const setStep = (step: string) => {
+    state.value.step = step;
+  }
+
   /**
    * @description Function for creating an order
    * @param params { MakeOrderParams }
@@ -41,7 +46,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
-    state.value.step = ORDER_STEPS.PREPARE_ORDER;
+    setStep(ORDER_STEPS.PREPARE_ORDER);
 
     await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
@@ -52,7 +57,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }),
     );
 
-    state.value.step = ORDER_STEPS.PREPARE_ORDER;
+    setStep(ORDER_STEPS.PREPARE_ORDER);
 
     const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
       useSdk().plentysystems.doPreparePayment(),
@@ -64,19 +69,20 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const paymentValue = preparePaymentData.value?.data.value || '""';
 
     const continueOrHtmlContent = async () => {
+      setStep(ORDER_STEPS.CREATING_ORDER);
       const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
 
       useHandleError(error.value);
 
       if (error.value) {
         state.value.loading = false;
-        state.value.step = ORDER_STEPS.ERROR;
+        setStep(ORDER_STEPS.ERROR);
         return {} as Order;
       }
 
       state.value.data = data.value?.data ?? state.value.data;
 
-      state.value.step = ORDER_STEPS.EXECUTING_PAYMENT;
+      setStep(ORDER_STEPS.EXECUTING_PAYMENT);
 
       await useAsyncData(() =>
         useSdk().plentysystems.doExecutePayment({
@@ -106,7 +112,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       case 'errorCode': {
         useNotification().send({ message: paymentValue, type: 'negative' });
-        state.value.step = ORDER_STEPS.ERROR;
+        setStep(ORDER_STEPS.ERROR);
         break;
       }
 
@@ -115,12 +121,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
           message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
           type: 'negative',
         });
-        state.value.step = ORDER_STEPS.ERROR;
+        setStep(ORDER_STEPS.ERROR);
         break;
       }
     }
 
-    state.value.step = ORDER_STEPS.SUCCESS;
+    setStep(ORDER_STEPS.SUCCESS);
 
     state.value.loading = false;
     return state.value.data;
@@ -128,6 +134,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
   return {
     createOrder,
+    setStep,
     ...toRefs(state.value),
   };
 };

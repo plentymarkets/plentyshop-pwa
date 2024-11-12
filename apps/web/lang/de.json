@@ -288,8 +288,10 @@
   "checkoutBuyButton": {
     "prepareOrder": "Bestellung wird vorbereitet",
     "preparePayment": "Zahlung wird vorbereitet",
+    "creatingOrder": "Bestellung wird erstellt",
     "executingPayment": "Zahlung wird ausgeführt",
-    "orderCreated": "Bestellung wurde erstellt",
+    "orderCreated": "Bestellung erstellt",
+    "navigateToConfirmation": "Bestätigungsseite wird geladen",
     "error": "Fehler beim Bestellen"
   },
   "cancellationRights": "Widerrufsrecht",
