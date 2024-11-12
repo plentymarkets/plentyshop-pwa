@@ -45,7 +45,7 @@
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
-                :disabled="!termsAccepted || disableBuyButton"
+                :disabled="!termsAccepted || disableBuyButton || paypalCardDialog"
                 @validation-callback="handleReadyToBuy"
                 type="Checkout"
               />
@@ -272,6 +272,7 @@ const order = async () => {
 };
 
 watch(cartIsEmpty, async () => {
+  send({ type: 'neutral', message: t('emptyCartNotification') });
   if (!processingOrder.value) await navigateTo(localePath(paths.cart));
 });
 </script>
