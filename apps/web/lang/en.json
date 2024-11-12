@@ -290,7 +290,7 @@
     "preparePayment": "Preparing payment",
     "executingPayment": "Executing payment",
     "orderCreated": "Order created",
-    "error": "Faild to create order"
+    "error": "Failed to create order"
   },
   "cancellationRights": "Cancellation rights",
   "cart": "Cart",

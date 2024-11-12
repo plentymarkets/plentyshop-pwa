@@ -285,6 +285,13 @@
   "billingAddressRequired": "Bitte Rechnungsadresse auswählen.",
   "breadcrumbsDropdownText": "Mehr Breadcrumbs anzeigen",
   "buy": "Kaufen",
+  "checkoutBuyButton": {
+    "prepareOrder": "Bestellung wird vorbereitet",
+    "preparePayment": "Zahlung wird vorbereitet",
+    "executingPayment": "Zahlung wird ausgeführt",
+    "orderCreated": "Bestellung wurde erstellt",
+    "error": "Fehler beim Bestellen"
+  },
   "cancellationRights": "Widerrufsrecht",
   "cart": "Warenkorb",
   "categories": {
