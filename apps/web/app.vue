@@ -2,7 +2,7 @@
   <Body class="font-body" :class="bodyClass" />
   <UiNotifications />
   <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
-  <NuxtLoadingIndicator :color="loadingIndicatorColor" :height="5" />
+  <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
@@ -17,9 +17,6 @@ const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
-const runtimeConfig = useRuntimeConfig();
-const primaryColor = ref(runtimeConfig.public.primaryColor);
-const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);
@@ -29,10 +26,6 @@ usePageTitle();
 
 onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
-});
-
-const loadingIndicatorColor = computed(() => {
-  return `repeating-linear-gradient(to right, ${primaryColor.value} 0%, ${secondaryColor.value} 50%, ${secondaryColor.value} 100%)`;
 });
 
 watch(
