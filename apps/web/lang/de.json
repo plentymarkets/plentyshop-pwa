@@ -707,7 +707,8 @@
     "declineOffer": "Angebot ablehnen",
     "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
     "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt.",
-    "offer": "Angebot"
+    "offer": "Angebot",
+    "offerValidUntil": "Angebot gültig bis: {date}"
   },
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
