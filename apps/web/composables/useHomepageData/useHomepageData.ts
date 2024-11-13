@@ -9,9 +9,9 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
 };
 
 export default async function useHomepageData() {
-  const vsfLocale = useCookie('vsf-locale');
+  const { $i18n } = useNuxtApp();
   let homepageTemplateData = homepageTemplateDataEn;
-  if (vsfLocale.value === 'de') {
+  if ($i18n.locale === 'de') {
     homepageTemplateData = homepageTemplateDataDe;
   }
   const viewport = useViewport();
