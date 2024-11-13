@@ -5,6 +5,7 @@
 ### New
 
 - Added PWA cookie hash to sdk client
+- Added the "Valid Until" date to the offer page, displayed when a validity date is set.
 
 ### 👷 Changed
 
