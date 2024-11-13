@@ -2,9 +2,9 @@
   <NuxtLayout
     name="checkout"
     page-type="static"
-    :back-label-desktop="$t('backToCart')"
-    :back-label-mobile="$t('back')"
-    :heading="$t('checkout')"
+    :back-label-desktop="t('backToCart')"
+    :back-label-mobile="t('back')"
+    :heading="t('checkout')"
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
@@ -32,15 +32,23 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
+            <PayPalExpressButton
+              v-if="changedTotal"
+              @validation-callback="handleUpdatedOrder"
+              :disabled="!termsAccepted || interactionDisabled"
+              type="Checkout"
+            />
+
             <UiButton
+              v-else
               type="submit"
-              @click="order"
+              @click="handleRegularOrder"
               :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
               <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
-              <template v-else>{{ $t('buy') }}</template>
+              <template v-else>{{ t('buy') }}</template>
             </UiButton>
           </OrderSummary>
         </div>
@@ -50,33 +58,54 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, ApiError, Order, orderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, ApiError, Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
+import { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const ID_CHECKBOX = '#terms-checkbox';
+const localePath = useLocalePath();
+const route = useRoute();
+const { send } = useNotification();
+const { t } = useI18n();
 const { isAuthorized } = useCustomer();
-const { getSession } = useCustomer();
+const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
+const { getShippingMethods } = useCartShippingMethods();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { loading: executeOrderLoading, executeOrder } = usePayPal();
+const { processingOrder } = useProcessingOrder();
+const { setInitialCartTotal, changedTotal } = useShippingAsBilling();
+const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+const { loadPayment, loadShipping, paymentMethods, shippingMethods } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
   data: shippingAddresses,
   getAddresses: getShippingAddresses,
   saveAddress: saveShippingAddress,
 } = useAddress(AddressType.Shipping);
-const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
-const { loading: executeOrderLoading, executeOrder } = usePayPal();
-const route = useRoute();
-const localePath = useLocalePath();
-const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const { persistShippingAddress, persistBillingAddress } = useCheckout();
+const {
+  anyAddressFormIsOpen,
+  hasShippingAddress,
+  persistShippingAddress,
+  persistBillingAddress,
+  backToFormEditing,
+  scrollToShippingAddress,
+} = useCheckout();
 
-const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value);
-const interactionDisabled = computed(() => createOrderLoading.value || cartLoading.value || executeOrderLoading.value);
 const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
+const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const interactionDisabled = computed(
+  () =>
+    createOrderLoading.value ||
+    disableShippingPayment.value ||
+    cartLoading.value ||
+    navigationInProgress.value ||
+    processingOrder.value ||
+    executeOrderLoading.value,
+);
 
 const fetchShippingAndPaymentMethods = async () => {
   try {
@@ -97,11 +126,10 @@ const handleAuthUserInit = async () => {
   try {
     await useFetchAddress(AddressType.Shipping).fetchServer();
     await persistShippingAddress();
-
     await useFetchAddress(AddressType.Billing).fetchServer();
     await persistBillingAddress();
-
     await fetchShippingAndPaymentMethods();
+    setInitialCartTotal();
   } catch (error) {
     useHandleError(error as ApiError);
   }
@@ -111,6 +139,7 @@ const setClientCheckoutAddress = async () => {
   try {
     await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
     await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
+    setInitialCartTotal();
   } catch (error) {
     useHandleError(error as ApiError);
   }
@@ -149,6 +178,17 @@ const readyToOrder = async () => {
     return false;
   }
 
+  if (anyAddressFormIsOpen.value) {
+    send({ type: 'secondary', message: t('unsavedAddress') });
+    return backToFormEditing();
+  }
+
+  if (!hasShippingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    scrollToShippingAddress();
+    return false;
+  }
+
   if (!termsAccepted.value) {
     scrollToTerms();
     return false;
@@ -157,7 +197,11 @@ const readyToOrder = async () => {
   return true;
 };
 
-const order = async () => {
+const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
+  if (callback) callback(await readyToOrder());
+};
+
+const handleRegularOrder = async () => {
   if (!(await readyToOrder())) return;
 
   try {

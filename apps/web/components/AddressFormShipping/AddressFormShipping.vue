@@ -150,7 +150,7 @@ const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
 const { default: shippingCountries } = useAggregatedCountries();
-const { restrictedAddresses, shippingAsBilling } = useShippingAsBilling();
+const { restrictedAddresses, shippingAsBilling, handleCartTotalChanges } = useShippingAsBilling();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
@@ -242,6 +242,7 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
+    .then(() => handleCartTotalChanges())
     .catch((error) => useHandleError(error));
 });
 
