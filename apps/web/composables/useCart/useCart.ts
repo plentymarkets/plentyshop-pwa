@@ -165,17 +165,24 @@ export const useCart: UseCartReturn = () => {
     state.value.loading = true;
 
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCartItems(params));
+      const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
-      useHandleError(error.value);
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
 
-      return !!data.value;
+      return !!data;
     } catch (error) {
-      throw new Error(error as string);
+      const apiError = error as ApiError;
+      if (apiError.events?.AfterBasketChanged?.basket) {
+        state.value.data = {
+          ...apiError.events.AfterBasketChanged.basket,
+          items: apiError.events.AfterBasketChanged.basketItems,
+        };
+      }
+      useHandleError(apiError);
     } finally {
       state.value.loading = false;
     }
+    return false;
   };
 
   /**
