@@ -913,6 +913,15 @@
       "validationFailed": "The address is invalid."
     },
     "cart": {
+      "addToBasket": {
+        "itemSetComponentMismatch": "There is a mismatch in the item set components, and it cannot be added to the cart.",
+        "maxItemQuantityReached": "The maximum quantity for this item has been reached and it cannot be added to the cart.",
+        "maxVariationQuantityReached": "The maximum quantity for this variant has been reached and it cannot be added to the cart.",
+        "minVariationQuantityNotReached": "The minimum quantity for this variant has not been reached and cannot be added to the cart.",
+        "notEnoughStockForVariation": "There is insufficient stock available for this variant.",
+        "unknownError": "An unknown error occurred while adding the item. Please try again.",
+        "variationNotFound": "The selected variant was not found and cannot be added to the cart."
+      },
       "failedToRemoveItem": "The item could not be removed.",
       "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
