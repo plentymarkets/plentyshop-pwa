@@ -61,7 +61,7 @@
 import { AddressType, ApiError, Order, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const ID_CHECKBOX = '#terms-checkbox';
 const localePath = useLocalePath();
