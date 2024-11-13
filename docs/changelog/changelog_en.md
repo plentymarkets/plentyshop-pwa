@@ -9,6 +9,7 @@
 ### 👷 Changed
 
 - Newsletter email confirmation
+- Modified lighthouse rules for CLS and dom-size
 
 ### 🩹 Fixed
 
