@@ -5,12 +5,12 @@
       v-model="open"
       :placement="placement"
       :class="[
-        'w-128',
+        'lg:w-128',
         'bg-neutral-50',
         'border',
         'border-gray-300',
         'z-50',
-        { 'min-w-[400px]': placement === 'left' || placement === 'right' },
+        { 'lg:min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
