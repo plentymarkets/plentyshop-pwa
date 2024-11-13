@@ -28,9 +28,6 @@ onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
 });
 
-// const editorState = useEditor();
-// provide('editorState', editorState);
-
 watch(
   () => locale.value,
   async (locale: string) => {
