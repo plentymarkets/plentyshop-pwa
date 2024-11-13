@@ -1,5 +1,24 @@
 # Changelog plentyshopPWA
 
+## v1.x.x (yyyy-mm-dd)
+
+### New
+
+- Added PWA cookie hash to sdk client
+- Added progress loading indicator animation when navigating between pages.
+
+### 👷 Changed
+
+- Newsletter email confirmation
+
+### 🩹 Fixed
+
+- Load more accurate images sizes for product page.
+- Reload page after login so the customer class affects prices and categories
+- Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
+- The hero button now links to the provided destination.
+- Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
+
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
@@ -18,6 +37,7 @@
 
 ### 🩹 Fixed
 
+- Addressed an unhandled scenario in which a guest user attempts to modify their billing address while using the same address for shipping.
 - Fixed an issue where increasing the quantity beyond maximum stock would clear the cart.
 - Removed the "Add to Cart" notification from item and category pages when the quick checkout modal is not present.
 - Improved accessibility for the cart and wishlist pages by increasing the font size.

@@ -39,7 +39,7 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing } = useEditor();
 const { recommendedProductsCategoryId } = await useHomepageData();
 const { hero, valueProposition, fetchData } = useHomePageState();
-definePageMeta({ pageType: 'static' });
+definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 const { t } = useI18n();
 

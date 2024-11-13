@@ -2,6 +2,7 @@
   <Body class="font-body" :class="bodyClass" />
   <UiNotifications />
   <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
+  <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
@@ -16,8 +17,6 @@ const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
-const { isAuthorized } = useCustomer();
-const localePath = useLocalePath();
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);
@@ -25,32 +24,12 @@ setVsfLocale(locale.value);
 if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
 
-const authOnlyRoutes = new Set([
-  localePath(paths.accountPersonalData),
-  localePath(paths.accountBillingDetails),
-  localePath(paths.accountShippingDetails),
-  localePath(paths.accountMyOrders),
-  localePath(paths.accountMyWishlist),
-  localePath(paths.accountReturns),
-  localePath(paths.accountNewReturn),
-]);
-
-const watchAuthRoutes = (authenticated: boolean) => {
-  if (authOnlyRoutes.has(localePath(route.path)) && !authenticated) navigateTo(localePath(paths.home));
-};
-
 onNuxtReady(async () => {
   bodyClass.value = 'hydrated'; // Need this class for cypress testing
-  watchAuthRoutes(isAuthorized.value);
 });
 
 // const editorState = useEditor();
 // provide('editorState', editorState);
-
-watch(
-  () => isAuthorized.value,
-  (authenticated: boolean) => watchAuthRoutes(authenticated),
-);
 
 watch(
   () => locale.value,

@@ -45,7 +45,7 @@
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
             <client-only v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
-                :disabled="!termsAccepted || disableShippingPayment || cartLoading"
+                :disabled="!termsAccepted || disableBuyButton"
                 @validation-callback="handleReadyToBuy"
                 type="Checkout"
               />
@@ -60,7 +60,7 @@
               type="submit"
               data-testid="place-order-button"
               @click="openPayPalCardDialog"
-              :disabled="disableShippingPayment || cartLoading || paypalCardDialog"
+              :disabled="disableBuyButton || paypalCardDialog"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
@@ -68,24 +68,26 @@
             </UiButton>
             <PayPalApplePayButton
               v-else-if="selectedPaymentId === paypalApplePayPaymentId"
-              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              :style="disableBuyButton ? 'pointer-events: none;' : ''"
               @button-clicked="handleReadyToBuy"
             />
             <PayPalGooglePayButton
               v-else-if="selectedPaymentId === paypalGooglePayPaymentId"
-              :style="createOrderLoading || disableShippingPayment || cartLoading ? 'pointer-events: none;' : ''"
+              :style="disableBuyButton ? 'pointer-events: none;' : ''"
               @button-clicked="handleReadyToBuy"
             />
             <UiButton
               v-else
               type="submit"
               @click="order"
-              :disabled="createOrderLoading || disableShippingPayment || cartLoading"
+              :disabled="disableBuyButton"
               size="lg"
               data-testid="place-order-button"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular v-if="createOrderLoading" class="flex justify-center items-center" size="sm" />
+              <template v-if="createOrderLoading">
+                <SfLoaderCircular class="flex justify-center items-center" size="sm" />
+              </template>
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
           </OrderSummary>
@@ -126,6 +128,7 @@ definePageMeta({
 const { send } = useNotification();
 const { t } = useI18n();
 const localePath = useLocalePath();
+const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
@@ -188,6 +191,16 @@ onNuxtReady(async () => {
 const paypalCardDialog = ref(false);
 const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
 const { processingOrder } = useProcessingOrder();
+
+const disableBuyButton = computed(
+  () =>
+    createOrderLoading.value ||
+    disableShippingPayment.value ||
+    cartLoading.value ||
+    navigationInProgress.value ||
+    processingOrder.value,
+);
+
 const paypalPaymentId = computed(() => {
   if (!paymentMethods.value.list) return null;
   return paymentProviderGetters.getIdByPaymentKey(paymentMethods.value.list, PayPalPaymentKey);
@@ -258,6 +271,9 @@ const order = async () => {
 };
 
 watch(cartIsEmpty, async () => {
-  if (!processingOrder.value) await navigateTo(localePath(paths.cart));
+  if (!processingOrder.value) {
+    send({ type: 'neutral', message: t('emptyCartNotification') });
+    await navigateTo(localePath(paths.cart));
+  }
 });
 </script>
