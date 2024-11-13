@@ -66,7 +66,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
 
-    const manufacturer = productGetters.getManufacturer(product);
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -94,11 +93,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
-      manufacturer: {
-        '@type': 'Organization',
-        name: manufacturer.externalName,
-      },
-      sku: productGetters.getSku(product),
       review: reviews,
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -109,7 +103,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),
         price: Number(price.value),
-        priceValidUntil: productGetters.getVariationAvailableUntil(product),
         url: null,
         priceSpecification: [
           {
@@ -122,10 +115,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: productGetters.isSalable(product)
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: null,
+        availability: productGetters.getMappedAvailability(product),
+        itemCondition: productGetters.getConditionOfItem(product),
       },
       depth: {
         '@type': 'QuantitativeValue',
@@ -143,7 +134,38 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
-    };
+    } as any;
+
+    // if (productGetters.getSeoManufacturer(product) !== '') {
+    //   metaObject.manufacturer = {
+    //     '@type': 'Organization',
+    //     name: manufacturer.externalName,
+    //   }
+    // }
+
+    const brand = productGetters.getBrand(product);
+    if (brand !== '') metaObject.brand = { '@type': 'Brand', 'name': brand };
+
+    const sku = productGetters.getSku(product);
+    if (sku !== '') metaObject.sku = sku;
+
+    const gtin = productGetters.getGtin(product);
+    if (gtin !== '') metaObject.gtin = gtin;
+
+    const gtin8 = productGetters.getGtin8(product);
+    if (gtin8 !== '') metaObject.gtin8 = gtin8;
+
+    const gtin13 = productGetters.getGtin13(product);
+    if (gtin13 !== '') metaObject.gtin13 = gtin13;
+
+    const isbn = productGetters.getIsbn(product);
+    if (isbn !== '') metaObject.isbn = productGetters.getIsbn(product);
+
+    const mpn = productGetters.getMpn(product);
+    if (mpn !== '') metaObject.mpn = mpn;
+
+    const priceValidUntil = productGetters.getPriceValidUntil(product);
+    if (priceValidUntil !== '') metaObject.offers.priceValidUntil = priceValidUntil;
 
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
@@ -160,7 +182,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(metaObject),
+          innerHTML: JSON.stringify(metaObject, null, 4),
         },
       ],
     });
