@@ -27,7 +27,6 @@ export default async function useHomepageData() {
     const parsedData = JSON.parse(data);
     if (parsedData) {
       homepageTemplate.value = {
-        id: parsedData.id,
         hero: parsedData.hero || [],
         valueProposition: parsedData.valueProposition,
         featured: parsedData.featured,

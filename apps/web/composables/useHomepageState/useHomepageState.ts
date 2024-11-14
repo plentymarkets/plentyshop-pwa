@@ -43,7 +43,6 @@ const fetchHomepageTemplate = async (homepageCategoryId: number) => {
   homepageTemplate.value =
     parsedData && !isEmptyObject(parsedData)
       ? {
-          id: parsedData.id,
           hero: parsedData.hero || [],
           valueProposition: parsedData.valueProposition,
           featured: parsedData.featured,
@@ -117,7 +116,6 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     const formattedHeroItems = formatHeroItems();
 
     const homeData: HomeData = {
-      id: homepageTemplate.value.id,
       hero: formattedHeroItems,
       valueProposition: mediaData,
     };

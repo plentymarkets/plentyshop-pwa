@@ -2,7 +2,6 @@ import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 
 export interface HomeData {
-  id: number;
   hero: HeroContentProps[];
   valueProposition: MediaItemProps[];
 }
