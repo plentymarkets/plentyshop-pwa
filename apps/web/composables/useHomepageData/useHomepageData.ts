@@ -1,6 +1,5 @@
 import { HeroContentProps, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
-import { useCategoryTemplate } from '~/composables';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 
