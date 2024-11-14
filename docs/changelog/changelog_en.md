@@ -6,6 +6,7 @@
 
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
+- Allow for multiple category products fetching on the same page. 
 
 ### 👷 Changed
 
