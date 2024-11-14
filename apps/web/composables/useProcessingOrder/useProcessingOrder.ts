@@ -3,7 +3,17 @@ export const useProcessingOrder = () => {
     processingOrder: false,
   }));
 
+  const start = () => {
+    state.value.processingOrder = true;
+  };
+
+  const stop = () => {
+    state.value.processingOrder = false;
+  };
+
   return {
+    start,
+    stop,
     ...toRefs(state.value),
   };
 };

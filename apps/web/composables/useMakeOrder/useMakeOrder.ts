@@ -44,11 +44,14 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    */
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     const { $i18n } = useNuxtApp();
+    const { start: startProcessingOrder } = useProcessingOrder();
     state.value.loading = true;
+    startProcessingOrder();
+
 
     setStep(ORDER_STEPS.PREPARE_ORDER);
 
-    await useAsyncData(() =>
+    const {error: doAdditionalInformationError } = await useAsyncData(() =>
       useSdk().plentysystems.doAdditionalInformation({
         orderContactWish: null,
         orderCustomerSign: null,
@@ -56,40 +59,36 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
         templateType: 'checkout',
       }),
     );
-
+    handleError(doAdditionalInformationError.value);
     setStep(ORDER_STEPS.PREPARE_ORDER);
 
     const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
       useSdk().plentysystems.doPreparePayment(),
     );
 
-    useHandleError(preparePaymentError.value);
+    handleError(preparePaymentError.value);
 
     const paymentType = preparePaymentData.value?.data.type || 'errorCode';
     const paymentValue = preparePaymentData.value?.data.value || '""';
 
     const continueOrHtmlContent = async () => {
       setStep(ORDER_STEPS.CREATING_ORDER);
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
+      const { data, error: placeOrderError } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
 
-      useHandleError(error.value);
-
-      if (error.value) {
-        state.value.loading = false;
-        setStep(ORDER_STEPS.ERROR);
-        return {} as Order;
-      }
+      handleError(placeOrderError.value);
 
       state.value.data = data.value?.data ?? state.value.data;
 
       setStep(ORDER_STEPS.EXECUTING_PAYMENT);
 
-      await useAsyncData(() =>
+      const { error: doExecutePaymentError } = await useAsyncData(() =>
         useSdk().plentysystems.doExecutePayment({
           orderId: state.value.data.order.id,
           paymentId: params.paymentId,
         }),
       );
+
+      handleError(doExecutePaymentError.value);
     };
 
     switch (paymentType) {
@@ -112,7 +111,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       case 'errorCode': {
         useNotification().send({ message: paymentValue, type: 'negative' });
-        setStep(ORDER_STEPS.ERROR);
+        handleError();
         break;
       }
 
@@ -121,7 +120,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
           message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
           type: 'negative',
         });
-        setStep(ORDER_STEPS.ERROR);
+        handleError();
         break;
       }
     }
@@ -131,6 +130,15 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     state.value.loading = false;
     return state.value.data;
   };
+
+  const handleError = (error?: any) => {
+    if (error) useHandleError(error);
+
+    state.value.loading = false;
+    useProcessingOrder().stop();
+    setStep(ORDER_STEPS.ERROR);
+    return {} as Order;
+  }
 
   return {
     createOrder,

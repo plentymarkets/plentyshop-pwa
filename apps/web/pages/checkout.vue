@@ -264,7 +264,6 @@ const handleReadyToBuy = (callback?: PayPalAddToCartCallback) => {
 const order = async () => {
   if (!readyToBuy()) return;
 
-  processingOrder.value = true;
   const paymentMethodsById = _.keyBy(paymentMethods.value.list, 'id');
 
   paymentMethodsById[selectedPaymentId.value].key === 'plentyPayPal'
