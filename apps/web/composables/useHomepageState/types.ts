@@ -23,6 +23,5 @@ export interface UseHomepage {
   valueProposition: Readonly<Ref<MediaItemProps[]>>;
   setFormattedHeroItems: (items: HomeData[]) => void;
 }
-export type DoHomepageData = () => UseHomepageDataState;
 
 export type UseHomepageDataReturn = () => UseHomepage;
