@@ -19,6 +19,7 @@
 - Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
 - The hero button now links to the provided destination.
 - Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
+- Fixed GPSR drawer responsiveness.
 - To satisfy accessibility guidelines, the alt text for the logo now includes the store name.
 - The hero image now uses the alt text specified in the homepage template.
 - The recommended products section on the homepage now uses the category ID from the homepage template.
