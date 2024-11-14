@@ -14,16 +14,6 @@ import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
  * ```
  */
 
-/**
- * @description Resolves the image URL based on the provided size key
- * @param imageSizes Record of image URLs keyed by size
- * @param sizeKey The size key to resolve the image for
- * @returns The resolved image URL
- */
-const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
-  return imageSizes[sizeKey] || '';
-};
-
 const homepageTemplate = ref(homepageTemplateData);
 const runtimeConfig = useRuntimeConfig();
 const { isEditingDisabled } = useEditor();
@@ -57,23 +47,13 @@ const fetchHomepageTemplate = async (homepageCategoryId: number) => {
  */
 const formatHeroItems = () => {
   return homepageTemplate.value.hero.map((item) => {
-    const viewport = useViewport();
-    const getCurrentSizeKey = (): SizeKey => viewport.breakpoint.value as SizeKey;
-    const currentSizeKey = getCurrentSizeKey();
     return {
-      image: resolveImage(item.image, currentSizeKey),
+      image: item.image,
       tagline: item.tagline || '',
       heading: item.heading || '',
       description: item.description || '',
       callToAction: item.callToAction || '',
       link: item.link || '',
-      backgroundSizes: {
-        lg: { width: '4000', height: '600' },
-        md: { width: '1024', height: '600' },
-        sm: { width: '640', height: '752' },
-        xs: { width: '250', height: '250' },
-      },
-      actualBackgroundSize: currentSizeKey,
     };
   });
 };
