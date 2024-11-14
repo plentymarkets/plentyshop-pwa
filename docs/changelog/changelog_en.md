@@ -6,7 +6,6 @@
 
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
-- Allow for multiple category products fetching on the same page. 
 
 ### 👷 Changed
 
@@ -20,6 +19,7 @@
 - The hero button now links to the provided destination.
 - Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
 - Fixed GPSR drawer responsiveness.
+- Allow for multiple category products fetching on the same page.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
