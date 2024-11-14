@@ -73,5 +73,4 @@ export default async function useHomepageData() {
     mediaData,
     recommendedProductsCategories,
   };
-};
-export default useHomepageData;
+}
