@@ -1,17 +1,24 @@
-import { ref, watch, computed } from 'vue';
 import { HeroContentProps, SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
-import { useCategoryTree, useCategoryTemplate } from '~/composables';
-import homepageTemplateData from './homepageTemplateData.json';
+import homepageTemplateDataEn from './homepageTemplateDataEn.json';
+import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 
 const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): string => {
   return imageSizes[sizeKey] || '';
 };
 
+const getHomepageTemplateData = (locale: string) => {
+  if (locale === 'de') {
+    return homepageTemplateDataDe;
+  }
+  return homepageTemplateDataEn;
+};
+
 export default async function useHomepageData() {
+  const { $i18n } = useNuxtApp();
+  const homepageTemplateData = getHomepageTemplateData($i18n.locale.value);
   const viewport = useViewport();
-  const { data: categoryTree } = useCategoryTree();
-  const recommendedProductsCategoryId = ref('');
+  const recommendedProductsCategories = ref(homepageTemplateData.featured);
 
   const runtimeConfig = useRuntimeConfig();
   const homepageTemplate = ref(homepageTemplateData);
@@ -48,6 +55,7 @@ export default async function useHomepageData() {
     return homepageTemplate.value.hero.map((item) => {
       return {
         image: resolveImage(item.image, currentSizeKey),
+        alt: item.image.alt || '',
         tagline: item.tagline || '',
         heading: item.heading || '',
         description: item.description || '',
@@ -64,18 +72,9 @@ export default async function useHomepageData() {
     });
   });
 
-  watch(
-    () => categoryTree.value,
-    () => {
-      const firstCategoryId = categoryTree.value?.[0]?.id;
-      if (firstCategoryId) recommendedProductsCategoryId.value = firstCategoryId.toString();
-    },
-    { immediate: true },
-  );
-
   return {
     formattedHeroItems,
     mediaData,
-    recommendedProductsCategoryId,
+    recommendedProductsCategories,
   };
 }
