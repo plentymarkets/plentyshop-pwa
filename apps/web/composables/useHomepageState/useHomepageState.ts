@@ -1,6 +1,5 @@
 import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
 import { toRefs, ref, watch } from 'vue';
-import { SizeKey } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import homepageTemplateData from '~/composables/useHomepageData/homepageTemplateData.json';
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';

@@ -1,17 +1,20 @@
-export const useHomepageData = async () => {
-  const { data: categoryTree } = useCategoryTree();
-  const recommendedProductsCategoryId = ref('');
-  watch(
-    () => categoryTree.value,
-    () => {
-      const firstCategoryId = categoryTree.value?.[0]?.id;
-      if (firstCategoryId) recommendedProductsCategoryId.value = firstCategoryId.toString();
-    },
-    { immediate: true },
-  );
+import homepageTemplateDataEn from './homepageTemplateDataEn.json';
+import homepageTemplateDataDe from './homepageTemplateDataDe.json';
+
+const getHomepageTemplateData = (locale: string) => {
+  if (locale === 'de') {
+    return homepageTemplateDataDe;
+  }
+  return homepageTemplateDataEn;
+};
+
+export default async function useHomepageData() {
+  const { $i18n } = useNuxtApp();
+  const homepageTemplateData = getHomepageTemplateData($i18n.locale.value);
+  const recommendedProductsCategories = ref(homepageTemplateData.featured);
 
   return {
-    recommendedProductsCategoryId,
+    recommendedProductsCategories,
+    getHomepageTemplateData,
   };
-};
-export default useHomepageData;
+}
