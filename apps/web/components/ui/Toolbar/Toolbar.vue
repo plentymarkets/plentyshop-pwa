@@ -17,13 +17,18 @@
         :disabled="isEditingDisabled"
         @click="saveData"
       >
-        Save
+        <template v-if="loading">
+          <SfLoaderCircular class="animate-spin w-4 h-4" />
+        </template>
+
+        <template v-else> Save </template>
       </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing, isEditingDisabled } = useEditor();
 
 const viewport = useViewport();
@@ -31,7 +36,7 @@ const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
 
-const { saveData } = useHomePageState();
+const { saveData, loading } = useHomePageState();
 
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;

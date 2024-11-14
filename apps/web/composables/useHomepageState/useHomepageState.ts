@@ -138,7 +138,12 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const saveData = async (): Promise<void> => {
     const { setCategoryTemplate } = useCategoryTemplate();
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    await setCategoryTemplate(homepageCategoryId, JSON.stringify(state.value.data));
+    state.value.loading = true;
+    try {
+      await setCategoryTemplate(homepageCategoryId, JSON.stringify(state.value.data));
+    } finally {
+      state.value.loading = false;
+    }
   };
 
   /**
