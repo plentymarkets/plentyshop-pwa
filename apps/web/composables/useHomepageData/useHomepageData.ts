@@ -7,12 +7,16 @@ const resolveImage = (imageSizes: Record<SizeKey, string>, sizeKey: SizeKey): st
   return imageSizes[sizeKey] || '';
 };
 
+const getHomepageTemplateData = (locale: string) => {
+  if (locale === 'de') {
+    return homepageTemplateDataDe;
+  }
+  return homepageTemplateDataEn;
+};
+
 export default async function useHomepageData() {
   const { $i18n } = useNuxtApp();
-  let homepageTemplateData = homepageTemplateDataEn;
-  if ($i18n.locale === 'de') {
-    homepageTemplateData = homepageTemplateDataDe;
-  }
+  const homepageTemplateData = getHomepageTemplateData($i18n.locale.value);
   const viewport = useViewport();
   const recommendedProductsCategories = ref(homepageTemplateData.featured);
 
