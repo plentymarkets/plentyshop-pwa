@@ -24,6 +24,7 @@
 - The hero image now uses the alt text specified in the homepage template.
 - The recommended products section on the homepage now uses the category ID from the homepage template.
 - The recommended products section on the homepage is now displayed multiple times if specified.
+- Allow for multiple category products fetching on the same page.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
