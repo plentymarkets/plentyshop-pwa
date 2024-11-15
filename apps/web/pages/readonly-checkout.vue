@@ -129,7 +129,7 @@ const handleAuthUserInit = async () => {
     await useFetchAddress(AddressType.Billing).fetchServer();
     await persistBillingAddress();
     await fetchShippingAndPaymentMethods();
-    setInitialCartTotal();
+    await setInitialCartTotal();
   } catch (error) {
     useHandleError(error as ApiError);
   }
@@ -139,7 +139,7 @@ const setClientCheckoutAddress = async () => {
   try {
     await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
     await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
-    setInitialCartTotal();
+    await setInitialCartTotal();
   } catch (error) {
     useHandleError(error as ApiError);
   }

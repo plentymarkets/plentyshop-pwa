@@ -5,21 +5,30 @@ export const useShippingAsBilling = () => {
   const localePath = useLocalePath();
   const { data: customerData } = useCustomer();
   const { getCart } = useCart();
+  const { getOrder } = usePayPal();
 
   const state = useState('useShippingAsBilling', () => ({
     restrictedAddresses: route.fullPath.includes(localePath(paths.readonlyCheckout)),
     shippingAsBilling: false,
-    initialTotal: 0,
+    initialTotal: '0',
     changedTotal: false,
   }));
 
-  const setInitialCartTotal = () => {
-    state.value.initialTotal = cartGetters.getTotals(customerData.value.basket).total;
+  const setInitialCartTotal = async () => {
+    const paypalOrder = await getOrder({
+      paypalOrderId: route.query.orderId?.toString() || '',
+      payPalPayerId: route.query.payerId?.toString() || '',
+    });
+
+    if (paypalOrder) {
+      state.value.initialTotal = paypalOrder.result.purchase_units[0].amount.value;
+    }
   };
 
   const handleCartTotalChanges = async () => {
     if (state.value.restrictedAddresses) {
-      state.value.changedTotal = cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal;
+      state.value.changedTotal =
+        cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
       await getCart();
     }
   };
