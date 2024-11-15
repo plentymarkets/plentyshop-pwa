@@ -174,6 +174,7 @@ const readyToOrder = async () => {
   if (interactionDisabled.value) return false;
 
   if (cartIsEmpty.value) {
+    send({ type: 'neutral', message: t('emptyCartNotification') });
     await navigateTo(localePath(paths.cart));
     return false;
   }
