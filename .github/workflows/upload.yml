@@ -7,6 +7,14 @@ on:
     branches: [main]
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'The environment to deploy to'
+        type: choice
+        required: true
+        default: 'staging'
+        options:
+          - staging
+          - production
       tag-version:
         description: 'The tag version, branch name or SHA to checkout'
         required: true
@@ -85,8 +93,8 @@ jobs:
           outPath: pwa.tar.gz
 
       - name: Upload build to production
-        if: github.event_name == 'release'
-        id: upload
+        if: github.event_name == 'release'  || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'production')
+        id: upload-production
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: 'https://pwapublish.plentysystems.com'
@@ -94,7 +102,7 @@ jobs:
           fileForms: '{ "file": "pwa.tar.gz" }'
 
       - name: Upload build to staging
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'staging')
         id: upload-staging
         uses: JantHsueh/upload-file-action@1.0
         with:
