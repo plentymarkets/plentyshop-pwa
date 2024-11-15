@@ -39,8 +39,7 @@
 <script lang="ts" setup async>
 import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing } = useEditor();
-const { recommendedProductsCategories } = await useHomepageData();
-const { hero, valueProposition, fetchData } = useHomePageState();
+const { hero, valueProposition, fetchData, recommendedProductsCategories } = useHomePageState();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 

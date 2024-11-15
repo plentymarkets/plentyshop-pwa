@@ -1,73 +1,12 @@
 import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
 import { toRefs, ref, watch } from 'vue';
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
-import homepageTemplateData from '~/composables/useHomepageData/homepageTemplateData.json';
+import homepageTemplateDataEn from '~/composables/useHomepageData/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '~/composables/useHomepageData/homepageTemplateDataDe.json';
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
+import { MediaItemProps } from '~/components/ui/MediaCard/types';
 
-/**
- * @description Composable managing homepage data
- * @returns UseHomepageDataReturn
- * @example
- * ``` ts
- * const { data, loading, fetchData } = useHomePageState('');
- * ```
- */
-
-const homepageTemplate = ref(homepageTemplateData);
-const runtimeConfig = useRuntimeConfig();
-const { isEditingDisabled } = useEditor();
-
-/**
- * @description Fetches the homepage template data for a given category ID
- * @param homepageCategoryId The ID of the homepage category to fetch the template for
- */
-const isEmptyObject = (obj: any) => {
-  return Object.keys(obj).length === 0;
-};
-const fetchHomepageTemplate = async (homepageCategoryId: number) => {
-  const { fetchCategoryTemplate } = useCategoryTemplate();
-  const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data || '{}');
-
-  homepageTemplate.value =
-    parsedData && !isEmptyObject(parsedData)
-      ? {
-          hero: parsedData.hero || [],
-          valueProposition: parsedData.valueProposition,
-          featured: parsedData.featured,
-        }
-      : homepageTemplateData;
-};
-
-/**
- * @description Formats the hero items for the homepage
- * @returns An array of formatted hero items
- */
-const formatHeroItems = () => {
-  return homepageTemplate.value.hero.map((item) => {
-    return {
-      image: item.image,
-      tagline: item.tagline || '',
-      heading: item.heading || '',
-      description: item.description || '',
-      callToAction: item.callToAction || '',
-      link: item.link || '',
-    };
-  });
-};
-
-/**
- * @description Formats the media data for the homepage
- * @returns An array of formatted media items
- */
-const formatMediaData = () => {
-  return homepageTemplate.value.valueProposition.map((media: MediaItemProps) => ({
-    image: media.image,
-    text: media.text,
-    alignment: media.alignment,
-    alt: media.alt,
-  }));
-};
+const useLocaleSpecificHomepageTemplate = (locale: string) =>
+  locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
 
 export const useHomePageState: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
@@ -76,12 +15,55 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     showErrors: false,
   }));
 
+  const { $i18n } = useNuxtApp();
+  const runtimeConfig = useRuntimeConfig();
+  const { isEditingDisabled } = useEditor();
+
+  const currentLocale = ref($i18n.locale.value);
+  const homepageTemplateData = ref(useLocaleSpecificHomepageTemplate(currentLocale.value));
+
+  const recommendedProductsCategories = ref(homepageTemplateData.value.featured || []);
   const hero = ref<HeroContentProps[]>([]);
   const valueProposition = ref<MediaItemProps[]>([]);
 
-  /**
-   * @description Fetches the homepage data and updates the state
-   */
+  // eslint-disable-next-line unicorn/consistent-function-scoping
+  const isEmptyObject = (obj: any) => Object.keys(obj).length === 0;
+
+  const fetchHomepageTemplate = async (homepageCategoryId: number) => {
+    const { fetchCategoryTemplate } = useCategoryTemplate();
+    const { data } = await fetchCategoryTemplate(homepageCategoryId);
+    const parsedData = JSON.parse(data || '{}');
+
+    homepageTemplateData.value =
+      parsedData && !isEmptyObject(parsedData)
+        ? {
+            hero: parsedData.hero || [],
+            valueProposition: parsedData.valueProposition,
+            featured: parsedData.featured,
+          }
+        : useLocaleSpecificHomepageTemplate(currentLocale.value);
+
+    recommendedProductsCategories.value = homepageTemplateData.value.featured || [];
+  };
+
+  const formatHeroItems = () =>
+    homepageTemplateData.value.hero.map((item) => ({
+      image: item.image,
+      tagline: item.tagline || '',
+      heading: item.heading || '',
+      description: item.description || '',
+      callToAction: item.callToAction || '',
+      link: item.link || '',
+    }));
+
+  const formatMediaData = () =>
+    homepageTemplateData.value.valueProposition.map((media) => ({
+      image: media.image,
+      text: media.text,
+      alignment: media.alignment,
+      alt: media.alt,
+    }));
+
   const fetchData = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
@@ -99,7 +81,7 @@ export const useHomePageState: UseHomepageDataReturn = () => {
       valueProposition: mediaData,
     };
 
-    state.value.data.push(homeData);
+    state.value.data = [homeData];
     state.value.loading = false;
 
     if (state.value.data.length > 0) {
@@ -109,9 +91,6 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     }
   };
 
-  /**
-   * @description Saves the homepage data
-   */
   const saveData = async (): Promise<void> => {
     const { setCategoryTemplate } = useCategoryTemplate();
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
@@ -123,15 +102,21 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     }
   };
 
-  /**
-   * @description Sets the formatted hero items in the state
-   * @param item An array of HomeData objects
-   */
   const setFormattedHeroItems = (item: HomeData[]) => {
     state.value.data = item;
   };
 
-  // Watch for changes in state.value.data and update hero and valueProposition
+  // watch(
+  //   () => $i18n.locale.value,
+  //   (updatedLocale) => {
+  //     console.log(`Locale changed to: ${updatedLocale}`);
+  //     currentLocale.value = updatedLocale;
+  //     homepageTemplateData.value = useLocaleSpecificHomepageTemplate(updatedLocale);
+  //     fetchData();
+  //   },
+  //   { immediate: true },
+  // );
+
   watch(
     () => state.value.data,
     (updatedData) => {
@@ -154,5 +139,6 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     setFormattedHeroItems,
     hero,
     valueProposition,
+    recommendedProductsCategories,
   };
 };
