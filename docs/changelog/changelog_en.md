@@ -5,10 +5,12 @@
 ### New
 
 - Added PWA cookie hash to sdk client
+- Added progress loading indicator animation when navigating between pages.
 
 ### 👷 Changed
 
 - Newsletter email confirmation
+- The default data for the homepage is now available for both English and German.
 
 ### 🩹 Fixed
 
@@ -16,6 +18,14 @@
 - Reload page after login so the customer class affects prices and categories
 - Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
 - The hero button now links to the provided destination.
+- Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
+- Fixed GPSR drawer responsiveness.
+- To satisfy accessibility guidelines, the alt text for the logo now includes the store name.
+- The hero image now uses the alt text specified in the homepage template.
+- The recommended products section on the homepage now uses the category ID from the homepage template.
+- The recommended products section on the homepage is now displayed multiple times if specified.
+- Allow for multiple category products fetching on the same page.
+- Fixed an issue where review modal was unscrollable on smaller screens.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
