@@ -11,6 +11,15 @@
 
 - Newsletter email confirmation
 
+#### GitHub Action: Upload
+
+The **Upload** action now supports deploying the PWA to different environments:
+
+- Production: triggered manually or when creating a GitHub release
+- Staging: triggered manually or when pushing a change to the `main` branch
+
+Each client supports two PWA instances. With this change, you can designate the live instance as the production environment and the preview instance as the staging environment. The production environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN`; the staging environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
+
 ### 🩹 Fixed
 
 - Load more accurate images sizes for product page.
