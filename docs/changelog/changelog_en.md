@@ -43,6 +43,7 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
+- Added the image count to the item sitemaps.
 
 ### 🩹 Fixed
 
