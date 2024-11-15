@@ -23,6 +23,9 @@ export const useShippingAsBilling = () => {
     if (paypalOrder) {
       state.value.initialTotal = paypalOrder.result.purchase_units[0].amount.value;
     }
+
+    state.value.changedTotal =
+      cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
   };
 
   const handleCartTotalChanges = async () => {
