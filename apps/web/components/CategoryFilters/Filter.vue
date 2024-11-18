@@ -11,6 +11,7 @@
         v-for="(filter, index) in facetGetters.getFilters(facet).reverse() as Filter[]"
         :key="index"
         tag="label"
+        class="my-3 sm:my-1"
         size="sm"
       >
         <div class="flex items-center">
@@ -19,14 +20,14 @@
             :value="filter"
             :id="filter.id"
             @change="facetChange"
-            class="flex items-center mr-1"
+            class="flex items-center mr-2"
           />
           <span>
-            <SfRating :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" />
-            <span :class="['mx-2 text-base ']">{{ Number(filter.id.toString().replace('feedback-', '')) }} </span>
-            <span class="mr-2" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5"> & up </span>
-          </span>
-          <SfCounter size="sm">{{ filter.count }}</SfCounter>
+            <SfRating class="mr-2 pt-2" :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" />
+            <span classs="text-lg xs:text-base xs:mr-0" :class="Number(filter.id.toString().replace('feedback-', '')) === 5 ? 'font-medium' : ''">{{ Number(filter.id.toString().replace('feedback-', '')) }} </span>
+            <span class="text-lg xs:text-base" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5"> & up </span>
+            <SfCounter size="sm" class="ml-1">{{ filter.count }}</SfCounter>
+          </span>        
         </div>
       </SfListItem>
     </div>
