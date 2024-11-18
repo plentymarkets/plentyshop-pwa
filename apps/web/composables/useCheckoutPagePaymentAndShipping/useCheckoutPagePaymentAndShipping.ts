@@ -1,18 +1,20 @@
-import { shippingProviderGetters } from '@plentymarkets/shop-api';
+import { paymentProviderGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_SHIPPING_CHECKBOX = '#shipping-agreement-checkbox';
 
 export const useCheckoutPagePaymentAndShipping = () => {
+  const { $i18n } = useNuxtApp();
+  const { send } = useNotification();
+  const { getCart, data: cart } = useCart();
   const { loading: loadPayment, data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
   const { shippingPrivacyAgreement, setShippingPrivacyAgreement, setShippingPrivacyAgreementErrors } =
     useAdditionalInformation();
-  const { selectedMethod } = useCartShippingMethods();
-  const { getCart, data: cart } = useCart();
 
   const {
     loading: loadShipping,
     data: shippingMethodData,
+    selectedMethod: selectedShippingMethod,
     getShippingMethods,
     saveShippingMethod,
   } = useCartShippingMethods();
@@ -26,6 +28,14 @@ export const useCheckoutPagePaymentAndShipping = () => {
     await fetchPaymentMethods();
     await getCart();
 
+    if (
+      paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod.value, selectedPaymentId.value) ||
+      paymentProviderGetters.isPaymentMethodUnavailable(paymentMethods.value.list, selectedPaymentId.value)
+    ) {
+      send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
+      await savePaymentMethod(paymentMethods.value.list[0].id);
+    }
+
     setShippingPrivacyAgreement(false);
   };
 
@@ -35,8 +45,8 @@ export const useCheckoutPagePaymentAndShipping = () => {
   };
 
   const validateShippingTerms = () => {
-    const shouldAcceptAgreement = selectedMethod.value
-      ? shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value)
+    const shouldAcceptAgreement = selectedShippingMethod.value
+      ? shippingProviderGetters.getDataPrivacyAgreementHint(selectedShippingMethod.value)
       : false;
 
     if (shouldAcceptAgreement) {
