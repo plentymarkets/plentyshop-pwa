@@ -18,7 +18,6 @@ export const useHomePageState: UseHomepageDataReturn = () => {
 
   const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
-  // const { isEditingDisabled } = useEditor();
 
   const currentLocale = ref($i18n.locale.value);
   const homepageTemplateData = ref(useLocaleSpecificHomepageTemplate(currentLocale.value));
@@ -77,6 +76,7 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     const homeData: HomeData = {
       hero: formattedHeroItems,
       valueProposition: mediaData,
+      featured: recommendedProductsCategories.value,
     };
 
     state.value.data = [homeData];
@@ -86,6 +86,7 @@ export const useHomePageState: UseHomepageDataReturn = () => {
       const firstItem = state.value.data[0];
       hero.value = firstItem.hero;
       valueProposition.value = firstItem.valueProposition;
+      recommendedProductsCategories.value = firstItem.featured;
     }
   };
 
@@ -121,9 +122,11 @@ export const useHomePageState: UseHomepageDataReturn = () => {
         const firstItem = updatedData[0];
         hero.value = firstItem.hero;
         valueProposition.value = firstItem.valueProposition;
+        recommendedProductsCategories.value = firstItem.featured;
       } else {
         hero.value = [];
         valueProposition.value = [];
+        recommendedProductsCategories.value = [];
       }
     },
     { deep: true },

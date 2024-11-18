@@ -1,14 +1,15 @@
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 
-export interface Recomended {
+export type Featured = {
   headline: string;
   categoryId: string;
-}
+};
 
 export interface HomeData {
   hero: HeroContentProps[];
   valueProposition: MediaItemProps[];
+  featured: Featured[];
 }
 
 export interface UseHomepageDataState {
@@ -25,7 +26,7 @@ export interface UseHomepage {
   saveData: () => Promise<void>;
   hero: Readonly<Ref<HeroContentProps[]>>;
   valueProposition: Readonly<Ref<MediaItemProps[]>>;
-  recommendedProductsCategories: Readonly<Ref<Recomended[]>>;
+  recommendedProductsCategories: Readonly<Ref<Featured[]>>;
   setFormattedHeroItems: (items: HomeData[]) => void;
 }
 
