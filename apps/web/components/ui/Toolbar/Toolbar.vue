@@ -38,6 +38,7 @@ const buttonSize = computed(() => {
 
 const { saveData, loading } = useHomePageState();
 
+console.log(isEditingDisabled.value);
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };
