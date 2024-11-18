@@ -13,6 +13,15 @@
 - Newsletter email confirmation
 - The default data for the homepage is now available for both English and German.
 
+#### GitHub Action: Upload
+
+The **Upload** action now supports deploying the PWA to different environments:
+
+- Production: triggered manually or when creating a GitHub release
+- Staging: triggered manually or when pushing a change to the `main` branch
+
+Each client supports two PWA instances. With this change, you can designate the live instance as the production environment and the preview instance as the staging environment. The production environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN`; the staging environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
+
 ### 🩹 Fixed
 
 - Load more accurate images sizes for product page.
@@ -43,6 +52,7 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
+- Added the image count to the item sitemaps.
 
 ### 🩹 Fixed
 
