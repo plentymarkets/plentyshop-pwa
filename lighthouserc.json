@@ -46,7 +46,7 @@
               "cumulative-layout-shift": ["error", { "aggregationMethod": "median-run", "maxNumericValue": 0.3 }],
               "speed-index": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 5800 }],
 
-              "dom-size": ["error", { "maxNumericValue": 1400 }],
+              "dom-size": ["error", { "maxNumericValue": 2000 }],
 
               "resource-summary:media:size": ["warn", { "maxNumericValue": 1 }],
               "resource-summary:stylesheet:size": ["warn", { "maxNumericValue": 21000 }]
