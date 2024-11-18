@@ -104,16 +104,15 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     state.value.data = item;
   };
 
-  // watch(
-  //   () => $i18n.locale.value,
-  //   (updatedLocale) => {
-  //     console.log(`Locale changed to: ${updatedLocale}`);
-  //     currentLocale.value = updatedLocale;
-  //     homepageTemplateData.value = useLocaleSpecificHomepageTemplate(updatedLocale);
-  //     fetchData();
-  //   },
-  //   { immediate: true },
-  // );
+  watch(
+    () => $i18n.locale.value,
+    async (changedLocale) => {
+      currentLocale.value = changedLocale;
+      homepageTemplateData.value = useLocaleSpecificHomepageTemplate(changedLocale);
+      await fetchData();
+    },
+    { immediate: true },
+  );
 
   watch(
     () => state.value.data,

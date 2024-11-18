@@ -17,7 +17,6 @@
       ></textarea>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
-
     <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md bg-blue-500 hover:bg-blue-600">
       {{ $t('editMode.formatJson') }}
     </UiButton>
@@ -31,27 +30,8 @@
 </template>
 
 <script setup lang="ts">
-const { data } = useHomePageState();
 import { JsonData } from './types';
-
-const cleanJsonData = (data: JsonData): JsonData => {
-  if (data._object) {
-    data = data._object;
-  }
-
-  if (data.data) {
-    data = data.data;
-  }
-
-  delete data._key;
-  delete data.__v_isRef;
-
-  return data;
-};
-
-const cleanedData = cleanJsonData(data);
-const initialJson = JSON.stringify(cleanedData, null, 2);
-
+const { data } = useHomePageState();
 const {
   jsonText,
   errorMessage,
@@ -63,5 +43,26 @@ const {
   formatJson,
   purgeJson,
   clearText,
-} = useJsonEditor(initialJson);
+} = useJsonEditor(JSON.stringify(data, null, 2));
+
+const cleanJsonData = (data: JsonData): JsonData => {
+  if (data._object) {
+    data = data._object;
+  }
+  if (data.data) {
+    data = data.data;
+  }
+  delete data._key;
+  delete data.__v_isRef;
+  return data;
+};
+
+watch(
+  () => data,
+  (updatedData) => {
+    const cleanedData = cleanJsonData(updatedData);
+    jsonText.value = JSON.stringify(cleanedData, null, 2);
+  },
+  { immediate: true },
+);
 </script>
