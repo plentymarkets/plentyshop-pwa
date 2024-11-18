@@ -63,6 +63,6 @@ watch(
     const cleanedData = cleanJsonData(updatedData);
     jsonText.value = JSON.stringify(cleanedData, null, 2);
   },
-  { deep: true },
+  { immediate: true, deep: true },
 );
 </script>
