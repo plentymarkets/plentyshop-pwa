@@ -18,7 +18,7 @@
         />
       </div>
     </NuxtLazyHydrate>
-    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10" v-if="recommendedItemsLoaded">
       <NuxtLazyHydrate when-visible>
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
           <section class="mb-10 overflow-hidden">
@@ -45,9 +45,11 @@ const { showNewsletter } = useNewsletter();
 
 const heroLoaded = ref(false);
 const media = ref(false);
+const recommendedItemsLoaded = ref(false);
 onMounted(async () => {
   await fetchData();
   heroLoaded.value = true;
   media.value = true;
+  recommendedItemsLoaded.value = true;
 });
 </script>
