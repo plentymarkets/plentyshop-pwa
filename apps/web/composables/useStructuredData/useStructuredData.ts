@@ -144,7 +144,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     // }
 
     const brand = productGetters.getBrand(product);
-    if (brand !== '') metaObject.brand = { '@type': 'Brand', 'name': brand };
+    if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
 
     const sku = productGetters.getSku(product);
     if (sku !== '') metaObject.sku = sku;
