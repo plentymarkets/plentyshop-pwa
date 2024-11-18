@@ -1,12 +1,20 @@
 name: Deploy PWA
 
 on:
-  # release:
-  #   types: [published]
-  # push:
-  #   branches: [main]
+  release:
+    types: [published]
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'The environment to deploy to'
+        type: choice
+        required: true
+        default: 'staging'
+        options:
+          - staging
+          - production
       tag-version:
         description: 'The tag version, branch name or SHA to checkout'
         required: true
@@ -22,7 +30,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag-version }}
+          ref: ${{ inputs.tag-version || github.ref }}
 
       - name: Enable corepack
         run: corepack enable
@@ -84,10 +92,20 @@ jobs:
             ./middleware
           outPath: pwa.tar.gz
 
-      - name: Upload File
-        id: upload
+      - name: Upload build to production
+        if: github.event_name == 'release'  || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'production')
+        id: upload-production
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: 'https://pwapublish.plentysystems.com'
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
+          fileForms: '{ "file": "pwa.tar.gz" }'
+
+      - name: Upload build to staging
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'staging')
+        id: upload-staging
+        uses: JantHsueh/upload-file-action@1.0
+        with:
+          url: 'https://pwapublish.plentysystems.com'
+          forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN_STAGING }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'

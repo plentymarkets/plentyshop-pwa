@@ -5,11 +5,24 @@
 ### New
 
 - Added PWA cookie hash to sdk client
+- Added progress loading indicator animation when navigating between pages.
+- Added Zoom functionality to product images.
 
 ### 👷 Changed
 
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
+- The default data for the homepage is now available for both English and German.
+
+#### GitHub Action: Upload
+
+The **Upload** action now supports deploying the PWA to different environments:
+
+- Production: triggered manually or when creating a GitHub release
+- Staging: triggered manually or when pushing a change to the `main` branch
+
+Each client supports two PWA instances. With this change, you can designate the live instance as the production environment and the preview instance as the staging environment. The production environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN`; the staging environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
+
 
 ### 🩹 Fixed
 
@@ -18,6 +31,13 @@
 - Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
 - The hero button now links to the provided destination.
 - Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
+- Fixed GPSR drawer responsiveness.
+- To satisfy accessibility guidelines, the alt text for the logo now includes the store name.
+- The hero image now uses the alt text specified in the homepage template.
+- The recommended products section on the homepage now uses the category ID from the homepage template.
+- The recommended products section on the homepage is now displayed multiple times if specified.
+- Allow for multiple category products fetching on the same page.
+- Fixed an issue where review modal was unscrollable on smaller screens.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -34,6 +54,7 @@
 - Enabled font color customization for the hero banner via a template property.
 - Added a new carousel compoment.
 - Added an edit mode toolbar and JSON editor for the front end. Note that this is a preparatory step. Further functionality will be added in an upcoming version.
+- Added the image count to the item sitemaps.
 
 ### 🩹 Fixed
 
