@@ -21,11 +21,7 @@
             class="flex items-center mr-1"
           />
           <span>
-            <template v-for="starId in 5" :key="starId">
-              <SfIconStarFilled class="text-orange-300" v-if="starId <=  Number(filter.id.toString().replace('feedback-', ''))" ></SfIconStarFilled>
-              <SfIconStar class="text-gray-400" v-else></SfIconStar>
-            </template>
-
+            <SfRating :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" />
           <span :class="['mx-2 text-base ']">{{
             Number(filter.id.toString().replace('feedback-', ''))
           }}
@@ -107,6 +103,7 @@ import {
   SfAccordionItem,
   SfIconChevronLeft,
   SfListItem,
+  SfRating,
   SfIconStar,
   SfIconStarFilled,
   SfCheckbox,
