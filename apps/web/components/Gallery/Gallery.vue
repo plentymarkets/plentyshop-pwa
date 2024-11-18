@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4" data-testid="gallery">
+  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4 relative" data-testid="gallery">
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
@@ -16,25 +16,28 @@
         <div
           v-for="(image, index) in images"
           :key="`image-${index}-thumbnail`"
-          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
+          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image"
         >
-          <NuxtImg
-            :id="`gallery-img-${index}`"
-            :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
-            :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
-            :aria-hidden="activeIndex !== index"
-            fit="fill"
-            class="object-contain h-full w-full"
-            :quality="80"
-            :srcset="getSourceSet(image)"
-            sizes="2xs:370px xs:720px sm:740px md:1400px"
-            draggable="false"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
-            @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="getWidth(image, productImageGetters.getImageUrl(image))"
-            :height="getHeight(image, productImageGetters.getImageUrl(image))"
-          />
+          <Drift :index="index">
+            <NuxtImg
+              :id="`gallery-img-${index}`"
+              :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
+              :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
+              :aria-hidden="activeIndex !== index"
+              fit="fill"
+              :class="`object-contain h-full w-full demo-trigger-${index}`"
+              :data-zoom="productImageGetters.getImageUrl(image)"
+              :quality="80"
+              :srcset="getSourceSet(image)"
+              sizes="2xs:370px xs:720px sm:740px md:1400px"
+              draggable="false"
+              :loading="index === 0 ? 'eager' : 'lazy'"
+              :fetchpriority="index === 0 ? 'high' : 'auto'"
+              @load="updateImageStatusFor(`gallery-img-${index}`)"
+              :width="getWidth(image, productImageGetters.getImageUrl(image))"
+              :height="getHeight(image, productImageGetters.getImageUrl(image))"
+            />
+          </Drift>
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
         </div>
       </SfScrollable>
@@ -116,6 +119,7 @@
         />
       </div>
     </div>
+    <div v-if="isMobile" class="drift-zoom-image" />
   </div>
 </template>
 
@@ -128,6 +132,7 @@ import { productImageGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
 
 const props = defineProps<{ images: ImagesData[] }>();
+const viewport = useViewport();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
@@ -138,6 +143,7 @@ const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
 const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
+const isMobile = computed(() => viewport.isLessThan('md'));
 
 const getSourceSet = (image: ImagesData) => {
   const dpr = 2;
