@@ -7,7 +7,7 @@
     <UiHeroCarousel v-if="heroLoaded" :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
-      <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <div v-if="media" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
           v-for="(item, index) in valueProposition"
           :key="index"
@@ -44,9 +44,10 @@ definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 
 const heroLoaded = ref(false);
-
+const media = ref(false);
 onMounted(async () => {
   await fetchData();
   heroLoaded.value = true;
+  media.value = true;
 });
 </script>
