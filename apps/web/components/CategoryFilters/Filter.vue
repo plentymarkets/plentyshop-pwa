@@ -6,26 +6,38 @@
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
     </template>
-
     <div v-if="facetGetters.getType(facet) === 'feedback'">
-      <!-- <SfListItem
-        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
+      <SfListItem
+        v-for="(filter, index) in facetGetters.getFilters(facet).reverse() as Filter[]"
         :key="index"
         tag="label"
-        size="sm"
-        class="!items-center py-4 md:py-1 px-1.5 bg-transparent hover:bg-transparent"
-      >
-        <template #prefix>
-          <SfRadio class="flex items-center" :checked="filter.selected ?? false" />
-        </template>
-        <div class="flex flex-wrap items-center">
-          <SfRating class="-mt-px" :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" size="sm" />
-          <span :class="['mx-2 text-base md:text-sm']">{{
+        size="sm">
+        <div class="flex items-center">
+          <SfCheckbox
+            v-model="models[filter.id]"
+            :value="filter"
+            :id="filter.id"
+            @change="facetChange"
+            class="flex items-center mr-1"
+          />
+          <span>
+            <template v-for="starId in 5" :key="starId">
+              <SfIconStarFilled class="text-orange-300" v-if="starId <=  Number(filter.id.toString().replace('feedback-', ''))" ></SfIconStarFilled>
+              <SfIconStar class="text-gray-400" v-else></SfIconStar>
+            </template>
+
+          <span :class="['mx-2 text-base ']">{{
             Number(filter.id.toString().replace('feedback-', ''))
-          }}</span>
+          }}
+          
+          </span>
+          <span class="mr-2" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5">
+            & up
+          </span>
+          </span>
           <SfCounter size="sm">{{ filter.count }}</SfCounter>
         </div>
-      </SfListItem> -->
+      </SfListItem>
     </div>
 
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
@@ -94,7 +106,11 @@ import {
   SfIconClose,
   SfAccordionItem,
   SfIconChevronLeft,
+  SfRadio,
+  SfRating,
   SfListItem,
+  SfIconStar,
+  SfIconStarFilled,
   SfCheckbox,
   SfCounter,
 } from '@storefront-ui/vue';
