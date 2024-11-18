@@ -11,7 +11,8 @@
         v-for="(filter, index) in facetGetters.getFilters(facet).reverse() as Filter[]"
         :key="index"
         tag="label"
-        size="sm">
+        size="sm"
+      >
         <div class="flex items-center">
           <SfCheckbox
             v-model="models[filter.id]"
@@ -22,14 +23,8 @@
           />
           <span>
             <SfRating :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" />
-          <span :class="['mx-2 text-base ']">{{
-            Number(filter.id.toString().replace('feedback-', ''))
-          }}
-          
-          </span>
-          <span class="mr-2" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5">
-            & up
-          </span>
+            <span :class="['mx-2 text-base ']">{{ Number(filter.id.toString().replace('feedback-', '')) }} </span>
+            <span class="mr-2" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5"> & up </span>
           </span>
           <SfCounter size="sm">{{ filter.count }}</SfCounter>
         </div>
@@ -104,8 +99,6 @@ import {
   SfIconChevronLeft,
   SfListItem,
   SfRating,
-  SfIconStar,
-  SfIconStarFilled,
   SfCheckbox,
   SfCounter,
 } from '@storefront-ui/vue';
