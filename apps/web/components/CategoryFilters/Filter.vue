@@ -106,7 +106,6 @@ import {
   SfIconClose,
   SfAccordionItem,
   SfIconChevronLeft,
-  SfRating,
   SfListItem,
   SfIconStar,
   SfIconStarFilled,
