@@ -20,7 +20,7 @@ export interface UseHomepageDataState {
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
-  loading: Readonly<Ref<boolean>>;
+  loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchData: () => Promise<void>;
   saveData: () => Promise<void>;
