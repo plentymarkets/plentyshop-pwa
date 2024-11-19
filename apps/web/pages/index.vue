@@ -1,12 +1,15 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <UiHeroCarousel :hero-item-props="formattedHeroItems" />
+    <div class="flex items-center justify-center h-full mt-5">
+      <SfLoaderCircular v-if="!heroLoaded" class="animate-spin" size="4xl" />
+    </div>
+    <UiHeroCarousel v-if="heroLoaded" :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
       <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
-          v-for="(item, index) in mediaData"
+          v-for="(item, index) in valueProposition"
           :key="index"
           :image="item.image"
           :alt="item.alt"
@@ -15,7 +18,6 @@
         />
       </div>
     </NuxtLazyHydrate>
-
     <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
@@ -35,9 +37,17 @@
 </template>
 
 <script lang="ts" setup async>
-const isEditing = useEditor();
-const { formattedHeroItems, mediaData, recommendedProductsCategories } = await useHomepageData();
+import { SfLoaderCircular } from '@storefront-ui/vue';
+const { isEditing } = useEditor();
+const { recommendedProductsCategories } = await useHomepageData();
+const { hero, valueProposition, fetchData } = useHomePageState();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
-
 const { showNewsletter } = useNewsletter();
+
+const heroLoaded = ref(false);
+
+onMounted(async () => {
+  await fetchData();
+  heroLoaded.value = true;
+});
 </script>
