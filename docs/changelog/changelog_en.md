@@ -7,6 +7,7 @@
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
+- New Json Editor
 
 ### 👷 Changed
 
