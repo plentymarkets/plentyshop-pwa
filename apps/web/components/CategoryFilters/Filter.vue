@@ -151,4 +151,6 @@ watch(
 const feedbackNumber = (filter: Filter) => {
   return Number(filter.id.toString().replace('feedback-', ''));
 };
+const sortedReviews = (facet: FilterGroup) =>
+  facetGetters.getFilters(facet).sort((a: Filter, b: Filter) => (a.id > b.id ? -1 : a.id < b.id ? 1 : 0));
 </script>
