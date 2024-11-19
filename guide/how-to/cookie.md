@@ -78,3 +78,30 @@ loadExampleScript: () => {
   console.log('Hello World!')
 },
 ```
+
+## Read and react to a registered cookie
+
+To read and react to the state of the a specific cookie you can use the [useCookieConsent]("/reference/composables/functions/useCookieConsent") composable.
+
+This composable uses the cookie name that you defined in the `cookie.config.ts` to get the reactive state of cookie.
+
+``` vue
+// MyComponent.vue
+<template>
+  <PayPalExpressButton v-if="PayPalCookie"></PayPalExpressButton>
+  <div v-else>
+    <div>PayPal cookies not accepted</div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const { cookie: PayPalCookie } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
+
+watch(PayPalCookie, () => {
+  reloadScript();
+  console.log('PayPalCookie value', PayPalCookie.value)
+  // do something when the cookie changes.
+});
+
+</script>
+```
