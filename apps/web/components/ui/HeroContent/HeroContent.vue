@@ -41,12 +41,16 @@
 <script setup lang="ts">
 import { HeroContentProps, SizeKey, Sizes } from '../HeroCarousel/types';
 
-function isSizeKeyRecord(image: HeroContentProps['image']): image is Record<SizeKey, string> {
-  return (
-    image !== undefined && typeof image === 'object' && 'lg' in image && 'md' in image && 'sm' in image && 'xs' in image
-  );
-}
-
+const backgroundSizes: Sizes = {
+  lg: { width: '4000', height: '600' },
+  md: { width: '1024', height: '600' },
+  sm: { width: '640', height: '752' },
+  xs: { width: '250', height: '250' },
+};
+const isSizeKeyRecord = (image: HeroContentProps['image']): image is Record<SizeKey, string> => {
+  const sizeKeys = Object.keys(backgroundSizes);
+  return image !== undefined && typeof image === 'object' && sizeKeys.every((key) => key in image);
+};
 const props = defineProps<{
   heroItemProps: HeroContentProps;
 }>();
@@ -57,13 +61,6 @@ const NuxtLink = resolveComponent('NuxtLink');
 const viewport = useViewport();
 
 const currentSizeKey = computed(() => viewport.breakpoint.value as SizeKey);
-
-const backgroundSizes: Sizes = {
-  lg: { width: '4000', height: '600' },
-  md: { width: '1024', height: '600' },
-  sm: { width: '640', height: '752' },
-  xs: { width: '250', height: '250' },
-};
 
 const currentImageSize = computed(() => backgroundSizes[currentSizeKey.value]);
 const currentImageSource = computed<string | undefined>(() => {
