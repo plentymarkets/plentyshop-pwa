@@ -150,12 +150,14 @@ const { address, addAddress = false } = defineProps<AddressFormProps>();
 
 const { isGuest } = useCustomer();
 const { default: shippingCountries } = useAggregatedCountries();
-const { restrictedAddresses, shippingAsBilling, handleCartTotalChanges } = useShippingAsBilling();
+const { shippingAsBilling } = useShippingAsBilling();
+const { handleCartTotalChanges } = useCartTotalChange();
 const { addresses: shippingAddresses } = useAddressStore(AddressType.Shipping);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setShippingAddress } = useCheckoutAddress(AddressType.Shipping);
 const { set: setBillingAddress } = useCheckoutAddress(AddressType.Billing);
 const { addressToSave: billingAddressToSave, save: saveBillingAddress } = useAddressForm(AddressType.Billing);
+const { restrictedAddresses } = useRestrictedAddress();
 const {
   hasCompany: hasShippingCompany,
   addressToSave: shippingAddressToSave,
@@ -228,7 +230,7 @@ const handleBillingPrimaryAddress = async () => {
   }
 };
 
-const submitForm = handleSubmit((shippingAddressForm) => {
+const submitForm = handleSubmit(async (shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
 
   if (addAddress) shippingAddressToSave.value.primary = true;
@@ -242,8 +244,9 @@ const submitForm = handleSubmit((shippingAddressForm) => {
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
-    .then(() => handleCartTotalChanges())
     .catch((error) => useHandleError(error));
+
+  if (restrictedAddresses.value) await handleCartTotalChanges();
 });
 
 defineExpose({ validate, submitForm });

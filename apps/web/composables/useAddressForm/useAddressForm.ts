@@ -10,7 +10,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: customerData, getSession } = useCustomer();
   const { data: cartData } = useCart();
   const { send } = useNotification();
-  const { restrictedAddresses } = useShippingAsBilling();
+  const { restrictedAddresses } = useRestrictedAddress();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
