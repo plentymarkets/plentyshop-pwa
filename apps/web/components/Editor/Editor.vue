@@ -30,7 +30,6 @@
 </template>
 
 <script setup lang="ts">
-import { JsonData } from './types';
 const { data } = useHomePageState();
 
 const {
@@ -46,23 +45,10 @@ const {
   clearText,
 } = useJsonEditor(JSON.stringify(data, null, 2));
 
-const cleanJsonData = (data: JsonData): JsonData => {
-  if (data._object) {
-    data = data._object;
-  }
-  if (data.data) {
-    data = data.data;
-  }
-  delete data._key;
-  delete data.__v_isRef;
-  return data;
-};
-
 watch(
   () => data,
   (updatedData) => {
-    const cleanedData = cleanJsonData(updatedData);
-    jsonText.value = JSON.stringify(cleanedData, null, 2);
+    jsonText.value = JSON.stringify(updatedData.value, null, 2);
   },
   { immediate: true, deep: true },
 );
