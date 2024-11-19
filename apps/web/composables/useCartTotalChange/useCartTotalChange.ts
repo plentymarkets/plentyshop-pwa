@@ -5,6 +5,7 @@ export const useCartTotalChange = () => {
   const { data: customerData } = useCustomer();
   const { getCart } = useCart();
   const { getOrder } = usePayPal();
+  const { restrictedAddresses } = useRestrictedAddress();
 
   const state = useState('useCartTotalChange', () => ({
     initialTotal: '0',
@@ -25,9 +26,11 @@ export const useCartTotalChange = () => {
   };
 
   const handleCartTotalChanges = async () => {
-    await getCart();
-    state.value.changedTotal =
-      cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
+    if (restrictedAddresses.value) {
+      state.value.changedTotal =
+        cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
+      await getCart();
+    }
   };
 
   return {

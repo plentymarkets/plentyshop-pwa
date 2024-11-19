@@ -230,7 +230,7 @@ const handleBillingPrimaryAddress = async () => {
   }
 };
 
-const submitForm = handleSubmit(async (shippingAddressForm) => {
+const submitForm = handleSubmit((shippingAddressForm) => {
   shippingAddressToSave.value = shippingAddressForm as Address;
 
   if (addAddress) shippingAddressToSave.value.primary = true;
@@ -244,9 +244,7 @@ const submitForm = handleSubmit(async (shippingAddressForm) => {
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
-    .then(() => {
-      if (restrictedAddresses.value) handleCartTotalChanges();
-    })
+    .then(() => handleCartTotalChanges())
     .catch((error) => useHandleError(error));
 });
 
