@@ -55,17 +55,11 @@
                 :commit="true"
               />
             </client-only>
-            <UiButton
+            <PayPalCreditCardBuyButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
-              type="submit"
-              data-testid="place-order-button"
               @click="openPayPalCardDialog"
               :disabled="disableBuyButton || paypalCardDialog"
-              size="lg"
-              class="w-full mb-4 md:mb-0 cursor-pointer"
-            >
-              {{ t('buy') }}
-            </UiButton>
+            />
             <PayPalApplePayButton
               v-else-if="selectedPaymentId === paypalApplePayPaymentId"
               :style="disableBuyButton ? 'pointer-events: none;' : ''"
@@ -132,6 +126,7 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
+const { consent: payPalConsent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const {
   cart,
   cartIsEmpty,
@@ -158,7 +153,7 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 const checkPayPalPaymentsEligible = async () => {
-  if (import.meta.client) {
+  if (import.meta.client && payPalConsent.value) {
     const googlePayAvailable = await useGooglePay().checkIsEligible();
     const applePayAvailable = await useApplePay().checkIsEligible();
 
@@ -275,5 +270,9 @@ watch(cartIsEmpty, async () => {
     send({ type: 'neutral', message: t('emptyCartNotification') });
     await navigateTo(localePath(paths.cart));
   }
+});
+
+watch(payPalConsent, async () => {
+  await checkPayPalPaymentsEligible();
 });
 </script>
