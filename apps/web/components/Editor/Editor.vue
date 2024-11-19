@@ -32,6 +32,7 @@
 <script setup lang="ts">
 import { JsonData } from './types';
 const { data } = useHomePageState();
+
 const {
   jsonText,
   errorMessage,

@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 bg-[#FDD835] py-2 z-50">
+  <div class="sticky top-0 bg-[#FFFFFF] py-2 z-50">
     <div class="flex justify-center md:justify-end pr-5 space-x-2">
       <UiButton
         variant="secondary"
@@ -14,7 +14,7 @@
         variant="secondary"
         :size="buttonSize"
         class="self-start"
-        :disabled="isEditingDisabled"
+        :disabled="isEditingDisabled || !isEditing"
         @click="saveData"
       >
         <template v-if="loading">
@@ -38,7 +38,6 @@ const buttonSize = computed(() => {
 
 const { saveData, loading } = useHomePageState();
 
-console.log(isEditingDisabled.value);
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
 };
