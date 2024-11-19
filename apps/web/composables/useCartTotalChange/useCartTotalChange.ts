@@ -29,7 +29,7 @@ export const useCartTotalChange = () => {
     if (restrictedAddresses.value) {
       state.value.changedTotal =
         cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
-      await getCart();
+      if (state.value.changedTotal) await getCart();
     }
   };
 
