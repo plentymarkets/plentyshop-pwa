@@ -11,7 +11,7 @@
         v-for="(filter, index) in facetGetters.getFilters(facet).reverse() as Filter[]"
         :key="index"
         tag="label"
-        class="my-3 sm:my-1"
+        class="mb-3 sm:my-1"
         size="sm"
       >
         <div class="flex items-center">
@@ -20,14 +20,12 @@
             :value="filter"
             :id="filter.id"
             @change="facetChange"
-            class="flex items-center mr-2"
+            class="mr-2"
           />
-          <span>
-            <SfRating class="mr-2 pt-2" :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" />
-            <span classs="text-lg xs:text-base xs:mr-0" :class="Number(filter.id.toString().replace('feedback-', '')) === 5 ? 'font-medium' : ''">{{ Number(filter.id.toString().replace('feedback-', '')) }} </span>
-            <span class="text-lg xs:text-base" v-if="Number(filter.id.toString().replace('feedback-', '')) != 5"> & up </span>
-            <SfCounter size="sm" class="ml-1">{{ filter.count }}</SfCounter>
-          </span>        
+          <SfRating :value="feedbackNumber(filter)" :max="5" />
+          <span :class="['ml-2 text-lg xs:text-base xs:mr-0', {'font-medium' : feedbackNumber(filter) === 5 }]">{{ feedbackNumber(filter) }} </span>
+          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base"> & up </span>
+          <SfCounter size="sm" :class="['ml-1', {'ml-3' : feedbackNumber(filter) === 5 }]">{{ filter.count }}</SfCounter>
         </div>
       </SfListItem>
     </div>
@@ -152,4 +150,7 @@ watch(
     maxPrice.value = getFacetsFromURL().priceMax ?? '';
   },
 );
+const feedbackNumber = (filter: Filter) => {
+  return Number(filter.id.toString().replace('feedback-', ''));
+}
 </script>
