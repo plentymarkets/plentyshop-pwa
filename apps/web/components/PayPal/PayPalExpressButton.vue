@@ -5,6 +5,7 @@
     :id="'paypal-' + paypalUuid"
     class="z-0 relative paypal-button"
   />
+  <PayPalCookieDisabledBanner v-else-if="!consent" />
 </template>
 
 <script setup lang="ts">

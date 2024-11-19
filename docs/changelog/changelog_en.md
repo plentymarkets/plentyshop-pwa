@@ -14,7 +14,7 @@
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
-- Paypal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
+- PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 
 #### GitHub Action: Upload
 

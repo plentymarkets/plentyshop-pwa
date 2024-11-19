@@ -772,7 +772,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "cookieNotAccepted": "Bitte akzeptieren Sie unsere Cookies, um PayPal zu nutzen."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
