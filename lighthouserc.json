@@ -43,10 +43,10 @@
               "largest-contentful-paint": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 5200 }],
               "interactive": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 7300 }],
               "first-contentful-paint": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 3000 }],
-              "cumulative-layout-shift": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 0.25 }],
+              "cumulative-layout-shift": ["error", { "aggregationMethod": "median-run", "maxNumericValue": 0.3 }],
               "speed-index": ["warn", { "aggregationMethod": "median-run", "maxNumericValue": 5800 }],
 
-              "dom-size": ["warn", { "maxNumericValue": 1400 }],
+              "dom-size": ["error", { "maxNumericValue": 2000 }],
 
               "resource-summary:media:size": ["warn", { "maxNumericValue": 1 }],
               "resource-summary:stylesheet:size": ["warn", { "maxNumericValue": 21000 }]
