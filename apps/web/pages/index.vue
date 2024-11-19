@@ -18,7 +18,7 @@
         />
       </div>
     </NuxtLazyHydrate>
-    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10" v-if="recommendedItemsLoaded">
+    <div v-if="recommendedItemsLoaded" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
           <section class="mb-10 overflow-hidden">

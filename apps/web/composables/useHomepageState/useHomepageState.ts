@@ -7,9 +7,16 @@ import { MediaItemProps } from '~/components/ui/MediaCard/types';
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
 
+const stripArrayBrackets = (jsonString: string): string => {
+  jsonString = jsonString.trim();
+  if (jsonString.startsWith('[') && jsonString.endsWith(']')) {
+    jsonString = jsonString.slice(1, -1);
+  }
+  return jsonString;
+};
 export const useHomePageState: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: [] as HomeData[],
+    data: {} as HomeData[],
     loading: false,
     showErrors: false,
   }));
@@ -20,9 +27,9 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const currentLocale = ref($i18n.locale.value);
   const homepageTemplateData = ref(useLocaleSpecificHomepageTemplate(currentLocale.value));
 
-  const recommendedProductsCategories = ref<Featured[]>([]);
   const hero = ref<HeroContentProps[]>([]);
   const valueProposition = ref<MediaItemProps[]>([]);
+  const recommendedProductsCategories = ref<Featured[]>([]);
 
   const fetchHomepageTemplate = async (homepageCategoryId: number) => {
     const { fetchCategoryTemplate } = useCategoryTemplate();
@@ -40,16 +47,19 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     homepageTemplateData.value.hero.map((item) => ({
       image: item.image,
       tagline: item.tagline || '',
+      taglineColor: item.taglineColor || '',
       heading: item.heading || '',
+      headingColor: item.headingColor || '',
       description: item.description || '',
+      descriptionColor: item.descriptionColor || '',
       callToAction: item.callToAction || '',
       link: item.link || '',
     }));
 
   const formatMediaData = () =>
     homepageTemplateData.value.valueProposition.map((media) => ({
-      image: media.image,
       text: media.text,
+      image: media.image,
       alignment: media.alignment,
       alt: media.alt,
     }));
@@ -95,7 +105,8 @@ export const useHomePageState: UseHomepageDataReturn = () => {
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     state.value.loading = true;
     try {
-      await setCategoryTemplate(homepageCategoryId, JSON.stringify(state.value.data));
+      const cleanedData = stripArrayBrackets(JSON.stringify(state.value.data));
+      await setCategoryTemplate(homepageCategoryId, cleanedData);
     } finally {
       state.value.loading = false;
     }
