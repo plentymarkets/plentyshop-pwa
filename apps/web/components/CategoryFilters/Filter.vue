@@ -15,17 +15,15 @@
         size="sm"
       >
         <div class="flex items-center">
-          <SfCheckbox
-            v-model="models[filter.id]"
-            :value="filter"
-            :id="filter.id"
-            @change="facetChange"
-            class="mr-2"
-          />
+          <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" class="mr-2" />
           <SfRating :value="feedbackNumber(filter)" :max="5" />
-          <span :class="['ml-2 text-lg xs:text-base xs:mr-0', {'font-medium' : feedbackNumber(filter) === 5 }]">{{ feedbackNumber(filter) }} </span>
+          <span :class="['ml-2 text-lg xs:text-base xs:mr-0', { 'font-medium': feedbackNumber(filter) === 5 }]"
+            >{{ feedbackNumber(filter) }}
+          </span>
           <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base"> & up </span>
-          <SfCounter size="sm" :class="['ml-1', {'ml-3' : feedbackNumber(filter) === 5 }]">{{ filter.count }}</SfCounter>
+          <SfCounter size="sm" :class="['ml-1', { 'ml-3': feedbackNumber(filter) === 5 }]">{{
+            filter.count
+          }}</SfCounter>
         </div>
       </SfListItem>
     </div>
@@ -152,5 +150,5 @@ watch(
 );
 const feedbackNumber = (filter: Filter) => {
   return Number(filter.id.toString().replace('feedback-', ''));
-}
+};
 </script>
