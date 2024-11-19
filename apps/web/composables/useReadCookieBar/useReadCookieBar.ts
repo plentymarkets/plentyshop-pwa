@@ -2,6 +2,7 @@ import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
 import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
+import {useCookieConsent} from "~/composables/useCookieConsent/useCookieConsent";
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
@@ -80,6 +81,9 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     cookies.groups.slice(1).forEach((group: CookieGroup) => {
       group.cookies.forEach((cookie: Cookie) => {
         cookie.accepted = !!browserCookies.value?.[group.name as any]?.[cookie.name as any] || false;
+
+        const { consent } = useCookieConsent(cookie.name);
+        consent.value = cookie.accepted || false;
       });
 
       group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
@@ -109,6 +113,9 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     const jsonCookie = state.value.data.groups.reduce((accumulator: any, group: CookieGroup) => {
       accumulator[group.name] = group.cookies.reduce((childAccumulator: any, cookie: Cookie) => {
         childAccumulator[cookie.name] = cookie.accepted;
+
+        const { consent } = useCookieConsent(cookie.name);
+        consent.value = cookie.accepted || false;
         return childAccumulator;
       }, {});
 
