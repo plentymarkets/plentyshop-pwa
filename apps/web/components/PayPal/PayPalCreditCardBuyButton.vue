@@ -15,6 +15,6 @@
 </template>
 <script lang="ts" setup>
 const emits = defineEmits(['click']);
-const { disabled = false } = defineProps<{disabled: boolean}>();
+const { disabled = false } = defineProps<{ disabled: boolean }>();
 const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 </script>
