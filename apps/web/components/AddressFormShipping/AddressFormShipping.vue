@@ -244,9 +244,10 @@ const submitForm = handleSubmit(async (shippingAddressForm) => {
     .then(() => handleShippingPrimaryAddress())
     .then(() => handleBillingPrimaryAddress())
     .then(() => refreshAddressDependencies())
+    .then(() => {
+      if (restrictedAddresses.value) handleCartTotalChanges();
+    })
     .catch((error) => useHandleError(error));
-
-  if (restrictedAddresses.value) await handleCartTotalChanges();
 });
 
 defineExpose({ validate, submitForm });

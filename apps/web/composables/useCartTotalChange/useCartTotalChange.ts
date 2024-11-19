@@ -25,9 +25,9 @@ export const useCartTotalChange = () => {
   };
 
   const handleCartTotalChanges = async () => {
+    await getCart();
     state.value.changedTotal =
       cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
-    await getCart();
   };
 
   return {
