@@ -44,6 +44,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### New
 
+- User can now modify shipping address during the read-only checkout process.
 - Google Pay and Apple Pay are now available as payment methods in the checkout.
 - Clicking the **Buy** button with an unsaved address now displays a notification.
 - To ensure compliance with geo-blocking regulations, selecting an EU country as the shipping country now makes all EU countries available as billing options.
