@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 bg-[#FFFFFF] py-2 z-50">
+  <div class="sticky top-0 bg-white py-2 z-50">
     <div class="flex justify-center md:justify-end pr-5 space-x-2">
       <UiButton
         variant="secondary"
@@ -11,7 +11,7 @@
         {{ isEditing ? 'Preview' : 'Edit' }}
       </UiButton>
       <UiButton
-        variant="secondary"
+        variant="primary"
         :size="buttonSize"
         class="self-start"
         :disabled="isEditingDisabled || !isEditing"
