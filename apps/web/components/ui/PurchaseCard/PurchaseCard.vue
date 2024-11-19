@@ -1,7 +1,7 @@
 <template>
   <form
     @submit.prevent="handleAddToCart()"
-    class="md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
+    class="p-4 xl:p-6 md:border md:border-neutral-100 md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
     <div class="relative">

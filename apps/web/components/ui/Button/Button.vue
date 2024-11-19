@@ -4,7 +4,7 @@
     :type="type"
     :disabled="disabled"
     :class="[
-      'inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
+      'inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-3xl disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
       sizeClasses,
       variantClasses[variant],
     ]"
