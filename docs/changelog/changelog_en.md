@@ -7,12 +7,14 @@
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
+- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
 
 ### 👷 Changed
 
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
+- Paypal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true  https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 
 #### GitHub Action: Upload
 
