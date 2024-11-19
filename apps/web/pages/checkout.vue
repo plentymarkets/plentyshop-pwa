@@ -55,17 +55,11 @@
                 :commit="true"
               />
             </client-only>
-            <UiButton
+            <PayPalCreditCardBuyButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
-              type="submit"
-              data-testid="place-order-button"
               @click="openPayPalCardDialog"
               :disabled="disableBuyButton || paypalCardDialog"
-              size="lg"
-              class="w-full mb-4 md:mb-0 cursor-pointer"
-            >
-              {{ t('buy') }}
-            </UiButton>
+            />
             <PayPalApplePayButton
               v-else-if="selectedPaymentId === paypalApplePayPaymentId"
               :style="disableBuyButton ? 'pointer-events: none;' : ''"
