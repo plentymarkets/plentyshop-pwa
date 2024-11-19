@@ -21,7 +21,7 @@ export const useCheckoutPagePaymentAndShipping = () => {
 
   const paymentMethods = computed(() => paymentMethodData.value);
   const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-  const selectedPaymentId = computed(() => cart.value.methodOfPaymentId);
+  const selectedPaymentId = computed(() => cart?.value?.methodOfPaymentId || 0);
 
   const handleShippingMethodUpdate = async (shippingMethodId: string) => {
     await saveShippingMethod(Number(shippingMethodId));

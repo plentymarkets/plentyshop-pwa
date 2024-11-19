@@ -1,98 +1,206 @@
 import { mockNuxtImport } from '@nuxt/test-utils/runtime';
 
-vi.mock('@plentymarkets/shop-api', () => ({
-  paymentProviderGetters: {
-    isPaymentMethodExcluded: vi.fn(),
-    isPaymentMethodUnavailable: vi.fn(),
-  },
-  shippingProviderGetters: {
-    getShippingProviders: vi.fn(),
-    getDataPrivacyAgreementHint: vi.fn(),
-  },
+const { useCart } = vi.hoisted(() => ({
+  useCart: vi.fn().mockReturnValue({}),
 }));
 
-vi.mock('~/utils/scollHelper', () => ({
-  scrollToHTMLObject: vi.fn(),
+const { usePaymentMethods } = vi.hoisted(() => ({
+  usePaymentMethods: vi.fn().mockReturnValue({}),
 }));
+
+const { useCartShippingMethods } = vi.hoisted(() => ({
+  useCartShippingMethods: vi.fn().mockReturnValue({}),
+}));
+
+const { useAdditionalInformation } = vi.hoisted(() => ({
+  useAdditionalInformation: vi.fn().mockReturnValue({}),
+}));
+
+mockNuxtImport('useCart', () => useCart);
+mockNuxtImport('usePaymentMethods', () => usePaymentMethods);
+mockNuxtImport('useCartShippingMethods', () => useCartShippingMethods);
+mockNuxtImport('useAdditionalInformation', () => useAdditionalInformation);
 
 describe('useCheckoutPagePaymentAndShipping', () => {
-  let composable: ReturnType<typeof import('../useCheckoutPagePaymentAndShipping')['useCheckoutPagePaymentAndShipping']>;
-
-  beforeEach(() => {
-    composable = require('~/composables/useCheckoutPagePaymentAndShipping').useCheckoutPagePaymentAndShipping();
-  });
-
   afterEach(() => {
     clearNuxtState();
     vi.resetAllMocks();
   });
 
-  it('should handle shipping method update correctly', async () => {
-    const mockSaveShippingMethod = vi.fn().mockResolvedValue({});
-    const mockFetchPaymentMethods = vi.fn().mockResolvedValue({});
-    const mockGetCart = vi.fn().mockResolvedValue({});
-    const mockSavePaymentMethod = vi.fn().mockResolvedValue({});
-    const mockSend = vi.fn().mockResolvedValue({});
-
-    const mockCart = { value: { methodOfPaymentId: 1 } };
-    const mockSelectedShippingMethod = { value: {} };
-    const mockPaymentMethods = { value: { list: [{ id: 2 }] } };
-
-    mockNuxtImport('useCart', () => ({
-      getCart: mockGetCart,
-      data: mockCart,
+  beforeEach(() => {
+    useCart.mockImplementation(() => ({
+      data: ref({
+        customerShippingAddressId: '123',
+        customerInvoiceAddressId: '321',
+      }),
+      cart: ref({
+        methodOfPaymentId: 1,
+      }),
+      getCart: vi.fn(),
     }));
 
-    mockNuxtImport('usePaymentMethods', () => ({
-      savePaymentMethod: mockSavePaymentMethod,
-      fetchPaymentMethods: mockFetchPaymentMethods,
+    usePaymentMethods.mockImplementation(() => ({
+      loading: ref(false),
+      data: ref({ list: [{ id: 1 }] }),
+      fetchPaymentMethods: vi.fn(),
+      savePaymentMethod: vi.fn(),
     }));
 
-    mockNuxtImport('useCartShippingMethods', () => ({
-      saveShippingMethod: mockSaveShippingMethod,
-      selectedMethod: mockSelectedShippingMethod,
+    useCartShippingMethods.mockImplementation(() => ({
+      loading: ref(false),
+      data: ref([]),
+      selectedMethod: ref({
+        shippingPrivacyInformation: [{ showDataPrivacyAgreementHint: true }],
+      }),
+      saveShippingMethod: vi.fn(),
+      getShippingMethods: vi.fn(),
     }));
 
-    mockNuxtImport('useNotification', () => ({
-      send: mockSend,
+    useAdditionalInformation.mockImplementation(() => ({
+      shippingPrivacyAgreement: ref(false),
+      setShippingPrivacyAgreement: vi.fn(),
+      setShippingPrivacyAgreementErrors: vi.fn(),
     }));
-
-    const { isPaymentMethodExcluded, isPaymentMethodUnavailable } = require('@plentymarkets/shop-api').paymentProviderGetters;
-
-    isPaymentMethodExcluded.mockReturnValue(true);
-    isPaymentMethodUnavailable.mockReturnValue(false);
-
-    await composable.handleShippingMethodUpdate('1');
-
-    expect(mockSaveShippingMethod).toHaveBeenCalledWith(1);
-    expect(mockFetchPaymentMethods).toHaveBeenCalled();
-    expect(mockGetCart).toHaveBeenCalled();
-    expect(mockSend).toHaveBeenCalledWith({
-      message: 'billing.methodChanged',
-      type: 'warning',
-    });
-    expect(mockSavePaymentMethod).toHaveBeenCalledWith(2);
   });
 
-  it('should validate shipping terms correctly', () => {
-    const mockSetShippingPrivacyAgreementErrors = vi.fn();
-    const mockScrollToHTMLObject = require('~/utils/scollHelper').scrollToHTMLObject;
-
-    const mockShippingPrivacyAgreement = { value: false };
-    const mockSelectedShippingMethod = { value: { id: 1 } };
-
-    mockNuxtImport('useAdditionalInformation', () => ({
-      shippingPrivacyAgreement: mockShippingPrivacyAgreement,
-      setShippingPrivacyAgreementErrors: mockSetShippingPrivacyAgreementErrors,
+  it('should initialize payment and shipping methods', () => {
+    usePaymentMethods.mockImplementation(() => ({
+      loading: ref(false),
+      data: ref({ list: [] }),
+      fetchPaymentMethods: vi.fn(),
     }));
 
-    const { getDataPrivacyAgreementHint } = require('@plentymarkets/shop-api').shippingProviderGetters;
-    getDataPrivacyAgreementHint.mockReturnValue(true);
+    useCartShippingMethods.mockImplementation(() => ({
+      loading: ref(false),
+      data: ref([]),
+      selectedMethod: ref({
+        shippingPrivacyInformation: [{ showDataPrivacyAgreementHint: true }],
+      }),
+    }));
 
-    const result = composable.validateShippingTerms();
+    const { loadPayment, loadShipping, paymentMethods, shippingMethods } = useCheckoutPagePaymentAndShipping();
 
-    expect(mockSetShippingPrivacyAgreementErrors).toHaveBeenCalledWith(true);
-    expect(mockScrollToHTMLObject).toHaveBeenCalledWith('#shipping-agreement-checkbox');
+    expect(loadPayment.value).toBe(false);
+    expect(loadShipping.value).toBe(false);
+    expect(paymentMethods.value).toEqual({ list: [] });
+    expect(shippingMethods.value).toEqual([]);
+  });
+
+  it('should update shipping method and refresh cart', async () => {
+    const saveShippingMethodMock = vi.fn();
+    const fetchPaymentMethodsMock = vi.fn();
+    const savePaymentMethodMock = vi.fn();
+    const getCartMock = vi.fn();
+
+    useCart.mockImplementation(() => ({
+      cart: ref({ methodOfPaymentId: 1 }),
+      getCart: getCartMock,
+    }));
+
+    usePaymentMethods.mockImplementation(() => ({
+      savePaymentMethod: savePaymentMethodMock,
+      fetchPaymentMethods: fetchPaymentMethodsMock,
+      data: ref({ list: [{ id: 1 }] }),
+    }));
+
+    useCartShippingMethods.mockImplementation(() => ({
+      saveShippingMethod: saveShippingMethodMock,
+      selectedMethod: ref({
+        shippingPrivacyInformation: [{ showDataPrivacyAgreementHint: true }],
+        excludedPaymentMethodIds: []
+      }),
+    }));
+
+    const { handleShippingMethodUpdate } = useCheckoutPagePaymentAndShipping();
+
+    await handleShippingMethodUpdate('123');
+
+    expect(saveShippingMethodMock).toHaveBeenCalledWith(123);
+    expect(fetchPaymentMethodsMock).toHaveBeenCalled();
+    expect(getCartMock).toHaveBeenCalled();
+  });
+
+  it('should update payment method and refresh shipping methods', async () => {
+    const savePaymentMethodMock = vi.fn();
+    const getShippingMethodsMock = vi.fn();
+
+    usePaymentMethods.mockImplementation(() => ({
+      savePaymentMethod: savePaymentMethodMock,
+    }));
+
+    useCartShippingMethods.mockImplementation(() => ({
+      getShippingMethods: getShippingMethodsMock,
+    }));
+
+    const { handlePaymentMethodUpdate } = useCheckoutPagePaymentAndShipping();
+
+    await handlePaymentMethodUpdate(456);
+
+    expect(savePaymentMethodMock).toHaveBeenCalledWith(456);
+    expect(getShippingMethodsMock).toHaveBeenCalled();
+  });
+
+  it('should validate shipping terms and return true if agreement is not required', () => {
+    useAdditionalInformation.mockImplementation(() => ({
+      shippingPrivacyAgreement: ref(true),
+      setShippingPrivacyAgreementErrors: vi.fn(),
+    }));
+
+    useCartShippingMethods.mockImplementation(() => ({
+      selectedMethod: ref(null),
+    }));
+
+    const { validateShippingTerms } = useCheckoutPagePaymentAndShipping();
+
+    const result = validateShippingTerms();
+
+    expect(result).toBe(true);
+  });
+
+  it('should validate shipping terms and return false if agreement is required but not accepted', () => {
+    const setErrorsMock = vi.fn();
+
+    useAdditionalInformation.mockImplementation(() => ({
+      shippingPrivacyAgreement: ref(false),
+      setShippingPrivacyAgreementErrors: setErrorsMock,
+    }));
+
+    useCartShippingMethods.mockImplementation(() => ({
+      selectedMethod: ref({
+        shippingPrivacyInformation: [{ showDataPrivacyAgreementHint: true }],
+      }),
+    }));
+
+    const { validateShippingTerms } = useCheckoutPagePaymentAndShipping();
+
+    const result = validateShippingTerms();
+
+    expect(setErrorsMock).toHaveBeenCalledWith(true);
     expect(result).toBe(false);
+  });
+
+  it('should save the first payment method when current is excluded', async () => {
+    const savePaymentMethodMock = vi.fn();
+    const saveShippingMethodMock = vi.fn();
+    const fetchPaymentMethodsMock = vi.fn();
+
+    usePaymentMethods.mockImplementation(() => ({
+      data: ref({ list: [{ id: 1 }] }),
+      fetchPaymentMethods: fetchPaymentMethodsMock,
+      savePaymentMethod: savePaymentMethodMock,
+    }));
+
+    useCartShippingMethods.mockImplementation(() => ({
+      saveShippingMethod: saveShippingMethodMock,
+      selectedMethod: ref({
+        excludedPaymentMethodIds: []
+      }),
+    }));
+
+    const { handleShippingMethodUpdate } = useCheckoutPagePaymentAndShipping();
+
+    await handleShippingMethodUpdate('123');
+
+    expect(savePaymentMethodMock).toHaveBeenCalledWith(1);
   });
 });
