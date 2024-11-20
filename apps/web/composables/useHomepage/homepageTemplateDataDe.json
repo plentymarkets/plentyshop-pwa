@@ -5,14 +5,14 @@
         "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-lg.avif",
         "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-md.avif",
         "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-sm.avif",
-        "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-xs.avif",
-        "alt": "Capybara-Kopfhörer"
+        "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-xs.avif"
       },
       "tagline": "Kristalklare Klänge Genießen",
       "taglineColor": "#000000",
       "heading": "Sound auf höchstem Niveau",
       "headingColor": "#000000",
       "description": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
+      "alt": "Capybara-Kopfhörer",
       "descriptionColor": "#000000",
       "callToAction": "Capybara entdecken",
       "link": "/gear/headphones-capybara_157"
@@ -22,14 +22,14 @@
         "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drohne-1920-800.avif",
         "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_1024x600.avif",
         "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif",
-        "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif",
-        "alt": "Omega-Drone"
+        "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif"
       },
       "tagline": "Die Zukunft der Luftbildfotografie",
       "taglineColor": "#000000",
       "heading": "Drone Omega",
       "headingColor": "#000000",
       "description": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
+      "alt": "Omega-Drone",
       "descriptionColor": "#000000",
       "callToAction": "Omega entdecken",
       "link": "/gear/drone-omega_154"

@@ -1,6 +1,6 @@
-import { HomeData, UseHomepageDataReturn, UseHomepageDataState } from './types';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
+import { HomeData, UseHomepageDataReturn, UseHomepageDataState } from './types';
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
 import { useFetchHome } from '~/composables/useFetchHome/useFetchHome';
@@ -33,6 +33,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
       heading: item.heading || '',
       headingColor: item.headingColor || '',
       description: item.description || '',
+      alt: item.alt || '',
       descriptionColor: item.descriptionColor || '',
       callToAction: item.callToAction || '',
       link: item.link || '',
