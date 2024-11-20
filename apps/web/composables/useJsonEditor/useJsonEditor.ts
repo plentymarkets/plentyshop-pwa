@@ -26,10 +26,10 @@ export const useJsonEditor = (initialJson: string) => {
     try {
       JSON.parse(jsonText.value);
       errorMessage.value = '';
-      isEditingEnabled.value = false;
+      isEditingEnabled.value = true;
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = true;
+      isEditingEnabled.value = false;
     }
   };
 
@@ -47,7 +47,7 @@ export const useJsonEditor = (initialJson: string) => {
       updateLineCount();
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = true;
+      isEditingEnabled.value = false;
     }
   };
 
@@ -59,7 +59,7 @@ export const useJsonEditor = (initialJson: string) => {
       nextTick(updateLineCount);
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = true;
+      isEditingEnabled.value = false;
     }
   };
 
@@ -71,7 +71,7 @@ export const useJsonEditor = (initialJson: string) => {
       nextTick(updateLineCount);
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = true;
+      isEditingEnabled.value = false;
     }
   };
 
