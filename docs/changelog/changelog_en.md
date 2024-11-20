@@ -11,6 +11,7 @@
 
 ### 👷 Changed
 
+- Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
