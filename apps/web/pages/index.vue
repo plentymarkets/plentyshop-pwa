@@ -2,12 +2,12 @@
   <Editor v-if="isEditing" />
   <div v-else class="content">
     <div class="flex items-center justify-center h-full mt-5">
-      <SfLoaderCircular v-if="!heroLoaded" class="animate-spin" size="4xl" />
+      <SfLoaderCircular v-if="loading" class="animate-spin" size="4xl" />
     </div>
-    <UiHeroCarousel v-if="heroLoaded" :hero-item-props="hero" />
+    <UiHeroCarousel v-if="loadComponents" :hero-item-props="hero" />
 
     <NuxtLazyHydrate when-visible>
-      <div v-if="media" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
           v-for="(item, index) in valueProposition"
           :key="index"
@@ -18,7 +18,7 @@
         />
       </div>
     </NuxtLazyHydrate>
-    <div v-if="recommendedItemsLoaded" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+    <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
           <section class="mb-10 overflow-hidden">
@@ -42,14 +42,11 @@ const { isEditing } = useEditor();
 const { hero, valueProposition, fetchData, recommendedProductsCategories } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
+const { loading } = useHomepage();
 
-const heroLoaded = ref(false);
-const media = ref(false);
-const recommendedItemsLoaded = ref(false);
+const loadComponents = ref(false);
 onMounted(async () => {
   await fetchData();
-  heroLoaded.value = true;
-  media.value = true;
-  recommendedItemsLoaded.value = true;
+  loadComponents.value = true;
 });
 </script>
