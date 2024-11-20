@@ -2,9 +2,14 @@
   <Editor v-if="isEditing" />
   <div v-else class="content">
     <div class="flex items-center justify-center h-full mt-5">
-      <SfLoaderCircular v-if="loading" class="animate-spin" size="4xl" />
+      <!-- <SfLoaderCircular v-if="loading" class="animate-spin" size="xs" /> -->
     </div>
-    <UiHeroCarousel v-if="loadComponents" :hero-item-props="hero" />
+    <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <UiHeroCarousel :hero-item-props="hero" />
+    </div>
+    <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <UiSkeletonLoader />
+    </div>
 
     <NuxtLazyHydrate when-visible>
       <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -17,7 +22,11 @@
           :alignment="item.alignment"
         />
       </div>
+      <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+        <UiSkeletonLoader v-for="index in 3" :key="index" />
+      </div>
     </NuxtLazyHydrate>
+
     <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <NuxtLazyHydrate when-visible>
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
@@ -33,16 +42,17 @@
         <NewsletterSubscribe v-if="showNewsletter" />
       </NuxtLazyHydrate>
     </div>
+    <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <UiSkeletonLoader />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup async>
-import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing } = useEditor();
 const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
-const { loading } = useHomepage();
 
 const loadComponents = ref(false);
 onMounted(async () => {
