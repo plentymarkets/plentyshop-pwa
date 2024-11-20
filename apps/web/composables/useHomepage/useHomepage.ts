@@ -52,7 +52,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
       categoryId: category.categoryId,
     }));
 
-  const fetchData = async (): Promise<void> => {
+  const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
@@ -105,7 +105,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   );
 
   return {
-    fetchData,
+    fetchPageTemplate,
     ...toRefs(state.value),
     setFormattedHeroItems,
     hero,

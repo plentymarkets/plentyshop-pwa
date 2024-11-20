@@ -32,13 +32,18 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
     state.value.loading = true;
-    const { data } = await useSdk().plentysystems.setCategoryTemplate({
-      id: categoryId,
-      content: content,
-    });
-    state.value.loading = false;
-    state.value.data = data;
-    return data;
+    try {
+      const { data } = await useSdk().plentysystems.setCategoryTemplate({
+        id: categoryId,
+        content: content,
+      });
+      state.value.data = data;
+      return data;
+    } catch (error) {
+      throw new Error(error as string);
+    } finally {
+      state.value.loading = false;
+    }
   };
 
   return {
