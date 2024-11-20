@@ -7,6 +7,7 @@
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
+- New Json Editor
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
 
 ### 👷 Changed
