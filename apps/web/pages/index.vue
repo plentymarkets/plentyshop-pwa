@@ -1,9 +1,6 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <div class="flex items-center justify-center h-full mt-5">
-      <!-- <SfLoaderCircular v-if="loading" class="animate-spin" size="xs" /> -->
-    </div>
     <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <UiHeroCarousel :hero-item-props="hero" />
     </div>
