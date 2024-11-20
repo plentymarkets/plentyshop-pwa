@@ -15,7 +15,7 @@
         :size="buttonSize"
         class="self-start"
         :disabled="isEditingDisabled || !isEditing"
-        @click="saveData"
+        @click="updatePageTemplate"
       >
         <template v-if="loading">
           <SfLoaderCircular class="animate-spin w-4 h-4" />
@@ -36,7 +36,8 @@ const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
 
-const { saveData, loading } = useHomepage();
+const { loading } = useHomepage();
+const { updatePageTemplate } = useUpdatePageTemplate();
 
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;

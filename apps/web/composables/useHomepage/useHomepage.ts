@@ -1,19 +1,13 @@
-import { UseHomepageDataReturn, UseHomepageDataState, HomeData } from './types';
+import { HomeData, UseHomepageDataReturn, UseHomepageDataState } from './types';
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
 import { MediaItemProps } from '~/components/ui/MediaCard/types';
+import { useFetchHome } from '~/composables/useFetchHome/useFetchHome';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
 
-const stripArrayBrackets = (jsonString: string): string => {
-  jsonString = jsonString.trim();
-  if (jsonString.startsWith('[') && jsonString.endsWith(']')) {
-    jsonString = jsonString.slice(1, -1);
-  }
-  return jsonString;
-};
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
     data: {} as HomeData[],
@@ -30,18 +24,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const hero = ref<HeroContentProps[]>([]);
   const valueProposition = ref<MediaItemProps[]>([]);
   const recommendedProductsCategories = ref<Featured[]>([]);
-
-  // const fetchHomepageTemplate = async (homepageCategoryId: number) => {
-  //   const { fetchCategoryTemplate } = useCategoryTemplate();
-  //   const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  //   const parsedData = JSON.parse(data || '{}');
-
-  //   homepageTemplateData.value = {
-  //     hero: parsedData.hero || [],
-  //     valueProposition: parsedData.valueProposition,
-  //     featured: parsedData.featured,
-  //   };
-  // };
 
   const formatHeroItems = () =>
     homepageTemplateData.value.hero.map((item) => ({
@@ -74,7 +56,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
-      await fetchHomepageTemplate(homepageCategoryId);
+      const { fetchHomepageTemplate } = useFetchHome();
+      homepageTemplateData.value = await fetchHomepageTemplate(homepageCategoryId);
     } else {
       homepageTemplateData.value = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
@@ -97,18 +80,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
       hero.value = firstItem.hero;
       valueProposition.value = firstItem.valueProposition;
       recommendedProductsCategories.value = firstItem.featured;
-    }
-  };
-
-  const saveData = async (): Promise<void> => {
-    const { setCategoryTemplate } = useCategoryTemplate();
-    const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    state.value.loading = true;
-    try {
-      const cleanedData = stripArrayBrackets(JSON.stringify(state.value.data));
-      await setCategoryTemplate(homepageCategoryId, cleanedData);
-    } finally {
-      state.value.loading = false;
     }
   };
 
@@ -135,7 +106,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   return {
     fetchData,
-    saveData,
     ...toRefs(state.value),
     setFormattedHeroItems,
     hero,
