@@ -1,13 +1,24 @@
-import { PaymentMethod, paymentProviderGetters, ShippingMethod, shippingProviderGetters } from '@plentymarkets/shop-api';
+import {
+  PaymentMethod,
+  paymentProviderGetters,
+  ShippingMethod,
+  shippingProviderGetters,
+} from '@plentymarkets/shop-api';
 import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const ID_SHIPPING_CHECKBOX = '#shipping-agreement-checkbox';
 
-const getFallbackPaymentMethod = ((paymentMethods: PaymentMethod[], selectedShippingMethod: ShippingMethod | undefined) => {
+const getFallbackPaymentMethod = (
+  paymentMethods: PaymentMethod[],
+  selectedShippingMethod: ShippingMethod | undefined,
+) => {
   return paymentMethods.find((method) => {
-    return !paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod, method.id) && !paymentProviderGetters.isPaymentMethodUnavailable(paymentMethods, method.id);
-  })
-});
+    return (
+      !paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod, method.id) &&
+      !paymentProviderGetters.isPaymentMethodUnavailable(paymentMethods, method.id)
+    );
+  });
+};
 
 export const useCheckoutPagePaymentAndShipping = () => {
   const { $i18n } = useNuxtApp();
@@ -34,8 +45,14 @@ export const useCheckoutPagePaymentAndShipping = () => {
     await fetchPaymentMethods();
     await getCart();
 
-    const isPaymentMethodExcluded = paymentProviderGetters.isPaymentMethodExcluded(selectedShippingMethod.value, selectedPaymentId.value);
-    const isPaymentMethodUnavailable = paymentProviderGetters.isPaymentMethodUnavailable(paymentMethods.value.list, selectedPaymentId.value);
+    const isPaymentMethodExcluded = paymentProviderGetters.isPaymentMethodExcluded(
+      selectedShippingMethod.value,
+      selectedPaymentId.value,
+    );
+    const isPaymentMethodUnavailable = paymentProviderGetters.isPaymentMethodUnavailable(
+      paymentMethods.value.list,
+      selectedPaymentId.value,
+    );
 
     if (isPaymentMethodExcluded || isPaymentMethodUnavailable) {
       send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
@@ -76,5 +93,3 @@ export const useCheckoutPagePaymentAndShipping = () => {
     validateShippingTerms,
   };
 };
-
-
