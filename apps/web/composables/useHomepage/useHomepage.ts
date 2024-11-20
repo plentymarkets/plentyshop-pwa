@@ -14,7 +14,7 @@ const stripArrayBrackets = (jsonString: string): string => {
   }
   return jsonString;
 };
-export const useHomePageState: UseHomepageDataReturn = () => {
+export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
     data: {} as HomeData[],
     loading: false,
@@ -31,17 +31,17 @@ export const useHomePageState: UseHomepageDataReturn = () => {
   const valueProposition = ref<MediaItemProps[]>([]);
   const recommendedProductsCategories = ref<Featured[]>([]);
 
-  const fetchHomepageTemplate = async (homepageCategoryId: number) => {
-    const { fetchCategoryTemplate } = useCategoryTemplate();
-    const { data } = await fetchCategoryTemplate(homepageCategoryId);
-    const parsedData = JSON.parse(data || '{}');
+  // const fetchHomepageTemplate = async (homepageCategoryId: number) => {
+  //   const { fetchCategoryTemplate } = useCategoryTemplate();
+  //   const { data } = await fetchCategoryTemplate(homepageCategoryId);
+  //   const parsedData = JSON.parse(data || '{}');
 
-    homepageTemplateData.value = {
-      hero: parsedData.hero || [],
-      valueProposition: parsedData.valueProposition,
-      featured: parsedData.featured,
-    };
-  };
+  //   homepageTemplateData.value = {
+  //     hero: parsedData.hero || [],
+  //     valueProposition: parsedData.valueProposition,
+  //     featured: parsedData.featured,
+  //   };
+  // };
 
   const formatHeroItems = () =>
     homepageTemplateData.value.hero.map((item) => ({

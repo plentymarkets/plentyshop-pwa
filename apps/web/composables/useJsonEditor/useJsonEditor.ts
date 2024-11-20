@@ -1,5 +1,5 @@
 export const useJsonEditor = (initialJson: string) => {
-  const { setFormattedHeroItems } = useHomePageState();
+  const { setFormattedHeroItems } = useHomepage();
   const { isEditingDisabled } = useEditor();
 
   const errorMessage = ref('');
@@ -78,8 +78,7 @@ export const useJsonEditor = (initialJson: string) => {
   const clearText = () => {
     jsonText.value = '';
     errorMessage.value = '';
-    const noData: [] = [];
-    setFormattedHeroItems(noData);
+    setFormattedHeroItems([]);
     updateLineCount();
   };
 

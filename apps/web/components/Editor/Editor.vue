@@ -30,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-const { data } = useHomePageState();
+const { data } = useHomepage();
 
 const {
   jsonText,

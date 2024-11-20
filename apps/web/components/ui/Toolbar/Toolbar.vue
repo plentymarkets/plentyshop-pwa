@@ -36,7 +36,7 @@ const buttonSize = computed(() => {
   return viewport.isLessThan('md') ? 'sm' : 'lg';
 });
 
-const { saveData, loading } = useHomePageState();
+const { saveData, loading } = useHomepage();
 
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
