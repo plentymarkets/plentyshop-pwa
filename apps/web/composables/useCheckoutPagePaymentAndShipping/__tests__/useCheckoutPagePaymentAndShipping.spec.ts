@@ -179,28 +179,39 @@ describe('useCheckoutPagePaymentAndShipping', () => {
     expect(result).toBe(false);
   });
 
-  it('should save the first payment method when current is excluded', async () => {
+  it('should save the first available payment method when current is excluded', async () => {
     const savePaymentMethodMock = vi.fn();
     const saveShippingMethodMock = vi.fn();
     const fetchPaymentMethodsMock = vi.fn();
 
+    const ExcludedPaymentMethodId = 1337;
+    const FirstAvailablePaymentMethodId = 2;
+
     usePaymentMethods.mockImplementation(() => ({
-      data: ref({ list: [{ id: 1 }] }),
+      data: ref({ list: [{ id: ExcludedPaymentMethodId }, {id: FirstAvailablePaymentMethodId}] }),
       fetchPaymentMethods: fetchPaymentMethodsMock,
       savePaymentMethod: savePaymentMethodMock,
+    }));
+
+    useCart.mockImplementation(() => ({
+      cart: ref({
+        methodOfPaymentId: ExcludedPaymentMethodId,
+      }),
+      getCart: vi.fn(),
     }));
 
     useCartShippingMethods.mockImplementation(() => ({
       saveShippingMethod: saveShippingMethodMock,
       selectedMethod: ref({
-        excludedPaymentMethodIds: []
+        id: 1,
+        excludedPaymentMethodIds: [ExcludedPaymentMethodId],
       }),
     }));
 
     const { handleShippingMethodUpdate } = useCheckoutPagePaymentAndShipping();
 
-    await handleShippingMethodUpdate('123');
+    await handleShippingMethodUpdate('1');
 
-    expect(savePaymentMethodMock).toHaveBeenCalledWith(1);
+    expect(savePaymentMethodMock).toHaveBeenCalledWith(FirstAvailablePaymentMethodId);
   });
 });
