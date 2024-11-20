@@ -14,7 +14,7 @@ const myAccount: MyAccountPageObject = new MyAccountPageObject();
 beforeEach(() => {
   cy.clearCookies();
   cy.setCookie('vsf-locale', 'en');
-  cy.setCookie('consent-cookie', '{"Essentials":{"Session":true,"Consent":true,"Session2":true},"External Media":{"Session":false,"Consent":false,"Session2":false},"Functional":{"Session":false,"Consent":false,"Session2":false},"Marketing":{"Session":false,"Consent":false,"Session2":false}}');
+  cy.setCookie('consent-cookie', '{"CookieBar.essentials.label":{"CookieBar.essentials.cookies.plentyId.name":true,"CookieBar.essentials.cookies.vsfLocale.name":true,"CookieBar.essentials.cookies.consentCookie.name":true,"CookieBar.essentials.cookies.cloudflareTurnstile.name":true},"CookieBar.externalMedia.label":{},"CookieBar.functional.label":{"CookieBar.functional.cookies.scriptDemo.name":true,"CookieBar.functional.cookies.payPal.name":true},"CookieBar.marketing.label":{}}');
   cy.visitAndHydrate(paths.home);
 });
 
