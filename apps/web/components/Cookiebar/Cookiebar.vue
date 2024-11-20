@@ -48,10 +48,10 @@
           >
             {{ t(cookieGroup.name) }}
           </label>
-          <div>
+          <div class="leading-6 my-2">
             {{ t(cookieGroup.description) }}
           </div>
-          <div v-if="cookieGroup.showMore">
+          <div v-if="Boolean(cookieGroup.showMore)">
             <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
               <div class="flex items-center p-2 mb-1 bg-white">
                 <SfCheckbox
