@@ -81,7 +81,7 @@ loadExampleScript: () => {
 
 ## Read and react to a registered cookie
 
-To read and react to the state of the a specific cookie you can use the [useCookieConsent]("/reference/composables/functions/useCookieConsent") composable.
+To read and react to the state of the a specific cookie you can use the [useCookieConsent](/reference/composables/functions/useCookieConsent) composable.
 
 This composable uses the cookie name that you defined in the `cookie.config.ts` to get the reactive state of cookie.
 
