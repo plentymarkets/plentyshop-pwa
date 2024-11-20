@@ -19,4 +19,4 @@ export interface UseProducts {
   setCurrentProduct: SetCurrentProduct;
 }
 
-export type UseProductsReturn = () => UseProducts;
+export type UseProductsReturn = (category?: string) => UseProducts;

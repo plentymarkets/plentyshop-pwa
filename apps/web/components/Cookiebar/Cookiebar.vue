@@ -6,13 +6,13 @@
     <div v-if="!furtherSettingsOn">
       <!-- cookie info -->
       <div class="font-medium text-center">
-        {{ $t(cookieGroups?.barTitle) }}
+        {{ t(cookieGroups?.barTitle) }}
       </div>
       <div class="leading-relaxed overflow-y-scroll sm:h-auto h-[295px] pb-5">
-        {{ $t(cookieGroups?.barDescription) }}
+        {{ t(cookieGroups?.barDescription) }}
 
         <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
-          {{ $t('CookieBar.Privacy Settings') }}
+          {{ t('CookieBar.Privacy Settings') }}
         </SfLink>
       </div>
       <!-- checkboxes -->
@@ -27,7 +27,7 @@
               class="md:h-6 md:w-6"
             />
             <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900" :for="cookieGroup.name">
-              {{ $t(cookieGroup.name) }}
+              {{ t(cookieGroup.name) }}
             </label>
           </div>
         </template>
@@ -47,10 +47,10 @@
             class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
             :for="cookieGroup.name"
           >
-            {{ $t(cookieGroup.name) }}
+            {{ t(cookieGroup.name) }}
           </label>
           <div class="leading-6 my-2">
-            {{ $t(cookieGroup.description) }}
+            {{ t(cookieGroup.description) }}
           </div>
           <div v-if="Boolean(cookieGroup.showMore)">
             <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
@@ -63,25 +63,25 @@
                   :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
                 />
                 <label class="ml-2 cursor-pointer peer-disabled:text-disabled-900 font-medium" :for="cookie.name">
-                  {{ $t(cookie.name) }}
+                  {{ t(cookie.name) }}
                 </label>
               </div>
               <div v-for="propKey in Object.keys(cookie)" :key="propKey">
                 <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex w-full mb-1 p-2 bg-white">
                   <div class="w-1/4">
-                    {{ $t(`CookieBar.keys.${propKey}`) }}
+                    {{ t(`CookieBar.keys.${propKey}`) }}
                   </div>
                   <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
                       <!-- TODO -->
                       <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
-                        {{ $t('CookieBar.Privacy Settings') }}
+                        {{ t('CookieBar.Privacy Settings') }}
                       </SfLink>
                     </template>
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{
                         getCookiePropertyValue(cookie, propKey).startsWith('CookieBar.')
-                          ? $t(getCookiePropertyValue(cookie, propKey))
+                          ? t(getCookiePropertyValue(cookie, propKey))
                           : getCookiePropertyValue(cookie, propKey)
                       }}
                     </template>
@@ -91,10 +91,10 @@
             </div>
           </div>
           <SfLink v-if="!Boolean(cookieGroup.showMore)" href="#" size="sm" @click="cookieGroup.showMore = true">
-            {{ $t('CookieBar.More information') }}
+            {{ t('CookieBar.More information') }}
           </SfLink>
           <SfLink v-else href="#" size="sm" @click="cookieGroup.showMore = false">
-            {{ $t('CookieBar.Show less') }}
+            {{ t('CookieBar.Show less') }}
           </SfLink>
         </div>
       </template>
@@ -102,10 +102,10 @@
     <div>
       <div class="text-center mt-2">
         <SfLink class="text-base" v-if="!furtherSettingsOn" href="#" @click="furtherSettingsOn = true">
-          {{ $t('CookieBar.Further Settings') }}
+          {{ t('CookieBar.Further Settings') }}
         </SfLink>
         <SfLink v-else href="#" @click="furtherSettingsOn = false">
-          {{ $t('CookieBar.Back') }}
+          {{ t('CookieBar.Back') }}
         </SfLink>
       </div>
       <!-- action buttons -->
@@ -115,11 +115,11 @@
             class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Accept All')"
+            :aria-label="t('CookieBar.Accept All')"
             @click="setAllCookiesState(true)"
             data-testid="cookie-bar-accept-all"
           >
-            {{ $t('CookieBar.Accept All') }}
+            {{ t('CookieBar.Accept All') }}
           </UiButton>
         </div>
         <div class="flex-1">
@@ -127,10 +127,10 @@
             class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Reject All')"
+            :aria-label="t('CookieBar.Reject All')"
             @click="setAllCookiesState(false)"
           >
-            {{ $t('CookieBar.Reject All') }}
+            {{ t('CookieBar.Reject All') }}
           </UiButton>
         </div>
         <div class="flex-1">
@@ -139,10 +139,10 @@
             class="w-full h-10 md:h-12"
             :aria-disabled="false"
             type="button"
-            :aria-label="$t('CookieBar.Accept Selection')"
+            :aria-label="t('CookieBar.Accept Selection')"
             @click="setConsent()"
           >
-            {{ $t('CookieBar.Accept Selection') }}
+            {{ t('CookieBar.Accept Selection') }}
           </UiButton>
         </div>
       </div>
@@ -150,11 +150,11 @@
   </div>
   <!-- button to open cookie tab -->
   <div v-else class="z-10 h-auto w-12 fixed bottom-[4.3rem] md:bottom-2 left-2 xl:left-auto xl:right-2">
-    <SfTooltip :label="$t('CookieBar.Cookie Settings')" placement="left">
+    <SfTooltip :label="t('CookieBar.Cookie Settings')" placement="left">
       <UiButton
         variant="secondary"
         class="!px-3 bg-white"
-        :aria-label="$t('CookieBar.Cookie Settings')"
+        :aria-label="t('CookieBar.Cookie Settings')"
         @click="changeVisibilityState"
         data-testid="cookie-bar-open-btn"
       >
@@ -183,6 +183,7 @@ const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
 const runtimeConfig = useRuntimeConfig();
 const cookieGroups = ref(runtimeConfig.public.cookieGroups);
+const { t } = useI18n();
 
 const {
   initializeCookies,

@@ -4239,6 +4239,7 @@ __metadata:
     "@paypal/paypal-js": 8.1.0
     "@plentymarkets/shop-api": ^0.74.1
     "@types/applepayjs": ^14.0.8
+    "@types/drift-zoom": ^1.5.2
     "@types/googlepay": ^0.7.6
     "@types/uuid": ^9.0.8
     "@vee-validate/nuxt": ^4.13.2
@@ -4253,6 +4254,7 @@ __metadata:
     cross-env: ^7.0.3
     cypress-iframe: ^1.0.1
     dotenv: ^16.4.5
+    drift-zoom: ^1.5.1
     happy-dom: ^14.12.3
     husky: ^8.0.3
     is-ci: ^3.0.1
@@ -4926,6 +4928,13 @@ __metadata:
   dependencies:
     "@types/ms": "*"
   checksum: 47876a852de8240bfdaf7481357af2b88cb660d30c72e73789abf00c499d6bc7cd5e52f41c915d1b9cd8ec9fef5b05688d7b7aef17f7f272c2d04679508d1053
+  languageName: node
+  linkType: hard
+
+"@types/drift-zoom@npm:^1.5.2":
+  version: 1.5.2
+  resolution: "@types/drift-zoom@npm:1.5.2"
+  checksum: 481bc258822acca5ef6092966c9f1c2eac19d749b1762e9086443777966a670be8d630968e40a71a53cc812cf146de1f10b7736cc95efc4a8809ded268f1bd4a
   languageName: node
   linkType: hard
 
@@ -9927,6 +9936,13 @@ __metadata:
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 301a12c3d44fd49888b74eb9ccf9f07a1f5df43f489e7fcb89647a2edcd84c42d6bc349dc8df099cd18f07c35c7b04685c1a4f3e6a6a9e6b30f8d48c15b7f49c
+  languageName: node
+  linkType: hard
+
+"drift-zoom@npm:^1.5.1":
+  version: 1.5.1
+  resolution: "drift-zoom@npm:1.5.1"
+  checksum: 4a02c4196212137b2ef207116a142e221aa52399d3062b69e2bb9081a92050995179ddee2e0833c33fc773cc4aab9b0568d17f7ceabc2d4e727d8ca86a551d61
   languageName: node
   linkType: hard
 
