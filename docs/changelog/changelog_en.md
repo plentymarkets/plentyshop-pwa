@@ -11,6 +11,7 @@
 
 ### 👷 Changed
 
+- Order of attribute select and order properties on item page
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
