@@ -9,7 +9,7 @@
     <NuxtLazyHydrate when-visible>
       <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <UiMediaCard
-          v-for="(item, index) in valueProposition"
+          v-for="(item, index) in mediaCard"
           :key="index"
           :image="item.image"
           :alt="item.alt"
@@ -39,7 +39,7 @@
 <script lang="ts" setup async>
 import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditing } = useEditor();
-const { hero, valueProposition, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
+const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 const { loading } = useHomepage();

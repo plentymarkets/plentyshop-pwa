@@ -6,7 +6,7 @@ export const fetchHomepageTemplate = async (homepageCategoryId: number): Promise
 
   homepageTemplateData.value = {
     hero: parsedData.hero || [],
-    valueProposition: parsedData.valueProposition,
+    mediaCard: parsedData.mediaCard,
     featured: parsedData.featured,
   };
 

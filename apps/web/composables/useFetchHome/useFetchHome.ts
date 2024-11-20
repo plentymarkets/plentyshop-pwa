@@ -5,7 +5,7 @@ const fetchHomepageTemplate = async (homepageCategoryId: number) => {
 
   return {
     hero: parsedData.hero || [],
-    valueProposition: parsedData.valueProposition,
+    mediaCard: parsedData.mediaCard,
     featured: parsedData.featured,
   };
 };

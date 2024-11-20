@@ -22,7 +22,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const homepageTemplateData = ref(useLocaleSpecificHomepageTemplate(currentLocale.value));
 
   const hero = ref<HeroContentProps[]>([]);
-  const valueProposition = ref<MediaItemProps[]>([]);
+  const mediaCard = ref<MediaItemProps[]>([]);
   const recommendedProductsCategories = ref<Featured[]>([]);
 
   const formatHeroItems = () =>
@@ -39,7 +39,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     }));
 
   const formatMediaData = () =>
-    homepageTemplateData.value.valueProposition.map((media) => ({
+    homepageTemplateData.value.mediaCard.map((media) => ({
       text: media.text,
       image: media.image,
       alignment: media.alignment,
@@ -68,7 +68,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
     const homeData: HomeData = {
       hero: formattedHeroItems,
-      valueProposition: mediaData,
+      mediaCard: mediaData,
       featured: recommendedProductsCategoriesData,
     };
 
@@ -78,7 +78,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     if (state.value.data.length > 0) {
       const firstItem = state.value.data[0];
       hero.value = firstItem.hero;
-      valueProposition.value = firstItem.valueProposition;
+      mediaCard.value = firstItem.mediaCard;
       recommendedProductsCategories.value = firstItem.featured;
     }
   };
@@ -93,11 +93,11 @@ export const useHomepage: UseHomepageDataReturn = () => {
       if (updatedData.length > 0) {
         const firstItem = updatedData[0];
         hero.value = firstItem.hero;
-        valueProposition.value = firstItem.valueProposition;
+        mediaCard.value = firstItem.mediaCard;
         recommendedProductsCategories.value = firstItem.featured;
       } else {
         hero.value = [];
-        valueProposition.value = [];
+        mediaCard.value = [];
         recommendedProductsCategories.value = [];
       }
     },
@@ -109,7 +109,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     ...toRefs(state.value),
     setFormattedHeroItems,
     hero,
-    valueProposition,
+    mediaCard: mediaCard,
     recommendedProductsCategories,
   };
 };

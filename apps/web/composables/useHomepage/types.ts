@@ -8,7 +8,7 @@ export type Featured = {
 
 export interface HomeData {
   hero: HeroContentProps[];
-  valueProposition: MediaItemProps[];
+  mediaCard: MediaItemProps[];
   featured: Featured[];
 }
 
@@ -24,7 +24,7 @@ export interface UseHomepage {
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => Promise<void>;
   hero: Readonly<Ref<HeroContentProps[]>>;
-  valueProposition: Readonly<Ref<MediaItemProps[]>>;
+  mediaCard: Readonly<Ref<MediaItemProps[]>>;
   recommendedProductsCategories: Readonly<Ref<Featured[]>>;
   setFormattedHeroItems: (items: HomeData[]) => void;
 }
