@@ -14,7 +14,7 @@
         variant="primary"
         :size="buttonSize"
         class="self-start"
-        :disabled="isEditingEnabled || !isEditing"
+        :disabled="isEditingEnabled || !isEditing || !isLocalTemplate()"
         @click="updatePageTemplate"
       >
         <template v-if="loading">
@@ -38,6 +38,11 @@ const buttonSize = computed(() => {
 
 const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
+
+const runtimeConfig = useRuntimeConfig();
+const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+
+const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
   isEditing.value = !isEditing.value;
