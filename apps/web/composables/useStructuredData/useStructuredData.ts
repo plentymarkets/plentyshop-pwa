@@ -1,6 +1,6 @@
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
@@ -115,8 +115,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: productGetters.getMappedAvailability(product),
-        itemCondition: productGetters.getConditionOfItem(product),
+        availability: productSeoSettingsGetters.getMappedAvailability(product),
+        itemCondition: productSeoSettingsGetters.getConditionOfItem(product),
       },
       depth: {
         '@type': 'QuantitativeValue',
@@ -143,28 +143,28 @@ export const useStructuredData: useStructuredDataReturn = () => {
     //   }
     // }
 
-    const brand = productGetters.getBrand(product);
+    const brand = productSeoSettingsGetters.getBrand(product);
     if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
 
-    const sku = productGetters.getSku(product);
+    const sku = productSeoSettingsGetters.getSku(product);
     if (sku !== '') metaObject.sku = sku;
 
-    const gtin = productGetters.getGtin(product);
+    const gtin = productSeoSettingsGetters.getGtin(product);
     if (gtin !== '') metaObject.gtin = gtin;
 
-    const gtin8 = productGetters.getGtin8(product);
+    const gtin8 = productSeoSettingsGetters.getGtin8(product);
     if (gtin8 !== '') metaObject.gtin8 = gtin8;
 
-    const gtin13 = productGetters.getGtin13(product);
+    const gtin13 = productSeoSettingsGetters.getGtin13(product);
     if (gtin13 !== '') metaObject.gtin13 = gtin13;
 
-    const isbn = productGetters.getIsbn(product);
-    if (isbn !== '') metaObject.isbn = productGetters.getIsbn(product);
+    const isbn = productSeoSettingsGetters.getIsbn(product);
+    if (isbn !== '') metaObject.isbn = productSeoSettingsGetters.getIsbn(product);
 
-    const mpn = productGetters.getMpn(product);
+    const mpn = productSeoSettingsGetters.getMpn(product);
     if (mpn !== '') metaObject.mpn = mpn;
 
-    const priceValidUntil = productGetters.getPriceValidUntil(product);
+    const priceValidUntil = productSeoSettingsGetters.getPriceValidUntil(product);
     if (priceValidUntil !== '') metaObject.offers.priceValidUntil = priceValidUntil;
 
     if (product.prices?.rrp) {
