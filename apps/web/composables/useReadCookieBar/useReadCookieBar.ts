@@ -18,7 +18,7 @@ const fetchScripts = (scripts: string[]) => {
       } else if (cookieScripts[script]) {
         cookieScripts[script]();
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
     }
   });
@@ -108,13 +108,22 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   const setConsent: SetConsent = () => {
     const { getMinimumLifeSpan } = cookieBarHelper();
     const router = useRouter();
+    const browserCookies = useCookie('consent-cookie');
+
+    let cookieRevoke = false;
 
     const jsonCookie = state.value.data.groups.reduce((accumulator: any, group: CookieGroup) => {
       accumulator[group.name] = group.cookies.reduce((childAccumulator: any, cookie: Cookie) => {
-        childAccumulator[cookie.name] = cookie.accepted;
-
+        const currentStatus = !!browserCookies.value?.[group.name as any]?.[cookie.name as any] || false;
         const { consent } = useCookieConsent(cookie.name);
+
+        childAccumulator[cookie.name] = cookie.accepted;
         consent.value = cookie.accepted || false;
+
+        if (currentStatus && !consent.value) {
+          cookieRevoke = true;
+        }
+
         return childAccumulator;
       }, {});
 
@@ -126,15 +135,11 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
       maxAge: getMinimumLifeSpan(state.value.data.groups),
     });
 
-    const alreadySetCookie = Boolean(consentCookie.value);
-
     consentCookie.value = jsonCookie;
-
     changeVisibilityState();
-
     loadThirdPartyScripts();
 
-    if (alreadySetCookie) {
+    if (cookieRevoke) {
       router.go(0);
     }
   };
