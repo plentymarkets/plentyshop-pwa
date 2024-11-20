@@ -24,7 +24,7 @@
               @update:model-value="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
             />
-            <label :for="cookieGroup.name" class="text-gray-800 cursor-pointer">
+            <label :for="cookieGroup.name" class="text-gray-800 cursor-pointer peer-disabled:text-disabled-900">
               {{ t(cookieGroup.name) }}
             </label>
           </div>
