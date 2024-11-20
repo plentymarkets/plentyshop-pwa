@@ -28,6 +28,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Order property tooltip was under input fields.
 - Load more accurate images sizes for product page.
 - Reload page after login so the customer class affects prices and categories
 - Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
