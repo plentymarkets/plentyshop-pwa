@@ -11,19 +11,27 @@
         v-for="(filter, index) in sortedReviews(facet) as Filter[]"
         :key="index"
         tag="label"
-        class="mb-3 sm:my-1"
+        class="mb-3"
         size="sm"
       >
         <div class="flex items-center">
           <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" class="mr-2" />
           <SfRating :value="feedbackNumber(filter)" :max="5" />
-          <span :class="['ml-2 text-lg xs:text-base xs:mr-0', { 'font-medium': feedbackNumber(filter) === 5 }]"
+          <span
+            :class="[
+              'ml-2 min-w-[10px] text-center text-lg xs:text-base xs:mr-0',
+              { 'font-medium': feedbackNumber(filter) === 5 },
+            ]"
             >{{ feedbackNumber(filter) }}
           </span>
-          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base"> {{ $t('&up') }} </span>
-          <SfCounter size="sm" :class="['ml-1', { 'ml-3': feedbackNumber(filter) === 5 }]">{{
-            filter.count
-          }}</SfCounter>
+          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base">
+            <SfIconArrowUpward size="xs"></SfIconArrowUpward>
+          </span>
+          <span>
+            <SfCounter size="xs" :class="['ml-1', { 'ml-3': feedbackNumber(filter) === 5 }]">{{
+              filter.count
+            }}</SfCounter>
+          </span>
         </div>
       </SfListItem>
     </div>
@@ -98,6 +106,7 @@ import {
   SfRating,
   SfCheckbox,
   SfCounter,
+  SfIconArrowUpward,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
