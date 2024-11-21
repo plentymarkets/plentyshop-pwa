@@ -13,6 +13,12 @@ export default defineConfig({
   description: "Documentation for PlentyONE Onlineshop, built with VueJS, Nuxt 3 and Alokai.",
   cleanUrls: true,
   ignoreDeadLinks: true,
+  markdown: {
+    theme: {
+      light: 'github-light-high-contrast',
+      dark: 'github-dark-high-contrast'
+    }
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [

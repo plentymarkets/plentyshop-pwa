@@ -3,6 +3,7 @@
     --vp-c-bg: #F6F2ED;
     --vp-c-bg-alt: #CEC2B3;
     --vp-c-bg-soft: #E9DFD3;
+    --vp-code-block-bg: #fff; 
 
     --vp-c-text-1: #062633;
     --vp-c-text-2: #062633;
@@ -23,6 +24,7 @@
     --vp-c-bg: #062633;
     --vp-c-bg-alt: #31687D;
     --vp-c-bg-soft: #31687D;
+    --vp-code-block-bg: #000; 
 
     --vp-c-text-1: #ffffff;
     --vp-c-text-2: #ffffff;
