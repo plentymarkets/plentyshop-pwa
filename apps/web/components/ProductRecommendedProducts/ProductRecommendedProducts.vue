@@ -7,7 +7,6 @@ import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
-if (props.categoryId) {
-  fetchProductRecommended(props.categoryId);
-}
+
+fetchProductRecommended('49');
 </script>
