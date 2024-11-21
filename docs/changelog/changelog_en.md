@@ -4,7 +4,7 @@
 
 ### New
 
-- Added filter by rating on category page
+- Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
