@@ -33,10 +33,6 @@
           <ProductRecommendedProducts cache-key="homepage" :category-id="item.categoryId" />
         </section>
       </template>
-
-      <NuxtLazyHydrate when-visible>
-        <NewsletterSubscribe v-if="showNewsletter" />
-      </NuxtLazyHydrate>
     </div>
     <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <UiSkeletonLoader />
