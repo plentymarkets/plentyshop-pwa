@@ -61,7 +61,7 @@
 
     <div v-else class="mb-4">
       <SfListItem
-        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
+        v-for="(filter, index) in facetGetters.getFilters(facet)"
         :key="index"
         tag="label"
         size="sm"
