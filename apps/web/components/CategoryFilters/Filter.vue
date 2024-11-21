@@ -14,23 +14,34 @@
         class="mb-3"
         size="sm"
       >
-        <div class="flex items-center">
-          <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" class="mr-2" />
-          <SfRating :value="feedbackNumber(filter)" :max="5" />
+        <div class="flex items-center space-x-2">
+          <span class="pt-1 flex items-center">
+            <SfCheckbox
+              v-model="models[filter.id]"
+              :value="filter"
+              :id="filter.id"
+              @change="facetChange"
+              class="mr-2"
+            />
+          </span>
+          <span class="flex items-center pt-[2px]">
+            <SfRating :value="feedbackNumber(filter)" :max="5" />
+          </span>
           <span
             :class="[
-              'ml-2 min-w-[10px] text-center text-lg xs:text-base xs:mr-0',
+              'ml-2 pt-1 min-w-[10px] text-base text-center flex items-center justify-center',
               { 'font-medium': feedbackNumber(filter) === 5 },
             ]"
-            >{{ feedbackNumber(filter) }}
+          >
+            {{ feedbackNumber(filter) }}
           </span>
-          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base">
-            <SfIconArrowUpward size="xs"></SfIconArrowUpward>
+          <span v-if="feedbackNumber(filter) != 5" class="ml-1 pt-1 flex items-center">
+            <SfIconArrowUpward size="xs" />
           </span>
           <span>
-            <SfCounter size="xs" :class="['ml-1', { 'ml-3': feedbackNumber(filter) === 5 }]">{{
-              filter.count
-            }}</SfCounter>
+            <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
+              {{ filter.count }}
+            </SfCounter>
           </span>
         </div>
       </SfListItem>
