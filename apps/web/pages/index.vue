@@ -25,20 +25,21 @@
     </NuxtLazyHydrate>
 
     <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <NuxtLazyHydrate when-visible>
-        <template v-for="(item, index) in recommendedProductsCategories" :key="index">
-          <section class="mb-10 overflow-hidden">
-            <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
-              {{ item.headline }}
-            </p>
+      <template v-for="(item, index) in recommendedProductsCategories" :key="index">
+        <section class="mb-10 overflow-hidden">
+          <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
+            {{ item.headline }}
+          </p>
+          <client-only>
             <ProductRecommendedProducts
               cache-key="homepage"
               :category-id="item.categoryId"
               @data-fetched="onDataFetched"
             />
-          </section>
-        </template>
-      </NuxtLazyHydrate>
+          </client-only>
+        </section>
+      </template>
+
       <NuxtLazyHydrate when-visible>
         <NewsletterSubscribe v-if="showNewsletter" />
       </NuxtLazyHydrate>
@@ -72,7 +73,7 @@ onMounted(async () => {
 });
 
 function onDataFetched() {
-  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch #3');
+  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch test client');
   loadComponents.value = true;
 }
 </script>
