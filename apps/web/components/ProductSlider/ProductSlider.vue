@@ -47,5 +47,6 @@ const { addModernImageExtension } = useModernImage();
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 
-defineProps<ProductSliderProps>();
+const props = defineProps<ProductSliderProps>();
+console.log('ProductSlider', runtimeConfig, props);
 </script>

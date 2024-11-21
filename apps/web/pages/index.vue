@@ -54,6 +54,7 @@ const { showNewsletter } = useNewsletter();
 const loadComponents = ref(false);
 onMounted(async () => {
   await fetchPageTemplate();
+  console.log('after fetchPageTemplate', recommendedProductsCategories);
   loadComponents.value = true;
 });
 </script>
