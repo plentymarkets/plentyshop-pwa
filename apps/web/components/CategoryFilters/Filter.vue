@@ -20,7 +20,7 @@
           <span :class="['ml-2 text-lg xs:text-base xs:mr-0', { 'font-medium': feedbackNumber(filter) === 5 }]"
             >{{ feedbackNumber(filter) }}
           </span>
-          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base"> & up </span>
+          <span v-if="feedbackNumber(filter) != 5" class="ml-1 text-lg xs:text-base"> {{ $t('&up') }} </span>
           <SfCounter size="sm" :class="['ml-1', { 'ml-3': feedbackNumber(filter) === 5 }]">{{
             filter.count
           }}</SfCounter>

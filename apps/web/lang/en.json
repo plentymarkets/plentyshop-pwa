@@ -678,6 +678,7 @@
   },
   "max": "Max",
   "min": "Min",
+  "&up": " & up",
   "minimumOrderQuantity": "Minimum order quantity: {count}",
   "moreItemsOfThisCategory": "More items of this category",
   "myCart": "My Cart",
