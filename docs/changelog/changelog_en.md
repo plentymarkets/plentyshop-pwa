@@ -7,11 +7,13 @@
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
+- New Json Editor
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
 
 ### 👷 Changed
 
 - Order of attribute select and order properties on item page
+- Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
@@ -29,6 +31,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Cookiebar usability in landscape mode.
+- Order property tooltip was under input fields.
 - Load more accurate images sizes for product page.
 - Reload page after login so the customer class affects prices and categories
 - Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
@@ -42,6 +46,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Allow for multiple category products fetching on the same page.
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
+- Fixed an issue with the PayPal button not being displayed on the checkout.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
