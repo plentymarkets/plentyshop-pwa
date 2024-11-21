@@ -24,8 +24,8 @@
       </div>
     </NuxtLazyHydrate>
 
-    <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <NuxtLazyHydrate when-visible>
+    <NuxtLazyHydrate when-visible>
+      <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
         <template v-for="(item, index) in recommendedProductsCategories" :key="index">
           <section class="mb-10 overflow-hidden">
             <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
@@ -34,12 +34,12 @@
             <ProductRecommendedProducts cache-key="homepage" :category-id="item.categoryId" />
           </section>
         </template>
-      </NuxtLazyHydrate>
-      <NuxtLazyHydrate when-visible>
-        <NewsletterSubscribe v-if="showNewsletter" />
-      </NuxtLazyHydrate>
-    </div>
-    <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      </div>
+    </NuxtLazyHydrate>
+    <NuxtLazyHydrate when-visible>
+      <NewsletterSubscribe v-if="showNewsletter" />
+    </NuxtLazyHydrate>
+    <div v-if="!loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <UiSkeletonLoader />
     </div>
   </div>
