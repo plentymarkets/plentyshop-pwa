@@ -60,4 +60,10 @@ onMounted(async () => {
     console.error('Error fetching page template:', error);
   }
 });
+
+watch(recommendedProductsCategories, (value, dep) => {
+  if (value !== dep) {
+    loadComponents.value = true;
+  }
+});
 </script>
