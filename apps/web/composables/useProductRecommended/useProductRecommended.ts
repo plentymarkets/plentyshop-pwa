@@ -37,6 +37,7 @@ export const useProductRecommended: UseProductRecommendedReturn = () => {
 
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(payload));
     useHandleError(error.value);
+    console.log('data?.value?.data?.products:', data?.value?.data?.products);
     state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;
     return state.value.data;
