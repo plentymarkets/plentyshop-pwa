@@ -1,5 +1,5 @@
 import type { UseReadCookieBarState, UseReadCookieBarReturn } from './types';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig, JsonCookie } from '~/configuration/cookie.config';
 import type { ChangeVisibilityState, SetAllCookiesState, SetConsent, InitializeCookies } from './types';
 import cookieScripts from '~/cookie-scripts.config';
 
@@ -75,11 +75,11 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   const initializeCookies: InitializeCookies = () => {
     const cookies = JSON.parse(JSON.stringify(initialCookies));
 
-    const browserCookies = useCookie('consent-cookie');
+    const browserCookies = useCookie('consent-cookie') as Ref<JsonCookie | null | undefined>;
 
     cookies.groups.slice(1).forEach((group: CookieGroup) => {
       group.cookies.forEach((cookie: Cookie) => {
-        cookie.accepted = !!browserCookies.value?.[group.name as any]?.[cookie.name as any] || false;
+        cookie.accepted = !!browserCookies.value?.[group.name]?.[cookie.name] || false;
 
         const { consent } = useCookieConsent(cookie.name);
         consent.value = cookie.accepted || false;
@@ -108,17 +108,17 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   const setConsent: SetConsent = () => {
     const { getMinimumLifeSpan } = cookieBarHelper();
     const router = useRouter();
-    const browserCookies = useCookie('consent-cookie');
+    const browserCookies = useCookie('consent-cookie') as Ref<JsonCookie | null | undefined>;
 
     let cookieRevoke = false;
 
-    const jsonCookie = state.value.data.groups.reduce((accumulator: any, group: CookieGroup) => {
-      accumulator[group.name] = group.cookies.reduce((childAccumulator: any, cookie: Cookie) => {
-        const currentStatus = !!browserCookies.value?.[group.name as any]?.[cookie.name as any] || false;
+    const jsonCookie = state.value.data.groups.reduce((accumulator: JsonCookie, group: CookieGroup) => {
+      accumulator[group.name] = group.cookies.reduce((childAccumulator: { [key: string]: boolean }, cookie: Cookie) => {
+        const currentStatus = !!browserCookies.value?.[group.name]?.[cookie.name] || false;
         const { consent } = useCookieConsent(cookie.name);
 
-        childAccumulator[cookie.name] = cookie.accepted;
-        consent.value = cookie.accepted || false;
+        childAccumulator[cookie.name] = consent.value = cookie.accepted || false;
+        // consent.value = cookie.accepted || false;
 
         if (currentStatus && !consent.value) {
           cookieRevoke = true;
@@ -135,7 +135,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
       maxAge: getMinimumLifeSpan(state.value.data.groups),
     });
 
-    consentCookie.value = jsonCookie;
+    consentCookie.value = JSON.stringify(jsonCookie);
     changeVisibilityState();
     loadThirdPartyScripts();
 

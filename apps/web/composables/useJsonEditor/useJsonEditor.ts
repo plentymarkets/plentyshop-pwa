@@ -18,7 +18,7 @@ export const useJsonEditor = (initialJson: string) => {
   const updateLineCount = () => {
     if (textarea.value) {
       const lineBreaks = (jsonText.value.match(/\n/g) || []).length;
-      lineCount.value = Array.from({ length: lineBreaks + 1 }, (_, i) => i + 1);
+      lineCount.value = Array.from({ length: lineBreaks + 1 }, (_, index) => index + 1);
     }
   };
 
