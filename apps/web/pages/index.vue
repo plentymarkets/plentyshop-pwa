@@ -52,9 +52,19 @@ definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
+const triggerReRender = ref(false);
+
 onMounted(async () => {
   await fetchPageTemplate();
   loadComponents.value = true;
-  console.log("Test from branch");
+  console.log('Test from branch');
+
+  // Hacky
+  setTimeout(() => {
+    triggerReRender.value = true;
+    recommendedProductsCategories.value.forEach((category) => {
+      useProductRecommended(category.categoryId);
+    });
+  }, 1000);
 });
 </script>
