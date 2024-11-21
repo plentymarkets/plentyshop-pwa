@@ -1,5 +1,5 @@
 <template>
-  <ProductSlider v-if="showSlider" :items="products" />
+  <ProductSlider v-if="showProductSlider" :items="products" />
 </template>
 
 <script setup lang="ts">
@@ -7,14 +7,12 @@ import { ref, watch } from 'vue';
 import type { RecommendedProductsProps } from '~/components/RecommendedProducts/types';
 
 const props = defineProps<RecommendedProductsProps>();
-const showSlider = ref(false);
+const showProductSlider = ref(false);
 
 watch(
   () => props.products,
-  (updatedProducts) => {
-    if (updatedProducts?.length) {
-      showSlider.value = true;
-    }
+  (updatedProduct) => {
+    showProductSlider.value = updatedProduct?.length ? true : false;
   },
   { immediate: true },
 );
