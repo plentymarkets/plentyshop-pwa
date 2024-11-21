@@ -8,6 +8,6 @@ import type { ProductRecommendedProductsProps } from './types';
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended();
 
-fetchProductRecommended('49');
+await fetchProductRecommended('49');
 console.log('here:', recommendedProducts.value);
 </script>
