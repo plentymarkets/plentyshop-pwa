@@ -25,6 +25,10 @@
     </NuxtLazyHydrate>
 
     <ProductRecommendedProducts cache-key="homepage" :category-id="'49'" />
+
+    <NuxtLazyHydrate when-visible>
+      <NewsletterSubscribe v-if="showNewsletter" />
+    </NuxtLazyHydrate>
   </div>
 </template>
 
@@ -32,6 +36,7 @@
 const { isEditing } = useEditor();
 const { hero, mediaCard, fetchPageTemplate } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
+const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
 onMounted(async () => {

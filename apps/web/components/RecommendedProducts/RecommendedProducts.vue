@@ -1,5 +1,5 @@
 <template>
-  <!--  <ProductSlider v-if="products?.length" :items="products" />-->
+  <ProductSlider v-if="products?.length" :items="products" />
 </template>
 
 <script setup lang="ts">
