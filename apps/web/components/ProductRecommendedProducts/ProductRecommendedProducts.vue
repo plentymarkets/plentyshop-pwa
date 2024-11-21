@@ -9,16 +9,9 @@ const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 const loadComponent = ref(false);
 console.log('my cristian test 1', props, recommendedProducts, loadComponent.value);
-if (props.categoryId) {
-  const response = await fetchProductRecommended(props.categoryId);
+onMounted(async () => {
+  await fetchProductRecommended(props.categoryId);
   loadComponent.value = true;
-  console.log(
-    'my cristian test 2',
-    props,
-    recommendedProducts,
-    loadComponent.value,
-    response,
-    props.categoryId + props.cacheKey,
-  );
-}
+  console.log('my cristian test 2', props, recommendedProducts, loadComponent.value);
+});
 </script>
