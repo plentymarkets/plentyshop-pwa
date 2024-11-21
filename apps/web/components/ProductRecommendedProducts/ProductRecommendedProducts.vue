@@ -9,5 +9,5 @@ const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended();
 
 fetchProductRecommended('49');
-console.log('here:', recommendedProducts);
+console.log('here:', recommendedProducts.value);
 </script>
