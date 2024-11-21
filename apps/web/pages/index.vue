@@ -46,14 +46,18 @@
     </div>
   </div>
 </template>
-x
-<script lang="ts" setup async>
+
+<script lang="ts" setup>
+import { useNewsletter } from '~/composables/useNewsletter';
+
 const { isEditing } = useEditor();
 const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
-definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
+
+definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
+
 onMounted(async () => {
   try {
     console.log('Fetching page template...');
@@ -65,14 +69,8 @@ onMounted(async () => {
   }
 });
 
-const onDataFetched = () => {
-  console.log('Data fetched from ProductRecommendedProducts');
+function onDataFetched() {
+  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch #1');
   loadComponents.value = true;
-};
-// watch(recommendedProductsCategories, (newVal, oldVal) => {
-//   console.log('recommendedProductsCategories changed:', newVal);
-//   if (newVal !== oldVal) {
-//     loadComponents.value = true;
-//   }
-// });
+}
 </script>
