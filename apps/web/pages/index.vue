@@ -46,9 +46,7 @@
 
 <script lang="ts" setup async>
 const { isEditing } = useEditor();
-const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories, loading } = useHomepage();
+const { hero, mediaCard, recommendedProductsCategories, loading } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
-
-await fetchPageTemplate();
 </script>
