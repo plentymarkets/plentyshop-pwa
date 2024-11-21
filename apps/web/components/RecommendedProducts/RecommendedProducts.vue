@@ -14,6 +14,6 @@ watch(
   (updatedProduct) => {
     showProductSlider.value = updatedProduct?.length ? true : false;
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 );
 </script>
