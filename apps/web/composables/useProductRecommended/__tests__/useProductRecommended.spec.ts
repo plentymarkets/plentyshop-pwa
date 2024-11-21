@@ -3,7 +3,7 @@ import { useProductRecommended } from '~/composables/useProductRecommended/usePr
 describe('useProductRecommended', () => {
   it('should return product recommended', async () => {
     const slug = 'athletic-mens-walking-sneakers';
-    const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(slug);
+    const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended();
 
     await fetchProductRecommended(slug);
 
