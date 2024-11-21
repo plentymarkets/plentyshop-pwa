@@ -12,6 +12,7 @@
 
 ### 👷 Changed
 
+- Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
