@@ -36,7 +36,7 @@
             {{ feedbackNumber(filter) }}
           </span>
           <span v-if="feedbackNumber(filter) != 5" class="ml-1 pt-1 flex items-center">
-            <SfIconArrowUpward size="xs" />
+            <SfIconArrowUpward size="sm" />
           </span>
           <span>
             <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
