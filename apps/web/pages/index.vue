@@ -35,13 +35,13 @@
           </section>
         </template>
       </div>
+      <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+        <UiSkeletonLoader />
+      </div>
     </NuxtLazyHydrate>
     <NuxtLazyHydrate when-visible>
       <NewsletterSubscribe v-if="showNewsletter" />
     </NuxtLazyHydrate>
-    <div v-if="!loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <UiSkeletonLoader />
-    </div>
   </div>
 </template>
 
