@@ -7,13 +7,7 @@
       </div>
     </template>
     <div v-if="facetGetters.getType(facet) === 'feedback'">
-      <SfListItem
-        v-for="(filter, index) in sortedReviews(facet)"
-        :key="index"
-        tag="label"
-        class="mb-3"
-        size="sm"
-      >
+      <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
         <div class="flex items-center space-x-2">
           <span class="pt-1 flex items-center">
             <SfCheckbox
