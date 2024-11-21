@@ -55,5 +55,6 @@ const loadComponents = ref(false);
 onMounted(async () => {
   await fetchPageTemplate();
   loadComponents.value = true;
+  console.log("Test from branch");
 });
 </script>
