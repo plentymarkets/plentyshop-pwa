@@ -44,7 +44,6 @@
 const { isEditing } = useEditor();
 const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
-const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
 onMounted(async () => {
