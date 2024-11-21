@@ -43,7 +43,7 @@
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <Coupon />
           <OrderSummary v-if="cart" :cart="cart" class="mt-4">
-            <client-only v-if="selectedPaymentId === paypalPaymentId">
+            <div v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableBuyButton"
                 @validation-callback="handleReadyToBuy"
@@ -54,7 +54,7 @@
                 :amount="cartGetters.getTotal(cartGetters.getTotals(cart))"
                 :commit="true"
               />
-            </client-only>
+            </div>
             <PayPalCreditCardBuyButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
               @click="openPayPalCardDialog"
