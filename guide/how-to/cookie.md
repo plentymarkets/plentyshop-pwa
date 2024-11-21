@@ -95,7 +95,7 @@ This composable uses the cookie name that you defined in the `cookie.config.ts` 
 </template>
 
 <script setup lang="ts">
-const { cookie: PayPalCookie } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
+const { consent: PayPalCookie } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 
 watch(PayPalCookie, () => {
   reloadScript();
