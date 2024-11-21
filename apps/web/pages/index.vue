@@ -1,7 +1,7 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <div v-if="!loading" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+    <div v-if="!test" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <UiHeroCarousel :hero-item-props="hero" />
     </div>
     <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
@@ -51,4 +51,10 @@ definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 const { showNewsletter } = useNewsletter();
 
 await fetchPageTemplate();
+
+const test = ref(true);
+
+onMounted(() => {
+  test.value = false;
+});
 </script>
