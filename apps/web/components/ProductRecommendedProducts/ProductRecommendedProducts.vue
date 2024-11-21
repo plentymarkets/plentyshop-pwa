@@ -2,7 +2,7 @@
   <RecommendedProducts v-if="loadComponent" :products="recommendedProducts"></RecommendedProducts>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" async>
 import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
