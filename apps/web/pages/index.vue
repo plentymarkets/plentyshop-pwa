@@ -25,16 +25,18 @@
     </NuxtLazyHydrate>
 
     <div v-if="loadComponents" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <NuxtLazyHydrate when-visible>
-        <template v-for="(item, index) in recommendedProductsCategories" :key="index">
-          <section class="mb-10 overflow-hidden">
-            <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
-              {{ item.headline }}
-            </p>
-            <ProductRecommendedProducts cache-key="homepage" :category-id="item.categoryId" />
-          </section>
-        </template>
-      </NuxtLazyHydrate>
+      <template v-for="(item, index) in recommendedProductsCategories" :key="index">
+        <section class="mb-10 overflow-hidden">
+          <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
+            {{ item.headline }}
+          </p>
+          <ProductRecommendedProducts
+            cache-key="homepage"
+            :category-id="item.categoryId"
+            @data-fetched="onDataFetched"
+          />
+        </section>
+      </template>
       <NuxtLazyHydrate when-visible>
         <NewsletterSubscribe v-if="showNewsletter" />
       </NuxtLazyHydrate>
@@ -44,7 +46,7 @@
     </div>
   </div>
 </template>
-
+x
 <script lang="ts" setup async>
 const { isEditing } = useEditor();
 const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = useHomepage();
@@ -54,16 +56,23 @@ const { showNewsletter } = useNewsletter();
 const loadComponents = ref(false);
 onMounted(async () => {
   try {
+    console.log('Fetching page template...');
     await fetchPageTemplate();
+    console.log('Page template fetched:', recommendedProductsCategories.value);
     loadComponents.value = true;
   } catch (error) {
     console.error('Error fetching page template:', error);
   }
 });
 
-watch(recommendedProductsCategories, (value, dep) => {
-  if (value !== dep) {
-    loadComponents.value = true;
-  }
-});
+const onDataFetched = () => {
+  console.log('Data fetched from ProductRecommendedProducts');
+  loadComponents.value = true;
+};
+// watch(recommendedProductsCategories, (newVal, oldVal) => {
+//   console.log('recommendedProductsCategories changed:', newVal);
+//   if (newVal !== oldVal) {
+//     loadComponents.value = true;
+//   }
+// });
 </script>

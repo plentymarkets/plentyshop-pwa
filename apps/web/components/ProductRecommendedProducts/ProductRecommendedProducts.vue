@@ -6,8 +6,12 @@
 import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
+const emit = defineEmits(['data-fetched']);
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
-if (props.categoryId) {
-  fetchProductRecommended(props.categoryId);
-}
+onMounted(async () => {
+  if (props.categoryId) {
+    await fetchProductRecommended(props.categoryId);
+    emit('data-fetched');
+  }
+});
 </script>
