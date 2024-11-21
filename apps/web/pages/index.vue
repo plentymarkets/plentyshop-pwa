@@ -53,7 +53,11 @@ const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
 onMounted(async () => {
-  await fetchPageTemplate();
-  loadComponents.value = true;
+  try {
+    await fetchPageTemplate();
+    loadComponents.value = true;
+  } catch (error) {
+    console.error('Error fetching page template:', error);
+  }
 });
 </script>
