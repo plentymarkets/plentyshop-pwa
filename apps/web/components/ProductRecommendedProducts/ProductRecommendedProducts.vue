@@ -9,4 +9,5 @@ const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 
 fetchProductRecommended('49');
+console.log('here:', recommendedProducts);
 </script>
