@@ -31,7 +31,11 @@
             <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
               {{ item.headline }}
             </p>
-            <ProductRecommendedProducts cache-key="homepage" :category-id="item.categoryId" />
+            <ProductRecommendedProducts
+              cache-key="homepage"
+              :category-id="item.categoryId"
+              @data-fetched="onDataFetched"
+            />
           </section>
         </template>
       </NuxtLazyHydrate>
@@ -68,7 +72,7 @@ onMounted(async () => {
 });
 
 function onDataFetched() {
-  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch #2');
+  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch #3');
   loadComponents.value = true;
 }
 </script>
