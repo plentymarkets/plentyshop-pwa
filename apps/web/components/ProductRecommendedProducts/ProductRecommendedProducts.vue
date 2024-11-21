@@ -1,5 +1,5 @@
 <template>
-  <div v-if="recommendedProducts.length > 0">
+  <div v-if="recommendedProducts">
     <RecommendedProducts :products="recommendedProducts" />
   </div>
   <UiSkeletonLoader v-else />
