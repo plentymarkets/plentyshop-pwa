@@ -4,6 +4,7 @@
 
 ### New
 
+- Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
@@ -12,6 +13,7 @@
 
 ### 👷 Changed
 
+- Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
@@ -31,6 +33,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
 - Load more accurate images sizes for product page.
 - Reload page after login so the customer class affects prices and categories
