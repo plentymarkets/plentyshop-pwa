@@ -1,5 +1,6 @@
 <template>
   <RecommendedProducts :products="recommendedProducts"></RecommendedProducts>
+  ?
 </template>
 
 <script setup lang="ts">
