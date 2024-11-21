@@ -8,7 +8,7 @@
     </template>
     <div v-if="facetGetters.getType(facet) === 'feedback'">
       <SfListItem
-        v-for="(filter, index) in sortedReviews(facet) as Filter[]"
+        v-for="(filter, index) in sortedReviews(facet)"
         :key="index"
         tag="label"
         class="mb-3"
