@@ -6,8 +6,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useProductRecommended } from '~/composables/useProductRecommended';
 import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
@@ -18,6 +16,12 @@ const loadProducts = ref(false);
 onMounted(async () => {
   if (props.categoryId) {
     await fetchProductRecommended(props.categoryId);
+    loadProducts.value = true;
+  }
+});
+
+watch(recommendedProducts, (updatdProducts) => {
+  if (updatdProducts.length > 0) {
     loadProducts.value = true;
   }
 });
