@@ -117,8 +117,8 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
         const currentStatus = !!browserCookies.value?.[group.name]?.[cookie.name] || false;
         const { consent } = useCookieConsent(cookie.name);
 
-        childAccumulator[cookie.name] = consent.value = cookie.accepted || false;
-        // consent.value = cookie.accepted || false;
+        childAccumulator[cookie.name] = cookie.accepted || false;
+        consent.value = cookie.accepted || false;
 
         if (currentStatus && !consent.value) {
           cookieRevoke = true;
