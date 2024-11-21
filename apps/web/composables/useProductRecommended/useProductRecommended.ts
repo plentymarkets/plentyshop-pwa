@@ -13,8 +13,8 @@ import type {
  * const { data, loading, fetchProductRecommended } = useProductRecommended('1');
  * ```
  */
-export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
-  const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
+export const useProductRecommended: UseProductRecommendedReturn = () => {
+  const state = useState<UseProductRecommendedState>(`useProductRecommended`, () => ({
     data: [],
     loading: false,
   }));

@@ -13,4 +13,4 @@ export interface useProductRecommended {
   fetchProductRecommended: FetchProductRecommended;
 }
 
-export type UseProductRecommendedReturn = (categoryId: string) => useProductRecommended;
+export type UseProductRecommendedReturn = () => useProductRecommended;

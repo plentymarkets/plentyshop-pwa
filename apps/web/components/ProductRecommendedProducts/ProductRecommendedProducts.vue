@@ -6,7 +6,7 @@
 import type { ProductRecommendedProductsProps } from './types';
 
 const props = defineProps<ProductRecommendedProductsProps>();
-const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
+const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended();
 
 fetchProductRecommended('49');
 console.log('here:', recommendedProducts);
