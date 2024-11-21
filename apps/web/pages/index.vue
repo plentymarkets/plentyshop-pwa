@@ -30,16 +30,13 @@
           <p data-testid="recommended-products" class="mb-4 typography-text-lg text-center md:text-left">
             {{ item.headline }}
           </p>
-          <client-only>
-            <ProductRecommendedProducts
-              cache-key="homepage"
-              :category-id="item.categoryId"
-              @data-fetched="onDataFetched"
-            />
-          </client-only>
+          <ProductRecommendedProducts
+            cache-key="homepage"
+            :category-id="item.categoryId"
+            @data-fetched="onDataFetched"
+          />
         </section>
       </template>
-
       <NuxtLazyHydrate when-visible>
         <NewsletterSubscribe v-if="showNewsletter" />
       </NuxtLazyHydrate>
@@ -58,6 +55,7 @@ const { hero, mediaCard, fetchPageTemplate, recommendedProductsCategories } = us
 const { showNewsletter } = useNewsletter();
 
 const loadComponents = ref(false);
+const dataFetchedPromises = ref<Promise<void>[]>([]);
 
 definePageMeta({ pageType: 'static', middleware: ['newsletter-confirmation'] });
 
@@ -66,6 +64,9 @@ onMounted(async () => {
     console.log('Fetching page template...');
     await fetchPageTemplate();
     console.log('Page template fetched:', recommendedProductsCategories.value);
+
+    // Wait for all data fetching promises to resolve
+    await Promise.all(dataFetchedPromises.value);
     loadComponents.value = true;
   } catch (error) {
     console.error('Error fetching page template:', error);
@@ -73,7 +74,7 @@ onMounted(async () => {
 });
 
 function onDataFetched() {
-  console.log('Data fetched from ProductRecommendedProducts FROM debbug branch test client');
-  loadComponents.value = true;
+  console.log('Data fetched from ProductRecommendedProducts');
+  dataFetchedPromises.value.push(Promise.resolve());
 }
 </script>
