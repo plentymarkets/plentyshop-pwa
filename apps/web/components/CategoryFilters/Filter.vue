@@ -15,7 +15,6 @@
               :value="filter"
               :id="filter.id"
               @change="facetChange"
-              class="mr-2"
             />
           </span>
           <span class="flex items-center pt-[2px]">
