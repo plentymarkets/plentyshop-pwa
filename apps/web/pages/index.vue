@@ -1,7 +1,7 @@
 <template>
   <Editor v-if="isEditing" />
   <div v-else class="content">
-    <div v-if="!loading" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 h-[567px]">
+    <div v-if="!loading" class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
       <UiHeroCarousel :hero-item-props="homepage.hero" />
     </div>
     <div v-else class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">

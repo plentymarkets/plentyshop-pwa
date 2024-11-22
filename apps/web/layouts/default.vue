@@ -1,8 +1,8 @@
 <template>
-  <client-only>
-    <UiToolbar v-show="isPreview" />
-  </client-only>
   <div>
+    <client-only>
+      <UiToolbar v-show="isPreview" />
+    </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
