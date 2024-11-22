@@ -10,12 +10,7 @@
       <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
         <div class="flex items-center space-x-2">
           <span class="pt-1 flex items-center">
-            <SfCheckbox
-              v-model="models[filter.id]"
-              :value="filter"
-              :id="filter.id"
-              @change="facetChange"
-            />
+            <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" />
           </span>
           <span class="flex items-center pt-[2px]">
             <SfRating :value="feedbackNumber(filter)" :max="5" />
