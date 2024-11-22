@@ -5,7 +5,5 @@
 <script setup lang="ts">
 import type { RecommendedProductsProps } from '~/components/RecommendedProducts/types';
 
-const props = defineProps<RecommendedProductsProps>();
-
-console.log('recommended:', props.products);
+defineProps<RecommendedProductsProps>();
 </script>

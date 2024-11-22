@@ -1,4 +1,7 @@
 <template>
+  <client-only>
+    <UiToolbar v-show="isPreview" />
+  </client-only>
   <div>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">

@@ -13,8 +13,8 @@ import type {
  * const { data, loading, fetchProductRecommended } = useProductRecommended('1');
  * ```
  */
-export const useProductRecommended: UseProductRecommendedReturn = () => {
-  const state = useState<UseProductRecommendedState>(`useProductRecommended`, () => ({
+export const useProductRecommended: UseProductRecommendedReturn = (categoryId: string) => {
+  const state = useState<UseProductRecommendedState>(`useProductRecommended-${categoryId}`, () => ({
     data: [],
     loading: false,
   }));
@@ -35,12 +35,8 @@ export const useProductRecommended: UseProductRecommendedReturn = () => {
       sort: 'sorting.price.avg_asc',
     };
 
-    const { data, error } = await useAsyncData('useProductRecommended-' + categoryId, () =>
-      useSdk().plentysystems.getFacet(payload),
-    );
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.getFacet(payload));
     useHandleError(error.value);
-    console.log('data', data);
-    console.log('data?.value?.data?.products:', data?.value?.data?.products);
     state.value.data = data?.value?.data?.products ?? state.value.data;
     state.value.loading = false;
     return state.value.data;
