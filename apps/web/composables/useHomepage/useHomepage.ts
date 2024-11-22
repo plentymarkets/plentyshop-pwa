@@ -64,8 +64,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
       const { fetchHomepageTemplate } = useFetchHome();
       homepageTemplateData.value = await fetchHomepageTemplate(homepageCategoryId);
     } else {
-      // Simulate loading time to render the page skeleton for lower CLS
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       homepageTemplateData.value = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
