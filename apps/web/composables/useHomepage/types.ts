@@ -13,7 +13,7 @@ export interface HomeData {
 }
 
 export interface UseHomepageDataState {
-  data: HomeData[];
+  data: HomeData;
   loading: boolean;
   showErrors: boolean;
 }
@@ -22,11 +22,11 @@ export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
-  fetchPageTemplate: () => Promise<void>;
+  fetchPageTemplate: () => void;
   hero: Readonly<Ref<HeroContentProps[]>>;
   mediaCard: Readonly<Ref<MediaItemProps[]>>;
   recommendedProductsCategories: Readonly<Ref<Featured[]>>;
-  setFormattedHeroItems: (items: HomeData[]) => void;
+  setFormattedHeroItems: (items: HomeData) => void;
 }
 
 export type UseHomepageDataReturn = () => UseHomepage;
