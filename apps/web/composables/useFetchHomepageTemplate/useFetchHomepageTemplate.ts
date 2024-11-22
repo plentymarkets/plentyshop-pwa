@@ -1,8 +1,7 @@
-export const fetchHomepageTemplate = async (homepageCategoryId: number): Promise<unknown> => {
+export const fetchHomepageTemplate = (): unknown => {
   const homepageTemplateData = ref({});
-  const { fetchCategoryTemplate } = useCategoryTemplate();
-  const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data || '{}');
+  const { data } = useCategoryTemplate();
+  const parsedData = JSON.parse(data?.value?.data || '{}');
 
   homepageTemplateData.value = {
     hero: parsedData.hero || [],

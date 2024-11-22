@@ -57,15 +57,14 @@ export const useHomepage: UseHomepageDataReturn = () => {
       categoryId: category.categoryId,
     }));
 
-  const fetchPageTemplate = async (): Promise<void> => {
+  const fetchPageTemplate = (): void => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
       const { fetchHomepageTemplate } = useFetchHome();
-      homepageTemplateData.value = await fetchHomepageTemplate(homepageCategoryId);
+
+      homepageTemplateData.value = fetchHomepageTemplate();
     } else {
-      // Simulate loading time to render the page skeleton for lower CLS
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       homepageTemplateData.value = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
