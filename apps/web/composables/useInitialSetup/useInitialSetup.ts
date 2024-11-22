@@ -43,7 +43,7 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
-  const { fetchPageTemplate } = useHomepage();
+  const { fetchPageTemplateRemote } = useHomepage();
 
   cartLoading.value = true;
 
@@ -54,7 +54,12 @@ const setInitialDataSSR: SetInitialData = async () => {
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
       setWishlistItemIds(data.value.data.session?.basket?.itemWishListIds || []);
-      fetchPageTemplate();
+
+      const runtimeConfig = useRuntimeConfig();
+      const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+      if (typeof homepageCategoryId === 'number') {
+        await fetchPageTemplateRemote(homepageCategoryId);
+      }
     }
   } catch (error) {
     useHandleError(error as ApiError);

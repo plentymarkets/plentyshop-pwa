@@ -22,7 +22,8 @@ export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
-  fetchPageTemplate: () => Promise<void>;
+  fetchPageTemplateLocal: () => Promise<void>;
+  fetchPageTemplateRemote: (categoryId: number) => Promise<void>;
   hero: Readonly<Ref<HeroContentProps[]>>;
   mediaCard: Readonly<Ref<MediaItemProps[]>>;
   recommendedProductsCategories: Readonly<Ref<Featured[]>>;
