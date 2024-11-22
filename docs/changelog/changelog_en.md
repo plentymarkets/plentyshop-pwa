@@ -48,6 +48,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
+- Added SSR rendering for homepage.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
