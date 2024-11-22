@@ -10,7 +10,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: {} as HomeData[],
+    data: {} as HomeData,
     loading: false,
     showErrors: false,
   }));
@@ -19,14 +19,18 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const runtimeConfig = useRuntimeConfig();
 
   const currentLocale = ref($i18n.locale.value);
-  const homepageTemplateData = ref(useLocaleSpecificHomepageTemplate(currentLocale.value));
+  const homepageTemplateData = ref<HomeData>({
+    hero: [],
+    mediaCard: [],
+    featured: [],
+  });
 
   const hero = ref<HeroContentProps[]>([]);
   const mediaCard = ref<MediaItemProps[]>([]);
   const recommendedProductsCategories = ref<Featured[]>([]);
 
   const formatHeroItems = () =>
-    homepageTemplateData.value.hero.map((item) => ({
+    homepageTemplateData.value.hero.map((item: HeroContentProps) => ({
       image: item.image,
       tagline: item.tagline || '',
       taglineColor: item.taglineColor || '',
@@ -40,7 +44,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     }));
 
   const formatMediaData = () =>
-    homepageTemplateData.value.mediaCard.map((media) => ({
+    homepageTemplateData.value.mediaCard.map((media: MediaItemProps) => ({
       text: media.text,
       image: media.image,
       alignment: media.alignment,
@@ -48,86 +52,46 @@ export const useHomepage: UseHomepageDataReturn = () => {
     }));
 
   const formatRecommendedProductsCategories = () =>
-    homepageTemplateData.value.featured.map((category) => ({
+    homepageTemplateData.value.featured.map((category: Featured) => ({
       headline: category.headline,
       categoryId: category.categoryId,
     }));
 
-  const fetchPageTemplateLocal = async (): Promise<void> => {
+  const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
-    homepageTemplateData.value = useLocaleSpecificHomepageTemplate(currentLocale.value);
+    const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+    if (typeof homepageCategoryId === 'number') {
+      const { fetchHomepageTemplate } = useFetchHome();
+      homepageTemplateData.value = await fetchHomepageTemplate(homepageCategoryId);
+    } else {
+      // Simulate loading time to render the page skeleton for lower CLS
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      homepageTemplateData.value = useLocaleSpecificHomepageTemplate(currentLocale.value);
+    }
 
-    const mediaData = formatMediaData();
-    const formattedHeroItems = formatHeroItems();
-    const recommendedProductsCategoriesData = formatRecommendedProductsCategories();
-
-    const homeData: HomeData = {
-      hero: formattedHeroItems,
-      mediaCard: mediaData,
-      featured: recommendedProductsCategoriesData,
+    state.value.data = {
+      hero: formatHeroItems(),
+      mediaCard: formatMediaData(),
+      featured: formatRecommendedProductsCategories(),
     };
 
-    state.value.data = [homeData];
     state.value.loading = false;
-
-    if (state.value.data.length > 0) {
-      const firstItem = state.value.data[0];
-      hero.value = firstItem.hero;
-      mediaCard.value = firstItem.mediaCard;
-      recommendedProductsCategories.value = firstItem.featured;
-    }
   };
 
-  const fetchPageTemplateRemote = async (homepageCategoryId: number): Promise<void> => {
-    state.value.loading = true;
-    const { fetchHomepageTemplate } = useFetchHome();
-    homepageTemplateData.value = await fetchHomepageTemplate(homepageCategoryId);
-
-    const mediaData = formatMediaData();
-    const formattedHeroItems = formatHeroItems();
-    const recommendedProductsCategoriesData = formatRecommendedProductsCategories();
-
-    const homeData: HomeData = {
-      hero: formattedHeroItems,
-      mediaCard: mediaData,
-      featured: recommendedProductsCategoriesData,
-    };
-
-    state.value.data = [homeData];
-    state.value.loading = false;
-
-    if (state.value.data.length > 0) {
-      const firstItem = state.value.data[0];
-      hero.value = firstItem.hero;
-      mediaCard.value = firstItem.mediaCard;
-      recommendedProductsCategories.value = firstItem.featured;
-    }
-  };
-
-  const setFormattedHeroItems = (item: HomeData[]) => {
+  const setFormattedHeroItems = (item: HomeData) => {
     state.value.data = item;
   };
 
   watch(
     () => state.value.data,
     (updatedData) => {
-      if (updatedData.length > 0) {
-        const firstItem = updatedData[0];
-        hero.value = firstItem.hero;
-        mediaCard.value = firstItem.mediaCard;
-        recommendedProductsCategories.value = firstItem.featured;
-      } else {
-        hero.value = [];
-        mediaCard.value = [];
-        recommendedProductsCategories.value = [];
-      }
+      state.value.data = updatedData;
     },
     { deep: true },
   );
 
   return {
-    fetchPageTemplateLocal,
-    fetchPageTemplateRemote,
+    fetchPageTemplate,
     ...toRefs(state.value),
     setFormattedHeroItems,
     hero,
