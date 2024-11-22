@@ -21,6 +21,12 @@ export interface CookieGroupFromNuxtConfig {
   barDescription: string;
 }
 
+export type JsonCookie = {
+  [groupName: string]: {
+    [cookieName: string]: boolean;
+  };
+};
+
 export default {
   barTitle: 'CookieBar.about.label',
   barDescription: 'CookieBar.about.description',

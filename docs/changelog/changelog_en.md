@@ -20,6 +20,7 @@
 - The default data for the homepage is now available for both English and German.
 - PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 - PayPal shows a message if the cookie is not accepted.
+- We only reload the page after a cookie gets revoked.
 
 #### GitHub Action: Upload
 
@@ -48,6 +49,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
+- Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
