@@ -36,7 +36,11 @@ export const useJsonEditor = (initialJson: string) => {
   const handleInput = () => {
     try {
       if (jsonText.value.trim() === '') {
-        const noData: [] = [];
+        const noData = {
+          hero: [],
+          mediaCard: [],
+          featured: [],
+        };
         setFormattedHeroItems(noData);
         updateLineCount();
         return;
@@ -78,7 +82,11 @@ export const useJsonEditor = (initialJson: string) => {
   const clearText = () => {
     jsonText.value = '';
     errorMessage.value = '';
-    setFormattedHeroItems([]);
+    setFormattedHeroItems({
+      hero: [],
+      mediaCard: [],
+      featured: [],
+    });
     updateLineCount();
   };
 

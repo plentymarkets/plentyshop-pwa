@@ -1,7 +1,6 @@
-const fetchHomepageTemplate = async (homepageCategoryId: number) => {
-  const { fetchCategoryTemplate } = useCategoryTemplate();
-  const { data } = await fetchCategoryTemplate(homepageCategoryId);
-  const parsedData = JSON.parse(data || '{}');
+const fetchHomepageTemplate = () => {
+  const { data } = useCategoryTemplate();
+  const parsedData = JSON.parse(data?.value?.data || '{}');
 
   return {
     hero: parsedData.hero || [],
