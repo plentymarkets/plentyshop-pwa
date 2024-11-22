@@ -1,6 +1,6 @@
 # Custom icons
 
-Customising icons in your PlentyONE Onlineshop can give your store a unique look and feel. 
+Customising icons in your PlentyONE Shop can give your store a unique look and feel. 
 This guide will walk you through the process of adding or replacing icons in your PWA.
 For further information, you can also refer to the [Storefront UI Documentation](https://docs.storefrontui.io/v2/vue/components/iconbase#custom-icon).
 

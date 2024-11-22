@@ -10,7 +10,7 @@ To run this project, you need a plentysystems system. Get a free 30-day trial [o
 
 > :bulb: New systems ship with the required plugins pre-installed. If you use a new system, skip to the next step.
 
-For PlentyONE Onlineshop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
+For PlentyONE Shop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
 
 1. Log into your plentysystems system.
 2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:

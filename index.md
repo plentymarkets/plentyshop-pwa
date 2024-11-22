@@ -3,11 +3,11 @@
 layout: home
 
 hero:
-  name: "PlentyONE Onlineshop"
+  name: "PlentyONE Shop"
   text: "Documentation"
   image:
     src: /logo.png
-    alt: PlentyONE Onlineshop
+    alt: PlentyONE Shop
   actions:
     - theme: brand
       text: Get started
