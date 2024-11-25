@@ -34,6 +34,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- When visiting an item page with no price being logged with b2b account returns in 404.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
