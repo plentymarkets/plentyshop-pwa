@@ -773,7 +773,8 @@
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
     "unbrandedPay": "Pay",
-    "cookieNotAccepted": "Please accept our cookies to use PayPal: "
+    "cookieNotAccepted": "Please accept our cookies to use PayPal: ",
+    "openSettings": "open cookie settings"
   },
   "perPage": "Per page",
   "phone": "Phone",
