@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold">{{ $t('contactInfo.heading') }}</h2>
       <UiButton v-if="!disabled && cart.customerEmail && !isAuthorized" @click="open" variant="secondary">
-        <SfIconBase v-if="isMobile" viewBox="0 0 34 40" class="fill-primary-700 w-6 h-6 pt-[3px] cursor-pointer">
+        <SfIconBase v-if="isMobile" viewBox="0 0 34 40" class="w-6 h-6 pt-[3px]">
           <path :d="penPath" />
         </SfIconBase>
         <template v-else>{{ $t('contactInfo.edit') }}</template>
