@@ -4,6 +4,7 @@
 
 ### New
 
+- Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
@@ -12,12 +13,15 @@
 
 ### 👷 Changed
 
+- Removed checkbox margin from rating filter in category page
+- Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Newsletter email confirmation
 - Modified lighthouse rules for CLS and dom-size
 - The default data for the homepage is now available for both English and German.
 - PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 - PayPal shows a message if the cookie is not accepted.
+- We only reload the page after a cookie gets revoked.
 
 #### GitHub Action: Upload
 
@@ -47,6 +51,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
 - The language selector is no longer displayed if only one language is configured.
+- Fixed an issue with category product prices not being updated on page change.
+- Added SSR rendering for homepage.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
