@@ -25,11 +25,8 @@
                      :max="99" />
           </template>
         </UiButton>
-        <UiButton
-                  class="group relative !text-black hover:bg-transparent"
-                  :tag="NuxtLink" :to="localePath(paths.cart)"
-                  :aria-label="t('numberInCart', { count: cartItemsCount })"
-                  variant="tertiary" square>
+        <UiButton class="group relative !text-black hover:bg-transparent" :tag="NuxtLink" :to="localePath(paths.cart)"
+                  :aria-label="t('numberInCart', { count: cartItemsCount })" variant="tertiary" square>
           <template #prefix>
             <SfIconShoppingCart />
             <SfBadge
@@ -69,9 +66,9 @@
             </li>
           </ul>
         </SfDropdown>
-        <UiButton v-else @click="openAuthentication"
-                  class="group relative !text-black hover:bg-transparent"
-                  variant="tertiary" :aria-label="t('auth.login.openLoginForm')" square>
+        <UiButton v-else @click="openAuthentication" class="group relative !text-black hover:bg-transparent"
+                  variant="tertiary"
+                  :aria-label="t('auth.login.openLoginForm')" square>
           <SfIconPerson />
         </UiButton>
         <UiButton v-if="showConfigurationDrawer" @click="open = true"
@@ -110,17 +107,15 @@
   </UiModal>
 
   <NuxtLazyHydrate when-idle>
-    <SfModal v-model="isSearchModalOpen" class="w-full h-full z-50" tag="section" role="dialog"
+    <SfModal v-model="isSearchModalOpen" class="w-full !p-8 mt-0 z-50" tag="section" role="dialog"
              aria-labelledby="search-modal-title">
-      <header class="mb-4">
-        <UiButton square variant="tertiary" class="absolute right-4 top-2" @click="searchModalClose">
+      <div class="flex">
+        <UiSearch class="flex-grow mr-8" :close="searchModalClose" />
+
+        <UiButton square variant="tertiary" class="absolute right-4" @click="searchModalClose">
           <SfIconClose class="text-neutral-500" />
         </UiButton>
-        <h3 id="search-modal-title" class="absolute left-6 top-4 font-bold typography-headline-4 mb-4">
-          {{ t('search') }}
-        </h3>
-      </header>
-      <UiSearch :close="searchModalClose" />
+      </div>
     </SfModal>
   </NuxtLazyHydrate>
   <LazyConfigurationDrawer v-if="showConfigurationDrawer" />
