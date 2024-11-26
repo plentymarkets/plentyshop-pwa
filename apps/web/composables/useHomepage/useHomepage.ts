@@ -15,6 +15,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
     showErrors: false,
   }));
 
+  const heroState = useState<HeroContentProps[]>('heroState', () => []);
+
   const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
 
@@ -74,17 +76,21 @@ export const useHomepage: UseHomepageDataReturn = () => {
       featured: formatRecommendedProductsCategories(),
     };
 
+    heroState.value = state.value.data.hero;
+
     state.value.loading = false;
   };
 
   const setFormattedHeroItems = (item: HomeData) => {
     state.value.data = item;
+    heroState.value = item.hero;
   };
 
   watch(
     () => state.value.data,
     (updatedData) => {
       state.value.data = updatedData;
+      heroState.value = updatedData.hero;
     },
     { deep: true },
   );

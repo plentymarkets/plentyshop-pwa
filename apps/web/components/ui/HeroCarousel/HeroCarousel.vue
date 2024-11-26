@@ -8,7 +8,7 @@
       pagination
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(heroItem, index) in heroItemProps" :key="index" class="md:px-7 lg:px-15">
+      <SwiperSlide v-for="(heroItem, index) in heroData" :key="index" class="md:px-7 lg:px-15">
         <UiHeroContent :hero-item-props="heroItem" />
       </SwiperSlide>
     </Swiper>
@@ -24,9 +24,7 @@ import '@/assets/libraries/swiper/swiper.min.css';
 import '@/assets/libraries/swiper/navigation.min.css';
 import '@/assets/libraries/swiper/pagination.min.css';
 
-const { heroItemProps } = defineProps<{
-  heroItemProps: HeroContentProps[];
-}>();
+const heroData = useState<HeroContentProps[]>('heroState');
 
-const enableModules = computed(() => heroItemProps.length > 1);
+const enableModules = computed(() => heroData.value.length > 1);
 </script>
