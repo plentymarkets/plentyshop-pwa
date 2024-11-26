@@ -1,4 +1,4 @@
-export const useJsonEditor = (initialJson: string) => {
+export const useJsonEditor = (blockJson: string) => {
   const { setFormattedHeroItems } = useHomepage();
   const { isEditingEnabled } = useEditor();
 
@@ -7,7 +7,7 @@ export const useJsonEditor = (initialJson: string) => {
   const textarea = ref<HTMLTextAreaElement | null>(null);
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
-  const jsonText = useState<string>('jsonText', () => initialJson);
+  const jsonText = useState<string>('jsonText', () => blockJson);
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -55,41 +55,6 @@ export const useJsonEditor = (initialJson: string) => {
     }
   };
 
-  const formatJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json, null, 2);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const purgeJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const clearText = () => {
-    jsonText.value = '';
-    errorMessage.value = '';
-    setFormattedHeroItems({
-      hero: [],
-      mediaCard: [],
-      featured: [],
-    });
-    updateLineCount();
-  };
-
   onMounted(() => {
     updateLineCount();
   });
@@ -104,8 +69,5 @@ export const useJsonEditor = (initialJson: string) => {
     lineNumberContainer,
     syncScroll,
     handleInput,
-    formatJson,
-    purgeJson,
-    clearText,
   };
 };
