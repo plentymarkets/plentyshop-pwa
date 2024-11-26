@@ -4,6 +4,7 @@
 
 ### New
 
+- Added a Guest guard middleware to restrict access to pages for authenticated users.
 - Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
