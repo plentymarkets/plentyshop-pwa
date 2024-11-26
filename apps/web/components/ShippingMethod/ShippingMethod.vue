@@ -2,7 +2,12 @@
   <div data-testid="shipping-method" class="md:px-4 my-6">
     <h3 class="text-neutral-900 text-lg font-bold">{{ t('shippingMethod.heading') }}</h3>
     <div class="mt-4">
-      <ul v-if="shippingMethods" class="grid gap-y-4 md:grid-cols-2 md:gap-x-4" role="radiogroup">
+      <ul
+        v-if="shippingMethods && shippingMethods.length > 0"
+        class="grid gap-y-4 md:grid-cols-2 md:gap-x-4"
+        role="radiogroup"
+        data-testid="shipping-method-list"
+      >
         <SfListItem
           v-for="(method, index) in shippingMethods"
           :key="`shipping-method-${index}`"
@@ -30,9 +35,16 @@
         </SfListItem>
       </ul>
 
-      <div v-else class="flex mb-6">
-        <SfIconBlock class="mr-2 text-neutral-500" />
-        <p>{{ t('shippingMethod.description') }}</p>
+      <div
+        v-else
+        class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md"
+        data-testid="no-shipping-method-available"
+      >
+        <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+        <div class="py-2 mr-2">
+          <p v-if="hasCheckoutAddress">{{ t('shippingMethod.noMethodsAvailable') }}</p>
+          <p v-else>{{ t('shippingMethod.description') }}</p>
+        </div>
       </div>
     </div>
 
@@ -41,12 +53,12 @@
 </template>
 
 <script setup lang="ts">
-import { shippingProviderGetters } from '@plentymarkets/shop-api';
-import { SfIconBlock, SfListItem, SfRadio } from '@storefront-ui/vue';
+import { AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
 
 const { shippingMethods, disabled = false } = defineProps<ShippingMethodProps>();
-
+const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 
 const { data: cart } = useCart();
