@@ -1,5 +1,5 @@
 export const useJsonEditor = (initialJson: string) => {
-  const { setFormattedHeroItems } = useHomepage();
+  // const { setFormattedHeroItems } = useHomepage();
   const { isEditingEnabled } = useEditor();
 
   const errorMessage = ref('');
@@ -41,12 +41,12 @@ export const useJsonEditor = (initialJson: string) => {
           mediaCard: [],
           featured: [],
         };
-        setFormattedHeroItems(noData);
+        // setFormattedHeroItems(noData);
         updateLineCount();
         return;
       }
       const parsedData = JSON.parse(jsonText.value);
-      setFormattedHeroItems(parsedData);
+      // setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
     } catch (error: any) {
@@ -82,11 +82,11 @@ export const useJsonEditor = (initialJson: string) => {
   const clearText = () => {
     jsonText.value = '';
     errorMessage.value = '';
-    setFormattedHeroItems({
-      hero: [],
-      mediaCard: [],
-      featured: [],
-    });
+    // setFormattedHeroItems({
+    //   hero: [],
+    //   mediaCard: [],
+    //   featured: [],
+    // });
     updateLineCount();
   };
 
