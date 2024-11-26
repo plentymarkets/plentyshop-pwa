@@ -34,6 +34,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Fix selling points misalignment on register page.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
