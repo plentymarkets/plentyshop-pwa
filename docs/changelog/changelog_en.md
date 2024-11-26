@@ -34,6 +34,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
