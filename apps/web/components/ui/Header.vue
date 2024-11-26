@@ -82,18 +82,11 @@
     <div v-if="viewport.isLessThan('lg')">
       <UiButton variant="tertiary"
                 class="relative !text-black hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
-                square data-testid="open-languageselect-button" :aria-label="t('languageSelector')"
-                @click="toggleLanguageSelect()">
-        <SfIconLanguage />
-      </UiButton>
-      <UiButton variant="tertiary"
-                class="relative !text-black hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
                 square @click="searchModalOpen" :aria-label="t('openSearchModalButtonLabel')">
         <SfIconSearch />
       </UiButton>
     </div>
   </MegaMenu>
-  <LanguageSelector />
   <UiModal v-if="viewport.isGreaterOrEquals('md') && isAuthenticationOpen" v-model="isAuthenticationOpen" tag="section"
            class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto">
     <header>
