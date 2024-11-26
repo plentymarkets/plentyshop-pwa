@@ -34,7 +34,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
-- Return 404 when visiting item page that has no price and user is b2b account.
+- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
