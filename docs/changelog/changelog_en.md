@@ -34,6 +34,9 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+\_
+
+- Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
