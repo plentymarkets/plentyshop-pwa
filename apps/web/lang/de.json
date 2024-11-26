@@ -773,7 +773,7 @@
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
     "unbrandedPay": "Bezahlen",
-    "cookieNotAccepted": "Bitte akzeptieren Sie unsere Cookies, um PayPal zu nutzen.",
+    "cookieNotAccepted": "Bitte akzeptieren Sie unsere Cookies, um PayPal zu nutzen: ",
     "openSettings": "Cookie-Einstellungen öffnen"
   },
   "perPage": "Pro Seite",
