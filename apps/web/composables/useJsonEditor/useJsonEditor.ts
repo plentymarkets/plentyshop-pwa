@@ -55,41 +55,6 @@ export const useJsonEditor = (initialJson: string) => {
     }
   };
 
-  const formatJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json, null, 2);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const purgeJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const clearText = () => {
-    jsonText.value = '';
-    errorMessage.value = '';
-    // setFormattedHeroItems({
-    //   hero: [],
-    //   mediaCard: [],
-    //   featured: [],
-    // });
-    updateLineCount();
-  };
-
   onMounted(() => {
     updateLineCount();
   });
@@ -104,8 +69,5 @@ export const useJsonEditor = (initialJson: string) => {
     lineNumberContainer,
     syncScroll,
     handleInput,
-    formatJson,
-    purgeJson,
-    clearText,
   };
 };
