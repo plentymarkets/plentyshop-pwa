@@ -17,10 +17,13 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { HeroContentProps } from './types';
 import { Navigation, Pagination } from 'swiper/modules';
 
-const { hero } = useHomepage();
+// const { hero } = useHomepage();
 const { handleArrows, onSlideChange } = useCarousel();
-
-const enableModules = computed(() => hero.value.length > 1);
+const { hero } = defineProps<{
+  hero: HeroContentProps[];
+}>();
+const enableModules = computed(() => hero.length > 1);
 </script>

@@ -8,7 +8,7 @@
 import testEn from './testEn.json';
 
 const getComponent = (name: string) => {
-    console.log(`Resolving component: ${name}`);
+  console.log(`Resolving component: ${name}`);
 
   if (name === 'UiSkeletonLoader') {
     return resolveComponent('UiSkeletonLoader');
@@ -26,17 +26,4 @@ const getComponent = (name: string) => {
     return resolveComponent('ProductRecommendedProducts');
   }
 };
-
-// const template = [
-//   {
-//     name: 'UiSkeletonLoader',
-//     props: {},
-//   },
-//   {
-//     name: 'UiMediaCard',
-//     options: {
-//       text: 'Hello World',
-//     },
-//   },
-// ];
 </script>
