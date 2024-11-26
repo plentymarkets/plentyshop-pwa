@@ -10,6 +10,7 @@
 - Added Zoom functionality to product images.
 - New Json Editor
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
+- Added a warning alert on the checkout if no payment or shipping method is available
 
 ### 👷 Changed
 
