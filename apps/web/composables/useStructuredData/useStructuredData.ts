@@ -136,12 +136,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
       },
     } as any;
 
-    // if (productGetters.getSeoManufacturer(product) !== '') {
-    //   metaObject.manufacturer = {
-    //     '@type': 'Organization',
-    //     name: manufacturer.externalName,
-    //   }
-    // }
+    const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
+    if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer }
 
     const brand = productSeoSettingsGetters.getBrand(product);
     if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
