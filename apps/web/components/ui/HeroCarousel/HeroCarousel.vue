@@ -19,8 +19,9 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { HeroContentProps } from './types';
 import { Navigation, Pagination } from 'swiper/modules';
-
-// const { hero } = useHomepage();
+import '@/assets/libraries/swiper/swiper.min.css';
+import '@/assets/libraries/swiper/navigation.min.css';
+import '@/assets/libraries/swiper/pagination.min.css';
 const { handleArrows, onSlideChange } = useCarousel();
 const { hero } = defineProps<{
   hero: HeroContentProps[];

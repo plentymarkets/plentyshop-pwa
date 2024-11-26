@@ -1,6 +1,8 @@
 <template>
   <template v-for="(block, index) in testEn.blocks" :key="index">
-    <component :is="getComponent(block.name)" v-bind="block.options" />
+    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
+      <component :is="getComponent(block.name)" v-bind="block.options" />
+    </div>
   </template>
 </template>
 
@@ -8,8 +10,6 @@
 import testEn from './testEn.json';
 
 const getComponent = (name: string) => {
-  console.log(`Resolving component: ${name}`);
-
   if (name === 'UiSkeletonLoader') {
     return resolveComponent('UiSkeletonLoader');
   }
