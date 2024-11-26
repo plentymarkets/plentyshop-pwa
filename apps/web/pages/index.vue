@@ -40,22 +40,35 @@
         <NewsletterSubscribe v-if="showNewsletter" />
       </NuxtLazyHydrate>
     </div> -->
-
-  <template v-for="(block, index) in testEn.blocks" :key="index">
-    <div class="max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10">
-      <Editor v-if="isEditing" :block="block" />
-      <component v-else :is="getComponent(block.name)" v-bind="block.options" />
+  <div>
+    <Editor v-if="isEditing" :block="currentBlock" />
+    <div v-else class="content">
+      <template v-for="(block, index) in testEn.blocks" :key="index">
+        <div class="relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group">
+          <button
+            @click="editBlock(block)"
+            class="absolute right-0 top-0 mt-2 mr-2 p-2 bg-blue-500 text-white rounded hidden group-hover:block"
+          >
+            Edit
+          </button>
+          <component :is="getComponent(block.name)" v-bind="block.options" />
+        </div>
+      </template>
     </div>
-  </template>
-  <!-- </div> -->
+  </div>
 </template>
 
 <script lang="ts" setup>
 import testEn from './testEn.json';
 
-const { isEditing } = useEditor();
-const { data: homepage, fetchPageTemplate } = useHomepage();
-const { showNewsletter } = useNewsletter();
+const isEditing = ref(false);
+const currentBlock = ref(null);
+
+const editBlock = (block: any) => {
+  currentBlock.value = block;
+  isEditing.value = true;
+};
+
 const getComponent = (name: string) => {
   if (name === 'UiSkeletonLoader') {
     return resolveComponent('UiSkeletonLoader');
@@ -73,5 +86,4 @@ const getComponent = (name: string) => {
     return resolveComponent('ProductRecommendedProducts');
   }
 };
-fetchPageTemplate();
 </script>
