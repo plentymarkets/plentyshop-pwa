@@ -42,7 +42,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
   }));
 
   const runtimeConfig = useRuntimeConfig();
-  const initialCookies = runtimeConfig.public.cookieGroups as CookieGroupFromNuxtConfig;
 
   const changeVisibilityState: ChangeVisibilityState = () => {
     state.value.visible = !state.value.visible;
@@ -50,6 +49,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
   const loadThirdPartyScripts = (): void => {
     if (!import.meta.server) {
+      const initialCookies = runtimeConfig.public.cookieGroups as CookieGroupFromNuxtConfig;
       state.value.data.groups.forEach((cookieGroup: CookieGroup, groupIndex: number) => {
         cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
           if (cookie.accepted) {
@@ -73,6 +73,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
    * ```
    */
   const initializeCookies: InitializeCookies = () => {
+    const initialCookies = runtimeConfig.public.cookieGroups as CookieGroupFromNuxtConfig;
     const cookies = JSON.parse(JSON.stringify(initialCookies));
 
     const browserCookies = useCookie('consent-cookie') as Ref<JsonCookie | null | undefined>;
