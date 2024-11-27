@@ -120,7 +120,7 @@ definePageMeta({
   middleware: ['reject-empty-checkout'],
 });
 
-const { data: afterBuy} = useExtendCheckout('checkout:after:buy');
+const { data: afterBuy } = useExtendCheckout('checkout:after:buy');
 console.log(afterBuy.value);
 
 const { send } = useNotification();

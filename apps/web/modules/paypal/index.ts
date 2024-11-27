@@ -1,5 +1,4 @@
 import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule, addPlugin } from '@nuxt/kit';
-import i18nConfig from '~/configuration/vueI18n.config';
 
 export default defineNuxtModule({
   meta: {
@@ -27,7 +26,7 @@ export default defineNuxtModule({
 
     await addComponentsDir({
       path: resolver.resolve('components'),
-      global: false,
+      global: true,
     });
     addImportsDir(resolver.resolve('composables'));
     addPlugin(resolver.resolve('plugins/registerComponents.ts'));
