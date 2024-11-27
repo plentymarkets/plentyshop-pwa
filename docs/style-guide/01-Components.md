@@ -5,7 +5,7 @@
 `components/ui` should contain two types of components:
 
 1. **Base components**: Base components should be general-purpose components that may be re-used throughout the application. Each base component has a directory, for example `components/ui/Button/Button.vue`.
-2. **Single instance components**: Single instance components should only be used once on a page. In general this means they're part of a layout rather. Each single instance component is at the root of the `ui` directory, for example `components/ui/Header.vue`.
+2. **Single instance components**: Single instance components should only be used once on a page. In general this means they're part of a layout. Each single instance component is at the root of the `ui` directory, for example `components/ui/Header.vue`.
 
 Create all other components outside the `ui` directory.
 
