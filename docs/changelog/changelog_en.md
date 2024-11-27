@@ -34,6 +34,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
+- Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
@@ -51,6 +53,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
+- The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
 
