@@ -33,7 +33,6 @@
 
 <script lang="ts" setup>
 import { SfIconBase } from '@storefront-ui/vue';
-import { ref } from 'vue';
 import { Block } from '~/composables/useHomepage/types';
 
 const props = defineProps<{ block: Block }>();
