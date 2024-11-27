@@ -1,9 +1,6 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './types';
-import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
-import { useFetchHome } from '~/composables/useFetchHome/useFetchHome';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
