@@ -3,7 +3,9 @@
     <Editor v-if="isEditing" :block="currentBlock" />
     <div v-else class="content">
       <template v-for="(block, index) in testEn.blocks" :key="index">
-        <div class="relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group">
+        <div
+          class="relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group hover:border-[3px] hover:border-[#538AEA]"
+        >
           <UiBlockActions :block="block" />
 
           <component :is="getComponent(block.name)" v-bind="block.options" />
@@ -18,6 +20,10 @@ import testEn from './testEn.json';
 import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing } = useEditor();
+// const viewport = useViewport();
+// const buttonSize = computed(() => {
+//   return viewport.isLessThan('md') ? 'sm' : 'lg';
+// });
 
 const currentBlock = ref<Block | null>(null);
 

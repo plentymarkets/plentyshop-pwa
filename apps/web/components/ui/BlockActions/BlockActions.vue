@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 mt-2 mr-2 border border-[#538AEA] rounded-[6px]"
+    class="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 mt-2 border border-[#538AEA] rounded-[6px]"
   >
     <UiButton
       @click="editBlock"
