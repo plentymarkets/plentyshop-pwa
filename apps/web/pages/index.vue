@@ -4,10 +4,14 @@
     <div v-else class="content">
       <template v-for="(block, index) in testEn.blocks" :key="index">
         <div
-          class="relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group hover:border-[3px] hover:border-[#538AEA]"
+          :class="[
+            'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
+            { 'border-[3px] border-[#538AEA]': isClicked && isTablet && clickedBlockIndex === index },
+            { 'hover:border-[3px] hover:border-[#538AEA]': !isTablet },
+          ]"
+          @click="tabletEdit(index)"
         >
           <UiBlockActions :block="block" />
-
           <component :is="getComponent(block.name)" v-bind="block.options" />
         </div>
       </template>
@@ -20,12 +24,20 @@ import testEn from './testEn.json';
 import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing } = useEditor();
-// const viewport = useViewport();
-// const buttonSize = computed(() => {
-//   return viewport.isLessThan('md') ? 'sm' : 'lg';
-// });
+const viewport = useViewport();
 
 const currentBlock = ref<Block | null>(null);
+const isClicked = ref(false);
+const clickedBlockIndex = ref<number | null>(null);
+
+const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
+
+const tabletEdit = (index: number) => {
+  if (isTablet.value) {
+    isClicked.value = !isClicked.value;
+    clickedBlockIndex.value = isClicked.value ? index : null;
+  }
+};
 
 const getComponent = (name: string) => {
   if (name === 'UiSkeletonLoader') {
