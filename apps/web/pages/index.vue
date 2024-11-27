@@ -11,7 +11,7 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions :block="block" />
+          <UiBlockActions :block="block" @edit="editBlock" />
           <component :is="getComponent(block.name)" v-bind="block.options" />
         </div>
       </template>
@@ -37,13 +37,11 @@ const tabletEdit = (index: number) => {
     isClicked.value = !isClicked.value;
     clickedBlockIndex.value = isClicked.value ? index : null;
   }
+};
 const editBlock = (block: Block) => {
-  currentBlock.value = JSON.parse(JSON.stringify(block));
-  console.log('currentBlock.value', currentBlock.value);
-  console.log('block', block);
+  currentBlock.value = block;
   isEditing.value = true;
 };
-
 const getComponent = (name: string) => {
   if (name === 'UiSkeletonLoader') {
     return resolveComponent('UiSkeletonLoader');

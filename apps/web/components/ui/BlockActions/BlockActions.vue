@@ -3,7 +3,7 @@
     class="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 mt-2 border border-[#538AEA] rounded-[6px]"
   >
     <UiButton
-      @click="editBlock"
+      @click="onEditClick"
       class="text-white rounded hover:bg-transparent active:bg-transparent !px-1"
       variant="tertiary"
       size="sm"
@@ -36,12 +36,9 @@ import { SfIconBase } from '@storefront-ui/vue';
 import { Block } from '~/composables/useHomepage/types';
 
 const props = defineProps<{ block: Block }>();
+const emit = defineEmits(['edit']);
 
-const { isEditing } = useEditor();
-const currentBlock = ref<Block | null>(null);
-
-const editBlock = () => {
-  currentBlock.value = props.block;
-  isEditing.value = true;
+const onEditClick = () => {
+  emit('edit', props.block);
 };
 </script>
