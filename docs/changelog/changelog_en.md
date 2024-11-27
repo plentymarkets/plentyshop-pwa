@@ -35,6 +35,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 ### 🩹 Fixed
 
 - Fix selling points misalignment on register page.
+- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
+- Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
