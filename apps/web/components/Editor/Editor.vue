@@ -21,16 +21,18 @@
 </template>
 
 <script setup lang="ts">
-const { data } = useHomepage();
-
+// const { data } = useHomepage();
+const props = defineProps<{
+  block: Block | null;
+}>();
 const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncScroll, handleInput } = useJsonEditor(
-  JSON.stringify(data, null, 2),
+  JSON.stringify(props.block, null, 2),
 );
 
 watch(
-  () => data,
+  () => props.block,
   (updatedData) => {
-    jsonText.value = JSON.stringify(updatedData.value, null, 2);
+    jsonText.value = JSON.stringify(updatedData, null, 2);
   },
   { immediate: true, deep: true },
 );

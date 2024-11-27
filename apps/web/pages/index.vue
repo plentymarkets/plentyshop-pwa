@@ -25,7 +25,9 @@ const isEditing = ref(false);
 const currentBlock = ref<Block | null>(null);
 
 const editBlock = (block: Block) => {
-  currentBlock.value = block;
+  currentBlock.value = JSON.parse(JSON.stringify(block));
+  console.log('currentBlock.value', currentBlock.value);
+  console.log('block', block);
   isEditing.value = true;
 };
 
