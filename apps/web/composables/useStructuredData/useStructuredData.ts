@@ -137,7 +137,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
     } as any;
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
-    if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer }
+    if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer };
 
     const brand = productSeoSettingsGetters.getBrand(product);
     if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
