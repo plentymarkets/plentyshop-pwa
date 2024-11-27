@@ -9,7 +9,8 @@
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
 - New Json Editor
-- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
+- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
+- Added dynamic structured data from the SEO config.
 
 ### 👷 Changed
 
@@ -34,6 +35,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.

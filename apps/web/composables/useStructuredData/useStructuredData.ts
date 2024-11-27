@@ -1,6 +1,6 @@
 import type { useStructuredDataReturn } from './types';
 import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-api';
+import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
@@ -66,7 +66,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const { data: productReviews } = useProductReviews(productId);
     const { data: reviewAverage } = useProductReviewAverage(productId);
 
-    const manufacturer = productGetters.getManufacturer(product);
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -87,7 +86,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      // sku: sku,
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
@@ -95,10 +93,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
-      manufacturer: {
-        '@type': 'Organization',
-        name: manufacturer.externalName,
-      },
       review: reviews,
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -109,7 +103,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),
         price: Number(price.value),
-        priceValidUntil: productGetters.getVariationAvailableUntil(product),
         url: null,
         priceSpecification: [
           {
@@ -122,10 +115,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: productGetters.isSalable(product)
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: null,
+        availability: productSeoSettingsGetters.getMappedAvailability(product),
+        itemCondition: productSeoSettingsGetters.getConditionOfItem(product),
       },
       depth: {
         '@type': 'QuantitativeValue',
@@ -143,7 +134,34 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
-    };
+    } as any;
+
+    const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
+    if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer };
+
+    const brand = productSeoSettingsGetters.getBrand(product);
+    if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
+
+    const sku = productSeoSettingsGetters.getSku(product);
+    if (sku !== '') metaObject.sku = sku;
+
+    const gtin = productSeoSettingsGetters.getGtin(product);
+    if (gtin !== '') metaObject.gtin = gtin;
+
+    const gtin8 = productSeoSettingsGetters.getGtin8(product);
+    if (gtin8 !== '') metaObject.gtin8 = gtin8;
+
+    const gtin13 = productSeoSettingsGetters.getGtin13(product);
+    if (gtin13 !== '') metaObject.gtin13 = gtin13;
+
+    const isbn = productSeoSettingsGetters.getIsbn(product);
+    if (isbn !== '') metaObject.isbn = productSeoSettingsGetters.getIsbn(product);
+
+    const mpn = productSeoSettingsGetters.getMpn(product);
+    if (mpn !== '') metaObject.mpn = mpn;
+
+    const priceValidUntil = productSeoSettingsGetters.getPriceValidUntil(product);
+    if (priceValidUntil !== '') metaObject.offers.priceValidUntil = priceValidUntil;
 
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
@@ -160,7 +178,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(metaObject),
+          innerHTML: JSON.stringify(metaObject, null, 4),
         },
       ],
     });
