@@ -14,7 +14,7 @@ export default defineNuxtPlugin((nuxtApp) => {
           Status: 'CookieBar.functional.cookies.payPal.status',
           PrivacyPolicy: '/PrivacyPolicy',
           Lifespan: 'Session',
-        } as any);
+        });
       }
     });
   }
