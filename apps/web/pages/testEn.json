@@ -52,7 +52,7 @@
     },
     {
       "name": "ProductRecommendedProducts",
-      "options": { "categoryId": "16" }
+      "options": { "headline": "Test Headline", "categoryId": "16" }
     }
   ]
 }

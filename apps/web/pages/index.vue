@@ -21,7 +21,8 @@
 import testEn from './testEn.json';
 import { Block } from '~/composables/useHomepage/types';
 
-const isEditing = ref(false);
+const { isEditing } = useEditor();
+
 const currentBlock = ref<Block | null>(null);
 
 const editBlock = (block: Block) => {
