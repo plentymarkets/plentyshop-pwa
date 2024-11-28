@@ -11,12 +11,12 @@
         <div
           :class="[
             'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
-            { 'border-[3px] border-[#538AEA]': isClicked && isTablet && clickedBlockIndex === index },
-            { 'hover:border-[3px] hover:border-[#538AEA]': !isTablet },
+            { 'border-[3px] border-[#538AEA]': disableActions && isClicked && isTablet && clickedBlockIndex === index },
+            { 'hover:border-[3px] hover:border-[#538AEA]': disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions :index="index" @edit="handleEdit" />
+          <UiBlockActions v-if="disableActions" :index="index" @edit="handleEdit" />
           <component :is="getComponent(block.name)" v-bind="block.options" />
         </div>
       </template>
@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { Block } from '~/composables/useHomepage/types';
 
-const { isEditing } = useEditor();
+const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
 const { data, fetchPageTemplate } = useHomepage();
 
