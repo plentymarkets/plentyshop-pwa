@@ -680,7 +680,9 @@
     "noResponsibleInformation": "No information available for Responsible Person",
     "responsibleHeader": "Responsible Person in the EU",
     "responsibleSubtitle": "An economic operator based within the EU who ensures that the product complies with all necessary regulations.",
-    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product."
+    "subtitle": "Manufacturer information includes the address and additional details about the producer of the product.",
+    "contactUrl": "Contact form",
+    "responsibleContactUrl": "EU-Responsible contact form"
   },
   "max": "Max",
   "min": "Min",
