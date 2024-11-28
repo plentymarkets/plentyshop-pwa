@@ -36,6 +36,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
