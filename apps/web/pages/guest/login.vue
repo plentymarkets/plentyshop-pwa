@@ -10,5 +10,8 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({ pageType: 'static' });
+definePageMeta({
+  pageType: 'static',
+  middleware: ['guest-guard'],
+});
 </script>
