@@ -42,9 +42,9 @@ const { buildCategoryMenuLink } = useLocalization();
 
 const localePath = useLocalePath();
 
-const categoryTreeItem = categoryTreeGetters.findCategoryById(
+const categoryTreeItem = computed(() =>categoryTreeGetters.findCategoryById(
   categoryTree.value,
   categoryGetters.getId(props.category),
-);
+));
 const parent = categoryTreeGetters.findCategoryById(categoryTree.value, categoryGetters.getParentId(props.category));
 </script>
