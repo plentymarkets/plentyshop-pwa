@@ -188,26 +188,24 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setProductRobotsMetaData: SetProductRobotsMetaData = (product: Product) => {
     state.value.loading = true;
 
-    const route = useRoute()
+    const route = useRoute();
     let robotsContent: string | undefined = '';
 
     if (
-        (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
-        product.seoSettings?.forceNoIndex
+      (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
+      product.seoSettings?.forceNoIndex
     ) {
-      robotsContent = 'noindex'
+      robotsContent = 'noindex';
     } else {
       robotsContent = product.seoSettings?.robots;
     }
 
     useHead({
-      meta: [
-        { name: 'robots', content: robotsContent }
-      ],
+      meta: [{ name: 'robots', content: robotsContent }],
     });
 
-    state.value.loading = false
-  }
+    state.value.loading = false;
+  };
 
   return {
     setLogoMeta,
