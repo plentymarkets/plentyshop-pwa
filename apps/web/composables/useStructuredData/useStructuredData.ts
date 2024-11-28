@@ -191,7 +191,10 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const route = useRoute()
     let robotsContent: string | undefined = '';
 
-    if (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) {
+    if (
+        (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
+        product.seoSettings?.forceNoIndex
+    ) {
       robotsContent = 'noindex'
     } else {
       robotsContent = product.seoSettings?.robots;
