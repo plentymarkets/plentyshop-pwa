@@ -1,0 +1,24 @@
+{
+    "name": "UiHeroCarousel",
+    "options": {
+      "hero": [
+        {
+          "image": {
+            "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-lg.avif",
+            "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-md.avif",
+            "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-sm.avif",
+            "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-xs.avif"
+          },
+          "tagline": "New tagline from cypress",
+          "taglineColor": "#000000",
+          "heading": "New heading from cypress",
+          "headingColor": "#000000",
+          "description": "Description from cypress.",
+          "alt": "Capybara headphones",
+          "descriptionColor": "#000000",
+          "callToAction": "Discover Capybara",
+          "link": "/gear/headphones-capybara_157"
+        }
+      ]
+    }
+  }

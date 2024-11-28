@@ -7,6 +7,7 @@
         class="self-start"
         @click="toggleEdit"
         :disabled="!isEditingEnabled"
+        data-testid="edit-preview-button"
       >
         {{ disableActions ? 'Preview' : 'Edit' }}
       </UiButton>
@@ -15,6 +16,7 @@
         :size="buttonSize"
         class="self-start"
         :disabled="!isEditingEnabled || !isEditing || !isLocalTemplate()"
+        data-testid="edit-preview-button"
         @click="updatePageTemplate"
       >
         <template v-if="loading">
