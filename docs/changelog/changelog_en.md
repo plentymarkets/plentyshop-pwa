@@ -37,6 +37,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 ### 🩹 Fixed
 
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
+- Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
