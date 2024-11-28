@@ -36,6 +36,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Resolved an issue where the shipping costs where not updated during guest checkout process.
+- Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
@@ -59,6 +61,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- Improved CLS for hero skeleton.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
