@@ -8,7 +8,7 @@
         @click="toggleEdit"
         :disabled="!isEditingEnabled"
       >
-        {{ isEditing ? 'Preview' : 'Edit' }}
+        {{ disableActions ? 'Preview' : 'Edit' }}
       </UiButton>
       <UiButton
         variant="primary"
@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-const { isEditing, isEditingEnabled } = useEditor();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const viewport = useViewport();
 const buttonSize = computed(() => {
@@ -45,6 +45,6 @@ const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
-  isEditing.value = !isEditing.value;
+  disableActions.value = !disableActions.value;
 };
 </script>

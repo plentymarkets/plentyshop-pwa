@@ -20,14 +20,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = true;
 
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    // if (typeof homepageCategoryId === 'number') {
-    //   const { fetchHomepageTemplate } = useFetchHome();
-    //   console.log("intra aici");
-    //   state.value.data = fetchHomepageTemplate();
-    // } else {
     state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-    // }
-
     state.value.loading = false;
   };
   watch(
