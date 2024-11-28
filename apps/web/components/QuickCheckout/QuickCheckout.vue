@@ -41,7 +41,7 @@
         </div>
         <div class="flex mb-3">
           <h1 class="font-bold typography-headline-4" data-testid="product-name">
-            {{ productGetters.getName(product) }} 
+            {{ productGetters.getName(product) }}
           </h1>
         </div>
 
