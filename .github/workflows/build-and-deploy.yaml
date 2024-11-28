@@ -46,7 +46,7 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          node-version-file: './.github/.node-version'
+          node-version-file: '.nvmrc'
           cache: 'yarn'
 
       - name: Build and publish docker image

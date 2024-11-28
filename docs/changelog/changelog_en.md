@@ -9,7 +9,9 @@
 - Added progress loading indicator animation when navigating between pages.
 - Added Zoom functionality to product images.
 - New Json Editor
-- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie
+- Added a warning alert on the checkout if no payment or shipping method is available
+- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
+- Added dynamic structured data from the SEO config.
 
 ### 👷 Changed
 
@@ -34,6 +36,9 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Fix selling points misalignment on register page.
+- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
+- Resolved an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the Cookiebar anchor.
 - Cookiebar usability in landscape mode.
 - Order property tooltip was under input fields.
@@ -51,8 +56,10 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Fixed an issue where review modal was unscrollable on smaller screens.
 - Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
+- The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- Improved CLS for hero skeleton.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

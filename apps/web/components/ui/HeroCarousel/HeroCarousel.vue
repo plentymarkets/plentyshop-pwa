@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <ClientOnly>
     <Swiper
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
@@ -12,7 +12,11 @@
         <UiHeroContent :hero-item-props="heroItem" />
       </SwiperSlide>
     </Swiper>
-  </div>
+
+    <template #fallback>
+      <UiHeroContentSkeleton />
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup lang="ts">

@@ -69,6 +69,13 @@ const { open, openDrawer } = useProductLegalDetailsDrawer();
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams);
+
+if (Object.keys(product.value).length === 0) {
+  throw new Response(null, {
+    status: 404,
+    statusText: 'Not found',
+  });
+}
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 

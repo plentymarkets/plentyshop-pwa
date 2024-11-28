@@ -45,15 +45,15 @@
     },
     "functional": {
       "cookies": {
-        "scriptDemo": {
-          "name": "Script demo",
-          "provider": "plentysystems AG",
-          "status": "Usage example for loading a script after consent."
-        },
         "payPal": {
           "name": "paypal",
           "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
           "status": "Required for PayPal payments."
+        },
+        "scriptDemo": {
+          "name": "Script demo",
+          "provider": "plentysystems AG",
+          "status": "Usage example for loading a script after consent."
         }
       },
       "description": "These cookies are used to store preferred settings and certain options selected by the user.",
@@ -346,7 +346,8 @@
   "checkoutPayment": {
     "comingSoon": "Coming soon",
     "creditCard": "Credit Card",
-    "heading": "Payment method"
+    "heading": "Payment method",
+    "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
   "clear": "Clear",
   "clearFilters": "Clear all filters",
@@ -766,15 +767,15 @@
   "pagination": "Paginated Navigation",
   "passwordVisibilty": "Password visibility",
   "paypal": {
+    "cookieNotAccepted": "Please accept our cookies to use PayPal: ",
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
+    "openSettings": "open cookie settings",
     "unbrandedCancel": "Cancel",
     "unbrandedCardNumber": "Card number",
     "unbrandedCvv": "CVV",
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
-    "unbrandedPay": "Pay",
-    "cookieNotAccepted": "Please accept our cookies to use PayPal: ",
-    "openSettings": "open cookie settings"
+    "unbrandedPay": "Pay"
   },
   "perPage": "Per page",
   "phone": "Phone",
@@ -888,6 +889,7 @@
     "description": "Not available until a shipping address is provided.",
     "free": "Free",
     "heading": "Shipping method",
+    "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
     "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
   },
   "showAllReviews": "Show all reviews",

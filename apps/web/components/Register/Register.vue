@@ -1,9 +1,9 @@
 <template>
-  <div class="font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
+  <div class="font-medium ml-8" :class="{ 'flex flex-col items-center': !isModal }">
     <div class="text-lg">{{ t('auth.signup.heading') }}</div>
     <div class="text-base">{{ t('auth.signup.subheading') }}</div>
 
-    <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
+    <div class="mt-5 font-normal flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>

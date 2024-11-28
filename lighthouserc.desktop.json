@@ -1,0 +1,16 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "yarn start",
+      "settings": {
+        "preset": "desktop"
+      },
+      "url": [
+        "http://localhost:3000/?desktop",
+        "http://localhost:3000/living-room?desktop",
+        "http://localhost:3000/living-room/sofas/2-seater-sofa-sunflower_127?desktop"
+      ],
+      "numberOfRuns": 3
+    }
+  }
+}

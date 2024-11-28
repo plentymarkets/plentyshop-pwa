@@ -1,13 +1,6 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "yarn start",
-      "url": [
-        "http://localhost:3000/",
-        "http://localhost:3000/living-room",
-        "http://localhost:3000/living-room/sofas/2-seater-sofa-sunflower_127"
-      ],
-      "numberOfRuns": 3,
       "assert": {
         "includePassedAssertions": false,
         "assertMatrix": [
