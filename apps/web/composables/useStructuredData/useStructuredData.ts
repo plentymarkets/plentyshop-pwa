@@ -1,5 +1,5 @@
 import type { useStructuredDataReturn } from './types';
-import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
+import type { SetLogoMeta, SetProductMetaData, SetProductRobotsMetaData, UseStructuredDataState } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
@@ -185,9 +185,31 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = false;
   };
 
+  const setProductRobotsMetaData: SetProductRobotsMetaData = (product: Product) => {
+    state.value.loading = true;
+
+    const route = useRoute()
+    let robotsContent: string | undefined = '';
+
+    if (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) {
+      robotsContent = 'noindex'
+    } else {
+      robotsContent = product.seoSettings?.robots;
+    }
+
+    useHead({
+      meta: [
+        { name: 'robots', content: robotsContent }
+      ],
+    });
+
+    state.value.loading = false
+  }
+
   return {
     setLogoMeta,
     setProductMetaData,
+    setProductRobotsMetaData,
     ...toRefs(state.value),
   };
 };
