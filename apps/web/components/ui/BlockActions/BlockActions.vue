@@ -33,12 +33,12 @@
 
 <script lang="ts" setup>
 import { SfIconBase } from '@storefront-ui/vue';
-import { Block } from '~/composables/useHomepage/types';
 
-const props = defineProps<{ block: Block }>();
+const props = defineProps<{ index: number }>();
+
 const emit = defineEmits(['edit']);
 
 const onEditClick = () => {
-  emit('edit', props.block);
+  emit('edit', props.index);
 };
 </script>

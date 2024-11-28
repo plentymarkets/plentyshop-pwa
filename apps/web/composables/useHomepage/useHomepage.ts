@@ -7,7 +7,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: {} as HomepageData,
+    data: { blocks: [] } as HomepageData,
     loading: false,
     showErrors: false,
   }));
@@ -20,13 +20,12 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = true;
 
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-    // if (typeof homepageCategoryId === 'number') {
-    //   const { fetchHomepageTemplate } = useFetchHome();
-    //   console.log("intra aici");
-    //   state.value.data = fetchHomepageTemplate();
-    // } else {
-    state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-    // }
+    if (typeof homepageCategoryId === 'number') {
+      const { fetchHomepageTemplate } = useFetchHome();
+      state.value.data = fetchHomepageTemplate();
+    } else {
+      state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
+    }
 
     state.value.loading = false;
   };

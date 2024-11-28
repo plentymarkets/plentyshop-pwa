@@ -1,7 +1,5 @@
 export const useJsonEditor = (initialJson: string) => {
-  // const { setFormattedHeroItems } = useHomepage();
   const { isEditingEnabled } = useEditor();
-
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
@@ -35,18 +33,6 @@ export const useJsonEditor = (initialJson: string) => {
 
   const handleInput = () => {
     try {
-      if (jsonText.value.trim() === '') {
-        const noData = {
-          hero: [],
-          mediaCard: [],
-          featured: [],
-        };
-        // setFormattedHeroItems(noData);
-        updateLineCount();
-        return;
-      }
-      const parsedData = JSON.parse(jsonText.value);
-      // setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
     } catch (error: any) {

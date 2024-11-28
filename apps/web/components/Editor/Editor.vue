@@ -22,11 +22,12 @@
 </template>
 
 <script setup lang="ts">
-// const { data } = useHomepage();
-const { isEditing } = useEditor();
 const props = defineProps<{
   block: Block | null;
+  index: number;
 }>();
+
+const emit = defineEmits(['update']);
 const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncScroll, handleInput } = useJsonEditor(
   JSON.stringify(props.block, null, 2),
 );
@@ -35,11 +36,14 @@ watch(
   () => props.block,
   (updatedData) => {
     jsonText.value = JSON.stringify(updatedData, null, 2);
+    console.log("inwatch",props.block);
   },
   { immediate: true, deep: true },
 );
 
 const closeEditor = () => {
+  emit('update', props.index, JSON.parse(jsonText.value));
+  const { isEditing } = useEditor();
   isEditing.value = false;
 };
 </script>

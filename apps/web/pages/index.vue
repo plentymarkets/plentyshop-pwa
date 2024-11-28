@@ -1,8 +1,13 @@
 <template>
   <div>
-    <Editor v-if="isEditing" :block="currentBlock" />
+    <Editor
+      v-if="isEditing && currentBlockIndex !== null"
+      :index="currentBlockIndex"
+      :block="currentBlock"
+      @update="updateBlock"
+    />
     <div v-else class="content">
-      <template v-for="(block, index) in testEn.blocks" :key="index">
+      <template v-for="(block, index) in data.blocks" :key="index">
         <div
           :class="[
             'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
@@ -11,7 +16,7 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions :block="block" @edit="editBlock" />
+          <UiBlockActions :index="index" @edit="handleEdit" />
           <component :is="getComponent(block.name)" v-bind="block.options" />
         </div>
       </template>
@@ -20,13 +25,14 @@
 </template>
 
 <script lang="ts" setup>
-import testEn from './testEn.json';
 import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing } = useEditor();
 const viewport = useViewport();
+const { data, fetchPageTemplate } = useHomepage();
 
 const currentBlock = ref<Block | null>(null);
+const currentBlockIndex = ref<number | null>(null);
 const isClicked = ref(false);
 const clickedBlockIndex = ref<number | null>(null);
 
@@ -38,10 +44,20 @@ const tabletEdit = (index: number) => {
     clickedBlockIndex.value = isClicked.value ? index : null;
   }
 };
-const editBlock = (block: Block) => {
-  currentBlock.value = block;
-  isEditing.value = true;
+const handleEdit = (index: number) => {
+  if (data.value.blocks && data.value.blocks.length > index) {
+    currentBlockIndex.value = index;
+    currentBlock.value = data.value.blocks[index];
+    isEditing.value = true;
+  }
 };
+
+const updateBlock = (index: number, updatedBlock: Block) => {
+  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
+    data.value.blocks[index] = updatedBlock;
+  }
+};
+
 const getComponent = (name: string) => {
   if (name === 'UiSkeletonLoader') {
     return resolveComponent('UiSkeletonLoader');
@@ -59,4 +75,5 @@ const getComponent = (name: string) => {
     return resolveComponent('ProductRecommendedProducts');
   }
 };
+fetchPageTemplate();
 </script>
