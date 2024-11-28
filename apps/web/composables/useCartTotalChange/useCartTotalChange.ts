@@ -2,7 +2,7 @@ import { cartGetters } from '@plentymarkets/shop-api';
 
 export const useCartTotalChange = () => {
   const route = useRoute();
-  const { data: customerData } = useCustomer();
+  const { data: customerData, isGuest } = useCustomer();
   const { getCart } = useCart();
   const { getOrder } = usePayPal();
   const { restrictedAddresses } = useRestrictedAddress();
@@ -29,8 +29,9 @@ export const useCartTotalChange = () => {
     if (restrictedAddresses.value) {
       state.value.changedTotal =
         cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
-      await getCart();
     }
+
+    if (restrictedAddresses.value || isGuest.value) await getCart();
   };
 
   return {
