@@ -36,8 +36,9 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
-- Fixed filter translation on categorty page when switching language.
-- Changed image quality in quick checkout to use middle image and positioned quantity.
+- Fixed filter translation on category page when switching language.
+- Resolved an issue where the shipping costs where not updated during guest checkout process.
+- Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 - Resolved an issue where the checkout layout button was overlapping the adjacent text.
@@ -61,6 +62,9 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
+- The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
+- Improved CLS for hero skeleton.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
