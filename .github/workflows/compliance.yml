@@ -1,7 +1,6 @@
 name: Compliance
 on:
-  pull_request:
-    types: [ opened, edited, synchronize, reopened ]
+  workflow_dispatch:
 jobs:
   label:
     name: Apply conventional release labels

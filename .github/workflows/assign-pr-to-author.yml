@@ -1,7 +1,6 @@
 name: PR to Author
 on:
-  pull_request:
-    types: [opened]
+  workflow_dispatch:
 
 jobs:
   assignAuthor:
