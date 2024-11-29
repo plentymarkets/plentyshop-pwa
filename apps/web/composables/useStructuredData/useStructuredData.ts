@@ -191,14 +191,11 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const route = useRoute();
     let robotsContent: string | undefined = '';
 
-    if (
+    robotsContent =
       (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
       product.seoSettings?.forceNoIndex
-    ) {
-      robotsContent = 'noindex';
-    } else {
-      robotsContent = product.seoSettings?.robots;
-    }
+        ? 'noindex'
+        : product.seoSettings?.robots;
 
     useHead({
       meta: [{ name: 'robots', content: robotsContent }],
