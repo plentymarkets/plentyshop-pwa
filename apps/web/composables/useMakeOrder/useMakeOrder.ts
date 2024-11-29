@@ -15,6 +15,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     loading: false,
   }));
 
+  const handleMakeOrderError = (error: any) => {
+    if (error) useHandleError(error);
+    state.value.loading = false;
+    useProcessingOrder().processingOrder.value = false;
+  };
+
   /**
    * @description Function for creating an order
    * @param params { MakeOrderParams }
@@ -31,45 +37,49 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
-    await useAsyncData(() =>
-      useSdk().plentysystems.doAdditionalInformation({
+    try {
+      await useSdk().plentysystems.doAdditionalInformation({
         orderContactWish: null,
         orderCustomerSign: null,
         shippingPrivacyHintAccepted: params.shippingPrivacyHintAccepted,
         templateType: 'checkout',
-      }),
-    );
+      });
+    } catch (error) {
+      handleMakeOrderError(error);
+    }
 
-    const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
-      useSdk().plentysystems.doPreparePayment(),
-    );
+    const paymentType = ref('errorCode');
+    const paymentValue = ref('');
 
-    useHandleError(preparePaymentError.value);
+    try {
+      const { data } = await useSdk().plentysystems.doPreparePayment();
 
-    const paymentType = preparePaymentData.value?.data.type || 'errorCode';
-    const paymentValue = preparePaymentData.value?.data.value || '""';
+      paymentType.value = data.type ?? 'errorCode';
+      paymentValue.value = data.value ?? '';
+    } catch (error) {
+      handleMakeOrderError(error);
+    }
 
     const continueOrHtmlContent = async () => {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
-
-      useHandleError(error.value);
-
-      if (error.value) {
-        state.value.loading = false;
+      try {
+        const { data } = await useSdk().plentysystems.doPlaceOrder();
+        state.value.data = data ?? state.value.data;
+      } catch (error) {
+        handleMakeOrderError(error);
         return {} as Order;
       }
 
-      state.value.data = data.value?.data ?? state.value.data;
-
-      await useAsyncData(() =>
-        useSdk().plentysystems.doExecutePayment({
+      try {
+        await useSdk().plentysystems.doExecutePayment({
           orderId: state.value.data.order.id,
           paymentId: params.paymentId,
-        }),
-      );
+        });
+      } catch (error) {
+        handleMakeOrderError(error);
+      }
     };
 
-    switch (paymentType) {
+    switch (paymentType.value) {
       case 'continue':
       case 'htmlContent': {
         await continueOrHtmlContent();
@@ -78,7 +88,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       case 'redirectUrl': {
         // redirect to given payment provider
-        window.location.assign(paymentValue);
+        window.location.assign(paymentValue.value);
         break;
       }
 
@@ -88,13 +98,13 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useNotification().send({ message: paymentValue, type: 'negative' });
+        useNotification().send({ message: paymentValue.value, type: 'negative' });
         break;
       }
 
       default: {
         useNotification().send({
-          message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
+          message: $i18n.t('orderErrorProvider', { paymentType: paymentType.value }),
           type: 'negative',
         });
         break;
