@@ -21,6 +21,7 @@ runs:
         API_ENDPOINT=$API_ENDPOINT
         $CONFIGURATION
         EOT
+      shell: bash
       env:
         API_SECURITY_TOKEN: ${{ inputs.api-security-token }}
         API_ENDPOINT: ${{ inputs.api-endpoint }}
