@@ -30,6 +30,7 @@ runs:
         yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
         yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
         yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
+        yarn plugin import workspace-tools
       shell: bash
       env:
         NODE_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
