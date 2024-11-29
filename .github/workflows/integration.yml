@@ -103,7 +103,7 @@ jobs:
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          API_ENDPOINT=${{ vars.API_ENDPOINT_TESTING }}
           DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1
           ${{ vars.CONFIG }}
           EOT
@@ -137,7 +137,7 @@ jobs:
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          API_ENDPOINT=${{ vars.API_ENDPOINT_TESTING }}
           DEFAULT_FEEDBACK_ITEMS_PER_PAGE=1
           ${{ vars.CONFIG }}
           EOT
@@ -181,7 +181,7 @@ jobs:
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          API_ENDPOINT=${{ vars.API_ENDPOINT_TESTING }}
           ${{ vars.CONFIG }}
           EOT
 
@@ -223,7 +223,7 @@ jobs:
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          API_ENDPOINT=${{ vars.API_ENDPOINT_TESTING }}
           ${{ vars.CONFIG }}
           EOT
 
@@ -252,7 +252,7 @@ jobs:
           touch apps/web/.env
           cat <<EOT >> apps/web/.env
           API_SECURITY_TOKEN=${{ secrets.API_SECURITY_TOKEN }}
-          API_ENDPOINT=https://mevofvd5omld.c01-14.plentymarkets.com
+          API_ENDPOINT=${{ vars.API_ENDPOINT_TESTING }}
           ${{ vars.CONFIG }}
           EOT
 
