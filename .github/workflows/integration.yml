@@ -266,3 +266,41 @@ jobs:
 
       - name: lighthouse desktop audit
         run: yarn lhci:desktop
+  ready-to-review:
+    runs-on: ubuntu-latest
+    needs: [fitness-compliance, fitness-code-quality, test-unit, build, test-e2e-stable, test-e2e-flakey, fitness-web-vitals-mobile, fitness-web-vitals-desktop]
+    steps:
+      - name: Ready to review (push notification)
+        run: |
+          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "cardsV2": [
+                {
+                    "cardId": "${{ github.event.pull_request.id }}",
+                    "card": {
+                        "header": {
+                            "title": "Boilerplate Review Required",
+                            "subtitle": "${{ github.event.pull_request.title }}"
+                        },
+                        "sections": [
+                            {
+                                "widgets": [
+                                    {
+                                        "buttonList": {
+                                            "buttons": {
+                                                "text": "Open PR",
+                                                "onClick": {
+                                                    "openLink": {
+                                                        "url": "https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]}'
