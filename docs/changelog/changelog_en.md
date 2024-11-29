@@ -13,6 +13,7 @@
 - Added a warning alert on the checkout if no payment or shipping method is available
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
 - Added dynamic structured data from the SEO config.
+- Added robots settings for SEO config.
 
 ### 👷 Changed
 
