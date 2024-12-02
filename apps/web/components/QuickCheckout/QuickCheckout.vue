@@ -35,14 +35,15 @@
           loading="lazy"
           class="mb-3"
         />
-
-        <div class="my-2">
-          <span class="self-center"> {{ quantity }}x </span>
-        </div>
-        <div class="flex mb-3">
+        <div class="flex mb-1">
           <h1 class="font-bold typography-headline-4" data-testid="product-name">
             {{ productGetters.getName(product) }}
           </h1>
+        </div>
+        <div class="mb-3">
+          <span class="self-center text-gray-700 typography-headline-3">
+            {{ t('account.ordersAndReturns.orderDetails.quantity') }}: {{ quantity }}
+          </span>
         </div>
 
         <ProductPrice :product="product" />

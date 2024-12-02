@@ -803,7 +803,8 @@
     "cartContains": "Your cart contains {count} item | Your cart contains {count} items",
     "checkYourCart": "Check your cart",
     "heading": "Added to shopping cart",
-    "subTotal": "Items subtotal"
+    "subTotal": "Items subtotal",
+    "quantity": "Quantity"
   },
   "readLess": "Read less",
   "readMore": "Read more",
