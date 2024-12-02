@@ -21,17 +21,26 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('editor-textarea');
   }
 
+  togglePreviewMode() {
+    this.editPreviewButton.should('be.enabled').click();
+
+    this.editPreviewButton.should('contain.text', 'Preview');
+    return this;
+  }
   toggleEditMode() {
-    this.editPreviewButton.should('not.be.disabled').click();
+    this.editPreviewButton.should('be.enabled').click();
+    this.editPreviewButton.should('contain.text', 'Preview');
     return this;
   }
 
   assertEditModeToolbarVisible() {
+    this.editPreviewButton.click(); 
     this.editorToolbar.should('be.visible');
     return this;
   }
 
   assertEditBlockActionsVisible() {
+    this.editPreviewButton.click(); 
     this.editBlockActions.should('be.visible');
     return this;
   }

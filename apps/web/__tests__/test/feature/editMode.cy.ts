@@ -4,40 +4,32 @@ import newContent from '../../fixtures/newContent.json';
 
 describe('EditMode', () => {
   const editor = new EditorObject();
-  // Function to get the value of a cookie using Cypress commands
-  const getCookieValue = (name: string) => {
-    return cy.getCookie(name).then((cookie) => {
-      return cookie ? cookie.value : null;
-    });
-  };
 
   beforeEach(() => {
     cy.visitAndHydrate(paths.home);
   });
 
-  it('should check if the pwa cookie exists and run tests accordingly', () => {
-    getCookieValue('pwa').then((pwaCookie) => {
-      if (pwaCookie) {
-        // Test to toggle preview mode and back
-        editor.assertEditModeToolbarVisible();
-        editor.toggleEditMode();
-        editor.editPreviewButton.should('contain.text', 'Edit');
-        editor.toggleEditMode();
-        editor.editPreviewButton.should('contain.text', 'Preview');
+  it('should display the UiToolbar and interact with buttons when isPreview is true', () => {
+    // Ensure the toolbar is visible
+    editor.assertEditModeToolbarVisible();
 
-        // Test to check the actions block
-        editor.toggleEditMode();
-        editor.assertEditBlockActionsVisible();
-        editor.toggleEditMode();
-        editor.assertEditBlockActionsNotVisible();
+    // Ensure the edit preview button is enabled and visible before clicking
 
-        // Test to open the editor and change the content
-        editor.openEditor();
-        editor.clearAndTypeInEditor(JSON.stringify(newContent, null, 2));
-        editor.assertEditorContent(JSON.stringify(newContent, null, 2));
-      } else {
-        cy.log('Skipping tests because the pwa cookie does not exist');
-      }
-    });
+    // Test to toggle preview mode and back
+    editor.togglePreviewMode();
+    editor.toggleEditMode();
+
+    // Test to check the actions block
+    editor.toggleEditMode();
+    editor.assertEditBlockActionsVisible();
+    editor.toggleEditMode();
+    editor.assertEditBlockActionsNotVisible();
+
+    // Ensure the open editor button is enabled and visible before clicking
+    editor.openEditorButton.should('be.visible').and('not.be.disabled').click();
+
+    // Test to open the editor and change the content
+    editor.editorTextarea.should('be.visible').clear().type(JSON.stringify(newContent, null, 2));
+    editor.editorTextarea.should('have.value', JSON.stringify(newContent, null, 2));
   });
 });

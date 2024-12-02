@@ -16,7 +16,7 @@
         :size="buttonSize"
         class="self-start"
         :disabled="!isEditingEnabled || !isEditing || !isLocalTemplate()"
-        data-testid="edit-preview-button"
+        data-testid="edit-save-button"
         @click="updatePageTemplate"
       >
         <template v-if="loading">
