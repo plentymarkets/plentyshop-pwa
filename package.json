@@ -9,7 +9,7 @@
   "scripts": {
     "prepare": "is-ci || husky install",
     "update:sdk": "yarn up @plentymarkets/shop-api",
-    "setup": "yarn && yarn build && yarn dev",
+    "setup": "bash yarn.sh && yarn build && yarn dev",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "yarn turbo:disable-telemetry && turbo run build",
     "build:analyze": "yarn turbo:disable-telemetry && turbo run build:analyze",
@@ -78,7 +78,7 @@
     "yarn": ">=3.6.1",
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@3.6.4",
+  "packageManager": "yarn@4.5.3",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog",
