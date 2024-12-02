@@ -1,4 +1,4 @@
-import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
+import { type Order, type MakeOrderParams, additionalInformationGetters } from '@plentymarkets/shop-api';
 import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 
 /**
@@ -29,7 +29,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ``` ts
    * createOrder({
    *    paymentId: 1, // Method of payment
-   *    shippingPrivacyHintAccepted: true,
+   *    additionalInformation: { shippingPrivacyHintAccepted : true }
    * });
    * ```
    */
@@ -38,12 +38,13 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     state.value.loading = true;
 
     try {
-      await useSdk().plentysystems.doAdditionalInformation({
-        orderContactWish: null,
-        orderCustomerSign: null,
-        shippingPrivacyHintAccepted: params.shippingPrivacyHintAccepted,
-        templateType: 'checkout',
-      });
+      const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
+
+      if (params.shippingPrivacyHintAccepted) {
+        additionalParams.shippingPrivacyHintAccepted = params.shippingPrivacyHintAccepted;
+      }
+
+      await useSdk().plentysystems.doAdditionalInformation(additionalParams);
     } catch (error) {
       handleMakeOrderError(error);
     }
