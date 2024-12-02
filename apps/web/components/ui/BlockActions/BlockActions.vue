@@ -1,12 +1,14 @@
 <template>
   <div
     class="absolute right-0 top-1/2 transform -translate-y-1/2 flex flex-col space-y-2 mt-2 border border-[#538AEA] rounded-[6px]"
+    data-testid="edit-block-actions"
   >
     <UiButton
       @click="onEditClick"
       class="text-white rounded hover:bg-transparent active:bg-transparent !px-1"
       variant="tertiary"
       size="sm"
+      data-testid="open-editor-button"
     >
       <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
