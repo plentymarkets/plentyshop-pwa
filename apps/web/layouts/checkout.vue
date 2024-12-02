@@ -39,8 +39,7 @@ const { backToCart = true, heading, backLabelMobile, backLabelDesktop } = define
 const historyState = router.options.history.state;
 const backUrl = localePath(historyState?.back?.toString() ?? paths.home);
 const backHref = backUrl === localePath(router.currentRoute.value.path) ? localePath(paths.home) : backUrl;
-const goToPreviousRoute = async () =>
-  backToCart ? await navigateTo(localePath(paths.cart)) : await navigateTo(localePath(backHref));
+const goToPreviousRoute = () => (backToCart ? navigateTo(localePath(paths.cart)) : navigateTo(localePath(backHref)));
 
 onNuxtReady(async () => await setInitialData());
 </script>

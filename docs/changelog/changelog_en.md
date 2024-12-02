@@ -37,6 +37,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Adjusted the checkout layout for tablet screen sizes.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
 - Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
