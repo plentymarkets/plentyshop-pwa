@@ -1,7 +1,7 @@
 <template>
   <fieldset class="md:mx-4 my-6" data-testid="checkout-payment">
     <legend class="text-neutral-900 text-lg font-bold mb-4">{{ t('checkoutPayment.heading') }}</legend>
-    <div class="grid gap-4 grid-cols-2">
+    <div v-if="paymentMethods.list.length > 0" class="grid gap-4 grid-cols-2">
       <label v-for="paymentMethod in paymentMethods.list" :key="paymentMethod.id" class="relative">
         <input
           type="radio"
@@ -31,12 +31,22 @@
         </span>
       </label>
     </div>
+    <div
+      v-else
+      class="flex items-start bg-warning-100 shadow-md pr-2 pl-4 ring-1 ring-warning-200 typography-text-sm md:typography-text-base py-1 rounded-md"
+      data-testid="no-payment-method-available"
+    >
+      <SfIconWarning class="mt-2 mr-2 text-warning-700 shrink-0" />
+      <div class="py-2 mr-2">
+        <p>{{ t('checkoutPayment.noMethodsAvailable') }}</p>
+      </div>
+    </div>
   </fieldset>
 </template>
 
 <script setup lang="ts">
 import { paymentProviderGetters, type PaymentMethod } from '@plentymarkets/shop-api';
-import { SfIconCreditCard } from '@storefront-ui/vue';
+import { SfIconCreditCard, SfIconWarning } from '@storefront-ui/vue';
 import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
 const { disabled = false } = defineProps<CheckoutPaymentProps>();

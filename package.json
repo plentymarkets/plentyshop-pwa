@@ -28,10 +28,11 @@
     "test:cypress-quarantine": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"yarn start\"",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress\" \"yarn start\"",
     "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn start\"",
-    "lhci:mobile": "lhci autorun"
+    "lhci:mobile": "lhci collect --config=lighthouserc.mobile.json && lhci assert",
+    "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.75.0",
+    "@plentymarkets/shop-api": "^0.76.0",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
