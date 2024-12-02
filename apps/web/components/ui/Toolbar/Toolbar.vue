@@ -48,5 +48,6 @@ const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
+  isEditing.value = false;
 };
 </script>
