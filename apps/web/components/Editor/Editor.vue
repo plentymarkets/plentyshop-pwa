@@ -16,8 +16,8 @@
         :placeholder="$t('editMode.editJsonPlaceholder')"
         data-testid="editor-textarea"
       ></textarea>
-      <SfButton size="sm" class="absolute top-2 right-2" @click="closeEditor"
-        ><SfIconCancel class="cursor-pointer"></SfIconCancel
+      <SfButton size="sm" id="close" class="absolute top-2 right-2" @click="closeEditor" data-testid="editor-exit"
+        ><SfIconCancel data-testid="editor-exit" class="cursor-pointer"></SfIconCancel
       ></SfButton>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>

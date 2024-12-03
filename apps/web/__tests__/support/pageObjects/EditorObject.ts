@@ -1,6 +1,18 @@
 import { PageObject } from "./PageObject";
 
 export class EditorObject extends PageObject {
+  get tagline() {
+    return cy.get('[data-testid="tagline"]');
+  }
+
+  get headline() {
+    return cy.get('[data-testid="headline"]');
+  }
+
+  get description() {
+    return cy.get('[data-testid="description"]');
+  }
+
   get editorToolbar() {
     return cy.getByTestId('edit-mode-toolbar');
   }
@@ -19,6 +31,10 @@ export class EditorObject extends PageObject {
 
   get editorTextarea() {
     return cy.getByTestId('editor-textarea');
+  }
+
+  get exitEditorButton() {
+   return cy.get('#close')
   }
 
   togglePreviewMode() {
@@ -66,10 +82,7 @@ export class EditorObject extends PageObject {
 
   checkEditorContent() {
     this.openEditorButton.should('be.visible').first().click();
-    
-    cy.log('Waiting for the textarea to render...');
 
-  
     cy.get('body', { timeout: 30000 }) 
       .find('[data-testid="editor-textarea"]') 
       .should('exist') 
@@ -78,13 +91,26 @@ export class EditorObject extends PageObject {
       .should('not.be.empty')
   }
 
-   replaceEditorContent(content: string) {
-    cy.get('body', { timeout: 30000 }) 
-    .find('[data-testid="editor-textarea"]') 
-    cy.get('body', { timeout: 30000 }) 
-    .clear() 
-    .type(content);
-    
-   }
+  replaceEditorContent(content: string) {
+    cy.get('[data-testid="editor-textarea"]', { timeout: 30000 })
+        .should('be.visible')
+        .then($el => {
+            if ($el.prop('isContentEditable')) {
+                cy.wrap($el).invoke('text', '');
+            } else {
+                cy.wrap($el).clear(); 
+            }
+        })
+        .type(content) 
+        .should('have.value', content); 
+}
+
+checkEditorChanges() {
+  this.exitEditorButton.get('#close').click({ force: true });
+  this.tagline.should('have.text', 'New tagline from cypress');
+  this.headline.should('have.text', 'New heading from cypress');
+  this.description.should('have.text', 'Description from cypress.');
+}
+
 
 }

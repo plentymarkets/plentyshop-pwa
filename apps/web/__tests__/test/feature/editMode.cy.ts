@@ -10,13 +10,13 @@ describe('EditMode', () => {
   });
 
   it('should display and interact with the editor textarea', () => {
-    editor.isToolbarVisible(); // Ensure toolbar is visible
-    editor.togglePreviewMode(); // Toggle to preview mode
-    editor.toggleEditMode(); // Toggle back to edit mode
-    editor.isEditBlockVisible(); // Check if edit block is visible
-    editor.checkEditorContent(); // Use the updated method to check editor content
+    editor.isToolbarVisible(); 
+    editor.togglePreviewMode();
+    editor.toggleEditMode(); 
+    editor.isEditBlockVisible(); 
+    editor.checkEditorContent(); 
 
-    // Additional assertions if needed
     editor.replaceEditorContent(JSON.stringify(newContent, null, 2));
+    editor.checkEditorChanges();
   });
 });
