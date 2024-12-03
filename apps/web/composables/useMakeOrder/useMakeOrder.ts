@@ -1,4 +1,4 @@
-import { type Order, type MakeOrderParams, additionalInformationGetters } from '@plentymarkets/shop-api';
+import { type Order, type MakeOrderParams, additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
 import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 
 /**
@@ -99,7 +99,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useNotification().send({ message: paymentValue.value, type: 'negative' });
+        handleMakeOrderError(new ApiError({ key: 'null', message: paymentValue.value , code: '400', cause: paymentValue.value }));
         break;
       }
 
