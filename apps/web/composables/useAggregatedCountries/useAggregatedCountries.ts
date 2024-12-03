@@ -16,6 +16,7 @@ import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type Fe
  *  fetchAggregatedCountries,
  *  useGeoRegulatedCountries,
  *  billingCountries,
+ *  localeCountryName(countryId),
  * } = useAggregatedCountries();
  * ```
  */
@@ -57,10 +58,18 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     );
   });
 
+  const localeCountryName = (countryId: string) => {
+    const id = Number.parseInt(countryId);
+
+    if (Number.isNaN(id)) return '';
+    return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
+  };
+
   return {
     fetchAggregatedCountries,
     useGeoRegulatedCountries,
     billingCountries,
+    localeCountryName,
     ...toRefs(state.value),
   };
 };
