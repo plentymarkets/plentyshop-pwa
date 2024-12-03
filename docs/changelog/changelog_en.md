@@ -16,6 +16,7 @@
 
 ### 👷 Changed
 
+- Address preview details now includes the country name.
 - Removed checkbox margin from rating filter in category page
 - Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
