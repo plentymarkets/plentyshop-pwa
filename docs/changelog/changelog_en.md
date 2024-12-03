@@ -26,6 +26,7 @@
 - PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 - PayPal shows a message if the cookie is not accepted.
 - We only reload the page after a cookie gets revoked.
+- Changed the PayPal message if the related cookie is not set.
 
 #### GitHub Action: Upload
 
