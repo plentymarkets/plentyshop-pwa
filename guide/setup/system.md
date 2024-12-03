@@ -4,7 +4,7 @@
 To establish a local connection between the PWA and your plentysystem system, kindly reach out to us via the [forum](https://forum.plentymarkets.com/t/plentyshop-pwa-release/736055). Your PID is necessary for assistance.
 :::
 
-To run this project, you need a plentysystems system. Get a free 30-day trial [on our website](https://www.plentymarkets.com/) or choose one of the [available editions](https://www.plentymarkets.com/product/pricing/).
+To run this project, you need a PlentyONE system. Get started on our website and view our [pricing options](https://www.plentyone.com/pricing).
 
 ## Plugins
 
