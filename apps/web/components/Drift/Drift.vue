@@ -21,7 +21,9 @@ onMounted(() => {
     zoomFactor: 2,
     hoverBoundingBox: true,
     handleTouch: true,
-    touchDelay: 300,
+
+    // inlinePane: 450,
+    touchDelay: 300_000,
     injectBaseStyles: true,
   });
 });

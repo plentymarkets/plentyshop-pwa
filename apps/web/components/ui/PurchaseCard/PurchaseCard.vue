@@ -158,6 +158,8 @@ const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 
+const isMobile = computed(() => viewport.isLessThan('md'));
+
 resetInvalidFields();
 resetAttributeFields();
 

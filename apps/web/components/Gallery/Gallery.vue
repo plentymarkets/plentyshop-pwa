@@ -3,6 +3,7 @@
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
+      ref="containerReference"
     >
       <SfScrollable
         class="flex items-center snap-x snap-mandatory scrollbar-hidden w-full h-full"
@@ -16,16 +17,23 @@
         <div
           v-for="(image, index) in images"
           :key="`image-${index}-thumbnail`"
-          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image"
+          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image zoom-container"
         >
           <Drift :index="index">
             <NuxtImg
+              @touchstart="onTouchStart"
+              @touchmove="onTouchMove"
+              @touchend="onTouchEnd"
               :id="`gallery-img-${index}`"
               :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
               :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
               :aria-hidden="activeIndex !== index"
               fit="fill"
-              :class="`object-contain h-full w-full demo-trigger-${index}`"
+              :class="{
+                zoomed: isZoomed,
+                'object-contain h-full w-full': true,
+                [`demo-trigger-${index}`]: true,
+              }"
               :data-zoom="productImageGetters.getImageUrl(image)"
               :quality="80"
               :srcset="getSourceSet(image)"
@@ -36,6 +44,7 @@
               @load="updateImageStatusFor(`gallery-img-${index}`)"
               :width="getWidth(image, productImageGetters.getImageUrl(image))"
               :height="getHeight(image, productImageGetters.getImageUrl(image))"
+              :style="imageStyle"
             />
           </Drift>
           <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
@@ -119,7 +128,6 @@
         />
       </div>
     </div>
-    <div v-if="isMobile" class="drift-zoom-image" />
   </div>
 </template>
 
@@ -237,4 +245,8 @@ const assignReference = (element: Element | ComponentPublicInstance | null, inde
 
   if (index === 0) firstThumbReference.value = element as HTMLButtonElement;
 };
+
+const containerReference = useTemplateRef<HTMLElement | null>('containerReference');
+
+const { isZoomed, imageStyle, onTouchStart, onTouchMove, onTouchEnd } = useImageZoom(containerReference);
 </script>
