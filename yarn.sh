@@ -13,6 +13,22 @@ function display_version() {
   echo "Script version 1.0"
 }
 
+function delete_yarnrc() {
+  if [ -f .yarnrc.yml ]; then
+    if [ "$FORCE_DELETE" = true ]; then
+      rm .yarnrc.yml
+    else
+      read -p "Do you really want to delete your current .yarnrc.yml? [Y/n] " -n 1 -r
+      echo
+      if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
+        rm .yarnrc.yml
+      else
+        exit 1
+      fi
+    fi
+  fi
+}
+
 # Parse command line arguments
 FORCE_DELETE=false
 while [[ "$1" != "" ]]; do
@@ -35,22 +51,6 @@ while [[ "$1" != "" ]]; do
   esac
   shift
 done
-
-function delete_yarnrc() {
-  if [ -f .yarnrc.yml ]; then
-    if [ "$FORCE_DELETE" = true ]; then
-      rm .yarnrc.yml
-    else
-      read -p "Do you really want to delete your current .yarnrc.yml? [Y/n] " -n 1 -r
-      echo
-      if [[ $REPLY =~ ^[Yy]$ ]] || [[ -z $REPLY ]]; then
-        rm .yarnrc.yml
-      else
-        exit 1
-      fi
-    fi
-  fi
-}
 
 # Main script
 corepack enable
