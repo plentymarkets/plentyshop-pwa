@@ -17,6 +17,6 @@ describe('EditMode', () => {
     editor.checkEditorContent(); // Use the updated method to check editor content
 
     // Additional assertions if needed
-   // editor.assertEditorContent(JSON.stringify(newContent, null, 2));
+    editor.replaceEditorContent(JSON.stringify(newContent, null, 2));
   });
 });
