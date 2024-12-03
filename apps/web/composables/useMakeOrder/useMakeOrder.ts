@@ -36,6 +36,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
+    state.value.data = {} as Order;
 
     try {
       const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
@@ -47,6 +48,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       await useSdk().plentysystems.doAdditionalInformation(additionalParams);
     } catch (error) {
       handleMakeOrderError(error);
+      return {} as Order
     }
 
     const paymentType = ref('errorCode');
@@ -59,6 +61,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       paymentValue.value = data.value ?? '';
     } catch (error) {
       handleMakeOrderError(error);
+      return {} as Order
     }
 
     const continueOrHtmlContent = async () => {
@@ -77,6 +80,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
         });
       } catch (error) {
         handleMakeOrderError(error);
+        return {} as Order;
       }
     };
 
