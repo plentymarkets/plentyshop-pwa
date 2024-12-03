@@ -26,11 +26,7 @@
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment
-            :payment-methods="paymentMethods"
-            :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate"
-          />
+          <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />

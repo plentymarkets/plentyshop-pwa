@@ -18,7 +18,7 @@
         <div class="relative">
           <ShippingMethod :shipping-methods="shippingMethods" disabled />
           <UiDivider :class="dividerClass" />
-          <CheckoutPayment :payment-methods="paymentMethods" disabled />
+          <CheckoutPayment disabled />
         </div>
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
@@ -79,7 +79,7 @@ const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const { processingOrder } = useProcessingOrder();
 const { setInitialCartTotal, changedTotal } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const { loadPayment, loadShipping, paymentMethods, shippingMethods } = useCheckoutPagePaymentAndShipping();
+const { loadPayment, loadShipping, shippingMethods } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
   data: shippingAddresses,
