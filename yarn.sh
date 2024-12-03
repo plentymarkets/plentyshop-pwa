@@ -60,6 +60,7 @@ yarn set version 4.5.3 --yarn-path
 yarn config set nodeLinker node-modules
 yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
 yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
+
 if [ -n "$GITHUB_ACTIONS" ]; then
   if [ -z "$NPM_AUTH_TOKEN" ]; then
     echo "NPM_AUTH_TOKEN is not set in the GitHub Actions environment"
@@ -73,4 +74,5 @@ else
   echo "NPM_AUTH_TOKEN not found in ./apps/web/.env"
   exit 1
 fi
+
 yarn
