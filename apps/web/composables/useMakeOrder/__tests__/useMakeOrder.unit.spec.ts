@@ -362,6 +362,50 @@ describe('useMakeOrder', () => {
                 expect(doExecutePaymentSpy).not.toHaveBeenCalled();
             }
         });
+
+        it('should call the error handling if doPreparePayment returns a error as http 200', async () => {
+            const handleErrorSpy = vi.fn();
+            const doPreparePayment = vi.fn().mockImplementation(() => {
+                return {
+                    data: {
+                        type: 'errorCode',
+                        value: 'my prepayment error'
+                    }
+                }
+            });
+
+            useSdk.mockImplementation(() => {
+                return {
+                    plentysystems: {
+                        doAdditionalInformation: vi.fn(),
+                        doPreparePayment: doPreparePayment,
+                        doPlaceOrder: vi.fn(),
+                        doExecutePayment: vi.fn()
+                    }
+                }
+            });
+
+            useHandleError.mockImplementation(() => {
+                return handleErrorSpy;
+            });
+
+            const { createOrder } = useMakeOrder();
+            try {
+                await createOrder({
+                    paymentId: 1,
+                    shippingPrivacyHintAccepted: true,
+                });
+            } catch (error) {
+                expect(handleErrorSpy).toHaveBeenCalledWith(
+                    new ApiError({
+                        key: 'errorCode',
+                        code: 'errorCode',
+                        message: 'my prepayment error',
+                        cause: {},
+                    })
+                );
+            }
+        });
     });
 
 });
