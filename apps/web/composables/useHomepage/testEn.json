@@ -33,7 +33,7 @@
     },
     {
       "name": "ProductRecommendedProducts",
-      "options": { "headline": "", "categoryId": "49" }
+      "options": { "headline": "New Sales Headline", "categoryId": "49" }
     }
   ]
 }
