@@ -5,7 +5,7 @@
     aria-labelledby="review-modal"
     tag="section"
     role="dialog"
-    class="h-full md:w-[500px] md:h-fit m-0 p-0"
+    class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
     :data-testid="dataTestId"
   >
     <template v-if="isAuthorized">

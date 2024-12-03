@@ -45,6 +45,11 @@
     },
     "functional": {
       "cookies": {
+        "payPal": {
+          "name": "paypal",
+          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
+          "status": "Erforderlich für die Zahlungsabwicklung über PayPal."
+        },
         "scriptDemo": {
           "name": "Script-Demo",
           "provider": "plentysystems AG",
@@ -350,7 +355,8 @@
   "checkoutPayment": {
     "comingSoon": "Bald verfügbar",
     "creditCard": "Kreditkarte",
-    "heading": "Zahlungsart"
+    "heading": "Zahlungsart",
+    "noMethodsAvailable": "Es sind keine Zahlungsarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter."
   },
   "clear": "Zurücksetzen",
   "clearFilters": "Alle Filter löschen",
@@ -770,7 +776,9 @@
   "pagination": "Paginierte Navigation",
   "passwordVisibilty": "Sichtbarkeit des Passworts",
   "paypal": {
+    "cookieNotAccepted": "Bitte akzeptieren Sie unsere Cookies, um PayPal zu nutzen: ",
     "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum.",
+    "openSettings": "Cookie-Einstellungen öffnen",
     "unbrandedCancel": "Abbrechen",
     "unbrandedCardNumber": "Kartennummer",
     "unbrandedCvv": "Kartenprüfnummer",
@@ -890,6 +898,7 @@
     "description": "Nicht verfügbar, solange keine Versandadresse angegeben wird.",
     "free": "Kostenlos",
     "heading": "Versandart",
+    "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
     "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
   },
   "showAllReviews": "Alle Bewertungen anzeigen",
@@ -922,6 +931,15 @@
       "validationFailed": "Die Adresse ist ungültig."
     },
     "cart": {
+      "addToBasket": {
+        "itemSetComponentMismatch": "Es liegt eine Unstimmigkeit bei den Komponenten des Artikelsets vor, und es kann somit nicht zum Warenkorb hinzugefügt werden.",
+        "maxItemQuantityReached": "Die maximale Menge für diesen Artikel wurde erreicht und kann somit nicht zum Warenkorb hinzugefügt werden.",
+        "maxVariationQuantityReached": "Die maximale Menge für diese Variante wurde erreicht und kann somit nicht zum Warenkorb hinzugefügt werden.",
+        "minVariationQuantityNotReached": "Die Mindestmenge für diese Variante wurde nicht erreicht und kann somit nicht zum Warenkorb hinzugefügt werden.",
+        "notEnoughStockForVariation": "Es ist nicht genügend Bestand für diese Variante verfügbar.",
+        "unknownError": "Beim Hinzufügen des Artikels ist ein unbekannter Fehler aufgetreten. Bitte versuche es erneut.",
+        "variationNotFound": "Die ausgewählte Variante wurde nicht gefunden und kann somit nicht zum Warenkorb hinzugefügt werden."
+      },
       "failedToRemoveItem": "Der Artikel konnte nicht entfernt werden.",
       "reachedMaximumQuantity": "Die maximale Bestellmenge dieses Artikels wurde überschritten."
     },

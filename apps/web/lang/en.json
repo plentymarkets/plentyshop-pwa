@@ -45,6 +45,11 @@
     },
     "functional": {
       "cookies": {
+        "payPal": {
+          "name": "paypal",
+          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
+          "status": "Required for PayPal payments."
+        },
         "scriptDemo": {
           "name": "Script demo",
           "provider": "plentysystems AG",
@@ -350,7 +355,8 @@
   "checkoutPayment": {
     "comingSoon": "Coming soon",
     "creditCard": "Credit Card",
-    "heading": "Payment method"
+    "heading": "Payment method",
+    "noMethodsAvailable": "There are no payment methods available. Please contact the webshop provider."
   },
   "clear": "Clear",
   "clearFilters": "Clear all filters",
@@ -770,7 +776,9 @@
   "pagination": "Paginated Navigation",
   "passwordVisibilty": "Password visibility",
   "paypal": {
+    "cookieNotAccepted": "Please accept our cookies to use PayPal: ",
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
+    "openSettings": "Open cookie settings",
     "unbrandedCancel": "Cancel",
     "unbrandedCardNumber": "Card number",
     "unbrandedCvv": "CVV",
@@ -890,6 +898,7 @@
     "description": "Not available until a shipping address is provided.",
     "free": "Free",
     "heading": "Shipping method",
+    "noMethodsAvailable": "There are no shipping methods available. Please contact the webshop provider.",
     "showDataPrivacyAgreementHint": "I agree that my email address and my phone number will be transmitted to {parcelServiceInformation}, so that they can contact me via email or phone in order to determine a delivery date or to communicate status information about the delivery of the shipment. I can revoke this agreement at any time."
   },
   "showAllReviews": "Show all reviews",
@@ -922,6 +931,15 @@
       "validationFailed": "The address is invalid."
     },
     "cart": {
+      "addToBasket": {
+        "itemSetComponentMismatch": "There is a mismatch in the item set components, and it cannot be added to the cart.",
+        "maxItemQuantityReached": "The maximum quantity for this item has been reached and it cannot be added to the cart.",
+        "maxVariationQuantityReached": "The maximum quantity for this variant has been reached and it cannot be added to the cart.",
+        "minVariationQuantityNotReached": "The minimum quantity for this variant has not been reached and cannot be added to the cart.",
+        "notEnoughStockForVariation": "There is insufficient stock available for this variant.",
+        "unknownError": "An unknown error occurred while adding the item. Please try again.",
+        "variationNotFound": "The selected variant was not found and cannot be added to the cart."
+      },
       "failedToRemoveItem": "The item could not be removed.",
       "reachedMaximumQuantity": "Your order exceeds the maximum order quantity of this item."
     },
