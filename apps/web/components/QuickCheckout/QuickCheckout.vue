@@ -106,8 +106,7 @@ defineProps<QuickCheckoutProps>();
 
 const { t, n } = useI18n();
 
-const { data: sessionData } = useCustomer();
-const showNetPrices = sessionData.value?.user?.showNetPrices;
+const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();

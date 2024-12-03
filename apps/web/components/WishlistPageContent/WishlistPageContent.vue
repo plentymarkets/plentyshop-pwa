@@ -77,8 +77,7 @@ import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
-const { data: sessionData } = useCustomer();
-const showNetPrices = sessionData.value?.user?.showNetPrices;
+const { showNetPrices } = useCustomer();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 

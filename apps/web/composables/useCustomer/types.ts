@@ -34,6 +34,7 @@ export interface UseCustomer {
   register: Register;
   loginAsGuest: LoginAsGuest;
   changePassword: ChangePassword;
+  showNetPrices?: Boolean;
 }
 
 export type UseCustomerReturn = () => UseCustomer;

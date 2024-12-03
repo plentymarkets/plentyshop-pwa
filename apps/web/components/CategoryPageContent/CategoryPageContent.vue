@@ -91,8 +91,7 @@ const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<C
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
 
-const { data: sessionData } = useCustomer();
-const showNetPrices = sessionData.value?.user?.showNetPrices;
+const { showNetPrices } = useCustomer();
 
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();

@@ -232,8 +232,7 @@ const { send } = useNotification();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, addOrderToCart, loading, hasItemsChanged } = useOrderAgain();
 const { t, n } = useI18n();
-const { data: sessionData } = useCustomer();
-const showNetPrices = sessionData.value?.user?.showNetPrices;
+const { showNetPrices } = useCustomer();
 
 const localePath = useLocalePath();
 const loadingAddToCart = ref(false);
