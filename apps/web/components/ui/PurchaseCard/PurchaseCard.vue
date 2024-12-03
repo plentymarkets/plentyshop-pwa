@@ -138,8 +138,9 @@ import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const { data: sessionData } = useCustomer();
+const showNetPrices = sessionData.value?.user?.showNetPrices;
+
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();

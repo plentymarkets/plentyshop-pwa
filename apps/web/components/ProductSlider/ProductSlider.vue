@@ -44,8 +44,8 @@ import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
 const { addModernImageExtension } = useModernImage();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const { data: sessionData } = useCustomer();
+const showNetPrices = sessionData.value?.user?.showNetPrices;
 
 defineProps<ProductSliderProps>();
 </script>

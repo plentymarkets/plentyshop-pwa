@@ -105,8 +105,10 @@ import { paths } from '~/utils/paths';
 defineProps<QuickCheckoutProps>();
 
 const { t, n } = useI18n();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+
+const { data: sessionData } = useCustomer();
+const showNetPrices = sessionData.value?.user?.showNetPrices;
+
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();
 const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
