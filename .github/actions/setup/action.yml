@@ -19,7 +19,7 @@ runs:
         registry-url: 'https://npm.pkg.github.com'
 
     - name: Setup yarn
-      run: bash ${{ github.workspace }}/yarn.sh
+      run: chmod +x ${{ github.workspace }}/yarn.sh && ${{ github.workspace }}/yarn.sh
       shell: bash
       env:
         NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
