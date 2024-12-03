@@ -61,9 +61,6 @@ const handleEdit = (index: number) => {
 const updateBlock = (index: number, updatedBlock: Block) => {
   if (data.value.blocks && index !== null && index < data.value.blocks.length) {
     data.value.blocks[index] = updatedBlock;
-    if (isEmptyBlock(updatedBlock)) {
-      jsonHasData.value = false;
-    }
   }
 };
 
