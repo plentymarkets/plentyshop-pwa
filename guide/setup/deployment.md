@@ -2,15 +2,15 @@
 
 This guide describes how to deploy your app on your live domain. The setup consists of three parts.
 
-1. Register the app in your plentysystems system. Registering the app generates authentication credentials.
+1. Register the app in your PlentyONE system. Registering the app generates authentication credentials.
 2. Add the credentials to your GitHub repository.
-3. Upload the app to plentysystems.
+3. Upload the app to PlentyONE.
 
 The following sections describe the steps in detail.
 
-## plentysystems system
+## PlentyONE system
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **CMS » Deployment**.
 3. Click on :heavy_plus_sign: to add a new application.
 4. Fill in the required information.
@@ -88,9 +88,9 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 
 ### Upload
 
-In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your plentysystems system.
+In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your PlentyONE system.
 
-To deploy a preview to your plentysystems system, carry out the following steps:
+To deploy a preview to your PlentyONE system, carry out the following steps:
 
 1. Go to your repository.
 2. Go to **Actions**.
@@ -103,7 +103,7 @@ The workflow takes several minutes to complete. You can monitor the progress in 
 
 ## Activation
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **CMS » Deployment**.
 3. For the configured domain, open the further actions menu (three dots).
 4. Click on **Activate application**.
@@ -113,7 +113,7 @@ It can take up to 1 hour for the changes to take effect.
 
 ## Preview
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **CMS » Deployment**.
 3. Click on the **URL** of the app you want to preview.
 
@@ -123,7 +123,7 @@ It can take up to 1 hour for the changes to take effect.
 :notebook: To activate live mode, you first have to [activate](#activation) the application.
 :::
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **CMS » Deployment**.
 3. For the configuration domain, open the further actions menu (three dots).
 4. Click on **Activate live mode**.

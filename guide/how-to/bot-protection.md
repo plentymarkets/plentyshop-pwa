@@ -26,7 +26,7 @@ For further information, refer to the [Turnstile documentation](https://develope
 
 ## Enabling Cloudflare Turnstile
 
-This section describes how to enable Turnstile for your shop. You have to take action in Cloudflare, your plentysystems system and the PlentyONE Shop configuration.
+This section describes how to enable Turnstile for your shop. You have to take action in Cloudflare, your PlentyONE system and the PlentyONE Shop configuration.
 
 ### Cloudflare
 
@@ -36,9 +36,9 @@ This section describes how to enable Turnstile for your shop. You have to take a
 
 Cloudflare generates a secret key and a sitekey. You need both keys in the next steps.
 
-### plentysystems
+### PlentyONE
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **Setup » plentyShop » Select client » Online Store Settings**.
 3. Paste the secret key in the **Cloudflare Turnstile Secret key (only PWA)** field.
 4. **Save** the settings.
@@ -56,11 +56,11 @@ NEWSLETTER_FORM_SHOW_NAMES=1
 
 ## Disabling Cloudflare Turnstile
 
-To disable Turnstile, you have to reset the configurations in the plentysystems system and PlentyONE Shop.
+To disable Turnstile, you have to reset the configurations in the PlentyONE system and PlentyONE Shop.
 
-### plentysystems
+### PlentyONE
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **Setup » plentyShop » Select client » Online Store Settings**.
 3. Remove the secret key from the **Cloudflare Turnstile Secret key (only PWA)** field.
 4. **Save** the settings.

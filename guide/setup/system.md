@@ -1,4 +1,4 @@
-# plentysystems system setup
+# PlentyONE system setup
 
 ::: info
 To establish a local connection between the PWA and your plentysystem system, kindly reach out to us via the [forum](https://forum.plentymarkets.com/t/plentyshop-pwa-release/736055). Your PID is necessary for assistance.
@@ -12,7 +12,7 @@ To run this project, you need a PlentyONE system. Get started on our website and
 
 For PlentyONE Shop to run, you have to install plugins that provide additional REST routes and providers. Carry out the following steps:
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. [Install](https://knowledge.plentymarkets.com/en-gb/manual/main/plugins/installing-added-plugins.html#installing-plugins) the following plugins in the latest version:
     - IO
     - plentyShop LTS
@@ -38,6 +38,6 @@ Optionally, install additional plugins to add more payment or shipping providers
 
 ## System configuration
 
-1. Log into your plentysystems system.
+1. Log into your PlentyONE system.
 2. Go to **Setup » Guided Tours** and complete **Setting up plentyShop**.
 3. Go to **Setup » Orders » Payment » PayPal** and set up your PayPal account.

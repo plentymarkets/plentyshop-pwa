@@ -21,7 +21,7 @@ We recommend working with a fork of the [app repository](https://github.com/plen
 
 ### NPM registry
 
-This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
+This project queries data from PlentyONE by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
 
 1. In the root directory, create a new file called `.yarnrc.yml`.
 2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
@@ -33,7 +33,7 @@ The `.gitignore` doesn't track `.yarnrc.yml`, so you don't have to worry about e
 You can enable [push protection](https://docs.github.com/en/code-security/secret-scanning/push-protection-for-users) in your GitHub account for an additional layer of security.
 :::
 
-### plentysystems system
+### PlentyONE system
 
 1. Add your [API endpoint](/guide/how-to/middleware#api-endpoint)
 2. Add your [API security token](/guide/how-to/middleware#api-security-token)
@@ -46,7 +46,7 @@ You can enable [push protection](https://docs.github.com/en/code-security/secret
 
 ## Custom configuration
 
-By default, the app connects to a demo shop. The demo shop uses English as the default locale and German as a second locale. To connect to your own plentysystems system, you have to update the API endpoint in the middleware and match the locale configuration in system and app.
+By default, the app connects to a demo shop. The demo shop uses English as the default locale and German as a second locale. To connect to your own PlentyONE system, you have to update the API endpoint in the middleware and match the locale configuration in system and app.
 
 For details, refer to the following guides:
 
