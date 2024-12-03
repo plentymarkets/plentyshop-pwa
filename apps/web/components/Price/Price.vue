@@ -16,5 +16,4 @@ import type { PriceProps } from '~/components/Price/types';
 defineProps<PriceProps>();
 
 const { showNetPrices } = useCustomer();
-
 </script>
