@@ -17,6 +17,7 @@
 ### 👷 Changed
 
 - Modified showNetPrices source to be consumed from user session.
+- Address preview details now includes the country name.
 - Removed checkbox margin from rating filter in category page
 - Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
@@ -26,6 +27,7 @@
 - PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 - PayPal shows a message if the cookie is not accepted.
 - We only reload the page after a cookie gets revoked.
+- Changed the PayPal message if the related cookie is not set.
 
 #### GitHub Action: Upload
 
@@ -38,6 +40,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Fixed filter translation on category page when switching language.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
 - Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
