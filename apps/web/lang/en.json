@@ -767,9 +767,9 @@
   "pagination": "Paginated Navigation",
   "passwordVisibilty": "Password visibility",
   "paypal": {
-    "cookieNotAccepted": "Please accept our cookies to use PayPal: ",
+    "cookieNotAccepted": "To use Paypal, open the {phrase} and enable the PayPal cookie.",
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
-    "openSettings": "Open cookie settings",
+    "openSettings": "cookie settings",
     "unbrandedCancel": "Cancel",
     "unbrandedCardNumber": "Card number",
     "unbrandedCvv": "CVV",
