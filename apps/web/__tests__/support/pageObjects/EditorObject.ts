@@ -7,7 +7,7 @@ export class EditorObject extends PageObject {
 
   get editPreviewButton() {
     return cy.getByTestId('edit-preview-button');
-  }
+  }   
 
   get editBlockActions() {
     return cy.getByTestId('edit-block-actions');
@@ -32,13 +32,13 @@ export class EditorObject extends PageObject {
     return this;
   }
 
-  assertEditModeToolbarVisible() {
+  isToolbarVisible() {
     this.editPreviewButton.click(); 
     this.editorToolbar.should('be.visible');
     return this;
   }
 
-  assertEditBlockActionsVisible() {
+  isEditBlockVisible() {
     this.editPreviewButton.click(); 
     this.editBlockActions.should('be.visible');
     return this;
@@ -63,4 +63,28 @@ export class EditorObject extends PageObject {
     this.editorTextarea.should('have.value', content);
     return this;
   }
+
+  checkEditorContent() {
+    this.openEditorButton.should('be.visible').first().click();
+    
+    cy.log('Waiting for the textarea to render...');
+
+  
+    cy.get('body', { timeout: 30000 }) 
+      .find('[data-testid="editor-textarea"]') 
+      .should('exist') 
+      .and('be.visible') 
+      .invoke('attr', 'placeholder')
+      .should('not.be.empty')
+  }
+
+   replaceEditorContent(content: string) {
+    cy.get('body', { timeout: 30000 }) 
+    .find('[data-testid="editor-textarea"]') 
+    cy.get('body', { timeout: 30000 }) 
+    .clear() 
+    .type(content);
+    
+   }
+
 }
