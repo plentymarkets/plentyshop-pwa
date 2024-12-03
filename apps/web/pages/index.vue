@@ -16,7 +16,7 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions v-if="disableActions || jsonHasData" :index="index" @edit="handleEdit" />
+          <UiBlockActions v-if="disableActions && blockHasData(block)" :index="index" @edit="handleEdit" />
           <component :is="getComponent(block.name)" v-bind="block.options" />
         </div>
       </template>
@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import { Block } from '~/composables/useHomepage/types';
 
-const { isEditing, disableActions, jsonHasData } = useEditor();
+const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
 const { data, fetchPageTemplate } = useHomepage();
 
@@ -40,6 +40,9 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
+};
+const blockHasData = (block: Block): boolean => {
+  return !isEmptyBlock(block);
 };
 const tabletEdit = (index: number) => {
   if (isTablet.value) {
