@@ -5,8 +5,8 @@ import { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './typ
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
 
-export const useHomepage: UseHomepageDataReturn = () => {
-  const state = useState<UseHomepageDataState>('useHomepageState', () => ({
+export const useHomepage: UseHomepageDataReturn = (lang) => {
+  const state = useState<UseHomepageDataState>(`useHomepageState-${lang}`, () => ({
     data: { blocks: [] } as HomepageData,
     loading: false,
     showErrors: false,
@@ -15,7 +15,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
 
-  const currentLocale = ref($i18n.locale.value);
+  const currentLocale = ref(lang || $i18n.locale.value);
+
   const fetchPageTemplate = (): void => {
     state.value.loading = true;
 
@@ -29,12 +30,19 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
     state.value.loading = false;
   };
+
   watch(
-    () => state.value.data,
-    (updatedData) => {
-      state.value.data = updatedData;
+    () => $i18n.locale.value,
+    (changedLocale) => {
+      currentLocale.value = changedLocale;
+      const langState = useState<UseHomepageDataState>(`useHomepageState-${changedLocale}`, () => ({
+        data: useLocaleSpecificHomepageTemplate(changedLocale),
+        loading: false,
+        showErrors: false,
+      }));
+      state.value = langState.value;
     },
-    { deep: true },
+    { immediate: true },
   );
 
   return {

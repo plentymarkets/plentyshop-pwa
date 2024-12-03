@@ -29,7 +29,10 @@ import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
-const { data, fetchPageTemplate } = useHomepage();
+const { $i18n } = useNuxtApp();
+const currentLocale = ref($i18n.locale.value);
+
+const { data, fetchPageTemplate } = useHomepage(currentLocale.value);
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
