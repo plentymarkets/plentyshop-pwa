@@ -99,7 +99,9 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        handleMakeOrderError(new ApiError({ key: 'null', message: paymentValue.value , code: '400', cause: paymentValue.value }));
+        handleMakeOrderError(
+          new ApiError({ key: 'null', message: paymentValue.value, code: '400', cause: paymentValue.value }),
+        );
         break;
       }
 
