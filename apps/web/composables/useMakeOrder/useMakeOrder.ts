@@ -48,7 +48,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       await useSdk().plentysystems.doAdditionalInformation(additionalParams);
     } catch (error) {
       handleMakeOrderError(error);
-      return {} as Order
+      return {} as Order;
     }
 
     const paymentType = ref('errorCode');
@@ -61,7 +61,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       paymentValue.value = data.value ?? '';
     } catch (error) {
       handleMakeOrderError(error);
-      return {} as Order
+      return {} as Order;
     }
 
     const continueOrHtmlContent = async () => {
