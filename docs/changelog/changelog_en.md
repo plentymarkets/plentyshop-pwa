@@ -65,6 +65,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- Fixed SSR rendering for homepage when switching language.
 - CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
 - Improved CLS for hero skeleton.
