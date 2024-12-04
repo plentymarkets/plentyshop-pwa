@@ -66,9 +66,11 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- Fixed SSR rendering for homepage when switching language.
 - CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
 - Improved CLS for hero skeleton.
+- Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
