@@ -1,0 +1,130 @@
+<template>
+  <div
+    class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image"
+    ref="containerReference"
+  >
+    <Drift v-if="!isMobile" :index="index">
+      <NuxtImg
+        @touchstart="onTouchStart"
+        @touchmove="onTouchMove"
+        @touchend="onTouchEnd"
+        :id="`gallery-img-${index}`"
+        :alt="imageAlt"
+        :title="imageTitle"
+        :aria-hidden="activeIndex !== index"
+        fit="fill"
+        :class="{
+          zoomed: isZoomed,
+          'object-contain h-full w-full': true,
+          [`demo-trigger-${index}`]: true,
+        }"
+        :data-zoom="imageUrl"
+        :quality="80"
+        :srcset="getSourceSet(image)"
+        sizes="2xs:370px xs:720px sm:740px md:1400px"
+        draggable="false"
+        :loading="isFirstImage ? 'eager' : 'lazy'"
+        :fetchpriority="isFirstImage ? 'high' : 'auto'"
+        @load="updateImageStatusFor(`gallery-img-${index}`)"
+        :width="getWidth(image, imageUrl)"
+        :height="getHeight(image, imageUrl)"
+        :style="isMobile && imageStyle"
+      />
+    </Drift>
+    <NuxtImg
+      v-else
+      @touchstart="onTouchStart"
+      @touchmove="onTouchMove"
+      @touchend="onTouchEnd"
+      :id="`gallery-img-${index}`"
+      :alt="imageAlt"
+      :title="imageTitle"
+      :aria-hidden="activeIndex !== index"
+      fit="fill"
+      :class="{
+        zoomed: isZoomed,
+        'object-contain h-full w-full': true,
+        [`demo-trigger-${index}`]: true,
+      }"
+      :data-zoom="imageUrl"
+      :quality="80"
+      :srcset="getSourceSet(image)"
+      sizes="2xs:370px xs:720px sm:740px md:1400px"
+      draggable="false"
+      :loading="isFirstImage ? 'eager' : 'lazy'"
+      :fetchpriority="isFirstImage ? 'high' : 'auto'"
+      @load="updateImageStatusFor(`gallery-img-${index}`)"
+      :width="getWidth(image, imageUrl)"
+      :height="getHeight(image, imageUrl)"
+      :style="isMobile && imageStyle"
+    />
+    <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { productImageGetters } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
+import type { ImagesData } from '@plentymarkets/shop-api';
+import { type ZoomableImageProps } from '~/components/ZoomableImage/types';
+
+const props = defineProps<ZoomableImageProps>();
+
+const containerReference = useTemplateRef<null>('containerReference');
+const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
+
+const { isZoomed, imageStyle, onTouchStart, onTouchMove, onTouchEnd } = useImageZoom(containerReference);
+const viewport = useViewport();
+
+const image = props.image;
+const index = props.index;
+const imageUrl = productImageGetters.getImageUrl(image);
+const imageAlt = productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || '';
+const imageTitle = productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || '';
+const isMobile = computed(() => viewport.isLessThan('md'));
+
+const getSourceSet = (image: ImagesData) => {
+  const dpr = 2;
+  const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
+  const preview = productImageGetters.getImageUrlPreview(image);
+  const middle = productImageGetters.getImageUrlMiddle(image);
+  const full = productImageGetters.getImageUrl(image);
+
+  return `
+    ${secondPreview} ${370 * dpr}w,
+    ${preview} ${700 * dpr}w,
+    ${middle} ${720 * dpr}w,
+    ${full} ${1400 * dpr}w
+  `;
+};
+
+const getWidth = (image: ImagesData, imageUrl: string) => {
+  const imageWidth = productImageGetters.getImageWidth(image) || 600;
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageWidth;
+  }
+  return '';
+};
+
+const getHeight = (image: ImagesData, imageUrl: string) => {
+  const imageHeight = productImageGetters.getImageHeight(image) || 600;
+  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageHeight;
+  }
+  return '';
+};
+
+onMounted(() => {
+  nextTick(() => {
+    for (const [index] of props.images.entries()) {
+      const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
+      const imgId = String(myImg?.id);
+      if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
+    }
+  });
+});
+
+const updateImageStatusFor = (imageId: string) => {
+  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
+};
+</script>
