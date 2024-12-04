@@ -33,6 +33,7 @@ const { $i18n } = useNuxtApp();
 const currentLocale = ref($i18n.locale.value);
 
 const { data, fetchPageTemplate } = useHomepage(currentLocale.value);
+const { fetchCategoryTemplate } = useCategoryTemplate();
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
@@ -84,5 +85,10 @@ const getComponent = (name: string) => {
     return resolveComponent('ProductRecommendedProducts');
   }
 };
+
+const runtimeConfig = useRuntimeConfig();
+
+await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+
 fetchPageTemplate();
 </script>
