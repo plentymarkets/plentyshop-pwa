@@ -14,7 +14,6 @@
         :aria-hidden="activeIndex !== index"
         fit="fill"
         :class="{
-          zoomed: isZoomed,
           'object-contain h-full w-full': true,
           [`demo-trigger-${index}`]: true,
         }"
@@ -28,7 +27,6 @@
         @load="updateImageStatusFor(`gallery-img-${index}`)"
         :width="getWidth(image, imageUrl)"
         :height="getHeight(image, imageUrl)"
-        :style="isMobile && imageStyle"
       />
     </Drift>
     <NuxtImg
@@ -44,7 +42,6 @@
       :class="{
         zoomed: isZoomed,
         'object-contain h-full w-full': true,
-        [`demo-trigger-${index}`]: true,
       }"
       :data-zoom="imageUrl"
       :quality="80"
@@ -56,7 +53,7 @@
       @load="updateImageStatusFor(`gallery-img-${index}`)"
       :width="getWidth(image, imageUrl)"
       :height="getHeight(image, imageUrl)"
-      :style="isMobile && imageStyle"
+      :style="imageStyle"
     />
     <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
   </div>

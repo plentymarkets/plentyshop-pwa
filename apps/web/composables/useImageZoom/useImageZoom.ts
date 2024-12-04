@@ -13,7 +13,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   let startTranslateY = 0;
   const maxTranslateX = ref(0);
   const maxTranslateY = ref(0);
-  const zoomScale = 2; // The zoom scale factor
+  const zoomScale = 2;
 
   const updateMaxTranslations = () => {
     const container = containerReference.value;
@@ -47,13 +47,15 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
 
       if (isZoomed.value) {
         updateMaxTranslations();
+      } else {
+        maxTranslateX.value = 0;
+        maxTranslateY.value = 0;
       }
     }
 
     lastTap = currentTime;
 
     if (isZoomed.value) {
-      // Start tracking touch move
       const touch = event.touches[0];
       touchStartX = touch.pageX - startTranslateX;
       touchStartY = touch.pageY - startTranslateY;
@@ -87,11 +89,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
           transition: 'none',
           cursor: 'move',
         }
-      : {
-          transform: 'scale(1)',
-          transition: 'transform 0.3s ease',
-          cursor: 'auto',
-        };
+      : {};
   });
 
   onMounted(() => {
