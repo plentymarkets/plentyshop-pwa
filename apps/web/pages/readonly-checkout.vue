@@ -208,7 +208,7 @@ const handleRegularOrder = async () => {
   try {
     const data: Order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
     await executeOrder({
