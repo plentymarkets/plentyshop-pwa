@@ -100,11 +100,14 @@ onMounted(() => {
           paymentId: cart.value.methodOfPaymentId,
           additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
         });
-        await executeOrder({
-          mode: 'paypal',
-          plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-          paypalTransactionId: data.orderID,
-        });
+
+        if (order) {
+          await executeOrder({
+            mode: 'paypal',
+            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+            paypalTransactionId: data.orderID,
+          });
+        }
 
         if (order?.order?.id) {
           useProcessingOrder().processingOrder.value = true;
