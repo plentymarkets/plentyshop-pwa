@@ -20,10 +20,7 @@ onMounted(() => {
     containInline: true,
     zoomFactor: 2,
     hoverBoundingBox: true,
-    handleTouch: true,
-
-    // inlinePane: 450,
-    touchDelay: 300_000,
+    handleTouch: false,
     injectBaseStyles: true,
   });
 });
