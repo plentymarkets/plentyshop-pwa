@@ -1,5 +1,7 @@
 #!/bin/bash
 
+RED='\033[0;31m'
+
 function display_help() {
   echo "Usage: $0 [option...]"
   echo
@@ -63,7 +65,7 @@ yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
 
 if [ -n "$GITHUB_ACTIONS" ]; then
   if [ -z "$NPM_AUTH_TOKEN" ]; then
-    echo "NPM_AUTH_TOKEN is not set in the GitHub Actions environment"
+    echo -e "${RED}NPM_AUTH_TOKEN is not set in the GitHub Actions environment ${SET}"
     exit 1
   fi
   yarn config set npmScopes.plentymarkets.npmAuthToken $NPM_AUTH_TOKEN
@@ -71,7 +73,7 @@ elif grep -q "NPM_AUTH_TOKEN" ./apps/web/.env; then
   export $(grep "NPM_AUTH_TOKEN" ./apps/web/.env | xargs)
   yarn config set npmScopes.plentymarkets.npmAuthToken $NPM_AUTH_TOKEN
 else
-  echo "NPM_AUTH_TOKEN not found in ./apps/web/.env"
+  echo -e "${RED} NPM_AUTH_TOKEN not found in ./apps/web/.env ${SET}"
   exit 1
 fi
 

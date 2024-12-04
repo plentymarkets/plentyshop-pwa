@@ -36,7 +36,7 @@ $args | ForEach-Object {
     "--version" { Show-Version; exit }
     "-f" { $ForceDelete = $true }
     "--force" { $ForceDelete = $true }
-    default { Write-Output "Invalid option: $_"; Show-Help; exit 1 }
+    default { Write-Host "Invalid option: $_"; Show-Help; exit 1 }
   }
 }
 
@@ -51,7 +51,7 @@ yarn config set npmScopes.plentymarkets.npmAlwaysAuth $true
 
 if ($env:GITHUB_ACTIONS) {
   if (-not $env:NPM_AUTH_TOKEN) {
-    Write-Output "NPM_AUTH_TOKEN is not set in the GitHub Actions environment"
+    Write-Host "NPM_AUTH_TOKEN is not set in the GitHub Actions environment" -ForegroundColor Red
     exit 1
   }
   yarn config set npmScopes.plentymarkets.npmAuthToken $env:NPM_AUTH_TOKEN
@@ -60,7 +60,7 @@ if ($env:GITHUB_ACTIONS) {
   $env:NPM_AUTH_TOKEN = $envVars["NPM_AUTH_TOKEN"]
   yarn config set npmScopes.plentymarkets.npmAuthToken $env:NPM_AUTH_TOKEN
 } else {
-  Write-Output "NPM_AUTH_TOKEN not found in ./apps/web/.env"
+  Write-Host "NPM_AUTH_TOKEN not found in ./apps/web/.env" -ForegroundColor Red
   exit 1
 }
 
