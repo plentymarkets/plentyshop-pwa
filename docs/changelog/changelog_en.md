@@ -13,9 +13,11 @@
 - Added a warning alert on the checkout if no payment or shipping method is available
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
 - Added dynamic structured data from the SEO config.
+- Added more manufacturer information to legal details drawer.
 
 ### 👷 Changed
 
+- Modified showNetPrices source to be consumed from user session.
 - Address preview details now includes the country name.
 - Removed checkbox margin from rating filter in category page
 - Order of attribute select and order properties on item page
