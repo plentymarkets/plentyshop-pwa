@@ -1,0 +1,286 @@
+name: Integration Gates
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  packages: read
+  pull-requests: write
+
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Assign author to PR
+        if: github.event.action == 'opened'
+        uses: toshimaru/auto-author-assign@v2.1.1
+
+      - name: Validate PR title
+        uses: amannn/action-semantic-pull-request@v5
+        with:
+          requireScope: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Assign labels to PR
+        uses: mauroalderete/action-assign-labels@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          conventional-commits: |
+            conventional-commits:
+              - type: 'fix'
+                nouns: ['FIX', 'Fix', 'fix', 'FIXED', 'Fixed', 'fixed']
+                labels: ['fix']
+              - type: 'feature'
+                nouns: ['FEATURE', 'Feature', 'feature', 'FEAT', 'Feat', 'feat']
+                labels: ['feature']
+          maintain-labels-not-matched: false
+          apply-changes: true
+  fitness-compliance:
+    runs-on: ubuntu-latest
+    needs: meta
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependency review
+        uses: actions/dependency-review-action@v4
+        with:
+          license-check: true
+          deny-licenses: 'AGPL-1.0-or-later, GPL-1.0-or-later, LGPL-2.0-or-later, NGPL'
+          vulnerability-check: false
+          comment-summary-in-pr: on-failure
+
+      - name: Changelog review
+        if: contains(github.event.pull_request.labels.*.name, 'feature') || contains(github.event.pull_request.labels.*.name, 'fix')
+        run: |
+          gh pr diff "$BRANCH" --name-only >> diff.txt
+          grep -Fxq "docs/changelog/changelog_en.md" diff.txt
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.head_ref }}
+  fitness-code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run prettier
+        run: yarn format
+
+      - name: Run linter
+        run: yarn lint
+  test-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Unit tests
+        run: yarn test:coverage
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Build application
+        run: yarn build
+
+      - name: Install productive dependencies for server
+        run: yarn workspaces focus --production
+
+      - name: Tar build output
+        run: tar -czf build.tar.gz -C ${{ github.workspace }} apps/server/dist apps/web/.output apps/web/.nuxt
+
+      - name: Upload build
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build.tar.gz
+  test-e2e-stable:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          command: yarn test:cypress
+        env:
+          NUXT_PUBLIC_DEFAULT_ITEMS_PER_PAGE: 1
+          CYPRESS_DEFAULT_FEEDBACK_ITEMS_PER_PAGE: 1
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore
+  test-e2e-flakey:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: E2E tests
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          command: yarn test:cypress-quarantine
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: apps/web/__tests__/report/screenshots
+          if-no-files-found: ignore
+  fitness-web-vitals-mobile:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: lighthouse mobile audit
+        run: yarn lhci:mobile
+  fitness-web-vitals-desktop:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
+        with:
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup environment
+        uses: ./.github/actions/environment
+        with:
+          api-security-token: ${{ secrets.API_SECURITY_TOKEN }}
+          api-endpoint: ${{ vars.API_ENDPOINT_TESTING }}
+          configuration: ${{ vars.CONFIG }}
+
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: build
+
+      - name: Extract build
+        run: tar -xzf build.tar.gz
+
+      - name: lighthouse desktop audit
+        run: yarn lhci:desktop
+  ready-to-review:
+    runs-on: ubuntu-latest
+    needs: [fitness-compliance, fitness-code-quality, test-unit, build, test-e2e-stable, fitness-web-vitals-mobile, fitness-web-vitals-desktop]
+    steps:
+      - name: Ready to review (push notification)
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
+        run: |
+          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+            "cardsV2": [
+                {
+                    "cardId": "${{ github.event.pull_request.id }}",
+                    "card": {
+                        "header": {
+                            "title": "Boilerplate Review Required",
+                            "subtitle": "${{ github.event.pull_request.title }}"
+                        },
+                        "sections": [
+                            {
+                                "widgets": [
+                                    {
+                                        "buttonList": {
+                                            "buttons": {
+                                                "text": "Open PR",
+                                                "onClick": {
+                                                    "openLink": {
+                                                        "url": "https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]}'

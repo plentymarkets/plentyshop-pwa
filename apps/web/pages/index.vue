@@ -37,8 +37,12 @@
 
 <script lang="ts" setup>
 const { isEditing } = useEditor();
+const { fetchCategoryTemplate } = useCategoryTemplate();
 const { data: homepage, fetchPageTemplate } = useHomepage();
 const { showNewsletter } = useNewsletter();
 
+const runtimeConfig = useRuntimeConfig();
+
+await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
 fetchPageTemplate();
 </script>
