@@ -26,7 +26,6 @@
 <script setup lang="ts">
 import { SfIconCancel } from '@storefront-ui/vue';
 
-const { isEditing } = useEditor();
 const props = defineProps<{
   block: Block | null;
   index: number;

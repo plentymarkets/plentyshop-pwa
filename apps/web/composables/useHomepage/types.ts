@@ -57,4 +57,4 @@ export interface UseHomepage {
   fetchPageTemplate: () => void;
 }
 
-export type UseHomepageDataReturn = (lang: string) => UseHomepage;
+export type UseHomepageDataReturn = () => UseHomepage;
