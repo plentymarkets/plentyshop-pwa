@@ -197,6 +197,7 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
+    showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };
 };

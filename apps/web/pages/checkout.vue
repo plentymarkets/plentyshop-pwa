@@ -231,7 +231,7 @@ const openPayPalCardDialog = async () => {
 const handleRegularOrder = async () => {
   const data = await createOrder({
     paymentId: paymentMethods.value.selected,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+    additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
   });
 
   if (data?.order?.id) {
