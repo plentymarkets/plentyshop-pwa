@@ -88,11 +88,13 @@ const onApprove = async (data: OnApproveData) => {
       additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
-    await executeOrder({
-      mode: 'paypal',
-      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-      paypalTransactionId: data.orderID,
-    });
+    if (order) {
+      await executeOrder({
+        mode: 'paypal',
+        plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+        paypalTransactionId: data.orderID,
+      });
+    }
 
     clearCartItems();
 
