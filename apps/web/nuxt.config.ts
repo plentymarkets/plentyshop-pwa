@@ -46,7 +46,6 @@ export default defineNuxtConfig({
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
-      showNetPrices: true,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true',
       useWebp: process.env?.IMAGEWEBP === 'true',

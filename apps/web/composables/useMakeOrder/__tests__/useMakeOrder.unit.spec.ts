@@ -6,6 +6,11 @@ describe('useMakeOrder', () => {
 
     describe('createOrder', () => {
 
+        beforeEach(() => {
+            vi.resetAllMocks();
+            vi.clearAllMocks();
+        });
+
         const { useSdk } = vi.hoisted(() => {
             return {
                 useSdk: vi.fn().mockReturnValue({
@@ -65,7 +70,6 @@ describe('useMakeOrder', () => {
                     cause: {},
                 });
             });
-            const handleErrorSpy = vi.fn();
 
             useSdk.mockImplementation(() => {
                 return {
@@ -80,14 +84,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
-                await createOrder({
-                    paymentId: 1,
-                    shippingPrivacyHintAccepted: true,
-                });
-            } catch (error) {
-                expect(handleErrorSpy).toHaveBeenCalled();
-            }
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(useHandleError).toHaveBeenCalled();
         });
 
         it('should call useHandleError if doPreparePayment fails', async () => {
@@ -99,7 +100,6 @@ describe('useMakeOrder', () => {
                     cause: {},
                 });
             });
-            const handleErrorSpy = vi.fn();
 
             useSdk.mockImplementation(() => {
                 return {
@@ -114,14 +114,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
-                await createOrder({
-                    paymentId: 1,
-                    shippingPrivacyHintAccepted: true,
-                });
-            } catch (error) {
-                expect(handleErrorSpy).toHaveBeenCalled();
-            }
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(useHandleError).toHaveBeenCalled();
         });
 
         it('should call useHandleError if doPlaceOrder fails', async () => {
@@ -133,8 +130,7 @@ describe('useMakeOrder', () => {
                     cause: {},
                 });
             });
-            const handleErrorSpy = vi.fn();
-
+            
             useSdk.mockImplementation(() => {
                 return {
                     plentysystems: {
@@ -148,14 +144,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
-                await createOrder({
-                    paymentId: 1,
-                    shippingPrivacyHintAccepted: true,
-                });
-            } catch (error) {
-                expect(handleErrorSpy).toHaveBeenCalled();
-            }
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(useHandleError).toHaveBeenCalled();
         });
 
         it('should call useHandleError if doExecutePayment fails', async () => {
@@ -167,7 +160,6 @@ describe('useMakeOrder', () => {
                     cause: {},
                 });
             });
-            const handleErrorSpy = vi.fn();
 
             useSdk.mockImplementation(() => {
                 return {
@@ -182,14 +174,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
                 await createOrder({
                     paymentId: 1,
                     shippingPrivacyHintAccepted: true,
                 });
-            } catch (error) {
-                expect(handleErrorSpy).toHaveBeenCalled();
-            }
+                expect(useHandleError).toHaveBeenCalled();
         });
 
         it('should set processingOrder to false if any call fails', async () => {
@@ -215,14 +204,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
-                await createOrder({
-                    paymentId: 1,
-                    shippingPrivacyHintAccepted: true,
-                });
-            } catch (error) {
-                expect(useProcessingOrder().processingOrder.value).toBe(false);
-            }
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(useProcessingOrder().processingOrder.value).toBe(false);
         });
 
         it('should set loading to false if any call fails', async () => {
@@ -248,14 +234,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder, loading } = useMakeOrder();
 
-            try {
                 await createOrder({
                     paymentId: 1,
                     shippingPrivacyHintAccepted: true,
                 });
-            } catch (error) {
                 expect(loading.value).toBe(false);
-            }
         });
 
         it('should not continue if doAdditionalInformation fails', async () => {
@@ -283,14 +266,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
                 await createOrder({
                     paymentId: 1,
                     shippingPrivacyHintAccepted: true,
                 });
-            } catch (error) {
                 expect(doPreparePaymentSpy).not.toHaveBeenCalled();
-            }
         });
 
         it('should not continue if doPreparePayment fails', async () => {
@@ -318,14 +298,11 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
                 await createOrder({
                     paymentId: 1,
                     shippingPrivacyHintAccepted: true,
                 });
-            } catch (error) {
                 expect(doPlaceOrderSpy).not.toHaveBeenCalled();
-            }
         });
 
         it('should not continue if doPlaceOrder fails', async () => {
@@ -353,18 +330,14 @@ describe('useMakeOrder', () => {
 
             const { createOrder } = useMakeOrder();
 
-            try {
                 await createOrder({
                     paymentId: 1,
                     shippingPrivacyHintAccepted: true,
                 });
-            } catch (error) {
                 expect(doExecutePaymentSpy).not.toHaveBeenCalled();
-            }
         });
 
         it('should call the error handling if doPreparePayment returns a error as http 200', async () => {
-            const handleErrorSpy = vi.fn();
             const doPreparePayment = vi.fn().mockImplementation(() => {
                 return {
                     data: {
@@ -385,26 +358,87 @@ describe('useMakeOrder', () => {
                 }
             });
 
-            useHandleError.mockImplementation(() => {
-                return handleErrorSpy;
-            });
 
             const { createOrder } = useMakeOrder();
-            try {
-                await createOrder({
-                    paymentId: 1,
-                    shippingPrivacyHintAccepted: true,
-                });
-            } catch (error) {
-                expect(handleErrorSpy).toHaveBeenCalledWith(
-                    new ApiError({
-                        key: 'errorCode',
-                        code: 'errorCode',
-                        message: 'my prepayment error',
-                        cause: {},
-                    })
-                );
-            }
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(useHandleError).toHaveBeenCalledWith(
+                new ApiError({
+                    key: 'null',
+                    code: '400',
+                    message: 'my prepayment error',
+                    cause: 'my prepayment error',
+                })
+            );
+        });
+
+        it('should always reset the order object when creating new order', async () => {
+
+
+            const doPlaceOrder = vi.fn().mockImplementation(() => {
+                return {
+                    data: {
+                        id: 1337
+                    }
+                }
+            });
+
+            const doPreparePaymentSuccess = vi.fn().mockImplementation(() => {
+                return {
+                    data: {
+                        type: 'continue',
+                        value: 'my prepayment value'
+                    }
+                }
+            });
+
+            useSdk.mockImplementation(() => {
+                return {
+                    plentysystems: {
+                        doAdditionalInformation: vi.fn(),
+                        doPreparePayment: doPreparePaymentSuccess,
+                        doPlaceOrder: doPlaceOrder,
+                        doExecutePayment: vi.fn()
+                    }
+                }
+            });
+
+            const { createOrder, data } = useMakeOrder();
+
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+
+            expect(data.value).toEqual({ id: 1337 });
+
+            const doPreparePayment = vi.fn().mockImplementation(() => {
+                return {
+                    data: {
+                        type: 'errorCode',
+                        value: 'my prepayment error'
+                    }
+                }
+            });
+
+            useSdk.mockImplementation(() => {
+                return {
+                    plentysystems: {
+                        doAdditionalInformation: vi.fn(),
+                        doPreparePayment: doPreparePayment,
+                        doPlaceOrder: vi.fn(),
+                        doExecutePayment: vi.fn()
+                    }
+                }
+            });
+
+            await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(data.value).toEqual({});
         });
     });
 
