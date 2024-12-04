@@ -161,7 +161,7 @@ const handleGuestUserInit = async () => {
   }
 };
 
-onMounted(async () => {
+onNuxtReady(async () => {
   if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
   isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });
