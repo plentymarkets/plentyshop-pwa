@@ -10,7 +10,7 @@ function display_help() {
 }
 
 function display_version() {
-  echo "Script version 1.0"
+  echo "1.0"
 }
 
 function delete_yarnrc() {

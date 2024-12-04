@@ -8,7 +8,7 @@ function Show-Help {
 }
 
 function Show-Version {
-  Write-Output "Script version 1.0"
+  Write-Output "1.0"
 }
 
 function Delete-Yarnrc {
