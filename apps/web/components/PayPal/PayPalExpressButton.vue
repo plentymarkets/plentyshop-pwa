@@ -85,7 +85,7 @@ const onApprove = async (data: OnApproveData) => {
     useProcessingOrder().processingOrder.value = true;
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
     await executeOrder({
