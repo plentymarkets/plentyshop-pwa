@@ -16,6 +16,7 @@
 
 ### 👷 Changed
 
+- Modified showNetPrices source to be consumed from user session.
 - Address preview details now includes the country name.
 - Removed checkbox margin from rating filter in category page
 - Order of attribute select and order properties on item page
