@@ -1,4 +1,4 @@
-import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
+import { type Order, type MakeOrderParams, additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
 import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
 
 /**
@@ -15,6 +15,12 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     loading: false,
   }));
 
+  const handleMakeOrderError = (error: any) => {
+    if (error) useHandleError(error);
+    state.value.loading = false;
+    useProcessingOrder().processingOrder.value = false;
+  };
+
   /**
    * @description Function for creating an order
    * @param params { MakeOrderParams }
@@ -23,7 +29,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
    * ``` ts
    * createOrder({
    *    paymentId: 1, // Method of payment
-   *    shippingPrivacyHintAccepted: true,
+   *    additionalInformation: { shippingPrivacyHintAccepted : true }
    * });
    * ```
    */
@@ -31,45 +37,50 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
 
-    await useAsyncData(() =>
-      useSdk().plentysystems.doAdditionalInformation({
-        orderContactWish: null,
-        orderCustomerSign: null,
-        shippingPrivacyHintAccepted: params.shippingPrivacyHintAccepted,
-        templateType: 'checkout',
-      }),
-    );
+    try {
+      const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
 
-    const { data: preparePaymentData, error: preparePaymentError } = await useAsyncData(() =>
-      useSdk().plentysystems.doPreparePayment(),
-    );
+      if (params.shippingPrivacyHintAccepted) {
+        additionalParams.shippingPrivacyHintAccepted = params.shippingPrivacyHintAccepted;
+      }
 
-    useHandleError(preparePaymentError.value);
+      await useSdk().plentysystems.doAdditionalInformation(additionalParams);
+    } catch (error) {
+      handleMakeOrderError(error);
+    }
 
-    const paymentType = preparePaymentData.value?.data.type || 'errorCode';
-    const paymentValue = preparePaymentData.value?.data.value || '""';
+    const paymentType = ref('errorCode');
+    const paymentValue = ref('');
+
+    try {
+      const { data } = await useSdk().plentysystems.doPreparePayment();
+
+      paymentType.value = data.type ?? 'errorCode';
+      paymentValue.value = data.value ?? '';
+    } catch (error) {
+      handleMakeOrderError(error);
+    }
 
     const continueOrHtmlContent = async () => {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doPlaceOrder());
-
-      useHandleError(error.value);
-
-      if (error.value) {
-        state.value.loading = false;
+      try {
+        const { data } = await useSdk().plentysystems.doPlaceOrder();
+        state.value.data = data ?? state.value.data;
+      } catch (error) {
+        handleMakeOrderError(error);
         return {} as Order;
       }
 
-      state.value.data = data.value?.data ?? state.value.data;
-
-      await useAsyncData(() =>
-        useSdk().plentysystems.doExecutePayment({
+      try {
+        await useSdk().plentysystems.doExecutePayment({
           orderId: state.value.data.order.id,
           paymentId: params.paymentId,
-        }),
-      );
+        });
+      } catch (error) {
+        handleMakeOrderError(error);
+      }
     };
 
-    switch (paymentType) {
+    switch (paymentType.value) {
       case 'continue':
       case 'htmlContent': {
         await continueOrHtmlContent();
@@ -78,7 +89,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       case 'redirectUrl': {
         // redirect to given payment provider
-        window.location.assign(paymentValue);
+        window.location.assign(paymentValue.value);
         break;
       }
 
@@ -88,13 +99,15 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       }
 
       case 'errorCode': {
-        useNotification().send({ message: paymentValue, type: 'negative' });
+        handleMakeOrderError(
+          new ApiError({ key: 'null', message: paymentValue.value, code: '400', cause: paymentValue.value }),
+        );
         break;
       }
 
       default: {
         useNotification().send({
-          message: $i18n.t('orderErrorProvider', { paymentType: paymentType }),
+          message: $i18n.t('orderErrorProvider', { paymentType: paymentType.value }),
           type: 'negative',
         });
         break;
