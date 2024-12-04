@@ -15,22 +15,14 @@
         <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
         <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" id="bottom-billing-divider" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
-          <ShippingMethod
-            :shipping-methods="shippingMethods"
-            :disabled="disableShippingPayment"
-            @update:shipping-method="handleShippingMethodUpdate"
-          />
+          <ShippingMethod :disabled="disableShippingPayment" @update:shipping-method="handleShippingMethodUpdate" />
           <SfLoaderCircular
             v-if="disableShippingPayment"
             class="absolute mt-5 right-0 left-0 m-auto z-[999]"
             size="2xl"
           />
           <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment
-            :payment-methods="paymentMethods"
-            :disabled="disableShippingPayment"
-            @update:active-payment="handlePaymentMethodUpdate"
-          />
+          <CheckoutPayment :disabled="disableShippingPayment" @update:active-payment="handlePaymentMethodUpdate" />
         </div>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
         <CheckoutGeneralTerms />

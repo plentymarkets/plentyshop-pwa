@@ -16,9 +16,9 @@
         <AddressContainer :disabled="true" :type="AddressType.Billing" :key="1" id="billing-address" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
-          <ShippingMethod :shipping-methods="shippingMethods" disabled />
+          <ShippingMethod disabled />
           <UiDivider :class="dividerClass" />
-          <CheckoutPayment :payment-methods="paymentMethods" disabled />
+          <CheckoutPayment disabled />
         </div>
         <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
@@ -77,9 +77,9 @@ const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { loading: executeOrderLoading, executeOrder } = usePayPal();
 const { processingOrder } = useProcessingOrder();
-const { setInitialCartTotal, changedTotal } = useCartTotalChange();
+const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
 const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
-const { loadPayment, loadShipping, paymentMethods, shippingMethods } = useCheckoutPagePaymentAndShipping();
+const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
   data: shippingAddresses,
@@ -124,6 +124,7 @@ const fetchShippingAndPaymentMethods = async () => {
 
 const handleAuthUserInit = async () => {
   try {
+    await getShippingAddresses();
     await useFetchAddress(AddressType.Shipping).fetchServer();
     await persistShippingAddress();
     await useFetchAddress(AddressType.Billing).fetchServer();
@@ -139,7 +140,7 @@ const setClientCheckoutAddress = async () => {
   try {
     await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
     await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
-    await setInitialCartTotal();
+    await handleCartTotalChanges();
   } catch (error) {
     useHandleError(error as ApiError);
   }
@@ -160,7 +161,7 @@ const handleGuestUserInit = async () => {
   }
 };
 
-onNuxtReady(async () => {
+onMounted(async () => {
   if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
   isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
 });

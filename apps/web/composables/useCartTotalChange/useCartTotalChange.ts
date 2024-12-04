@@ -8,7 +8,8 @@ export const useCartTotalChange = () => {
   const { restrictedAddresses } = useRestrictedAddress();
 
   const state = useState('useCartTotalChange', () => ({
-    initialTotal: '0',
+    initialTotal: 0,
+    initialCurrency: '',
     changedTotal: false,
   }));
 
@@ -19,19 +20,30 @@ export const useCartTotalChange = () => {
     });
 
     if (paypalOrder) {
-      state.value.initialTotal = paypalOrder.result.purchase_units[0].amount.value;
+      state.value.initialTotal = Number.parseFloat(paypalOrder.result.purchase_units[0].amount.value);
+      state.value.initialCurrency = paypalOrder.result.purchase_units[0].amount.currency_code;
       state.value.changedTotal =
-        cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
+        cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
+        cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
+      console.log('initialTotal', state.value.initialTotal);
+      console.log('initialCurrency', state.value.initialCurrency);
+      console.log('cartCurrency', cartGetters.getCurrency(customerData.value.basket));
+      console.log('cartTotal', cartGetters.getTotals(customerData.value.basket).total);
     }
   };
 
   const handleCartTotalChanges = async () => {
+    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await getCart();
+
     if (restrictedAddresses.value) {
       state.value.changedTotal =
-        cartGetters.getTotals(customerData.value.basket).total.toString() !== state.value.initialTotal;
+        cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
+        cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
+      console.log('initialTotal 1', state.value.initialTotal);
+      console.log('initialCurrency 1', state.value.initialCurrency);
+      console.log('cartCurrency 1', cartGetters.getCurrency(customerData.value.basket));
+      console.log('cartTotal 1', cartGetters.getTotals(customerData.value.basket).total);
     }
-
-    if (restrictedAddresses.value || isGuest.value || isAuthorized.value) await getCart();
   };
 
   return {
