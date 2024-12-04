@@ -101,7 +101,7 @@ export class EditorObject extends PageObject {
                 cy.wrap($el).clear(); 
             }
         })
-        .type(content) 
+        .type(content, {delay: 0}) 
         .should('have.value', content); 
 }
 
