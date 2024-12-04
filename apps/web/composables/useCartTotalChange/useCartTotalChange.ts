@@ -25,10 +25,6 @@ export const useCartTotalChange = () => {
       state.value.changedTotal =
         cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
         cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
-      console.log('initialTotal', state.value.initialTotal);
-      console.log('initialCurrency', state.value.initialCurrency);
-      console.log('cartCurrency', cartGetters.getCurrency(customerData.value.basket));
-      console.log('cartTotal', cartGetters.getTotals(customerData.value.basket).total);
     }
   };
 
@@ -39,10 +35,6 @@ export const useCartTotalChange = () => {
       state.value.changedTotal =
         cartGetters.getTotals(customerData.value.basket).total !== state.value.initialTotal ||
         cartGetters.getCurrency(customerData.value.basket) !== state.value.initialCurrency;
-      console.log('initialTotal 1', state.value.initialTotal);
-      console.log('initialCurrency 1', state.value.initialCurrency);
-      console.log('cartCurrency 1', cartGetters.getCurrency(customerData.value.basket));
-      console.log('cartTotal 1', cartGetters.getTotals(customerData.value.basket).total);
     }
   };
 
