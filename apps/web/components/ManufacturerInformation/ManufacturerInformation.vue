@@ -11,7 +11,7 @@
       </p>
       <p v-if="manufacturerInfo.name">{{ manufacturerInfo.name }}</p>
       <p v-else-if="manufacturerInfo.externalName">{{ manufacturerInfo.externalName }}</p>
-      <p v-else-if="manufacturerInfo.legalName">{{ manufacturerInfo.legalName }}</p>
+      <p v-if="manufacturerInfo.legalName">{{ manufacturerInfo.legalName }}</p>
       <p v-if="manufacturerInfo.street || manufacturerInfo.houseNo">
         {{ manufacturerInfo.street }} {{ manufacturerInfo.houseNo }}
       </p>
