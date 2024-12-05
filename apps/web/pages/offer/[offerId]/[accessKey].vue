@@ -38,7 +38,7 @@ watch(error, (value) => {
 await loadOffer();
 
 const decline = async (text: string) => {
-  await declineOffer({ offerId: offerId, accessKey: accessKey, text: text as string });
+  await declineOffer({ offerId: offerId, accessKey: accessKey, text: text });
 
   if (!apiError.value) send({ type: 'positive', message: t('contact.success') });
   navigateTo(localePath(paths.home));
