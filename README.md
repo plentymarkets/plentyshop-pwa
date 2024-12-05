@@ -19,8 +19,8 @@ This section describes how to run the project locally with the preconfigured dem
 
 ### Prerequisites
 
-- `Node.js` 20+
-- `Yarn` 3
+- `Node.js` 22+
+- `Yarn` 4
 - [Personal Access Token](https://github.com/settings/tokens/new) with the scope **read:packages**
 
 Download Node.js from the [official website](https://nodejs.org/) or use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version. For installation instructions for Yarn, refer to the [Yarn documentation](https://yarnpkg.com/getting-started/install).
@@ -50,8 +50,9 @@ Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your 
 ### Starting the app
 
 1. Open the repository in your command line interface.
-2. Run `yarn` to install all dependencies.
+2. Run `yarn setup:unix` or `yarn setup:windows` to install all dependencies.
 3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+
 
 ## Resources
 
