@@ -45,6 +45,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
