@@ -48,6 +48,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
 
     if (data.value?.data) {
       if (categoryGetters.hasCustomerRight(data.value?.data.category) && !isAuthorized.value) {
+        state.value.data = {} as Facet;
         await navigateTo(localePath(paths.authLogin));
         return state.value.data;
       }
