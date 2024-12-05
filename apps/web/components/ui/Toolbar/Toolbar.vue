@@ -7,14 +7,16 @@
         class="self-start"
         @click="toggleEdit"
         :disabled="!isEditingEnabled"
+        data-testid="edit-preview-button"
       >
-        {{ isEditing ? 'Preview' : 'Edit' }}
+        {{ disableActions ? 'Preview' : 'Edit' }}
       </UiButton>
       <UiButton
         variant="primary"
         :size="buttonSize"
         class="self-start"
         :disabled="!isEditingEnabled || !isEditing || !isLocalTemplate()"
+        data-testid="edit-save-button"
         @click="updatePageTemplate"
       >
         <template v-if="loading">
@@ -29,7 +31,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-const { isEditing, isEditingEnabled } = useEditor();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const viewport = useViewport();
 const buttonSize = computed(() => {
@@ -45,6 +47,6 @@ const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
-  isEditing.value = !isEditing.value;
+  disableActions.value = !disableActions.value;
 };
 </script>
