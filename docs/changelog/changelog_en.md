@@ -14,6 +14,8 @@
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
 - Added dynamic structured data from the SEO config.
 - Added more manufacturer information to legal details drawer.
+- Add login redirect on category "after login" visibility.
+- The Homepage components are now split in edit block s
 
 ### 👷 Changed
 
@@ -42,6 +44,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
 - Resolved an issue causing the Login modal to be unresponsive in the user interface.

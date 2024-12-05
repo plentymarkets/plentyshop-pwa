@@ -1,12 +1,9 @@
 const fetchHomepageTemplate = () => {
   const { data } = useCategoryTemplate();
   const parsedData = JSON.parse(data?.value?.data || '{}');
+  const blocks = parsedData.blocks || [];
 
-  return {
-    hero: parsedData.hero || [],
-    mediaCard: parsedData.mediaCard,
-    featured: parsedData.featured,
-  };
+  return { blocks };
 };
 
 export const useFetchHome = () => {
