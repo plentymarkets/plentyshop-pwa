@@ -17,41 +17,47 @@ Welcome to the plentysystems integration for Alokai.
 
 This section describes how to run the project locally with the preconfigured demo system.
 
-### Prerequisites
-
-- `Node.js` 22+
-- `Yarn` 4
-- [Personal Access Token](https://github.com/settings/tokens/new) with the scope **read:packages**
-
-Download Node.js from the [official website](https://nodejs.org/) or use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version. For installation instructions for Yarn, refer to the [Yarn documentation](https://yarnpkg.com/getting-started/install).
-
-### Repository fork
+### Fork repository
 
 We recommend working with a fork of this repository. A fork allows you to easily incorporate updates from this boilerplate into your own codebase.
 
 1. [Create a fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 2. [Clone the forked repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository).
 
-### Authentication
+### Create authentication token
 
-This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
+This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
 
-1. In the root directory, create a new file called `.yarnrc.yml`.
-2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
-3. In `.yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
+To enable authentication, create a [Personal Access Token](https://github.com/settings/tokens/new) (PAT) with the scope **read:packages**.
 
-Git doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
+### Set up environment
 
-### Setup environment
+Create an environment file under `apps/web/.env`. The minimum required configuration includes your PAT, the [API endpoint](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint) of your PlentyONE system and the corresponding [API security token](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token):
 
-1. Add your [API endpoint](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint)
-2. Add your [API security token](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+```properties
+# apps/web/.env
 
-### Starting the app
+NPM_AUTH_TOKEN=
+API_ENDPOINT=
+API_SECURITY_TOKEN=
+```
 
-1. Open the repository in your command line interface.
-2. Run `yarn setup:unix` or `yarn setup:windows` to install all dependencies.
-3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using Yarn.
+
+```bash
+# installs nvm (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+
+# downloads and installs Node.js according to the project version in .nvmrc
+nvm install
+
+# downloads and installs Yarn according to the project version, and downloads, installs, and builds all dependencies
+npm run setup:unix
+```
+
+### Start the app
+
+Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 
 ## Resources
