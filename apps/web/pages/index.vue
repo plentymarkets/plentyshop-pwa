@@ -13,9 +13,9 @@
             'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
             {
               'outline outline-4 outline-[#538AEA]':
-                disableActions && isClicked && isTablet && clickedBlockIndex === index,
+                isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
             },
-            { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': disableActions && !isTablet },
+            { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
         >
