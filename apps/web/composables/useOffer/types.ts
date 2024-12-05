@@ -1,10 +1,11 @@
-import type { Offer, GetOfferError, OfferSearchParams, Order } from '@plentymarkets/shop-api';
+import type { Offer, GetOfferError, OfferSearchParams, Order, ApiError } from '@plentymarkets/shop-api';
 
 export interface UseOfferState {
   data: Offer;
   relatedOrder: Order | null;
   loading: boolean;
   error: GetOfferError | null;
+  apiError: ApiError | null;
 }
 
 export type FetchOffer = (params: OfferSearchParams) => Promise<Offer | string>;
@@ -19,5 +20,6 @@ export interface UseOffer {
   declineOffer: DeclineOffer;
   acceptOffer: AcceptOffer;
   error: Readonly<Ref<UseOfferState['error']>>;
+  apiError: Readonly<Ref<UseOfferState['apiError']>>;
 }
 export type UseOfferReturn = () => UseOffer;

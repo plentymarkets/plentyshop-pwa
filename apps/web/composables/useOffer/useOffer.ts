@@ -15,6 +15,7 @@ export const useOffer: UseOfferReturn = () => {
     relatedOrder: null,
     loading: false,
     error: null,
+    apiError: null,
   }));
 
   const handleApiCall = async (apiCall: () => Promise<Data<Offer | GetOfferError | GetOfferReject | Order>>) => {
@@ -25,8 +26,9 @@ export const useOffer: UseOfferReturn = () => {
       const data = await apiCall();
       data_ = ref(data);
     } catch (ApiError) {
+      state.value.apiError = ApiError as ApiError;
       state.value.loading = false;
-      useHandleError(ApiError as ApiError);
+      useHandleError(state.value.apiError);
     }
 
     return { data: data_ };
