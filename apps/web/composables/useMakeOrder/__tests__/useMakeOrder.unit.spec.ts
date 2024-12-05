@@ -438,7 +438,37 @@ describe('useMakeOrder', () => {
                 paymentId: 1,
                 shippingPrivacyHintAccepted: true,
             });
-            expect(data.value).toEqual({});
+            expect(data.value).toEqual(null);
+        });
+
+        it('should return null if any call in createOrder fails', async () => {
+            const additionalInformationSpy = vi.fn().mockImplementation(() => {
+                throw new ApiError({
+                    key: 'error',
+                    code: '500',
+                    message: 'error',
+                    cause: {},
+                });
+            });
+
+            useSdk.mockImplementation(() => {
+                return {
+                    plentysystems: {
+                        doAdditionalInformation: additionalInformationSpy,
+                        doPreparePayment: vi.fn(),
+                        doPlaceOrder: vi.fn(),
+                        doExecutePayment: vi.fn()
+                    }
+                }
+            });
+
+            const { createOrder } = useMakeOrder();
+
+            const order = await createOrder({
+                paymentId: 1,
+                shippingPrivacyHintAccepted: true,
+            });
+            expect(order).toBeNull();
         });
     });
 
