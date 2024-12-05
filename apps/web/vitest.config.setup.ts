@@ -1,6 +1,5 @@
 import { createI18n } from 'vue-i18n';
 import { config } from '@vue/test-utils';
-import { mockComponent, mockNuxtImport } from '@nuxt/test-utils/runtime';
 
 const FindTestIdPlugin = (wrapper: any) => {
   function findByTestId(testId: string) {
