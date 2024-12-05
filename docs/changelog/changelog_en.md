@@ -14,6 +14,7 @@
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
 - Added dynamic structured data from the SEO config.
 - Added more manufacturer information to legal details drawer.
+- Add login redirect on category "after login" visibility.
 - The Homepage components are now split in edit block s
 
 ### 👷 Changed
