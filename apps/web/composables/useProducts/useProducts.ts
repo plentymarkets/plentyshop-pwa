@@ -38,6 +38,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
     const localePath = useLocalePath();
+    const { isAuthorized } = useCustomer();
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 
@@ -46,7 +47,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
     if (data.value?.data) {
-      if (categoryGetters.hasCustomerRight(data.value?.data.category)) {
+      if (categoryGetters.hasCustomerRight(data.value?.data.category) && !isAuthorized.value) {
         await navigateTo(localePath(paths.authLogin));
         return state.value.data;
       }
