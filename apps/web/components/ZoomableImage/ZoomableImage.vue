@@ -5,7 +5,7 @@
   >
     <div
       v-if="showZoomHint && isMobile"
-      class="zoom-hint absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded"
+      class="zoom-hint absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded z-20"
     >
       Double-tap to zoom
     </div>

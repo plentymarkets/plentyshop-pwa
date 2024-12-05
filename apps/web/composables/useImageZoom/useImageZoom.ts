@@ -157,13 +157,13 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   };
 
   const imageStyle = computed(() => {
-    return isZoomed.value
-      ? {
-          transform: `scale(${zoomScale}) translate(${currentTranslateX.value / zoomScale}px, ${currentTranslateY.value / zoomScale}px)`,
-          transition: 'none',
-          cursor: 'move',
-        }
-      : {};
+    return {
+      transform: isZoomed.value
+        ? `scale(${zoomScale}) translate(${currentTranslateX.value / zoomScale}px, ${currentTranslateY.value / zoomScale}px)`
+        : 'scale(1) translate(0px, 0px)',
+      transition: 'transform 0.3s ease',
+      cursor: isZoomed.value ? 'move' : 'auto',
+    };
   });
 
   onMounted(() => {
