@@ -3,6 +3,12 @@
     class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image"
     ref="containerReference"
   >
+    <div
+      v-if="showZoomHint && isMobile"
+      class="zoom-hint absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-75 text-white px-4 py-2 rounded"
+    >
+      Double-tap to zoom
+    </div>
     <Drift v-if="!isMobile" :index="index">
       <NuxtImg
         @touchstart="onTouchStart"
@@ -80,6 +86,8 @@ const imageAlt = productImageGetters.getImageAlternate(image) || productImageGet
 const imageTitle = productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || '';
 const isMobile = computed(() => viewport.isLessThan('md'));
 
+const showZoomHint = ref(false);
+
 const getSourceSet = (image: ImagesData) => {
   const dpr = 2;
   const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
@@ -111,6 +119,10 @@ const getHeight = (image: ImagesData, imageUrl: string) => {
   return '';
 };
 
+const updateImageStatusFor = (imageId: string) => {
+  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
+};
+
 onMounted(() => {
   nextTick(() => {
     for (const [index] of props.images.entries()) {
@@ -121,7 +133,10 @@ onMounted(() => {
   });
 });
 
-const updateImageStatusFor = (imageId: string) => {
-  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
-};
+if (isMobile.value) {
+  showZoomHint.value = true;
+  setTimeout(() => {
+    showZoomHint.value = false;
+  }, 3000);
+}
 </script>
