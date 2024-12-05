@@ -19,7 +19,7 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions v-if="disableActions && blockHasData(block)" :index="index" @edit="handleEdit" />
+          <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <component
             v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
             :is="getComponent(block.name)"
@@ -47,6 +47,16 @@ const isClicked = ref(false);
 const clickedBlockIndex = ref<number | null>(null);
 
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
+
+const isPreview = ref(false);
+onMounted(() => {
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
+
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
