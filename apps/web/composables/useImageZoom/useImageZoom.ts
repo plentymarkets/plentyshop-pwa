@@ -2,6 +2,12 @@ const clamp = (value: number, min: number, max: number): number => {
   return Math.min(Math.max(value, min), max);
 };
 
+const getDistance = (touch1: Touch, touch2: Touch): number => {
+  const dx = touch1.clientX - touch2.clientX;
+  const dy = touch1.clientY - touch2.clientY;
+  return Math.sqrt(dx * dx + dy * dy);
+};
+
 export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   const isZoomed = ref(false);
   const currentTranslateX = ref(0);
@@ -34,12 +40,6 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
       maxTranslateX.value = Math.max(0, maxTransX);
       maxTranslateY.value = Math.max(0, maxTransY);
     }
-  };
-
-  const getDistance = (touch1: Touch, touch2: Touch): number => {
-    const dx = touch1.clientX - touch2.clientX;
-    const dy = touch1.clientY - touch2.clientY;
-    return Math.sqrt(dx * dx + dy * dy);
   };
 
   const onTouchStart = (event: TouchEvent) => {
