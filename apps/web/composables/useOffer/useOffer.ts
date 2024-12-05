@@ -25,6 +25,7 @@ export const useOffer: UseOfferReturn = () => {
       const data = await apiCall();
       data_ = ref(data);
     } catch (ApiError) {
+      state.value.loading = false;
       useHandleError(ApiError as ApiError);
     }
 
