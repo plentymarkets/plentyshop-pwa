@@ -6,9 +6,9 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   const isZoomed = ref(false);
   const currentTranslateX = ref(0);
   const currentTranslateY = ref(0);
-  let lastTap = 0;
-  let touchStartX = 0;
-  let touchStartY = 0;
+  let lastTap = 0; // Changed from const to let
+  let touchStartX = 0; // Changed from const to let
+  let touchStartY = 0; // Changed from const to let
   let startTranslateX = 0;
   let startTranslateY = 0;
   const maxTranslateX = ref(0);
@@ -39,21 +39,36 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
 
     if (isDoubleTap) {
       isZoomed.value = !isZoomed.value;
-      currentTranslateX.value = 0;
-      currentTranslateY.value = 0;
-      startTranslateX = 0;
-      startTranslateY = 0;
       event.preventDefault();
 
       if (isZoomed.value) {
         updateMaxTranslations();
+
+        const touch = event.touches[0];
+        const container = containerReference.value;
+        if (!container) return;
+        const containerRect = container.getBoundingClientRect();
+
+        const tapX = touch.clientX - containerRect.left;
+        const tapY = touch.clientY - containerRect.top;
+
+        // Calculate the new translation offsets
+        currentTranslateX.value = (containerRect.width / 2 - tapX) * (zoomScale - 1);
+        currentTranslateY.value = (containerRect.height / 2 - tapY) * (zoomScale - 1);
+
+        // Initialize start translation values
+        startTranslateX = currentTranslateX.value;
+        startTranslateY = currentTranslateY.value;
       } else {
-        maxTranslateX.value = 0;
-        maxTranslateY.value = 0;
+        // Reset translations when zooming out
+        currentTranslateX.value = 0;
+        currentTranslateY.value = 0;
+        startTranslateX = 0;
+        startTranslateY = 0;
       }
     }
 
-    lastTap = currentTime;
+    lastTap = currentTime; // Update lastTap
 
     if (isZoomed.value) {
       const touch = event.touches[0];
