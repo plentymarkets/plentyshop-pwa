@@ -1,11 +1,19 @@
-import type { Order, MakeOrderParams } from '@plentymarkets/shop-api';
+import type { Order, AdditionalInformationParams } from '@plentymarkets/shop-api';
 
 export interface UseMakeOrderState {
-  data: Order;
+  data: Order | null;
   loading: boolean;
 }
 
-export type CreateOrder = (params: MakeOrderParams) => Promise<Order>;
+export interface MakeOrderParams {
+  paymentId: number;
+  /** @deprecated use additionalInformation: AdditionalInformationParams */
+  shippingPrivacyHintAccepted?: boolean;
+  additionalInformation?: AdditionalInformationParams;
+  customQuery?: Record<string, unknown>;
+}
+
+export type CreateOrder = (params: MakeOrderParams) => Promise<Order | null>;
 
 export interface UseMakeOrder {
   data: Readonly<Ref<UseMakeOrderState['data']>>;

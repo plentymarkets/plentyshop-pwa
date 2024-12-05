@@ -118,7 +118,7 @@ export const useGooglePay = () => {
 
       const order = await createOrder({
         paymentId: cart.value.methodOfPaymentId,
-        shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+        additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
       });
 
       if (!order || !order.order || !order.order.id) {

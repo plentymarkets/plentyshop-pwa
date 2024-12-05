@@ -13,9 +13,15 @@
 - Added a warning alert on the checkout if no payment or shipping method is available
 - Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
 - Added dynamic structured data from the SEO config.
+- Added more manufacturer information to legal details drawer.
+- Add login redirect on category "after login" visibility.
+- The Homepage components are now split in edit block s
 
 ### 👷 Changed
 
+- Improved user experience while using the cookie bar.
+- Modified showNetPrices source to be consumed from user session.
+- Address preview details now includes the country name.
 - Removed checkbox margin from rating filter in category page
 - Order of attribute select and order properties on item page
 - Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
@@ -25,6 +31,7 @@
 - PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
 - PayPal shows a message if the cookie is not accepted.
 - We only reload the page after a cookie gets revoked.
+- Changed the PayPal message if the related cookie is not set.
 
 #### GitHub Action: Upload
 
@@ -37,6 +44,8 @@ Each client supports two PWA instances. With this change, you can designate the 
 
 ### 🩹 Fixed
 
+- Changed image quality in quick checkout to use middle image and positioned quantity.
+- Fixed filter translation on category page when switching language.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
 - Resolved an issue causing the Login modal to be unresponsive in the user interface.
 - Fix selling points misalignment on register page.
@@ -62,9 +71,11 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
 - Added SSR rendering for homepage.
+- Fixed SSR rendering for homepage when switching language.
 - CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
 - Improved CLS for hero skeleton.
+- Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

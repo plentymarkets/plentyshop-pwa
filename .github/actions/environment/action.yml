@@ -1,0 +1,28 @@
+name: 'Setup environment'
+description: 'Setup environment for workflows'
+inputs:
+  api-security-token:
+    description: 'API security token'
+    required: true
+  api-endpoint:
+    description: 'API endpoint'
+    required: true
+  configuration:
+    description: 'Configuration'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Set environment
+      run: |
+        touch apps/web/.env
+        cat <<EOT >> apps/web/.env
+        API_SECURITY_TOKEN=$API_SECURITY_TOKEN
+        API_ENDPOINT=$API_ENDPOINT
+        $CONFIGURATION
+        EOT
+      shell: bash
+      env:
+        API_SECURITY_TOKEN: ${{ inputs.api-security-token }}
+        API_ENDPOINT: ${{ inputs.api-endpoint }}
+        CONFIGURATION: ${{ inputs.configuration }}

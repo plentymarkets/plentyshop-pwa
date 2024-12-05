@@ -10,9 +10,7 @@
       </div>
       <div class="max-h-[35vh] leading-relaxed overflow-y-auto">
         {{ t(cookieGroups?.barDescription) }}
-        <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
-          {{ t('CookieBar.Privacy Settings') }}
-        </SfLink>
+        <SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
       </div>
       <!-- checkboxes -->
       <div v-if="cookieJson" class="flex flex-wrap gap-4 sm:grid sm:grid-cols-4 mt-2">
@@ -72,9 +70,7 @@
                   </div>
                   <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
-                      <SfLink :tag="NuxtLink" :to="localePath(paths.privacyPolicy)">
-                        {{ t('CookieBar.Privacy Settings') }}
-                      </SfLink>
+                      <SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
                     </template>
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{
@@ -88,7 +84,12 @@
               </div>
             </div>
           </div>
-          <SfLink size="sm" class="text-primary hover:underline" @click="cookieGroup.showMore = !cookieGroup.showMore">
+          <SfLink
+            @click="cookieGroup.showMore = !cookieGroup.showMore"
+            tag="button"
+            size="sm"
+            class="text-primary hover:underline"
+          >
             {{ cookieGroup.showMore ? t('CookieBar.Show less') : t('CookieBar.More information') }}
           </SfLink>
         </div>
@@ -97,7 +98,7 @@
 
     <!-- Actions -->
     <div class="my-5 text-center">
-      <SfLink href="#" @click="furtherSettingsOn = !furtherSettingsOn" class="text-base">
+      <SfLink @click="furtherSettingsOn = !furtherSettingsOn" tag="button" class="text-base">
         {{ furtherSettingsOn ? t('CookieBar.Back') : t('CookieBar.Further Settings') }}
       </SfLink>
     </div>
@@ -162,7 +163,6 @@
 import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { defaults } from '~/composables';
 import { Cookie, CookieGroup } from '~/configuration/cookie.config';
-import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
@@ -182,6 +182,8 @@ const {
 initializeCookies();
 
 const furtherSettingsOn = ref(false);
+
+const privacyPolicy = computed(() => localePath(paths.privacyPolicy));
 
 const triggerCookieConsent = (group: CookieGroup) => {
   group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
