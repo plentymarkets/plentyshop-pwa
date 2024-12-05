@@ -1,6 +1,6 @@
 <template>
   <div class="mx-auto p-5">
-    <div class="flex items-start border rounded-md shadow-lg max-h-[500px] overflow-hidden">
+    <div class="flex items-start border rounded-md shadow-lg max-h-[500px] overflow-hidden relative">
       <div
         class="bg-primary-500 text-white text-right pr-4 pt-2 font-mono text-sm w-10 h-[500px] overflow-y-auto"
         ref="lineNumberContainer"
@@ -15,41 +15,38 @@
         class="w-full p-2 font-mono text-sm border-none resize-none outline-none h-[500px]"
         :placeholder="$t('editMode.editJsonPlaceholder')"
       ></textarea>
+      <SfButton size="sm" class="absolute top-2 right-2" @click="closeEditor"
+        ><SfIconCancel class="cursor-pointer"></SfIconCancel
+      ></SfButton>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
-    <UiButton @click="formatJson" class="mt-4 px-4 py-2 text-white rounded-md bg-blue-500 hover:bg-blue-600">
-      {{ $t('editMode.formatJson') }}
-    </UiButton>
-    <UiButton @click="purgeJson" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-green-500 hover:bg-green-600">
-      {{ $t('editMode.minifyJson') }}
-    </UiButton>
-    <UiButton @click="clearText" class="mt-4 ml-2 px-4 py-2 text-white rounded-md bg-red-500 hover:bg-red-600">
-      {{ $t('editMode.clearJson') }}
-    </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
-const { data } = useHomepage();
+import { SfIconCancel } from '@storefront-ui/vue';
 
-const {
-  jsonText,
-  errorMessage,
-  lineCount,
-  textarea,
-  lineNumberContainer,
-  syncScroll,
-  handleInput,
-  formatJson,
-  purgeJson,
-  clearText,
-} = useJsonEditor(JSON.stringify(data, null, 2));
+const props = defineProps<{
+  block: Block | null;
+  index: number;
+}>();
+
+const emit = defineEmits(['update']);
+const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncScroll, handleInput } = useJsonEditor(
+  JSON.stringify(props.block, null, 2),
+);
 
 watch(
-  () => data,
+  () => props.block,
   (updatedData) => {
-    jsonText.value = JSON.stringify(updatedData.value, null, 2);
+    jsonText.value = JSON.stringify(updatedData, null, 2);
   },
   { immediate: true, deep: true },
 );
+
+const closeEditor = () => {
+  emit('update', props.index, JSON.parse(jsonText.value));
+  const { isEditing } = useEditor();
+  isEditing.value = false;
+};
 </script>

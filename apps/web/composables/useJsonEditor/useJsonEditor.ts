@@ -1,7 +1,5 @@
 export const useJsonEditor = (initialJson: string) => {
-  const { setFormattedHeroItems } = useHomepage();
   const { isEditingEnabled } = useEditor();
-
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
@@ -35,59 +33,12 @@ export const useJsonEditor = (initialJson: string) => {
 
   const handleInput = () => {
     try {
-      if (jsonText.value.trim() === '') {
-        const noData = {
-          hero: [],
-          mediaCard: [],
-          featured: [],
-        };
-        setFormattedHeroItems(noData);
-        updateLineCount();
-        return;
-      }
-      const parsedData = JSON.parse(jsonText.value);
-      setFormattedHeroItems(parsedData);
       validateJson();
       updateLineCount();
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
       isEditingEnabled.value = false;
     }
-  };
-
-  const formatJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json, null, 2);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const purgeJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-      isEditingEnabled.value = false;
-    }
-  };
-
-  const clearText = () => {
-    jsonText.value = '';
-    errorMessage.value = '';
-    setFormattedHeroItems({
-      hero: [],
-      mediaCard: [],
-      featured: [],
-    });
-    updateLineCount();
   };
 
   onMounted(() => {
@@ -104,8 +55,5 @@ export const useJsonEditor = (initialJson: string) => {
     lineNumberContainer,
     syncScroll,
     handleInput,
-    formatJson,
-    purgeJson,
-    clearText,
   };
 };

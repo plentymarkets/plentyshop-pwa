@@ -250,7 +250,7 @@ jobs:
     needs: [fitness-compliance, fitness-code-quality, test-unit, build, test-e2e-stable, fitness-web-vitals-mobile, fitness-web-vitals-desktop]
     steps:
       - name: Ready to review (push notification)
-        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
         run: |
           curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
           --header 'Content-Type: application/json' \

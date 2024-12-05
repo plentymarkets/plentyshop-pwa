@@ -96,7 +96,7 @@ export const useApplePay = () => {
 
           const order = await createOrder({
             paymentId: cart.value.methodOfPaymentId,
-            shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+            additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
           });
           if (!order || !order.order || !order.order.id) {
             showErrorNotification($i18n.t('storefrontError.order.createFailed'));

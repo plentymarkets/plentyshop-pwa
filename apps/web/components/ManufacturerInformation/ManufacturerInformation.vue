@@ -9,7 +9,9 @@
       <p v-if="manufacturerInfo.logo">
         <NuxtImg :src="manufacturerInfo.logo" :alt="t('manufacturer.logoAlt')" loading="lazy" />
       </p>
-      <p v-if="manufacturerInfo.externalName">{{ manufacturerInfo.externalName }}</p>
+      <p v-if="manufacturerInfo.name">{{ manufacturerInfo.name }}</p>
+      <p v-else-if="manufacturerInfo.externalName">{{ manufacturerInfo.externalName }}</p>
+      <p v-if="manufacturerInfo.legalName">{{ manufacturerInfo.legalName }}</p>
       <p v-if="manufacturerInfo.street || manufacturerInfo.houseNo">
         {{ manufacturerInfo.street }} {{ manufacturerInfo.houseNo }}
       </p>
@@ -21,6 +23,7 @@
       <p v-if="manufacturerInfo.phoneNumber">{{ t('phone') }}: {{ manufacturerInfo.phoneNumber }}</p>
       <p v-if="manufacturerInfo.faxNumber">{{ t('fax') }}: {{ manufacturerInfo.faxNumber }}</p>
       <p v-if="manufacturerInfo.email">{{ t('email') }}: {{ manufacturerInfo.email }}</p>
+      <p v-if="manufacturerInfo.contactUrl">{{ t('contactUrl') }}: {{ manufacturerInfo.contactUrl }}</p>
       <p v-if="manufacturerInfo.url">
         <a :href="manufacturerInfo.url" target="_blank">{{ t('homepage') }}: {{ manufacturerInfo.url }}</a>
       </p>
@@ -44,7 +47,9 @@ const country = manufacturerGetters.getManufacturerCountry(manufacturer);
 const manufacturerInfo = computed(() => {
   return {
     logo: manufacturerGetters.getManufacturerLogo(manufacturer),
+    name: manufacturerGetters.getManufacturerName(manufacturer),
     externalName: manufacturerGetters.getManufacturerExternalName(manufacturer),
+    legalName: manufacturerGetters.getManufacturerLegalName(manufacturer),
     street: manufacturerGetters.getManufacturerStreet(manufacturer),
     houseNo: manufacturerGetters.getManufacturerHouseNo(manufacturer),
     postcode: manufacturerGetters.getManufacturerPostCode(manufacturer),
@@ -53,6 +58,7 @@ const manufacturerInfo = computed(() => {
     email: manufacturerGetters.getManufacturerEmail(manufacturer),
     phoneNumber: manufacturerGetters.getManufacturerPhoneNumber(manufacturer),
     faxNumber: manufacturerGetters.getManufacturerFaxNumber(manufacturer),
+    contactUrl: manufacturerGetters.getManufacturerContactUrl(manufacturer),
     url: manufacturerGetters.getManufacturerUrl(manufacturer),
   };
 });

@@ -9,7 +9,7 @@
       @slide-change="onSlideChange"
       class="!z-0"
     >
-      <SwiperSlide v-for="(heroItem, index) in heroItemProps" :key="index" class="md:px-7 lg:px-15">
+      <SwiperSlide v-for="(heroItem, index) in hero" :key="index" class="md:px-7 lg:px-15">
         <UiHeroContent :hero-item-props="heroItem" />
       </SwiperSlide>
     </Swiper>
@@ -21,16 +21,15 @@
 </template>
 
 <script setup lang="ts">
-import { HeroContentProps } from './types';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { HeroContentProps } from './types';
 import { Navigation, Pagination } from 'swiper/modules';
 const { handleArrows, onSlideChange } = useCarousel();
 
-const { heroItemProps } = defineProps<{
-  heroItemProps: HeroContentProps[];
+const { hero } = defineProps<{
+  hero: HeroContentProps[];
 }>();
-
-const enableModules = computed(() => heroItemProps.length > 1);
+const enableModules = computed(() => hero.length > 1);
 </script>
 
 <style src="./styles/navigation.min.css"></style>
