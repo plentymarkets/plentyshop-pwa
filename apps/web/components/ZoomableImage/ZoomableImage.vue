@@ -131,12 +131,12 @@ onMounted(() => {
       if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
     }
   });
-});
 
-if (isMobile.value) {
-  showZoomHint.value = true;
-  setTimeout(() => {
-    showZoomHint.value = false;
-  }, 3000);
-}
+  if (isMobile.value) {
+    showZoomHint.value = true;
+    setTimeout(() => {
+      showZoomHint.value = false;
+    }, 3000);
+  }
+});
 </script>
