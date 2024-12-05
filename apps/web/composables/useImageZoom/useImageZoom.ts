@@ -16,8 +16,6 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   const zoomScale = 2;
 
   let initialPinchDistance = 0;
-  let pinchCenterX = 0;
-  let pinchCenterY = 0;
 
   const updateMaxTranslations = () => {
     const container = containerReference.value;
@@ -90,13 +88,6 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
       const touch2 = event.touches[1];
 
       initialPinchDistance = getDistance(touch1, touch2);
-
-      const container = containerReference.value;
-      if (!container) return;
-      const containerRect = container.getBoundingClientRect();
-
-      pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - containerRect.left;
-      pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - containerRect.top;
     }
   };
 
@@ -123,13 +114,16 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
       const threshold = 10;
 
       if (Math.abs(distanceChange) > threshold) {
+        const container = containerReference.value;
+        if (!container) return;
+        const containerRect = container.getBoundingClientRect();
+
+        const pinchCenterX = (touch1.clientX + touch2.clientX) / 2 - containerRect.left;
+        const pinchCenterY = (touch1.clientY + touch2.clientY) / 2 - containerRect.top;
+
         if (distanceChange > 0 && !isZoomed.value) {
           isZoomed.value = true;
           updateMaxTranslations();
-
-          const container = containerReference.value;
-          if (!container) return;
-          const containerRect = container.getBoundingClientRect();
 
           currentTranslateX.value = (containerRect.width / 2 - pinchCenterX) * (zoomScale - 1);
           currentTranslateY.value = (containerRect.height / 2 - pinchCenterY) * (zoomScale - 1);
