@@ -9,7 +9,6 @@
   "scripts": {
     "prepare": "is-ci || husky install",
     "update:sdk": "yarn up @plentymarkets/shop-api",
-    "setup": "if [ \"$OS\" = \"Windows_NT\" ]; then yarn setup:windows; else yarn setup:unix; fi",
     "setup:unix": "chmod +x yarn.sh && ./yarn.sh && yarn build",
     "setup:windows": "powershell -Command \"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ./yarn.ps1\" && yarn build",
     "turbo:disable-telemetry": "turbo telemetry disable",
