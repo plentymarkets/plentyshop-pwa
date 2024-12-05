@@ -1,10 +1,11 @@
-export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
+export const useJsonEditor = (initialJson: string) => {
+  const { isEditingEnabled } = useEditor();
   const errorMessage = ref('');
   const lineCount = ref<number[]>([]);
   const textarea = ref<HTMLTextAreaElement | null>(null);
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
-  const jsonText = ref(initialJson);
+  const jsonText = useState<string>('jsonText', () => initialJson);
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -23,42 +24,21 @@ export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
     try {
       JSON.parse(jsonText.value);
       errorMessage.value = '';
+      isEditingEnabled.value = true;
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingEnabled.value = false;
     }
   };
 
   const handleInput = () => {
-    validateJson();
-    updateLineCount();
-  };
-
-  const formatJson = () => {
     try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json, null, 2);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
+      validateJson();
+      updateLineCount();
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
+      isEditingEnabled.value = false;
     }
-  };
-
-  const purgeJson = () => {
-    try {
-      const json = JSON.parse(jsonText.value);
-      jsonText.value = JSON.stringify(json);
-      errorMessage.value = '';
-      nextTick(updateLineCount);
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
-    }
-  };
-
-  const clearText = () => {
-    jsonText.value = '';
-    errorMessage.value = '';
-    updateLineCount();
   };
 
   onMounted(() => {
@@ -75,8 +55,5 @@ export const useJsonEditor = (initialJson: string): UseJsonEditorReturn => {
     lineNumberContainer,
     syncScroll,
     handleInput,
-    formatJson,
-    purgeJson,
-    clearText,
   };
 };

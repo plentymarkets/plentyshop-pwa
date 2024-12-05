@@ -1,4 +1,5 @@
 import { PageObject } from './PageObject';
+import type { AddressFixtureOverride } from '~/__tests__/types';
 
 export class CheckoutPageObject extends PageObject {
   get goToCheckoutButton() {
@@ -182,7 +183,7 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillShippingAddressForm() {
+  fillShippingAddressForm(fixtureOverride?: AddressFixtureOverride) {
     cy.intercept('/plentysystems/setCheckoutAddress')
       .as('setCheckoutAddress')
       .intercept('/plentysystems/getShippingProvider')
@@ -190,7 +191,7 @@ export class CheckoutPageObject extends PageObject {
       .intercept('/plentysystems/getPaymentProviders')
       .as('getPaymentProviders');
 
-    this.fillAddressForm();
+    this.fillAddressForm(fixtureOverride);
 
     cy.wait('@setCheckoutAddress').wait('@getShippingProvider').wait('@getPaymentProviders');
 
@@ -224,8 +225,20 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
-  fillAddressForm() {
+  checkPayPal() {
+    cy.intercept('/plentysystems/setPaymentProvider').as('setPaymentProvider');
+    cy.getByTestId('payment-method-6001').check({ force: true });
+    cy.wait('@setPaymentProvider');
+    return this;
+  }
+
+  fillAddressForm(fixtureOverride?: AddressFixtureOverride) {
     cy.getFixture('addressForm').then((fixture) => {
+
+      if (fixtureOverride) {
+        fixture = { ...fixture, ...fixtureOverride };
+      }
+
       this.fillForm(fixture);
     });
     return this;
@@ -241,6 +254,22 @@ export class CheckoutPageObject extends PageObject {
     // this.stateSelect.select(fixture.state);
     this.postalCodeInput.type(fixture.zipCode);
     this.saveShipping.click({ force: true });
+    return this;
+  }
+
+  get payPalButton() {
+    return cy.get('.paypal-buttons-context-iframe').first();
+  }
+
+  shouldShowShippingMethods() {
+    cy.getByTestId('shipping-method-list').should('be.visible');
+    cy.getByTestId('no-payment-method-available').should('not.exist');
+    return this;
+  }
+
+  shouldNotShowShippingMethods() {
+    cy.getByTestId('shipping-method-list').should('not.exist');
+    cy.getByTestId('no-payment-method-available').should('be.visible');
     return this;
   }
 }

@@ -28,21 +28,22 @@
     <div class="lg:grid lg:grid-cols-2 lg:gap-4">
       <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
-          :src="addModernImageExtension(productGetters.getPreviewImage(product))"
+          :src="addModernImageExtension(productGetters.getMiddleImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
           width="240"
           height="240"
           loading="lazy"
           class="mb-3"
         />
-
-        <div class="flex mb-3">
-          <div class="mr-1 flex">
-            <span class="self-center"> {{ quantity }}x </span>
-          </div>
+        <div class="flex mb-1">
           <h1 class="font-bold typography-headline-4" data-testid="product-name">
             {{ productGetters.getName(product) }}
           </h1>
+        </div>
+        <div class="mb-3">
+          <span class="self-center text-gray-700 typography-headline-3">
+            {{ t('account.ordersAndReturns.orderDetails.quantity') }}: {{ quantity }}
+          </span>
         </div>
 
         <ProductPrice :product="product" />
@@ -87,7 +88,7 @@
         >
           {{ t('goToCheckout') }}
         </UiButton>
-        <OrDivider class="my-4" v-if="isPayPalReady" />
+        <OrDivider class="my-4" v-if="isPaypalAvailable" />
         <PayPalExpressButton class="w-full text-center" type="CartPreview" @on-approved="isOpen = false" />
         <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
       </div>
@@ -105,11 +106,12 @@ import { paths } from '~/utils/paths';
 defineProps<QuickCheckoutProps>();
 
 const { t, n } = useI18n();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+
+const { showNetPrices } = useCustomer();
+
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();
-const { isReady: isPayPalReady, loadConfig } = usePayPal();
+const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);

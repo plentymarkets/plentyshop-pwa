@@ -1,12 +1,20 @@
 name: Deploy PWA
 
 on:
-  # release:
-  #   types: [published]
-  # push:
-  #   branches: [main]
+  release:
+    types: [published]
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
+      environment:
+        description: 'The environment to deploy to'
+        type: choice
+        required: true
+        default: 'staging'
+        options:
+          - staging
+          - production
       tag-version:
         description: 'The tag version, branch name or SHA to checkout'
         required: true
@@ -22,35 +30,12 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag-version }}
+          ref: ${{ inputs.tag-version || github.ref }}
 
-      - name: Enable corepack
-        run: corepack enable
-
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - name: Setup Node and Yarn
+        uses: ./.github/actions/setup
         with:
-          node-version: '20.5'
-          cache: 'yarn'
-          registry-url: 'https://npm.pkg.github.com'
-
-      - name: Set yarn version
-        run: |
-          yarn set version stable
-          yarn set version 3.6.4
-
-      - name: Setup .yarnrc.yml
-        run: |
-          yarn config set nodeLinker node-modules
-          yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-          yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
-          yarn config set npmScopes.plentymarkets.npmAuthToken $NODE_AUTH_TOKEN
-          yarn plugin import workspace-tools
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install Dependencies
-        run: yarn --frozen-lockfile
+          npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup environment
         run: |
@@ -84,10 +69,20 @@ jobs:
             ./middleware
           outPath: pwa.tar.gz
 
-      - name: Upload File
-        id: upload
+      - name: Upload build to production
+        if: github.event_name == 'release'  || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+        id: upload-production
         uses: JantHsueh/upload-file-action@1.0
         with:
           url: 'https://pwapublish.plentysystems.com'
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
+          fileForms: '{ "file": "pwa.tar.gz" }'
+
+      - name: Upload build to staging
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+        id: upload-staging
+        uses: JantHsueh/upload-file-action@1.0
+        with:
+          url: 'https://pwapublish.plentysystems.com'
+          forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN_STAGING }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'

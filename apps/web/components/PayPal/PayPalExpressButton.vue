@@ -1,5 +1,11 @@
 <template>
-  <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
+  <div
+    v-if="paypalUuid && consent"
+    ref="paypalButton"
+    :id="'paypal-' + paypalUuid"
+    class="z-0 relative paypal-button"
+  />
+  <PayPalCookieDisabledBanner v-else-if="!consent" />
 </template>
 
 <script setup lang="ts">
@@ -25,6 +31,7 @@ const emits = defineEmits<{
   (event: 'on-approved'): void;
 }>();
 
+const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
@@ -78,14 +85,16 @@ const onApprove = async (data: OnApproveData) => {
     useProcessingOrder().processingOrder.value = true;
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
-    await executeOrder({
-      mode: 'paypal',
-      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-      paypalTransactionId: data.orderID,
-    });
+    if (order) {
+      await executeOrder({
+        mode: 'paypal',
+        plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+        paypalTransactionId: data.orderID,
+      });
+    }
 
     clearCartItems();
 
@@ -148,5 +157,12 @@ onNuxtReady(async () => {
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
+});
+
+watch(consent, async () => {
+  if (consent.value) {
+    paypalScript.value = await getScript(currency.value, isCommit);
+    createButton();
+  }
 });
 </script>

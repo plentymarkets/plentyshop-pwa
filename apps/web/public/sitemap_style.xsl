@@ -150,8 +150,9 @@
                 <table id="sitemap" cellpadding="3">
                   <thead>
                     <tr>
-                      <th width="75%">URL</th>
-                      <th width="25%">Last Modified</th>
+                      <th width="70%">URL</th>
+                      <th width="10%">Images</th>
+                      <th width="20%">Last Modified</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -166,6 +167,9 @@
                           <a href="{$itemURL}">
                             <xsl:value-of select="sitemap:loc"/>
                           </a>
+                        </td>
+                        <td>
+                          <xsl:value-of select="count(image:image)"/>
                         </td>
                         <td>
                           <xsl:value-of select="sitemap:lastmod"/>

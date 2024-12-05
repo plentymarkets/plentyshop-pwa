@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only>
-      <UiToolbar v-show="isPreview" />
+      <UiToolbar data-testid="edit-mode-toolbar" v-show="isPreview" />
     </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
@@ -33,7 +33,7 @@ onMounted(() => {
   const config = useRuntimeConfig().public;
   const showConfigurationDrawer = config.showConfigurationDrawer;
 
-  const cookieExists = document.cookie.split('; ').some((cookie) => cookie.trim().startsWith('pwa='));
-  isPreview.value = cookieExists || (showConfigurationDrawer as boolean);
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 });
 </script>
