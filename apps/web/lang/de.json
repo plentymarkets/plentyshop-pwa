@@ -908,6 +908,9 @@
     "reviewsUp": "Kundenbewertung ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Angebot abgelaufen"
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",

@@ -908,6 +908,9 @@
     "reviewsUp": "Item reviews ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Offer expired"
+    },
     "address": {
       "createFailed": "Saving the address has failed.",
       "deleteFailed": "The deletion of the address failed.",
