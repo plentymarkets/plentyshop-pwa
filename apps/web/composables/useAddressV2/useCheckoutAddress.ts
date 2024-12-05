@@ -35,8 +35,6 @@ export const useCheckoutAddress = (type: AddressType) => {
       useCheckoutAddress(AddressType.Billing).clear();
     }
 
-    const { add: showNewForm } = useAddressForm(type);
-    showNewForm.value = true;
     state.value.checkoutAddress = {} as Address;
   };
 
