@@ -17,6 +17,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
 
   let initialPinchDistance = 0;
   let isPanningEnabled = false;
+  const shouldTransition = ref(false);
 
   const updateMaxTranslations = () => {
     const container = containerReference.value;
@@ -49,6 +50,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
     if (event.touches.length === 1) {
       if (isDoubleTap) {
         isZoomed.value = !isZoomed.value;
+        shouldTransition.value = true;
         event.preventDefault();
 
         if (isZoomed.value) {
@@ -73,6 +75,10 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
           startTranslateX = 0;
           startTranslateY = 0;
         }
+
+        setTimeout(() => {
+          shouldTransition.value = false;
+        }, 300);
       }
 
       lastTap = currentTime;
@@ -127,6 +133,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
 
         if (distanceChange > 0 && !isZoomed.value) {
           isZoomed.value = true;
+          shouldTransition.value = true;
           updateMaxTranslations();
 
           currentTranslateX.value = (containerRect.width / 2 - pinchCenterX) * (zoomScale - 1);
@@ -134,13 +141,22 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
 
           startTranslateX = currentTranslateX.value;
           startTranslateY = currentTranslateY.value;
+
+          setTimeout(() => {
+            shouldTransition.value = false;
+          }, 300);
         } else if (distanceChange < 0 && isZoomed.value) {
           isZoomed.value = false;
+          shouldTransition.value = true;
 
           currentTranslateX.value = 0;
           currentTranslateY.value = 0;
           startTranslateX = 0;
           startTranslateY = 0;
+
+          setTimeout(() => {
+            shouldTransition.value = false;
+          }, 300);
         }
       }
     }
@@ -160,8 +176,8 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
     return {
       transform: isZoomed.value
         ? `scale(${zoomScale}) translate(${currentTranslateX.value / zoomScale}px, ${currentTranslateY.value / zoomScale}px)`
-        : 'scale(1) translate(0px, 0px)',
-      transition: 'transform 0.3s ease',
+        : '',
+      transition: shouldTransition.value ? 'transform 0.3s ease' : 'none',
       cursor: isZoomed.value ? 'move' : 'auto',
     };
   });
