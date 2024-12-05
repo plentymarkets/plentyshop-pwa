@@ -7,8 +7,8 @@
   >
     <div v-if="offer" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
-        <h1 v-if="offerGetters.getValidUntil(offer)" class="px-4 py-6 font-medium">
-          {{ t('offerForm.offerValidUntil', { date: offerGetters.getValidUntil(offer) }) }}
+        <h1 v-if="validUntil" class="px-4 py-6 font-medium">
+          {{ t('offerForm.offerValidUntil', { date: validUntil }) }}
         </h1>
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="px-4 py-6">
@@ -186,6 +186,7 @@ import { offerGetters } from '@plentymarkets/shop-api';
 import { SfLink, SfCheckbox, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { paths } from '~/utils/paths';
 import { OfferPageContentProps } from './types';
+import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const { loading: offerLoading } = useOffer();
 const { send } = useNotification();
@@ -200,21 +201,9 @@ const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const shippingAddress = computed(() => offerGetters.getShippingAddress(props.offer));
 const billingAddress = computed(() => offerGetters.getBillingAddress(props.offer));
+const validUntil = computed(() => offerGetters.getValidUntil(props.offer));
 
 const ID_CHECKBOX = '#terms-checkbox';
-
-const scrollToHTMLObject = (object: string) => {
-  const element = document.querySelector(object) as HTMLElement;
-  const elementOffset = element?.offsetTop ?? 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: elementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
-};
 
 const validateTerms = (): boolean => {
   showTermsError.value = !termsAccepted.value;
