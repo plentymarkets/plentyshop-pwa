@@ -805,7 +805,8 @@
     "cartContains": "Ihr Warenkorb enthält {count} Artikel",
     "checkYourCart": "Warenkorb prüfen",
     "heading": "Zum Warenkorb hinzugefügt",
-    "subTotal": "Zwischensumme"
+    "subTotal": "Zwischensumme",
+    "quantity": "Anzahl"
   },
   "readLess": "Weniger lesen",
   "readMore": "Mehr lesen",

@@ -28,21 +28,22 @@
     <div class="lg:grid lg:grid-cols-2 lg:gap-4">
       <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
-          :src="addModernImageExtension(productGetters.getPreviewImage(product))"
+          :src="addModernImageExtension(productGetters.getMiddleImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
           width="240"
           height="240"
           loading="lazy"
           class="mb-3"
         />
-
-        <div class="flex mb-3">
-          <div class="mr-1 flex">
-            <span class="self-center"> {{ quantity }}x </span>
-          </div>
+        <div class="flex mb-1">
           <h1 class="font-bold typography-headline-4" data-testid="product-name">
             {{ productGetters.getName(product) }}
           </h1>
+        </div>
+        <div class="mb-3">
+          <span class="self-center text-gray-700 typography-headline-3">
+            {{ t('account.ordersAndReturns.orderDetails.quantity') }}: {{ quantity }}
+          </span>
         </div>
 
         <ProductPrice :product="product" />
