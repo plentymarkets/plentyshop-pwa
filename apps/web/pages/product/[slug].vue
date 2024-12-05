@@ -57,7 +57,7 @@ definePageMeta({
 const { t } = useI18n();
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
-const { setProductMetaData } = useStructuredData();
+const { setProductMetaData, setProductRobotsMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
@@ -114,7 +114,10 @@ watch(
       const categoryTree = categoriesTree.find(
         (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
       );
-      if (categoryTree) setProductMetaData(product.value, categoryTree);
+      if (categoryTree) {
+        setProductMetaData(product.value, categoryTree);
+        setProductRobotsMetaData(product.value);
+      }
     }
   },
   { immediate: true },
