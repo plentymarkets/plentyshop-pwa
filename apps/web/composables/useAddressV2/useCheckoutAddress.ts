@@ -27,6 +27,15 @@ export const useCheckoutAddress = (type: AddressType) => {
     await setCheckoutAddress(address);
   };
 
+  const handleGuestAddressCleanup = (addressId: number) => {
+    const addressType = type === AddressType.Shipping ? AddressType.Billing : AddressType.Shipping;
+    const { hasCheckoutAddress: hasAddress, clear: clearAddress } = useCheckoutAddress(addressType);
+    const { get: getAddress, destroy: destroyAddress } = useAddressStore(addressType);
+
+    if (hasAddress.value) clearAddress();
+    if (getAddress(addressId) !== undefined) destroyAddress(addressId);
+  };
+
   const clear = () => {
     const { shippingAsBilling } = useShippingAsBilling();
     const { isGuest } = useCustomer();
@@ -35,13 +44,7 @@ export const useCheckoutAddress = (type: AddressType) => {
     state.value.checkoutAddress = {} as Address;
 
     if (!addressId || !isGuest.value || !shippingAsBilling.value) return;
-
-    const addressType = type === AddressType.Shipping ? AddressType.Billing : AddressType.Shipping;
-    const { hasCheckoutAddress: hasAddress, clear: clearAddress } = useCheckoutAddress(addressType);
-    const { get: getAddress, destroy: destroyAddress } = useAddressStore(addressType);
-
-    if (hasAddress.value) clearAddress();
-    if (getAddress(addressId) !== undefined) destroyAddress(addressId);
+    handleGuestAddressCleanup(addressId);
   };
 
   const hasCheckoutAddress = computed(() => {
