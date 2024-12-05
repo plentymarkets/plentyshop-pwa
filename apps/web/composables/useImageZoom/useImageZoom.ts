@@ -16,6 +16,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   const zoomScale = 2;
 
   let initialPinchDistance = 0;
+  let isPanningEnabled = false;
 
   const updateMaxTranslations = () => {
     const container = containerReference.value;
@@ -77,12 +78,15 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
       lastTap = currentTime;
 
       if (isZoomed.value) {
+        isPanningEnabled = true;
         const touch = event.touches[0];
         touchStartX = touch.pageX - startTranslateX;
         touchStartY = touch.pageY - startTranslateY;
       }
     } else if (event.touches.length === 2) {
       event.preventDefault();
+
+      isPanningEnabled = false;
 
       const touch1 = event.touches[0];
       const touch2 = event.touches[1];
@@ -92,7 +96,7 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
   };
 
   const onTouchMove = (event: TouchEvent) => {
-    if (isZoomed.value && event.touches.length === 1) {
+    if (isZoomed.value && event.touches.length === 1 && isPanningEnabled) {
       const touch = event.touches[0];
       const deltaX = touch.pageX - touchStartX;
       const deltaY = touch.pageY - touchStartY;
@@ -142,7 +146,10 @@ export const useImageZoom = (containerReference: Ref<HTMLElement | null>) => {
     }
   };
 
-  const onTouchEnd = () => {
+  const onTouchEnd = (event: TouchEvent) => {
+    if (event.touches.length === 0) {
+      isPanningEnabled = false;
+    }
     if (isZoomed.value) {
       startTranslateX = currentTranslateX.value;
       startTranslateY = currentTranslateY.value;
