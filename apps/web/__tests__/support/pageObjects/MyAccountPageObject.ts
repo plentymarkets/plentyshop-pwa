@@ -55,10 +55,11 @@ export class MyAccountPageObject extends PageObject {
 
   clickTopBarLogoutButton() {
     cy.intercept('/plentysystems/doLogoutUser').as('doLogoutUser');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
     cy.getByTestId('account-dropdown-button').should('exist').click();
     cy.getByTestId('account-dropdown-logout-item').should('exist').click();
 
-    cy.wait('@doLogoutUser').url().should('contain', paths.home);
+    cy.wait(['@doLogoutUser', '@getFacet']).url().should('contain', paths.home);
     cy.getByTestId('account-dropdown-button').should('not.exist');
   }
 
