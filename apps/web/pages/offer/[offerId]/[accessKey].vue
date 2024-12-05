@@ -23,50 +23,29 @@ const route = useRoute();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
+const offerId = route.params.offerId ? route.params.offerId.toString() : '';
+const accessKey = route.params.accessKey ? route.params.accessKey.toString() : '';
+
 const loadOffer = async (type?: string, value?: string) => {
   const object = type === undefined || type === '' ? {} : { [type]: value };
-  await fetchOffer({
-    offerId: route.params.offerId as string,
-    accessKey: route.params.accessKey as string,
-    ...object,
-  });
+  await fetchOffer({ offerId: offerId, accessKey: accessKey, ...object });
 };
 
-watch(
-  () => error.value,
-  (value) => {
-    if (value) {
-      send({
-        type: 'warning',
-        message: value.error.message,
-      });
-    }
-  },
-);
+watch(error, (value) => {
+  if (value) send({ type: 'warning', message: value.error.message });
+});
 
 await loadOffer();
 
 const decline = async (text: string) => {
-  await declineOffer({
-    offerId: route.params.offerId as string,
-    accessKey: route.params.accessKey as string,
-    text: text as string,
-  });
+  await declineOffer({ offerId: offerId, accessKey: accessKey, text: text as string });
 
-  if (!apiError.value) {
-    send({
-      type: 'positive',
-      message: t('contact.success'),
-    });
-  }
+  if (!apiError.value) send({ type: 'positive', message: t('contact.success') });
   navigateTo(localePath(paths.home));
 };
 
 const accept = async () => {
-  await acceptOffer({
-    offerId: route.params.offerId as string,
-    accessKey: route.params.accessKey as string,
-  });
+  await acceptOffer({ offerId: offerId, accessKey: accessKey });
 
   if (!error.value && relatedOrder.value) {
     navigateTo(

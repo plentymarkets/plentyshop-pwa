@@ -18,17 +18,19 @@ export const useOffer: UseOfferReturn = () => {
     apiError: null,
   }));
 
-  const handleApiCall = async (apiCall: () => Promise<Data<Offer | GetOfferError | GetOfferReject | Order>>) => {
+  const handleApiCall = async (
+    apiCall: () => Promise<Data<Offer | GetOfferError | GetOfferReject | Order>>,
+  ): Promise<{ data: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> }> => {
     state.value.loading = true;
-    let data_: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> = ref(null);
+    const data_: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> = ref(null);
 
     try {
-      const data = await apiCall();
-      data_ = ref(data);
-    } catch (ApiError) {
-      state.value.apiError = ApiError as ApiError;
-      state.value.loading = false;
+      data_.value = await apiCall();
+    } catch (error) {
+      state.value.apiError = error as ApiError;
       useHandleError(state.value.apiError);
+    } finally {
+      state.value.loading = false;
     }
 
     return { data: data_ };
@@ -41,6 +43,7 @@ export const useOffer: UseOfferReturn = () => {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
     }
+
     if (typeof data.value?.data === 'object' && 'order' in data.value.data) {
       const offerData = data.value?.data as Offer;
       state.value.data = offerData?.order ? offerData : ({} as Offer);
