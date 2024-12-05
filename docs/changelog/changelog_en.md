@@ -17,6 +17,7 @@
 - Added more manufacturer information to legal details drawer.
 - Add login redirect on category "after login" visibility.
 - The Homepage components are now split in edit block s
+- Added robots settings for SEO config.
 
 ### 👷 Changed
 
