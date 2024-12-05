@@ -31,9 +31,24 @@ interface UiMediaCardOptions {
 
 interface ProductRecommendedProductsOptions {
   categoryId: string;
+  headline?: string;
+}
+interface NewsletterSubscribeOptions {
+  email: string;
+  firstName: string;
+  heading: string;
+  info: string;
+  lastName: string;
+  policy: string;
+  subscribe: string;
+  success: string;
 }
 
-type BlockOptions = UiHeroCarouselOptions | UiMediaCardOptions | ProductRecommendedProductsOptions;
+type BlockOptions =
+  | UiHeroCarouselOptions
+  | UiMediaCardOptions
+  | ProductRecommendedProductsOptions
+  | NewsletterSubscribeOptions;
 
 export interface Block {
   name: string;

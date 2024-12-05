@@ -11,13 +11,20 @@
         <div
           :class="[
             'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
-            { 'border-[3px] border-[#538AEA]': disableActions && isClicked && isTablet && clickedBlockIndex === index },
-            { 'hover:border-[3px] hover:border-[#538AEA]': disableActions && !isTablet },
+            {
+              'outline outline-4 outline-[#538AEA]':
+                disableActions && isClicked && isTablet && clickedBlockIndex === index,
+            },
+            { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
         >
           <UiBlockActions v-if="disableActions && blockHasData(block)" :index="index" @edit="handleEdit" />
-          <component :is="getComponent(block.name)" v-bind="block.options" />
+          <component
+            v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
+            :is="getComponent(block.name)"
+            v-bind="block.options"
+          />
         </div>
       </template>
     </div>
@@ -32,6 +39,7 @@ const viewport = useViewport();
 
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
+const { showNewsletter } = useNewsletter();
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
@@ -67,8 +75,8 @@ const updateBlock = (index: number, updatedBlock: Block) => {
 };
 
 const getComponent = (name: string) => {
-  if (name === 'UiSkeletonLoader') {
-    return resolveComponent('UiSkeletonLoader');
+  if (name === 'NewsletterSubscribe') {
+    return resolveComponent('NewsletterSubscribe');
   }
 
   if (name === 'UiHeroCarousel') {
