@@ -77,8 +77,8 @@ import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const { showNetPrices } = useCustomer();
+
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 
 const { addModernImageExtension, getImageForViewport } = useModernImage();

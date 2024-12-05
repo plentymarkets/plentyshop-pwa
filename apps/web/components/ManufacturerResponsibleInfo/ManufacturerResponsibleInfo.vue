@@ -24,6 +24,9 @@
       </p>
       <p v-if="manufacturerResponsibleInfo.phoneNo">{{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}</p>
       <p v-if="manufacturerResponsibleInfo.email">{{ t('email') }}: {{ manufacturerResponsibleInfo.email }}</p>
+      <p v-if="manufacturerResponsibleInfo.responsibleContactUrl">
+        {{ t('responsibleContactUrl') }}: {{ manufacturerResponsibleInfo.responsibleContactUrl }}
+      </p>
     </div>
   </div>
   <div v-else>
@@ -50,6 +53,7 @@ const manufacturerResponsibleInfo = computed(() => ({
   country: Object.keys(country).length > 0 ? country : null,
   email: manufacturerGetters.getManufacturerResponsibleEmail(manufacturer),
   phoneNo: manufacturerGetters.getManufacturerResponsiblePhoneNo(manufacturer),
+  responsibleContactUrl: manufacturerGetters.getManufacturerResponsibleContactUrl(manufacturer),
 }));
 
 const hasAnyInfo = computed(() => {
