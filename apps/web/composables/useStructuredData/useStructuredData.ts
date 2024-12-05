@@ -189,13 +189,14 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = true;
 
     const route = useRoute();
-    let robotsContent: string | undefined = '';
+    let robotsContent = product.seoSettings?.robots || '';
 
-    robotsContent =
+    if (
       (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
       product.seoSettings?.forceNoIndex
-        ? 'noindex'
-        : product.seoSettings?.robots;
+    ) {
+      robotsContent = 'noindex';
+    }
 
     useHead({
       meta: [{ name: 'robots', content: robotsContent }],
