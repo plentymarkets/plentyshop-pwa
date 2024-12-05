@@ -1,6 +1,7 @@
 #!/bin/bash
 
 RED='\033[0;31m'
+SET='\033[0m'
 
 function display_help() {
   echo "Usage: $0 [option...]"
