@@ -29,13 +29,19 @@ export const useCheckoutAddress = (type: AddressType) => {
 
   const clear = () => {
     const { shippingAsBilling } = useShippingAsBilling();
+    const { isGuest } = useCustomer();
 
-    if (type === AddressType.Shipping && shippingAsBilling.value && state.value.checkoutAddress.id) {
-      useAddressStore(AddressType.Billing).destroy(state.value.checkoutAddress.id);
-      useCheckoutAddress(AddressType.Billing).clear();
-    }
-
+    const addressId = state.value.checkoutAddress?.id;
     state.value.checkoutAddress = {} as Address;
+
+    if (!addressId || !isGuest.value || !shippingAsBilling.value) return;
+
+    const addressType = type === AddressType.Shipping ? AddressType.Billing : AddressType.Shipping;
+    const { hasCheckoutAddress: hasAddress, clear: clearAddress } = useCheckoutAddress(addressType);
+    const { get: getAddress, destroy: destroyAddress } = useAddressStore(addressType);
+
+    if (hasAddress.value) clearAddress();
+    if (getAddress(addressId) !== undefined) destroyAddress(addressId);
   };
 
   const hasCheckoutAddress = computed(() => {
