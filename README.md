@@ -59,7 +59,6 @@ npm run setup:unix
 
 Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
-
 ## Resources
 
 ### Documentation
