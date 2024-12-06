@@ -103,7 +103,7 @@ onMounted(() => {
 
         if (order) {
           await executeOrder({
-            mode: 'paypal',
+            mode: 'PAYPAL_UNBRANDED_CARD',
             plentyOrderId: Number.parseInt(orderGetters.getId(order)),
             paypalTransactionId: data.orderID,
           });
