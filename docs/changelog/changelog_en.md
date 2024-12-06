@@ -20,6 +20,7 @@
 
 ### 👷 Changed
 
+- Improve size for quantity label on quick checkout on desktop.
 - Improved user experience while using the cookie bar.
 - Modified showNetPrices source to be consumed from user session.
 - Address preview details now includes the country name.
@@ -46,6 +47,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 ### 🩹 Fixed
 
 - Addressed a scenario where deleting the checkout address as a guest triggered an unknown error.
+- Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
 - Resolved an issue where the shipping costs where not updated during guest checkout process.
@@ -79,6 +81,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Improved CLS for hero skeleton.
 - Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
 - Added missing condition to block action.
+- Fixed a bug where PayPal payments were stored as "Cash in Advance".
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

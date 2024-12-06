@@ -213,7 +213,7 @@ const handleRegularOrder = async () => {
 
     if (data) {
       await executeOrder({
-        mode: 'paypal',
+        mode: 'PAYPAL',
         plentyOrderId: Number.parseInt(orderGetters.getId(data)),
         paypalTransactionId: route?.query?.orderId?.toString() ?? '',
       });
