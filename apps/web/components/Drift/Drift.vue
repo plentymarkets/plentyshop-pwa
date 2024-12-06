@@ -9,18 +9,26 @@ import type { DriftProps } from '~/components/Drift/types';
 
 const { index } = defineProps<DriftProps>();
 
+let drift: Drift | null = null;
+
 onMounted(() => {
   let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
   let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
-  new Drift(demoTrigger, {
+  drift = new Drift(demoTrigger, {
     paneContainer: paneContainer,
     containInline: true,
     zoomFactor: 2,
     hoverBoundingBox: true,
-    handleTouch: true,
-    touchDelay: 300,
+    handleTouch: false,
     injectBaseStyles: true,
   });
+});
+
+onUnmounted(() => {
+  if (drift) {
+    drift.destroy();
+    drift = null;
+  }
 });
 </script>
