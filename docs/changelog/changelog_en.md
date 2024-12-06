@@ -71,6 +71,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
 - Improved CLS for hero skeleton.
 - Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
+- Fixed multiple issues in the PayPal readonly checkout process.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
