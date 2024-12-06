@@ -18,8 +18,16 @@ runs:
         cache: 'yarn'
         registry-url: 'https://npm.pkg.github.com'
 
-    - name: Setup yarn
+    - name: Setup yarn (Unix)
+      if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
       run: chmod +x ${{ github.workspace }}/yarn.sh && ${{ github.workspace }}/yarn.sh
       shell: bash
+      env:
+        NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
+
+    - name: Setup yarn (Windows)
+      if: ${{ runner.os == 'Windows' }}
+      run: powershell -Command Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ${{ github.workspace }}/yarn.ps1
+      shell: pwsh
       env:
         NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
