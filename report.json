@@ -1,0 +1,112 @@
+{
+  "value": "body-parser",
+  "children": {
+    "ID": 1099520,
+    "Issue": "body-parser vulnerable to denial of service when url encoding is enabled",
+    "URL": "https://github.com/advisories/GHSA-qwcr-r2fm-qrc7",
+    "Severity": "high",
+    "Vulnerable Versions": "<1.20.3",
+    "Tree Versions": [
+      "1.20.2"
+    ],
+    "Dependents": [
+      "express@npm:4.19.2"
+    ]
+  }
+}
+{
+  "value": "cross-spawn",
+  "children": {
+    "ID": 1100563,
+    "Issue": "Regular Expression Denial of Service (ReDoS) in cross-spawn",
+    "URL": "https://github.com/advisories/GHSA-3xgq-45jj-v275",
+    "Severity": "high",
+    "Vulnerable Versions": ">=7.0.0 <7.0.5",
+    "Tree Versions": [
+      "7.0.3"
+    ],
+    "Dependents": [
+      "eslint@npm:8.57.0"
+    ]
+  }
+}
+{
+  "value": "path-to-regexp",
+  "children": {
+    "ID": 1099558,
+    "Issue": "path-to-regexp outputs backtracking regular expressions",
+    "URL": "https://github.com/advisories/GHSA-9wv6-86v2-598j",
+    "Severity": "high",
+    "Vulnerable Versions": ">=4.0.0 <6.3.0",
+    "Tree Versions": [
+      "6.2.2"
+    ],
+    "Dependents": [
+      "@koa/router@npm:12.0.1"
+    ]
+  }
+}
+{
+  "value": "path-to-regexp",
+  "children": {
+    "ID": 1099562,
+    "Issue": "path-to-regexp outputs backtracking regular expressions",
+    "URL": "https://github.com/advisories/GHSA-9wv6-86v2-598j",
+    "Severity": "high",
+    "Vulnerable Versions": "<0.1.10",
+    "Tree Versions": [
+      "0.1.7"
+    ],
+    "Dependents": [
+      "express@npm:4.19.2"
+    ]
+  }
+}
+{
+  "value": "rollup",
+  "children": {
+    "ID": 1099757,
+    "Issue": "DOM Clobbering Gadget found in rollup bundled scripts that leads to XSS",
+    "URL": "https://github.com/advisories/GHSA-gcx4-mw62-g8wm",
+    "Severity": "high",
+    "Vulnerable Versions": "<2.79.2",
+    "Tree Versions": [
+      "2.79.1"
+    ],
+    "Dependents": [
+      "workbox-build@npm:7.3.0"
+    ]
+  }
+}
+{
+  "value": "rollup",
+  "children": {
+    "ID": 1099758,
+    "Issue": "DOM Clobbering Gadget found in rollup bundled scripts that leads to XSS",
+    "URL": "https://github.com/advisories/GHSA-gcx4-mw62-g8wm",
+    "Severity": "high",
+    "Vulnerable Versions": ">=3.0.0 <3.29.5",
+    "Tree Versions": [
+      "3.29.4"
+    ],
+    "Dependents": [
+      "@plentymarkets/plentyshop-pwa@workspace:."
+    ]
+  }
+}
+{
+  "value": "rollup",
+  "children": {
+    "ID": 1099764,
+    "Issue": "DOM Clobbering Gadget found in rollup bundled scripts that leads to XSS",
+    "URL": "https://github.com/advisories/GHSA-gcx4-mw62-g8wm",
+    "Severity": "high",
+    "Vulnerable Versions": ">=4.0.0 <4.22.4",
+    "Tree Versions": [
+      "4.21.3"
+    ],
+    "Dependents": [
+      "nitropack@virtual:6db7d8d30927b357d15a50b98e4a8a59c37e21cad080b0855f3a4775fec8bf1700e4d61322aeb548e7e7563998ba9a20ada61fc23ff36c0613c6457ab69c8045#npm:2.9.7"
+    ]
+  }
+}
