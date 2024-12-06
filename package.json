@@ -10,7 +10,7 @@
     "prepare": "is-ci || husky install",
     "update:sdk": "yarn up @plentymarkets/shop-api",
     "setup:unix": "chmod +x yarn.sh && ./yarn.sh && yarn build",
-    "setup:windows": "powershell -Command \"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ./yarn.ps1\" && yarn build",
+    "setup:windows": "powershell -Command Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ./yarn.ps1 && yarn build",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "yarn turbo:disable-telemetry && turbo run build",
     "build:analyze": "yarn turbo:disable-telemetry && turbo run build:analyze",
