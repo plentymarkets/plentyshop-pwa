@@ -8,6 +8,7 @@
 - Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
+- Added the "Valid Until" date to the offer page, displayed when a validity date is set.
 - Added Zoom functionality to product images.
 - New Json Editor
 - Added a warning alert on the checkout if no payment or shipping method is available
