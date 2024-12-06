@@ -30,7 +30,6 @@ beforeEach(() => {
   reviewPage.deleteAllReviews();
 
   myAccount.clickTopBarLogoutButton();
-  cy.visitAndHydrate(paths.home);
 });
 
 
@@ -38,7 +37,7 @@ beforeEach(() => {
 describe('Reviews functionality check.', () => {
   it('Checks review section.', () => {
     cookieBar.acceptAll();
-    homePage.goToCategory();
+    cy.visitAndHydrate('/coupons');
     productListPage.goToProduct();
 
     reviewPage
