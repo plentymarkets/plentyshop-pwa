@@ -47,7 +47,7 @@ yarn set version stable
 yarn set version 4.5.3 --yarn-path
 yarn config set nodeLinker node-modules
 yarn config set npmScopes.plentymarkets.npmRegistryServer "https://npm.pkg.github.com"
-yarn config set npmScopes.plentymarkets.npmAlwaysAuth "$true"
+yarn config set npmScopes.plentymarkets.npmAlwaysAuth true
 
 if ($env:GITHUB_ACTIONS) {
   if (-not $env:NPM_AUTH_TOKEN) {
