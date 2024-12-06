@@ -44,6 +44,21 @@ The **Upload** action now supports deploying the PWA to different environments:
 
 Each client supports two PWA instances. With this change, you can designate the live instance as the production environment and the preview instance as the staging environment. The production environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN`; the staging environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
 
+### NPM Authentication Token
+
+Instead of creating a `.yarnrc.yml` file manually, you can now use one of the following scripts depending on your operating system:
+
+- Linux/MacOS: `yarn.sh` | `npm run setup:unix`
+- Windows: `yarn.ps1` | `npm run setup:windows`
+
+To run the script, you have to add your GitHub Token with `read:packages` permissions to the environment.
+
+```properties
+# apps/web/.env
+
+NPM_AUTH_TOKEN="<TOKEN>"
+```
+
 ### 🩹 Fixed
 
 - Adjusted the checkout layout for tablet screen sizes.
