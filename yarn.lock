@@ -4255,7 +4255,7 @@ __metadata:
     cypress-iframe: "npm:^1.0.1"
     dotenv: "npm:^16.4.5"
     drift-zoom: "npm:^1.5.1"
-    happy-dom: "npm:^14.12.3"
+    happy-dom: "npm:^15.11.7"
     husky: "npm:^8.0.3"
     is-ci: "npm:^3.0.1"
     lint-staged: "npm:^14.0.1"
@@ -9211,13 +9211,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css.escape@npm:^1.5.1":
-  version: 1.5.1
-  resolution: "css.escape@npm:1.5.1"
-  checksum: 10c0/5e09035e5bf6c2c422b40c6df2eb1529657a17df37fda5d0433d722609527ab98090baf25b13970ca754079a0f3161dd3dfc0e743563ded8cfa0749d861c1525
-  languageName: node
-  linkType: hard
-
 "cssesc@npm:^3.0.0":
   version: 3.0.0
   resolution: "cssesc@npm:3.0.0"
@@ -12305,28 +12298,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:^12.10.3":
-  version: 12.10.3
-  resolution: "happy-dom@npm:12.10.3"
-  dependencies:
-    css.escape: "npm:^1.5.1"
-    entities: "npm:^4.5.0"
-    iconv-lite: "npm:^0.6.3"
-    webidl-conversions: "npm:^7.0.0"
-    whatwg-encoding: "npm:^2.0.0"
-    whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10c0/fbf8647e17c4af5c166d7c4b6963f4bbc9d1c279e94a4c77234b1fecca98c59989b894c7b186f5107e1062d40ffd84f12350b757f51330a5fc1c5228eb199517
-  languageName: node
-  linkType: hard
-
-"happy-dom@npm:^14.12.3":
-  version: 14.12.3
-  resolution: "happy-dom@npm:14.12.3"
+"happy-dom@npm:^15.11.7":
+  version: 15.11.7
+  resolution: "happy-dom@npm:15.11.7"
   dependencies:
     entities: "npm:^4.5.0"
     webidl-conversions: "npm:^7.0.0"
     whatwg-mimetype: "npm:^3.0.0"
-  checksum: 10c0/72e817bc9d03c4c0dbb794f8fb5b69aac4b4dbe0ee789a6b6a02a60298a9aa99bac766967a5c642153e5c95c02489437f878de5641ed64fd13b2271c56805df5
+  checksum: 10c0/22b08cac20192b08edf2e9c857ceeda8333a3301c4b5965a9550787b00db60d6d107c726390bd45a35305cd12ab086abd656bf957a408be0fcdc9fcd389f1973
   languageName: node
   linkType: hard
 
@@ -12654,7 +12633,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"iconv-lite@npm:0.6.3, iconv-lite@npm:^0.6.2, iconv-lite@npm:^0.6.3":
+"iconv-lite@npm:^0.6.2":
   version: 0.6.3
   resolution: "iconv-lite@npm:0.6.3"
   dependencies:
@@ -21156,7 +21135,7 @@ __metadata:
     cypress-wait-until: "npm:^2.0.1"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
-    happy-dom: "npm:^12.10.3"
+    happy-dom: "npm:^15.11.7"
     lodash-es: "npm:^4.17.21"
     msw: "npm:^2.3.1"
     nuxt: "npm:^3.13.2"
@@ -21206,15 +21185,6 @@ __metadata:
   version: 0.6.2
   resolution: "webpack-virtual-modules@npm:0.6.2"
   checksum: 10c0/5ffbddf0e84bf1562ff86cf6fcf039c74edf09d78358a6904a09bbd4484e8bb6812dc385fe14330b715031892dcd8423f7a88278b57c9f5002c84c2860179add
-  languageName: node
-  linkType: hard
-
-"whatwg-encoding@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "whatwg-encoding@npm:2.0.0"
-  dependencies:
-    iconv-lite: "npm:0.6.3"
-  checksum: 10c0/91b90a49f312dc751496fd23a7e68981e62f33afe938b97281ad766235c4872fc4e66319f925c5e9001502b3040dd25a33b02a9c693b73a4cbbfdc4ad10c3e3e
   languageName: node
   linkType: hard
 
