@@ -40,7 +40,6 @@
     "@vee-validate/nuxt": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
     "country-flag-icons": "^1.5.12",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
     "nuxt-swiper": "^1.2.2"
