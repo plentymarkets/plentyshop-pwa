@@ -27,7 +27,7 @@ runs:
 
     - name: Setup yarn (Windows)
       if: ${{ runner.os == 'Windows' }}
-      run: powershell -Command \"Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ${{ github.workspace }}/yarn.ps1\"
+      run: powershell -Command Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ${{ github.workspace }}/yarn.ps1
       shell: pwsh
       env:
         NPM_AUTH_TOKEN: ${{ inputs.npm-auth-token }}
