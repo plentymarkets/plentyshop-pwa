@@ -90,7 +90,7 @@ const onApprove = async (data: OnApproveData) => {
 
     if (order) {
       await executeOrder({
-        mode: 'paypal',
+        mode: 'PAYPAL',
         plentyOrderId: Number.parseInt(orderGetters.getId(order)),
         paypalTransactionId: data.orderID,
       });

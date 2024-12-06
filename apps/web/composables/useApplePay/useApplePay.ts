@@ -120,7 +120,7 @@ export const useApplePay = () => {
           });
 
           await executeOrder({
-            mode: 'paypal',
+            mode: 'PAYPAL_APPLE_PAY',
             plentyOrderId: Number.parseInt(orderGetters.getId(order)),
             paypalTransactionId: transaction.id,
           });
