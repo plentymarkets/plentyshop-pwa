@@ -1,5 +1,10 @@
-import { type Order, type MakeOrderParams, additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
-import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/composables/useMakeOrder/types';
+import { additionalInformationGetters, ApiError } from '@plentymarkets/shop-api';
+import type {
+  UseMakeOrderState,
+  UseMakeOrderReturn,
+  CreateOrder,
+  MakeOrderParams,
+} from '~/composables/useMakeOrder/types';
 
 /**
  * @description Composable for managing order creation.
@@ -11,14 +16,15 @@ import type { UseMakeOrderState, UseMakeOrderReturn, CreateOrder } from '~/compo
  */
 export const useMakeOrder: UseMakeOrderReturn = () => {
   const state = useState<UseMakeOrderState>('useMakeOrder', () => ({
-    data: {} as Order,
+    data: null,
     loading: false,
   }));
 
-  const handleMakeOrderError = (error: any) => {
-    if (error) useHandleError(error);
+  const handleMakeOrderError = (error: unknown) => {
+    if (error) useHandleError(error as ApiError);
     state.value.loading = false;
     useProcessingOrder().processingOrder.value = false;
+    return null;
   };
 
   /**
@@ -36,7 +42,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
   const createOrder: CreateOrder = async (params: MakeOrderParams) => {
     const { $i18n } = useNuxtApp();
     state.value.loading = true;
-    state.value.data = {} as Order;
+    state.value.data = null;
 
     try {
       const additionalParams = additionalInformationGetters.getAdditionalInformation(params.additionalInformation);
@@ -47,8 +53,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
 
       await useSdk().plentysystems.doAdditionalInformation(additionalParams);
     } catch (error) {
-      handleMakeOrderError(error);
-      return {} as Order;
+      return handleMakeOrderError(error);
     }
 
     const paymentType = ref('errorCode');
@@ -60,8 +65,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
       paymentType.value = data.type ?? 'errorCode';
       paymentValue.value = data.value ?? '';
     } catch (error) {
-      handleMakeOrderError(error);
-      return {} as Order;
+      return handleMakeOrderError(error);
     }
 
     const continueOrHtmlContent = async () => {
@@ -69,8 +73,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
         const { data } = await useSdk().plentysystems.doPlaceOrder();
         state.value.data = data ?? state.value.data;
       } catch (error) {
-        handleMakeOrderError(error);
-        return {} as Order;
+        return handleMakeOrderError(error);
       }
 
       try {
@@ -79,8 +82,7 @@ export const useMakeOrder: UseMakeOrderReturn = () => {
           paymentId: params.paymentId,
         });
       } catch (error) {
-        handleMakeOrderError(error);
-        return {} as Order;
+        return handleMakeOrderError(error);
       }
     };
 

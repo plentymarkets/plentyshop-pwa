@@ -680,7 +680,9 @@
     "noResponsibleInformation": "Es sind keine Informationen zur EU Verantwortlichen Person verfügbar.",
     "responsibleHeader": "Verantwortliche Stelle in der EU",
     "responsibleSubtitle": "Ein in der EU ansässiger Wirtschaftsteilnehmer, der sicherstellt, dass das Produkt allen notwendigen Vorschriften entspricht.",
-    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts."
+    "subtitle": "Die Herstellerinformationen umfassen die Adresse und weitere Angaben zum Produzenten des Produkts.",
+    "contactUrl": "Kontaktformular",
+    "responsibleContactUrl": "EU-Verantwortlicher Kontaktformular"
   },
   "max": "Max.",
   "min": "Min.",
@@ -804,7 +806,8 @@
     "cartContains": "Ihr Warenkorb enthält {count} Artikel",
     "checkYourCart": "Warenkorb prüfen",
     "heading": "Zum Warenkorb hinzugefügt",
-    "subTotal": "Zwischensumme"
+    "subTotal": "Zwischensumme",
+    "quantity": "Anzahl"
   },
   "readLess": "Weniger lesen",
   "readMore": "Mehr lesen",
