@@ -84,7 +84,7 @@ const index = props.index;
 const imageUrl = productImageGetters.getImageUrl(image);
 const imageAlt = productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || '';
 const imageTitle = productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || '';
-const isMobile = computed(() => viewport.isLessThan('md'));
+const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const showZoomHint = ref(false);
 
