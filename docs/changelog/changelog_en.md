@@ -20,6 +20,7 @@
 
 ### 👷 Changed
 
+- Improve size for quantity label on quick checkout on desktop.
 - Improved user experience while using the cookie bar.
 - Modified showNetPrices source to be consumed from user session.
 - Address preview details now includes the country name.
