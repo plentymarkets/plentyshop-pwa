@@ -182,7 +182,7 @@ export const usePayPal = () => {
    * @example
    * ``` ts
    * executeOrder({
-   *   mode: 'paypal',
+   *   mode: 'PAYPAL',
    *   plentyOrderId: 1234,
    *   paypalTransactionId: 'UHIhhur3h2rh2',
    * });
