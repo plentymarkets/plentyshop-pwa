@@ -775,7 +775,8 @@
     "unbrandedCvv": "CVV",
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
-    "unbrandedPay": "Pay"
+    "unbrandedPay": "Pay",
+    "invalidOrder": "The order cannot be processed. Please try again."
   },
   "perPage": "Per page",
   "phone": "Phone",

@@ -775,7 +775,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
