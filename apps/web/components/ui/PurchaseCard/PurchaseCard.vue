@@ -69,7 +69,7 @@
           </div>
           <div
             v-if="productGetters.getShortDescription(product).length > 0"
-            class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
+            class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words no-preflight"
             data-testid="product-description"
           >
             {{ productGetters.getShortDescription(product) }}

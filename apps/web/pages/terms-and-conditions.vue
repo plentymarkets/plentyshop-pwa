@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-5 overflow-x-auto" v-html="getHTMLTexts()" />
+  <div class="w-full p-5 overflow-x-auto no-preflight" v-html="getHTMLTexts()" />
 </template>
 
 <script setup lang="ts">
