@@ -15,6 +15,7 @@ export const useOffer: UseOfferReturn = () => {
     relatedOrder: null,
     loading: false,
     error: null,
+    hasError: false,
   }));
 
   const handleApiCall = async (
@@ -26,6 +27,7 @@ export const useOffer: UseOfferReturn = () => {
     try {
       data_.value = await apiCall();
     } catch (error) {
+      state.value.hasError = true;
       useHandleError(error as ApiError);
     } finally {
       state.value.loading = false;
@@ -40,12 +42,14 @@ export const useOffer: UseOfferReturn = () => {
     if (typeof data.value?.data === 'object' && 'error' in data.value.data) {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
+      state.value.hasError = true;
     }
 
     if (typeof data.value?.data === 'object' && 'order' in data.value.data) {
       const offerData = data.value?.data as Offer;
       state.value.data = offerData?.order ? offerData : ({} as Offer);
       state.value.error = null;
+      state.value.hasError = false;
     }
 
     state.value.loading = false;
@@ -63,6 +67,7 @@ export const useOffer: UseOfferReturn = () => {
 
     const orderData = data.value?.data as Order;
     state.value.relatedOrder = orderData?.order ? orderData : null;
+    state.value.hasError = false;
 
     state.value.loading = false;
     return state.value.relatedOrder;
