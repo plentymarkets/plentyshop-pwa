@@ -83,7 +83,7 @@ export default defineNuxtConfig({
   eslint: {
     config: {
       standalone: false,
-    }
+    },
   },
   vsf: {
     middleware: {
