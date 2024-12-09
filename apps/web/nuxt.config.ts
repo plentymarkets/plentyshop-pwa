@@ -66,6 +66,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
@@ -79,6 +80,11 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
   ],
+  eslint: {
+    config: {
+      standalone: false,
+    }
+  },
   vsf: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
