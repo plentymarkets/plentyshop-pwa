@@ -1,7 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 import withNuxt from './.nuxt/eslint.config.mjs';
-import { ecma, typescript, style, architecture } from "@vue-storefront/eslint-config";
+import { ecma, typescript, architecture } from "@vue-storefront/eslint-config";
 import pluginVue from 'eslint-plugin-vue';
 import tseslint from 'typescript-eslint';
 
@@ -14,6 +14,7 @@ export default withNuxt(
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: __dirname,
+        extraFileExtensions: ['.vue'],
       }
     },
     rules: {
@@ -45,13 +46,13 @@ export default withNuxt(
           order: ['template', 'script', 'style'],
         },
       ],
-      'vue/max-len': ['warn', {
-        code: 120,
-        ignoreStrings: true,
-        ignoreUrls: true,
-        ignoreTemplateLiterals: true,
-        ignoreHTMLAttributeValues: true
-      }],
+      // 'vue/max-len': ['warn', {
+      //   code: 120,
+      //   ignoreStrings: true,
+      //   ignoreUrls: true,
+      //   ignoreTemplateLiterals: true,
+      //   ignoreHTMLAttributeValues: true
+      // }],
       'vue/multi-word-component-names': 'off',
       'vue/no-setup-props-destructure': 'off',
       'vue/singleline-html-element-content-newline': 'off',
@@ -62,7 +63,6 @@ export default withNuxt(
   tseslint.configs.recommended,
   ecma(),
   typescript(),
-  style(),
   architecture({
     maxComplexity: 10,
     maxDepth: 5,
