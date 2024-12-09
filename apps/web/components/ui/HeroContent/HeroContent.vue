@@ -14,18 +14,21 @@
       <p
         class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
         :style="{ color: heroItemProps.taglineColor }"
+        data-testid="tagline"
       >
         {{ heroItemProps.tagline }}
       </p>
       <h1
         class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
         :style="{ color: heroItemProps.headingColor }"
+        data-testid="headline"
       >
         {{ heroItemProps.heading }}
       </h1>
       <p
         class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
         :style="{ color: heroItemProps.descriptionColor }"
+        data-testid="description"
       >
         {{ heroItemProps.description }}
       </p>
