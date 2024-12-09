@@ -138,7 +138,6 @@ const {
   loadPayment,
   loadShipping,
   paymentMethods,
-  shippingMethods,
   selectedPaymentId,
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
