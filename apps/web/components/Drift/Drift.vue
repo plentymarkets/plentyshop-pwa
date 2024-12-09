@@ -29,7 +29,7 @@ onMounted(() => {
   });
 });
 
-onBeforeRouteLeave(() => {
+onBeforeRouteUpdate(() => {
   if (drift) {
     drift.destroy();
     drift = null;
