@@ -21,6 +21,7 @@
 
 ### 👷 Changed
 
+- Improve size for quantity label on quick checkout on desktop.
 - Improved user experience while using the cookie bar.
 - Modified showNetPrices source to be consumed from user session.
 - Address preview details now includes the country name.
@@ -43,6 +44,21 @@ The **Upload** action now supports deploying the PWA to different environments:
 - Staging: triggered manually or when pushing a change to the `main` branch
 
 Each client supports two PWA instances. With this change, you can designate the live instance as the production environment and the preview instance as the staging environment. The production environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN`; the staging environment uses the GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
+
+### NPM Authentication Token
+
+Instead of creating a `.yarnrc.yml` file manually, you can now use one of the following scripts depending on your operating system:
+
+- Linux/MacOS: `yarn.sh` | `npm run setup:unix`
+- Windows: `yarn.ps1` | `npm run setup:windows`
+
+To run the script, you have to add your GitHub Token with `read:packages` permissions to the environment.
+
+```properties
+# apps/web/.env
+
+NPM_AUTH_TOKEN="<TOKEN>"
+```
 
 ### 🩹 Fixed
 
@@ -80,6 +96,7 @@ Each client supports two PWA instances. With this change, you can designate the 
 - Improved CLS for hero skeleton.
 - Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
 - Added missing condition to block action.
+- Fixed a bug where PayPal payments were stored as "Cash in Advance".
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
