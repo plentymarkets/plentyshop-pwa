@@ -36,6 +36,13 @@ onBeforeRouteUpdate(() => {
   }
 });
 
+onBeforeRouteLeave(() => {
+  if (drift) {
+    drift.destroy();
+    drift = null;
+  }
+});
+
 onUnmounted(() => {
   if (drift) {
     drift.destroy();
