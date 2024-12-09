@@ -41,7 +41,7 @@
           </h1>
         </div>
         <div class="mb-3">
-          <span class="self-center text-gray-700 typography-headline-3">
+          <span class="self-center text-gray-600 sm:typography-headline-4 typography-headline-3">
             {{ t('account.ordersAndReturns.orderDetails.quantity') }}: {{ quantity }}
           </span>
         </div>

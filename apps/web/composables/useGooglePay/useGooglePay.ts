@@ -127,7 +127,7 @@ export const useGooglePay = () => {
       }
 
       await executeOrder({
-        mode: 'paypal',
+        mode: 'PAYPAL_GOOGLE_PAY',
         plentyOrderId: Number.parseInt(orderGetters.getId(order)),
         paypalTransactionId: transaction.id,
       });
