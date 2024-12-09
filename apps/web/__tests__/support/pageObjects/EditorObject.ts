@@ -2,15 +2,15 @@ import { PageObject } from "./PageObject";
 
 export class EditorObject extends PageObject {
   get tagline() {
-    return cy.get('[data-testid="tagline"]');
+    return cy.getByTestId('tagline');
   }
 
   get headline() {
-    return cy.get('[data-testid="headline"]');
+    return cy.getByTestId('headline');
   }
 
   get description() {
-    return cy.get('[data-testid="description"]');
+    return cy.getByTestId('description');
   }
 
   get editorToolbar() {
@@ -92,7 +92,7 @@ export class EditorObject extends PageObject {
   }
 
   replaceEditorContent(content: string) {
-    cy.get('[data-testid="editor-textarea"]', { timeout: 30000 })
+    this.editorTextarea
       .should('be.visible')
       .then($el => {
         if ($el.prop('isContentEditable')) {
