@@ -57,7 +57,7 @@ definePageMeta({
 const { t } = useI18n();
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
-const { setProductMetaData } = useStructuredData();
+const { setProductMetaData, setProductRobotsMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
@@ -69,6 +69,13 @@ const { open, openDrawer } = useProductLegalDetailsDrawer();
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams);
+
+if (Object.keys(product.value).length === 0) {
+  throw new Response(null, {
+    status: 404,
+    statusText: 'Not found',
+  });
+}
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 
@@ -107,7 +114,10 @@ watch(
       const categoryTree = categoriesTree.find(
         (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
       );
-      if (categoryTree) setProductMetaData(product.value, categoryTree);
+      if (categoryTree) {
+        setProductMetaData(product.value, categoryTree);
+        setProductRobotsMetaData(product.value);
+      }
     }
   },
   { immediate: true },

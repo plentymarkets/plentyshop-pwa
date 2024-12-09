@@ -11,13 +11,20 @@
         <div
           :class="[
             'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
-            { 'border-[3px] border-[#538AEA]': disableActions && isClicked && isTablet && clickedBlockIndex === index },
-            { 'hover:border-[3px] hover:border-[#538AEA]': disableActions && !isTablet },
+            {
+              'outline outline-4 outline-[#538AEA]':
+                isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
+            },
+            { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
         >
-          <UiBlockActions v-if="disableActions" :index="index" @edit="handleEdit" />
-          <component :is="getComponent(block.name)" v-bind="block.options" />
+          <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
+          <component
+            v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
+            :is="getComponent(block.name)"
+            v-bind="block.options"
+          />
         </div>
       </template>
     </div>
@@ -29,7 +36,10 @@ import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
+
 const { data, fetchPageTemplate } = useHomepage();
+const { fetchCategoryTemplate } = useCategoryTemplate();
+const { showNewsletter } = useNewsletter();
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
@@ -38,6 +48,22 @@ const clickedBlockIndex = ref<number | null>(null);
 
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
+const isPreview = ref(false);
+onMounted(() => {
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
+
+const isEmptyBlock = (block: Block): boolean => {
+  const options = block?.options;
+  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
+};
+const blockHasData = (block: Block): boolean => {
+  return !isEmptyBlock(block);
+};
 const tabletEdit = (index: number) => {
   if (isTablet.value) {
     isClicked.value = !isClicked.value;
@@ -59,8 +85,8 @@ const updateBlock = (index: number, updatedBlock: Block) => {
 };
 
 const getComponent = (name: string) => {
-  if (name === 'UiSkeletonLoader') {
-    return resolveComponent('UiSkeletonLoader');
+  if (name === 'NewsletterSubscribe') {
+    return resolveComponent('NewsletterSubscribe');
   }
 
   if (name === 'UiHeroCarousel') {
@@ -75,5 +101,10 @@ const getComponent = (name: string) => {
     return resolveComponent('ProductRecommendedProducts');
   }
 };
+
+const runtimeConfig = useRuntimeConfig();
+
+await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+
 fetchPageTemplate();
 </script>

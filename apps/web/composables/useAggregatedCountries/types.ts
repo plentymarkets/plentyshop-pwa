@@ -19,6 +19,7 @@ export interface UseAggregatedCountries {
   fetchAggregatedCountries: FetchAggregatedCountries;
   useGeoRegulatedCountries: boolean;
   billingCountries: ComputedRef<(ActiveShippingCountry | GeoRegulatedCountry)[]>;
+  localeCountryName: (countryId: string) => string;
 }
 
 export type UseAggregatedCountriesReturn = () => UseAggregatedCountries;

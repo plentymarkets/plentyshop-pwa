@@ -1,27 +1,3 @@
-// import { HeroContentProps } from '~/components/ui/HeroCarousel/types';
-import { MediaItemProps } from '~/components/ui/MediaCard/types';
-
-// export type Featured = {
-//   headline: string;
-//   categoryId: string;
-// };
-//
-// // export interface HomeData {
-// //   hero: HeroContentProps[];
-// //   mediaCard: MediaItemProps[];
-// //   featured: Featured[];
-// // }
-// export type BlockData = {
-//   name: string;
-//   options: HeroContentProps[] | MediaItemProps[] | Featured[];
-// };
-//
-// export interface HomeData {
-//   heroContent: HeroContentProps[];
-//   mediaContent: MediaItemProps[];
-//   featuredContent: Featured[];
-// }
-// Interface for the Image sizes
 interface ImageProps {
   lg: string;
   md: string;
@@ -55,9 +31,24 @@ interface UiMediaCardOptions {
 
 interface ProductRecommendedProductsOptions {
   categoryId: string;
+  headline?: string;
+}
+interface NewsletterSubscribeOptions {
+  email: string;
+  firstName: string;
+  heading: string;
+  info: string;
+  lastName: string;
+  policy: string;
+  subscribe: string;
+  success: string;
 }
 
-type BlockOptions = UiHeroCarouselOptions | UiMediaCardOptions | ProductRecommendedProductsOptions;
+type BlockOptions =
+  | UiHeroCarouselOptions
+  | UiMediaCardOptions
+  | ProductRecommendedProductsOptions
+  | NewsletterSubscribeOptions;
 
 export interface Block {
   name: string;
@@ -79,10 +70,6 @@ export interface UseHomepage {
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
-  // hero: Readonly<Ref<HeroContentProps[]>>;
-  // mediaCard: Readonly<Ref<MediaItemProps[]>>;
-  // recommendedProductsCategories: Readonly<Ref<Featured[]>>;
-  // setFormattedHeroItems: (items: HomeData) => void;
 }
 
 export type UseHomepageDataReturn = () => UseHomepage;

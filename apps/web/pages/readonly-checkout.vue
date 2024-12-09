@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, ApiError, Order, orderGetters } from '@plentymarkets/shop-api';
+import { AddressType, ApiError, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
 import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
@@ -206,16 +206,18 @@ const handleRegularOrder = async () => {
   if (!(await readyToOrder())) return;
 
   try {
-    const data: Order = await createOrder({
+    const data = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
-    await executeOrder({
-      mode: 'paypal',
-      plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-      paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-    });
+    if (data) {
+      await executeOrder({
+        mode: 'PAYPAL',
+        plentyOrderId: Number.parseInt(orderGetters.getId(data)),
+        paypalTransactionId: route?.query?.orderId?.toString() ?? '',
+      });
+    }
 
     clearCartItems();
     if (data?.order?.id) await navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));

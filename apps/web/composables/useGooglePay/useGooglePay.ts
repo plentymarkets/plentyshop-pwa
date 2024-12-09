@@ -118,7 +118,7 @@ export const useGooglePay = () => {
 
       const order = await createOrder({
         paymentId: cart.value.methodOfPaymentId,
-        shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+        additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
       });
 
       if (!order || !order.order || !order.order.id) {
@@ -127,7 +127,7 @@ export const useGooglePay = () => {
       }
 
       await executeOrder({
-        mode: 'paypal',
+        mode: 'PAYPAL_GOOGLE_PAY',
         plentyOrderId: Number.parseInt(orderGetters.getId(order)),
         paypalTransactionId: transaction.id,
       });
