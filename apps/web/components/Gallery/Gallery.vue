@@ -13,33 +13,15 @@
         :drag="{ containerWidth: true }"
         @on-scroll="onScroll"
       >
-        <div
+        <ZoomableImage
           v-for="(image, index) in images"
           :key="`image-${index}-thumbnail`"
-          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow gallery-image"
-        >
-          <Drift :index="index">
-            <NuxtImg
-              :id="`gallery-img-${index}`"
-              :alt="productImageGetters.getImageAlternate(image) || productImageGetters.getCleanImageName(image) || ''"
-              :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
-              :aria-hidden="activeIndex !== index"
-              fit="fill"
-              :class="`object-contain h-full w-full demo-trigger-${index}`"
-              :data-zoom="productImageGetters.getImageUrl(image)"
-              :quality="80"
-              :srcset="getSourceSet(image)"
-              sizes="2xs:370px xs:720px sm:740px md:1400px"
-              draggable="false"
-              :loading="index === 0 ? 'eager' : 'lazy'"
-              :fetchpriority="index === 0 ? 'high' : 'auto'"
-              @load="updateImageStatusFor(`gallery-img-${index}`)"
-              :width="getWidth(image, productImageGetters.getImageUrl(image))"
-              :height="getHeight(image, productImageGetters.getImageUrl(image))"
-            />
-          </Drift>
-          <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
-        </div>
+          :images="images"
+          :image="image"
+          :index="index"
+          :active-index="activeIndex"
+          :is-first-image="index === 0"
+        />
       </SfScrollable>
     </div>
 
@@ -69,7 +51,7 @@
         </template>
 
         <button
-          v-for="({ urlPreview, cleanImageName, width, height }, index) in images"
+          v-for="(image, index) in images"
           :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
@@ -81,11 +63,11 @@
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
-            :alt="cleanImageName"
+            :alt="productImageGetters.getCleanImageName(image)"
             class="object-contain"
-            :width="width ?? 80"
-            :height="height ?? 80"
-            :src="urlPreview"
+            :width="productImageGetters.getImageWidth(image) ?? 80"
+            :height="productImageGetters.getImageHeight(image) ?? 80"
+            :src="productImageGetters.getImageUrlPreview(image)"
             :quality="80"
             loading="lazy"
           />
@@ -108,8 +90,8 @@
       </SfScrollable>
       <div class="flex md:hidden gap-0.5" role="group">
         <button
-          v-for="({ url }, index) in images"
-          :key="url"
+          v-for="(image, index) in images"
+          :key="productImageGetters.getImageUrl(image)"
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index + 1)"
@@ -119,20 +101,17 @@
         />
       </div>
     </div>
-    <div v-if="isMobile" class="drift-zoom-image" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
-import { SfScrollable, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
-import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
-import type { ImagesData } from '@plentymarkets/shop-api';
+import { SfScrollable, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
 import { productImageGetters } from '@plentymarkets/shop-api';
-import { defaults } from '~/composables';
+import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
+import { useTimeoutFn, useIntersectionObserver, unrefElement } from '@vueuse/core';
+import type { ImagesData } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ images: ImagesData[] }>();
-const viewport = useViewport();
 
 const { isPending, start, stop } = useTimeoutFn(() => {}, 50);
 
@@ -142,36 +121,6 @@ const lastThumbReference = ref<HTMLButtonElement>();
 const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
-const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
-const isMobile = computed(() => viewport.isLessThan('md'));
-
-const getSourceSet = (image: ImagesData) => {
-  const dpr = 2;
-  const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
-  const preview = productImageGetters.getImageUrlPreview(image);
-  const middle = productImageGetters.getImageUrlMiddle(image);
-  const full = productImageGetters.getImageUrl(image);
-
-  return `
-    ${secondPreview} ${370 * dpr}w,
-    ${preview} ${700 * dpr}w,
-    ${middle} ${720 * dpr}w,
-    ${full} ${1400 * dpr}w
-  `;
-};
-onMounted(() => {
-  nextTick(() => {
-    for (const [index] of props.images.entries()) {
-      const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
-      const imgId = String(myImg?.id);
-      if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
-    }
-  });
-});
-
-const updateImageStatusFor = (imageId: string) => {
-  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
-};
 
 const registerThumbsWatch = (
   singleThumbReference: Ref<HTMLButtonElement | undefined>,
@@ -200,22 +149,6 @@ const registerThumbsWatch = (
 
 registerThumbsWatch(firstThumbReference, firstVisibleThumbnailIntersected);
 registerThumbsWatch(lastThumbReference, lastVisibleThumbnailIntersected);
-
-const getWidth = (image: ImagesData, imageUrl: string) => {
-  const imageWidth = productImageGetters.getImageWidth(image) || 600;
-  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
-    return imageWidth;
-  }
-  return '';
-};
-
-const getHeight = (image: ImagesData, imageUrl: string) => {
-  const imageHeight = productImageGetters.getImageHeight(image) || 600;
-  if (imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
-    return imageHeight;
-  }
-  return '';
-};
 
 const onChangeIndex = (index: number) => {
   stop();
