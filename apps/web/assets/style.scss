@@ -84,61 +84,46 @@ apple-pay-button {
   h1 {
     display: block;
     font-size: 2em;
-    margin-block-start: 0.67em;
-    margin-block-end: 0.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
     font-weight: bold;
-    unicode-bidi: isolate;
+    margin: 0.67em 0;
+    padding: 0;
+    line-height: 1.2;
+    color: inherit;
+    text-align: left;
+    white-space: normal;
   };
   h2 {
     display: block;
     font-size: 1.5em;
-    margin-block-start: 0.83em;
-    margin-block-end: 0.83em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
     font-weight: bold;
-    unicode-bidi: isolate;
+    margin: 0.75em 0;
+    padding: 0;
+    line-height: 1.3;
+    color: inherit;
+    text-align: left;
+    white-space: normal;
   };
   h3 {
     display: block;
     font-size: 1.17em;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
     font-weight: bold;
-    unicode-bidi: isolate;
+    margin: 0.83em 0;
+    padding: 0;
+    line-height: 1.4;
+    color: inherit;
+    text-align: left;
+    white-space: normal;
   };
   h4 {
     display: block;
-    margin-block-start: 1.33em;
-    margin-block-end: 1.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
+    font-size: 1em;
     font-weight: bold;
-    unicode-bidi: isolate;
-  };
-  h5 {
-    display: block;
-    font-size: 0.83em;
-    margin-block-start: 1.67em;
-    margin-block-end: 1.67em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
-  };
-  h6 {
-    display: block;
-    font-size: 0.67em;
-    margin-block-start: 2.33em;
-    margin-block-end: 2.33em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: bold;
-    unicode-bidi: isolate;
+    margin: 1.33em 0;
+    padding: 0;
+    line-height: 1.5;
+    color: inherit;
+    text-align: left;
+    white-space: normal;
   };
   p {
     display: block;
@@ -151,4 +136,33 @@ apple-pay-button {
   strong {
     font-weight: bold;
   };
+  em {
+    font-style: italic;
+  };
+  u {
+    text-underline-offset: auto;
+  };
+  s {
+    text-decoration: line-through;
+  };
+  sub {
+    font-size: smaller;
+    vertical-align: sub;
+  };
+  sup {
+    font-size: smaller;
+    vertical-align: super;
+  };
+  ol {
+    display: block;
+    list-style-type: decimal;
+  };
+  li {
+    font-size: 1rem; 
+    margin: 0.5rem 0; 
+  };
+  ul {
+    display: block;
+    list-style-type: disc;
+  }
 }
