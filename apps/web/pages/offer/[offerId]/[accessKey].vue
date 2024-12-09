@@ -17,7 +17,7 @@ definePageMeta({
   pageType: 'static',
 });
 
-const { data, error, apiError, relatedOrder, fetchOffer, declineOffer, acceptOffer } = useOffer();
+const { data, error, relatedOrder, fetchOffer, declineOffer, acceptOffer } = useOffer();
 const { send } = useNotification();
 const route = useRoute();
 const localePath = useLocalePath();
@@ -40,7 +40,7 @@ await loadOffer();
 const decline = async (text: string) => {
   await declineOffer({ offerId: offerId, accessKey: accessKey, text: text });
 
-  if (!apiError.value) send({ type: 'positive', message: t('contact.success') });
+  send({ type: 'positive', message: t('contact.success') });
   navigateTo(localePath(paths.home));
 };
 
