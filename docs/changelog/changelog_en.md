@@ -20,6 +20,7 @@
 - Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
 - The homepage now has a functional delete block button
 - The edit mode buttons are not styled
+- Save is now permanent
 
 ### 👷 Changed
 
