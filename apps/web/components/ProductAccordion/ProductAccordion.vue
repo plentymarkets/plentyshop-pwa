@@ -1,5 +1,5 @@
 <template>
-  <div data-testid="product-accordion">
+  <div data-testid="product-accordion no-preflight">
     <UiAccordionItem
       v-if="productGetters.getDescription(product)?.length"
       summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
