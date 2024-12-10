@@ -64,7 +64,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
-- Added no-preflight class to format custom html fetched from backend.
+- Added no-preflight class to provide needed css for custom html fetched from backend.
 - Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
