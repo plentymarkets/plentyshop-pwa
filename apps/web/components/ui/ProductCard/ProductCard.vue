@@ -47,7 +47,7 @@
       </div>
       <div
         v-if="productGetters.getShortDescription(product)"
-        class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words no-preflight"
+        class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
       >
         <span class="line-clamp-3">
           {{ productGetters.getShortDescription(product) }}
