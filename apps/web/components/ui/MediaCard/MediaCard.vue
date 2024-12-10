@@ -4,7 +4,11 @@
       <img :src="image" :alt="alt" width="728" height="485" class="w-full h-auto object-cover" />
     </div>
 
-    <div v-if="text && text.trim() !== ''" :class="['w-full no-preflight', textWidthClass, textAlignmentClass]" v-html="text"></div>
+    <div
+      v-if="text && text.trim() !== ''"
+      :class="['w-full no-preflight', textWidthClass, textAlignmentClass]"
+      v-html="text"
+    ></div>
   </div>
 </template>
 
