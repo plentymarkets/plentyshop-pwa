@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 
 export default withNuxt(
   {
+    ignores: [".nuxt/"],
     languageOptions: {
       parserOptions: {
         project: './tsconfig.json',
