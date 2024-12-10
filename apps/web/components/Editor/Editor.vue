@@ -14,8 +14,9 @@
         ref="textarea"
         class="w-full p-2 font-mono text-sm border-none resize-none outline-none h-[500px]"
         :placeholder="$t('editMode.editJsonPlaceholder')"
+        data-testid="editor-textarea"
       ></textarea>
-      <SfButton size="sm" class="absolute top-2 right-2" @click="closeEditor"
+      <SfButton id="close" size="sm" class="absolute top-2 right-2" @click="closeEditor"
         ><SfIconCancel class="cursor-pointer"></SfIconCancel
       ></SfButton>
     </div>
