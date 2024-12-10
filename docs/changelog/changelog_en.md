@@ -19,7 +19,7 @@
 - Added robots settings for SEO config.
 - Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
 - The homepage now has a functional delete block button
-
+- The edit mode buttons are not styled 
 ### 👷 Changed
 
 - Improve size for quantity label on quick checkout on desktop.
