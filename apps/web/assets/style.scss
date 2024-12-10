@@ -79,3 +79,7 @@ apple-pay-button {
     }
   }
 }
+
+.no-preflight * {
+  all: revert;
+}
