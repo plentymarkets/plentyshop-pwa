@@ -18,6 +18,7 @@
 - The Homepage components are now split in edit block s
 - Added robots settings for SEO config.
 - Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
+- The homepage now has a functional delete block button
 
 ### 👷 Changed
 
