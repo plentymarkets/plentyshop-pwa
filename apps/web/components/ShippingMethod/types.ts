@@ -1,7 +1,4 @@
-import type { ShippingMethod } from '@plentymarkets/shop-api';
-
 export type ShippingMethodProps = {
-  shippingMethods: ShippingMethod[];
   disabled?: boolean;
 };
 
