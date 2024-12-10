@@ -993,5 +993,6 @@
     "add": "The item was added to your wish list.",
     "delete": "The item was removed from your wish list."
   },
-  "youAreOfflineText": "It seems you are currently offline, check your internet connection"
+  "youAreOfflineText": "It seems you are currently offline, check your internet connection",
+  "double-tap-zoom": "Double-tap to zoom"
 }
