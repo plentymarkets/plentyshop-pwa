@@ -4,7 +4,7 @@
     data-testid="edit-block-actions"
   >
     <UiButton
-      @click="onEditClick"
+      @click="triggerEdit"
       class="text-white rounded hover:bg-transparent active:bg-transparent !px-1"
       variant="tertiary"
       size="sm"
@@ -18,7 +18,7 @@
     </UiButton>
     <hr class="w-[15px] mx-auto bg-black border-0 h-[1px]" />
     <UiButton
-      @click="onDeleteClick"
+      @click="triggerDelete"
       class="text-[#000] rounded hover:bg-transparent active:bg-transparent !px-1"
       variant="tertiary"
       size="sm"
@@ -41,10 +41,10 @@ const props = defineProps<{ index: number }>();
 
 const emit = defineEmits(['edit', 'delete']);
 
-const onEditClick = () => {
+const triggerEdit = () => {
   emit('edit', props.index);
 };
-const onDeleteClick = () => {
+const triggerDelete = () => {
   emit('delete', props.index);
 };
 </script>
