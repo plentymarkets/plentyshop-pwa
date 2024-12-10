@@ -18,6 +18,17 @@ export const useOffer: UseOfferReturn = () => {
     hasError: false,
   }));
 
+  const checkForErrorData = async (data: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null>) => {
+    if (typeof data.value?.data === 'object' && 'error' in data.value.data) {
+      const errorData = data.value?.data as GetOfferError;
+      state.value.error = errorData?.error ? errorData : null;
+      state.value.hasError = true;
+    } else {
+      state.value.error = null;
+      state.value.hasError = false;
+    }
+  };
+
   const handleApiCall = async (
     apiCall: () => Promise<Data<Offer | GetOfferError | GetOfferReject | Order>>,
   ): Promise<{ data: Ref<Data<Order | GetOfferError | Offer | GetOfferReject> | null> }> => {
@@ -26,6 +37,7 @@ export const useOffer: UseOfferReturn = () => {
 
     try {
       data_.value = await apiCall();
+      checkForErrorData(data_);
     } catch (error) {
       state.value.hasError = true;
       useHandleError(error as ApiError);
@@ -38,12 +50,6 @@ export const useOffer: UseOfferReturn = () => {
 
   const fetchOffer: FetchOffer = async (params: OfferSearchParams) => {
     const { data } = await handleApiCall(() => useSdk().plentysystems.getOffer(params));
-
-    if (typeof data.value?.data === 'object' && 'error' in data.value.data) {
-      const errorData = data.value?.data as GetOfferError;
-      state.value.error = errorData?.error ? errorData : null;
-      state.value.hasError = true;
-    }
 
     if (typeof data.value?.data === 'object' && 'order' in data.value.data) {
       const offerData = data.value?.data as Offer;
