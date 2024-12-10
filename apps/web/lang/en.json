@@ -715,7 +715,8 @@
     "declineOffer": "Decline offer",
     "inputPlaceholder": "Please share your reason for declining...",
     "missingEmail": "No email address has been provided.",
-    "offer": "Offer"
+    "offer": "Offer",
+    "offerValidUntil": "Offer valid until: {date}"
   },
   "openConfigurationDrawer": "Open configuration drawer",
   "openSearchModalButtonLabel": "Open item search",
@@ -919,6 +920,12 @@
     "reviewsUp": "Item reviews ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Offer expired",
+      "openUnauthorized": "Unauthorized to open the offer.",
+      "itemOutOfStock": "One or more items out of this offer are out of stock.",
+      "alreadyTaken": "The offer is already taken."
+    },
     "address": {
       "createFailed": "Saving the address has failed.",
       "deleteFailed": "The deletion of the address failed.",

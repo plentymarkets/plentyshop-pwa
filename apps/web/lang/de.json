@@ -715,7 +715,8 @@
     "declineOffer": "Angebot ablehnen",
     "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
     "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt.",
-    "offer": "Angebot"
+    "offer": "Angebot",
+    "offerValidUntil": "Angebot gültig bis: {date}"
   },
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
@@ -919,6 +920,12 @@
     "reviewsUp": "Kundenbewertung ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Angebot abgelaufen.",
+      "openUnauthorized": "Öffnen des Angebots verboten.",
+      "itemOutOfStock": "Ein oder mehr Produkte aus dem Angebot sind nichtmehr auf Lager.",
+      "alreadyTaken": "Das Angebot wurde bereits angenommen."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
