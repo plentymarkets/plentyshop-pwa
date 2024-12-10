@@ -43,7 +43,7 @@ const decline = async (text: string) => {
 const accept = async () => {
   await acceptOffer({ offerId: offerId, accessKey: accessKey });
 
-  if (!error.value && relatedOrder.value) {
+  if (!hasError.value && relatedOrder.value) {
     navigateTo(
       localePath(paths.confirmation + '/' + relatedOrder.value?.order.id + '/' + relatedOrder.value?.order.accessKey),
     );

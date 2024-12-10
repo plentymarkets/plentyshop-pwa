@@ -25,7 +25,9 @@ export const useOffer: UseOfferReturn = () => {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
       state.value.hasError = true;
-      send({ type: 'warning', message: 'test' });
+      if (import.meta.client) {
+        send({ type: 'warning', message: errorData.error.message });
+      }
     } else {
       state.value.error = null;
       state.value.hasError = false;
