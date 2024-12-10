@@ -17,7 +17,12 @@
       </SfIconBase>
     </UiButton>
     <hr class="w-[15px] mx-auto bg-black border-0 h-[1px]" />
-    <UiButton class="text-[#000] rounded hover:bg-transparent active:bg-transparent !px-1" variant="tertiary" size="sm">
+    <UiButton
+      @click="onDeleteClick"
+      class="text-[#000] rounded hover:bg-transparent active:bg-transparent !px-1"
+      variant="tertiary"
+      size="sm"
+    >
       <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path :d="deletePath" fill="black" />
@@ -34,9 +39,12 @@ import { deletePath } from 'assets/icons/paths/delete';
 
 const props = defineProps<{ index: number }>();
 
-const emit = defineEmits(['edit']);
+const emit = defineEmits(['edit', 'delete']);
 
 const onEditClick = () => {
   emit('edit', props.index);
+};
+const onDeleteClick = () => {
+  emit('delete', props.index);
 };
 </script>
