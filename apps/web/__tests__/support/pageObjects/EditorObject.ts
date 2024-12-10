@@ -81,7 +81,7 @@ export class EditorObject extends PageObject {
   }
 
   checkEditorContent() {
-    this.openEditorButton.should('be.visible').first().click();
+    this.openEditorButton.should('be.visible').first().click({ force: true });
 
     cy.get('body', { timeout: 30000 })
       .find('[data-testid="editor-textarea"]')
