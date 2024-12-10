@@ -190,7 +190,7 @@ import { scrollToHTMLObject } from '~/utils/scollHelper';
 
 const { loading: offerLoading } = useOffer();
 const { send } = useNotification();
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const localePath = useLocalePath();
 const props = defineProps<OfferPageContentProps>();
 const emit = defineEmits(['accept', 'decline']);
@@ -201,7 +201,7 @@ const termsAccepted = ref(false);
 const showTermsError = ref(false);
 const shippingAddress = computed(() => offerGetters.getShippingAddress(props.offer));
 const billingAddress = computed(() => offerGetters.getBillingAddress(props.offer));
-const validUntil = computed(() => offerGetters.getValidUntil(props.offer));
+const validUntil = computed(() => offerGetters.getValidUntil(props.offer, locale.value));
 
 const ID_CHECKBOX = '#terms-checkbox';
 
