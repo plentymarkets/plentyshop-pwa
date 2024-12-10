@@ -19,7 +19,7 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <SfButton
+          <button
             v-if="experimentalAddBlock && disableActions && isPreview"
             :class="[
               'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
@@ -28,7 +28,7 @@
             ]"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
-          </SfButton>
+          </button>
           <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <UiBlockActions
             v-if="disableActions && blockHasData(block) && isPreview"
@@ -41,7 +41,7 @@
             :is="getComponent(block.name)"
             v-bind="block.options"
           />
-          <SfButton
+          <button
             v-if="experimentalAddBlock && disableActions && isPreview"
             :class="[
               'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
@@ -50,7 +50,7 @@
             ]"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
-          </SfButton>
+          </button>
         </div>
       </template>
     </div>
