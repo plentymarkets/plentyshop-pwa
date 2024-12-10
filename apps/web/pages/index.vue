@@ -10,7 +10,7 @@
       <template v-for="(block, index) in data.blocks" :key="index">
         <div
           :class="[
-            'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
+            'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
             {
               'outline outline-4 outline-[#538AEA]':
                 isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
@@ -19,7 +19,17 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
+          <button
+            v-if="experimentalAddBlock && disableActions && isPreview"
+            :class="[
+              'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
+              { 'opacity-100': isClicked && clickedBlockIndex === index },
+              'group-hover:opacity-100 group-focus:opacity-100',
+            ]"
+          >
+            <SfIconAdd class="cursor-pointer"></SfIconAdd>
+          </button>
+          <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <UiBlockActions
             v-if="disableActions && blockHasData(block) && isPreview"
             :index="index"
@@ -31,7 +41,16 @@
             :is="getComponent(block.name)"
             v-bind="block.options"
           />
-          <UiButton v-if="experimentalAddBlock" class="absolute bottom-0 right-0 z-50"> Add </UiButton>
+          <button
+            v-if="experimentalAddBlock && disableActions && isPreview"
+            :class="[
+              'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
+              { 'opacity-100': isClicked && clickedBlockIndex === index },
+              'group-hover:opacity-100 group-focus:opacity-100',
+            ]"
+          >
+            <SfIconAdd class="cursor-pointer"></SfIconAdd>
+          </button>
         </div>
       </template>
     </div>
@@ -39,6 +58,7 @@
 </template>
 
 <script lang="ts" setup>
+import { SfIconAdd } from '@storefront-ui/vue';
 import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing, disableActions } = useEditor();

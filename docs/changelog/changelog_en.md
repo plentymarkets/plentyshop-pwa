@@ -20,6 +20,8 @@
 - Added robots settings for SEO config.
 - Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
 - The homepage now has a functional delete block button
+- The edit mode buttons are not styled
+- Save is now permanent
 
 ### 👷 Changed
 
@@ -64,6 +66,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
 - Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
