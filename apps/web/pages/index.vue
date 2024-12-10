@@ -30,6 +30,13 @@
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </SfButton>
           <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
+          <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
+          <UiBlockActions
+            v-if="disableActions && blockHasData(block) && isPreview"
+            :index="index"
+            @edit="handleEdit"
+            @delete="deleteBlock"
+          />
           <component
             v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
             :is="getComponent(block.name)"
@@ -97,6 +104,12 @@ const handleEdit = (index: number) => {
     currentBlockIndex.value = index;
     currentBlock.value = data.value.blocks[index];
     isEditing.value = true;
+  }
+};
+
+const deleteBlock = (index: number) => {
+  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
+    data.value.blocks.splice(index, 1);
   }
 };
 
