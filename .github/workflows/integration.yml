@@ -184,6 +184,8 @@ jobs:
         with:
           install: false
           command: yarn test:cypress-editor
+        env:
+          NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
