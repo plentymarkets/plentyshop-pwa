@@ -19,12 +19,14 @@
           ]"
           @click="tabletEdit(index)"
         >
+          <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
           <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <component
             v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
             :is="getComponent(block.name)"
             v-bind="block.options"
           />
+          <UiButton v-if="experimentalAddBlock" class="absolute bottom-0 right-0 z-50"> Add </UiButton>
         </div>
       </template>
     </div>
@@ -49,10 +51,11 @@ const clickedBlockIndex = ref<number | null>(null);
 const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
 const isPreview = ref(false);
-onMounted(() => {
-  const config = useRuntimeConfig().public;
-  const showConfigurationDrawer = config.showConfigurationDrawer;
+const config = useRuntimeConfig().public;
+const showConfigurationDrawer = config.showConfigurationDrawer;
+const experimentalAddBlock = ref(config.experimentalAddBlock);
 
+onMounted(() => {
   const pwaCookie = useCookie('pwa');
   isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
 });

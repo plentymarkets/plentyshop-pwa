@@ -15,6 +15,10 @@ onMounted(() => {
   let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
   let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
+  if (!demoTrigger || !paneContainer) {
+    return;
+  }
+
   drift = new Drift(demoTrigger, {
     paneContainer: paneContainer,
     containInline: true,
@@ -23,6 +27,20 @@ onMounted(() => {
     handleTouch: false,
     injectBaseStyles: true,
   });
+});
+
+onBeforeRouteUpdate(() => {
+  if (drift) {
+    drift.destroy();
+    drift = null;
+  }
+});
+
+onBeforeRouteLeave(() => {
+  if (drift) {
+    drift.destroy();
+    drift = null;
+  }
 });
 
 onUnmounted(() => {

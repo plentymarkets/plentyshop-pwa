@@ -10,7 +10,7 @@
       {{ $t('double-tap-zoom') }}
     </div>
 
-    <Drift v-if="!isMobile" :index="index">
+    <Drift v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]" :index="index">
       <NuxtImg
         v-bind="nuxtImgProps"
         @touchstart="onTouchStart"
