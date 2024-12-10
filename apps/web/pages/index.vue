@@ -19,14 +19,24 @@
           ]"
           @click="tabletEdit(index)"
         >
-          <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
+          <SfButton
+            v-if="experimentalAddBlock"
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
+          >
+            <SfIconAdd class="cursor-pointer"></SfIconAdd>
+          </SfButton>
           <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <component
             v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
             :is="getComponent(block.name)"
             v-bind="block.options"
           />
-          <UiButton v-if="experimentalAddBlock" class="absolute bottom-0 right-0 z-50"> Add </UiButton>
+          <SfButton
+            v-if="experimentalAddBlock"
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
+          >
+            <SfIconAdd class="cursor-pointer"></SfIconAdd>
+          </SfButton>
         </div>
       </template>
     </div>
@@ -34,6 +44,7 @@
 </template>
 
 <script lang="ts" setup>
+import { SfIconAdd } from '@storefront-ui/vue';
 import { Block } from '~/composables/useHomepage/types';
 
 const { isEditing, disableActions } = useEditor();
