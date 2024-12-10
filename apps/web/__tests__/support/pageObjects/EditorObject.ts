@@ -38,12 +38,12 @@ export class EditorObject extends PageObject {
   }
 
   togglePreviewMode() {
-    this.editPreviewButton.should('be.enabled').click({ force: true });
+    this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
     return this;
   }
   toggleEditMode() {
-    this.editPreviewButton.should('be.enabled').click({ force: true });
+    this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Edit');
     return this;
   }
