@@ -20,7 +20,12 @@
           @click="tabletEdit(index)"
         >
           <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
-          <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit"  @delete="deleteBlock"/>
+          <UiBlockActions
+            v-if="disableActions && blockHasData(block) && isPreview"
+            :index="index"
+            @edit="handleEdit"
+            @delete="deleteBlock"
+          />
           <component
             v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
             :is="getComponent(block.name)"
