@@ -96,6 +96,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
 - Improved CLS for hero skeleton.
 - Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
+- Fixed multiple issues in the PayPal readonly checkout process.
 - Added missing condition to block action.
 - Fixed a bug where PayPal payments were stored as "Cash in Advance".
 
