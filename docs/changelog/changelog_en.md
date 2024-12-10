@@ -17,6 +17,7 @@
 - Add login redirect on category "after login" visibility.
 - The Homepage components are now split in edit block s
 - Added robots settings for SEO config.
+- The homepage now has a functional delete block button
 
 ### 👷 Changed
 
