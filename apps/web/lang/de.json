@@ -921,10 +921,10 @@
   },
   "storefrontError": {
     "offer": {
-      "expired": "Angebot abgelaufen.",
-      "openUnauthorized": "Öffnen des Angebots verboten.",
-      "itemOutOfStock": "Ein oder mehr Produkte aus dem Angebot sind nichtmehr auf Lager.",
-      "alreadyTaken": "Das Angebot wurde bereits angenommen."
+      "expired": "Dieses Angebot ist abgelaufen.",
+      "openUnauthorized": "Sie sind nicht berechtigt, dieses Angebot zu öffnen.",
+      "itemOutOfStock": "Mindestens ein Artikel des Angebots ist nicht mehr auf Lager.",
+      "alreadyTaken": "Dieses Angebot wurde bereits verwendet und kann nicht erneut verwendet werden."
     },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",

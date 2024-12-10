@@ -921,10 +921,10 @@
   },
   "storefrontError": {
     "offer": {
-      "expired": "Offer expired",
-      "openUnauthorized": "Unauthorized to open the offer.",
-      "itemOutOfStock": "One or more items out of this offer are out of stock.",
-      "alreadyTaken": "The offer is already taken."
+      "expired": "This offer has expired",
+      "openUnauthorized": "You are not authorised to open this offer.",
+      "itemOutOfStock": "At least one item in the offer is no longer in stock.",
+      "alreadyTaken": "This offer has already been used and cannot be used again."
     },
     "address": {
       "createFailed": "Saving the address has failed.",
