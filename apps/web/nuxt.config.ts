@@ -63,6 +63,7 @@ export default defineNuxtConfig({
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
+      experimentalAddBlock: false,
     },
   },
   modules: [
