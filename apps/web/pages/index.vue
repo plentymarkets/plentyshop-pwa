@@ -10,7 +10,7 @@
       <template v-for="(block, index) in data.blocks" :key="index">
         <div
           :class="[
-            'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mb-10 group',
+            'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
             {
               'outline outline-4 outline-[#538AEA]':
                 isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
@@ -21,7 +21,7 @@
         >
           <SfButton
             v-if="experimentalAddBlock"
-            class="absolute top-0 left-1/2 transform -translate-x-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </SfButton>
@@ -33,7 +33,7 @@
           />
           <SfButton
             v-if="experimentalAddBlock"
-            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </SfButton>
