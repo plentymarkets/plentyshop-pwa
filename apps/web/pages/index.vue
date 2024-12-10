@@ -30,7 +30,6 @@
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </SfButton>
           <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
-          <UiButton v-if="experimentalAddBlock" class="absolute top-0 right-0 z-50"> Add </UiButton>
           <UiBlockActions
             v-if="disableActions && blockHasData(block) && isPreview"
             :index="index"
