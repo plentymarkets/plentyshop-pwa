@@ -10,6 +10,8 @@ import {
 import { AcceptOffer, DeclineOffer, FetchOffer, UseOfferReturn } from './types';
 
 export const useOffer: UseOfferReturn = () => {
+  const { send } = useNotification();
+
   const state = useState<UseOfferState>('useOffer-', () => ({
     data: {} as Offer,
     relatedOrder: null,
@@ -23,6 +25,7 @@ export const useOffer: UseOfferReturn = () => {
       const errorData = data.value?.data as GetOfferError;
       state.value.error = errorData?.error ? errorData : null;
       state.value.hasError = true;
+      send({ type: 'warning', message: 'test' });
     } else {
       state.value.error = null;
       state.value.hasError = false;

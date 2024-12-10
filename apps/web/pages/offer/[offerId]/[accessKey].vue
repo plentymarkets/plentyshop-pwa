@@ -31,10 +31,6 @@ const loadOffer = async (type?: string, value?: string) => {
   await fetchOffer({ offerId: offerId, accessKey: accessKey, ...object });
 };
 
-watch(error, (value) => {
-  if (value) send({ type: 'warning', message: value.error.message });
-});
-
 await loadOffer();
 
 const decline = async (text: string) => {
