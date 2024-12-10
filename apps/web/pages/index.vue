@@ -18,6 +18,7 @@
             { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
+          data-testid="block-wrapper"
         >
           <button
             v-if="experimentalAddBlock && disableActions && isPreview"
@@ -26,6 +27,7 @@
               { 'opacity-100': isClicked && clickedBlockIndex === index },
               'group-hover:opacity-100 group-focus:opacity-100',
             ]"
+            data-testid="top-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>
@@ -48,6 +50,7 @@
               { 'opacity-100': isClicked && clickedBlockIndex === index },
               'group-hover:opacity-100 group-focus:opacity-100',
             ]"
+            data-testid="btm-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>

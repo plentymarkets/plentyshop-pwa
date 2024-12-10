@@ -37,6 +37,24 @@ export class EditorObject extends PageObject {
     return cy.get('#close')
   }
 
+  get blockWrapper() {
+    return cy.getByTestId('block-wrapper')
+  }
+
+  get topBlockButton(){
+    return cy.getByTestId('top-add-block')
+  }
+
+  get bottomBlockButton(){
+    return cy.getByTestId('btm-add-block')
+  }
+  
+  get deleteBlockButton(){
+    return cy.getByTestId('del-block-button')
+  }
+
+
+  
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -110,5 +128,21 @@ export class EditorObject extends PageObject {
     this.tagline.should('have.text', 'New tagline from cypress');
     this.headline.should('have.text', 'New heading from cypress');
     this.description.should('have.text', 'Description from cypress.');
+  }
+
+  buttonsExistOnHover() {
+    this.blockWrapper.realHover();
+    this.topBlockButton.should('be.visible');
+    this.bottomBlockButton.should('be.visible');
+    return this;
+  }
+
+  deleteBlock() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.blockWrapper.first().should('exist');
+      this.deleteBlockButton.first().should('be.visible').and('not.be.disabled').click({ force: true });      cy.wait(1000);
+        this.blockWrapper.should('have.length', initialLength - 1);
+    });
   }
 }
