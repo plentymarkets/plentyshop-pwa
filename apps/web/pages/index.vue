@@ -98,7 +98,6 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-const experimentalAddBlock = ref(config.experimentalAddBlock);
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
