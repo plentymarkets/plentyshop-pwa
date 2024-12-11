@@ -56,86 +56,40 @@
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
-import { Block } from '~/composables/useHomepage/types';
+import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
+import { useHomepage } from '~/composables/useHomepage/useHomepage';
+import { useEditor } from '~/composables/useEditor/useEditor';
+import { useNewsletter } from '~/composables/useNewsletter';
 
-const { isEditing, disableActions } = useEditor();
-const viewport = useViewport();
+const {
+  currentBlock,
+  currentBlockIndex,
+  isClicked,
+  clickedBlockIndex,
+  isTablet,
+  isPreview,
+  experimentalAddBlock,
+  blockHasData,
+  tabletEdit,
+  handleEdit,
+  deleteBlock,
+  updateBlock,
+} = useBlockManager();
 
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
 
-const currentBlock = ref<Block | null>(null);
-const currentBlockIndex = ref<number | null>(null);
-const isClicked = ref(false);
-const clickedBlockIndex = ref<number | null>(null);
-
-const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
-
-const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-const experimentalAddBlock = ref(config.experimentalAddBlock);
-
-onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
-
-const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.options;
-  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
-};
-const blockHasData = (block: Block): boolean => {
-  return !isEmptyBlock(block);
-};
-const tabletEdit = (index: number) => {
-  if (isTablet.value) {
-    isClicked.value = !isClicked.value;
-    clickedBlockIndex.value = isClicked.value ? index : null;
-  }
-};
-const handleEdit = (index: number) => {
-  if (data.value.blocks && data.value.blocks.length > index) {
-    currentBlockIndex.value = index;
-    currentBlock.value = data.value.blocks[index];
-    isEditing.value = true;
-  }
-};
-
-const deleteBlock = (index: number) => {
-  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-    data.value.blocks.splice(index, 1);
-  }
-};
-
-const updateBlock = (index: number, updatedBlock: Block) => {
-  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-    data.value.blocks[index] = updatedBlock;
-  }
-};
+const { isEditing, disableActions } = useEditor();
 
 const getComponent = (name: string) => {
-  if (name === 'NewsletterSubscribe') {
-    return resolveComponent('NewsletterSubscribe');
-  }
-
-  if (name === 'UiHeroCarousel') {
-    return resolveComponent('UiHeroCarousel');
-  }
-
-  if (name === 'UiMediaCard') {
-    return resolveComponent('UiMediaCard');
-  }
-
-  if (name === 'ProductRecommendedProducts') {
-    return resolveComponent('ProductRecommendedProducts');
-  }
+  if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
+  if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
+  if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
+  if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
-
 const runtimeConfig = useRuntimeConfig();
 
 await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);

@@ -470,7 +470,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
-- Refactored index.vue
+- Refactored index.vue and created a new composable for the blocks
 
 ## New Contributors
 
