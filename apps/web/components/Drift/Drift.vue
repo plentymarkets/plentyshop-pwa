@@ -29,10 +29,12 @@ onMounted(() => {
   });
 });
 
-onUnmounted(() => {
+const destroyDrift = () => {
   if (drift) {
     drift.destroy();
     drift = null;
   }
-});
+};
+
+onUnmounted(() => destroyDrift());
 </script>
