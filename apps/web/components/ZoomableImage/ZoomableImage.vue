@@ -10,7 +10,7 @@
       {{ $t('double-tap-zoom') }}
     </div>
 
-    <Drift v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]" :index="index">
+    <Drift v-if="!isMobile && imagesLoaded[`gallery-img-${index}`]" :index="index" :key="route.fullPath">
       <NuxtImg
         v-bind="nuxtImgProps"
         @touchstart="onTouchStart"
@@ -46,6 +46,7 @@ const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
 
 const { isZoomed, imageStyle, onTouchStart, onTouchMove, onTouchEnd } = useImageZoom(containerReference);
 const viewport = useViewport();
+const route = useRoute();
 
 const image = props.image;
 const index = props.index;
@@ -60,7 +61,7 @@ const imageAlt = productImageGetters.getImageAlternate(image) || productImageGet
 const imageTitle = productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || '';
 
 const getSourceSet = (image: ImagesData) => {
-  const dpr = 2;
+  const dpr = 1;
   const secondPreview = productImageGetters.getImageUrlSecondPreview(image);
   const preview = productImageGetters.getImageUrlPreview(image);
   const middle = productImageGetters.getImageUrlMiddle(image);
