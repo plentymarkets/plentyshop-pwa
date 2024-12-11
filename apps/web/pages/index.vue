@@ -61,6 +61,8 @@
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
 import { Block } from '~/composables/useHomepage/types';
+import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
 
 const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
@@ -68,20 +70,17 @@ const viewport = useViewport();
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
+const { $i18n } = useNuxtApp();
+
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+};
 
 const addNewBlock = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
   const updatedBlocks = [...data.value.blocks];
 
-  updatedBlocks.splice(insertIndex, 0, {
-    name: 'UiMediaCard',
-    options: {
-      text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='typography-text-sm md:typography-text-lg mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg '><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
-      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
-      alt: 'Headphones',
-      alignment: 'right',
-    },
-  });
+  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
 
   data.value = {
     ...data.value,
