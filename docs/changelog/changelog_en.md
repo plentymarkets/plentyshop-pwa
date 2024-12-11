@@ -22,6 +22,7 @@
 - The homepage now has a functional delete block button
 - The edit mode buttons are not styled
 - Save is now permanent
+- Added '+' button to add new blocks in the editor
 
 ### 👷 Changed
 

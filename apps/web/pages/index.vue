@@ -20,7 +20,8 @@
           @click="tabletEdit(index)"
         >
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
+            @click="addNewBlock(index, -1)"
             :class="[
               'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
               { 'opacity-100': isClicked && clickedBlockIndex === index },
@@ -41,7 +42,8 @@
             v-bind="block.options"
           />
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
+            @click="addNewBlock(index, 1)"
             :class="[
               'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
               { 'opacity-100': isClicked && clickedBlockIndex === index },
@@ -57,6 +59,8 @@
 </template>
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
+import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
 
 const {
   currentBlock,
@@ -65,7 +69,6 @@ const {
   clickedBlockIndex,
   isTablet,
   isPreview,
-  experimentalAddBlock,
   blockHasData,
   tabletEdit,
   handleEdit,
@@ -76,6 +79,20 @@ const {
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
+const { $i18n } = useNuxtApp();
+
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+};
+
+const addNewBlock = (index: number, position: number) => {
+  const insertIndex = position === -1 ? index : index + 1;
+  const updatedBlocks = [...data.value.blocks];
+
+  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+
+  data.value.blocks = updatedBlocks;
+};
 
 const { isEditing, disableActions } = useEditor();
 
