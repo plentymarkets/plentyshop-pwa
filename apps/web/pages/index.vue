@@ -21,6 +21,7 @@
         >
           <button
             v-if="experimentalAddBlock && disableActions && isPreview"
+            @click="addNewBlock(index, -1)"
             :class="[
               'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
               { 'opacity-100': isClicked && clickedBlockIndex === index },
@@ -42,6 +43,7 @@
           />
           <button
             v-if="experimentalAddBlock && disableActions && isPreview"
+            @click="addNewBlock(index, 1)"
             :class="[
               'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
               { 'opacity-100': isClicked && clickedBlockIndex === index },
@@ -66,6 +68,26 @@ const viewport = useViewport();
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
+
+const addNewBlock = (index: number, position: number) => {
+  const insertIndex = position === -1 ? index : index + 1;
+  const updatedBlocks = [...data.value.blocks];
+
+  updatedBlocks.splice(insertIndex, 0, {
+    name: 'UiMediaCard',
+    options: {
+      text: "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='typography-text-sm md:typography-text-lg mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg '><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
+      image: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
+      alt: 'Headphones',
+      alignment: 'right',
+    },
+  });
+
+  data.value = {
+    ...data.value,
+    blocks: updatedBlocks,
+  };
+};
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
