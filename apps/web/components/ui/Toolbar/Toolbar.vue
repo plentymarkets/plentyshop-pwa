@@ -15,7 +15,7 @@
         variant="primary"
         :size="buttonSize"
         class="self-start"
-        :disabled="!isEditingEnabled || !isEditing || !isLocalTemplate()"
+        :disabled="!isEditingEnabled || !isLocalTemplate()"
         data-testid="edit-save-button"
         @click="updatePageTemplate"
       >
@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { isEditingEnabled, disableActions } = useEditor();
 
 const viewport = useViewport();
 const buttonSize = computed(() => {

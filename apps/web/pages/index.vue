@@ -29,7 +29,6 @@
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>
-          <UiBlockActions v-if="disableActions && blockHasData(block) && isPreview" :index="index" @edit="handleEdit" />
           <UiBlockActions
             v-if="disableActions && blockHasData(block) && isPreview"
             :index="index"

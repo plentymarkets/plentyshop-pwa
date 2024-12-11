@@ -8,6 +8,7 @@
 - Added the ability to filter products by rating on category pages.
 - Added PWA cookie hash to sdk client
 - Added progress loading indicator animation when navigating between pages.
+- Added the "Valid Until" date to the offer page, displayed when a validity date is set.
 - Added Zoom functionality to product images.
 - New Json Editor
 - Added a warning alert on the checkout if no payment or shipping method is available
@@ -20,6 +21,7 @@
 - Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
 - The homepage now has a functional delete block button
 - The edit mode buttons are not styled
+- Save is now permanent
 
 ### 👷 Changed
 
@@ -64,6 +66,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
+- Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
 - Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
 - Fixed filter translation on category page when switching language.
