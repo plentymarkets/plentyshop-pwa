@@ -82,10 +82,7 @@ const addNewBlock = (index: number, position: number) => {
 
   updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
 
-  data.value = {
-    ...data.value,
-    blocks: updatedBlocks,
-  };
+  data.value.blocks = updatedBlocks;
 };
 
 const currentBlock = ref<Block | null>(null);

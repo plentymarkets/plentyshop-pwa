@@ -66,7 +66,7 @@ export interface UseHomepageDataState {
 }
 
 export interface UseHomepage {
-  data: Ref<UseHomepageDataState['data']>;
+  data: Readonly<Ref<UseHomepageDataState['data']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
