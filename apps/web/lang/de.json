@@ -715,7 +715,8 @@
     "declineOffer": "Angebot ablehnen",
     "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
     "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt.",
-    "offer": "Angebot"
+    "offer": "Angebot",
+    "offerValidUntil": "Angebot gültig bis: {date}"
   },
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
@@ -777,7 +778,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
@@ -919,6 +921,12 @@
     "reviewsUp": "Kundenbewertung ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Dieses Angebot ist abgelaufen.",
+      "openUnauthorized": "Sie sind nicht berechtigt, dieses Angebot zu öffnen.",
+      "itemOutOfStock": "Mindestens ein Artikel des Angebots ist nicht mehr auf Lager.",
+      "alreadyTaken": "Dieses Angebot wurde bereits verwendet und kann nicht erneut verwendet werden."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
@@ -992,5 +1000,6 @@
     "add": "Der Artikel wurde der Wunschliste hinzugefügt.",
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
-  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung"
+  "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
+  "double-tap-zoom": "Zoom Zoomen doppeltippen"
 }

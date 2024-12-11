@@ -34,7 +34,7 @@
         </div>
 
         <div
-          class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm"
+          class="h-auto line-clamp-3 mt-1 font-normal typography-text-sm no-preflight"
           v-html="productBundleGetters.getBundleItemDescription(item)"
         ></div>
       </div>
@@ -44,7 +44,7 @@
           <span class="h-auto">{{ t('products') }}</span>
         </p>
         <div
-          class="h-auto mt-1 font-normal typography-text-sm"
+          class="h-auto mt-1 font-normal typography-text-sm no-preflight"
           v-html="t('productAttributes.productInformationMissing')"
         ></div>
       </div>

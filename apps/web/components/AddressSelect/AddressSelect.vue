@@ -110,7 +110,15 @@ const persistCheckoutAddress = async (address: Address) => {
 };
 
 const handleSetCheckoutAddress = async (address: Address) => {
+  const { isAuthorized } = useCustomer();
+  const { restrictedAddresses } = useRestrictedAddress();
+  const { handleCartTotalChanges } = useCartTotalChange();
+
   await persistCheckoutAddress(address);
+
+  if (isAuthorized.value && restrictedAddresses.value) {
+    await handleCartTotalChanges();
+  }
 };
 
 const handleDeleteAddress = async (address: Address) => {

@@ -54,7 +54,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     );
 
     return [...uniqueCountries.values()].sort((firstCountry, secondCountry) =>
-      firstCountry.currLangName.localeCompare(secondCountry.currLangName, useI18n().locale.value),
+      firstCountry.currLangName.localeCompare(secondCountry.currLangName, useNuxtApp().$i18n.locale.value),
     );
   });
 
