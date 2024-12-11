@@ -25,7 +25,7 @@
               :title="productImageGetters.getImageName(image) || productImageGetters.getCleanImageName(image) || ''"
               :aria-hidden="activeIndex !== index"
               fit="fill"
-              :class="`object-contain h-full w-full demo-trigger-${index}`"
+              :class="`object-contain object-top h-full w-full demo-trigger-${index}`"
               :data-zoom="productImageGetters.getImageUrl(image)"
               :quality="80"
               :srcset="getSourceSet(image)"

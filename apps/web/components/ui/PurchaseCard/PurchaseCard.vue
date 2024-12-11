@@ -4,6 +4,7 @@
     class="p-4 xl:p-6 md:border md:border-neutral-100 md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
   >
+  <p>Gewicht: {{ product.variation.weightG}}, {{ product.variation.weightNetG}}</p>
     <div class="relative">
       <div class="drift-zoom-image">
         <section class="p-4 xl:p-6">
@@ -48,6 +49,7 @@
           />
           <UiBadges class="mt-4" :product="product" :use-availability="true" />
           <div class="mt-2 variation-properties">
+            <h1>PROPERTIES</h1>
             <VariationProperties :product="product" />
           </div>
           <div class="inline-flex items-center mt-4 mb-2">

@@ -1,0 +1,40 @@
+.kl-mega-menu-item {
+  &::after {
+    background-size: cover;
+    content: "";
+    width: 48px;
+    height: 48px;
+    background-color: #d3d3d3;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 200px;
+    margin-top: 15px;
+    overflow: hidden;
+    transition: background-size 0.2s ease-out;
+    width: 200px;
+  }
+
+  &:hover:after {
+    background-size: 110%;
+  }
+
+  &#pringles::after {
+    background-image: url('/images/kelloggs/img--pringles.png');
+  }
+
+  &#pop-tarts::after {
+    background-image: url('/images/kelloggs/img--pop-tarts.png');
+  }
+
+  &#cerealien::after {
+    background-image: url('/images/kelloggs/img-cerealien.png');
+  }
+
+  &#muesli::after {
+    background-image: url('/images/kelloggs/img-muesli.png');
+  }
+}

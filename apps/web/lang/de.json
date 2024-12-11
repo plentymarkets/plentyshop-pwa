@@ -699,7 +699,7 @@
   "noneExisting": "Keine vorhanden",
   "numberInCart": "{count} Produkte im Warenkorb",
   "numberInWishlist": "{count} Produkte in der Wunschliste",
-  "numberOfProducts": "{count} Produkte von {total} Produkten",
+  "numberOfProducts": "{count} Produkte",
   "offerForm": {
     "acceptOffer": "Angebot annehmen",
     "cancel": "Abbrechen",

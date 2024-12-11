@@ -1,1 +1,10 @@
+@import 'components/fonts';
 @import 'components/search';
+@import 'components/image';
+@import 'components/nav';
+
+body * {
+  font-family: "Gilroy", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

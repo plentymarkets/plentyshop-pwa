@@ -10,6 +10,7 @@
     ]"
     data-testid="button"
   >
+
     <slot v-if="$slots.prefix" name="prefix" />
     <slot />
     <slot v-if="$slots.suffix" name="suffix" />
@@ -76,6 +77,6 @@ export const variantClasses = {
   [SfButtonVariant.secondary]:
     'text-primary-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900 ring-1 ring-inset ring-primary-500 shadow hover:shadow-md active:shadow hover:ring-primary-800 active:ring-primary-900 disabled:ring-1 disabled:ring-disabled-300 disabled:bg-white/50',
   [SfButtonVariant.tertiary]:
-    'text-primary-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900 disabled:bg-transparent',
+    'text-primary-500 hover:text-primary-800 active:text-primary-900 disabled:bg-transparent',
 };
 </script>

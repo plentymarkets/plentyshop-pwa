@@ -9,11 +9,10 @@
       </CategorySidebar> -->
       <div class="flex-1">
         <div class="flex justify-between items-center mb-6">
-          <span class="font-bold font-headings md:text-lg">
+          <span class="font-bold font-headings g-14-m text-gray-400">
             {{
               $t('numberOfProducts', {
                 count: products?.length ?? 0,
-                total: totalProducts,
               })
             }}
           </span>
@@ -26,7 +25,7 @@
         </div>
         <section
           v-if="products?.length"
-          class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
+          class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:gap-8 lg:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
           <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="index">

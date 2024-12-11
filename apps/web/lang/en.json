@@ -699,7 +699,7 @@
   "noneExisting": "None",
   "numberInCart": "{count} product in cart",
   "numberInWishlist": "{count} products in wishlist",
-  "numberOfProducts": "{count} Products out of {total} Products",
+  "numberOfProducts": "{count} Products",
   "offerForm": {
     "acceptOffer": "Accept offer",
     "cancel": "Cancel",

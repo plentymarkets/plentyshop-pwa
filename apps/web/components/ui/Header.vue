@@ -1,7 +1,7 @@
 <template>
   <MegaMenu :categories="categoryTree">
     <template v-if="viewport.isGreaterOrEquals('md')">
-      <nav class="hidden ml-4 md:flex md:flex-row md:flex-nowrap">
+      <nav class="hidden md:flex md:flex-row md:flex-nowrap ml-auto">
         <UiButton
                   variant="tertiary"
                   class="relative !text-black hover:bg-transparent"

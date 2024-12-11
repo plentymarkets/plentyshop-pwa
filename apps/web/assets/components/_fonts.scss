@@ -1,0 +1,167 @@
+@tailwind utilities;
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-ultralightitalic-webfont.woff2") format("woff2");
+  font-weight: 200;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-bold-webfont.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-bolditalic-webfont.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-extrabold-webfont.woff2") format("woff2");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-extrabolditalic-webfont.woff2") format("woff2");
+  font-weight: 800;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-heavy-webfont.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-heavyitalic-webfont.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-medium-webfont.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-mediumitalic-webfont.woff2") format("woff2");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-regular-webfont.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-regularitalic-webfont.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-semibold-webfont.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("/fonts/gilroy-semibolditalic-webfont.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+}
+
+
+
+@layer utilities {
+  .g-90 {
+    font-size: 128px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-80 {
+    font-size: 80px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-56 {
+    font-size: 56px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-40 {
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-32 {
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-24 {
+    font-size: 24px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-24-m {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .g-18 {
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-16 {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-16-m {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .g-14 {
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .g-14-m {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .g-12 {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+  }
+  .g-12-m {
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1;
+  }
+}

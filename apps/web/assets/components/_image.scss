@@ -1,0 +1,11 @@
+.kl-card-image-zoom {
+  img {
+    transition: transform 300ms ease !important;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.12);
+    }
+  }
+}
