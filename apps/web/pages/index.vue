@@ -21,7 +21,7 @@
           data-testid="block-wrapper"
         >
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
             class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
             :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
             data-testid="top-add-block"
@@ -40,7 +40,7 @@
             v-bind="block.options"
           />
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
             class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
             :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
             data-testid="bottom-add-block"
@@ -56,6 +56,8 @@
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
 import { Block } from '~/composables/useHomepage/types';
+import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
 
 const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();
@@ -63,6 +65,20 @@ const viewport = useViewport();
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
+const { $i18n } = useNuxtApp();
+
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+};
+
+const addNewBlock = (index: number, position: number) => {
+  const insertIndex = position === -1 ? index : index + 1;
+  const updatedBlocks = [...data.value.blocks];
+
+  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+
+  data.value.blocks = updatedBlocks;
+};
 
 const currentBlock = ref<Block | null>(null);
 const currentBlockIndex = ref<number | null>(null);
@@ -74,7 +90,6 @@ const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterT
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-const experimentalAddBlock = ref(config.experimentalAddBlock);
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
