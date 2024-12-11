@@ -1,5 +1,11 @@
 import { ref, computed, onMounted } from 'vue';
 
+const isEmptyBlock = (block: Block): boolean => {
+  const options = block?.options;
+  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
+};
+const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
+
 export function useBlockManager() {
   const { data } = useHomepage();
 
@@ -20,13 +26,6 @@ export function useBlockManager() {
     const pwaCookie = useCookie('pwa');
     isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
   });
-
-  const isEmptyBlock = (block: Block): boolean => {
-    const options = block?.options;
-    return !options || (typeof options === 'object' && Object.keys(options).length === 0);
-  };
-
-  const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
