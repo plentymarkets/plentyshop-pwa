@@ -29,24 +29,12 @@ onMounted(() => {
   });
 });
 
-onBeforeRouteUpdate(() => {
+const destroyDrift = () => {
   if (drift) {
     drift.destroy();
     drift = null;
   }
-});
+};
 
-onBeforeRouteLeave(() => {
-  if (drift) {
-    drift.destroy();
-    drift = null;
-  }
-});
-
-onUnmounted(() => {
-  if (drift) {
-    drift.destroy();
-    drift = null;
-  }
-});
+onUnmounted(() => destroyDrift());
 </script>
