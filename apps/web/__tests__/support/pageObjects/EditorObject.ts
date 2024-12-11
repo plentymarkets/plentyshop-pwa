@@ -53,8 +53,6 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('del-block-button')
   }
 
-
-  
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -141,8 +139,10 @@ export class EditorObject extends PageObject {
     this.blockWrapper.then(initialBlocks => {
       const initialLength = initialBlocks.length;
       this.blockWrapper.first().should('exist');
-      this.deleteBlockButton.first().should('be.visible').and('not.be.disabled').click({ force: true });      cy.wait(1000);
-        this.blockWrapper.should('have.length', initialLength - 1);
+      this.deleteBlockButton.eq(1).click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength - 1);
     });
-  }
+   }
 }
+

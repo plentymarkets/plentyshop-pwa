@@ -11,15 +11,6 @@ describe('Blocks', () => {
     it('should ensure correct block logic and template', () => {
         editor.buttonsExistOnHover();
         editor.deleteBlock();
-
-        // Add a new block Top
-
-        // Add a new block Bottom
-
-        // Remove a block
-
-    
-
     });
   });
   
