@@ -46,11 +46,11 @@ export class EditorObject extends PageObject {
   }
 
   get bottomBlockButton(){
-    return cy.getByTestId('btm-add-block')
+    return cy.getByTestId('botttom-add-block')
   }
   
   get deleteBlockButton(){
-    return cy.getByTestId('del-block-button')
+    return cy.getByTestId('delete-block-button')
   }
 
   togglePreviewMode() {
@@ -132,7 +132,6 @@ export class EditorObject extends PageObject {
     this.blockWrapper.realHover();
     this.topBlockButton.should('be.visible');
     this.bottomBlockButton.should('be.visible');
-    return this;
   }
 
   deleteBlock() {

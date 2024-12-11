@@ -50,7 +50,7 @@
               { 'opacity-100': isClicked && clickedBlockIndex === index },
               'group-hover:opacity-100 group-focus:opacity-100',
             ]"
-            data-testid="btm-add-block"
+            data-testid="botttom-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>
