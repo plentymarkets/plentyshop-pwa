@@ -27,7 +27,7 @@
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({ layout: false });
+definePageMeta({ layout: false, middleware: ['auth-guard'] });
 
 const { setCategoriesPageMeta } = useCanonical();
 const { t, locale } = useI18n();

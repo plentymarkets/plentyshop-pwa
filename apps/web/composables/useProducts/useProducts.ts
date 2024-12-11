@@ -47,11 +47,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
     if (data.value?.data) {
-      if (categoryGetters.hasCustomerRight(data.value?.data.category) && !isAuthorized.value) {
-        state.value.data = {} as Facet;
-        await navigateTo(localePath(paths.authLogin));
-        return state.value.data;
-      }
 
       data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
       state.value.data = data.value.data;
