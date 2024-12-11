@@ -20,7 +20,7 @@
           @click="tabletEdit(index)"
         >
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
             @click="addNewBlock(index, -1)"
             :class="[
               'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
@@ -42,7 +42,7 @@
             v-bind="block.options"
           />
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
+            v-if="disableActions && isPreview"
             @click="addNewBlock(index, 1)"
             :class="[
               'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
