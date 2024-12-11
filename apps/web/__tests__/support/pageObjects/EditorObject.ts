@@ -130,8 +130,8 @@ export class EditorObject extends PageObject {
 
   buttonsExistOnHover() {
     this.blockWrapper.realHover();
-    this.topBlockButton.realHover().should('be.visible');
-    this.bottomBlockButton.realHover().should('be.visible');
+    this.topBlockButton.should('be.visible');
+    this.bottomBlockButton.should('be.visible');
   }
 
   deleteBlock() {
