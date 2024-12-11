@@ -3,9 +3,7 @@
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-          <NuxtLazyHydrate when-idle>
-            <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
-          </NuxtLazyHydrate>
+          <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
