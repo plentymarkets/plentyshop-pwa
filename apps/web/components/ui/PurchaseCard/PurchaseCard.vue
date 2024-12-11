@@ -6,7 +6,7 @@
   >
     <div class="relative">
       <div class="drift-zoom-image">
-        <section class="p-4 xl:p-6">
+        <div class="p-4 xl:p-6">
           <div class="grid grid-cols-[2fr_1fr] mt-4">
             <h1 class="font-bold typography-headline-4" data-testid="product-name">
               {{ productGetters.getName(product) }}
@@ -124,7 +124,7 @@
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>
           </div>
-        </section>
+        </div>
       </div>
     </div>
   </form>

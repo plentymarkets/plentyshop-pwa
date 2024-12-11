@@ -12,7 +12,7 @@
             <UiPurchaseCard v-if="product" :product="product" :review-average="countsProductReviews" />
           </NuxtLazyHydrate>
         </section>
-        <section class="grid-in-left-bottom md:mt-8">
+        <div class="grid-in-left-bottom md:mt-8">
           <UiDivider class="mt-4 mb-2 md:mt-8" />
           <NuxtLazyHydrate when-visible>
             <ProductAccordion v-if="product" :product="product" />
@@ -29,7 +29,7 @@
               <SfIconChevronRight />
             </p>
           </div>
-        </section>
+        </div>
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
