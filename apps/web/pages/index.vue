@@ -57,10 +57,6 @@
 </template>
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
-import { useBlockManager } from '~/composables/useBlockManager/useBlockManager';
-import { useHomepage } from '~/composables/useHomepage/useHomepage';
-import { useEditor } from '~/composables/useEditor/useEditor';
-import { useNewsletter } from '~/composables/useNewsletter';
 
 const {
   currentBlock,

@@ -1,6 +1,4 @@
 import { ref, computed, onMounted } from 'vue';
-import { useHomepage } from '~/composables/useHomepage/useHomepage';
-import { Block } from '~/composables/useHomepage/types';
 
 export function useBlockManager() {
   const { data } = useHomepage();
