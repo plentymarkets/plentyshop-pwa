@@ -22,11 +22,8 @@
         >
           <button
             v-if="experimentalAddBlock && disableActions && isPreview"
-            :class="[
-              'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
-              { 'opacity-100': isClicked && clickedBlockIndex === index },
-              'group-hover:opacity-100 group-focus:opacity-100',
-            ]"
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+            :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
             data-testid="top-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
@@ -44,12 +41,9 @@
           />
           <button
             v-if="experimentalAddBlock && disableActions && isPreview"
-            :class="[
-              'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
-              { 'opacity-100': isClicked && clickedBlockIndex === index },
-              'group-hover:opacity-100 group-focus:opacity-100',
-            ]"
-            data-testid="botttom-add-block"
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+            :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+            data-testid="bottom-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>

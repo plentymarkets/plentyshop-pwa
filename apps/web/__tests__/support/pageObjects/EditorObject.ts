@@ -128,10 +128,16 @@ export class EditorObject extends PageObject {
     this.description.should('have.text', 'Description from cypress.');
   }
 
+  buttonsDoNotExist() {
+    this.blockWrapper.first().should('not.have.css', 'outline-style', 'solid');
+    this.blockWrapper.first().children().getByTestId('top-add-block').should('have.css', 'opacity', '0');
+    this.blockWrapper.first().children().getByTestId('bottom-add-block').should('have.css', 'opacity', '0');
+  }
+
   buttonsExistOnHover() {
-    this.blockWrapper.realHover();
-    this.topBlockButton.should('be.visible');
-    this.bottomBlockButton.should('be.visible');
+    this.blockWrapper.first().realHover().should('have.css', 'outline-style', 'solid');
+    this.blockWrapper.first().realHover().children().getByTestId('top-add-block').should('have.css', 'opacity', '1');
+    this.blockWrapper.first().realHover().children().getByTestId('bottom-add-block').should('have.css', 'opacity', '1');
   }
 
   deleteBlock() {

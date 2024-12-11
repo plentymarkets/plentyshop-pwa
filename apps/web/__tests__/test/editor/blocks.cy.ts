@@ -9,6 +9,7 @@ describe('Blocks', () => {
     });
   
     it('should ensure correct block logic and template', () => {
+        editor.buttonsDoNotExist();
         editor.buttonsExistOnHover();
         editor.deleteBlock();
     });
