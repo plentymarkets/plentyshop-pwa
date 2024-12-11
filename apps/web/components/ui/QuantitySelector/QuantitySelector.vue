@@ -68,7 +68,7 @@
 import { clamp } from '@storefront-ui/shared';
 import { SfIconAdd, SfIconRemove, SfTooltip, useId } from '@storefront-ui/vue';
 import { useCounter } from '@vueuse/core';
-import type { QuantitySelectorProps } from '~/components/ui/QuantitySelector/types';
+import {QuantitySelectorProps} from './types';
 
 const emit = defineEmits(['changeQuantity']);
 

@@ -70,6 +70,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
+    '@plentymarkets/pwa-module-boilerplate',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
@@ -218,5 +219,12 @@ export default defineNuxtConfig({
     },
 
     registerWebManifestInRouteRules: true,
+  },
+  vite: {
+    server: {
+      fs: {
+        allow: ['/Users/cristi/workspace/pwa-module-boilerplate'],
+      },
+    },
   },
 });

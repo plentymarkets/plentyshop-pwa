@@ -23,8 +23,7 @@
 
 <script setup lang="ts">
 import { SfSelect } from '@storefront-ui/vue';
-import type { CategoryItemsPerPageProps, Option } from '~/components/CategoryItemsPerPage/types';
-import { defaults } from '~/composables';
+import {CategoryItemsPerPageProps, Option} from './types';
 
 const props = defineProps<CategoryItemsPerPageProps>();
 

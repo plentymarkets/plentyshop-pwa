@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AccountDataProps } from '~/components/AccountData/types';
+import {AccountDataProps} from './types';
 
 const { showEditButton = false } = defineProps<AccountDataProps>();
 defineEmits(['on-click']);

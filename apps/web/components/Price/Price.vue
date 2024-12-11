@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { PriceProps } from '~/components/Price/types';
+import {PriceProps} from './types';
 
 defineProps<PriceProps>();
 

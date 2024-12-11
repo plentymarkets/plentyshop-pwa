@@ -22,7 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import type { DefaultLayoutProps } from '~/layouts/types';
+import {type DefaultLayoutProps} from './types';
+
 defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();

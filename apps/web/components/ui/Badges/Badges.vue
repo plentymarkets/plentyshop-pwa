@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import { SfListItem } from '@storefront-ui/vue';
 import { type ProductTag, productGetters, tagGetters } from '@plentymarkets/shop-api';
-import type { BadgesProps } from '~/components/ui/Badges/types';
+import {BadgesProps} from './types';
 
 const localePath = useLocalePath();
 

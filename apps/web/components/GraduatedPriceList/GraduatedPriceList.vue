@@ -33,8 +33,8 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import type { GraduatedPriceListProps } from '~/components/GraduatedPriceList/types';
 import { SfIconCheck } from '@storefront-ui/vue';
+import {GraduatedPriceListProps} from './types';
 
 const { product, count = 0 } = defineProps<GraduatedPriceListProps>();
 const graduatedList = computed(() => productGetters.getGraduatedList(product));

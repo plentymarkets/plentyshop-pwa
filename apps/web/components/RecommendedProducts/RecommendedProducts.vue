@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-import type { RecommendedProductsProps } from '~/components/RecommendedProducts/types';
+import { type RecommendedProductsProps } from './types';
 
 defineProps<RecommendedProductsProps>();
 </script>

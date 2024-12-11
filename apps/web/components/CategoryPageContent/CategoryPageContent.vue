@@ -84,7 +84,7 @@
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import {CategoryPageContentProps} from './types';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 

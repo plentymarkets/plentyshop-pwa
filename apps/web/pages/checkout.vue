@@ -95,15 +95,8 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import _ from 'lodash';
-import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import {
-  PayPalCreditCardPaymentKey,
-  PayPalPaymentKey,
-  PayPalGooglePayKey,
-  PayPalApplePayKey,
-} from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import {PayPalAddToCartCallback} from '../components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',

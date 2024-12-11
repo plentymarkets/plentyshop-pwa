@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
+import {ProductAccordionPropsType} from './types';
 
 const props = defineProps<ProductAccordionPropsType>();
 

@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { cartGetters } from '@plentymarkets/shop-api';
-import type { OrderSummaryPropsType } from '~/components/OrderSummary/types';
+import {OrderSummaryPropsType} from './types';
 
 const props = defineProps<OrderSummaryPropsType>();
 const { t, n } = useI18n();

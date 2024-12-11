@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { paymentProviderGetters, type PaymentMethod } from '@plentymarkets/shop-api';
 import { SfIconCreditCard, SfIconWarning } from '@storefront-ui/vue';
-import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
+import {CheckoutPaymentEmits, CheckoutPaymentProps} from './types';
 
 const { disabled = false } = defineProps<CheckoutPaymentProps>();
 const emit = defineEmits<CheckoutPaymentEmits>();

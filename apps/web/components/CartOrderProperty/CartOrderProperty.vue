@@ -20,9 +20,9 @@
 </template>
 
 <script setup lang="ts">
-import type { CartOrderPropertyProps } from '~/components/CartOrderProperty/types';
 import { cartGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import {CartOrderPropertyProps} from './types';
 
 const { downloadFile } = useProductOrderProperties();
 const loading = ref(false);

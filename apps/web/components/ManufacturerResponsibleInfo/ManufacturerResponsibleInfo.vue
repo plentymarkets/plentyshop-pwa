@@ -36,7 +36,7 @@
 
 <script setup lang="ts">
 import { manufacturerGetters, productGetters } from '@plentymarkets/shop-api';
-import type { ManufacturerResponsibleInfoProps } from '~/components/ManufacturerResponsibleInfo/types';
+import {ManufacturerResponsibleInfoProps} from './types';
 
 const props = defineProps<ManufacturerResponsibleInfoProps>();
 const { t } = useI18n();

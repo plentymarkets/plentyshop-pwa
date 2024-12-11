@@ -15,7 +15,7 @@
 <script setup lang="ts">
 import { SfAccordionItem, SfIconChevronLeft } from '@storefront-ui/vue';
 import { useVModel } from '@vueuse/core';
-import type { AccordionItemProps } from '~/components/ui/AccordionItem/types';
+import {AccordionItemProps} from './types';
 
 const props = defineProps<AccordionItemProps>();
 const { modelValue = false, summary = '', summaryClass = '' } = props;

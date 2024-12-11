@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { SfIconArrowBack } from '@storefront-ui/vue';
-import type { HeaderWithLinkProps } from '~/components/HeaderWithLink/types';
+import {HeaderWithLinkProps} from './types';
 
 const localePath = useLocalePath();
 const router = useRouter();

@@ -12,7 +12,7 @@
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
+import {PayPalAddToCartCallback, PaypalButtonPropsType} from './types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());

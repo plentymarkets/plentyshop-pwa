@@ -54,8 +54,8 @@
 
 <script setup lang="ts">
 import { type ProductBundleComponent, productBundleGetters } from '@plentymarkets/shop-api';
-import type { BundleOrderItemsProps } from '~/components/BundleOrderItems/types';
 import { SfLink } from '@storefront-ui/vue';
+import {BundleOrderItemsProps} from './types';
 const { t } = useI18n();
 
 const { product } = defineProps<BundleOrderItemsProps>();

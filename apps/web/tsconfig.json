@@ -1,8 +1,20 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "types": ["vitest/globals", "@vite-pwa/nuxt", "@types/applepayjs", "@types/googlepay"],
-    "verbatimModuleSyntax": false,
+    // "paths": {
+    //   "@plentymarkets/pwa-module-boilerplate/*": ["../pwa-module-boilerplate/dist/*"]
+    // },
+    "types": [
+      // "@nuxt/types",
+      "@nuxt/kit",
+      "@nuxt/schema",
+      "vitest/globals",
+      "@vite-pwa/nuxt",
+      "@types/applepayjs",
+      "@types/googlepay",
+      "@plentymarkets/pwa-module-boilerplate"
+    ],
+    "verbatimModuleSyntax": false
   },
   "exclude": ["node_modules", "mocks", "__tests__", "cypress.config.ts"],
   "typedocOptions": {

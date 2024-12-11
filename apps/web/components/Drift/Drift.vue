@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import Drift from 'drift-zoom';
 import './Drift.scss';
-import type { DriftProps } from '~/components/Drift/types';
+import {DriftProps} from './types';
 
 const { index } = defineProps<DriftProps>();
 

@@ -110,7 +110,7 @@ import {
   userAddressGetters,
 } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import { type AddressFormProps } from '~/components/AddressForm/types';
+import {AddressFormProps} from './types';
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 

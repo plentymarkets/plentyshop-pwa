@@ -4,7 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import type { BasePriceProps } from '~/components/BasePrice/types';
+import {BasePriceProps} from './types';
+
 
 defineProps<BasePriceProps>();
 </script>

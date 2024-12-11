@@ -20,7 +20,7 @@
 </template>
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-import type { AccountFormsNameProps } from '~/components/AccountForms/types';
+import {AccountFormsNameProps} from './types';
 
 const props = defineProps<AccountFormsNameProps>();
 defineEmits(['on-save', 'on-cancel']);

@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AlertProps } from '~/components/ui/Alert/types';
+import { AlertProps } from './types';
 
 const sizeClasses = {
   sm: 'text-xs p-1 gap-1',

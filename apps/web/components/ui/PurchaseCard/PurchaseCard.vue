@@ -133,8 +133,8 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
-import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import {PurchaseCardProps} from './types';
+import {PayPalAddToCartCallback} from '../../PayPal/types';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 

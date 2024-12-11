@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
+import {WishlistPageContentProps} from './types';
 
 const { showNetPrices } = useCustomer();
 

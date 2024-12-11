@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
-import { PayPalPayLaterBannerType } from '~/components/PayPal/types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
 import { PayPalNamespace } from '@paypal/paypal-js';
+import {PayPalPayLaterBannerType} from './types';
 
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));

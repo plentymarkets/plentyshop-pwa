@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfScrollable } from '@storefront-ui/vue';
-import type { ProductSliderProps } from '~/components/ProductSlider/types';
+import {ProductSliderProps} from './types';
 
 const { addModernImageExtension } = useModernImage();
 const { showNetPrices } = useCustomer();

@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconClose } from '@storefront-ui/vue';
-import type { CategorySidebarEmits, CategorySidebarProps } from '~/components/CategorySidebar/types';
+import {CategorySidebarEmits, CategorySidebarProps} from './types';
 
 defineProps<CategorySidebarProps>();
 defineEmits<CategorySidebarEmits>();

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <ModuleTest />
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -59,7 +60,7 @@
 
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
-import { Block } from '~/composables/useHomepage/types';
+import { Block } from '../composables/useHomepage/types';
 
 const { isEditing, disableActions } = useEditor();
 const viewport = useViewport();

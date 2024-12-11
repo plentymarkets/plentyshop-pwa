@@ -45,9 +45,8 @@ import { SfInput, SfTextarea } from '@storefront-ui/vue';
 import { object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
-import { defaults } from '~/composables';
 import { reviewGetters, productGetters } from '@plentymarkets/shop-api';
-import type { ReplyFormProps } from '~/components/ReplyForm/types';
+import {ReplyFormProps} from './types';
 
 const emits = defineEmits(['on-close']);
 

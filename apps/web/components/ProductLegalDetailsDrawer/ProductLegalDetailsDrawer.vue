@@ -59,9 +59,9 @@
 
 <script setup lang="ts">
 import { SfDrawer, SfIconClose, SfDrawerPlacement, useTrapFocus } from '@storefront-ui/vue';
-import { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
-import ManufacturerResponsibleInfo from '~/components/ManufacturerResponsibleInfo/ManufacturerResponsibleInfo.vue';
-import ManufacturerInformation from '~/components/ManufacturerInformation/ManufacturerInformation.vue';
+import ManufacturerResponsibleInfo from '../ManufacturerResponsibleInfo/ManufacturerResponsibleInfo.vue';
+import ManufacturerInformation from '../ManufacturerInformation/ManufacturerInformation.vue';
+import {ProductLegalDetailsProps} from './types';
 
 defineProps<ProductLegalDetailsProps>();
 

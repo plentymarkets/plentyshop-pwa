@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { SfCounter, SfIconCheck, SfListItem } from '@storefront-ui/vue';
-import type { CategoryTreeItemType } from '~/components/CategoryTree/types';
+import {CategoryTreeItemType} from './types';
 
 const localePath = useLocalePath();
 

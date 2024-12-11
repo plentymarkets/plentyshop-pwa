@@ -37,7 +37,7 @@
 import { productImageGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import type { ImagesData } from '@plentymarkets/shop-api';
-import type { ZoomableImageProps } from '~/components/ZoomableImage/types';
+import {ZoomableImageProps} from './types';
 
 const props = defineProps<ZoomableImageProps>();
 

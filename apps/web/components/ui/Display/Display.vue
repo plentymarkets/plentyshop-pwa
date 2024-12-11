@@ -45,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import type { DisplayProps } from '~/components/ui/Display/types';
-import { paths } from '~/utils/paths';
+import {DisplayProps} from './types';
+import { paths } from '../../../utils/paths';
 
 defineProps<DisplayProps>();
 

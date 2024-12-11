@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryFiltersProps } from '~/components/CategoryFilters/types';
+import {CategoryFiltersProps} from './types';
 
 const props = defineProps<CategoryFiltersProps>();
 

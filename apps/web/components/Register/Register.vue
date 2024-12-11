@@ -152,9 +152,8 @@ import {
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean, ref as yupReference } from 'yup';
-import type { RegisterFormParams } from '~/components/Register/types';
-import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
-import { paths } from '~/utils/paths';
+import {RegisterFormParams} from './types';
+import { paths } from '../../utils/paths';
 
 const localePath = useLocalePath();
 const router = useRouter();

@@ -40,10 +40,10 @@
 <script setup lang="ts">
 import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { ComponentsMapper, OrderPropertiesProps } from './types';
-import OrderPropertyInput from '~/components/OrderPropertyInput/OrderPropertyInput.vue';
-import OrderPropertySelect from '~/components/OrderPropertySelect/OrderPropertySelect.vue';
-import OrderPropertyCheckbox from '~/components/OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
-import OrderPropertyFileUpload from '~/components/OrderPropertyFileUpload/OrderPropertyFileUpload.vue';
+import OrderPropertyInput from '../OrderPropertyInput/OrderPropertyInput.vue';
+import OrderPropertySelect from '../OrderPropertySelect/OrderPropertySelect.vue';
+import OrderPropertyCheckbox from '../OrderPropertyCheckbox/OrderPropertyCheckbox.vue';
+import OrderPropertyFileUpload from '../OrderPropertyFileUpload/OrderPropertyFileUpload.vue';
 import { SfIconInfo, SfTooltip } from '@storefront-ui/vue';
 
 const props = defineProps<OrderPropertiesProps>();

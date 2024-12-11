@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { BasePriceProps } from '~/components/BasePrice/types';
+import {BasePriceProps} from './types';
 
 const props = defineProps<BasePriceProps>();
 const { basePrice, unitContent, unitName } = props;

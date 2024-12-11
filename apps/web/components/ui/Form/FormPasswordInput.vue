@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfIconVisibility, SfIconVisibilityOff } from '@storefront-ui/vue';
-import type { FormPasswordProps } from '~/components/ui/Form/types';
+import {FormPasswordProps} from './types';
 
 defineProps<FormPasswordProps>();
 

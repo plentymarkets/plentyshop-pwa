@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CategoryCardProps } from '~/components/ui/CategoryCard/types';
+import {CategoryCardProps} from './types';
 
 const localePath = useLocalePath();
 

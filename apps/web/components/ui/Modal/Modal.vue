@@ -13,7 +13,7 @@ export default {
 </script>
 <script setup lang="ts">
 import { SfModal } from '@storefront-ui/vue';
-import type { ModalProps } from '~/components/ui/Modal/types';
+import {ModalProps} from './types';
 
 const props = defineProps<ModalProps>();
 </script>

@@ -51,7 +51,7 @@
 </template>
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
-import type { AccountFormsPasswordProps } from '~/components/AccountForms/types';
+import {AccountFormsPasswordProps} from './types';
 
 const { send } = useNotification();
 const { loading, changePassword } = useCustomer();

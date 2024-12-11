@@ -19,9 +19,9 @@
 import { productGetters, productPropertyGetters } from '@plentymarkets/shop-api';
 import type { Product, VariationProperty } from '@plentymarkets/shop-api';
 import type { VariationPropertiesProps, ComponentsMapper } from './types';
-import VariationPropertyText from '~/components/VariationPropertyText/VariationPropertyText.vue';
-import VariationPropertyHtml from '~/components/VariationPropertyHtml/VariationPropertyHtml.vue';
-import VariationPropertyDate from '~/components/VariationPropertyDate/VariationPropertyDate.vue';
+import VariationPropertyText from '../VariationPropertyText/VariationPropertyText.vue';
+import VariationPropertyHtml from '../VariationPropertyHtml/VariationPropertyHtml.vue';
+import VariationPropertyDate from '../VariationPropertyDate/VariationPropertyDate.vue';
 import VariationPropertyFile from '../VariationPropertyFile/VariationPropertyFile.vue';
 
 const props = defineProps<VariationPropertiesProps>();

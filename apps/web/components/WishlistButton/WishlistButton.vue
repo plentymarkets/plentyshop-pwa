@@ -24,9 +24,9 @@
 </template>
 
 <script setup lang="ts">
-import type { WishlistButtonProps } from '~/components/WishlistButton/types';
 import { SfIconFavorite, SfIconFavoriteFilled, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
 import { productGetters } from '@plentymarkets/shop-api';
+import {WishlistButtonProps} from './types';
 
 const { product, quantity = 1, discard = false } = defineProps<WishlistButtonProps>();
 const { t } = useI18n();

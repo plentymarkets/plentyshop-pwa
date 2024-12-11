@@ -6,8 +6,7 @@
 
 <script setup lang="ts">
 import { productGetters } from '@plentymarkets/shop-api';
-import type { LowestPriceProps } from '~/components/LowestPrice/types';
-import { useProductPrice } from '~/composables/useProductPrice';
+import {LowestPriceProps} from './types';
 
 const props = defineProps<LowestPriceProps>();
 
