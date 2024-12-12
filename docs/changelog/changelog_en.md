@@ -68,6 +68,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Fixed image issue on no-preflight class.
 - Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
 - Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
 - Adjusted the checkout layout for tablet screen sizes.
