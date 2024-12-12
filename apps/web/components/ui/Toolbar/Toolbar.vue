@@ -1,10 +1,10 @@
 <template>
   <div class="sticky top-0 bg-white py-2 z-50">
-    <div class="relative flex items-center pr-5">
-      <div class="absolute left-1/2 transform -translate-x-1/2" v-if="localeCodes.length > 1">
-        <UiLanguageEditor />
+    <div class="flex justify-between items-center pr-5">
+      <div class="flex-1 flex justify-center">
+        <UiLanguageEditor v-if="experimentalAddBlock" />
       </div>
-      <div class="ml-auto flex space-x-2">
+      <div class="flex space-x-2">
         <UiButton
           variant="secondary"
           :size="buttonSize"
@@ -37,7 +37,6 @@
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
 const { isEditingEnabled, disableActions } = useEditor();
-const { localeCodes } = useI18n();
 
 const viewport = useViewport();
 const buttonSize = computed(() => {
@@ -49,7 +48,7 @@ const { updatePageTemplate } = useUpdatePageTemplate();
 
 const runtimeConfig = useRuntimeConfig();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-
+const experimentalAddBlock = runtimeConfig.public.experimentalAddBlock;
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
