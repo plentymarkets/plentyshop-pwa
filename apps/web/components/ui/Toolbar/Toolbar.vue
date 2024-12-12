@@ -1,10 +1,10 @@
 <template>
   <div class="sticky top-0 bg-white py-2 z-50">
-    <div class="flex justify-between items-center pr-5">
-      <div class="flex-1 flex justify-center">
+    <div class="relative flex items-center pr-5">
+      <div class="absolute left-1/2 transform -translate-x-1/2">
         <UiLanguageEditor v-if="experimentalAddBlock" />
       </div>
-      <div class="flex space-x-2">
+      <div class="ml-auto flex space-x-2">
         <UiButton
           variant="secondary"
           :size="buttonSize"
@@ -49,6 +49,7 @@ const { updatePageTemplate } = useUpdatePageTemplate();
 const runtimeConfig = useRuntimeConfig();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const experimentalAddBlock = runtimeConfig.public.experimentalAddBlock;
+
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
