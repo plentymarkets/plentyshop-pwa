@@ -97,12 +97,20 @@ apple-pay-button {
     white-space: normal;
   }
 
-  img, video {
+  img,
+  video {
     height: auto;
     max-width: 100%;
   }
 
-  audio, canvas, embed, iframe, img, object, svg, video {
+  audio,
+  canvas,
+  embed,
+  iframe,
+  img,
+  object,
+  svg,
+  video {
     display: block;
     vertical-align: middle;
   }
