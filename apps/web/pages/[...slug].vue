@@ -6,6 +6,7 @@
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
     <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <KelloggsCategoryHeader :categoryName="categoryName"></KelloggsCategoryHeader> 
     <CategoryPageContent
       v-if="productsCatalog?.products"
       :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -65,6 +66,10 @@ const breadcrumbs = computed(() => {
   return [];
 });
 
+const categoryName = computed(() => {
+  return productsCatalog.value.category.details?.[0]?.name;
+});
+
 watch(
   () => locale.value,
   (changedLocale: any) => {
@@ -108,3 +113,9 @@ useHead({
   ],
 });
 </script>
+
+<style lang="scss"scoped>
+  nav[testid="breadcrumbs"] {
+    display: none;
+  }
+</style>

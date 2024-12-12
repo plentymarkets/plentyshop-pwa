@@ -57,6 +57,7 @@
                  :style="style"
                  class="hidden md:flex gap-x-6 bg-white shadow-lg p-6 left-0 right-0 outline-none z-40"
                  tabindex="0"
+                 @click.passive="close"
                  @keydown.esc="focusTrigger(index)">
               <template v-for="node in activeMenu.children" :key="node.id">
                 <template v-if="node.childCount === 0">
@@ -171,7 +172,7 @@ import {
 import { unrefElement } from '@vueuse/core';
 import type { MegaMenuProps } from '~/components/MegaMenu/types';
 import { paths } from '~/utils/paths';
-import { onBeforeRouteUpdate } from 'vue-router';
+import { onBeforeRouteLeave } from 'vue-router';
 
 const { t } = useI18n();
 const viewport = useViewport();
@@ -188,7 +189,7 @@ const { referenceRef, floatingRef, style } = useDropdown({
 });
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 
-onBeforeRouteUpdate((to, from) => {
+onBeforeRouteLeave((to, from) => {
   // Close mega menu when user navigates to new page
   close();
 });

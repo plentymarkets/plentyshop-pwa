@@ -1,108 +1,95 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart()"
-    class="p-4 xl:p-6 md:border md:border-neutral-100 md:rounded-md md:sticky md:top-40"
-    data-testid="purchase-card"
-  >
-  <p>Gewicht: {{ product.variation.weightG}}, {{ product.variation.weightNetG}}</p>
+        @submit.prevent="handleAddToCart()"
+        class="md:rounded-md md:sticky md:top-40"
+        data-testid="purchase-card">
     <div class="relative">
       <div class="drift-zoom-image">
-        <section class="p-4 xl:p-6">
-          <div class="grid grid-cols-[2fr_1fr] mt-4">
-            <h1 class="font-bold typography-headline-4" data-testid="product-name">
+
+        <section class="">
+          <div class="flex">
+            <h1 class="font-bold g-32" data-testid="product-name">
               {{ productGetters.getName(product) }}
             </h1>
-            <div class="flex items-center justify-center">
+            <!-- <div class="ml-4 flex items-center justify-center">
               <WishlistButton
-                :product="product"
-                :quantity="quantitySelectorValue"
-                :square="viewport.isLessThan('lg')"
-                :class="{
-                  'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
-                    viewport.isLessThan('lg'),
-                }"
-              >
-                <template v-if="viewport.isGreaterOrEquals('lg')">
-                  {{
-                    !isWishlistItem(productGetters.getVariationId(product))
-                      ? t('addToWishlist')
-                      : t('removeFromWishlist')
-                  }}
-                </template>
+                              :product="product"
+                              :quantity="quantitySelectorValue"
+                              :square="viewport.isLessThan('lg')"
+                              :class="{
+                                'bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full':
+                                  viewport.isLessThan('lg'),
+                              }">
               </WishlistButton>
-            </div>
+            </div> -->
           </div>
-          <div class="flex space-x-2">
+          <div class="flex items-center mt-2 ml-[-2px]" @click="scrollToReviews">
+            <SfRating
+                      size="base"
+                      :half-increment="true"
+                      :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
+                      :max="5" />
+            <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
+          </div>
+          <div class="flex flex-col mt-2">
             <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
-            <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
+            <div class="text-gray-600">
+              <p class="g-12-m mt-1">{{ product.variation.weightG }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
+              <div class="g-12-m flex mb-4 mt-1">
+                <span>{{ t('asterisk') }}</span>
+                <span class="mr-1">{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
+                <span>{{ t('excludedShipping') }}</span>
+              </div>
+            </div>
+
+
+            <!-- <div v-if="(productBundleGetters?.getBundleDiscount(product) ?? 0) > 0" class="m-auto">
               <UiTag :size="'sm'" :variant="'secondary'">{{
                 t('procentageSavings', { percent: productBundleGetters.getBundleDiscount(product) })
-              }}</UiTag>
-            </div>
+                }}</UiTag>
+            </div> -->
           </div>
           <LowestPrice :product="product" />
-          <BasePrice
-            v-if="productGetters.showPricePerUnit(product)"
-            :base-price="basePriceSingleValue"
-            :unit-content="productGetters.getUnitContent(product)"
-            :unit-name="productGetters.getUnitName(product)"
-          />
-          <UiBadges class="mt-4" :product="product" :use-availability="true" />
-          <div class="mt-2 variation-properties">
-            <h1>PROPERTIES</h1>
-            <VariationProperties :product="product" />
-          </div>
-          <div class="inline-flex items-center mt-4 mb-2">
-            <SfRating
-              size="xs"
-              :half-increment="true"
-              :value="reviewGetters.getAverageRating(reviewAverage, 'half')"
-              :max="5"
-            />
-            <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
-            <UiButton
-              variant="tertiary"
-              @click="scrollToReviews"
-              class="ml-2 text-xs text-neutral-500 cursor-pointer"
-              data-testid="show-reviews"
-            >
-              {{ t('showAllReviews') }}
-            </UiButton>
-          </div>
-          <div
-            v-if="productGetters.getShortDescription(product).length > 0"
-            class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
-            data-testid="product-description"
-          >
-            {{ productGetters.getShortDescription(product) }}
-          </div>
+          <!-- <BasePrice
+                     v-if="productGetters.showPricePerUnit(product)"
+                     :base-price="basePriceSingleValue"
+                     :unit-content="productGetters.getUnitContent(product)"
+                     :unit-name="productGetters.getUnitName(product)" /> -->
 
-          <BundleOrderItems v-if="product.bundleComponents" :product="product" />
+          <!-- <div class="mt-2 variation-properties">
+            <VariationProperties :product="product" />
+          </div> -->
+
+          <!-- <div
+               v-if="productGetters.getShortDescription(product).length > 0"
+               class="mb-4 font-normal typography-text-sm whitespace-pre-line break-words"
+               data-testid="product-description">
+            {{ productGetters.getShortDescription(product) }}
+          </div> -->
+
+          <!-- <BundleOrderItems v-if="product.bundleComponents" :product="product" /> -->
           <OrderProperties :product="product" />
-          <ProductAttributes :product="product" />
+          <!-- <ProductAttributes :product="product" /> -->
           <GraduatedPriceList :product="product" :count="quantitySelectorValue" />
 
           <div class="mt-4">
             <div class="flex flex-col md:flex-row flex-wrap gap-4">
               <UiQuantitySelector
-                :min-value="productGetters.getMinimumOrderQuantity(product)"
-                :value="quantitySelectorValue"
-                @change-quantity="changeQuantity"
-                class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
-              />
+                                  :min-value="productGetters.getMinimumOrderQuantity(product)"
+                                  :value="quantitySelectorValue"
+                                  @change-quantity="changeQuantity"
+                                  class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0" />
               <SfTooltip
-                show-arrow
-                placement="top"
-                :label="isNotValidVariation || isSalableText"
-                class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap"
-              >
+                         show-arrow
+                         placement="top"
+                         :label="isNotValidVariation || isSalableText"
+                         class="flex-grow-[2] flex-shrink basis-auto whitespace-nowrap">
                 <UiButton
-                  type="submit"
-                  data-testid="add-to-cart"
-                  size="lg"
-                  class="w-full h-full"
-                  :disabled="loading || !productGetters.isSalable(product)"
-                >
+                          type="submit"
+                          data-testid="add-to-cart"
+                          size="lg"
+                          class="w-full h-full"
+                          :disabled="loading || !productGetters.isSalable(product)">
                   <template #prefix>
                     <div v-if="!loading" class="flex row items-center">
                       <SfIconShoppingCart size="sm" />
@@ -116,16 +103,110 @@
               </SfTooltip>
             </div>
 
-            <div class="mt-4 typography-text-xs flex gap-1">
-              <span>{{ t('asterisk') }}</span>
-              <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
-              <span>{{ t('excludedShipping') }}</span>
-            </div>
-            <template v-if="showPayPalButtons">
+            <!-- <div class="flex">
+              <UiBadges class="ml-1" :product="product" :use-tags="false" :use-availability="true" />
+            </div> -->
+
+            <!-- <template v-if="showPayPalButtons">
               <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
-            </template>
+            </template> -->
           </div>
+
+
+          <section class="mt-4">
+            <NuxtLazyHydrate when-visible>
+                <!-- Produktbeschreibung -->
+                <UiAccordionItem
+                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                  <template #summary>
+                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                      Produktbeschreibung
+                    </h2>
+                  </template>
+                  <div>PLACEHOLDER_DESCRIPTION</div>
+                </UiAccordionItem>
+
+                <!-- Produktinformationen -->
+                <UiAccordionItem
+                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                  <template #summary>
+                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                      Produktinformationen
+                    </h2>
+                  </template>
+                  <div>
+                    <div class="kl-details-container">
+                      <div class="kl-details-row">
+                        <div class="kl-details-cell kl-label">Artikelnummer</div>
+                        <div class="kl-details-cell">PLACEHOLDER_SKU</div>
+                      </div>
+                      <div class="kl-details-row">
+                        <div class="kl-details-cell kl-label">Verkehrsbezeichnung</div>
+                        <div class="kl-details-cell">PLACEHOLDER_VERKEHRSBEZEICHNUNG</div>
+                      </div>
+                      <div class="kl-details-row">
+                        <div class="kl-details-cell kl-label">Hinweis</div>
+                        <div class="kl-details-cell">PLACEHOLDER_STORAGE_NOTE</div>
+                      </div>
+                      <div class="kl-details-row">
+                        <div class="kl-details-cell kl-label">Inhalt</div>
+                        <div class="kl-details-cell">PLACEHOLDER_CONTENT</div>
+                      </div>
+                      <div class="kl-details-row">
+                        <div class="kl-details-cell kl-label">Nettogewicht</div>
+                        <div class="kl-details-cell">PLACEHOLDER_WEIGHT</div>
+                      </div>
+                    </div>
+                    <div class="kl-hersteller">
+                      PLACEHOLDER_MANUFACTURER
+                    </div>
+                  </div>
+                </UiAccordionItem>
+
+                <!-- Zutaten -->
+                <UiAccordionItem
+                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                  <template #summary>
+                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                      Zutaten
+                    </h2>
+                  </template>
+                  <div>
+                    <p class="kl-nutrition-text">PLACEHOLDER_VERKEHRSBEZEICHNUNG</p>
+                    <p class="kl-nutrition-text">PLACEHOLDER_INGREDIENTS</p>
+                    <p class="kl-nutrition-text">PLACEHOLDER_STORAGE_NOTE</p>
+                  </div>
+                </UiAccordionItem>
+
+                <!-- Durchschnittliche Nährwerte -->
+                <UiAccordionItem
+                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                  <template #summary>
+                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                      Durchschnittliche Nährwerte
+                    </h2>
+                  </template>
+                  <div>
+                    PLACEHOLDER_NUTRITIONAL_VALUES
+                    <p class="kl-nutrition-text">PLACEHOLDER_PORTIONS</p>
+                  </div>
+                </UiAccordionItem>
+
+                <!-- Allergenkennzeichnung -->
+                <UiAccordionItem
+                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                  <template #summary>
+                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                      Allergenkennzeichnung
+                    </h2>
+                  </template>
+                  <div>
+                    PLACEHOLDER_ALLERGENE
+                  </div>
+                </UiAccordionItem>
+            </NuxtLazyHydrate>
+          </section>
         </section>
       </div>
     </div>
@@ -133,17 +214,16 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, productBundleGetters, Product } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
 import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
-
 const runtimeConfig = useRuntimeConfig();
 const showNetPrices = runtimeConfig.public.showNetPrices;
 const viewport = useViewport();
-const { getCombination } = useProductAttributes();
+const { getCombination, updateValue, getValue, setAttribute } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
 const { validateAllFields, invalidFields, resetInvalidFields } = useValidatorAggregator('properties');
 const {
@@ -153,15 +233,30 @@ const {
 } = useValidatorAggregator('attributes');
 const { send } = useNotification();
 const { addToCart, loading } = useCart();
-const { t } = useI18n();
+const { t, n } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
 const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
-const { crossedPrice } = useProductPrice(product);
+const { price, crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 
 resetInvalidFields();
 resetAttributeFields();
+
+// Automatically select the first available variant (otherwise the ProductAttributes component would be needed)
+onMounted(() => {
+  // TODO: Figure out why the hook alone is not enough
+  setTimeout(() => {
+    setAttribute(product, true);
+  }, 300);
+})
+
+const getKgPrice = (product: Product) => {
+  let weight = product?.variation?.weightG;
+  if (!weight) return 0;
+
+  return (price.value / weight) * 1000;
+}
 
 const priceWithProperties = computed(
   () =>

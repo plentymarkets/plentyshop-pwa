@@ -4,5 +4,5 @@ export type Breadcrumb = {
 };
 
 export type BreadcrumbsProps = {
-  breadcrumbs: Breadcrumb[];
+  breadcrumbs: Breadcrumb[]
 };

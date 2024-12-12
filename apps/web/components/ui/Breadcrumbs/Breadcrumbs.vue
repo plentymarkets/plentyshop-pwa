@@ -1,5 +1,5 @@
 <template>
-  <nav data-testid="breadcrumbs" class="inline-flex items-center text-sm font-normal">
+  <nav data-testid="breadcrumbs" class="inline-flex items-center text-sm font-normal" :class="{'absolute' : isCategoryPage}">
     <ol class="flex w-auto leading-none group md:flex-wrap">
       <li class="flex items-center sm:hidden text-neutral-500 z-10">
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
@@ -114,5 +114,9 @@ useHead({
       innerHTML: JSON.stringify(structuredData),
     },
   ],
+});
+
+const isCategoryPage = computed(() => {
+  return route.name == 'slug___de___default'
 });
 </script>

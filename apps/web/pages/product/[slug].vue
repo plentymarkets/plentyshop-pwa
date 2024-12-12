@@ -13,25 +13,24 @@
           </NuxtLazyHydrate>
         </section>
         <section class="grid-in-left-bottom md:mt-8">
-          <UiDivider class="mt-4 mb-2 md:mt-8" />
-          <NuxtLazyHydrate when-visible>
-            <ProductAccordion v-if="product" :product="product" />
-          </NuxtLazyHydrate>
-          <ReviewsAccordion
+          <!-- <UiDivider class="mt-4 mb-2 md:mt-8" /> -->
+          <!-- <ReviewsAccordion
             v-if="product"
             :product="product"
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
-          />
+          /> -->
 
-          <div class="p-4 flex">
+          <!-- <div class="p-4 flex">
             <p @click="openDrawer()" class="font-bold leading-6 cursor-pointer">
               <span>{{ t('legalDetails') }}</span>
               <SfIconChevronRight />
             </p>
-          </div>
+          </div> -->
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
+        <p class="g-16 lg:g-18 mt-2">Weitere Produkte</p>
+        <p class="g-40 lg:g-56 mb-6">Das könnte dir auch gefallen</p>
         <NuxtLazyHydrate when-visible>
           <ProductRecommendedProducts
             :category-id="productGetters.getCategoryIds(product)[0]"

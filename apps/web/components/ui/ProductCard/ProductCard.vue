@@ -6,7 +6,7 @@
               :tag="NuxtLink"
               rel="preload"
               :to="productPath"
-              :class="{ 'size-48': isFromSlider }"
+              :class="{ 'size-72': isFromSlider }"
               as="image"
               class="flex items-center justify-center">
         <NuxtImg
@@ -31,12 +31,11 @@
     </div>
     <div class="pt-6 typography-text-sm flex flex-col flex-auto">
       <SfLink :tag="NuxtLink" :to="productPath" class="no-underline g-16" variant="secondary">
-        {{ name }}
+        {{ product.item.id }}: {{ name }}
       </SfLink>
       <p class="mb-2">{{ getWeight(product) }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
 
-      <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
-      <div class="flex items-center pt-2 gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
+      <div class="flex items-center gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
         <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
@@ -44,8 +43,8 @@
            v-if="productGetters.getShortDescription(product)"
            class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words">
         <span class="line-clamp-3">
-          <VariationProperties :product="product"></VariationProperties>
-          ITEM_ID: {{ product.item.id }}
+          <!-- <VariationProperties :product="product"></VariationProperties> -->
+          <!-- <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" /> -->
         </span>
       </div>
       <LowestPrice :product="product" />

@@ -20,12 +20,17 @@ export default async function useHomepageData() {
   const viewport = useViewport();
   const recommendedProductsCategories = ref(homepageTemplateData.featured);
 
+  console.log("homepage", homepageTemplateData);
+  
+
   const runtimeConfig = useRuntimeConfig();
   const homepageTemplate = ref(homepageTemplateData);
 
   const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+  
   const { fetchCategoryTemplate } = useCategoryTemplate();
 
+  
   if (typeof homepageCategoryId === 'number') {
     const { data } = await fetchCategoryTemplate(homepageCategoryId);
     const parsedData = JSON.parse(data);
