@@ -130,18 +130,20 @@ export class EditorObject extends PageObject {
 
   buttonsExistWithGroupClasses() {
     this.blockWrapper.first()
-      .should('have.class', 'group')
-      .and('not.have.css', 'outline-style', 'solid')
-    this.blockWrapper.first().children().getByTestId('top-add-block')
       .should('exist')
-      .and('have.css', 'opacity', '0')
-      .and('have.class', 'group-hover:opacity-100')
-      .and('have.class', 'group-focus:opacity-100')
-    this.blockWrapper.first().children().getByTestId('bottom-add-block')
-      .should('exist')
-      .and('have.css', 'opacity', '0')
-      .and('have.class', 'group-hover:opacity-100')
-      .and('have.class', 'group-focus:opacity-100')
+      .and('have.class', 'group')
+      .and('not.have.css', 'outline-style', 'solid');
+    this.blockWrapper.first().within(() => {
+      this.topBlockButton
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+      this.bottomBlockButton
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+    });
+
   }
 
   deleteBlock() {
