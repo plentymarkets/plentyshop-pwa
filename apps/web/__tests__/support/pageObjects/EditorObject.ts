@@ -46,7 +46,7 @@ export class EditorObject extends PageObject {
   }
 
   get bottomBlockButton(){
-    return cy.getByTestId('botttom-add-block')
+    return cy.getByTestId('bottom-add-block')
   }
   
   get deleteBlockButton(){
@@ -135,9 +135,11 @@ export class EditorObject extends PageObject {
   }
 
   buttonsExistOnHover() {
-    this.blockWrapper.first().trigger('mouseenter').should('have.css', 'outline-style', 'solid');
-    this.blockWrapper.first().trigger('mouseenter').children().getByTestId('top-add-block').should('have.css', 'opacity', '1');
-    this.blockWrapper.first().trigger('mouseenter').children().getByTestId('bottom-add-block').should('have.css', 'opacity', '1');
+    this.blockWrapper.first().realHover().should('have.css', 'outline-style', 'solid');
+    this.blockWrapper.first().realHover().within(() => {
+      this.topBlockButton.realHover().should('have.css', 'opacity', '1');
+      this.bottomBlockButton.realHover().should('have.css', 'opacity', '1');
+    });
   }
 
   deleteBlock() {
