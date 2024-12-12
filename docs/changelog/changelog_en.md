@@ -40,6 +40,7 @@
 - PayPal shows a message if the cookie is not accepted.
 - We only reload the page after a cookie gets revoked.
 - Changed the PayPal message if the related cookie is not set.
+- New language Editor component
 
 #### GitHub Action: Upload
 
