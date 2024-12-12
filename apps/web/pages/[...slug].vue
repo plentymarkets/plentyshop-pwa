@@ -27,7 +27,7 @@
 import { categoryGetters, categoryTreeGetters, facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
-definePageMeta({ layout: false, middleware: ['auth-guard'] });
+definePageMeta({ layout: false, middleware: ['category-guard'] });
 
 const { setCategoriesPageMeta } = useCanonical();
 const { t, locale } = useI18n();
@@ -40,6 +40,7 @@ const { buildCategoryLanguagePath } = useLocalization();
 
 const handleQueryUpdate = async () => {
   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+  console.log('from slug');
 
   if (!productsCatalog.value.category) {
     throw new Response(null, {
