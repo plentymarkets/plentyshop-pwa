@@ -21,6 +21,6 @@ const { localeCodes, locale: currentLocale } = useI18n();
 const { switchLocale } = useLocalization();
 
 const switchLanguage = async (locale: string) => {
-  await switchLocale(locale);
+  await switchLocale(locale, false);
 };
 </script>
