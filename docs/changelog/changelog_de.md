@@ -86,8 +86,8 @@
 
 #### Konfiguration
 
-- Das Favicon kann jetzt vom plentysystems System abgerufen werden.
-- Das Logo kann jetzt vom plentysystems System abgerufen werden.
+- Das Favicon kann jetzt vom plentyONE System abgerufen werden.
+- Das Logo kann jetzt vom plentyONE System abgerufen werden.
 - Die Google Fonts-Schriftart kann jetzt über Umgebungsvariablen konfiguriert werden.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
 - Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
@@ -135,7 +135,7 @@
 - Die Bearbeitung des Autorennamens in Rezensionen und Antworten wurde korrigiert.
 - Das Problem mit dem plentyID-Cookie in der PWA-Live-Vorschau wurde behoben.
 - Es wurde behoben, dass die PayPal Express-Schaltfläche auf der Produktseite nur angezeigt wird, wenn der Artikel zum Kauf verfügbar ist.
-- Beim Abrufen von Konfigurationen von plentysystems wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
+- Beim Abrufen von Konfigurationen von plentyONE wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
 - Das verwaiste Formularlabel in den Attributen der Produktseite wurde behoben.
 - Der Datenschutzlink in der Cookieleiste funktionierte nicht richtig. Dies wurde behoben.
 - Kleinere Styling-Probleme im Kreditkartenformular im Checkout und im Bewertungsformular auf der Produktseite wurden behoben.
@@ -300,7 +300,7 @@
 ### Migrationsanleitung
 
 - Die Upload-Aktion wurde geändert [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) Aktualisiere die Datei, um die [config-Funktion](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config) zu nutzen.
-- Wir benötigen nun ein API Security Token, um Anfragen an die plentysystems API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- Wir benötigen nun ein API Security Token, um Anfragen an die plentyONE API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
 - Das Kategorie-Routing wurde aktualisiert und das Präfix /c wurde entfernt. Überprüft, dass keine statischen URLs in deiner Anwendung noch /c enthalten.
   - Um die /c-Routing-Änderung möglich zu machen, wurde die [Kategorieseite](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) von apps/web/pages/category/[slug].vue nach apps/web/pages/[...slug].vue verschoben.
 
@@ -383,7 +383,7 @@
 
 ### Geändert
 
-- Zum Hochladen der App auf plentysystems wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
+- Zum Hochladen der App auf plentyONE wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
 
 ### Behoben
 

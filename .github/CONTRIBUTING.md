@@ -34,12 +34,12 @@ To keep the code base of plentymarkets/plentyshop-pwa neat and tidy, the followi
 
 ### Logic
 
-The data between plentysystems and the web app flows as follows:
+The data between plentyONE and the web app flows as follows:
 
 ```mermaid
 flowchart LR
 
-A[plentysystems] --> B[REST API]
+A[plentyONE] --> B[REST API]
 B --> C[SDK]
 C --> D[plentyShop Web App]
 ```
