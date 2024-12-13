@@ -28,8 +28,8 @@
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
+import { SfIconAdd } from '@storefront-ui/vue';
 import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
 import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
 
@@ -73,7 +73,6 @@ const getComponent = (name: string) => {
   if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
-
 const runtimeConfig = useRuntimeConfig();
 
 await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
