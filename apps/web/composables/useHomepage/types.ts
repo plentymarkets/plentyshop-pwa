@@ -8,12 +8,12 @@ interface ImageProps {
 interface HeroContentProps {
   image: ImageProps;
   tagline: string;
-  taglineColor: string;
+  taglineColor?: string;
   heading: string;
-  headingColor: string;
+  headingColor?: string;
   description: string;
   alt: string;
-  descriptionColor: string;
+  descriptionColor?: string;
   callToAction: string;
   link: string;
 }
@@ -23,10 +23,10 @@ interface UiHeroCarouselOptions {
 }
 
 interface UiMediaCardOptions {
-  text: string;
-  image: string;
-  alt: string;
-  alignment: string;
+  text?: string;
+  image?: string;
+  alt?: string;
+  alignment?: string;
 }
 
 interface ProductRecommendedProductsOptions {
