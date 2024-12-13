@@ -1,4 +1,4 @@
-# Changelog plentyshopPWA
+# Changelog PlentyONE Shop
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
