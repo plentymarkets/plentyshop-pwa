@@ -4,7 +4,7 @@
 
 ### New
 
-- Users can now edit the homepage from within the shop. This includes editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Product gallery, and Newsletter.
+- Users can now edit the homepage from within the shop. This includes adding, editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Product gallery, and Newsletter.
 - Categories with visibility "After login" now redirect to the login when accessed by a guest user.
 - Category pages now support filtering products by rating.
 - Users can now zoom in on product images by hovering over them. Double-tapping and pinch zooming are supported on mobile.
@@ -58,17 +58,6 @@ NPM_AUTH_TOKEN="<TOKEN>"
 ```
 
 ### 🩹 Fixed
-
-- Fixed image issue on no-preflight class.
-- Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
-- Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
-- Adjusted the checkout layout for tablet screen sizes.
-- Changed image quality in quick checkout to use middle image and positioned quantity.
-- Fixed filter translation on category page when switching language.
-- Resolved an issue where the shipping costs where not updated during guest checkout process.
-- Resolved an issue causing the Login modal to be unresponsive in the user interface.
-- Fix selling points misalignment on register page.
-- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 
 - Fixed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Fixed the styling of HTML entered in a PlentyONE system's editor by adding a `no-preflight` CSS class that accounts for Tailwind's preflight configuration.
