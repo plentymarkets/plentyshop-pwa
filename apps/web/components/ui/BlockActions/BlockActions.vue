@@ -22,6 +22,7 @@
       class="text-[#000] rounded hover:bg-transparent active:bg-transparent !px-1"
       variant="tertiary"
       size="sm"
+      data-testid="delete-block-button"
     >
       <SfIconBase size="xs" viewBox="0 0 18 18" class="fill-primary-900 cursor-pointer">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">

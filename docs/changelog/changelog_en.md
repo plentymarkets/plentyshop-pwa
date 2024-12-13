@@ -22,6 +22,7 @@
 - The homepage now has a functional delete block button
 - The edit mode buttons are not styled
 - Save is now permanent
+- Added '+' button to add new blocks in the editor
 
 ### 👷 Changed
 
@@ -39,6 +40,7 @@
 - PayPal shows a message if the cookie is not accepted.
 - We only reload the page after a cookie gets revoked.
 - Changed the PayPal message if the related cookie is not set.
+- New language Editor component
 
 #### GitHub Action: Upload
 
@@ -67,6 +69,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 ### 🩹 Fixed
 
 - Addressed a scenario where deleting the checkout address as a guest triggered an unknown error.
+- Fixed image issue on no-preflight class.
+- Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
 - Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
 - Adjusted the checkout layout for tablet screen sizes.
 - Changed image quality in quick checkout to use middle image and positioned quantity.
@@ -474,7 +478,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
-- Refactored index.vue
+- Refactored index.vue and created a new composable for the blocks
 
 ## New Contributors
 

@@ -18,19 +18,20 @@
             { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
           ]"
           @click="tabletEdit(index)"
+          data-testid="block-wrapper"
         >
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
-            :class="[
-              'absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
-              { 'opacity-100': isClicked && clickedBlockIndex === index },
-              'group-hover:opacity-100 group-focus:opacity-100',
-            ]"
+            v-if="disableActions && isPreview"
+            @click="addNewBlock(index, 1)"
+            class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+            :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+            data-testid="top-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>
           <UiBlockActions
             v-if="disableActions && blockHasData(block) && isPreview"
+            class="opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
             :index="index"
             @edit="handleEdit"
             @delete="deleteBlock"
@@ -41,12 +42,11 @@
             v-bind="block.options"
           />
           <button
-            v-if="experimentalAddBlock && disableActions && isPreview"
-            :class="[
-              'absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0',
-              { 'opacity-100': isClicked && clickedBlockIndex === index },
-              'group-hover:opacity-100 group-focus:opacity-100',
-            ]"
+            v-if="disableActions && isPreview"
+            @click="addNewBlock(index, 1)"
+            class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 z-50 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+            :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
+            data-testid="bottom-add-block"
           >
             <SfIconAdd class="cursor-pointer"></SfIconAdd>
           </button>
@@ -55,86 +55,51 @@
     </div>
   </div>
 </template>
-
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
-import { Block } from '~/composables/useHomepage/types';
+import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
 
-const { isEditing, disableActions } = useEditor();
-const viewport = useViewport();
+const {
+  currentBlock,
+  currentBlockIndex,
+  isClicked,
+  clickedBlockIndex,
+  isTablet,
+  isPreview,
+  blockHasData,
+  tabletEdit,
+  handleEdit,
+  deleteBlock,
+  updateBlock,
+} = useBlockManager();
 
 const { data, fetchPageTemplate } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
+const { $i18n } = useNuxtApp();
 
-const currentBlock = ref<Block | null>(null);
-const currentBlockIndex = ref<number | null>(null);
-const isClicked = ref(false);
-const clickedBlockIndex = ref<number | null>(null);
-
-const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
-
-const isPreview = ref(false);
-const config = useRuntimeConfig().public;
-const showConfigurationDrawer = config.showConfigurationDrawer;
-const experimentalAddBlock = ref(config.experimentalAddBlock);
-
-onMounted(() => {
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
-
-const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.options;
-  return !options || (typeof options === 'object' && Object.keys(options).length === 0);
-};
-const blockHasData = (block: Block): boolean => {
-  return !isEmptyBlock(block);
-};
-const tabletEdit = (index: number) => {
-  if (isTablet.value) {
-    isClicked.value = !isClicked.value;
-    clickedBlockIndex.value = isClicked.value ? index : null;
-  }
-};
-const handleEdit = (index: number) => {
-  if (data.value.blocks && data.value.blocks.length > index) {
-    currentBlockIndex.value = index;
-    currentBlock.value = data.value.blocks[index];
-    isEditing.value = true;
-  }
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
 };
 
-const deleteBlock = (index: number) => {
-  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-    data.value.blocks.splice(index, 1);
-  }
+const addNewBlock = (index: number, position: number) => {
+  const insertIndex = position === -1 ? index : index + 1;
+  const updatedBlocks = [...data.value.blocks];
+
+  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+
+  data.value.blocks = updatedBlocks;
 };
 
-const updateBlock = (index: number, updatedBlock: Block) => {
-  if (data.value.blocks && index !== null && index < data.value.blocks.length) {
-    data.value.blocks[index] = updatedBlock;
-  }
-};
+const { isEditing, disableActions } = useEditor();
 
 const getComponent = (name: string) => {
-  if (name === 'NewsletterSubscribe') {
-    return resolveComponent('NewsletterSubscribe');
-  }
-
-  if (name === 'UiHeroCarousel') {
-    return resolveComponent('UiHeroCarousel');
-  }
-
-  if (name === 'UiMediaCard') {
-    return resolveComponent('UiMediaCard');
-  }
-
-  if (name === 'ProductRecommendedProducts') {
-    return resolveComponent('ProductRecommendedProducts');
-  }
+  if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
+  if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
+  if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
+  if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
-
 const runtimeConfig = useRuntimeConfig();
 
 await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
