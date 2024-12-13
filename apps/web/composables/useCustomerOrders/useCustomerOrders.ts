@@ -3,7 +3,7 @@ import type {
   UseCustomerOrdersState,
   FetchCustomerOrders,
 } from '~/composables/useCustomerOrders/types';
-import { useSdk } from '~/sdk';
+
 import type { UseUserOrderSearchParams } from '@plentymarkets/shop-api';
 
 /**

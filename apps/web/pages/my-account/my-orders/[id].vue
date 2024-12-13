@@ -11,7 +11,7 @@
         class="flex justify-between bg-white items-center typography-headline-4 md:typography-headline-3 font-bold"
       >
         <h3>{{ $t('account.ordersAndReturns.orderDetails.heading') }}</h3>
-        <SfButton
+        <UiButton
           square
           variant="tertiary"
           :tag="NuxtLink"
@@ -19,7 +19,7 @@
           class="md:absolute md:top-2 md:right-2"
         >
           <SfIconClose class="text-neutral-500" />
-        </SfButton>
+        </UiButton>
       </header>
       <main class="mt-6">
         <ul class="bg-neutral-100 p-4 rounded-md md:columns-2 mb-6">
@@ -29,7 +29,7 @@
           </li>
           <li class="my-4 md:mb-0">
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.orderDate') }}</p>
-            <span>{{ orderGetters.getDate(data) }}</span>
+            <span>{{ orderGetters.getDate(data, locale) }}</span>
           </li>
           <li>
             <p class="font-medium">{{ $t('account.ordersAndReturns.orderDetails.paymentAmount') }}</p>
@@ -152,15 +152,22 @@
 </template>
 
 <script setup lang="ts">
-import { orderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { orderGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const route = useRoute();
 const localePath = useLocalePath();
-
+const { locale } = useI18n();
 const { isOpen } = useDisclosure({ initialValue: true });
-
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);
+
+definePageMeta({
+  layout: 'account',
+  pageType: 'static',
+  middleware: ['auth-guard'],
+});
+
 onMounted(async () => {
   // without nextTick data on first click does not load data
   await nextTick();

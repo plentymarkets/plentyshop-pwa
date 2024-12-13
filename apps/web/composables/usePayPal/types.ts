@@ -1,43 +1,19 @@
-import type { PayPalNamespace } from '@paypal/paypal-js';
-import type {
-  PayPalCreateOrder,
-  PayPalApproveOrder,
-  PayPalExecutePayment,
-  PayPalExecuteParams,
-  PayPalCreditCardTransaction,
-  PayPalCaptureOrderParams,
-  PayPalConfigResponse,
-} from '@plentymarkets/shop-api';
+import { PayPalNamespace } from '@paypal/paypal-js';
 
 export const PayPalPaymentKey = 'PAYPAL';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';
 
-export interface UsePayPalState {
-  paypalScript: PayPalNamespace | null;
-  order: PayPalCreateOrder | null;
-  config: PayPalConfigResponse | null;
-  loadedConfig: boolean;
-  loading: boolean;
-}
+export const PayPalGooglePayKey = 'PAYPAL_GOOGLE_PAY';
 
-export type LoadConfig = () => Promise<void>;
-export type GetLocale = (locale: string) => string;
-export type LoadScript = (currency: string, commit?: boolean) => Promise<PayPalNamespace | null>;
-export type CreateTransaction = (fundingSource: string) => Promise<PayPalCreateOrder | null>;
-export type ApproveOrder = (orderID: string, payerID: string) => Promise<PayPalApproveOrder | null>;
-export type ExecuteOrder = (params: PayPalExecuteParams) => Promise<PayPalExecutePayment | null>;
-export type CreateCreditCardTransaction = () => Promise<PayPalCreditCardTransaction | null>;
-export type CaptureOrder = (params: PayPalCaptureOrderParams) => Promise<PayPalApproveOrder | null>;
+export const PayPalApplePayKey = 'PAYPAL_APPLE_PAY';
 
-export interface UsePayPalMethods {
-  loading: Readonly<Ref<boolean>>;
-  loadScript: LoadScript;
-  createTransaction: CreateTransaction;
-  approveOrder: ApproveOrder;
-  executeOrder: ExecuteOrder;
-  createCreditCardTransaction: CreateCreditCardTransaction;
-  captureOrder: CaptureOrder;
-  loadConfig: LoadConfig;
-}
+export type PayPalScript = {
+  script: PayPalNamespace | null;
+  locale: string;
+  currency: string;
+  commit: boolean;
+};
 
-export type UsePayPalMethodsReturn = () => UsePayPalMethods;
+export type PayPalLoadScript = {
+  [key: string]: Promise<PayPalNamespace | null>;
+};

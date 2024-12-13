@@ -1,13 +1,13 @@
 <template>
-  <SfButton class="mt-4 w-full cursor-pointer" variant="secondary" @click="openReturn()">
+  <UiButton class="mt-4 w-full cursor-pointer" variant="secondary" @click="openReturn()">
     {{ $t('returns.returnItems') }}
-  </SfButton>
+  </UiButton>
 
   <OrderReturnForm :is-open="isReturnOpen" @close="closeReturn" />
 </template>
 
 <script setup lang="ts">
-import { SfButton, useDisclosure } from '@storefront-ui/vue';
+import { useDisclosure } from '@storefront-ui/vue';
 import type { OrderReturnItemsProps } from './types';
 
 const props = defineProps<OrderReturnItemsProps>();

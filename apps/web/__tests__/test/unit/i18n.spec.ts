@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { getLocaleObject } from '../../../configuration/locale.config'
 
 const en = require('../../../lang/en.json')
 const de = require('../../../lang/de.json')
@@ -25,6 +26,20 @@ describe('i18n', () => {
     });
 });
 
+describe('locale configuration', () => {
+    it('should create a locale configuration for each language', () => {
+        const languages = 'en,de,fr';
+        const EXPECTED = [
+            { code: 'en', file: 'en.json' },
+            { code: 'de', file: 'de.json' },
+            { code: 'fr', file: 'fr.json' },
+          ];
+        const localeObject = getLocaleObject(languages);
+
+        expect(localeObject).toEqual(EXPECTED);
+    });
+});
+
 const haveEqualStructure = (lang1: object, lang2: object) => {
     hasAllKeys(lang1, lang2);
     hasAllKeys(lang2, lang1);
@@ -33,7 +48,7 @@ const haveEqualStructure = (lang1: object, lang2: object) => {
 const hasAllKeys = (obj1: object, obj2: object)  => {
     const obj1WorkingCopy = structuredClone(obj1)
     const obj2WorkingCopy = structuredClone(obj2)
-    
+
     const obj1Skeleton = setValuesToEmptyString(obj1WorkingCopy);
     const obj2Skeleton = setValuesToEmptyString(obj2WorkingCopy);
 

@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { validateApiUrl } from './utils/pathHelper';
-import cookieConfig from './cookie.config';
-import { nuxtI18nOptions } from './i18n.config';
+import cookieConfig from './configuration/cookie.config';
+import { nuxtI18nOptions } from './configuration/i18n.config';
+import { appConfiguration } from './configuration/app.config';
+import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -9,27 +11,12 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true,
   },
-  app: {
-    head: {
-      viewport: 'minimum-scale=1, initial-scale=1, width=device-width',
-      htmlAttrs: {
-        lang: 'en',
-      },
-      meta: [
-        { name: 'description', content: 'plentyshop PWA' },
-        { name: 'theme-color', content: '#0C7992' },
-      ],
-      link: [
-        { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/favicon.ico' },
-      ],
-    },
-  },
+  app: appConfiguration,
   experimental: {
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: 'plentyshop PWA',
+    titleSuffix: process.env.STORENAME || 'plentyshop PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
@@ -48,32 +35,34 @@ export default defineNuxtConfig({
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/icons/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
     '/favicon.ico': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
+    '/images/**': { headers: { 'cache-control': `max-age=604800` } },
   },
   site: {
     url: '',
   },
-  hooks: {
-    'pages:extend'(pages) {
-      pages.push({
-        name: 'product',
-        path: '/:slug?/:slug_2?/:slug_3?/:slug_4?/:slug_5?/:slug_6?_:itemId',
-        file: __dirname + '/pages/product/[slug].vue',
-      });
-    },
-  },
+  pages: true,
   runtimeConfig: {
     public: {
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
-      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
-      apiEndpoint: process.env.API_ENDPOINT ?? 'https://mevofvd5omld.c01-14.plentymarkets.com',
+      apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
-      showNetPrices: true,
-      turnstileSiteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY ?? '',
-      newsletterFromShowNames: process.env?.NEWSLETTER_FORM_SHOW_NAMES === '1' ?? false,
-      useAvif: process.env?.USE_AVIF === '1' ?? false,
-      useWebp: process.env?.USE_WEBP === '1' ?? false,
-      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1' ?? false,
-      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1' ?? false,
+      turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
+      useAvif: process.env?.IMAGEAVIF === 'true',
+      useWebp: process.env?.IMAGEWEBP === 'true',
+      validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
+      enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
+      showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
+      primaryColor: process.env.PRIMARY || '#0c7992',
+      secondaryColor: process.env.SECONDARY || '#008ebd',
+      newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
+      newsletterFormShowNames:
+        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
+      defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
+      headerLogo: process.env.LOGO || '/images/logo.svg',
+      homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
+      storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
+      noCache: process.env.NO_CACHE || '',
+      configId: process.env.CONFIG_ID || '',
     },
   },
   modules: [
@@ -88,7 +77,13 @@ export default defineNuxtConfig({
     'nuxt-viewport',
     '@vee-validate/nuxt',
     '@vite-pwa/nuxt',
+    '@vue-storefront/nuxt',
   ],
+  vsf: {
+    middleware: {
+      apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
+    },
+  },
   image: {
     screens: {
       '4xl': 1920,
@@ -102,12 +97,7 @@ export default defineNuxtConfig({
       '2xs': 360,
     },
   },
-  googleFonts: {
-    families: {
-      'Red Hat Display': { wght: [400, 500, 700] },
-      'Red Hat Text': { wght: [300, 400, 500, 700] },
-    },
-  },
+  googleFonts: fontFamilyNuxtConfig,
   i18n: nuxtI18nOptions,
   sitemap: {
     autoLastmod: true,
@@ -129,7 +119,7 @@ export default defineNuxtConfig({
           '/reset-password-success',
           '/cart',
           '/checkout',
-          '/thank-you',
+          '/confirmation',
           '/wishlist',
           '/login',
           '/signup',
@@ -140,13 +130,14 @@ export default defineNuxtConfig({
     },
   },
   tailwindcss: {
-    configPath: '~/tailwind.config.ts',
+    configPath: '~/configuration/tailwind.config.ts',
   },
   turnstile: {
-    siteKey: process.env?.CLOUDFLARE_TURNSTILE_SITE_KEY,
+    siteKey: process.env?.TURNSTILESITEKEY,
   },
   viewport: {
     breakpoints: {
+      xs: 380,
       sm: 640,
       md: 640,
       lg: 1024,
@@ -166,7 +157,7 @@ export default defineNuxtConfig({
     },
   },
   veeValidate: {
-    autoImports: true,
+    autoImports: false,
     componentNames: {
       Form: 'VeeForm',
       Field: 'VeeField',
@@ -224,6 +215,7 @@ export default defineNuxtConfig({
         },
       ],
     },
+
     registerWebManifestInRouteRules: true,
   },
 });

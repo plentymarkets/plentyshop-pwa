@@ -9,3 +9,10 @@ export type MyAccountSubsection = {
   link: string;
   hide?: boolean;
 };
+
+export type CheckoutLayoutProps = {
+  backToCart?: boolean;
+  heading: string;
+  backLabelMobile: string;
+  backLabelDesktop: string;
+};

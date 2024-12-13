@@ -21,7 +21,8 @@ export class LanguageSelectObject extends PageObject {
   }
 
   selectOption(option: string) {
-    cy.getByTestId(`languageOption-${option}`).first().click();
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.getByTestId(`languageOption-${option}`).first().click().wait('@getCart');
     return this;
   }
 
@@ -35,4 +36,23 @@ export class LanguageSelectObject extends PageObject {
     cy.url().should('include', url);
     return this;
   }
+
+  openMobileModal() {
+    cy.getByTestId('open-languageselect-button').first().click();
+    cy.getByTestId('modal').first().should('be.visible');
+    return this;
+  }
+
+  checkLanguageFlags() {
+    cy.getByTestId('flagIcon-en').should('be.visible');
+    cy.getByTestId('flagIcon-de').should('be.visible');
+    return this;
+  }
+
+  closeModal() {
+    cy.getByTestId('overlay').first().click(0, 0);
+    cy.getByTestId('modal').should('not.exist');
+    return this;
+  }
+
 }

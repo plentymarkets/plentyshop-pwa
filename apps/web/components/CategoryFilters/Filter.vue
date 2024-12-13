@@ -6,37 +6,50 @@
         <SfIconChevronLeft :class="['text-neutral-500', open ? 'rotate-90' : '-rotate-90']" />
       </div>
     </template>
-
     <div v-if="facetGetters.getType(facet) === 'feedback'">
-      <!-- <SfListItem
-        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
-        :key="index"
-        tag="label"
-        size="sm"
-        class="!items-center py-4 md:py-1 px-1.5 bg-transparent hover:bg-transparent"
-      >
-        <template #prefix>
-          <SfRadio class="flex items-center" :checked="filter.selected ?? false" />
-        </template>
-        <div class="flex flex-wrap items-center">
-          <SfRating class="-mt-px" :value="Number(filter.id.toString().replace('feedback-', ''))" :max="5" size="sm" />
-          <span :class="['mx-2 text-base md:text-sm']">{{
-            Number(filter.id.toString().replace('feedback-', ''))
-          }}</span>
-          <SfCounter size="sm">{{ filter.count }}</SfCounter>
+      <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
+        <div class="flex items-center space-x-2">
+          <span class="pt-1 flex items-center">
+            <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" />
+          </span>
+          <span class="flex items-center pt-[2px]">
+            <SfRating :value="feedbackNumber(filter)" :max="5" />
+          </span>
+          <span
+            :class="[
+              'ml-2 pt-1 min-w-[10px] text-base text-center flex items-center justify-center',
+              { 'font-medium': feedbackNumber(filter) === 5 },
+            ]"
+          >
+            {{ feedbackNumber(filter) }}
+          </span>
+          <span v-if="feedbackNumber(filter) != 5" class="ml-1 pt-1 flex items-center">
+            <SfIconArrowUpward size="sm" />
+          </span>
+          <span>
+            <SfCounter :class="['ml-1 pt-1 flex items-center text-base', { 'ml-3': feedbackNumber(filter) === 5 }]">
+              {{ filter.count }}
+            </SfCounter>
+          </span>
         </div>
-      </SfListItem> -->
+      </SfListItem>
     </div>
 
     <form v-else-if="facetGetters.getType(facet) === 'price'" class="mb-4" @submit.prevent="updatePriceFilter">
       <div class="mb-3">
-        <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+        <label for="min">
+          <UiFormLabel class="text-start">{{ $t('min') }}</UiFormLabel>
+          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+        </label>
       </div>
       <div class="mb-3">
-        <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+        <label for="max">
+          <UiFormLabel class="text-start">{{ $t('max') }}</UiFormLabel>
+          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+        </label>
       </div>
       <div class="flex">
-        <SfButton
+        <UiButton
           type="submit"
           class="w-full mr-3 h-10"
           :disabled="minPrice.length === 0 && maxPrice.length === 0"
@@ -46,16 +59,16 @@
             <SfIconCheck />
           </template>
           {{ $t('apply') }}
-        </SfButton>
-        <SfButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+        </UiButton>
+        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
       </div>
     </form>
 
     <div v-else class="mb-4">
       <SfListItem
-        v-for="(filter, index) in facetGetters.getFilters(facet) as Filter[]"
+        v-for="(filter, index) in facetGetters.getFilters(facet)"
         :key="index"
         tag="label"
         size="sm"
@@ -81,19 +94,18 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
-import type { Filter, FilterGroup } from '@plentymarkets/shop-api';
-import { facetGetters } from '@plentymarkets/shop-sdk';
+import { type Filter, type FilterGroup, facetGetters } from '@plentymarkets/shop-api';
 import {
   SfInput,
   SfIconCheck,
   SfIconClose,
-  SfButton,
   SfAccordionItem,
   SfIconChevronLeft,
   SfListItem,
+  SfRating,
   SfCheckbox,
   SfCounter,
+  SfIconArrowUpward,
 } from '@storefront-ui/vue';
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
@@ -144,4 +156,9 @@ watch(
     maxPrice.value = getFacetsFromURL().priceMax ?? '';
   },
 );
+const feedbackNumber = (filter: Filter) => {
+  return Number(filter.id.toString().replace('feedback-', ''));
+};
+const sortedReviews = (facet: FilterGroup): Filter[] =>
+  facetGetters.getFilters(facet).sort((a, b) => feedbackNumber(b) - feedbackNumber(a));
 </script>

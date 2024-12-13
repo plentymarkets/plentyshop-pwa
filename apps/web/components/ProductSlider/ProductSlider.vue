@@ -11,13 +11,21 @@
       :key="productGetters.getId(product)"
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
-      :image-url="addModernImageExtension(getImageForViewport(product, 'ItemList'))"
-      :image-alt="productGetters.getName(product)"
-      :image-height="productGetters.getImageHeight(product) ?? 600"
-      :image-width="productGetters.getImageWidth(product) ?? 600"
-      :price="productGetters.getSpecialPrice(product)"
+      :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"
+      :image-alt="
+        productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+        productGetters.getName(product) ||
+        ''
+      "
+      :image-title="
+        productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
+        productGetters.getName(product) ||
+        ''
+      "
+      :image-height="productGetters.getImageHeight(product) || 600"
+      :image-width="productGetters.getImageWidth(product) || 600"
       :rating-count="productGetters.getTotalReviews(product)"
-      :rating="productGetters.getAverageRating(product)"
+      :rating="productGetters.getAverageRating(product, 'half')"
       is-from-slider
       class="max-w-48"
     />
@@ -31,13 +39,12 @@
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfScrollable } from '@storefront-ui/vue';
 import type { ProductSliderProps } from '~/components/ProductSlider/types';
 
-const { addModernImageExtension, getImageForViewport } = useModernImage();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const { addModernImageExtension } = useModernImage();
+const { showNetPrices } = useCustomer();
 
 defineProps<ProductSliderProps>();
 </script>

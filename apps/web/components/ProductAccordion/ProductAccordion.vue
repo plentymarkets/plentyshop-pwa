@@ -10,7 +10,7 @@
           {{ $t('productDetails') }}
         </h2>
       </template>
-      <div v-html="productGetters.getDescription(product)"></div>
+      <div class="no-preflight" v-html="productGetters.getDescription(product)"></div>
     </UiAccordionItem>
     <UiDivider v-if="productDetailsOpen && productGetters.getDescription(product)?.length" class="mb-2 mt-2" />
     <UiAccordionItem
@@ -23,14 +23,14 @@
           {{ $t('technicalData') }}
         </h2>
       </template>
-      <div v-html="productGetters.getTechnicalData(product)"></div>
+      <div class="no-preflight" v-html="productGetters.getTechnicalData(product)"></div>
     </UiAccordionItem>
     <UiDivider v-if="technicalDataOpen && productGetters.getTechnicalData(product)?.length" class="mb-2 mt-2" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
+import { productGetters } from '@plentymarkets/shop-api';
 import type { ProductAccordionPropsType } from '~/components/ProductAccordion/types';
 
 const props = defineProps<ProductAccordionPropsType>();

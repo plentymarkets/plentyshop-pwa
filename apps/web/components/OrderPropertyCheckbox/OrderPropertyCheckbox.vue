@@ -9,9 +9,9 @@
         :invalid="isOrderPropertyRequired && Boolean(errors['value'])"
         class="mr-2 h-12"
       />
-      <div class="flex h-12 items-center justify-center">
+      <div class="flex items-center justify-center">
         <label
-          class="cursor-pointer select-none h-12 flex items-center justify-center peer-disabled:text-disabled-900"
+          class="cursor-pointer select-none flex items-center justify-center peer-disabled:text-disabled-900"
           :for="`prop-${orderPropertyId}`"
         >
           {{ productPropertyGetters.getOrderPropertyName(productProperty) }}
@@ -28,20 +28,16 @@
       </div>
     </div>
 
-    <VeeErrorMessage
-      v-if="isOrderPropertyRequired"
-      as="span"
-      name="value"
-      class="flex text-negative-700 text-sm mt-2"
-    />
+    <ErrorMessage v-if="isOrderPropertyRequired" as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyCheckboxProps } from './types';
 import { SfCheckbox } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, boolean } from 'yup';
 
 const props = defineProps<OrderPropertyCheckboxProps>();

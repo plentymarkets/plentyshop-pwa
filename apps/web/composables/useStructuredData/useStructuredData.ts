@@ -1,6 +1,6 @@
 import type { useStructuredDataReturn } from './types';
-import type { SetLogoMeta, SetProductMetaData, UseStructuredDataState } from './types';
-import { categoryTreeGetters, productGetters, reviewGetters } from '@plentymarkets/shop-sdk';
+import type { SetLogoMeta, SetProductMetaData, SetProductRobotsMetaData, UseStructuredDataState } from './types';
+import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
@@ -60,10 +60,12 @@ export const useStructuredData: useStructuredDataReturn = () => {
    */
   const setProductMetaData: SetProductMetaData = (product: Product, categoryTree: CategoryTreeItem) => {
     state.value.loading = true;
-    const { data: productReviews } = useProductReviews(Number(productGetters.getItemId(product)));
-    const { data: reviewAverage } = useProductReviewAverage(productGetters.getItemId(product));
+    const { price, crossedPrice } = useProductPrice(product);
+    const productId = Number(productGetters.getItemId(product));
 
-    const manufacturer = product.item.manufacturer as { name: string };
+    const { data: productReviews } = useProductReviews(productId);
+    const { data: reviewAverage } = useProductReviewAverage(productId);
+
     let reviews = null;
     if (reviewAverage.value) {
       reviews = [];
@@ -84,7 +86,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
     const metaObject = {
       '@context': 'https://schema.org',
       '@type': 'Product',
-      // sku: sku,
       name: productGetters.getName(product),
       category: categoryTreeGetters.getName(categoryTree),
       releaseDate: '',
@@ -92,10 +93,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
       identifier: productGetters.getId(product),
       description: product.texts.description,
       disambiguatingDescription: '',
-      manufacturer: {
-        '@type': 'Organization',
-        name: manufacturer.name,
-      },
       review: reviews,
       aggregateRating: {
         '@type': 'AggregateRating',
@@ -105,13 +102,12 @@ export const useStructuredData: useStructuredDataReturn = () => {
       offers: {
         '@type': 'Offer',
         priceCurrency: productGetters.getSpecialPriceCurrency(product),
-        price: productGetters.getPrice(product).special,
-        priceValidUntil: productGetters.getVariationAvailableUntil(product),
+        price: Number(price.value),
         url: null,
         priceSpecification: [
           {
             '@type': 'UnitPriceSpecification',
-            price: productGetters.getPrice(product).special,
+            price: Number(price.value),
             priceCurrency: productGetters.getSpecialPriceCurrency(product),
             priceType: 'SalePrice',
             referenceQuantity: {
@@ -119,10 +115,8 @@ export const useStructuredData: useStructuredDataReturn = () => {
             },
           },
         ],
-        availability: productGetters.isSalable(product)
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        itemCondition: null,
+        availability: productSeoSettingsGetters.getMappedAvailability(product),
+        itemCondition: productSeoSettingsGetters.getConditionOfItem(product),
       },
       depth: {
         '@type': 'QuantitativeValue',
@@ -140,12 +134,39 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
-    };
+    } as any;
+
+    const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
+    if (manufacturer !== '') metaObject.manufacturer = { '@type': 'Organization', name: manufacturer };
+
+    const brand = productSeoSettingsGetters.getBrand(product);
+    if (brand !== '') metaObject.brand = { '@type': 'Brand', name: brand };
+
+    const sku = productSeoSettingsGetters.getSku(product);
+    if (sku !== '') metaObject.sku = sku;
+
+    const gtin = productSeoSettingsGetters.getGtin(product);
+    if (gtin !== '') metaObject.gtin = gtin;
+
+    const gtin8 = productSeoSettingsGetters.getGtin8(product);
+    if (gtin8 !== '') metaObject.gtin8 = gtin8;
+
+    const gtin13 = productSeoSettingsGetters.getGtin13(product);
+    if (gtin13 !== '') metaObject.gtin13 = gtin13;
+
+    const isbn = productSeoSettingsGetters.getIsbn(product);
+    if (isbn !== '') metaObject.isbn = productSeoSettingsGetters.getIsbn(product);
+
+    const mpn = productSeoSettingsGetters.getMpn(product);
+    if (mpn !== '') metaObject.mpn = mpn;
+
+    const priceValidUntil = productSeoSettingsGetters.getPriceValidUntil(product);
+    if (priceValidUntil !== '') metaObject.offers.priceValidUntil = priceValidUntil;
 
     if (product.prices?.rrp) {
       metaObject.offers.priceSpecification.push({
         '@type': 'UnitPriceSpecification',
-        price: productGetters.getRegularPrice(product),
+        price: Number(crossedPrice.value),
         priceCurrency: productGetters.getRegularPriceCurrency(product),
         priceType: 'ListPrice',
         referenceQuantity: {
@@ -157,16 +178,37 @@ export const useStructuredData: useStructuredDataReturn = () => {
       script: [
         {
           type: 'application/ld+json',
-          innerHTML: JSON.stringify(metaObject),
+          innerHTML: JSON.stringify(metaObject, null, 4),
         },
       ],
     });
     state.value.loading = false;
   };
 
+  const setProductRobotsMetaData: SetProductRobotsMetaData = (product: Product) => {
+    state.value.loading = true;
+
+    const route = useRoute();
+    let robotsContent = product.seoSettings?.robots || '';
+
+    if (
+      (!product.seoSettings?.forceRobotsValue && Object.keys(route.query).length > 0) ||
+      product.seoSettings?.forceNoIndex
+    ) {
+      robotsContent = 'noindex';
+    }
+
+    useHead({
+      meta: [{ name: 'robots', content: robotsContent }],
+    });
+
+    state.value.loading = false;
+  };
+
   return {
     setLogoMeta,
     setProductMetaData,
+    setProductRobotsMetaData,
     ...toRefs(state.value),
   };
 };

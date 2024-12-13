@@ -1,5 +1,8 @@
 <template>
   <div>
+    <client-only>
+      <UiToolbar data-testid="edit-mode-toolbar" v-show="isPreview" />
+    </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -7,11 +10,9 @@
     <main>
       <slot />
     </main>
-    <NuxtLazyHydrate when-idle>
-      <UiNavbarBottom v-if="viewport.isLessThan('md')" />
-      <Cookiebar />
-      <PreviewMode />
-    </NuxtLazyHydrate>
+    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
+    <Cookiebar />
+    <PreviewMode />
     <NuxtLazyHydrate when-visible>
       <UiFooter />
     </NuxtLazyHydrate>
@@ -22,13 +23,17 @@
 
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
-usePageTitle();
-
 defineProps<DefaultLayoutProps>();
-
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
-
 setLogoMeta();
+const isPreview = ref(false);
+onMounted(() => {
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
 </script>

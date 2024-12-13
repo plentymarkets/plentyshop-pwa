@@ -28,7 +28,7 @@
       <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
       <div class="w-full">
         <div class="flex items-center">
-          <SfButton
+          <UiButton
             class="w-full border-dashed border-2 flex items-center flex-col !p-5"
             variant="tertiary"
             @click="openUploadModal"
@@ -41,7 +41,7 @@
                 </div>
               </template>
             </i18n-t>
-          </SfButton>
+          </UiButton>
           <div v-if="hasTooltip" class="w-[28px]">
             <slot name="tooltip" />
           </div>
@@ -72,15 +72,16 @@
       <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
 
-    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
+    <ErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { SfInput, SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyInputProps } from './types';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 const { t, n } = useI18n();

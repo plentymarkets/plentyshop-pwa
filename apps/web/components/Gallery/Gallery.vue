@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4" data-testid="gallery">
+  <div class="flex-col md:flex-row h-full flex relative scroll-smooth md:gap-4 relative" data-testid="gallery">
     <div
       class="after:block after:pt-[100%] flex-1 relative overflow-hidden w-full max-h-[600px]"
       data-testid="gallery-images"
@@ -13,29 +13,15 @@
         :drag="{ containerWidth: true }"
         @on-scroll="onScroll"
       >
-        <div
-          v-for="({ url, cleanImageName, width, height }, index) in images"
+        <ZoomableImage
+          v-for="(image, index) in images"
           :key="`image-${index}-thumbnail`"
-          class="w-full h-full relative flex items-center justify-center snap-center snap-always basis-full shrink-0 grow"
-        >
-          <NuxtImg
-            :id="`gallery-img-${index}`"
-            :alt="cleanImageName ?? ''"
-            :aria-hidden="activeIndex !== index"
-            fit="fill"
-            class="object-contain h-full w-full"
-            :quality="80"
-            :src="url"
-            sizes="2xs:100vw, md:700px"
-            draggable="false"
-            :loading="index === 0 ? 'eager' : 'lazy'"
-            :fetchpriority="index === 0 ? 'high' : 'auto'"
-            @load="updateImageStatusFor(`gallery-img-${index}`)"
-            :width="width ?? 600"
-            :height="height ?? 600"
-          />
-          <SfLoaderCircular v-if="!imagesLoaded[`gallery-img-${index}`]" class="absolute" size="sm" />
-        </div>
+          :images="images"
+          :image="image"
+          :index="index"
+          :active-index="activeIndex"
+          :is-first-image="index === 0"
+        />
       </SfScrollable>
     </div>
 
@@ -50,7 +36,7 @@
         :next-disabled="activeIndex === images.length - 1"
       >
         <template #previousButton>
-          <SfButton
+          <UiButton
             variant="secondary"
             size="sm"
             square
@@ -61,34 +47,34 @@
             <template #prefix>
               <SfIconChevronLeft />
             </template>
-          </SfButton>
+          </UiButton>
         </template>
 
         <button
-          v-for="({ urlPreview, cleanImageName, width, height }, index) in images"
+          v-for="(image, index) in images"
           :key="`imagebutton-${index}-thumbnail`"
           :ref="(el) => assignReference(el, index)"
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index)"
           class="w-20 h-[88px] relative shrink-0 pb-1 border-b-4 snap-start cursor-pointer transition-colors flex-grow-0"
-          :class="[activeIndex === index ? 'border-primary-700' : 'border-transparent']"
+          :class="[activeIndex === index ? 'border-primary-500' : 'border-transparent']"
           @mouseover="onChangeIndex(index)"
           @focus="onChangeIndex(index)"
         >
           <NuxtImg
-            :alt="cleanImageName"
+            :alt="productImageGetters.getCleanImageName(image)"
             class="object-contain"
-            :width="width ?? 80"
-            :height="height ?? 80"
-            :src="urlPreview"
+            :width="productImageGetters.getImageWidth(image) ?? 80"
+            :height="productImageGetters.getImageHeight(image) ?? 80"
+            :src="productImageGetters.getImageUrlPreview(image)"
             :quality="80"
             loading="lazy"
           />
         </button>
 
         <template #nextButton>
-          <SfButton
+          <UiButton
             variant="secondary"
             size="sm"
             square
@@ -99,18 +85,18 @@
             <template #prefix>
               <SfIconChevronRight />
             </template>
-          </SfButton>
+          </UiButton>
         </template>
       </SfScrollable>
       <div class="flex md:hidden gap-0.5" role="group">
         <button
-          v-for="({ url }, index) in images"
-          :key="url"
+          v-for="(image, index) in images"
+          :key="productImageGetters.getImageUrl(image)"
           type="button"
           :aria-current="activeIndex === index"
           :aria-label="$t('gallery.thumb', index + 1)"
           class="relative shrink-0 pb-1 border-b-4 cursor-pointer transition-colors flex-grow"
-          :class="[activeIndex === index ? 'border-primary-700' : 'border-neutral-200']"
+          :class="[activeIndex === index ? 'border-primary-500' : 'border-neutral-200']"
           @click="onChangeIndex(index)"
         />
       </div>
@@ -119,9 +105,10 @@
 </template>
 
 <script setup lang="ts">
+import { SfScrollable, SfIconChevronLeft, SfIconChevronRight } from '@storefront-ui/vue';
+import { productImageGetters } from '@plentymarkets/shop-api';
 import { clamp, type SfScrollableOnScrollData } from '@storefront-ui/shared';
-import { SfScrollable, SfButton, SfIconChevronLeft, SfIconChevronRight, SfLoaderCircular } from '@storefront-ui/vue';
-import { unrefElement, useIntersectionObserver, useTimeoutFn } from '@vueuse/core';
+import { useTimeoutFn, useIntersectionObserver, unrefElement } from '@vueuse/core';
 import type { ImagesData } from '@plentymarkets/shop-api';
 
 const props = defineProps<{ images: ImagesData[] }>();
@@ -134,21 +121,6 @@ const lastThumbReference = ref<HTMLButtonElement>();
 const firstVisibleThumbnailIntersected = ref(true);
 const lastVisibleThumbnailIntersected = ref(true);
 const activeIndex = ref(0);
-const imagesLoaded = ref([] as unknown as { [key: string]: boolean });
-
-onMounted(() => {
-  nextTick(() => {
-    for (const [index] of props.images.entries()) {
-      const myImg: HTMLImageElement | null = document.querySelector(`#gallery-img-${index}`);
-      const imgId = String(myImg?.id);
-      if (!imagesLoaded.value[imgId]) imagesLoaded.value[imgId] = Boolean(myImg?.complete);
-    }
-  });
-});
-
-const updateImageStatusFor = (imageId: string) => {
-  if (!imagesLoaded.value[imageId]) imagesLoaded.value[imageId] = true;
-};
 
 const registerThumbsWatch = (
   singleThumbReference: Ref<HTMLButtonElement | undefined>,

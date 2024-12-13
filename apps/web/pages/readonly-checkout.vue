@@ -1,85 +1,28 @@
 <template>
   <NuxtLayout
     name="checkout"
-    :back-href="localePath(paths.cart)"
+    page-type="static"
     :back-label-desktop="t('backToCart')"
     :back-label-mobile="t('back')"
     :heading="t('checkout')"
   >
     <div v-if="cart" class="md:grid md:grid-cols-12 md:gap-x-6">
       <div class="col-span-7 mb-10 md:mb-0">
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider :class="dividerClass" />
         <ContactInformation disabled />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="billing-address"
-          :heading="t('billing.heading')"
-          :description="t('billing.description')"
-          :button-text="t('billing.addButton')"
-          :addresses="billingAddresses"
-          :type="AddressType.Billing"
-          disabled
-        />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-        <CheckoutAddress
-          id="shipping-address"
-          :heading="t('shipping.heading')"
-          :description="t('shipping.description')"
-          :button-text="t('shipping.addButton')"
-          :addresses="shippingAddresses"
-          :type="AddressType.Shipping"
-          disabled
-        />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" />
+        <UiDivider :class="dividerClass" />
+        <AddressContainer :disabled="false" :type="AddressType.Shipping" :key="0" id="shipping-address" />
+        <UiDivider :class="dividerClass" />
+        <AddressContainer :disabled="true" :type="AddressType.Billing" :key="1" id="billing-address" />
+        <UiDivider :class="dividerClass" />
         <div class="relative">
-          <ShippingMethod :shipping-methods="shippingMethods" disabled />
-
-          <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
-          <CheckoutPayment :payment-methods="paymentMethods" disabled />
+          <ShippingMethod disabled />
+          <UiDivider :class="dividerClass" />
+          <CheckoutPayment disabled />
         </div>
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0 mb-10" />
+        <UiDivider :class="`${dividerClass} mb-10`" />
         <div class="text-sm mx-4 md:pb-0">
-          <div class="flex items-center">
-            <SfCheckbox
-              v-model="termsAccepted"
-              :invalid="showTermsError"
-              @change="showTermsError = false"
-              id="terms-checkbox"
-              class="inline-block mr-2"
-            />
-            <div>
-              <i18n-t keypath="termsInfo" scope="global">
-                <template #terms>
-                  <SfLink
-                    :href="localePath(paths.termsAndConditions)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('termsAndConditions') }}
-                  </SfLink>
-                </template>
-                <template #cancellationRights>
-                  <SfLink
-                    :href="localePath(paths.cancellationRights)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('cancellationRights') }}
-                  </SfLink>
-                </template>
-                <template #privacyPolicy>
-                  <SfLink
-                    :href="localePath(paths.privacyPolicy)"
-                    target="_blank"
-                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
-                  >
-                    {{ t('privacyPolicy') }}
-                  </SfLink>
-                </template>
-              </i18n-t>
-            </div>
-          </div>
-          <div v-if="showTermsError" class="text-negative-700 text-sm mt-2">{{ t('termsRequired') }}</div>
+          <CheckoutGeneralTerms />
         </div>
       </div>
       <div class="col-span-5">
@@ -89,22 +32,24 @@
         <div class="relative md:sticky mt-4 md:top-20 h-fit" :class="{ 'pointer-events-none opacity-50': cartLoading }">
           <SfLoaderCircular v-if="cartLoading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
           <OrderSummary v-if="cart" :cart="cart">
-            <SfButton
+            <PayPalExpressButton
+              v-if="changedTotal"
+              @validation-callback="handleUpdatedOrder"
+              :disabled="!termsAccepted || interactionDisabled"
+              type="Checkout"
+            />
+
+            <UiButton
+              v-else
               type="submit"
-              @click="order"
-              :disabled="createOrderLoading || cartLoading || executeOrderLoading"
+              @click="handleRegularOrder"
+              :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
             >
-              <SfLoaderCircular
-                v-if="createOrderLoading || cartLoading || executeOrderLoading"
-                class="flex justify-center items-center"
-                size="sm"
-              />
-              <span v-else>
-                {{ t('buy') }}
-              </span>
-            </SfButton>
+              <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
+              <template v-else>{{ t('buy') }}</template>
+            </UiButton>
           </OrderSummary>
         </div>
       </div>
@@ -113,120 +58,172 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, type PaymentMethod } from '@plentymarkets/shop-api';
-import { orderGetters, shippingProviderGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfLink, SfCheckbox, SfLoaderCircular } from '@storefront-ui/vue';
-
-definePageMeta({
-  layoutName: 'checkout',
-  pageType: 'static',
-});
+import { AddressType, ApiError, orderGetters } from '@plentymarkets/shop-api';
+import { SfLoaderCircular } from '@storefront-ui/vue';
+import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
+import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const ID_CHECKBOX = '#terms-checkbox';
-
-const { getSession } = useCustomer();
-const { data: cart, clearCartItems, loading: cartLoading } = useCart();
+const localePath = useLocalePath();
+const route = useRoute();
+const { send } = useNotification();
+const { t } = useI18n();
+const { isAuthorized } = useCustomer();
+const { isLoading: navigationInProgress } = useLoadingIndicator();
+const { data: cart, cartIsEmpty, clearCartItems, loading: cartLoading } = useCart();
+const { getShippingMethods } = useCartShippingMethods();
+const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
+const { loading: createOrderLoading, createOrder } = useMakeOrder();
+const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { loading: executeOrderLoading, executeOrder } = usePayPal();
+const { processingOrder } = useProcessingOrder();
+const { setInitialCartTotal, changedTotal, handleCartTotalChanges } = useCartTotalChange();
+const { checkboxValue: termsAccepted, setShowErrors } = useAgreementCheckbox('checkoutGeneralTerms');
+const { loadPayment, loadShipping } = useCheckoutPagePaymentAndShipping();
 const { data: billingAddresses, getAddresses: getBillingAddresses } = useAddress(AddressType.Billing);
 const {
   data: shippingAddresses,
   getAddresses: getShippingAddresses,
   saveAddress: saveShippingAddress,
 } = useAddress(AddressType.Shipping);
-const { data: shippingMethodData, getShippingMethods } = useCartShippingMethods();
-const { data: paymentMethodData, fetchPaymentMethods, savePaymentMethod } = usePaymentMethods();
-const { loading: createOrderLoading, createOrder } = useMakeOrder();
-const { shippingPrivacyAgreement } = useAdditionalInformation();
-const { loading: executeOrderLoading, executeOrder } = usePayPal();
-const route = useRoute();
-const { send } = useNotification();
-const { t } = useI18n();
-const localePath = useLocalePath();
+const {
+  anyAddressFormIsOpen,
+  hasShippingAddress,
+  persistShippingAddress,
+  persistBillingAddress,
+  backToFormEditing,
+  scrollToShippingAddress,
+} = useCheckout();
 
-const termsAccepted = ref(false);
-const showTermsError = ref(false);
-
-const loadAddresses = async () => {
-  await getBillingAddresses();
-  await getShippingAddresses();
-
-  if (shippingAddresses.value.length === 0 && billingAddresses.value.length > 0) {
-    await saveShippingAddress(billingAddresses.value[0]);
-  } else if (shippingAddresses.value.length === 0 && billingAddresses.value.length === 0) {
-    navigateTo(localePath(paths.cart));
-  }
-
-  await getShippingMethods();
-};
-
-const redirectBack = () => {
-  if (cart.value.items?.length === 0) {
-    send({
-      type: 'neutral',
-      message: t('emptyCart'),
-    });
-
-    navigateTo(localePath(paths.cart));
-    return true;
-  }
-  return false;
-};
-
-await getSession();
-redirectBack();
-await loadAddresses();
-await getShippingMethods();
-await fetchPaymentMethods();
-
-await savePaymentMethod(
-  paymentMethodData?.value?.list?.find((method: PaymentMethod) => method.name === 'PayPal')?.id ?? 0,
+const dividerClass = 'w-screen md:w-auto -mx-4 md:mx-0';
+const disableShippingPayment = computed(() => loadShipping.value || loadPayment.value);
+const interactionDisabled = computed(
+  () =>
+    createOrderLoading.value ||
+    disableShippingPayment.value ||
+    cartLoading.value ||
+    navigationInProgress.value ||
+    processingOrder.value ||
+    executeOrderLoading.value,
 );
 
-const shippingMethods = computed(() => shippingProviderGetters.getShippingProviders(shippingMethodData.value));
-const paymentMethods = computed(() => paymentMethodData.value);
-
-const scrollToHTMLObject = (object: string) => {
-  const element = document.querySelector(object) as HTMLElement;
-  const elementOffset = element?.offsetTop ?? 0;
-
-  const headerElement = document.querySelector('header') as HTMLElement;
-  const headerElementOffset = headerElement.offsetHeight ?? 0;
-
-  window.scrollTo({
-    top: elementOffset - headerElementOffset,
-    behavior: 'smooth',
-  });
+const fetchShippingAndPaymentMethods = async () => {
+  try {
+    await Promise.all([
+      useAggregatedCountries().fetchAggregatedCountries(),
+      getShippingMethods(),
+      fetchPaymentMethods().then(
+        async () =>
+          await savePaymentMethod(paymentMethodData?.value?.list?.find((method) => method.name === 'PayPal')?.id || 0),
+      ),
+    ]);
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
 };
 
-const validateTerms = (): boolean => {
-  showTermsError.value = !termsAccepted.value;
-  if (showTermsError.value) {
-    scrollToHTMLObject(ID_CHECKBOX);
+const handleAuthUserInit = async () => {
+  try {
+    await getShippingAddresses();
+    await useFetchAddress(AddressType.Shipping).fetchServer();
+    await persistShippingAddress();
+    await useFetchAddress(AddressType.Billing).fetchServer();
+    await persistBillingAddress();
+    await fetchShippingAndPaymentMethods();
+    await setInitialCartTotal();
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
+};
+
+const setClientCheckoutAddress = async () => {
+  try {
+    await useCheckoutAddress(AddressType.Shipping).set(shippingAddresses.value[0], true);
+    await useCheckoutAddress(AddressType.Billing).set(billingAddresses.value[0], true);
+    await handleCartTotalChanges();
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
+};
+
+const handleGuestUserInit = async () => {
+  try {
+    await getShippingAddresses();
+    await getBillingAddresses();
+
+    if (billingAddresses.value.length === 0) await navigateTo(localePath(paths.cart));
+    if (shippingAddresses.value.length === 0) await saveShippingAddress(billingAddresses.value[0], true);
+
+    await setClientCheckoutAddress();
+    await fetchShippingAndPaymentMethods();
+  } catch (error) {
+    useHandleError(error as ApiError);
+  }
+};
+
+onNuxtReady(async () => {
+  if (cartIsEmpty.value) await navigateTo(localePath(paths.cart));
+  isAuthorized.value ? await handleAuthUserInit() : await handleGuestUserInit();
+});
+
+const scrollToTerms = () => {
+  scrollToHTMLObject(ID_CHECKBOX);
+  setShowErrors(true);
+};
+
+const readyToOrder = async () => {
+  if (interactionDisabled.value) return false;
+
+  if (cartIsEmpty.value) {
+    send({ type: 'neutral', message: t('emptyCartNotification') });
+    await navigateTo(localePath(paths.cart));
+    return false;
+  }
+
+  if (anyAddressFormIsOpen.value) {
+    send({ type: 'secondary', message: t('unsavedAddress') });
+    return backToFormEditing();
+  }
+
+  if (!hasShippingAddress.value) {
+    send({ type: 'secondary', message: t('errorMessages.checkout.missingAddress') });
+    scrollToShippingAddress();
+    return false;
+  }
+
+  if (!termsAccepted.value) {
+    scrollToTerms();
     return false;
   }
 
   return true;
 };
 
-const order = async () => {
-  if (redirectBack() || !validateTerms()) {
-    return;
-  }
+const handleUpdatedOrder = async (callback?: PayPalAddToCartCallback) => {
+  if (callback) callback(await readyToOrder());
+};
 
-  const data = await createOrder({
-    paymentId: cart.value.methodOfPaymentId,
-    shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-  });
+const handleRegularOrder = async () => {
+  if (!(await readyToOrder())) return;
 
-  await executeOrder({
-    mode: 'paypal',
-    plentyOrderId: Number.parseInt(orderGetters.getId(data)),
-    paypalTransactionId: route?.query?.orderId?.toString() ?? '',
-  });
+  try {
+    const data = await createOrder({
+      paymentId: cart.value.methodOfPaymentId,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
+    });
 
-  clearCartItems();
+    if (data) {
+      await executeOrder({
+        mode: 'PAYPAL',
+        plentyOrderId: Number.parseInt(orderGetters.getId(data)),
+        paypalTransactionId: route?.query?.orderId?.toString() ?? '',
+      });
+    }
 
-  if (data?.order?.id) {
-    navigateTo(localePath('/thank-you/?orderId=' + data.order.id + '&accessKey=' + data.order.accessKey));
+    clearCartItems();
+    if (data?.order?.id) await navigateTo(localePath('/confirmation/' + data.order.id + '/' + data.order.accessKey));
+  } catch (error) {
+    useHandleError(error as ApiError);
   }
 };
 </script>

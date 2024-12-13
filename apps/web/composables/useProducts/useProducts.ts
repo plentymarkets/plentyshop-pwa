@@ -1,8 +1,8 @@
-import type { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
-import type { Facet } from '@plentymarkets/shop-api';
-import { defaults, type SelectVariation } from '~/composables';
-import type { FetchProducts, UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
-import { useSdk } from '~/sdk';
+import { categoryGetters, FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
+import { Facet } from '@plentymarkets/shop-api';
+import { defaults, type SetCurrentProduct } from '~/composables';
+import { type FetchProducts, type UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
+import { paths } from '~/utils/paths';
 
 /**
  * @description Composable for managing products.
@@ -12,12 +12,12 @@ import { useSdk } from '~/sdk';
  * const { data, loading, productsPerPage, selectedVariation, fetchProducts, selectVariation } = useProducts();
  * ```
  */
-export const useProducts: UseProductsReturn = () => {
-  const state = useState<UseProductsState>('products', () => ({
+export const useProducts: UseProductsReturn = (category = '') => {
+  const state = useState<UseProductsState>(`useProducts${category}`, () => ({
     data: {} as Facet,
     loading: false,
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
-    selectedVariation: {} as Product,
+    currentProduct: {} as Product,
   }));
 
   /**
@@ -26,24 +26,35 @@ export const useProducts: UseProductsReturn = () => {
    * @return FetchProducts
    * @example
    * ``` ts
-   *  fetchProducts({
-   *     page: 1,
-   *     categoryUrlPath: '/living-room'
-   *  });
+   * const { fetchProducts: fetchProducts1, data: productsCatalog1 } = useProducts('/living-room');
+   * const { fetchProducts: fetchProducts2, data: productsCatalog2 } = useProducts('49');
+   * const { fetchProducts: fetchProducts3, data: productsCatalog3 } = useProducts('19');
+   *
+   * fetchProducts1({ categoryUrlPath: '/living-room', page: 1 });
+   * fetchProducts2({ categoryId: '49', page: 1 });
+   * fetchProducts3({ categoryId: '19', page: 1 });
    * ```
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getFacet(params));
+    const localePath = useLocalePath();
+    const { isAuthorized } = useCustomer();
+
+    if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
+
+    const { data } = await useAsyncData(`useProducts-${category}`, () => useSdk().plentysystems.getFacet(params));
 
     state.value.productsPerPage = params.itemsPerPage || defaults.DEFAULT_ITEMS_PER_PAGE;
 
-    if (data.value) data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+    if (data.value?.data) {
+      if (categoryGetters.hasCustomerRight(data.value?.data.category) && !isAuthorized.value) {
+        state.value.data = {} as Facet;
+        await navigateTo(localePath(paths.authLogin));
+        return state.value.data;
+      }
 
-    state.value.data = data.value?.data ?? state.value.data;
-
-    if (state.value.data?.facets?.length) {
-      state.value.data.facets = state.value.data.facets.filter((facet) => facet.id !== 'feedback');
+      data.value.data.pagination.perPageOptions = defaults.PER_PAGE_STEPS;
+      state.value.data = data.value.data;
     }
 
     state.value.loading = false;
@@ -51,25 +62,25 @@ export const useProducts: UseProductsReturn = () => {
   };
 
   /**
-   * @description Function for selecting a variation.
+   * @description Function for setting the current product.
    * @param product { Product }
-   * @return SelectVariation
+   * @return SetCurrentProduct
    * @example
    * ``` ts
-   *  selectVariation({} as Product)
+   *  setCurrentProduct({} as Product)
    * ```
    */
-  const selectVariation: SelectVariation = async (product: Product) => {
+  const setCurrentProduct: SetCurrentProduct = async (product: Product) => {
     state.value.loading = true;
 
-    state.value.selectedVariation = product;
+    state.value.currentProduct = product;
 
     state.value.loading = false;
   };
 
   return {
     fetchProducts,
-    selectVariation,
+    setCurrentProduct,
     ...toRefs(state.value),
   };
 };

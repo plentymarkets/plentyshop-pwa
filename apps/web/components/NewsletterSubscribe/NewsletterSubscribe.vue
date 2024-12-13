@@ -1,58 +1,70 @@
 <template>
   <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
-    <p class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
+    <h2 class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
       {{ t('newsletter.heading') }}
-    </p>
+    </h2>
     <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
       {{ t('newsletter.info') }}
     </p>
 
     <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
-      <div v-if="showNewsletterNameForms" class="grid grid-cols-1 sm:grid-cols-2">
+      <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
-          <SfInput
-            v-model="firstName"
-            v-bind="firstNameAttributes"
-            :invalid="Boolean(errors['firstName'])"
-            :placeholder="`${t('newsletter.firstName')} **`"
-            :wrapper-class="wrapperClass"
-            type="text"
-            name="firstName"
-          />
+          <label for="newsletter-first-name">
+            <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
+            <SfInput
+              v-model="firstName"
+              v-bind="firstNameAttributes"
+              :invalid="Boolean(errors['firstName'])"
+              :placeholder="`${t('newsletter.firstName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-first-name"
+              name="firstName"
+            />
+          </label>
           <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+            <ErrorMessage as="div" name="firstName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
 
         <div class="sm:ml-[1rem]">
-          <SfInput
-            v-model="lastName"
-            v-bind="lastNameAttributes"
-            :invalid="Boolean(errors['lastName'])"
-            :placeholder="`${t('newsletter.lastName')} **`"
-            :wrapper-class="wrapperClass"
-            type="text"
-            name="lastName"
-          />
+          <label for="newsletter-last-name">
+            <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
+            <SfInput
+              v-model="lastName"
+              v-bind="lastNameAttributes"
+              :invalid="Boolean(errors['lastName'])"
+              :placeholder="`${t('newsletter.lastName')} **`"
+              :wrapper-class="wrapperClass"
+              type="text"
+              id="newsletter-last-name"
+              name="lastName"
+            />
+          </label>
           <div class="h-[2rem]">
-            <VeeErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+            <ErrorMessage as="div" name="lastName" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
           </div>
         </div>
       </div>
 
       <div class="grid grid-cols-1">
-        <SfInput
-          v-model="email"
-          v-bind="emailAttributes"
-          :invalid="Boolean(errors['email'])"
-          :placeholder="`${t('newsletter.email')} **`"
-          :wrapper-class="wrapperClass"
-          type="email"
-          name="email"
-          autocomplete="email"
-        />
+        <label for="newsletter-email">
+          <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
+          <SfInput
+            v-model="email"
+            v-bind="emailAttributes"
+            :invalid="Boolean(errors['email'])"
+            :placeholder="`${t('newsletter.email')} **`"
+            :wrapper-class="wrapperClass"
+            type="email"
+            id="newsletter-email"
+            name="email"
+            autocomplete="email"
+          />
+        </label>
         <div class="h-[2rem]">
-          <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </div>
 
@@ -82,15 +94,15 @@
           </label>
         </div>
         <div class="h-[2rem]">
-          <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </div>
 
       <div class="flex flex-col items-center">
-        <SfButton type="submit" size="lg" :disabled="loading">
+        <UiButton type="submit" size="lg" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
           <template v-else>{{ t('newsletter.subscribe') }}</template>
-        </SfButton>
+        </UiButton>
 
         <NuxtTurnstile
           v-if="turnstileSiteKey"
@@ -101,7 +113,7 @@
           class="mt-4"
         />
 
-        <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+        <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
       </div>
     </form>
 
@@ -110,27 +122,28 @@
 </template>
 
 <script lang="ts" setup>
-import { SfButton, SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { SfCheckbox, SfInput, SfLink, SfLoaderCircular } from '@storefront-ui/vue';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
+import { paths } from '~/utils/paths';
 
 const runtimeConfig = useRuntimeConfig();
-const { subscribe, loading } = useNewsletter();
+const { subscribe, loading, showNames } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
 
-const showNewsletterNameForms = runtimeConfig.public?.newsletterFromShowNames ?? false;
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: showNewsletterNameForms
+    firstName: showNames.value
       ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
-    lastName: showNewsletterNameForms
+    lastName: showNames.value
       ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),

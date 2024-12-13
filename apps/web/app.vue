@@ -1,47 +1,37 @@
 <template>
   <Body class="font-body" :class="bodyClass" />
-  <VitePwaManifest />
+  <UiNotifications />
+  <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
+  <NuxtLoadingIndicator color="repeating-linear-gradient(to right, #008ebd 0%,#80dfff 50%,#e0f7ff 100%)" />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
 
 <script setup lang="ts">
+const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
-const DAYS = 100;
-const localeExpireDate = new Date();
-localeExpireDate.setDate(new Date().getDate() + DAYS);
-
-onMounted(() => {
-  // Need this class for cypress testing
-  bodyClass.value = 'hydrated';
-});
-
 const { getCategoryTree } = useCategoryTree();
-const { setInitialDataSSR, ssrLocale } = useInitialSetup();
+const { setInitialDataSSR } = useInitialSetup();
+const { setVsfLocale } = useLocalization();
 const route = useRoute();
 const { locale } = useI18n();
-
-const vsfLocale = useCookie('vsf-locale', {
-  expires: localeExpireDate,
-});
 const { setStaticPageMeta } = useCanonical();
 
-vsfLocale.value = locale.value;
-ssrLocale.value = locale.value;
-
 await setInitialDataSSR();
+setVsfLocale(locale.value);
 
-if (route?.meta.pageType === 'static') {
-  setStaticPageMeta();
-}
+if (route?.meta.pageType === 'static') setStaticPageMeta();
 usePageTitle();
+
+onNuxtReady(async () => {
+  bodyClass.value = 'hydrated'; // Need this class for cypress testing
+});
 
 watch(
   () => locale.value,
   async (locale: string) => {
-    vsfLocale.value = locale;
-
+    setVsfLocale(locale);
     await getCategoryTree();
   },
 );

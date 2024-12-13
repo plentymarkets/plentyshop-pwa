@@ -10,6 +10,16 @@ module.exports = {
     'max-lines-per-function': 'off',
     'max-statements': 'off',
     'no-undef': 'off',
+    'no-restricted-imports': [
+      'error',
+      {
+        'paths': [{
+          name: '@storefront-ui/vue',
+          importNames: ['SfButton'],
+          message: `SfButton doesn't conform to the app's design system. Use UiButton instead.`
+        }],
+      },
+    ],
     'etc/no-deprecated': 'off',
     'etc/no-internal': 'off',
     'no-secrets/no-secrets': 'off',
@@ -37,4 +47,12 @@ module.exports = {
     'vue/singleline-html-element-content-newline': 'off',
     'vue/max-attributes-per-line': 'off',
   },
+  overrides: [
+    {
+      files: 'build/**/*.ts',
+      rules: {
+        'no-console': 'off',
+      },
+    }
+  ]
 };

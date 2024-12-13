@@ -1,9 +1,8 @@
-import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
-import type {
-  DoAdditionalInformation,
-  DoAdditionalInformationReturn,
-  SetShippingPrivacyAgreement,
+import { AdditionalInformationParams } from '@plentymarkets/shop-api';
+import {
+  type DoAdditionalInformation,
+  type DoAdditionalInformationReturn,
+  type SetShippingPrivacyAgreement,
   UseAdditionalInformationState,
 } from './types';
 
@@ -22,6 +21,7 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     data: null,
     loading: false,
     shippingPrivacyAgreement: false,
+    showErrors: false,
   }));
 
   /**
@@ -39,9 +39,9 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const doAdditionalInformation: DoAdditionalInformation = async (params: AdditionalInformationParams) => {
     state.value.loading = true;
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAdditionalInformation(params));
+      const { error } = await useAsyncData(() => useSdk().plentysystems.doAdditionalInformation(params));
       useHandleError(error.value);
-      state.value.data = data?.value?.data ?? state.value.data;
+      state.value.data = null;
 
       return state.value.data;
     } catch (error) {
@@ -49,6 +49,10 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
     } finally {
       state.value.loading = false;
     }
+  };
+
+  const setShippingPrivacyAgreementErrors = (showErrors: boolean) => {
+    state.value.showErrors = showErrors;
   };
 
   /**
@@ -63,10 +67,12 @@ export const useAdditionalInformation: DoAdditionalInformationReturn = () => {
   const setShippingPrivacyAgreement: SetShippingPrivacyAgreement = (shippingPrivacyAgreement: boolean) => {
     state.value.loading = true;
     state.value.shippingPrivacyAgreement = shippingPrivacyAgreement;
+    // setShippingPrivacyAgreementErrors(!shippingPrivacyAgreement);
     state.value.loading = false;
   };
 
   return {
+    setShippingPrivacyAgreementErrors,
     setShippingPrivacyAgreement,
     doAdditionalInformation,
     ...toRefs(state.value),

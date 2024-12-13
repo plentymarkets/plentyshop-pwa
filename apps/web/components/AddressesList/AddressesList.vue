@@ -2,7 +2,7 @@
   <div
     class="addresses-list relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
-    :data-testid="`account-billing-addresses-${props.type}`"
+    :data-testid="`account-billing-addresses-${type}`"
   >
     <SfLoaderCircular v-if="loading" class="absolute top-0 bottom-0 right-0 left-0 m-auto" size="2xl" />
     <Address
@@ -11,16 +11,23 @@
       :address="address"
       :is-default="defaultAddressId === Number(userAddressGetters.getId(address))"
       :is-selected="defaultAddressId === Number(userAddressGetters.getId(address))"
+      :show-divider="!(defaultAddressId === Number(userAddressGetters.getId(address)))"
       @on-edit="editAddress(address)"
       @on-delete="onDelete(address)"
       @make-default="makeDefault(address)"
     />
 
-    <SfButton class="!block mt-6 ml-auto w-auto" variant="secondary" @click="editAddress">
-      {{ addAddressText }}
-    </SfButton>
+    <div class="col-span-3 text-center">
+      <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
+        {{ $t('account.accountSettings.noAddresses') }}
+      </h3>
+      <UiButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
+        {{ addAddressText }}
+      </UiButton>
+    </div>
 
     <UiModal
+      v-if="isOpen"
       v-model="isOpen"
       tag="section"
       role="dialog"
@@ -28,9 +35,9 @@
       aria-labelledby="address-modal-title"
     >
       <header>
-        <SfButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
+        <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
           <SfIconClose />
-        </SfButton>
+        </UiButton>
         <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold mb-4">
           <span v-if="userAddressGetters.getId(selectedAddress)">
             {{ editAddressText }}
@@ -39,7 +46,6 @@
         </h3>
       </header>
       <AddressForm
-        :countries="activeShippingCountries"
         :saved-address="selectedAddress"
         :use-as-shipping-default="false"
         :type="type"
@@ -49,17 +55,16 @@
     </UiModal>
   </div>
 </template>
-<script lang="ts" setup>
-import { type Address, AddressType } from '@plentymarkets/shop-api';
-import { userAddressGetters } from '@plentymarkets/shop-sdk';
-import { SfButton, SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import type { AddressesListProps } from '~/components/AddressesList/types';
 
-const props = defineProps<AddressesListProps>();
+<script lang="ts" setup>
+import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
+import { SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
+import { type AddressesListProps } from './types';
+
+const { type, editAddressText, addAddressText } = defineProps<AddressesListProps>();
 
 const { isOpen, open, close } = useDisclosure();
-
-const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
+const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const {
   data: addresses,
   getAddresses,
@@ -68,9 +73,9 @@ const {
   deleteAddress,
   defaultAddressId,
   loading,
-} = useAddress(props.type);
-const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
-await getActiveShippingCountries();
+} = useAddress(type);
+
+await useAggregatedCountries().fetchAggregatedCountries();
 await getAddresses();
 
 const selectedAddress = ref();
@@ -79,6 +84,7 @@ const editAddress = (address: Address) => {
   selectedAddress.value = address;
   open();
 };
+
 const onDelete = (address: Address) => {
   deleteAddress(Number(userAddressGetters.getId(address)));
 };
@@ -86,13 +92,9 @@ const onDelete = (address: Address) => {
 const onSave = async (address: Address, useAsShippingAddress: boolean) => {
   await saveAddress(address);
   close();
-
-  if (useAsShippingAddress) {
-    await saveShippingAddress(address);
-  }
+  if (useAsShippingAddress) await saveShippingAddress(address);
+  await getAddresses();
 };
 
-const makeDefault = (address: Address) => {
-  setDefault(address);
-};
+const makeDefault = (address: Address) => setDefault(address);
 </script>

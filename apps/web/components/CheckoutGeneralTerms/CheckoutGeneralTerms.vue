@@ -43,12 +43,14 @@
         </i18n-t>
       </label>
     </div>
-    <div v-if="showErrors" class="text-negative-700 text-sm mt-2">{{ $t('termsRequired') }}</div>
+    <div class="text-sm text-neutral-500 mt-1 ml-7">* {{ $t('contact.form.asterixHint') }}</div>
+    <div v-if="showErrors" class="text-negative-700 text-sm">{{ $t('termsRequired') }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfCheckbox, SfLink } from '@storefront-ui/vue';
+import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 

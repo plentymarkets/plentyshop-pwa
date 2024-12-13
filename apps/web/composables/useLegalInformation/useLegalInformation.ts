@@ -1,5 +1,4 @@
 import type { LegalInformationResponse, LegalTextsParams } from '@plentymarkets/shop-api';
-import { useSdk } from '~/sdk';
 import type { UseLegalInformationState, UseLegalInformationMethodsReturn, GetLegalInformation } from './types';
 
 /**

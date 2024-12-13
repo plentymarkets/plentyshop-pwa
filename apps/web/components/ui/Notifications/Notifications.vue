@@ -1,7 +1,14 @@
 <template>
   <div data-testid="notifications" class="sticky float-right w-50 right-2 max-w-[450px] z-[51] top-0 h-0">
     <div v-for="notification of notifications" class="my-2" :key="notification.id">
-      <UiAlert :size="'base'" :variant="notification.type">
+      <UiAlert :size="'base'" :variant="notification.type" class="pl-4">
+        <component
+          class="!m-0"
+          v-if="getIconComponent(notification) && getIconClass(notification)"
+          :is="getIconComponent(notification)"
+          :class="getIconClass(notification)"
+        />
+
         <div>
           <div class="typography-text-sm" v-if="typeof notification.message === 'string'">
             {{ notification.message }}
@@ -41,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfIconCheckCircle, SfIconInfo, SfIconWarning, SfIconError } from '@storefront-ui/vue';
 import type { Notification } from '../../../composables/useNotification/types';
 const { data: notifications } = useNotification();
 
@@ -53,8 +60,30 @@ const classMapper = {
   negative:
     'text-negative-700 hover:bg-negative-200 active:bg-negative-300 hover:text-negative-800 active:text-negative-900',
   secondary:
-    'text-secondary-700 hover:bg-secondary-200 active:bg-secondary-300 hover:text-secondary-800 active:text-secondary-900',
+    'text-secondary-500 hover:bg-secondary-50 active:bg-secondary-100 hover:text-secondary-600 active:text-secondary-700',
 };
 
+const iconMapper = {
+  positive: {
+    component: SfIconCheckCircle,
+    class: 'my-2 mr-2 text-positive-700 shrink-0',
+  },
+  secondary: {
+    component: SfIconInfo,
+    class: 'mr-2 text-secondary-700 shrink-0',
+  },
+  warning: {
+    component: SfIconWarning,
+    class: 'mt-2 mr-2 text-warning-700 shrink-0',
+  },
+  negative: {
+    component: SfIconError,
+    class: 'mt-2 mr-2 text-negative-700 shrink-0',
+  },
+  neutral: null,
+};
+
+const getIconComponent = (notification: Notification) => iconMapper[notification.type]?.component ?? null;
+const getIconClass = (notification: Notification) => iconMapper[notification.type]?.class ?? null;
 const getButtonClasses = (notification: Notification) => classMapper[notification.type] ?? '';
 </script>

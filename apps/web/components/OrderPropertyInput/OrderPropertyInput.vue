@@ -17,7 +17,7 @@
         :id="`prop-${orderPropertyId}`"
         v-model="value"
         v-bind="valueAttributes"
-        class="bg-white outline-none rounded-md ring-1 ring-neutral-200 text-neutral-500 hover:ring-primary-700 focus:ring-primary-700 active:ring-2 focus:ring-2 h-[80px] w-full p-2"
+        class="bg-white outline-none rounded-md ring-1 ring-neutral-200 text-neutral-500 hover:ring-primary-500 focus:ring-primary-500 active:ring-2 focus:ring-2 h-[80px] w-full p-2"
         :class="{ '!ring-negative-700 ring-2': isOrderPropertyRequired && Boolean(errors['value']) }"
       />
       <SfInput
@@ -32,15 +32,16 @@
 
       <slot v-if="hasTooltip" name="tooltip" class="w-[28px]" />
     </div>
-    <VeeErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
+    <ErrorMessage as="span" name="value" class="flex text-negative-700 text-sm mt-2" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { SfInput } from '@storefront-ui/vue';
-import { productPropertyGetters } from '@plentymarkets/shop-sdk';
+import { productPropertyGetters } from '@plentymarkets/shop-api';
 import type { OrderPropertyInputProps } from './types';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string } from 'yup';
 
 const props = defineProps<OrderPropertyInputProps>();

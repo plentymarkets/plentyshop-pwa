@@ -1,5 +1,5 @@
 import type { CookieRef } from 'nuxt/app';
-import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/cookie.config';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig } from '~/configuration/cookie.config';
 import type { UseCookieReturn } from './types';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {
@@ -73,7 +73,7 @@ export const useCookieBar = (
    * ```
    */
   function loadThirdPartyScripts(): void {
-    if (!process.server) {
+    if (!import.meta.server) {
       cookieJson.value.forEach((cookieGroup, groupIndex) => {
         cookieGroup.cookies.forEach((cookie, cookieIndex) => {
           if (cookie.accepted) {

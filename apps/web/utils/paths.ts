@@ -9,7 +9,7 @@ export const paths = {
   readonlyCheckout: '/readonly-checkout',
   search: '/search',
   account: '/my-account/personal-data',
-  thankYou: '/thank-you',
+  confirmation: '/confirmation',
   accountPersonalData: '/my-account/personal-data',
   accountBillingDetails: '/my-account/billing-details',
   accountShippingDetails: '/my-account/shipping-details',

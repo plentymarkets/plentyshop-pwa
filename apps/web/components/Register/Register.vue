@@ -1,23 +1,23 @@
 <template>
-  <div class="font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
+  <div class="font-medium ml-8" :class="{ 'flex flex-col items-center': !isModal }">
     <div class="text-lg">{{ t('auth.signup.heading') }}</div>
     <div class="text-base">{{ t('auth.signup.subheading') }}</div>
 
-    <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
+    <div class="mt-5 font-normal flex flex-col gap-2">
       <div class="flex items-center gap-2">
-        <SfIconPerson class="text-primary-700" />
+        <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconLocalShipping class="text-primary-700" />
+        <SfIconLocalShipping class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderTracking') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconFavorite class="text-primary-700" />
+        <SfIconFavorite class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.wishlist') }}</div>
       </div>
       <div class="flex items-center gap-2">
-        <SfIconSchedule class="text-primary-700" />
+        <SfIconSchedule class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.orderHistory') }}</div>
       </div>
     </div>
@@ -30,12 +30,11 @@
           v-model="email"
           v-bind="emailAttributes"
           :invalid="Boolean(errors['register.email'])"
-          :disabled="emailAddress"
           name="customerEmail"
           type="email"
           autocomplete="email"
         />
-        <VeeErrorMessage as="span" name="register.email" class="flex text-negative-700 text-sm mt-2" />
+        <ErrorMessage as="span" name="register.email" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <label>
@@ -48,7 +47,7 @@
           v-bind="passwordAttributes"
           :invalid="Boolean(errors['register.password'])"
         />
-        <!-- <VeeErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
+        <!-- <ErrorMessage as="span" name="register.password" class="flex text-negative-700 text-sm mt-2" /> -->
       </label>
       <label>
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }}</UiFormLabel>
@@ -60,7 +59,7 @@
           v-bind="repeatPasswordAttributes"
           :invalid="Boolean(errors['register.repeatPassword'])"
         />
-        <VeeErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
+        <ErrorMessage as="span" name="register.repeatPassword" class="flex text-negative-700 text-sm mt-2" />
       </label>
 
       <div class="text-xs">
@@ -107,7 +106,7 @@
           {{ t('form.required') }}
         </label>
       </div>
-      <VeeErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
+      <ErrorMessage as="div" name="register.privacyPolicy" class="text-negative-700 text-left text-sm" />
 
       <NuxtTurnstile
         v-if="turnstileSiteKey"
@@ -118,16 +117,16 @@
         class="mt-4 flex justify-center"
       />
 
-      <VeeErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
+      <ErrorMessage as="div" name="register.turnstile" class="text-negative-700 text-center text-sm" />
 
-      <SfButton type="submit" class="mt-2" :disabled="loading">
-        <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
+      <UiButton type="submit" class="mt-2" :disabled="loading || migrateLoading">
+        <SfLoaderCircular v-if="loading || migrateLoading" class="flex justify-center items-center" size="base" />
         <span v-else>
           {{ t('auth.signup.submitLabel') }}
         </span>
-      </SfButton>
+      </UiButton>
 
-      <div class="text-center">
+      <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
         <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
           {{ t('auth.signup.logInLinkLabel') }}
@@ -139,7 +138,6 @@
 
 <script lang="ts" setup>
 import {
-  SfButton,
   SfLink,
   SfInput,
   SfLoaderCircular,
@@ -151,22 +149,24 @@ import {
   SfIconCheck,
   SfIconClose,
 } from '@storefront-ui/vue';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean, ref as yupReference } from 'yup';
 import type { RegisterFormParams } from '~/components/Register/types';
+import { useMigrateGuestOrder } from '~/composables/useMigrateGuestOrder';
+import { paths } from '~/utils/paths';
 
 const localePath = useLocalePath();
 const router = useRouter();
 const { register, loading } = useCustomer();
 const { t } = useI18n();
 const { send } = useNotification();
+const { migrateGuestOrder, loading: migrateLoading } = useMigrateGuestOrder();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 
 const emits = defineEmits(['registered', 'change-view']);
-const props = withDefaults(defineProps<RegisterFormParams>(), {
-  isModal: false,
-});
+const { emailAddress, order, isModal = false, changeableView = true } = defineProps<RegisterFormParams>();
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
@@ -202,12 +202,18 @@ const [repeatPassword, repeatPasswordAttributes] = defineField('register.repeatP
 const [turnstile, turnstileAttributes] = defineField('register.turnstile');
 const [privacyPolicy, privacyPolicyAttributes] = defineField('register.privacyPolicy');
 
-if (props.emailAddress) {
-  email.value = props.emailAddress;
+if (emailAddress) {
+  email.value = emailAddress;
 }
 
+const clearTurnstile = () => {
+  turnstile.value = '';
+  turnstileElement.value?.reset();
+};
+
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const registerUser = async () => {
-  if (!meta.value.valid || !turnstile.value) {
+  if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;
   }
 
@@ -217,14 +223,12 @@ const registerUser = async () => {
     'cf-turnstile-response': turnstile.value,
   });
 
-  turnstile.value = '';
-  turnstileElement.value?.reset();
-
   if (response?.data.code === 1) {
     send({
       message: t('auth.signup.emailAlreadyExists'),
       type: 'negative',
     });
+    clearTurnstile();
     return;
   }
 
@@ -233,8 +237,22 @@ const registerUser = async () => {
       message: t('auth.signup.success'),
       type: 'positive',
     });
+
+    if (order) {
+      await migrateGuestOrder({
+        orderId: order?.order.id ?? -1,
+        accessKey: order?.order.accessKey ?? '',
+        postcode: order?.order.deliveryAddress.postalCode ?? undefined,
+        name: order?.order.deliveryAddress.name3 ?? undefined,
+      });
+    }
+
     emits('registered');
-    viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    clearTurnstile();
+
+    if (!order) {
+      viewport.isGreaterOrEquals('lg') ? router.push(router.currentRoute.value.path) : router.back();
+    }
   }
 };
 

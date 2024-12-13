@@ -10,24 +10,23 @@
       <SfLink
         :tag="NuxtLink"
         rel="preload"
-        :to="localePath(`${path}/${productSlug}`)"
+        :to="productPath"
         :class="{ 'size-48': isFromSlider }"
         as="image"
         class="flex items-center justify-center"
       >
         <NuxtImg
-          ref="img"
           :src="imageUrl"
           :alt="imageAlt"
+          :title="imageTitle"
           :loading="lazy && !priority ? 'lazy' : 'eager'"
           :fetchpriority="priority ? 'high' : 'auto'"
           :preload="priority || false"
+          :width="getWidth()"
+          :height="getHeight()"
           class="object-contain rounded-md aspect-square w-full"
           data-testid="image-slot"
-          :width="imageWidth"
-          :height="imageHeight"
         />
-        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
       </SfLink>
 
       <slot name="wishlistButton">
@@ -39,38 +38,39 @@
       </slot>
     </div>
     <div class="p-2 border-t border-neutral-200 typography-text-sm flex flex-col flex-auto">
-      <SfLink :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" class="no-underline" variant="secondary">
+      <SfLink :tag="NuxtLink" :to="productPath" class="no-underline" variant="secondary">
         {{ name }}
       </SfLink>
-      <div class="flex items-center pt-1 gap-1">
-        <SfRating size="xs" :value="rating ?? 0" :max="5" />
+      <div class="flex items-center pt-1 gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
+        <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
       </div>
-
-      <p class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify">
-        {{ description }}
-      </p>
+      <div
+        v-if="productGetters.getShortDescription(product)"
+        class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words"
+      >
+        <span class="line-clamp-3">
+          {{ productGetters.getShortDescription(product) }}
+        </span>
+      </div>
       <LowestPrice :product="product" />
       <div v-if="showBasePrice" class="mb-2">
         <BasePriceInLine :base-price="basePrice" :unit-content="unitContent" :unit-name="unitName" />
       </div>
-      <div class="flex items-center mt-auto">
+      <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
         <span class="block pb-2 font-bold typography-text-sm" data-testid="product-card-vertical-price">
           <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
             {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
           </span>
-          <span>{{ n(cheapestPrice ?? mainPrice, 'currency') }}</span>
+          <span>{{ n(price, 'currency') }}</span>
           <span v-if="showNetPrices">{{ t('asterisk') }} </span>
         </span>
-        <span
-          v-if="oldPrice && oldPrice !== mainPrice"
-          class="typography-text-sm text-neutral-500 line-through ml-3 pb-2"
-        >
-          {{ n(oldPrice, 'currency') }}
+        <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 md:pb-2">
+          {{ n(crossedPrice, 'currency') }}
         </span>
       </div>
-      <SfButton
-        v-if="productGetters.canBeAddedToCartFromCategoryPage(product) || isFromWishlist"
+      <UiButton
+        v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
@@ -84,67 +84,68 @@
         <span v-else>
           {{ t('addToCartShort') }}
         </span>
-      </SfButton>
-      <SfButton v-else type="button" :tag="NuxtLink" :to="localePath(`${path}/${productSlug}`)" size="sm" class="w-fit">
-        <span>{{ t('showArticle') }}</span>
-        <template #prefix>
-          <SfIconChevronRight size="sm" />
-        </template>
-      </SfButton>
+      </UiButton>
+      <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
+        <span>{{ t('showOptions') }}</span>
+      </UiButton>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { productGetters } from '@plentymarkets/shop-sdk';
-import {
-  SfLink,
-  SfButton,
-  SfIconShoppingCart,
-  SfLoaderCircular,
-  SfIconChevronRight,
-  SfRating,
-  SfCounter,
-} from '@storefront-ui/vue';
+import { productGetters } from '@plentymarkets/shop-api';
+import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } from '@storefront-ui/vue';
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
+import { defaults } from '~/composables';
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
-const { product } = withDefaults(defineProps<ProductCardProps>(), {
-  lazy: true,
-  imageAlt: '',
-  isFromWishlist: false,
-  isFromSlider: false,
-});
+const {
+  product,
+  name,
+  imageUrl,
+  imageAlt = '',
+  imageTitle,
+  imageWidth,
+  imageHeight,
+  rating,
+  ratingCount,
+  priority,
+  lazy = true,
+  unitContent,
+  unitName,
+  basePrice,
+  showBasePrice,
+  isFromWishlist = false,
+  isFromSlider = false,
+} = defineProps<ProductCardProps>();
 
 const { data: categoryTree } = useCategoryTree();
 const { openQuickCheckout } = useQuickCheckout();
-
 const { addToCart } = useCart();
+const { price, crossedPrice } = useProductPrice(product);
 const { send } = useNotification();
 const loading = ref(false);
-const imageLoaded = ref(false);
-const img = ref();
-const emit = defineEmits(['load']);
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
 
-onMounted(() => {
-  const imgElement = (img.value?.$el as HTMLImageElement) || null;
+const { showNetPrices } = useCustomer();
 
-  if (imgElement) {
-    if (!imageLoaded.value) {
-      if (imgElement.complete) imageLoaded.value = true;
-      imgElement.addEventListener('load', () => (imageLoaded.value = true));
-    }
-
-    nextTick(() => {
-      if (!imgElement.complete) emit('load');
-    });
+const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
+const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
+const productPath = computed(() => localePath(`${path.value}/${productSlug.value}`));
+const getWidth = () => {
+  if (imageWidth && imageWidth > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageWidth;
   }
-});
+  return '';
+};
+const getHeight = () => {
+  if (imageHeight && imageHeight > 0 && imageUrl.includes(defaults.IMAGE_LINK_SUFIX)) {
+    return imageHeight;
+  }
+  return '';
+};
 
-const addWithLoader = async (productId: number) => {
+const addWithLoader = async (productId: number, quickCheckout = true) => {
   loading.value = true;
 
   try {
@@ -152,27 +153,15 @@ const addWithLoader = async (productId: number) => {
       productId: productId,
       quantity: 1,
     });
-
-    openQuickCheckout(product, 1);
-    send({ message: t('addedToCart'), type: 'positive' });
+    if (quickCheckout) {
+      openQuickCheckout(product, 1);
+    } else {
+      send({ message: t('addedToCart'), type: 'positive' });
+    }
   } finally {
     loading.value = false;
   }
 };
 
-const mainPrice = computed(() => {
-  const price = productGetters.getPrice(product);
-  if (!price) return 0;
-
-  if (price.special) return price.special;
-  if (price.regular) return price.regular;
-
-  return 0;
-});
-
-const cheapestPrice = productGetters.getCheapestGraduatedPrice(product);
-const oldPrice = productGetters.getRegularPrice(product);
-const path = computed(() => productGetters.getCategoryUrlPath(product, categoryTree.value));
-const productSlug = computed(() => productGetters.getSlug(product) + `_${productGetters.getItemId(product)}`);
 const NuxtLink = resolveComponent('NuxtLink');
 </script>

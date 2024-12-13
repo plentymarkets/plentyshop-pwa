@@ -18,7 +18,7 @@
               :invalid="Boolean(errors['name'])"
             />
           </label>
-          <VeeErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="name" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <div class="">
           <label>
@@ -37,17 +37,17 @@
               </template>
             </SfInput>
           </label>
-          <VeeErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="email" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput name="subject" type="text" v-model="subject" v-bind="subjectAttributes" />
-          <VeeErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
           <SfInput name="order-id" type="text" v-model="orderId" v-bind="orderIdAttributes" />
-          <VeeErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
 
         <div>
@@ -63,7 +63,7 @@
               required
             />
           </label>
-          <VeeErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="message" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
         <div>
@@ -95,21 +95,21 @@
               {{ t('form.required') }}
             </label>
           </div>
-          <VeeErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="privacyPolicy" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
 
         <p class="text-sm text-neutral-500 mb-2">{{ t('form.required') }} {{ t('contact.form.asterixHint') }}</p>
 
         <div class="md:col-span-3 flex flex-col-reverse md:flex-row justify-end gap-4">
-          <SfButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
+          <UiButton type="button" variant="secondary" :disabled="isContactLoading" @click="clearInputs">
             {{ t('contact.clearAll') }}
-          </SfButton>
-          <SfButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
+          </UiButton>
+          <UiButton data-testid="save-address" type="submit" class="min-w-[120px]" :disabled="isContactLoading">
             <SfLoaderCircular v-if="isContactLoading" class="flex justify-center items-center" size="sm" />
             <span v-else>
               {{ t('contact.contactSend') }}
             </span>
-          </SfButton>
+          </UiButton>
         </div>
 
         <div>
@@ -121,7 +121,7 @@
             :options="{ theme: 'light' }"
             class="mt-4"
           />
-          <VeeErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
+          <ErrorMessage as="div" name="turnstile" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </div>
       </form>
     </div>
@@ -129,9 +129,11 @@
 </template>
 
 <script setup lang="ts">
-import { SfButton, SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
+import { SfInput, SfCheckbox, SfLink, SfTextarea, SfLoaderCircular, SfIconEmail } from '@storefront-ui/vue';
 import { boolean, object, string } from 'yup';
-import { useForm } from 'vee-validate';
+import { useForm, ErrorMessage } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
+import { paths } from '~/utils/paths';
 
 definePageMeta({
   layout: false,
