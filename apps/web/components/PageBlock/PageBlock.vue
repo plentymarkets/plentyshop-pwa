@@ -46,11 +46,6 @@
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
 
-interface Block {
-  name: string;
-  options?: Record<string, unknown>;
-}
-
 interface Props {
   index: number;
   block: Block;
