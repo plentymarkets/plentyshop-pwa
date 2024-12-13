@@ -59,6 +59,15 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Fixed image issue on no-preflight class.
+- Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
+- Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
+- Adjusted the checkout layout for tablet screen sizes.
+- Changed image quality in quick checkout to use middle image and positioned quantity.
+- Fixed filter translation on category page when switching language.
+- Resolved an issue where the shipping costs where not updated during guest checkout process.
+- Resolved an issue causing the Login modal to be unresponsive in the user interface.
+- Fix selling points misalignment on register page.
 - Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
 
 - Fixed an unhandled scenario where a blocked payment method remained available during the checkout process
@@ -466,7 +475,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
-- Refactored index.vue
+- Refactored index.vue and created a new composable for the blocks
 
 ## New Contributors
 
