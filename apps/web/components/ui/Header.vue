@@ -12,6 +12,7 @@
             square
             data-testid="open-languageselect-button"
             @click="toggleLanguageSelect()"
+            :disabled="isEditing || disableActions"
           >
             <template #prefix>
               <SfIconLanguage class="relative" />
@@ -135,6 +136,7 @@
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
         @click="toggleLanguageSelect()"
+        :disabled="isEditing || disableActions"
       >
         <SfIconLanguage />
       </UiButton>
@@ -229,8 +231,8 @@ const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
-
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
+const { isEditing, disableActions } = useEditor();
 
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
