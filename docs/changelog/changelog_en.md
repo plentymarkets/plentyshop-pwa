@@ -68,6 +68,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Addressed a scenario where deleting the checkout address as a guest triggered an unknown error.
 - Fixed image issue on no-preflight class.
 - Fixed an issue where accepting all cookies caused the zoom feature to stop working and prevented proper navigation back to the previous page.
 - Added no-preflight class to prevent tailwind preflight for content coming from backend editor.
