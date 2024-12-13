@@ -1,18 +1,21 @@
 {
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
+    // "baseUrl": ".",
     // "paths": {
     //   "@plentymarkets/pwa-module-boilerplate/*": ["../pwa-module-boilerplate/dist/*"]
     // },
+    // "paths": {
+    //   "@plentymarkets/pwa-module-boilerplate": ["node_modules/@plentymarkets/pwa-module-boilerplate/dist"]
+    // },
     "types": [
-      // "@nuxt/types",
       "@nuxt/kit",
       "@nuxt/schema",
       "vitest/globals",
       "@vite-pwa/nuxt",
       "@types/applepayjs",
-      "@types/googlepay",
-      "@plentymarkets/pwa-module-boilerplate"
+      "@types/googlepay"
+      // "@plentymarkets/pwa-module-boilerplate"
     ],
     "verbatimModuleSyntax": false
   },

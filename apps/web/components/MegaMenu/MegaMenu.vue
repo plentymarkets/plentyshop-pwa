@@ -183,6 +183,7 @@
 
 <script lang="ts" setup>
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
+import { paths } from '../../../web/utils/paths';
 import {
   SfIconClose,
   SfDrawer,
@@ -195,7 +196,7 @@ import {
   useDropdown,
 } from '@storefront-ui/vue';
 import { unrefElement } from '@vueuse/core';
-import {MegaMenuProps} from './types';
+import { MegaMenuProps } from './types';
 
 const { t } = useI18n();
 const viewport = useViewport();

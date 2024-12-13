@@ -4,6 +4,7 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
+import { resolve } from 'node:path';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -30,6 +31,9 @@ export default defineNuxtConfig({
       crawlLinks: false,
     },
     compressPublicAssets: true,
+  },
+  build: {
+    transpile: ['@plentymarkets/pwa-module-boilerplate'],
   },
   routeRules: {
     '/_ipx/**': { headers: { 'cache-control': `public, max-age=31536000, immutable` } },
@@ -67,10 +71,10 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@plentymarkets/pwa-module-boilerplate',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
-    '@plentymarkets/pwa-module-boilerplate',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
     '@nuxtjs/tailwindcss',
@@ -224,6 +228,11 @@ export default defineNuxtConfig({
     server: {
       fs: {
         allow: ['/Users/cristi/workspace/pwa-module-boilerplate'],
+      },
+    },
+    resolve: {
+      alias: {
+        'main-app-composables': resolve('~/composables'),
       },
     },
   },
