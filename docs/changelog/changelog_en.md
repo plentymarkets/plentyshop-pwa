@@ -1,6 +1,6 @@
 # Changelog plentyshopPWA
 
-## v1.8.0 (2024-12-11)
+## v1.8.0 (2024-12-13)
 
 ### New
 
@@ -25,6 +25,7 @@
 - The address preview details now include the country name.
 - The size of the quantity labels in the quick checkout has been adjusted on desktop to improve accessibility.
 - The order of attribute select and order properties on product pages have been switched to better reflect the user flow.
+- The values of attributes are now sorted in descending order by position, then by ID and then alphabetically.
 - The cookie bar has been adjusted to provide a better user experience.
 
 #### GitHub Action: Lighthouse CI
@@ -66,7 +67,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed the image quality in the quick checkout by using the middle-size image and adjusting the quantity position.
 - Fixed filter translation on category pages when switching language.
 - Fixed an issue where the shipping costs were not updated during guest checkout process.
-- Fixed an issue causing the Login modal to be unresponsive in the user interface.
+- Fixed an issue causing the login modal to be unresponsive in the user interface.
 - Fixed a misalignment of the sign-up incentives on the registration page.
 - Fixed an issue where the checkout layout button was overlapping the adjacent text.
 - Added a missing href attribute to the cookie bar anchor.
