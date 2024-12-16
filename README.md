@@ -1,19 +1,15 @@
 <div align="center">
-<a href="https://alokai.com" target="_blank">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
   <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
   <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="80px">
 </picture> 
-</a>
 
-<a href="https://www.plentymarkets.com/" target="_blank">
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
   <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
   <img alt="plentysystems logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="160px">
 </picture> 
-</a>
 
   <h1 align="center">Alokai Integration With plentysystems</h1>
 
