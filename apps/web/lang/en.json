@@ -535,7 +535,7 @@
   },
   "estimatedTax": "VAT",
   "etaDelivery": "Estimated delivery time",
-  "excludedShipping": "excl. Shipping",
+  "excludedShipping": "excl. {shipping}",
   "failedInfoHeader": "We are really sorry.",
   "failedInfoMessage": "Your order has not been completed.",
   "filters": "Filters",

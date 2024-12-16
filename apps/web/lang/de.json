@@ -535,7 +535,7 @@
   },
   "estimatedTax": "MwSt.",
   "etaDelivery": "Voraussichtliche Lieferdauer",
-  "excludedShipping": "zzgl. Versandkosten",
+  "excludedShipping": "zzgl. {shipping}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
   "filters": "Filter",
