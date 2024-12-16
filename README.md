@@ -7,8 +7,7 @@
     <img alt="plentysystems logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
   </picture> 
 </a>
-<div align="center">
-<span style="font-size: 25px"><bold>powered by</bold></span>
+<h2 style="font-size: 25px; border: none">powered by</h2>
 <a href="https://alokai.com" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
@@ -17,10 +16,9 @@
   </picture> 
 </a>
 
-</div>
 
 
-  <h1 align="center">Alokai Integration With plentysystems</h1>
+  <h1 align="center">Alokai Integration With PlentyOne Shop</h1>
 
 </div>
 
