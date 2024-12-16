@@ -1,27 +1,24 @@
 <div align="center">
 
-<a style="margin-bottom: 20px" href="https://plentyone.com" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
-    <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
-  </picture> 
-</a>
+  <a href="https://plentyone.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+    </picture> 
+  </a>
 
 ### powered by
 
-<a href="https://alokai.com" target="_blank">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
-    <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
-    <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
-  </picture> 
-</a>
-
-
+  <a href="https://alokai.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
+    </picture> 
+  </a>
 
   <h1>Alokai Integration With PlentyONE Shop</h1>
-
 </div>
 
 
