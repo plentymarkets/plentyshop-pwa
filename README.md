@@ -8,7 +8,7 @@
   </picture> 
 </a>
 
-## powered by
+### powered by
 
 <a href="https://alokai.com" target="_blank">
   <picture>
@@ -20,7 +20,7 @@
 
 
 
-  <h1 align="center">Alokai Integration With PlentyOne Shop</h1>
+  <h1>Alokai Integration With PlentyOne Shop</h1>
 
 </div>
 
