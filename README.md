@@ -1,15 +1,20 @@
 <div align="center">
-  <a href="https://alokai.com/"><img src="./apps/web/public/images/alokai-logo-dark.svg#gh-dark-mode-only" alt="Alokai" height="80px" />
-  
-  <img src="./apps/web/public/images/alokai-logo-light.svg#gh-light-mode-only" alt="Alokai" height="80px" />
-  </a>
-<a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
+<a href="https://alokai.com"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
+  <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="80px">
+</picture> </a>
+
+<a href="https://www.plentymarkets.com/"><picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
+  <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+  <img alt="plentysystems logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="160px">
+</picture> </a>
 
   <h1 align="center">Alokai Integration With plentysystems</h1>
+
 </div>
 
-[![Alokai Logo light](./apps/web/public/images/alokai-logo-light.svg#gh-light-mode-only)](https://alokai.com/)
-[![Alokai Logo dark](./apps/web/public/images/alokai-logo-dark.svg#gh-dark-mode-only)](https://alokai.com/)
 
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
