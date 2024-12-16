@@ -8,6 +8,10 @@
   <h1 align="center">Alokai Integration With plentysystems</h1>
 </div>
 
+![Alokai Logo light](./apps/web/public/images/alokai-logo-light.svg#gh-light-mode-only)
+![Alokai Logo dark](./apps/web/public/images/alokai-logo-dark.svg#gh-dark-mode-only)
+
+
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
 [![X Follow](https://img.shields.io/twitter/follow/plentymarkets?style=social)](https://twitter.com/plentymarkets)
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
