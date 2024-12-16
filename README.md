@@ -8,7 +8,7 @@
   </picture> 
 </a>
 
-### powered by
+## powered by
 
 <a href="https://alokai.com" target="_blank">
   <picture>
