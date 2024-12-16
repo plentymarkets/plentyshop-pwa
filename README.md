@@ -7,8 +7,8 @@
     <img alt="plentysystems logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
   </picture> 
 </a>
-<div>
-<span>powered by </span>
+<div style="margin-bottom: 20px; display: flex">
+<span class="h2">powered by</span>
 <a href="https://alokai.com" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
