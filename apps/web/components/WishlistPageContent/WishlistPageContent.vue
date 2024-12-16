@@ -67,17 +67,29 @@
       <span>{{ $t('asterisk') }}</span>
       <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
       <span v-else>{{ $t('itemInclVAT') }}</span>
-      <span>{{ $t('excludedShipping') }}</span>
+      <i18n-t keypath="excludedShipping" scope="global">
+        <template #shipping>
+          <SfLink
+            :href="localePath(paths.shipping)"
+            target="_blank"
+            class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+          >
+            {{ $t('delivery') }}
+          </SfLink>
+        </template>
+      </i18n-t>
     </div>
   </NarrowContainer>
 </template>
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfLink } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
+import { paths } from '~/utils/paths';
 
 const { showNetPrices } = useCustomer();
+const localePath = useLocalePath();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 

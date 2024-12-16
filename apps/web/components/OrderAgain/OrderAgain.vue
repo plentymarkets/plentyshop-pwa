@@ -193,7 +193,17 @@
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
-          <span>{{ t('excludedShipping') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
+            <template #shipping>
+              <SfLink
+                :href="localePath(paths.shipping)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('delivery') }}
+              </SfLink>
+            </template>
+          </i18n-t>
         </div>
         <div class="ml-auto float-right">
           <UiButton class="mr-2" variant="secondary" @click="close()" size="lg">
@@ -223,9 +233,11 @@ import {
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfListItem,
+  SfLink,
 } from '@storefront-ui/vue';
 import type { OrderAgainProps } from './types';
 import { orderGetters, productPropertyGetters } from '@plentymarkets/shop-api';
+import { paths } from '~/utils/paths';
 
 const props = defineProps<OrderAgainProps>();
 const { send } = useNotification();
