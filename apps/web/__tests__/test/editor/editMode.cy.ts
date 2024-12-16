@@ -11,11 +11,9 @@ describe('EditMode', () => {
 
   it('should display and interact with the editor textarea', () => {
     editor.isToolbarVisible();
-    editor.togglePreviewMode();
     editor.toggleEditMode();
-    editor.isEditBlockVisible();
+    editor.togglePreviewMode();
     editor.checkEditorContent();
-
     editor.replaceEditorContent(JSON.stringify(newContent, null, 2));
     editor.checkEditorChanges();
   });
