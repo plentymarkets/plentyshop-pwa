@@ -5,30 +5,44 @@
         <UiLanguageEditor v-if="experimentalAddBlock" />
       </div>
       <div class="ml-auto flex space-x-2">
-        <UiButton
-          variant="secondary"
-          :size="buttonSize"
-          class="self-start"
+        <button
+          class="self-start text-[#062633] px-4 py-2 rounded-md font-inter font-medium text-base leading-6 flex items-center"
           @click="toggleEdit"
           :disabled="!isEditingEnabled"
           data-testid="edit-preview-button"
         >
-          {{ disableActions ? 'Preview' : 'Edit' }}
-        </UiButton>
-        <UiButton
-          variant="primary"
-          :size="buttonSize"
-          class="self-start"
+          <template v-if="disableActions">
+            <SfIconVisibility class="mr-[10px]" />
+            Preview
+          </template>
+          <template v-else>
+            <SfIconBase size="xs" viewBox="0 0 18 18" class="mr-[10px] fill-primary-900 cursor-pointer">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path :d="editPath" fill="black" />
+              </svg>
+            </SfIconBase>
+            Edit
+          </template>
+        </button>
+        <button
+          class="self-start bg-[#062633] text-white px-4 py-2 rounded-md font-inter font-medium text-base leading-6 flex items-center"
           :disabled="!isEditingEnabled || !isLocalTemplate()"
           data-testid="edit-save-button"
           @click="updatePageTemplate"
         >
-          <template v-if="loading">
-            <SfLoaderCircular class="animate-spin w-4 h-4" />
+          <template v-if="!loading">
+            <SfIconBase size="xs" class="mr-[10px]">
+              <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M14 0H2C0.89 0 0 0.9 0 2V16C0 17.1 0.89 18 2 18H16C17.1 18 18 17.1 18 16V4L14 0ZM9 16C7.34 16 6 14.66 6 13C6 11.34 7.34 10 9 10C10.66 10 12 11.34 12 13C12 14.66 10.66 16 9 16ZM12 6H2V2H12V6Z"
+                  fill="white"
+                />
+              </svg>
+            </SfIconBase>
           </template>
-
-          <template v-else> Save </template>
-        </UiButton>
+          <template v-if="loading"> <SfLoaderCircular class="animate-spin w-4 h-4 text-white" /> </template>
+          <template v-else> Save changes </template>
+        </button>
       </div>
     </div>
   </div>
@@ -36,12 +50,10 @@
 
 <script setup lang="ts">
 import { SfLoaderCircular } from '@storefront-ui/vue';
+import { editPath } from 'assets/icons/paths/edit';
+import { SfIconBase } from '@storefront-ui/vue';
+import { SfIconVisibility } from '@storefront-ui/vue';
 const { isEditingEnabled, disableActions } = useEditor();
-
-const viewport = useViewport();
-const buttonSize = computed(() => {
-  return viewport.isLessThan('md') ? 'sm' : 'lg';
-});
 
 const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
