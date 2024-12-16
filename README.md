@@ -1,9 +1,11 @@
 <div align="center">
-<a href="https://alokai.com"><picture>
+<a href="https://alokai.com" target="_blank">
+<picture>
   <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
   <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
   <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="80px">
-</picture> </a>
+</picture> 
+</a>
 
 <a href="https://www.plentymarkets.com/" target="_blank">
 <picture>
