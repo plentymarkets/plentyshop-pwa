@@ -1,6 +1,8 @@
 <div align="center">
-  <a href="https://alokai.com/"><img src="./apps/web/public/images/alokai-logo.svg" style="background-color: black" alt="Alokai" height="80px" /></a>
-
+  <a href="https://alokai.com/"><img src="./apps/web/public/images/alokai-logo-dark.svg#gh-dark-mode-only" alt="Alokai" height="80px" />
+  
+  <img src="./apps/web/public/images/alokai-logo-light.svg#gh-light-mode-only" alt="Alokai" height="80px" />
+  </a>
 <a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
 
   <h1 align="center">Alokai Integration With plentysystems</h1>
