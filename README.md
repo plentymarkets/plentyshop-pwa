@@ -1,14 +1,14 @@
 <div align="center">
 
-<a href="https://plentyone.com" target="_blank">
+<a style="margin-bottom: 20px" href="https://plentyone.com" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
     <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
     <img alt="plentysystems logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
   </picture> 
 </a>
-<div style="margin-bottom: 20px; display: flex">
-<span class="h2">powered by</span>
+<div>
+<h2 class="h2">powered by</h2>
 <a href="https://alokai.com" target="_blank">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
