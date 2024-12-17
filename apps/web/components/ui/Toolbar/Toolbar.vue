@@ -1,9 +1,7 @@
 <template>
-  <div class="sticky top-0 bg-white z-[100]">
+  <div class="sticky top-0 bg-white z-[1] md:z-[1] lg:z-[100]">
     <div class="relative flex items-center pr-5">
-      <div class="">
-        <img :src="imagePath" alt="Brand Logo" ref="logo" preload class="h-[54px] w-[54px]" />
-      </div>
+      <UiBrandLogo />
 
       <div class="absolute left-1/2 transform -translate-x-1/2">
         <UiLanguageEditor v-if="experimentalAddBlock" />
@@ -47,6 +45,7 @@
       </div>
     </div>
   </div>
+  <div class="bg-[#F1F3F5] py-1"></div>
 </template>
 
 <script setup lang="ts">
@@ -57,8 +56,6 @@ import { SfIconBase } from '@storefront-ui/vue';
 import { SfIconVisibility } from '@storefront-ui/vue';
 const runtimeConfig = useRuntimeConfig();
 const { isEditingEnabled, disableActions } = useEditor();
-
-const imagePath = '/images/brand-logo.png';
 
 const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
