@@ -53,11 +53,16 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('delete-block-button')
   }
 
+  get editorLanguagePicker() {
+    return cy.getByTestId('editor-language-picker');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
     return this;
   }
+
   toggleEditMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Edit');
@@ -66,6 +71,10 @@ export class EditorObject extends PageObject {
 
   isToolbarVisible() {
     this.editorToolbar.should('be.visible');
+  }
+
+  isEditorLanguagePickerVisible() {
+    this.editorLanguagePicker.should('be.visible');
   }
 
   assertEditBlockActionsNotVisible() {

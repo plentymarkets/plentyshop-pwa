@@ -5,6 +5,7 @@
       @change="switchLanguage(currentLocale)"
       class="form-select focus:outline-none focus:ring-0 focus:border-transparent"
       v-model="currentLocale"
+      data-testid="editor-language-picker"
     >
       <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-base">
         {{ $t(`lang.${locale}`) }}
