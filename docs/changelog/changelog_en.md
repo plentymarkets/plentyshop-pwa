@@ -21,6 +21,7 @@
 - Restricting guest user access to pages is now handled via a middleware.
 - The PWA cookie hash has been added to the SDK client.
 - When navigating between pages, an animation now indicates the loading progress.
+- New styles for toolbar
 
 ### 👷 Changed
 
