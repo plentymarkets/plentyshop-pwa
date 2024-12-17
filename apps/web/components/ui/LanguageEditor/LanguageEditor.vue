@@ -1,5 +1,8 @@
 <template>
-  <div class="flex items-center space-x-1 md:space-x-2">
+  <div
+    class="flex items-center space-x-1 md:space-x-2"
+    :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }"
+  >
     <SfIconLanguage class="w-4 h-4 md:w-6 md:h-6" />
     <div class="relative">
       <select
@@ -11,6 +14,8 @@
             no-repeat right 0.35rem center;
           background-size: 12px 12px;
         "
+        :disabled="isEditing || disableActions"
+        :class="{ 'cursor-not-allowed': isEditing || disableActions }"
       >
         <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
           {{ $t(`lang.${locale}`) }}
@@ -26,6 +31,7 @@ import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale } = useI18n();
 const { switchLocale } = useLocalization();
+const { isEditing, disableActions } = useEditor();
 
 const switchLanguage = async (locale: string) => {
   await switchLocale(locale, false);
