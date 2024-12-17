@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 bg-white z-[1] md:z-[1] lg:z-[100]">
+  <div class="sticky top-0 bg-white z-[1] md:z-[1] lg:z-[100]" data-testid="edit-mode-toolbar">
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
 
