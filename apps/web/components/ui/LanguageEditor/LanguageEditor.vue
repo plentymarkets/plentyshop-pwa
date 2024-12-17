@@ -1,11 +1,12 @@
 <template>
-  <div class="flex items-center space-x-2">
+  <div class="flex items-center space-x-2" :class="{ 'opacity-40 cursor-not-allowed': isEditing || disableActions }">
     <SfIconLanguage />
     <select
       @change="switchLanguage(currentLocale)"
       class="form-select focus:outline-none focus:ring-0 focus:border-transparent"
       v-model="currentLocale"
       :disabled="isEditing || disableActions"
+      :class="{ 'cursor-not-allowed': isEditing || disableActions }"
     >
       <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-base">
         {{ $t(`lang.${locale}`) }}

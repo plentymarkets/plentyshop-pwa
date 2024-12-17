@@ -12,7 +12,7 @@
             square
             data-testid="open-languageselect-button"
             @click="toggleLanguageSelect()"
-            :disabled="isEditing || disableActions"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
           >
             <template #prefix>
               <SfIconLanguage class="relative" />
@@ -136,7 +136,7 @@
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
         @click="toggleLanguageSelect()"
-        :disabled="isEditing || disableActions"
+        :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
       >
         <SfIconLanguage />
       </UiButton>
