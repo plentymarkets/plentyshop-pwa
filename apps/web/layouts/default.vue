@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only>
-      <UiToolbar data-testid="edit-mode-toolbar" v-show="isPreview" />
+      <UiToolbar v-show="isPreview" />
     </client-only>
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
