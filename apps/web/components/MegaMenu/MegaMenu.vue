@@ -182,7 +182,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { type CategoryTreeItem, categoryTreeGetters } from '@plentymarkets/shop-api';
 import {
   SfIconClose,
