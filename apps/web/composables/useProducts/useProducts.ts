@@ -16,6 +16,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const state = useState<UseProductsState>(`useProducts${category}`, () => ({
     data: {} as Facet,
     loading: false,
+    checkingGuard: false, // this is necesary so category page does not brifly show category while checking the guard.
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
     currentProduct: {} as Product,
   }));

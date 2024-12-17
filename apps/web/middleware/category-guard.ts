@@ -8,25 +8,18 @@
 import { categoryGetters } from '@plentymarkets/shop-api';
 export default defineNuxtRouteMiddleware(async (to) => {
   console.log('category guard middlware');
+    const { getFacetsFromURL } = useCategoryFilter();
     const { isAuthorized, getSession } = useCustomer();
-    const { data: productsCatalog, loading } = useProducts();
-
+    const { data: productsCatalog, fetchProducts, loading, checkingGuard } = useProducts();
     const localePath = useLocalePath();
-    console.log('loading state');
-    console.log(loading.value);
-
     await getSession();
-    // Fetch category is made only after this middlware is called.So accessing getter is problematic.
-    console.log(productsCatalog.value?.category)
-    
-    if(productsCatalog.value?.category) {
-      console.log(categoryGetters.hasCustomerRight(productsCatalog.value.category))
-    }
-
-
+    const params = getFacetsFromURL(to);
+    checkingGuard.value = true;
+    await fetchProducts(params);
     if (productsCatalog.value?.category) {
       if (categoryGetters.hasCustomerRight(productsCatalog.value.category) && !isAuthorized.value) {
         const targetUrl = to.fullPath;
+        checkingGuard.value = false;
         return navigateTo({
           path: localePath(paths.authLogin),
           query: {

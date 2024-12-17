@@ -1,4 +1,5 @@
 import type { FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { RouteLocationNormalizedGeneric } from 'vue-router';
 
 export interface GetFacetsFromURLResponse extends FacetSearchCriteria {
   term?: string;
@@ -12,7 +13,7 @@ export interface Filters {
 }
 
 export interface UseCategoryFiltersResponse {
-  getFacetsFromURL(): GetFacetsFromURLResponse;
+  getFacetsFromURL(to?: RouteLocationNormalizedGeneric): GetFacetsFromURLResponse;
   updateFilters(filters: Filters): void;
   updatePrices(priceMin: string, priceMax: string): void;
   updateItemsPerPage(itemsPerPage: number): void;

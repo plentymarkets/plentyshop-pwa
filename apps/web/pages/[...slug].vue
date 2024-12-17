@@ -5,7 +5,7 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular v-if="loading" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <SfLoaderCircular v-if="loading && checkingGuard" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
     <CategoryPageContent
       v-if="productsCatalog?.products"
       :title="categoryGetters.getCategoryName(productsCatalog.category)"
@@ -34,23 +34,23 @@ const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading } = useProducts();
+const { fetchProducts, data: productsCatalog, productsPerPage, loading, checkingGuard } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 
-const handleQueryUpdate = async () => {
-  await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
-  console.log('from slug');
+// const handleQueryUpdate = async () => {
+//   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
+//   console.log('from slug');
 
-  if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
-    });
-  }
-};
+//   if (!productsCatalog.value.category) {
+//     throw new Response(null, {
+//       status: 404,
+//       statusText: 'Not found',
+//     });
+//   }
+// };
 
-await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+// await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -76,12 +76,12 @@ watch(
   },
 );
 
-watch(
-  () => route.query,
-  async () => {
-    await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
-  },
-);
+// watch(
+//   () => route.query,
+//   async () => {
+//     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
+//   },
+// );
 
 const headTitle = computed(() =>
   productsCatalog.value?.category
