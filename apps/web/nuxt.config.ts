@@ -219,4 +219,6 @@ export default defineNuxtConfig({
 
     registerWebManifestInRouteRules: true,
   },
+
+  ssr: false
 });
