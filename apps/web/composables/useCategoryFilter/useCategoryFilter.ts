@@ -57,8 +57,6 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
     const { getCategoryUrlFromRoute } = useLocalization();
     const config = useRuntimeConfig().public;
 
-    // const newRoute = to ?? route;
-
     return {
       categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
       page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
