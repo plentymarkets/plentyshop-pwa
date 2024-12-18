@@ -25,8 +25,6 @@ export default defineNuxtConfig({
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
-  // eslint-disable-next-line unicorn/expiring-todo-comments
-  // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
       crawlLinks: false,
@@ -183,7 +181,6 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
-          // @ts-ignore
           urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkOnly',
           options: {
@@ -218,7 +215,6 @@ export default defineNuxtConfig({
         },
       ],
     },
-
     registerWebManifestInRouteRules: true,
   },
 });

@@ -1,16 +1,26 @@
 import {
   AllowedHTTPMethods,
   BasicAuth,
+  CorsOptions,
+  ContentSecurityPolicyValue,
   CrossOriginEmbedderPolicyValue,
   CrossOriginOpenerPolicyValue,
   CrossOriginResourcePolicyValue,
   HTTPMethod,
+  PermissionsPolicyValue,
   RateLimiter,
   ReferrerPolicyValue,
+  RequestSizeLimiter,
+  StrictTransportSecurityValue,
+  Ssg,
   XDnsPrefetchControlValue,
   XFrameOptionsValue,
   XPermittedCrossDomainPoliciesValue,
+  XssValidator,
 } from 'nuxt-security';
+
+// Enabling 'unsafe-eval' and 'unsafe-inline' can create security risks
+// TODO: If these are not strictly necessary, we should aim to avoid them
 
 export const securityConfiguration = {
   strict: false,
@@ -23,19 +33,22 @@ export const securityConfiguration = {
       'font-src': ["'self'", 'https:', 'data:'],
       'form-action': ["'self'"],
       'frame-ancestors': ["'self'"],
-      'img-src': ["'self'", 'data:'],
+      'img-src': ["'self'", 'data:', 'https://cdn02.plentymarkets.com'],
       'object-src': ["'none'"],
-      'script-src-attr': ["'none'"],
+      'script-src-attr': ["'unsafe-inline'"],
       'style-src': ["'self'", 'https:', "'unsafe-inline'"],
-      'script-src': ["'self'", 'https:', "'unsafe-inline'", "'strict-dynamic'", "'nonce-{{nonce}}'"],
+      'script-src': ["'self'", 'https:', "'unsafe-inline'", "'strict-dynamic'", "'nonce-{{nonce}}'", "'unsafe-eval'"],
       'upgrade-insecure-requests': true,
-    },
+      'report-to': '', // Sends CSP violation reports to our server
+      'report-uri': '', // Legacy reporting method
+    } as ContentSecurityPolicyValue,
     originAgentCluster: '?1' as const,
     referrerPolicy: 'no-referrer' as ReferrerPolicyValue,
     strictTransportSecurity: {
-      maxAge: 15_552_000,
+      maxAge: 31536000, // 1 year
       includeSubdomains: true,
-    },
+      preload: true, // We should consider adding to the HSTS preload list
+    } as StrictTransportSecurityValue,
     xContentTypeOptions: 'nosniff' as const,
     xDNSPrefetchControl: 'off' as XDnsPrefetchControlValue,
     xDownloadOptions: 'noopen' as const,
@@ -48,13 +61,13 @@ export const securityConfiguration = {
       fullscreen: [],
       geolocation: [],
       microphone: [],
-    },
+    } as PermissionsPolicyValue,
   },
   requestSizeLimiter: {
     maxRequestSizeInBytes: 2_000_000,
     maxUploadFileRequestInBytes: 8_000_000,
     throwError: true,
-  },
+  } as RequestSizeLimiter,
   rateLimiter: {
     tokensPerInterval: 150,
     interval: 300_000,
@@ -66,14 +79,14 @@ export const securityConfiguration = {
   } as RateLimiter,
   xssValidator: {
     throwError: true,
-  },
+  } as XssValidator,
   corsHandler: {
-    origin: 'http://localhost:3000',
+    origin: 'http://localhost:3000', // Limit to specific trusted domains
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'] as HTTPMethod[],
     preflight: {
       statusCode: 204,
     },
-  },
+  } as CorsOptions,
   allowedMethodsRestricter: {
     methods: '*',
     throwError: true,
@@ -90,6 +103,6 @@ export const securityConfiguration = {
     hashStyles: false,
     nitroHeaders: true,
     exportToPresets: true,
-  },
+  } as Ssg,
   sri: true,
 };
