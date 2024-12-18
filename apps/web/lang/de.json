@@ -535,7 +535,7 @@
   },
   "estimatedTax": "MwSt.",
   "etaDelivery": "Voraussichtliche Lieferdauer",
-  "excludedShipping": "zzgl. Versandkosten",
+  "excludedShipping": "zzgl. {shipping}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
   "filters": "Filter",
@@ -590,6 +590,9 @@
   "home": "Startseite",
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
+    "emptyBlock": {
+      "headline": "Hier den ersten Abschnitt hinzufügen."
+    },
     "banner": {
       "moto1": "Fühle die Musik",
       "moto2": "Neue Wireless Pro",
@@ -1001,5 +1004,5 @@
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "double-tap-zoom": "Zoom Zoomen doppeltippen"
+  "double-tap-zoom": "Zum Zoomen doppeltippen"
 }
