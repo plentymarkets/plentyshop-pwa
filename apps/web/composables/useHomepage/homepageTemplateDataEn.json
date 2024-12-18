@@ -67,7 +67,8 @@
         "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
       }
     }
-  ]
+  ],
+  "meta": {
+    "isDefault": null
+  }
 }
-
-

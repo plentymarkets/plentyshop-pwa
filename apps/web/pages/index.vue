@@ -1,5 +1,6 @@
 <template>
   <div>
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)"></EmptyBlock>
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -73,7 +74,7 @@ const {
   updateBlock,
 } = useBlockManager();
 
-const { data, fetchPageTemplate } = useHomepage();
+const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
 const { $i18n } = useNuxtApp();
