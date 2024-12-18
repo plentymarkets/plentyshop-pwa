@@ -42,8 +42,8 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * } = useCategoryFilter();
  * ```
  */
-export const useCategoryFilter = (): UseCategoryFiltersResponse => {
-  const route = useRoute();
+export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
+  const route =  to ?? useRoute();
 
   /**
    * @description Function for getting facets from url.
@@ -53,23 +53,23 @@ export const useCategoryFilter = (): UseCategoryFiltersResponse => {
    * getFacetsFromURL();
    * ```
    */
-  const getFacetsFromURL = (to?: RouteLocationNormalizedGeneric): GetFacetsFromURLResponse => {
+  const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const { getCategoryUrlFromRoute } = useLocalization();
     const config = useRuntimeConfig().public;
     
-    const newRoute = to ?? route;
+    // const newRoute = to ?? route;
 
     return {
-      categoryUrlPath: getCategoryUrlFromRoute(newRoute.fullPath),
-      page: Number(newRoute.query.page as string) || defaults.DEFAULT_PAGE,
-      sort: newRoute.query.sort?.toString(),
-      facets: newRoute.query.facets?.toString(),
-      feedbackPage: Number(newRoute.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
-      feedbacksPerPage: Number(newRoute.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
-      itemsPerPage: Number(newRoute.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
-      term: newRoute.query.term?.toString(),
-      priceMin: newRoute.query.priceMin?.toString(),
-      priceMax: newRoute.query.priceMax?.toString(),
+      categoryUrlPath: getCategoryUrlFromRoute(route.fullPath),
+      page: Number(route.query.page as string) || defaults.DEFAULT_PAGE,
+      sort: route.query.sort?.toString(),
+      facets: route.query.facets?.toString(),
+      feedbackPage: Number(route.query.feedbackPage as string) || defaults.DEFAULT_FEEDBACK_PAGE,
+      feedbacksPerPage: Number(route.query.feedbacksPerPage as string) || config.defaultItemsPerPage,
+      itemsPerPage: Number(route.query.itemsPerPage as string) || defaults.DEFAULT_ITEMS_PER_PAGE,
+      term: route.query.term?.toString(),
+      priceMin: route.query.priceMin?.toString(),
+      priceMax: route.query.priceMax?.toString(),
     };
   };
 

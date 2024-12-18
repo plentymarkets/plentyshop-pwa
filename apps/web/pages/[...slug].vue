@@ -31,7 +31,6 @@ import { SfLoaderCircular } from '@storefront-ui/vue';
 
 definePageMeta({ layout: false, middleware: ['category-guard'] });
 
-const { setCategoriesPageMeta } = useCanonical();
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
@@ -39,20 +38,6 @@ const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading, checkingPermission } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
-
-// const handleQueryUpdate = async () => {
-//   await fetchProducts(getFacetsFromURL()).then(() => checkFiltersInURL());
-//   console.log('from slug');
-
-//   if (!productsCatalog.value.category) {
-//     throw new Response(null, {
-//       status: 404,
-//       statusText: 'Not found',
-//     });
-//   }
-// };
-
-// await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
 
 const breadcrumbs = computed(() => {
   if (productsCatalog.value.category) {
@@ -77,13 +62,6 @@ watch(
     });
   },
 );
-
-// watch(
-//   () => route.query,
-//   async () => {
-//     await handleQueryUpdate().then(() => setCategoriesPageMeta(productsCatalog.value, getFacetsFromURL()));
-//   },
-// );
 
 const headTitle = computed(() =>
   productsCatalog.value?.category
