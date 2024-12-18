@@ -1,9 +1,7 @@
 /**
- * This middleware is used to check if the user is authorized.
+ * This middleware is used to check if category can be accesed without being authenticatedd.
  *
- * Use this auth guard to protect routes that require the user to be logged in.
- *
- * If the user is not authorized, the user will be redirected to the login page.
+ * If the user is not authenticated, the user will be redirected to the login page.
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
 export default defineNuxtRouteMiddleware(async (to) => {
@@ -16,10 +14,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const params = getFacetsFromURL();
   await fetchProducts(params).then(() => checkFiltersInURL());
   if (!productsCatalog.value.category) {
-    throw new Response(null, {
-      status: 404,
-      statusText: 'Not found',
-    });
+    throw createError({ statusCode: 404, statusMessage: 'Not found', fatal: true });
   }
   setCategoriesPageMeta(productsCatalog.value, params);
 
