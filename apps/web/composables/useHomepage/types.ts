@@ -57,16 +57,19 @@ export interface Block {
 
 export interface HomepageData {
   blocks: Block[];
+  meta?: { isDefault: boolean | null };
 }
 
 export interface UseHomepageDataState {
   data: HomepageData;
+  dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
 }
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
+  dataIsEmpty: Readonly<Ref<UseHomepageDataState['dataIsEmpty']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;

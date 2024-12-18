@@ -1,5 +1,4 @@
 import { ref, computed, onMounted } from 'vue';
-
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);

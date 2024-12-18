@@ -572,6 +572,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Added composable that sets canonical url metadata for static pages.
 - Added more default notifications for a variaty of interactions in the PWA
 - Added loading animations where applicable
+- Added empty block component for when there is no data in the json
 
 ### Changed
 
