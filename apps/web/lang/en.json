@@ -535,7 +535,7 @@
   },
   "estimatedTax": "VAT",
   "etaDelivery": "Estimated delivery time",
-  "excludedShipping": "excl. Shipping",
+  "excludedShipping": "excl. {shipping}",
   "failedInfoHeader": "We are really sorry.",
   "failedInfoMessage": "Your order has not been completed.",
   "filters": "Filters",
@@ -590,6 +590,9 @@
   "home": "Home",
   "homepage": {
     "background": "New Wireless Pro headphones with sleek design and modern features",
+    "emptyBlock": {
+      "headline": "Add the first block here."
+    },
     "banner": {
       "moto1": "Feel the music",
       "moto2": "New Wireless Pro",

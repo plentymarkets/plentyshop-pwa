@@ -67,7 +67,10 @@
         "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
       }
     }
-  ]
+  ],
+    "meta": {
+        "isDefault": null
+    }
 }
 
 
