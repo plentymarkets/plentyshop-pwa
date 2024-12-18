@@ -37,6 +37,22 @@ export class EditorObject extends PageObject {
     return cy.get('#close')
   }
 
+  get blockWrapper() {
+    return cy.getByTestId('block-wrapper')
+  }
+
+  get topBlockButton(){
+    return cy.getByTestId('top-add-block')
+  }
+
+  get bottomBlockButton(){
+    return cy.getByTestId('bottom-add-block')
+  }
+  
+  get deleteBlockButton(){
+    return cy.getByTestId('delete-block-button')
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -49,15 +65,7 @@ export class EditorObject extends PageObject {
   }
 
   isToolbarVisible() {
-    this.editPreviewButton.click();
     this.editorToolbar.should('be.visible');
-    return this;
-  }
-
-  isEditBlockVisible() {
-    this.editPreviewButton.click();
-    this.editBlockActions.should('be.visible');
-    return this;
   }
 
   assertEditBlockActionsNotVisible() {
@@ -81,7 +89,7 @@ export class EditorObject extends PageObject {
   }
 
   checkEditorContent() {
-    this.openEditorButton.should('be.visible').first().click({ force: true });
+    this.openEditorButton.first().click({ force: true });
 
     cy.get('body', { timeout: 30000 })
       .find('[data-testid="editor-textarea"]')
@@ -111,4 +119,37 @@ export class EditorObject extends PageObject {
     this.headline.should('have.text', 'New heading from cypress');
     this.description.should('have.text', 'Description from cypress.');
   }
+
+  buttonsExistWithGroupClasses() {
+    this.blockWrapper.first()
+      .should('exist')
+      .and('have.class', 'group')
+      .and('not.have.css', 'outline-style', 'solid');
+    this.blockWrapper.first().within(() => {
+      this.topBlockButton
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+      this.bottomBlockButton
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+      this.editBlockActions
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+    });
+
+  }
+
+  deleteBlock() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.blockWrapper.first().should('exist');
+      this.deleteBlockButton.eq(1).click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength - 1);
+    });
+   }
 }
+

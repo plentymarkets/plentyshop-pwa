@@ -794,7 +794,7 @@
   "procentageSavings": "You save {percent} % on this bundle",
   "productAttributes": {
     "notValidVariation": "Please select a valid variation.",
-    "productInformationMissing": "Product information missing",
+    "productNameMissing": "Product name missing",
     "seeAvailableOptions": "See available options"
   },
   "productDetails": "Product details",
