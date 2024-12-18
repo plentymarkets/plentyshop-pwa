@@ -101,15 +101,18 @@ export const useLocalization = createSharedComposable(() => {
    * @description Function for switching app locale.
    * @param language
    *
+   * @param hideMenu
    * @example switchLocale('en')
    */
-  const switchLocale = async (language: string) => {
+  const switchLocale = async (language: string, hideMenu = true) => {
     const { getCart } = useCart();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
     setVsfLocale(language);
-    toggle();
+    if (hideMenu) {
+      toggle();
+    }
     await getCart().then(
       async () =>
         await navigateTo({

@@ -65,15 +65,7 @@ export class EditorObject extends PageObject {
   }
 
   isToolbarVisible() {
-    this.editPreviewButton.click();
     this.editorToolbar.should('be.visible');
-    return this;
-  }
-
-  isEditBlockVisible() {
-    this.editPreviewButton.click();
-    this.editBlockActions.should('be.visible');
-    return this;
   }
 
   assertEditBlockActionsNotVisible() {
@@ -97,7 +89,7 @@ export class EditorObject extends PageObject {
   }
 
   checkEditorContent() {
-    this.openEditorButton.should('be.visible').first().click({ force: true });
+    this.openEditorButton.first().click({ force: true });
 
     cy.get('body', { timeout: 30000 })
       .find('[data-testid="editor-textarea"]')
@@ -139,6 +131,10 @@ export class EditorObject extends PageObject {
         .and('have.class', 'group-hover:opacity-100')
         .and('have.class', 'group-focus:opacity-100');
       this.bottomBlockButton
+        .should('exist')
+        .and('have.class', 'group-hover:opacity-100')
+        .and('have.class', 'group-focus:opacity-100');
+      this.editBlockActions
         .should('exist')
         .and('have.class', 'group-hover:opacity-100')
         .and('have.class', 'group-focus:opacity-100');
