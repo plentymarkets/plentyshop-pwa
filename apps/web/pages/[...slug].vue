@@ -5,21 +5,23 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular v-if="loading && checkingGuard" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
-    <CategoryPageContent
-      v-if="productsCatalog?.products"
-      :title="categoryGetters.getCategoryName(productsCatalog.category)"
-      :total-products="productsCatalog.pagination.totals"
-      :products="productsCatalog.products"
-      :items-per-page="Number(productsPerPage)"
-    >
-      <template #sidebar>
-        <CategoryTree :category="productsCatalog.category" />
-        <CategorySorting />
-        <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
-        <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
-      </template>
-    </CategoryPageContent>
+    <SfLoaderCircular v-if="loading || checkingPermission" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <template v-else>
+      <CategoryPageContent
+        v-if="productsCatalog?.products"
+        :title="categoryGetters.getCategoryName(productsCatalog.category)"
+        :total-products="productsCatalog.pagination.totals"
+        :products="productsCatalog.products"
+        :items-per-page="Number(productsPerPage)"
+      >
+        <template #sidebar>
+          <CategoryTree :category="productsCatalog.category" />
+          <CategorySorting />
+          <CategoryItemsPerPage class="mt-6" :total-products="productsCatalog.pagination.totals" />
+          <CategoryFilters v-if="facetGetters.hasFilters(productsCatalog.facets)" :facets="productsCatalog.facets" />
+        </template>
+      </CategoryPageContent>
+    </template>
   </NuxtLayout>
 </template>
 
@@ -34,7 +36,7 @@ const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
-const { fetchProducts, data: productsCatalog, productsPerPage, loading, checkingGuard } = useProducts();
+const { fetchProducts, data: productsCatalog, productsPerPage, loading, checkingPermission } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();
 

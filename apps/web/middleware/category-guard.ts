@@ -7,26 +7,22 @@
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
 export default defineNuxtRouteMiddleware(async (to) => {
-  console.log('category guard middlware');
-    const { getFacetsFromURL } = useCategoryFilter();
-    const { isAuthorized, getSession } = useCustomer();
-    const { data: productsCatalog, fetchProducts, loading, checkingGuard } = useProducts();
-    const localePath = useLocalePath();
-    await getSession();
-    const params = getFacetsFromURL(to);
-    checkingGuard.value = true;
-    await fetchProducts(params);
-    if (productsCatalog.value?.category) {
-      if (categoryGetters.hasCustomerRight(productsCatalog.value.category) && !isAuthorized.value) {
-        const targetUrl = to.fullPath;
-        checkingGuard.value = false;
-        return navigateTo({
-          path: localePath(paths.authLogin),
-          query: {
-            redirect: targetUrl,
-          },
-        });
-      }
-    }
-  });
-  
+  const { getFacetsFromURL } = useCategoryFilter();
+  const { isAuthorized, getSession } = useCustomer();
+  const { data: productsCatalog, fetchProducts, loading, checkingPermission } = useProducts();
+  const localePath = useLocalePath();
+  await getSession();
+  const params = getFacetsFromURL(to);
+  checkingPermission.value = true;
+  await fetchProducts(params);
+  const category = productsCatalog.value?.category;
+
+  if (category && categoryGetters.hasCustomerRight(category) && !isAuthorized.value) {
+    const targetUrl = to.fullPath;
+    return navigateTo({
+      path: localePath(paths.authLogin),
+      query: { redirect: targetUrl },
+    });
+  }
+  checkingPermission.value = false;
+});
