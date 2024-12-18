@@ -1,6 +1,5 @@
 node_modules
 .yarn
-.idea
 .vitepress/dist
 .vitepress/cache
 .idea/workspace.xml

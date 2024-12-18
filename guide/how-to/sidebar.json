@@ -50,23 +50,5 @@
                 "link": "/guide/how-to/custom-icon.md"
             }
         ]
-    },
-    {
-        "text": "Module",
-        "collapsed": true,
-        "items": [
-            {
-                "text": "Get started",
-                "link": "/guide/how-to/module/index.md"
-            },
-            {
-                "text": "i18n",
-                "link": "/guide/how-to/module/i18n.md"
-            },
-            {
-                "text": "Tailwind",
-                "link": "/guide/how-to/module/tailwind.md"
-            }
-        ]
     }
 ]
