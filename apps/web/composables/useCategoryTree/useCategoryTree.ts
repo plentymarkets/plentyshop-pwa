@@ -27,7 +27,6 @@ export const useCategoryTree: UseCategoryTreeMethodsReturn = () => {
     state.value.loading = true;
     try {
       const data = await useSdk().plentysystems.getCategoryTree();
-      console.log({ categoryData: data});
       state.value.data = data?.data ?? state.value.data;
       
       return state.value.data;

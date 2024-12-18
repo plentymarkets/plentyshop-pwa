@@ -20,9 +20,6 @@ export default async function useHomepageData() {
   const viewport = useViewport();
   const recommendedProductsCategories = ref(homepageTemplateData.featured);
 
-  console.log("homepage", homepageTemplateData);
-  
-
   const runtimeConfig = useRuntimeConfig();
   const homepageTemplate = ref(homepageTemplateData);
 
