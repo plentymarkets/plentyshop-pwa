@@ -189,6 +189,11 @@ const { referenceRef, floatingRef, style } = useDropdown({
 });
 const categoryTree = ref(categoryTreeGetters.getTree(props.categories));
 
+// onBeforeRouteLeave((to, from) => {
+//   // Close mega menu when user navigates to new page
+//   close();
+// });
+
 const findNode = (keys: number[], node: CategoryTreeItem): CategoryTreeItem => {
   if (keys.length > 1) {
     const [currentKey, ...restKeys] = keys;
