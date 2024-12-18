@@ -101,11 +101,11 @@ jobs:
           forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN }}" }'
           fileForms: '{ "file": "pwa.tar.gz" }'
 
-      - name: Upload build to staging
-        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'staging')
-        id: upload-staging
-        uses: JantHsueh/upload-file-action@1.0
-        with:
-          url: 'https://pwapublish.plentysystems.com'
-          forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN_STAGING }}" }'
-          fileForms: '{ "file": "pwa.tar.gz" }'
+      # - name: Upload build to staging
+      #   if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && ${{ inputs.environment }} == 'staging')
+      #   id: upload-staging
+      #   uses: JantHsueh/upload-file-action@1.0
+      #   with:
+      #     url: 'https://pwapublish.plentysystems.com'
+      #     forms: '{ "token": "${{ secrets.URL_ENDPOINT_TOKEN_STAGING }}" }'
+      #     fileForms: '{ "file": "pwa.tar.gz" }'
