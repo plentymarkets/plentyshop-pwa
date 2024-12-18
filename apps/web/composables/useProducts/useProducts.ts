@@ -15,7 +15,7 @@ export const useProducts: UseProductsReturn = (category = '') => {
   const state = useState<UseProductsState>(`useProducts${category}`, () => ({
     data: {} as Facet,
     loading: false,
-    checkingPermission: false, // used to avoid temporary display of category when navigating without page reload
+    checkingPermission: false,
     productsPerPage: defaults.DEFAULT_ITEMS_PER_PAGE,
     currentProduct: {} as Product,
   }));

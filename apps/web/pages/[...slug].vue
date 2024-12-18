@@ -38,7 +38,6 @@ definePageMeta({ layout: false, middleware: ['category-guard'] });
 const { t, locale } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
 const { fetchProducts, data: productsCatalog, productsPerPage, loading, checkingPermission } = useProducts();
 const { data: categoryTree } = useCategoryTree();
 const { buildCategoryLanguagePath } = useLocalization();

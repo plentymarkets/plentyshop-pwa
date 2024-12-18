@@ -7,14 +7,14 @@
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { getFacetsFromURL } = useCategoryFilter(to);
+  const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter(to);
   const { setCategoriesPageMeta } = useCanonical();
   const { isAuthorized, getSession } = useCustomer();
   const { data: productsCatalog, fetchProducts, loading, checkingPermission } = useProducts();
   const localePath = useLocalePath();
   checkingPermission.value = true;
   const params = getFacetsFromURL();
-  await fetchProducts(params);
+  await fetchProducts(params).then(() => checkFiltersInURL());
   if (!productsCatalog.value.category) {
     throw new Response(null, {
       status: 404,
