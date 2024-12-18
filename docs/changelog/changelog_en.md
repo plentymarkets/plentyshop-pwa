@@ -1,5 +1,11 @@
 # Changelog PlentyONE Shop
 
+## v1.x.x (2025-xx-xx)
+
+### 🩹 Fixed
+
+- Fix for max visible pages on mobile pagination.
+
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
@@ -15,6 +21,8 @@
 - Restricting guest user access to pages is now handled via a middleware.
 - The PWA cookie hash has been added to the SDK client.
 - When navigating between pages, an animation now indicates the loading progress.
+- New styles for toolbar
+- New styles for blocks actions
 
 ### 👷 Changed
 
