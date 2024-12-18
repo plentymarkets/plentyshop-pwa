@@ -590,6 +590,9 @@
   "home": "Startseite",
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
+    "emptyBlock": {
+      "headline": "Hier den ersten Abschnitt hinzufügen."
+    },
     "banner": {
       "moto1": "Fühle die Musik",
       "moto2": "Neue Wireless Pro",
