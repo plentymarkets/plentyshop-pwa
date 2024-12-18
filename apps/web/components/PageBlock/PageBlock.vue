@@ -22,7 +22,13 @@
     </button>
     <UiBlockActions
       v-if="disableActions && blockHasData && blockHasData(block) && isPreview"
-      class="opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+      :class="[
+        'opacity-0',
+        {
+          'hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100': !isTablet,
+          'opacity-100': isTablet && isClicked && clickedBlockIndex === index,
+        },
+      ]"
       :index="index"
       @edit="handleEdit"
       @delete="deleteBlock"
