@@ -12,7 +12,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { isAuthorized, getSession } = useCustomer();
   const { data: productsCatalog, fetchProducts, loading, checkingPermission } = useProducts();
   const localePath = useLocalePath();
-  await getSession();
   checkingPermission.value = true;
   const params = getFacetsFromURL();
   await fetchProducts(params);
