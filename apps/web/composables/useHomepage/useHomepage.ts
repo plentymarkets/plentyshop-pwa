@@ -23,7 +23,10 @@ export const useHomepage: UseHomepageDataReturn = () => {
     if (typeof homepageCategoryId === 'number') {
       const { fetchHomepageTemplate } = useFetchHome();
       state.value.data = fetchHomepageTemplate();
-      if (state.value.data.meta?.isDefault === null) {
+      if (
+        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
+        state.value.data.meta?.isDefault === null
+      ) {
         state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
       }
     } else {
