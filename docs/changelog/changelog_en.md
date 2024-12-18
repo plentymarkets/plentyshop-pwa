@@ -2,6 +2,10 @@
 
 ## v1.x.x (2025-xx-xx)
 
+### New
+
+- Added page for shipping legal text.
+
 ### 🩹 Fixed
 
 - Fix for max visible pages on mobile pagination.
