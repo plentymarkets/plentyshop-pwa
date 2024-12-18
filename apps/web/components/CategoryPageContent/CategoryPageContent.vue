@@ -108,7 +108,7 @@ const { showNetPrices } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();
 
-const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 if (viewport.isLessThan('md')) close();
 </script>
