@@ -55,7 +55,7 @@ import { savePath } from '~/assets/icons/paths/save';
 import { SfIconBase } from '@storefront-ui/vue';
 import { SfIconVisibility } from '@storefront-ui/vue';
 const runtimeConfig = useRuntimeConfig();
-const { isEditingEnabled, disableActions } = useEditor();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
@@ -67,5 +67,8 @@ const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
+  if (isEditing.value) {
+    isEditing.value = false;
+  }
 };
 </script>
