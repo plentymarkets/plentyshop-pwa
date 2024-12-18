@@ -8,7 +8,7 @@ definePageMeta({
 });
 const { data, fetchCategoryTemplate } = useCategoryTemplate();
 const runtimeConfig = useRuntimeConfig();
-await fetchCategoryTemplate(runtimeConfig.public.shippingTextCategoryId);
+await fetchCategoryTemplate(Number(runtimeConfig.public.shippingTextCategoryId));
 
 const text = computed(() => data?.value?.data);
 </script>
