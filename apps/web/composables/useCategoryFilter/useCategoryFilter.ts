@@ -43,7 +43,7 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route =  to ?? useRoute();
+  const route = to ?? useRoute();
 
   /**
    * @description Function for getting facets from url.
@@ -56,7 +56,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
   const getFacetsFromURL = (): GetFacetsFromURLResponse => {
     const { getCategoryUrlFromRoute } = useLocalization();
     const config = useRuntimeConfig().public;
-    
+
     // const newRoute = to ?? route;
 
     return {

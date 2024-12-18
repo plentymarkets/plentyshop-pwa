@@ -5,7 +5,11 @@
     class="relative"
     :class="{ 'pointer-events-none opacity-50': loading }"
   >
-    <SfLoaderCircular v-if="loading || checkingPermission" class="fixed top-[50%] right-0 left-0 m-auto z-[99999]" size="2xl" />
+    <SfLoaderCircular
+      v-if="loading || checkingPermission"
+      class="fixed top-[50%] right-0 left-0 m-auto z-[99999]"
+      size="2xl"
+    />
     <template v-else>
       <CategoryPageContent
         v-if="productsCatalog?.products"
