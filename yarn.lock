@@ -20078,12 +20078,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc-plugin-markdown@npm:^4.3.2":
-  version: 4.3.2
-  resolution: "typedoc-plugin-markdown@npm:4.3.2"
+"typedoc-plugin-markdown@npm:^4.3.3":
+  version: 4.3.3
+  resolution: "typedoc-plugin-markdown@npm:4.3.3"
   peerDependencies:
     typedoc: 0.27.x
-  checksum: 10c0/6e66524fabb8087931552477188e47084ce6ce32e8e937c86795bbf821dfad042a9d03d83ecbfbde6b4f94b78c8370f9f8ed1eeec169dca04759ad2f82057e45
+  checksum: 10c0/91a1281ed4921f9278bf6dc1a551a8720eed4abd44f5e4a2a3bfa0423cc7b2d38ecde150598468f23f2af8eab81225967c0db99bc2e4e30db03b7d0045e314da
   languageName: node
   linkType: hard
 
@@ -21473,7 +21473,7 @@ __metadata:
     sass: "npm:^1.83.0"
     tsx: "npm:^4.19.2"
     typedoc: "npm:^0.27.5"
-    typedoc-plugin-markdown: "npm:^4.3.2"
+    typedoc-plugin-markdown: "npm:^4.3.3"
     typedoc-vitepress-theme: "npm:1.1.1"
     uuid: "npm:^9.0.1"
     vitepress: "npm:^1.5.0"
