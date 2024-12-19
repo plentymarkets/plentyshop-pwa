@@ -66,7 +66,17 @@
           <span>{{ $t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
           <span v-else>{{ $t('itemInclVAT') }}</span>
-          <span>{{ $t('excludedShipping') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
+            <template #shipping>
+              <SfLink
+                :href="localePath(paths.shipping)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('delivery') }}
+              </SfLink>
+            </template>
+          </i18n-t>
         </div>
         <UiPagination
           v-if="totalProducts > 0"
@@ -83,11 +93,13 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
+import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
 import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 
+const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
 
@@ -96,7 +108,7 @@ const { showNetPrices } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();
 
-const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 if (viewport.isLessThan('md')) close();
 </script>

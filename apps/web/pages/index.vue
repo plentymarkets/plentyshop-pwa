@@ -1,5 +1,6 @@
 <template>
   <div>
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)"></EmptyBlock>
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -46,8 +47,7 @@ const {
   updateBlock,
 } = useBlockManager();
 
-const { data, fetchPageTemplate } = useHomepage();
-const { fetchCategoryTemplate } = useCategoryTemplate();
+const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { showNewsletter } = useNewsletter();
 const { $i18n } = useNuxtApp();
 
@@ -72,9 +72,6 @@ const getComponent = (name: string) => {
   if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
-const runtimeConfig = useRuntimeConfig();
-
-await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
 
 fetchPageTemplate();
 </script>
