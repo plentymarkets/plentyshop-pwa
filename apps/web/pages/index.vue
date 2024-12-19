@@ -1,5 +1,6 @@
 <template>
   <KelloggsHeroSection></KelloggsHeroSection>
+  <LanguageSelector />
   <KelloggsRedBar class="mb-12"></KelloggsRedBar>
   <KelloggsOurProducts></KelloggsOurProducts> 
   <KelloggsOurBenefits></KelloggsOurBenefits>
