@@ -48,6 +48,10 @@ const setInitialDataSSR: SetInitialData = async () => {
 
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
+
+    console.log("setInitialDataSSR:DATA", data?.value)
+    console.log("setInitialDataSSR:Categories", data?.value?.data?.categories)
+    
     if (data.value?.data) {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);

@@ -58,7 +58,7 @@
 import { ref, onMounted } from 'vue';
 import { useCart } from '~/composables/useCart';
 import { useNotification } from '~/composables/useNotification';
-import { debounce } from 'lodash';
+import _ from 'lodash';
 const { t } = useI18n();
 const { addToCart, setCartItemQuantity, deleteCartItem } = useCart();
 const { send } = useNotification();
@@ -110,7 +110,7 @@ const updateCart = async () => {
   }
 }
 
-const debouncedAddToCart = debounce(async () => {
+const debouncedAddToCart = _.debounce(async () => {
   if (loading.value || !available) return;
   loading.value = true;
 
