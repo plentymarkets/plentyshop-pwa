@@ -4,6 +4,7 @@
 
 ### New
 
+- Added security module.
 - Added page for shipping legal text.
 
 ### 🩹 Fixed
