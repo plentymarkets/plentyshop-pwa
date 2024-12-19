@@ -8,6 +8,7 @@
 
 ### 🩹 Fixed
 
+- Changed brand mentions to PLENTYONE and changed logo.
 - Fix for max visible pages on mobile pagination.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
