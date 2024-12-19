@@ -48,7 +48,7 @@ const loginUser = async () => {
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
     emits('loggedIn');
-    if(route.query.skipReload === 'true') {
+    if (route.query.skipReload === 'true') {
       return;
     }
     if (!skipReload) {
