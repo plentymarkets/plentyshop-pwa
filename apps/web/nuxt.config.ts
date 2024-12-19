@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: process.env.STORENAME || 'PlentyONE PWA',
+    titleSuffix: process.env.STORENAME || 'PlentyONE Shop',
     fallbackCurrency: 'GBP',
   },
   imports: {
