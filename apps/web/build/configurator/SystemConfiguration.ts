@@ -40,7 +40,7 @@ export class SystemConfiguration {
           : this.findValueInResponseByKey('styling', 'primary'),
       secondary:
         this.findValueInResponseByKey('styling', 'secondary') === ''
-          ? '#31687d'
+          ? '#008ebd'
           : this.findValueInResponseByKey('styling', 'secondary'),
     };
   }
