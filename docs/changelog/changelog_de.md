@@ -86,8 +86,8 @@
 
 #### Konfiguration
 
-- Das Favicon kann jetzt vom PlentyONE System abgerufen werden.
-- Das Logo kann jetzt vom PlentyONE System abgerufen werden.
+- Das Favicon kann jetzt vom plentysystems System abgerufen werden.
+- Das Logo kann jetzt vom plentysystems System abgerufen werden.
 - Die Google Fonts-Schriftart kann jetzt über Umgebungsvariablen konfiguriert werden.
 - Es ist jetzt möglich, eine vollständige Tailwind-Farbpalette von einer einzigen Hauptfarbe zu generieren. Um diese Funktionalität zu nutzen, musst du im Hook `build:before` die Methode `generateScssVariables` aktivieren und die beiden Umgebungsvariablen `PRIMARY` und `SECONDARY` hinterlegen. Diese Variablen stellen jeweils die mittlere Farbe der Palette dar, also die Gewichtung `500`. Im Zusammenhang mit diesem Update wurden alle Vorkommen von `SfButton` mit der neuen Komponente `UiButton` ersetzt. `UiButton` ist in der Funktionalität identisch zu `SfButton`, allerdings wurden einige Gewichtungen an die generierten Paletten angepasst. Eine Prüfung mit ESLint markiert `SfButton` jetzt als `error`. Du kannst diese Regel in der Datei `apps/web/eslintrc.cjs` abschalten.
 - Die in der App verfügbaren Sprachen und die Standardsprache können jetzt über Umgebungsvariablen konfiguriert werden.
@@ -135,7 +135,7 @@
 - Die Bearbeitung des Autorennamens in Rezensionen und Antworten wurde korrigiert.
 - Das Problem mit dem plentyID-Cookie in der PWA-Live-Vorschau wurde behoben.
 - Es wurde behoben, dass die PayPal Express-Schaltfläche auf der Produktseite nur angezeigt wird, wenn der Artikel zum Kauf verfügbar ist.
-- Beim Abrufen von Konfigurationen von PlentyONE wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
+- Beim Abrufen von Konfigurationen von plentysystems wurde behoben, dass der Build Updates nur beim zweiten Durchlauf einspielt.
 - Das verwaiste Formularlabel in den Attributen der Produktseite wurde behoben.
 - Der Datenschutzlink in der Cookieleiste funktionierte nicht richtig. Dies wurde behoben.
 - Kleinere Styling-Probleme im Kreditkartenformular im Checkout und im Bewertungsformular auf der Produktseite wurden behoben.
