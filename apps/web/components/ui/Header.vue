@@ -276,6 +276,8 @@ const accountDropdown = computed(() => [
   },
 ]);
 const navigateToLogin = () => {
-  if (route.path !== localePath(paths.authLogin)) { openAuthentication(); }
-}
+  if (route.path !== localePath(paths.authLogin)) {
+    openAuthentication();
+  }
+};
 </script>
