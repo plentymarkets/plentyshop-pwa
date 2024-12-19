@@ -16,7 +16,7 @@ export default defineNuxtConfig({
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: process.env.STORENAME || 'plentyONE PWA',
+    titleSuffix: process.env.STORENAME || 'PlentyONE PWA',
     fallbackCurrency: 'GBP',
   },
   imports: {
@@ -60,7 +60,7 @@ export default defineNuxtConfig({
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
-      storename: process.env.STORENAME || 'plentyONE AG',
+      storename: process.env.STORENAME || 'plentysystems AG',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
     },
