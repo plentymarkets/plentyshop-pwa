@@ -18,6 +18,8 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
+console.log('i18n LOCALE', locale.value, locale)
+
 await setInitialDataSSR();
 setVsfLocale(locale.value);
 
