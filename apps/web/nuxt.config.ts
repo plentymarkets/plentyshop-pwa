@@ -53,7 +53,7 @@ export default defineNuxtConfig({
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       primaryColor: process.env.PRIMARY || '#0c7992',
-      secondaryColor: process.env.SECONDARY || '#008ebd',
+      secondaryColor: process.env.SECONDARY || '#31687d',
       newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
       newsletterFormShowNames:
         process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
