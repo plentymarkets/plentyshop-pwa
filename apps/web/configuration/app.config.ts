@@ -5,7 +5,7 @@ export const appConfiguration = {
       lang: process.env.DEFAULTLANGUAGE ?? 'en',
     },
     meta: [
-      { name: 'shop-name', content: process.env.STORENAME || 'plentysystems AG' },
+      { name: 'shop-name', content: process.env.STORENAME || 'PLENTYSYSTEMS AG' },
       { name: 'description', content: process.env.METADESC || 'Demo shop for plentyShop PWA' },
       { name: 'keywords', content: process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa' },
       { name: 'theme-color', content: '#0C7992' },
