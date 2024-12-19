@@ -23,7 +23,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const targetUrl = to.fullPath;
     return navigateTo({
       path: localePath(paths.authLogin),
-      query: { redirect: targetUrl },
+      query: { redirect: targetUrl, skipReload: 'true' },
     });
   }
   checkingPermission.value = false;
