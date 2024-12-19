@@ -64,24 +64,11 @@
         </div>
 
         <div class="ml-auto">
-          <UiButton
-                    v-if="productGetters.canBeAddedToCartFromCategoryPage(product)"
-                    size="sm"
-                    class="min-w-[80px] w-fit"
-                    data-testid="add-to-basket-short"
-                    @click="addWithLoader(Number(productGetters.getId(product)))"
-                    :disabled="loading">
-            <template #prefix v-if="!loading">
-              <SfIconShoppingCart size="sm" />
-            </template>
-            <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
-            <span v-else>
-              {{ t('addToCartShort') }}
-            </span>
-          </UiButton>
-          <UiButton v-else type="button" :tag="NuxtLink" :to="productPath" size="sm" class="w-fit">
-            <span>{{ t('showOptions') }}</span>
-          </UiButton>
+          <KelloggsAddToBasket
+              :product-id="Number(productGetters.getId(product))"
+              :available="productGetters.canBeAddedToCartFromCategoryPage(product)"
+              @added-to-cart="handleAddToCartSuccess"
+              :loading="loading" />
         </div>
 
       </div>
@@ -95,6 +82,9 @@ import { SfLink, SfIconShoppingCart, SfLoaderCircular, SfRating, SfCounter } fro
 import type { ProductCardProps } from '~/components/ui/ProductCard/types';
 import { defaults } from '~/composables';
 import { Product } from '@plentymarkets/shop-api';
+import { computed, ref } from 'vue';
+
+const { cartIsEmpty } = useCart();
 
 const localePath = useLocalePath();
 const { t, n } = useI18n();
@@ -115,12 +105,14 @@ const {
   basePrice,
   showBasePrice,
   isFromWishlist = false,
-  isFromSlider = false,
+  isFromSlider = false
 } = defineProps<ProductCardProps>();
 
+onMounted(() => {
+  // console.log('cartIsEmpty', cartIsEmpty); 
+})
+
 const { data: categoryTree } = useCategoryTree();
-const { openQuickCheckout } = useQuickCheckout();
-const { addToCart } = useCart();
 const { price, crossedPrice } = useProductPrice(product);
 const { send } = useNotification();
 const loading = ref(false);
@@ -142,22 +134,10 @@ const getHeight = () => {
   return '';
 };
 
-const addWithLoader = async (productId: number, quickCheckout = true) => {
-  loading.value = true;
-
-  try {
-    await addToCart({
-      productId: productId,
-      quantity: 1,
-    });
-    if (quickCheckout) {
-      openQuickCheckout(product, 1);
-    } else {
-      send({ message: t('addedToCart'), type: 'positive' });
-    }
-  } finally {
-    loading.value = false;
-  }
+// Handle success of adding to cart (can be used to trigger notifications, etc.)
+const handleAddToCartSuccess = () => {
+  loading.value = false;
+  send({ message: t('addedToCart'), type: 'positive' });
 };
 
 const getWeight = (product: Product) => {

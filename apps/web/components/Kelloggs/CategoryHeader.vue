@@ -1,5 +1,5 @@
 <template>
-  <section class="kl-collection-hero" :style="categoryStyles">
+  <section class="kl-collection-hero">
     <div class="kl-collection-hero__content">
       <div class="kl-collection-hero__category">Breakfast</div>
       <h1 class="kl-collection-hero__title">{{ categoryName }}</h1>

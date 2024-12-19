@@ -1,5 +1,8 @@
 <template>
-  <h1>laskdf</h1>
+  <KelloggsHeroSection></KelloggsHeroSection>
+  <KelloggsRedBar class="mb-12"></KelloggsRedBar>
+  <KelloggsOurProducts></KelloggsOurProducts> 
+  <KelloggsOurBenefits></KelloggsOurBenefits>
 </template>
 
 <script lang="ts" setup async>

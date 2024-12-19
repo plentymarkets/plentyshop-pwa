@@ -201,6 +201,8 @@
   "addToCartShort": "Hinzufügen",
   "addToWishlist": "Zur Wunschliste hinzufügen",
   "addedToCart": "Artikel zum Warenkorb hinzugefügt",
+  "removedFromCart": "Artikel aus dem Warenkorb entfernt",
+  "changedCartQuantity": "Menge im Warenkorb angepasst",
   "address": "Adressen",
   "addressContainer": {
     "sameAsShippingAddress": "Entspricht der Lieferadresse"

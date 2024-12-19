@@ -201,6 +201,8 @@
   "addToCartShort": "Add",
   "addToWishlist": "Add to wishlist",
   "addedToCart": "Item added to Cart",
+  "removedFromCart": "Item removed from Cart",
+  "changedCartQuantity": "Changed quantity in cart",
   "address": "Addresses",
   "addressContainer": {
     "sameAsShippingAddress": "Same as shipping address"

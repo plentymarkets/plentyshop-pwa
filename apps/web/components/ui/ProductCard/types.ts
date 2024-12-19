@@ -1,4 +1,4 @@
-import type { Product } from '@plentymarkets/shop-api';
+import type { CartItem, Product } from '@plentymarkets/shop-api';
 
 export type ProductCardProps = {
   product: Product;
