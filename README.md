@@ -18,7 +18,7 @@
     </picture> 
   </a>
 
-  <h1>Alokai Integration With PlentyONE Shop</h1>
+  <h1>Alokai integration with plentysystems</h1>
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
