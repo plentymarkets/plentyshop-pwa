@@ -7,7 +7,7 @@ export const appConfiguration = {
     meta: [
       { name: 'shop-name', content: process.env.STORENAME || 'PLENTYSYSTEMS AG' },
       { name: 'description', content: process.env.METADESC || 'Demo shop for plentyShop PWA' },
-      { name: 'keywords', content: process.env.METAKEYWORDS || 'plentysystems, plentyshop, pwa' },
+      { name: 'keywords', content: process.env.METAKEYWORDS || 'PlentyONE, plentyshop, pwa' },
       { name: 'theme-color', content: '#0C7992' },
       { property: 'og:title', content: process.env.OGTITLE || 'plentyShop PWA Demo' },
       { property: 'og:type', content: 'website' },
