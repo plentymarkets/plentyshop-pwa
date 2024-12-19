@@ -151,5 +151,24 @@ export class EditorObject extends PageObject {
       this.blockWrapper.should('have.length', initialLength - 1);
     });
    }
-}
+   addBlockTop() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.topBlockButton.invoke('removeClass', 'opacity-0'); 
+      this.topBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
+
+  addBlockBottom() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.bottomBlockButton.invoke('removeClass', 'opacity-0'); 
+      this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
+  }
 
