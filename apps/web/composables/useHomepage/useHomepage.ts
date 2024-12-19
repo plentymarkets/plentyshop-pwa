@@ -15,15 +15,20 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   const { $i18n } = useNuxtApp();
   const runtimeConfig = useRuntimeConfig();
+  const { fetchCategoryTemplate } = useCategoryTemplate();
+  const { fetchHomepageTemplate } = useFetchHome();
 
   const currentLocale = ref($i18n.locale.value);
   const fetchPageTemplate = (): void => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
-      const { fetchHomepageTemplate } = useFetchHome();
+      fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
       state.value.data = fetchHomepageTemplate();
-      if (state.value.data.meta?.isDefault === null) {
+      if (
+        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
+        state.value.data.meta?.isDefault === null
+      ) {
         state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
       }
     } else {
