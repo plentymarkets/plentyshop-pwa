@@ -9,7 +9,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { setCategoriesPageMeta } = useCanonical();
   const { isAuthorized, getSession } = useCustomer();
   await getSession();
-  const { data: productsCatalog, fetchProducts, loading, checkingPermission } = useProducts();
+  const { data: productsCatalog, fetchProducts, checkingPermission } = useProducts();
   const localePath = useLocalePath();
   checkingPermission.value = true;
   const params = getFacetsFromURL();
