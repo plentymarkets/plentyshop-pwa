@@ -19,11 +19,11 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { fetchHomepageTemplate } = useFetchHome();
 
   const currentLocale = ref($i18n.locale.value);
-  const fetchPageTemplate = (): void => {
+  const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
-      fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+      await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
       state.value.data = fetchHomepageTemplate();
       if (
         (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
