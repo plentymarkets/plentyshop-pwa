@@ -18,7 +18,7 @@
     </picture> 
   </a>
 
-  <h1>Alokai integration with plentysystems</h1>
+  <h1>Alokai integration with PlentyONE</h1>
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
@@ -26,7 +26,7 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-Welcome to the plentysystems integration for Alokai.
+Welcome to the PlentyONE integration for Alokai.
 
 ## Development setup
 
@@ -41,7 +41,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Create authentication token
 
-This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
+This project queries data from PlentyONE by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
 
 To enable authentication, create a [Personal Access Token](https://github.com/settings/tokens/new) (PAT) with the scope **read:packages**.
 
