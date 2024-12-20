@@ -1,9 +1,24 @@
 <div align="center">
-  <a href="https://alokai.com//"><img src="https://images.contentstack.io/v3/assets/bltb1a38d5d52a9d1a1/blt847d04e30da9e1dc/65dc9501f86c24118b8df9d8/alokai-logo.svg?auto=webp&height=24" alt="Alokai" height="80px" /></a>
 
-<a href="https://www.plentymarkets.com/"><img src="https://139853260.fs1.hubspotusercontent-eu1.net/hubfs/139853260/logo.svg" alt="PlentyOne logo" height="160px" /></a>
+  <a href="https://plentyone.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+    </picture> 
+  </a>
 
-  <h1 align="center">Alokai Integration With PlentyONE</h1>
+### powered by
+
+  <a href="https://alokai.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
+    </picture> 
+  </a>
+
+  <h1>Alokai integration with plentysystems</h1>
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
@@ -11,7 +26,7 @@
 [![YouTube Channel Subscribers](https://img.shields.io/youtube/channel/subscribers/UCauJsvmhbPNp6ii7tCGwxMg?style=social)](https://www.youtube.com/@plentymarkets)
 [![Discord](https://img.shields.io/discord/770285988244750366?label=join%20discord&logo=Discord&logoColor=white)](https://discord.vuestorefront.io)
 
-Welcome to the PlentyONE integration for Alokai.
+Welcome to the plentysystems integration for Alokai.
 
 ## Development setup
 
@@ -26,7 +41,7 @@ We recommend working with a fork of this repository. A fork allows you to easily
 
 ### Create authentication token
 
-This project queries data from PlentyONE by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
+This project queries data from plentysystems by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate.
 
 To enable authentication, create a [Personal Access Token](https://github.com/settings/tokens/new) (PAT) with the scope **read:packages**.
 
