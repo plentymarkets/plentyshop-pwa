@@ -19,7 +19,6 @@ const navigateAfterAuth = (skipReload: boolean) => {
   const redirectUrl = router.currentRoute.value.query.redirect as string;
   if (redirectUrl && !skipReload) {
     window.location.href = localePath(redirectUrl);
-    return;
   }
 };
 </script>
