@@ -1,15 +1,41 @@
 export const categories = [
   {
-    key: 'legal',
+    key: 'content',
     subcategories: [
       {
-        key: 'termsAndConditions',
-        link: paths.termsAndConditions,
+        key: 'kelloggsHistory',
+        link: paths.home, // No matching path, so using home
       },
       {
-        key: 'cancellationRights',
-        link: paths.cancellationRights,
+        key: 'betterDays',
+        link: paths.home, // No matching path, so using home
       },
+      {
+        key: 'pringles',
+        link: paths.home, // No matching path, so using home
+      },
+      {
+        key: 'breakfast',
+        link: paths.home, // No matching path, so using home
+      },
+    ],
+  },
+  {
+    key: 'service',
+    subcategories: [
+      {
+        key: 'paymentAndShipping',
+        link: paths.home, // No matching path, so using home
+      },
+      {
+        key: 'faq',
+        link: paths.home, // No matching path, so using home
+      },
+    ],
+  },
+  {
+    key: 'legal',
+    subcategories: [
       {
         key: 'legalDisclosure',
         link: paths.legalDisclosure,
@@ -19,17 +45,8 @@ export const categories = [
         link: paths.privacyPolicy,
       },
       {
-        key: 'cancellationForm',
-        link: paths.cancellationForm,
-      },
-    ],
-  },
-  {
-    key: 'contact',
-    subcategories: [
-      {
-        key: 'contact',
-        link: '/contact',
+        key: 'termsAndConditions',
+        link: paths.termsAndConditions,
       },
     ],
   },

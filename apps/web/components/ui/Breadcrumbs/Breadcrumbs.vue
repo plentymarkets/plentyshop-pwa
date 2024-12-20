@@ -1,5 +1,5 @@
 <template>
-  <nav data-testid="breadcrumbs" class="inline-flex items-center text-sm font-normal" :class="{'absolute' : isCategoryPage}">
+  <nav data-testid="breadcrumbs" class="breadcrumbs inline-flex items-center text-sm font-normal" :class="{'absolute' : isCategoryPage}">
     <ol class="flex w-auto leading-none group md:flex-wrap">
       <li class="flex items-center sm:hidden text-neutral-500 z-10">
         <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
@@ -40,6 +40,7 @@
         v-for="(item, index) in breadcrumbs"
         :key="item.name"
         class="peer hidden sm:flex items-center peer-[:nth-of-type(even)]:before:content-['/'] peer-[:nth-of-type(even)]:before:px-2 peer-[:nth-of-type(even)]:before:leading-5 last-of-type:flex last-of-type:before:font-normal last-of-type:before:text-neutral-500 text-neutral-500 last-of-type:text-neutral-900 last-of-type:font-medium"
+        :class="{'!text-white !last-of-type:before:text-white' : isCategoryPage}"
       >
         <SfLink
           v-if="index < breadcrumbs.length - 1"
@@ -117,6 +118,8 @@ useHead({
 });
 
 const isCategoryPage = computed(() => {
+  console.log('route.name', route.name);
+  
   return route.name == 'slug___de___default'
 });
 </script>

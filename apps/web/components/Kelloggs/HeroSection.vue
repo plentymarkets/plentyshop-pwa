@@ -98,9 +98,11 @@
 
 .kl-hero-section .kl-hero-section__content .kl-hero-section__description {
   font-size: 24px;
+  margin-top: 30px;
   margin-bottom: 30px;
   line-height: 1.2;
   max-width: 600px;
+  color: white;
 }
 
 @media (max-width: 1050px) {

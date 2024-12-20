@@ -49,7 +49,8 @@ const setInitialDataSSR: SetInitialData = async () => {
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
 
-    console.log("setInitialDataSSR:DATA", data?.value)
+    console.log("setInitialDataSSR:DATA", data)
+    console.log("setInitialDataSSR:DATA.VALUE", data?.value)
     console.log("setInitialDataSSR:Categories", data?.value?.data?.categories)
     
     if (data.value?.data) {

@@ -5,8 +5,7 @@
         data-testid="purchase-card">
     <div class="relative">
       <div class="drift-zoom-image">
-
-        <section class="">
+        <section class="max-w-[520px] ml-auto px-4 pt-6 lg:pt-0 lg:px-0">
           <div class="flex">
             <h1 class="font-bold g-32" data-testid="product-name">
               {{ productGetters.getName(product) }}
@@ -34,7 +33,7 @@
           <div class="flex flex-col mt-2">
             <Price :price="priceWithProperties" :crossed-price="crossedPrice" />
             <div class="text-gray-600">
-              <p class="g-12-m mt-1">{{ product.variation.weightG }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
+              <p class="g-12-m mt-1 text-gray-600">{{ product.variation.weightG }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
               <div class="g-12-m flex mb-4 mt-1">
                 <span>{{ t('asterisk') }}</span>
                 <span class="mr-1">{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
@@ -114,97 +113,99 @@
           </div>
 
 
+
+
           <section class="mt-4">
             <NuxtLazyHydrate when-visible>
-                <!-- Produktbeschreibung -->
-                <UiAccordionItem
-                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
-                  <template #summary>
-                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-                      Produktbeschreibung
-                    </h2>
-                  </template>
-                  <div>PLACEHOLDER_DESCRIPTION</div>
-                </UiAccordionItem>
+              <!-- Produktbeschreibung -->
+              <UiAccordionItem
+                               summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                <template #summary>
+                  <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                    Produktbeschreibung
+                  </h2>
+                </template>
+                <div class="kl-product-desc" v-html="productGetters.getDescription(product)"></div>
+              </UiAccordionItem>
 
-                <!-- Produktinformationen -->
-                <UiAccordionItem
-                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
-                  <template #summary>
-                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-                      Produktinformationen
-                    </h2>
-                  </template>
-                  <div>
-                    <div class="kl-details-container">
-                      <div class="kl-details-row">
-                        <div class="kl-details-cell kl-label">Artikelnummer</div>
-                        <div class="kl-details-cell">PLACEHOLDER_SKU</div>
-                      </div>
-                      <div class="kl-details-row">
-                        <div class="kl-details-cell kl-label">Verkehrsbezeichnung</div>
-                        <div class="kl-details-cell">PLACEHOLDER_VERKEHRSBEZEICHNUNG</div>
-                      </div>
-                      <div class="kl-details-row">
-                        <div class="kl-details-cell kl-label">Hinweis</div>
-                        <div class="kl-details-cell">PLACEHOLDER_STORAGE_NOTE</div>
-                      </div>
-                      <div class="kl-details-row">
-                        <div class="kl-details-cell kl-label">Inhalt</div>
-                        <div class="kl-details-cell">PLACEHOLDER_CONTENT</div>
-                      </div>
-                      <div class="kl-details-row">
-                        <div class="kl-details-cell kl-label">Nettogewicht</div>
-                        <div class="kl-details-cell">PLACEHOLDER_WEIGHT</div>
+              <!-- Produktinformationen -->
+              <UiAccordionItem
+                               summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                <template #summary>
+                  <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                    Produktinformationen
+                  </h2>
+                </template>
+                <div>
+                  <div class="kl-details-container">
+                    <div class="kl-details-row">
+                      <div class="kl-details-cell kl-label">Artikelnummer</div>
+                      <div class="kl-details-cell">{{ product?.variation?.number }}</div>
+                    </div>
+                    <div class="kl-details-row">
+                      <div class="kl-details-cell kl-label">Verkehrsbezeichnung</div>
+                      <div class="kl-details-cell">{{ getPropertyValue(6, 14) }}</div>
+                    </div>
+                    <div class="kl-details-row">
+                      <div class="kl-details-cell kl-label">Hinweis</div>
+                      <div class="kl-details-cell">
+                        <span v-if="getManufacturerName(product) === 'Pringles'">Unter Schutzatmosphäre verpackt</span>
+                        <span v-else>Kühl und trocken lagern</span>
                       </div>
                     </div>
-                    <div class="kl-hersteller">
-                      PLACEHOLDER_MANUFACTURER
+                    <div class="kl-details-row">
+                      <div class="kl-details-cell kl-label">Inhalt</div>
+                      <div class="kl-details-cell">{{ getProductContent(product) }}</div>
+                    </div>
+                    <div class="kl-details-row">
+                      <div class="kl-details-cell kl-label">Nettogewicht</div>
+                      <div class="kl-details-cell">{{ productGetters.getWeightG(product) }}g</div>
                     </div>
                   </div>
-                </UiAccordionItem>
-
-                <!-- Zutaten -->
-                <UiAccordionItem
-                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
-                  <template #summary>
-                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-                      Zutaten
-                    </h2>
-                  </template>
-                  <div>
-                    <p class="kl-nutrition-text">PLACEHOLDER_VERKEHRSBEZEICHNUNG</p>
-                    <p class="kl-nutrition-text">PLACEHOLDER_INGREDIENTS</p>
-                    <p class="kl-nutrition-text">PLACEHOLDER_STORAGE_NOTE</p>
+                  <div class="kl-hersteller">
+                    <KelloggsManufacturer :product="product" :manufacturer="getManufacturerName(product)" />
                   </div>
-                </UiAccordionItem>
+                </div>
+              </UiAccordionItem>
 
-                <!-- Durchschnittliche Nährwerte -->
-                <UiAccordionItem
-                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
-                  <template #summary>
-                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-                      Durchschnittliche Nährwerte
-                    </h2>
-                  </template>
-                  <div>
-                    PLACEHOLDER_NUTRITIONAL_VALUES
-                    <p class="kl-nutrition-text">PLACEHOLDER_PORTIONS</p>
-                  </div>
-                </UiAccordionItem>
+              <!-- Zutaten -->
+              <UiAccordionItem
+                               summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                <template #summary>
+                  <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                    Zutaten
+                  </h2>
+                </template>
+                <div>
+                  <div v-html="getPropertyValue(6, 42)"></div>
+                </div>
+              </UiAccordionItem>
 
-                <!-- Allergenkennzeichnung -->
-                <UiAccordionItem
-                                 summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
-                  <template #summary>
-                    <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
-                      Allergenkennzeichnung
-                    </h2>
-                  </template>
-                  <div>
-                    PLACEHOLDER_ALLERGENE
-                  </div>
-                </UiAccordionItem>
+              <!-- Durchschnittliche Nährwerte -->
+              <UiAccordionItem
+                               summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                <template #summary>
+                  <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                    Durchschnittliche Nährwerte
+                  </h2>
+                </template>
+                <div>
+                  <div class="nutritionalValuescontent" v-html="getPropertyValue(6, 30)"></div>
+                </div>
+              </UiAccordionItem>
+
+              <!-- Allergenkennzeichnung -->
+              <UiAccordionItem
+                               summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none">
+                <template #summary>
+                  <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+                    Allergenkennzeichnung
+                  </h2>
+                </template>
+                <div>
+                  {{ getPropertyValue(6, 41) }}
+                </div>
+              </UiAccordionItem>
             </NuxtLazyHydrate>
           </section>
         </section>
@@ -250,6 +251,30 @@ onMounted(() => {
     setAttribute(product, true);
   }, 300);
 })
+
+const getPropertyValue = (groupId: Number, propertyId: Number) => {
+  return product?.variationProperties
+    ?.find(group => group.id === groupId)
+    ?.properties
+    ?.find(property => property.id === propertyId)
+    ?.values?.value;
+}
+
+const getManufacturerName = (product: Product) => {
+  //@ts-ignore
+  return product?.item?.manufacturer?.name;
+}
+
+const getProductContent = (product: Product) => {
+  let vpe = getPropertyValue(6, 27);
+  let unit = `${vpe ?? ''} ${getPropertyValue(6, 24) ?? ''}`;
+
+  let contentInfoString = getPropertyValue(6, 64);
+  let beinhaltet = (vpe && Number(vpe) > 1) ? 'beinhalten ' : 'beinhaltet ';
+  if (contentInfoString) return unit + ' ' + beinhaltet + contentInfoString;
+
+  return unit;
+}
 
 const getKgPrice = (product: Product) => {
   let weight = product?.variation?.weightG;
@@ -349,3 +374,154 @@ const scrollToReviews = () => {
   }
 };
 </script>
+
+
+<style lang="scss">
+.kl-hersteller {
+  border-top: 1px solid black;
+  margin-top: 25px;
+  padding-bottom: 10px;
+}
+
+p,
+ul li {
+  margin-bottom: 0;
+  font-weight: 500;
+  line-height: 1.4;
+  font-size: 16px;
+  color: black;
+}
+
+p.kl-pd-title {
+  font-weight: 700;
+  margin-top: 20px;
+}
+
+p.kl-pd-title+p {
+  margin-top: 0;
+}
+
+.kl-product-desc {
+  &> :first-child {
+    margin-top: 0px;
+  }
+
+  &> :last-child {
+    padding-bottom: 25px;
+  }
+}
+
+.kl-details-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  * {
+    color: black;
+    letter-spacing: 0;
+  }
+
+  .kl-details-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .kl-details-cell {
+      flex: 1;
+      padding: 8px;
+      border-bottom: 1px solid #e7e7e7;
+      font-weight: 500;
+
+      &.kl-label {
+        font-weight: 700;
+        min-width: 175px;
+        padding-left: 0;
+      }
+    }
+
+    .kl-details-table-top .kl-details-cell {
+      font-weight: 700;
+    }
+  }
+}
+
+.nutritionalValuescontent {
+  & > p {
+    font-size: 14px;
+    margin-top: 12px;
+  }
+}
+
+#nutritions {
+  width: 100%;
+  border: none;
+  box-shadow: none;
+  line-height: 1.3;
+
+  p {
+    margin: 0;
+  }
+
+  tr {
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+
+    td {
+      padding: 10px 5px;
+      border: none;
+      font-weight: 500;
+      font-size: 14px;
+
+      p {
+        font-weight: 500;
+        font-size: 14px;
+      }
+    }
+
+    td:first-child {
+      font-weight: 700;
+      color: black;
+
+      p {
+        font-weight: 700;
+      }
+
+      @media only screen and (min-width: 1000px) {
+        width: 45%;
+      }
+    }
+
+    td:nth-child(4) {
+      text-align: right;
+    }
+  }
+
+  tr:first-child {
+    font-weight: 700;
+    border-bottom: 1px solid black;
+    white-space: nowrap;
+  }
+
+  tr:nth-child(3),
+  tr:nth-child(5) {
+    border-bottom: none;
+  }
+
+  tr:nth-child(4),
+  tr:nth-child(6) {
+    transform: translatey(-12px);
+
+    td:first-child {
+      font-weight: 500;
+
+      p {
+        font-weight: 500;
+      }
+    }
+
+    td {
+      padding: 10px 5px 0 5px;
+    }
+  }
+}
+</style>

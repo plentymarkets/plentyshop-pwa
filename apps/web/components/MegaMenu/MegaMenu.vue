@@ -1,5 +1,5 @@
 <template>
-  <header ref="referenceRef" class="relative w-full z-40 md:sticky border-b">
+  <header ref="referenceRef" class="relative w-full z-40 lg:sticky top-0 border-b z-50">
     <div
          class="flex justify-between items-center flex-wrap md:flex-nowrap px-4 md:px-10 py-2 md:py-5 w-full h-full border-0 bg-white border-neutral-200 md:h-20 md:z-10"
          data-testid="navbar-top">
@@ -136,7 +136,7 @@
               <li v-else>
                 <SfListItem size="lg" tag="button" type="button" class="!p-0">
                   <div class="flex items-center w-100">
-                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click="close()">
+                    <NuxtLink class="flex-1 m-0 p-4 pr-0" :to="localePath(generateCategoryLink(node))" @click.stop="goNext(node.id)">
                       <div class="flex items-center">
                         <p class="text-left">{{ categoryTreeGetters.getName(node) }}</p>
                         <SfCounter class="ml-2">{{ categoryTreeGetters.getCount(node) }}</SfCounter>

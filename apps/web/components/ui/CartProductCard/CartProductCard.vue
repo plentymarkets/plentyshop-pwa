@@ -1,109 +1,110 @@
 <template>
-  <div class="relative flex border-neutral-200 border-b min-w-[320px] p-4 last:mb-0" data-testid="cart-product-card">
-    <div class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px]">
-      <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center">
-        <NuxtImg
-          ref="img"
-          :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
-          :alt="cartGetters.getItemName(cartItem)"
-          width="300"
-          height="300"
-          loading="lazy"
-          class="w-full h-auto border rounded-md border-neutral-200"
-        />
-        <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
-      </SfLink>
-    </div>
-    <div class="flex flex-col pl-4 min-w-[180px] flex-1">
-      <SfLink
-        :tag="NuxtLink"
-        :to="path"
-        variant="secondary"
-        class="w-fit no-underline typography-text-sm sm:typography-text-lg"
-      >
-        {{ cartGetters.getItemName(cartItem) }}
-      </SfLink>
-
-      <div v-if="!cartItem.variation?.bundleComponents">
-        {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
-      </div>
-
-      <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" />
-
-      <div v-if="!cartItem.variation?.bundleComponents">
-        <div v-if="cartItem.variation" class="mt-2">
-          <BasePrice
-            v-if="productGetters.showPricePerUnit(cartItem.variation)"
-            :base-price="basePriceSingleValue"
-            :unit-content="productGetters.getUnitContent(cartItem.variation)"
-            :unit-name="productGetters.getUnitName(cartItem.variation)"
-          />
-        </div>
-        <div class="my-2">
-          <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
-            <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
-              <span class="mr-1">{{ attribute.label }}:</span>
-              <span class="font-medium">{{ attribute.value }}</span>
-            </li>
-          </ul>
-          <div
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
-            v-if="cartItem.basketItemOrderParams.length > 0"
-          >
-            <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
-            <CartOrderProperty
-              v-for="property in cartItem.basketItemOrderParams"
-              :key="property.propertyId"
-              :cart-item="cartItem"
-              :basket-item-order-param="property"
-            />
-          </div>
-          <div
-            v-if="cartGetters.getVariation(cartItem)"
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3"
-          >
-            <VariationProperties :product="cartGetters.getVariation(cartItem)" />
-          </div>
-        </div>
-      </div>
-      <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
-        <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
-          <SfLink
-            :tag="NuxtLink"
-            v-if="productBundleGetters.isItemBundleSalable(item)"
-            :to="localePath(productBundleGetters.getBundleItemUrl(item))"
-            variant="secondary"
-            class="no-underline typography-text-sm"
-          >
-            <p>
-              {{ productBundleGetters.getBundleItemQuantity(item) }}x
-              <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
-            </p>
+  <div class="relative flex border-neutral-200 border-b min-w-[320px] py-4 last:mb-0" data-testid="cart-product-card">
+    <div class="grid grid-cols-3 lg:grid-cols-5 items-start min-w-[180px] flex-1">
+      <div class="flex mb-[-13%] lg:mb-0 col-span-3 pr-10 lg:pr-2">
+        <div class="relative overflow-hidden w-[100px] sm:w-[128px] kl-card-image-zoom">
+          <SfLink :tag="NuxtLink" :to="path" class="flex items-center justify-center ">
+            <NuxtImg
+                     ref="img"
+                     :src="addModernImageExtension(cartItemImage) || '/images/placeholder.png'"
+                     :alt="cartGetters.getItemName(cartItem)"
+                     width=""
+                     height=""
+                     loading="lazy"
+                     class="w-full h-auto" />
+            <SfLoaderCircular v-if="!imageLoaded" class="absolute" size="sm" />
           </SfLink>
-          <p class="text-sm" v-else>
-            {{ productBundleGetters.getBundleItemQuantity(item) }}x
-            <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+        </div>
+
+        <div class="pl-4">
+          <SfLink
+                  :tag="NuxtLink"
+                  :to="path"
+                  variant="secondary"
+                  class="w-fit no-underline g-12 lg:g-16 mt-2 block">
+            {{ cartGetters.getItemName(cartItem) }}
+          </SfLink>
+
+          <p class="g-12-m lg:g-16-m mt-1">
+            Einzelpreis: {{ n(cartItem.price, 'currency') }}
           </p>
+
+          <div v-if="!cartItem.variation?.bundleComponents">
+            {{ n(cartGetters.getCartItemPrice(cartItem), 'currency') }}
+          </div>
+
+          <!-- <UiBadges v-if="cartItem.variation" :product="cartItem.variation" :use-availability="true" /> -->
+
+          <div v-if="!cartItem.variation?.bundleComponents">
+            <div v-if="cartItem.variation" class="mt-2">
+              <BasePrice
+                         v-if="productGetters.showPricePerUnit(cartItem.variation)"
+                         :base-price="basePriceSingleValue"
+                         :unit-content="productGetters.getUnitContent(cartItem.variation)"
+                         :unit-name="productGetters.getUnitName(cartItem.variation)" />
+            </div>
+            <div class="my-2">
+              <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
+                <li v-for="attribute in cartGetters.getItemAttributes(cartItem)" :key="attribute.name">
+                  <span class="mr-1">{{ attribute.label }}:</span>
+                  <span class="font-medium">{{ attribute.value }}</span>
+                </li>
+              </ul>
+              <div
+                   class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
+                   v-if="cartItem.basketItemOrderParams.length > 0">
+                <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
+                <CartOrderProperty
+                                   v-for="property in cartItem.basketItemOrderParams"
+                                   :key="property.propertyId"
+                                   :cart-item="cartItem"
+                                   :basket-item-order-param="property" />
+              </div>
+              <div
+                   v-if="cartGetters.getVariation(cartItem)"
+                   class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700 mt-3">
+                <VariationProperties :product="cartGetters.getVariation(cartItem)" />
+              </div>
+            </div>
+          </div>
+          <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
+            <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
+              <SfLink
+                      :tag="NuxtLink"
+                      v-if="productBundleGetters.isItemBundleSalable(item)"
+                      :to="localePath(productBundleGetters.getBundleItemUrl(item))"
+                      variant="secondary"
+                      class="no-underline typography-text-sm">
+                <p>
+                  {{ productBundleGetters.getBundleItemQuantity(item) }}x
+                  <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+                </p>
+              </SfLink>
+              <p class="text-sm" v-else>
+                {{ productBundleGetters.getBundleItemQuantity(item) }}x
+                <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="items-start sm:items-center sm:mt-auto flex flex-col sm:flex-row">
-        <span
-          v-if="currentFullPrice"
-          class="text-secondary-600 sm:order-1 font-bold typography-text-sm sm:typography-text-lg sm:ml-auto"
-        >
-          {{ n(currentFullPrice || 0, 'currency') }}
-        </span>
+      <div class="col-start-2 lg:col-start-4">
         <UiQuantitySelector
-          ref="quantitySelectorReference"
-          :disabled="disabled"
-          @change-quantity="debounceQuantity"
-          :value="itemQuantitySelector"
-          :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
-          :max-value="maximumOrderQuantity"
-          class="mt-4 sm:mt-0"
-        />
+                            ref="quantitySelectorReference"
+                            :disabled="disabled"
+                            @change-quantity="debounceQuantity"
+                            :value="itemQuantitySelector"
+                            :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
+                            :max-value="maximumOrderQuantity"
+                            class="mt-4 sm:mt-0" />
       </div>
+
+      <span
+            v-if="currentFullPrice"
+            class="sm:order-1 g-12 lg:g-16 text-right mt-auto lg:mt-0">
+        {{ n(currentFullPrice || 0, 'currency') }}
+      </span>
     </div>
 
     <div v-if="deleteLoading" class="absolute top-2 right-2 bg-white p-1.5">
@@ -111,22 +112,21 @@
     </div>
 
     <UiButton
-      v-else-if="!disabled"
-      @click="deleteItem"
-      square
-      :aria-label="t('removeItemFromBasket')"
-      variant="tertiary"
-      size="sm"
-      class="absolute top-2 right-2 bg-white"
-    >
-      <SfIconClose size="sm" />
+              v-else-if="!disabled"
+              @click="deleteItem"
+              square
+              :aria-label="t('removeItemFromBasket')"
+              variant="tertiary"
+              size="sm"
+              class="absolute top-2 lg:top-auto lg:bottom-2 right-0 bg-white">
+      <SfIconDelete size="base" class="text-black" />
     </UiButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import { productGetters, productBundleGetters, cartGetters } from '@plentymarkets/shop-api';
-import { SfLink, SfLoaderCircular, SfIconClose } from '@storefront-ui/vue';
+import { SfLink, SfLoaderCircular, SfIconDelete } from '@storefront-ui/vue';
 import type { CartProductCardProps } from '~/components/ui/CartProductCard/types';
 import type { Product } from '@plentymarkets/shop-api';
 import _ from 'lodash';

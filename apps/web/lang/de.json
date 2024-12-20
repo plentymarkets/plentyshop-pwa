@@ -336,6 +336,22 @@
         "shippingDelivery": "Versand & Lieferung",
         "storeLocator": "Filialfinder"
       }
+    },
+    "content": {
+      "label": "Inhalt",
+      "subcategories": {
+        "kelloggsHistory": "Die Kellogg’s Geschichte",
+        "betterDays": "Better Days - Versprechen",
+        "pringles": "Pringles",
+        "breakfast": "Frühstück"
+      }
+    },
+    "service": {
+      "label": "Service",
+      "subcategories": {
+        "paymentAndShipping": "Zahlung & Versand",
+        "faq": "FAQ"
+      }
     }
   },
   "category": "Kategorie",
@@ -570,7 +586,7 @@
     "prev": "Vorherige",
     "thumb": "Zu Bild {index}"
   },
-  "goToCheckout": "Zur Kasse",
+  "goToCheckout": "Weiter zur Kasse",
   "goToHomepage": "Zur Startseite gehen",
   "goToPage": "Zur Seite navigieren {page}",
   "googlePay": {
@@ -682,7 +698,7 @@
   "min": "Min.",
   "minimumOrderQuantity": "Minimale Bestellmenge: {count}",
   "moreItemsOfThisCategory": "Weitere Artikel in dieser Kategorie",
-  "myCart": "Mein Warenkorb",
+  "myCart": "Warenkorb",
   "newBillingAddress": "Neue Rechnungsadresse",
   "newShippingAddress": "Neue Lieferadresse",
   "newsletter": {

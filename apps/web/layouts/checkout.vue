@@ -2,7 +2,7 @@
   <main data-testid="checkout-layout">
     <NuxtLazyHydrate when-visible>
       <NarrowContainer class="px-4 md:px-0 mb-20">
-        <div class="flex items-center justify-between mt-8 mb-10 px-4 md:px-0">
+        <div class="flex items-center justify-between mt-6 mb-6">
           <h1 class="font-bold typography-headline-3 md:typography-headline-2">{{ heading }}</h1>
           <UiButton
             @click="goToPreviousRoute"

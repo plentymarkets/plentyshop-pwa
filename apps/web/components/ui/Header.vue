@@ -11,7 +11,7 @@
                   :aria-label="t('openSearchModalButtonLabel')">
           <SfIconSearch />
         </UiButton>
-        <UiButton
+        <!-- <UiButton
                   class="group relative !text-black hover:bg-transparent"
                   :tag="NuxtLink" :to="localePath(paths.wishlist)"
                   :aria-label="t('numberInWishlist', { count: wishlistItemIds.length })" variant="tertiary" square
@@ -25,7 +25,7 @@
                      placement="top-right"
                      :max="99" />
           </template>
-        </UiButton>
+        </UiButton> -->
         <UiButton class="group relative !text-black hover:bg-transparent" :tag="NuxtLink" :to="localePath(paths.cart)"
                   :aria-label="t('numberInCart', { count: cartItemsCount })" variant="tertiary" square>
           <template #prefix>
@@ -42,8 +42,8 @@
           <template #trigger>
             <UiButton
                       variant="tertiary"
-                      class="relative !text-black hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md"
-                      :class="{ 'bg-primary-700': isAccountDropdownOpen }"
+                      class="relative !text-black hover:text-white active:text-white hover:bg-gray-100 active:bg-gray-200 rounded-md"
+                      :class="{ 'bg-gray-200': isAccountDropdownOpen }"
                       @click="accountDropdownToggle()"
                       data-testid="account-dropdown-button">
               <template #prefix>
@@ -82,7 +82,7 @@
 
     <div v-if="viewport.isLessThan('lg')">
       <UiButton variant="tertiary"
-                class="relative !text-black hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 rounded-md md:hidden"
+                class="relative !text-black hover:text-white active:text-white hover:bg-gray-800 active:bg-gray-700 rounded-md md:hidden"
                 square @click="searchModalOpen" :aria-label="t('openSearchModalButtonLabel')">
         <SfIconSearch />
       </UiButton>

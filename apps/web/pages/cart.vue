@@ -1,29 +1,33 @@
 <template>
   <NuxtLayout
-    name="checkout"
-    :back-to-cart="false"
-    :back-label-desktop="t('back')"
-    :back-label-mobile="t('back')"
-    :heading="t('myCart')"
-  >
+              name="checkout"
+              :back-to-cart="false"
+              :back-label-desktop="t('back')"
+              :back-label-mobile="t('back')"
+              :heading="t('myCart')">
     <div v-if="!cartIsEmpty" class="md:grid md:grid-cols-12 md:gap-x-6" data-testid="cart-page-content">
       <div class="col-span-7 mb-2 md:mb-0">
+        <div class="hidden lg:grid grid-cols-5 items-center mb-3">
+          <div class="col-span-3 g-16">Artikel</div>
+          <div class="g-16">Menge</div>
+          <div class="text-right g-16">Summe</div>
+        </div>
         <div v-for="(cartItem, index) in cart?.items" :key="cartItem.id">
           <UiCartProductCard :cart-item="cartItem" :class="{ 'border-t': index === 0 }" />
         </div>
         <Coupon class="mb-2" v-if="viewport.isLessThan('lg')" />
       </div>
-      <div class="relative col-span-5 md:sticky md:top-10 h-fit" :class="{ 'pointer-events-none opacity-50': loading }">
+      <div class="lg:py-6 lg:px-2 lg:ml-12 relative col-span-5 md:sticky md:top-10 h-fit mt-4 lg:mt-0 lg:bg-primary-500 lg:px-12"
+           :class="{ 'pointer-events-none opacity-50': loading }">
         <SfLoaderCircular v-if="loading" class="absolute top-[130px] right-0 left-0 m-auto z-[999]" size="2xl" />
-        <OrderSummary :cart="cart">
-          <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" />
+        <OrderSummary class="kl-summary" :cart="cart">
+          <!-- <Coupon v-if="viewport.isGreaterOrEquals('lg')" class="mb-5" /> -->
           <UiButton
-            data-testid="checkout-button"
-            :tag="NuxtLink"
-            :to="goToCheckout()"
-            size="lg"
-            class="w-full mb-4 md:mb-0"
-          >
+                    data-testid="checkout-button"
+                    :tag="NuxtLink"
+                    :to="goToCheckout()"
+                    size="lg"
+                    class="w-full mb-4 md:mb-0 shadow-none lg:bg-white lg:text-black lg:g-16">
             {{ t('goToCheckout') }}
           </UiButton>
           <client-only>

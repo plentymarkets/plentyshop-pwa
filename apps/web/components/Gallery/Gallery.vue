@@ -101,11 +101,11 @@
   </div>
 
   <div class="flex justify-end items-center space-x-4 mb-auto mr-6 mt-3">
-    <button @click="navigate(-1)" class="p-1 bg-primary-500 rounded-full hover:bg-primary-600 text-white" :disabled="activeIndex === 0"
+    <button @click="navigate(-1)" class="p-1 bg-primary-500 rounded-full hover:bg-gray-600 text-white" :disabled="activeIndex === 0"
             aria-label="Previous Image">
       <SfIconChevronLeft size="xl" />
     </button>
-    <button @click="navigate(1)" class="p-1 bg-primary-500 rounded-full hover:bg-primary-600 text-white"
+    <button @click="navigate(1)" class="p-1 bg-primary-500 rounded-full hover:bg-gray-600 text-white"
             :disabled="activeIndex === images.length - 1" aria-label="Next Image">
       <SfIconChevronRight size="xl" />
     </button>

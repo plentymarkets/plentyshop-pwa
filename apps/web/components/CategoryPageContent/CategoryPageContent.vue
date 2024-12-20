@@ -15,12 +15,12 @@
               })
             }}
           </span>
-          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <!-- <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
             <template #prefix>
               <SfIconTune />
             </template>
-            {{ $t('listSettings') }}
-          </UiButton>
+{{ $t('listSettings') }}
+</UiButton> -->
         </div>
         <section v-if="products?.length"
                  class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:gap-8 lg:grid-cols-4 mb-10 md:mb-5"
@@ -33,16 +33,16 @@
                             productGetters.getName(product) ||
                             ''
                             " :image-title="productImageGetters.getImageName(productImageGetters.getFirstImage(product)) ||
-                productGetters.getName(product) ||
-                ''
-                " :image-height="productGetters.getImageHeight(product) || 600"
+                              productGetters.getName(product) ||
+                              ''
+                              " :image-height="productGetters.getImageHeight(product) || 600"
                            :image-width="productGetters.getImageWidth(product) || 600"
                            :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
                            :priority="index < 5"
                            :base-price="productGetters.getDefaultBasePrice(product)"
                            :unit-content="productGetters.getUnitContent(product)"
                            :unit-name="productGetters.getUnitName(product)"
-                           :show-base-price="productGetters.showPricePerUnit(product)"/>
+                           :show-base-price="productGetters.showPricePerUnit(product)" />
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />

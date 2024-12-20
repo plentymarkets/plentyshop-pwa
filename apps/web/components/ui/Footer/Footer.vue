@@ -1,12 +1,12 @@
 <template>
   <KelloggsOurBrands></KelloggsOurBrands>
-  <footer class="pt-10 bg-neutral-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
+  <footer class="pt-10 lg:px-8 bg-neutral-100 md:mb-0" data-testid="footer" :class="simplifiedFooter ? 'mb-0' : 'mb-[58px]'">
     <div
       class="grid justify-center grid-cols-[1fr_1fr] md:grid-cols-[repeat(4,1fr)] px-4 md:px-6 pb-10 max-w-screen-3xl mx-auto"
       data-testid="section-top"
     >
-      <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col">
-        <div class="ml-4 text-lg font-medium leading-7 text-neutral-900">
+      <div v-for="{ key, subcategories } in categories" :key="key" class="min-w-[25%] xs:min-w-[50%] flex flex-col mb-8 lg:mb-0">
+        <div class="ml-4 text-black g-16 lg:g-24 lg:mb-2">
           {{ $t(`categories.${key}.label`) }}
         </div>
         <ul>
@@ -17,7 +17,7 @@
           >
             <SfLink
               :tag="NuxtLink"
-              class="router-link-active router-link-exact-active no-underline text-neutral-600 hover:underline hover:!text-neutral-900 active:underline active:!text-neutral-900"
+              class="router-link-active router-link-exact-active g-14-m lg:g-16-m no-underline hover:underline hover:text-gray-800"
               variant="secondary"
               :to="localePath(link)"
             >

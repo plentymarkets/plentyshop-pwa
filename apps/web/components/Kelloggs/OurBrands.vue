@@ -1,7 +1,7 @@
 <template>
-  <section class="kl-our-brands">
+  <section class="kl-our-brands relative z-10">
     <section class="kl-our-brands__text">
-      <p class="kl-our-brands__small-title">Unsere Marken</p>
+      <p class="kl-our-brands__small-title text-white g-16">Unsere Marken</p>
       <h3 class="kl-our-brands__large-title">Erkunde die Vielfalt bei uns</h3>
     </section>
     <section class="kl-our-brands__brand kl-our-brands__kelloggs">

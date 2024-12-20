@@ -48,9 +48,9 @@
                 :tag="NuxtLink"
                 :to="localePath(link)"
                 :class="[
-                  'first-of-type:py-4 md:first-of-type:px-4 md:first-of-type:py-2 rounded-md active:bg-primary-100 !text-neutral-900',
+                  'first-of-type:py-4 md:first-of-type:px-4 md:first-of-type:py-2 rounded-md active:bg-gray-100 !text-neutral-900',
                   {
-                    'font-medium bg-primary-100': router.currentRoute.value.path === localePath(link),
+                    'font-medium bg-gray-100': router.currentRoute.value.path === localePath(link),
                   },
                 ]"
               >
@@ -64,7 +64,7 @@
           <ul>
             <SfListItem
               @click="logOut"
-              class="py-4 md:py-2 mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
+              class="py-4 md:py-2 mt-4 rounded-md active:bg-gray-100 !text-neutral-900"
               data-testid="account-logout-button"
             >
               <template #prefix><SfIconBase /></template>
@@ -143,16 +143,16 @@ const sections = computed(() => [
       },
     ],
   },
-  {
-    title: t('account.wishlist.heading'),
-    icon: SfIconFavorite,
-    subsections: [
-      {
-        label: t('account.wishlist.section.myWishlist'),
-        link: localePath(paths.accountMyWishlist),
-      },
-    ],
-  },
+  // {
+  //   title: t('account.wishlist.heading'),
+  //   icon: SfIconFavorite,
+  //   subsections: [
+  //     {
+  //       label: t('account.wishlist.section.myWishlist'),
+  //       link: localePath(paths.accountMyWishlist),
+  //     },
+  //   ],
+  // },
 ]);
 
 const currentPath = computed(() => router.currentRoute.value.path);

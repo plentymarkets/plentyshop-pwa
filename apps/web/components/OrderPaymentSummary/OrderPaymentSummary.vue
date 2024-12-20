@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-primary-500 font-headings md:text-lg mb-3 mt-10">
+  <div class="text-black g-16 lg:g-18 mb-3 mt-10">
     {{ $t('account.ordersAndReturns.paymentSummary.heading') }}
   </div>
 

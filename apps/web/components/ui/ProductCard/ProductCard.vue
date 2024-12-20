@@ -22,18 +22,18 @@
                  data-testid="image-slot" />
       </SfLink>
 
-      <slot name="wishlistButton">
+      <!-- <slot name="wishlistButton">
         <WishlistButton
                         square
                         class="absolute bottom-0 right-0 mr-2 mb-2 bg-white ring-1 ring-inset ring-neutral-200 !rounded-full"
                         :product="product" />
-      </slot>
+      </slot> -->
     </div>
     <div class="pt-6 typography-text-sm flex flex-col flex-auto">
-      <SfLink :tag="NuxtLink" :to="productPath" class="no-underline g-16" variant="secondary">
-        {{ product.item.id }}: {{ name }}
+      <SfLink :tag="NuxtLink" :to="productPath" class="no-underline g-12 lg:g-16" variant="secondary">
+        {{ name }}
       </SfLink>
-      <p class="mb-2">{{ getWeight(product) }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
+      <p class="g-12-m lg:g-16-m mb-2 mt-1">{{ getWeight(product) }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
 
       <div class="flex items-center gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
         <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
@@ -50,13 +50,13 @@
       <LowestPrice :product="product" />
 
       <div class="flex items-center">
-        <div class="flex flex-col-reverse items-start md:flex-row md:items-center mt-auto">
+        <div class="flex flex-col-reverse items-start md:flex-row md:items-center">
           <span class="block font-bold typography-text-sm" data-testid="product-card-vertical-price">
             <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
               {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
             </span>
-            <span class="g-24">{{ n(price, 'currency') }}</span>
-            <span class="g-24" v-if="showNetPrices">{{ t('asterisk') }} </span>
+            <span class="g-16 lg:g-24">{{ n(price, 'currency') }}</span>
+            <span class="g-16 lg:g-24" v-if="showNetPrices">{{ t('asterisk') }} </span>
           </span>
           <span v-if="crossedPrice" class="typography-text-sm text-neutral-500 line-through md:ml-3 g-16-m">
             {{ n(crossedPrice, 'currency') }}

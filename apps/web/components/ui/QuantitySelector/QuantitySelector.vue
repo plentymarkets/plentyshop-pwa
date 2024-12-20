@@ -1,6 +1,6 @@
 <template>
   <div class="inline-flex flex-col items-center" data-testid="quantity-selector">
-    <div class="flex border border-neutral-300 rounded-full h-full w-full">
+    <div class="flex items-center border border-neutral-300 rounded-full h-full w-full">
       <SfTooltip
         v-if="count <= minValue"
         :label="$t('minimumOrderQuantity', minValue)"
@@ -32,7 +32,7 @@
         data-testid="quantity-selector-decrease-button"
         @click="dec()"
       >
-        <SfIconRemove />
+        <SfIconRemove class="text-black" />
       </UiButton>
       <input
         :id="inputId"
@@ -43,7 +43,7 @@
         :min="minValue"
         :max="maxValue"
         data-testid="quantity-selector-input"
-        class="h-12"
+        class="g-14-m lg:g-16-m h-8 lg:h-12 mx-auto"
         :aria-label="$t('quantitySelector')"
         @input="handleOnChange"
         :disabled="disabled"
@@ -58,7 +58,7 @@
         data-testid="quantity-selector-increase-button"
         @click="inc()"
       >
-        <SfIconAdd />
+        <SfIconAdd class="text-black" />
       </UiButton>
     </div>
   </div>

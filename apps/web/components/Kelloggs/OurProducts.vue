@@ -16,14 +16,14 @@
           <div class="kl-img-wrapper">
             <img src="https://kelloggs-shop.de/cdn/shop/t/26/assets/img-pringles@2x.png" alt="Pringles">
           </div>
-          <p id="pringles-title" class="kl-card-title">Pringles</p>
-          <p id="pringles-description" class="kl-card-description">
+          <p id="pringles-title" class="text-white kl-card-title">Pringles</p>
+          <p id="pringles-description" class="text-white kl-card-description">
             Ob der intensive Kick von Salt & Vinegar oder die köstlich saure Note von Sour Cream & Onion: Du wirst
             garantiert deinen perfekten Pringles Moment finden.
           </p>
           <NuxtLink
                     to="/snacks/pringles"
-                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4">
+                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4 hover:bg-primary-500 hover:text-white border-2 border-white">
             Alle ansehen
           </NuxtLink>
         </div>
@@ -38,14 +38,14 @@
           <div class="kl-img-wrapper">
             <img src="https://kelloggs-shop.de/cdn/shop/t/26/assets/img-cerealien@2x.png" alt="Cerealien">
           </div>
-          <p id="cereal-title" class="kl-card-title">Cerealien</p>
-          <p id="cereal-description" class="kl-card-description">
+          <p id="cereal-title" class="text-white kl-card-title">Cerealien</p>
+          <p id="cereal-description" class="text-white kl-card-description">
             Kellogg's Tresor, Kellogg's Smacks, Kellogg's Frosties oder doch Special K? Du hast die Wahl - bei dem
             vielfältigen Cerealien-Sortiment findet jeder was!
           </p>
           <NuxtLink
                     to="/fruehstueck/cerealien"
-                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4">
+                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4 hover:bg-primary-500 hover:text-white border-2 border-white">
             Alle ansehen
           </NuxtLink>
         </div>
@@ -66,7 +66,7 @@
           </p>
           <NuxtLink
                     to="/fruehstueck/muesli"
-                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4">
+                    class="bg-white rounded-full p-3 mx-4 text-black text-center g-16 mb-4 hover:bg-primary-500 hover:text-white border-2 border-white">
             Alle ansehen
           </NuxtLink>
         </div>

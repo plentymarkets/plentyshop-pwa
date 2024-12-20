@@ -1,11 +1,11 @@
 <template>
-  <nav class="w-full fixed bottom-0 left-0 flex flex-row items-stretch md:hidden" data-testid="navbar-bottom">
+  <nav class="w-full z-40 fixed bottom-0 left-0 flex flex-row items-stretch md:hidden" data-testid="navbar-bottom">
     <UiButton
       v-for="{ label, icon, link } in items"
       :key="label"
       variant="tertiary"
       :class="[
-        '!p-1 !pt-3 flex flex-col h-full w-full rounded-none bg-primary-500 text-white hover:text-white hover:bg-primary-800 active:text-white active:bg-primary-700 !text-xs !font-base',
+        '!p-1 !pt-3 flex flex-col h-full w-full rounded-none bg-primary-500 text-white hover:text-white hover:bg-gray-800 active:text-white active:bg-gray-700 !text-xs !font-base',
         { 'text-white bg-primary-700': route.path === link },
       ]"
       size="sm"
@@ -59,11 +59,11 @@ const items = computed(() => [
     icon: SfIconMenu,
     link: '',
   },
-  {
-    label: t('wishlist'),
-    icon: SfIconFavorite,
-    link: localePath(paths.wishlist),
-  },
+  // {
+  //   label: t('wishlist'),
+  //   icon: SfIconFavorite,
+  //   link: localePath(paths.wishlist),
+  // },
   {
     label: t('cart'),
     icon: SfIconShoppingCart,

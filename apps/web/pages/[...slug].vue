@@ -114,8 +114,8 @@ useHead({
 });
 </script>
 
-<style lang="scss"scoped>
-  nav[testid="breadcrumbs"] {
+<style lang="scss" scoped>
+  nav.breadcrumbs {
     display: none;
   }
 </style>

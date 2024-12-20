@@ -1,14 +1,14 @@
 <template>
   <div class="border-b border-neutral-200">
     <SfAccordionItem v-if="!cartGetters.getCouponDiscount(cart)" data-testid="couponZone" v-model="openedCoupon">
-      <template #summary>
+      <!-- <template #summary>
         <div :class="['flex justify-between font-medium p-3', { 'my-4 bg-gray-100 rounded-md': openedCoupon }]">
           <p class="pl-3">{{ $t('coupon.title') }}</p>
           <SfIconChevronLeft
             :class="['text-neutral-500', { 'rotate-90': openedCoupon, '-rotate-90': !openedCoupon }]"
           />
         </div>
-      </template>
+      </template> -->
       <div class="flex mb-4">
         <div class="flex-grow mr-2" data-testid="couponCode">
           <SfInput

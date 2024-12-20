@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-primary-500 font-headings md:text-lg mb-3">
+  <div class="font-bold text-black g-16 lg:g-18 mb-3">
     <span v-if="!orderGetters.isReturn(order)">
       {{ $t('account.ordersAndReturns.orderDetails.heading') }}
     </span>
