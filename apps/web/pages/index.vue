@@ -48,7 +48,6 @@ const {
 } = useBlockManager();
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
-const { fetchCategoryTemplate } = useCategoryTemplate();
 const { showNewsletter } = useNewsletter();
 const { $i18n } = useNuxtApp();
 
@@ -73,9 +72,6 @@ const getComponent = (name: string) => {
   if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
-const runtimeConfig = useRuntimeConfig();
-
-await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
 
 fetchPageTemplate();
 </script>
