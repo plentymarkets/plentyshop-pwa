@@ -41,7 +41,6 @@ const emits = defineEmits(['loggedIn', 'change-view']);
 
 const email = ref('');
 const password = ref('');
-const route = useRoute();
 
 const loginUser = async () => {
   const success = await login(email.value, password.value);
