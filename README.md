@@ -1,9 +1,24 @@
 <div align="center">
-  <a href="https://alokai.com//"><img src="https://camo.githubusercontent.com/b3f817d20b7d4f18247de2dbdf89756cd2348208b146f7c182fe6c9b0de39426/68747470733a2f2f7265732e636c6f7564696e6172792e636f6d2f7675652d73746f726566726f6e742f696d6167652f75706c6f61642f76313731303735343532342f4c6f676f5f677265656e5f32785f7a34766d687a2e706e67" alt="Alokai" height="80px" /></a>
 
-<a href="https://www.plentymarkets.com/"><img src="https://cdn01.plentymarkets.com/avw8j9fg70hi/frontend/plentyShop_LTS/plentysystems-logo.jpg" alt="plentysystems logo" height="160px" /></a>
+  <a href="https://plentyone.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/PlentyONE_Logo_White_RGB.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg">
+      <img alt="PlentyONE logo" src="./apps/web/public/images/PlentyONE_Logo_PlentyBlue_RGB.svg" height="100px">
+    </picture> 
+  </a>
 
-  <h1 align="center">Alokai Integration With plentysystems</h1>
+### powered by
+
+  <a href="https://alokai.com" target="_blank">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/images/alokai-logo-light.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./apps/web/public/images/alokai-logo-dark.svg">
+      <img alt="alokai logo" src="./apps/web/public/images/alokai-logo-dark.svg" height="40px">
+    </picture> 
+  </a>
+
+  <h1>Alokai integration with plentysystems</h1>
 </div>
 
 [![GitHub Repo stars](https://img.shields.io/github/stars/plentymarkets/plentyshop-pwa?style=social)](https://github.com/plentymarkets/plentyshop-pwa)
