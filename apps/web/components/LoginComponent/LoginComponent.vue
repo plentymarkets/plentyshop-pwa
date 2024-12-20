@@ -47,13 +47,7 @@ const loginUser = async () => {
   const success = await login(email.value, password.value);
   if (success) {
     send({ message: t('auth.login.success'), type: 'positive' });
-    emits('loggedIn');
-    if (route.query.skipReload === 'true') {
-      return;
-    }
-    if (!skipReload) {
-      window.location.reload();
-    }
+    emits('loggedIn', skipReload);
   }
 };
 </script>

@@ -8,6 +8,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter(to);
   const { setCategoriesPageMeta } = useCanonical();
   const { isAuthorized, getSession } = useCustomer();
+  await getSession();
   const { data: productsCatalog, fetchProducts, loading, checkingPermission } = useProducts();
   const localePath = useLocalePath();
   checkingPermission.value = true;
@@ -23,7 +24,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
     const targetUrl = to.fullPath;
     return navigateTo({
       path: localePath(paths.authLogin),
-      query: { redirect: targetUrl, skipReload: 'true' },
+      query: { redirect: targetUrl },
     });
   }
   checkingPermission.value = false;
