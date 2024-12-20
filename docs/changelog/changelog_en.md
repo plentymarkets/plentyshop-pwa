@@ -73,6 +73,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Redirect on hidden category after user was logged in.
 - Fixed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Fixed the styling of HTML entered in a PlentyONE system's editor by adding a `no-preflight` CSS class that accounts for Tailwind's preflight configuration.
 - Fixed the checkout layout for tablet screen sizes.
