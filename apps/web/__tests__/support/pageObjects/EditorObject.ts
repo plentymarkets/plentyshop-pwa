@@ -53,6 +53,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('delete-block-button')
   }
 
+  get recommendedProducts() {
+    return cy.getByTestId('recommended-products');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -150,6 +154,10 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blockWrapper.should('have.length', initialLength - 1);
     });
+   }
+
+   recommendedProductsExist() {
+      this.recommendedProducts.should('exist');
    }
 }
 
