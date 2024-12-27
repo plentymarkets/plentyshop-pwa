@@ -53,6 +53,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('delete-block-button')
   }
 
+  get languageSwitcher() {
+    return cy.getByTestId('language-select');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -150,6 +154,14 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blockWrapper.should('have.length', initialLength - 1);
     });
+   }
+
+   switchLanguage() {
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(3000);
+    this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
    }
 }
 
