@@ -8,7 +8,10 @@
 
 ### 🩹 Fixed
 
+- Added margin for graduated prices.
+- Changed brand mentions to PlentyONE and changed logo.
 - Fix for max visible pages on mobile pagination.
+- Fix for editor language picker when it showed inverted data template.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -71,6 +74,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
+- Redirect on hidden category after user was logged in.
 - Fixed an unhandled scenario where a blocked payment method remained available during the checkout process
 - Fixed the styling of HTML entered in a PlentyONE system's editor by adding a `no-preflight` CSS class that accounts for Tailwind's preflight configuration.
 - Fixed the checkout layout for tablet screen sizes.
@@ -195,8 +199,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 #### Configuration
 
-- The app can now fetch the Favicon from the plentysystems system.
-- The app can now fetch the logo from the plentysystems system.
+- The app can now fetch the Favicon from the PlentyONE system.
+- The app can now fetch the logo from the PlentyONE system.
 - The app now reads which Google Fonts to use from the environment.
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
 - The app now reads the internationalisation configuration from the environment. This includes the available languages and the default language.
@@ -242,7 +246,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed editing author name on reviews and replies with added e2e.
 - Fixed the issue with the plentyID-cookie in the PWA live preview.
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
-- Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed that when fetching configurations from PlentyONE, the build would only apply updates on the second run.
 - Fixed orphaned form label on product page attributes.
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
@@ -414,7 +418,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 ### Migration guide
 
 - The upload action was changed [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) update the file to make use of the [config feature](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config)
-- We now require an API Security Token to make requests to the plentysystems API. [setup guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- We now require an API Security Token to make requests to the PlentyONE API. [setup guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
 - Category routing has been updated, and the /c prefix has been removed. Please verify that no static URLs in your application still include /c.
   - To accommodate the /c routing change, the [category page](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) was moved from apps/web/pages/category/[slug].vue to apps/web/pages/[...slug].vue.
 

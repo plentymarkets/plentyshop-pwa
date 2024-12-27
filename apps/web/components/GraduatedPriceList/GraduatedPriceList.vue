@@ -1,5 +1,5 @@
 <template>
-  <div class="typography-text-sm font-bold" v-if="graduatedList.length > 0">
+  <div class="typography-text-sm font-bold mt-5" v-if="graduatedList.length > 0">
     {{ $t('graduatedPrices.title') }}
   </div>
   <table class="w-full text-left typography-text-sm mb-2" v-if="graduatedList.length > 0">
