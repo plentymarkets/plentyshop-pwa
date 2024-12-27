@@ -39,6 +39,7 @@ export function useBlockManager() {
       currentBlock.value = data.value.blocks[index];
       const { isEditing } = useEditor();
       isEditing.value = true;
+      window.scrollTo(0, 0);
     }
   };
 
