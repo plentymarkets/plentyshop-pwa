@@ -85,9 +85,7 @@ const keywordsContent = computed((): string =>
 );
 
 const robotsContent = computed((): string =>
-    productsCatalog.value?.category
-    ? categoryGetters.getCategoryRobots(productsCatalog.value.category)
-    : '',
+  productsCatalog.value?.category ? categoryGetters.getCategoryRobots(productsCatalog.value.category) : '',
 );
 
 useHead({
