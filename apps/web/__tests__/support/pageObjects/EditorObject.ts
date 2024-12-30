@@ -54,7 +54,7 @@ export class EditorObject extends PageObject {
   }
 
   get languageSwitcher() {
-    return cy.getByTestId('language-select');
+    return cy.getByTestId('editor-language-select');
   }
 
   togglePreviewMode() {

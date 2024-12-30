@@ -16,7 +16,7 @@
         "
         :disabled="isEditing || disableActions"
         :class="{ 'cursor-not-allowed': isEditing || disableActions }"
-        data-testid="language-select"
+        data-testid="editor-language-select"
       >
         <option v-for="locale in localeCodes" :key="locale" :value="locale" class="font-medium text-sm md:text-base">
           {{ $t(`lang.${locale}`) }}
