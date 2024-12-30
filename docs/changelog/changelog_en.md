@@ -8,7 +8,7 @@
 
 ### 🩹 Fixed
 
-- Fixed same text in alt and title warning in category page. 
+- Fixed same text in alt and title warning in category page.
 - Replaced favicon with PlentyONE favicon.
 - Added margin for graduated prices.
 - Changed brand mentions to PlentyONE and changed logo.
