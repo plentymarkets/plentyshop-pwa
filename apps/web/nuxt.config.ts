@@ -81,11 +81,6 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@vue-storefront/nuxt',
   ],
-  eslint: {
-    config: {
-      standalone: false,
-    },
-  },
   vsf: {
     middleware: {
       apiUrl: validateApiUrl(process.env.API_URL) ?? 'http://localhost:8181',
