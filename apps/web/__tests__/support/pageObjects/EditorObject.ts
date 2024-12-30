@@ -157,10 +157,14 @@ export class EditorObject extends PageObject {
    }
 
    switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
+
     this.editPreviewButton.click();
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
-    cy.wait(3000);
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
     this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
    }
 }
