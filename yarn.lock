@@ -23449,6 +23449,7 @@ __metadata:
     uuid: "npm:^9.0.1"
     vitepress: "npm:^1.2.3"
     vitest: "npm:^1.6.0"
+    vue-eslint-parser: "npm:^9.4.3"
     vue-tsc: "npm:^2.1.6"
     vuepress: "npm:^2.0.0-rc.14"
   languageName: unknown

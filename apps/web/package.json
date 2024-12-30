@@ -71,6 +71,7 @@
     "typedoc-vitepress-theme": "1.0.0",
     "vitepress": "^1.2.3",
     "vitest": "^1.6.0",
+    "vue-eslint-parser": "^9.4.3",
     "vue-tsc": "^2.1.6",
     "vuepress": "^2.0.0-rc.14"
   }
