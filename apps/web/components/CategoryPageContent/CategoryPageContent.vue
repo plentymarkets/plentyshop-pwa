@@ -40,8 +40,8 @@
               :rating-count="productGetters.getTotalReviews(product)"
               :rating="productGetters.getAverageRating(product, 'half')"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
-              :image-alt="'alt-' +
-                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+              :image-alt="
+                'alt-' + productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
                 productGetters.getName(product) ||
                 ''
               "
