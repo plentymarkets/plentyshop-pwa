@@ -100,11 +100,18 @@ const keywordsContent = computed((): string =>
     : process.env.METAKEYWORDS ?? '',
 );
 
+const robotsContent = computed((): string =>
+    productsCatalog.value?.category
+    ? categoryGetters.getCategoryRobots(productsCatalog.value.category)
+    : '',
+);
+
 useHead({
   title: headTitle,
   meta: [
     { name: 'description', content: descriptionContent },
     { name: 'keywords', content: keywordsContent },
+    { name: 'robots', content: robotsContent },
   ],
 });
 </script>
