@@ -11,8 +11,8 @@ const __dirname = dirname(__filename);
 export default withNuxt(
   {
     ignores: [".nuxt/"],
-    parser: "vue-eslint-parser",
     languageOptions: {
+      parser: "vue-eslint-parser",
       parserOptions: {
         parser: "@typescript-eslint/parser",
         project: './tsconfig.json',
