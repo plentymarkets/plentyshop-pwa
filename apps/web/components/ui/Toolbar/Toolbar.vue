@@ -4,7 +4,7 @@
       <UiBrandLogo />
 
       <div class="absolute left-1/2 transform -translate-x-1/2">
-        <UiLanguageEditor v-if="experimentalAddBlock" />
+        <UiLanguageEditor />
       </div>
       <div class="ml-auto flex space-x-2">
         <button
@@ -61,7 +61,6 @@ const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-const experimentalAddBlock = runtimeConfig.public.experimentalAddBlock;
 
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
