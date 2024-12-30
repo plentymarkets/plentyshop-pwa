@@ -53,6 +53,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('delete-block-button')
   }
 
+  get languageSwitcher() {
+    return cy.getByTestId('editor-language-select');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -150,6 +154,18 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blockWrapper.should('have.length', initialLength - 1);
     });
+   }
+
+   switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
+
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
    }
 }
 
