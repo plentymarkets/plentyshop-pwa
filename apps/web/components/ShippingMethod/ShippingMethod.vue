@@ -57,18 +57,19 @@ import { AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
 
-const { shippingMethods, disabled = false } = defineProps<ShippingMethodProps>();
+const { disabled = false } = defineProps<ShippingMethodProps>();
 const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);
 const emit = defineEmits<CheckoutShippingEmits>();
 
 const { data: cart } = useCart();
 const { t, n } = useI18n();
 const { selectedMethod } = useCartShippingMethods();
+const { shippingMethods } = useCheckoutPagePaymentAndShipping();
 const radioModel = ref(shippingProviderGetters.getShippingProfileId(cart.value));
 
 const showShippingPrivacy = computed(
   () =>
-    shippingMethods.length > 0 &&
+    shippingMethods.value.length > 0 &&
     selectedMethod.value &&
     shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value),
 );

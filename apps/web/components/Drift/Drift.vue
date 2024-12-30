@@ -15,6 +15,10 @@ onMounted(() => {
   let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
   let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
+  if (!demoTrigger || !paneContainer) {
+    return;
+  }
+
   drift = new Drift(demoTrigger, {
     paneContainer: paneContainer,
     containInline: true,
@@ -25,10 +29,12 @@ onMounted(() => {
   });
 });
 
-onUnmounted(() => {
+const destroyDrift = () => {
   if (drift) {
     drift.destroy();
     drift = null;
   }
-});
+};
+
+onUnmounted(() => destroyDrift());
 </script>

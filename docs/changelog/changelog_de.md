@@ -1,4 +1,99 @@
-# Changelog plentyshopPWA
+# Changelog PlentyONE Shop
+
+## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Benutzer können jetzt die Startseite direkt im Shop bearbeiten. Dies umfasst das Hinzufügen, Bearbeiten und Löschen einzelner Blöcke. Unterstützte Blocktypen sind Hero Slider, Media Card, Empfohlene Produkte und Newsletter.
+- Kategorien mit der Sichtbarkeit "Nach Login" leiten Gastbenutzer jetzt zum Login weiter.
+- Kategorieseiten unterstützen jetzt die Filterung von Produkten nach Bewertung.
+- Benutzer können jetzt in Produktbilder hineinzoomen, indem sie mit der Maus darüber fahren. Doppeltippen und Pinch-Zoom werden auf Mobilgeräten unterstützt.
+- Die rechtlichen Details enthalten jetzt mehr Herstellerinformationen.
+- Weitere Einstellungen aus der SEO-Konfiguration werden jetzt in der App unterstützt. Dies umfasst dynamische strukturierte Daten und Robots-Einstellungen.
+- Die Angebotsseite zeigt jetzt das Datum an, bis zu dem das Angebot gültig ist, sofern es gesetzt wurde.
+- Der Checkout zeigt jetzt eine Warnung an, wenn keine Zahlungs- oder Versandmethoden verfügbar sind.
+- Die Einschränkung des Gastzugriffs auf Seiten wird jetzt über eine Middleware gehandhabt.
+- Der PWA-Cookie-Hash wurde zum SDK-Client hinzugefügt.
+- Beim Navigieren zwischen Seiten zeigt eine Animation den Ladefortschritt an.
+
+### Geändert
+
+- Die Cookie-Verarbeitung für PayPal basiert jetzt auf einem funktionalen Cookie, das die Zustimmung des Benutzers erfordert ([siehe Dokumentation für Details](https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie)). Benutzer sehen eine Meldung, die zur Einwilligung auffordert, wenn Funktionen aufgrund fehlender Zustimmung nicht verfügbar sind.
+- Wenn ein Benutzer seine Cookie-Einstellungen ändert, wird die Seite nur neu geladen, wenn ein Cookie widerrufen wurde.
+- Die Benutzersitzung ist jetzt die Quelle für `showNetPrices`.
+- Bei der Newsletter-Anmeldung müssen Benutzer die Anmeldung jetzt per E-Mail bestätigen.
+- Die Adressvorschau enthält jetzt den Ländernamen.
+- Die Größe der Mengenbeschriftungen in der Schnellkasse wurde auf dem Desktop angepasst, um die Barrierefreiheit zu verbessern.
+- Die Reihenfolge von Attributauswahl und Bestelleigenschaften auf Produktseiten wurde getauscht, um den Benutzerfluss besser abzubilden.
+- Die Werte von Attributen werden jetzt absteigend nach Position, dann nach ID und dann alphabetisch sortiert.
+- Die Cookie-Bar wurde für eine bessere Benutzererfahrung angepasst.
+
+#### GitHub Action: Lighthouse CI
+
+- Lighthouse CI läuft jetzt sowohl für Mobile als auch Desktop.
+- Die Lighthouse-Regeln für CLS und DOM-Größe wurden aktualisiert.
+
+#### GitHub Action: Upload
+
+Der **Upload**-Workflow unterstützt jetzt das Bereitstellen der PWA in verschiedenen Umgebungen:
+
+- Produktion: manuell ausgelöst oder beim Erstellen eines GitHub-Releases
+- Staging: manuell ausgelöst oder beim Pushen einer Änderung in den `main`-Branch
+
+Jeder Client unterstützt zwei PWA-Instanzen. Mit dieser Änderung kann die Live-Instanz als Produktionsumgebung und die Vorschau-Instanz als Staging-Umgebung verwendet werden. Die Produktionsumgebung verwendet das GitHub Actions Secret `URL_ENDPOINT_TOKEN`; die Staging-Umgebung verwendet das GitHub Actions Secret `URL_ENDPOINT_TOKEN_STAGING`.
+
+### NPM Authentication Token
+
+Statt eine `.yarnrc.yml` Datei manuell zu erstellen, kannst du jetzt je nach Betriebssystem eines der folgenden Skripte verwenden:
+
+- Linux/MacOS: `yarn.sh` | `npm run setup:unix`
+- Windows: `yarn.ps1` | `npm run setup:windows`
+
+Um das Skript auszuführen, musst du einen GitHub Token mit dem Scope `read:packages` zur Umgebung hinzufügen.
+
+```properties
+# apps/web/.env
+
+NPM_AUTH_TOKEN="<TOKEN>"
+```
+
+### 🩹 Behoben
+
+- Ein nicht behandelter Fall wurde behoben, bei dem eine blockierte Zahlungsmethode während des Checkout-Prozesses verfügbar blieb.
+- Das Styling von HTML-Inhalten aus dem PlentyONE System-Editor wurde durch Hinzufügen einer `no-preflight` CSS-Klasse korrigiert, die Tailwinds Preflight-Konfiguration berücksichtigt.
+- Das Checkout-Layout für Tablet-Bildschirmgrößen wurde korrigiert.
+- Die Bildqualität im Schnellkauf wurde durch Verwendung des mittelgroßen Bildes und Anpassung der Mengenposition verbessert.
+- Die Filterübersetzung auf Kategorieseiten beim Sprachwechsel wurde korrigiert.
+- Ein Problem wurde behoben, bei dem die Versandkosten während des Gast-Checkout-Prozesses nicht aktualisiert wurden.
+- Ein Problem wurde behoben, durch das das Login-Modal nicht reagierte.
+- Eine falsche Ausrichtung der Registrierungsvorteile auf der Registrierungsseite wurde korrigiert.
+- Ein Problem wurde behoben, bei dem der Checkout-Layout-Button den benachbarten Text überlagerte.
+- Ein fehlendes href-Attribut wurde zum Cookie-Bar-Anker hinzugefügt.
+- Die Bedienbarkeit der Cookie-Bar im Querformat wurde verbessert.
+- Die Position des Bestelleigenschafts-Tooltips wurde korrigiert.
+- Die auf der Produktseite geladenen Bildgrößen wurden korrigiert.
+- Ein Problem wurde behoben, bei dem die Kundenklasse nach dem Login keine Auswirkung auf Preise und Kategorien hatte.
+- Der Zeitpunkt zum Anzeigen der Benachrichtigung für leere Warenkörbe wurde korrigiert.
+- Ein Problem wurde behoben, bei dem die Hero-Slider-Buttons nicht zum angegebenen Ziel verlinkten.
+- Ein Problem wurde behoben, bei dem der Kaufen-Button nach Abschluss der Bestellung und während der Weiterleitung zur Bestätigung noch geklickt werden konnte.
+- Die Responsivität des DSGVO-Drawers wurde verbessert.
+- Die Barrierefreiheit wurde durch das Hinzufügen des Shop-Namens zum Alt-Text des Logos verbessert.
+- Das Hero-Bild verwendet jetzt den im Homepage-Template angegebenen Alt-Text.
+- Der Empfohlene-Produkte-Bereich auf der Homepage verwendet jetzt die Kategorie-ID aus dem Homepage-Template.
+- Der Empfohlene-Produkte-Bereich auf der Homepage wird jetzt bei entsprechender Konfiguration mehrfach angezeigt.
+- Kategorieprodukte können jetzt mehrfach auf derselben Seite abgerufen werden.
+- Ein Problem wurde behoben, bei dem das Bewertungs-Modal auf kleineren Bildschirmen nicht scrollbar war.
+- Die Fehlermeldung wurde verbessert, wenn Artikel zum Warenkorb hinzugefügt werden, die nicht verfügbar sind oder aus anderen Gründen nicht hinzugefügt werden können.
+- Ein Problem wurde behoben, bei dem der PayPal-Button im Checkout nicht angezeigt wurde.
+- Mehrere Probleme im PayPal-Read-Only-Checkout-Prozess wurden behoben.
+- Ein Problem wurde behoben, bei dem PayPal-Zahlungen als "Vorkasse" gespeichert wurden.
+- Die Sprachauswahl wird nicht mehr angezeigt, wenn nur eine Sprache konfiguriert ist.
+- Ein Problem mit Kategorieproduktpreisen wurde behoben, die sich bei Seitenwechsel nicht aktualisierten.
+- Die Ladezeiten auf der Homepage wurden durch Hinzufügen von SSR verbessert.
+- CSS für die Swiper-Bibliothek wird jetzt nur noch auf Seiten geladen, die die `HeroCarousel`-Komponente verwenden.
+- Das `HeroCarousel` überlappt nicht mehr das Navigationsmenü auf mobilen Geräten.
+- Die Höhe des Hero-Skeletts wurde korrigiert, um CLS zu verbessern.
+- `createOrder` behandelt Fehler jetzt zuverlässiger und setzt den Kaufen-Button zurück, wenn ein Fehler auftritt.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
@@ -300,7 +395,7 @@
 ### Migrationsanleitung
 
 - Die Upload-Aktion wurde geändert [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) Aktualisiere die Datei, um die [config-Funktion](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config) zu nutzen.
-- Wir benötigen nun ein API Security Token, um Anfragen an die plentysystems API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- Wir benötigen nun ein API Security Token, um Anfragen an die PlentyONE API zu stellen. [Guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
 - Das Kategorie-Routing wurde aktualisiert und das Präfix /c wurde entfernt. Überprüft, dass keine statischen URLs in deiner Anwendung noch /c enthalten.
   - Um die /c-Routing-Änderung möglich zu machen, wurde die [Kategorieseite](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) von apps/web/pages/category/[slug].vue nach apps/web/pages/[...slug].vue verschoben.
 
@@ -383,7 +478,7 @@
 
 ### Geändert
 
-- Zum Hochladen der App auf plentysystems wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
+- Zum Hochladen der App auf PlentyONE wird ab jetzt ein einziger Endpunkt für alle Systeme verwendet. Somit wird das Secret `URL_ENDPOINT` nicht mehr benötigt.
 
 ### Behoben
 

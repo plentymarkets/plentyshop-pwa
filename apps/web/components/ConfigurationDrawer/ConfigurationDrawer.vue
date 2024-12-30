@@ -15,7 +15,7 @@
         'bg-neutral-50',
         'border',
         'border-gray-300',
-        'z-50',
+        'z-[150]',
         { 'min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >

@@ -535,7 +535,7 @@
   },
   "estimatedTax": "VAT",
   "etaDelivery": "Estimated delivery time",
-  "excludedShipping": "excl. Shipping",
+  "excludedShipping": "excl. {shipping}",
   "failedInfoHeader": "We are really sorry.",
   "failedInfoMessage": "Your order has not been completed.",
   "filters": "Filters",
@@ -590,6 +590,9 @@
   "home": "Home",
   "homepage": {
     "background": "New Wireless Pro headphones with sleek design and modern features",
+    "emptyBlock": {
+      "headline": "Add the first block here."
+    },
     "banner": {
       "moto1": "Feel the music",
       "moto2": "New Wireless Pro",
@@ -715,7 +718,8 @@
     "declineOffer": "Decline offer",
     "inputPlaceholder": "Please share your reason for declining...",
     "missingEmail": "No email address has been provided.",
-    "offer": "Offer"
+    "offer": "Offer",
+    "offerValidUntil": "Offer valid until: {date}"
   },
   "openConfigurationDrawer": "Open configuration drawer",
   "openSearchModalButtonLabel": "Open item search",
@@ -777,7 +781,8 @@
     "unbrandedCvv": "CVV",
     "unbrandedExpirationDate": "Expiration date",
     "unbrandedNameOnCard": "Name on card",
-    "unbrandedPay": "Pay"
+    "unbrandedPay": "Pay",
+    "invalidOrder": "The order cannot be processed. Please try again."
   },
   "perPage": "Per page",
   "phone": "Phone",
@@ -792,7 +797,7 @@
   "procentageSavings": "You save {percent} % on this bundle",
   "productAttributes": {
     "notValidVariation": "Please select a valid variation.",
-    "productInformationMissing": "Product information missing",
+    "productNameMissing": "Product name missing",
     "seeAvailableOptions": "See available options"
   },
   "productDetails": "Product details",
@@ -919,6 +924,12 @@
     "reviewsUp": "Item reviews ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "This offer has expired",
+      "openUnauthorized": "You are not authorised to open this offer.",
+      "itemOutOfStock": "At least one item in the offer is no longer in stock.",
+      "alreadyTaken": "This offer has already been used and cannot be used again."
+    },
     "address": {
       "createFailed": "Saving the address has failed.",
       "deleteFailed": "The deletion of the address failed.",

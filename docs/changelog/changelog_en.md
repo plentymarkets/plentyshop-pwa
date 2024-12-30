@@ -1,40 +1,52 @@
-# Changelog plentyshopPWA
+# Changelog PlentyONE Shop
 
-## v1.x.x (yyyy-mm-dd)
+## v1.x.x (2025-xx-xx)
 
 ### New
 
-- Added a Guest guard middleware to restrict access to pages for authenticated users.
-- Added the ability to filter products by rating on category pages.
-- Added PWA cookie hash to sdk client
-- Added progress loading indicator animation when navigating between pages.
-- Added Zoom functionality to product images.
-- New Json Editor
-- Added a warning alert on the checkout if no payment or shipping method is available
-- Added cookie consent management helper functions read more at https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie.
-- Added dynamic structured data from the SEO config.
-- Added more manufacturer information to legal details drawer.
-- Add login redirect on category "after login" visibility.
-- The Homepage components are now split in edit block s
-- Added robots settings for SEO config.
-- Improved existing zoom functionality and added double-tap & pinch zoom for mobile.
+- Added page for shipping legal text.
+
+### 🩹 Fixed
+
+- Added margin for graduated prices.
+- Changed brand mentions to PlentyONE and changed logo.
+- Fix for max visible pages on mobile pagination.
+- Fix for editor language picker when it showed inverted data template.
+
+## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
+
+### New
+
+- Users can now edit the homepage from within the shop. This includes adding, editing and deleting individual blocks. Supported block types include Hero Slider, Media Card, Recommended Product gallery, and Newsletter.
+- Categories with visibility "After login" now redirect to the login when accessed by a guest user.
+- Category pages now support filtering products by rating.
+- Users can now zoom in on product images by hovering over them. Double-tapping and pinch zooming are supported on mobile.
+- The legal details drawer now includes more manufacturer information.
+- Additional settings from the SEO configuration are now supported in the app. This includes dynamic structured data and robots settings.
+- The offer page now displays the date until when the offer is valid if it has been set.
+- The checkout now displays a warning if no payment or shipping methods are available.
+- Restricting guest user access to pages is now handled via a middleware.
+- The PWA cookie hash has been added to the SDK client.
+- When navigating between pages, an animation now indicates the loading progress.
+- New styles for toolbar
+- New styles for blocks actions
 
 ### 👷 Changed
 
-- Improve size for quantity label on quick checkout on desktop.
-- Improved user experience while using the cookie bar.
-- Modified showNetPrices source to be consumed from user session.
-- Address preview details now includes the country name.
-- Removed checkbox margin from rating filter in category page
-- Order of attribute select and order properties on item page
-- Addressed an unhandled scenario where a blocked payment method remained available during the checkout process
-- Newsletter email confirmation
-- Modified lighthouse rules for CLS and dom-size
-- The default data for the homepage is now available for both English and German.
-- PayPal is now a functional cookie and has to be accepted by the user. Default behavior can be changed by changing accepted to true https://pwa-docs.plentymarkets.com/guide/how-to/cookie
-- PayPal shows a message if the cookie is not accepted.
-- We only reload the page after a cookie gets revoked.
-- Changed the PayPal message if the related cookie is not set.
+- Cookie handling for PayPal now relies on a functional cookie requiring user consent ([see docs for details](https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie)). Users will see a message prompting consent when functionality is unavailable due to missing consent.
+- When a user changes their cookie consent settings, the page now only reloads if a cookie has been revoked.
+- The user session is now the source for `showNetPrices`.
+- When subscribing to the newsletter, users now have to confirm the subscription via email.
+- The address preview details now include the country name.
+- The size of the quantity labels in the quick checkout has been adjusted on desktop to improve accessibility.
+- The order of attribute select and order properties on product pages have been switched to better reflect the user flow.
+- The values of attributes are now sorted in descending order by position, then by ID and then alphabetically.
+- The cookie bar has been adjusted to provide a better user experience.
+
+#### GitHub Action: Lighthouse CI
+
+- Lighthouse CI now runs for both mobile and desktop.
+- The lighthouse rules for CLS and DOM size have been updated.
 
 #### GitHub Action: Upload
 
@@ -62,41 +74,42 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 ### 🩹 Fixed
 
-- Adjusted the checkout layout for tablet screen sizes.
-- Changed image quality in quick checkout to use middle image and positioned quantity.
-- Fixed filter translation on category page when switching language.
-- Resolved an issue where the shipping costs where not updated during guest checkout process.
-- Resolved an issue causing the Login modal to be unresponsive in the user interface.
-- Fix selling points misalignment on register page.
-- Introduced error handling to throw a 404 Not Found response when the requested product does not exist.
-- Resolved an issue where the checkout layout button was overlapping the adjacent text.
-- Added a missing href attribute to the Cookiebar anchor.
-- Cookiebar usability in landscape mode.
-- Order property tooltip was under input fields.
-- Load more accurate images sizes for product page.
-- Reload page after login so the customer class affects prices and categories
-- Empty cart notification was displayed when user navigates to cart. Now only shown when the cart is emptied in checkout.
-- The hero button now links to the provided destination.
-- Fixed, Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
+- Redirect on hidden category after user was logged in.
+- Fixed an unhandled scenario where a blocked payment method remained available during the checkout process
+- Fixed the styling of HTML entered in a PlentyONE system's editor by adding a `no-preflight` CSS class that accounts for Tailwind's preflight configuration.
+- Fixed the checkout layout for tablet screen sizes.
+- Fixed the image quality in the quick checkout by using the middle-size image and adjusting the quantity position.
+- Fixed filter translation on category pages when switching language.
+- Fixed an issue where the shipping costs were not updated during guest checkout process.
+- Fixed an issue causing the login modal to be unresponsive in the user interface.
+- Fixed a misalignment of the sign-up incentives on the registration page.
+- Fixed an issue where the checkout layout button was overlapping the adjacent text.
+- Added a missing href attribute to the cookie bar anchor.
+- Fixed cookie bar usability in landscape mode.
+- Fixed the position of the order property tooltip.
+- Fixed the images sizes loaded on product page.
+- Fixed an issue where the customer class didn't affect prices and categories after login by reloading the page.
+- Fixed when the empty cart notification gets displayed.
+- Fixed an issue where the Hero slider buttons didn't link to the provided target.
+- Fixed an issue where the Buy button could be clicked after the order was finished and the redirect to the confirmation was in progress.
 - Fixed GPSR drawer responsiveness.
-- To satisfy accessibility guidelines, the alt text for the logo now includes the store name.
+- Fixed accessibility issues by adding the store name to the alt text for the logo.
 - The hero image now uses the alt text specified in the homepage template.
 - The recommended products section on the homepage now uses the category ID from the homepage template.
 - The recommended products section on the homepage is now displayed multiple times if specified.
-- Allow for multiple category products fetching on the same page.
+- Category products can now be fetched multiple times on the same page.
 - Fixed an issue where review modal was unscrollable on smaller screens.
-- Fixed, adding items to the cart that are not available or cant be added for other reasons, now respond with a clear error notification.
+- The error message provided has been improved when adding items to the cart that are not available or can't be added for other reasons.
 - Fixed an issue with the PayPal button not being displayed on the checkout.
+- Fixed multiple issues in the PayPal readonly checkout process.
+- Fixed a issue where PayPal payments were stored as "Cash in Advance".
 - The language selector is no longer displayed if only one language is configured.
 - Fixed an issue with category product prices not being updated on page change.
-- Added SSR rendering for homepage.
-- Fixed SSR rendering for homepage when switching language.
+- Fixed loading times on the homepage by adding SSR.
 - CSS for the Swiper library is now only loaded on pages that use the `HeroCarousel` component.
 - The `HeroCarousel` no longer overlaps the navigation menu on mobile devices.
-- Improved CLS for hero skeleton.
-- Fixed, createOrder now handles errors more reliable and resets the buy button if an error occurs.
-- Added missing condition to block action.
-- Fixed a bug where PayPal payments were stored as "Cash in Advance".
+- Fixed the height of the hero skeleton to improve CLS.
+- `createOrder` now handles errors more reliably and resets the buy button if an error occurs.
 
 ## v1.7.0 (2024-11-06) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.6.0...v1.7.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -186,8 +199,8 @@ NPM_AUTH_TOKEN="<TOKEN>"
 
 #### Configuration
 
-- The app can now fetch the Favicon from the plentysystems system.
-- The app can now fetch the logo from the plentysystems system.
+- The app can now fetch the Favicon from the PlentyONE system.
+- The app can now fetch the logo from the PlentyONE system.
 - The app now reads which Google Fonts to use from the environment.
 - The app can now generate a complete Tailwind color palette from a single main color. To use this functionality, enable the `build:before` hook's `generateScssVariables` method and set the environment variables `PRIMARY` and `SECONDARY`. These variables represent the center color of the Tailwind palette, weight `500`. As part of this update, all instances of `SfButton` have been replaced with a new `UiButton` component. Functionally, `UiButton` is identical to `SfButton`, but some color weights were adjusted to work with the generated palettes. ESLint now reports an `error` for `SfButton`. You can disable this rule in `apps/web/eslintrc.cjs`.
 - The app now reads the internationalisation configuration from the environment. This includes the available languages and the default language.
@@ -233,7 +246,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed editing author name on reviews and replies with added e2e.
 - Fixed the issue with the plentyID-cookie in the PWA live preview.
 - Fixed that the PayPal Express button on the product page is only displayed if the item is available for purchase.
-- Fixed that when fetching configurations from plentysystems, the build would only apply updates on the second run.
+- Fixed that when fetching configurations from PlentyONE, the build would only apply updates on the second run.
 - Fixed orphaned form label on product page attributes.
 - Fixed cookie bar privacy link not working properly.
 - Fixed minor styling issues in the credit card form in the checkout and the rating form on the product page.
@@ -405,7 +418,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 ### Migration guide
 
 - The upload action was changed [.github/workflows/upload.yml](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-8cf0b5fae548aab9bd49f5020da9c0e35d281984b82b8a5358ffb1c1ae5bec13L5) update the file to make use of the [config feature](https://pwa-docs.plentymarkets.com/guide/setup/deployment#config)
-- We now require an API Security Token to make requests to the plentysystems API. [setup guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
+- We now require an API Security Token to make requests to the PlentyONE API. [setup guide](https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-security-token)
 - Category routing has been updated, and the /c prefix has been removed. Please verify that no static URLs in your application still include /c.
   - To accommodate the /c routing change, the [category page](https://github.com/plentymarkets/plentyshop-pwa/compare/v1.3.0...v1.4.0#diff-2f61484eb978aa090fc50dcba90bc44813b45081f25dbff295434cdf6bf219a4) was moved from apps/web/pages/category/[slug].vue to apps/web/pages/[...slug].vue.
 
@@ -467,7 +480,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Fixed the issue where a hard load after language switch leads to a 404 error.
 - Added the missing wishlist navigation button on mobile devices.
 - Fixed the link to the contribution guidelines in the documentation.
-- Refactored index.vue
+- Refactored index.vue and created a new composable for the blocks
 
 ## New Contributors
 
@@ -567,6 +580,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Added composable that sets canonical url metadata for static pages.
 - Added more default notifications for a variaty of interactions in the PWA
 - Added loading animations where applicable
+- Added empty block component for when there is no data in the json
 
 ### Changed
 

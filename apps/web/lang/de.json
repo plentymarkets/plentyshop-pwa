@@ -535,7 +535,7 @@
   },
   "estimatedTax": "MwSt.",
   "etaDelivery": "Voraussichtliche Lieferdauer",
-  "excludedShipping": "zzgl. Versandkosten",
+  "excludedShipping": "zzgl. {shipping}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
   "filters": "Filter",
@@ -590,6 +590,9 @@
   "home": "Startseite",
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
+    "emptyBlock": {
+      "headline": "Hier den ersten Abschnitt hinzufügen."
+    },
     "banner": {
       "moto1": "Fühle die Musik",
       "moto2": "Neue Wireless Pro",
@@ -715,7 +718,8 @@
     "declineOffer": "Angebot ablehnen",
     "inputPlaceholder": "Bitte teilen Sie uns Ihre Gründe zur Ablehnung mit...",
     "missingEmail": "Es wurde keine E-Mail-Adresse hinterlegt.",
-    "offer": "Angebot"
+    "offer": "Angebot",
+    "offerValidUntil": "Angebot gültig bis: {date}"
   },
   "openConfigurationDrawer": "Konfigurations-Drawer öffnen",
   "openSearchModalButtonLabel": "Suche öffnen",
@@ -777,7 +781,8 @@
     "unbrandedCvv": "Kartenprüfnummer",
     "unbrandedExpirationDate": "Ablaufdatum",
     "unbrandedNameOnCard": "Karteninhaber",
-    "unbrandedPay": "Bezahlen"
+    "unbrandedPay": "Bezahlen",
+    "invalidOrder": "Die Bestellung konnte nicht abgeschlossen werden. Bitte versuchen Sie es erneut."
   },
   "perPage": "Pro Seite",
   "phone": "Telefonnummer",
@@ -792,7 +797,7 @@
   "procentageSavings": "Du sparst {percent} % auf dieses Bundle",
   "productAttributes": {
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productInformationMissing": "Produktinformationen fehlen",
+    "productNameMissing": "Produktname fehlt",
     "seeAvailableOptions": "Verfügbare Optionen anzeigen"
   },
   "productDetails": "Produktdetails",
@@ -919,6 +924,12 @@
     "reviewsUp": "Kundenbewertung ⬆"
   },
   "storefrontError": {
+    "offer": {
+      "expired": "Dieses Angebot ist abgelaufen.",
+      "openUnauthorized": "Sie sind nicht berechtigt, dieses Angebot zu öffnen.",
+      "itemOutOfStock": "Mindestens ein Artikel des Angebots ist nicht mehr auf Lager.",
+      "alreadyTaken": "Dieses Angebot wurde bereits verwendet und kann nicht erneut verwendet werden."
+    },
     "address": {
       "createFailed": "Das Speichern der Adresse ist fehlgeschlagen.",
       "deleteFailed": "Das Löschen der Adresse ist fehlgeschlagen.",
@@ -993,5 +1004,5 @@
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "double-tap-zoom": "Zoom Zoomen doppeltippen"
+  "double-tap-zoom": "Zum Zoomen doppeltippen"
 }

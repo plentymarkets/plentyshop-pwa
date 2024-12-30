@@ -26,6 +26,7 @@
     "test": "yarn turbo:disable-telemetry && turbo run test",
     "test:watch": "yarn turbo:disable-telemetry && turbo run test:watch",
     "test:coverage": "yarn turbo:disable-telemetry && npx turbo run test:coverage",
+    "test:cypress-editor": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-editor\" \"yarn start\"",
     "test:cypress-quarantine": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-quarantine\" \"yarn start\"",
     "test:cypress": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress\" \"yarn start\"",
     "test:cypress-dev": "concurrently -k -s=first \"yarn wait-on http-get://localhost:3000 && yarn turbo:disable-telemetry && turbo run test:cypress-dev\" \"yarn start\"",
@@ -33,7 +34,7 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.82.0",
+    "@plentymarkets/shop-api": "^0.82.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",

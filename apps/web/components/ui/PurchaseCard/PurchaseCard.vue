@@ -117,7 +117,17 @@
             <div class="mt-4 typography-text-xs flex gap-1">
               <span>{{ t('asterisk') }}</span>
               <span>{{ showNetPrices ? t('itemExclVAT') : t('itemInclVAT') }}</span>
-              <span>{{ t('excludedShipping') }}</span>
+              <i18n-t keypath="excludedShipping" scope="global">
+                <template #shipping>
+                  <SfLink
+                    :href="localePath(paths.shipping)"
+                    target="_blank"
+                    class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+                  >
+                    {{ $t('delivery') }}
+                  </SfLink>
+                </template>
+              </i18n-t>
             </div>
             <template v-if="showPayPalButtons">
               <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
@@ -132,9 +142,10 @@
 
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
-import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip } from '@storefront-ui/vue';
+import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
 import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
 import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
@@ -157,6 +168,7 @@ const { isWishlistItem } = useWishlist();
 const { openQuickCheckout } = useQuickCheckout();
 const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
+const localePath = useLocalePath();
 
 resetInvalidFields();
 resetAttributeFields();

@@ -23,20 +23,20 @@
           },
           {
             "image": {
-              "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-lg.avif",
-              "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-md.avif",
-              "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-sm.avif",
-              "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-xs.avif"
+              "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drohne-1920-800.avif",
+              "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_1024x600.avif",
+              "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif",
+              "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif"
             },
-            "tagline": "Feel the music",
+            "tagline": "The Future of Aerial Photography",
             "taglineColor": "#000000",
-            "heading": "Your Sound, Elevated",
+            "heading": "Drone Omega",
             "headingColor": "#000000",
-            "description": "Immerse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
-            "alt": "Capybara headphones",
+            "description": "A lightweight drone designed for stunning aerial footage. With a high-resolution camera on a 3-axis gimbal and up to 45 minutes of flight time, it's perfect for capturing smooth, stable video. Featuring GPS-assisted hover, obstacle avoidance, and easy portability, the Drone brings innovation and simplicity to your aerial shots.",
+            "alt": "Omage drone",
             "descriptionColor": "#000000",
-            "callToAction": "Discover Capybara",
-            "link": "/gear/headphones-capybara_157"
+            "callToAction": "Discover Omega",
+            "link": "/gear/drone-omega_154"
           }
         ]
       }
@@ -52,7 +52,7 @@
     },
     {
       "name": "ProductRecommendedProducts",
-      "options": { "headline": "Explore our fashion collection", "categoryId": "16" }
+      "options": { "headline": "Explore our fashion collection", "categoryId": "49" }
     },
     {
       "name": "NewsletterSubscribe",
@@ -67,7 +67,8 @@
         "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
       }
     }
-  ]
+  ],
+  "meta": {
+    "isDefault": null
+  }
 }
-
-

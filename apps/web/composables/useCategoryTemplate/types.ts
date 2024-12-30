@@ -5,8 +5,8 @@ export interface UseCategoryTemplateState {
   loading: boolean;
 }
 
-export type FetchCategoryTemplate = (categoryId: number) => void;
-export type SetCategoryTemplate = (categoryId: number, content: string) => void;
+export type FetchCategoryTemplate = (categoryId: number) => Promise<void>;
+export type SetCategoryTemplate = (categoryId: number, content: string) => Promise<void>;
 
 export interface UseCategoryTemplate {
   data: Readonly<Ref<UseCategoryTemplateState['data']>>;
