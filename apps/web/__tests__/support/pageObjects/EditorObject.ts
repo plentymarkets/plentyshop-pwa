@@ -54,7 +54,7 @@ export class EditorObject extends PageObject {
   }
 
   get recommendedProducts() {
-    return cy.getByTestId('recommended-products');
+    return cy.getByTestId('product-slider');
   }
 
   togglePreviewMode() {
