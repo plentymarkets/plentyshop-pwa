@@ -8,6 +8,7 @@
 
 ### 🩹 Fixed
 
+- Replaced favicon with PlentyONE favicon.
 - Added margin for graduated prices.
 - Changed brand mentions to PlentyONE and changed logo.
 - Fix for max visible pages on mobile pagination.
