@@ -1,7 +1,10 @@
 import withNuxt from './.nuxt/eslint.config.mjs';
-import { architecture } from "@vue-storefront/eslint-config";
+import { architecture, ecma } from "@vue-storefront/eslint-config";
 
 export default withNuxt(
+  {
+    ignores: ['**/__mocks__/**'],
+  },
   architecture({
     maxComplexity: 10,
     maxDepth: 5,
@@ -12,9 +15,13 @@ export default withNuxt(
     maxNestedCallbacks: 3,
     maxParams: 4
   }),
+  ecma({
+    withImport: false,
+  }),
   {
     rules: {
-      // Custom rules TBD
+      'vue/no-multiple-template-root': 'off',
+      'vue/no-v-html': 'off',
     }
-  }
+  },
 );
