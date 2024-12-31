@@ -14,4 +14,8 @@ describe('Blocks', () => {
         editor.addBlockTop();
         editor.addBlockBottom();
     });
+
+    it('should check for recommended products', () => {
+      editor.recommendedProductsExist();
+    });
   });

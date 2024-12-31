@@ -39,6 +39,16 @@ export const useHomepage: UseHomepageDataReturn = () => {
   };
 
   watch(
+    () => currentLocale.value,
+    // eslint-disable-next-line unicorn/no-keyword-prefix
+    async (newLocale) => {
+      // eslint-disable-next-line unicorn/no-keyword-prefix
+      currentLocale.value = newLocale;
+      await fetchPageTemplate();
+    },
+  );
+
+  watch(
     () => state.value.data,
     (updatedData) => {
       if (updatedData.meta?.isDefault === null) {
