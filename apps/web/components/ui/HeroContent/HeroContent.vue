@@ -70,3 +70,4 @@ const currentImageSource = computed<string | undefined>(() => {
   return isSizeKeyRecord(props.heroItemProps.image) ? props.heroItemProps.image[currentSizeKey.value] : undefined;
 });
 </script>
+
