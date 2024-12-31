@@ -164,19 +164,7 @@ export class EditorObject extends PageObject {
       this.blockWrapper.should('have.length', initialLength + 1);
     });
   }
-
-  addBlockBottom() {
-    this.blockWrapper.then(initialBlocks => {
-      const initialLength = initialBlocks.length;
-      this.bottomBlockButton.invoke('removeClass', 'opacity-0');
-      this.bottomBlockButton.first().should('exist').click();
-      cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
-    });
-  }
-  }
-
-   switchLanguage() {
+  switchLanguage() {
     cy.intercept('/plentysystems/getCart').as('getCart');
     cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
     cy.intercept('/plentysystems/getFacet').as('getFacet');
@@ -186,6 +174,15 @@ export class EditorObject extends PageObject {
     this.languageSwitcher.select('de');
     cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
     this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
-   }
+  }
+  addBlockBottom() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.bottomBlockButton.invoke('removeClass', 'opacity-0');
+      this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
 }
 
