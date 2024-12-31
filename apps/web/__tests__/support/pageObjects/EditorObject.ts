@@ -48,9 +48,13 @@ export class EditorObject extends PageObject {
   get bottomBlockButton(){
     return cy.getByTestId('bottom-add-block')
   }
-  
+
   get deleteBlockButton(){
     return cy.getByTestId('delete-block-button')
+  }
+
+  get recommendedProducts() {
+    return cy.getByTestId('product-slider');
   }
 
   get languageSwitcher() {
@@ -154,6 +158,10 @@ export class EditorObject extends PageObject {
       cy.wait(1000);
       this.blockWrapper.should('have.length', initialLength - 1);
     });
+   }
+
+   recommendedProductsExist() {
+      this.recommendedProducts.should('exist');
    }
 
    switchLanguage() {

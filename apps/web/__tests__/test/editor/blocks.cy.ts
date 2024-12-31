@@ -12,5 +12,9 @@ describe('Blocks', () => {
         editor.buttonsExistWithGroupClasses();
         editor.deleteBlock();
     });
+
+    it('should check for recommended products', () => {
+      editor.recommendedProductsExist();
+    });
   });
   
