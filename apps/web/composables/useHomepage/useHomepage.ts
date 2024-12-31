@@ -23,16 +23,12 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
-      try {
-        await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
-        state.value.data = fetchHomepageTemplate();
-        if (
-          (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
-          state.value.data.meta?.isDefault === null
-        ) {
-          state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
-        }
-      } catch {
+      await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+      state.value.data = fetchHomepageTemplate();
+      if (
+        (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
+        state.value.data.meta?.isDefault === null
+      ) {
         state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
       }
     } else {
@@ -44,8 +40,10 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   watch(
     () => currentLocale.value,
-    async (differentLang) => {
-      currentLocale.value = differentLang;
+    // eslint-disable-next-line unicorn/no-keyword-prefix
+    async (newLocale) => {
+      // eslint-disable-next-line unicorn/no-keyword-prefix
+      currentLocale.value = newLocale;
       await fetchPageTemplate();
     },
   );

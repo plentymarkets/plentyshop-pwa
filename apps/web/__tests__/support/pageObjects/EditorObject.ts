@@ -57,6 +57,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('product-slider');
   }
 
+  get languageSwitcher() {
+    return cy.getByTestId('editor-language-select');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
