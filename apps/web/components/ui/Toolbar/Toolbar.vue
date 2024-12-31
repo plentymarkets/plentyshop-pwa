@@ -1,10 +1,10 @@
 <template>
-  <div class="sticky top-0 bg-white z-[1] md:z-[1] lg:z-[100]" data-testid="edit-mode-toolbar">
+  <div class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[100]" data-testid="edit-mode-toolbar">
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
 
       <div class="absolute left-1/2 transform -translate-x-1/2">
-        <UiLanguageEditor v-if="experimentalAddBlock" />
+        <UiLanguageEditor />
       </div>
       <div class="ml-auto flex space-x-2">
         <button
@@ -61,7 +61,6 @@ const { loading } = useHomepage();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-const experimentalAddBlock = runtimeConfig.public.experimentalAddBlock;
 
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 

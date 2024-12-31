@@ -17,4 +17,9 @@ describe('EditMode', () => {
     editor.replaceEditorContent(JSON.stringify(newContent, null, 2));
     editor.checkEditorChanges();
   });
+
+  it('should switch language and check editor content', () => {
+     editor.switchLanguage();
+  });
+
 });
