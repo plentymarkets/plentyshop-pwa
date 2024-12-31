@@ -5,6 +5,7 @@
 ### New
 
 - Added page for shipping legal text.
+- Added robots for category page.
 
 ### 🩹 Fixed
 
