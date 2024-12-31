@@ -60,7 +60,6 @@
     "cypress-wait-until": "^2.0.1",
     "eslint": "^9.16.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.32.0",
     "happy-dom": "^15.11.7",
     "msw": "^2.6.7",
     "nuxt": "^3.13.2",
@@ -71,7 +70,6 @@
     "typedoc-vitepress-theme": "1.0.0",
     "vitepress": "^1.2.3",
     "vitest": "^1.6.0",
-    "vue-eslint-parser": "^9.4.3",
     "vue-tsc": "^2.1.6",
     "vuepress": "^2.0.0-rc.14"
   }
