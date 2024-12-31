@@ -48,7 +48,7 @@ export class EditorObject extends PageObject {
   get bottomBlockButton(){
     return cy.getByTestId('bottom-add-block')
   }
-  
+
   get deleteBlockButton(){
     return cy.getByTestId('delete-block-button')
   }
@@ -158,6 +158,18 @@ export class EditorObject extends PageObject {
 
    recommendedProductsExist() {
       this.recommendedProducts.should('exist');
+   }
+
+   switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
+
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
    }
 }
 
