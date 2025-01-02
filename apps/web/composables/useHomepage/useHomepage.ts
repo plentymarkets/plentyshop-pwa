@@ -17,7 +17,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const runtimeConfig = useRuntimeConfig();
   const { fetchCategoryTemplate } = useCategoryTemplate();
   const { fetchHomepageTemplate } = useFetchHome();
-
+  
   const currentLocale = ref($i18n.locale.value);
   const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
@@ -35,6 +35,14 @@ export const useHomepage: UseHomepageDataReturn = () => {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
     state.value.dataIsEmpty = !state.value.data.blocks || state.value.data.blocks.length === 0;
+    state.value.data.blocks.forEach((block, index) => {
+      if (block.name === 'ProductRecommendedProducts') {
+        const options = block.options as ProductRecommendedProductsOptions;
+        const id = options.categoryId;
+        const { fetchProductRecommended } = useProductRecommended(id);
+        fetchProductRecommended(id);
+      }
+    });
     state.value.loading = false;
   };
 
