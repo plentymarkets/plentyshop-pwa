@@ -23,7 +23,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { fetchHomepageTemplate } = useFetchHome();
 
   const fetchRecommendedProducts = async () => {
-    state.value.data.blocks.forEach((block, index) => {
+    state.value.data.blocks.forEach((block) => {
       if (block.name === 'ProductRecommendedProducts') {
         const options = block.options as ProductRecommendedProductsOptions;
         const id = options.categoryId;
