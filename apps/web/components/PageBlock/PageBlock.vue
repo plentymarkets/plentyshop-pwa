@@ -2,7 +2,7 @@
   <div
     :class="[
       block.name === 'UiHeroCarousel'
-        ? 'new-classes-for-hero-carousel'
+        ? 'relative mb-10 group'
         : 'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
       {
         'outline outline-4 outline-[#538AEA]':

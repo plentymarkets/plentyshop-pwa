@@ -13,12 +13,14 @@
       </SwiperSlide> -->
 
       <SwiperSlide>
-        <div class="relative">
-          <div class="bg-cover bg-center h-full w-full">
-            <img src="https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png" />
-          </div>
-          <div class="absolute inset-0 bg-black opacity-50"></div>
-          <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
+         <img
+            src="https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png"
+            class="h-auto w-full object-cover brightness-50"
+            alt=""
+          />
+          <div
+            class="absolute inset-0 p-4 md:p-10 md:max-w-[50%] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4 text-white"
+          >
             <p
               class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
               data-testid="tagline"
@@ -35,13 +37,12 @@
               class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
               data-testid="description"
             >
-              desc
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia mauris ipsum, faucibus pretium magna congue non. Donec ut rutrum magna, quis molestie felis. Duis mattis vel odio consectetur sagittis. Cras vel diam suscipit, ornare risus nec, pellentesque risus. Pellentesque ac placerat risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dictum placerat egestas. Fusce varius viverra lacus ut sodales. Sed imperdiet nec nunc ut congue. Duis ac nisl ipsum. In hac habitasse platea dictumst.
             </p>
             <div class="flex flex-col md:flex-row gap-4 mt-6">
               <UiButton size="lg">Test</UiButton>
             </div>
           </div>
-        </div>
       </SwiperSlide>
     </Swiper>
 
