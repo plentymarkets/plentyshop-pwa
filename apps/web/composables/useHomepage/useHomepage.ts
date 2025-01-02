@@ -49,7 +49,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
     await fetchRecommendedProducts();
   };
-  
+
   const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
 
