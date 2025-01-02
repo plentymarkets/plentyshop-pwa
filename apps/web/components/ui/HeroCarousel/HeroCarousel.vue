@@ -8,7 +8,7 @@
       @slide-change="onSlideChange"
       class="!z-0"
     >
-      <!-- <SwiperSlide v-for="(heroItem, index) in hero" :key="index" class="md:px-7 lg:px-15">
+      <!-- <SwiperSlide v-for="(heroItem, index) in hero" :key="index">
         <UiHeroContent :hero-item-props="heroItem" />
       </SwiperSlide> -->
 

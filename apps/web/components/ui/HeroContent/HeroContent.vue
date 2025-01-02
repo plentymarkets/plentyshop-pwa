@@ -1,16 +1,11 @@
 <template>
-  <div class="md:flex md:flex-row-reverse md:justify-center mx-auto mb-10 text-center">
-    <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
       <img
         :src="currentImageSource"
-        :width="currentImageSize.width"
-        :height="currentImageSize.height"
         :alt="heroItemProps.alt"
-        class="h-full m-auto md:h-full md:object-contain"
+        class="h-auto w-full object-cover brightness-50"
       />
-    </div>
 
-    <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
+    <div class="absolute inset-0 p-4 md:p-10 md:max-w-[50%] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4 text-white">
       <p
         class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
         :style="{ color: heroItemProps.taglineColor }"
@@ -38,7 +33,6 @@
         }}</UiButton>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup lang="ts">
