@@ -32,6 +32,7 @@ export type HeroContentProps2 = {
   text: {
     color: string;
     bgcolor: string;
+    bgopacity: number;
     pretitle: string;
     title: string;
     subtitle: string;

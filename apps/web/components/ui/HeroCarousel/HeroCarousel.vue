@@ -13,36 +13,7 @@
       </SwiperSlide> -->
 
       <SwiperSlide>
-         <img
-            src="https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png"
-            class="h-[85vh] w-full object-cover brightness-50"
-            alt=""
-          />
-          <div
-            class="absolute inset-0 p-4 md:p-10 md:flex md:flex-col md:justify-end md:items-center md:basis-2/4 text-white"
-          >
-            <p
-              class="typography-text-xs md:typography-text-sm font-bold text-center md:text-left tracking-widest uppercase md:max-w-[50%]"
-              data-testid="tagline"
-            >
-              Tagline
-            </p>
-            <h1
-              class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4 md:max-w-[50%]"
-              data-testid="headline"
-            >
-              Heading
-            </h1>
-            <p
-              class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal md:max-w-[50%]"
-              data-testid="description"
-            >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia mauris ipsum, faucibus pretium magna congue non. Donec ut rutrum magna, quis molestie felis. Duis mattis vel odio consectetur sagittis. Cras vel diam suscipit, ornare risus nec, pellentesque risus. Pellentesque ac placerat risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dictum placerat egestas. Fusce varius viverra lacus ut sodales. Sed imperdiet nec nunc ut congue. Duis ac nisl ipsum. In hac habitasse platea dictumst. 
-            </p>
-            <div class="flex flex-col md:flex-row gap-4 mt-6">
-              <UiButton size="lg">Test</UiButton>
-            </div>
-          </div>
+        <HeroContent2 :hero-item-props="heroContent2" />
       </SwiperSlide>
     </Swiper>
 
@@ -56,12 +27,42 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { HeroContentProps, HeroContentProps2 } from './types';
 import { Pagination } from 'swiper/modules';
+import HeroContent2 from '../HeroContent/HeroContent2.vue';
 const { onSlideChange } = useCarousel();
 
 const { hero } = defineProps<{
   hero: HeroContentProps[];
 }>();
 const enableModules = computed(() => hero.length > 1);
+
+const heroContent2: HeroContentProps2 = {
+  image: {
+    lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    alt: '',
+    brightness: 0.5,
+  },
+  text: {
+    color: '#fff',
+    bgcolor: '#000',
+    bgopacity: 0.8,
+    pretitle: 'Pretitle',
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat',
+    descriptionIsHtml: false,
+    textAlignment: 'left',
+    justify: 'end',
+    align: 'center',
+  },
+  button: {
+    label: 'Test',
+    link: '/test',
+    variant: 'primary',
+  },
+};
 </script>
 
 <style src="./styles/navigation.min.css"></style>
