@@ -8,6 +8,7 @@
 
 ### 🩹 Fixed
 
+- Fixed accesibility error caused by missing label on clear filters.
 - Fixed same text in alt and title warning in category page.
 - Replaced favicon with PlentyONE favicon.
 - Added margin for graduated prices.
