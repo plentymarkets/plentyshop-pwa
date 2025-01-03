@@ -6,7 +6,7 @@
       :loop="true"
       pagination
       @slide-change="onSlideChange"
-      class="!z-0"
+      class="!z-0 !w-full !max-h-[85vh]"
     >
       <!-- <SwiperSlide v-for="(heroItem, index) in hero" :key="index">
         <UiHeroContent :hero-item-props="heroItem" />
@@ -15,29 +15,29 @@
       <SwiperSlide>
          <img
             src="https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png"
-            class="h-auto w-full object-cover brightness-50"
+            class="h-[85vh] w-full object-cover brightness-50"
             alt=""
           />
           <div
-            class="absolute inset-0 p-4 md:p-10 md:max-w-[50%] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4 text-white"
+            class="absolute inset-0 p-4 md:p-10 md:flex md:flex-col md:justify-end md:items-center md:basis-2/4 text-white"
           >
             <p
-              class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
+              class="typography-text-xs md:typography-text-sm font-bold text-center md:text-left tracking-widest uppercase md:max-w-[50%]"
               data-testid="tagline"
             >
               Tagline
             </p>
             <h1
-              class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
+              class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4 md:max-w-[50%]"
               data-testid="headline"
             >
               Heading
             </h1>
             <p
-              class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
+              class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal md:max-w-[50%]"
               data-testid="description"
             >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia mauris ipsum, faucibus pretium magna congue non. Donec ut rutrum magna, quis molestie felis. Duis mattis vel odio consectetur sagittis. Cras vel diam suscipit, ornare risus nec, pellentesque risus. Pellentesque ac placerat risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dictum placerat egestas. Fusce varius viverra lacus ut sodales. Sed imperdiet nec nunc ut congue. Duis ac nisl ipsum. In hac habitasse platea dictumst.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut lacinia mauris ipsum, faucibus pretium magna congue non. Donec ut rutrum magna, quis molestie felis. Duis mattis vel odio consectetur sagittis. Cras vel diam suscipit, ornare risus nec, pellentesque risus. Pellentesque ac placerat risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc dictum placerat egestas. Fusce varius viverra lacus ut sodales. Sed imperdiet nec nunc ut congue. Duis ac nisl ipsum. In hac habitasse platea dictumst. 
             </p>
             <div class="flex flex-col md:flex-row gap-4 mt-6">
               <UiButton size="lg">Test</UiButton>
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { HeroContentProps } from './types';
+import { HeroContentProps, HeroContentProps2 } from './types';
 import { Pagination } from 'swiper/modules';
 const { onSlideChange } = useCarousel();
 
