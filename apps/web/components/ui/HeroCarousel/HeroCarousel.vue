@@ -1,16 +1,19 @@
 <template>
   <ClientOnly>
     <Swiper
-      :modules="enableModules ? [Pagination, Navigation] : []"
+      :modules="enableModules ? [Pagination] : []"
       :slides-per-view="1"
-      :navigation="enableModules && handleArrows()"
       :loop="true"
       pagination
       @slide-change="onSlideChange"
-      class="!z-0"
+      class="!z-0 !w-full !max-h-[85vh]"
     >
-      <SwiperSlide v-for="(heroItem, index) in hero" :key="index" class="md:px-7 lg:px-15">
+      <!-- <SwiperSlide v-for="(heroItem, index) in hero" :key="index">
         <UiHeroContent :hero-item-props="heroItem" />
+      </SwiperSlide> -->
+
+      <SwiperSlide>
+        <HeroContent2 :hero-item-props="heroContent2" />
       </SwiperSlide>
     </Swiper>
 
@@ -22,14 +25,44 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { HeroContentProps } from './types';
-import { Navigation, Pagination } from 'swiper/modules';
-const { handleArrows, onSlideChange } = useCarousel();
+import { HeroContentProps, HeroContentProps2 } from './types';
+import { Pagination } from 'swiper/modules';
+import HeroContent2 from '../HeroContent/HeroContent2.vue';
+const { onSlideChange } = useCarousel();
 
 const { hero } = defineProps<{
   hero: HeroContentProps[];
 }>();
 const enableModules = computed(() => hero.length > 1);
+
+const heroContent2: HeroContentProps2 = {
+  image: {
+    lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    alt: '',
+    brightness: 0.5,
+  },
+  text: {
+    color: '#fff',
+    bgcolor: '#000',
+    bgopacity: 0.8,
+    pretitle: 'Pretitle',
+    title: 'Title',
+    subtitle: 'Subtitle',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat',
+    descriptionIsHtml: false,
+    textAlignment: 'left',
+    justify: 'end',
+    align: 'center',
+  },
+  button: {
+    label: 'Test',
+    link: '/test',
+    variant: 'primary',
+  },
+};
 </script>
 
 <style src="./styles/navigation.min.css"></style>
