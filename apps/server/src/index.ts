@@ -15,7 +15,7 @@ const checkEnvironments = (integrations: any) => {
       'API_ENDPOINT is not set. Please set it in your .env file https://pwa-docs.plentymarkets.com/guide/how-to/middleware#api-endpoint',
     );
   }
-}
+};
 
 (async () => {
   const app = await createServer(
@@ -23,18 +23,18 @@ const checkEnvironments = (integrations: any) => {
     {
       // CORS configuration
       cors: {
-        origin: "http://localhost:3000",
+        origin: 'http://localhost:3000',
         credentials: true,
       },
       // Body parser configuration
       bodyParser: {
-        limit: "50mb",
+        limit: '50mb',
       },
       fileUpload: {
         enabled: true, // Enable/disable file upload functionality
-        maxFileSize: 14155776, //// 13,3mb for 10mb upload file
+        maxFileSize: 14_155_776, //// 13,3mb for 10mb upload file
         maxFiles: 5, // Maximum number of files per upload
-      }
+      },
     },
   );
 
@@ -46,5 +46,4 @@ const checkEnvironments = (integrations: any) => {
   app.listen(port, host, () => {
     consola.success(`API server listening on http://${host}:${port}`);
   });
-
 })();
