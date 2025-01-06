@@ -13,12 +13,12 @@
       </SwiperSlide> -->
 
       <SwiperSlide>
-        <Banner :hero-item-props="heroContent2" />
+        <UiBanner :hero-item-props="heroContent2" />
       </SwiperSlide>
     </Swiper>
 
     <template #fallback>
-      <UiHeroContentSkeleton />
+      <UiBannerSkeleton />
     </template>
   </ClientOnly>
 </template>
@@ -27,7 +27,6 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { HeroContentProps } from './types';
 import { Pagination } from 'swiper/modules';
-import Banner from '../Banner/Banner.vue';
 import { BannerProps } from '../Banner/types';
 const { onSlideChange } = useCarousel();
 
