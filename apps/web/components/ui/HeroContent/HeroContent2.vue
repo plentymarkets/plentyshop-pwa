@@ -1,10 +1,11 @@
 <template>
   <NuxtImg
-    src="https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png"
+    :src="getImageUrl()"
+    :alt="props.heroItemProps.image.alt ?? ''"
     class="h-[85vh] w-full object-cover"
     :style="{ filter: 'brightness(' + props.heroItemProps.image.brightness + ')' }"
-    :alt="props.heroItemProps.image.alt ?? ''"
   />
+
   <div
     class="absolute inset-0 p-4 md:p-10 flex flex-col md:basis-2/4"
     :style="{
@@ -68,6 +69,23 @@ const isMobile = computed(() => viewport.isLessThan('lg'));
 const props = defineProps<{
   heroItemProps: HeroContentProps2;
 }>();
+
+const getImageUrl = () => {
+  switch (viewport.breakpoint.value) {
+    case 'lg': {
+      return props.heroItemProps.image.lg;
+    }
+    case 'md': {
+      return props.heroItemProps.image.md;
+    }
+    case 'sm': {
+      return props.heroItemProps.image.sm;
+    }
+    default: {
+      return props.heroItemProps.image.xs;
+    }
+  }
+};
 
 const getTextAlignment = () => {
   if (isMobile.value) {

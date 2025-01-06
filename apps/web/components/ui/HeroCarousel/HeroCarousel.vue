@@ -38,9 +38,9 @@ const enableModules = computed(() => hero.length > 1);
 const heroContent2: HeroContentProps2 = {
   image: {
     lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
-    md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
-    sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
-    xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
+    md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-768.png',
+    sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-480.png',
+    xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-480.png',
     alt: '',
     brightness: 0.5,
   },
