@@ -1,11 +1,14 @@
 import dotenv from 'dotenv';
 import * as path from 'path';
-
 dotenv.config({
   path: path.resolve(__dirname, '../web/.env'),
 });
 
 const config = {
+  logger: {
+    includeStackTrace: true,
+    verbosity: 'debug'
+  },
   integrations: {
     plentysystems: {
       location: '@plentymarkets/shop-api/server',
