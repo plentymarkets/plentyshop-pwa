@@ -78,7 +78,6 @@ const showShippingPrivacy = computed(
 );
 
 const getDeliveryDays = (method: string) => {
-  if (!cart.value.maxDeliveryDays && method) return null;
   return cartGetters.getMaxDeliveryDays(cart.value, Number(method));
 };
 
