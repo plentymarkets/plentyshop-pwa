@@ -7,7 +7,7 @@ dotenv.config({
 const config = {
   logger: {
     includeStackTrace: true,
-    verbosity: 'debug'
+    verbosity: 'debug',
   },
   integrations: {
     plentysystems: {
