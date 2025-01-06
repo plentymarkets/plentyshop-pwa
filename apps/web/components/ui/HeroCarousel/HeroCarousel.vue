@@ -13,7 +13,7 @@
       </SwiperSlide> -->
 
       <SwiperSlide>
-        <HeroContent2 :hero-item-props="heroContent2" />
+        <Banner :hero-item-props="heroContent2" />
       </SwiperSlide>
     </Swiper>
 
@@ -25,9 +25,10 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { HeroContentProps, HeroContentProps2 } from './types';
+import { HeroContentProps } from './types';
 import { Pagination } from 'swiper/modules';
-import HeroContent2 from '../HeroContent/HeroContent2.vue';
+import Banner from '../Banner/Banner.vue';
+import { BannerProps } from '../Banner/types';
 const { onSlideChange } = useCarousel();
 
 const { hero } = defineProps<{
@@ -35,7 +36,7 @@ const { hero } = defineProps<{
 }>();
 const enableModules = computed(() => hero.length > 1);
 
-const heroContent2: HeroContentProps2 = {
+const heroContent2: BannerProps = {
   image: {
     lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
     md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-768.png',

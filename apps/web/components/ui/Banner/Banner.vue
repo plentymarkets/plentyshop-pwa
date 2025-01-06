@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { HeroContentProps2 } from '../HeroCarousel/types';
+import { BannerProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 
@@ -67,7 +67,7 @@ const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const props = defineProps<{
-  heroItemProps: HeroContentProps2;
+  heroItemProps: BannerProps;
 }>();
 
 const getImageUrl = () => {
