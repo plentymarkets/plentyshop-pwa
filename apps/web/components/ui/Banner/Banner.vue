@@ -4,6 +4,7 @@
     :alt="props.bannerProps.image.alt ?? ''"
     class="h-[85vh] w-full object-cover"
     :style="{ filter: 'brightness(' + props.bannerProps.image.brightness + ')' }"
+    :data-testid="'banner-image-' + props.index"
   />
 
   <div
@@ -14,27 +15,32 @@
       alignItems: getContentPosition(props.bannerProps.text.align),
       justifyContent: getContentPosition(props.bannerProps.text.justify),
     }"
+    :data-testid="'banner-overlay-' + props.index"
   >
     <div
       class="p-4 md:p-6 rounded-lg md:max-w-[50%]"
       :style="{ backgroundColor: props.bannerProps.text.bgcolor, opacity: props.bannerProps.text.bgopacity }"
+      :data-testid="'banner-content-' + props.index"
     >
-      <div class="typography-headline-6 font-bold tracking-widest uppercase" data-testid="pretitle">
+      <div
+        class="typography-headline-6 font-bold tracking-widest uppercase"
+        :data-testid="'banner-pretitle-' + props.index"
+      >
         {{ props.bannerProps.text.pretitle }}
       </div>
 
-      <h1 class="typography-display-1 md:leading-[67.5px] font-bold my-2" data-testid="title">
+      <h1 class="typography-display-1 md:leading-[67.5px] font-bold my-2" :data-testid="'banner-title-' + props.index">
         {{ props.bannerProps.text.title }}
       </h1>
 
-      <div class="typography-headline-6 font-bold tracking-widest mb-4" data-testid="subtitle">
+      <div class="typography-headline-6 font-bold tracking-widest mb-4" :data-testid="'banner-subtitle-' + props.index">
         {{ props.bannerProps.text.subtitle }}
       </div>
 
       <div
         v-html="props.bannerProps.text.htmlDescription"
         class="typography-text-sm md:typography-text-lg font-normal"
-        data-testid="description"
+        :data-testid="'banner-description-' + props.index"
       ></div>
 
       <UiButton
@@ -43,6 +49,7 @@
         :to="localePath(props.bannerProps.button.link ?? '')"
         :variant="props.bannerProps.button.variant ?? 'primary'"
         size="lg"
+        :data-testid="'banner-button-' + props.index"
       >
         {{ props.bannerProps.button.label }}
       </UiButton>
@@ -62,6 +69,7 @@ const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const props = defineProps<{
   bannerProps: BannerProps;
+  index: number;
 }>();
 
 const getImageUrl = () => {
