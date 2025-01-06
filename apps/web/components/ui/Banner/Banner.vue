@@ -30,18 +30,15 @@
         {{ props.heroItemProps.text.title }}
       </h2>
 
-      <h2 class="typography-display-4 md:typography-display-3 font-bold text-xs mt-2" data-testid="subtitle">
+      <h3 class="typography-display-4 md:typography-display-3 font-bold text-xs mt-2" data-testid="subtitle">
         {{ props.heroItemProps.text.subtitle }}
-      </h2>
+      </h3>
 
       <div
-        v-if="props.heroItemProps.text.descriptionIsHtml"
-        v-html="props.heroItemProps.text.description"
+        v-html="props.heroItemProps.text.htmlDescription"
+        class="typography-text-sm md:typography-text-lg font-normal"
         data-testid="description"
       ></div>
-      <div v-else class="typography-text-sm md:typography-text-lg font-normal" data-testid="description">
-        {{ props.heroItemProps.text.description }}
-      </div>
 
       <UiButton
         class="flex flex-col md:flex-row gap-4 mt-6"

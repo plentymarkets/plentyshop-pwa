@@ -14,8 +14,7 @@ export type BannerProps = {
     pretitle: string;
     title: string;
     subtitle: string;
-    description: string;
-    descriptionIsHtml: boolean;
+    htmlDescription: string;
     textAlignment: 'left' | 'center' | 'right';
     justify: 'start' | 'center' | 'end';
     align: 'start' | 'center' | 'end';
