@@ -1,19 +1,22 @@
 <template>
   <NuxtImg
     :src="getImageUrl()"
-    :alt="props.bannerProps.image.alt ?? ''"
+    :alt="props.bannerProps.image?.alt ?? ''"
     class="h-[85vh] w-full object-cover"
-    :style="{ filter: 'brightness(' + props.bannerProps.image.brightness + ')' }"
+    :style="
+      props.bannerProps.image?.brightness ? { filter: 'brightness(' + props.bannerProps.image.brightness + ')' } : null
+    "
     :data-testid="'banner-image-' + props.index"
   />
 
   <div
+    v-if="props.bannerProps.text"
     class="absolute inset-0 p-4 md:p-10 flex flex-col md:basis-2/4"
     :style="{
       color: props.bannerProps.text.color,
       textAlign: getTextAlignment(),
-      alignItems: getContentPosition(props.bannerProps.text.align),
-      justifyContent: getContentPosition(props.bannerProps.text.justify),
+      alignItems: getContentPosition(props.bannerProps.text.align ?? ''),
+      justifyContent: getContentPosition(props.bannerProps.text.justify ?? ''),
     }"
     :data-testid="'banner-overlay-' + props.index"
   >
@@ -23,27 +26,38 @@
       :data-testid="'banner-content-' + props.index"
     >
       <div
+        v-if="props.bannerProps.text.pretitle"
         class="typography-headline-6 font-bold tracking-widest uppercase"
         :data-testid="'banner-pretitle-' + props.index"
       >
         {{ props.bannerProps.text.pretitle }}
       </div>
 
-      <h1 class="typography-display-1 md:leading-[67.5px] font-bold my-2" :data-testid="'banner-title-' + props.index">
+      <h1
+        v-if="props.bannerProps.text.title"
+        class="typography-display-1 md:leading-[67.5px] font-bold my-2"
+        :data-testid="'banner-title-' + props.index"
+      >
         {{ props.bannerProps.text.title }}
       </h1>
 
-      <div class="typography-headline-6 font-bold tracking-widest mb-4" :data-testid="'banner-subtitle-' + props.index">
+      <div
+        v-if="props.bannerProps.text.subtitle"
+        class="typography-headline-6 font-bold tracking-widest mb-4"
+        :data-testid="'banner-subtitle-' + props.index"
+      >
         {{ props.bannerProps.text.subtitle }}
       </div>
 
       <div
+        v-if="props.bannerProps.text.htmlDescription"
         v-html="props.bannerProps.text.htmlDescription"
         class="typography-text-sm md:typography-text-lg font-normal"
         :data-testid="'banner-description-' + props.index"
       ></div>
 
       <UiButton
+        v-if="props.bannerProps.button && props.bannerProps.button.label && props.bannerProps.button.link"
         class="flex flex-col md:flex-row gap-4 mt-6"
         :tag="NuxtLink"
         :to="localePath(props.bannerProps.button.link ?? '')"
@@ -75,16 +89,16 @@ const props = defineProps<{
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case 'lg': {
-      return props.bannerProps.image.lg;
+      return props.bannerProps.image?.lg ?? '';
     }
     case 'md': {
-      return props.bannerProps.image.md;
+      return props.bannerProps.image?.md ?? '';
     }
     case 'sm': {
-      return props.bannerProps.image.sm;
+      return props.bannerProps.image?.sm ?? '';
     }
     default: {
-      return props.bannerProps.image.xs;
+      return props.bannerProps.image?.xs ?? '';
     }
   }
 };
@@ -94,7 +108,9 @@ const getTextAlignment = () => {
     return 'center';
   }
 
-  switch (props.bannerProps.text.textAlignment) {
+  const textAlignment = props.bannerProps.text?.textAlignment ?? '';
+
+  switch (textAlignment) {
     case 'center': {
       return 'center';
     }
