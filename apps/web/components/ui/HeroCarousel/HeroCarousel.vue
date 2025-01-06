@@ -13,7 +13,7 @@
       </SwiperSlide> -->
 
       <SwiperSlide>
-        <UiBanner :hero-item-props="heroContent2" />
+        <UiBanner :bannerProps="heroContent2" />
       </SwiperSlide>
     </Swiper>
 

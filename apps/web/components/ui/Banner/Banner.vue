@@ -1,38 +1,38 @@
 <template>
   <NuxtImg
     :src="getImageUrl()"
-    :alt="props.heroItemProps.image.alt ?? ''"
+    :alt="props.bannerProps.image.alt ?? ''"
     class="h-[85vh] w-full object-cover"
-    :style="{ filter: 'brightness(' + props.heroItemProps.image.brightness + ')' }"
+    :style="{ filter: 'brightness(' + props.bannerProps.image.brightness + ')' }"
   />
 
   <div
     class="absolute inset-0 p-4 md:p-10 flex flex-col md:basis-2/4"
     :style="{
-      color: props.heroItemProps.text.color,
+      color: props.bannerProps.text.color,
       textAlign: getTextAlignment(),
-      alignItems: getContentPosition(props.heroItemProps.text.align),
-      justifyContent: getContentPosition(props.heroItemProps.text.justify),
+      alignItems: getContentPosition(props.bannerProps.text.align),
+      justifyContent: getContentPosition(props.bannerProps.text.justify),
     }"
   >
     <div
       class="p-4 md:p-6 rounded-lg md:max-w-[50%]"
-      :style="{ backgroundColor: props.heroItemProps.text.bgcolor, opacity: props.heroItemProps.text.bgopacity }"
+      :style="{ backgroundColor: props.bannerProps.text.bgcolor, opacity: props.bannerProps.text.bgopacity }"
     >
       <div class="typography-headline-6 font-bold tracking-widest uppercase" data-testid="pretitle">
-        {{ props.heroItemProps.text.pretitle }}
+        {{ props.bannerProps.text.pretitle }}
       </div>
 
       <h1 class="typography-display-1 md:leading-[67.5px] font-bold my-2" data-testid="title">
-        {{ props.heroItemProps.text.title }}
+        {{ props.bannerProps.text.title }}
       </h1>
 
       <div class="typography-headline-6 font-bold tracking-widest mb-4" data-testid="subtitle">
-        {{ props.heroItemProps.text.subtitle }}
+        {{ props.bannerProps.text.subtitle }}
       </div>
 
       <div
-        v-html="props.heroItemProps.text.htmlDescription"
+        v-html="props.bannerProps.text.htmlDescription"
         class="typography-text-sm md:typography-text-lg font-normal"
         data-testid="description"
       ></div>
@@ -40,11 +40,11 @@
       <UiButton
         class="flex flex-col md:flex-row gap-4 mt-6"
         :tag="NuxtLink"
-        :to="localePath(props.heroItemProps.button.link ?? '')"
-        :variant="props.heroItemProps.button.variant ?? 'primary'"
+        :to="localePath(props.bannerProps.button.link ?? '')"
+        :variant="props.bannerProps.button.variant ?? 'primary'"
         size="lg"
       >
-        {{ props.heroItemProps.button.label }}
+        {{ props.bannerProps.button.label }}
       </UiButton>
     </div>
   </div>
@@ -61,22 +61,22 @@ const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
 const props = defineProps<{
-  heroItemProps: BannerProps;
+  bannerProps: BannerProps;
 }>();
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case 'lg': {
-      return props.heroItemProps.image.lg;
+      return props.bannerProps.image.lg;
     }
     case 'md': {
-      return props.heroItemProps.image.md;
+      return props.bannerProps.image.md;
     }
     case 'sm': {
-      return props.heroItemProps.image.sm;
+      return props.bannerProps.image.sm;
     }
     default: {
-      return props.heroItemProps.image.xs;
+      return props.bannerProps.image.xs;
     }
   }
 };
@@ -86,7 +86,7 @@ const getTextAlignment = () => {
     return 'center';
   }
 
-  switch (props.heroItemProps.text.textAlignment) {
+  switch (props.bannerProps.text.textAlignment) {
     case 'center': {
       return 'center';
     }
