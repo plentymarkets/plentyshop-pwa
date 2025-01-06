@@ -41,7 +41,7 @@
               :rating="productGetters.getAverageRating(product, 'half')"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="
-                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+                'alt-' + productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
                 productGetters.getName(product) ||
                 ''
               "

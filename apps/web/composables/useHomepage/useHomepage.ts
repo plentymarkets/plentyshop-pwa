@@ -19,11 +19,11 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const { fetchHomepageTemplate } = useFetchHome();
 
   const currentLocale = ref($i18n.locale.value);
-  const fetchPageTemplate = (): void => {
+  const fetchPageTemplate = async (): Promise<void> => {
     state.value.loading = true;
     const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
     if (typeof homepageCategoryId === 'number') {
-      fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
+      await fetchCategoryTemplate(runtimeConfig.public.homepageCategoryId);
       state.value.data = fetchHomepageTemplate();
       if (
         (!state.value.data.blocks || state.value.data.blocks.length === 0) &&
@@ -37,6 +37,16 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.dataIsEmpty = !state.value.data.blocks || state.value.data.blocks.length === 0;
     state.value.loading = false;
   };
+
+  watch(
+    () => currentLocale.value,
+    // eslint-disable-next-line unicorn/no-keyword-prefix
+    async (newLocale) => {
+      // eslint-disable-next-line unicorn/no-keyword-prefix
+      currentLocale.value = newLocale;
+      await fetchPageTemplate();
+    },
+  );
 
   watch(
     () => state.value.data,
