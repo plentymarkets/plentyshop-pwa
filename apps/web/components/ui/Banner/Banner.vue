@@ -19,20 +19,17 @@
       class="p-4 md:p-6 rounded-lg md:max-w-[50%]"
       :style="{ backgroundColor: props.heroItemProps.text.bgcolor, opacity: props.heroItemProps.text.bgopacity }"
     >
-      <div class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase" data-testid="pretitle">
+      <div class="typography-headline-6 font-bold tracking-widest uppercase" data-testid="pretitle">
         {{ props.heroItemProps.text.pretitle }}
       </div>
 
-      <h2
-        class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs mt-2 mb-4"
-        data-testid="title"
-      >
+      <h1 class="typography-display-1 md:leading-[67.5px] font-bold my-2" data-testid="title">
         {{ props.heroItemProps.text.title }}
-      </h2>
+      </h1>
 
-      <h3 class="typography-display-4 md:typography-display-3 font-bold text-xs mt-2" data-testid="subtitle">
+      <div class="typography-headline-6 font-bold tracking-widest mb-4" data-testid="subtitle">
         {{ props.heroItemProps.text.subtitle }}
-      </h3>
+      </div>
 
       <div
         v-html="props.heroItemProps.text.htmlDescription"
