@@ -33,7 +33,13 @@
             <span class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</span>
           </div>
           <div v-if="getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method))">
-            <span class="text-sm"> {{ t('shippingMethod.maxDeliveryDays', { days: getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method)) }) }}</span>
+            <span class="text-sm">
+              {{
+                t('shippingMethod.maxDeliveryDays', {
+                  days: getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method)),
+                })
+              }}</span
+            >
           </div>
         </SfListItem>
       </ul>
