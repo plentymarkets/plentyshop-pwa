@@ -27,7 +27,7 @@
     >
       <div
         v-if="props.bannerProps.text.pretitle"
-        class="typography-headline-6 font-bold tracking-widest uppercase"
+        class="typography-headline-6 font-bold tracking-widest"
         :data-testid="'banner-pretitle-' + props.index"
       >
         {{ props.bannerProps.text.pretitle }}
@@ -35,7 +35,7 @@
 
       <h1
         v-if="props.bannerProps.text.title"
-        class="typography-display-1 md:leading-[67.5px] font-bold my-2"
+        class="typography-display-3 md:typography-display-2 lg:typography-display-1 md:leading-[67.5px] font-bold my-2"
         :data-testid="'banner-title-' + props.index"
       >
         {{ props.bannerProps.text.title }}
