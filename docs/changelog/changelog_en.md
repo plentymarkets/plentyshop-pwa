@@ -5,6 +5,7 @@
 ### New
 
 - Added page for shipping legal text.
+- Added delivery days to checkout shipping providers.
 
 ### 🩹 Fixed
 

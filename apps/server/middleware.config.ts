@@ -1,11 +1,13 @@
 import dotenv from 'dotenv';
 import * as path from 'path';
-
 dotenv.config({
   path: path.resolve(__dirname, '../web/.env'),
 });
 
 const config = {
+  logger: {
+    verbosity: process.env.LOG_LEVEL ?? 'info',
+  },
   integrations: {
     plentysystems: {
       location: '@plentymarkets/shop-api/server',

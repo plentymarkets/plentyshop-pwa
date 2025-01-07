@@ -896,7 +896,8 @@
     "free": "Kostenlos",
     "heading": "Versandart",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen",
+    "maxDeliveryDays": "Lieferung in {days} Tagen"
   },
   "showAllReviews": "Alle Bewertungen anzeigen",
   "showLess": "Weniger anzeigen",
