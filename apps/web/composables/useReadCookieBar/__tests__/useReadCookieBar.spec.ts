@@ -38,8 +38,7 @@ describe('useReadCookieBar', () => {
       });
 
       initializeCookies();
-
-      data.value.groups[2].cookies[1].accepted = false;
+      data.value.groups[2].cookies[0].accepted = false;
       setConsent();
 
       expect(RouterGoSpy).toHaveBeenCalledTimes(1);
