@@ -1,34 +1,42 @@
 <template>
-  <img :src="currentImageSource" :alt="heroItemProps.alt" class="h-auto w-full object-cover brightness-50" />
+  <div class="md:flex md:flex-row-reverse md:justify-center mx-auto mb-10 text-center">
+    <div class="flex flex-col md:basis-2/4 md:items-stretch md:overflow-hidden">
+      <img
+        :src="currentImageSource"
+        :width="currentImageSize.width"
+        :height="currentImageSize.height"
+        :alt="heroItemProps.alt"
+        class="h-full m-auto md:h-full md:object-contain"
+      />
+    </div>
 
-  <div
-    class="absolute inset-0 p-4 md:p-10 md:max-w-[50%] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4 text-white"
-  >
-    <p
-      class="typography-text-xs md:typography-text-sm font-bold text-center md:text-left tracking-widest uppercase"
-      :style="{ color: heroItemProps.taglineColor }"
-      data-testid="tagline"
-    >
-      {{ heroItemProps.tagline }}
-    </p>
-    <h1
-      class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
-      :style="{ color: heroItemProps.headingColor }"
-      data-testid="headline"
-    >
-      {{ heroItemProps.heading }}
-    </h1>
-    <p
-      class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
-      :style="{ color: heroItemProps.descriptionColor }"
-      data-testid="description"
-    >
-      {{ heroItemProps.description }}
-    </p>
-    <div class="flex flex-col md:flex-row gap-4 mt-6">
-      <UiButton :tag="NuxtLink" :to="localePath(props.heroItemProps.link ?? '')" size="lg">{{
-        heroItemProps.callToAction
-      }}</UiButton>
+    <div class="p-4 md:p-10 md:max-w-[768px] md:flex md:flex-col md:justify-center md:items-start md:basis-2/4">
+      <p
+        class="typography-text-xs md:typography-text-sm font-bold tracking-widest uppercase"
+        :style="{ color: heroItemProps.taglineColor }"
+        data-testid="tagline"
+      >
+        {{ heroItemProps.tagline }}
+      </p>
+      <h1
+        class="typography-display-3 md:typography-display-1 md:leading-[67.5px] font-bold text-xs text-center md:text-left mt-2 mb-4"
+        :style="{ color: heroItemProps.headingColor }"
+        data-testid="headline"
+      >
+        {{ heroItemProps.heading }}
+      </h1>
+      <p
+        class="typography-text-sm md:typography-text-lg text-center md:text-left font-normal"
+        :style="{ color: heroItemProps.descriptionColor }"
+        data-testid="description"
+      >
+        {{ heroItemProps.description }}
+      </p>
+      <div class="flex flex-col md:flex-row gap-4 mt-6">
+        <UiButton :tag="NuxtLink" :to="localePath(props.heroItemProps.link ?? '')" size="lg">{{
+          heroItemProps.callToAction
+        }}</UiButton>
+      </div>
     </div>
   </div>
 </template>
@@ -57,6 +65,7 @@ const viewport = useViewport();
 
 const currentSizeKey = computed(() => viewport.breakpoint.value as SizeKey);
 
+const currentImageSize = computed(() => backgroundSizes[currentSizeKey.value]);
 const currentImageSource = computed<string | undefined>(() => {
   return isSizeKeyRecord(props.heroItemProps.image) ? props.heroItemProps.image[currentSizeKey.value] : undefined;
 });
