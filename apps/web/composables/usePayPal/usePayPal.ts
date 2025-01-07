@@ -98,9 +98,6 @@ export const usePayPal = () => {
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
 
-    const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
-    if (!consent.value) return null;
-
     if (state.value.loadingScripts[scriptKey] !== undefined) {
       state.value.isReady = true;
       return state.value.loadingScripts[scriptKey];

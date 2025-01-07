@@ -15,6 +15,11 @@
     },
     "essentials": {
       "cookies": {
+        "payPal": {
+          "name": "paypal",
+          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
+          "status": "Required for PayPal payments."
+        },
         "cloudflareTurnstile": {
           "name": "Cloudflare Turnstile",
           "provider": "Cloudflare",
@@ -45,11 +50,6 @@
     },
     "functional": {
       "cookies": {
-        "payPal": {
-          "name": "paypal",
-          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
-          "status": "Required for PayPal payments."
-        },
         "scriptDemo": {
           "name": "Script demo",
           "provider": "plentysystems AG",

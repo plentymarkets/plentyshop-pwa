@@ -1,6 +1,5 @@
 <template>
   <UiButton
-    v-if="consent"
     type="submit"
     data-testid="place-order-button"
     @click="emits('click')"
@@ -10,11 +9,8 @@
   >
     {{ $t('buy') }}
   </UiButton>
-
-  <PayPalCookieDisabledBanner v-else />
 </template>
 <script lang="ts" setup>
 const emits = defineEmits(['click']);
 const { disabled = false } = defineProps<{ disabled: boolean }>();
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 </script>

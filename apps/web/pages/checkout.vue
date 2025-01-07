@@ -118,7 +118,7 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
-const { consent: payPalConsent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
+const { consent: payPalConsent } = useCookieConsent('CookieBar.essentials.cookies.payPal.name');
 const {
   cart,
   cartIsEmpty,

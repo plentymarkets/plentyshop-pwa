@@ -1,7 +1,7 @@
 /**
  * @description Helper function to read and react to a specific cookie registered in the cookiebar
  * @param name name of the cookie registered in the cookie bar apps/web/configuration/cookie.config.ts
- * @example const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
+ * @example const { consent } = useCookieConsent('CookieBar.essentials.cookies.payPal.name');
  */
 export const useCookieConsent = (name: string) => {
   const state = useState('useCookieConsent_' + name, () => ({
