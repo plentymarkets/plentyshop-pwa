@@ -4240,6 +4240,7 @@ __metadata:
     "@nuxt/test-utils": "npm:^3.13.1"
     "@nuxtjs/turnstile": "npm:^0.8.0"
     "@paypal/paypal-js": "npm:8.1.0"
+    "@plentymarkets/pwa-module-boilerplate": /Users/fabiangerke/workspace/pwa-module-boilerplate
     "@plentymarkets/shop-api": "npm:^0.82.1"
     "@types/applepayjs": "npm:^14.0.8"
     "@types/drift-zoom": "npm:^1.5.2"
@@ -4273,6 +4274,15 @@ __metadata:
     wait-on: "npm:^7.2.0"
   languageName: unknown
   linkType: soft
+
+"@plentymarkets/pwa-module-boilerplate@file:/Users/fabiangerke/workspace/pwa-module-boilerplate::locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A.":
+  version: 1.0.0
+  resolution: "@plentymarkets/pwa-module-boilerplate@file:/Users/fabiangerke/workspace/pwa-module-boilerplate#/Users/fabiangerke/workspace/pwa-module-boilerplate::hash=868af2&locator=%40plentymarkets%2Fplentyshop-pwa%40workspace%3A."
+  dependencies:
+    pathe: "npm:^1.1.2"
+  checksum: 10c0/b1e321acd8d2708f2944d8b3e17d86b220ab619c6ff268c56b915d2907a1a6e3de90d5f9ae580555f74452ad923a2f76f24a3650b32692437019ea9d20a08367
+  languageName: node
+  linkType: hard
 
 "@plentymarkets/shop-api@npm:^0.82.1":
   version: 0.82.1
