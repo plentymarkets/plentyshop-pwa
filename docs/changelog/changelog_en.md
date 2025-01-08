@@ -5,9 +5,11 @@
 ### New
 
 - Added page for shipping legal text.
+- Added delivery days to checkout shipping providers.
 
 ### 🩹 Fixed
 
+- Fixed accesibility error caused by missing label on clear filters.
 - Fixed same text in alt and title warning in category page.
 - Replaced favicon with PlentyONE favicon.
 - Added margin for graduated prices.
@@ -15,6 +17,7 @@
 - Fix for max visible pages on mobile pagination.
 - Fix for editor language picker when it showed inverted data template.
 - When the media card only displays text, the text block is now left aligned instead of centered.
+- The homepage now displays recommended products on initial load.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
