@@ -1,9 +1,8 @@
 export type BannerProps = {
   image?: {
-    lg?: string;
-    md?: string;
-    sm?: string;
-    xs?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
     alt?: string;
     brightness?: number;
   };

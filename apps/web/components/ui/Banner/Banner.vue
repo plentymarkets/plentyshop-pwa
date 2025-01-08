@@ -2,7 +2,7 @@
   <NuxtImg
     :src="getImageUrl()"
     :alt="props.bannerProps.image?.alt ?? ''"
-    class="h-[85vh] w-full object-cover"
+    class="max-h-[85vh] w-full object-cover"
     :style="
       props.bannerProps.image?.brightness ? { filter: 'brightness(' + props.bannerProps.image.brightness + ')' } : null
     "
@@ -89,16 +89,13 @@ const props = defineProps<{
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case 'lg': {
-      return props.bannerProps.image?.lg ?? '';
+      return props.bannerProps.image?.desktop ?? '';
     }
     case 'md': {
-      return props.bannerProps.image?.md ?? '';
-    }
-    case 'sm': {
-      return props.bannerProps.image?.sm ?? '';
+      return props.bannerProps.image?.tablet ?? '';
     }
     default: {
-      return props.bannerProps.image?.xs ?? '';
+      return props.bannerProps.image?.mobile ?? '';
     }
   }
 };

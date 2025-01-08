@@ -37,10 +37,9 @@ const enableModules = computed(() => hero.length > 1);
 
 const heroContent2: BannerProps = {
   image: {
-    lg: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel.png',
-    md: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-768.png',
-    sm: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-480.png',
-    xs: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/background-carousel-480.png',
+    desktop: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif',
+    tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif',
+    mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif',
     alt: '',
     brightness: 0.5,
   },
@@ -48,12 +47,12 @@ const heroContent2: BannerProps = {
     color: '#fff',
     bgcolor: '#000',
     bgopacity: 0.8,
-    pretitle: 'Pretitle',
+    pretitle: 'PRETITLE',
     title: 'Title',
     subtitle: 'Subtitle',
     htmlDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat',
     textAlignment: 'left',
-    justify: 'end',
+    justify: 'center',
     align: 'center',
   },
   button: {
