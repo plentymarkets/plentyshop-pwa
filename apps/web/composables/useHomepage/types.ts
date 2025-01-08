@@ -1,3 +1,5 @@
+import { BannerProps } from '~/components/ui/Banner/types';
+
 interface ImageProps {
   lg: string;
   md: string;
@@ -45,6 +47,7 @@ interface NewsletterSubscribeOptions {
 }
 
 type BlockOptions =
+  | BannerProps
   | UiHeroCarouselOptions
   | UiMediaCardOptions
   | ProductRecommendedProductsOptions
