@@ -2,7 +2,7 @@
   <NuxtImg
     :src="getImageUrl()"
     :alt="props.bannerProps.image?.alt ?? ''"
-    class="max-h-[85vh] w-full object-cover"
+    class="w-full object-cover"
     :style="
       props.bannerProps.image?.brightness ? { filter: 'brightness(' + props.bannerProps.image.brightness + ')' } : null
     "
