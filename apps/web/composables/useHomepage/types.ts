@@ -8,12 +8,12 @@ interface ImageProps {
 interface HeroContentProps {
   image: ImageProps;
   tagline: string;
-  taglineColor: string;
+  taglineColor?: string;
   heading: string;
-  headingColor: string;
+  headingColor?: string;
   description: string;
   alt: string;
-  descriptionColor: string;
+  descriptionColor?: string;
   callToAction: string;
   link: string;
 }
@@ -23,10 +23,10 @@ interface UiHeroCarouselOptions {
 }
 
 interface UiMediaCardOptions {
-  text: string;
-  image: string;
-  alt: string;
-  alignment: string;
+  text?: string;
+  image?: string;
+  alt?: string;
+  alignment?: string;
 }
 
 interface ProductRecommendedProductsOptions {
@@ -57,16 +57,19 @@ export interface Block {
 
 export interface HomepageData {
   blocks: Block[];
+  meta?: { isDefault: boolean | null };
 }
 
 export interface UseHomepageDataState {
   data: HomepageData;
+  dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
 }
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
+  dataIsEmpty: Readonly<Ref<UseHomepageDataState['dataIsEmpty']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;

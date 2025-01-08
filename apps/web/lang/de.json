@@ -535,7 +535,7 @@
   },
   "estimatedTax": "MwSt.",
   "etaDelivery": "Voraussichtliche Lieferdauer",
-  "excludedShipping": "zzgl. Versandkosten",
+  "excludedShipping": "zzgl. {shipping}",
   "failedInfoHeader": "Es tut uns wirklich leid.",
   "failedInfoMessage": "Ihre Bestellung konnte nicht abgeschlossen werden.",
   "filters": "Filter",
@@ -590,6 +590,9 @@
   "home": "Startseite",
   "homepage": {
     "background": "Neue Wireless Pro Kopfhörer mit elegantem Design und modernen Funktionen",
+    "emptyBlock": {
+      "headline": "Hier den ersten Abschnitt hinzufügen."
+    },
     "banner": {
       "moto1": "Fühle die Musik",
       "moto2": "Neue Wireless Pro",
@@ -794,7 +797,7 @@
   "procentageSavings": "Du sparst {percent} % auf dieses Bundle",
   "productAttributes": {
     "notValidVariation": "Bitte wählen Sie eine gültige Variante.",
-    "productInformationMissing": "Produktinformationen fehlen",
+    "productNameMissing": "Produktname fehlt",
     "seeAvailableOptions": "Verfügbare Optionen anzeigen"
   },
   "productDetails": "Produktdetails",
@@ -895,7 +898,8 @@
     "free": "Kostenlos",
     "heading": "Versandart",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen",
+    "maxDeliveryDays": "Lieferung in {days} Tagen"
   },
   "showAllReviews": "Alle Bewertungen anzeigen",
   "showLess": "Weniger anzeigen",
@@ -1001,5 +1005,5 @@
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "double-tap-zoom": "Zoom Zoomen doppeltippen"
+  "double-tap-zoom": "Zum Zoomen doppeltippen"
 }

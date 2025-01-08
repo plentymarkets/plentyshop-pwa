@@ -12,6 +12,7 @@
             square
             data-testid="open-languageselect-button"
             @click="toggleLanguageSelect()"
+            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
           >
             <template #prefix>
               <SfIconLanguage class="relative" />
@@ -106,7 +107,7 @@
         </SfDropdown>
         <UiButton
           v-else
-          @click="openAuthentication"
+          @click="navigateToLogin"
           class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
           variant="tertiary"
           :aria-label="t('auth.login.openLoginForm')"
@@ -135,6 +136,7 @@
         data-testid="open-languageselect-button"
         :aria-label="t('languageSelector')"
         @click="toggleLanguageSelect()"
+        :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
       >
         <SfIconLanguage />
       </UiButton>
@@ -229,8 +231,8 @@ const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();
 const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
-
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
+const { isEditing, disableActions } = useEditor();
 
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
@@ -273,4 +275,9 @@ const accountDropdown = computed(() => [
     label: t('account.logout'),
   },
 ]);
+const navigateToLogin = () => {
+  if (route.path !== localePath(paths.authLogin)) {
+    openAuthentication();
+  }
+};
 </script>
