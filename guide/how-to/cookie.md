@@ -88,18 +88,18 @@ This composable uses the cookie name that you defined in the `cookie.config.ts` 
 ``` vue
 // MyComponent.vue
 <template>
-  <PayPalExpressButton v-if="PayPalCookie"></PayPalExpressButton>
+  <ScriptDemoButton v-if="ScriptDemoCookie"></ScriptDemoButton>
   <div v-else>
-    <div>PayPal cookies not accepted</div>
+    <div>Script demo cookies not accepted</div>
   </div>
 </template>
 
 <script setup lang="ts">
-const { consent: PayPalCookie } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
+const { consent: ScriptDemoCookie } = useCookieConsent('CookieBar.functional.cookies.scriptDemo.name');
 
-watch(PayPalCookie, () => {
+watch(ScriptDemoCookie, () => {
   reloadScript();
-  console.log('PayPalCookie value', PayPalCookie.value)
+  console.log('ScriptDemo value', ScriptDemoCookie.value)
   // do something when the cookie changes.
 });
 
