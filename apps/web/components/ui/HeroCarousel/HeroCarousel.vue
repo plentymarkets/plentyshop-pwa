@@ -1,9 +1,10 @@
 <template>
   <ClientOnly>
     <Swiper
-      :modules="enableModules ? [Pagination] : []"
+      :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
+      :navigation="enableModules && handleArrows()"
       pagination
       @slide-change="onSlideChange"
       class="!z-0 !w-full !max-h-[85vh]"
@@ -21,9 +22,9 @@
 
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Pagination } from 'swiper/modules';
+import { Pagination, Navigation } from 'swiper/modules';
 import { BannerProps } from '../Banner/types';
-const { onSlideChange } = useCarousel();
+const { handleArrows, onSlideChange } = useCarousel();
 
 const { bannerItems } = defineProps<{
   bannerItems: BannerProps[];
