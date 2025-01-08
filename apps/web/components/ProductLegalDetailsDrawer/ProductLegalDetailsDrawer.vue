@@ -1,7 +1,7 @@
 <template>
   <UiOverlay :visible="open">
     <SfDrawer
-      ref="productLegalDrawerRef"
+      ref="productLegalDrawerReference"
       v-model="open"
       :placement="placement"
       :class="[
@@ -80,7 +80,7 @@ const setActiveTab = (index: number) => {
   activeTabIndex.value = index;
 };
 
-const productLegalDrawerRef = ref();
+const productLegalDrawerReference = ref();
 const { open } = useProductLegalDetailsDrawer();
-useTrapFocus(productLegalDrawerRef, { activeState: open });
+useTrapFocus(productLegalDrawerReference, { activeState: open });
 </script>

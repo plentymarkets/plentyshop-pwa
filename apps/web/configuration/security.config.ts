@@ -20,6 +20,7 @@ import {
 } from 'nuxt-security';
 
 // Enabling 'unsafe-eval' and 'unsafe-inline' can create security risks
+// eslint-disable-next-line unicorn/expiring-todo-comments
 // TODO: If these are not strictly necessary, we should aim to avoid them
 
 export const securityConfiguration = {
@@ -50,7 +51,7 @@ export const securityConfiguration = {
     originAgentCluster: '?1' as const,
     referrerPolicy: 'no-referrer' as ReferrerPolicyValue,
     strictTransportSecurity: {
-      maxAge: 31536000, // 1 year
+      maxAge: 31_536_000, // 1 year
       includeSubdomains: true,
       preload: true, // We should consider adding to the HSTS preload list
     } as StrictTransportSecurityValue,

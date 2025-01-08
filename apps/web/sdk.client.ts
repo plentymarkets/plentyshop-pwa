@@ -38,6 +38,7 @@ const createHttpClient = () => {
 };
 
 const handleHttpError = (error: unknown) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const axiosError = error as any;
   const data = axiosError?.response?.data?.data || axiosError?.response?.data;
   const events = axiosError?.response?.data?.events;

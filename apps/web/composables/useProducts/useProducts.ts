@@ -37,8 +37,6 @@ export const useProducts: UseProductsReturn = (category = '') => {
    */
   const fetchProducts: FetchProducts = async (params: FacetSearchCriteria) => {
     state.value.loading = true;
-    const localePath = useLocalePath();
-    const { isAuthorized } = useCustomer();
 
     if (params.categoryUrlPath?.endsWith('.js')) return state.value.data;
 

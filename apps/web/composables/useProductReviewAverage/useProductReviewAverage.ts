@@ -11,7 +11,7 @@ import type { FetchProductReviewAverage, UseProductReviewAverage, UseProductRevi
  * ```
  */
 export const useProductReviewAverage: UseProductReviewAverage = (itemId: number) => {
-  const state = useState<UseProductReviewAverageState>('useProductReviewAverage', () => ({
+  const state = useState<UseProductReviewAverageState>(`useProductReviewAverage-${itemId}`, () => ({
     data: {} as ReviewAverage,
     loading: false,
   }));

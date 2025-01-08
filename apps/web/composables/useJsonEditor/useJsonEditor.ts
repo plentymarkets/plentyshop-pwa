@@ -25,8 +25,8 @@ export const useJsonEditor = (initialJson: string) => {
       JSON.parse(jsonText.value);
       errorMessage.value = '';
       isEditingEnabled.value = true;
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
+    } catch (error: Error | unknown) {
+      errorMessage.value = `Invalid JSON: ${error instanceof Error ? error.message : error}`;
       isEditingEnabled.value = false;
     }
   };
@@ -35,8 +35,8 @@ export const useJsonEditor = (initialJson: string) => {
     try {
       validateJson();
       updateLineCount();
-    } catch (error: any) {
-      errorMessage.value = 'Invalid JSON: ' + error.message;
+    } catch (error: Error | unknown) {
+      errorMessage.value = `Invalid JSON: ${error instanceof Error ? error.message : error}`;
       isEditingEnabled.value = false;
     }
   };

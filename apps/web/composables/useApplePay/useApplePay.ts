@@ -39,6 +39,7 @@ export const useApplePay = () => {
       state.value.scriptLoaded = true;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     state.value.script = (script as any).Applepay() as ApplepayType;
     state.value.config = await state.value.script.config();
 
