@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@nuxt/scripts": "^0.9.5",
-    "@plentymarkets/shop-api": "^0.82.1",
+    "@plentymarkets/shop-api": "^0.83.1",
     "@types/applepayjs": "^14.0.9",
     "@types/cypress": "^1.1.6",
     "@types/drift-zoom": "^1.5.2",
