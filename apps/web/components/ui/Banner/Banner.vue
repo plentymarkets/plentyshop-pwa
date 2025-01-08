@@ -2,10 +2,13 @@
   <NuxtImg
     :src="getImageUrl()"
     :alt="props.bannerProps.image?.alt ?? ''"
-    class="w-full object-cover"
-    :style="
-      props.bannerProps.image?.brightness ? { filter: 'brightness(' + props.bannerProps.image.brightness + ')' } : null
-    "
+    class="h-[320px] w-full object-cover"
+    :style="{
+      filter: props.bannerProps.image?.brightness
+        ? 'brightness(' + (props.bannerProps.image?.brightness ?? 1) + ')'
+        : '',
+      height: getImageHeight(),
+    }"
     :data-testid="'banner-image-' + props.index"
   />
 
@@ -96,6 +99,20 @@ const getImageUrl = () => {
     }
     default: {
       return props.bannerProps.image?.mobile ?? '';
+    }
+  }
+};
+
+const getImageHeight = () => {
+  switch (viewport.breakpoint.value) {
+    case 'lg': {
+      return '576px';
+    }
+    case 'md': {
+      return '432px';
+    }
+    default: {
+      return '320px';
     }
   }
 };
