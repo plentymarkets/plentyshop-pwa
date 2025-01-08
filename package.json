@@ -45,7 +45,6 @@
     "country-flag-icons": "^1.5.13",
     "dotenv": "^16.4.7",
     "drift-zoom": "^1.5.1",
-    "eslint": "^9.17.0",
     "nuxt-swiper": "^1.2.2",
     "tailwindcss": "^3.4.17",
     "vue": "^3.5.13",
