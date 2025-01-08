@@ -35,10 +35,9 @@ describe('Banner image', () => {
       props: {
         bannerProps: {
           image: {
-            lg: '/test-lg.jpg',
-            md: '/test-md.jpg',
-            sm: '/test-sm.jpg',
-            xs: '/test-xs.jpg',
+            desktop: '/test-desktop.jpg',
+            tablet: '/test-tablet.jpg',
+            mobile: '/test-mobile.jpg',
             alt: 'test alt text',
             brightness: 0.5,
           },

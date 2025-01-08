@@ -8,10 +8,9 @@ describe('Banner', () => {
       props: {
         bannerProps: {
           image: {
-            lg: '/test-lg.jpg',
-            md: '/test-md.jpg',
-            sm: '/test-sm.jpg',
-            xs: '/test-xs.jpg',
+            desktop: '/test-desktop.jpg',
+            tablet: '/test-tablet.jpg',
+            mobile: '/test-mobile.jpg',
             alt: 'test alt text',
           },
           text: {
@@ -48,7 +47,7 @@ describe('Banner', () => {
       const image = wrapper.find('[data-testid="banner-image-0"]');
 
       expect(image.exists()).toBe(true);
-      expect(image.attributes('src')).toBe('/test-lg.jpg');
+      expect(image.attributes('src')).toBe('/test-desktop.jpg');
       expect(image.attributes('alt')).toBe('test alt text');
     });
 
