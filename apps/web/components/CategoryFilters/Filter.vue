@@ -60,7 +60,7 @@
           </template>
           {{ $t('apply') }}
         </UiButton>
-        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary">
+        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary" :aria-label="$t('clear')">
           <SfIconClose />
         </UiButton>
       </div>
