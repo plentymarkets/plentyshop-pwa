@@ -1,6 +1,7 @@
 export interface Notification {
   message: string | string[];
-  action?: { text: string; onClick: (...arguments_: never) => void };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  action?: { text: string; onClick: (...arguments_: any) => void };
   type: 'neutral' | 'positive' | 'secondary' | 'warning' | 'negative';
   persist?: boolean;
   id?: symbol;
