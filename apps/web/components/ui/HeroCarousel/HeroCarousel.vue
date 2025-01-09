@@ -4,8 +4,14 @@
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
-      :navigation="enableModules && handleArrows()"
       pagination
+      :navigation="
+        (enableModules && handleArrows(),
+        {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        })
+      "
       @slide-change="onSlideChange"
       class="!z-0 !w-full !max-h-[85vh]"
     >
@@ -13,7 +19,8 @@
         <UiBanner :banner-props="bannerItem" :index="index" />
       </SwiperSlide>
     </Swiper>
-
+    <div class="swiper-button-prev" style="color: red!important"></div>
+    <div class="swiper-button-next"></div>
     <template #fallback>
       <UiBannerSkeleton />
     </template>
