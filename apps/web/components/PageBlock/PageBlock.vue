@@ -17,7 +17,7 @@
     <button
       v-if="disableActions && isPreview"
       @click.stop="addNewBlock(index, -1)"
-      class="z-[0] md:z-[0] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+      class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="top-add-block"
     >
@@ -44,7 +44,7 @@
     <button
       v-if="disableActions && isPreview"
       @click.stop="addNewBlock(index, 1)"
-      class="z-[0] md:z-[0] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+      class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="bottom-add-block"
     >
