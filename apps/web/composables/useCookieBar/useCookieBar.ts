@@ -96,9 +96,9 @@ export const useCookieBar = (
                   } else {
                     (0, eval)(script);
                   }
-                } catch (error) {
+                } catch (error: any) {
                   // @TODO error handling
-                  return new Error(error as string);
+                  return new Error(error);
                 }
               });
             }

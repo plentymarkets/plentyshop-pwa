@@ -1,12 +1,7 @@
-import { type useStructuredDataReturn } from './types';
-import {
-  type SetLogoMeta,
-  type SetProductMetaData,
-  type SetProductRobotsMetaData,
-  UseStructuredDataState,
-} from './types';
+import type { useStructuredDataReturn } from './types';
+import type { SetLogoMeta, SetProductMetaData, SetProductRobotsMetaData, UseStructuredDataState } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import { type CategoryTreeItem, Product } from '@plentymarkets/shop-api';
+import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
 
@@ -139,7 +134,6 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);

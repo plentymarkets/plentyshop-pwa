@@ -137,7 +137,6 @@ export const useReturnOrder: UseReturnOrderReturn = () => {
   const cleanReturnData: CleanReturnData = () => {
     const data = state.value.returnData['variationIds'];
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     const filteredObject = Object.fromEntries(Object.entries(data).filter(([key, value]) => value.quantity > 0));
 
     state.value.returnData['variationIds'] = filteredObject;

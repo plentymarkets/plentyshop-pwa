@@ -41,7 +41,6 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
    * fetchProductReviews(1, 1);
    * ```
    */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
   const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
     state.value.loading = true;
     const route = useRoute();
