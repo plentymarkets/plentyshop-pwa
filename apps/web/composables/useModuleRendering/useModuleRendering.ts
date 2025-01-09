@@ -1,9 +1,9 @@
 import { ModuleRenderingAreas } from './areas';
 
-export const useModuleRendering = (block: string) => {
-  if (!ModuleRenderingAreas.includes(block)) throw new Error('Invalid module rendering area: ' + block);
+export const useModuleRendering = (area: string) => {
+  if (!ModuleRenderingAreas.includes(area)) throw new Error('Invalid module rendering area: ' + area);
 
-  const state = useState('useModuleRendering_' + block, () => ({
+  const state = useState('useModuleRendering_' + area, () => ({
     components: [] as string[],
   }));
 
