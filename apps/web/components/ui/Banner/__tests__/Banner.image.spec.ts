@@ -25,7 +25,7 @@ describe('Banner image', () => {
 
     expect(image.attributes('src')).toBe('');
     expect(image.attributes('alt')).toBe('');
-    expect(image.attributes('style')).toBe(undefined);
+    expect(image.attributes('style')).toContain('height: 576px');
 
     expect(wrapper.find('[data-testid="banner-overlay-0"]').exists()).toBe(true);
   });
