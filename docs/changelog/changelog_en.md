@@ -4,6 +4,7 @@
 
 ### New
 
+- Added Nuxt security module.
 - Added page for shipping legal text.
 - Added delivery days to checkout shipping providers.
 
