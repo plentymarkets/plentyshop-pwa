@@ -32,6 +32,15 @@
             <span>{{ shippingProviderGetters.getShippingMethodName(method) }}</span>
             <span class="ml-auto">{{ getShippingAmount(shippingProviderGetters.getShippingAmount(method)) }}</span>
           </div>
+          <div v-if="getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method))">
+            <span class="text-sm">
+              {{
+                t('shippingMethod.maxDeliveryDays', {
+                  days: getDeliveryDays(shippingProviderGetters.getParcelServicePresetId(method)),
+                })
+              }}</span
+            >
+          </div>
         </SfListItem>
       </ul>
 
@@ -53,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { AddressType, shippingProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
 import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
 
@@ -73,6 +82,10 @@ const showShippingPrivacy = computed(
     selectedMethod.value &&
     shippingProviderGetters.getDataPrivacyAgreementHint(selectedMethod.value),
 );
+
+const getDeliveryDays = (method: string) => {
+  return cartGetters.getMaxDeliveryDays(cart.value, Number(method));
+};
 
 const updateShippingMethod = (shippingId: string) => {
   if (disabled) return;
