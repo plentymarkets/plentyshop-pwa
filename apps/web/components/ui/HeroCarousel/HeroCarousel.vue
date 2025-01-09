@@ -6,21 +6,32 @@
       :loop="true"
       pagination
       :navigation="
-        (enableModules && handleArrows(),
-        {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        })
+        enableModules
+          ? {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            }
+          : false
       "
-      @slide-change="onSlideChange"
+      @swiper="onSwiperInit"
       class="!z-0 !w-full !max-h-[85vh]"
     >
       <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
         <UiBanner :banner-props="bannerItem" :index="index" />
       </SwiperSlide>
     </Swiper>
-    <div class="swiper-button-prev" style="color: red!important"></div>
-    <div class="swiper-button-next"></div>
+
+    <div
+      v-if="enableModules && handleArrows()"
+      class="swiper-button-prev"
+      :style="{ color: generalTextColor + ' !important' }"
+    ></div>
+    <div
+      v-if="enableModules && handleArrows()"
+      class="swiper-button-next"
+      :style="{ color: generalTextColor + ' !important' }"
+    ></div>
+
     <template #fallback>
       <UiBannerSkeleton />
     </template>
@@ -31,12 +42,16 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import { BannerProps } from '../Banner/types';
-const { handleArrows, onSlideChange } = useCarousel();
 
-const { bannerItems } = defineProps<{
-  bannerItems: BannerProps[];
-}>();
+const { handleArrows } = useCarousel();
+const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
 const enableModules = computed(() => bannerItems.length > 1);
+
+const generalTextColor = ref('inherit');
+
+const onSwiperInit = () => {
+  generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
+};
 </script>
 
 <style src="./styles/navigation.min.css"></style>
