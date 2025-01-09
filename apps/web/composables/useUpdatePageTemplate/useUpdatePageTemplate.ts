@@ -8,6 +8,7 @@ const stripArrayBrackets = (jsonString: string): string => {
 
 const updatePageTemplate = async (): Promise<void> => {
   const { setCategoryTemplate } = useCategoryTemplate();
+  const { isEditingEnabled } = useEditor();
   const runtimeConfig = useRuntimeConfig();
   const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
   const { data, loading } = useHomepage();
@@ -17,6 +18,7 @@ const updatePageTemplate = async (): Promise<void> => {
     await setCategoryTemplate(homepageCategoryId, cleanedData);
   } finally {
     loading.value = false;
+    isEditingEnabled.value = false;
   }
 };
 

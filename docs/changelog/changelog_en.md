@@ -20,6 +20,7 @@
 - When the media card only displays text, the text block is now left aligned instead of centered.
 - The homepage now displays recommended products on initial load.
 - Fixed product gallery thumbnail image alternate.
+- Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

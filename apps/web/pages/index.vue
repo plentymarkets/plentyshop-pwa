@@ -64,7 +64,7 @@ const addNewBlock = (index: number, position: number) => {
   data.value.blocks = updatedBlocks;
 };
 
-const { isEditing, disableActions } = useEditor();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
@@ -72,6 +72,10 @@ const getComponent = (name: string) => {
   if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
+
+onMounted(() => {
+  isEditingEnabled.value = false;
+});
 
 fetchPageTemplate();
 </script>

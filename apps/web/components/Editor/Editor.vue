@@ -37,17 +37,15 @@ const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncSc
   JSON.stringify(props.block, null, 2),
 );
 
-watch(
-  () => props.block,
-  (updatedData) => {
-    jsonText.value = JSON.stringify(updatedData, null, 2);
-  },
-  { immediate: true, deep: true },
-);
-
 const closeEditor = () => {
-  emit('update', props.index, JSON.parse(jsonText.value));
   const { isEditing } = useEditor();
   isEditing.value = false;
 };
+
+watch(
+  () => jsonText.value,
+  () => {
+    emit('update', props.index, JSON.parse(jsonText.value));
+  },
+);
 </script>
