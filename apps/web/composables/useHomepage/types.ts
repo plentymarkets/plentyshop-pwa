@@ -38,7 +38,7 @@ interface UiTextCardOptions {
   link?: string;
 }
 
-interface ProductRecommendedProductsOptions {
+export interface ProductRecommendedProductsOptions {
   categoryId: string;
   headline?: string;
 }
