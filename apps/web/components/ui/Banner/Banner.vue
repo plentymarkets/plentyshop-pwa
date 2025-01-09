@@ -9,6 +9,7 @@
         : '',
       height: getImageHeight(),
     }"
+    :loading="props.index > 0 ? 'lazy' : 'eager'"
     :data-testid="'banner-image-' + props.index"
   />
 
