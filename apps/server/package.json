@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "nodemon",
     "start": "nodemon",
+    "lint": "echo \"No linting configured for server app\"",
+    "lint:fix": "echo \"No linting configured for server app\"",
     "build": "tsup --minify"
   },
   "dependencies": {
