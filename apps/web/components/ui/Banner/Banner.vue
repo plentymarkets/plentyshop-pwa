@@ -25,7 +25,7 @@
     :data-testid="'banner-overlay-' + props.index"
   >
     <div
-      class="p-4 md:p-6 rounded-lg md:max-w-[50%]"
+      :class="bannerContentClass"
       :style="{ backgroundColor: props.bannerProps.text.bgcolor, opacity: props.bannerProps.text.bgopacity }"
       :data-testid="'banner-content-' + props.index"
     >
@@ -155,4 +155,8 @@ const getContentPosition = (axis: string) => {
     }
   }
 };
+
+const bannerContentClass = computed(() => {
+  return isMobile.value ? 'p-4 md:p-6 rounded-lg w-full' : 'p-4 md:p-6 rounded-lg md:max-w-[50%]';
+});
 </script>
