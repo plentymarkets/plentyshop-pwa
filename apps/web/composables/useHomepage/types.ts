@@ -29,7 +29,7 @@ interface UiMediaCardOptions {
   alignment?: string;
 }
 
-interface ProductRecommendedProductsOptions {
+export interface ProductRecommendedProductsOptions {
   categoryId: string;
   headline?: string;
 }
