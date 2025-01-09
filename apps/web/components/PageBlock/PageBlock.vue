@@ -9,7 +9,7 @@
           isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
       },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
-      '-z-10',
+      { '-z-10': !isPreview },
     ]"
     @click="tabletEdit(index)"
     data-testid="block-wrapper"
