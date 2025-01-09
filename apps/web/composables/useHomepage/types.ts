@@ -28,6 +28,15 @@ interface UiMediaCardOptions {
   alt?: string;
   alignment?: string;
 }
+interface UiTextCardOptions {
+  description?: string;
+  pretitle?: string;
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  alignment?: string;
+  link?: string;
+}
 
 interface ProductRecommendedProductsOptions {
   categoryId: string;
@@ -47,6 +56,7 @@ interface NewsletterSubscribeOptions {
 type BlockOptions =
   | UiHeroCarouselOptions
   | UiMediaCardOptions
+  | UiTextCardOptions
   | ProductRecommendedProductsOptions
   | NewsletterSubscribeOptions;
 
