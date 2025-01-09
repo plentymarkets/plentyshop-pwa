@@ -4,14 +4,9 @@ import type {
   SetProductMetaData,
   SetProductRobotsMetaData,
   SetProductCanonicalMetaData,
-  UseStructuredDataState
+  UseStructuredDataState,
 } from './types';
-import {
-  categoryTreeGetters,
-  productGetters,
-  reviewGetters,
-  productSeoSettingsGetters,
-} from '@plentymarkets/shop-api';
+import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
@@ -239,7 +234,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
       });
     }
     state.value.loading = false;
-  }
+  };
 
   return {
     setLogoMeta,
