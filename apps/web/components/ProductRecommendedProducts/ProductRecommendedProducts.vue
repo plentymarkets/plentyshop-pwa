@@ -1,5 +1,13 @@
 <template>
-  <RecommendedProducts :products="recommendedProducts"></RecommendedProducts>
+  <p
+    v-if="headline"
+    data-testid="recommended-products-headline"
+    class="mb-4 typography-text-lg text-center md:text-left"
+  >
+    {{ headline }}
+  </p>
+
+  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
 </template>
 
 <script setup lang="ts">
