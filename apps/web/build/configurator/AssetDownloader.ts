@@ -22,7 +22,7 @@ export class AssetDownloader {
       return;
     }
     this.logger.info('Downloading favicon...');
-    const iconPath = path.resolve(__dirname, `../../public/favicon.ico`);
+    const iconPath = path.resolve(__dirname, `../../public/favicon.ico?v=2`);
     this.writer.write(url, iconPath);
   }
 
