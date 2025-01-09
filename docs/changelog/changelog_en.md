@@ -7,6 +7,7 @@
 - Added page for shipping legal text.
 - Added the logic to render components within a module in certain areas of the PWA
 - Added delivery days to checkout shipping providers.
+- Added robots for category page.
 
 ### 🩹 Fixed
 
