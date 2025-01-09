@@ -14,7 +14,7 @@
 
   <div
     v-if="props.bannerProps.text"
-    class="absolute inset-0 p-4 md:p-10 flex flex-col md:basis-2/4"
+    :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': props.bannerProps.text.bgcolor }]"
     :style="{
       color: props.bannerProps.text.color,
       textAlign: getTextAlignment(),
