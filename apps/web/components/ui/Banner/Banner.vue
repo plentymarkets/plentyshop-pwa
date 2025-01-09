@@ -118,10 +118,6 @@ const getImageHeight = () => {
 };
 
 const getTextAlignment = () => {
-  if (isMobile.value) {
-    return 'center';
-  }
-
   const textAlignment = props.bannerProps.text?.textAlignment ?? '';
 
   switch (textAlignment) {
