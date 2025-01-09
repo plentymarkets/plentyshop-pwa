@@ -22,7 +22,7 @@
           />
 
           <div class="p-4 flex">
-            <p @click="openDrawer()" class="font-bold leading-6 cursor-pointer">
+            <p @click="openDrawer()" data-testid="open-manufacturer-drawer" class="font-bold leading-6 cursor-pointer">
               <span>{{ t('legalDetails') }}</span>
               <SfIconChevronRight />
             </p>

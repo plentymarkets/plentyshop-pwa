@@ -3,6 +3,7 @@
     <SfDrawer
       ref="productLegalDrawerRef"
       v-model="open"
+      data-testid="product-legal-details-drawer"
       :placement="placement"
       :class="[
         'lg:w-128',
@@ -32,16 +33,19 @@
           :key="tab.label"
           type="button"
           role="tab"
+          :data-testid="tab.component.__name"
           :variant="isActiveTab(index) ? 'primary' : 'secondary'"
           :aria-selected="isActiveTab(index)"
           :aria-controls="`tabpanel-${index}`"
           :disabled="tab.disabled"
           @click="setActiveTab(index)"
         >
-          {{ tab.label }}
+        {{ tab.label }}
         </UiButton>
       </div>
-
+      <!-- ManufacturerResponsibleInfo
+           ManufacturerResponsibleInfo -->
+      <!-- ManufacturerInformation -->
       <div
         v-for="(tab, index) in tabs"
         :key="tab.label"
