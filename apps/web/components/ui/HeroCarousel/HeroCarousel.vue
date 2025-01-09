@@ -4,7 +4,14 @@
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
-      pagination
+      :pagination="
+        enableModules
+          ? {
+              el: '.custom-swiper-pagination',
+              clickable: true,
+            }
+          : false
+      "
       :navigation="
         enableModules
           ? {
@@ -14,11 +21,23 @@
           : false
       "
       @swiper="onSwiperInit"
+      @slide-change="onSlideChange"
       class="!z-0 !w-full !max-h-[85vh]"
     >
       <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
         <UiBanner :banner-props="bannerItem" :index="index" />
       </SwiperSlide>
+      <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
+        <span
+          v-for="(bannerItem, index) in bannerItems"
+          :key="'dot-' + index"
+          class="swiper-pagination-bullet"
+          :style="{
+            backgroundColor: generalTextColor + ' !important',
+          }"
+          :class="{ 'swiper-pagination-bullet-active': index === activeIndex }"
+        ></span>
+      </div>
     </Swiper>
 
     <div
@@ -48,9 +67,14 @@ const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
 const enableModules = computed(() => bannerItems.length > 1);
 
 const generalTextColor = ref('inherit');
+const activeIndex = ref(0);
 
-const onSwiperInit = () => {
+const onSwiperInit = (swiper: any) => {
   generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
+  activeIndex.value = swiper.realIndex;
+};
+const onSlideChange = (swiper: any) => {
+  activeIndex.value = swiper.realIndex;
 };
 </script>
 
