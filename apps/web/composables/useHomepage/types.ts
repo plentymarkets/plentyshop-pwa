@@ -1,3 +1,5 @@
+import { TextCardProps } from '~/components/ui/TextCard/types';
+
 interface ImageProps {
   lg: string;
   md: string;
@@ -28,15 +30,6 @@ interface UiMediaCardOptions {
   alt?: string;
   alignment?: string;
 }
-interface UiTextCardOptions {
-  description?: string;
-  pretitle?: string;
-  title?: string;
-  subtitle?: string;
-  buttonText?: string;
-  alignment?: string;
-  link?: string;
-}
 
 export interface ProductRecommendedProductsOptions {
   categoryId: string;
@@ -56,7 +49,7 @@ interface NewsletterSubscribeOptions {
 type BlockOptions =
   | UiHeroCarouselOptions
   | UiMediaCardOptions
-  | UiTextCardOptions
+  | TextCardProps
   | ProductRecommendedProductsOptions
   | NewsletterSubscribeOptions;
 
