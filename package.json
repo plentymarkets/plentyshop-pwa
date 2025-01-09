@@ -34,7 +34,6 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/pwa-module-boilerplate": "/Users/fabiangerke/workspace/pwa-module-boilerplate",
     "@plentymarkets/shop-api": "^0.82.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",

@@ -105,7 +105,6 @@ import {
 } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { PayPalAddToCartCallback } from '~/components/PayPal/types';
-import ModuleComponentRendering from "~/components/ModuleComponentRendering/ModuleComponentRendering.vue";
 
 definePageMeta({
   layout: 'simplified-header-and-footer',
