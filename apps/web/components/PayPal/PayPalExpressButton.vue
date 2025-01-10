@@ -1,11 +1,5 @@
 <template>
-  <div
-    v-if="paypalUuid && consent"
-    ref="paypalButton"
-    :id="'paypal-' + paypalUuid"
-    class="z-0 relative paypal-button"
-  />
-  <PayPalCookieDisabledBanner v-else-if="!consent" />
+  <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
@@ -31,7 +25,6 @@ const emits = defineEmits<{
   (event: 'on-approved'): void;
 }>();
 
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
@@ -157,12 +150,5 @@ onNuxtReady(async () => {
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
-});
-
-watch(consent, async () => {
-  if (consent.value) {
-    paypalScript.value = await getScript(currency.value, isCommit);
-    createButton();
-  }
 });
 </script>

@@ -1,3 +1,6 @@
+import { BannerProps } from '~/components/ui/Banner/types';
+import { TextCardProps } from '~/components/ui/TextCard/types';
+
 interface ImageProps {
   lg: string;
   md: string;
@@ -29,24 +32,26 @@ interface UiMediaCardOptions {
   alignment?: string;
 }
 
-interface ProductRecommendedProductsOptions {
+export interface ProductRecommendedProductsOptions {
   categoryId: string;
   headline?: string;
 }
 interface NewsletterSubscribeOptions {
-  email: string;
-  firstName: string;
-  heading: string;
-  info: string;
-  lastName: string;
-  policy: string;
-  subscribe: string;
-  success: string;
+  email?: string;
+  firstName?: string;
+  heading?: string;
+  info?: string;
+  lastName?: string;
+  policy?: string;
+  subscribe?: string;
+  success?: string;
 }
 
 type BlockOptions =
+  | BannerProps
   | UiHeroCarouselOptions
   | UiMediaCardOptions
+  | TextCardProps
   | ProductRecommendedProductsOptions
   | NewsletterSubscribeOptions;
 

@@ -1,16 +1,20 @@
 import { PageObject } from "./PageObject";
 
 export class EditorObject extends PageObject {
-  get tagline() {
-    return cy.getByTestId('tagline');
+  get pretitle() {
+    return cy.getByTestId('banner-pretitle-0');
   }
 
-  get headline() {
-    return cy.getByTestId('headline');
+  get title() {
+    return cy.getByTestId('banner-title-0');
+  }
+
+  get subtitle() {
+    return cy.getByTestId('banner-subtitle-0');
   }
 
   get description() {
-    return cy.getByTestId('description');
+    return cy.getByTestId('banner-description-0');
   }
 
   get editorToolbar() {
@@ -48,9 +52,17 @@ export class EditorObject extends PageObject {
   get bottomBlockButton(){
     return cy.getByTestId('bottom-add-block')
   }
-  
+
   get deleteBlockButton(){
     return cy.getByTestId('delete-block-button')
+  }
+
+  get recommendedProducts() {
+    return cy.getByTestId('product-slider');
+  }
+
+  get languageSwitcher() {
+    return cy.getByTestId('editor-language-select');
   }
 
   togglePreviewMode() {
@@ -115,8 +127,9 @@ export class EditorObject extends PageObject {
 
   checkEditorChanges() {
     this.exitEditorButton.get('#close').click({ force: true });
-    this.tagline.should('have.text', 'New tagline from cypress');
-    this.headline.should('have.text', 'New heading from cypress');
+    this.pretitle.should('have.text', 'New pretitle from cypress');
+    this.title.should('have.text', 'New title from cypress');
+    this.subtitle.should('not.exist');
     this.description.should('have.text', 'Description from cypress.');
   }
 
@@ -151,5 +164,41 @@ export class EditorObject extends PageObject {
       this.blockWrapper.should('have.length', initialLength - 1);
     });
    }
+
+   recommendedProductsExist() {
+      this.recommendedProducts.should('exist');
+   }
+
+   switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
+
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    this.title.first().should('have.text', 'Dein Sound');
+  }
+
+  addBlockTop() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.topBlockButton.invoke('removeClass', 'opacity-0');
+      this.topBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
+
+  addBlockBottom() {
+    this.blockWrapper.then(initialBlocks => {
+      const initialLength = initialBlocks.length;
+      this.bottomBlockButton.invoke('removeClass', 'opacity-0');
+      this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
 }
 

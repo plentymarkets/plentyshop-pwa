@@ -15,6 +15,11 @@
     },
     "essentials": {
       "cookies": {
+        "payPal": {
+          "name": "paypal",
+          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
+          "status": "Erforderlich für die Zahlungsabwicklung über PayPal."
+        },
         "cloudflareTurnstile": {
           "name": "Cloudflare Turnstile",
           "provider": "Cloudflare",
@@ -45,11 +50,6 @@
     },
     "functional": {
       "cookies": {
-        "payPal": {
-          "name": "paypal",
-          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
-          "status": "Erforderlich für die Zahlungsabwicklung über PayPal."
-        },
         "scriptDemo": {
           "name": "Script-Demo",
           "provider": "plentysystems AG",
@@ -773,9 +773,7 @@
   "pagination": "Paginierte Navigation",
   "passwordVisibilty": "Sichtbarkeit des Passworts",
   "paypal": {
-    "cookieNotAccepted": "Um PayPal zu nutzen, öffnen Sie die {phrase} und aktivieren Sie den PayPal-Cookie.",
     "errorMessageCreditCard": "Die eingegebenen Daten sind ungültig. Überprüfen Sie die Felder Kartennummer, Kartenprüfnummer (CVV), Ablaufdatum.",
-    "openSettings": "Cookie-Einstellungen",
     "unbrandedCancel": "Abbrechen",
     "unbrandedCardNumber": "Kartennummer",
     "unbrandedCvv": "Kartenprüfnummer",
@@ -898,7 +896,8 @@
     "free": "Kostenlos",
     "heading": "Versandart",
     "noMethodsAvailable": "Es sind keine Versandarten verfügbar. Bitte kontaktieren Sie den Webshop-Anbieter.",
-    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen"
+    "showDataPrivacyAgreementHint": "Ich bin damit einverstanden, dass meine E-Mail-Adresse bzw. meine Telefonnummer an {parcelServiceInformation} weitergegeben wird, damit der Paketdienstleister vor der Zustellung der Ware zum Zwecke der Abstimmung eines Liefertermins per E-Mail oder Telefon Kontakt mit mir aufnehmen bzw. Statusinformationen zur Sendungszustellung übermitteln kann. Meine diesbezüglich erteilte Einwilligung kann ich jederzeit widerrufen",
+    "maxDeliveryDays": "Lieferung in {days} Tagen"
   },
   "showAllReviews": "Alle Bewertungen anzeigen",
   "showLess": "Weniger anzeigen",
