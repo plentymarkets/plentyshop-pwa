@@ -22,7 +22,7 @@ describe('useReadCookieBar', () => {
       useCookie.mockImplementation(() => ({
         value: {
           'CookieBar.functional.label': {
-            'CookieBar.functional.cookies.payPal.name': true,
+            'CookieBar.essentials.cookies.payPal.name': true,
             'CookieBar.functional.cookies.scriptDemo.name': true,
           }
         },
@@ -38,8 +38,7 @@ describe('useReadCookieBar', () => {
       });
 
       initializeCookies();
-
-      data.value.groups[2].cookies[1].accepted = false;
+      data.value.groups[2].cookies[0].accepted = false;
       setConsent();
 
       expect(RouterGoSpy).toHaveBeenCalledTimes(1);
@@ -48,7 +47,7 @@ describe('useReadCookieBar', () => {
     it('should not reload the page if a consent cookie is accepted', () => {
       const { setConsent, initializeCookies } = useReadCookieBar();
       const RouterGoSpy = vi.fn();
-      
+
       useRouter.mockReturnValue({
         go: RouterGoSpy,
       });
