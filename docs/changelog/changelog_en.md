@@ -12,6 +12,7 @@
 ### 🩹 Fixed
 
 - Fixed an issue where required attributes notification was blocking the cart.
+- Fixed a visual inconsistency in the category filters sidebar.
 - Fixed accesibility error caused by missing label on clear filters.
 - Fixed same text in alt and title warning in category page.
 - Replaced favicon with PlentyONE favicon.
