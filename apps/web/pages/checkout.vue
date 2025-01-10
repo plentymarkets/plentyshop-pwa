@@ -9,11 +9,11 @@
       <div class="col-span-6 xl:col-span-7 mb-10 lg:mb-0">
         <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" />
         <ContactInformation />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-shipping-divider" />
-        <AddressContainer :type="AddressType.Shipping" :key="0" id="shipping-address" />
-        <UiDivider class="w-screen md:w-auto -mx-4 md:mx-0" id="top-billing-divider" />
-        <AddressContainer :type="AddressType.Billing" :key="1" id="billing-address" />
-        <UiDivider class-name="w-screen md:w-auto -mx-4 md:mx-0" id="bottom-billing-divider" />
+        <UiDivider id="top-shipping-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <AddressContainer id="shipping-address" :key="0" :type="AddressType.Shipping" />
+        <UiDivider id="top-billing-divider" class="w-screen md:w-auto -mx-4 md:mx-0" />
+        <AddressContainer id="billing-address" :key="1" :type="AddressType.Billing" />
+        <UiDivider id="bottom-billing-divider" class-name="w-screen md:w-auto -mx-4 md:mx-0" />
         <div class="relative" :class="{ 'pointer-events-none opacity-50': disableShippingPayment }">
           <ShippingMethod :disabled="disableShippingPayment" @update:shipping-method="handleShippingMethodUpdate" />
           <SfLoaderCircular
@@ -38,8 +38,8 @@
             <div v-if="selectedPaymentId === paypalPaymentId">
               <PayPalExpressButton
                 :disabled="!termsAccepted || disableBuyButton"
-                @validation-callback="handleReadyToBuy"
                 type="Checkout"
+                @validation-callback="handleReadyToBuy"
               />
               <PayPalPayLaterBanner
                 placement="payment"
@@ -49,8 +49,8 @@
             </div>
             <PayPalCreditCardBuyButton
               v-else-if="selectedPaymentId === paypalCreditCardPaymentId"
-              @click="openPayPalCardDialog"
               :disabled="disableBuyButton || paypalCardDialog"
+              @click="openPayPalCardDialog"
             />
             <PayPalApplePayButton
               v-else-if="selectedPaymentId === paypalApplePayPaymentId"
@@ -65,11 +65,11 @@
             <UiButton
               v-else
               type="submit"
-              @click="order"
               :disabled="disableBuyButton"
               size="lg"
               data-testid="place-order-button"
               class="w-full mb-4 md:mb-0 cursor-pointer"
+              @click="order"
             >
               <template v-if="createOrderLoading">
                 <SfLoaderCircular class="flex justify-center items-center" size="sm" />
@@ -104,7 +104,7 @@ import {
   PayPalApplePayKey,
 } from '~/composables/usePayPal/types';
 import { AddressType, paymentProviderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 definePageMeta({
   layout: 'simplified-header-and-footer',

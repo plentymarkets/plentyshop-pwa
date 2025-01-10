@@ -1,8 +1,8 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart()"
     class="md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
+    @submit.prevent="handleAddToCart()"
   >
     <div class="relative">
       <div class="drift-zoom-image">
@@ -60,9 +60,9 @@
             <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
             <UiButton
               variant="tertiary"
-              @click="scrollToReviews"
               class="ml-2 text-xs text-neutral-500 cursor-pointer"
               data-testid="show-reviews"
+              @click="scrollToReviews"
             >
               {{ t('showAllReviews') }}
             </UiButton>
@@ -85,8 +85,8 @@
               <UiQuantitySelector
                 :min-value="productGetters.getMinimumOrderQuantity(product)"
                 :value="quantitySelectorValue"
-                @change-quantity="changeQuantity"
                 class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
+                @change-quantity="changeQuantity"
               />
               <SfTooltip
                 show-arrow
@@ -130,7 +130,7 @@
               </i18n-t>
             </div>
             <template v-if="showPayPalButtons">
-              <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
+              <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>
           </div>
@@ -143,8 +143,8 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
-import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();

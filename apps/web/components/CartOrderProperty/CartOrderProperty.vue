@@ -9,8 +9,8 @@
     </span>
     <span
       v-if="productPropertyGetters.isOrderPropertyFile(property)"
-      @click="downloadPropertyFile"
       class="cursor-pointer"
+      @click="downloadPropertyFile"
     >
       <span>: {{ value }}</span>
       <SfLoaderCircular v-if="loading" class="absolute ml-2 z-[999]" size="sm" />

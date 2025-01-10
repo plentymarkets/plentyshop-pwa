@@ -60,7 +60,7 @@ describe('Auth Guard', () => {
 
         cy.wait('@doLogin');
         
-        guardedRoutes.forEach(route => {
+        guardedRoutes.forEach((route) => {
             cy.visitAndHydrate(route);
             cy.url().should('include', route);
         });

@@ -1,8 +1,8 @@
 <template>
   <UiOverlay visible>
     <UiModal
-      v-model="isOpen"
       v-if="data"
+      v-model="isOpen"
       as="section"
       role="dialog"
       class="h-full w-full overflow-auto !p-4 md:!p-10 md:max-w-[770px] md:h-fit"

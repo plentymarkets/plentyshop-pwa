@@ -1,8 +1,8 @@
 <template>
-  <div class="typography-text-sm font-bold mt-5" v-if="graduatedList.length > 0">
+  <div v-if="graduatedList.length > 0" class="typography-text-sm font-bold mt-5">
     {{ $t('graduatedPrices.title') }}
   </div>
-  <table class="w-full text-left typography-text-sm mb-2" v-if="graduatedList.length > 0">
+  <table v-if="graduatedList.length > 0" class="w-full text-left typography-text-sm mb-2">
     <thead class="border-b-2 border-neutral-200">
       <tr>
         <th class="lg:py-4 py-2 lg:pr-4 pr-2 font-medium">{{ $t('graduatedPrices.price') }}</th>
