@@ -76,6 +76,7 @@
               </template>
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
+            <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
       </div>
@@ -118,7 +119,6 @@ const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
-const { consent: payPalConsent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const {
   cart,
   cartIsEmpty,
@@ -144,7 +144,7 @@ const {
 } = useCheckoutPagePaymentAndShipping();
 
 const checkPayPalPaymentsEligible = async () => {
-  if (import.meta.client && payPalConsent.value) {
+  if (import.meta.client) {
     const googlePayAvailable = await useGooglePay().checkIsEligible();
     const applePayAvailable = await useApplePay().checkIsEligible();
 
@@ -261,9 +261,5 @@ watch(cartIsEmpty, async () => {
     send({ type: 'neutral', message: t('emptyCartNotification') });
     await navigateTo(localePath(paths.cart));
   }
-});
-
-watch(payPalConsent, async () => {
-  await checkPayPalPaymentsEligible();
 });
 </script>

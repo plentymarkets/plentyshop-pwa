@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isReady && consent" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
 </template>
 
 <script setup lang="ts">
@@ -12,7 +12,6 @@ const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const { isReady, getScript } = usePayPal();
 const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerType>();
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const textStylePlacements = ['product', 'cart', 'payment'];
 const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(placement));
@@ -55,10 +54,4 @@ watch(
   () => amount,
   async () => await renderMessage(),
 );
-
-watch(consent, async () => {
-  if (consent.value) {
-    await renderMessage();
-  }
-});
 </script>

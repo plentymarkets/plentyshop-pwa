@@ -5,7 +5,9 @@
 ### New
 
 - Added page for shipping legal text.
+- Added the logic to render components within a module in certain areas of the PWA
 - Added delivery days to checkout shipping providers.
+- Added robots for category page.
 
 ### 🩹 Fixed
 
@@ -18,8 +20,10 @@
 - Fix for max visible pages on mobile pagination.
 - Fix for editor language picker when it showed inverted data template.
 - When the media card only displays text, the text block is now left aligned instead of centered.
+- Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
 - The homepage now displays recommended products on initial load.
 - Fixed product gallery thumbnail image alternate.
+- The homepage now has the new version of the carousel
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
