@@ -53,13 +53,18 @@
     {
       "name": "UiTextCard",
       "options": {
-        "description": "Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung findest du bei uns alles, was deinen Alltag smarter und deinen Look einzigartig macht.\n\nUnser Ziel ist es, dir eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob du nach einem neuen Lautsprecher für den perfekten Sound suchst oder nach einem lässigen Hoodie, der deinem Stil entspricht – wir haben, was du brauchst.",
-        "pretitle": "Willkommen in deinem neuen Lieblingsshop",
-        "title": "Entdecke Technik & Style",
-        "subtitle": "Innovative Technik trifft auf moderne Mode",
-        "buttonText": "Get Started",
-        "alignment": "center",
-        "link": ""
+        "text": {
+          "htmlDescription": "Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung findest du bei uns alles, was deinen Alltag smarter und deinen Look einzigartig macht.\n\nUnser Ziel ist es, dir eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob du nach einem neuen Lautsprecher für den perfekten Sound suchst oder nach einem lässigen Hoodie, der deinem Stil entspricht – wir haben, was du brauchst.",
+          "pretitle": "Willkommen in deinem neuen Lieblingsshop",
+          "title": "Entdecke Technik & Style",
+          "subtitle": "Innovative Technik trifft auf moderne Mode",
+          "textAlignment": "center"
+        },
+        "button": {
+          "buttonText": "Jetzt zuschlagen",
+          "link": "",
+          "variant": "primary"
+        }
       }
     },
     {

@@ -53,13 +53,19 @@
     {
       "name": "UiTextCard",
       "options": {
-        "description": "Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.",
-        "pretitle": "Welcome to your new favorite shop",
-        "title": "Discover Tech & Style",
-        "subtitle": "Innovative technology meets modern fashion",
-        "buttonText": "Get Started",
-        "alignment": "center",
-        "link": ""
+        "text": {
+          "htmlDescription": "Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.",
+          "title": "Discover Tech & Style",
+          "subtitle": "Innovative technology meets modern fashion",
+          "pretitle": "Welcome to your new favorite shop",
+          "textAlignment": "right"
+
+        },
+        "button": {
+          "label":"Get shopping",
+          "link":"",
+          "variant": "primary"
+        }
       }
     },
     {
