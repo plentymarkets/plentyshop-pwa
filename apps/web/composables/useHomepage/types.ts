@@ -36,14 +36,14 @@ export interface ProductRecommendedProductsOptions {
   headline?: string;
 }
 interface NewsletterSubscribeOptions {
-  email: string;
-  firstName: string;
-  heading: string;
-  info: string;
-  lastName: string;
-  policy: string;
-  subscribe: string;
-  success: string;
+  email?: string;
+  firstName?: string;
+  heading?: string;
+  info?: string;
+  lastName?: string;
+  policy?: string;
+  subscribe?: string;
+  success?: string;
 }
 
 type BlockOptions =
