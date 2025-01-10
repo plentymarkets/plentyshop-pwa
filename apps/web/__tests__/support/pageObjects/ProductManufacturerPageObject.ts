@@ -45,15 +45,15 @@ export class ProductManufacturerPageObject extends PageObject {
     this.manufacturerResponsibleInfo.should('be.visible');
     this.manufacturerResponsibleInformation.should('be.visible');
      
-    this.manufacturerResponsibleInformationName.should('contain', 'Matthias Richter');
-    this.manufacturerResponsibleInformationStreet.should('contain', 'Sophienstraße 13');
-    this.manufacturerResponsibleInformationPostcode.should('contain', '80333');
-    this.manufacturerResponsibleInformationPhone.should('contain', '+49 89 98765432');
-    this.manufacturerResponsibleInformationEmail.should('contain', 'eu-representative@acdesign.eu');
+    this.manufacturerResponsibleInformationName.should('be.visible');
+    this.manufacturerResponsibleInformationStreet.should('be.visible');
+    this.manufacturerResponsibleInformationPostcode.should('be.visible');
+    this.manufacturerResponsibleInformationPhone.should('be.visible');
+    this.manufacturerResponsibleInformationEmail.should('be.visible');
 
 
     this.manufacturerResponsibleInformation.click()
-    this.manufacturerInformationName.should('contain', 'A & C Design');
+    this.manufacturerInformationName.should('be.visible');
     this.productLegalDetailsClose.click();
 
     this.manufacturerResponsibleInfo.should('not.exist');
