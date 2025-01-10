@@ -27,7 +27,6 @@ function convertToSaveableJson(jsonList: any): string {
  * } = useCookieBar(consentCookie, initCheckboxIndex, initialCookieJsonFromConfig);
  * ```
  */
-/* eslint-disable sonarjs/cognitive-complexity */
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,

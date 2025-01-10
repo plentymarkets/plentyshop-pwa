@@ -34,7 +34,6 @@ async function onGooglePaymentButtonClicked() {
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
-          // eslint-disable-next-line promise/no-nesting
           processPayment(paymentData).catch((error: Error) => {
             useNotification().send({
               message: error.message || t('errorMessages.paymentFailed'),

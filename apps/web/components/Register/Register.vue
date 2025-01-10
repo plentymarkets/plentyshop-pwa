@@ -211,7 +211,6 @@ const clearTurnstile = () => {
   turnstileElement.value?.reset();
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const registerUser = async () => {
   if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;

@@ -69,7 +69,6 @@ const confirmCancel = () => {
   emit('confirmCancel');
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 onMounted(() => {
   let paypalOrderId: string = '';
   let paypalPayerId: string = '';

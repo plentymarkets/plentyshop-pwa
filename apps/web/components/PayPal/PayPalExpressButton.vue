@@ -116,7 +116,6 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
         // TODO: handle error
       },
       async createOrder() {
