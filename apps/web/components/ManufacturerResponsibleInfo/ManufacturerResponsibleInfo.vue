@@ -6,8 +6,13 @@
     <p class="mb-2">{{ t('manufacturer.responsibleSubtitle') }}</p>
 
     <div class="border-2 py-2 px-4">
-      <p data-testid="manufacturer-responsible-info-name" v-if="manufacturerResponsibleInfo.name">{{ manufacturerResponsibleInfo.name }}</p>
-      <p data-testid="manufacturer-responsible-info-street" v-if="manufacturerResponsibleInfo.street || manufacturerResponsibleInfo.houseNo">
+      <p data-testid="manufacturer-responsible-info-name" v-if="manufacturerResponsibleInfo.name">
+        {{ manufacturerResponsibleInfo.name }}
+      </p>
+      <p
+        data-testid="manufacturer-responsible-info-street"
+        v-if="manufacturerResponsibleInfo.street || manufacturerResponsibleInfo.houseNo"
+      >
         {{ manufacturerResponsibleInfo.street }} {{ manufacturerResponsibleInfo.houseNo }}
       </p>
       <p
@@ -23,8 +28,12 @@
         <span v-if="manufacturerResponsibleInfo.town && manufacturerResponsibleInfo.country">, &nbsp;</span>
         <span v-if="manufacturerResponsibleInfo.country">{{ manufacturerResponsibleInfo.country.name }}</span>
       </p>
-      <p v-if="manufacturerResponsibleInfo.phoneNo" data-testid="manufacturer-responsible-info-phone">{{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}</p>
-      <p v-if="manufacturerResponsibleInfo.email" data-testid="manufacturer-responsible-info-email">{{ t('email') }}: {{ manufacturerResponsibleInfo.email }}</p>
+      <p v-if="manufacturerResponsibleInfo.phoneNo" data-testid="manufacturer-responsible-info-phone">
+        {{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}
+      </p>
+      <p v-if="manufacturerResponsibleInfo.email" data-testid="manufacturer-responsible-info-email">
+        {{ t('email') }}: {{ manufacturerResponsibleInfo.email }}
+      </p>
       <p v-if="manufacturerResponsibleInfo.responsibleContactUrl">
         {{ t('responsibleContactUrl') }}: {{ manufacturerResponsibleInfo.responsibleContactUrl }}
       </p>
