@@ -47,8 +47,8 @@
             </li>
           </ul>
           <div
-            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
             v-if="cartItem.basketItemOrderParams.length > 0"
+            class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700"
           >
             <div class="text-[15px]">{{ t('orderProperties.additionalCostsPerItem') }}:</div>
             <CartOrderProperty
@@ -69,8 +69,8 @@
       <div v-if="cartItem.variation?.bundleComponents" class="my-2 mb-6">
         <div v-for="(item, index) in cartItem.variation.bundleComponents" :key="index">
           <SfLink
-            :tag="NuxtLink"
             v-if="productBundleGetters.isItemBundleSalable(item)"
+            :tag="NuxtLink"
             :to="localePath(productBundleGetters.getBundleItemUrl(item))"
             variant="secondary"
             class="no-underline typography-text-sm"
@@ -80,7 +80,7 @@
               <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
           </SfLink>
-          <p class="text-sm" v-else>
+          <p v-else class="text-sm">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>
@@ -97,11 +97,11 @@
         <UiQuantitySelector
           ref="quantitySelectorReference"
           :disabled="disabled"
-          @change-quantity="debounceQuantity"
           :value="itemQuantitySelector"
           :min-value="productGetters.getMinimumOrderQuantity(cartItem.variation || ({} as Product))"
           :max-value="maximumOrderQuantity"
           class="mt-4 sm:mt-0"
+          @change-quantity="debounceQuantity"
         />
       </div>
     </div>
@@ -112,12 +112,12 @@
 
     <UiButton
       v-else-if="!disabled"
-      @click="deleteItem"
       square
       :aria-label="t('removeItemFromBasket')"
       variant="tertiary"
       size="sm"
       class="absolute top-2 right-2 bg-white"
+      @click="deleteItem"
     >
       <SfIconClose size="sm" />
     </UiButton>

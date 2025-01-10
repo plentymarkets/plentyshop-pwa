@@ -11,8 +11,8 @@
       :disabled="pagination.selectedPage <= 1 || disabled"
       variant="tertiary"
       class="gap-3"
-      @click="previousPage"
       data-testid="pagination-previous"
+      @click="previousPage"
     >
       <template #prefix>
         <SfIconChevronLeft />
@@ -62,8 +62,8 @@
             ]"
             :aria-current="pagination.endPage - 1 === pagination.selectedPage"
             :aria-label="getAriaLabel(pagination.endPage - 1 === pagination.selectedPage, pagination.endPage - 1)"
-            @click="setPage(pagination.endPage - 1)"
             :disabled="disabled"
+            @click="setPage(pagination.endPage - 1)"
           >
             {{ pagination.endPage - 1 }}
           </button>
@@ -107,8 +107,8 @@
               },
             ]"
             :aria-label="t('goToPage', { page: 2 })"
-            @click="setPage(2)"
             :disabled="disabled"
+            @click="setPage(2)"
           >
             2
           </button>
@@ -138,8 +138,8 @@
             ]"
             :aria-current="pagination.totalPages === pagination.selectedPage"
             :aria-label="getAriaLabel(pagination.totalPages === pagination.selectedPage, pagination.selectedPage)"
-            @click="setPage(pagination.totalPages)"
             :disabled="disabled"
+            @click="setPage(pagination.totalPages)"
           >
             {{ pagination.totalPages }}
           </button>
@@ -152,8 +152,8 @@
       :disabled="pagination.selectedPage >= pagination.totalPages || disabled"
       variant="tertiary"
       class="gap-3"
-      @click="nextPage"
       data-testid="pagination-next"
+      @click="nextPage"
     >
       <span class="hidden sm:inline-flex">{{ t('next') }}</span>
       <template #suffix>

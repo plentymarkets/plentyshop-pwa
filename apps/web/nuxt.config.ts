@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
-  // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
@@ -67,6 +66,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
+    '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',

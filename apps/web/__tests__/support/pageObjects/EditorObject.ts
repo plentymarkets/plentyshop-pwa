@@ -114,7 +114,7 @@ export class EditorObject extends PageObject {
   replaceEditorContent(content: string) {
     this.editorTextarea
       .should('be.visible')
-      .then($el => {
+      .then(($el) => {
         if ($el.prop('isContentEditable')) {
           cy.wrap($el).invoke('text', '');
         } else {
@@ -156,7 +156,7 @@ export class EditorObject extends PageObject {
   }
 
   deleteBlock() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.blockWrapper.first().should('exist');
       this.deleteBlockButton.eq(1).click();
@@ -182,7 +182,7 @@ export class EditorObject extends PageObject {
   }
 
   addBlockTop() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
@@ -192,7 +192,7 @@ export class EditorObject extends PageObject {
   }
 
   addBlockBottom() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();

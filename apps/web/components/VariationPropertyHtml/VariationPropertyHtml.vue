@@ -12,7 +12,7 @@
     >
       :
     </div>
-    <div class="no-preflight" v-html="productPropertyGetters.getPropertyValue(variationProperty)"></div>
+    <div class="no-preflight" v-html="productPropertyGetters.getPropertyValue(variationProperty)" />
   </div>
 </template>
 

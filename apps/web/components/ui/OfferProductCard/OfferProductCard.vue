@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { SfLink } from '@storefront-ui/vue';
-import { OfferProductCardProps } from './types';
+import type { OfferProductCardProps } from './types';
 import { offerGetters } from '@plentymarkets/shop-api';
 
 const props = defineProps<OfferProductCardProps>();

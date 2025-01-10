@@ -1,8 +1,8 @@
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { FileTypeValidator } from '../validators/FileTypeValidator';
-import { Writer } from '../writers/types';
-import { Logger } from '../logs/types';
+import type { Writer } from '../writers/types';
+import type { Logger } from '../logs/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
