@@ -8,6 +8,7 @@
       v-if="props.button?.label && props.button?.link"
       :tag="NuxtLink"
       :to="localePath(props.button?.link ?? '')"
+      :variant="props.button?.variant ?? 'primary'"
       class="mt-3 px-4 py-2"
     >
       {{ props.button?.label }}
