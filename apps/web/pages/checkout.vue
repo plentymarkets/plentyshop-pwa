@@ -76,6 +76,7 @@
               </template>
               <template v-else>{{ t('buy') }}</template>
             </UiButton>
+            <ModuleComponentRendering area="checkout.afterBuyButton" />
           </OrderSummary>
         </div>
       </div>
