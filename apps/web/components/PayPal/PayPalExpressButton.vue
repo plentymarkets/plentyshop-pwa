@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import type { PayPalNamespace, type FUNDING_SOURCE, type OnApproveData, type OnInitActions } from '@paypal/paypal-js';
+import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
 import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 

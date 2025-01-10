@@ -1,9 +1,5 @@
 import type { AggregatedCountries } from '@plentymarkets/shop-api';
-import type {
-  UseAggregatedCountriesState,
-  type UseAggregatedCountriesReturn,
-  type FetchAggregatedCountries,
-} from './types';
+import type { UseAggregatedCountriesState, UseAggregatedCountriesReturn, FetchAggregatedCountries } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:

@@ -2,9 +2,9 @@ import { type Address, AddressType, cartGetters, userAddressGetters } from '@ple
 import type {
   DeleteAddress,
   SetDefault,
-  type UseAddressReturn,
-  type GetAddresses,
-  type SaveAddress,
+  UseAddressReturn,
+  GetAddresses,
+  SaveAddress,
   UseAddressMethodsState,
 } from './types';
 

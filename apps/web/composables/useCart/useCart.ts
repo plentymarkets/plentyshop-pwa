@@ -5,16 +5,16 @@ import type {
   CartItem,
   CartItemError,
   ApiError,
-  type Cart,
+  Cart,
 } from '@plentymarkets/shop-api';
 import type {
   UseCartState,
-  type UseCartReturn,
-  type GetCart,
-  type AddToCart,
-  type AddItemsToCart,
-  type DeleteCartItem,
-  type SetCartItemQuantity,
+  UseCartReturn,
+  GetCart,
+  AddToCart,
+  AddItemsToCart,
+  DeleteCartItem,
+  SetCartItemQuantity,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {

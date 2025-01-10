@@ -1,4 +1,4 @@
-import type { AddressType, type Address } from '@plentymarkets/shop-api';
+import type { AddressType, Address } from '@plentymarkets/shop-api';
 import type { AddressState } from './types';
 
 export const useAddressStore = (type: AddressType) => {

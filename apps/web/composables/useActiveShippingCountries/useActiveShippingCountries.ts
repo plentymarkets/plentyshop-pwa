@@ -1,8 +1,8 @@
 import type { ActiveShippingCountry } from '@plentymarkets/shop-api';
 import type {
   UseActiveShippingCountriesState,
-  type UseActiveShippingCountriesReturn,
-  type GetActiveShippingCountries,
+  UseActiveShippingCountriesReturn,
+  GetActiveShippingCountries,
 } from './types';
 
 /**
