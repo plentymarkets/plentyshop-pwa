@@ -46,12 +46,12 @@ export const useValidatorAggregator: UseValidatorAggregatorReturn = (type: strin
     const invalidFields = state.value.invalidFields;
 
     if (validMeta) {
-      const indexToRemove = invalidFields.findIndex((invalidField) => invalidField.key === fieldUniqueId);
+      const indexToRemove = invalidFields.findIndex(invalidField => invalidField.key === fieldUniqueId);
       if (indexToRemove !== -1) {
         invalidFields.splice(indexToRemove, 1);
       }
     } else {
-      const existingField = invalidFields.find((invalidField) => invalidField.key === fieldUniqueId);
+      const existingField = invalidFields.find(invalidField => invalidField.key === fieldUniqueId);
       if (existingField) {
         existingField.name = name;
       } else {

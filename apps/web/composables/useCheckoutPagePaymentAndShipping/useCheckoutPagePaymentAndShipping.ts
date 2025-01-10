@@ -1,7 +1,8 @@
-import {
+import type {
   PaymentMethod,
+  ShippingMethod} from '@plentymarkets/shop-api';
+import {
   paymentProviderGetters,
-  ShippingMethod,
   shippingProviderGetters,
 } from '@plentymarkets/shop-api';
 import { scrollToHTMLObject } from '~/utils/scollHelper';

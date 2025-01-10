@@ -12,7 +12,7 @@
           :checked="isPaymentMethodChecked(paymentMethod)"
           :disabled="isPaymentMethodDisabled(paymentMethod)"
           @click.prevent="handlePaymentMethodChange(paymentMethod)"
-        />
+        >
         <span
           :class="{
             'peer-focus:border-primary-50 peer-focus:bg-primary-50': !paymentProviderGetters.isPaymentMethodExcluded(
@@ -47,7 +47,7 @@
 <script setup lang="ts">
 import { paymentProviderGetters, type PaymentMethod } from '@plentymarkets/shop-api';
 import { SfIconCreditCard, SfIconWarning } from '@storefront-ui/vue';
-import { type CheckoutPaymentEmits, type CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
+import type { CheckoutPaymentEmits, CheckoutPaymentProps } from '~/components/CheckoutPayment/types';
 
 const { disabled = false } = defineProps<CheckoutPaymentProps>();
 const emit = defineEmits<CheckoutPaymentEmits>();

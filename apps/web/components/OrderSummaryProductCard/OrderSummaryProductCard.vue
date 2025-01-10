@@ -1,8 +1,8 @@
 <template>
   <div
+    v-if="orderItem.typeId !== 6"
     class="relative flex border-b-[1px] border-neutral-200 hover:shadow-lg last:mb-0 p-4 w-full"
     data-testid="cart-product-card"
-    v-if="orderItem.typeId !== 6"
   >
     <SfLink
       class="relative overflow-hidden rounded-md w-[100px] sm:w-[176px] mr-4"
@@ -33,13 +33,13 @@
       >
         {{ orderGetters.getItemName(orderItem) }}
       </SfLink>
-      <div class="my-2" v-if="!orderGetters.isBundleComponents(orderItem)">
+      <div v-if="!orderGetters.isBundleComponents(orderItem)" class="my-2">
         <ul class="text-xs font-normal leading-5 sm:typography-text-sm text-neutral-700">
           <li v-for="(attribute, index) in orderGetters.getOrderAttributes(orderItem)" :key="index">
-            <span class="mr-1" v-if="orderGetters.getOrderItemAttributeName(attribute)">
+            <span v-if="orderGetters.getOrderItemAttributeName(attribute)" class="mr-1">
               {{ orderGetters.getOrderItemAttributeName(attribute) }}:
             </span>
-            <span class="font-medium" v-if="orderGetters.getOrderItemAttributeValue(attribute)">
+            <span v-if="orderGetters.getOrderItemAttributeValue(attribute)" class="font-medium">
               {{ orderGetters.getOrderItemAttributeValue(attribute) }}
             </span>
           </li>
@@ -50,7 +50,7 @@
               <span>{{ orderGetters.getItemOrderPropertyName(property) }}</span>
               <span v-if="orderGetters.getItemOrderPropertyValue(property).length > 0">:</span>
             </span>
-            <span class="font-medium" v-if="orderGetters.isItemOrderPropertyFile(property)">
+            <span v-if="orderGetters.isItemOrderPropertyFile(property)" class="font-medium">
               <a
                 :href="orderGetters.getItemOrderPropertyFileUrl(property)"
                 target="_blank"
@@ -61,13 +61,13 @@
                 <SfIconOpenInNew class="ml-1" size="sm" />
               </a>
             </span>
-            <span class="font-medium" v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0">
+            <span v-else-if="orderGetters.getItemOrderPropertyValue(property).length > 0" class="font-medium">
               {{ orderGetters.getItemOrderPropertyValue(property) }}
             </span>
           </li>
         </ul>
       </div>
-      <div class="my-2 mb-6" v-if="orderGetters.isBundleComponents(orderItem)">
+      <div v-if="orderGetters.isBundleComponents(orderItem)" class="my-2 mb-6">
         <ul v-for="(item, index) in orderItem.bundleComponents" :key="index">
           <SfLink
             v-if="productBundleGetters.isItemBundleSalableAndActive(item)"
@@ -81,7 +81,7 @@
               <span class="underline px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
             </p>
           </SfLink>
-          <p class="text-sm" v-else>
+          <p v-else class="text-sm">
             {{ productBundleGetters.getBundleItemQuantity(item) }}x
             <span class="px-1 h-">{{ productBundleGetters.getBundleItemName(item) }}</span>
           </p>

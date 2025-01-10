@@ -93,7 +93,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
    * ```
    */
   const getPropertyById = (id: number): BasketItemOrderParamsProperty | undefined => {
-    return state.value.data.find((property) => property.property.id === id);
+    return state.value.data.find(property => property.property.id === id);
   };
 
   /**
@@ -105,7 +105,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
    * ```
    */
   const getPropertiesForCart = (): BasketItemOrderParamsProperty[] | undefined => {
-    const result = state.value.data.filter((property) => property.property.value !== null);
+    const result = state.value.data.filter(property => property.property.value !== null);
     return result.length > 0 ? result : undefined;
   };
 
@@ -124,7 +124,7 @@ export const useProductOrderProperties: UseProductOrderPropertiesReturn = () => 
     if (properties) {
       properties.forEach((property) => {
         const propertyItem = product.properties?.find(
-          (productProperty) => productProperty.propertyId === property.property.id,
+          productProperty => productProperty.propertyId === property.property.id,
         );
         if (propertyItem) {
           const labels = productPropertyGetters.getOrderPropertyLabel(propertyItem);

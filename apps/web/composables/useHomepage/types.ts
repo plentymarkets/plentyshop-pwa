@@ -1,5 +1,5 @@
-import { BannerProps } from '~/components/ui/Banner/types';
-import { TextCardProps } from '~/components/ui/TextCard/types';
+import type { BannerProps } from '~/components/ui/Banner/types';
+import type { TextCardProps } from '~/components/ui/TextCard/types';
 
 interface ImageProps {
   lg: string;

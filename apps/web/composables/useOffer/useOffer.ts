@@ -1,4 +1,4 @@
-import {
+import type {
   ApiError,
   Data,
   GetOfferError,
@@ -7,7 +7,7 @@ import {
   OfferSearchParams,
   Order,
 } from '@plentymarkets/shop-api';
-import { AcceptOffer, DeclineOffer, FetchOffer, UseOfferReturn } from './types';
+import type { AcceptOffer, DeclineOffer, FetchOffer, UseOfferReturn } from './types';
 
 export const useOffer: UseOfferReturn = () => {
   const { send } = useNotification();

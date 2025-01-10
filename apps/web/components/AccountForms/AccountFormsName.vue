@@ -1,13 +1,13 @@
 <template>
-  <form @submit.prevent="$emit('on-save')" data-testid="account-forms-name">
+  <form data-testid="account-forms-name" @submit.prevent="$emit('on-save')">
     <div class="md:flex justify-between gap-4">
       <label class="block flex-1">
         <UiFormLabel>{{ $t('account.accountSettings.personalData.firstName') }} {{ $t('form.required') }}</UiFormLabel>
-        <SfInput name="firstname" type="text" v-model="userData.firstName" required />
+        <SfInput v-model="userData.firstName" name="firstname" type="text" required />
       </label>
       <label class="block flex-1 mt-4 md:mt-0">
         <UiFormLabel>{{ $t('account.accountSettings.personalData.lastName') }} {{ $t('form.required') }}</UiFormLabel>
-        <SfInput name="lastname" type="text" v-model="userData.lastName" required />
+        <SfInput v-model="userData.lastName" name="lastname" type="text" required />
       </label>
     </div>
     <div class="mt-6 flex flex-col-reverse md:flex-row md:justify-end gap-4">

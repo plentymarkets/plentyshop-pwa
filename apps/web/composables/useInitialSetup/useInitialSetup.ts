@@ -1,7 +1,6 @@
-import type { Cart, SessionResult } from '@plentymarkets/shop-api';
+import type { Cart, SessionResult , ApiError } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData

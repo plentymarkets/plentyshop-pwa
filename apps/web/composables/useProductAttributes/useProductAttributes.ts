@@ -125,8 +125,8 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
    * ```
    */
   const updateValue: UpdateValue = (attributeId: number, valueId: number | undefined) => {
-    const item = state.value.attributes.find((attribute) => attribute.attributeId === attributeId);
-    const value = item?.values.find((value) => value.attributeValueId === valueId) || undefined;
+    const item = state.value.attributes.find(attribute => attribute.attributeId === attributeId);
+    const value = item?.values.find(value => value.attributeValueId === valueId) || undefined;
 
     if (!value || !valueId) {
       delete state.value.attributeValues[attributeId];
@@ -142,10 +142,10 @@ export const useProductAttributes = (): UseProductAttributesReturn => {
       disableAttributes();
 
       Object.values(oldValues).forEach((oldValueId) => {
-        const oldKey = Object.keys(oldValues).find((key) => oldValues[key] === oldValueId);
+        const oldKey = Object.keys(oldValues).find(key => oldValues[key] === oldValueId);
         const oldValue = state.value.attributes
-          .find((attribute) => attribute.attributeId === Number(oldKey ?? 0))
-          ?.values.find((value) => value.attributeValueId === oldValueId);
+          .find(attribute => attribute.attributeId === Number(oldKey ?? 0))
+          ?.values.find(value => value.attributeValueId === oldValueId);
 
         if (oldKey && oldValue && !oldValue.disabled) {
           state.value.attributeValues[oldKey] = oldValueId;

@@ -1,9 +1,9 @@
+import type { Product, ImagesData } from '@plentymarkets/shop-api';
 interface AgnosticImage {
   alt: string | null;
   url: string;
 }
 export type AddModernImageExtensionForSfImages = (images: AgnosticImage[]) => AgnosticImage[];
-import type { Product, ImagesData } from '@plentymarkets/shop-api';
 
 export type AddModernImageExtension = (url: string | undefined) => string;
 export type AddModernImageExtensionForGallery = (images: ImagesData[]) => ImagesData[];

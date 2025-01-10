@@ -1,6 +1,5 @@
-import { UseReadCookieBarState, type UseReadCookieBarReturn } from './types';
-import { Cookie, CookieGroup, CookieGroupFromNuxtConfig, type JsonCookie } from '~/configuration/cookie.config';
-import { type ChangeVisibilityState, type SetAllCookiesState, type SetConsent, type InitializeCookies } from './types';
+import type { UseReadCookieBarState, type UseReadCookieBarReturn , type ChangeVisibilityState, type SetAllCookiesState, type SetConsent, type InitializeCookies } from './types';
+import type { Cookie, CookieGroup, CookieGroupFromNuxtConfig, type JsonCookie } from '~/configuration/cookie.config';
 import cookieScripts from '~/cookie-scripts.config';
 
 const checkIfScriptIsExternal = (scriptName: string): boolean => {

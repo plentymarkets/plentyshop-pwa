@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AppConfigurator } from '../AppConfigurator';
-import { BaseColors, ConfigurationResponse } from '../types';
-import { Writer } from '../../writers/types';
-import { Logger } from '../../logs/types';
+import type { BaseColors, ConfigurationResponse } from '../types';
+import type { Writer } from '../../writers/types';
+import type { Logger } from '../../logs/types';
 
 describe('AppConfigurator', () => {
     let writerMock: Writer;

@@ -1,6 +1,7 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import https from 'node:https';
-import { ConfigurationResponse, BaseColors, Languages } from './types';
+import type { ConfigurationResponse, BaseColors, Languages } from './types';
 
 export class SystemConfiguration {
   private axiosRequestConfig: AxiosRequestConfig = {
@@ -24,7 +25,7 @@ export class SystemConfiguration {
   }
 
   private findValueInResponseByKey(category: string, key: string): string {
-    const foundEntry = this.response[category]?.find((entry) => entry.key === key);
+    const foundEntry = this.response[category]?.find(entry => entry.key === key);
     return foundEntry ? foundEntry.value : '';
   }
 

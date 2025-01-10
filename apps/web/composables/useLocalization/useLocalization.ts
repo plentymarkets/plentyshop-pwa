@@ -94,7 +94,7 @@ export const useLocalization = createSharedComposable(() => {
       }
     }
 
-    return parts.map((part) => (part.includes('?') ? part.split('?')[0] : part)).join('/');
+    return parts.map(part => (part.includes('?') ? part.split('?')[0] : part)).join('/');
   };
 
   /**

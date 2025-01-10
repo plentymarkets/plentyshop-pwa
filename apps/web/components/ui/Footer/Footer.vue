@@ -26,7 +26,7 @@
         </ul>
       </div>
     </div>
-    <hr />
+    <hr >
 
     <div class="bg-neutral-900" data-testid="section-bottom">
       <div class="justify-end px-4 py-10 md:flex md:py-6 max-w-screen-3xl mx-auto">

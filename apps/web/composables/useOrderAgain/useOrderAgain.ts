@@ -1,9 +1,9 @@
-import { type BasketItemOrderParamsProperty, DoAddItemParams, Order, orderGetters } from '@plentymarkets/shop-api';
-import {
+import type { DoAddItemParams, Order, type BasketItemOrderParamsProperty, orderGetters } from '@plentymarkets/shop-api';
+import type {
+  UseOrderAgainState,
   type AddOrderToCart,
   type OpenOrderAgainModal,
   type UseOrderAgainReturn,
-  UseOrderAgainState,
   type LoadOrderInformation,
 } from './types';
 

@@ -42,7 +42,7 @@
 
 <script lang="ts" setup>
 import { SfIconCheckCircle } from '@storefront-ui/vue';
-import { type AddressProps } from './types';
+import type { AddressProps } from './types';
 import { userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, isDefault, isSelected, showDivider } = defineProps<AddressProps>();

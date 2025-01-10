@@ -1,15 +1,15 @@
-import {
-  type Cart,
+import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
   DeleteCartItemParams,
   CartItem,
   CartItemError,
   ApiError,
+  type Cart
 } from '@plentymarkets/shop-api';
-import {
-  type UseCartReturn,
+import type {
   UseCartState,
+  type UseCartReturn,
   type GetCart,
   type AddToCart,
   type AddItemsToCart,
@@ -28,7 +28,7 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
     }
 
     const oldCartItemData =
-      oldCart?.items?.find((oldCartItem) => oldCartItem.id === nextCartItem.id) ?? ({} as CartItem);
+      oldCart?.items?.find(oldCartItem => oldCartItem.id === nextCartItem.id) ?? ({} as CartItem);
 
     if (!oldCartItemData?.variation) {
       return;
@@ -127,7 +127,7 @@ export const useCart: UseCartReturn = () => {
 
       state.value.data = data ? migrateVariationData(state.value.data, data) : state.value.data;
 
-      const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
+      const item = state?.value?.data?.items?.find(item => item.variationId === params.productId);
 
       if (item) {
         state.value.lastUpdatedCartItem = item;

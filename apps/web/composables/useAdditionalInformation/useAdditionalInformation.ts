@@ -1,9 +1,9 @@
-import { AdditionalInformationParams } from '@plentymarkets/shop-api';
-import {
+import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
+import type {
+  UseAdditionalInformationState,
   type DoAdditionalInformation,
   type DoAdditionalInformationReturn,
-  type SetShippingPrivacyAgreement,
-  UseAdditionalInformationState,
+  type SetShippingPrivacyAgreement
 } from './types';
 
 /**

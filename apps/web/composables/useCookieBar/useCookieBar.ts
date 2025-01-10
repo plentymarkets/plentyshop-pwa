@@ -6,11 +6,11 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
 function convertToSaveableJson(jsonList: any): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   return jsonList.map((group: any) => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+     
     [group.name]: group.cookies.map((cookie: any) => ({
       [cookie.name]: cookie.accepted,
     })),
@@ -88,8 +88,8 @@ export const useCookieBar = (
                       mode: 'no-cors',
                       credentials: 'same-origin',
                     })
-                      .then((response) => response.text())
-                      .then((text) => (0, eval)(text))
+                      .then(response => response.text())
+                      .then(text => (0, eval)(text))
                       .catch(() => {
                         return;
                       });
@@ -153,7 +153,7 @@ export const useCookieBar = (
   }
   // Mark default checkbox group as true
   cookieJson.value[defaultCheckboxIndex].accepted = true;
-  cookieJson.value[defaultCheckboxIndex].cookies = cookieJson.value[0].cookies.map((cookie) => ({
+  cookieJson.value[defaultCheckboxIndex].cookies = cookieJson.value[0].cookies.map(cookie => ({
     ...cookie,
     accepted: true,
   }));

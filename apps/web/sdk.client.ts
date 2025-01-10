@@ -1,4 +1,5 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { updateVsfLocale } from './utils/sdkClientHelper';
 import { ApiError } from '@plentymarkets/shop-api';
 

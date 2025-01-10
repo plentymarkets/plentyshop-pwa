@@ -1,10 +1,10 @@
 import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse, Languages } from './types';
+import type { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse, Languages } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
-import { Writer } from '../writers/types';
-import { Logger } from '../logs/types';
+import type { Writer } from '../writers/types';
+import type { Logger } from '../logs/types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

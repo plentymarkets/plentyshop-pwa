@@ -30,11 +30,11 @@
         <div class="border border-black p-4 mb-4 rounded-md">
           <div class="py-2 pl-2 flex justify-between min-w-20">
             <div>Primary:</div>
-            <div><input type="color" v-model="primaryColorReference" /></div>
+            <div><input v-model="primaryColorReference" type="color" ></div>
           </div>
           <div class="py-2 pl-2 flex justify-between">
             <div>Secondary:</div>
-            <div><input type="color" v-model="secondaryColorReference" /></div>
+            <div><input v-model="secondaryColorReference" type="color" ></div>
           </div>
         </div>
         <h3>General</h3>
@@ -58,7 +58,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconClose, SfIconTune, SfDrawerPlacement, useTrapFocus, SfCheckbox } from '@storefront-ui/vue';
+import type { SfDrawerPlacement} from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, SfIconTune, useTrapFocus, SfCheckbox } from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();

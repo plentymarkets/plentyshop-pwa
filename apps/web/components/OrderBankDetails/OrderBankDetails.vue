@@ -3,11 +3,11 @@
     <h2 class="font-medium text-base">{{ t('account.ordersAndReturns.orderDetails.bankDetails.heading') }}</h2>
     <p>
       {{ t('account.ordersAndReturns.orderDetails.bankDetails.accountOwner') }}:
-      {{ orderGetters.getOrderPaymentBankDetailsHolder(bankDetails) }}<br />
+      {{ orderGetters.getOrderPaymentBankDetailsHolder(bankDetails) }}<br >
       {{ t('account.ordersAndReturns.orderDetails.bankDetails.bank') }}:
-      {{ orderGetters.getOrderPaymentBankDetailsBankName(bankDetails) }}<br />
+      {{ orderGetters.getOrderPaymentBankDetailsBankName(bankDetails) }}<br >
       {{ t('account.ordersAndReturns.orderDetails.bankDetails.iban') }}:
-      {{ orderGetters.getOrderPaymentBankDetailsIban(bankDetails) }}<br />
+      {{ orderGetters.getOrderPaymentBankDetailsIban(bankDetails) }}<br >
       {{ t('account.ordersAndReturns.orderDetails.bankDetails.bic') }}:
       {{ orderGetters.getOrderPaymentBankDetailsSwift(bankDetails) }}
     </p>
@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { OrderBankDetailsProps } from '~/components/OrderBankDetails/types';
+import type { OrderBankDetailsProps } from '~/components/OrderBankDetails/types';
 import { orderGetters } from '@plentymarkets/shop-api';
 
 const { t } = useI18n();

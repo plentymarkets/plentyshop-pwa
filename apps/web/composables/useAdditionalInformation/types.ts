@@ -1,4 +1,4 @@
-import { AdditionalInformationParams } from '@plentymarkets/shop-api';
+import type { AdditionalInformationParams } from '@plentymarkets/shop-api';
 
 export interface UseAdditionalInformationState {
   data: null;

@@ -7,13 +7,13 @@
 </template>
 
 <script lang="ts">
-export default {
-  inheritAttrs: false,
-};
 </script>
 <script setup lang="ts">
 import { SfModal } from '@storefront-ui/vue';
 import type { ModalProps } from '~/components/ui/Modal/types';
+export default {
+  inheritAttrs: false,
+};
 
 const props = defineProps<ModalProps>();
 </script>

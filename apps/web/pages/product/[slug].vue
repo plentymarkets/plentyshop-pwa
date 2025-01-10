@@ -22,7 +22,7 @@
           />
 
           <div class="p-4 flex">
-            <p @click="openDrawer()" class="font-bold leading-6 cursor-pointer">
+            <p class="font-bold leading-6 cursor-pointer" @click="openDrawer()">
               <span>{{ t('legalDetails') }}</span>
               <SfIconChevronRight />
             </p>
@@ -33,7 +33,7 @@
         <NuxtLazyHydrate when-visible>
           <ProductRecommendedProducts
             :category-id="productGetters.getCategoryIds(product)[0]"
-          ></ProductRecommendedProducts>
+          />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -45,7 +45,8 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import { Product, productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Product} from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: false,

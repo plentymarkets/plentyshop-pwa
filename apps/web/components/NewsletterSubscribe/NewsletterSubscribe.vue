@@ -7,19 +7,19 @@
       {{ t('newsletter.info') }}
     </p>
 
-    <form @submit.prevent="onSubmit" class="mx-auto max-w-[550px] pt-2" novalidate>
+    <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
             <SfInput
-              v-model="firstName"
               v-bind="firstNameAttributes"
+              id="newsletter-first-name"
+              v-model="firstName"
               :invalid="Boolean(errors['firstName'])"
               :placeholder="`${t('newsletter.firstName')} **`"
               :wrapper-class="wrapperClass"
               type="text"
-              id="newsletter-first-name"
               name="firstName"
             />
           </label>
@@ -32,13 +32,13 @@
           <label for="newsletter-last-name">
             <UiFormLabel class="text-start">{{ t('newsletter.lastName') }}</UiFormLabel>
             <SfInput
-              v-model="lastName"
               v-bind="lastNameAttributes"
+              id="newsletter-last-name"
+              v-model="lastName"
               :invalid="Boolean(errors['lastName'])"
               :placeholder="`${t('newsletter.lastName')} **`"
               :wrapper-class="wrapperClass"
               type="text"
-              id="newsletter-last-name"
               name="lastName"
             />
           </label>
@@ -52,13 +52,13 @@
         <label for="newsletter-email">
           <UiFormLabel class="text-start">{{ t('newsletter.email') }}</UiFormLabel>
           <SfInput
-            v-model="email"
             v-bind="emailAttributes"
+            id="newsletter-email"
+            v-model="email"
             :invalid="Boolean(errors['email'])"
             :placeholder="`${t('newsletter.email')} **`"
             :wrapper-class="wrapperClass"
             type="email"
-            id="newsletter-email"
             name="email"
             autocomplete="email"
           />
@@ -71,10 +71,10 @@
       <div class="text-base text-neutral-900">
         <div class="flex justify-center items-center">
           <SfCheckbox
-            v-model="privacyPolicy"
             v-bind="privacyPolicyAttributes"
-            :invalid="Boolean(errors['privacyPolicy'])"
             id="terms-checkbox"
+            v-model="privacyPolicy"
+            :invalid="Boolean(errors['privacyPolicy'])"
             class="inline-block mr-2"
             data-testid="checkout-terms-checkbox"
           />
@@ -106,9 +106,9 @@
 
         <NuxtTurnstile
           v-if="turnstileSiteKey"
-          v-model="turnstile"
           v-bind="turnstileAttributes"
           ref="turnstileElement"
+          v-model="turnstile"
           :options="{ theme: 'light' }"
           class="mt-4"
         />

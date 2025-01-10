@@ -25,7 +25,7 @@
     <div v-else class="col-span-3" data-testid="account-orders-content">
       <div class="relative col-span-3" :class="{ 'pointer-events-none opacity-50': loading }">
         <template v-if="viewport.isLessThan('md')">
-          <ul class="my-4 last-of-type:mb-0" v-for="(order, index) in data.data.entries" :key="index">
+          <ul v-for="(order, index) in data.data.entries" :key="index" class="my-4 last-of-type:mb-0">
             <li>
               <p class="block typography-text-sm font-medium">{{ t('account.ordersAndReturns.orderId') }}</p>
               <span class="block typography-text-sm mb-2">{{ orderGetters.getId(order) }}</span>
@@ -62,7 +62,7 @@
                   class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
                 >
                   <li>
-                    <SfListItem @click="openOrderAgainModal(order)" tag="button" class="text-left">
+                    <SfListItem tag="button" class="text-left" @click="openOrderAgainModal(order)">
                       {{ t('account.ordersAndReturns.orderAgain.heading') }}
                     </SfListItem>
                   </li>
@@ -123,7 +123,7 @@
                     class="rounded bg-white relative shadow-md border border-neutral-100 text-neutral-900 min-w-[152px] py-2"
                   >
                     <li>
-                      <SfListItem @click="openOrderAgainModal(order)" tag="button" class="text-left">
+                      <SfListItem tag="button" class="text-left" @click="openOrderAgainModal(order)">
                         {{ t('account.ordersAndReturns.orderAgain.heading') }}
                       </SfListItem>
                     </li>

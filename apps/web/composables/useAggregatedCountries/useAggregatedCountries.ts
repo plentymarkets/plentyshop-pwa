@@ -1,5 +1,5 @@
-import { type AggregatedCountries } from '@plentymarkets/shop-api';
-import { type UseAggregatedCountriesReturn, UseAggregatedCountriesState, type FetchAggregatedCountries } from './types';
+import type { AggregatedCountries } from '@plentymarkets/shop-api';
+import type { UseAggregatedCountriesState, type UseAggregatedCountriesReturn, type FetchAggregatedCountries } from './types';
 
 /**
  * @description Composable for getting `AggregatedCountries`:
@@ -50,7 +50,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     if (!useGeoRegulatedCountries) return state.value.default;
 
     const uniqueCountries = new Map(
-      [...state.value.default, ...state.value.geoRegulated].map((country) => [country.id, country]),
+      [...state.value.default, ...state.value.geoRegulated].map(country => [country.id, country]),
     );
 
     return [...uniqueCountries.values()].sort((firstCountry, secondCountry) =>
@@ -62,7 +62,7 @@ export const useAggregatedCountries: UseAggregatedCountriesReturn = () => {
     const id = Number.parseInt(countryId);
 
     if (Number.isNaN(id)) return '';
-    return billingCountries.value.find((country) => country.id === id)?.currLangName ?? '';
+    return billingCountries.value.find(country => country.id === id)?.currLangName ?? '';
   };
 
   return {

@@ -1,12 +1,12 @@
 <template>
-  <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalNamespace , type FUNDING_SOURCE, type OnApproveData, type OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());

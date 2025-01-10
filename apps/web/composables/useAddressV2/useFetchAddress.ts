@@ -1,5 +1,4 @@
-import { AddressType } from '@plentymarkets/shop-api';
-import { ApiError } from '@plentymarkets/shop-api';
+import type { AddressType , ApiError } from '@plentymarkets/shop-api';
 
 export const useFetchAddress = (type: AddressType) => {
   const state = useState('useFetchAddress' + type, () => ({
@@ -30,7 +29,7 @@ export const useFetchAddress = (type: AddressType) => {
     setAddressStore(data.value?.data || []);
 
     if (data.value?.data?.length) {
-      usePrimaryAddress(type).primaryAddressId.value = data.value?.data.find((item) => item.primary === true)?.id || -1;
+      usePrimaryAddress(type).primaryAddressId.value = data.value?.data.find(item => item.primary === true)?.id || -1;
     }
 
     state.value.loading = false;

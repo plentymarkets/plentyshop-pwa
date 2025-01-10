@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" data-testid="contact-information-form" novalidate>
+  <form data-testid="contact-information-form" novalidate @submit.prevent="onSubmit">
     <label>
       <UiFormLabel>{{ t('contactInfo.email') }}</UiFormLabel>
       <SfInput
@@ -14,7 +14,7 @@
     </label>
 
     <div class="mt-4 flex flex-col-reverse md:flex-row md:justify-end">
-      <UiButton @click="resetForm()" type="reset" class="md:mr-4" variant="secondary">
+      <UiButton type="reset" class="md:mr-4" variant="secondary" @click="resetForm()">
         {{ t('contactInfo.clear') }}
       </UiButton>
 

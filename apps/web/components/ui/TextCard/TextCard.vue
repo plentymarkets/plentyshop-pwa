@@ -3,7 +3,7 @@
     <div v-if="props.text?.pretitle" class="text-xl font-bold mb-2">{{ props.text.pretitle }}</div>
     <h2 v-if="props.text?.title" class="text-2xl font-semibold mb-4">{{ props.text.title }}</h2>
     <div v-if="props.text?.subtitle" class="text-lg font-semibold">{{ props.text.subtitle }}</div>
-    <div v-if="props.text?.htmlDescription" class="text-base" v-html="props.text.htmlDescription"></div>
+    <div v-if="props.text?.htmlDescription" class="text-base" v-html="props.text.htmlDescription"/>
     <UiButton
       v-if="props.button?.label && props.button?.link"
       :tag="NuxtLink"
@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { TextCardProps } from '~/components/ui/TextCard/types';
+import type { TextCardProps } from '~/components/ui/TextCard/types';
 
 const props = defineProps<TextCardProps>();
 const localePath = useLocalePath();
