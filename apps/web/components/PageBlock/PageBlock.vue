@@ -1,12 +1,15 @@
 <template>
   <div
     :class="[
-      'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
+      block.name === 'UiHeroCarousel'
+        ? 'relative mb-10 group'
+        : 'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
       {
         'outline outline-4 outline-[#538AEA]':
           isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
       },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
+      { '-z-10': !isPreview },
     ]"
     @click="tabletEdit(index)"
     data-testid="block-wrapper"
@@ -14,7 +17,7 @@
     <button
       v-if="disableActions && isPreview"
       @click.stop="addNewBlock(index, -1)"
-      class="z-[0] md:z-[0] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
+      class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="top-add-block"
     >
@@ -41,7 +44,7 @@
     <button
       v-if="disableActions && isPreview"
       @click.stop="addNewBlock(index, 1)"
-      class="z-[0] md:z-[0] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
+      class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="bottom-add-block"
     >
