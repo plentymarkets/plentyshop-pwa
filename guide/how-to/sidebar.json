@@ -66,6 +66,10 @@
             {
                 "text": "Tailwind",
                 "link": "/guide/how-to/module/tailwind.md"
+            },
+            {
+                "text": "Custom JS & CSS",
+                "link": "/guide/how-to/module/custom-js-css.md"
             }
         ]
     }
