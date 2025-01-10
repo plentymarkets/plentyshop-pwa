@@ -38,7 +38,7 @@
       </div>
       <h1
         v-if="props.bannerProps.text.title"
-        class="typography-display-3 md:typography-display-2 lg:typography-display-1 md:leading-[67.5px] font-bold my-2 lg:leading-[4rem]"
+        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
         :data-testid="'banner-title-' + props.index"
       >
         {{ props.bannerProps.text.title }}
