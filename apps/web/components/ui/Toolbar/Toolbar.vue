@@ -45,11 +45,11 @@
       </div>
     </div>
   </div>
-  <div class="bg-[#F1F3F5] py-1"/>
+  <div class="bg-[#F1F3F5] py-1" />
 </template>
 
 <script setup lang="ts">
-import { SfLoaderCircular , SfIconBase , SfIconVisibility } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconBase, SfIconVisibility } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();

@@ -1,4 +1,4 @@
-import type { RegisterParams, SessionResult, UserChangePasswordParams , ApiError } from '@plentymarkets/shop-api';
+import type { RegisterParams, SessionResult, UserChangePasswordParams, ApiError } from '@plentymarkets/shop-api';
 import type {
   UseCustomerReturn,
   UseCustomerState,

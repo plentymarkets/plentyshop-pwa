@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ApiError} from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
 import { AddressType, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';

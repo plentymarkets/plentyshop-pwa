@@ -1,5 +1,5 @@
 import type { OrderDocument } from '@plentymarkets/shop-api';
-import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn , DownloadFile, GetDocument } from './types';
+import type { UseOrderDocumentState, UseOrderDocumentMethodsReturn, DownloadFile, GetDocument } from './types';
 
 /**
  * @description Composable for managing the order documents.

@@ -40,7 +40,7 @@
             }
           "
         >
-          <li v-if="categoryTree.length === 0" class="h-10"/>
+          <li v-if="categoryTree.length === 0" class="h-10" />
 
           <li v-for="(menuNode, index) in categoryTree" v-else :key="index">
             <NuxtLink :to="localePath(generateCategoryLink(menuNode))">

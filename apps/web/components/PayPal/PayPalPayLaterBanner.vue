@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2"/>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2" />
 </template>
 
 <script setup lang="ts">

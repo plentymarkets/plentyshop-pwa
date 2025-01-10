@@ -1,8 +1,4 @@
-import type {
-  ActiveShippingCountry,
-  GeoRegulatedCountry,
-  AggregatedCountries,
-} from '@plentymarkets/shop-api';
+import type { ActiveShippingCountry, GeoRegulatedCountry, AggregatedCountries } from '@plentymarkets/shop-api';
 
 export interface UseAggregatedCountriesState {
   default: AggregatedCountries['default'];

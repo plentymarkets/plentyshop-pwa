@@ -1,5 +1,5 @@
 <template>
-  <div id="apple-pay-button"/>
+  <div id="apple-pay-button" />
 </template>
 
 <script lang="ts" setup>

@@ -10,7 +10,7 @@
           {{ $t('productDetails') }}
         </h2>
       </template>
-      <div class="no-preflight" v-html="productGetters.getDescription(product)"/>
+      <div class="no-preflight" v-html="productGetters.getDescription(product)" />
     </UiAccordionItem>
     <UiDivider v-if="productDetailsOpen && productGetters.getDescription(product)?.length" class="mb-2 mt-2" />
     <UiAccordionItem
@@ -23,7 +23,7 @@
           {{ $t('technicalData') }}
         </h2>
       </template>
-      <div class="no-preflight" v-html="productGetters.getTechnicalData(product)"/>
+      <div class="no-preflight" v-html="productGetters.getTechnicalData(product)" />
     </UiAccordionItem>
     <UiDivider v-if="technicalDataOpen && productGetters.getTechnicalData(product)?.length" class="mb-2 mt-2" />
   </div>

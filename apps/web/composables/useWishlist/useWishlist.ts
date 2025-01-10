@@ -1,4 +1,9 @@
-import type { AddWishlistItemResponse, WishlistItem , AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
+import type {
+  AddWishlistItemResponse,
+  WishlistItem,
+  AddWishlistItemParams,
+  DeleteWishlistItemParams,
+} from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
   UseWishlistReturn,
@@ -57,10 +62,10 @@ export const useWishlist: UseWishlistReturn = () => {
    * @param wishlistItemIds
    */
   const setWishlistItemIds: SetWishlistItemIds = (wishlistItemIds = []) => {
-    state.value.wishlistItemIds = wishlistItemIds.map(number => number.toString());
+    state.value.wishlistItemIds = wishlistItemIds.map((number) => number.toString());
 
     if (state.value.data.length > 0) {
-      state.value.data = state.value.data.filter(wishListItem =>
+      state.value.data = state.value.data.filter((wishListItem) =>
         state.value.wishlistItemIds.includes(wishListItem.variation.id.toString()),
       );
     }

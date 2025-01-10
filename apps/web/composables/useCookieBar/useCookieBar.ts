@@ -6,11 +6,8 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
- 
 function convertToSaveableJson(jsonList: any): string {
-   
   return jsonList.map((group: any) => ({
-     
     [group.name]: group.cookies.map((cookie: any) => ({
       [cookie.name]: cookie.accepted,
     })),
@@ -87,8 +84,8 @@ export const useCookieBar = (
                       mode: 'no-cors',
                       credentials: 'same-origin',
                     })
-                      .then(response => response.text())
-                      .then(text => (0, eval)(text))
+                      .then((response) => response.text())
+                      .then((text) => (0, eval)(text))
                       .catch(() => {
                         return;
                       });
@@ -152,7 +149,7 @@ export const useCookieBar = (
   }
   // Mark default checkbox group as true
   cookieJson.value[defaultCheckboxIndex].accepted = true;
-  cookieJson.value[defaultCheckboxIndex].cookies = cookieJson.value[0].cookies.map(cookie => ({
+  cookieJson.value[defaultCheckboxIndex].cookies = cookieJson.value[0].cookies.map((cookie) => ({
     ...cookie,
     accepted: true,
   }));

@@ -31,9 +31,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductRecommendedProducts
-            :category-id="productGetters.getCategoryIds(product)[0]"
-          />
+          <ProductRecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -45,7 +43,7 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import type { Product} from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({

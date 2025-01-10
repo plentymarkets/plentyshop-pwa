@@ -1,5 +1,5 @@
 <template>
-  <div id="google-pay-button"/>
+  <div id="google-pay-button" />
 
   <div
     v-if="paymentLoading"

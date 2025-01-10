@@ -12,7 +12,7 @@
           :checked="isPaymentMethodChecked(paymentMethod)"
           :disabled="isPaymentMethodDisabled(paymentMethod)"
           @click.prevent="handlePaymentMethodChange(paymentMethod)"
-        >
+        />
         <span
           :class="{
             'peer-focus:border-primary-50 peer-focus:bg-primary-50': !paymentProviderGetters.isPaymentMethodExcluded(

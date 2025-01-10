@@ -1,4 +1,4 @@
-import type { Cart, SessionResult , ApiError } from '@plentymarkets/shop-api';
+import type { Cart, SessionResult, ApiError } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
 

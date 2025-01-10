@@ -22,7 +22,7 @@
       <SfIconArrowDownward />
     </button> -->
 
-    <div class="w-px h-4 bg-gray-300"/>
+    <div class="w-px h-4 bg-gray-300" />
 
     <button class="text-black hover:bg-gray-100 p-1 rounded" data-testid="delete-block-button" @click="triggerDelete">
       <SfIconDelete />

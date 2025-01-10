@@ -109,7 +109,7 @@
 <script setup lang="ts">
 import { SfIconClose, SfLink } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import type { Product} from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { cartGetters, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';

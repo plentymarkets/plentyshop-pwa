@@ -1,5 +1,5 @@
-import type { UseCanonicalReturn , type StaticPageMeta, type CategoriesPageMeta, UseCanonicalState } from './types';
-import type { Facet , FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { UseCanonicalReturn, type StaticPageMeta, type CategoriesPageMeta, UseCanonicalState } from './types';
+import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { LocaleObject } from '@nuxtjs/i18n';
 
 /**

@@ -1,4 +1,10 @@
-import type { useStructuredDataReturn , SetLogoMeta, SetProductMetaData, SetProductRobotsMetaData, UseStructuredDataState } from './types';
+import type {
+  useStructuredDataReturn,
+  SetLogoMeta,
+  SetProductMetaData,
+  SetProductRobotsMetaData,
+  UseStructuredDataState,
+} from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
 import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';

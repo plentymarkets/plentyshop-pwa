@@ -5,7 +5,8 @@ import type {
   UseCartShippingMethodsReturn,
   GetShippingMethods,
   SaveShippingMethod,
- SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
+  SetSelectedMethod,
+} from '~/composables/useCartShippingMethods/types';
 
 /**
  * @description Composable for managing shipping methods.
@@ -23,7 +24,7 @@ export const useCartShippingMethods: UseCartShippingMethodsReturn = () => {
 
   const setSelectedMethod: SetSelectedMethod = (shippingMethodId: number) => {
     state.value.selectedMethod = state.value.data.list?.find(
-      method => method.parcelServicePresetId === Number(shippingMethodId),
+      (method) => method.parcelServicePresetId === Number(shippingMethodId),
     );
   };
 

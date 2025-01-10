@@ -47,7 +47,7 @@
         :aria-label="$t('quantitySelector')"
         :disabled="disabled"
         @input="handleOnChange"
-      >
+      />
       <UiButton
         variant="tertiary"
         :disabled="disabled || count >= maxValue"

@@ -25,7 +25,7 @@ export class SystemConfiguration {
   }
 
   private findValueInResponseByKey(category: string, key: string): string {
-    const foundEntry = this.response[category]?.find(entry => entry.key === key);
+    const foundEntry = this.response[category]?.find((entry) => entry.key === key);
     return foundEntry ? foundEntry.value : '';
   }
 

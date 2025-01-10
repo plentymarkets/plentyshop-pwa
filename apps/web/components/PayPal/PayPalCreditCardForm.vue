@@ -11,7 +11,7 @@
     <div class="row">
       <div class="grid-cols-12">
         <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCardNumber') }} *</UiFormLabel>
-        <div id="card-number"/>
+        <div id="card-number" />
       </div>
     </div>
 
@@ -19,13 +19,13 @@
       <div>
         <div class="grid-cols-12">
           <UiFormLabel class="pl-2">{{ t('paypal.unbrandedExpirationDate') }} *</UiFormLabel>
-          <div id="expiration-date"/>
+          <div id="expiration-date" />
         </div>
       </div>
       <div>
         <div class="grid-cols-12">
           <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCvv') }} *</UiFormLabel>
-          <div id="credit-card-cvv"/>
+          <div id="credit-card-cvv" />
         </div>
       </div>
     </div>

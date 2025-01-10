@@ -21,7 +21,7 @@
         :height="imgHeight"
         class="max-h-[100px] max-w-[200px]"
         preload
-      >
+      />
     </template>
   </picture>
 </template>

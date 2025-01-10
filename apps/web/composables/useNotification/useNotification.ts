@@ -36,7 +36,7 @@ export const useNotification: UseNotificationReturn = () => {
     const id = Symbol();
 
     const dismiss = () => {
-      const index = state.value.data.findIndex(notification => notification.id === id);
+      const index = state.value.data.findIndex((notification) => notification.id === id);
 
       if (index !== -1) state.value.data.splice(index, 1);
     };

@@ -25,7 +25,7 @@
       @drop="handleDrop"
       @dragover="handleDragOver"
     >
-      <input ref="uploadForm" type="file" hidden @change="handleFileUpload" >
+      <input ref="uploadForm" type="file" hidden @change="handleFileUpload" />
       <div class="w-full">
         <div class="flex items-center">
           <UiButton

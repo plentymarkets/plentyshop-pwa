@@ -90,7 +90,7 @@
                 @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
               />
             </div>
-            <br >
+            <br />
           </div>
           <p class="text-sm">{{ reviewGetters.getReviewMessage(reply) }}</p>
         </div>

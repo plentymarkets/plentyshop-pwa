@@ -3,7 +3,7 @@ import type {
   UseAdditionalInformationState,
   type DoAdditionalInformation,
   type DoAdditionalInformationReturn,
-  type SetShippingPrivacyAgreement
+  type SetShippingPrivacyAgreement,
 } from './types';
 
 /**

@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SfDrawerPlacement} from '@storefront-ui/vue';
+import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer, SfIconClose, useTrapFocus } from '@storefront-ui/vue';
 import type { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
 import ManufacturerResponsibleInfo from '~/components/ManufacturerResponsibleInfo/ManufacturerResponsibleInfo.vue';

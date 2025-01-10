@@ -17,7 +17,8 @@
         @scroll="syncScroll"
       />
       <SfButton id="close" size="sm" class="absolute top-2 right-2" @click="closeEditor"
-        ><SfIconCancel class="cursor-pointer"/></SfButton>
+        ><SfIconCancel class="cursor-pointer"
+      /></SfButton>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
   </div>

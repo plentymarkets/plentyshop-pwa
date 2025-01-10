@@ -56,11 +56,11 @@ export const useCheckout = (cacheKey = '') => {
     scrollToHTMLObject(targetId);
 
     targetElement?.classList.add(...classList);
-    [firstDivider, secondDivider].forEach(divider => divider?.classList.add(opacityClass));
+    [firstDivider, secondDivider].forEach((divider) => divider?.classList.add(opacityClass));
 
     setTimeout(() => {
       targetElement?.classList.remove(...classList);
-      [firstDivider, secondDivider].forEach(divider => divider?.classList.remove(opacityClass));
+      [firstDivider, secondDivider].forEach((divider) => divider?.classList.remove(opacityClass));
     }, 1000);
 
     return false;

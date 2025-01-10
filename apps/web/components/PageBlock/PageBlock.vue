@@ -21,7 +21,7 @@
       data-testid="top-add-block"
       @click.stop="addNewBlock(index, -1)"
     >
-      <SfIconAdd class="cursor-pointer"/>
+      <SfIconAdd class="cursor-pointer" />
     </button>
     <UiBlockActions
       v-if="disableActions && blockHasData && blockHasData(block) && isPreview"
@@ -48,7 +48,7 @@
       data-testid="bottom-add-block"
       @click.stop="addNewBlock(index, 1)"
     >
-      <SfIconAdd class="cursor-pointer"/>
+      <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
 </template>

@@ -34,6 +34,7 @@ export default withNuxt(
      * unicorn/prefer-add-event-listener
      */
     rules: {
+      'arrow-parens': 'off',
       'no-console': 'off',
       'no-constant-binary-expression': 'off',
       'no-useless-escape': 'off',
@@ -50,6 +51,7 @@ export default withNuxt(
       'vue/no-export-in-script-setup': 'off',
       'vue/no-multiple-template-root': 'off',
       'vue/no-v-html': 'off',
+      'vue/html-self-closing': 'off',
     }
   },
 );

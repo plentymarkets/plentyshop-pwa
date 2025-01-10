@@ -100,7 +100,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
    */
   const getFiltersDataFromUrl = (): GetFacetsFromURLResponse => {
     return Object.keys(route.query)
-      .filter(f => nonFilters.has(f))
+      .filter((f) => nonFilters.has(f))
       .reduce(reduceFilters(route.query), {});
   };
 
@@ -249,7 +249,7 @@ export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCateg
       const updatedFacets = facets.filter((facet) => {
         return facetsFromResponse.some((facetItem) => {
           if (facetItem.values) {
-            return facetItem.values.some(facetValue => facetValue.id.toString() === facet);
+            return facetItem.values.some((facetValue) => facetValue.id.toString() === facet);
           }
           return false;
         });
