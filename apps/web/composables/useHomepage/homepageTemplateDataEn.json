@@ -75,18 +75,23 @@
           "subtitle": "Innovative technology meets modern fashion",
           "pretitle": "Welcome to your new favorite shop",
           "textAlignment": "right"
-
         },
         "button": {
-          "label":"Get shopping",
-          "link":"",
+          "label": "Get shopping",
+          "link": "",
           "variant": "primary"
         }
       }
     },
     {
       "name": "ProductRecommendedProducts",
-      "options": { "headline": "Explore our fashion collection", "categoryId": "49" }
+      "options": {
+        "preTitle": "More than just technology",
+        "headline": "Explore our fashion collection",
+        "subTitle": "Sportive fashion and accessoires for everybody.",
+        "htmlDescription": "<a href='https://plentyshop.plentymarkets.com/wear' target='_self'>full collection</a>.",
+        "categoryId": "49"
+      }
     },
     {
       "name": "NewsletterSubscribe",

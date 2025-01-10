@@ -86,7 +86,13 @@
     },
     {
       "name": "ProductRecommendedProducts",
-      "options": { "headline": "Entdecken Sie unsere Modekollektion", "categoryId": "49" }
+      "options": {
+        "preTitle": "Mehr als nur Technik",
+        "headline": "Entdecken Sie unsere Modekollektion",
+        "subTitle": "Sportive Mode und Accessories für alle.",
+        "htmlDescription": "<a href='https://plentyshop.plentymarkets.com/wear' target='_self'>kompletten Kollektion</a>.",
+        "categoryId": "49"
+      }
     },
     {
       "name": "NewsletterSubscribe",
