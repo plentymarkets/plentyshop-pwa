@@ -16,7 +16,7 @@
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
-        <UiButton square variant="tertiary" class="text-white" @click="open = false">
+        <UiButton square variant="tertiary"  data-testid="product-legal-details-close" class="text-white" @click="open = false">
           <SfIconClose />
         </UiButton>
       </header>
@@ -43,9 +43,6 @@
         {{ tab.label }}
         </UiButton>
       </div>
-      <!-- ManufacturerResponsibleInfo
-           ManufacturerResponsibleInfo -->
-      <!-- ManufacturerInformation -->
       <div
         v-for="(tab, index) in tabs"
         :key="tab.label"
