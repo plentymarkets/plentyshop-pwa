@@ -5,8 +5,8 @@ import type {
   UseCartShippingMethodsReturn,
   GetShippingMethods,
   SaveShippingMethod,
+  SetSelectedMethod,
 } from '~/composables/useCartShippingMethods/types';
-import type { SetSelectedMethod } from '~/composables/useCartShippingMethods/types';
 
 /**
  * @description Composable for managing shipping methods.

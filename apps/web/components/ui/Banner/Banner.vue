@@ -54,10 +54,10 @@
 
       <div
         v-if="props.bannerProps.text.htmlDescription"
-        v-html="props.bannerProps.text.htmlDescription"
         class="typography-text-sm md:typography-text-lg font-normal"
         :data-testid="'banner-description-' + props.index"
-      ></div>
+        v-html="props.bannerProps.text.htmlDescription"
+      />
 
       <UiButton
         v-if="props.bannerProps.button && props.bannerProps.button.label && props.bannerProps.button.link"
@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { BannerProps } from './types';
+import type { BannerProps } from './types';
 
 const NuxtLink = resolveComponent('NuxtLink');
 

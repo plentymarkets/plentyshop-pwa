@@ -17,7 +17,7 @@
               })
             }}
           </span>
-          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
             <template #prefix>
               <SfIconTune />
             </template>
@@ -30,9 +30,9 @@
           data-testid="category-grid"
         >
           <NuxtLazyHydrate
-            when-visible
             v-for="(product, index) in products"
             :key="productGetters.getVariationId(product)"
+            when-visible
           >
             <UiProductCard
               :product="product"
@@ -62,7 +62,7 @@
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />
-        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+        <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
           <span>{{ $t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
           <span v-else>{{ $t('itemInclVAT') }}</span>
@@ -94,7 +94,7 @@
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
 import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
-import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
 import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();

@@ -2,7 +2,7 @@
   <div data-testid="contact-information" class="md:px-4 py-6">
     <div class="flex justify-between items-center">
       <h2 class="text-neutral-900 text-lg font-bold">{{ $t('contactInfo.heading') }}</h2>
-      <UiButton v-if="!disabled && cart.customerEmail && !isAuthorized" @click="open" variant="secondary">
+      <UiButton v-if="!disabled && cart.customerEmail && !isAuthorized" variant="secondary" @click="open">
         <SfIconBase v-if="isMobile" viewBox="0 0 34 40" class="w-6 h-6 pt-[3px]">
           <path :d="penPath" />
         </SfIconBase>
@@ -43,14 +43,14 @@
 
 <script lang="ts" setup>
 import { SfIconBase, SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { type ContactInformationProps } from './types';
+import type { ContactInformationProps } from './types';
+import { penPath } from '~/assets/icons/paths/pen';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
 const viewport = useViewport();
 const { data: sessionData, loginAsGuest, getSession, isAuthorized } = useCustomer();
 const { isOpen, open, close } = useDisclosure();
-import { penPath } from '~/assets/icons/paths/pen';
 const cart = ref({ customerEmail: sessionData.value?.user?.email ?? sessionData.value?.user?.guestMail ?? '' });
 const isMobile = computed(() => viewport.isLessThan('md'));
 

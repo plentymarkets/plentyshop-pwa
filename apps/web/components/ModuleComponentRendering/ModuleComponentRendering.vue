@@ -1,9 +1,9 @@
 <template>
-  <component v-for="(component, index) in components" :is="component" :key="index" />
+  <component :is="component" v-for="(component, index) in components" :key="index" />
 </template>
 
 <script setup lang="ts">
-import { ModuleComponentRenderingProps } from './types';
+import type { ModuleComponentRenderingProps } from './types';
 
 const { area } = defineProps<ModuleComponentRenderingProps>();
 const { components } = useModuleRendering(area);

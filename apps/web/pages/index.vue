@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)"></EmptyBlock>
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)" />
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"

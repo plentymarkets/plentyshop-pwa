@@ -80,11 +80,11 @@
       </UiButton>
     </header>
     <Register
-      @registered="closeAuthentication"
       :order="order"
       :email-address="orderGetters.getOrderEmail(order)"
       :is-modal="true"
       :changeable-view="false"
+      @registered="closeAuthentication"
     />
   </UiModal>
 </template>
@@ -92,7 +92,7 @@
 <script setup lang="ts">
 import { orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure } from '@storefront-ui/vue';
-import { type ConfirmationPageContentProps } from './types';
+import type { ConfirmationPageContentProps } from './types';
 import { paths } from '~/utils/paths';
 
 const NuxtLink = resolveComponent('NuxtLink');
