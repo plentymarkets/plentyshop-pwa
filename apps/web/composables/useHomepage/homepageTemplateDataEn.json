@@ -89,7 +89,7 @@
         "preTitle": "More than just technology",
         "headline": "Explore our fashion collection",
         "subTitle": "Sportive fashion and accessoires for everybody.",
-        "htmlDescription": "<a href='https://plentyshop.plentymarkets.com/wear' target='_self'>full collection</a>.",
+        "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>",
         "categoryId": "49"
       }
     },

@@ -7,7 +7,7 @@
   >
     {{ headline }}
   </h2>
-  <div class="text-2xl" v-if="subTitle">{{ subTitle }}</div>
+  <div class="text-2xl pb-1" v-if="subTitle">{{ subTitle }}</div>
   <div v-if="htmlDescription" v-html="htmlDescription"></div>
   <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
 </template>
