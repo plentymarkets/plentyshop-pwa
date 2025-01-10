@@ -150,7 +150,6 @@ import { paths } from '~/utils/paths';
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const { showNetPrices } = useCustomer();
-
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -160,7 +159,7 @@ const {
   invalidFields: invalidAttributeFields,
   resetInvalidFields: resetAttributeFields,
 } = useValidatorAggregator('attributes');
-const { send } = useNotification();
+const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
@@ -170,8 +169,14 @@ const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 const localePath = useLocalePath();
 
-resetInvalidFields();
-resetAttributeFields();
+onNuxtReady(() => {
+  resetInvalidFields();
+  resetAttributeFields();
+});
+
+onBeforeRouteLeave(() => {
+  if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
+});
 
 const priceWithProperties = computed(
   () =>
@@ -186,24 +191,28 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBasePrice(product),
 );
 
+const handleValidationErrors = (): boolean => {
+  send({
+    message: [
+      t('errorMessages.missingOrWrongProperties'),
+      '',
+      ...invalidAttributeFields.value.map((field) => field.name),
+      ...invalidFields.value.map((field) => field.name),
+      '',
+      t('errorMessages.pleaseFillOutAllFields'),
+    ],
+    type: 'negative',
+  });
+
+  return false;
+};
+
 const handleAddToCart = async (quickCheckout = true) => {
   await validateAllFieldsAttributes();
   await validateAllFields();
+
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
-    const invalidFieldsNames = invalidFields.value.map((field) => field.name);
-    const invalidAttributeFieldsNames = invalidAttributeFields.value.map((field) => field.name);
-    send({
-      message: [
-        t('errorMessages.missingOrWrongProperties'),
-        '',
-        ...invalidAttributeFieldsNames,
-        ...invalidFieldsNames,
-        '',
-        t('errorMessages.pleaseFillOutAllFields'),
-      ],
-      type: 'negative',
-    });
-    return false;
+    return handleValidationErrors();
   }
 
   if (!getCombination()) {
@@ -211,21 +220,19 @@ const handleAddToCart = async (quickCheckout = true) => {
     return false;
   }
 
-  const params = {
+  const addedToCart = await addToCart({
     productId: Number(productGetters.getId(product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
-  };
+  });
 
-  const added = await addToCart(params);
-  if (added) {
-    if (quickCheckout) {
-      openQuickCheckout(product, quantitySelectorValue.value);
-    } else {
-      send({ message: t('addedToCart'), type: 'positive' });
-    }
+  if (addedToCart) {
+    quickCheckout === true
+      ? openQuickCheckout(product, quantitySelectorValue.value)
+      : send({ message: t('addedToCart'), type: 'positive' });
   }
-  return added;
+
+  return addedToCart;
 };
 
 const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {
