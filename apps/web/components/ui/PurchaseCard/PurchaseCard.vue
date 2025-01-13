@@ -169,7 +169,7 @@ const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 const localePath = useLocalePath();
 
-onNuxtReady(() => {
+onMounted(() => {
   resetInvalidFields();
   resetAttributeFields();
 });
