@@ -116,30 +116,14 @@ export class EditorObject extends PageObject {
       .should('be.visible')
       .then(($el) => {
         if ($el.prop('isContentEditable')) {
-          cy.wrap($el).invoke('html', content);  // For content-editable elements
+          cy.wrap($el).invoke('text', '');
         } else {
-          cy.wrap($el).invoke('val', content);  // For textarea/input elements
+          cy.wrap($el).clear();
         }
       })
-      .should(($el) => {
-        const actualValue = $el.prop('isContentEditable') ? $el.text() : $el.val();
-        expect(actualValue).to.eq(content);
-      });
+      .type(content, {delay: 0})
+      .should('have.value', content);
   }
-
-  // replaceEditorContent(content: string) {
-  //   this.editorTextarea
-  //     .should('be.visible')
-  //     .then(($el) => {
-  //       if ($el.prop('isContentEditable')) {
-  //         cy.wrap($el).invoke('text', '');
-  //       } else {
-  //         cy.wrap($el).clear();
-  //       }
-  //     })
-  //     .type(content, {delay: 0})
-  //     .should('have.value', content);
-  // }
 
   checkEditorChanges() {
     this.exitEditorButton.get('#close').click({ force: true });

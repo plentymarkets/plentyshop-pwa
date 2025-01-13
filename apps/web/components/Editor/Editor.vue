@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { SfIconCancel } from '@storefront-ui/vue';
+import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<{
   block: Block | null;
@@ -43,10 +44,13 @@ const closeEditor = () => {
   isEditing.value = false;
 };
 
-watch(
+watchDebounced(
   () => jsonText.value,
   () => {
-    emit('update', props.index, JSON.parse(jsonText.value));
+    if (jsonText.value !== '') {
+      emit('update', props.index, JSON.parse(jsonText.value));
+    }
   },
+  { debounce: 100 },
 );
 </script>
