@@ -9,6 +9,7 @@
 - Added delivery days to checkout shipping providers.
 - Added robots for category page.
 - Subtitle, pretitle and title options where added to the Recommened Products component
+- Added canonical for item page.
 
 ### 🩹 Fixed
 
