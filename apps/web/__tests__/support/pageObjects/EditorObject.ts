@@ -1,16 +1,20 @@
 import { PageObject } from "./PageObject";
 
 export class EditorObject extends PageObject {
-  get tagline() {
-    return cy.getByTestId('tagline');
+  get pretitle() {
+    return cy.getByTestId('banner-pretitle-0');
   }
 
-  get headline() {
-    return cy.getByTestId('headline');
+  get title() {
+    return cy.getByTestId('banner-title-0');
+  }
+
+  get subtitle() {
+    return cy.getByTestId('banner-subtitle-0');
   }
 
   get description() {
-    return cy.getByTestId('description');
+    return cy.getByTestId('banner-description-0');
   }
 
   get editorToolbar() {
@@ -110,7 +114,7 @@ export class EditorObject extends PageObject {
   replaceEditorContent(content: string) {
     this.editorTextarea
       .should('be.visible')
-      .then($el => {
+      .then(($el) => {
         if ($el.prop('isContentEditable')) {
           cy.wrap($el).invoke('text', '');
         } else {
@@ -123,8 +127,9 @@ export class EditorObject extends PageObject {
 
   checkEditorChanges() {
     this.exitEditorButton.get('#close').click({ force: true });
-    this.tagline.should('have.text', 'New tagline from cypress');
-    this.headline.should('have.text', 'New heading from cypress');
+    this.pretitle.should('have.text', 'New pretitle from cypress');
+    this.title.should('have.text', 'New title from cypress');
+    this.subtitle.should('not.exist');
     this.description.should('have.text', 'Description from cypress.');
   }
 
@@ -151,7 +156,7 @@ export class EditorObject extends PageObject {
   }
 
   deleteBlock() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.blockWrapper.first().should('exist');
       this.deleteBlockButton.eq(1).click();
@@ -173,11 +178,11 @@ export class EditorObject extends PageObject {
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
     cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-    this.headline.first().should('have.text', 'Sound auf höchstem Niveau');
+    this.title.first().should('have.text', 'Dein Sound');
   }
 
   addBlockTop() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
@@ -187,7 +192,7 @@ export class EditorObject extends PageObject {
   }
 
   addBlockBottom() {
-    this.blockWrapper.then(initialBlocks => {
+    this.blockWrapper.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();

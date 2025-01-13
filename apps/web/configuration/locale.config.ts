@@ -1,4 +1,4 @@
-import { LocaleObject } from '@nuxtjs/i18n';
+import type { LocaleObject } from '@nuxtjs/i18n';
 
 export const getLocaleObject = (languages: string) => {
   const localeObject: LocaleObject[] = [];

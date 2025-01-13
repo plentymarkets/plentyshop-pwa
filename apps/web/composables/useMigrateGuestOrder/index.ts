@@ -1,4 +1,4 @@
-import { MigrateGuestOrderToCustomerParams } from '@plentymarkets/shop-api';
+import type { MigrateGuestOrderToCustomerParams } from '@plentymarkets/shop-api';
 
 export const useMigrateGuestOrder = () => {
   const state = useState('useMigrateGuestOrder', () => ({

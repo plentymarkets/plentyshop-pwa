@@ -1,22 +1,22 @@
 <template>
-  <form @submit.prevent="submitChangePassword" data-testid="account-forms-password">
+  <form data-testid="account-forms-password" @submit.prevent="submitChangePassword">
     <label class="block">
       <UiFormLabel
         >{{ t('account.accountSettings.personalData.currentPassword') }} {{ $t('form.required') }}</UiFormLabel
       >
       <UiFormPasswordInput
+        v-model="userPasswords.oldPassword"
         name="password"
         autocomplete="current-password"
-        v-model="userPasswords.oldPassword"
         required
       />
     </label>
     <label class="block my-4">
       <UiFormLabel>{{ t('account.accountSettings.personalData.newPassword') }} {{ $t('form.required') }}</UiFormLabel>
       <UiFormPasswordInput
+        v-model="userPasswords.firstNewPassword"
         name="password"
         autocomplete="new-password"
-        v-model="userPasswords.firstNewPassword"
         required
         minlength="8"
         pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"
@@ -28,9 +28,9 @@
         >{{ t('account.accountSettings.personalData.newPasswordAgain') }} {{ $t('form.required') }}</UiFormLabel
       >
       <UiFormPasswordInput
+        v-model="userPasswords.secondNewPassword"
         name="password"
         autocomplete="new-password"
-        v-model="userPasswords.secondNewPassword"
         required
         minlength="8"
         pattern="^(?=.*[A-Za-z])(?=.*\d)\S{8,}$"

@@ -85,7 +85,6 @@ export const usePayPal = () => {
           commit: commit,
         });
       } catch {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
         // TODO: Handle error (not loading sdk)
       }
     }
@@ -97,9 +96,6 @@ export const usePayPal = () => {
     const { $i18n } = useNuxtApp();
     const localePayPal = getLocaleForPayPal($i18n.locale.value);
     const scriptKey = `${currency}_${localePayPal}_${commit}`;
-
-    const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
-    if (!consent.value) return null;
 
     if (state.value.loadingScripts[scriptKey] !== undefined) {
       state.value.isReady = true;

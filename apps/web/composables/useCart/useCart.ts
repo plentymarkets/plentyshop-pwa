@@ -1,20 +1,20 @@
-import {
-  type Cart,
+import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
   DeleteCartItemParams,
   CartItem,
   CartItemError,
   ApiError,
+  Cart,
 } from '@plentymarkets/shop-api';
-import {
-  type UseCartReturn,
+import type {
   UseCartState,
-  type GetCart,
-  type AddToCart,
-  type AddItemsToCart,
-  type DeleteCartItem,
-  type SetCartItemQuantity,
+  UseCartReturn,
+  GetCart,
+  AddToCart,
+  AddItemsToCart,
+  DeleteCartItem,
+  SetCartItemQuantity,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {

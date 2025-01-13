@@ -1,18 +1,12 @@
 <template>
-  <div
-    v-if="paypalUuid && consent"
-    ref="paypalButton"
-    :id="'paypal-' + paypalUuid"
-    class="z-0 relative paypal-button"
-  />
-  <PayPalCookieDisabledBanner v-else-if="!consent" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());
@@ -31,7 +25,6 @@ const emits = defineEmits<{
   (event: 'on-approved'): void;
 }>();
 
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const props = defineProps<PaypalButtonPropsType>();
 const currentInstance = getCurrentInstance();
 
@@ -123,7 +116,6 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
         // TODO: handle error
       },
       async createOrder() {
@@ -157,12 +149,5 @@ onNuxtReady(async () => {
 watch(currency, async () => {
   paypalScript.value = await getScript(currency.value, isCommit);
   createButton();
-});
-
-watch(consent, async () => {
-  if (consent.value) {
-    paypalScript.value = await getScript(currency.value, isCommit);
-    createButton();
-  }
 });
 </script>

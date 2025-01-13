@@ -1,11 +1,9 @@
-import type { Order, PaginatedResult, UseUserOrderSearchParams } from '@plentymarkets/shop-api';
+import type { Order, PaginatedResult, UseUserOrderSearchParams, OrderReturnsResponse } from '@plentymarkets/shop-api';
 import type {
   UseCustomerReturnsReturn,
   UseCustomerReturnsState,
   FetchCustomerReturns,
 } from '~/composables/useCustomerReturns/types';
-
-import type { OrderReturnsResponse } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing order returns data

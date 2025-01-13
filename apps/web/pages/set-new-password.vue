@@ -6,15 +6,15 @@
       </p>
       <label class="block mb-4">
         <UiFormLabel>{{ $t('auth.setNewPassword.password') }} {{ $t('form.required') }}</UiFormLabel>
-        <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
+        <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
         <UiFormHelperText>{{ $t('auth.setNewPassword.help') }}</UiFormHelperText>
       </label>
       <label>
         <UiFormLabel>{{ $t('auth.setNewPassword.repeatPassword') }} {{ $t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
+          v-model="repeatedPassword"
           name="repeatedPassword"
           autocomplete="current-password"
-          v-model="repeatedPassword"
           required
         />
       </label>

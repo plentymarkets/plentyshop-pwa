@@ -36,7 +36,6 @@ const main = async () => {
   }
 };
 
-// eslint-disable-next-line etc/no-implicit-any-catch
 await main().catch((error: Error) => {
   BuildLoggerInstance.error('An error occurred:', error);
 });

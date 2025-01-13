@@ -1,18 +1,17 @@
 <template>
-  <div v-if="isReady && consent" :id="'paypal-messaging-' + paypalUuid" class="mt-2"></div>
+  <div v-if="isReady" :id="'paypal-messaging-' + paypalUuid" class="mt-2" />
 </template>
 
 <script setup lang="ts">
-import { PayPalPayLaterBannerType } from '~/components/PayPal/types';
+import type { PayPalPayLaterBannerType } from '~/components/PayPal/types';
 import { cartGetters } from '@plentymarkets/shop-api';
 import { v4 as uuid } from 'uuid';
-import { PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalNamespace } from '@paypal/paypal-js';
 
 const { data: cart } = useCart();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const { isReady, getScript } = usePayPal();
 const { placement, amount, commit = false } = defineProps<PayPalPayLaterBannerType>();
-const { consent } = useCookieConsent('CookieBar.functional.cookies.payPal.name');
 const textStylePlacements = ['product', 'cart', 'payment'];
 const paypalUuid = uuid();
 const isTextStyle = ref(textStylePlacements.includes(placement));
@@ -55,10 +54,4 @@ watch(
   () => amount,
   async () => await renderMessage(),
 );
-
-watch(consent, async () => {
-  if (consent.value) {
-    await renderMessage();
-  }
-});
 </script>
