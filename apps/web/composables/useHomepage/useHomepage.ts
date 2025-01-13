@@ -8,6 +8,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
     data: { blocks: [], meta: { isDefault: null } } as HomepageData,
+    initialBlocks: [],
     dataIsEmpty: false,
     loading: false,
     showErrors: false,
@@ -46,6 +47,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
     } else {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
+
+    state.value.initialBlocks = state.value.data.blocks.map((block) => toRaw(block));
 
     await fetchRecommendedProducts();
   };
