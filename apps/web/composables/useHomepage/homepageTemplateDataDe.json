@@ -88,9 +88,9 @@
       "name": "ProductRecommendedProducts",
       "options": {
         "text": {
-          "preTitle": "Mehr als nur Technik",
+          "pretitle": "Mehr als nur Technik",
           "title": "Entdecken Sie unsere Modekollektion",
-          "subTitle": "Sportive Mode und Accessories für alle.",
+          "subtitle": "Sportive Mode und Accessories für alle.",
           "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>Zu unserer kompletten Kollektion.</a>"
         },
         "categoryId": "49"

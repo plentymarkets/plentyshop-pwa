@@ -1,5 +1,5 @@
 <template>
-  <div v-if="text?.preTitle" class="text-2xl">{{ text.preTitle }}</div>
+  <div v-if="text?.pretitle" class="text-2xl">{{ text.pretitle }}</div>
   <h2
     v-if="text?.title"
     class="typography-display-3 md:typography-display-2 lg:typography-display-2 font-bold lg:leading-[4rem]"
@@ -7,7 +7,7 @@
   >
     {{ text.title }}
   </h2>
-  <div v-if="text?.subTitle" class="text-2xl pb-1">{{ text.subTitle }}</div>
+  <div v-if="text?.subtitle" class="text-2xl pb-1">{{ text.subtitle }}</div>
   <div
     class="typography-text-sm md:typography-text-lg font-normal"
     v-if="text?.htmlDescription"

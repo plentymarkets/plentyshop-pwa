@@ -87,9 +87,9 @@
       "name": "ProductRecommendedProducts",
       "options": {
         "text": {
-          "preTitle": "More than just technology",
+          "pretitle": "More than just technology",
           "title": "Explore our fashion collection",
-          "subTitle": "Sportive fashion and accessoires for everybody.",
+          "subtitle": "Sportive fashion and accessoires for everybody.",
           "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>"
         },
 

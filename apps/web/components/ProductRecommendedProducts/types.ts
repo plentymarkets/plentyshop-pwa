@@ -2,9 +2,9 @@ export type ProductRecommendedProductsProps = {
   categoryId: string;
   cacheKey?: string;
   text?: {
-    preTitle?: string;
+    pretitle?: string;
     title?: string;
-    subTitle?: string;
+    subtitle?: string;
     htmlDescription?: string;
   };
 };
