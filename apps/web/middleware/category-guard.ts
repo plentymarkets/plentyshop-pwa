@@ -17,7 +17,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
   if (!productsCatalog.value.category) {
     throw createError({ statusCode: 404, statusMessage: 'Not found', fatal: true });
   }
-  //setCategoriesPageMeta(productsCatalog.value, params);
+  setCategoriesPageMeta(productsCatalog.value, params);
 
   const category = productsCatalog.value?.category;
   if (category && categoryGetters.hasCustomerRight(category) && !isAuthorized.value) {
