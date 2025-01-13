@@ -9,6 +9,8 @@ const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
 export function useBlockManager() {
   const { data } = useHomepage();
+  const { isEditing, isEditingEnabled } = useEditor();
+  const { initialBlocks } = useHomepage();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
@@ -39,14 +41,11 @@ export function useBlockManager() {
     if (data.value.blocks && data.value.blocks.length > index) {
       currentBlockIndex.value = index;
       currentBlock.value = data.value.blocks[index];
-      const { isEditing } = useEditor();
       isEditing.value = true;
     }
   };
 
   const deleteBlock = (index: number) => {
-    const { isEditingEnabled } = useEditor();
-    const { initialBlocks } = useHomepage();
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
       isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
