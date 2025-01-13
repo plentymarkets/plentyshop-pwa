@@ -1,5 +1,5 @@
-import type { useStructuredDataReturn } from './types';
 import type {
+  useStructuredDataReturn,
   SetLogoMeta,
   SetProductMetaData,
   SetProductRobotsMetaData,
