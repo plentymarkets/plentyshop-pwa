@@ -6,15 +6,15 @@
       </h1>
       <p class="mb-10">{{ t('contact.contactShopMessage') }}</p>
 
-      <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" @submit.prevent="onSubmit" novalidate>
+      <form data-testid="contact-form" class="flex flex-col rounded-md gap-4" novalidate @submit.prevent="onSubmit">
         <div class="">
           <label>
             <UiFormLabel class="mb-1">{{ t('contact.form.nameLabel') }} {{ t('form.required') }}</UiFormLabel>
             <SfInput
               v-bind="nameAttributes"
+              v-model="name"
               name="name"
               type="text"
-              v-model="name"
               :invalid="Boolean(errors['name'])"
             />
           </label>
@@ -25,11 +25,11 @@
             <UiFormLabel class="mb-1">{{ t('contact.form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
 
             <SfInput
+              v-bind="emailAttributes"
+              v-model="email"
               name="email"
               type="email"
               autocomplete="email"
-              v-bind="emailAttributes"
-              v-model="email"
               :invalid="Boolean(errors['email'])"
             >
               <template #prefix>
@@ -41,12 +41,12 @@
         </div>
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.subjectLabel') }} {{ t('form.required') }}</UiFormLabel>
-          <SfInput name="subject" type="text" v-model="subject" v-bind="subjectAttributes" />
+          <SfInput v-model="subject" name="subject" type="text" v-bind="subjectAttributes" />
           <ErrorMessage as="div" name="subject" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
         <label>
           <UiFormLabel class="mb-1">{{ t('contact.form.order-id') }} {{ t('form.required') }}</UiFormLabel>
-          <SfInput name="order-id" type="text" v-model="orderId" v-bind="orderIdAttributes" />
+          <SfInput v-model="orderId" name="order-id" type="text" v-bind="orderIdAttributes" />
           <ErrorMessage as="div" name="orderId" class="text-negative-700 text-left text-sm pt-[0.2rem]" />
         </label>
 
@@ -54,11 +54,11 @@
           <label class="flex flex-col">
             <UiFormLabel class="mb-1">{{ t('contact.form.message') }} {{ t('form.required') }}</UiFormLabel>
             <SfTextarea
+              v-bind="messageAttributes"
+              v-model="message"
               :placeholder="t('contact.form.message-placeholder')"
               class="w-full"
               name="message"
-              v-bind="messageAttributes"
-              v-model="message"
               :invalid="Boolean(errors['message'])"
               required
             />
@@ -69,9 +69,9 @@
         <div>
           <div class="flex items-center">
             <SfCheckbox
-              :invalid="Boolean(errors['privacyPolicy'])"
               id="terms"
               v-model="privacyPolicy"
+              :invalid="Boolean(errors['privacyPolicy'])"
               v-bind="privacyPolicyAttributes"
               value="value"
               class="peer"
@@ -115,9 +115,9 @@
         <div>
           <NuxtTurnstile
             v-if="turnstileSiteKey"
-            v-model="turnstile"
             v-bind="turnstileAttributes"
             ref="turnstileElement"
+            v-model="turnstile"
             :options="{ theme: 'light' }"
             class="mt-4"
           />

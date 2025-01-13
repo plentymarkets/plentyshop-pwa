@@ -6,11 +6,8 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function convertToSaveableJson(jsonList: any): string {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return jsonList.map((group: any) => ({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [group.name]: group.cookies.map((cookie: any) => ({
       [cookie.name]: cookie.accepted,
     })),
@@ -27,7 +24,6 @@ function convertToSaveableJson(jsonList: any): string {
  * } = useCookieBar(consentCookie, initCheckboxIndex, initialCookieJsonFromConfig);
  * ```
  */
-/* eslint-disable sonarjs/cognitive-complexity */
 export const useCookieBar = (
   consentCookie: CookieRef<CookieGroup[]>,
   initCheckboxIndex: number,

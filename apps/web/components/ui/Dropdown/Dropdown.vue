@@ -1,7 +1,7 @@
 <template>
   <SfDropdown v-model="isOpen" placement="bottom-end">
     <template #trigger>
-      <div @click="toggle()" class="z-0">
+      <div class="z-0" @click="toggle()">
         <slot name="trigger" />
       </div>
     </template>

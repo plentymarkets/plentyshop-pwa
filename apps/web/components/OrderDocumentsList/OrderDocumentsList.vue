@@ -3,9 +3,9 @@
     <UiButton
       v-for="(document, key) in documents"
       :key="key"
-      @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
       class="mt-4 w-full cursor-pointer"
       variant="secondary"
+      @click="downloadPDF(document, orderGetters.getAccessKey(props.order))"
     >
       {{ getDocumentName(document) }}
     </UiButton>

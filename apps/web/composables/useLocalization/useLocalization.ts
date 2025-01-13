@@ -24,7 +24,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns category path that is then navigated to
    * @example buildCategoryLanguagePath('')
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -38,7 +37,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns product path that is then navigated to
    * @example buildProductLanguagePath('')
    */
-  // eslint-disable-next-line sonarjs/no-identical-functions,unicorn/consistent-function-scoping
   const buildProductLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -53,7 +51,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns product path that is then navigated to
    * @example buildCategoryMenuLink(category, categoryTree)
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryMenuLink = (category: CategoryTreeItem, categoryTree: CategoryTreeItem[]) => {
     return categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
   };
@@ -64,7 +61,6 @@ export const useLocalization = createSharedComposable(() => {
    * @param path
    * @example getCategoryUrlFromRoute('')
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const getCategoryUrlFromRoute = (path: string): string => {
     const parts = path.split('/');
 

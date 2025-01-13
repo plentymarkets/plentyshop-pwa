@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)"></EmptyBlock>
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)" />
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -69,6 +69,7 @@ const { isEditing, disableActions } = useEditor();
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
   if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
+  if (name === 'UiTextCard') return resolveComponent('UiTextCard');
   if (name === 'UiImageText') return resolveComponent('UiImageText');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };

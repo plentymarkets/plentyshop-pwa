@@ -9,7 +9,7 @@
           {{ t('review.editReplyFormTitle') }}
         </template>
       </h3>
-      <UiButton @click="closeReviewModal" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="closeReviewModal">
         <SfIconClose />
       </UiButton>
     </header>
@@ -35,23 +35,23 @@
         <template v-if="isCreateReviewModal || isUpdateReviewModal">
           <UiFormLabel class="mt-2" for="review-title">{{ t('review.title') }} *</UiFormLabel>
           <SfInput
-            v-model="title"
             v-bind="titleAttributes"
+            id="review-title"
+            v-model="title"
             :invalid="Boolean(errors['title'])"
             name="title"
-            id="review-title"
           />
           <ErrorMessage as="div" name="title" class="text-negative-700 text-sm mt-1" />
         </template>
 
         <UiFormLabel class="mt-4" for="review-author">{{ t('review.reviewAuthor') }}</UiFormLabel>
         <SfInput
-          v-model="authorName"
           v-bind="authorNameAttributes"
+          id="review-author"
+          v-model="authorName"
           :invalid="Boolean(errors['authorName'])"
           name="authorName"
           data-testid="input-authorName"
-          id="review-author"
         />
         <ErrorMessage as="div" name="authorName" class="text-negative-700 text-sm" />
 
@@ -79,7 +79,7 @@
         <p class="text-sm text-neutral-500 mt-4 mb-2">* {{ t('contact.form.asterixHint') }}</p>
 
         <div class="flex justify-end gap-x-4 mt-6">
-          <UiButton @click="closeReviewModal" type="button" variant="secondary" class="flex-1 md:flex-initial">
+          <UiButton type="button" variant="secondary" class="flex-1 md:flex-initial" @click="closeReviewModal">
             {{ t('review.cancel') }}
           </UiButton>
           <UiButton type="submit" class="flex-1 md:flex-initial">

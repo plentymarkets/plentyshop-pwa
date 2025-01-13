@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   UseProductReviews,
@@ -8,7 +8,6 @@ import type {
   CreateProductReview,
 } from './types';
 import { reviewGetters } from '@plentymarkets/shop-api';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data

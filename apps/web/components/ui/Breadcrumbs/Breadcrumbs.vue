@@ -10,8 +10,8 @@
                 :aria-label="$t('breadcrumbsDropdownText')"
                 variant="tertiary"
                 square
-                @click="toggle"
                 data-testid="breadcrumbs-dropdown-button"
+                @click="toggle"
               >
                 <template #prefix>
                   <SfIconMoreHoriz
@@ -77,7 +77,7 @@ const toggle = () => {
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
 const items = route.path.split('/');
-let itemListElement = [] as Array<any>;
+const itemListElement = [] as Array<any>;
 let name = '';
 items.forEach((item, index) => {
   name += item;

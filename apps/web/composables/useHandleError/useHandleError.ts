@@ -1,4 +1,4 @@
-import { NuxtError } from 'nuxt/app';
+import type { NuxtError } from 'nuxt/app';
 import type { UseHandleError } from '~/composables/useHandleError/types';
 import { ApiError } from '@plentymarkets/shop-api';
 

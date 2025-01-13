@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ShippingOptionItemProps } from './types';
+import type { ShippingOptionItemProps } from './types';
 import { SfRadio } from '@storefront-ui/vue';
 
 const { t, n } = useI18n();
