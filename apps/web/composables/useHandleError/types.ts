@@ -1,5 +1,5 @@
-import { ApiError } from '@plentymarkets/shop-api';
-import { NuxtError } from 'nuxt/app';
+import type { ApiError } from '@plentymarkets/shop-api';
+import type { NuxtError } from 'nuxt/app';
 
 export type ErrorParams = {
   /** The error message. */

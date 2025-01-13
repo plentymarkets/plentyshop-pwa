@@ -1,8 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { AssetDownloader } from '../AssetDownloader';
 import { FileTypeValidator } from '../../validators/FileTypeValidator';
-import { Writer } from '../../writers/types';
-import { Logger } from '../../logs/types';
+import type { Writer } from '../../writers/types';
+import type { Logger } from '../../logs/types';
 import path from 'path';
 
 describe('AssetDownloader', () => {

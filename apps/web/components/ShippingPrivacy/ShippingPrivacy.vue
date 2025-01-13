@@ -5,9 +5,9 @@
       :value="shippingPrivacyAgreement"
       :selected="shippingPrivacyAgreement"
       :invalid="showErrors"
-      @update:model-value="(event) => setShippingPrivacyAgreement(Boolean(event))"
       class="mt-1"
       name="Shipping Privacy"
+      @update:model-value="(event) => setShippingPrivacyAgreement(Boolean(event))"
     />
     <label for="shipping-agreement-checkbox" class="cursor-pointer select-none">
       {{ $t('shippingMethod.showDataPrivacyAgreementHint', { parcelServiceInformation }) }}

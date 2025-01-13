@@ -3,40 +3,57 @@
     {
       "name": "UiHeroCarousel",
       "options": {
-        "hero": [
+        "bannerItems": [
           {
             "image": {
-              "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-lg.avif",
-              "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-md.avif",
-              "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-sm.avif",
-              "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/headphones-xs.avif"
+              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
+              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
+              "alt": "",
+              "brightness": 0.5
             },
-            "tagline": "Kristalklare Klänge Genießen",
-            "taglineColor": "#000000",
-            "heading": "Sound auf höchstem Niveau",
-            "headingColor": "#000000",
-            "description": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
-            "alt": "Capybara-Kopfhörer",
-            "descriptionColor": "#000000",
-            "callToAction": "Capybara entdecken",
-            "link": "/gear/headphones-capybara_157"
+            "text": {
+              "color": "#fff",
+              "bgcolor": "#000",
+              "bgopacity": 0.9,
+              "pretitle": "Kristalklare Klänge Genießen",
+              "title": "Dein Sound",
+              "subtitle": "Auf höchstem Niveau",
+              "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
+              "textAlignment": "left",
+              "justify": "top",
+              "align": "start"
+            },
+            "button": {
+              "label": "Capybara entdecken",
+              "link": "/gear/headphones-capybara_157",
+              "variant": "primary"
+            }
           },
           {
             "image": {
-              "lg": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drohne-1920-800.avif",
-              "md": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_1024x600.avif",
-              "sm": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif",
-              "xs": "https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Homepage/drone_768x600.avif"
+              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
+              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
+              "alt": "",
+              "brightness": 0.75
             },
-            "tagline": "Die Zukunft der Luftbildfotografie",
-            "taglineColor": "#000000",
-            "heading": "Drone Omega",
-            "headingColor": "#000000",
-            "description": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
-            "alt": "Omega-Drone",
-            "descriptionColor": "#000000",
-            "callToAction": "Omega entdecken",
-            "link": "/gear/drone-omega_154"
+            "text": {
+              "color": "#fff",
+              "bgcolor": "#000",
+              "bgopacity": 1,
+              "pretitle": "Die Zukunft der Luftbildfotografie",
+              "title": "Drone Omega",
+              "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
+              "textAlignment": "left",
+              "justify": "top",
+              "align": "start"
+            },
+            "button": {
+              "label": "Omega entdecken",
+              "link": "/gear/drone-omega_154",
+              "variant": "primary"
+            }
           }
         ]
       }
@@ -51,8 +68,33 @@
       }
     },
     {
+      "name": "UiTextCard",
+      "options": {
+        "text": {
+          "htmlDescription": "Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung findest du bei uns alles, was deinen Alltag smarter und deinen Look einzigartig macht.\n\nUnser Ziel ist es, dir eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob du nach einem neuen Lautsprecher für den perfekten Sound suchst oder nach einem lässigen Hoodie, der deinem Stil entspricht – wir haben, was du brauchst.",
+          "pretitle": "Willkommen in deinem neuen Lieblingsshop",
+          "title": "Entdecke Technik & Style",
+          "subtitle": "Innovative Technik trifft auf moderne Mode",
+          "textAlignment": "center"
+        },
+        "button": {
+          "buttonText": "Jetzt zuschlagen",
+          "link": "",
+          "variant": "primary"
+        }
+      }
+    },
+    {
       "name": "ProductRecommendedProducts",
-      "options": { "headline": "Entdecken Sie unsere Modekollektion", "categoryId": "49" }
+      "options": {
+        "text": {
+          "pretitle": "Mehr als nur Technik",
+          "title": "Entdecken Sie unsere Modekollektion",
+          "subtitle": "Sportive Mode und Accessories für alle.",
+          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>Zu unserer kompletten Kollektion.</a>"
+        },
+        "categoryId": "49"
+      }
     },
     {
       "name": "NewsletterSubscribe",

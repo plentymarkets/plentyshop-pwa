@@ -1,4 +1,7 @@
-import { EmailConfirmationOptin, UseNewsletterConfirmationReturn } from '~/composables/useNewsletterConfirmation/types';
+import type {
+  EmailConfirmationOptin,
+  UseNewsletterConfirmationReturn,
+} from '~/composables/useNewsletterConfirmation/types';
 
 const confirmEmail: EmailConfirmationOptin = async (newsletterEmailId, authString) => {
   return await useSdk().plentysystems.doEmailConfirmation({
