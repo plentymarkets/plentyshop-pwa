@@ -38,6 +38,7 @@ const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncSc
 );
 
 const closeEditor = () => {
+  emit('update', props.index, JSON.parse(jsonText.value));
   const { isEditing } = useEditor();
   isEditing.value = false;
 };
