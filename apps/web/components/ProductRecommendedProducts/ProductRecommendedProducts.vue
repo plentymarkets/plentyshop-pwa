@@ -1,14 +1,14 @@
 <template>
-  <div class="text-2xl" v-if="preTitle">{{ preTitle }}</div>
+  <div v-if="text?.preTitle" class="text-2xl">{{ text.preTitle }}</div>
   <h2
-    v-if="headline"
+    v-if="text?.title"
     class="typography-display-3 md:typography-display-2 lg:typography-display-2 font-bold lg:leading-[4rem]"
     data-testid="recommended-products-headline"
   >
-    {{ headline }}
+    {{ text.title }}
   </h2>
-  <div class="text-2xl pb-1" v-if="subTitle">{{ subTitle }}</div>
-  <div v-if="htmlDescription" v-html="htmlDescription"></div>
+  <div v-if="text?.subTitle" class="text-2xl pb-1">{{ text.subTitle }}</div>
+  <div v-if="text?.htmlDescription" v-html="text.htmlDescription"></div>
   <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
 </template>
 
