@@ -1,5 +1,9 @@
-import type { AddWishlistItemResponse, WishlistItem } from '@plentymarkets/shop-api';
-import type { AddWishlistItemParams, DeleteWishlistItemParams } from '@plentymarkets/shop-api';
+import type {
+  AddWishlistItemResponse,
+  WishlistItem,
+  AddWishlistItemParams,
+  DeleteWishlistItemParams,
+} from '@plentymarkets/shop-api';
 import type {
   FetchWishlist,
   UseWishlistReturn,

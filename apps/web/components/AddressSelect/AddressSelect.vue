@@ -1,6 +1,6 @@
 <template>
   <SfTooltip :label="tooltipLabel">
-    <UiButton :disabled="disabled" @click="handleAddressButtonTrigger" variant="secondary">{{ buttonLabel }}</UiButton>
+    <UiButton :disabled="disabled" variant="secondary" @click="handleAddressButtonTrigger">{{ buttonLabel }}</UiButton>
   </SfTooltip>
 
   <UiModal
@@ -12,7 +12,7 @@
     data-testid="checkout-pick-address-modal"
   >
     <header>
-      <UiButton @click="close" square variant="tertiary" class="absolute right-2 top-2">
+      <UiButton square variant="tertiary" class="absolute right-2 top-2" @click="close">
         <SfIconClose />
       </UiButton>
       <h3 id="address-modal-title" class="text-neutral-900 text-lg md:text-2xl font-bold">
@@ -28,11 +28,11 @@
       :is-selected="Number(userAddressGetters.getId(checkoutAddress)) === Number(userAddressGetters.getId(address))"
       :is-default="primaryAddressId === Number(userAddressGetters.getId(address))"
       :show-divider="Number(userAddressGetters.getId(checkoutAddress)) !== Number(userAddressGetters.getId(address))"
+      class="group hover:bg-primary-50 cursor-pointer"
       @click="handleSetCheckoutAddress(address)"
       @on-delete="handleDeleteAddress(address)"
       @make-default="handleSetDefaultAddress(address)"
       @on-edit="emitEditAddressEvent(address)"
-      class="group hover:bg-primary-50 cursor-pointer"
     >
       <UiDivider class="col-span-3 mx-4 !w-auto md:mx-0 group-hover:opacity-0" />
     </Address>
@@ -46,9 +46,9 @@
 </template>
 
 <script setup lang="ts">
-import { type AddressSelectProps } from './types';
+import type { AddressSelectProps } from './types';
 import { AddressType, userAddressGetters } from '@plentymarkets/shop-api';
-import { type Address } from '@plentymarkets/shop-api';
+import type { Address } from '@plentymarkets/shop-api';
 import { SfIconClose, useDisclosure, SfTooltip } from '@storefront-ui/vue';
 
 const { disabled = false, type } = defineProps<AddressSelectProps>();

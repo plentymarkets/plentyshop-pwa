@@ -11,9 +11,9 @@
         <UiDivider :class="dividerClass" />
         <ContactInformation disabled />
         <UiDivider :class="dividerClass" />
-        <AddressContainer :disabled="false" :type="AddressType.Shipping" :key="0" id="shipping-address" />
+        <AddressContainer id="shipping-address" :key="0" :disabled="false" :type="AddressType.Shipping" />
         <UiDivider :class="dividerClass" />
-        <AddressContainer :disabled="true" :type="AddressType.Billing" :key="1" id="billing-address" />
+        <AddressContainer id="billing-address" :key="1" :disabled="true" :type="AddressType.Billing" />
         <UiDivider :class="dividerClass" />
         <div class="relative">
           <ShippingMethod disabled />
@@ -34,18 +34,18 @@
           <OrderSummary v-if="cart" :cart="cart">
             <PayPalExpressButton
               v-if="changedTotal"
-              @validation-callback="handleUpdatedOrder"
               :disabled="!termsAccepted || interactionDisabled"
               type="Checkout"
+              @validation-callback="handleUpdatedOrder"
             />
 
             <UiButton
               v-else
               type="submit"
-              @click="handleRegularOrder"
               :disabled="interactionDisabled"
               size="lg"
               class="w-full mb-4 md:mb-0 cursor-pointer"
+              @click="handleRegularOrder"
             >
               <SfLoaderCircular v-if="interactionDisabled" class="flex justify-center items-center" size="sm" />
               <template v-else>{{ t('buy') }}</template>
@@ -58,10 +58,11 @@
 </template>
 
 <script lang="ts" setup>
-import { AddressType, ApiError, orderGetters } from '@plentymarkets/shop-api';
+import type { ApiError } from '@plentymarkets/shop-api';
+import { AddressType, orderGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 import PayPalExpressButton from '~/components/PayPal/PayPalExpressButton.vue';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 
 const ID_CHECKBOX = '#terms-checkbox';
 const localePath = useLocalePath();

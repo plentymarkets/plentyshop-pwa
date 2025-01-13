@@ -19,8 +19,8 @@
             <SfCheckbox
               :id="cookieGroup.name"
               v-model="cookieGroup.accepted"
-              @update:model-value="triggerGroupConsent(cookieGroup)"
               :disabled="index === defaults.ESSENTIAL_COOKIES_INDEX"
+              @update:model-value="triggerGroupConsent(cookieGroup)"
             />
             <label :for="cookieGroup.name" class="text-gray-800 cursor-pointer peer-disabled:text-disabled-900">
               {{ t(cookieGroup.name) }}
@@ -34,11 +34,11 @@
       <template v-for="(cookieGroup, groupIndex) in cookieJson.groups" :key="groupIndex">
         <div v-if="cookieGroup?.cookies?.length" class="p-2 mb-2 bg-gray-100">
           <SfCheckbox
-            class="align-text-top"
             :id="cookieGroup.name"
             v-model="cookieGroup.accepted"
-            @update:model-value="triggerGroupConsent(cookieGroup)"
+            class="align-text-top"
             :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
+            @update:model-value="triggerGroupConsent(cookieGroup)"
           />
           <label
             class="ml-2 cursor-pointer peer-disabled:text-disabled-900 align-text-bottom font-medium"
@@ -53,11 +53,11 @@
             <div v-for="(cookie, cookieIndex) in cookieGroup.cookies" :key="cookieIndex" class="mb-4">
               <div class="flex items-center p-2 mb-1 bg-white">
                 <SfCheckbox
-                  class="ml-1"
                   :id="cookie.name"
                   v-model="cookie.accepted"
-                  @update:model-value="triggerCookieConsent(cookieGroup)"
+                  class="ml-1"
                   :disabled="groupIndex === defaults.ESSENTIAL_COOKIES_INDEX"
+                  @update:model-value="triggerCookieConsent(cookieGroup)"
                 />
                 <label :for="cookie.name" class="ml-2 font-medium cursor-pointer peer-disabled:text-disabled-900">
                   {{ t(cookie.name) }}
@@ -85,10 +85,10 @@
             </div>
           </div>
           <SfLink
-            @click="cookieGroup.showMore = !cookieGroup.showMore"
             tag="button"
             size="sm"
             class="text-primary hover:underline"
+            @click="cookieGroup.showMore = !cookieGroup.showMore"
           >
             {{ cookieGroup.showMore ? t('CookieBar.Show less') : t('CookieBar.More information') }}
           </SfLink>
@@ -98,7 +98,7 @@
 
     <!-- Actions -->
     <div class="my-5 text-center">
-      <SfLink @click="furtherSettingsOn = !furtherSettingsOn" tag="button" class="text-base">
+      <SfLink tag="button" class="text-base" @click="furtherSettingsOn = !furtherSettingsOn">
         {{ furtherSettingsOn ? t('CookieBar.Back') : t('CookieBar.Further Settings') }}
       </SfLink>
     </div>
@@ -108,8 +108,8 @@
         :aria-disabled="false"
         type="button"
         :aria-label="t('CookieBar.Accept All')"
-        @click="setAllCookiesState(true)"
         data-testid="cookie-bar-accept-all"
+        @click="setAllCookiesState(true)"
       >
         {{ t('CookieBar.Accept All') }}
       </UiButton>
@@ -142,8 +142,8 @@
         variant="secondary"
         class="!px-3 bg-white"
         :aria-label="t('CookieBar.Cookie Settings')"
-        @click="changeVisibilityState"
         data-testid="cookie-bar-open-btn"
+        @click="changeVisibilityState"
       >
         <SfIconBase viewBox="0 0 24 24" size="base" class="fill-none">
           <path
@@ -162,7 +162,7 @@
 <script setup lang="ts">
 import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { defaults } from '~/composables';
-import { Cookie, CookieGroup } from '~/configuration/cookie.config';
+import type { Cookie, CookieGroup } from '~/configuration/cookie.config';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();

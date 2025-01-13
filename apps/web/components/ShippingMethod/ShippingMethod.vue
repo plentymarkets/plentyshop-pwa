@@ -12,10 +12,10 @@
           v-for="(method, index) in shippingMethods"
           :key="`shipping-method-${index}`"
           :disabled="disabled"
-          @click.prevent="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
           tag="label"
           children-tag="div"
           class="border rounded-md items-start select-none"
+          @click.prevent="updateShippingMethod(shippingProviderGetters.getParcelServicePresetId(method))"
         >
           <template #prefix>
             <SfRadio
@@ -64,7 +64,7 @@
 <script setup lang="ts">
 import { AddressType, shippingProviderGetters, cartGetters } from '@plentymarkets/shop-api';
 import { SfIconWarning, SfListItem, SfRadio } from '@storefront-ui/vue';
-import { type CheckoutShippingEmits, type ShippingMethodProps } from './types';
+import type { CheckoutShippingEmits, ShippingMethodProps } from './types';
 
 const { disabled = false } = defineProps<ShippingMethodProps>();
 const { hasCheckoutAddress } = useCheckoutAddress(AddressType.Shipping);

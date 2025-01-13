@@ -1,4 +1,4 @@
-import { Product } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
 import { ProductPriceFixture } from '../../../__tests__/__mocks__/product-price.mock';
 
 const productWithPrices = {

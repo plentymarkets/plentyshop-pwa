@@ -1,7 +1,6 @@
-import { FacetSearchCriteria, Product } from '@plentymarkets/shop-api';
-import { Facet } from '@plentymarkets/shop-api';
+import type { FacetSearchCriteria, Product, Facet } from '@plentymarkets/shop-api';
 import { defaults, type SetCurrentProduct } from '~/composables';
-import { type FetchProducts, type UseProductsReturn, UseProductsState } from '~/composables/useProducts/types';
+import type { UseProductsState, FetchProducts, UseProductsReturn } from '~/composables/useProducts/types';
 
 /**
  * @description Composable for managing products.

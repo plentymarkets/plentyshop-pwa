@@ -44,11 +44,11 @@
 
       <div
         v-for="(tab, index) in tabs"
+        v-show="isActiveTab(index)"
+        :id="`tabpanel-${index}`"
         :key="tab.label"
         role="tabpanel"
-        :id="`tabpanel-${index}`"
         :aria-labelledby="`tab-${index}`"
-        v-show="isActiveTab(index)"
         class="p-4"
       >
         <component :is="tab.component" :product="product" />
@@ -58,8 +58,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconClose, SfDrawerPlacement, useTrapFocus } from '@storefront-ui/vue';
-import { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
+import type { SfDrawerPlacement } from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, useTrapFocus } from '@storefront-ui/vue';
+import type { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
 import ManufacturerResponsibleInfo from '~/components/ManufacturerResponsibleInfo/ManufacturerResponsibleInfo.vue';
 import ManufacturerInformation from '~/components/ManufacturerInformation/ManufacturerInformation.vue';
 

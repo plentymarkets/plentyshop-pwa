@@ -1,5 +1,5 @@
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
-import { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
+import type { ApplepayType, ConfigResponse } from '~/components/PayPal/types';
 
 const loadExternalScript = async () => {
   return new Promise((resolve, reject) => {
