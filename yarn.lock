@@ -5007,6 +5007,7 @@ __metadata:
     "@vite-pwa/nuxt": "npm:^0.8.1"
     "@vue-storefront/eslint-config": "npm:~2.0.0"
     "@vue/test-utils": "npm:^2.4.6"
+    blaze-slider: "npm:^1.9.3"
     commitizen: "npm:^4.3.0"
     concurrently: "npm:^8.2.2"
     country-flag-icons: "npm:^1.5.12"
@@ -8606,6 +8607,13 @@ __metadata:
     inherits: "npm:^2.0.4"
     readable-stream: "npm:^3.4.0"
   checksum: 10c0/02847e1d2cb089c9dc6958add42e3cdeaf07d13f575973963335ac0fdece563a50ac770ac4c8fa06492d2dd276f6cc3b7f08c7cd9c7a7ad0f8d388b2a28def5f
+  languageName: node
+  linkType: hard
+
+"blaze-slider@npm:^1.9.3":
+  version: 1.9.3
+  resolution: "blaze-slider@npm:1.9.3"
+  checksum: 10c0/1de393de24dfab75a24bd2ad2c022845ae479bc9c9b65fc759890f6f5dd2c9306dc166c33900545c7cb78d6d3987dcb09c376880d127fd9fed8f7e56f19a5339
   languageName: node
   linkType: hard
 

@@ -9,6 +9,7 @@
     />
     <div v-else class="content">
       <template v-for="(block, index) in data.blocks" :key="index">
+        <UiBlazeCarousel />
         <PageBlock
           :index="index"
           :block="block"
@@ -72,6 +73,7 @@ const getComponent = (name: string) => {
   if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'UiTextCard') return resolveComponent('UiTextCard');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
+  if (name === 'BlazeCarousel') return resolveComponent('BlazeCarousel');
 };
 
 fetchPageTemplate();
