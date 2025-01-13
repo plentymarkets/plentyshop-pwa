@@ -6,7 +6,7 @@
       </p>
       <label>
         <UiFormLabel>{{ $t('auth.resetPassword.email') }} {{ $t('form.required') }}</UiFormLabel>
-        <SfInput name="email" type="email" v-model="customerEmail" required />
+        <SfInput v-model="customerEmail" name="email" type="email" required />
       </label>
       <div class="mt-6 flex flex-col-reverse md:flex-row gap-4">
         <UiButton :tag="NuxtLink" :to="localePath(paths.authLogin)" class="flex-1" variant="tertiary">

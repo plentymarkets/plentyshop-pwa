@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { userAddressGetters } from '@plentymarkets/shop-api';
-import { type AddressProps } from './types';
+import type { AddressProps } from './types';
 
 const { address } = defineProps<AddressProps>();
 

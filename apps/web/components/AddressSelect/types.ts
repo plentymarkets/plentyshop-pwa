@@ -1,4 +1,4 @@
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import type { AddressType, Address } from '@plentymarkets/shop-api';
 
 export type AddressSelectProps = {
   disabled?: boolean;

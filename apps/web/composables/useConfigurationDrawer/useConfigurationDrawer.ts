@@ -1,5 +1,6 @@
-import { getPaletteFromColor, TailwindPalette } from '~/utils/tailwindHelper';
-import { SetColorProperties, UpdateColorPalette, UseConfigurationDraerMethodsReturn } from './types';
+import type { TailwindPalette } from '~/utils/tailwindHelper';
+import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import type { SetColorProperties, UpdateColorPalette, UseConfigurationDraerMethodsReturn } from './types';
 
 const open = ref(false);
 

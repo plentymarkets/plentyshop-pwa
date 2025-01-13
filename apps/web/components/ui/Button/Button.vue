@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { type ConcreteComponent } from 'vue';
+import type { ConcreteComponent } from 'vue';
 import { useAttrsRef, SfButtonSize, SfButtonVariant } from '@storefront-ui/vue';
 
 const props = defineProps({

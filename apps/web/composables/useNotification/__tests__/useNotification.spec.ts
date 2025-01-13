@@ -84,10 +84,10 @@ describe('useNotification', () => {
 
         expect(data.value.length).toBe(1);
 
-        await new Promise((resolve) => setTimeout(resolve, 4000));
+        await new Promise(resolve => setTimeout(resolve, 4000));
         expect(data.value.length).toBe(1);
 
-        await new Promise((resolve) => setTimeout(resolve, 1100));
+        await new Promise(resolve => setTimeout(resolve, 1100));
         expect(data.value.length).toBe(0);
     });
 
@@ -102,7 +102,7 @@ describe('useNotification', () => {
 
         expect(data.value.length).toBe(1);
 
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 10));
 
         expect(data.value.length).toBe(1);
     });
@@ -119,7 +119,7 @@ describe('useNotification', () => {
 
         expect(data.value.length).toBe(1);
 
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise(resolve => setTimeout(resolve, 10));
 
         expect(data.value.length).toBe(1);
     });

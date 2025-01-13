@@ -22,7 +22,6 @@ const fileToBase64 = async (file: File): Promise<string | null> => {
       }
     };
 
-    // eslint-disable-next-line unicorn/prefer-add-event-listener
     reader.onerror = function () {
       resolve(null);
     };

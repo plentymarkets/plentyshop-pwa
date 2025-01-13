@@ -10,9 +10,9 @@
     <div class="px-4 pb-4 mt-3 md:px-6 md:pb-6 md:mt-0">
       <div v-if="orderPropertiesWithVatAdditionalCosts.length > 0" class="mb-4">
         <div
-          class="flex justify-between typography-text-base w-full"
           v-for="property in orderPropertiesWithVatAdditionalCosts"
           :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
+          class="flex justify-between typography-text-base w-full"
         >
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
@@ -49,9 +49,9 @@
       <div v-if="orderPropertiesWithoutVat.length > 0" class="mb-4">
         <UiDivider class="mb-4" />
         <div
-          class="flex justify-between typography-text-base w-full"
           v-for="property in orderPropertiesWithoutVat"
           :key="cartGetters.getBasketItemOrderParamPropertyId(property)"
+          class="flex justify-between typography-text-base w-full"
         >
           <p class="flex flex-col gap-2 grow pr-2">{{ cartGetters.getBasketItemOrderParamName(property) }}</p>
           <p class="flex flex-col gap-2 text-right">
