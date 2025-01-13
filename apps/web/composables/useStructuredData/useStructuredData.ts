@@ -214,7 +214,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setProductCanonicalMetaData: SetProductCanonicalMetaData = (product: Product) => {
     state.value.loading = true;
 
-    let canonical = product.seoSettings?.canonical;
+    const canonical = product.seoSettings?.canonical;
 
     if (canonical) {
       useHead({
