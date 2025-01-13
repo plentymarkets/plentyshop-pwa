@@ -69,7 +69,7 @@ const { isEditing, disableActions } = useEditor();
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
   if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
-  if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
+  if (name === 'UiImageText') return resolveComponent('UiImageText');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
 };
 
