@@ -8,9 +8,8 @@ const isEmptyBlock = (block: Block): boolean => {
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
 export function useBlockManager() {
-  const { data } = useHomepage();
+  const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
-  const { initialBlocks } = useHomepage();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
