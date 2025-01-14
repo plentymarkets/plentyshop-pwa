@@ -40,7 +40,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number) => {
     state.value.loading = true;
     const route = useRoute();
     const config = useRuntimeConfig().public;
