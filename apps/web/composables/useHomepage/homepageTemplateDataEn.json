@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "name": "UiHeroCarousel",
+      "name": "UiBlazeCarousel",
       "options": {
         "bannerItems": [
           {
