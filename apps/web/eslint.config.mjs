@@ -46,7 +46,7 @@ export default withNuxt(
       '@typescript-eslint/no-invalid-void-type': 'off',
       '@typescript-eslint/no-namespace': 'off',
       '@typescript-eslint/no-require-imports': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       '@typescript-eslint/no-unused-vars': 'off',
       'vue/no-export-in-script-setup': 'off',
       'vue/no-multiple-template-root': 'off',
