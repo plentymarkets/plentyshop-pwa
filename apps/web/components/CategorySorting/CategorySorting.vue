@@ -18,7 +18,6 @@
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
 import { SfSelect } from '@storefront-ui/vue';
-import { routeStore } from '~/utils/routeStore';
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
 const route = routeStore.route ?? useRoute();

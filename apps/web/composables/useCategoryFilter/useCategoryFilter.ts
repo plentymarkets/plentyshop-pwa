@@ -1,6 +1,4 @@
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
-import type { RouteLocationNormalizedGeneric } from 'vue-router';
-import { routeStore } from '~/utils/routeStore';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
 const reduceFilters =

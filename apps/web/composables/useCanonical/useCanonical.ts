@@ -1,7 +1,6 @@
 import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { LocaleObject } from '@nuxtjs/i18n';
-import { routeStore } from '~/utils/routeStore';
 
 /**
  * @description Composable managing canonical data

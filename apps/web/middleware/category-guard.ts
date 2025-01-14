@@ -4,7 +4,6 @@
  * If the user is not authenticated, the user will be redirected to the login page.
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
-import { routeStore } from '~/utils/routeStore';
 export default defineNuxtRouteMiddleware(async (to) => {
   routeStore.setRoute(to);
 
