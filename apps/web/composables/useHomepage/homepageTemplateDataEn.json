@@ -60,10 +60,37 @@
     {
       "name": "UiImageText",
       "options": {
-        "text": "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Experience the Future of Sound</span><h2 class='text-2xl font-semibold mb-4'>Redefine Your Listening Experience</h2><p class='typography-text-sm md:typography-text-lg mb-6 padding-right-desktop'>Our latest collection of headphones is designed to deliver unparalleled audio precision, with deep bass, clear highs, and an immersive experience for every genre of music. Combining sleek design, comfort, and cutting-edge technology, these headphones are made for those who refuse to compromise on sound quality.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg '><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul></div>",
-        "image": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-        "alt": "Headphones",
-        "alignment": "right"
+        "text": {
+          "htmlDescription": "Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.",
+          "title": "Discover Tech & Style",
+          "subtitle": "Innovative technology meets modern fashion",
+          "pretitle": "Welcome to your new favorite shop",
+          "textAlignment": "left"
+        },
+        "button": {
+          "label": "Get Started",
+          "link": "",
+          "variant": "primary"
+        },
+        "image": {
+          "desktop": {
+            "src": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+            "width": 1200,
+            "height": 800
+          },
+          "tablet": {
+            "src": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+            "width": 800,
+            "height": 533
+          },
+          "mobile": {
+            "src": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+            "width": 400,
+            "height": 267
+          },
+          "alt": "Headphones",
+          "imageAlignment": "right"
+        }
       }
     },
     {
