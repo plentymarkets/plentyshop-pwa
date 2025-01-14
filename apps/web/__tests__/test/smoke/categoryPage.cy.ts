@@ -14,7 +14,7 @@ describe('Smoke: Category Page', () => {
     // This way we are independet from the language and the url.
     cy.visitAndHydrate('/living-room');
 
-    category.filterClickShouldReloadCategory;
+    category.filterClickShouldReloadCategory();
   })
 
   it('[smoke] Category should load DE SSR on first visit where there are no browser cookies', () => {
