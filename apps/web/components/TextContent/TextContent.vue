@@ -22,7 +22,6 @@ import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
 
-
 const localePath = useLocalePath();
 const NuxtLink = resolveComponent('NuxtLink');
 
