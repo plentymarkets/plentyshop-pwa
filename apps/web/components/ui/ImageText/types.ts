@@ -5,7 +5,6 @@ export interface ImageSource {
 }
 
 export type ImageTextProps = {
-  
   image?: {
     desktop?: ImageSource;
     tablet?: ImageSource;
