@@ -1,12 +1,12 @@
 <template>
-  <div v-if="showComponent" :class="['flex flex-col md:flex-row items-center', positionClass]">
-    <div :class="['w-full', 'md:w-1/2']">
+  <div :class="['flex flex-col md:flex-row items-center', positionClass]">
+    <div :class="['md:w-1/2']">
       <NuxtImg
-        :src="getImageUrl()?.src"
+        :src="getImageUrl()"
         :alt="props.image?.alt"
         class="mx-auto h-auto object-cover"
-        :width="getImageUrl()?.width"
-        :height="getImageUrl()?.height"
+        :width="getImageDimensions().width"
+        :height="getImageDimensions().height"
       />
     </div>
     <TextContent :text="props.text" :button="props.button" />
@@ -14,19 +14,15 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageTextProps, ImageSource } from '~/components/ui/ImageText/types';
+import type { ImageTextProps, ImageDimensions } from '~/components/ui/ImageText/types';
 
 const viewport = useViewport();
 
 const props = defineProps<ImageTextProps>();
 
-const showComponent = computed(() => {
-  return props.image || props.text;
-});
-
 const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'));
 
-const getImageUrl = (): ImageSource | undefined => {
+const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case 'lg': {
       return props.image?.desktop;
@@ -36,6 +32,20 @@ const getImageUrl = (): ImageSource | undefined => {
     }
     default: {
       return props.image?.mobile;
+    }
+  }
+};
+
+const getImageDimensions = (): ImageDimensions => {
+  switch (viewport.breakpoint.value) {
+    case 'lg': {
+      return { width: 1200, height: 800 };
+    }
+    case 'md': {
+      return { width: 800, height: 533 };
+    }
+    default: {
+      return { width: 400, height: 267 };
     }
   }
 };

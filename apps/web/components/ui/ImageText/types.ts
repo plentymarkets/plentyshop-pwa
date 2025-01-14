@@ -1,14 +1,8 @@
-export interface ImageSource {
-  src: string;
-  width: number;
-  height: number;
-}
-
 export type ImageTextProps = {
   image?: {
-    desktop?: ImageSource;
-    tablet?: ImageSource;
-    mobile?: ImageSource;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
     alt: string;
     imageAlignment: 'left' | 'right';
   };
@@ -26,3 +20,8 @@ export type ImageTextProps = {
     variant?: 'primary' | 'secondary';
   };
 };
+
+export interface ImageDimensions {
+  width: number;
+  height: number;
+}
