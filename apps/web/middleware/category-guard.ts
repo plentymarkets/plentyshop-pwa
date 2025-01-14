@@ -4,8 +4,11 @@
  * If the user is not authenticated, the user will be redirected to the login page.
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
+import { routeStore } from '~/utils/routeStore';
 export default defineNuxtRouteMiddleware(async (to) => {
-  const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter(to);
+  routeStore.setRoute(to);
+
+  const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
   const { setCategoriesPageMeta } = useCanonical();
   const { isAuthorized, getSession } = useCustomer();
   await getSession();

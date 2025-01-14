@@ -1,6 +1,7 @@
 import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
 import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
 import type { LocaleObject } from '@nuxtjs/i18n';
+import { routeStore } from '~/utils/routeStore';
 
 /**
  * @description Composable managing canonical data
@@ -62,7 +63,7 @@ export const useCanonical: UseCanonicalReturn = () => {
   const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
-    const route = useRoute();
+    const route = routeStore.route ?? useRoute();
     const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
@@ -100,7 +101,7 @@ export const useCanonical: UseCanonicalReturn = () => {
    */
   const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
-    const route = useRoute();
+    const route = routeStore.route ?? useRoute();
     const localePath = useLocalePath();
     const { $i18n } = useNuxtApp();
     const runtimeConfig = useRuntimeConfig();

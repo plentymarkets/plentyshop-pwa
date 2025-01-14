@@ -9,9 +9,10 @@ const createHttpClient = () => {
   if (tryUseNuxtApp()) {
     const { token } = useCsrfToken();
     const { $i18n } = useNuxtApp();
+    const route = routeStore.route ?? useRoute();
     const runtimeConfig = useRuntimeConfig();
-    const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
-    const noCache = runtimeConfig.public.noCache || useRoute().query?.noCache?.toString() || '';
+    const referrerId = route.query?.referrerID?.toString() ?? '';
+    const noCache = runtimeConfig.public.noCache || route.query?.noCache?.toString() || '';
     const configId = runtimeConfig.public.configId;
     const pwaHashCookie = useCookie('pwa');
 

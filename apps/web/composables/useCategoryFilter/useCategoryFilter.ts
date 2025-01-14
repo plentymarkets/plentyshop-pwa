@@ -1,5 +1,6 @@
 import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
+import { routeStore } from '~/utils/routeStore';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
 const reduceFilters =
@@ -42,8 +43,8 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * } = useCategoryFilter();
  * ```
  */
-export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route = to ?? useRoute();
+export const useCategoryFilter = (): UseCategoryFiltersResponse => {
+  const route = routeStore.route ?? useRoute();
 
   /**
    * @description Function for getting facets from url.

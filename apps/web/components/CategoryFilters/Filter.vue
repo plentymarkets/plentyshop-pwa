@@ -110,7 +110,7 @@ import {
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 
-const route = useRoute();
+const route = routeStore.route ?? useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();

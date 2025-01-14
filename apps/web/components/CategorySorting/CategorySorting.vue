@@ -18,9 +18,10 @@
 <script setup lang="ts">
 import { useRoute } from 'nuxt/app';
 import { SfSelect } from '@storefront-ui/vue';
+import { routeStore } from '~/utils/routeStore';
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
-const route = useRoute();
+const route = routeStore.route ?? useRoute();
 const options = ref([
   {
     label: 'nameA-Z',
