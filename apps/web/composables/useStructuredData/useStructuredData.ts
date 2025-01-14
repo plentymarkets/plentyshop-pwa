@@ -7,7 +7,7 @@ import type {
   UseStructuredDataState,
 } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
+import type { CategoryTreeItem, Product, CanonicalAlternate } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
 
@@ -214,18 +214,19 @@ export const useStructuredData: useStructuredDataReturn = () => {
   const setProductCanonicalMetaData: SetProductCanonicalMetaData = (product: Product) => {
     state.value.loading = true;
 
-    const canonical = product.seoSettings?.canonical;
+    const canonical = productSeoSettingsGetters.getCanonical(product);
 
     if (canonical) {
       useHead({
-        link: [{ rel: 'canonical', href: canonical?.href }],
+        link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
       });
 
-      const alternateLocales = canonical.alternate.map((item: any) => {
+      const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
+      const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
         return {
           rel: 'alternate',
-          hreflang: item.hreflang,
-          href: item.href,
+          hreflang: productSeoSettingsGetters.getCanonicalAlternateHreflang(item),
+          href: productSeoSettingsGetters.getCanonicalAlternateHref(item),
         };
       });
 
