@@ -12,4 +12,3 @@ export type TextContentProps = {
     variant?: 'primary' | 'secondary';
   };
 };
-
