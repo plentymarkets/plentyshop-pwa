@@ -35,6 +35,9 @@ Creating the application adds a new table entry. In the next part, you'll need t
 | Name      | Value |
 | ----------- | ----------- |
 | `URL_ENDPOINT_TOKEN` | **Access key** |
+| `URL_ENDPOINT_TOKEN_STAGING` | **Access key** |
+
+You can use the two tokens to set up deployments to different either your preview or production instance. See [Upload](#upload) for details.
 
 ### System URL
 
@@ -88,16 +91,20 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 
 ### Upload
 
-In your forked repository, enable the GitHub Action `Deploy PWA` from `upload.yml`. Update the trigger conditions to determine when to upload your repository to your PlentyONE system.
+PlentyONE Shop uses [GitHub Actions](https://github.com/features/actions) to upload apps the PlentyONE systems. For details, refer to the workflow at [`.github/workflows/upload.yml`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/.github/workflows/upload.yml). By default, the upload workflow triggers when one of the following conditions is met:
 
-To deploy a preview to your PlentyONE system, carry out the following steps:
+- A **Push** to the `main` branch uploads the code from main using the `URL_ENDPOINT_TOKEN_STAGING` token.
+- A **[GitHub Release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)** uploads the code from the specified tag using the `URL_ENDPOINT_TOKEN` token.
+
+Additionally, you can trigger an upload manually by carrying out the following steps:
 
 1. Go to your repository.
 2. Go to **Actions**.
 3. In the **All workflows** sections, click on **Deploy PWA**.
 4. Open the **Run workflow** drop-down menu.
 5. In the field **The tag version, branch name or SHA to checkout**, enter the name of the branch you want to deploy.
-6. Click on **Run workflow**.
+6. Select which environment to deploy to. **staging** uses `URL_ENDPOINT_TOKEN_STAGING`; **production** uses `URL_ENDPOINT_TOKEN`.
+7. Click on **Run workflow**.
 
 The workflow takes several minutes to complete. You can monitor the progress in the **Actions** menu.
 
