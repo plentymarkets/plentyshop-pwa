@@ -20,9 +20,9 @@
             }
           : false
       "
+      class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
-      class="!z-0 !w-full !max-h-[85vh]"
     >
       <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
         <UiBanner :banner-props="bannerItem" :index="index" />
@@ -36,7 +36,7 @@
             backgroundColor: generalTextColor + ' !important',
           }"
           :class="{ 'swiper-pagination-bullet-active': index === activeIndex }"
-        ></span>
+        />
       </div>
     </Swiper>
 
@@ -44,12 +44,12 @@
       v-if="enableModules && handleArrows()"
       class="swiper-button-prev"
       :style="{ color: generalTextColor + ' !important' }"
-    ></div>
+    />
     <div
       v-if="enableModules && handleArrows()"
       class="swiper-button-next"
       :style="{ color: generalTextColor + ' !important' }"
-    ></div>
+    />
 
     <template #fallback>
       <UiBannerSkeleton />
@@ -60,7 +60,7 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import { BannerProps } from '../Banner/types';
+import type { BannerProps } from '../Banner/types';
 
 const { handleArrows } = useCarousel();
 const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();

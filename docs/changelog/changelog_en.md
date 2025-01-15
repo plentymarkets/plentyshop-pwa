@@ -8,10 +8,14 @@
 - Added the logic to render components within a module in certain areas of the PWA
 - Added delivery days to checkout shipping providers.
 - Added robots for category page.
+- Subtitle, pretitle and title options where added to the Recommened Products component
+- Media Card is now Image Text
 
 ### 🩹 Fixed
 
 - Added e2e tests for product manufacturer details tab.
+- Fixed an issue where required attributes notification was blocking the cart.
+- Fixed a visual inconsistency in the category filters sidebar.
 - Fixed accesibility error caused by missing label on clear filters.
 - Fixed same text in alt and title warning in category page.
 - Replaced favicon with PlentyONE favicon.
@@ -23,7 +27,9 @@
 - Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
 - The homepage now displays recommended products on initial load.
 - Fixed product gallery thumbnail image alternate.
+- Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
 - The homepage now has the new version of the carousel
+- Fixed product accordions arrow display.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -593,6 +599,7 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Added more default notifications for a variaty of interactions in the PWA
 - Added loading animations where applicable
 - Added empty block component for when there is no data in the json
+- Added a new text component for the homepage
 
 ### Changed
 

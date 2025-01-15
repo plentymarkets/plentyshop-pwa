@@ -45,8 +45,8 @@
         data-testid="quantity-selector-input"
         class="h-12"
         :aria-label="$t('quantitySelector')"
-        @input="handleOnChange"
         :disabled="disabled"
+        @input="handleOnChange"
       />
       <UiButton
         variant="tertiary"

@@ -1,4 +1,4 @@
-import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 

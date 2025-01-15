@@ -9,19 +9,18 @@
           isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
       },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
-      { '-z-10': !isPreview },
     ]"
-    @click="tabletEdit(index)"
     data-testid="block-wrapper"
+    @click="tabletEdit(index)"
   >
     <button
       v-if="disableActions && isPreview"
-      @click.stop="addNewBlock(index, -1)"
       class="z-[0] md:z-[1] lg:z-[10] absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 hover:opacity-100 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="top-add-block"
+      @click.stop="addNewBlock(index, -1)"
     >
-      <SfIconAdd class="cursor-pointer"></SfIconAdd>
+      <SfIconAdd class="cursor-pointer" />
     </button>
     <UiBlockActions
       v-if="disableActions && blockHasData && blockHasData(block) && isPreview"
@@ -37,18 +36,18 @@
       @delete="deleteBlock"
     />
     <component
-      v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
       :is="getComponent && getComponent(block.name)"
+      v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
       v-bind="block.options"
     />
     <button
       v-if="disableActions && isPreview"
-      @click.stop="addNewBlock(index, 1)"
       class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
       :class="[{ 'opacity-100': isClicked && clickedBlockIndex === index }]"
       data-testid="bottom-add-block"
+      @click.stop="addNewBlock(index, 1)"
     >
-      <SfIconAdd class="cursor-pointer"></SfIconAdd>
+      <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
 </template>

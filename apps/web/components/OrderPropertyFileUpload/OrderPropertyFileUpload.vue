@@ -20,12 +20,12 @@
 
     <div
       v-if="!loaded && !loading"
-      class="flex items-center"
       id="drop-area"
+      class="flex items-center"
       @drop="handleDrop"
       @dragover="handleDragOver"
     >
-      <input type="file" ref="uploadForm" hidden @change="handleFileUpload" />
+      <input ref="uploadForm" type="file" hidden @change="handleFileUpload" />
       <div class="w-full">
         <div class="flex items-center">
           <UiButton

@@ -34,9 +34,9 @@
           ]"
         >
           <ul
-            class="[&:not(:last-child)]:mb-4"
             v-for="({ title, icon, subsections }, secIndex) in sections"
             :key="`section-${secIndex}`"
+            class="[&:not(:last-child)]:mb-4"
           >
             <SfListItem class="py-4 md:py-2 hover:!bg-transparent font-medium !cursor-auto select-none">
               <template #prefix><Component :is="icon" /></template>
@@ -63,9 +63,9 @@
           <UiDivider />
           <ul>
             <SfListItem
-              @click="logOut"
               class="py-4 md:py-2 mt-4 rounded-md active:bg-primary-100 !text-neutral-900"
               data-testid="account-logout-button"
+              @click="logOut"
             >
               <template #prefix><SfIconBase /></template>
               {{ t('account.logout') }}

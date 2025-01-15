@@ -1,5 +1,5 @@
 <template>
-  <slot></slot>
+  <slot />
 </template>
 
 <script setup lang="ts">
@@ -12,8 +12,8 @@ const { index } = defineProps<DriftProps>();
 let drift: Drift | null = null;
 
 onMounted(() => {
-  let demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
-  let paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
+  const demoTrigger = document.querySelector(`.demo-trigger-${index}`) as HTMLElement;
+  const paneContainer = document.querySelector('.drift-zoom-image') as HTMLElement;
 
   if (!demoTrigger || !paneContainer) {
     return;

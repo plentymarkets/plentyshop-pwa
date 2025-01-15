@@ -1,4 +1,4 @@
-import { type ConcreteComponent } from 'vue';
+import type { ConcreteComponent } from 'vue';
 
 export interface ModalProps {
   modelValue?: boolean;

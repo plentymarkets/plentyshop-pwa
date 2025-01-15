@@ -1,6 +1,12 @@
 import { type Address, AddressType, cartGetters, userAddressGetters } from '@plentymarkets/shop-api';
-import { type DeleteAddress, type SetDefault } from './types';
-import { type UseAddressReturn, type GetAddresses, type SaveAddress, UseAddressMethodsState } from './types';
+import type {
+  DeleteAddress,
+  SetDefault,
+  UseAddressReturn,
+  GetAddresses,
+  SaveAddress,
+  UseAddressMethodsState,
+} from './types';
 
 /**
  * @deprecated use `useAddressStore`, `useCheckoutAddress`, `useCreateAddress`, `usePrimaryAddress`, `useFetchAddress`, `useDeleteAddress` instead

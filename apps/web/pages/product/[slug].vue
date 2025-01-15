@@ -22,7 +22,7 @@
           />
 
           <div class="p-4 flex">
-            <p @click="openDrawer()" data-testid="open-manufacturer-drawer" class="font-bold leading-6 cursor-pointer">
+            <p class="font-bold leading-6 cursor-pointer" @click="openDrawer()" data-testid="open-manufacturer-drawer">
               <span>{{ t('legalDetails') }}</span>
               <SfIconChevronRight />
             </p>
@@ -31,9 +31,7 @@
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductRecommendedProducts
-            :category-id="productGetters.getCategoryIds(product)[0]"
-          ></ProductRecommendedProducts>
+          <ProductRecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -45,7 +43,8 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import { Product, productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: false,
@@ -85,7 +84,6 @@ await fetchReviews();
 
 setBreadcrumbs();
 
-// eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.

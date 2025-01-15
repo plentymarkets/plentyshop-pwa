@@ -20,17 +20,17 @@
         <OrDivider class="mt-4" />
       </template>
 
-      <form @submit.prevent="loginUser" :class="{ 'mt-4': isAvailable }">
+      <form :class="{ 'mt-4': isAvailable }" @submit.prevent="loginUser">
         <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
 
         <label>
           <UiFormLabel class="w-full mt-4">{{ t('form.emailLabel') }}</UiFormLabel>
-          <SfInput class="w-full" name="email" type="email" autocomplete="email" v-model="email" required />
+          <SfInput v-model="email" class="w-full" name="email" type="email" autocomplete="email" required />
         </label>
 
         <label>
           <UiFormLabel class="mt-6">{{ t('form.passwordLabel') }}</UiFormLabel>
-          <UiFormPasswordInput name="password" autocomplete="current-password" v-model="password" required />
+          <UiFormPasswordInput v-model="password" name="password" autocomplete="current-password" required />
         </label>
 
         <UiButton :disabled="loading || loginSubmit" type="submit" class="mt-8 w-full">

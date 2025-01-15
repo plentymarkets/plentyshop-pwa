@@ -15,19 +15,19 @@
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
         <SfIconBase
-          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview, reviewItem)"
           viewBox="0 0 32 32"
           size="xs"
           class="fill-primary-700 cursor-pointer"
           data-testid="edit-review-button"
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview, reviewItem)"
         >
           <path :d="penPath" />
         </SfIconBase>
         <SfIconDelete
-          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, reviewItem)"
           size="sm"
           class="fill-primary-700 cursor-pointer"
           data-testid="remove-review-button"
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, reviewItem)"
         />
       </div>
     </div>
@@ -46,8 +46,8 @@
       v-if="reviewItem.replies.length > 0"
       type="button"
       class="inline-block text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-500 hover:border-primary-800"
-      @click="isCollapsed = !isCollapsed"
       data-testid="show-replies"
+      @click="isCollapsed = !isCollapsed"
     >
       {{ t(isCollapsed ? 'review.showAnswers' : 'review.hideAnswers') }}
     </button>
@@ -75,19 +75,19 @@
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
               <SfIconBase
-                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply, reply)"
                 viewBox="0 0 38 38"
                 size="xs"
                 class="fill-primary-700 cursor-pointer"
                 data-testid="edit-reply-button"
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply, reply)"
               >
                 <path :d="penPath" />
               </SfIconBase>
               <SfIconDelete
-                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
                 size="xs"
                 class="fill-primary-700 cursor-pointer"
                 data-testid="remove-reply-button"
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
               />
             </div>
             <br />
@@ -98,11 +98,11 @@
 
       <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
         <UiButton
-          @click="isAnswerFormOpen = true"
           variant="tertiary"
           size="sm"
           class="self-start"
           data-testid="add-reply-button"
+          @click="isAnswerFormOpen = true"
         >
           {{ t('review.answer') }}
         </UiButton>
