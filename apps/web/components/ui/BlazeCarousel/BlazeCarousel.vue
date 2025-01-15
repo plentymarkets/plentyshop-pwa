@@ -1,30 +1,33 @@
 <template>
-  <div class="blaze-slider">
-    <div class="blaze-container relative">
+  <div class="blaze-slider relative">
+    <div class="blaze-container">
       <div class="blaze-track-container">
         <div class="blaze-track flex gap-4 w-full">
           <div
             v-for="(bannerItem, index) in bannerItems"
             :key="index"
-            class="blaze-slide flex-shrink-0 w-full h-auto  overflow-hidden"
+            class="blaze-slide relative flex-shrink-0 w-full h-auto overflow-hidden"
           >
             <UiBanner :banner-props="bannerItem" :index="index" />
           </div>
         </div>
       </div>
+
+      <button class="blaze-prev absolute left-[-18px] top-1/2 -translate-y-1/2 text-white">
+        <svg class="w-20 h-20" fill="none" :stroke="generalTextColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
+      </button>
+
+      <button class="blaze-next absolute right-[-18px] top-1/2 -translate-y-1/2 text-white">
+        <svg class="w-20 h-20" fill="none" :stroke="generalTextColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
     </div>
+
+    <div class="blaze-pagination relative flex bottom-[40px] justify-center gap-2 mt-4"></div>
   </div>
-
-
-  <!-- <div class="my-pagination-container">
-          <div class="blaze-pagination"></div>
-        </div> -->
-
-  <!-- navigation buttons -->
-  <!-- <div class="my-nav-container">
-        <button class="blaze-prev">previous</button>
-        <button class="blaze-next">next</button>
-      </div> -->
 </template>
 
 <script setup lang="ts">
@@ -33,7 +36,10 @@ import 'blaze-slider/dist/blaze.css';
 import type { BannerProps } from '../Banner/types';
 
 const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
-console.log('Banner Items:', bannerItems);
+const generalTextColor = ref('inherit');
+
+generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
+
 
 onMounted(() => {
   const el = document.querySelector('.blaze-slider');
@@ -46,3 +52,24 @@ onMounted(() => {
   }
 });
 </script>
+
+<style>
+.blaze-pagination button {
+  font-size: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  outline: none;
+  border: none;
+  background: v-bind(generalTextColor);
+  cursor: pointer;
+  transition:
+    transform 200ms ease,
+    background-color 300ms ease;
+}
+
+.blaze-pagination button.active {
+  background: v-bind(generalTextColor);
+  transform: scale(1.3);
+}
+</style>
