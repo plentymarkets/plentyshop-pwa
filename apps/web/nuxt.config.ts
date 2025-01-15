@@ -181,7 +181,6 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
-          // @ts-ignore
           urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkOnly',
           options: {
