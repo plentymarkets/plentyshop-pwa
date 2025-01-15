@@ -1,10 +1,12 @@
 <template>
-  <div class="relative mt-5 p-4 sm:p-10 text-center" :style="{backgroundColor: props.text?.bgColor ?? '#f5f5f5'}">
+  <div class="relative mt-5 p-4 sm:p-10 text-center" :style="{ backgroundColor: props.text?.bgColor ?? '#f5f5f5' }">
     <h2 class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
       {{ props.text?.title ?? t('newsletter.heading') }}
     </h2>
-    <p class="typography-text-sm sm:typography-text-base my-2 mb-4" v-html="props.text?.htmlDescription ?? t('newsletter.info')">
-    </p>
+    <p
+      class="typography-text-sm sm:typography-text-base my-2 mb-4"
+      v-html="props.text?.htmlDescription ?? t('newsletter.info')"
+    ></p>
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
       <div v-if="props.input?.displayNameInput" class="grid grid-cols-1 sm:grid-cols-2">
