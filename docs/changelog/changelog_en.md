@@ -10,6 +10,7 @@
 - Added robots for category page.
 - Subtitle, pretitle and title options where added to the Recommened Products component
 - Added canonical for item page.
+- Media Card is now Image Text
 
 ### 🩹 Fixed
 
@@ -28,6 +29,7 @@
 - Fixed product gallery thumbnail image alternate.
 - Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
 - The homepage now has the new version of the carousel
+- Fixed product accordions arrow display.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
