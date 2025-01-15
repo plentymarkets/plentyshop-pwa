@@ -14,6 +14,7 @@
 
 ### 🩹 Fixed
 
+- Added e2e tests for product manufacturer details tab.
 - Fixed an issue where required attributes notification was blocking the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
 - Fixed accesibility error caused by missing label on clear filters.
