@@ -13,20 +13,22 @@
         </div>
       </div>
 
-      <button class="blaze-prev absolute left-[-18px] top-1/2 -translate-y-1/2 text-white">
+      <button v-if="!isMobile" class="blaze-prev absolute left-[-18px] top-1/2 -translate-y-1/2 text-white">
         <svg class="w-20 h-20" fill="none" :stroke="generalTextColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
         </svg>
       </button>
 
-      <button class="blaze-next absolute right-[-18px] top-1/2 -translate-y-1/2 text-white">
+      <button v-if="!isMobile" class="blaze-next absolute right-[-18px] top-1/2 -translate-y-1/2 text-white">
         <svg class="w-20 h-20" fill="none" :stroke="generalTextColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
     </div>
 
-    <div class="blaze-pagination relative flex bottom-[40px] justify-center gap-2 mt-4"></div>
+    <div
+      class="blaze-pagination absolute flex bottom-[20px] left-1/2 transform -translate-x-1/2 justify-center gap-2 mt-4"
+    ></div>
   </div>
 </template>
 
@@ -38,8 +40,10 @@ import type { BannerProps } from '../Banner/types';
 const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
 const generalTextColor = ref('inherit');
 
-generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
+const viewport = useViewport();
+const isMobile = computed(() => viewport.isLessThan('lg'));
 
+generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
 
 onMounted(() => {
   const el = document.querySelector('.blaze-slider');
