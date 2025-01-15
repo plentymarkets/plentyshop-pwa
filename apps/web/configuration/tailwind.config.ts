@@ -91,5 +91,6 @@ export default {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [sfTypography, require('@savvywombat/tailwindcss-grid-areas')],
 } as Config;

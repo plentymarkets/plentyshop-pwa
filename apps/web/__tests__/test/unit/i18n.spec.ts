@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { getLocaleObject } from '../../../configuration/locale.config'
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const en = require('../../../lang/en.json')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const de = require('../../../lang/de.json')
 
 describe('i18n', () => {
