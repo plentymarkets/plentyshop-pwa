@@ -120,7 +120,7 @@ export const usePayPal = () => {
         return paypalScript;
       })
       .finally(() => {
-        delete state.value.loadingScripts[scriptKey];
+        delete state.value.loadingScripts.scriptKey;
       });
 
     return state.value.loadingScripts[scriptKey];
