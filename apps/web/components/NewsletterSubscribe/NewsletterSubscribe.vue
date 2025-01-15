@@ -1,14 +1,13 @@
 <template>
-  <div class="relative mt-5 bg-neutral-100 p-4 sm:p-10 text-center">
+  <div class="relative mt-5 p-4 sm:p-10 text-center" :style="{backgroundColor: props.text?.bgColor ?? '#f5f5f5'}">
     <h2 class="typography-headline-4 sm:typography-headline-3 font-bold mb-2">
-      {{ t('newsletter.heading') }}
+      {{ props.text?.title ?? t('newsletter.heading') }}
     </h2>
-    <p class="typography-text-sm sm:typography-text-base my-2 mb-4">
-      {{ t('newsletter.info') }}
+    <p class="typography-text-sm sm:typography-text-base my-2 mb-4" v-html="props.text?.htmlDescription ?? t('newsletter.info')">
     </p>
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
-      <div v-if="showNames" class="grid grid-cols-1 sm:grid-cols-2">
+      <div v-if="props.input?.displayNameInput" class="grid grid-cols-1 sm:grid-cols-2">
         <div class="sm:mr-[1rem]">
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>
@@ -101,7 +100,7 @@
       <div class="flex flex-col items-center">
         <UiButton type="submit" size="lg" :disabled="loading">
           <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="base" />
-          <template v-else>{{ t('newsletter.subscribe') }}</template>
+          <template v-else>{{ props.button?.label ?? t('newsletter.subscribe') }}</template>
         </UiButton>
 
         <NuxtTurnstile
@@ -127,12 +126,14 @@ import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 import { paths } from '~/utils/paths';
+import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
 const runtimeConfig = useRuntimeConfig();
-const { subscribe, loading, showNames } = useNewsletter();
+const { subscribe, loading } = useNewsletter();
 const { send } = useNotification();
 const localePath = useLocalePath();
 const { t } = useI18n();
+const props = defineProps<NewsletterSubscribeProps>();
 
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
@@ -140,10 +141,10 @@ const wrapperClass = 'focus-within:outline focus-within:outline-offset';
 
 const validationSchema = toTypedSchema(
   object({
-    firstName: showNames.value
+    firstName: props.input?.nameIsRequired
       ? string().required(t('errorMessages.newsletter.firstNameRequired')).default('')
       : string().optional().default(''),
-    lastName: showNames.value
+    lastName: props.input?.nameIsRequired
       ? string().required(t('errorMessages.newsletter.lastNameRequired')).default('')
       : string().optional().default(''),
     email: string().email(t('errorMessages.email.valid')).required(t('errorMessages.email.required')).default(''),

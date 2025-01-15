@@ -37,7 +37,6 @@
     />
     <component
       :is="getComponent && getComponent(block.name)"
-      v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
       v-bind="block.options"
     />
     <button
@@ -63,7 +62,6 @@ interface Props {
   isClicked: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
-  showNewsletter: boolean;
   blockHasData?: (block: Block) => boolean;
   getComponent?: (name: string) => unknown;
   tabletEdit: (index: number) => void;
