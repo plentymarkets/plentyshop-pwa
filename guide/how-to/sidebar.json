@@ -60,6 +60,22 @@
                 "link": "/guide/how-to/module/index.md"
             },
             {
+                "text": "Components",
+                "link": "/guide/how-to/module/components.md"
+            },
+            {
+                "text": "Layouts",
+                "link": "/guide/how-to/module/layouts.md"
+            },
+            {
+                "text": "Pages",
+                "link": "/guide/how-to/module/pages.md"
+            },
+            {
+                "text": "Middlewares",
+                "link": "/guide/how-to/module/middlewares.md"
+            },
+            {
                 "text": "i18n",
                 "link": "/guide/how-to/module/i18n.md"
             },
@@ -70,6 +86,10 @@
             {
                 "text": "Custom JS & CSS",
                 "link": "/guide/how-to/module/custom-js-css.md"
+            },
+            {
+                "text": "Inject components into PlentyONE Shop areas",
+                "link": "/guide/how-to/module/inject-components.md"
             }
         ]
     }
