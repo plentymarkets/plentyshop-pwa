@@ -9,10 +9,12 @@
 - Added delivery days to checkout shipping providers.
 - Added robots for category page.
 - Subtitle, pretitle and title options where added to the Recommened Products component
+- Added canonical for item page.
 - Media Card is now Image Text
 
 ### 🩹 Fixed
 
+- Added e2e tests for product manufacturer details tab.
 - Fixed an issue where required attributes notification was blocking the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
 - Fixed accesibility error caused by missing label on clear filters.
