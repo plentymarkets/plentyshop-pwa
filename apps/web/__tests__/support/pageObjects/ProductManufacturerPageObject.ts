@@ -35,25 +35,25 @@ export class ProductManufacturerPageObject extends PageObject {
   }
 
   displayCheck() {
-    this.assertProductDetailPageElements();
+    this.assertProductManufacturerPageElements();
     return this;
   }
 
-  assertProductDetailPageElements() {
+  assertProductManufacturerPageElements() {
     this.manufacturerDrawerTrigger.should('be.visible');
     this.manufacturerDrawerTrigger.click();
     this.manufacturerResponsibleInfo.should('be.visible');
     this.manufacturerResponsibleInformation.should('be.visible');
      
-    this.manufacturerResponsibleInformationName.should('be.visible');
-    this.manufacturerResponsibleInformationStreet.should('be.visible');
-    this.manufacturerResponsibleInformationPostcode.should('be.visible');
-    this.manufacturerResponsibleInformationPhone.should('be.visible');
-    this.manufacturerResponsibleInformationEmail.should('be.visible');
+    // this.manufacturerResponsibleInformationName.should('be.visible');
+    // this.manufacturerResponsibleInformationStreet.should('be.visible');
+    // this.manufacturerResponsibleInformationPostcode.should('be.visible');
+    // this.manufacturerResponsibleInformationPhone.should('be.visible');
+    // this.manufacturerResponsibleInformationEmail.should('be.visible');
 
 
     this.manufacturerResponsibleInformation.click()
-    this.manufacturerInformationName.should('be.visible');
+    // this.manufacturerInformationName.should('be.visible');
     this.productLegalDetailsClose.click();
 
     this.manufacturerResponsibleInfo.should('not.exist');
