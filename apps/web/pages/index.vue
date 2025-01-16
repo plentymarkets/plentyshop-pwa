@@ -68,13 +68,20 @@ const addNewBlock = (index: number, position: number) => {
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 
+const runtimeConfig = useRuntimeConfig();
+console.log("Runtime Config:", runtimeConfig);
+
+const isHero = ref(runtimeConfig.public.isHero);
+console.log("Is hero: " + isHero.value);
+
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
-  if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
   if (name === 'UiTextCard') return resolveComponent('UiTextCard');
   if (name === 'UiImageText') return resolveComponent('UiImageText');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
-  if (name === 'UiBlazeCarousel') return resolveComponent('UiBlazeCarousel');
+  if (name === 'UiHeroCarousel' || name === 'UiBlazeCarousel') {
+    return isHero.value ? resolveComponent('UiHeroCarousel') : resolveComponent('UiBlazeCarousel');
+  }
 };
 
 onMounted(() => {
