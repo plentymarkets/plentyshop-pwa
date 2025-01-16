@@ -18,7 +18,6 @@
           :is-clicked="isClicked"
           :clicked-block-index="clickedBlockIndex"
           :is-tablet="isTablet"
-          :show-newsletter="showNewsletter"
           :block-has-data="blockHasData"
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
@@ -49,7 +48,6 @@ const {
 } = useBlockManager();
 
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
-const { showNewsletter } = useNewsletter();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 

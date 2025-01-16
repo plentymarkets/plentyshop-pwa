@@ -114,14 +114,18 @@
     {
       "name": "NewsletterSubscribe",
       "options": {
-        "email": "Email",
-        "firstName": "First Name",
-        "heading": "Subscribe to our Newsletter",
-        "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
-        "lastName": "Last Name",
-        "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
-        "subscribe": "Subscribe To Newsletter",
-        "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
+        "text": {
+          "bgColor": "#f5f5f5",
+          "title": "Subscribe to our Newsletter",
+          "htmlDescription": "Be aware of upcoming sales and events. Receive gifts and special offers!"
+        },
+        "input": {
+          "displayNameInput": false,
+          "nameIsRequired": false
+        },
+        "button": {
+          "label": "Subscribe To Newsletter"
+        }
       }
     }
   ],
