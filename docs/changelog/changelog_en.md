@@ -33,6 +33,7 @@
 - The homepage now has the new version of the carousel
 - Fixed product accordions arrow display.
 - Fixed an issue where calling useRoute within middleware could lead to misleading results.
+- Fixed an issue where you only edit the initial block you selected.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
