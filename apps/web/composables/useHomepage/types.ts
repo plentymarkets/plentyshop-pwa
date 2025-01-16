@@ -1,5 +1,6 @@
 import type { BannerProps } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
+import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
 interface ImageProps {
   lg: string;
@@ -36,16 +37,6 @@ export interface ProductRecommendedProductsOptions {
   categoryId: string;
   headline?: string;
 }
-interface NewsletterSubscribeOptions {
-  email?: string;
-  firstName?: string;
-  heading?: string;
-  info?: string;
-  lastName?: string;
-  policy?: string;
-  subscribe?: string;
-  success?: string;
-}
 
 type BlockOptions =
   | BannerProps
@@ -53,7 +44,7 @@ type BlockOptions =
   | UiMediaCardOptions
   | TextCardProps
   | ProductRecommendedProductsOptions
-  | NewsletterSubscribeOptions;
+  | NewsletterSubscribeProps;
 
 export interface Block {
   name: string;
