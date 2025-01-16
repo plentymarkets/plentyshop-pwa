@@ -63,7 +63,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
-    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
+    useWishlist().setWishlistItemIds(Object.keys(state.value.data?.basket?.itemWishListIds || []));
 
     state.value.loading = false;
     return state.value.data;

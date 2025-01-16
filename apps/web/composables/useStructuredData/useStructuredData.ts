@@ -3,10 +3,11 @@ import type {
   SetLogoMeta,
   SetProductMetaData,
   SetProductRobotsMetaData,
+  SetProductCanonicalMetaData,
   UseStructuredDataState,
 } from './types';
 import { categoryTreeGetters, productGetters, reviewGetters, productSeoSettingsGetters } from '@plentymarkets/shop-api';
-import type { CategoryTreeItem, Product } from '@plentymarkets/shop-api';
+import type { CategoryTreeItem, Product, CanonicalAlternate } from '@plentymarkets/shop-api';
 import { useProductReviews } from '../useProductReviews';
 import { useProductReviewAverage } from '../useProductReviewAverage';
 
@@ -210,10 +211,37 @@ export const useStructuredData: useStructuredDataReturn = () => {
     state.value.loading = false;
   };
 
+  const setProductCanonicalMetaData: SetProductCanonicalMetaData = (product: Product) => {
+    state.value.loading = true;
+
+    const canonical = productSeoSettingsGetters.getCanonical(product);
+
+    if (canonical) {
+      useHead({
+        link: [{ rel: 'canonical', href: productSeoSettingsGetters.getCanonicalHref(canonical) }],
+      });
+
+      const canonicalAlternates = productSeoSettingsGetters.getCanonicalAlternate(canonical);
+      const alternateLocales = canonicalAlternates.map((item: CanonicalAlternate) => {
+        return {
+          rel: 'alternate',
+          hreflang: productSeoSettingsGetters.getCanonicalAlternateHreflang(item),
+          href: productSeoSettingsGetters.getCanonicalAlternateHref(item),
+        };
+      });
+
+      useHead({
+        link: alternateLocales,
+      });
+    }
+    state.value.loading = false;
+  };
+
   return {
     setLogoMeta,
     setProductMetaData,
     setProductRobotsMetaData,
+    setProductCanonicalMetaData,
     ...toRefs(state.value),
   };
 };

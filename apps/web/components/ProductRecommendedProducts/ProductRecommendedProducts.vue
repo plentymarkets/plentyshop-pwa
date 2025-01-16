@@ -9,8 +9,8 @@
   </h2>
   <div v-if="text?.subtitle" class="text-2xl pb-1">{{ text.subtitle }}</div>
   <div
-    class="typography-text-sm md:typography-text-lg font-normal"
     v-if="text?.htmlDescription"
+    class="typography-text-sm md:typography-text-lg font-normal"
     v-html="text.htmlDescription"
   ></div>
   <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
