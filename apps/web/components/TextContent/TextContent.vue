@@ -17,7 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue';
 import type { TextContentProps } from '~/components/TextContent/types';
 
 const props = defineProps<TextContentProps>();
