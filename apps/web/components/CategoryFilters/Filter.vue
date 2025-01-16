@@ -110,7 +110,6 @@ import {
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 
-const route = routeStore.route ?? useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
@@ -148,7 +147,7 @@ const facetChange = () => updateFilters(models.value);
 updateFilter();
 
 watch(
-  () => route.query,
+  () => useNuxtApp().$router.currentRoute.value.query,
   async () => {
     updateFilter();
 

@@ -16,11 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'nuxt/app';
 import { SfSelect } from '@storefront-ui/vue';
 
 const { getFacetsFromURL, updateSorting } = useCategoryFilter();
-const route = routeStore.route ?? useRoute();
 const options = ref([
   {
     label: 'nameA-Z',
@@ -61,7 +59,7 @@ function sortQueryChanged() {
 sortQueryChanged();
 
 watch(
-  () => route.query.sort,
+  () => useNuxtApp().$router.currentRoute.value.query.sort,
   () => {
     sortQueryChanged();
   },

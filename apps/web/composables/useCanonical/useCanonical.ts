@@ -62,7 +62,7 @@ export const useCanonical: UseCanonicalReturn = () => {
   const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
-    const route = routeStore.route ?? useRoute();
+    const route = useNuxtApp().$router.currentRoute.value;
     const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
@@ -100,9 +100,9 @@ export const useCanonical: UseCanonicalReturn = () => {
    */
   const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
-    const route = routeStore.route ?? useRoute();
+    const { $i18n, $router } = useNuxtApp();
+    const route = $router.currentRoute.value;
     const localePath = useLocalePath();
-    const { $i18n } = useNuxtApp();
     const runtimeConfig = useRuntimeConfig();
 
     const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;

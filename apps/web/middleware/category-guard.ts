@@ -5,8 +5,6 @@
  */
 import { categoryGetters } from '@plentymarkets/shop-api';
 export default defineNuxtRouteMiddleware(async (to) => {
-  routeStore.setRoute(to);
-
   const { getFacetsFromURL, checkFiltersInURL } = useCategoryFilter();
   const { setCategoriesPageMeta } = useCanonical();
   const { isAuthorized, getSession } = useCustomer();
