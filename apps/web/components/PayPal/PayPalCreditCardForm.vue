@@ -7,11 +7,11 @@
       {{ t('checkoutPayment.creditCard') }}
     </h3>
   </header>
-  <div class="payment-container" id="pay-container">
+  <div id="pay-container" class="payment-container">
     <div class="row">
       <div class="grid-cols-12">
         <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCardNumber') }} *</UiFormLabel>
-        <div id="card-number"></div>
+        <div id="card-number" />
       </div>
     </div>
 
@@ -19,13 +19,13 @@
       <div>
         <div class="grid-cols-12">
           <UiFormLabel class="pl-2">{{ t('paypal.unbrandedExpirationDate') }} *</UiFormLabel>
-          <div id="expiration-date"></div>
+          <div id="expiration-date" />
         </div>
       </div>
       <div>
         <div class="grid-cols-12">
           <UiFormLabel class="pl-2">{{ t('paypal.unbrandedCvv') }} *</UiFormLabel>
-          <div id="credit-card-cvv"></div>
+          <div id="credit-card-cvv" />
         </div>
       </div>
     </div>
@@ -34,7 +34,7 @@
 
     <div class="flex justify-end gap-x-4 mt-6">
       <div>
-        <UiButton @click="confirmCancel" type="button" variant="secondary">{{ t('paypal.unbrandedCancel') }}</UiButton>
+        <UiButton type="button" variant="secondary" @click="confirmCancel">{{ t('paypal.unbrandedCancel') }}</UiButton>
       </div>
       <div>
         <UiButton id="creditcard-pay-button" type="submit" :disabled="loading" data-testid="pay-creditcard-button">
@@ -51,7 +51,7 @@
 <script lang="ts" setup>
 import { cartGetters, orderGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular } from '@storefront-ui/vue';
-import { CardFieldsOnApproveData } from '@paypal/paypal-js';
+import type { CardFieldsOnApproveData } from '@paypal/paypal-js';
 
 const { shippingPrivacyAgreement } = useAdditionalInformation();
 const { data: cart, clearCartItems } = useCart();
@@ -69,7 +69,6 @@ const confirmCancel = () => {
   emit('confirmCancel');
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 onMounted(() => {
   let paypalOrderId: string = '';
   let paypalPayerId: string = '';
@@ -98,15 +97,19 @@ onMounted(() => {
         }
         const order = await createOrder({
           paymentId: cart.value.methodOfPaymentId,
-          shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
-        });
-        await executeOrder({
-          mode: 'paypal',
-          plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-          paypalTransactionId: data.orderID,
+          additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
         });
 
+        if (order) {
+          await executeOrder({
+            mode: 'PAYPAL_UNBRANDED_CARD',
+            plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+            paypalTransactionId: data.orderID,
+          });
+        }
+
         if (order?.order?.id) {
+          useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
           navigateTo(

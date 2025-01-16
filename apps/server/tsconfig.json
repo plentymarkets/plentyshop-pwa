@@ -1,6 +1,7 @@
 {
   "display": "Server",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "composite": false,
     "declaration": false,
@@ -18,8 +19,8 @@
     "strict": true,
     "target": "ES2019",
     "types": [
-      "@types/express",
-      "jest"
+      "jest",
+      "@vue-storefront/middleware",
     ],
     "rootDir": ".",
     "outDir": "lib"

@@ -1,9 +1,9 @@
 <template>
-  <div class="font-medium ml-8" :class="{ 'text-center !ml-0': !isModal }">
+  <div class="font-medium ml-8" :class="{ 'flex flex-col items-center': !isModal }">
     <div class="text-lg">{{ t('auth.signup.heading') }}</div>
     <div class="text-base">{{ t('auth.signup.subheading') }}</div>
 
-    <div class="mt-5 font-normal flex flex-col gap-2" :class="{ 'items-center': !isModal }">
+    <div class="mt-5 font-normal flex flex-col gap-2">
       <div class="flex items-center gap-2">
         <SfIconPerson class="text-primary-500" />
         <div>{{ t('auth.signup.benefits.saveAddresses') }}</div>
@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="flex items-center justify-center my-1">
-    <form @submit.prevent="onSubmit" class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]">
+    <form class="flex flex-col gap-4 p-2 md:p-6 rounded-md w-full md:w-[400px]" @submit.prevent="onSubmit">
       <label>
         <UiFormLabel>{{ t('form.emailLabel') }} {{ t('form.required') }}</UiFormLabel>
         <SfInput
@@ -40,10 +40,10 @@
       <label>
         <UiFormLabel>{{ t('form.passwordLabel') }} {{ t('form.required') }}</UiFormLabel>
         <UiFormPasswordInput
+          v-model="password"
           :title="t('invalidPassword')"
           name="password"
           autocomplete="current-password"
-          v-model="password"
           v-bind="passwordAttributes"
           :invalid="Boolean(errors['register.password'])"
         />
@@ -52,10 +52,10 @@
       <label>
         <UiFormLabel>{{ t('form.repeatPasswordLabel') }}</UiFormLabel>
         <UiFormPasswordInput
+          v-model="repeatPassword"
           :title="t('invalidPassword')"
           name="password"
           autocomplete="current-password"
-          v-model="repeatPassword"
           v-bind="repeatPasswordAttributes"
           :invalid="Boolean(errors['register.repeatPassword'])"
         />
@@ -110,9 +110,9 @@
 
       <NuxtTurnstile
         v-if="turnstileSiteKey"
-        v-model="turnstile"
         v-bind="turnstileAttributes"
         ref="turnstileElement"
+        v-model="turnstile"
         :options="{ theme: 'light' }"
         class="mt-4 flex justify-center"
       />
@@ -128,7 +128,7 @@
 
       <div v-if="changeableView" class="text-center">
         <div class="my-5 font-bold">{{ t('auth.signup.alreadyHaveAccount') }}</div>
-        <SfLink @click="$emit('change-view')" variant="primary" class="cursor-pointer">
+        <SfLink variant="primary" class="cursor-pointer" @click="$emit('change-view')">
           {{ t('auth.signup.logInLinkLabel') }}
         </SfLink>
       </div>
@@ -211,7 +211,6 @@ const clearTurnstile = () => {
   turnstileElement.value?.reset();
 };
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const registerUser = async () => {
   if (!meta.value.valid || (!turnstile.value && turnstileSiteKey.length > 0)) {
     return;

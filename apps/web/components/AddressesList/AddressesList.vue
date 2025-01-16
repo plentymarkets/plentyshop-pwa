@@ -18,7 +18,7 @@
     />
 
     <div class="col-span-3 text-center">
-      <h3 class="typography-headline-3 font-bold mt-6 mb-4" v-if="addresses.length === 0">
+      <h3 v-if="addresses.length === 0" class="typography-headline-3 font-bold mt-6 mb-4">
         {{ $t('account.accountSettings.noAddresses') }}
       </h3>
       <UiButton class="!block mt-6 ml-auto mr-auto w-auto" variant="secondary" @click="editAddress">
@@ -46,7 +46,6 @@
         </h3>
       </header>
       <AddressForm
-        :countries="activeShippingCountries"
         :saved-address="selectedAddress"
         :use-as-shipping-default="false"
         :type="type"
@@ -60,12 +59,11 @@
 <script lang="ts" setup>
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 import { SfIconClose, SfLoaderCircular, useDisclosure } from '@storefront-ui/vue';
-import { type AddressesListProps } from './types';
+import type { AddressesListProps } from './types';
 
 const { type, editAddressText, addAddressText } = defineProps<AddressesListProps>();
 
 const { isOpen, open, close } = useDisclosure();
-const { data: activeShippingCountries, getActiveShippingCountries } = useActiveShippingCountries();
 const { saveAddress: saveShippingAddress } = useAddress(AddressType.Shipping);
 const {
   data: addresses,
@@ -77,7 +75,7 @@ const {
   loading,
 } = useAddress(type);
 
-await getActiveShippingCountries();
+await useAggregatedCountries().fetchAggregatedCountries();
 await getAddresses();
 
 const selectedAddress = ref();

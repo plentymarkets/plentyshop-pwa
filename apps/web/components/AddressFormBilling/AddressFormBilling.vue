@@ -1,18 +1,18 @@
 <template>
   <form
-    @submit="submitForm"
     novalidate
     class="grid grid-cols-1 md:grid-cols-[50%_1fr_120px] gap-4"
     data-testid="shipping-address-form"
+    @submit="submitForm"
   >
     <label>
       <UiFormLabel>
         {{ hasCompany ? $t('form.firstNameLabel') : `${$t('form.firstNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
+        v-model="firstName"
         name="firstName"
         autocomplete="given-name"
-        v-model="firstName"
         v-bind="firstNameAttributes"
         :invalid="Boolean(errors['firstName'])"
       />
@@ -24,8 +24,8 @@
         {{ hasCompany ? $t('form.lastNameLabel') : `${$t('form.lastNameLabel')} ${$t('form.required')}` }}
       </UiFormLabel>
       <SfInput
-        autocomplete="family-name"
         v-model="lastName"
+        autocomplete="family-name"
         v-bind="lastNameAttributes"
         :invalid="Boolean(errors['lastName'])"
       />
@@ -33,7 +33,7 @@
     </label>
 
     <div class="md:col-span-3">
-      <SfLink @click="hasCompany = !hasCompany" class="select-none hover:cursor-pointer">
+      <SfLink class="select-none hover:cursor-pointer" @click="hasCompany = !hasCompany">
         {{ !hasCompany ? $t('form.addCompany') : $t('form.removeCompany') }}
       </SfLink>
     </div>
@@ -41,9 +41,9 @@
     <label v-if="hasCompany">
       <UiFormLabel>{{ $t('form.companyLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="companyName"
         name="companyName"
         autocomplete="company"
-        v-model="companyName"
         v-bind="companyNameAttributes"
         :invalid="Boolean(errors['companyName'])"
       />
@@ -53,8 +53,8 @@
     <label v-if="hasCompany" class="md:col-span-2">
       <UiFormLabel>{{ $t('form.vatIdLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
-        autocomplete="vatNumber"
         v-model="vatNumber"
+        autocomplete="vatNumber"
         v-bind="vatNumberAttributes"
         :invalid="Boolean(errors['vatNumber'])"
       />
@@ -64,9 +64,9 @@
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="streetName"
         name="streetName"
         autocomplete="address-line1"
-        v-model="streetName"
         v-bind="streetNameAttributes"
         :invalid="Boolean(errors['streetName'])"
       />
@@ -76,9 +76,9 @@
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="apartment"
         name="streetNumber"
         autocomplete="address-line2"
-        v-model="apartment"
         v-bind="apartmentAttributes"
         :invalid="Boolean(errors['apartment'])"
       />
@@ -88,8 +88,8 @@
     <label>
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
-        autocomplete="postal-code"
         v-model="zipCode"
+        autocomplete="postal-code"
         v-bind="zipCodeAttributes"
         :invalid="Boolean(errors['zipCode'])"
       />
@@ -99,9 +99,9 @@
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfInput
+        v-model="city"
         name="city"
         autocomplete="address-level2"
-        v-model="city"
         v-bind="cityAttributes"
         :invalid="Boolean(errors['city'])"
       />
@@ -111,19 +111,21 @@
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
-        name="country"
         v-model="country"
+        name="country"
         v-bind="countryAttributes"
         :placeholder="$t('form.selectPlaceholder')"
-        autocomplete="country-name"
         :invalid="Boolean(errors['country'])"
+        wrapper-class-name="bg-white"
+        class="!ring-1 !ring-neutral-200"
+        autocomplete="country-name"
       >
         <option
-          v-for="(shippingCountry, index) in countries"
+          v-for="(billingCountry, index) in billingCountries"
           :key="`billing-country-${index}`"
-          :value="shippingCountry.id.toString()"
+          :value="billingCountry.id.toString()"
         >
-          {{ shippingCountry.currLangName }}
+          {{ billingCountry.currLangName }}
         </option>
       </SfSelect>
       <ErrorMessage as="span" name="country" class="flex text-negative-700 text-sm mt-2" />
@@ -134,17 +136,18 @@
 <script setup lang="ts">
 import { SfInput, SfSelect, SfLink } from '@storefront-ui/vue';
 import { useForm, ErrorMessage } from 'vee-validate';
-import { type AddressFormProps } from './types';
+import type { AddressFormProps } from './types';
 import { type Address, AddressType, userAddressGetters } from '@plentymarkets/shop-api';
 
 const { address, addAddress = false } = defineProps<AddressFormProps>();
 
-const { data: countries } = useActiveShippingCountries();
+const { isGuest } = useCustomer();
+const { shippingAsBilling } = useShippingAsBilling();
 const { hasCompany, addressToSave, save: saveAddress, validationSchema } = useAddressForm(AddressType.Billing);
 const { addresses: billingAddresses } = useAddressStore(AddressType.Billing);
 const { set: setCheckoutAddress } = useCheckoutAddress(AddressType.Billing);
-
 const { defineField, errors, setValues, validate, handleSubmit } = useForm({ validationSchema: validationSchema });
+const { billingCountries } = useAggregatedCountries();
 
 const [firstName, firstNameAttributes] = defineField('firstName');
 const [lastName, lastNameAttributes] = defineField('lastName');
@@ -165,18 +168,23 @@ if (!addAddress) {
   }
 }
 
+const guestHasShippingAsBilling = isGuest.value && shippingAsBilling.value;
+
 const syncCheckoutAddress = async () => {
   await setCheckoutAddress(
-    addAddress
+    addAddress || guestHasShippingAsBilling
       ? (billingAddresses.value[0] as Address)
       : (userAddressGetters.getDefault(billingAddresses.value) as Address),
     !addAddress,
   );
+
+  if (guestHasShippingAsBilling) shippingAsBilling.value = false;
 };
 
 const submitForm = handleSubmit((billingAddressForm) => {
   addressToSave.value = billingAddressForm as Address;
 
+  if (guestHasShippingAsBilling && !addAddress) delete addressToSave.value?.id;
   if (addAddress) addressToSave.value.primary = true;
   if (!hasCompany.value) {
     addressToSave.value.companyName = '';

@@ -1,6 +1,7 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import https from 'node:https';
-import { ConfigurationResponse, BaseColors } from './types';
+import type { ConfigurationResponse, BaseColors, Languages } from './types';
 
 export class SystemConfiguration {
   private axiosRequestConfig: AxiosRequestConfig = {
@@ -40,7 +41,7 @@ export class SystemConfiguration {
           : this.findValueInResponseByKey('styling', 'primary'),
       secondary:
         this.findValueInResponseByKey('styling', 'secondary') === ''
-          ? '#008ebd'
+          ? '#31687d'
           : this.findValueInResponseByKey('styling', 'secondary'),
     };
   }
@@ -51,5 +52,12 @@ export class SystemConfiguration {
 
   getLogoUrl(): string {
     return this.findValueInResponseByKey('store', 'logo');
+  }
+
+  getLanugages(): Languages {
+    return {
+      default: this.findValueInResponseByKey('languages', 'defaultLanguage'),
+      activated: this.findValueInResponseByKey('languages', 'languageList'),
+    };
   }
 }

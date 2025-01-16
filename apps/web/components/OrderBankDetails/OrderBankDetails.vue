@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { OrderBankDetailsProps } from '~/components/OrderBankDetails/types';
+import type { OrderBankDetailsProps } from '~/components/OrderBankDetails/types';
 import { orderGetters } from '@plentymarkets/shop-api';
 
 const { t } = useI18n();

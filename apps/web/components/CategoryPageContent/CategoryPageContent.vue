@@ -17,7 +17,7 @@
               })
             }}
           </span>
-          <UiButton @click="open" variant="tertiary" class="md:hidden whitespace-nowrap">
+          <UiButton variant="tertiary" class="md:hidden whitespace-nowrap" @click="open">
             <template #prefix>
               <SfIconTune />
             </template>
@@ -29,7 +29,11 @@
           class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
           data-testid="category-grid"
         >
-          <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="index">
+          <NuxtLazyHydrate
+            v-for="(product, index) in products"
+            :key="productGetters.getVariationId(product)"
+            when-visible
+          >
             <UiProductCard
               :product="product"
               :name="productGetters.getName(product) ?? ''"
@@ -37,7 +41,7 @@
               :rating="productGetters.getAverageRating(product, 'half')"
               :image-url="addModernImageExtension(productGetters.getCoverImage(product))"
               :image-alt="
-                productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
+                'alt-' + productImageGetters.getImageAlternate(productImageGetters.getFirstImage(product)) ||
                 productGetters.getName(product) ||
                 ''
               "
@@ -58,11 +62,21 @@
           </NuxtLazyHydrate>
         </section>
         <LazyCategoryEmptyState v-else />
-        <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="totalProducts > 0">
+        <div v-if="totalProducts > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
           <span>{{ $t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
           <span v-else>{{ $t('itemInclVAT') }}</span>
-          <span>{{ $t('excludedShipping') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
+            <template #shipping>
+              <SfLink
+                :href="localePath(paths.shipping)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('delivery') }}
+              </SfLink>
+            </template>
+          </i18n-t>
         </div>
         <UiPagination
           v-if="totalProducts > 0"
@@ -79,21 +93,22 @@
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfIconTune, useDisclosure } from '@storefront-ui/vue';
-import { type CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { SfIconTune, useDisclosure, SfLink } from '@storefront-ui/vue';
+import type { CategoryPageContentProps } from '~/components/CategoryPageContent/types';
+import { paths } from '~/utils/paths';
 
 const { title, totalProducts, itemsPerPage = 24, products = [] } = defineProps<CategoryPageContentProps>();
 
+const localePath = useLocalePath();
 const { getFacetsFromURL } = useCategoryFilter();
 const { addModernImageExtension } = useModernImage();
 
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+const { showNetPrices } = useCustomer();
 
 const { isOpen, open, close } = useDisclosure();
 const viewport = useViewport();
 
-const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 1));
+const maxVisiblePages = computed(() => (viewport.isGreaterOrEquals('lg') ? 5 : 2));
 
 if (viewport.isLessThan('md')) close();
 </script>

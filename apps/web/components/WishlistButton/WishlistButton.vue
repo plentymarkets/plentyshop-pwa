@@ -7,11 +7,11 @@
         ? t('removeProductFromWishlist', { label: productName })
         : t('addProductToWishlist', { label: productName })
     "
-    :class="{ 'p-[0.9rem]': !isCloseButton }"
+    :class="{ 'p-[0.5rem]': !isCloseButton }"
     class="m-2"
     :disabled="wishlistLoading"
-    @click="onWishlistClick"
     data-testid="wishlist-trigger"
+    @click="onWishlistClick"
   >
     <SfLoaderCircular v-if="actionLoading" class="flex justify-center items-center" size="sm" />
     <template v-else>

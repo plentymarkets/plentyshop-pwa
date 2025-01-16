@@ -62,3 +62,56 @@ apple-pay-button {
   --apple-pay-button-border-radius: 7px;
   --apple-pay-button-box-sizing: border-box;
 }
+
+.swiper-button-prev {
+  color: rgb(var(--colors-2-primary-500)) !important;
+}
+
+.swiper-button-next {
+  color: rgb(var(--colors-2-primary-500)) !important;
+}
+
+#google-pay-button {
+  div {
+    button {
+      width: 100% !important;
+      display: block;
+    }
+  }
+}
+
+.no-preflight {
+  * {
+    all: revert;
+  }
+
+  h1 {
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    margin: 0.67em 0;
+    padding: 0;
+    line-height: 1.2;
+    color: inherit;
+    text-align: left;
+    white-space: normal;
+  }
+
+  img,
+  video {
+    height: auto;
+    max-width: 100%;
+  }
+
+  audio,
+  canvas,
+  embed,
+  iframe,
+  img,
+  object,
+  svg,
+  video {
+    display: block;
+    vertical-align: middle;
+  }
+}

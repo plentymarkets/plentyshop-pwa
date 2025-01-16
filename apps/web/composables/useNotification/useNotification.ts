@@ -1,7 +1,7 @@
 import type { UseNotificationState, UseNotificationReturn, Notification } from './types';
 
 const maxVisibleNotifications = 5;
-const dismissTimeout = 3000;
+const dismissTimeout = 5000;
 
 /**
  * @description Composable to display ui notifications

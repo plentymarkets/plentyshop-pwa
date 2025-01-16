@@ -1,4 +1,4 @@
-import { type Address, AddressType } from '@plentymarkets/shop-api';
+import type { AddressType, Address, ApiError } from '@plentymarkets/shop-api';
 
 export const useCheckoutAddress = (type: AddressType) => {
   const state = useState('useCheckoutAddress' + type, () => ({
@@ -15,7 +15,7 @@ export const useCheckoutAddress = (type: AddressType) => {
       });
       state.value.loading = false;
     } catch (error: unknown) {
-      useHandleError(error as Error);
+      useHandleError(error as ApiError);
       state.value.loading = false;
     }
   };

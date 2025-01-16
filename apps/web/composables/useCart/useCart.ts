@@ -1,18 +1,20 @@
-import {
-  type Cart,
+import type {
   DoAddItemParams,
   SetCartItemQuantityParams,
   DeleteCartItemParams,
   CartItem,
+  CartItemError,
+  ApiError,
+  Cart,
 } from '@plentymarkets/shop-api';
-import {
-  type UseCartReturn,
+import type {
   UseCartState,
-  type GetCart,
-  type AddToCart,
-  type AddItemsToCart,
-  type DeleteCartItem,
-  type SetCartItemQuantity,
+  UseCartReturn,
+  GetCart,
+  AddToCart,
+  AddItemsToCart,
+  DeleteCartItem,
+  SetCartItemQuantity,
 } from './types';
 
 const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart => {
@@ -36,6 +38,10 @@ const migrateVariationData = (oldCart: Cart, nextCart: Cart = {} as Cart): Cart 
   });
 
   return nextCart;
+};
+
+const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
+  return 'availableStock' in data;
 };
 
 /**
@@ -117,10 +123,9 @@ export const useCart: UseCartReturn = () => {
     state.value.loading = true;
 
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCartItem(params));
+      const { data } = await useSdk().plentysystems.doAddCartItem(params);
 
-      useHandleError(error.value);
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      state.value.data = data ? migrateVariationData(state.value.data, data) : state.value.data;
 
       const item = state?.value?.data?.items?.find((item) => item.variationId === params.productId);
 
@@ -128,12 +133,21 @@ export const useCart: UseCartReturn = () => {
         state.value.lastUpdatedCartItem = item;
       }
 
-      return !!data.value;
+      return !!data;
     } catch (error) {
-      throw new Error(error as string);
+      const apiError = error as ApiError;
+      if (apiError.events?.AfterBasketChanged?.basket) {
+        state.value.data = {
+          ...apiError.events.AfterBasketChanged.basket,
+          items: apiError.events.AfterBasketChanged.basketItems,
+        };
+      }
+      useHandleError(apiError);
     } finally {
       state.value.loading = false;
     }
+
+    return false;
   };
 
   /**
@@ -151,17 +165,24 @@ export const useCart: UseCartReturn = () => {
     state.value.loading = true;
 
     try {
-      const { data, error } = await useAsyncData(() => useSdk().plentysystems.doAddCartItems(params));
+      const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
-      useHandleError(error.value);
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
 
-      return !!data.value;
+      return !!data;
     } catch (error) {
-      throw new Error(error as string);
+      const apiError = error as ApiError;
+      if (apiError.events?.AfterBasketChanged?.basket) {
+        state.value.data = {
+          ...apiError.events.AfterBasketChanged.basket,
+          items: apiError.events.AfterBasketChanged.basketItems,
+        };
+      }
+      useHandleError(apiError);
     } finally {
       state.value.loading = false;
     }
+    return false;
   };
 
   /**
@@ -186,9 +207,19 @@ export const useCart: UseCartReturn = () => {
           cartItemId: params.cartItemId,
         }),
       );
+
       useHandleError(error.value);
 
-      state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      if (isCartItemError(data.value?.data as unknown as Cart | CartItemError)) {
+        const { $i18n } = useNuxtApp();
+        const { send } = useNotification();
+        const responseData = data?.value?.data as CartItemError;
+        state.value.data.itemQuantity = responseData.availableStock;
+
+        send({ message: $i18n.t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
+      } else {
+        state.value.data = migrateVariationData(state.value.data, data?.value?.data as Cart) ?? state.value.data;
+      }
 
       return state.value.data;
     } catch (error) {
@@ -228,6 +259,8 @@ export const useCart: UseCartReturn = () => {
     }
   };
 
+  const cartIsEmpty = computed(() => !state.value.data?.items?.length);
+
   return {
     setCart,
     clearCartItems,
@@ -236,6 +269,7 @@ export const useCart: UseCartReturn = () => {
     addItemsToCart,
     deleteCartItem,
     getCart,
+    cartIsEmpty,
     ...toRefs(state.value),
   };
 };

@@ -1,8 +1,8 @@
 <template>
   <UiOverlay visible>
     <UiModal
-      v-model="isOpen"
       v-if="data"
+      v-model="isOpen"
       as="section"
       role="dialog"
       class="h-full w-full overflow-auto !p-4 md:!p-10 md:max-w-[770px] md:h-fit"
@@ -161,6 +161,12 @@ const localePath = useLocalePath();
 const { locale } = useI18n();
 const { isOpen } = useDisclosure({ initialValue: true });
 const { fetchOrder, data } = useCustomerOrder(route.params.id as string);
+
+definePageMeta({
+  layout: 'account',
+  pageType: 'static',
+  middleware: ['auth-guard'],
+});
 
 onMounted(async () => {
   // without nextTick data on first click does not load data

@@ -39,8 +39,8 @@
   </AccountData>
   <UiDivider class="col-span-3 -mx-4 !w-auto md:mx-0" />
   <UiModal
-    v-model="isOpen"
     ref="modalElement"
+    v-model="isOpen"
     tag="section"
     role="dialog"
     class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
@@ -71,6 +71,7 @@ import { unrefElement } from '@vueuse/core';
 definePageMeta({
   layout: 'account',
   pageType: 'static',
+  middleware: ['auth-guard'],
 });
 const { isOpen, open, close } = useDisclosure();
 const lastActiveElement = ref();

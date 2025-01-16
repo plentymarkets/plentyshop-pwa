@@ -16,14 +16,13 @@ export default defineNuxtConfig({
     asyncContext: true,
   },
   appConfig: {
-    titleSuffix: process.env.STORENAME || 'plentyshop PWA',
+    titleSuffix: process.env.STORENAME || 'PlentyONE Shop',
     fallbackCurrency: 'GBP',
   },
   imports: {
     dirs: ['composables', 'composables/**', 'utils/**'],
   },
   css: ['~/assets/style.scss'],
-  // eslint-disable-next-line unicorn/expiring-todo-comments
   // TODO: build is consistently failing because of this. check whether we need pre-render check.
   nitro: {
     prerender: {
@@ -46,25 +45,25 @@ export default defineNuxtConfig({
       domain: validateApiUrl(process.env.API_URL) ?? process.env.API_ENDPOINT,
       apiEndpoint: process.env.API_ENDPOINT,
       cookieGroups: cookieConfig,
-      showNetPrices: true,
       turnstileSiteKey: process.env?.TURNSTILESITEKEY ?? '',
       useAvif: process.env?.IMAGEAVIF === 'true',
       useWebp: process.env?.IMAGEWEBP === 'true',
       validateReturnReasons: process.env.VALIDATE_RETURN_REASONS === '1',
       enableQuickCheckoutTimer: process.env.ENABLE_QUICK_CHECKOUT_TIMER === '1',
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
-      primaryColor: process.env.PRIMARY || '#0c7992',
-      secondaryColor: process.env.SECONDARY || '#008ebd',
-      newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
-      newsletterFormShowNames:
-        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
+      primaryColor: process.env.PRIMARY || '#062633',
+      secondaryColor: process.env.SECONDARY || '#31687d',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,
+      shippingTextCategoryId: Number(process.env.SHIPPINGTEXT) ?? null,
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
+      noCache: process.env.NO_CACHE || '',
+      configId: process.env.CONFIG_ID || '',
     },
   },
   modules: [
+    '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/test-utils/module',
     '@nuxtjs/google-fonts',
@@ -136,8 +135,9 @@ export default defineNuxtConfig({
   },
   viewport: {
     breakpoints: {
+      xs: 380,
       sm: 640,
-      md: 640,
+      md: 768,
       lg: 1024,
     },
     defaultBreakpoints: {
@@ -178,7 +178,6 @@ export default defineNuxtConfig({
       navigationPreload: true,
       runtimeCaching: [
         {
-          // @ts-ignore
           urlPattern: ({ request }) => request.mode === 'navigate',
           handler: 'NetworkOnly',
           options: {
@@ -213,6 +212,7 @@ export default defineNuxtConfig({
         },
       ],
     },
+
     registerWebManifestInRouteRules: true,
   },
 });

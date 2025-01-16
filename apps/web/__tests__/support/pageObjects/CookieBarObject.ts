@@ -21,7 +21,7 @@ export class CookieBarObject extends PageObject {
   }
 
   checkExternalScript() {
-    return cy.document().then((doc) => {
+    return cy.document().then(() => {
       document.head.innerHTML.includes('test-cookie-external-script.js')
     })
   }

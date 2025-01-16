@@ -17,7 +17,7 @@
         class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
         data-testid="wishlist-grid"
       >
-        <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+        <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getId(product)" when-visible>
           <UiProductCard
             :product="product"
             is-from-wishlist
@@ -69,13 +69,33 @@
         {{ $t('emptyWishlist') }}
       </h2>
     </div>
+    <div v-if="products.length > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
+      <span>{{ $t('asterisk') }}</span>
+      <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
+      <span v-else>{{ $t('itemInclVAT') }}</span>
+      <i18n-t keypath="excludedShipping" scope="global">
+        <template #shipping>
+          <SfLink
+            :href="localePath(paths.shipping)"
+            target="_blank"
+            class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+          >
+            {{ $t('delivery') }}
+          </SfLink>
+        </template>
+      </i18n-t>
+    </div>
   </NarrowContainer>
 </template>
 
 <script setup lang="ts">
 import { productGetters, productImageGetters } from '@plentymarkets/shop-api';
-import { SfLoaderCircular } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfLink } from '@storefront-ui/vue';
 import type { WishlistPageContentProps } from '~/components/WishlistPageContent/types';
+import { paths } from '~/utils/paths';
+
+const { showNetPrices } = useCustomer();
+const localePath = useLocalePath();
 
 const { withHeader = true } = defineProps<WishlistPageContentProps>();
 

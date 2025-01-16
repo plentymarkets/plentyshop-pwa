@@ -1,12 +1,12 @@
 <template>
-  <div v-if="paypalUuid" ref="paypalButton" :id="'paypal-' + paypalUuid" class="z-0 relative paypal-button" />
+  <div v-if="paypalUuid" :id="'paypal-' + paypalUuid" ref="paypalButton" class="z-0 relative paypal-button" />
 </template>
 
 <script setup lang="ts">
 import { orderGetters, cartGetters } from '@plentymarkets/shop-api';
-import { type FUNDING_SOURCE, type OnApproveData, type OnInitActions, PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalNamespace, FUNDING_SOURCE, OnApproveData, OnInitActions } from '@paypal/paypal-js';
 import { v4 as uuid } from 'uuid';
-import { type PayPalAddToCartCallback, type PaypalButtonPropsType } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback, PaypalButtonPropsType } from '~/components/PayPal/types';
 
 const paypalButton = ref<HTMLElement | null>(null);
 const paypalUuid = ref(uuid());
@@ -22,6 +22,7 @@ const localePath = useLocalePath();
 
 const emits = defineEmits<{
   (event: 'validation-callback', callback: PayPalAddToCartCallback): Promise<void>;
+  (event: 'on-approved'): void;
 }>();
 
 const props = defineProps<PaypalButtonPropsType>();
@@ -68,20 +69,25 @@ const onValidationCallback = async () => {
 const onApprove = async (data: OnApproveData) => {
   const result = await approveOrder(data.orderID, data.payerID ?? '');
 
+  emits('on-approved');
+
   if ((props.type === TypeCartPreview || props.type === TypeSingleItem) && result?.url)
     navigateTo(localePath(paths.readonlyCheckout + `/?payerId=${data.payerID}&orderId=${data.orderID}`));
 
   if (props.type === TypeCheckout) {
+    useProcessingOrder().processingOrder.value = true;
     const order = await createOrder({
       paymentId: cart.value.methodOfPaymentId,
-      shippingPrivacyHintAccepted: shippingPrivacyAgreement.value,
+      additionalInformation: { shippingPrivacyHintAccepted: shippingPrivacyAgreement.value },
     });
 
-    await executeOrder({
-      mode: 'paypal',
-      plentyOrderId: Number.parseInt(orderGetters.getId(order)),
-      paypalTransactionId: data.orderID,
-    });
+    if (order) {
+      await executeOrder({
+        mode: 'PAYPAL',
+        plentyOrderId: Number.parseInt(orderGetters.getId(order)),
+        paypalTransactionId: data.orderID,
+      });
+    }
 
     clearCartItems();
 
@@ -110,7 +116,6 @@ const renderButton = (fundingSource: FUNDING_SOURCE) => {
         onInit(actions);
       },
       onError() {
-        // eslint-disable-next-line unicorn/expiring-todo-comments
         // TODO: handle error
       },
       async createOrder() {

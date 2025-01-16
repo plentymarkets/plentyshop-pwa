@@ -56,7 +56,8 @@ const cart: Cart =   {
       "setComponents": [],
       "itemType": 1
     }
-  ]
+  ],
+  "maxDeliveryDays": []
 };
 
 describe('<OrderSummary />', () => {

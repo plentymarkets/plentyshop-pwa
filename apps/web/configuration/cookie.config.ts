@@ -21,6 +21,12 @@ export interface CookieGroupFromNuxtConfig {
   barDescription: string;
 }
 
+export type JsonCookie = {
+  [groupName: string]: {
+    [cookieName: string]: boolean;
+  };
+};
+
 export default {
   barTitle: 'CookieBar.about.label',
   barDescription: 'CookieBar.about.description',
@@ -32,6 +38,14 @@ export default {
       showMore: false,
       description: 'CookieBar.essentials.description',
       cookies: [
+        {
+          name: 'CookieBar.essentials.cookies.payPal.name',
+          Provider: 'CookieBar.essentials.cookies.payPal.provider',
+          Status: 'CookieBar.essentials.cookies.payPal.status',
+          PrivacyPolicy: '/PrivacyPolicy',
+          Lifespan: 'Session',
+          accepted: true,
+        },
         {
           name: 'CookieBar.essentials.cookies.plentyId.name',
           Provider: 'CookieBar.essentials.cookies.plentyId.provider',

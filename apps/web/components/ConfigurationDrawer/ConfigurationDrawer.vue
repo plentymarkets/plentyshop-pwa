@@ -15,7 +15,7 @@
         'bg-neutral-50',
         'border',
         'border-gray-300',
-        'z-50',
+        'z-[150]',
         { 'min-w-[400px]': placement === 'left' || placement === 'right' },
       ]"
     >
@@ -30,26 +30,11 @@
         <div class="border border-black p-4 mb-4 rounded-md">
           <div class="py-2 pl-2 flex justify-between min-w-20">
             <div>Primary:</div>
-            <div><input type="color" v-model="primaryColorReference" /></div>
+            <div><input v-model="primaryColorReference" type="color" /></div>
           </div>
           <div class="py-2 pl-2 flex justify-between">
             <div>Secondary:</div>
-            <div><input type="color" v-model="secondaryColorReference" /></div>
-          </div>
-        </div>
-        <h3>General</h3>
-        <div class="border border-black p-4 rounded-md">
-          <div class="flex items-center pt-2">
-            <SfCheckbox id="newsletterNamesCheckbox" v-model="showNames" class="peer" />
-            <label
-              class="ml-3 text-base text-gray-900 cursor-pointer font-body peer-disabled:text-disabled-900"
-              for="newsletterNamesCheckbox"
-            >
-              Newsletter form
-            </label>
-          </div>
-          <div class="flex justify-between ml-8">
-            <p class="typography-hint-xs mt-0.5 text-neutral-500">Show names</p>
+            <div><input v-model="secondaryColorReference" type="color" /></div>
           </div>
         </div>
       </div>
@@ -58,7 +43,8 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconClose, SfIconTune, SfDrawerPlacement, useTrapFocus, SfCheckbox } from '@storefront-ui/vue';
+import type { SfDrawerPlacement } from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, SfIconTune, useTrapFocus } from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
 const drawerReference = ref();
@@ -68,7 +54,6 @@ const primaryColorReference = ref(runtimeConfig.public.primaryColor);
 const secondaryColorReference = ref(runtimeConfig.public.secondaryColor);
 
 const { open, updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
-const { showNames } = useNewsletter();
 
 useTrapFocus(drawerReference, { activeState: open });
 

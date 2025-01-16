@@ -1,8 +1,6 @@
-import { type UseCanonicalReturn } from './types';
-import { type StaticPageMeta, type CategoriesPageMeta, UseCanonicalState } from './types';
-import { Facet } from '@plentymarkets/shop-api';
-import { FacetSearchCriteria } from '@plentymarkets/shop-api';
-import { LocaleObject } from '@nuxtjs/i18n';
+import type { UseCanonicalReturn, StaticPageMeta, CategoriesPageMeta, UseCanonicalState } from './types';
+import type { Facet, FacetSearchCriteria } from '@plentymarkets/shop-api';
+import type { LocaleObject } from '@nuxtjs/i18n';
 
 /**
  * @description Composable managing canonical data
@@ -64,7 +62,7 @@ export const useCanonical: UseCanonicalReturn = () => {
   const setStaticPageMeta: StaticPageMeta = () => {
     state.value.loading = true;
 
-    const route = useRoute();
+    const route = useNuxtApp().$router.currentRoute.value;
     const runtimeConfig = useRuntimeConfig();
     const localePath = useLocalePath();
     const { locales, defaultLocale } = useI18n();
@@ -102,9 +100,9 @@ export const useCanonical: UseCanonicalReturn = () => {
    */
   const setCategoriesPageMeta: CategoriesPageMeta = (productsCatalog: Facet, facetsFromUrl: FacetSearchCriteria) => {
     state.value.loading = true;
-    const route = useRoute();
+    const { $i18n, $router } = useNuxtApp();
+    const route = $router.currentRoute.value;
     const localePath = useLocalePath();
-    const { $i18n } = useNuxtApp();
     const runtimeConfig = useRuntimeConfig();
 
     const canonicalLink = `${runtimeConfig.public.domain}${localePath(route.fullPath, $i18n.locale.value)}`;

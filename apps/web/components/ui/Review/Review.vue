@@ -15,21 +15,19 @@
           <SfIconVisibilityOff v-else size="sm" class="fill-neutral-400" />
         </SfTooltip>
         <SfIconBase
-          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview, reviewItem)"
           viewBox="0 0 32 32"
           size="xs"
           class="fill-primary-700 cursor-pointer"
           data-testid="edit-review-button"
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReview, reviewItem)"
         >
-          <path
-            d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
-          />
+          <path :d="penPath" />
         </SfIconBase>
         <SfIconDelete
-          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, reviewItem)"
           size="sm"
           class="fill-primary-700 cursor-pointer"
           data-testid="remove-review-button"
+          @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReview, reviewItem)"
         />
       </div>
     </div>
@@ -48,8 +46,8 @@
       v-if="reviewItem.replies.length > 0"
       type="button"
       class="inline-block text-sm font-normal border-b-2 border-black cursor-pointer w-fit hover:text-primary-500 hover:border-primary-800"
-      @click="isCollapsed = !isCollapsed"
       data-testid="show-replies"
+      @click="isCollapsed = !isCollapsed"
     >
       {{ t(isCollapsed ? 'review.showAnswers' : 'review.hideAnswers') }}
     </button>
@@ -77,21 +75,19 @@
                 <SfIconVisibilityOff v-else size="xs" class="fill-neutral-400" />
               </SfTooltip>
               <SfIconBase
-                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply, reply)"
                 viewBox="0 0 38 38"
                 size="xs"
                 class="fill-primary-700 cursor-pointer"
                 data-testid="edit-reply-button"
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.updateReply, reply)"
               >
-                <path
-                  d="M31.25 7.003c0-0 0-0.001 0-0.001 0-0.346-0.14-0.659-0.365-0.886l-5-5c-0.227-0.226-0.539-0.366-0.885-0.366s-0.658 0.14-0.885 0.366v0l-20.999 20.999c-0.146 0.146-0.256 0.329-0.316 0.532l-0.002 0.009-2 7c-0.030 0.102-0.048 0.22-0.048 0.342 0 0.691 0.559 1.251 1.25 1.252h0c0.126-0 0.248-0.019 0.363-0.053l-0.009 0.002 6.788-2c0.206-0.063 0.383-0.17 0.527-0.311l-0 0 21.211-21c0.229-0.226 0.37-0.539 0.371-0.886v-0zM8.133 26.891l-4.307 1.268 1.287-4.504 14.891-14.891 3.219 3.187zM25 10.191l-3.228-3.196 3.228-3.228 3.229 3.228z"
-                />
+                <path :d="penPath" />
               </SfIconBase>
               <SfIconDelete
-                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
                 size="xs"
                 class="fill-primary-700 cursor-pointer"
                 data-testid="remove-reply-button"
+                @click="openReviewModal(defaults.DEFAULT_REVIEW_MODAL_TYPES.deleteReply, reply)"
               />
             </div>
             <br />
@@ -102,11 +98,11 @@
 
       <div v-if="!isAnswerFormOpen && isAuthorized" class="actions flex justify-end">
         <UiButton
-          @click="isAnswerFormOpen = true"
           variant="tertiary"
           size="sm"
           class="self-start"
           data-testid="add-reply-button"
+          @click="isAnswerFormOpen = true"
         >
           {{ t('review.answer') }}
         </UiButton>
@@ -129,6 +125,7 @@ import {
 import type { ReviewProps } from './types';
 import { type ReviewItem, reviewGetters, productGetters } from '@plentymarkets/shop-api';
 import { defaults } from '~/composables';
+import { penPath } from '~/assets/icons/paths/pen';
 
 const props = defineProps<ReviewProps>();
 const { t } = useI18n();

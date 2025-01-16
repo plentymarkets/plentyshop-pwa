@@ -2,28 +2,28 @@
   <div data-testid="product-accordion">
     <UiAccordionItem
       v-if="productGetters.getDescription(product)?.length"
-      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
       v-model="productDetailsOpen"
+      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
     >
       <template #summary>
         <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
           {{ $t('productDetails') }}
         </h2>
       </template>
-      <div v-html="productGetters.getDescription(product)"></div>
+      <div class="no-preflight" v-html="productGetters.getDescription(product)" />
     </UiAccordionItem>
     <UiDivider v-if="productDetailsOpen && productGetters.getDescription(product)?.length" class="mb-2 mt-2" />
     <UiAccordionItem
       v-if="productGetters.getTechnicalData(product)?.length"
-      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
       v-model="technicalDataOpen"
+      summary-class="md:rounded-md w-full hover:bg-neutral-100 py-2 pl-4 pr-3 flex justify-between items-center select-none"
     >
       <template #summary>
         <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
           {{ $t('technicalData') }}
         </h2>
       </template>
-      <div v-html="productGetters.getTechnicalData(product)"></div>
+      <div class="no-preflight" v-html="productGetters.getTechnicalData(product)" />
     </UiAccordionItem>
     <UiDivider v-if="technicalDataOpen && productGetters.getTechnicalData(product)?.length" class="mb-2 mt-2" />
   </div>

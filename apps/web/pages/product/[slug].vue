@@ -3,9 +3,7 @@
     <NarrowContainer>
       <div class="md:grid gap-x-6 grid-areas-product-page grid-cols-product-page">
         <section class="grid-in-left-top md:h-full xl:max-h-[700px]">
-          <NuxtLazyHydrate when-idle>
-            <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
-          </NuxtLazyHydrate>
+          <Gallery :images="addModernImageExtensionForGallery(productGetters.getGallery(product))" />
         </section>
         <section class="mb-10 grid-in-right md:mb-0">
           <NuxtLazyHydrate when-idle>
@@ -23,17 +21,17 @@
             :total-reviews="reviewGetters.getTotalReviews(countsProductReviews)"
           />
 
-          <p @click="openDrawer()" class="font-bold leading-6 w-full p-4 flex cursor-pointer">
-            <span>{{ t('legalDetails') }}</span>
-            <SfIconChevronRight />
-          </p>
+          <div class="p-4 flex">
+            <p class="font-bold leading-6 cursor-pointer" data-testid="open-manufacturer-drawer" @click="openDrawer()">
+              <span>{{ t('legalDetails') }}</span>
+              <SfIconChevronRight />
+            </p>
+          </div>
         </section>
       </div>
       <section class="mx-4 mt-28 mb-20">
         <NuxtLazyHydrate when-visible>
-          <ProductRecommendedProducts
-            :category-id="productGetters.getCategoryIds(product)[0]"
-          ></ProductRecommendedProducts>
+          <ProductRecommendedProducts :category-id="productGetters.getCategoryIds(product)[0]" />
         </NuxtLazyHydrate>
       </section>
     </NarrowContainer>
@@ -45,7 +43,8 @@
 
 <script setup lang="ts">
 import { SfIconChevronRight } from '@storefront-ui/vue';
-import { Product, productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
+import { productGetters, reviewGetters, categoryTreeGetters } from '@plentymarkets/shop-api';
 
 definePageMeta({
   layout: false,
@@ -55,7 +54,7 @@ definePageMeta({
 const { t } = useI18n();
 const route = useRoute();
 const { setCurrentProduct } = useProducts();
-const { setProductMetaData } = useStructuredData();
+const { setProductMetaData, setProductRobotsMetaData, setProductCanonicalMetaData } = useStructuredData();
 const { buildProductLanguagePath } = useLocalization();
 const { addModernImageExtensionForGallery } = useModernImage();
 const { productParams, productId } = createProductParams(route.params);
@@ -67,6 +66,13 @@ const { open, openDrawer } = useProductLegalDetailsDrawer();
 const countsProductReviews = computed(() => reviewGetters.getReviewCounts(productReviews.value));
 
 await fetchProduct(productParams);
+
+if (Object.keys(product.value).length === 0) {
+  throw new Response(null, {
+    status: 404,
+    statusText: 'Not found',
+  });
+}
 setCurrentProduct(product.value || ({} as Product));
 setProductMeta();
 
@@ -78,7 +84,6 @@ await fetchReviews();
 
 setBreadcrumbs();
 
-// eslint-disable-next-line unicorn/expiring-todo-comments
 /* TODO: This should only be temporary.
  *  It changes the url of the product page while on the page and switching the locale.
  *  Should be removed when the item search is refactored.
@@ -105,7 +110,11 @@ watch(
       const categoryTree = categoriesTree.find(
         (categoryTree) => categoryTreeGetters.getId(categoryTree) === productCategoryId,
       );
-      if (categoryTree) setProductMetaData(product.value, categoryTree);
+      if (categoryTree) {
+        setProductMetaData(product.value, categoryTree);
+        setProductRobotsMetaData(product.value);
+      }
+      setProductCanonicalMetaData(product.value);
     }
   },
   { immediate: true },

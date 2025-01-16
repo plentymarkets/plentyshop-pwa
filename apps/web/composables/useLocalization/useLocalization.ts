@@ -24,7 +24,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns category path that is then navigated to
    * @example buildCategoryLanguagePath('')
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -38,7 +37,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns product path that is then navigated to
    * @example buildProductLanguagePath('')
    */
-  // eslint-disable-next-line sonarjs/no-identical-functions,unicorn/consistent-function-scoping
   const buildProductLanguagePath = (path: string) => {
     const localePath = useLocalePath();
 
@@ -53,7 +51,6 @@ export const useLocalization = createSharedComposable(() => {
    * @returns product path that is then navigated to
    * @example buildCategoryMenuLink(category, categoryTree)
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const buildCategoryMenuLink = (category: CategoryTreeItem, categoryTree: CategoryTreeItem[]) => {
     return categoryTreeGetters.generateCategoryLink(categoryTree, category, '');
   };
@@ -64,7 +61,6 @@ export const useLocalization = createSharedComposable(() => {
    * @param path
    * @example getCategoryUrlFromRoute('')
    */
-  // eslint-disable-next-line unicorn/consistent-function-scoping
   const getCategoryUrlFromRoute = (path: string): string => {
     const parts = path.split('/');
 
@@ -101,15 +97,18 @@ export const useLocalization = createSharedComposable(() => {
    * @description Function for switching app locale.
    * @param language
    *
+   * @param hideMenu
    * @example switchLocale('en')
    */
-  const switchLocale = async (language: string) => {
+  const switchLocale = async (language: string, hideMenu = true) => {
     const { getCart } = useCart();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
 
     setVsfLocale(language);
-    toggle();
+    if (hideMenu) {
+      toggle();
+    }
     await getCart().then(
       async () =>
         await navigateTo({

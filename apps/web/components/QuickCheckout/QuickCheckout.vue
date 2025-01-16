@@ -1,11 +1,11 @@
 <template>
   <UiModal
-    @mousemove="endTimer()"
     v-if="isOpen"
     v-model="isOpen"
     tag="section"
     class="h-full md:h-fit m-0 p-0 lg:w-[1000px] overflow-y-auto"
     aria-label="quick-checkout-modal"
+    @mousemove="endTimer()"
   >
     <header>
       <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
@@ -28,21 +28,22 @@
     <div class="lg:grid lg:grid-cols-2 lg:gap-4">
       <div class="lg:border-r-2 flex flex-col items-center p-8">
         <NuxtImg
-          :src="addModernImageExtension(productGetters.getPreviewImage(product))"
+          :src="addModernImageExtension(productGetters.getMiddleImage(product))"
           :alt="t('imageOfSth', { name: productGetters.getName(product) })"
           width="240"
           height="240"
           loading="lazy"
           class="mb-3"
         />
-
-        <div class="flex mb-3">
-          <div class="mr-1 flex">
-            <span class="self-center"> {{ quantity }}x </span>
-          </div>
+        <div class="flex mb-1">
           <h1 class="font-bold typography-headline-4" data-testid="product-name">
             {{ productGetters.getName(product) }}
           </h1>
+        </div>
+        <div class="mb-3">
+          <span class="self-center text-gray-600 sm:typography-headline-4 typography-headline-3">
+            {{ t('account.ordersAndReturns.orderDetails.quantity') }}: {{ quantity }}
+          </span>
         </div>
 
         <ProductPrice :product="product" />
@@ -55,7 +56,17 @@
           <span>{{ t('asterisk') }}</span>
           <span v-if="showNetPrices">{{ t('itemExclVAT') }}</span>
           <span v-else>{{ t('itemInclVAT') }}</span>
-          <span>{{ t('excludedShipping') }}</span>
+          <i18n-t keypath="excludedShipping" scope="global">
+            <template #shipping>
+              <SfLink
+                :href="localePath(paths.shipping)"
+                target="_blank"
+                class="focus:outline focus:outline-offset-2 focus:outline-2 outline-secondary-600 rounded"
+              >
+                {{ $t('delivery') }}
+              </SfLink>
+            </template>
+          </i18n-t>
         </div>
 
         <VariationProperties :product="lastUpdatedProduct" />
@@ -71,24 +82,24 @@
 
         <UiButton
           data-testid="quick-checkout-cart-button"
-          @click="goToPage(paths.cart)"
           size="lg"
           class="w-full mb-3"
           variant="secondary"
+          @click="goToPage(paths.cart)"
         >
-          {{ $t('quickCheckout.checkYourCart') }}
+          {{ t('quickCheckout.checkYourCart') }}
         </UiButton>
 
         <UiButton
           data-testid="quick-checkout-checkout-button"
-          @click="goToPage(paths.checkout)"
           size="lg"
           class="w-full mb-4 md:mb-0"
+          @click="goToPage(paths.checkout)"
         >
-          {{ $t('goToCheckout') }}
+          {{ t('goToCheckout') }}
         </UiButton>
-        <OrDivider class="my-4" v-if="isPayPalReady" />
-        <PayPalExpressButton class="w-full text-center" type="CartPreview" />
+        <OrDivider v-if="isPaypalAvailable" class="my-4" />
+        <PayPalExpressButton class="w-full text-center" type="CartPreview" @on-approved="isOpen = false" />
         <PayPalPayLaterBanner placement="payment" :amount="totals.total" />
       </div>
     </div>
@@ -96,20 +107,22 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconClose } from '@storefront-ui/vue';
+import { SfIconClose, SfLink } from '@storefront-ui/vue';
 import type { QuickCheckoutProps } from './types';
-import { cartGetters, Product, productGetters } from '@plentymarkets/shop-api';
+import type { Product } from '@plentymarkets/shop-api';
+import { cartGetters, productGetters } from '@plentymarkets/shop-api';
 import ProductPrice from '~/components/ProductPrice/ProductPrice.vue';
 import { paths } from '~/utils/paths';
 
 defineProps<QuickCheckoutProps>();
 
 const { t, n } = useI18n();
-const runtimeConfig = useRuntimeConfig();
-const showNetPrices = runtimeConfig.public.showNetPrices;
+
+const { showNetPrices } = useCustomer();
+
 const localePath = useLocalePath();
 const { data: cart, lastUpdatedCartItem } = useCart();
-const { isReady: isPayPalReady, loadConfig } = usePayPal();
+const { isAvailable: isPaypalAvailable, loadConfig } = usePayPal();
 const { addModernImageExtension } = useModernImage();
 const { isOpen, timer, startTimer, endTimer, closeQuickCheckout, hasTimer, quantity } = useQuickCheckout();
 const cartItemsCount = computed(() => cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0);

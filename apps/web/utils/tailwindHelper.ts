@@ -1,4 +1,5 @@
-import { createPaletteFromColor, PaletteConfig } from '@plentymarkets/tailwind-colors';
+import type { PaletteConfig } from '@plentymarkets/tailwind-colors';
+import { createPaletteFromColor } from '@plentymarkets/tailwind-colors';
 
 interface RGB {
   r: number;

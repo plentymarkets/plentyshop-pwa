@@ -18,6 +18,13 @@ describe('<Gallery />', () => {
           position: 1
         }],
       },
+      global: {
+        stubs: {
+          Drift: {
+            template: '<div><slot /></div>',
+          },
+        },
+      },
     });
 
     expect(getByTestId('gallery'));

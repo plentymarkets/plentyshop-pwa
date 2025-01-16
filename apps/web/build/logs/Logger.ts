@@ -1,7 +1,8 @@
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createWriteStream, WriteStream } from 'node:fs';
-import { Logger } from './types';
+import type { WriteStream } from 'node:fs';
+import { createWriteStream } from 'node:fs';
+import type { Logger } from './types';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,7 +12,7 @@ class BuildLogger implements Logger {
   private logStream: WriteStream;
 
   constructor() {
-    const timestamp = new Date().toISOString();
+    const timestamp = new Date().toISOString().replaceAll(':', '-');
     const logFilePath = path.resolve(__dirname, `./build-${timestamp}.log`);
     this.logStream = createWriteStream(logFilePath);
   }
@@ -30,6 +31,7 @@ class BuildLogger implements Logger {
 
   info(message: string): void {
     const formattedMessage = this.formatMessage('INFO', message);
+    // eslint-disable-next-line no-console
     console.log(formattedMessage);
     this.logStream.write(`${formattedMessage}\n`);
   }

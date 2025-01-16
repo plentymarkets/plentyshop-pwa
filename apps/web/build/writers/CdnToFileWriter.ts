@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { writeFileSync } from 'node:fs';
-import { Writer } from './types';
-import { Logger } from '../logs/types';
+import { existsSync, writeFileSync } from 'node:fs';
+import type { Writer } from './types';
+import type { Logger } from '../logs/types';
 
 export class CdnToFileWriter implements Writer {
   private logger: Logger;
@@ -23,6 +23,12 @@ export class CdnToFileWriter implements Writer {
       writeFileSync(path, imageBuffer);
     } catch (error) {
       this.logger.error(`Error downloading file from ${url}: ${error instanceof Error ? error.message : error}`);
+    }
+  }
+
+  writeMissing(data: string, path: string) {
+    if (!existsSync(path)) {
+      this.write(data, path);
     }
   }
 }

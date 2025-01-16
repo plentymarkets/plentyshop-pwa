@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   UseProductReviews,
@@ -40,7 +40,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number) => {
     state.value.loading = true;
     const route = useRoute();
     const config = useRuntimeConfig().public;
@@ -60,10 +60,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
       state.value.loading = false;
       return state.value.data;
     } catch (error: unknown) {
-      useHandleError({
-        statusCode: 500,
-        message: String(error),
-      });
+      useHandleError(error as ApiError);
     }
     return state.value.data;
   };
@@ -81,7 +78,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.doReview(params));
     useHandleError(error.value);
     if (data.value?.data && typeof data.value.data === 'string') {
-      useHandleError({ message: data.value.data, statusCode: 500 });
+      send({ type: 'negative', message: data.value.data });
     } else {
       send({ type: 'positive', message: $i18n.t('review.notification.success') });
     }

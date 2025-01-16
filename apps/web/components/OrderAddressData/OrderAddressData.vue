@@ -1,16 +1,12 @@
 <template>
-  <AddressDisplay :address="transformAddress(address)" :country-name="country" />
+  <AddressDisplay :address="transformAddress(address)" />
 </template>
 
 <script setup lang="ts">
 import type { OrderAddressDataPropsType } from './types';
 import type { Address, AddressData } from '@plentymarkets/shop-api';
 
-const { data: countries } = useActiveShippingCountries();
 const props = defineProps<OrderAddressDataPropsType>();
-const country = computed(() => {
-  return countries.value.find((country) => country.id === props.address.countryId)?.name ?? '';
-});
 
 const transformAddress = (address: AddressData): Address => {
   return {
@@ -18,7 +14,7 @@ const transformAddress = (address: AddressData): Address => {
     lastName: address.name3 || '',
     zipCode: address.postalCode,
     city: address.town,
-    country: country.value,
+    country: props.address.countryId.toString(),
     streetName: address.address1,
     apartment: address.address2,
     phoneNumber: '',

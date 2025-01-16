@@ -3,6 +3,7 @@ import type {
   SessionResult,
   UserChangePasswordParams,
   WishlistVariation,
+  ApiError
 } from '@plentymarkets/shop-api';
 import type {
   UseCustomerReturn,
@@ -68,7 +69,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
-    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || ({} as WishlistVariation));
+    useWishlist().setWishlistItemIds(Object.keys(state.value.data?.basket?.itemWishListIds || ({} as WishlistVariation)));
 
     state.value.loading = false;
     return state.value.data;
@@ -123,7 +124,7 @@ export const useCustomer: UseCustomerReturn = () => {
 
       return state.value.isAuthorized;
     } catch (error) {
-      useHandleError(error as ErrorParams);
+      useHandleError(error as ApiError);
       state.value.loading = false;
       return false;
     }
@@ -201,6 +202,7 @@ export const useCustomer: UseCustomerReturn = () => {
     register,
     loginAsGuest,
     changePassword,
+    showNetPrices: state?.value?.data?.user?.showNetPrices,
     ...toRefs(state.value),
   };
 };

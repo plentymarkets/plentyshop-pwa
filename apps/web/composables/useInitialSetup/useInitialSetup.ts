@@ -1,6 +1,5 @@
-import type { Cart, SessionResult, WishlistVariation } from '@plentymarkets/shop-api';
+import type { Cart, SessionResult, WishlistVariation, ApiError } from '@plentymarkets/shop-api';
 import type { SetInitialData, UseInitialSetupReturn } from './types';
-import type { ErrorParams } from '../useHandleError';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData
@@ -22,7 +21,7 @@ const setInitialData: SetInitialData = async () => {
       setCart(data.basket as Cart);
     }
   } catch (error) {
-    useHandleError(error as ErrorParams);
+    useHandleError(error as ApiError);
   } finally {
     cartLoading.value = false;
   }
@@ -59,7 +58,7 @@ const setInitialDataSSR: SetInitialData = async () => {
       setWishlistItemIds(dataWishlistIds || ({} as WishlistVariation));
     }
   } catch (error) {
-    useHandleError(error as ErrorParams);
+    useHandleError(error as ApiError);
   } finally {
     cartLoading.value = false;
   }

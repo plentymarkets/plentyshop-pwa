@@ -1,4 +1,4 @@
-import { type Address, AddressType, shippingProviderGetters } from '@plentymarkets/shop-api';
+import { type Address, AddressType, cartGetters, shippingProviderGetters } from '@plentymarkets/shop-api';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 
@@ -10,6 +10,7 @@ export const useAddressForm = (type: AddressType) => {
   const { data: customerData, getSession } = useCustomer();
   const { data: cartData } = useCart();
   const { send } = useNotification();
+  const { restrictedAddresses } = useRestrictedAddress();
 
   const state = useState('useAddressForm' + type, () => ({
     isLoading: false,
@@ -42,17 +43,17 @@ export const useAddressForm = (type: AddressType) => {
     object({
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
-      country: string().required($i18n.t('errorMessages.requiredField')).default(''),
+      country: string()
+        .required($i18n.t('errorMessages.requiredField'))
+        .default(cartGetters.getShippingCountryId(customerData.value?.basket)),
       streetName: string().required($i18n.t('errorMessages.requiredField')).default(''),
       apartment: string().required($i18n.t('errorMessages.requiredField')).default(''),
       city: string().required($i18n.t('errorMessages.requiredField')).default(''),
@@ -61,13 +62,11 @@ export const useAddressForm = (type: AddressType) => {
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       vatNumber: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
@@ -76,6 +75,7 @@ export const useAddressForm = (type: AddressType) => {
 
   const notifyIfShippingChanged = () => {
     if (
+      !restrictedAddresses.value &&
       selectedMethod.value &&
       shippingProviderGetters.getShippingProfileId(cartData.value).toString() !==
         shippingProviderGetters.getParcelServicePresetId(selectedMethod.value)
@@ -86,8 +86,8 @@ export const useAddressForm = (type: AddressType) => {
 
   const notifyIfBillingChanged = () => {
     if (cartData.value.methodOfPaymentId !== customerData.value.basket.methodOfPaymentId) {
-      send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
       cartData.value.methodOfPaymentId = customerData.value.basket.methodOfPaymentId;
+      if (!restrictedAddresses.value) send({ message: $i18n.t('billing.methodChanged'), type: 'warning' });
     }
   };
 

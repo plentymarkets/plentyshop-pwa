@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UiToolbar v-if="isPreview" />
     <UiHeader />
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
@@ -21,9 +22,16 @@
 <script setup lang="ts">
 import type { DefaultLayoutProps } from '~/layouts/types';
 defineProps<DefaultLayoutProps>();
-usePageTitle();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 setLogoMeta();
+const isPreview = ref(false);
+onMounted(() => {
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
 </script>

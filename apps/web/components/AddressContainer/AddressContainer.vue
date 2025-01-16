@@ -14,11 +14,11 @@
           @edit="edit"
         />
         <UiButton
-          :data-testid="'save-address-' + type"
           v-else
-          @click="validateAndSubmitForm"
+          :data-testid="'save-address-' + type"
           :disabled="formIsLoading"
           variant="secondary"
+          @click="validateAndSubmitForm"
         >
           {{ t('saveAddress') }}
         </UiButton>
@@ -28,7 +28,12 @@
           class="ml-2"
           :label="!editing && !showNewForm && !disabled ? t('editAddress') : ''"
         >
-          <UiButton @click="edit(checkoutAddress)" :disabled="formIsLoading || disabled" variant="secondary">
+          <UiButton
+            :disabled="formIsLoading || disabled"
+            variant="secondary"
+            :data-testid="'edit-address-' + type"
+            @click="edit(checkoutAddress)"
+          >
             <template v-if="!editing && !showNewForm">{{ t('contactInfo.edit') }}</template>
             <SfIconClose v-else />
           </UiButton>
@@ -62,7 +67,7 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfTooltip } from '@storefront-ui/vue';
-import { type AddressContainerProps } from './types';
+import type { AddressContainerProps } from './types';
 import { type Address, AddressType } from '@plentymarkets/shop-api';
 
 const { disabled = false, type } = defineProps<AddressContainerProps>();

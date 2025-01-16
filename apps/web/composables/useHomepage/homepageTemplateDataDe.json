@@ -1,0 +1,135 @@
+{
+  "blocks": [
+    {
+      "name": "UiHeroCarousel",
+      "options": {
+        "bannerItems": [
+          {
+            "image": {
+              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
+              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
+              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-320.avif",
+              "alt": "",
+              "brightness": 0.5
+            },
+            "text": {
+              "color": "#fff",
+              "bgcolor": "#000",
+              "bgopacity": 0.9,
+              "pretitle": "Kristalklare Klänge Genießen",
+              "title": "Dein Sound",
+              "subtitle": "Auf höchstem Niveau",
+              "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
+              "textAlignment": "left",
+              "justify": "top",
+              "align": "start"
+            },
+            "button": {
+              "label": "Capybara entdecken",
+              "link": "/gear/headphones-capybara_157",
+              "variant": "primary"
+            }
+          },
+          {
+            "image": {
+              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-1024.avif",
+              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-768.avif",
+              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Drone/drone-A-320.avif",
+              "alt": "",
+              "brightness": 0.75
+            },
+            "text": {
+              "color": "#fff",
+              "bgcolor": "#000",
+              "bgopacity": 1,
+              "pretitle": "Die Zukunft der Luftbildfotografie",
+              "title": "Drone Omega",
+              "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
+              "textAlignment": "left",
+              "justify": "top",
+              "align": "start"
+            },
+            "button": {
+              "label": "Omega entdecken",
+              "link": "/gear/drone-omega_154",
+              "variant": "primary"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "UiImageText",
+      "options": {
+        "text": {
+          "htmlDescription": "Willkommen in unserem Shop, in dem Technikbegeisterte und Modeliebhaber gleichermaßen fündig werden! Von Premium-Kopfhörern und Hochleistungsdrohnen bis hin zu stylischer Kleidung bieten wir alles, was Ihr Leben smarter und Ihren Style einzigartig macht. Unsere Mission ist es, Ihnen eine sorgfältig zusammengestellte Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Egal, ob Sie einen neuen Lautsprecher für perfekten Sound oder einen lässigen Hoodie suchen, um Ihren Look zu vervollständigen – bei uns sind Sie an der richtigen Adresse.",
+          "title": "Entdecken Sie Technik und Stil",
+          "subtitle": "Innovative Technologie trifft moderne Mode",
+          "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
+          "textAlignment": "left"
+        },
+        "button": {
+          "label": "Get Started",
+          "link": "",
+          "variant": "primary"
+        },
+        "image": {
+          "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "alt": "Headphones",
+          "imageAlignment": "right"
+        }
+      }
+    },
+    {
+      "name": "UiTextCard",
+      "options": {
+        "text": {
+          "htmlDescription": "Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung findest du bei uns alles, was deinen Alltag smarter und deinen Look einzigartig macht.\n\nUnser Ziel ist es, dir eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob du nach einem neuen Lautsprecher für den perfekten Sound suchst oder nach einem lässigen Hoodie, der deinem Stil entspricht – wir haben, was du brauchst.",
+          "pretitle": "Willkommen in deinem neuen Lieblingsshop",
+          "title": "Entdecke Technik & Style",
+          "subtitle": "Innovative Technik trifft auf moderne Mode",
+          "textAlignment": "center"
+        },
+        "button": {
+          "buttonText": "Jetzt zuschlagen",
+          "link": "",
+          "variant": "primary"
+        }
+      }
+    },
+    {
+      "name": "ProductRecommendedProducts",
+      "options": {
+        "text": {
+          "pretitle": "Mehr als nur Technik",
+          "title": "Entdecken Sie unsere Modekollektion",
+          "subtitle": "Sportive Mode und Accessories für alle.",
+          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>Zu unserer kompletten Kollektion.</a>"
+        },
+        "categoryId": "49"
+      }
+    },
+    {
+      "name": "NewsletterSubscribe",
+      "options": {
+        "text": {
+          "bgColor": "#f5f5f5",
+          "title": "Abonnieren Sie unseren Newsletter",
+          "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
+        },
+        "input": {
+          "displayNameInput": false,
+          "nameIsRequired": false
+        },
+        "button": {
+          "label": "Newsletter abonnieren"
+        }
+      }
+    }
+  ],
+  "meta": {
+    "isDefault": null
+  }
+}
