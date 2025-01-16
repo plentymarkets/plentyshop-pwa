@@ -43,7 +43,7 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route = to ?? useRoute();
+  const route = to ?? useNuxtApp().$router.currentRoute.value;
 
   /**
    * @description Function for getting facets from url.

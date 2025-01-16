@@ -53,9 +53,6 @@ export default defineNuxtConfig({
       showConfigurationDrawer: process.env.SHOW_CONFIGURATION_DRAWER === '1',
       primaryColor: process.env.PRIMARY || '#062633',
       secondaryColor: process.env.SECONDARY || '#31687d',
-      newsletterForm: process.env.NEWSLETTERFORM === undefined ? true : process.env.NEWSLETTERFORM === 'true',
-      newsletterFormShowNames:
-        process.env?.NEWSLETTERFORMNAMES === undefined ? false : process.env.NEWSLETTERFORMNAMES === 'true',
       defaultItemsPerPage: Number(process.env.DEFAULT_FEEDBACK_ITEMS_PER_PAGE ?? 10),
       headerLogo: process.env.LOGO || '/images/logo.svg',
       homepageCategoryId: Number(process.env.HOMEPAGE) ?? null,

@@ -11,6 +11,7 @@
 - Subtitle, pretitle and title options where added to the Recommened Products component
 - Added canonical for item page.
 - Media Card is now Image Text
+- The newsletter works as the other available blocks. (using the JSON as the source of the data)
 
 ### 🩹 Fixed
 
@@ -31,6 +32,7 @@
 - Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
 - The homepage now has the new version of the carousel
 - Fixed product accordions arrow display.
+- Fixed an issue where calling useRoute within middleware could lead to misleading results.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
