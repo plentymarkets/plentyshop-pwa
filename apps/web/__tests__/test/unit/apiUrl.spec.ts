@@ -10,7 +10,7 @@ describe('validateApiUrl function', () => {
     });
 
     it('should remove multiple trailing slashes', () => {
-        const apiUrl = `${expectedApiUrl}/\//`;
+        const apiUrl = `${expectedApiUrl}///`;
         expect(validateApiUrl(apiUrl)).toEqual(expectedApiUrl);
     });
 

@@ -21,8 +21,6 @@ describe('Banner image', () => {
 
     const image = wrapper.find('[data-testid="banner-image-0"]');
 
-    console.log(image.html());
-
     expect(image.attributes('src')).toBe('');
     expect(image.attributes('alt')).toBe('');
     expect(image.attributes('style')).toContain('height: 576px');
