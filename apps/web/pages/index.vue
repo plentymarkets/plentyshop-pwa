@@ -9,7 +9,6 @@
     />
     <div v-else class="content">
       <template v-for="(block, index) in data.blocks" :key="index">
-        <!-- <UiBlazeCarousel :bannerItems="[]" /> -->
         <PageBlock
           :index="index"
           :block="block"
@@ -67,10 +66,9 @@ const addNewBlock = (index: number, position: number) => {
 };
 
 const runtimeConfig = useRuntimeConfig();
-console.log("Runtime Config:", runtimeConfig);
+console.log('Runtime Config:', runtimeConfig);
 
 const isHero = ref(runtimeConfig.public.isHero);
-console.log("Is hero: " + isHero.value);
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
