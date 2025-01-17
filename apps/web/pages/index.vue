@@ -66,8 +66,6 @@ const addNewBlock = (index: number, position: number) => {
 };
 
 const runtimeConfig = useRuntimeConfig();
-console.log('Runtime Config:', runtimeConfig);
-
 const isHero = ref(runtimeConfig.public.isHero);
 
 const getComponent = (name: string) => {
