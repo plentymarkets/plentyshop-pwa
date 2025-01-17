@@ -35,9 +35,11 @@ export default withNuxt(
      */
     rules: {
       'arrow-parens': 'off',
+      'no-console': ['error'],
       'no-constant-binary-expression': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
+      'vue/no-console': ['error'],
       'vue/no-multiple-template-root': ['off'],
       'vue/no-v-html': ['off'],
       'vue/html-self-closing': ['error', { html: { void: 'always' } }],
