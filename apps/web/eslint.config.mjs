@@ -40,7 +40,7 @@ export default withNuxt(
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       'vue/no-multiple-template-root': ['off'],
       'vue/no-v-html': ['off'],
-      'vue/html-self-closing': 'off',
+      'vue/html-self-closing': ['error', { html: { void: 'always' } }],
     }
   },
 );
