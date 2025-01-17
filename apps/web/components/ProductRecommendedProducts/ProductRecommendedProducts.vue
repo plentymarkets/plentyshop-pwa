@@ -12,7 +12,7 @@
     v-if="text?.htmlDescription"
     class="typography-text-sm md:typography-text-lg font-normal"
     v-html="text.htmlDescription"
-  ></div>
+  />
   <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
 </template>
 
