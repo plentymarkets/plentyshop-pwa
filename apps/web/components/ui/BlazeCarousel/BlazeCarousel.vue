@@ -43,7 +43,7 @@ const generalTextColor = ref('inherit');
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-generalTextColor.value = bannerItems[0]?.text?.controlsColor ?? 'inherit';
+generalTextColor.value = bannerItems[0]?.controls?.color ?? 'inherit';
 
 onMounted(() => {
   const el = document.querySelector('.blaze-slider');

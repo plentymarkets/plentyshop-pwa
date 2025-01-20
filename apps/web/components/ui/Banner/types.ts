@@ -1,4 +1,7 @@
 export type BannerProps = {
+  controls?: {
+    color?: string;
+  };
   image?: {
     desktop?: string;
     tablet?: string;
@@ -9,7 +12,6 @@ export type BannerProps = {
   text?: {
     color?: string;
     bgcolor?: string;
-    controlsColor?: string;
     bgopacity?: number;
     pretitle?: string;
     title?: string;
