@@ -17,7 +17,6 @@
           :is-clicked="isClicked"
           :clicked-block-index="clickedBlockIndex"
           :is-tablet="isTablet"
-          :show-newsletter="showNewsletter"
           :block-has-data="blockHasData"
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
@@ -47,9 +46,9 @@ const {
   updateBlock,
 } = useBlockManager();
 
-const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
-const { showNewsletter } = useNewsletter();
+const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
@@ -62,17 +61,26 @@ const addNewBlock = (index: number, position: number) => {
   updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
 
   data.value.blocks = updatedBlocks;
+
+  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 
-const { isEditing, disableActions } = useEditor();
+const runtimeConfig = useRuntimeConfig();
+const isHero = ref(runtimeConfig.public.isHero);
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
-  if (name === 'UiHeroCarousel') return resolveComponent('UiHeroCarousel');
-  if (name === 'UiMediaCard') return resolveComponent('UiMediaCard');
   if (name === 'UiTextCard') return resolveComponent('UiTextCard');
+  if (name === 'UiImageText') return resolveComponent('UiImageText');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
+  if (name === 'UiHeroCarousel' || name === 'UiBlazeCarousel') {
+    return isHero.value ? resolveComponent('UiHeroCarousel') : resolveComponent('UiBlazeCarousel');
+  }
 };
+
+onMounted(() => {
+  isEditingEnabled.value = false;
+});
 
 fetchPageTemplate();
 </script>

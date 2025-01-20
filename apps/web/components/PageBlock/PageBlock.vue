@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      block.name === 'UiHeroCarousel'
+      block.name === 'UiBlazeCarousel' || block.name === 'UiHeroCarousel'
         ? 'relative mb-10 group'
         : 'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
       {
@@ -35,11 +35,7 @@
       @edit="handleEdit"
       @delete="deleteBlock"
     />
-    <component
-      :is="getComponent && getComponent(block.name)"
-      v-if="block.name !== 'NewsletterSubscribe' || showNewsletter"
-      v-bind="block.options"
-    />
+    <component :is="getComponent && getComponent(block.name)" v-bind="block.options" />
     <button
       v-if="disableActions && isPreview"
       class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
@@ -63,7 +59,6 @@ interface Props {
   isClicked: boolean;
   clickedBlockIndex: number | null;
   isTablet: boolean;
-  showNewsletter: boolean;
   blockHasData?: (block: Block) => boolean;
   getComponent?: (name: string) => unknown;
   tabletEdit: (index: number) => void;

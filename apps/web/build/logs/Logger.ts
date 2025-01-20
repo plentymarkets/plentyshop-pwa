@@ -31,6 +31,7 @@ class BuildLogger implements Logger {
 
   info(message: string): void {
     const formattedMessage = this.formatMessage('INFO', message);
+    // eslint-disable-next-line no-console
     console.log(formattedMessage);
     this.logStream.write(`${formattedMessage}\n`);
   }

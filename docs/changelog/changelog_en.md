@@ -9,9 +9,13 @@
 - Added delivery days to checkout shipping providers.
 - Added robots for category page.
 - Subtitle, pretitle and title options where added to the Recommened Products component
+- Added canonical for item page.
+- Media Card is now Image Text
+- The newsletter works as the other available blocks. (using the JSON as the source of the data)
 
 ### 🩹 Fixed
 
+- Added e2e tests for product manufacturer details tab.
 - Fixed an issue where required attributes notification was blocking the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
 - Fixed accesibility error caused by missing label on clear filters.
@@ -25,7 +29,11 @@
 - Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
 - The homepage now displays recommended products on initial load.
 - Fixed product gallery thumbnail image alternate.
+- Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
 - The homepage now has the new version of the carousel
+- Fixed product accordions arrow display.
+- Fixed an issue where calling useRoute within middleware could lead to misleading results.
+- Fixed an issue where you only edit the initial block you selected.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

@@ -26,6 +26,7 @@
 
 <script setup lang="ts">
 import { SfIconCancel } from '@storefront-ui/vue';
+import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<{
   block: Block | null;
@@ -37,6 +38,12 @@ const { jsonText, errorMessage, lineCount, textarea, lineNumberContainer, syncSc
   JSON.stringify(props.block, null, 2),
 );
 
+const closeEditor = () => {
+  emit('update', props.index, JSON.parse(jsonText.value));
+  const { isEditing } = useEditor();
+  isEditing.value = false;
+};
+
 watch(
   () => props.block,
   (updatedData) => {
@@ -45,9 +52,13 @@ watch(
   { immediate: true, deep: true },
 );
 
-const closeEditor = () => {
-  emit('update', props.index, JSON.parse(jsonText.value));
-  const { isEditing } = useEditor();
-  isEditing.value = false;
-};
+watchDebounced(
+  () => jsonText.value,
+  () => {
+    if (jsonText.value !== '') {
+      emit('update', props.index, JSON.parse(jsonText.value));
+    }
+  },
+  { debounce: 100 },
+);
 </script>

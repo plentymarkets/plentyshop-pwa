@@ -59,12 +59,27 @@
       }
     },
     {
-      "name": "UiMediaCard",
+      "name": "UiImageText",
       "options": {
-        "text": "<div class='flex flex-col mt-5 sm:mt-20 mt-0 sm:p-0 p-5 text-center sm:text-left'><span class='text-xl font-bold mb-2'>Die Zukunft des Klangs</span><h2 class='text-2xl font-semibold mb-4'>Das neue Hörerlebnis</h2><p class='typography-text-sm md:typography-text-lg mb-6 padding-right-desktop'>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit Ihrer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc list-inside typography-text-sm md:typography-text-lg '><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul></div>",
-        "image": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
-        "alt": "Headphones",
-        "alignment": "left"
+        "text": {
+          "htmlDescription": "Willkommen in unserem Shop, in dem Technikbegeisterte und Modeliebhaber gleichermaßen fündig werden! Von Premium-Kopfhörern und Hochleistungsdrohnen bis hin zu stylischer Kleidung bieten wir alles, was Ihr Leben smarter und Ihren Style einzigartig macht. Unsere Mission ist es, Ihnen eine sorgfältig zusammengestellte Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Egal, ob Sie einen neuen Lautsprecher für perfekten Sound oder einen lässigen Hoodie suchen, um Ihren Look zu vervollständigen – bei uns sind Sie an der richtigen Adresse.",
+          "title": "Entdecken Sie Technik und Stil",
+          "subtitle": "Innovative Technologie trifft moderne Mode",
+          "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
+          "textAlignment": "left"
+        },
+        "button": {
+          "label": "Get Started",
+          "link": "",
+          "variant": "primary"
+        },
+        "image": {
+          "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+          "alt": "Headphones",
+          "imageAlignment": "right"
+        }
       }
     },
     {
@@ -99,14 +114,18 @@
     {
       "name": "NewsletterSubscribe",
       "options": {
-        "email": "E-Mail",
-        "firstName": "Vorname",
-        "heading": "Abonnieren Sie unseren Newsletter",
-        "info": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!",
-        "lastName": "Nachname",
-        "policy": "Ich bestätige hiermit, dass ich die {privacyPolicy} gelesen habe. Ich kann meine Einwilligung jederzeit widerrufen.",
-        "subscribe": "Newsletter abonnieren",
-        "success": "Vielen Dank für Ihre Anmeldung! Bitte prüfen Sie Ihr E-Mail-Postfach und klicken Sie auf den Bestätigungslink in unserer Nachricht, um den Newsletter zu abonnieren."
+        "text": {
+          "bgColor": "#f5f5f5",
+          "title": "Abonnieren Sie unseren Newsletter",
+          "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
+        },
+        "input": {
+          "displayNameInput": false,
+          "nameIsRequired": false
+        },
+        "button": {
+          "label": "Newsletter abonnieren"
+        }
       }
     }
   ],

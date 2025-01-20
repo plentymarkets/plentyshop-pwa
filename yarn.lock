@@ -4997,7 +4997,7 @@ __metadata:
     "@nuxt/test-utils": "npm:^3.13.1"
     "@nuxtjs/turnstile": "npm:^0.8.0"
     "@paypal/paypal-js": "npm:8.1.0"
-    "@plentymarkets/shop-api": "npm:^0.85.0"
+    "@plentymarkets/shop-api": "npm:^0.87.1"
     "@types/applepayjs": "npm:^14.0.8"
     "@types/drift-zoom": "npm:^1.5.2"
     "@types/googlepay": "npm:^0.7.6"
@@ -5007,6 +5007,7 @@ __metadata:
     "@vite-pwa/nuxt": "npm:^0.8.1"
     "@vue-storefront/eslint-config": "npm:~2.0.0"
     "@vue/test-utils": "npm:^2.4.6"
+    blaze-slider: "npm:^1.9.3"
     commitizen: "npm:^4.3.0"
     concurrently: "npm:^8.2.2"
     country-flag-icons: "npm:^1.5.12"
@@ -5031,14 +5032,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.85.0":
-  version: 0.85.0
-  resolution: "@plentymarkets/shop-api@npm:0.85.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.85.0%2F3d012b0bb8221fb93a6c9829995107fee2b3417e"
+"@plentymarkets/shop-api@npm:^0.87.1":
+  version: 0.87.1
+  resolution: "@plentymarkets/shop-api@npm:0.87.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.87.1%2F3710acc6e809530b16348dd17edb6518016a18b8"
   dependencies:
     "@vue-storefront/middleware": "npm:^5.3.2"
     axios: "npm:^1.7.7"
     consola: "npm:^3.2.3"
-  checksum: 10c0/6ca0041b3c6b70cf6db1009b09eb8fa5a8fc74a064d965aa43fe593dac118c8a3220b4b3f2827e2fb095e2d32208700b555a18fcdb9fec2010e8de799c107943
+  checksum: 10c0/e939be4e335c28cb5f2f26cda5b968a70a05466583f41d3f6a9af862915680ca4dcbdf6e96a879fdbc97cd4e5141b6fe84ab115ab66dc259d28c1bda55d767e2
   languageName: node
   linkType: hard
 
@@ -8606,6 +8607,13 @@ __metadata:
     inherits: "npm:^2.0.4"
     readable-stream: "npm:^3.4.0"
   checksum: 10c0/02847e1d2cb089c9dc6958add42e3cdeaf07d13f575973963335ac0fdece563a50ac770ac4c8fa06492d2dd276f6cc3b7f08c7cd9c7a7ad0f8d388b2a28def5f
+  languageName: node
+  linkType: hard
+
+"blaze-slider@npm:^1.9.3":
+  version: 1.9.3
+  resolution: "blaze-slider@npm:1.9.3"
+  checksum: 10c0/1de393de24dfab75a24bd2ad2c022845ae479bc9c9b65fc759890f6f5dd2c9306dc166c33900545c7cb78d6d3987dcb09c376880d127fd9fed8f7e56f19a5339
   languageName: node
   linkType: hard
 
