@@ -9,6 +9,7 @@ export type BannerProps = {
   text?: {
     color?: string;
     bgcolor?: string;
+    controlsColor?: string;
     bgopacity?: number;
     pretitle?: string;
     title?: string;

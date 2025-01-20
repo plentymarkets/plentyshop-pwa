@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "name": "UiHeroCarousel",
+      "name": "UiCarousel",
       "options": {
         "bannerItems": [
           {
@@ -13,8 +13,9 @@
               "brightness": 0.5
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
+              "controlsColor": "#fff",
               "bgopacity": 0.9,
               "pretitle": "Kristalklare Klänge Genießen",
               "title": "Dein Sound",
@@ -39,8 +40,9 @@
               "brightness": 0.75
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
+              "controlsColor": "#fff",
               "bgopacity": 1,
               "pretitle": "Die Zukunft der Luftbildfotografie",
               "title": "Drone Omega",

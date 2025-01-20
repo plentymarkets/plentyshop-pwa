@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "name": "UiBlazeCarousel",
+      "name": "UiCarousel",
       "options": {
         "bannerItems": [
           {
@@ -13,8 +13,9 @@
               "brightness": 0.5
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
+              "controlsColor": "#fff",
               "bgopacity": 0.9,
               "pretitle": "Feel the music",
               "title": "Your Sound, Elevated",
@@ -38,8 +39,9 @@
               "brightness": 0.75
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
+              "controlsColor": "#fff",
               "bgopacity": 1,
               "pretitle": "The Future of Aerial Photography",
               "title": "Drone Omega",
