@@ -1,5 +1,5 @@
 {
-  "name": "UiHeroCarousel",
+  "name": "UiCarousel",
   "options": {
     "bannerItems": [
       {
@@ -13,6 +13,7 @@
         "text": {
           "color": "#fff",
           "bgcolor": "#000",
+          "controlsColor": "#fff",
           "bgopacity": 0.9,
           "pretitle": "New pretitle from cypress",
           "title": "New title from cypress",
