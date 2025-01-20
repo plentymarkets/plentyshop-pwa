@@ -2,6 +2,7 @@
   <div>
     <UiToolbar v-if="isPreview" />
     <UiHeader />
+    <UiBlocksNavigation v-if="displayBlockList"/>
     <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
       <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
     </NarrowContainer>
@@ -24,6 +25,7 @@ import type { DefaultLayoutProps } from '~/layouts/types';
 defineProps<DefaultLayoutProps>();
 const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
+const {displayBlockList} = useEditor();
 const viewport = useViewport();
 setLogoMeta();
 const isPreview = ref(false);
