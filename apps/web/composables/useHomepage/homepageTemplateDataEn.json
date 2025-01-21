@@ -19,7 +19,6 @@
             "text": {
               "color": "#000",
               "bgcolor": "#fff",
-              "controlsColor": "#fff",
               "bgopacity": 0.9,
               "pretitle": "Feel the music",
               "title": "Your Sound, Elevated",
@@ -45,7 +44,6 @@
             "text": {
               "color": "#000",
               "bgcolor": "#fff",
-              "controlsColor": "#fff",
               "bgopacity": 1,
               "pretitle": "The Future of Aerial Photography",
               "title": "Drone Omega",
