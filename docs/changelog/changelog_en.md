@@ -37,6 +37,7 @@
 - When the multilingualism configuration of the remote shop doesn't include English or German, the corresponding language file is now removed at build time. As a result, the language isn't displayed in the language selector.
 - Fixed various block spacings.
 - The asterix from newsletter name input should be visible only if 'nameIsRequired' flag is set to true.
+- The price now always displays an asterisk to refer to VAT information.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
