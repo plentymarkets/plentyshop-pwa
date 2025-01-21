@@ -1,19 +1,6 @@
 <template>
-  <div v-if="text?.pretitle" class="text-2xl">{{ text.pretitle }}</div>
-  <h2
-    v-if="text?.title"
-    class="typography-display-3 md:typography-display-2 lg:typography-display-2 font-bold lg:leading-[4rem]"
-    data-testid="recommended-products-headline"
-  >
-    {{ text.title }}
-  </h2>
-  <div v-if="text?.subtitle" class="text-2xl pb-1">{{ text.subtitle }}</div>
-  <div
-    v-if="text?.htmlDescription"
-    class="pb-2 typography-text-sm md:typography-text-lg font-normal"
-    v-html="text.htmlDescription"
-  />
-  <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
+    <TextContent class="pb-4" :text="props.text" />
+    <ProductSlider v-if="recommendedProducts?.length" :items="recommendedProducts" />
 </template>
 
 <script setup lang="ts">
