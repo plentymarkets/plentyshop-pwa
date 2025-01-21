@@ -1,18 +1,11 @@
 <template>
   <UiToolbar v-if="isPreview" />
   <div class="flex h-screen overflow-hidden">
-    <div
-      v-if="displayBlockList"
-      :class="{ '': !isTablet, 'fixed inset-0 z-50': isTablet }"
-      class="h-full bg-gray-100"
-    >
+    <div v-if="displayBlockList" :class="{'w-1/4': !isTablet, 'fixed inset-0 z-50': isTablet}" class="h-full bg-gray-100">
       <UiBlocksNavigation />
     </div>
 
-    <div
-      :class="{ 'flex-1': displayBlockList && !isTablet, 'w-full': !displayBlockList || isTablet }"
-      class="h-full overflow-y-auto"
-    >
+    <div :class="{ 'flex-1': displayBlockList && !isTablet, 'w-full': !displayBlockList || isTablet }" class="h-full overflow-y-auto">
       <UiHeader />
       <div v-if="breadcrumbs?.length" class="p-4 md:px-0">
         <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
