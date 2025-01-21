@@ -1005,18 +1005,18 @@
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
   "double-tap-zoom": "Zum Zoomen doppeltippen",
   "siteConfiguration": {
-    "settings": "",
-    "fonts": "",
-    "colors": "",
-    "blocksSpacing": "",
-    "primary": "",
-    "secondary": "",
-    "chooseFont": "",
-    "choosePrimaryColor": "",
-    "chooseSecondaryColor": "",
-    "fontTooltip": "",
-    "primaryTooltip": "",
-    "secondaryTooltip": "",
-    "spacingBetweenBlocks": ""
+    "settings": "TBD",
+    "fonts": "TBD",
+    "colors": "TBD",
+    "blocksSpacing": "TBD",
+    "primary": "TBD",
+    "secondary": "TBD",
+    "chooseFont": "TBD",
+    "choosePrimaryColor": "TBD",
+    "chooseSecondaryColor": "TBD",
+    "fontTooltip": "TBD",
+    "primaryTooltip": "TBD",
+    "secondaryTooltip": "TBD",
+    "spacingBetweenBlocks": "TBD"
   }
 }
