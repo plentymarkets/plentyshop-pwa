@@ -1,4 +1,4 @@
-import {
+import type {
   AllowedHTTPMethods,
   BasicAuth,
   CorsOptions,
@@ -20,8 +20,7 @@ import {
 } from 'nuxt-security';
 
 // Enabling 'unsafe-eval' and 'unsafe-inline' can create security risks
-// eslint-disable-next-line unicorn/expiring-todo-comments
-// TODO: If these are not strictly necessary, we should aim to avoid them
+// @TODO: If these are not strictly necessary, we should aim to avoid them
 
 export const securityConfiguration = {
   strict: false,
