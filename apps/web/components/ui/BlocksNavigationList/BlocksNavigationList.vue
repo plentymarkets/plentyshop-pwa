@@ -7,7 +7,8 @@
         <div class="relative">
           <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
           <button
-            class="absolute right-[11%] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+            :class="buttonClass"
+            class="absolute transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
@@ -18,6 +19,12 @@
 </template>
 
 <script setup lang="ts">
-import { blocksLists } from './blocksLists';
+ import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
+const viewport = useViewport();
+const isTablet = viewport.isLessThan('lg');
+
+const buttonClass = computed(() => {
+  return isTablet ? 'right-[8%]' : 'right-[11%]';
+});
 </script>
