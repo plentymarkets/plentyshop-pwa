@@ -3,7 +3,7 @@
   <div class="flex h-screen overflow-hidden">
     <div
       v-if="displayBlockList"
-      :class="{ 'w-1/4': !isTablet, 'fixed inset-0 z-50': isTablet }"
+      :class="{ '': !isTablet, 'fixed inset-0 z-50': isTablet }"
       class="h-full bg-gray-100"
     >
       <UiBlocksNavigation />
