@@ -2,7 +2,7 @@
   <div class="site-settings-view min-w-[395px] fixed">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">{{ t('siteConfiguration.settings') }}</div>
-      <UiButton square variant="tertiary" size="sm"  class="!p-0" @click="drawerOpen = false">
+      <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
       </UiButton>
     </header>
