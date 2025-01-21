@@ -35,7 +35,7 @@
 - Fixed an issue where calling useRoute within middleware could lead to misleading results.
 - Fixed an issue where you only edit the initial block you selected.
 - When the multilingualism configuration of the remote shop doesn't include English or German, the corresponding language file is now removed at build time. As a result, the language isn't displayed in the language selector.
-- Fixed various block spacings.
+- Fixed block spacings and colours.
 - The asterix from newsletter name input should be visible only if 'nameIsRequired' flag is set to true.
 - The price now always displays an asterisk to refer to VAT information.
 
