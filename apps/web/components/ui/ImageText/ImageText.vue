@@ -4,7 +4,7 @@
       <NuxtImg
         :src="getImageUrl()"
         :alt="props.image?.alt"
-        class="mx-auto h-auto object-cover"
+        :class="['h-auto', 'object-cover', {'pr-4': props.image?.imageAlignment === 'left', 'pl-4': props.image?.imageAlignment === 'right'}]"
         :width="getImageDimensions().width"
         :height="getImageDimensions().height"
       />
