@@ -103,7 +103,7 @@ export class AppConfigurator {
 
     return environmentContent;
   };
-  
+
   private writeLanguageFiles(defaultLanguageFile: string, languages: Languages, languageFilesPath: string) {
     const fileData = '{}';
     this.writer.writeMissing(fileData, defaultLanguageFile);
@@ -116,12 +116,12 @@ export class AppConfigurator {
   }
 
   private cleanUpInactiveLanguages(languages: Languages, languageFilesPath: string) {
-    if (!languages.activated.includes('en')) {
+    if (!languages.activated.includes('en') && languages.default !== 'en') {
       const enFile = path.resolve(languageFilesPath, 'en.json');
       rmSync(enFile);
     }
 
-    if (!languages.activated.includes('de')) {
+    if (!languages.activated.includes('de') && languages.default !== 'de') {
       const deFile = path.resolve(languageFilesPath, 'de.json');
       rmSync(deFile);
     }
@@ -132,9 +132,9 @@ export class AppConfigurator {
 
     const languageFilesPath = path.resolve(__dirname, '../../lang');
     const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
-    
+
     this.writeLanguageFiles(defaultLanguageFile, languages, languageFilesPath);
-    
+
     this.cleanUpInactiveLanguages(languages, languageFilesPath);
   };
 }
