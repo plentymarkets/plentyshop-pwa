@@ -12,7 +12,7 @@
       { 'min-w-[400px]': placement === 'left' || placement === 'right' },
     ]"
   >
-    <Component v-if="drawerView" :is="drawerViewMap[drawerView]" />
+    <Component :is="drawerViewMap[drawerView]" v-if="drawerView" />
   </SfDrawer>
 </template>
 

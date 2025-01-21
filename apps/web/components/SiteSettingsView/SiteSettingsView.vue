@@ -57,7 +57,7 @@
           <SfInput v-model="primaryColor" type="text">
             <template #suffix>
               <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
-                <input v-model="primaryColor" id="primary-color" type="color" class="invisible w-8" />
+                <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -84,7 +84,7 @@
                 :style="{ backgroundColor: secondaryColor }"
                 class="rounded-lg cursor-pointer"
               >
-                <input v-model="secondaryColor" id="secondary-color" type="color" class="invisible w-8" />
+                <input id="secondary-color" v-model="secondaryColor" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
