@@ -2,7 +2,7 @@
   <div class="site-settings-view min-w-[395px] fixed">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">{{ t('siteConfiguration.settings') }}</div>
-      <UiButton square variant="tertiary" @click="drawerOpen = false" size="sm" class="!p-0">
+      <UiButton square variant="tertiary" size="sm"  class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
       </UiButton>
     </header>
@@ -54,10 +54,10 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" v-model="primaryColor">
+          <SfInput v-model="primaryColor" type="text">
             <template #suffix>
               <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
-                <input v-model="primaryColor" type="color" id="primary-color" class="invisible w-8" />
+                <input v-model="primaryColor" id="primary-color" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
@@ -77,14 +77,14 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text" v-model="secondaryColor">
+          <SfInput v-model="secondaryColor" type="text">
             <template #suffix>
               <label
                 for="secondary-color"
                 :style="{ backgroundColor: secondaryColor }"
                 class="rounded-lg cursor-pointer"
               >
-                <input v-model="secondaryColor" type="color" id="secondary-color" class="invisible w-8" />
+                <input v-model="secondaryColor" id="secondary-color" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
