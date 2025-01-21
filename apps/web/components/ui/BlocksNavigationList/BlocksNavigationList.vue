@@ -1,9 +1,10 @@
 <template>
   <div class="bg-[#F1F3F5] p-5 h-screen">
-    <div class="pb-5 relative left-[33px]">Image with text</div>
-
     <div class="overflow-y-auto max-h-[80vh]">
-      <div v-for="block in blocksLists" :key="block.id" class="mb-10">
+      <div v-for="(block, index) in blocksLists" :key="block.id" class="mb-10">
+        <div v-if="index === 0 || block.category !== blocksLists[index - 1].category" class="pb-5">
+          {{ block.categoryTitle }}
+        </div>
         <div class="relative">
           <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
           <button
@@ -25,6 +26,6 @@ const viewport = useViewport();
 const isTablet = viewport.isLessThan('lg');
 
 const buttonClass = computed(() => {
-  return isTablet ? 'right-[8%]' : 'right-[11%]';
+  return isTablet ? 'right-[8%]' : 'right-[15%]';
 });
 </script>
