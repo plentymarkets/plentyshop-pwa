@@ -1,7 +1,7 @@
 <template>
   <UiToolbar v-if="isPreview" />
   <div class="flex h-screen overflow-hidden">
-    <div v-if="displayBlockList" class="w-1/4 h-full overflow-y-auto bg-gray-100">
+    <div v-if="displayBlockList" class="w-1/4 h-full bg-gray-100">
       <UiBlocksNavigation />
     </div>
 
