@@ -1,9 +1,22 @@
 <template>
-  <div class="bg-[#F1F3F5]">
-    <p>Image with text</p>
-    <NuxtImg src="https://drive.google.com/file/d/1duf-ZCA9e5ByqAoXaMI-gA-Z_8QlY8_w/view" alt="test" class="mx-auto h-auto" />
+  <div class="bg-[#F1F3F5] p-5 h-screen">
+    <div class="pb-5 relative left-[33px]">Image with text</div>
 
+    <div class="overflow-y-auto max-h-[80vh]">
+      <div v-for="block in blocksLists" :key="block.id" class="mb-10 relative">
+        <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
+
+        <button
+          class="absolute right-[20px] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+        >
+          <SfIconAdd class="cursor-pointer" />
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { blocksLists } from './blocksLists';
+import { SfIconAdd } from '@storefront-ui/vue';
+</script>
