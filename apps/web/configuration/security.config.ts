@@ -32,13 +32,8 @@ export const securityConfiguration = {
       'base-uri': ["'none'"],
       'font-src': ["'self'", 'https:', 'data:'],
       'form-action': ["'self'"],
-      'frame-ancestors': ["'self'"],
-      'img-src': [
-        "'self'",
-        'data:',
-        'https://cdn02.plentymarkets.com',
-        'https://v957ap1x34.execute-api.eu-central-1.amazonaws.com',
-      ],
+      // 'frame-ancestors': ["'self'"],
+      'img-src': ["'self'", 'data:', '*'], // dynamic src
       'object-src': ["'none'"],
       'script-src-attr': ["'unsafe-inline'"],
       'style-src': ["'self'", 'https:', "'unsafe-inline'"],
