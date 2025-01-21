@@ -105,7 +105,8 @@
       </template>
       <div class="border-b py-1">
         <UiButton
-          v-for="blocksSpacingSize in blocksSpacingSizes"
+          v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
+          :key="key"
           type="button"
           variant="tertiary"
           class="!hover:bg-gray-100"
