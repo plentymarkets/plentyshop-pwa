@@ -6,11 +6,11 @@
   >
     <label>
       <UiFormLabel>{{ $t('form.firstNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="firstName" autocomplete="given-name" v-model="defaultValues.firstName" required />
+      <SfInput v-model="defaultValues.firstName" name="firstName" autocomplete="given-name" required />
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.lastNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="lastName" autocomplete="family-name" v-model="defaultValues.lastName" required />
+      <SfInput v-model="defaultValues.lastName" name="lastName" autocomplete="family-name" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel class="flex">
@@ -18,25 +18,25 @@
         <UiFormHelperText>({{ $t('form.optional') }})</UiFormHelperText>
       </UiFormLabel>
       <SfInput
+        v-model="defaultValues.phoneNumber"
         name="phone"
         type="tel"
         minlength="7"
         maxlength="18"
         autocomplete="tel"
-        v-model="defaultValues.phoneNumber"
       />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.countryLabel') }} {{ $t('form.required') }}</UiFormLabel>
       <SfSelect
-        name="country"
         v-model="defaultValues.country"
-        @change="defaultValues.state = ''"
+        name="country"
         :placeholder="$t('form.selectPlaceholder')"
         wrapper-class-name="bg-white"
         class="!ring-1 !ring-neutral-200"
         autocomplete="country-name"
         required
+        @change="defaultValues.state = ''"
       >
         <option v-for="(country, index) in countries" :key="index" :value="country.id.toString()">
           {{ country.currLangName }}
@@ -45,17 +45,17 @@
     </label>
     <label class="md:col-span-2">
       <UiFormLabel>{{ $t('form.streetNameLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="streetName" autocomplete="address-line1" v-model="defaultValues.streetName" required />
+      <SfInput v-model="defaultValues.streetName" name="streetName" autocomplete="address-line1" required />
     </label>
     <label>
       <UiFormLabel>{{ $t('form.streetNumberLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="streetNumber" v-model="defaultValues.apartment" required />
+      <SfInput v-model="defaultValues.apartment" name="streetNumber" required />
     </label>
     <label class="md:col-span-3">
       <UiFormLabel>{{ $t('form.cityLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="city" autocomplete="address-level2" v-model="defaultValues.city" required />
+      <SfInput v-model="defaultValues.city" name="city" autocomplete="address-level2" required />
     </label>
-    <label class="md:col-span-2" v-if="states.length > 0">
+    <label v-if="states.length > 0" class="md:col-span-2">
       <UiFormLabel class="flex">
         <span class="mr-1">{{ $t('form.stateLabel') }}</span>
         <UiFormHelperText>({{ $t('form.optional') }})</UiFormHelperText>
@@ -73,11 +73,11 @@
     </label>
     <label>
       <UiFormLabel>{{ $t('form.postalCodeLabel') }} {{ $t('form.required') }}</UiFormLabel>
-      <SfInput name="postalCode" autocomplete="postal-code" v-model="defaultValues.zipCode" required />
+      <SfInput v-model="defaultValues.zipCode" name="postalCode" autocomplete="postal-code" required />
     </label>
 
     <label v-if="type === AddressType.Billing" class="md:col-span-3 flex items-center gap-2">
-      <SfCheckbox name="useAsShipping" v-model="useAsShippingAddress" />
+      <SfCheckbox v-model="useAsShippingAddress" name="useAsShipping" />
       {{ $t('form.useAsShippingLabel') }}
     </label>
 
@@ -110,7 +110,7 @@ import {
   userAddressGetters,
 } from '@plentymarkets/shop-api';
 import { SfCheckbox, SfInput, SfLoaderCircular, SfSelect } from '@storefront-ui/vue';
-import { type AddressFormProps } from '~/components/AddressForm/types';
+import type { AddressFormProps } from '~/components/AddressForm/types';
 
 const { type, savedAddress: propertySavedAddress, useAsShippingDefault = true } = defineProps<AddressFormProps>();
 

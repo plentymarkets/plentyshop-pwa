@@ -1,4 +1,4 @@
-import { PayPalNamespace } from '@paypal/paypal-js';
+import type { PayPalNamespace } from '@paypal/paypal-js';
 
 export const PayPalPaymentKey = 'PAYPAL';
 export const PayPalCreditCardPaymentKey = 'PAYPAL_UNBRANDED_CARD';

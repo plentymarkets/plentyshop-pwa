@@ -6,6 +6,7 @@ export const useJsonEditor = (initialJson: string) => {
   const lineNumberContainer = ref<HTMLElement | null>(null);
 
   const jsonText = useState<string>('jsonText', () => initialJson);
+  const originalJsonText = jsonText.value;
 
   const syncScroll = () => {
     if (lineNumberContainer.value && textarea.value) {
@@ -31,10 +32,17 @@ export const useJsonEditor = (initialJson: string) => {
     }
   };
 
+  const checkInputChange = () => {
+    if (jsonText.value === originalJsonText) {
+      isEditingEnabled.value = false;
+    }
+  };
+
   const handleInput = () => {
     try {
       validateJson();
       updateLineCount();
+      checkInputChange();
     } catch (error: any) {
       errorMessage.value = 'Invalid JSON: ' + error.message;
       isEditingEnabled.value = false;

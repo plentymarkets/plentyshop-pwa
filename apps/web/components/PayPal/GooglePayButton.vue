@@ -1,5 +1,5 @@
 <template>
-  <div id="google-pay-button"></div>
+  <div id="google-pay-button" />
 
   <div
     v-if="paymentLoading"
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { SfLoaderCircular } from '@storefront-ui/vue';
 
 const {
@@ -34,7 +34,6 @@ async function onGooglePaymentButtonClicked() {
       toRaw(paymentsClient.value)
         .loadPaymentData(paymentDataRequest)
         .then((paymentData: google.payments.api.PaymentData) => {
-          // eslint-disable-next-line promise/no-nesting
           processPayment(paymentData).catch((error: Error) => {
             useNotification().send({
               message: error.message || t('errorMessages.paymentFailed'),

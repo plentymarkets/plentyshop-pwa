@@ -2,6 +2,7 @@ import 'cypress-wait-until';
 import 'cypress-iframe';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
       getByTestId(id: string): Chainable;

@@ -1,8 +1,8 @@
 <template>
   <form
-    @submit.prevent="handleAddToCart()"
     class="md:border md:border-neutral-100 md:shadow-lg md:rounded-md md:sticky md:top-40"
     data-testid="purchase-card"
+    @submit.prevent="handleAddToCart()"
   >
     <div class="relative">
       <div class="drift-zoom-image">
@@ -60,9 +60,9 @@
             <SfCounter class="ml-1" size="xs">{{ reviewGetters.getTotalReviews(reviewAverage) }}</SfCounter>
             <UiButton
               variant="tertiary"
-              @click="scrollToReviews"
               class="ml-2 text-xs text-neutral-500 cursor-pointer"
               data-testid="show-reviews"
+              @click="scrollToReviews"
             >
               {{ t('showAllReviews') }}
             </UiButton>
@@ -85,8 +85,8 @@
               <UiQuantitySelector
                 :min-value="productGetters.getMinimumOrderQuantity(product)"
                 :value="quantitySelectorValue"
-                @change-quantity="changeQuantity"
                 class="min-w-[145px] flex-grow-0 flex-shrink-0 basis-0"
+                @change-quantity="changeQuantity"
               />
               <SfTooltip
                 show-arrow
@@ -130,7 +130,7 @@
               </i18n-t>
             </div>
             <template v-if="showPayPalButtons">
-              <PayPalExpressButton type="SingleItem" @validation-callback="paypalHandleAddToCart" class="mt-4" />
+              <PayPalExpressButton type="SingleItem" class="mt-4" @validation-callback="paypalHandleAddToCart" />
               <PayPalPayLaterBanner placement="product" :amount="priceWithProperties * quantitySelectorValue" />
             </template>
           </div>
@@ -143,14 +143,13 @@
 <script setup lang="ts">
 import { productGetters, reviewGetters, productBundleGetters } from '@plentymarkets/shop-api';
 import { SfCounter, SfRating, SfIconShoppingCart, SfLoaderCircular, SfTooltip, SfLink } from '@storefront-ui/vue';
-import { type PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
-import { type PayPalAddToCartCallback } from '~/components/PayPal/types';
+import type { PurchaseCardProps } from '~/components/ui/PurchaseCard/types';
+import type { PayPalAddToCartCallback } from '~/components/PayPal/types';
 import { paths } from '~/utils/paths';
 
 const { product, reviewAverage } = defineProps<PurchaseCardProps>();
 
 const { showNetPrices } = useCustomer();
-
 const viewport = useViewport();
 const { getCombination } = useProductAttributes();
 const { getPropertiesForCart, getPropertiesPrice } = useProductOrderProperties();
@@ -160,7 +159,7 @@ const {
   invalidFields: invalidAttributeFields,
   resetInvalidFields: resetAttributeFields,
 } = useValidatorAggregator('attributes');
-const { send } = useNotification();
+const { clear, send } = useNotification();
 const { addToCart, loading } = useCart();
 const { t } = useI18n();
 const quantitySelectorValue = ref(productGetters.getMinimumOrderQuantity(product));
@@ -170,8 +169,14 @@ const { crossedPrice } = useProductPrice(product);
 const { reviewArea } = useProductReviews(Number(productGetters.getId(product)));
 const localePath = useLocalePath();
 
-resetInvalidFields();
-resetAttributeFields();
+onMounted(() => {
+  resetInvalidFields();
+  resetAttributeFields();
+});
+
+onBeforeRouteLeave(() => {
+  if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) clear();
+});
 
 const priceWithProperties = computed(
   () =>
@@ -186,24 +191,28 @@ const basePriceSingleValue = computed(
     productGetters.getDefaultBasePrice(product),
 );
 
+const handleValidationErrors = (): boolean => {
+  send({
+    message: [
+      t('errorMessages.missingOrWrongProperties'),
+      '',
+      ...invalidAttributeFields.value.map((field) => field.name),
+      ...invalidFields.value.map((field) => field.name),
+      '',
+      t('errorMessages.pleaseFillOutAllFields'),
+    ],
+    type: 'negative',
+  });
+
+  return false;
+};
+
 const handleAddToCart = async (quickCheckout = true) => {
   await validateAllFieldsAttributes();
   await validateAllFields();
+
   if (invalidFields.value.length > 0 || invalidAttributeFields.value.length > 0) {
-    const invalidFieldsNames = invalidFields.value.map((field) => field.name);
-    const invalidAttributeFieldsNames = invalidAttributeFields.value.map((field) => field.name);
-    send({
-      message: [
-        t('errorMessages.missingOrWrongProperties'),
-        '',
-        ...invalidAttributeFieldsNames,
-        ...invalidFieldsNames,
-        '',
-        t('errorMessages.pleaseFillOutAllFields'),
-      ],
-      type: 'negative',
-    });
-    return false;
+    return handleValidationErrors();
   }
 
   if (!getCombination()) {
@@ -211,21 +220,19 @@ const handleAddToCart = async (quickCheckout = true) => {
     return false;
   }
 
-  const params = {
+  const addedToCart = await addToCart({
     productId: Number(productGetters.getId(product)),
     quantity: Number(quantitySelectorValue.value),
     basketItemOrderParams: getPropertiesForCart(),
-  };
+  });
 
-  const added = await addToCart(params);
-  if (added) {
-    if (quickCheckout) {
-      openQuickCheckout(product, quantitySelectorValue.value);
-    } else {
-      send({ message: t('addedToCart'), type: 'positive' });
-    }
+  if (addedToCart) {
+    quickCheckout === true
+      ? openQuickCheckout(product, quantitySelectorValue.value)
+      : send({ message: t('addedToCart'), type: 'positive' });
   }
-  return added;
+
+  return addedToCart;
 };
 
 const paypalHandleAddToCart = async (callback: PayPalAddToCartCallback) => {

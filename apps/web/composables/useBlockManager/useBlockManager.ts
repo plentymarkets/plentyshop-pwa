@@ -1,4 +1,6 @@
 import { ref, computed, onMounted } from 'vue';
+import { deepEqual } from '~/utils/jsonHelper';
+
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
@@ -6,7 +8,8 @@ const isEmptyBlock = (block: Block): boolean => {
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
 export function useBlockManager() {
-  const { data } = useHomepage();
+  const { data, initialBlocks } = useHomepage();
+  const { isEditing, isEditingEnabled } = useEditor();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
@@ -37,7 +40,6 @@ export function useBlockManager() {
     if (data.value.blocks && data.value.blocks.length > index) {
       currentBlockIndex.value = index;
       currentBlock.value = data.value.blocks[index];
-      const { isEditing } = useEditor();
       isEditing.value = true;
     }
   };
@@ -45,6 +47,7 @@ export function useBlockManager() {
   const deleteBlock = (index: number) => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
+      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
     }
   };
 

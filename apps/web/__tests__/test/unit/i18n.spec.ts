@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { getLocaleObject } from '../../../configuration/locale.config'
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const en = require('../../../lang/en.json')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const de = require('../../../lang/de.json')
 
 describe('i18n', () => {
@@ -12,7 +14,7 @@ describe('i18n', () => {
     it('has values for all English keys', () => {
         const valuesEn: Array<string | object> = Object.values(en);
 
-        valuesEn.forEach(value => {
+        valuesEn.forEach((value) => {
             hasText(value);
         })
     });
@@ -20,7 +22,7 @@ describe('i18n', () => {
     it('has values for all German keys', () => {
         const valuesDe: Array<string | object> = Object.values(de);
 
-        valuesDe.forEach(value => {
+        valuesDe.forEach((value) => {
             hasText(value);
         })
     });
@@ -76,7 +78,7 @@ const hasText = (value: string | object) => {
     if (isObject(value)) {
         expect(JSON.stringify(value)).not.toEqual('{}');
 
-        Object.values(value).forEach(childValue => {
+        Object.values(value).forEach((childValue) => {
             hasText(childValue);
         })
     }

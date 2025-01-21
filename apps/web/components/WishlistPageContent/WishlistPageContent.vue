@@ -17,7 +17,7 @@
         class="grid grid-cols-1 2xs:grid-cols-2 gap-4 md:gap-6 md:grid-cols-2 lg:grid-cols-3 3xl:grid-cols-4 mb-10 md:mb-5"
         data-testid="wishlist-grid"
       >
-        <NuxtLazyHydrate when-visible v-for="(product, index) in products" :key="productGetters.getId(product)">
+        <NuxtLazyHydrate v-for="(product, index) in products" :key="productGetters.getId(product)" when-visible>
           <UiProductCard
             :product="product"
             is-from-wishlist
@@ -63,7 +63,7 @@
         {{ $t('emptyWishlist') }}
       </h2>
     </div>
-    <div class="mt-4 mb-4 typography-text-xs flex gap-1" v-if="products.length > 0">
+    <div v-if="products.length > 0" class="mt-4 mb-4 typography-text-xs flex gap-1">
       <span>{{ $t('asterisk') }}</span>
       <span v-if="showNetPrices">{{ $t('itemExclVAT') }}</span>
       <span v-else>{{ $t('itemInclVAT') }}</span>

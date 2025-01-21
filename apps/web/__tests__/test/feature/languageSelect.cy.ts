@@ -66,16 +66,12 @@ describe('Feature: Language Selector', () => {
   });
 
   function setMobileState(
-      url: string = paths.home,
       width: number = 390,
       height: number = 844,
-      acceptCookie = true
   ) {
     cy.visitAndHydrate(paths.home);
     cy.viewport(width, height)
-
-    if (acceptCookie) {
-      cookieBar.acceptAll();
-    }
+    
+    cookieBar.acceptAll();
   }
 });

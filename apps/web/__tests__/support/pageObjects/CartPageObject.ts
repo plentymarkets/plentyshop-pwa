@@ -46,7 +46,7 @@ export class CartPageObject extends PageObject {
   }
 
   checkCart() {
-    cy.getFixture('products').then((fixture) => {
+    cy.getFixture('products').then(() => {
       this.assertCartPreviewElements();
     });
   }
