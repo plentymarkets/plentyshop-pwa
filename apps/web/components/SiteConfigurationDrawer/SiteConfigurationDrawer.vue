@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawerPlacement } from '@storefront-ui/vue';
+import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
 import SiteSettingsView from '~/components/SiteSettingsView/SiteSettingsView.vue';
 
