@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { rmSync } from 'node:fs';
 import type { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse, Languages } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import type { Writer } from '../writers/types';
@@ -102,14 +103,9 @@ export class AppConfigurator {
 
     return environmentContent;
   };
-
-  generateLanguageFiles = (languages: Languages): void => {
-    this.logger.info('Generating language files...');
-
+  
+  private writeLanguageFiles(defaultLanguageFile: string, languages: Languages, languageFilesPath: string) {
     const fileData = '{}';
-    const languageFilesPath = path.resolve(__dirname, '../../lang');
-    const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
-
     this.writer.writeMissing(fileData, defaultLanguageFile);
 
     languages.activated.split(',').forEach((language) => {
@@ -117,5 +113,28 @@ export class AppConfigurator {
 
       this.writer.writeMissing(fileData, languageFile);
     });
+  }
+
+  private cleanUpInactiveLanguages(languages: Languages, languageFilesPath: string) {
+    if (!languages.activated.includes('en')) {
+      const enFile = path.resolve(languageFilesPath, 'en.json');
+      rmSync(enFile);
+    }
+
+    if (!languages.activated.includes('de')) {
+      const deFile = path.resolve(languageFilesPath, 'de.json');
+      rmSync(deFile);
+    }
+  }
+
+  generateLanguageFiles = (languages: Languages): void => {
+    this.logger.info('Generating language files...');
+
+    const languageFilesPath = path.resolve(__dirname, '../../lang');
+    const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
+    
+    this.writeLanguageFiles(defaultLanguageFile, languages, languageFilesPath);
+    
+    this.cleanUpInactiveLanguages(languages, languageFilesPath);
   };
 }
