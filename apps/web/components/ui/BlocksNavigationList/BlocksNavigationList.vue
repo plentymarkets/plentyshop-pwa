@@ -3,14 +3,15 @@
     <div class="pb-5 relative left-[33px]">Image with text</div>
 
     <div class="overflow-y-auto max-h-[80vh]">
-      <div v-for="block in blocksLists" :key="block.id" class="mb-10 relative">
-        <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
-
-        <button
-          class="absolute right-[20px] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
-        >
-          <SfIconAdd class="cursor-pointer" />
-        </button>
+      <div v-for="block in blocksLists" :key="block.id" class="mb-10">
+        <div class="relative">
+          <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
+          <button
+            class="absolute right-[10%] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+          >
+            <SfIconAdd class="cursor-pointer" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
