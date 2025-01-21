@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <UiToolbar v-if="isPreview" />
-    <UiHeader />
-    <UiBlocksNavigation v-if="displayBlockList" />
-    <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
-      <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-    </NarrowContainer>
-    <main>
-      <slot />
-    </main>
-    <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
-    <Cookiebar />
-    <PreviewMode />
-    <NuxtLazyHydrate when-visible>
-      <UiFooter />
-    </NuxtLazyHydrate>
+  <UiToolbar v-if="isPreview" />
+  <div :class="{ flex: displayBlockList }">
+    <div v-if="displayBlockList" class="drawer w-1/4">
+      <UiBlocksNavigation />
+    </div>
+    <div :class="{ 'flex-1': displayBlockList, 'w-full': !displayBlockList }" class="main-content">
+      <UiHeader />
+      <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+        <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
+      </NarrowContainer>
+      <main>
+        <slot />
+      </main>
+      <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
+      <Cookiebar />
+      <PreviewMode />
+      <NuxtLazyHydrate when-visible>
+        <UiFooter />
+      </NuxtLazyHydrate>
 
-    <QuickCheckout v-if="isOpen" :product="product" />
+      <QuickCheckout v-if="isOpen" :product="product" />
+    </div>
   </div>
 </template>
 
