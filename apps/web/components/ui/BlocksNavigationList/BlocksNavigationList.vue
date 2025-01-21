@@ -7,7 +7,7 @@
         <div class="relative">
           <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
           <button
-            class="absolute right-[10%] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
+            class="absolute right-[11%] transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
