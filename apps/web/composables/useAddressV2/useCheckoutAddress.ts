@@ -1,4 +1,4 @@
-import type { AddressType, Address, ApiError } from '@plentymarkets/shop-api';
+import { type Address, type ApiError, AddressType } from '@plentymarkets/shop-api';
 
 export const useCheckoutAddress = (type: AddressType) => {
   const state = useState('useCheckoutAddress' + type, () => ({
