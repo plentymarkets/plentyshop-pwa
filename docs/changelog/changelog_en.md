@@ -35,6 +35,7 @@
 - Fixed an issue where calling useRoute within middleware could lead to misleading results.
 - Fixed an issue where you only edit the initial block you selected.
 - When the multilingualism configuration of the remote shop doesn't include English or German, the corresponding language file is now removed at build time. As a result, the language isn't displayed in the language selector.
+- The asterix from newsletter name input should be visible only if 'nameIsRequired' flag is set to true.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
