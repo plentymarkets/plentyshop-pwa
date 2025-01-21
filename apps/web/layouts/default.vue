@@ -1,14 +1,15 @@
 <template>
   <UiToolbar v-if="isPreview" />
-  <div :class="{ flex: displayBlockList }">
-    <div v-if="displayBlockList" class="drawer w-1/4">
+  <div class="flex h-screen overflow-hidden">
+    <div v-if="displayBlockList" class="w-1/4 h-full overflow-y-auto bg-gray-100">
       <UiBlocksNavigation />
     </div>
-    <div :class="{ 'flex-1': displayBlockList, 'w-full': !displayBlockList }" class="main-content">
+
+    <div :class="{ 'flex-1': displayBlockList, 'w-full': !displayBlockList }" class="h-full overflow-y-auto">
       <UiHeader />
-      <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+      <div v-if="breadcrumbs?.length" class="p-4 md:px-0">
         <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-      </NarrowContainer>
+      </div>
       <main>
         <slot />
       </main>
