@@ -1,6 +1,6 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
-import { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './types';
+import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
@@ -8,6 +8,7 @@ const useLocaleSpecificHomepageTemplate = (locale: string) =>
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
     data: { blocks: [], meta: { isDefault: null } } as HomepageData,
+    initialBlocks: [],
     dataIsEmpty: false,
     loading: false,
     showErrors: false,
@@ -47,6 +48,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
+    state.value.initialBlocks = state.value.data.blocks.map((block) => toRaw(block));
+
     await fetchRecommendedProducts();
   };
 
@@ -61,9 +64,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   watch(
     () => currentLocale.value,
-    // eslint-disable-next-line unicorn/no-keyword-prefix
     async (newLocale) => {
-      // eslint-disable-next-line unicorn/no-keyword-prefix
       currentLocale.value = newLocale;
       await fetchPageTemplate();
     },

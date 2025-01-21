@@ -10,7 +10,7 @@
       <SfListItem v-for="(filter, index) in sortedReviews(facet)" :key="index" tag="label" class="mb-3" size="sm">
         <div class="flex items-center space-x-2">
           <span class="pt-1 flex items-center">
-            <SfCheckbox v-model="models[filter.id]" :value="filter" :id="filter.id" @change="facetChange" />
+            <SfCheckbox :id="filter.id" v-model="models[filter.id]" :value="filter" @change="facetChange" />
           </span>
           <span class="flex items-center pt-[2px]">
             <SfRating :value="feedbackNumber(filter)" :max="5" />
@@ -39,13 +39,13 @@
       <div class="mb-3">
         <label for="min">
           <UiFormLabel class="text-start">{{ $t('min') }}</UiFormLabel>
-          <SfInput v-model="minPrice" :placeholder="$t('min')" id="min" />
+          <SfInput id="min" v-model="minPrice" :placeholder="$t('min')" />
         </label>
       </div>
       <div class="mb-3">
         <label for="max">
           <UiFormLabel class="text-start">{{ $t('max') }}</UiFormLabel>
-          <SfInput v-model="maxPrice" :placeholder="$t('max')" id="max" />
+          <SfInput id="max" v-model="maxPrice" :placeholder="$t('max')" />
         </label>
       </div>
       <div class="flex">
@@ -60,7 +60,7 @@
           </template>
           {{ $t('apply') }}
         </UiButton>
-        <UiButton type="reset" @click="resetPriceFilter" class="h-10" variant="secondary" :aria-label="$t('clear')">
+        <UiButton type="reset" class="h-10" variant="secondary" :aria-label="$t('clear')" @click="resetPriceFilter">
           <SfIconClose />
         </UiButton>
       </div>
@@ -77,11 +77,11 @@
       >
         <template #prefix>
           <SfCheckbox
+            :id="filter.id"
             v-model="models[filter.id]"
             :value="filter"
-            :id="filter.id"
-            @change="facetChange"
             class="flex items-center"
+            @change="facetChange"
           />
         </template>
         <p class="select-none">
@@ -110,7 +110,6 @@ import {
 import type { FilterProps } from '~/components/CategoryFilters/types';
 import type { Filters } from '~/composables';
 
-const route = useRoute();
 const { getFacetsFromURL, updateFilters, updatePrices } = useCategoryFilter();
 const open = ref(true);
 const props = defineProps<FilterProps>();
@@ -148,7 +147,7 @@ const facetChange = () => updateFilters(models.value);
 updateFilter();
 
 watch(
-  () => route.query,
+  () => useNuxtApp().$router.currentRoute.value.query,
   async () => {
     updateFilter();
 

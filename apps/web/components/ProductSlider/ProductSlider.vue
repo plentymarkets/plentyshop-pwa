@@ -7,8 +7,8 @@
   >
     <UiProductCard
       v-for="product in items"
-      :product="product"
       :key="productGetters.getId(product)"
+      :product="product"
       :name="productGetters.getName(product)"
       :slug="productGetters.getSlug(product) + `-${productGetters.getId(product)}`"
       :image-url="addModernImageExtension(productGetters.getSecondPreviewImage(product))"

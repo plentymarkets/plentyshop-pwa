@@ -6,8 +6,13 @@
     <p class="mb-2">{{ t('manufacturer.responsibleSubtitle') }}</p>
 
     <div class="border-2 py-2 px-4">
-      <p v-if="manufacturerResponsibleInfo.name">{{ manufacturerResponsibleInfo.name }}</p>
-      <p v-if="manufacturerResponsibleInfo.street || manufacturerResponsibleInfo.houseNo">
+      <p v-if="manufacturerResponsibleInfo.name" data-testid="manufacturer-responsible-info-name">
+        {{ manufacturerResponsibleInfo.name }}
+      </p>
+      <p
+        v-if="manufacturerResponsibleInfo.street || manufacturerResponsibleInfo.houseNo"
+        data-testid="manufacturer-responsible-info-street"
+      >
         {{ manufacturerResponsibleInfo.street }} {{ manufacturerResponsibleInfo.houseNo }}
       </p>
       <p
@@ -16,14 +21,19 @@
           manufacturerResponsibleInfo.town ||
           manufacturerResponsibleInfo.country
         "
+        data-testid="manufacturer-responsible-info-postcode"
       >
         {{ manufacturerResponsibleInfo.postCode }}
         <span v-if="manufacturerResponsibleInfo.town"> {{ manufacturerResponsibleInfo.town }}</span>
         <span v-if="manufacturerResponsibleInfo.town && manufacturerResponsibleInfo.country">, &nbsp;</span>
         <span v-if="manufacturerResponsibleInfo.country">{{ manufacturerResponsibleInfo.country.name }}</span>
       </p>
-      <p v-if="manufacturerResponsibleInfo.phoneNo">{{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}</p>
-      <p v-if="manufacturerResponsibleInfo.email">{{ t('email') }}: {{ manufacturerResponsibleInfo.email }}</p>
+      <p v-if="manufacturerResponsibleInfo.phoneNo" data-testid="manufacturer-responsible-info-phone">
+        {{ t('phone') }}: {{ manufacturerResponsibleInfo.phoneNo }}
+      </p>
+      <p v-if="manufacturerResponsibleInfo.email" data-testid="manufacturer-responsible-info-email">
+        {{ t('email') }}: {{ manufacturerResponsibleInfo.email }}
+      </p>
       <p v-if="manufacturerResponsibleInfo.responsibleContactUrl">
         {{ t('responsibleContactUrl') }}: {{ manufacturerResponsibleInfo.responsibleContactUrl }}
       </p>

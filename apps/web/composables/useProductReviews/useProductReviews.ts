@@ -1,4 +1,4 @@
-import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem } from '@plentymarkets/shop-api';
+import type { CreateReviewParams, Review, UpdateReviewParams, ReviewItem, ApiError } from '@plentymarkets/shop-api';
 import type {
   FetchProductReviews,
   UseProductReviews,
@@ -8,7 +8,6 @@ import type {
   CreateProductReview,
 } from './types';
 import { reviewGetters } from '@plentymarkets/shop-api';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing product reviews data
@@ -41,7 +40,7 @@ export const useProductReviews: UseProductReviews = (itemId: number, productVari
    * fetchProductReviews(1, 1);
    * ```
    */
-  const fetchProductReviews: FetchProductReviews = async (itemId: number, variationId?: number) => {
+  const fetchProductReviews: FetchProductReviews = async (itemId: number) => {
     state.value.loading = true;
     const route = useRoute();
     const config = useRuntimeConfig().public;

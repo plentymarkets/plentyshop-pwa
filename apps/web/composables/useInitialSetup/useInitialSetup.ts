@@ -1,7 +1,6 @@
-import type { Cart, SessionResult } from '@plentymarkets/shop-api';
+import type { Cart, SessionResult, ApiError } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData
@@ -52,7 +51,7 @@ const setInitialDataSSR: SetInitialData = async () => {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);
       setCategoryTree(data.value.data.categories);
-      setWishlistItemIds(data.value.data.session?.basket?.itemWishListIds || []);
+      setWishlistItemIds(Object.keys(data.value.data.session?.basket?.itemWishListIds || []));
     }
   } catch (error) {
     useHandleError(error as ApiError);

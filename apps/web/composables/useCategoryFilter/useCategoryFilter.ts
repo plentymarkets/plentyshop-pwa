@@ -1,4 +1,4 @@
-import { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
+import type { Filters, GetFacetsFromURLResponse, UseCategoryFiltersResponse } from './types';
 import type { RouteLocationNormalizedGeneric } from 'vue-router';
 const nonFilters = new Set(['page', 'sort', 'term', 'facets', 'itemsPerPage', 'priceMin', 'priceMax']);
 
@@ -43,7 +43,7 @@ const mergeFilters = (oldFilters: Filters, filters: Filters): Filters => {
  * ```
  */
 export const useCategoryFilter = (to?: RouteLocationNormalizedGeneric): UseCategoryFiltersResponse => {
-  const route = to ?? useRoute();
+  const route = to ?? useNuxtApp().$router.currentRoute.value;
 
   /**
    * @description Function for getting facets from url.

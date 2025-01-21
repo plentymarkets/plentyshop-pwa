@@ -34,12 +34,13 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.83.1",
+    "@plentymarkets/shop-api": "^0.87.1",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
     "@vee-validate/nuxt": "^4.13.2",
     "@vee-validate/yup": "^4.13.2",
+    "blaze-slider": "^1.9.3",
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",

@@ -43,13 +43,11 @@ export const useAddressForm = (type: AddressType) => {
     object({
       firstName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       lastName: string().when([], {
         is: () => !state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
@@ -64,13 +62,11 @@ export const useAddressForm = (type: AddressType) => {
       primary: boolean().default(false),
       companyName: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),
       vatNumber: string().when([], {
         is: () => state.value.hasCompany,
-        // eslint-disable-next-line unicorn/no-thenable
         then: () => string().required($i18n.t('errorMessages.requiredField')).default(''),
         otherwise: () => string().optional().default(''),
       }),

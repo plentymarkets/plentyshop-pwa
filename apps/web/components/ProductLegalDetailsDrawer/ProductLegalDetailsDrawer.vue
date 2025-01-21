@@ -3,6 +3,7 @@
     <SfDrawer
       ref="productLegalDrawerRef"
       v-model="open"
+      data-testid="product-legal-details-drawer"
       :placement="placement"
       :class="[
         'lg:w-128',
@@ -15,7 +16,13 @@
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white">{{ t('productLegalDetailsHeader') }}</div>
-        <UiButton square variant="tertiary" class="text-white" @click="open = false">
+        <UiButton
+          square
+          variant="tertiary"
+          data-testid="product-legal-details-close"
+          class="text-white"
+          @click="open = false"
+        >
           <SfIconClose />
         </UiButton>
       </header>
@@ -32,6 +39,7 @@
           :key="tab.label"
           type="button"
           role="tab"
+          :data-testid="tab.component.__name"
           :variant="isActiveTab(index) ? 'primary' : 'secondary'"
           :aria-selected="isActiveTab(index)"
           :aria-controls="`tabpanel-${index}`"
@@ -41,14 +49,13 @@
           {{ tab.label }}
         </UiButton>
       </div>
-
       <div
         v-for="(tab, index) in tabs"
+        v-show="isActiveTab(index)"
+        :id="`tabpanel-${index}`"
         :key="tab.label"
         role="tabpanel"
-        :id="`tabpanel-${index}`"
         :aria-labelledby="`tab-${index}`"
-        v-show="isActiveTab(index)"
         class="p-4"
       >
         <component :is="tab.component" :product="product" />
@@ -58,8 +65,9 @@
 </template>
 
 <script setup lang="ts">
-import { SfDrawer, SfIconClose, SfDrawerPlacement, useTrapFocus } from '@storefront-ui/vue';
-import { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
+import type { SfDrawerPlacement } from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, useTrapFocus } from '@storefront-ui/vue';
+import type { ProductLegalDetailsProps } from '~/components/ProductLegalDetailsDrawer/types';
 import ManufacturerResponsibleInfo from '~/components/ManufacturerResponsibleInfo/ManufacturerResponsibleInfo.vue';
 import ManufacturerInformation from '~/components/ManufacturerInformation/ManufacturerInformation.vue';
 

@@ -3,9 +3,9 @@
     <div v-for="(attribute, index) in attributes" :key="index" class="mb-2">
       <ClientOnly>
         <Component
+          :is="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
           v-if="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
           :attribute="attribute"
-          :is="componentsMapper[productAttributeGetters.getAttributeType(attribute)]"
         />
       </ClientOnly>
     </div>

@@ -1,4 +1,4 @@
-import type { RegisterParams, SessionResult, UserChangePasswordParams } from '@plentymarkets/shop-api';
+import type { RegisterParams, SessionResult, UserChangePasswordParams, ApiError } from '@plentymarkets/shop-api';
 import type {
   UseCustomerReturn,
   UseCustomerState,
@@ -9,7 +9,6 @@ import type {
   Logout,
   ChangePassword,
 } from '~/composables/useCustomer/types';
-import { ApiError } from '@plentymarkets/shop-api';
 
 /**
  * @description Composable managing Customer data
@@ -64,7 +63,7 @@ export const useCustomer: UseCustomerReturn = () => {
     useHandleError(error.value);
     state.value.data = data?.value?.data ?? state.value.data;
     checkUserState();
-    useWishlist().setWishlistItemIds(state.value.data?.basket?.itemWishListIds || []);
+    useWishlist().setWishlistItemIds(Object.keys(state.value.data?.basket?.itemWishListIds || []));
 
     state.value.loading = false;
     return state.value.data;

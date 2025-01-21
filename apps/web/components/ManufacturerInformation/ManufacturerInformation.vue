@@ -9,7 +9,7 @@
       <p v-if="manufacturerInfo.logo">
         <NuxtImg :src="manufacturerInfo.logo" :alt="t('manufacturer.logoAlt')" loading="lazy" />
       </p>
-      <p v-if="manufacturerInfo.name">{{ manufacturerInfo.name }}</p>
+      <p v-if="manufacturerInfo.name" data-testid="manufacturerInfo-name">{{ manufacturerInfo.name }}</p>
       <p v-else-if="manufacturerInfo.externalName">{{ manufacturerInfo.externalName }}</p>
       <p v-if="manufacturerInfo.legalName">{{ manufacturerInfo.legalName }}</p>
       <p v-if="manufacturerInfo.street || manufacturerInfo.houseNo">

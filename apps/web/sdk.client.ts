@@ -1,17 +1,17 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import type { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { updateVsfLocale } from './utils/sdkClientHelper';
 import { ApiError } from '@plentymarkets/shop-api';
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const createHttpClient = () => {
   const client = axios.create({ withCredentials: true });
 
   if (tryUseNuxtApp()) {
     const { token } = useCsrfToken();
-    const { $i18n } = useNuxtApp();
+    const { $i18n, $router } = useNuxtApp();
     const runtimeConfig = useRuntimeConfig();
-    const referrerId = useRoute().query?.ReferrerID?.toString() ?? '';
-    const noCache = runtimeConfig.public.noCache || useRoute().query?.noCache?.toString() || '';
+    const referrerId = $router.currentRoute.value.query?.ReferrerID?.toString() ?? '';
+    const noCache = runtimeConfig.public.noCache || $router.currentRoute.value.query?.noCache?.toString() || '';
     const configId = runtimeConfig.public.configId;
     const pwaHashCookie = useCookie('pwa');
 
@@ -42,7 +42,6 @@ const handleHttpError = (error: unknown) => {
   const data = axiosError?.response?.data?.data || axiosError?.response?.data;
   const events = axiosError?.response?.data?.events;
 
-  // eslint-disable-next-line etc/throw-error
   throw new ApiError({
     key: data?.key || 'unknownError',
     code: axiosError?.response?.data?.error?.code ?? axiosError?.response?.status ?? axiosError.status,

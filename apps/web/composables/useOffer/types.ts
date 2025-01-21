@@ -1,4 +1,4 @@
-import { Offer, GetOfferError, OfferSearchParams, Order } from '@plentymarkets/shop-api';
+import type { Offer, GetOfferError, OfferSearchParams, Order } from '@plentymarkets/shop-api';
 
 export interface UseOfferState {
   data: Offer;

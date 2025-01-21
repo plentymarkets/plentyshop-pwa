@@ -15,7 +15,7 @@ export default defineVitestConfig({
     clearMocks: true,
     setupFiles: './vitest.config.setup.ts',
     include: ['**/*/?(*.)+(spec|test).[jt]s'],
-    onConsoleLog: (log: string): boolean | void => {
+    onConsoleLog: (log: string): boolean | undefined => {
       if (silenceLogsFromSuspenseComponent(log)) {
         return false;
       }

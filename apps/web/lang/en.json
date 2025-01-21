@@ -15,6 +15,11 @@
     },
     "essentials": {
       "cookies": {
+        "payPal": {
+          "name": "paypal",
+          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
+          "status": "Required for PayPal payments."
+        },
         "cloudflareTurnstile": {
           "name": "Cloudflare Turnstile",
           "provider": "Cloudflare",
@@ -45,11 +50,6 @@
     },
     "functional": {
       "cookies": {
-        "payPal": {
-          "name": "paypal",
-          "provider": "PayPal (Europe) S.à r.l. et Cie, S.C.A.",
-          "status": "Required for PayPal payments."
-        },
         "scriptDemo": {
           "name": "Script demo",
           "provider": "plentysystems AG",
@@ -773,9 +773,7 @@
   "pagination": "Paginated Navigation",
   "passwordVisibilty": "Password visibility",
   "paypal": {
-    "cookieNotAccepted": "To use PayPal, open the {phrase} and enable the PayPal cookie.",
     "errorMessageCreditCard": "The input data is invalid. Check the fields Card number, CVV, Expiration date.",
-    "openSettings": "cookie settings",
     "unbrandedCancel": "Cancel",
     "unbrandedCardNumber": "Card number",
     "unbrandedCvv": "CVV",

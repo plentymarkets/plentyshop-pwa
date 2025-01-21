@@ -74,10 +74,10 @@
         size="sm"
         class="min-w-[80px] w-fit"
         data-testid="add-to-basket-short"
-        @click="addWithLoader(Number(productGetters.getId(product)))"
         :disabled="loading"
+        @click="addWithLoader(Number(productGetters.getId(product)))"
       >
-        <template #prefix v-if="!loading">
+        <template v-if="!loading" #prefix>
           <SfIconShoppingCart size="sm" />
         </template>
         <SfLoaderCircular v-if="loading" class="flex justify-center items-center" size="sm" />
