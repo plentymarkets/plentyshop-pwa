@@ -66,7 +66,7 @@ export default {
           '950': 'rgb(var(--colors-2-secondary-950) / <alpha-value>)',
         },
         editor: {
-          'body-bg': '#F1F3F5'
+          'body-bg': '#F1F3F5',
         },
       },
       gridTemplateAreas: {

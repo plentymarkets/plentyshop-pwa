@@ -13,9 +13,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2 class="">
-          Fonts
-        </h2>
+        <h2 class="">Fonts</h2>
       </template>
 
       <div class="flex justify-between mb-2">
@@ -42,9 +40,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2 class="">
-          Colors
-        </h2>
+        <h2 class="">Colors</h2>
       </template>
       <div class="py-2">
         <div class="flex justify-between mb-2">
@@ -104,9 +100,7 @@
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
       <template #summary>
-        <h2 class="">
-          Blocks spacing
-        </h2>
+        <h2 class="">Blocks spacing</h2>
       </template>
       <div class="border-b py-1">
         <UiButton
