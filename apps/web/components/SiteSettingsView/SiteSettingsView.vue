@@ -28,7 +28,12 @@
         </SfTooltip>
       </div>
 
-      <SfSelect v-model="font" size="lg" :placeholder="$t('pleaseSelect')" @change="loadGoogleFont(font)">
+      <SfSelect
+        v-model="selectedFont"
+        size="lg"
+        :placeholder="$t('pleaseSelect')"
+        @change="loadGoogleFont(selectedFont)"
+      >
         <option :value="undefined">{{ $t('pleaseSelect') }}</option>
         <option v-for="(font, key) in fonts" :key="key" :value="font.value">{{ font.caption }}</option>
       </SfSelect>
@@ -134,7 +139,7 @@ const blocksSpacingOpen = ref(false);
 
 const blocksSpacingSizes = ref(['S', 'M', 'L', 'XL']);
 
-const font = ref('');
+const selectedFont = ref(runtimeConfig.public.defaultFont);
 const primaryColor = ref(runtimeConfig.public.primaryColor);
 const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 </script>

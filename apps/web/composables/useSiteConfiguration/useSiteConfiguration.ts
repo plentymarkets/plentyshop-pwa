@@ -1,5 +1,8 @@
-import type { UseSiteConfigurationReturn, UseSiteConfigurationState } from '~/composables/useSiteConfiguration/types';
-import { LoadGoogleFont } from '~/composables/useSiteConfiguration/types';
+import type {
+  UseSiteConfigurationReturn,
+  UseSiteConfigurationState,
+  LoadGoogleFont,
+} from '~/composables/useSiteConfiguration/types';
 
 /**
  * @description Composable for managing wishlist.
