@@ -12,7 +12,7 @@ export const categories = [
       },
       {
         key: 'pringles',
-        link: paths.home, // No matching path, so using home
+        link: paths.pringles, // No matching path, so using home
       },
       {
         key: 'breakfast',
