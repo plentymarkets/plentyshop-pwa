@@ -41,8 +41,8 @@ export class EditorObject extends PageObject {
     return cy.get('#close')
   }
 
-  get blockWrapper() {
-    return cy.getByTestId('block-wrapper')
+  get blockWrappers() {
+    return cy.get('[data-testid*="block-wrapper"]');
   }
 
   get topBlockButton() {
@@ -142,11 +142,11 @@ export class EditorObject extends PageObject {
   }
 
   buttonsExistWithGroupClasses() {
-    this.blockWrapper.first()
+    this.blockWrappers.first()
       .should('exist')
       .and('have.class', 'group')
       .and('not.have.css', 'outline-style', 'solid');
-    this.blockWrapper.first().within(() => {
+    this.blockWrappers.first().within(() => {
       this.topBlockButton
         .should('exist')
         .and('have.class', 'group-hover:opacity-100')
@@ -164,12 +164,12 @@ export class EditorObject extends PageObject {
   }
 
   deleteBlock() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
-      this.blockWrapper.first().should('exist');
+      this.blockWrappers.first().should('exist');
       this.deleteBlockButton.eq(1).click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength - 1);
+      this.blockWrappers.should('have.length', initialLength - 1);
     });
    }
 
@@ -190,27 +190,27 @@ export class EditorObject extends PageObject {
   }
 
   addBlockTop() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.blockWrappers.should('have.length', initialLength + 1);
     });
   }
 
   addBlockBottom() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.blockWrappers.should('have.length', initialLength + 1);
     });
   }
 
   checkFirstBlock() {
-    this.blockWrapper.first().within(() => {
+    this.blockWrappers.first().within(() => {
       this.topMoveBlockButton.first()
         .should('exist')
         .and('be.disabled')
@@ -219,7 +219,7 @@ export class EditorObject extends PageObject {
   }
 
   checkLastBlock() {
-    this.blockWrapper.last().within(() => {
+    this.blockWrappers.last().within(() => {
       this.bottomMoveBlockButton.first()
         .should('exist')
         .and('be.disabled')
@@ -227,19 +227,22 @@ export class EditorObject extends PageObject {
     });
   }
 
+  assertDefaultBlockOrder() {
+    this.blockWrappers.
+      first().should('contain.text', 'Feel the music').
+      next().should('contain.text', 'Discover Tech');
+  }
+
   moveBlock() {
-    this.blockWrapper.then((blocks) => {
-      const firstBlock = blocks[0];
+    this.blockWrappers.first().within(() => {
+      this.bottomMoveBlockButton.first().should('exist').click();
+    })
+  }
 
-      cy.wrap(firstBlock).within(() => {
-        this.bottomMoveBlockButton.first().should('exist').click();
-      });
-
-      this.blockWrapper.then((updatedBlocks) => {
-        expect(updatedBlocks[0]).to.equal(firstBlock);
-        expect(updatedBlocks[1]).to.not.equal(firstBlock);
-      });
-    });
+  assertChangedBlockOrder() {
+    this.blockWrappers.
+      first().should('contain.text', 'Discover Tech').
+      next().should('contain.text', 'Feel the music');
   }
 }
 

@@ -23,8 +23,10 @@ describe('Blocks', () => {
       editor.checkLastBlock();
     });
 
-    it('moving blocks on the page', () => {
+    it('should move a block on the page', () => {
+      editor.assertDefaultBlockOrder();
       editor.moveBlock();
+      editor.assertChangedBlockOrder();
     });
 
     it('should check for recommended products', () => {
