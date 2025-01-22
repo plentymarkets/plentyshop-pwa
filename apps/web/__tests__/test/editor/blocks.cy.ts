@@ -15,10 +15,16 @@ describe('Blocks', () => {
         editor.addBlockBottom();
     });
 
-    it('should check for move block logic', () => {
+    it('should not be possible to move the first block up', () => {
       editor.checkFirstBlock();
+    });
+
+    it('should not be possible to move the last block down', () => {
       editor.checkLastBlock();
-      editor.moveFirstBlock();
+    });
+
+    it('moving blocks on the page', () => {
+      editor.moveBlock();
     });
 
     it('should check for recommended products', () => {

@@ -227,7 +227,7 @@ export class EditorObject extends PageObject {
     });
   }
 
-  moveFirstBlock() {
+  moveBlock() {
     this.blockWrapper.then((blocks) => {
       const firstBlock = blocks[0];
 
