@@ -8,7 +8,7 @@ PlentyONE is an e-commerce ERP system that combines stock management with a shop
 
 Besides its own online shop, PlentyONE connects to all relevant marketplace, payment, logistic, online shop, legal and affiliate marketing providers. PlentyONE also includes the app-based point-of-sale software plentyPOS. In short, PlentyONE allows you to sell on many sales channel while managing everything in one place.
 
-## What is PlentyONE Shop?
+## What is PlentyONE's shop solution?
 
 Progressive Web Apps (PWAs) are websites that offer functionality you typically only find in local apps:
 
@@ -19,11 +19,11 @@ Progressive Web Apps (PWAs) are websites that offer functionality you typically 
 * One app for all devices
 * Easy to use in the browser; downloading and installing the app isn't required
 
-Based on the e-commerce framework Alokai, PlentyONE Shop offers great performance out of the box. Once you’re set up, you benefit from a headless progressive web app that still seamlessly integrates with the rest of PlentyONE.
+Based on the e-commerce framework Alokai, the shop of PlentyONE offers great performance out of the box. Once you’re set up, you benefit from a headless progressive web app that still seamlessly integrates with the rest of PlentyONE.
 
 ## Demo
 
-Have a look at our official [PlentyONE Shop Demo Shop](https://plentyshop.plentymarkets.com/).
+Have a look at our official [Demo Shop](https://plentyshop.plentymarkets.com/).
 
 ## How to read this documentation
 

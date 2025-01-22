@@ -4,7 +4,7 @@ Implementing bot protection safeguards your shop against automated spamming acti
 
 By deploying bot protection, you can enhance the overall user experience, maintain data integrity, and mitigate the risk of fraudulent or malicious activities that can compromise the security and functionality of your shop.
 
-PlentyONE Shop uses Cloudflare Turnstile to implement bot protection.
+The shop uses Cloudflare Turnstile to implement bot protection.
 
 ## Cloudflare Turnstile
 
@@ -26,7 +26,7 @@ For further information, refer to the [Turnstile documentation](https://develope
 
 ## Enabling Cloudflare Turnstile
 
-This section describes how to enable Turnstile for your shop. You have to take action in Cloudflare, your PlentyONE system and the PlentyONE Shop configuration.
+This section describes how to enable Turnstile for your shop. You have to take action in Cloudflare, your PlentyONE system and the shop configuration.
 
 ### Cloudflare
 
@@ -43,7 +43,7 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 3. Paste the secret key in the **Cloudflare Turnstile Secret key (only PWA)** field.
 4. **Save** the settings.
 
-### PlentyONE Shop
+### Shop
 
 Paste the sitekey in the PWA's `apps/web/.env` file:
 
@@ -56,7 +56,7 @@ NEWSLETTER_FORM_SHOW_NAMES=1
 
 ## Disabling Cloudflare Turnstile
 
-To disable Turnstile, you have to reset the configurations in the PlentyONE system and PlentyONE Shop.
+To disable Turnstile, you have to reset the configurations in the PlentyONE system and the shop.
 
 ### PlentyONE
 
@@ -67,7 +67,7 @@ To disable Turnstile, you have to reset the configurations in the PlentyONE syst
 
 This disables the CAPTCHA validation.
 
-### PlentyONE Shop
+### Shop
 
 Remove the sitekey from the PWA's `apps/web/.env` file. This removes the widget in the PWA.
 

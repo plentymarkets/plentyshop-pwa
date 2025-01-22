@@ -7,7 +7,7 @@ Otherwise, Tailwind classes that do not already exist will not be available in y
 It is also possible to override the Tailwind configuration, e.g. to add custom colours.
 
 ::: info
-You need to insert your module before the `@nuxtjs/tailwindcss` in the `modules` of your `nuxt.config.ts` in your PlentyONE Shop repository.
+You need to insert your module before the `@nuxtjs/tailwindcss` in the `modules` of your `nuxt.config.ts` in your Shop repository.
 :::
 
 ## Prerequisites / Preparation

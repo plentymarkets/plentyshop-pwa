@@ -1,7 +1,7 @@
 # Pages Guide
 
 ## Introduction
-This guide explains how to create a new page in your module or override an existing page in your PlentyONE shop repository from your module.
+This guide explains how to create a new page in your module or override an existing page in your shop repository from your module.
 
 ## Scenarios
 
@@ -23,11 +23,11 @@ extendPages((pages: NuxtPage[]) => {
 });
 ```
 
-Your page is now registered and can be used in your PlentyONE shop repository. In this example, your page is available at `/my-path`.
+Your page is now registered and can be used in your shop repository. In this example, your page is available at `/my-path`.
 
 
 ### 2. Override an existing page
-To replace an existing page in your PlentyONE shop repository with a custom one, follow these steps:
+To replace an existing page in your shop repository with a custom one, follow these steps:
 1. Create a page in your module. We recommend using the `src/runtime/pages/` directory. The name of the page must be the same as the one you want to override.
 2. Use the `extendPages` function to find the page you want to override.
 3. Update its `file` property to point to your custom page.
@@ -46,4 +46,4 @@ extendPages((pages: NuxtPage[]) => {
 });
 ```
 
-This will replace the page in your PlentyONE shop repository with your custom version.
+This will replace the page in your shop repository with your custom version.

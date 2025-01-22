@@ -1,7 +1,7 @@
 # Components Guide
 
 ## Introduction
-This guide will show you how to create a new component in your module and how to override an existing component in your PlentyONE shop repository from your module.
+This guide will show you how to create a new component in your module and how to override an existing component in your shop repository from your module.
 
 ## Scenarios
 
@@ -20,12 +20,12 @@ await addComponent({
 });
 ```
 
-Your component is now registered and can be used in your PlentyONE shop repository. 
+Your component is now registered and can be used in your shop repository. 
 In this example, you can use it as `<ModuleTest />`.
 
 
 ### 2. Override an existing component
-To replace an existing component in your PlentyONE shop repository with a custom one, follow these steps:
+To replace an existing component in your shop repository with a custom one, follow these steps:
 1. Create a component in your module. We recommend using the `src/runtime/components/` directory. The name of the new component must be the same as the one you want to override. To override an existing component, it is not necessary to use the `addComponent` function in the setup in your module.
 2. Hook into the `components:extend` hook.
 3. Locate the component you want to override.
@@ -45,4 +45,4 @@ nuxt.hook('components:extend', (components) => {
 });
 ```
 
-This will replace the `UiButton` component in your PlentyONE shop repository with your custom version.
+This will replace the `UiButton` component in your shop repository with your custom version.

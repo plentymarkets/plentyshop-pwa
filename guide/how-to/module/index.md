@@ -5,7 +5,7 @@ next: false
 
 # How to create a module
 
-How-to guides are step-by-step instructions that help you create specific modules for PlentyONE Shop.
+How-to guides are step-by-step instructions that help you create specific modules for the shop.
 
 ## Quick start
 Check out our [pwa-module-boilerplate](https://github.com/plentymarkets/pwa-module-boilerplate)
@@ -18,7 +18,7 @@ Check out our [pwa-module-boilerplate](https://github.com/plentymarkets/pwa-modu
 - [i18n](/guide/how-to/module/i18n.md)
 - [Tailwind](/guide/how-to/module/tailwind.md)
 - [Custom CSS JS](/guide/how-to/module/custom-js-css.md)
-- [Inject components into PlentyONE Shop areas](/guide/how-to/module/inject-components.md)
+- [Inject components into shop areas](/guide/how-to/module/inject-components.md)
 
 ## Further reading
 [https://nuxt.com/docs/guide/going-further/modules](https://nuxt.com/docs/guide/going-further/modules)

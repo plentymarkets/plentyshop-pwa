@@ -91,7 +91,7 @@ Since we're ignoring .env files on deployment, the values from apps/web/.env nee
 
 ### Upload
 
-PlentyONE Shop uses [GitHub Actions](https://github.com/features/actions) to upload apps the PlentyONE systems. For details, refer to the workflow at [`.github/workflows/upload.yml`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/.github/workflows/upload.yml). By default, the upload workflow triggers when one of the following conditions is met:
+The shop uses [GitHub Actions](https://github.com/features/actions) to upload apps the PlentyONE systems. For details, refer to the workflow at [`.github/workflows/upload.yml`](https://github.com/plentymarkets/plentyshop-pwa/blob/main/.github/workflows/upload.yml). By default, the upload workflow triggers when one of the following conditions is met:
 
 - A **Push** to the `main` branch uploads the code from main using the `URL_ENDPOINT_TOKEN_STAGING` token.
 - A **[GitHub Release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository)** uploads the code from the specified tag using the `URL_ENDPOINT_TOKEN` token.

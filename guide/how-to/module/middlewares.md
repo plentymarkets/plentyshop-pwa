@@ -1,7 +1,7 @@
 # Middleware Guide
 
 ## Introduction
-This guide explains how to create a new middleware in your module or override an existing middleware in your PlentyONE shop repository from your module.
+This guide explains how to create a new middleware in your module or override an existing middleware in your shop repository from your module.
 
 ## Scenarios
 
@@ -21,11 +21,11 @@ addRouteMiddleware({
 });
 ```
 
-Your middleware is now registered and can be used in your PlentyONE shop repository. In this example, the middleware will be executed on every route because the `global` property is set to `true`.
+Your middleware is now registered and can be used in your shop repository. In this example, the middleware will be executed on every route because the `global` property is set to `true`.
 Otherwise, the middleware can be used with `middleware: 'example-middleware'`.
 
 ### 2. Overriding an existing middleware
-To replace an existing middleware in your PlentyONE shop repository with a custom one, follow these steps:
+To replace an existing middleware in your shop repository with a custom one, follow these steps:
 1. Create a middleware in your module. We recommend using the `src/runtime/middleware/` directory. The name of the middleware must be the same as the one you want to override. To just override an existing middleware it is not necessary to use the `addRouteMiddleware` function in the setup in your module.
 2. Hook into the `app:resolve` hook.
 3. Locate the middleware you want to override.
@@ -45,4 +45,4 @@ nuxt.hook('app:resolve', (app) => {
 });
 ```
 
-This will replace the `auth-guard` middleware in your PlentyONE shop repository with your custom version.
+This will replace the `auth-guard` middleware in your shop repository with your custom version.
