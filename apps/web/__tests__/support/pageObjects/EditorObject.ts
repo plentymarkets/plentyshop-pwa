@@ -178,7 +178,7 @@ export class EditorObject extends PageObject {
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
     cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-    this.title.first().should('have.text', 'Dein Sound');
+    this.title.first().should('have.text', 'Ihr Sound');
   }
 
   addBlockTop() {
