@@ -34,7 +34,7 @@ export default withNuxt(
      * unicorn/prefer-add-event-listener
      */
     rules: {
-      'arrow-parens': 'off',
+      'arrow-parens': ['error', 'always'],
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
