@@ -25,12 +25,4 @@ const { setLogoMeta } = useStructuredData();
 const { isOpen, product } = useQuickCheckout();
 const viewport = useViewport();
 setLogoMeta();
-const isPreview = ref(false);
-onMounted(() => {
-  const config = useRuntimeConfig().public;
-  const showConfigurationDrawer = config.showConfigurationDrawer;
-
-  const pwaCookie = useCookie('pwa');
-  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-});
 </script>
