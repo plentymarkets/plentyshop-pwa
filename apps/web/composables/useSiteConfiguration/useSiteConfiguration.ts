@@ -1,4 +1,7 @@
 import type { UseSiteConfigurationReturn, UseSiteConfigurationState } from '~/composables/useSiteConfiguration/types';
+import { LoadGoogleFont } from '~/composables/useSiteConfiguration/types';
+
+
 
 /**
  * @description Composable for managing wishlist.
@@ -15,10 +18,23 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
+    currentFont: useRuntimeConfig().public.defaultFont,
     drawerView: 'settings',
   }));
 
+  const loadGoogleFont: LoadGoogleFont = (fontName: string) => {
+    const link = document.createElement('link');
+
+    link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;700&display=swap`;
+    link.rel = 'stylesheet';
+
+    document.head.appendChild(link);
+
+    state.value.currentFont = `font-family: '${fontName}'`;
+  };
+
   return {
     ...toRefs(state.value),
+    loadGoogleFont,
   };
 };

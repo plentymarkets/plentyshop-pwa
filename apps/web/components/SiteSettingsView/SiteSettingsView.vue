@@ -28,8 +28,9 @@
         </SfTooltip>
       </div>
 
-      <SfSelect v-model="font" size="lg" :placeholder="$t('pleaseSelect')">
+      <SfSelect v-model="font" size="lg" :placeholder="$t('pleaseSelect')" @change="loadGoogleFont(font)">
         <option :value="undefined">{{ $t('pleaseSelect') }}</option>
+        <option v-for="(font, key) in fonts" :key="key" :value="font.value">{{ font.caption }}</option>
       </SfSelect>
       <span class="typography-text-xs text-neutral-700">Choose Google font for all texts</span>
     </UiAccordionItem>
@@ -122,8 +123,9 @@
 
 <script setup lang="ts">
 import { SfIconClose, SfIconInfo, SfInput, SfSelect, SfTooltip } from '@storefront-ui/vue';
+import fonts from '~/fonts/meta.json';
 
-const { drawerOpen } = useSiteConfiguration();
+const { drawerOpen, loadGoogleFont } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
 
 const fontsOpen = ref(false);
