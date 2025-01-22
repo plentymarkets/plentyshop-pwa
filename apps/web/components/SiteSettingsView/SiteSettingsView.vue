@@ -1,7 +1,7 @@
 <template>
-  <div class="site-settings-view min-w-[395px] fixed">
+  <div class="site-settings-view min-w-[395px] sticky top-[52px]">
     <header class="flex items-center justify-between px-4 py-5 border-b">
-      <div class="flex items-center text-xl font-bold">{{ t('siteConfiguration.settings') }}</div>
+      <div class="flex items-center text-xl font-bold">Settings</div>
       <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
       </UiButton>
@@ -14,13 +14,18 @@
     >
       <template #summary>
         <h2 class="">
-          {{ $t('siteConfiguration.fonts') }}
+          Fonts
         </h2>
       </template>
 
       <div class="flex justify-between mb-2">
-        <UiFormLabel>{{ $t('siteConfiguration.fonts') }}</UiFormLabel>
-        <SfTooltip :label="$t('siteConfiguration.fontTooltip')" :placement="'top'" :show-arrow="true" class="ml-2 z-10">
+        <UiFormLabel>Fonts</UiFormLabel>
+        <SfTooltip
+          label="The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running."
+          :placement="'top'"
+          :show-arrow="true"
+          class="ml-2 z-10"
+        >
           <SfIconInfo :size="'sm'" />
         </SfTooltip>
       </div>
@@ -28,7 +33,7 @@
       <SfSelect v-model="font" size="lg" :placeholder="$t('pleaseSelect')">
         <option :value="undefined">{{ $t('pleaseSelect') }}</option>
       </SfSelect>
-      <span class="typography-text-xs text-neutral-700">{{ $t('siteConfiguration.chooseFont') }}</span>
+      <span class="typography-text-xs text-neutral-700">Choose Google font for all texts</span>
     </UiAccordionItem>
 
     <UiAccordionItem
@@ -38,14 +43,14 @@
     >
       <template #summary>
         <h2 class="">
-          {{ $t('siteConfiguration.colors') }}
+          Colors
         </h2>
       </template>
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ $t('siteConfiguration.primary') }}</UiFormLabel>
+          <UiFormLabel>Primary color</UiFormLabel>
           <SfTooltip
-            :label="$t('siteConfiguration.primaryTooltip')"
+            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -61,14 +66,14 @@
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ $t('siteConfiguration.choosePrimaryColor') }}</span>
+          <span class="typography-text-xs text-neutral-700">Choose primary color</span>
         </label>
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>{{ $t('siteConfiguration.secondary') }}</UiFormLabel>
+          <UiFormLabel>Secondary color</UiFormLabel>
           <SfTooltip
-            :label="$t('siteConfiguration.secondaryTooltip')"
+            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -88,7 +93,7 @@
               </label>
             </template>
           </SfInput>
-          <span class="typography-text-xs text-neutral-700">{{ $t('siteConfiguration.chooseSecondaryColor') }}</span>
+          <span class="typography-text-xs text-neutral-700">Choose secondary color</span>
         </label>
       </div>
     </UiAccordionItem>
@@ -100,7 +105,7 @@
     >
       <template #summary>
         <h2 class="">
-          {{ $t('siteConfiguration.blocksSpacing') }}
+          Blocks spacing
         </h2>
       </template>
       <div class="border-b py-1">
@@ -115,7 +120,7 @@
         </UiButton>
       </div>
       <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">{{ $t('siteConfiguration.spacingBetweenBlocks', 0) }}</span>
+        <span class="typography-text-xs text-neutral-700">Spacing between blocks: 0px</span>
       </div>
     </UiAccordionItem>
   </div>
@@ -126,7 +131,6 @@ import { SfIconClose, SfIconInfo, SfInput, SfSelect, SfTooltip } from '@storefro
 
 const { drawerOpen } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
-const { t } = useI18n();
 
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
