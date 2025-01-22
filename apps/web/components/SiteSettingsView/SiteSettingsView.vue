@@ -17,7 +17,7 @@
       </template>
 
       <div class="flex justify-between mb-2">
-        <UiFormLabel>Fonts</UiFormLabel>
+        <UiFormLabel>Global fonts</UiFormLabel>
         <SfTooltip
           label="The shop supports Google Fonts. Fonts are downloaded during the build process. This means the shop does not connect to Google while the shop is running."
           :placement="'top'"
