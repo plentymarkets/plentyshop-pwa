@@ -119,7 +119,7 @@ describe('useAddress unit', () => {
 
         await deleteAddress(addressIdToDelete);
 
-        expect(data.value.find(address => address.id === addressIdToDelete)).toBe(undefined);
+        expect(data.value.find((address) => address.id === addressIdToDelete)).toBe(undefined);
     });
 
     it('should call setCheckoutAddress if setDisplayAddress is called with setAsCheckoutAddress true', async () => {

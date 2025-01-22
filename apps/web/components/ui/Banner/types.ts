@@ -1,4 +1,7 @@
 export type BannerProps = {
+  controls?: {
+    color?: string;
+  };
   image?: {
     desktop?: string;
     tablet?: string;
