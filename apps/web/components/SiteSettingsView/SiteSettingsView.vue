@@ -32,7 +32,7 @@
         <option :value="undefined">{{ $t('pleaseSelect') }}</option>
         <option v-for="(font, key) in fonts" :key="key" :value="font.value">{{ font.caption }}</option>
       </SfSelect>
-      <span class="typography-text-xs text-neutral-700">Choose Google font for all texts</span>
+      <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
     </UiAccordionItem>
 
     <UiAccordionItem
