@@ -11,14 +11,15 @@
       </SfIconBase>
     </button>
 
-    <div class="w-px h-4 bg-gray-300"/>
+    <div class="w-px h-4 bg-gray-300" />
 
     <button
       class="text-black hover:bg-gray-100 p-1 rounded"
       data-testid="move-up-button"
       :disabled="props.index === 0"
       :class="{ 'opacity-40 cursor-not-allowed': props.index === 0 }"
-      @click="changePosition(-1)">
+      @click="changePosition(-1)"
+    >
       <SfIconArrowUpward />
     </button>
 
@@ -27,7 +28,8 @@
       data-testid="move-down-button"
       :disabled="isLastBlock"
       :class="{ 'opacity-40 cursor-not-allowed': isLastBlock }"
-      @click="changePosition(1)">
+      @click="changePosition(1)"
+    >
       <SfIconArrowDownward />
     </button>
 
@@ -43,7 +45,7 @@
 import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 
-const props = defineProps<{ index: number, isLastBlock: boolean }>();
+const props = defineProps<{ index: number; isLastBlock: boolean }>();
 
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 
