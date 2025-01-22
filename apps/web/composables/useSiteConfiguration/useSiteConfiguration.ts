@@ -5,13 +5,11 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 
 /**
- * @description Composable for managing wishlist.
+ * @description Composable for managing site configuration.
  * @returns UseSiteConfigurationReturn
  * @example
  * ``` ts
- * const {
- *  data, loading, fetchWishlist, addWishlistItem, deleteWishlistItem, isWishlistItem, interactWithWishlist
- *  wishlistItemIds, setWishlistItemIds } = UseSiteConfiguration();
+ * const { data, drawerOpen, loading, currentFont, drawerView } = UseSiteConfiguration();
  * ```
  */
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
@@ -23,6 +21,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     drawerView: 'settings',
   }));
 
+  /**
+   * @description Function for loading a google font.
+   * @return LoadGoogleFont
+   * @example
+   * ``` ts
+   * loadGoogleFont('Jersey 10');
+   * ```
+   */
   const loadGoogleFont: LoadGoogleFont = (fontName: string) => {
     const link = document.createElement('link');
 
