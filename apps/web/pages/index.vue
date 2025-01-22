@@ -80,7 +80,17 @@ const getComponent = (name: string) => {
 
 onMounted(() => {
   isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  if (!isEditingEnabled.value) return;
+  event.preventDefault(); // Required for most browsers
+};
 
 fetchPageTemplate();
 </script>
