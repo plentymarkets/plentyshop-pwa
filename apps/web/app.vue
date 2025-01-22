@@ -1,7 +1,7 @@
 <template>
-  <UiToolbar v-if="isPreview" />
+  <UiToolbar v-if="isPreview" :style="`font-family: ${config.defaultFont}`" />
   <div class="w-100 relative" :class="{ flex: drawerOpen }">
-    <SiteConfigurationDrawer v-if="drawerOpen" class="sm:absolute lg:relative mr-3 bg-white" />
+    <SiteConfigurationDrawer v-if="drawerOpen" class="sm:absolute lg:relative mr-3 bg-white" :style="`font-family: ${config.defaultFont}`" />
 
     <div class="w-100 bg-white">
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
