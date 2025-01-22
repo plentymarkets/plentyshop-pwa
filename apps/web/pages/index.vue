@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
 import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
+import {useRobots} from "../composables/useRobots/useRobot";
 
 const {
   currentBlock,
@@ -49,6 +50,7 @@ const {
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { setRobotForStaticPage } = useRobots();
 
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
@@ -80,6 +82,7 @@ const getComponent = (name: string) => {
 
 onMounted(() => {
   isEditingEnabled.value = false;
+  setRobotForStaticPage('Homepage');
 });
 
 fetchPageTemplate();

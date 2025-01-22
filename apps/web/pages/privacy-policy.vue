@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
+const { setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   pageType: 'static',
@@ -16,4 +17,8 @@ await getLegalTexts({
 const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
+
+onMounted(() => {
+  setRobotForStaticPage('PrivacyPolicy');
+});
 </script>
