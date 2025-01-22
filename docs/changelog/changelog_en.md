@@ -56,6 +56,7 @@
 - When navigating between pages, an animation now indicates the loading progress.
 - New styles for toolbar
 - New styles for blocks actions
+- Users can now move a block up or down in the block list.
 
 ### 👷 Changed
 

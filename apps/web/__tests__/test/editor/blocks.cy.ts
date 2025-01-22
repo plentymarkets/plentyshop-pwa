@@ -15,6 +15,12 @@ describe('Blocks', () => {
         editor.addBlockBottom();
     });
 
+    it('should check for move block logic', () => {
+      editor.checkFirstBlock();
+      editor.checkLastBlock();
+      editor.moveFirstBlock();
+    });
+
     it('should check for recommended products', () => {
       editor.recommendedProductsExist();
     });

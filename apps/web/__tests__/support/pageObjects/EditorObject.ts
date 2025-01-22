@@ -45,16 +45,24 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('block-wrapper')
   }
 
-  get topBlockButton(){
+  get topBlockButton() {
     return cy.getByTestId('top-add-block')
   }
 
-  get bottomBlockButton(){
+  get bottomBlockButton() {
     return cy.getByTestId('bottom-add-block')
   }
 
-  get deleteBlockButton(){
+  get deleteBlockButton() {
     return cy.getByTestId('delete-block-button')
+  }
+
+  get topMoveBlockButton() {
+    return cy.getByTestId('move-up-button')
+  }
+
+  get bottomMoveBlockButton() {
+    return cy.getByTestId('move-down-button')
   }
 
   get recommendedProducts() {
@@ -198,6 +206,41 @@ export class EditorObject extends PageObject {
       this.bottomBlockButton.first().should('exist').click();
       cy.wait(1000);
       this.blockWrapper.should('have.length', initialLength + 1);
+    });
+  }
+
+  checkFirstBlock() {
+    this.blockWrapper.first().within(() => {
+      this.topMoveBlockButton.first()
+        .should('exist')
+        .and('be.disabled')
+        .and('have.class', 'opacity-40')
+        .and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  checkLastBlock() {
+    this.blockWrapper.last().within(() => {
+      this.bottomMoveBlockButton.first()
+        .should('exist')
+        .and('be.disabled')
+        .and('have.class', 'opacity-40')
+        .and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  moveFirstBlock() {
+    this.blockWrapper.then((blocks) => {
+      const firstBlock = blocks[0];
+
+      cy.wrap(firstBlock).within(() => {
+        this.bottomMoveBlockButton.first().should('exist').click();
+      });
+
+      this.blockWrapper.then((updatedBlocks) => {
+        expect(updatedBlocks[0]).to.equal(firstBlock);
+        expect(updatedBlocks[1]).to.not.equal(firstBlock);
+      });
     });
   }
 }
