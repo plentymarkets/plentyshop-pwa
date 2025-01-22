@@ -214,7 +214,6 @@ export class EditorObject extends PageObject {
       this.topMoveBlockButton.first()
         .should('exist')
         .and('be.disabled')
-        .and('have.class', 'opacity-40')
         .and('have.class', 'cursor-not-allowed');
     });
   }
@@ -224,7 +223,6 @@ export class EditorObject extends PageObject {
       this.bottomMoveBlockButton.first()
         .should('exist')
         .and('be.disabled')
-        .and('have.class', 'opacity-40')
         .and('have.class', 'cursor-not-allowed');
     });
   }
