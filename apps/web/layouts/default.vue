@@ -1,6 +1,6 @@
 <template>
   <UiToolbar v-if="isPreview" />
-  <div class="relative flex h-screen overflow-hidden">
+  <div class="relative flex h-screen">
     <div v-if="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
       <UiBlocksNavigation />
     </div>
