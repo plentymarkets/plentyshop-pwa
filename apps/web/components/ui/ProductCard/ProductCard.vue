@@ -35,10 +35,10 @@
       </SfLink>
       <p class="g-12-m lg:g-16-m mb-2 mt-1">{{ getWeight(product) }}g ({{ n(getKgPrice(product), 'currency') }}/kg )</p>
 
-      <div class="flex items-center gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
+      <!-- <div class="flex items-center gap-1" :class="{ 'mb-2': !productGetters.getShortDescription(product) }">
         <SfRating size="xs" :half-increment="true" :value="rating ?? 0" :max="5" />
         <SfCounter size="xs">{{ ratingCount }}</SfCounter>
-      </div>
+      </div> -->
       <div
            v-if="productGetters.getShortDescription(product)"
            class="block py-2 font-normal typography-text-xs text-neutral-700 text-justify whitespace-pre-line break-words">
@@ -52,9 +52,9 @@
       <div class="flex items-center">
         <div class="flex flex-col-reverse items-start md:flex-row md:items-center">
           <span class="block font-bold typography-text-sm" data-testid="product-card-vertical-price">
-            <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
+            <!-- <span v-if="!productGetters.canBeAddedToCartFromCategoryPage(product)" class="mr-1">
               {{ t('account.ordersAndReturns.orderDetails.priceFrom') }}
-            </span>
+            </span> -->
             <span class="g-16 lg:g-24">{{ n(price, 'currency') }}</span>
             <span class="g-16 lg:g-24" v-if="showNetPrices">{{ t('asterisk') }} </span>
           </span>

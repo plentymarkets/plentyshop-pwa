@@ -2,8 +2,8 @@
   <section class="kl-red-bar">
     <div class="kl-red-bar-wrapper">
       <div class="kl-red-bar__item">
-        <img src="https://kelloggs-shop.de/cdn/shop/t/26/assets/icn-circled-white.svg" alt="Gratisversand ab 40 €">
-        <p class="kl-red-bar__content">Gratisversand ab 40 €</p>
+        <img src="https://kelloggs-shop.de/cdn/shop/t/26/assets/icn-circled-white.svg" alt="Gratisversand ab 100 €">
+        <p class="kl-red-bar__content">Gratisversand ab 100 €</p>
       </div>
       <div class="kl-red-bar__item">
         <img src="https://kelloggs-shop.de/cdn/shop/t/26/assets/icn-circled-white.svg" alt="Schnelle Lieferung">

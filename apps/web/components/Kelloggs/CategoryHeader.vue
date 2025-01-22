@@ -1,7 +1,7 @@
 <template>
   <section class="kl-collection-hero">
     <div class="kl-collection-hero__content">
-      <div class="kl-collection-hero__category">Breakfast</div>
+      <div class="kl-collection-hero__category">{{ categoryTitle }}</div>
       <h1 class="kl-collection-hero__title">{{ categoryName }}</h1>
       <img>
     </div>
@@ -16,10 +16,14 @@ const { categoryName } = defineProps({
 });
 
 let imageName = '';
+let categoryTitle = 'Frühstück';
+
 if (categoryName == "Pringles") imageName = 'pringles'
 if (categoryName == "Cerealien") imageName = 'cerealien'
 if (categoryName == "Müsli") imageName = 'musli'
 if (categoryName == "Poptarts") imageName = 'pop-tarts'
+
+if (['pringles', 'pop-tarts'].includes(imageName)) categoryTitle = 'Snacks';
 
 const bgImage = computed(() => `url('/images/kelloggs/hero/${imageName}.png')`);
 const bgImageHover = computed(() => `url('/images/kelloggs/hero/${imageName}-hover.png')`);

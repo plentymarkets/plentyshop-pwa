@@ -2,13 +2,11 @@
   <section class="kl-hero-section">
     <div class="kl-hero-section__content page-width">
       <h1 class="kl-hero-section__title">
-        Der perfekte <br>
-        Genuss für den <br>
-        perfekten Tag
+        Ihr Partner für<br> 
+        Frühstücks und-<br>
+        Snackmomente
       </h1>
-      <p class="kl-hero-section__description">
-        Köstliche Frühstücksprodukte und unwiderstehliche Snacks warten auf dich!
-      </p>
+      <p class="kl-hero-section__description">Bestelle das komplette Kellogg’s und Pringles Sortiment jederzeit und von überall!</p>
       <a href="#our-products" class="kl-button">Produkte entdecken</a>
     </div>
 

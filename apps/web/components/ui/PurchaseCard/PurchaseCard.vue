@@ -202,8 +202,7 @@
                     Allergenkennzeichnung
                   </h2>
                 </template>
-                <div>
-                  {{ getPropertyValue(6, 41) }}
+                <div v-html="getPropertyValue(6, 41)">
                 </div>
               </UiAccordionItem>
             </NuxtLazyHydrate>
