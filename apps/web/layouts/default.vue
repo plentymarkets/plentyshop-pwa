@@ -7,8 +7,8 @@
 
     <div
       :class="{
-        'flex-1': displayBlockList && !isTablet,
-        'w-full': !displayBlockList || isTablet,
+        // 'flex-1': displayBlockList && !isTablet,
+        // 'w-full': !displayBlockList || isTablet,
         relative: isTablet,
       }"
       class="overflow-y-auto"
