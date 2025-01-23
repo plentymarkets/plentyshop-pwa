@@ -1,7 +1,7 @@
 <template>
   <UiToolbar v-if="isPreview" />
   <div class="relative flex h-screen">
-    <div v-show="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
+    <div v-if="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
       <UiBlocksNavigation />
     </div>
 
@@ -10,9 +10,9 @@
       class="h-full overflow-y-auto"
     >
       <UiHeader />
-      <div v-if="breadcrumbs?.length" class="p-4 md:px-0">
+      <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
         <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-      </div>
+      </NarrowContainer>
       <main>
         <slot />
       </main>
