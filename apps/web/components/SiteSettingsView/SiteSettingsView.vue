@@ -28,12 +28,7 @@
         </SfTooltip>
       </div>
 
-      <SfSelect
-        v-model="selectedFont"
-        size="lg"
-        placeholder="Select a font"
-        @change="loadGoogleFont(selectedFont)"
-      >
+      <SfSelect v-model="selectedFont" size="lg" placeholder="Select a font" @change="loadGoogleFont(selectedFont)">
         <option :value="undefined">Select a font</option>
         <option v-for="(font, key) in fonts" :key="key" :value="font.value">{{ font.caption }}</option>
       </SfSelect>
