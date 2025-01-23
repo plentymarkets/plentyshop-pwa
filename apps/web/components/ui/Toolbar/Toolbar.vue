@@ -7,7 +7,7 @@
         type="button"
         class="relative ml-4"
         variant="tertiary"
-        :aria-label="$t('openConfigurationDrawer')"
+        aria-label="Open configuration drawer"
         square
         @click="drawerOpen = !drawerOpen"
       >
