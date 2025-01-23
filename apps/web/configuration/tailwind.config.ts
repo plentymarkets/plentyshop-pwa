@@ -65,6 +65,9 @@ export default {
           '900': 'rgb(var(--colors-2-secondary-900) / <alpha-value>)',
           '950': 'rgb(var(--colors-2-secondary-950) / <alpha-value>)',
         },
+        editor: {
+          'body-bg': '#F1F3F5',
+        },
       },
       gridTemplateAreas: {
         'product-page': ['left-top right', 'left-bottom right'],
