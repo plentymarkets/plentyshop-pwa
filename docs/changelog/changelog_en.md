@@ -5,6 +5,7 @@
 ### New
 
 - Added site configuration drawer.
+- Added a popup to prevent users from leaving the page with unsaved block changes.
 
 ### 👷 Changed
 
