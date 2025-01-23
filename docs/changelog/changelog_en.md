@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-## 1.x.x (2025-xx-xx) 
+## 1.x.x (2025-xx-xx)
 
 ### 👷 Changed
 
