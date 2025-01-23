@@ -85,7 +85,7 @@ const computedHeight = computed(() => {
   return imageUrl.includes(defaults.IMAGE_LINK_SUFIX) ? imageHeight : '';
 });
 
-const nuxtImgProps = computed<Record<string, any>>(() => ({
+const nuxtImgProps = computed<Record<string, unknown>>(() => ({
   id: `gallery-img-${index}`,
   alt: imageAlt,
   title: imageTitle,

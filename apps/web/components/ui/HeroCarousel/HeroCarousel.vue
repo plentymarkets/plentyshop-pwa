@@ -69,10 +69,13 @@ const enableModules = computed(() => bannerItems.length > 1);
 const generalTextColor = ref('inherit');
 const activeIndex = ref(0);
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSwiperInit = (swiper: any) => {
   generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
   activeIndex.value = swiper.realIndex;
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSlideChange = (swiper: any) => {
   activeIndex.value = swiper.realIndex;
 };

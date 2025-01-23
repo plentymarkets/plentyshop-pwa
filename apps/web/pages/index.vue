@@ -21,6 +21,8 @@
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
           :add-new-block="addNewBlock"
+          :change-block-position="changeBlockPosition"
+          :is-last-block="isLastBlock"
           :handle-edit="handleEdit"
           :delete-block="deleteBlock"
         />
@@ -64,6 +66,22 @@ const addNewBlock = (index: number, position: number) => {
 
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
+
+const changeBlockPosition = (index: number, position: number) => {
+  const updatedBlocks = [...data.value.blocks];
+  const newIndex = index + position;
+
+  if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
+
+  const blockToChange = updatedBlocks.splice(index, 1)[0];
+  updatedBlocks.splice(newIndex, 0, blockToChange);
+
+  data.value.blocks = updatedBlocks;
+
+  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+};
+
+const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);

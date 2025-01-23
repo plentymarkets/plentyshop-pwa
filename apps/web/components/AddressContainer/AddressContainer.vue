@@ -78,7 +78,9 @@ const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const addressFormShipping = ref(null as any);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const addressFormBilling = ref(null as any);
 
 const sameAsShippingAddress = computed(() =>

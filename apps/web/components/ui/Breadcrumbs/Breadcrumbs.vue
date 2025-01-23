@@ -77,7 +77,7 @@ const toggle = () => {
 const NuxtLink = resolveComponent('NuxtLink');
 const route = useRoute();
 const items = route.path.split('/');
-const itemListElement = [] as Array<any>;
+const itemListElement = [] as Array<unknown>;
 let name = '';
 items.forEach((item, index) => {
   name += item;
