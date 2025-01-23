@@ -15,7 +15,7 @@
 ### 👷 Geändert
 
 - Das `UiHeroCarousel`-Template zeigt das bereitgestellte Bild nun als Banner über die gesamte Seitenbreite an. Die Komponente enthält jetzt auch zusätzliche Einstellungen.
-  - *Experimentell*: Das Karussell kann jetzt anstelle von [SwiperJS](https://swiperjs.com/) den [Blaze Slider](https://blaze-slider.dev/) verwenden. Dies kann Auswirkungen auf die Performance und Core Web Vitals haben. Wir evaluieren noch, welche Bibliothek performanter ist. Aktuell ist es möglich, über eine Runtime-Konfiguration zwischen beiden zu wechseln.
+  - _Experimentell_: Das Karussell kann jetzt anstelle von [SwiperJS](https://swiperjs.com/) den [Blaze Slider](https://blaze-slider.dev/) verwenden. Dies kann Auswirkungen auf die Performance und Core Web Vitals haben. Wir evaluieren noch, welche Bibliothek performanter ist. Aktuell ist es möglich, über eine Runtime-Konfiguration zwischen beiden zu wechseln.
 - Die Komponente `UiMediaCard` wurde in `UiImageText` umbenannt. Das Template wurde aktualisiert, um immer Platz für ein Bild zu reservieren. Die reine Text-Variante wurde in `UiTextCard` ausgelagert.
 - Der Newsletter verwendet jetzt das Template-JSON zur Konfiguration anstelle der Runtime-Konfiguration.
 - Das Speichern im Editor ist jetzt deaktiviert, wenn keine Änderungen am Template vorgenommen wurden oder wenn das Template ungültig ist.

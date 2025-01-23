@@ -15,7 +15,7 @@
 ### 👷 Changed
 
 - The `UiHeroCarousel` template now displays the provided image as a banner across the width of the page. The component now also contains additional settings.
-  - *Experimental*: The carousel can now use [Blaze Slider](https://blaze-slider.dev/) instead of [SwiperJS](https://swiperjs.com/). This may have an impact on performance and Core Web Vitals. We're still evaluation which library to prefer. At the moment, it's possible to toggle between them with a runtime configuration.
+  - _Experimental_: The carousel can now use [Blaze Slider](https://blaze-slider.dev/) instead of [SwiperJS](https://swiperjs.com/). This may have an impact on performance and Core Web Vitals. We're still evaluation which library to prefer. At the moment, it's possible to toggle between them with a runtime configuration.
 - The `UiMediaCard` component has been renamed to `UiImageText`. The template has been updated to always reserve space for an image. The text-only variation has been extracted to `UiTextCard`.
 - The Newsletter now uses the template JSON for configuration instead of the runtime configuration.
 - The save button in the editor is now disabled if no changes have been made to the template or if the template is invalid.
