@@ -1,7 +1,7 @@
 <template>
   <UiToolbar v-if="isPreview" />
   <div class="relative flex h-screen">
-    <div v-if="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
+    <div v-show="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
       <UiBlocksNavigation />
     </div>
 
