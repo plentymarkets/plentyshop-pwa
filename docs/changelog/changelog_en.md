@@ -13,6 +13,7 @@
 - Added canonical for item page.
 - Media Card is now Image Text
 - The newsletter works as the other available blocks. (using the JSON as the source of the data)
+- Added robots for static pages.
 
 ### 🩹 Fixed
 
