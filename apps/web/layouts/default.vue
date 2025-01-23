@@ -11,7 +11,7 @@
         'w-full': !displayBlockList || isTablet,
         relative: isTablet,
       }"
-      class="h-full overflow-y-auto"
+      class="overflow-y-auto"
     >
       <UiHeader />
       <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
