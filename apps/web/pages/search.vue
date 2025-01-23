@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { facetGetters } from '@plentymarkets/shop-api';
 import { SfLoaderCircular } from '@storefront-ui/vue';
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   layout: false,
@@ -43,4 +44,9 @@ watch(
     handleQueryUpdate();
   },
 );
+
+onMounted(() => {
+  getRobots();
+  setRobotForStaticPage('SearchResult');
+});
 </script>
