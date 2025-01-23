@@ -1,6 +1,10 @@
 # Changelog PlentyONE Shop
 
-## 1.x.x (2025-xx-xx)
+## v1.x.x (2025-01-23)
+
+### New
+
+- Added site configuration drawer.
 
 ### 👷 Changed
 
