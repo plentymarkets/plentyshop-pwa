@@ -143,6 +143,7 @@ const localePath = useLocalePath();
 const imageLoaded = ref(false);
 const img = ref();
 const deleteLoading = ref(false);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const quantitySelectorReference = ref(null as any);
 const itemQuantitySelector = ref(cartGetters.getItemQty(cartItem));
 const maximumOrderQuantity = ref();
