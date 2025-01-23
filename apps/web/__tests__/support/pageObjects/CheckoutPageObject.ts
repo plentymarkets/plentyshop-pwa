@@ -244,6 +244,7 @@ export class CheckoutPageObject extends PageObject {
     return this;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fillForm(fixture: any) {
     this.firstNameInput.type(fixture.firstName);
     this.lastNameInput.type(fixture.lastName);

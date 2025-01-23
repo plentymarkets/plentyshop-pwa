@@ -140,6 +140,7 @@ export const useStructuredData: useStructuredDataReturn = () => {
         '@type': 'QuantitativeValue',
         value: productGetters.getWeightG(product),
       },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } as any;
 
     const manufacturer = productSeoSettingsGetters.getSeoManufacturer(product);
