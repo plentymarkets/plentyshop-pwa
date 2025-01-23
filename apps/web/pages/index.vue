@@ -46,6 +46,10 @@ const {
   updateBlock,
 } = useBlockManager();
 
+const runtimeConfig = useRuntimeConfig();
+const isHero = ref(runtimeConfig.public.isHero);
+const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
+
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions, displayBlockList } = useEditor();
@@ -55,7 +59,10 @@ const defaultAddBlock = (lang: string) => {
 };
 
 const addNewBlock = (index: number, position: number) => {
-  displayBlockList.value = true;
+  if (showBlockList.value) {
+    displayBlockList.value = true;
+  }
+
   const insertIndex = position === -1 ? index : index + 1;
   const updatedBlocks = [...data.value.blocks];
 
@@ -65,9 +72,6 @@ const addNewBlock = (index: number, position: number) => {
 
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
-
-const runtimeConfig = useRuntimeConfig();
-const isHero = ref(runtimeConfig.public.isHero);
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');

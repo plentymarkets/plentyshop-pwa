@@ -1,12 +1,12 @@
 <template>
   <div class="bg-[#F1F3F5] p-5 h-screen max-w-[305px]">
     <div class="overflow-y-auto max-h-[80vh]">
-      <div v-for="(block, index) in blocksLists" :key="block.id" class="mb-10">
-        <div v-if="index === 0 || block.category !== blocksLists[index - 1].category" class="pb-3">
-          {{ block.categoryTitle }}
+      <div v-for="(category, categoryIndex) in blocksLists" :key="categoryIndex" class="mb-10">
+        <div class="pb-3">
+          {{ category.title }}
         </div>
-        <div class="relative">
-          <NuxtImg :src="block.imagePath" class="block mx-auto" :alt="block.title" width="253" height="120" />
+        <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="relative mb-5">
+          <NuxtImg :src="variation.image" class="block mx-auto" :alt="variation.title" width="253" height="120" />
           <button
             class="right-[0] absolute transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full flex items-center justify-center shadow-md"
           >

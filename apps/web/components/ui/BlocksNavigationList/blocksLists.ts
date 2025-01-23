@@ -1,72 +1,67 @@
 // Category will be used to sort at the next step
 // We can also add description if we need to add toltips or stuff like that
 // We could also send configuration here --- that will be the JSON
-
-export const blocksLists = [
-  // IMAGE BANNER
-  {
-    id: 1,
-    title: 'Image Banner Left',
+export const blocksLists = {
+  'image-banner': {
     category: 'image-banner',
-    categoryTitle: 'Image Banner',
-    imagePath: '/images/blocks/image_banner_left.png',
+    title: 'Image Banner',
+    variations: [
+      {
+        title: 'Image Banner Left',
+        image: '/images/blocks/image_banner_left.png',
+      },
+      {
+        title: 'Image Banner Right',
+        image: '/images/blocks/image_banner_right.png',
+      },
+      {
+        title: 'Image Banner Center',
+        image: '/images/blocks/image_banner_center.png',
+      },
+    ],
   },
-  {
-    id: 2,
-    title: 'Image Banner Right',
-    category: 'image-banner',
-    categoryTitle: 'Image Banner',
-    imagePath: '/images/blocks/image_banner_right.png',
-  },
-  {
-    id: 3,
-    title: 'Image Banner Center',
-    category: 'image-banner',
-    categoryTitle: 'Image Banner',
-    imagePath: '/images/blocks/image_banner_center.png',
-  },
-
-  // IMAGE WITH TEXT
-  {
-    id: 4,
-    title: 'Image Right Text',
+  'image-with-text': {
     category: 'image-with-text',
-    categoryTitle: 'Image with Text',
-    imagePath: '/images/blocks/image_right_text.png',
+    title: 'Image with Text',
+    variations: [
+      {
+        title: 'Image Right Text',
+        image: '/images/blocks/image_right_text.png',
+      },
+      {
+        title: 'Image Left Text',
+        image: '/images/blocks/image_left_text.png',
+      },
+    ],
   },
-
-  {
-    id: 5,
-    title: 'Image Left Text',
-    category: 'image-with-text',
-    categoryTitle: 'Image with Text',
-    imagePath: '/images/blocks/image_left_text.png',
-  },
-
-  // RICH TEXT
-  {
-    id: 6,
-    title: 'Rich Text',
+  'rich-text': {
     category: 'rich-text',
-    categoryTitle: 'Rich text',
-    imagePath: '/images/blocks/rich_text.png',
+    title: 'Rich Text',
+    variations: [
+      {
+        title: 'Rich Text',
+        image: '/images/blocks/rich_text.png',
+      },
+    ],
   },
-
-  // PRODUCTS
-  {
-    id: 7,
-    title: 'Product Galleries',
+  'product-galleries': {
     category: 'product-galleries',
-    categoryTitle: 'Products',
-    imagePath: '/images/blocks/product_galleries.png',
+    title: 'Products',
+    variations: [
+      {
+        title: 'Product Galleries',
+        image: '/images/blocks/product_galleries.png',
+      },
+    ],
   },
-
-  // FORMS
-  {
-    id: 8,
-    title: 'Forms Preview',
+  forms: {
     category: 'forms',
-    categoryTitle: 'Forms',
-    imagePath: '/images/blocks/forms_preview.png',
+    title: 'Forms',
+    variations: [
+      {
+        title: 'Forms Preview',
+        image: '/images/blocks/forms_preview.png',
+      },
+    ],
   },
-];
+};
