@@ -31,7 +31,7 @@
       <SfSelect
         v-model="selectedFont"
         size="lg"
-        :placeholder="$t('pleaseSelect')"
+        placeholder="Select a font"
         @change="loadGoogleFont(selectedFont)"
       >
         <option :value="undefined">{{ $t('pleaseSelect') }}</option>
