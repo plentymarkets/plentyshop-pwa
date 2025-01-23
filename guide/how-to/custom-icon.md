@@ -1,12 +1,14 @@
 # Custom icons
 
-Customising icons in your shop can give your store a unique look and feel. 
-This guide will walk you through the process of adding or replacing icons in your PWA.
+Customising icons in your shop can give your shop a unique look and feel. 
+
+This guide will walk you through the process of adding or replacing icons in your shop.
+
 For further information, you can also refer to the [Storefront UI Documentation](https://docs.storefrontui.io/v2/vue/components/iconbase#custom-icon).
 
 ## Adding a custom icon
 
-To add a new icon to your PWA, follow these steps:
+To add a new icon to your shop, follow these steps:
 
 1. **Choose an icon**: Select an SVG icon file and obtain the SVG path.
 2. **Insert the icon**: To display the new icon in your application, add or adjust the following code at the desired location:
@@ -24,7 +26,7 @@ To add a new icon to your PWA, follow these steps:
 
 ## Example
 
-This example demonstrates how to integrate an SVG icon into your PWA using the SfIconBase component. Adjust the viewBox, size, and class attributes to suit your needs.
+This example demonstrates how to integrate an SVG icon into your shop using the SfIconBase component. Adjust the viewBox, size, and class attributes to suit your needs.
 
 ```html
 <SfIconBase @click="openReviewEdit" viewBox="0 0 32 32" size="xs" class="fill-primary-900 cursor-pointer">

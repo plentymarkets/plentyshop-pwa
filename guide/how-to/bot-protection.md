@@ -40,12 +40,12 @@ Cloudflare generates a secret key and a sitekey. You need both keys in the next 
 
 1. Log into your PlentyONE system.
 2. Go to **Setup » plentyShop » Select client » Online Store Settings**.
-3. Paste the secret key in the **Cloudflare Turnstile Secret key (only PWA)** field.
+3. Paste the secret key in the **Cloudflare Turnstile Secret key** field.
 4. **Save** the settings.
 
 ### Shop
 
-Paste the sitekey in the PWA's `apps/web/.env` file:
+Paste the sitekey in the app's `apps/web/.env` file:
 
 ```
 CLOUDFLARE_TURNSTILE_SITE_KEY="0x4AAAAAAANx3aXDh7UR35x0"
@@ -62,14 +62,14 @@ To disable Turnstile, you have to reset the configurations in the PlentyONE syst
 
 1. Log into your PlentyONE system.
 2. Go to **Setup » plentyShop » Select client » Online Store Settings**.
-3. Remove the secret key from the **Cloudflare Turnstile Secret key (only PWA)** field.
+3. Remove the secret key from the **Cloudflare Turnstile Secret key** field.
 4. **Save** the settings.
 
 This disables the CAPTCHA validation.
 
 ### Shop
 
-Remove the sitekey from the PWA's `apps/web/.env` file. This removes the widget in the PWA.
+Remove the sitekey from the apps's `apps/web/.env` file. This removes the widget in the shop.
 
 ## CAPTCHA protected features
 
