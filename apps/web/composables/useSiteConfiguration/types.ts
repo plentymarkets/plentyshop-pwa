@@ -1,4 +1,4 @@
-type DrawerView = 'settings' | 'blocks' | null;
+export type DrawerView = 'settings' | 'blocks' | null;
 
 export interface UseSiteConfigurationState {
   data: [];

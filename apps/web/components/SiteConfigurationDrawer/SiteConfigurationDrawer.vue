@@ -25,7 +25,7 @@ const placement = ref<`${SfDrawerPlacement}`>('left');
 
 const { drawerOpen, drawerView } = useSiteConfiguration();
 
-const drawerViewMap: Record<string, any> = {
+const drawerViewMap: Record<string, Component> = {
   settings: SiteSettingsView,
   // blocks: BlocksView,
 };
