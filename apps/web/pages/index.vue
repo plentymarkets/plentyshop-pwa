@@ -52,15 +52,17 @@ const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
-const { isEditing, isEditingEnabled, disableActions, displayBlockList } = useEditor();
+const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
+const { setDrawerView, openDrawer } = useSiteConfiguration();
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
 };
 
 const addNewBlock = (index: number, position: number) => {
   if (showBlockList.value) {
-    displayBlockList.value = true;
+    openDrawer();
+    setDrawerView('blocks');
   }
 
   const insertIndex = position === -1 ? index : index + 1;

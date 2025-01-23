@@ -20,6 +20,7 @@
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
 import SiteSettingsView from '~/components/SiteSettingsView/SiteSettingsView.vue';
+import BlocksNavigation from '../BlocksNavigation/BlocksNavigation.vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('left');
 
@@ -27,6 +28,6 @@ const { drawerOpen, drawerView } = useSiteConfiguration();
 
 const drawerViewMap: Record<string, Component> = {
   settings: SiteSettingsView,
-  // blocks: BlocksView,
+  blocks: BlocksNavigation,
 };
 </script>
