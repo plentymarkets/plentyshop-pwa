@@ -17,7 +17,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
-    currentFont: useRuntimeConfig().public.defaultFont,
+    currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
   }));
 

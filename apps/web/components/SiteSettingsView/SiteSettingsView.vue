@@ -139,7 +139,7 @@ const blocksSpacingOpen = ref(false);
 
 const blocksSpacingSizes = ref(['S', 'M', 'L', 'XL']);
 
-const selectedFont = ref(runtimeConfig.public.defaultFont);
+const selectedFont = ref(runtimeConfig.public.font);
 const primaryColor = ref(runtimeConfig.public.primaryColor);
 const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 </script>
