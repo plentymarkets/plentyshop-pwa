@@ -6,11 +6,11 @@
 
 - The [Nuxt security module](https://nuxt-security.vercel.app/) has been added to the web app.
 - The web app is now equipped to [render components from a module](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in designated areas of the shop.
-- The shop now has a dedicated page for legal information regarding shipping.
+- The shop now has a dedicated legal information page for shipping information. You can link a category inside the Online Store Section of the Shops Configuration. The template configured on that category is used for the pages content. The URL for the page is /shipping.
 - In the checkout, shipping providers now include expected delivery dates.
-- Category pages now contain robots information.
+- The configured robots value on a category in the Terra back end, is now used for the robots meta tag of that category in the front end.
 - Product pages now contain canonical URLs.
-- The recommended products now optionally include a pretitle, title, subtitle, and description.
+- The recommended products block now optionally includes a pretitle, title, subtitle, and description.
 
 ### 👷 Changed
 
@@ -23,7 +23,7 @@
 
 ### 🩹 Fixed
 
-- The price now always displays an asterisk to refer to VAT information.
+- Prices now always displays an asterisk to refer to additional VAT and shipping information
 - Fixed the direction of accordion arrows on product pages.
 - Fixed an issue where the required attributes notification blocked the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
