@@ -1,35 +1,33 @@
 <template>
-  <div>
-    <UiToolbar v-if="isPreview" />
-    <div class="relative flex h-screen">
-      <div v-if="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
-        <UiBlocksNavigation />
-      </div>
+  <UiToolbar v-if="isPreview" />
+  <div class="relative flex h-screen">
+    <div v-if="displayBlockList" :class="{ absolute: isTablet }" class="h-full bg-gray-100">
+      <UiBlocksNavigation />
+    </div>
 
-      <div
-        :class="{
-          'flex-1': displayBlockList && !isTablet,
-          'w-full': !displayBlockList || isTablet,
-          relative: isTablet,
-        }"
-        class="h-full overflow-y-auto"
-      >
-        <UiHeader />
-        <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
-          <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
-        </NarrowContainer>
-        <main>
-          <slot />
-        </main>
-        <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
-        <Cookiebar />
-        <PreviewMode />
-        <NuxtLazyHydrate when-visible>
-          <UiFooter />
-        </NuxtLazyHydrate>
+    <div
+      :class="{
+        'flex-1': displayBlockList && !isTablet,
+        'w-full': !displayBlockList || isTablet,
+        relative: isTablet,
+      }"
+      class="h-full overflow-y-auto"
+    >
+      <UiHeader />
+      <NarrowContainer v-if="breadcrumbs?.length" class="p-4 md:px-0">
+        <LazyUiBreadcrumbs :breadcrumbs="breadcrumbs" />
+      </NarrowContainer>
+      <main>
+        <slot />
+      </main>
+      <UiNavbarBottom v-if="viewport.isLessThan('lg')" />
+      <Cookiebar />
+      <PreviewMode />
+      <NuxtLazyHydrate when-visible>
+        <UiFooter />
+      </NuxtLazyHydrate>
 
-        <QuickCheckout v-if="isOpen" :product="product" />
-      </div>
+      <QuickCheckout v-if="isOpen" :product="product" />
     </div>
   </div>
 </template>
