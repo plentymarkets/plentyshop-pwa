@@ -8,7 +8,7 @@
     @mousemove="endTimer()"
   >
     <header>
-      <h2 class="font-bold font-headings text-lg leading-6 md:text-2xl">
+      <h2 class="font-bold text-lg leading-6 md:text-2xl">
         <span>{{ t('quickCheckout.heading') }}</span>
       </h2>
       <div class="absolute right-2 top-2 flex items-center">

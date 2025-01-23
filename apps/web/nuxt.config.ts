@@ -63,6 +63,7 @@ export default defineNuxtConfig({
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
       isHero: process.env.IS_HERO === 'true',
+      font: process.env.TEXT || 'Red Hat Text',
     },
   },
   modules: [

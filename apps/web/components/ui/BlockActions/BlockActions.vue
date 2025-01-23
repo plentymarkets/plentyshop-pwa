@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfIconDelete } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 
 const props = defineProps<{ index: number }>();
