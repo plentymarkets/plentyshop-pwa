@@ -6,7 +6,7 @@
 import { useRobots } from "../composables/useRobots/useRobot";
 
 const { data, getLegalTexts } = useLegalInformation();
-const { setRobotForStaticPage } = useRobots();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   pageType: 'static',
@@ -21,6 +21,7 @@ const getHTMLTexts = () => {
 };
 
 onMounted(() => {
+  getRobots();
   setRobotForStaticPage('LegalDisclosure');
 });
 </script>

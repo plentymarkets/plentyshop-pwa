@@ -50,7 +50,7 @@ const {
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
-const { setRobotForStaticPage } = useRobots();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
@@ -82,6 +82,7 @@ const getComponent = (name: string) => {
 
 onMounted(() => {
   isEditingEnabled.value = false;
+  getRobots();
   setRobotForStaticPage('Homepage');
 });
 

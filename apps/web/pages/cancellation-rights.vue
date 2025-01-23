@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 const { data, getLegalTexts } = useLegalInformation();
-const { setRobotForStaticPage } = useRobots();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 definePageMeta({
   pageType: 'static',
@@ -19,6 +19,7 @@ const getHTMLTexts = () => {
 };
 
 onMounted(() => {
+  getRobots();
   setRobotForStaticPage('CancellationRights');
 });
 </script>
