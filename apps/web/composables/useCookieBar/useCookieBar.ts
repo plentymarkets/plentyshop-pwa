@@ -6,8 +6,11 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function convertToSaveableJson(jsonList: any): string {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return jsonList.map((group: any) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [group.name]: group.cookies.map((cookie: any) => ({
       [cookie.name]: cookie.accepted,
     })),
@@ -92,6 +95,7 @@ export const useCookieBar = (
                   } else {
                     (0, eval)(script);
                   }
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } catch (error: any) {
                   // @TODO error handling
                   return new Error(error);

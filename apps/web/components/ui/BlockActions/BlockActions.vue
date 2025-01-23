@@ -42,7 +42,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward } from '@storefront-ui/vue';
+import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 
 const props = defineProps<{ index: number; isLastBlock: boolean }>();

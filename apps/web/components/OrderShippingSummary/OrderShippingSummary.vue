@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold text-primary-500 font-headings md:text-lg mb-3">
+  <div class="font-bold text-primary-500 md:text-lg mb-3">
     {{ $t('account.ordersAndReturns.shippingSummary.heading') }}
   </div>
   <h2 class="font-medium text-base">{{ $t('account.ordersAndReturns.shippingSummary.shipTo') }}</h2>
