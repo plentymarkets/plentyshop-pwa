@@ -8,6 +8,7 @@ import { setupServer } from 'msw/node';
 import { HttpResponse, http } from 'msw';
 import { FacetMock } from './__tests__/__mocks__/facet.mock';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const FindTestIdPlugin = (wrapper: any) => {
   function findByTestId(testId: string) {
     return wrapper.find(`[data-testid='${testId}']`);
@@ -18,6 +19,7 @@ const FindTestIdPlugin = (wrapper: any) => {
   };
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const GetTestIdPlugin = (wrapper: any) => {
   function getByTestId(testId: string) {
     return wrapper.get(`[data-testid='${testId}']`);
