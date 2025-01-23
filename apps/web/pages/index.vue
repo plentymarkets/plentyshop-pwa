@@ -89,7 +89,7 @@ onBeforeUnmount(() => {
 
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (!isEditingEnabled.value) return;
-  event.preventDefault(); // Required for most browsers
+  event.preventDefault();
 };
 
 fetchPageTemplate();
