@@ -1,6 +1,5 @@
-import {GetRobots, SetRobotForStaticPage, UseRobotReturn, UseRobotState} from "./types";
-import {robotGetters, RobotsStaticPages} from '@plentymarkets/shop-api';
-
+import { GetRobots, SetRobotForStaticPage, UseRobotReturn, UseRobotState } from './types';
+import { robotGetters, RobotsStaticPages } from '@plentymarkets/shop-api';
 
 export const useRobots: UseRobotReturn = () => {
   const state = useState<UseRobotState>(`useRobots`, () => ({
@@ -29,7 +28,7 @@ export const useRobots: UseRobotReturn = () => {
    * setRobotForStaticPage()
    * ```
    */
-  const setRobotForStaticPage: SetRobotForStaticPage =  (staticPageName: string = '') => {
+  const setRobotForStaticPage: SetRobotForStaticPage = (staticPageName: string = '') => {
     state.value.loading = true;
 
     let content = 'ALL';
