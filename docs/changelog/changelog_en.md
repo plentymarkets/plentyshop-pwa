@@ -1,44 +1,41 @@
 # Changelog PlentyONE Shop
 
-## v1.x.x (2025-xx-xx)
+## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
-- Added Nuxt security module.
-- Added page for shipping legal text.
-- Added the logic to render components within a module in certain areas of the PWA
-- Added delivery days to checkout shipping providers.
-- Added robots for category page.
-- Subtitle, pretitle and title options where added to the Recommened Products component
-- Added canonical for item page.
-- Media Card is now Image Text
-- The newsletter works as the other available blocks. (using the JSON as the source of the data)
+- The [Nuxt security module](https://nuxt-security.vercel.app/) has been added to the web app.
+- The web app is now equipped to [render components from a module](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in designated areas of the shop.
+- The shop now has a dedicated legal information page for shipping information. You can link a category inside the Online Store Section of the Shops Configuration. The template configured on that category is used for the pages content. The URL for the page is /shipping.
+- In the checkout, shipping providers now include expected delivery dates.
+- The configured robots value on a category in the Terra back end, is now used for the robots meta tag of that category in the front end.
+- Product pages now contain canonical URLs.
+- The recommended products block now optionally includes a pretitle, title, subtitle, and description.
+
+### 👷 Changed
+
+- The `UiHeroCarousel` template now displays the provided image as a banner across the width of the page. The component now also contains additional settings.
+  - _Experimental_: The carousel can now use [Blaze Slider](https://blaze-slider.dev/) instead of [SwiperJS](https://swiperjs.com/). This may have an impact on performance and Core Web Vitals. We're still evaluation which library to prefer. At the moment, it's possible to toggle between them with a runtime configuration.
+- The `UiMediaCard` component has been renamed to `UiImageText`. The template has been updated to always reserve space for an image. The text-only variation has been extracted to `UiTextCard`.
+- The Newsletter now uses the template JSON for configuration instead of the runtime configuration.
+- The save button in the editor is now disabled if no changes have been made to the template or if the template is invalid.
+- Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
 
 ### 🩹 Fixed
 
-- Added e2e tests for product manufacturer details tab.
-- Fixed an issue where required attributes notification was blocking the cart.
+- Prices now always displays an asterisk to refer to additional VAT and shipping information
+- Fixed the direction of accordion arrows on product pages.
+- Fixed an issue where the required attributes notification blocked the cart.
 - Fixed a visual inconsistency in the category filters sidebar.
-- Fixed accesibility error caused by missing label on clear filters.
-- Fixed same text in alt and title warning in category page.
-- Replaced favicon with PlentyONE favicon.
-- Added margin for graduated prices.
-- Changed brand mentions to PlentyONE and changed logo.
-- Fix for max visible pages on mobile pagination.
-- Fix for editor language picker when it showed inverted data template.
-- When the media card only displays text, the text block is now left aligned instead of centered.
-- Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
+- Fixed an accesibility error caused by missing label on clear filters.
+- Fixed a warning about using the same text in alt and title on the category page.
+- Fixed the number of max visible pages on mobile pagination.
+- Fixed the product gallery thumbnail image alternate text.
 - The homepage now displays recommended products on initial load.
-- Fixed product gallery thumbnail image alternate.
-- Saving button is now disabled if there are no changes made to the JSON or if the JSON is invalid.
-- The homepage now has the new version of the carousel
-- Fixed product accordions arrow display.
-- Fixed an issue where calling useRoute within middleware could lead to misleading results.
-- Fixed an issue where you only edit the initial block you selected.
+- Fixed an issue where only the first template block selected in the editor is editable.
+- Fixed an issue where the editor's language selector displayed an inverted data template.
 - When the multilingualism configuration of the remote shop doesn't include English or German, the corresponding language file is now removed at build time. As a result, the language isn't displayed in the language selector.
-- Fixed block spacings and colours.
-- The asterix from newsletter name input should be visible only if 'nameIsRequired' flag is set to true.
-- The price now always displays an asterisk to refer to VAT information.
+- Fixed an issue where calling `useRoute` within middleware could lead to misleading results.
 
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
