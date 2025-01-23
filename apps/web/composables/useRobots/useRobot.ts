@@ -1,5 +1,6 @@
-import { GetRobots, SetRobotForStaticPage, UseRobotReturn, UseRobotState } from './types';
-import { robotGetters, RobotsStaticPages } from '@plentymarkets/shop-api';
+import type { SetRobotForStaticPage, UseRobotReturn, UseRobotState } from './types';
+import type { RobotsStaticPages } from '@plentymarkets/shop-api';
+import { robotGetters } from '@plentymarkets/shop-api';
 
 export const useRobots: UseRobotReturn = () => {
   const state = useState<UseRobotState>(`useRobots`, () => ({

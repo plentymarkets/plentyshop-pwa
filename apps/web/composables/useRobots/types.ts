@@ -1,4 +1,4 @@
-import { RobotsStaticPages } from '@plentymarkets/shop-api';
+import type { RobotsStaticPages } from '@plentymarkets/shop-api';
 
 export interface UseRobotState {
   loading: boolean;
