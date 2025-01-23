@@ -6,11 +6,12 @@
 
 - Das [Nuxt-Security-Modul](https://nuxt-security.vercel.app/) wurde zur Web-App hinzugefügt.
 - Die Web-App ist jetzt in der Lage, [Komponenten aus einem Modul](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in vorgegebenen Bereichen des Shops zu rendern.
-- Der Shop verfügt nun über eine eigene Seite für rechtliche Informationen zum Versand.
+- Im Shop gibt es jetzt eine eigene Seite mit rechtlichen Informationen zum Versand. Über die Shop-Konfiguration kann hier eine Kategorie verknüpft werden. Das Template der verknüpften Kategorie wird für die Seiteninhalte verwendet. Die URL der Seite ist `/shipping`.
 - Im Checkout werden bei den Versanddienstleistern nun voraussichtliche Liefertermine angezeigt.
-- Kategorieseiten enthalten jetzt Robots-Informationen.
+- The configured robots value on a category in the Terra back end, is now used for the robots meta tag of that category in the front end.
+- Wenn für eine Kategorie in Terra die Robots-Einstellung konfiguriert ist, wird das Robots-Meta-Tag der Kategorie im Shop entsprechend gesetzt.
 - Produktseiten enthalten jetzt kanonische URLs.
-- Die empfohlenen Produkte können jetzt optional einen Vor-Titel, Titel, Untertitel und eine Beschreibung enthalten.
+- Für den Block für Produktempfehlungen kann jetzt optional ein Vor-Titel, ein Titel, ein Untertitel und eine Beschreibung konfiguriert werden.
 
 ### 👷 Geändert
 
@@ -23,7 +24,7 @@
 
 ### 🩹 Behoben
 
-- Der Preis zeigt jetzt immer ein Sternchen als Verweis auf die MwSt.-Information an.
+- Bei Preisen wird jetzt immer ein Sternchen als Verweis auf die MwSt.-Information angezeigt.
 - Die Richtung der Akkordeon-Pfeile auf Produktseiten wurde korrigiert.
 - Ein Problem wurde behoben, bei dem die Benachrichtigung über erforderliche Attribute den Warenkorb blockierte.
 - Eine visuelle Inkonsistenz in der Kategoriefilter-Seitenleiste wurde behoben.
