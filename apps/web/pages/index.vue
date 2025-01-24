@@ -56,15 +56,14 @@ const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const { setDrawerView, openDrawer } = useSiteConfiguration();
+const { openDrawerWithView } = useSiteConfiguration();
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
 };
 
 const addNewBlock = (index: number, position: number) => {
   if (showBlockList.value) {
-    openDrawer();
-    setDrawerView('blocks');
+    openDrawerWithView('blocks');
   }
 
   const insertIndex = position === -1 ? index : index + 1;

@@ -2,7 +2,7 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
-  SetDrawerView,
+  DrawerView,
 } from '~/composables/useSiteConfiguration/types';
 
 /**
@@ -41,23 +41,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
-  const setDrawerView: SetDrawerView = (blocks: string) => {
-    state.value.drawerView = blocks as DrawerView;
-  };
-
-  const openDrawer = () => {
+  const openDrawerWithView = (view: DrawerView) => {
+    state.value.drawerView = view;
     state.value.drawerOpen = true;
   };
 
-  const toggleDrawer = () => {
-    state.value.drawerOpen = !state.value.drawerOpen;
+  const closeDrawer = () => {
+    state.value.drawerOpen = false;
   };
 
   return {
     ...toRefs(state.value),
     loadGoogleFont,
-    setDrawerView,
-    openDrawer,
-    toggleDrawer,
+    openDrawerWithView,
+    closeDrawer,
   };
 };

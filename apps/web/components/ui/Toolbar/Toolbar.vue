@@ -9,7 +9,7 @@
         variant="tertiary"
         aria-label="Open configuration drawer"
         square
-        @click="onOpenDrawer"
+        @click="toggleSettingsDrawer"
       >
         <SfIconTune />
       </UiButton>
@@ -66,16 +66,15 @@ const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const { setDrawerView, toggleDrawer } = useSiteConfiguration();
+const { drawerOpen, openDrawerWithView, closeDrawer } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
 const isLocalTemplate = () => typeof homepageCategoryId === 'number';
 
-const onOpenDrawer = () => {
-  toggleDrawer();
-  setDrawerView('settings');
+const toggleSettingsDrawer = () => {
+  drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');
 };
 
 const toggleEdit = () => {
