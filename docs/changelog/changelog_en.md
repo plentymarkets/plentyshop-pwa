@@ -6,6 +6,10 @@
 
 - Added site configuration drawer.
 
+### 👷 Changed
+
+- Changed footer background for automatic coloring.
+
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
@@ -70,6 +74,7 @@
 - When navigating between pages, an animation now indicates the loading progress.
 - New styles for toolbar
 - New styles for blocks actions
+- Users can now move a block up or down in the block list.
 
 ### 👷 Changed
 

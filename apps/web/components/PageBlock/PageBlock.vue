@@ -32,8 +32,11 @@
         },
       ]"
       :index="index"
+      :blocks="block"
+      :is-last-block="isLastBlock(index)"
       @edit="handleEdit"
       @delete="deleteBlock"
+      @change-position="changeBlockPosition"
     />
     <component :is="getComponent && getComponent(block.name)" v-bind="block.options" />
     <button
@@ -63,6 +66,8 @@ interface Props {
   getComponent?: (name: string) => unknown;
   tabletEdit: (index: number) => void;
   addNewBlock: (index: number, position: number) => void;
+  changeBlockPosition: (index: number, position: number) => void;
+  isLastBlock: (index: number) => boolean;
   handleEdit: (index: number) => void;
   deleteBlock: (index: number) => void;
 }
