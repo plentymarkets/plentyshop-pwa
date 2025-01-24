@@ -9,7 +9,7 @@
       'border',
       'border-gray-300',
       'z-[150]',
-      { 'min-w-[400px]': placement === 'left' || placement === 'right' },
+      { 'w-1/3 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
     <Component :is="drawerViewMap[drawerView]" v-if="drawerView" />
