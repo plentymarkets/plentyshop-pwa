@@ -93,9 +93,6 @@ const changeBlockPosition = (index: number, position: number) => {
 
 const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
-const runtimeConfig = useRuntimeConfig();
-const isHero = ref(runtimeConfig.public.isHero);
-
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
   if (name === 'UiTextCard') return resolveComponent('UiTextCard');
