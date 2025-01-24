@@ -5,6 +5,7 @@
 ### New
 
 - Added site configuration drawer.
+- Added blocks drawer.
 
 ### 👷 Changed
 
@@ -30,16 +31,6 @@
 - The Newsletter now uses the template JSON for configuration instead of the runtime configuration.
 - The save button in the editor is now disabled if no changes have been made to the template or if the template is invalid.
 - Updated cookie handling for PayPal: PayPal functionality now relies on an essential cookie, removing the need for user consent to enable it.
-- Added Nuxt security module.
-- Added page for shipping legal text.
-- Added the logic to render components within a module in certain areas of the PWA
-- Added delivery days to checkout shipping providers.
-- Added robots for category page.
-- Subtitle, pretitle and title options where added to the Recommened Products component
-- Added canonical for item page.
-- Media Card is now Image Text
-- The newsletter works as the other available blocks. (using the JSON as the source of the data)
-- New side menu for blocks list
 
 ### 🩹 Fixed
 
