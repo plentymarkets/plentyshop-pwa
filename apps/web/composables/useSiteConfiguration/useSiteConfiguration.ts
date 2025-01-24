@@ -47,18 +47,17 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const openDrawer = () => {
     state.value.drawerOpen = true;
-  }
+  };
 
   const toggleDrawer = () => {
-   state.value.drawerOpen = !state.value.drawerOpen;
-
-  }
+    state.value.drawerOpen = !state.value.drawerOpen;
+  };
 
   return {
     ...toRefs(state.value),
     loadGoogleFont,
     setDrawerView,
     openDrawer,
-    toggleDrawer
+    toggleDrawer,
   };
 };
