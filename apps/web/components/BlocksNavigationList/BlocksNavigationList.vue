@@ -26,25 +26,6 @@
 <script setup lang="ts">
 import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
-import homepageTemplateDataEn from '../../composables/useHomepage/homepageTemplateDataEn.json';
-import homepageTemplateDataDe from '../../composables/useHomepage/homepageTemplateDataDe.json';
-const { data, initialBlocks } = useHomepage();
-const { $i18n } = useNuxtApp();
-const { displayBlockList, isEditingEnabled } = useEditor();
 
-const getBlockFromJson = (component: string) => {
-  const blocks = $i18n.locale.value === 'en' ? homepageTemplateDataEn.blocks : homepageTemplateDataDe.blocks;
-  return blocks.find((block) => block.name === component);
-};
-
-const addNewBlock = (component: string, index: number) => {
-  displayBlockList.value = true;
-  const newBlock = getBlockFromJson(component);
-  if (!newBlock) return;
-
-  const updatedBlocks = [...data.value.blocks];
-  updatedBlocks.splice(index, 0, newBlock);
-  data.value.blocks = updatedBlocks;
-  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-};
+const { addNewBlock } = useAddBlocks();
 </script>
