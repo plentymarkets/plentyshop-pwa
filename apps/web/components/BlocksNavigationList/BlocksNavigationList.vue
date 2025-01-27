@@ -30,8 +30,7 @@ import homepageTemplateDataEn from '../../composables/useHomepage/homepageTempla
 import homepageTemplateDataDe from '../../composables/useHomepage/homepageTemplateDataDe.json';
 const { data, initialBlocks } = useHomepage();
 const { $i18n } = useNuxtApp();
-const { displayBlockList } = useEditor();
-const { isEditingEnabled } = useEditor();
+const { displayBlockList, isEditingEnabled } = useEditor();
 
 const getBlockFromJson = (component: string) => {
   const blocks = $i18n.locale.value === 'en' ? homepageTemplateDataEn.blocks : homepageTemplateDataDe.blocks;
