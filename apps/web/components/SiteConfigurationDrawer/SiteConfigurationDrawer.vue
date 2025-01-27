@@ -9,7 +9,7 @@
       'border',
       'border-gray-300',
       'z-[150]',
-      { 'w-1/1 lg:w-1/4': placement === 'left' || placement === 'right' },
+      { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
     <component :is="getDrawerView(drawerView)" v-if="drawerView" />
