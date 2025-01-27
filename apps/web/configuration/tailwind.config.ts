@@ -92,6 +92,12 @@ export default {
       width: {
         '128': '32rem',
       },
+      spacing: {
+        's': '2rem',
+        'm': '4rem',
+        'l': '6rem',
+        'xl': '8rem',
+      }
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports

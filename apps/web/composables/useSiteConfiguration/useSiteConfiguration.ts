@@ -19,6 +19,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loading: false,
     currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
+    blockSize: 'm'
   }));
 
   /**
@@ -30,6 +31,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
    * ```
    */
   const loadGoogleFont: LoadGoogleFont = (fontName: string) => {
+
     const link = document.createElement('link');
 
     link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;700&display=swap`;
@@ -40,8 +42,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
+  const updateBlockSize: UpdateBlockSize = (size: string) => {
+    state.value.blockSize = size;
+  }
+
   return {
     ...toRefs(state.value),
     loadGoogleFont,
+    updateBlockSize,
   };
 };

@@ -5069,6 +5069,7 @@ __metadata:
     turbo: "npm:1.13.4"
     typescript: "npm:5.6.2"
     vitest: "npm:^2.1.1"
+    vue-multiselect: "npm:^3.2.0"
     wait-on: "npm:^7.2.0"
   languageName: unknown
   linkType: soft
@@ -23610,6 +23611,13 @@ __metadata:
   peerDependencies:
     vue: ^3.0.0
   checksum: 10c0/ffe8d9cdad8a5f1c93d0088c7b4368711b8370bafd7b3145bbd908a8b6ebc2c56f78765795a105892a90a3f2a9be3d473106e8f00ec6864b8649afeadf6e05d5
+  languageName: node
+  linkType: hard
+
+"vue-multiselect@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "vue-multiselect@npm:3.2.0"
+  checksum: 10c0/a1a450b1bd1a7532a126aff21b8da98a41e06222c7873788352c1d4ebb92217b43d246974e0c1d473b128feb733b824a6ba03135ee5cc6355aa3d7266011de11
   languageName: node
   linkType: hard
 
