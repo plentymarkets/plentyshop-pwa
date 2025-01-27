@@ -27,5 +27,5 @@
 import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
-const { addNewBlock } = useAddBlocks();
+const { addNewBlock } = useBlockManager();
 </script>
