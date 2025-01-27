@@ -13,6 +13,7 @@
               'md:block md:mx-auto',
               'lg:right-[15%] lg:absolute',
             ]"
+            @click="addNewBlock(variationIndex, -1)"
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
@@ -25,4 +26,26 @@
 <script setup lang="ts">
 import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
+import homepageTemplateDataEn from '../../composables/useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../../composables/useHomepage/homepageTemplateDataDe.json';
+const { data, initialBlocks } = useHomepage();
+const { $i18n } = useNuxtApp();
+const { displayBlockList } = useEditor();
+const { isEditingEnabled } = useEditor();
+
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+};
+
+const addNewBlock = (index: number, position: number) => {
+  displayBlockList.value = true;
+  const insertIndex = position === -1 ? index : index + 1;
+  const updatedBlocks = [...data.value.blocks];
+
+  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+
+  data.value.blocks = updatedBlocks;
+
+  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+};
 </script>
