@@ -13,7 +13,7 @@
               'md:block md:mx-auto',
               'lg:right-[15%] lg:absolute',
             ]"
-            @click="addNewBlock(variationIndex, -1)"
+            @click="addNewBlock(variation.component, variationIndex)"
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
@@ -33,19 +33,19 @@ const { $i18n } = useNuxtApp();
 const { displayBlockList } = useEditor();
 const { isEditingEnabled } = useEditor();
 
-const defaultAddBlock = (lang: string) => {
-  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+const getBlockFromJson = (component: string) => {
+  const blocks = $i18n.locale.value === 'en' ? homepageTemplateDataEn.blocks : homepageTemplateDataDe.blocks;
+  return blocks.find((block) => block.name === component);
 };
 
-const addNewBlock = (index: number, position: number) => {
+const addNewBlock = (component: string, index: number) => {
   displayBlockList.value = true;
-  const insertIndex = position === -1 ? index : index + 1;
+  const newBlock = getBlockFromJson(component);
+  if (!newBlock) return;
+
   const updatedBlocks = [...data.value.blocks];
-
-  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
-
+  updatedBlocks.splice(index, 0, newBlock);
   data.value.blocks = updatedBlocks;
-
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 </script>
