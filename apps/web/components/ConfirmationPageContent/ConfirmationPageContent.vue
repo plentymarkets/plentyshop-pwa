@@ -43,7 +43,7 @@
           v-if="!isAuthorized"
           class="border border-1 border-neutral-200 rounded bg-neutral-100 p-4 w-full mt-4 text-sm items-center flex flex-col"
         >
-          <div class="font-bold text-primary-700 font-headings md:text-lg text-center mt-5">
+          <div class="font-bold text-primary-700 md:text-lg text-center mt-5">
             {{ t('orderConfirmation.saveOrderToAccount') }}
           </div>
           <div class="font-bold text-center mt-3">{{ t('orderConfirmation.createAccountForBenefits') }}</div>
