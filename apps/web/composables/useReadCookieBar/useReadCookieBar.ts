@@ -80,15 +80,18 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
    */
   const initializeCookies: InitializeCookies = () => {
     const cookies = JSON.parse(JSON.stringify(initialCookies));
-
     const browserCookies = useCookie('consent-cookie') as Ref<JsonCookie | null | undefined>;
 
     cookies.groups.slice(1).forEach((group: CookieGroup) => {
       group.cookies.forEach((cookie: Cookie) => {
-        cookie.accepted = !!browserCookies.value?.[group.name]?.[cookie.name] || false;
+        const isAccepted = group.name === 'CookieBar.essentials.label' || !!browserCookies.value?.[group.name]?.[cookie.name] || false;
+
+        if (browserCookies.value?.[group.name]?.[cookie.name] !== undefined) {
+          cookie.accepted = isAccepted;
+        }
 
         const { consent } = useCookieConsent(cookie.name);
-        consent.value = cookie.accepted || false;
+        consent.value = isAccepted;
       });
 
       group.accepted = group.cookies.some((cookie: Cookie) => cookie.accepted);
