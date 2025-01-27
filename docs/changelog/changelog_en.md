@@ -5,6 +5,7 @@
 ### New
 
 - Added site configuration drawer.
+- Added blocks drawer.
 
 ### 👷 Changed
 

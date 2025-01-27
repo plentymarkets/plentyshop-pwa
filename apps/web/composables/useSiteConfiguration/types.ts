@@ -21,6 +21,8 @@ export interface UseSiteConfiguration {
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
   loadGoogleFont: LoadGoogleFont;
   updateBlockSize: UpdateBlockSize;
+  openDrawerWithView: (view: DrawerView) => void;
+  closeDrawer: () => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

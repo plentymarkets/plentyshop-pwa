@@ -2,6 +2,7 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
+  DrawerView,
 } from '~/composables/useSiteConfiguration/types';
 
 /**
@@ -31,7 +32,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
    * ```
    */
   const loadGoogleFont: LoadGoogleFont = (fontName: string) => {
-
     const link = document.createElement('link');
 
     link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(fontName)}:wght@400;700&display=swap`;
@@ -42,6 +42,15 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
+  const openDrawerWithView = (view: DrawerView) => {
+    state.value.drawerView = view;
+    state.value.drawerOpen = true;
+  };
+
+  const closeDrawer = () => {
+    state.value.drawerOpen = false;
+  };
+
   const updateBlockSize: UpdateBlockSize = (size: string) => {
     state.value.blockSize = size;
   }
@@ -50,5 +59,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     ...toRefs(state.value),
     loadGoogleFont,
     updateBlockSize,
+    openDrawerWithView,
+    closeDrawer,
   };
 };
