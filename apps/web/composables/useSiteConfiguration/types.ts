@@ -1,10 +1,12 @@
 export type DrawerView = 'settings' | 'blocks' | null;
+export type SelectedFont = { caption: string; value: string };
 
 export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
   drawerOpen: boolean;
   currentFont: string;
+  selectedFont: SelectedFont;
   blockSize: string;
   drawerView: DrawerView;
 }
@@ -19,6 +21,7 @@ export interface UseSiteConfiguration {
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   blockSize: Readonly<Ref<UseSiteConfigurationState['blockSize']>>;
   drawerView: Readonly<Ref<UseSiteConfigurationState['drawerView']>>;
+  selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   loadGoogleFont: LoadGoogleFont;
   updateBlockSize: UpdateBlockSize;
   openDrawerWithView: (view: DrawerView) => void;

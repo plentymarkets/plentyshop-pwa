@@ -21,6 +21,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
     blockSize: 'm',
+    selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
   }));
 
   /**
