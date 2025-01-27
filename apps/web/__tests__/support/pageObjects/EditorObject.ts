@@ -41,20 +41,28 @@ export class EditorObject extends PageObject {
     return cy.get('#close')
   }
 
-  get blockWrapper() {
-    return cy.getByTestId('block-wrapper')
+  get blockWrappers() {
+    return cy.get('[data-testid*="block-wrapper"]');
   }
 
-  get topBlockButton(){
+  get topBlockButton() {
     return cy.getByTestId('top-add-block')
   }
 
-  get bottomBlockButton(){
+  get bottomBlockButton() {
     return cy.getByTestId('bottom-add-block')
   }
 
-  get deleteBlockButton(){
+  get deleteBlockButton() {
     return cy.getByTestId('delete-block-button')
+  }
+
+  get topMoveBlockButton() {
+    return cy.getByTestId('move-up-button')
+  }
+
+  get bottomMoveBlockButton() {
+    return cy.getByTestId('move-down-button')
   }
 
   get recommendedProducts() {
@@ -134,11 +142,11 @@ export class EditorObject extends PageObject {
   }
 
   buttonsExistWithGroupClasses() {
-    this.blockWrapper.first()
+    this.blockWrappers.first()
       .should('exist')
       .and('have.class', 'group')
       .and('not.have.css', 'outline-style', 'solid');
-    this.blockWrapper.first().within(() => {
+    this.blockWrappers.first().within(() => {
       this.topBlockButton
         .should('exist')
         .and('have.class', 'group-hover:opacity-100')
@@ -156,12 +164,12 @@ export class EditorObject extends PageObject {
   }
 
   deleteBlock() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
-      this.blockWrapper.first().should('exist');
+      this.blockWrappers.first().should('exist');
       this.deleteBlockButton.eq(1).click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength - 1);
+      this.blockWrappers.should('have.length', initialLength - 1);
     });
    }
 
@@ -178,27 +186,63 @@ export class EditorObject extends PageObject {
     this.languageSwitcher.should('exist');
     this.languageSwitcher.select('de');
     cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-    this.title.first().should('have.text', 'Dein Sound');
+    this.title.first().should('have.text', 'Ihr Sound');
   }
 
   addBlockTop() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.blockWrappers.should('have.length', initialLength + 1);
     });
   }
 
   addBlockBottom() {
-    this.blockWrapper.then((initialBlocks) => {
+    this.blockWrappers.then((initialBlocks) => {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.blockWrapper.should('have.length', initialLength + 1);
+      this.blockWrappers.should('have.length', initialLength + 1);
     });
+  }
+
+  checkFirstBlock() {
+    this.blockWrappers.first().within(() => {
+      this.topMoveBlockButton.first()
+        .should('exist')
+        .and('be.disabled')
+        .and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  checkLastBlock() {
+    this.blockWrappers.last().within(() => {
+      this.bottomMoveBlockButton.first()
+        .should('exist')
+        .and('be.disabled')
+        .and('have.class', 'cursor-not-allowed');
+    });
+  }
+
+  assertDefaultBlockOrder() {
+    this.blockWrappers.
+      first().should('contain.text', 'Feel the music').
+      next().should('contain.text', 'Discover Tech');
+  }
+
+  moveBlock() {
+    this.blockWrappers.first().within(() => {
+      this.bottomMoveBlockButton.first().should('exist').click();
+    })
+  }
+
+  assertChangedBlockOrder() {
+    this.blockWrappers.
+      first().should('contain.text', 'Discover Tech').
+      next().should('contain.text', 'Feel the music');
   }
 }
 

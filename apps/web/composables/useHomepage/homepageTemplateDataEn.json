@@ -1,10 +1,14 @@
 {
   "blocks": [
     {
-      "name": "UiHeroCarousel",
+      "name": "UiCarousel",
       "options": {
         "bannerItems": [
           {
+            "controls": {
+              "color": "#fff"
+            },
+
             "image": {
               "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
               "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-768.avif",
@@ -13,8 +17,8 @@
               "brightness": 0.5
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
               "bgopacity": 0.9,
               "pretitle": "Feel the music",
               "title": "Your Sound, Elevated",
@@ -38,8 +42,8 @@
               "brightness": 0.75
             },
             "text": {
-              "color": "#fff",
-              "bgcolor": "#000",
+              "color": "#000",
+              "bgcolor": "#fff",
               "bgopacity": 1,
               "pretitle": "The Future of Aerial Photography",
               "title": "Drone Omega",
@@ -58,18 +62,40 @@
       }
     },
     {
-      "name": "UiImageText",
+      "name": "UiTextCard",
       "options": {
         "text": {
-          "htmlDescription": "Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.",
+          "htmlDescription": "<p>Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.</p><p>Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.</p>",
           "title": "Discover Tech & Style",
           "subtitle": "Innovative technology meets modern fashion",
           "pretitle": "Welcome to your new favorite shop",
+          "textAlignment": "center"
+        },
+        "button": {
+          "label": "Get shopping",
+          "link": "",
+          "variant": "primary"
+        }
+      }
+    },
+    {
+      "name": "ProductRecommendedProducts",
+      "options": {
+        "categoryId": "73"
+      }
+    },
+    {
+      "name": "UiImageText",
+      "options": {
+        "text": {
+          "htmlDescription": "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
+          "title": "A New Listening Experience",
+          "subtitle": "Innovative technology meets modern fashion",
           "textAlignment": "left"
         },
         "button": {
-          "label": "Get Started",
-          "link": "",
+          "label": "To our headphones",
+          "link": "/gear/headphones-capybara_157",
           "variant": "primary"
         },
         "image": {
@@ -77,24 +103,7 @@
           "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
           "alt": "Headphones",
-          "imageAlignment": "right"
-        }
-      }
-    },
-    {
-      "name": "UiTextCard",
-      "options": {
-        "text": {
-          "htmlDescription": "Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.",
-          "title": "Discover Tech & Style",
-          "subtitle": "Innovative technology meets modern fashion",
-          "pretitle": "Welcome to your new favorite shop",
-          "textAlignment": "right"
-        },
-        "button": {
-          "label": "Get shopping",
-          "link": "",
-          "variant": "primary"
+          "imageAlignment": "left"
         }
       }
     },
@@ -107,21 +116,24 @@
           "subtitle": "Sportive fashion and accessoires for everybody.",
           "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>"
         },
-
         "categoryId": "49"
       }
     },
     {
       "name": "NewsletterSubscribe",
       "options": {
-        "email": "Email",
-        "firstName": "First Name",
-        "heading": "Subscribe to our Newsletter",
-        "info": "Be aware of upcoming sales and events. Receive gifts and special offers!",
-        "lastName": "Last Name",
-        "policy": "I hereby confirm that I have read the {privacyPolicy}. I can revoke my consent at any time.",
-        "subscribe": "Subscribe To Newsletter",
-        "success": "Thank you for signing up! Please check your email inbox and click on the confirmation link in our message to complete your newsletter subscription."
+        "text": {
+          "bgColor": "#f5f5f5",
+          "title": "Subscribe to our Newsletter",
+          "htmlDescription": "Be aware of upcoming sales and events. Receive gifts and special offers!"
+        },
+        "input": {
+          "displayNameInput": false,
+          "nameIsRequired": false
+        },
+        "button": {
+          "label": "Subscribe To Newsletter"
+        }
       }
     }
   ],

@@ -1,5 +1,5 @@
 <template>
-  <div :class="['w-full', 'flex', 'flex-col', 'items-start', 'p-5', 'space-y-4', textAlignmentClass]">
+  <div :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]">
     <TextContent :text="props.text" :button="props.button" />
   </div>
 </template>

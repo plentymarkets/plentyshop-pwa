@@ -34,23 +34,14 @@ export default withNuxt(
      * unicorn/prefer-add-event-listener
      */
     rules: {
-      'arrow-parens': 'off',
-      'no-console': 'off',
+      'arrow-parens': ['error', 'always'],
+      'no-console': ['error'],
       'no-constant-binary-expression': 'off',
-      'no-useless-escape': 'off',
-      '@typescript-eslint/ban-ts-comment': 'off',
-      '@typescript-eslint/no-dynamic-delete': 'off',
-      '@typescript-eslint/no-empty-object-type': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-extraneous-class': 'off',
-      '@typescript-eslint/no-invalid-void-type': 'off',
-      '@typescript-eslint/no-namespace': 'off',
-      '@typescript-eslint/no-require-imports': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
-      'vue/no-export-in-script-setup': 'off',
-      'vue/no-multiple-template-root': 'off',
-      'vue/no-v-html': 'off',
-      'vue/html-self-closing': 'off',
+      'vue/no-console': ['error'],
+      'vue/no-multiple-template-root': ['off'],
+      'vue/no-v-html': ['off'],
+      'vue/html-self-closing': ['error', { html: { void: 'always' } }],
     }
   },
 );

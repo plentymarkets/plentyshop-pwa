@@ -44,6 +44,14 @@ const closeEditor = () => {
   isEditing.value = false;
 };
 
+watch(
+  () => props.block,
+  (updatedData) => {
+    jsonText.value = JSON.stringify(updatedData, null, 2);
+  },
+  { immediate: true, deep: true },
+);
+
 watchDebounced(
   () => jsonText.value,
   () => {
