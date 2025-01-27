@@ -14,7 +14,7 @@
               'lg:right-[15%] lg:absolute',
             ]"
             @click="addNewBlock(variation.component, variationIndex)"
-          >
+            >
             <SfIconAdd class="cursor-pointer" />
           </button>
         </div>
