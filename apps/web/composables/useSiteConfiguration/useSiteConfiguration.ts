@@ -62,9 +62,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const isDirty = computed(() => {
     return (
-        state.value.blockSize !== state.value.initialData.blockSize ||
-        JSON.stringify(state.value.selectedFont) !==
-        JSON.stringify(state.value.initialData.selectedFont)
+      state.value.blockSize !== state.value.initialData.blockSize ||
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
 

@@ -43,7 +43,6 @@
           data-testid="edit-save-button"
           @click="updatePageTemplate"
         >
-
           <template v-if="!loading">
             <SfIconBase size="xs" class="mr-[5px] md:mr-[10px]">
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
