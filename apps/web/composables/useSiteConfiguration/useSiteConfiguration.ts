@@ -22,6 +22,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     drawerView: 'settings',
     blockSize: 'm',
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    initialData: {
+      blockSize: 'm',
+      selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    },
   }));
 
   /**
@@ -56,11 +60,20 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
+  const isDirty = computed(() => {
+    return (
+        state.value.blockSize !== state.value.initialData.blockSize ||
+        JSON.stringify(state.value.selectedFont) !==
+        JSON.stringify(state.value.initialData.selectedFont)
+    );
+  });
+
   return {
     ...toRefs(state.value),
     loadGoogleFont,
     updateBlockSize,
     openDrawerWithView,
     closeDrawer,
+    isDirty,
   };
 };
