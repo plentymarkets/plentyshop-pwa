@@ -29,16 +29,16 @@
       </div>
 
       <Multiselect
-          v-model="selectedFont"
-          :options="fonts"
-          placeholder="Select a font"
-          label="value"
-          track-by="caption"
-          :allow-empty="false"
-          @select="loadGoogleFont(selectedFont.value)"
-          class="cursor-pointer"
-          select-label=""
-          deselect-label="Selected"
+        v-model="selectedFont"
+        :options="fonts"
+        placeholder="Select a font"
+        label="value"
+        track-by="caption"
+        :allow-empty="false"
+        @select="loadGoogleFont(selectedFont.value)"
+        class="cursor-pointer"
+        select-label=""
+        deselect-label="Selected"
       />
       <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
     </UiAccordionItem>
@@ -131,11 +131,11 @@
 </template>
 
 <script setup lang="ts">
-import Multiselect from 'vue-multiselect'
-import 'vue-multiselect/dist/vue-multiselect.min.css'
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import fonts from '~/fonts/meta.json';
-import { _s, _m, _l,  _xl} from '#tailwind-config/theme/spacing'
+import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
 const { drawerOpen, loadGoogleFont, updateBlockSize, blockSize } = useSiteConfiguration();
 const runtimeConfig = useRuntimeConfig();
@@ -146,7 +146,7 @@ const blocksSpacingOpen = ref(false);
 
 const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
 
-const selectedFont = ref({caption: runtimeConfig.public.font, value: runtimeConfig.public.font});
+const selectedFont = ref({ caption: runtimeConfig.public.font, value: runtimeConfig.public.font });
 const primaryColor = ref(runtimeConfig.public.primaryColor);
 const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 
@@ -157,10 +157,10 @@ const spacingInPx = computed(() => {
     s: _s,
     m: _m,
     l: _l,
-    xl: _xl
+    xl: _xl,
   };
 
   const remValue = parseFloat(sizeMap[blockSize.value]);
   return remValue * 16;
-})
+});
 </script>

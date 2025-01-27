@@ -20,7 +20,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loading: false,
     currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
-    blockSize: 'm'
+    blockSize: 'm',
   }));
 
   /**
@@ -53,7 +53,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const updateBlockSize: UpdateBlockSize = (size: string) => {
     state.value.blockSize = size;
-  }
+  };
 
   return {
     ...toRefs(state.value),
