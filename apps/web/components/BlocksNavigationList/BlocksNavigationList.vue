@@ -8,10 +8,10 @@
         <div v-for="(variation, variationIndex) in category.variations" :key="variationIndex" class="relative mb-10">
           <NuxtImg :src="variation.image" class="block mx-auto" :alt="variation.title" width="253" height="120" />
           <button
-          :class="[
+            :class="[
               'transform -translate-y-1/2 bg-[#72CBEE] text-[#062633] w-10 h-10 rounded-full shadow-md cursor-pointer',
               'md:block md:mx-auto',
-              'lg:right-[15%] lg:absolute'
+              'lg:right-[15%] lg:absolute',
             ]"
           >
             <SfIconAdd class="cursor-pointer" />
