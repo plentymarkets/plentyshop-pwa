@@ -136,5 +136,4 @@ const blocksSpacingOpen = ref(false);
 const blocksSpacingSizes = ref(['S', 'M', 'L', 'XL']);
 
 const selectedFont = ref(runtimeConfig.public.font);
-
 </script>

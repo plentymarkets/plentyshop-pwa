@@ -54,20 +54,20 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       }
     });
   };
-  
+
   const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
       ...color,
     }));
-  
+
     setColorProperties('primary', tailwindColors);
   };
-  
+
   const updateSecondaryColor: UpdateColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
       ...color,
     }));
-  
+
     setColorProperties('secondary', tailwindColors);
   };
 
@@ -75,14 +75,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     () => state.value.primaryColor,
     (newValue) => {
       updatePrimaryColor(newValue);
-    }
+    },
   );
 
   watch(
     () => state.value.secondaryColor,
     (newValue) => {
       updateSecondaryColor(newValue);
-    }
+    },
   );
 
   return {
