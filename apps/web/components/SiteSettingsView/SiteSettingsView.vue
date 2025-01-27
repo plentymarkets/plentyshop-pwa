@@ -125,8 +125,7 @@
 import { SfIconClose, SfIconInfo, SfInput, SfSelect, SfTooltip } from '@storefront-ui/vue';
 import fonts from '~/fonts/meta.json';
 
-const { drawerOpen, loadGoogleFont } = useSiteConfiguration();
-const { updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
+const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor } = useSiteConfiguration();
 
 const runtimeConfig = useRuntimeConfig();
 
@@ -137,13 +136,5 @@ const blocksSpacingOpen = ref(false);
 const blocksSpacingSizes = ref(['S', 'M', 'L', 'XL']);
 
 const selectedFont = ref(runtimeConfig.public.font);
-const primaryColor = ref(runtimeConfig.public.primaryColor);
-const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 
-watch(primaryColor, () => {
-  updatePrimaryColor(primaryColor.value);
-});
-watch(secondaryColor, () => {
-  updateSecondaryColor(secondaryColor.value);
-});
 </script>
