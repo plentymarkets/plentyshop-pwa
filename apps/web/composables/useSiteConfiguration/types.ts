@@ -31,8 +31,8 @@ export interface UseSiteConfiguration {
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   loadGoogleFont: LoadGoogleFont;
-  updatePrimaryColor: UpdateColorPalette;
-  updateSecondaryColor: UpdateColorPalette;
+  setPrimaryColor: SetColorPalette;
+  setSecondaryColor: SetColorPalette;
   updateBlockSize: UpdateBlockSize;
   openDrawerWithView: (view: DrawerView) => void;
   closeDrawer: () => void;
@@ -40,5 +40,5 @@ export interface UseSiteConfiguration {
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
-export type SetColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
-export type UpdateColorPalette = (hexColor: string) => void;
+export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
+export type SetColorPalette = (hexColor: string) => void;

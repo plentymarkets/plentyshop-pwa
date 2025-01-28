@@ -2,8 +2,8 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
-  SetColorProperties,
-  UpdateColorPalette,
+  SetTailwindColorProperties,
+  SetColorPalette,
   DrawerView,
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
@@ -54,7 +54,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
-  const setColorProperties: SetColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+  const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
     tailwindPalette.forEach((shade) => {
       if (shade.rgb) {
         document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
@@ -62,7 +62,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     });
   };
 
-  const updatePrimaryColor: UpdateColorPalette = (hexColor: string) => {
+  const setPrimaryColor: SetColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
       ...color,
     }));
@@ -70,7 +70,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     setColorProperties('primary', tailwindColors);
   };
 
-  const updateSecondaryColor: UpdateColorPalette = (hexColor: string) => {
+  const setSecondaryColor: SetColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
       ...color,
     }));
@@ -81,14 +81,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   watch(
     () => state.value.primaryColor,
     (newValue) => {
-      updatePrimaryColor(newValue);
+      setPrimaryColor(newValue);
     },
   );
 
   watch(
     () => state.value.secondaryColor,
     (newValue) => {
-      updateSecondaryColor(newValue);
+      setSecondaryColor(newValue);
     },
   );
 
@@ -113,8 +113,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   });
 
   return {
-    updatePrimaryColor,
-    updateSecondaryColor,
+    setPrimaryColor,
+    setSecondaryColor,
     ...toRefs(state.value),
     loadGoogleFont,
     updateBlockSize,
