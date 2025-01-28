@@ -6,6 +6,7 @@
 
 - Added site configuration drawer.
 - Added blocks drawer.
+- Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added multiselect component that allows searching through the options.
 - Added preview functionality for blocks sizes.
 
