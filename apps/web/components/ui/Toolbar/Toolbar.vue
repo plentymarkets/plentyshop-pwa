@@ -62,14 +62,11 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
-const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
 const { drawerOpen, openDrawerWithView, closeDrawer, isDirty } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
-
-const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
 const isTouched = computed(() => isDirty.value || isEditingEnabled.value);
 

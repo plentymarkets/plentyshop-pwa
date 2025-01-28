@@ -35,10 +35,10 @@
         label="value"
         track-by="caption"
         :allow-empty="false"
-        @select="loadGoogleFont(selectedFont.value)"
         class="cursor-pointer"
         select-label=""
         deselect-label="Selected"
+        @select="loadGoogleFont(selectedFont.value)"
       />
       <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
     </UiAccordionItem>
