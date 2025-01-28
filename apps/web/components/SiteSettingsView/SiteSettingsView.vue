@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view min-w-[395px] sticky top-[52px]">
+  <div class="site-settings-view sticky top-[52px]">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
       <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">

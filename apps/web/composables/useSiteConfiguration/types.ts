@@ -24,6 +24,8 @@ export interface UseSiteConfiguration {
   loadGoogleFont: LoadGoogleFont;
   updatePrimaryColor: UpdateColorPalette;
   updateSecondaryColor: UpdateColorPalette;
+  openDrawerWithView: (view: DrawerView) => void;
+  closeDrawer: () => void;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
