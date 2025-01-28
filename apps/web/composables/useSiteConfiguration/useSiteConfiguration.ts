@@ -4,7 +4,7 @@ import type {
   LoadGoogleFont,
   SetColorProperties,
   UpdateColorPalette,
-  DrawerView
+  DrawerView,
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
@@ -47,7 +47,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.currentFont = `font-family: '${fontName}'`;
   };
-  
+
   const setColorProperties: SetColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
     tailwindPalette.forEach((shade) => {
       if (shade.rgb) {
@@ -94,7 +94,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const closeDrawer = () => {
     state.value.drawerOpen = false;
   };
-  
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
