@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="addNewBlock(0, 1)" />
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlock" />
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -20,7 +20,7 @@
           :block-has-data="blockHasData"
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
-          :add-new-block="addNewBlock"
+          :add-new-block="openBlock"
           :change-block-position="changeBlockPosition"
           :is-last-block="isLastBlock"
           :handle-edit="handleEdit"
@@ -47,12 +47,20 @@ const {
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
+const { openDrawerWithView } = useSiteConfiguration();
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
-const { changeBlockPosition, isLastBlock, addNewBlock } = useBlockManager();
+const { changeBlockPosition, isLastBlock } = useBlockManager();
+
+const openBlock = () => {
+  if (showBlockList.value) {
+    openDrawerWithView('blocks');
+  }
+};
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');

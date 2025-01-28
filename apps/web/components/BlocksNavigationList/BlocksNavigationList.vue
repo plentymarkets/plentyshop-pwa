@@ -13,6 +13,7 @@
               'md:block md:mx-auto',
               'lg:right-[15%] lg:absolute',
             ]"
+           
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
@@ -25,4 +26,5 @@
 <script setup lang="ts">
 import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
+
 </script>

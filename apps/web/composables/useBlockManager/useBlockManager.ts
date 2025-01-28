@@ -7,15 +7,11 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-const runtimeConfig = useRuntimeConfig();
 
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
-  const { openDrawerWithView } = useSiteConfiguration();
-
-  const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
@@ -33,10 +29,6 @@ export const useBlockManager = () => {
   };
 
   const addNewBlock = (index: number, position: number) => {
-    if (showBlockList.value) {
-      openDrawerWithView('blocks');
-    }
-
     const insertIndex = position === -1 ? index : index + 1;
     const updatedBlocks = [...data.value.blocks];
 
