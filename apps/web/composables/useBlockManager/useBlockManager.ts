@@ -1,6 +1,5 @@
 import { deepEqual } from '~/utils/jsonHelper';
-import homepageTemplateDataEn from '../useHomepage/homepageTemplateDataEn.json';
-import homepageTemplateDataDe from '../useHomepage/homepageTemplateDataDe.json';
+import { blocksLists } from '~/components/BlocksNavigationList/blocksLists';
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
@@ -24,15 +23,17 @@ export const useBlockManager = () => {
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
 
-  const defaultAddBlock = (lang: string) => {
-    return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+  const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
+    const template = blocksLists[category].variations[variationIndex].template;
+    return lang === 'de' ? template.de : template.en;
   };
 
-  const addNewBlock = (index: number, position: number) => {
-    const insertIndex = position === -1 ? index : index + 1;
+  const addNewBlock = (category: string, variationIndex: number, position: number) => {
+    const insertIndex = position === -1 ? data.value.blocks.length : position + 1;
     const updatedBlocks = [...data.value.blocks];
+    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
 
-    updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+    updatedBlocks.splice(insertIndex, 0, newBlock);
 
     data.value.blocks = updatedBlocks;
 
