@@ -4,9 +4,9 @@
 
 ### 📙 Todo
 
-- We moved our packages (shop-api and tailwind-colors) from github registry to npm registry. 
+- We moved our packages `shop-api` and `tailwind-colors` from github's registry to npm's registry. 
   We no loger require a github token to access these packages.
-  - run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `yarnrc.yml`.
+  - run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `.yarnrc.yml`.
   - remove `NPM_AUTH_TOKEN` from your apps/web/.env file.
 
 ### New
