@@ -31,8 +31,8 @@ export interface UseSiteConfiguration {
   selectedFont: Readonly<Ref<UseSiteConfigurationState['selectedFont']>>;
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   loadGoogleFont: LoadGoogleFont;
-  setPrimaryColor: SetColorPalette;
-  setSecondaryColor: SetColorPalette;
+  updatePrimaryColor: SetColorPalette;
+  updateSecondaryColor: SetColorPalette;
   updateBlockSize: UpdateBlockSize;
   openDrawerWithView: (view: DrawerView) => void;
   closeDrawer: () => void;

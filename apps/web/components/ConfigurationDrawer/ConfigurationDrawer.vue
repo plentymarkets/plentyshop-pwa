@@ -9,7 +9,6 @@
   >
     <SfDrawer
       ref="drawerRef"
-      v-model="open"
       :placement="placement"
       :class="[
         'bg-neutral-50',
@@ -21,7 +20,7 @@
     >
       <header class="flex items-center justify-between px-10 py-6 bg-primary-500">
         <div class="flex items-center text-white"><SfIconTune class="mr-2" /> App Settings</div>
-        <UiButton square variant="tertiary" class="text-white" @click="open = false">
+        <UiButton square variant="tertiary" class="text-white">
           <SfIconClose />
         </UiButton>
       </header>
@@ -44,24 +43,11 @@
 
 <script setup lang="ts">
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
-import { SfDrawer, SfIconClose, SfIconTune, useTrapFocus } from '@storefront-ui/vue';
+import { SfDrawer, SfIconClose, SfIconTune } from '@storefront-ui/vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('right');
-const drawerReference = ref();
 
 const runtimeConfig = useRuntimeConfig();
 const primaryColorReference = ref(runtimeConfig.public.primaryColor);
 const secondaryColorReference = ref(runtimeConfig.public.secondaryColor);
-
-const { open, updatePrimaryColor, updateSecondaryColor } = useConfigurationDrawer();
-
-useTrapFocus(drawerReference, { activeState: open });
-
-watch(primaryColorReference, () => {
-  updatePrimaryColor(primaryColorReference.value);
-});
-
-watch(secondaryColorReference, () => {
-  updateSecondaryColor(secondaryColorReference.value);
-});
 </script>

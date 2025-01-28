@@ -121,7 +121,6 @@
           variant="tertiary"
           :aria-label="t('openConfigurationDrawer')"
           square
-          @click="open = true"
         >
           <SfIconTune />
         </UiButton>
@@ -225,7 +224,6 @@ const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
-const { open } = useConfigurationDrawer();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();

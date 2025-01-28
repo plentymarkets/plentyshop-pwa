@@ -62,7 +62,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     });
   };
 
-  const setPrimaryColor: SetColorPalette = (hexColor: string) => {
+  const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
       ...color,
     }));
@@ -70,7 +70,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     setColorProperties('primary', tailwindColors);
   };
 
-  const setSecondaryColor: SetColorPalette = (hexColor: string) => {
+  const updateSecondaryColor: SetColorPalette = (hexColor: string) => {
     const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
       ...color,
     }));
@@ -81,14 +81,14 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   watch(
     () => state.value.primaryColor,
     (newValue) => {
-      setPrimaryColor(newValue);
+      updatePrimaryColor(newValue);
     },
   );
 
   watch(
     () => state.value.secondaryColor,
     (newValue) => {
-      setSecondaryColor(newValue);
+      updateSecondaryColor(newValue);
     },
   );
 
@@ -113,8 +113,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   });
 
   return {
-    setPrimaryColor,
-    setSecondaryColor,
+    updatePrimaryColor,
+    updateSecondaryColor,
     ...toRefs(state.value),
     loadGoogleFont,
     updateBlockSize,
