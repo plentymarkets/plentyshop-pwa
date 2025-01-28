@@ -5085,12 +5085,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/tailwind-colors@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@plentymarkets/tailwind-colors@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Ftailwind-colors%2F1.0.0%2F00e412f7c1cd700b914e1e6aacda2ac475980a72"
+"@plentymarkets/tailwind-colors@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@plentymarkets/tailwind-colors@npm:1.0.1"
   dependencies:
     nanoid: "npm:^3.3.1"
-  checksum: 10c0/1bd5c52b00451d9c1731a2ad30edbc56ddd7421001d2a0849b3cb8812f9f4973ec165ccd13bde408304791bbc9ca2cd5f40bc369485015b63bab8ec265b57782
+  checksum: 10c0/a7d0e9f78505baadf23c26b3111ca2127c41030c57f88c14aa9dbd44f916e8df8773f22c402d7c8c7480c5f60b878bc9248bb63f09c70029b213b6c369f44806
   languageName: node
   linkType: hard
 
@@ -23747,7 +23747,7 @@ __metadata:
     "@nuxtjs/sitemap": "npm:^5.2.2"
     "@nuxtjs/tailwindcss": "npm:^6.12.0"
     "@nuxtjs/turnstile": "npm:^0.8.0"
-    "@plentymarkets/tailwind-colors": "npm:^1.0.0"
+    "@plentymarkets/tailwind-colors": "npm:^1.0.1"
     "@savvywombat/tailwindcss-grid-areas": "npm:^3.1.0"
     "@storefront-ui/typography": "npm:^2.6.1"
     "@storefront-ui/vue": "npm:^2.6.3"
