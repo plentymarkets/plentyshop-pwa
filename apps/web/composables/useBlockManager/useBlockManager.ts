@@ -7,7 +7,7 @@ const isEmptyBlock = (block: Block): boolean => {
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
-export function useBlockManager() {
+export const useBlockManager = () => {
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
 
@@ -21,6 +21,23 @@ export function useBlockManager() {
 
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+
+  const changeBlockPosition = (index: number, position: number) => {
+    const updatedBlocks = [...data.value.blocks];
+    const newIndex = index + position;
+  
+    if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
+  
+    const blockToChange = updatedBlocks.splice(index, 1)[0];
+    updatedBlocks.splice(newIndex, 0, blockToChange);
+  
+    data.value.blocks = updatedBlocks;
+  
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+  
+  const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
+  
 
   onMounted(() => {
     const config = useRuntimeConfig().public;
@@ -70,5 +87,7 @@ export function useBlockManager() {
     handleEdit,
     deleteBlock,
     updateBlock,
+    changeBlockPosition,
+    isLastBlock,
   };
-}
+};

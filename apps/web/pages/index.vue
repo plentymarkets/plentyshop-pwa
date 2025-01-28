@@ -56,6 +56,8 @@ const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
+const {changeBlockPosition, isLastBlock} = useBlockManager();
+
 const { openDrawerWithView } = useSiteConfiguration();
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
@@ -76,21 +78,6 @@ const addNewBlock = (index: number, position: number) => {
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 
-const changeBlockPosition = (index: number, position: number) => {
-  const updatedBlocks = [...data.value.blocks];
-  const newIndex = index + position;
-
-  if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
-
-  const blockToChange = updatedBlocks.splice(index, 1)[0];
-  updatedBlocks.splice(newIndex, 0, blockToChange);
-
-  data.value.blocks = updatedBlocks;
-
-  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-};
-
-const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
