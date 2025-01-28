@@ -57,6 +57,7 @@ const hasAllKeys = (obj1: object, obj2: object)  => {
     expect(obj1Skeleton).toEqual(obj2Skeleton);
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const setValuesToEmptyString = (obj: Record<string, any>) => {
     Object.keys(obj).forEach((key) => {
         if (isObject(obj[key]) && obj[key] !== null) {
@@ -70,7 +71,7 @@ const setValuesToEmptyString = (obj: Record<string, any>) => {
     return obj;
   }
 
-const isObject = (item: any) => {
+const isObject = (item: unknown) => {
     return (item && typeof item === 'object' && !Array.isArray(item));
 }
 

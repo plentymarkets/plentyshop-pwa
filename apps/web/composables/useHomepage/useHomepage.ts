@@ -28,8 +28,11 @@ export const useHomepage: UseHomepageDataReturn = () => {
       if (block.name === 'ProductRecommendedProducts') {
         const options = block.options as ProductRecommendedProductsOptions;
         const id = options.categoryId;
-        const { fetchProductRecommended } = useProductRecommended(id);
-        fetchProductRecommended(id);
+
+        if (tryUseNuxtApp()) {
+          const { fetchProductRecommended } = useProductRecommended(id);
+          fetchProductRecommended(id);
+        }
       }
     });
   };

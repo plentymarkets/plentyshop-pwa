@@ -161,6 +161,7 @@ const [vatNumber, vatNumberAttributes] = defineField('vatNumber');
 
 if (!addAddress) {
   hasCompany.value = Boolean(userAddressGetters.getCompanyName(address as Address));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValues(address as any);
   if (!hasCompany.value) {
     companyName.value = '';

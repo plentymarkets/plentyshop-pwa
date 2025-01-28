@@ -1,7 +1,18 @@
 <template>
-  <div class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[100]" data-testid="edit-mode-toolbar">
+  <div class="sticky top-0 bg-white z-[1] md:z-[10] lg:z-[160] mb-3 h-[52px]" data-testid="edit-mode-toolbar">
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
+
+      <UiButton
+        type="button"
+        class="relative ml-4"
+        variant="tertiary"
+        aria-label="Open configuration drawer"
+        square
+        @click="toggleSettingsDrawer"
+      >
+        <SfIconTune />
+      </UiButton>
 
       <div class="absolute left-1/2 transform -translate-x-1/2">
         <UiLanguageEditor />
@@ -27,8 +38,8 @@
         </button>
         <button
           class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
-          :class="{ 'opacity-40 cursor-not-allowed': !isEditingEnabled || !isLocalTemplate() }"
-          :disabled="!isEditingEnabled || !isLocalTemplate()"
+          :class="{ 'opacity-40 cursor-not-allowed': !isTouched }"
+          :disabled="!isTouched"
           data-testid="edit-save-button"
           @click="updatePageTemplate"
         >
@@ -45,22 +56,28 @@
       </div>
     </div>
   </div>
-  <div class="bg-[#F1F3F5] py-1" />
 </template>
 
 <script setup lang="ts">
-import { SfLoaderCircular, SfIconBase, SfIconVisibility } from '@storefront-ui/vue';
+import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
+const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
-const isLocalTemplate = () => typeof homepageCategoryId === 'number';
+const isLocalTemplate = computed(() => typeof homepageCategoryId === 'number');
+
+const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+
+const toggleSettingsDrawer = () => {
+  drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');
+};
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
