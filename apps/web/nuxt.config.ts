@@ -135,6 +135,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
+    exposeConfig: true,
   },
   turnstile: {
     siteKey: process.env?.TURNSTILESITEKEY,

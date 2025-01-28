@@ -6,10 +6,13 @@
 
 - Added site configuration drawer.
 - Added blocks drawer.
+- Added multiselect component that allows searching through the options.
+- Added preview functionality for blocks sizes.
 
 ### 👷 Changed
 
 - Changed footer background for automatic coloring.
+- Changed editor save button disable logic to account for changes in the settings.
 
 ### 🩹 Fixed
 
