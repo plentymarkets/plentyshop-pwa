@@ -9,24 +9,23 @@
       'border',
       'border-gray-300',
       'z-[150]',
-      { 'min-w-[400px]': placement === 'left' || placement === 'right' },
+      { 'w-1/2 lg:w-1/4': placement === 'left' || placement === 'right' },
     ]"
   >
-    <Component :is="drawerViewMap[drawerView]" v-if="drawerView" />
+    <component :is="getDrawerView(drawerView)" v-if="drawerView" />
   </SfDrawer>
 </template>
 
 <script setup lang="ts">
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
-import SiteSettingsView from '~/components/SiteSettingsView/SiteSettingsView.vue';
 
 const placement = ref<`${SfDrawerPlacement}`>('left');
 
 const { drawerOpen, drawerView } = useSiteConfiguration();
 
-const drawerViewMap: Record<string, Component> = {
-  settings: SiteSettingsView,
-  // blocks: BlocksView,
+const getDrawerView = (view: string) => {
+  if (view === 'settings') return resolveComponent('SiteSettingsView');
+  if (view === 'blocks') return resolveComponent('BlocksNavigation');
 };
 </script>

@@ -2,6 +2,7 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
+  DrawerView,
 } from '~/composables/useSiteConfiguration/types';
 
 /**
@@ -40,8 +41,19 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
+  const openDrawerWithView = (view: DrawerView) => {
+    state.value.drawerView = view;
+    state.value.drawerOpen = true;
+  };
+
+  const closeDrawer = () => {
+    state.value.drawerOpen = false;
+  };
+
   return {
     ...toRefs(state.value),
     loadGoogleFont,
+    openDrawerWithView,
+    closeDrawer,
   };
 };

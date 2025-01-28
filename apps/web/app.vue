@@ -1,13 +1,13 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
-  <div class="w-100 relative" :class="{ flex: drawerOpen }">
+  <div class="w-100 relative" :class="{ 'lg:flex': drawerOpen }">
     <SiteConfigurationDrawer
       v-if="drawerOpen"
       class="sm:absolute lg:relative mr-3 bg-white"
       :style="`font-family: ${config.font}`"
     />
 
-    <div class="w-100 bg-white">
+    <div class="w-100 bg-white" :class="{ 'lg:w-3/4': drawerOpen }">
       <Body class="font-body bg-editor-body-bg" :class="bodyClass" :style="currentFont" />
       <UiNotifications />
       <VitePwaManifest v-if="$pwa?.isPWAInstalled" />
