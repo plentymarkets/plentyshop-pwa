@@ -1,9 +1,16 @@
 <template>
   <div
     :class="[
-      block.name === 'UiCarousel'
-        ? 'relative mb-10 group'
-        : 'relative max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 mb-10 group',
+      'relative group',
+      {
+        'mb-s': blockSize === 's',
+        'mb-m': blockSize === 'm',
+        'mb-l': blockSize === 'l',
+        'mb-xl': blockSize === 'xl',
+      },
+      {
+        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'UiCarousel',
+      },
       {
         'outline outline-4 outline-[#538AEA]':
           isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
@@ -73,4 +80,6 @@ interface Props {
 }
 
 defineProps<Props>();
+
+const { blockSize } = useSiteConfiguration();
 </script>
