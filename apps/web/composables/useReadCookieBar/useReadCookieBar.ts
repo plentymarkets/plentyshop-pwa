@@ -82,7 +82,7 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     const cookies = JSON.parse(JSON.stringify(initialCookies));
     const browserCookies = useCookie('consent-cookie') as Ref<JsonCookie | null | undefined>;
 
-    cookies.groups.slice(1).forEach((group: CookieGroup) => {
+    cookies.groups.forEach((group: CookieGroup) => {
       group.cookies.forEach((cookie: Cookie) => {
         const isAccepted = group.name === 'CookieBar.essentials.label' || !!browserCookies.value?.[group.name]?.[cookie.name] || false;
 
