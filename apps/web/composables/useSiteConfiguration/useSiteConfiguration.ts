@@ -3,6 +3,7 @@ import type {
   UseSiteConfigurationState,
   LoadGoogleFont,
   DrawerView,
+  SaveSettings,
 } from '~/composables/useSiteConfiguration/types';
 
 /**
@@ -10,7 +11,7 @@ import type {
  * @returns UseSiteConfigurationReturn
  * @example
  * ``` ts
- * const { data, drawerOpen, loading, currentFont, drawerView } = UseSiteConfiguration();
+ * const { data, drawerOpen, loading, currentFont, drawerView, settingsIsDirty, saveSettings } = UseSiteConfiguration();
  * ```
  */
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
@@ -67,6 +68,33 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     );
   });
 
+  const saveSettings: SaveSettings = async () => {
+    if (!settingsIsDirty.value) {
+      return;
+    }
+
+    const settings = [
+      {
+        key: 'blockSize',
+        value: state.value.blockSize,
+      },
+      {
+        key: 'font',
+        value: state.value.selectedFont.value,
+      },
+      {
+        key: 'primary',
+        value: '',
+      },
+      {
+        key: 'secondary',
+        value: '',
+      }
+    ];
+
+    const { data, error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+  }
+
   return {
     ...toRefs(state.value),
     loadGoogleFont,
@@ -74,5 +102,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     openDrawerWithView,
     closeDrawer,
     settingsIsDirty,
+    saveSettings,
   };
 };

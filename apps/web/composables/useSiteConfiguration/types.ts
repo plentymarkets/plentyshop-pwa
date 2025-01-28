@@ -15,6 +15,7 @@ export interface UseSiteConfigurationState {
 
 export type LoadGoogleFont = (font: string) => void;
 export type UpdateBlockSize = (size: string) => void;
+export type SaveSettings = () => void;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
@@ -27,6 +28,7 @@ export interface UseSiteConfiguration {
   initialData: Readonly<Ref<UseSiteConfigurationState['initialData']>>;
   loadGoogleFont: LoadGoogleFont;
   updateBlockSize: UpdateBlockSize;
+  saveSettings: SaveSettings;
   openDrawerWithView: (view: DrawerView) => void;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
