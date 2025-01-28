@@ -1,15 +1,21 @@
-import { ref, computed, onMounted } from 'vue';
 import { deepEqual } from '~/utils/jsonHelper';
+import homepageTemplateDataEn from '../useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../useHomepage/homepageTemplateDataDe.json';
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
+const runtimeConfig = useRuntimeConfig();
 
 export const useBlockManager = () => {
+  const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
+  const { openDrawerWithView } = useSiteConfiguration();
+
+  const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
@@ -22,22 +28,40 @@ export const useBlockManager = () => {
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
 
+  const defaultAddBlock = (lang: string) => {
+    return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+  };
+
+  const addNewBlock = (index: number, position: number) => {
+    if (showBlockList.value) {
+      openDrawerWithView('blocks');
+    }
+
+    const insertIndex = position === -1 ? index : index + 1;
+    const updatedBlocks = [...data.value.blocks];
+
+    updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
+
+    data.value.blocks = updatedBlocks;
+
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+
   const changeBlockPosition = (index: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newIndex = index + position;
-  
+
     if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
-  
+
     const blockToChange = updatedBlocks.splice(index, 1)[0];
     updatedBlocks.splice(newIndex, 0, blockToChange);
-  
+
     data.value.blocks = updatedBlocks;
-  
+
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
-  
+
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
-  
 
   onMounted(() => {
     const config = useRuntimeConfig().public;
@@ -89,5 +113,6 @@ export const useBlockManager = () => {
     updateBlock,
     changeBlockPosition,
     isLastBlock,
+    addNewBlock,
   };
 };

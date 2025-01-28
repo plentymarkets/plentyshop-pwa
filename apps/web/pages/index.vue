@@ -31,9 +31,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
-import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
-
 const {
   currentBlock,
   currentBlockIndex,
@@ -50,34 +47,12 @@ const {
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
-const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
-const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
-const { $i18n } = useNuxtApp();
+const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
+
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const {changeBlockPosition, isLastBlock} = useBlockManager();
-
-const { openDrawerWithView } = useSiteConfiguration();
-const defaultAddBlock = (lang: string) => {
-  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
-};
-
-const addNewBlock = (index: number, position: number) => {
-  if (showBlockList.value) {
-    openDrawerWithView('blocks');
-  }
-
-  const insertIndex = position === -1 ? index : index + 1;
-  const updatedBlocks = [...data.value.blocks];
-
-  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
-
-  data.value.blocks = updatedBlocks;
-
-  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-};
-
+const { changeBlockPosition, isLastBlock, addNewBlock } = useBlockManager();
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
