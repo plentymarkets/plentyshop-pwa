@@ -13,7 +13,8 @@
               'md:block md:mx-auto',
               'lg:right-[15%] lg:absolute',
             ]"
-          >
+            @click="addNewBlock(variation.component, variationIndex)"
+            >
             <SfIconAdd class="cursor-pointer" />
           </button>
         </div>
@@ -25,4 +26,6 @@
 <script setup lang="ts">
 import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
+
+const { addNewBlock } = useBlockManager();
 </script>

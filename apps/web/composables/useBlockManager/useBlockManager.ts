@@ -1,15 +1,23 @@
-import { ref, computed, onMounted } from 'vue';
+import homepageTemplateDataEn from '../useHomepage/homepageTemplateDataEn.json';
+import homepageTemplateDataDe from '../useHomepage/homepageTemplateDataDe.json';
 import { deepEqual } from '~/utils/jsonHelper';
+
+// interface Block {
+//   name: string;
+//   options: Record<string, any>;
+// }
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
+
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
-export function useBlockManager() {
+export const useBlockManager = () => {
   const { data, initialBlocks } = useHomepage();
-  const { isEditing, isEditingEnabled } = useEditor();
+  const { $i18n } = useNuxtApp();
+  const { displayBlockList, isEditing, isEditingEnabled } = useEditor();
 
   const currentBlock = ref<Block | null>(null);
   const currentBlockIndex = ref<number | null>(null);
@@ -21,6 +29,61 @@ export function useBlockManager() {
 
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+
+  const getBlockFromJson = (component: string) => {
+    const blocks = $i18n.locale.value === 'en' ? homepageTemplateDataEn.blocks : homepageTemplateDataDe.blocks;
+    return blocks.find((block) => block.name === component);
+  };
+
+  // const addNewBlock = (component: string, index: number, props: Record<string, any>) => {
+  //   displayBlockList.value = true;
+  //   const newBlock = getBlockFromJson(component);
+  //   if (!newBlock) return;
+
+  //   // Try # 1
+  //   if (newBlock.options) {
+  //     Object.keys(props).forEach((key) => {
+  //       if (newBlock.options[key]) {
+  //         newBlock.options[key] = { ...newBlock.options[key], ...props[key] };
+  //       } else {
+  //         newBlock.options[key] = props[key];
+  //       }
+  //     });
+  //   }
+
+  //   const updatedBlocks = [...data.value.blocks];
+  //   updatedBlocks.splice(index, 0, newBlock);
+  //   data.value.blocks = updatedBlocks;
+  //   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  // };
+
+  const addNewBlock = (component: string, index: number) => {
+    displayBlockList.value = true;
+    const newBlock = getBlockFromJson(component);
+    if (!newBlock) return;
+
+    const updatedBlocks = [...data.value.blocks];
+    updatedBlocks.splice(index, 0, newBlock);
+    data.value.blocks = updatedBlocks;
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+
+
+  const changeBlockPosition = (index: number, position: number) => {
+    const updatedBlocks = [...data.value.blocks];
+    const newIndex = index + position;
+
+    if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
+
+    const blockToChange = updatedBlocks.splice(index, 1)[0];
+    updatedBlocks.splice(newIndex, 0, blockToChange);
+
+    data.value.blocks = updatedBlocks;
+
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+
+  const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
   onMounted(() => {
     const config = useRuntimeConfig().public;
@@ -70,5 +133,8 @@ export function useBlockManager() {
     handleEdit,
     deleteBlock,
     updateBlock,
+    addNewBlock,
+    changeBlockPosition,
+    isLastBlock,
   };
-}
+};

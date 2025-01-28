@@ -9,14 +9,20 @@ export const blocksLists = {
       {
         title: 'Image Banner Left',
         image: '/images/blocks/image_banner_left.png',
+        component: 'UiCarousel',
+        props: { align: 'start' },
       },
       {
         title: 'Image Banner Right',
         image: '/images/blocks/image_banner_right.png',
+        component: 'UiCarousel',
+        props: { align: 'end' },
       },
       {
         title: 'Image Banner Center',
         image: '/images/blocks/image_banner_center.png',
+        component: 'UiCarousel',
+        props: { align: 'center' },
       },
     ],
   },
@@ -27,10 +33,14 @@ export const blocksLists = {
       {
         title: 'Image Right Text',
         image: '/images/blocks/image_right_text.png',
+        component: 'UiImageText',
+        props: { imageAlignment: 'left' },
       },
       {
         title: 'Image Left Text',
         image: '/images/blocks/image_left_text.png',
+        component: 'UiImageText',
+        props: { imageAlignment: 'right' },
       },
     ],
   },
@@ -41,6 +51,8 @@ export const blocksLists = {
       {
         title: 'Rich Text',
         image: '/images/blocks/rich_text.png',
+        component: 'UiTextCard',
+        props: {},
       },
     ],
   },
@@ -51,6 +63,8 @@ export const blocksLists = {
       {
         title: 'Product Galleries',
         image: '/images/blocks/product_galleries.png',
+        component: 'ProductRecommendedProducts',
+        props: {},
       },
     ],
   },
@@ -61,6 +75,8 @@ export const blocksLists = {
       {
         title: 'Forms Preview',
         image: '/images/blocks/forms_preview.png',
+        component: 'NewsletterSubscribe',
+        props: {},
       },
     ],
   },
