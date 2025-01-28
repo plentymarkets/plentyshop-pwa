@@ -62,13 +62,18 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
+const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
 const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
-const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
+const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
+
+const isLocalTemplate = computed(() => typeof homepageCategoryId === 'number');
+
+const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 
 const toggleSettingsDrawer = () => {
   drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');
