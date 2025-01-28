@@ -4,6 +4,7 @@
 
 ### New
 
+- Added functionality to SiteSettingsViewer for colors to update primary and secondary colors
 - Added site configuration drawer.
 - Added blocks drawer.
 - Added multiselect component that allows searching through the options.

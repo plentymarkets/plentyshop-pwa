@@ -993,5 +993,8 @@
     "delete": "The item was removed from your wish list."
   },
   "youAreOfflineText": "It seems you are currently offline, check your internet connection",
-  "double-tap-zoom": "Double-tap to zoom"
+  "double-tap-zoom": "Double-tap to zoom",
+  "siteSettingsView": {
+    "colorTooltip": "The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+  }
 }
