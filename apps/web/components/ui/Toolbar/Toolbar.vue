@@ -38,8 +38,8 @@
         </button>
         <button
           class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
-          :class="{ 'opacity-40 cursor-not-allowed': !isEditingEnabled || !isLocalTemplate() }"
-          :disabled="!isEditingEnabled || !isLocalTemplate()"
+          :class="{ 'opacity-40 cursor-not-allowed': !isTouched }"
+          :disabled="!isTouched"
           data-testid="edit-save-button"
           @click="updatePageTemplate"
         >
@@ -66,12 +66,14 @@ const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const { drawerOpen, openDrawerWithView, closeDrawer } = useSiteConfiguration();
+const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
-const isLocalTemplate = () => typeof homepageCategoryId === 'number';
+const isLocalTemplate = computed(() => typeof homepageCategoryId === 'number');
+
+const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 
 const toggleSettingsDrawer = () => {
   drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');

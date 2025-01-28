@@ -27,6 +27,12 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     drawerView: 'settings',
+    blockSize: 'm',
+    selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    initialData: {
+      blockSize: 'm',
+      selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+    },
   }));
 
   /**
@@ -95,12 +101,25 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.drawerOpen = false;
   };
 
+  const updateBlockSize: UpdateBlockSize = (size: string) => {
+    state.value.blockSize = size;
+  };
+
+  const settingsIsDirty = computed(() => {
+    return (
+      state.value.blockSize !== state.value.initialData.blockSize ||
+      JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
+    );
+  });
+
   return {
     updatePrimaryColor,
     updateSecondaryColor,
     ...toRefs(state.value),
     loadGoogleFont,
+    updateBlockSize,
     openDrawerWithView,
     closeDrawer,
+    settingsIsDirty,
   };
 };
