@@ -113,7 +113,7 @@ onBeforeUnmount(() => {
 
 const hasUnsavedChanges = () => {
   return !isEditingEnabled.value && !settingsIsDirty.value;
-}
+};
 
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
   if (hasUnsavedChanges()) return;
