@@ -56,7 +56,7 @@ const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const { openDrawerWithView } = useSiteConfiguration();
+const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
 };
@@ -112,7 +112,7 @@ onBeforeUnmount(() => {
 });
 
 const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-  if (!isEditingEnabled.value) return;
+  if (!isEditingEnabled.value && !settingsIsDirty.value) return;
   event.preventDefault();
 };
 
