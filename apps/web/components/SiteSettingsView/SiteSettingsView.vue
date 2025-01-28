@@ -55,7 +55,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>Primary color</UiFormLabel>
           <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            :label="$t('siteSettingsView.colorTooltip')"
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -78,7 +78,7 @@
         <div class="flex justify-between mb-2">
           <UiFormLabel>Secondary color</UiFormLabel>
           <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
+            :label="$t('siteSettingsView.colorTooltip')"
             :placement="'top'"
             :show-arrow="true"
             class="ml-2 z-10"
@@ -137,17 +137,14 @@ import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue'
 import fonts from '~/fonts/meta.json';
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { drawerOpen, loadGoogleFont, updateBlockSize, blockSize, selectedFont } = useSiteConfiguration();
-const runtimeConfig = useRuntimeConfig();
+const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
+  useSiteConfiguration();
 
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
 const blocksSpacingOpen = ref(false);
 
 const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
-
-const primaryColor = ref(runtimeConfig.public.primaryColor);
-const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 
 const spacingInPx = computed(() => {
   if (!blockSize.value) return '0';
