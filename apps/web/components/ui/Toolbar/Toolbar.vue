@@ -65,10 +65,10 @@ import { savePath } from '~/assets/icons/paths/save';
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const { drawerOpen, openDrawerWithView, closeDrawer, isDirty } = useSiteConfiguration();
+const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty } = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
-const isTouched = computed(() => isDirty.value || isEditingEnabled.value);
+const isTouched = computed(() => settingsIsDirty.value || isEditingEnabled.value);
 
 const toggleSettingsDrawer = () => {
   drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');

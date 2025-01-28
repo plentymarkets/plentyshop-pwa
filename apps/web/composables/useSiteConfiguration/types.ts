@@ -29,7 +29,7 @@ export interface UseSiteConfiguration {
   updateBlockSize: UpdateBlockSize;
   openDrawerWithView: (view: DrawerView) => void;
   closeDrawer: () => void;
-  isDirty: ComputedRef<boolean>;
+  settingsIsDirty: ComputedRef<boolean>;
 }
 
 export type UseSiteConfigurationReturn = () => UseSiteConfiguration;

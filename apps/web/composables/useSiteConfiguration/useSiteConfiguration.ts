@@ -60,7 +60,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
-  const isDirty = computed(() => {
+  const settingsIsDirty = computed(() => {
     return (
       state.value.blockSize !== state.value.initialData.blockSize ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
@@ -73,6 +73,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     updateBlockSize,
     openDrawerWithView,
     closeDrawer,
-    isDirty,
+    settingsIsDirty,
   };
 };
