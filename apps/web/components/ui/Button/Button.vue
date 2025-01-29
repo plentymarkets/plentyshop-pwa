@@ -18,7 +18,8 @@
 
 <script lang="ts" setup>
 import type { ConcreteComponent } from 'vue';
-import { useAttrsRef, SfButtonSize, SfButtonVariant } from '@storefront-ui/vue';
+import { useAttrsRef, SfButtonSize } from '@storefront-ui/vue';
+import { SfButtonCustomVariant } from './types';
 
 const props = defineProps({
   size: {
@@ -26,8 +27,8 @@ const props = defineProps({
     default: SfButtonSize.base,
   },
   variant: {
-    type: String as PropType<`${SfButtonVariant}`>,
-    default: SfButtonVariant.primary,
+    type: String as PropType<`${SfButtonCustomVariant}`>,
+    default: SfButtonCustomVariant.primary,
   },
   disabled: {
     type: Boolean,
@@ -71,11 +72,15 @@ const type = computed(
 </script>
 <script lang="ts">
 export const variantClasses = {
-  [SfButtonVariant.primary]:
+  [SfButtonCustomVariant.customPrimary]:
+    'text-white shadow hover:shadow-md active:shadow bg-custom-primary-500 hover:bg-custom-primary-600 active:bg-custom-primary-700 disabled:bg-custom-disabled-300',
+  [SfButtonCustomVariant.customTertiary]:
+    'text-custom-primary-500 hover:bg-custom-primary-100 hover:text-custom-primary-800 active:bg-custom-primary-200 active:text-custom-primary-900 disabled:bg-transparent',
+  [SfButtonCustomVariant.primary]:
     'text-white shadow hover:shadow-md active:shadow bg-primary-500 hover:bg-primary-600 active:bg-primary-700 disabled:bg-disabled-300',
-  [SfButtonVariant.secondary]:
+  [SfButtonCustomVariant.secondary]:
     'text-primary-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900 ring-1 ring-inset ring-primary-500 shadow hover:shadow-md active:shadow hover:ring-primary-800 active:ring-primary-900 disabled:ring-1 disabled:ring-disabled-300 disabled:bg-white/50',
-  [SfButtonVariant.tertiary]:
+  [SfButtonCustomVariant.tertiary]:
     'text-primary-500 hover:bg-primary-100 hover:text-primary-800 active:bg-primary-200 active:text-primary-900 disabled:bg-transparent',
 };
 </script>

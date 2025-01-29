@@ -6,7 +6,7 @@
       <UiButton
         type="button"
         class="relative ml-4"
-        variant="tertiary"
+        variant="customTertiary"
         aria-label="Open configuration drawer"
         square
         @click="toggleSettingsDrawer"
@@ -82,10 +82,10 @@ const save = () => {
     updatePageTemplate();
   }
 
-  if(settingsIsDirty.value) {
+  if (settingsIsDirty.value) {
     saveSettings();
   }
-}
+};
 
 const toggleSettingsDrawer = () => {
   drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');

@@ -110,6 +110,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const settingsIsDirty = computed(() => {
     return (
       state.value.blockSize !== state.value.initialData.blockSize ||
+      state.value.primaryColor !== state.value.initialData.primaryColor ||
+      state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
@@ -137,7 +139,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       {
         key: 'secondary',
         value: state.value.secondaryColor,
-      }
+      },
     ];
 
     await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
@@ -147,10 +149,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
       primaryColor: state.value.primaryColor,
       secondaryColor: state.value.secondaryColor,
-    }
+    };
 
     state.value.loading = false;
-  }
+  };
 
   return {
     updatePrimaryColor,
