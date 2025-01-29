@@ -137,17 +137,14 @@ import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue'
 import fonts from '~/fonts/meta.json';
 import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { drawerOpen, loadGoogleFont, updateBlockSize, blockSize, selectedFont } = useSiteConfiguration();
-const runtimeConfig = useRuntimeConfig();
+const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
+  useSiteConfiguration();
 
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
 const blocksSpacingOpen = ref(false);
 
 const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
-
-const primaryColor = ref(runtimeConfig.public.primaryColor);
-const secondaryColor = ref(runtimeConfig.public.secondaryColor);
 
 const spacingInPx = computed(() => {
   if (!blockSize.value) return '0';

@@ -2,8 +2,16 @@
 
 ## v1.x.x (2025-01-23)
 
+### 📙 Todo
+
+- We moved our packages `shop-api` and `tailwind-colors` from github's registry to npm's registry.
+  We no loger require a github token to access these packages.
+  - run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `.yarnrc.yml`.
+  - remove `NPM_AUTH_TOKEN` from your apps/web/.env file.
+
 ### New
 
+- Added ability to change primary and secondary colors from Site Configuration Drawer.
 - Added site configuration drawer.
 - Added blocks drawer.
 - Added multiselect component that allows searching through the options.
@@ -18,6 +26,8 @@
 ### 🩹 Fixed
 
 - Fixed a hydration error when fetching recommended products on the homepage.
+- Fixed an issue that disabled the save button even though the user has edited the homepage template.
+- Removed the `nuxt-security` module for now due to issues with PayPal.
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
