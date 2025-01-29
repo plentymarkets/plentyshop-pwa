@@ -13,6 +13,7 @@
               'md:block md:mx-auto',
               'lg:right-[15%] lg:absolute',
             ]"
+            :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="addBlock(category.category, variationIndex)"
           >
             <SfIconAdd class="cursor-pointer" />

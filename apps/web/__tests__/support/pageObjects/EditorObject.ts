@@ -73,6 +73,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('editor-language-select');
   }
 
+  get addBlockButton(){
+    return cy.getByTestId('block-add-image-with-text-1');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -195,6 +199,8 @@ export class EditorObject extends PageObject {
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
+      this.addBlockButton.click();
+      cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
   }
@@ -204,6 +210,8 @@ export class EditorObject extends PageObject {
       const initialLength = initialBlocks.length;
       this.bottomBlockButton.invoke('removeClass', 'opacity-0');
       this.bottomBlockButton.first().should('exist').click();
+      cy.wait(1000);
+      this.addBlockButton.click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
