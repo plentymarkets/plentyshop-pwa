@@ -11,9 +11,9 @@
 
 ### Neu
 
-- Möglichkeit hinzugefügt, primäre und sekundäre Farben über das Konfigurationsmenü zu ändern.
-- Seitenkonfigurationsmenü hinzugefügt.
-- Blockkonfigurationsmenü hinzugefügt.
+- Möglichkeit hinzugefügt, primäre und sekundäre Farben über den Seiten-Konfigurationsbereich zu ändern.
+- Seiten-Konfigurationsbereich hinzugefügt.
+- Block-Konfigurationsbereich hinzugefügt.
 - Multiselect-Komponente hinzugefügt, die das Durchsuchen der Optionen ermöglicht.
 - Vorschaufunktionalität für Blockgrößen hinzugefügt.
 - Wenn es ungespeicherte Änderungen im Editor gibt und der Benutzer versucht, die Seite zu schließen oder neu zu laden, zeigt der Browser jetzt eine Warnung an und fragt nach einer Bestätigung.
