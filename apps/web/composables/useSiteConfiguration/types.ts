@@ -1,7 +1,12 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 export type DrawerView = 'settings' | 'blocks' | null;
 export type SelectedFont = { caption: string; value: string };
-export type ConfigurationSettings = { blockSize: string; selectedFont: SelectedFont };
+export type ConfigurationSettings = {
+  blockSize: string;
+  selectedFont: SelectedFont;
+  primaryColor: string;
+  secondaryColor: string;
+};
 
 export interface UseSiteConfigurationState {
   data: [];

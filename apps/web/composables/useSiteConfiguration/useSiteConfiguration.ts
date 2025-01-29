@@ -32,6 +32,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     initialData: {
       blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+      primaryColor: useRuntimeConfig().public.primaryColor,
+      secondaryColor: useRuntimeConfig().public.secondaryColor,
     },
   }));
 
@@ -93,7 +95,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   );
 
   const openDrawerWithView = (view: DrawerView) => {
-    console.log('blockSize: ', useRuntimeConfig().public.blockSize)
     state.value.drawerView = view;
     state.value.drawerOpen = true;
   };
@@ -118,6 +119,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       return;
     }
 
+    state.value.loading = true;
+
     const settings = [
       {
         key: 'blockSize',
@@ -129,15 +132,24 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
       },
       {
         key: 'primary',
-        value: '',
+        value: state.value.primaryColor,
       },
       {
         key: 'secondary',
-        value: '',
+        value: state.value.secondaryColor,
       }
     ];
 
-    const { data, error } = await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+    await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+
+    state.value.initialData = {
+      blockSize: state.value.blockSize,
+      selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
+      primaryColor: state.value.primaryColor,
+      secondaryColor: state.value.secondaryColor,
+    }
+
+    state.value.loading = false;
   }
 
   return {
