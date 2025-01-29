@@ -20,8 +20,6 @@ const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
 
-onMounted(() => {
-  getRobots();
-  setRobotForStaticPage('LegalDisclosure');
-});
+await getRobots();
+setRobotForStaticPage('LegalDisclosure');
 </script>

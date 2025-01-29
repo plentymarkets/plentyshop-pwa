@@ -80,10 +80,11 @@ const getComponent = (name: string) => {
   }
 };
 
+await getRobots();
+setRobotForStaticPage('Homepage');
+
 onMounted(() => {
   isEditingEnabled.value = false;
-  getRobots();
-  setRobotForStaticPage('Homepage');
 });
 
 fetchPageTemplate();

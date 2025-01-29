@@ -18,8 +18,6 @@ const getHTMLTexts = () => {
   return data.value.htmlText ?? '';
 };
 
-onMounted(() => {
-  getRobots();
-  setRobotForStaticPage('CancellationRights');
-});
+await getRobots();
+setRobotForStaticPage('CancellationRights');
 </script>

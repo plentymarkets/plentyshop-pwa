@@ -45,8 +45,6 @@ watch(
   },
 );
 
-onMounted(() => {
-  getRobots();
-  setRobotForStaticPage('SearchResult');
-});
+await getRobots();
+setRobotForStaticPage('SearchResult');
 </script>

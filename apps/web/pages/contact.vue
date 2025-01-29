@@ -218,8 +218,6 @@ const sendContact = async () => {
 
 const onSubmit = handleSubmit(() => sendContact());
 
-onMounted(() => {
-  getRobots();
-  setRobotForStaticPage('ContactPage');
-});
+await getRobots();
+setRobotForStaticPage('ContactPage');
 </script>
