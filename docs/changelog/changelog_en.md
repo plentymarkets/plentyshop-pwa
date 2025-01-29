@@ -11,6 +11,7 @@
 
 ### New
 
+- Added ability to change primary and secondary colors from Site Configuration Drawer.
 - Added site configuration drawer.
 - Added blocks drawer.
 - Added multiselect component that allows searching through the options.
