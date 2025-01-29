@@ -33,7 +33,6 @@
 <script lang="ts" setup>
 import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
 import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
-import { useRobots } from '../composables/useRobots/useRobot';
 
 const {
   currentBlock,

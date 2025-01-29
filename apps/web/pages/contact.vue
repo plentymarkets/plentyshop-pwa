@@ -134,7 +134,6 @@ import { boolean, object, string } from 'yup';
 import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { paths } from '~/utils/paths';
-import { useRobots } from '../composables/useRobots/useRobot';
 
 definePageMeta({
   layout: false,

@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRobots } from '../composables/useRobots/useRobot';
 
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
