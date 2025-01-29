@@ -1,8 +1,9 @@
 # Changelog PlentyONE Shop
 
-# vx.x.x (202x-xx-xx) 
+# vx.x.x (202x-xx-xx)
 
 ### New
+
 - Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added the logic to remove cookies after revoking consent.
 
