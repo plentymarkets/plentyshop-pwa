@@ -80,6 +80,11 @@ jobs:
 
       - name: Unit tests
         run: yarn test:coverage
+      - name: 'Report Coverage'
+        if: always() 
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: './apps/web/'
   build:
     runs-on: ubuntu-latest
     steps:
