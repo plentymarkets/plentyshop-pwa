@@ -6,7 +6,16 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-
+const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
+  index: null,
+  position: null,
+});
+const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
+  if (visiblePlaceholder.value.index === index && visiblePlaceholder.value.position === position) {
+    return;
+  }
+  visiblePlaceholder.value = { index, position };
+};
 export function useBlockManager() {
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
@@ -70,5 +79,7 @@ export function useBlockManager() {
     handleEdit,
     deleteBlock,
     updateBlock,
+    visiblePlaceholder,
+    togglePlaceholder,
   };
 }

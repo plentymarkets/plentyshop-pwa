@@ -31,9 +31,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-import homepageTemplateDataEn from '../composables/useHomepage/homepageTemplateDataEn.json';
-import homepageTemplateDataDe from '../composables/useHomepage/homepageTemplateDataDe.json';
-
 const {
   currentBlock,
   currentBlockIndex,
@@ -53,26 +50,14 @@ const isHero = ref(runtimeConfig.public.isHero);
 const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
-const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
-
 const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
-const defaultAddBlock = (lang: string) => {
-  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
-};
-
+const { togglePlaceholder } = useBlockManager()
 const addNewBlock = (index: number, position: number) => {
   if (showBlockList.value) {
     openDrawerWithView('blocks');
   }
-
-  const insertIndex = position === -1 ? index : index + 1;
-  const updatedBlocks = [...data.value.blocks];
-
-  updatedBlocks.splice(insertIndex, 0, defaultAddBlock($i18n.locale.value));
-
-  data.value.blocks = updatedBlocks;
-
+  togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 

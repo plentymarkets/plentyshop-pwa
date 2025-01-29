@@ -1,4 +1,5 @@
 <template>
+  <block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'top'" />
   <div
     :class="[
       'relative group',
@@ -56,10 +57,12 @@
       <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
+  <block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'bottom'" />
 </template>
 
 <script lang="ts" setup>
 import { SfIconAdd } from '@storefront-ui/vue';
+import BlockPlaceholder from '~/components/ui/BlockPlaceholder/BlockPlaceholder.vue';
 
 interface Props {
   index: number;
@@ -82,4 +85,5 @@ interface Props {
 defineProps<Props>();
 
 const { blockSize } = useSiteConfiguration();
+const { visiblePlaceholder } = useBlockManager();
 </script>
