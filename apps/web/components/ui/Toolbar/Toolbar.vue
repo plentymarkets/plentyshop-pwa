@@ -68,7 +68,14 @@ const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty, saveSettings, loading: settingsLoading } = useSiteConfiguration();
+const {
+  drawerOpen,
+  openDrawerWithView,
+  closeDrawer,
+  settingsIsDirty,
+  saveSettings,
+  loading: settingsLoading,
+} = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
