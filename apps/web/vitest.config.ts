@@ -14,6 +14,7 @@ export default defineVitestConfig({
         'assets/**',
         'build/**',
       ],
+      reportOnFailure: true,
     },
     testTimeout: 6000,
     environment: 'nuxt',

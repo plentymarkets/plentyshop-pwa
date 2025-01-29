@@ -80,6 +80,13 @@ jobs:
 
       - name: Unit tests
         run: yarn test:coverage
+      - name: 'Report Coverage'
+        # Set if: always() to also generate the report if tests are failing
+        # Only works if you set `reportOnFailure: true` in your vite config as specified above
+        if: always() 
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: './apps/web/'
   build:
     runs-on: ubuntu-latest
     steps:
