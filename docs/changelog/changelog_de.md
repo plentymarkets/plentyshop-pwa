@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.9...v1.9.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### 📙 Todo
 
