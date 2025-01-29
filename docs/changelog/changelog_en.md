@@ -17,6 +17,7 @@
 
 ### 🩹 Fixed
 
+- Accesibility issue on banner.
 - Fixed a hydration error when fetching recommended products on the homepage.
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
