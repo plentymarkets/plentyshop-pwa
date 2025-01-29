@@ -4,16 +4,16 @@
 
 ### 📙 Todo
 
-- Wir haben unsere Packages `shop-api` und `tailwind-colors` von GitHub's Registry zu NPM's Registry verschoben.
+- Wir haben unsere Packages `shop-api` und `tailwind-colors` von GitHubs Registry zu NPMs Registry verschoben.
   Ein GitHub-Token ist nicht mehr erforderlich, um auf diese Packages zuzugreifen.
   - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
   - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
 
 ### Neu
 
-- Möglichkeit hinzugefügt, primäre und sekundäre Farben über das Konfigurations Menü zu ändern.
-- Seiten Konfigurations Menü hinzugefügt.
-- Block Konfigurations Menü hinzugefügt.
+- Möglichkeit hinzugefügt, primäre und sekundäre Farben über das Konfigurationsmenü zu ändern.
+- Seitenkonfigurationsmenü hinzugefügt.
+- Blockkonfigurationsmenü hinzugefügt.
 - Multiselect-Komponente hinzugefügt, die das Durchsuchen der Optionen ermöglicht.
 - Vorschaufunktionalität für Blockgrößen hinzugefügt.
 - Wenn es ungespeicherte Änderungen im Editor gibt und der Benutzer versucht, die Seite zu schließen oder neu zu laden, zeigt der Browser jetzt eine Warnung an und fragt nach einer Bestätigung.
