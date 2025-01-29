@@ -21,7 +21,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loading: false,
     currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
-    blockSize: 'm',
+    blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
       blockSize: 'm',
@@ -49,6 +49,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   };
 
   const openDrawerWithView = (view: DrawerView) => {
+    console.log('blockSize: ', useRuntimeConfig().public.blockSize)
     state.value.drawerView = view;
     state.value.drawerOpen = true;
   };
