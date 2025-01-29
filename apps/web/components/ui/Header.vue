@@ -11,7 +11,7 @@
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
-            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            :disabled="isEditing || disableActions"
             @click="toggleLanguageSelect()"
           >
             <template #prefix>
@@ -115,15 +115,6 @@
         >
           <SfIconPerson />
         </UiButton>
-        <UiButton
-          v-if="showConfigurationDrawer"
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
-          variant="tertiary"
-          :aria-label="t('openConfigurationDrawer')"
-          square
-        >
-          <SfIconTune />
-        </UiButton>
       </nav>
     </template>
 
@@ -191,7 +182,6 @@
       <UiSearch :close="searchModalClose" />
     </SfModal>
   </NuxtLazyHydrate>
-  <LazyConfigurationDrawer v-if="showConfigurationDrawer" />
 </template>
 
 <script setup lang="ts">
@@ -203,7 +193,6 @@ import {
   SfIconPerson,
   SfIconSearch,
   SfIconShoppingCart,
-  SfIconTune,
   SfListItem,
   SfModal,
   SfIconFavorite,
