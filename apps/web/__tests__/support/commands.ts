@@ -35,14 +35,14 @@ Cypress.Commands.add('waitUntilElementInDOM', (actionToWaitOn: () => Cypress.Cha
   cy.waitUntil(() =>
     actionToWaitOn()
       .should('have.length.gte', 0)
-      .then(element => !!element.length),
+      .then((element) => !!element.length),
   ),
 );
 
 Cypress.Commands.add('clearServiceWorkers', () => {
   // Fix for stuck visit even though page is loaded in cypress
   if (window.navigator && navigator.serviceWorker) {
-    const registrationPromise = window.navigator.serviceWorker.getRegistrations().then(registrations =>
+    const registrationPromise = window.navigator.serviceWorker.getRegistrations().then((registrations) =>
       registrations.forEach((registration) => {
         registration.unregister();
       }),

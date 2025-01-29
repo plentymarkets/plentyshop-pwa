@@ -34,7 +34,7 @@
     "lhci:desktop": "lhci collect --config=lighthouserc.desktop.json && lhci assert"
   },
   "dependencies": {
-    "@plentymarkets/shop-api": "^0.87.1",
+    "@plentymarkets/shop-api": "^0.88.0",
     "@types/applepayjs": "^14.0.8",
     "@types/drift-zoom": "^1.5.2",
     "@types/googlepay": "^0.7.6",
@@ -44,7 +44,8 @@
     "country-flag-icons": "^1.5.12",
     "dotenv": "^16.4.5",
     "drift-zoom": "^1.5.1",
-    "nuxt-swiper": "^1.2.2"
+    "nuxt-swiper": "^1.2.2",
+    "vue-multiselect": "^3.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.8.1",
@@ -65,6 +66,7 @@
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
     "nuxt": "^3.13.2",
+    "nuxt-security": "2.1.5",
     "nuxt-viewport": "^2.1.5",
     "playwright-core": "^1.45.1",
     "prettier": "^3.3.2",

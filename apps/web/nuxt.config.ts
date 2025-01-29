@@ -61,6 +61,8 @@ export default defineNuxtConfig({
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
       isHero: process.env.IS_HERO === 'true',
+      font: process.env.TEXT || 'Red Hat Text',
+      showBlocksNavigation: process.env.SHOW_BLOCKS_NAVIGATION === '1',
     },
   },
   modules: [
@@ -130,6 +132,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
+    exposeConfig: true,
   },
   turnstile: {
     siteKey: process.env?.TURNSTILESITEKEY,

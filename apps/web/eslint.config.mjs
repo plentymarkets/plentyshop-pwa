@@ -34,10 +34,9 @@ export default withNuxt(
      * unicorn/prefer-add-event-listener
      */
     rules: {
-      'arrow-parens': 'off',
+      'arrow-parens': ['error', 'always'],
       'no-console': ['error'],
       'no-constant-binary-expression': 'off',
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': ['error', { allowTernary: true }],
       'vue/no-console': ['error'],
       'vue/no-multiple-template-root': ['off'],

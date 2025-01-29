@@ -21,6 +21,8 @@
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
           :add-new-block="addNewBlock"
+          :change-block-position="changeBlockPosition"
+          :is-last-block="isLastBlock"
           :handle-edit="handleEdit"
           :delete-block="deleteBlock"
         />
@@ -46,15 +48,24 @@ const {
   updateBlock,
 } = useBlockManager();
 
+const runtimeConfig = useRuntimeConfig();
+const isHero = ref(runtimeConfig.public.isHero);
+const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
+
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { $i18n } = useNuxtApp();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
+const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
 const defaultAddBlock = (lang: string) => {
   return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
 };
 
 const addNewBlock = (index: number, position: number) => {
+  if (showBlockList.value) {
+    openDrawerWithView('blocks');
+  }
+
   const insertIndex = position === -1 ? index : index + 1;
   const updatedBlocks = [...data.value.blocks];
 
@@ -65,22 +76,49 @@ const addNewBlock = (index: number, position: number) => {
   isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 
-const runtimeConfig = useRuntimeConfig();
-const isHero = ref(runtimeConfig.public.isHero);
+const changeBlockPosition = (index: number, position: number) => {
+  const updatedBlocks = [...data.value.blocks];
+  const newIndex = index + position;
+
+  if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
+
+  const blockToChange = updatedBlocks.splice(index, 1)[0];
+  updatedBlocks.splice(newIndex, 0, blockToChange);
+
+  data.value.blocks = updatedBlocks;
+
+  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+};
+
+const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
 const getComponent = (name: string) => {
   if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
   if (name === 'UiTextCard') return resolveComponent('UiTextCard');
   if (name === 'UiImageText') return resolveComponent('UiImageText');
   if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
-  if (name === 'UiHeroCarousel' || name === 'UiBlazeCarousel') {
+  if (name === 'UiCarousel') {
     return isHero.value ? resolveComponent('UiHeroCarousel') : resolveComponent('UiBlazeCarousel');
   }
 };
 
 onMounted(() => {
   isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+const hasUnsavedChanges = () => {
+  return !isEditingEnabled.value && !settingsIsDirty.value;
+};
+
+const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  if (hasUnsavedChanges()) return;
+  event.preventDefault();
+};
 
 fetchPageTemplate();
 </script>
