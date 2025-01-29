@@ -24,16 +24,18 @@ export const useBlockManager = () => {
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
-    const template = blocksLists[category].variations[variationIndex].template;
-    return lang === 'de' ? template.de : template.en;
+    const variationsInCategory = blocksLists[category];
+    const variationToAdd = variationsInCategory.variations[variationIndex];
+    const variationTemplate = variationToAdd.template;
+
+    return lang === 'de' ? variationTemplate.de : variationTemplate.en;
   };
 
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
-    const insertIndex = position === -1 ? data.value.blocks.length : position + 1;
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
 
-    updatedBlocks.splice(insertIndex, 0, newBlock);
+    updatedBlocks.splice(position, 0, newBlock);
 
     data.value.blocks = updatedBlocks;
 

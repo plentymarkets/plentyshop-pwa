@@ -1,9 +1,11 @@
 /* eslint-disable max-lines */
 // Category will be used to sort at the next step
 // We can also add description if we need to add toltips or stuff like that
-
 // We could also send configuration here --- that will be the JSON
-export const blocksLists = {
+
+import type { BlocksList } from "./types";
+
+export const blocksLists: BlocksList = {
   'image-banner': {
     category: 'image-banner',
     title: 'Image Banner',
