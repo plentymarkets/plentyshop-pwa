@@ -2,8 +2,12 @@ import type {
   UseSiteConfigurationReturn,
   UseSiteConfigurationState,
   LoadGoogleFont,
+  SetTailwindColorProperties,
+  SetColorPalette,
   DrawerView,
 } from '~/composables/useSiteConfiguration/types';
+import type { TailwindPalette } from '~/utils/tailwindHelper';
+import { getPaletteFromColor } from '~/utils/tailwindHelper';
 
 /**
  * @description Composable for managing site configuration.
@@ -20,6 +24,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     loading: false,
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
+    primaryColor: useRuntimeConfig().public.primaryColor,
+    secondaryColor: useRuntimeConfig().public.secondaryColor,
     drawerView: 'settings',
     blockSize: 'm',
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
@@ -48,6 +54,44 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.currentFont = `font-family: '${fontName}'`;
   };
 
+  const setColorProperties: SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => {
+    tailwindPalette.forEach((shade) => {
+      if (shade.rgb) {
+        document.documentElement.style.setProperty(`--colors-2-${type}-${shade.weight}`, shade.rgb);
+      }
+    });
+  };
+
+  const updatePrimaryColor: SetColorPalette = (hexColor: string) => {
+    const tailwindColors: TailwindPalette = getPaletteFromColor('primary', hexColor).map((color) => ({
+      ...color,
+    }));
+
+    setColorProperties('primary', tailwindColors);
+  };
+
+  const updateSecondaryColor: SetColorPalette = (hexColor: string) => {
+    const tailwindColors: TailwindPalette = getPaletteFromColor('secondary', hexColor).map((color) => ({
+      ...color,
+    }));
+
+    setColorProperties('secondary', tailwindColors);
+  };
+
+  watch(
+    () => state.value.primaryColor,
+    (newValue) => {
+      updatePrimaryColor(newValue);
+    },
+  );
+
+  watch(
+    () => state.value.secondaryColor,
+    (newValue) => {
+      updateSecondaryColor(newValue);
+    },
+  );
+
   const openDrawerWithView = (view: DrawerView) => {
     state.value.drawerView = view;
     state.value.drawerOpen = true;
@@ -73,6 +117,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   });
 
   return {
+    updatePrimaryColor,
+    updateSecondaryColor,
     ...toRefs(state.value),
     updateNewBlockPosition,
     loadGoogleFont,
