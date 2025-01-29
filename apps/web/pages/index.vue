@@ -52,7 +52,7 @@ const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 const { data, initialBlocks, fetchPageTemplate, dataIsEmpty } = useHomepage();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
-const { togglePlaceholder } = useBlockManager()
+const { togglePlaceholder } = useBlockManager();
 const addNewBlock = (index: number, position: number) => {
   if (showBlockList.value) {
     openDrawerWithView('blocks');
