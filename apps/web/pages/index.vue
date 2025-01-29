@@ -31,7 +31,6 @@
   </div>
 </template>
 <script lang="ts" setup>
-
 const {
   currentBlock,
   currentBlockIndex,
@@ -48,18 +47,14 @@ const {
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
-const { openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
+const {settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
-const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
+const { data , fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { changeBlockPosition, isLastBlock } = useBlockManager();
-const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
-const defaultAddBlock = (lang: string) => {
-  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
-};
 
 const openBlockList = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
@@ -100,3 +95,4 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
 
 fetchPageTemplate();
 </script>
+
