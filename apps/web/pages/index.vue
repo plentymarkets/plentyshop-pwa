@@ -47,9 +47,9 @@ const {
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
-const {settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
+const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
-const { data , fetchPageTemplate, dataIsEmpty } = useHomepage();
+const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
@@ -95,4 +95,3 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
 
 fetchPageTemplate();
 </script>
-
