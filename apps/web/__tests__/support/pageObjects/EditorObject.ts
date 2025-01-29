@@ -181,17 +181,17 @@ export class EditorObject extends PageObject {
       this.recommendedProducts.should('exist');
    }
 
-  //  switchLanguage() {
-  //   cy.intercept('/plentysystems/getCart').as('getCart');
-  //   cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
-  //   cy.intercept('/plentysystems/getFacet').as('getFacet');
+   switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
 
-  //   this.editPreviewButton.click();
-  //   this.languageSwitcher.should('exist');
-  //   this.languageSwitcher.select('de');
-  //   cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-  //   this.title.first().should('have.text', 'Ihr Sound');
-  // }
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    this.title.first().should('have.text', 'Ihr Sound');
+  }
 
   addBlockTop() {
     this.blockWrappers.then((initialBlocks) => {
