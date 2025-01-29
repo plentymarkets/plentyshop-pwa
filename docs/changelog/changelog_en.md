@@ -8,6 +8,7 @@
 - Added blocks drawer.
 - Added multiselect component that allows searching through the options.
 - Added preview functionality for blocks sizes.
+- If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 
 ### 👷 Changed
 

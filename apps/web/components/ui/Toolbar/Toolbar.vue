@@ -43,15 +43,17 @@
           data-testid="edit-save-button"
           @click="updatePageTemplate"
         >
-          <template v-if="!loading">
+          <template v-if="loading">
+            <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px] md:mr-[10px]" />
+          </template>
+          <template v-else>
             <SfIconBase size="xs" class="mr-[5px] md:mr-[10px]">
               <svg width="16" height="16" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path :d="savePath" fill="white" />
               </svg>
             </SfIconBase>
           </template>
-          <template v-if="loading"> <SfLoaderCircular class="animate-spin w-4 h-4 text-white" /> </template>
-          <template v-else> Save changes </template>
+          Save changes
         </button>
       </div>
     </div>

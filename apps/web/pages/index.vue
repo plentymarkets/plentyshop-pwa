@@ -31,6 +31,7 @@
   </div>
 </template>
 <script lang="ts" setup>
+
 const {
   currentBlock,
   currentBlockIndex,
@@ -55,10 +56,14 @@ const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { changeBlockPosition, isLastBlock } = useBlockManager();
+const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
+const defaultAddBlock = (lang: string) => {
+  return lang === 'en' ? homepageTemplateDataEn.blocks[1] : homepageTemplateDataDe.blocks[1];
+};
 
 const openBlockList = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
-  
+
   if (showBlockList.value) {
     updateNewBlockPosition(insertIndex);
     openDrawerWithView('blocks');
@@ -77,7 +82,21 @@ const getComponent = (name: string) => {
 
 onMounted(() => {
   isEditingEnabled.value = false;
+  window.addEventListener('beforeunload', handleBeforeUnload);
 });
+
+onBeforeUnmount(() => {
+  window.removeEventListener('beforeunload', handleBeforeUnload);
+});
+
+const hasUnsavedChanges = () => {
+  return !isEditingEnabled.value && !settingsIsDirty.value;
+};
+
+const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+  if (hasUnsavedChanges()) return;
+  event.preventDefault();
+};
 
 fetchPageTemplate();
 </script>
