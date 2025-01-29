@@ -8,7 +8,6 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
-import { watch } from 'vue';
 
 /**
  * @description Composable for managing site configuration.

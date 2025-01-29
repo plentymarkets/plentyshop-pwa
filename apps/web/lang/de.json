@@ -993,8 +993,5 @@
     "delete": "Der Artikel wurde von der Wunschliste entfernt."
   },
   "youAreOfflineText": "Es scheint, dass Sie derzeit offline sind, überprüfen Sie Ihre Internetverbindung",
-  "double-tap-zoom": "Zum Zoomen doppeltippen",
-  "siteSettingsView": {
-    "colorTooltip": "Im Shop werden zwei Farbpaletten verwendet. Eine für die Primärfarbe und eine für die Sekundärfarbe. In jeder Palette gibt es zehn Schattierungen. Die hier hinterlegte Farbe dient als Grundfarbe für die jeweilige Palette. Die anderen Schattierungen werden beim Bauen automatisch generiert."
-  }
+  "double-tap-zoom": "Zum Zoomen doppeltippen"
 }
