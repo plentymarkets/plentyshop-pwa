@@ -18,6 +18,7 @@
 ### 🩹 Fixed
 
 - Fixed a hydration error when fetching recommended products on the homepage.
+- Fixed an issue that disabled the save button even though the user has edited the homepage template.
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
