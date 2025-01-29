@@ -37,8 +37,10 @@ const showConfigurationDrawer = config.showConfigurationDrawer;
 
 const { drawerOpen } = useSiteConfiguration();
 
-const pwaCookie = useCookie('pwa');
-isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+onMounted(() => {
+  const pwaCookie = useCookie('pwa');
+  isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
+});
 
 await setInitialDataSSR();
 setVsfLocale(locale.value);

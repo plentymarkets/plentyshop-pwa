@@ -5037,7 +5037,7 @@ __metadata:
     "@nuxt/test-utils": "npm:^3.13.1"
     "@nuxtjs/turnstile": "npm:^0.8.0"
     "@paypal/paypal-js": "npm:8.1.0"
-    "@plentymarkets/shop-api": "npm:^0.87.1"
+    "@plentymarkets/shop-api": "npm:^0.88.0"
     "@types/applepayjs": "npm:^14.0.8"
     "@types/drift-zoom": "npm:^1.5.2"
     "@types/googlepay": "npm:^0.7.6"
@@ -5074,23 +5074,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@plentymarkets/shop-api@npm:^0.87.1":
-  version: 0.87.1
-  resolution: "@plentymarkets/shop-api@npm:0.87.1::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Fshop-api%2F0.87.1%2F3710acc6e809530b16348dd17edb6518016a18b8"
+"@plentymarkets/shop-api@npm:^0.88.0":
+  version: 0.88.0
+  resolution: "@plentymarkets/shop-api@npm:0.88.0"
   dependencies:
     "@vue-storefront/middleware": "npm:^5.3.2"
     axios: "npm:^1.7.7"
     consola: "npm:^3.2.3"
-  checksum: 10c0/e939be4e335c28cb5f2f26cda5b968a70a05466583f41d3f6a9af862915680ca4dcbdf6e96a879fdbc97cd4e5141b6fe84ab115ab66dc259d28c1bda55d767e2
+  checksum: 10c0/d2a16eefce18315cbb781fbecd8e0b292287fa9c04d19b5e100f867fe80247c426704cf39c731c56062e68fd93b555ac6f8d6b4a12f3b232760bead0a460a43f
   languageName: node
   linkType: hard
 
-"@plentymarkets/tailwind-colors@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "@plentymarkets/tailwind-colors@npm:1.0.0::__archiveUrl=https%3A%2F%2Fnpm.pkg.github.com%2Fdownload%2F%40plentymarkets%2Ftailwind-colors%2F1.0.0%2F00e412f7c1cd700b914e1e6aacda2ac475980a72"
+"@plentymarkets/tailwind-colors@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@plentymarkets/tailwind-colors@npm:1.0.1"
   dependencies:
     nanoid: "npm:^3.3.1"
-  checksum: 10c0/1bd5c52b00451d9c1731a2ad30edbc56ddd7421001d2a0849b3cb8812f9f4973ec165ccd13bde408304791bbc9ca2cd5f40bc369485015b63bab8ec265b57782
+  checksum: 10c0/a7d0e9f78505baadf23c26b3111ca2127c41030c57f88c14aa9dbd44f916e8df8773f22c402d7c8c7480c5f60b878bc9248bb63f09c70029b213b6c369f44806
   languageName: node
   linkType: hard
 
@@ -23747,7 +23747,7 @@ __metadata:
     "@nuxtjs/sitemap": "npm:^5.2.2"
     "@nuxtjs/tailwindcss": "npm:^6.12.0"
     "@nuxtjs/turnstile": "npm:^0.8.0"
-    "@plentymarkets/tailwind-colors": "npm:^1.0.0"
+    "@plentymarkets/tailwind-colors": "npm:^1.0.1"
     "@savvywombat/tailwindcss-grid-areas": "npm:^3.1.0"
     "@storefront-ui/typography": "npm:^2.6.1"
     "@storefront-ui/vue": "npm:^2.6.3"
