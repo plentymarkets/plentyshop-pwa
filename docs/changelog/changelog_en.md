@@ -1,5 +1,11 @@
 # Changelog PlentyONE Shop
 
+# vx.x.x (202x-xx-xx) 
+
+### New
+- Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
+- Added the logic to remove cookies after revoking consent.
+
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 📙 Todo
@@ -14,9 +20,8 @@
 - Added ability to change primary and secondary colors from Site Configuration Drawer.
 - Added site configuration drawer.
 - Added blocks drawer.
-- Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added multiselect component that allows searching through the options.
-- Added preview functionality for blocks sizes.
+- Added preview functionality for block sizes.
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 
 ### 👷 Changed
