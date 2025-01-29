@@ -24,6 +24,7 @@
 - Logik zum Deaktivieren der Speichertaste im Editor geändert, um Änderungen in den Einstellungen zu berücksichtigen.
 
 ### 🩹 Behoben
+
 - Ein Hydrationsfehler beim Abrufen empfohlener Produkte auf der Startseite behoben.
 - Ein Problem behoben, das die Speichertaste deaktivierte, obwohl der Benutzer die Startseite bearbeitet hatte.
 - Das `nuxt-security` Modul vorerst entfernt aufgrund von Problemen mit PayPal.
