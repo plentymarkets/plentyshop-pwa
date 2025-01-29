@@ -4,7 +4,6 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
-import { securityConfiguration } from './configuration/security.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -13,7 +12,6 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
   app: appConfiguration,
-  security: securityConfiguration,
   experimental: {
     asyncContext: true,
   },
@@ -63,10 +61,11 @@ export default defineNuxtConfig({
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
       isHero: process.env.IS_HERO === 'true',
+      font: process.env.TEXT || 'Red Hat Text',
+      showBlocksNavigation: process.env.SHOW_BLOCKS_NAVIGATION === '1',
     },
   },
   modules: [
-    'nuxt-security',
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/test-utils/module',
@@ -133,6 +132,7 @@ export default defineNuxtConfig({
   },
   tailwindcss: {
     configPath: '~/configuration/tailwind.config.ts',
+    exposeConfig: true,
   },
   turnstile: {
     siteKey: process.env?.TURNSTILESITEKEY,

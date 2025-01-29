@@ -115,16 +115,6 @@
         >
           <SfIconPerson />
         </UiButton>
-        <UiButton
-          v-if="showConfigurationDrawer"
-          class="group relative text-white hover:text-white active:text-white hover:bg-primary-800 active:bg-primary-700 mr-1 -ml-0.5 rounded-md"
-          variant="tertiary"
-          :aria-label="t('openConfigurationDrawer')"
-          square
-          @click="open = true"
-        >
-          <SfIconTune />
-        </UiButton>
       </nav>
     </template>
 
@@ -192,7 +182,6 @@
       <UiSearch :close="searchModalClose" />
     </SfModal>
   </NuxtLazyHydrate>
-  <LazyConfigurationDrawer v-if="showConfigurationDrawer" />
 </template>
 
 <script setup lang="ts">
@@ -204,7 +193,6 @@ import {
   SfIconPerson,
   SfIconSearch,
   SfIconShoppingCart,
-  SfIconTune,
   SfListItem,
   SfModal,
   SfIconFavorite,
@@ -225,7 +213,6 @@ const localePath = useLocalePath();
 const { isOpen: isAccountDropdownOpen, toggle: accountDropdownToggle } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
 const { open: searchModalOpen, isOpen: isSearchModalOpen, close: searchModalClose } = useDisclosure();
-const { open } = useConfigurationDrawer();
 const { toggle: toggleLanguageSelect, isOpen: isLanguageSelectOpen } = useLocalization();
 const { data: categoryTree } = useCategoryTree();
 const { data: user, isAuthorized, logout } = useCustomer();

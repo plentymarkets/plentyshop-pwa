@@ -58,7 +58,7 @@ const breadcrumbs = computed(() => {
 
 watch(
   () => locale.value,
-  (changedLocale: any) => {
+  (changedLocale: string) => {
     router.push({
       path: buildCategoryLanguagePath(`${productsCatalog.value.languageUrls[changedLocale]}`),
       query: route.query,
