@@ -21,8 +21,6 @@ node_modules
 cache
 .temp
 dist
-# testing
-coverage
 
 # misc
 .DS_Store
