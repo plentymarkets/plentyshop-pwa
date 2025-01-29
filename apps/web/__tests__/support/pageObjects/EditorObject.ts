@@ -199,7 +199,7 @@ export class EditorObject extends PageObject {
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.addBlockButton.click();
+      this.addBlockButton.should('exist').click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
