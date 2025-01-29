@@ -28,8 +28,9 @@ import { blocksLists } from './blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { addNewBlock } = useBlockManager();
+const { newBlockPosition } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
-  addNewBlock(category, variationIndex, -1);
+  addNewBlock(category, variationIndex, newBlockPosition.value);
 };
 </script>

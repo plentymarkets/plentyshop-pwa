@@ -18,6 +18,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
+    newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
     drawerView: 'settings',
     blockSize: 'm',
@@ -60,6 +61,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
+  const updateNewBlockPosition = (position: number) => {
+    state.value.newBlockPosition = position;
+  };
+
   const settingsIsDirty = computed(() => {
     return (
       state.value.blockSize !== state.value.initialData.blockSize ||
@@ -69,6 +74,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   return {
     ...toRefs(state.value),
+    updateNewBlockPosition,
     loadGoogleFont,
     updateBlockSize,
     openDrawerWithView,

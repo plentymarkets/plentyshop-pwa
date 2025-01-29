@@ -1,6 +1,6 @@
 <template>
   <div>
-    <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlock" />
+    <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
     <Editor
       v-if="isEditing && currentBlockIndex !== null"
       :index="currentBlockIndex"
@@ -20,7 +20,7 @@
           :block-has-data="blockHasData"
           :get-component="getComponent"
           :tablet-edit="tabletEdit"
-          :add-new-block="openBlock"
+          :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
           :is-last-block="isLastBlock"
           :handle-edit="handleEdit"
@@ -47,7 +47,7 @@ const {
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
-const { openDrawerWithView } = useSiteConfiguration();
+const { openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
@@ -56,8 +56,11 @@ const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { changeBlockPosition, isLastBlock } = useBlockManager();
 
-const openBlock = () => {
+const openBlockList = (index: number, position: number) => {
+  const insertIndex = position === -1 ? index : index + 1;
+  
   if (showBlockList.value) {
+    updateNewBlockPosition(insertIndex);
     openDrawerWithView('blocks');
   }
 };
