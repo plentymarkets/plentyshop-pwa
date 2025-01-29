@@ -24,7 +24,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
-      blockSize: 'm',
+      blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     },
   }));
