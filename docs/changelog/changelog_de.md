@@ -24,11 +24,11 @@
 - Logik zum Deaktivieren der Speichertaste im Editor geändert, um Änderungen in den Einstellungen zu berücksichtigen.
 
 ### 🩹 Behoben
-
 - Ein Hydrationsfehler beim Abrufen empfohlener Produkte auf der Startseite behoben.
 - Ein Problem behoben, das die Speichertaste deaktivierte, obwohl der Benutzer die Startseite bearbeitet hatte.
 - Das `nuxt-security` Modul vorerst entfernt aufgrund von Problemen mit PayPal.
 - Ein Problem mit PayPal Express Checkout behoben, bei dem eine erneute Autorisierung der Zahlung erforderlich war.
+- Ein Barrierefreiheitsfehler in der Banner Komponente behoben.
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
