@@ -74,7 +74,7 @@ export class EditorObject extends PageObject {
   }
 
   get addBlockButton(){
-    return cy.getByTestId('block-add-image-with-text-0');
+    return cy.getByTestId('block-add-image-banner-0');
   }
 
   togglePreviewMode() {
