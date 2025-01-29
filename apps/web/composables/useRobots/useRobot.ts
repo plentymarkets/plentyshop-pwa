@@ -11,7 +11,7 @@ export const useRobots: UseRobotReturn = () => {
   /**
    *
    */
-  const getRobots: () => Promise<any> = async () => {
+  const getRobots: () => Promise<RobotsStaticPages> = async () => {
     state.value.loading = true;
     const { data, error } = await useAsyncData(() => useSdk().plentysystems.getRobots());
     useHandleError(error.value);
