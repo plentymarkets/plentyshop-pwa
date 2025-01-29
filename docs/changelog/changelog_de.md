@@ -1,5 +1,35 @@
 # Changelog PlentyONE Shop
 
+## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.9...v1.9.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 📙 Todo
+
+- Wir haben unsere Packages `shop-api` und `tailwind-colors` von GitHub's Registry zu NPM's Registry verschoben.
+  Ein GitHub-Token ist nicht mehr erforderlich, um auf diese Packages zuzugreifen.
+  - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
+  - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
+
+### Neu
+
+- Möglichkeit hinzugefügt, primäre und sekundäre Farben über das Konfigurations Menü zu ändern.
+- Seiten Konfigurations Menü hinzugefügt.
+- Block Konfigurations Menü hinzugefügt.
+- Multiselect-Komponente hinzugefügt, die das Durchsuchen der Optionen ermöglicht.
+- Vorschaufunktionalität für Blockgrößen hinzugefügt.
+- Wenn es ungespeicherte Änderungen im Editor gibt und der Benutzer versucht, die Seite zu schließen oder neu zu laden, zeigt der Browser jetzt eine Warnung an und fragt nach einer Bestätigung.
+
+### 👷 Geändert
+
+- Hintergrund des Footers für automatische Färbung geändert.
+- Logik zum Deaktivieren der Speichertaste im Editor geändert, um Änderungen in den Einstellungen zu berücksichtigen.
+
+### 🩹 Behoben
+
+- Ein Hydrationsfehler beim Abrufen empfohlener Produkte auf der Startseite behoben.
+- Ein Problem behoben, das die Speichertaste deaktivierte, obwohl der Benutzer die Startseite bearbeitet hatte.
+- Das `nuxt-security` Modul vorerst entfernt aufgrund von Problemen mit PayPal.
+- Ein Problem mit PayPal Express Checkout behoben, bei dem eine erneute Autorisierung der Zahlung erforderlich war.
+
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
