@@ -1,9 +1,6 @@
 /* eslint-disable max-lines */
-// Category will be used to sort at the next step
-// We can also add description if we need to add toltips or stuff like that
-// We could also send configuration here --- that will be the JSON
 
-import type { BlocksList } from "./types";
+import type { BlocksList } from './types';
 
 export const blocksLists: BlocksList = {
   'image-banner': {
@@ -433,7 +430,7 @@ export const blocksLists: BlocksList = {
                   "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
                 title: 'A New Listening Experience',
                 subtitle: 'Innovative technology meets modern fashion',
-                textAlignment: 'right',
+                textAlignment: 'left',
               },
               button: {
                 label: 'To our headphones',
@@ -445,7 +442,7 @@ export const blocksLists: BlocksList = {
                 tablet: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
                 mobile: 'https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif',
                 alt: 'Headphones',
-                imageAlignment: 'left',
+                imageAlignment: 'right',
               },
             },
           },
@@ -456,12 +453,12 @@ export const blocksLists: BlocksList = {
               text: {
                 htmlDescription:
                   "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
-                title: 'A New Listening Experience',
-                subtitle: 'Innovative technology meets modern fashion',
+                title: 'Entdecken Sie Technik und Stil',
+                subtitle: 'Innovative Technologie trifft moderne Fashion',
                 textAlignment: 'right',
               },
               button: {
-                label: 'To our headphones',
+                label: 'Zu unseren Kopfhörern',
                 link: '/gear/headphones-capybara_157',
                 variant: 'primary',
               },
@@ -510,14 +507,14 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 htmlDescription:
-                  "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
-                title: 'A New Listening Experience',
-                subtitle: 'Innovative technology meets modern fashion',
+                  "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
+                title: 'Entdecken Sie Technik und Stil',
+                subtitle: 'Innovative Technologie trifft moderne Fashion',
                 textAlignment: 'left',
               },
               button: {
-                label: 'To our headphones',
-                link: '/gear/headphones-capybara_157',
+                label: 'Zu unseren Kopfhörern',
+                link: '/technik/headphones-capybara_157',
                 variant: 'primary',
               },
               image: {
@@ -593,11 +590,11 @@ export const blocksLists: BlocksList = {
             name: 'ProductRecommendedProducts',
             options: {
               text: {
-                pretitle: 'Mehr als nur Technik',
-                title: 'Entdecken Sie unsere Modekollektion',
-                subtitle: 'Sportive Mode und Accessories für alle.',
+                pretitle: 'More than just technology',
+                title: 'Explore our fashion collection',
+                subtitle: 'Sportive fashion and accessoires for everybody.',
                 htmlDescription:
-                  "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>Zu unserer kompletten Kollektion.</a>",
+                  "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>",
               },
               categoryId: '49',
             },
@@ -619,7 +616,7 @@ export const blocksLists: BlocksList = {
       },
     ],
   },
-  'forms': {
+  forms: {
     category: 'forms',
     title: 'Forms',
     variations: [
@@ -650,15 +647,16 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 bgColor: '#f5f5f5',
-                title: 'Subscribe to our Newsletter',
-                htmlDescription: 'Be aware of upcoming sales and events. Receive gifts and special offers!',
+                title: 'Abonnieren Sie unseren Newsletter',
+                htmlDescription:
+                  'Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!',
               },
               input: {
                 displayNameInput: false,
                 nameIsRequired: false,
               },
               button: {
-                label: 'Subscribe To Newsletter',
+                label: 'Newsletter abonnieren',
               },
             },
           },
