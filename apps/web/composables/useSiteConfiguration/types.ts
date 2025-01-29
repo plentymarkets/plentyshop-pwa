@@ -18,7 +18,6 @@ export interface UseSiteConfigurationState {
 
 export type LoadGoogleFont = (font: string) => void;
 export type UpdateBlockSize = (size: string) => void;
-export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
 
@@ -41,3 +40,5 @@ export interface UseSiteConfiguration {
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
 }
+
+export type UseSiteConfigurationReturn = () => UseSiteConfiguration;
