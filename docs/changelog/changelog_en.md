@@ -25,6 +25,7 @@
 
 ### 🩹 Fixed
 
+- Accesibility issue on banner.
 - Fixed a hydration error when fetching recommended products on the homepage.
 - Fixed an issue that disabled the save button even though the user has edited the homepage template.
 - Removed the `nuxt-security` module for now due to issues with PayPal.
