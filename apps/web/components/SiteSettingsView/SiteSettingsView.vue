@@ -28,10 +28,18 @@
         </SfTooltip>
       </div>
 
-      <SfSelect v-model="selectedFont" size="lg" placeholder="Select a font" @change="loadGoogleFont(selectedFont)">
-        <option :value="undefined">Select a font</option>
-        <option v-for="(font, key) in fonts" :key="key" :value="font.value">{{ font.caption }}</option>
-      </SfSelect>
+      <Multiselect
+        v-model="selectedFont"
+        :options="fonts"
+        placeholder="Select a font"
+        label="value"
+        track-by="caption"
+        :allow-empty="false"
+        class="cursor-pointer"
+        select-label=""
+        deselect-label="Selected"
+        @select="loadGoogleFont(selectedFont.value)"
+      />
       <span class="typography-text-xs text-neutral-700">Choose one Google font for all texts</span>
     </UiAccordionItem>
 
@@ -108,33 +116,47 @@
           v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
           :key="key"
           type="button"
-          variant="tertiary"
-          class="!hover:bg-gray-100"
+          :variant="blocksSpacingSize === blockSize ? 'primary' : 'tertiary'"
+          class="!hover:bg-gray-100 uppercase"
+          @click="updateBlockSize(blocksSpacingSize)"
         >
           {{ blocksSpacingSize }}
         </UiButton>
       </div>
       <div class="px-4 py-3">
-        <span class="typography-text-xs text-neutral-700">Spacing between blocks: 0px</span>
+        <span class="typography-text-xs text-neutral-700">Spacing between blocks: {{ spacingInPx }}px</span>
       </div>
     </UiAccordionItem>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconClose, SfIconInfo, SfInput, SfSelect, SfTooltip } from '@storefront-ui/vue';
+import Multiselect from 'vue-multiselect';
+import 'vue-multiselect/dist/vue-multiselect.min.css';
+import { SfIconClose, SfIconInfo, SfInput, SfTooltip } from '@storefront-ui/vue';
 import fonts from '~/fonts/meta.json';
+import { _s, _m, _l, _xl } from '#tailwind-config/theme/spacing';
 
-const { drawerOpen, loadGoogleFont } = useSiteConfiguration();
-const runtimeConfig = useRuntimeConfig();
+const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSize, blockSize, selectedFont } =
+  useSiteConfiguration();
 
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
 const blocksSpacingOpen = ref(false);
 
-const blocksSpacingSizes = ref(['S', 'M', 'L', 'XL']);
+const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
 
-const selectedFont = ref(runtimeConfig.public.font);
-const primaryColor = ref(runtimeConfig.public.primaryColor);
-const secondaryColor = ref(runtimeConfig.public.secondaryColor);
+const spacingInPx = computed(() => {
+  if (!blockSize.value) return '0';
+
+  const sizeMap: Record<string, string> = {
+    s: _s,
+    m: _m,
+    l: _l,
+    xl: _xl,
+  };
+
+  const remValue = parseFloat(sizeMap[blockSize.value]);
+  return remValue * 16;
+});
 </script>
