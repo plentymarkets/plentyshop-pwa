@@ -2,7 +2,7 @@
   <div class="site-settings-view sticky top-[52px]">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
-      <UiButton square variant="customTertiary" size="sm" class="!p-0" @click="drawerOpen = false">
+      <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
       </UiButton>
     </header>
@@ -116,7 +116,7 @@
           v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
           :key="key"
           type="button"
-          :variant="blocksSpacingSize === blockSize ? 'customPrimary' : 'customTertiary'"
+          :variant="blocksSpacingSize === blockSize ? 'primary' : 'tertiary'"
           class="!hover:bg-gray-100 uppercase"
           @click="updateBlockSize(blocksSpacingSize)"
         >
