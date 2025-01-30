@@ -23,7 +23,7 @@ export const useRobots: UseRobotReturn = () => {
 
   /**
    * @description Function for setting robot for static page.
-   * @returns CategoriesPageMeta
+   * @returns SetRobotForStaticPage
    * @example
    * ``` ts
    * setRobotForStaticPage()
