@@ -38,10 +38,10 @@
         </button>
         <button
           class="self-start bg-[#062633] text-white px-2 py-1 rounded-md font-inter font-medium text-sm leading-5 flex items-center md:px-4 md:py-2 md:text-base md:leading-6"
-          :class="{ 'opacity-40 cursor-not-allowed': !isTouched }"
-          :disabled="!isTouched"
+          :class="{ 'opacity-40 cursor-not-allowed': !isTouched || settingsLoading }"
+          :disabled="!isTouched || settingsLoading"
           data-testid="edit-save-button"
-          @click="updatePageTemplate"
+          @click="save"
         >
           <template v-if="loading">
             <SfLoaderCircular class="animate-spin w-4 h-4 text-white mr-[5px] md:mr-[10px]" />
@@ -68,7 +68,14 @@ const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
-const { drawerOpen, openDrawerWithView, closeDrawer, settingsIsDirty } = useSiteConfiguration();
+const {
+  drawerOpen,
+  openDrawerWithView,
+  closeDrawer,
+  settingsIsDirty,
+  saveSettings,
+  loading: settingsLoading,
+} = useSiteConfiguration();
 const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
@@ -76,6 +83,16 @@ const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
 
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+
+const save = () => {
+  if (!isLocalTemplate.value && isEditingEnabled.value) {
+    updatePageTemplate();
+  }
+
+  if (settingsIsDirty.value) {
+    saveSettings();
+  }
+};
 
 const toggleSettingsDrawer = () => {
   drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');
