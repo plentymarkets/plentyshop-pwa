@@ -6,6 +6,7 @@
 
 - Added robots for static pages.
 - Adding saving functionality for site settings.
+- You can now add blocks on homepage from the blocks side nav!
 
 ### 👷 Changed
 
