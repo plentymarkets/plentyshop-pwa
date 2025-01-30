@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-
 const { data, getLegalTexts } = useLegalInformation();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
