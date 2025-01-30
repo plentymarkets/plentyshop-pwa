@@ -1,7 +1,12 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 export type DrawerView = 'settings' | 'blocks' | null;
 export type SelectedFont = { caption: string; value: string };
-export type ConfigurationSettings = { blockSize: string; selectedFont: SelectedFont };
+export type ConfigurationSettings = {
+  blockSize: string;
+  selectedFont: SelectedFont;
+  primaryColor: string;
+  secondaryColor: string;
+};
 
 export interface UseSiteConfigurationState {
   data: [];
@@ -22,6 +27,7 @@ export type UpdateBlockSize = (size: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
+export type SaveSettings = () => void;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
@@ -40,6 +46,7 @@ export interface UseSiteConfiguration {
   updatePrimaryColor: SetColorPalette;
   updateSecondaryColor: SetColorPalette;
   updateBlockSize: UpdateBlockSize;
+  saveSettings: SaveSettings;
   openDrawerWithView: (view: DrawerView) => void;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;

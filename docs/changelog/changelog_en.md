@@ -17,6 +17,7 @@
 - Added multiselect component that allows searching through the options.
 - Added preview functionality for block sizes.
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
+- Adding saving functionality for site settings.
 - You can now add blocks on homepage from the blocks side nav!
 
 ### 👷 Changed
