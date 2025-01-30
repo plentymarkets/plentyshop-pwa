@@ -27,7 +27,8 @@
 
 ### 🩹 Fixed
 
-- Fixed accesibility erros in edit mode.
+- Fixed an issue where page elements changed during navigation.
+- Fixed accessibility erros in edit mode.
 - Fixed a hydration error when fetching recommended products on the homepage.
 - Fixed an issue that disabled the save button even though the user has edited the homepage template.
 - Removed the `nuxt-security` module for now due to issues with PayPal.
