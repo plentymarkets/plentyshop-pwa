@@ -1,5 +1,20 @@
 # Changelog PlentyONE Shop
 
+# v1.x.x (2025-xx-xx)
+
+### New
+
+- Added robots for static pages.
+- Adding saving functionality for site settings.
+- You can now add blocks on homepage from the blocks side nav!
+
+### 👷 Changed
+
+### 🩹 Fixed
+
+- Fixed an issue where page elements changed during navigation.
+- Fixed accessibility erros in edit mode.
+
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 📙 Todo
@@ -27,7 +42,6 @@
 
 ### 🩹 Fixed
 
-- Fixed accesibility erros in edit mode.
 - Fixed a hydration error when fetching recommended products on the homepage.
 - Fixed an issue that disabled the save button even though the user has edited the homepage template.
 - Removed the `nuxt-security` module for now due to issues with PayPal.

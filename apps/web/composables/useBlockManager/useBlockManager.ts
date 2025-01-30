@@ -31,6 +31,7 @@ export const useBlockManager = () => {
 
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
@@ -42,11 +43,14 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+
     updatedBlocks.splice(position, 0, newBlock);
+
     data.value.blocks = updatedBlocks;
-    visiblePlaceholder.value = { index: null, position: null };
+
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
+
   const changeBlockPosition = (index: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newIndex = index + position;

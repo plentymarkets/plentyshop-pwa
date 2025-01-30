@@ -214,7 +214,17 @@ export class CheckoutPageObject extends PageObject {
   }
 
   payCreditCard() {
+    cy.intercept('/plentysystems/doAdditionalInformation')
+      .as('doAdditionalInformation')
+      .intercept('/plentysystems/doPreparePayment')
+      .as('doPreparePayment')
+      .intercept('/plentysystems/doCapturePayPalOrder')
+      .as('doCapturePayPalOrder')
+      .intercept('/plentysystems/getExecutePayPalOrder')
+      .as('getExecutePayPalOrder');
+
     cy.getByTestId('pay-creditcard-button').click();
+    cy.wait('@doAdditionalInformation').wait('@doPreparePayment').wait('@doCapturePayPalOrder').wait('@getExecutePayPalOrder');
     return this;
   }
 
