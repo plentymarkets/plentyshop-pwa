@@ -103,6 +103,8 @@
 - New styles for toolbar
 - New styles for blocks actions
 - Users can now move a block up or down in the block list.
+- - Added a new placeholder block component to showcase to the user where his block will go
+
 
 ### 👷 Changed
 
@@ -655,7 +657,6 @@ NPM_AUTH_TOKEN="<TOKEN>"
 - Added loading animations where applicable
 - Added empty block component for when there is no data in the json
 - Added a new text component for the homepage
-- Added a new placeholder block component to showcase to the user where his block will go
 
 ### Changed
 
