@@ -63,7 +63,6 @@ export default defineNuxtConfig({
       blockSize: 'm',
       primaryColor: '#062633',
       secondaryColor: '#31687d',
-      font: process.env.TEXT || 'Red Hat Text',
     },
   },
   modules: [
