@@ -15,17 +15,11 @@
 
         <OrDivider />
 
-        <template v-if="loadedConfig && isAvailable && !loginSubmit">
+        <template v-if="loadedConfig && isAvailable">
           <PayPalExpressButton class="mt-4" type="CartPreview" />
           <PayPalPayLaterBanner placement="cart" :amount="cartGetters.getTotal(cartGetters.getTotals(cart))" />
+          <OrDivider />
         </template>
-
-        <template v-else>
-          <SkeletonsPaypalButton />
-          <SkeletonsPaypalButton class="mt-2" />
-        </template>
-
-        <OrDivider class="mt-4" />
 
         <form :class="{ 'mt-4': isAvailable }" @submit.prevent="loginUser">
           <h2 class="font-bold text-lg">{{ t('loginFastCheckout') }}</h2>
