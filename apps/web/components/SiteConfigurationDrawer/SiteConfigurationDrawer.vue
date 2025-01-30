@@ -20,12 +20,13 @@
 import type { SfDrawerPlacement } from '@storefront-ui/vue';
 import { SfDrawer } from '@storefront-ui/vue';
 
-const placement = ref<`${SfDrawerPlacement}`>('left');
+const placement = ref<`${SfDrawerPlacement}`>('right');
 
 const { drawerOpen, drawerView } = useSiteConfiguration();
 
 const getDrawerView = (view: string) => {
   if (view === 'settings') return resolveComponent('SiteSettingsView');
   if (view === 'blocks') return resolveComponent('BlocksNavigation');
+  if (view === 'editBlock') return resolveComponent('BlockEditView');
 };
 </script>

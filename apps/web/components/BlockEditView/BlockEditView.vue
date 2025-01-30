@@ -1,0 +1,24 @@
+<template>
+  <div class="site-settings-view sticky top-[52px]">
+    <header class="flex items-center justify-between px-4 py-5 border-b">
+      <div class="flex items-center text-xl font-bold">Block Editing</div>
+      <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">
+        <SfIconClose />
+      </UiButton>
+    </header>
+
+    <component :is="getBlock(blockType)" v-if="blockType" :id="activeId" />
+  </div>
+</template>
+
+<script setup lang="ts">
+import { SfIconClose } from '@storefront-ui/vue';
+const blockType = ref('slider');
+const { drawerOpen } = useSiteConfiguration();
+const { activeId } = useBlocks();
+
+const getBlock = (view: string) => {
+  if (view === 'slider') return resolveComponent('BlockSlider');
+  // if (view === 'recommendedProducts') return resolveComponent('BlockRecommendedProducts');
+};
+</script>

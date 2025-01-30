@@ -9,6 +9,7 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
+import { SetActive } from '~/composables/useBlocks';
 
 /**
  * @description Composable for managing site configuration.
@@ -23,6 +24,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
+    placement: 'left',
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
@@ -95,9 +97,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   );
 
-  const openDrawerWithView = (view: DrawerView) => {
+  const openDrawerWithView = (view: DrawerView, id: number = 0) => {
+    const { setActive } = useBlocks();
     state.value.drawerView = view;
     state.value.drawerOpen = true;
+    setActive(id);
+
+    state.value.placement = view === 'editBlock' ? 'right' : 'left';
   };
 
   const closeDrawer = () => {
