@@ -80,7 +80,7 @@ const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
-const isLocalTemplate = computed(() => typeof homepageCategoryId === 'number');
+const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
 
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 
