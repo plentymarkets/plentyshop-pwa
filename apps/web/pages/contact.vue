@@ -147,6 +147,7 @@ const localePath = useLocalePath();
 const turnstileSiteKey = runtimeConfig.public?.turnstileSiteKey ?? '';
 const turnstileElement = ref();
 const { send } = useNotification();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 const validationSchema = toTypedSchema(
   object({
@@ -215,4 +216,7 @@ const sendContact = async () => {
 };
 
 const onSubmit = handleSubmit(() => sendContact());
+
+await getRobots();
+setRobotForStaticPage('ContactPage');
 </script>
