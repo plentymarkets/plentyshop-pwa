@@ -19,6 +19,7 @@
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
+- You can now add blocks on homepage from the blocks side nav!
 
 ### 👷 Changed
 

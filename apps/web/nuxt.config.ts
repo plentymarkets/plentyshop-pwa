@@ -63,7 +63,6 @@ export default defineNuxtConfig({
       blockSize: 'm',
       primaryColor: '#062633',
       secondaryColor: '#31687d',
-      showBlocksNavigation: process.env.SHOW_BLOCKS_NAVIGATION === '1',
     },
   },
   modules: [
