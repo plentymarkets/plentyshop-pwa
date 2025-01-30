@@ -1,5 +1,5 @@
-import { ref, computed, onMounted } from 'vue';
 import { deepEqual } from '~/utils/jsonHelper';
+import { blocksLists } from '~/blocks/blocksLists';
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
@@ -7,7 +7,8 @@ const isEmptyBlock = (block: Block): boolean => {
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
 
-export function useBlockManager() {
+export const useBlockManager = () => {
+  const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
 
@@ -21,6 +22,41 @@ export function useBlockManager() {
 
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+
+  const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
+    const variationsInCategory = blocksLists[category];
+    const variationToAdd = variationsInCategory.variations[variationIndex];
+    const variationTemplate = variationToAdd.template;
+
+    return lang === 'de' ? variationTemplate.de : variationTemplate.en;
+  };
+
+  const addNewBlock = (category: string, variationIndex: number, position: number) => {
+    const updatedBlocks = [...data.value.blocks];
+    const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+
+    updatedBlocks.splice(position, 0, newBlock);
+
+    data.value.blocks = updatedBlocks;
+
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+
+  const changeBlockPosition = (index: number, position: number) => {
+    const updatedBlocks = [...data.value.blocks];
+    const newIndex = index + position;
+
+    if (newIndex < 0 || newIndex >= updatedBlocks.length) return;
+
+    const blockToChange = updatedBlocks.splice(index, 1)[0];
+    updatedBlocks.splice(newIndex, 0, blockToChange);
+
+    data.value.blocks = updatedBlocks;
+
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+  };
+
+  const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
   onMounted(() => {
     const config = useRuntimeConfig().public;
@@ -70,5 +106,8 @@ export function useBlockManager() {
     handleEdit,
     deleteBlock,
     updateBlock,
+    changeBlockPosition,
+    isLastBlock,
+    addNewBlock,
   };
-}
+};
