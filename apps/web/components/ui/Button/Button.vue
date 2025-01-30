@@ -9,6 +9,7 @@
       variantClasses[variant],
     ]"
     data-testid="button"
+    aria-label="button"
   >
     <slot v-if="$slots.prefix" name="prefix" />
     <slot />
