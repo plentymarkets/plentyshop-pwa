@@ -6,6 +6,7 @@ export interface Cookie {
   Provider: string;
   Status: string;
   PrivacyPolicy: string;
+  cookieNames?: string[];
 }
 export interface CookieGroup {
   id?: number;
