@@ -1,5 +1,5 @@
 import { deepEqual } from '~/utils/jsonHelper';
-import { blocksLists } from '~/components/BlocksNavigationList/blocksLists';
+import { blocksLists } from '~/blocks/blocksLists';
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;

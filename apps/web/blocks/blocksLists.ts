@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 
-import type { BlocksList } from './types';
+import type { BlocksList } from '../components/BlocksNavigationList/types';
 
 export const blocksLists: BlocksList = {
   'image-banner': {

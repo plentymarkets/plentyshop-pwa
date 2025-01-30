@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { blocksLists } from './blocksLists';
+import { blocksLists } from '../../blocks/blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { addNewBlock } = useBlockManager();
