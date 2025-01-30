@@ -6,7 +6,7 @@
       <UiButton
         type="button"
         class="relative ml-4"
-        variant="customTertiary"
+        variant="tertiary"
         aria-label="Open configuration drawer"
         square
         @click="toggleSettingsDrawer"
@@ -80,7 +80,7 @@ const { updatePageTemplate } = useUpdatePageTemplate();
 
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 
-const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
+const isLocalTemplate = computed(() => typeof homepageCategoryId === 'number');
 
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
 
