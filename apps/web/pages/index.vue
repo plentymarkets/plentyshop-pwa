@@ -45,7 +45,7 @@ const {
   updateBlock,
   changeBlockPosition,
   isLastBlock,
-  togglePlaceholder
+  togglePlaceholder,
 } = useBlockManager();
 
 const runtimeConfig = useRuntimeConfig();
