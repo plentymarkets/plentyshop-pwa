@@ -43,11 +43,9 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-
     updatedBlocks.splice(position, 0, newBlock);
-
     data.value.blocks = updatedBlocks;
-
+    visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
