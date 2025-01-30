@@ -9,8 +9,6 @@
 
 ### 👷 Changed
 
-
-
 ### 🩹 Fixed
 
 - Fixed an issue where page elements changed during navigation.
