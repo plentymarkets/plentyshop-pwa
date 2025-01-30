@@ -39,17 +39,6 @@ export default {
         body: [`${fontFamilyText}`, ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        custom: {
-          primary: {
-            '100': 'rgb(var(--colors-3-primary-100) / <alpha-value>)',
-            '200': 'rgb(var(--colors-3-primary-200) / <alpha-value>)',
-            '500': 'rgb(var(--colors-3-primary-500) / <alpha-value>)',
-            '600': 'rgb(var(--colors-3-primary-600) / <alpha-value>)',
-            '700': 'rgb(var(--colors-3-primary-700) / <alpha-value>)',
-            '800': 'rgb(var(--colors-3-primary-800) / <alpha-value>)',
-            '900': 'rgb(var(--colors-3-primary-900) / <alpha-value>)',
-          },
-        },
         primary: {
           '50': 'rgb(var(--colors-2-primary-50) / <alpha-value>)',
           '100': 'rgb(var(--colors-2-primary-100) / <alpha-value>)',
