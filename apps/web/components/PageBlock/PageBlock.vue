@@ -81,8 +81,7 @@ interface Props {
   changeBlockPosition: (index: number, position: number) => void;
   isLastBlock: (index: number) => boolean;
   handleEdit: (index: number) => void;
-  deleteBlock: (index: number) => void;
-}
+  deleteBlock: (index: number) => void;}
 
 defineProps<Props>();
 

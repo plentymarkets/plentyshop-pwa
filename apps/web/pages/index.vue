@@ -43,6 +43,9 @@ const {
   handleEdit,
   deleteBlock,
   updateBlock,
+  changeBlockPosition,
+  isLastBlock,
+  togglePlaceholder
 } = useBlockManager();
 
 const runtimeConfig = useRuntimeConfig();
@@ -53,21 +56,11 @@ const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
-const { changeBlockPosition, isLastBlock } = useBlockManager();
-
 const openBlockList = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
-
+  togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
   updateNewBlockPosition(insertIndex);
   openDrawerWithView('blocks');
-const { settingsIsDirty, openDrawerWithView } = useSiteConfiguration();
-const { togglePlaceholder } = useBlockManager();
-const addNewBlock = (index: number, position: number) => {
-  if (showBlockList.value) {
-    openDrawerWithView('blocks');
-  }
-  togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
-  isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 };
 
 const getComponent = (name: string) => {

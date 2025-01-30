@@ -6,9 +6,6 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-
-export const useBlockManager = () => {
-  const { $i18n } = useNuxtApp();
 const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
   index: null,
   position: null,
@@ -19,7 +16,8 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
   }
   visiblePlaceholder.value = { index, position };
 };
-export function useBlockManager() {
+export const useBlockManager = () => {
+  const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
 
@@ -33,7 +31,6 @@ export function useBlockManager() {
 
   const isPreview = ref(false);
   const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
-
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
@@ -45,14 +42,11 @@ export function useBlockManager() {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-
     updatedBlocks.splice(position, 0, newBlock);
-
     data.value.blocks = updatedBlocks;
-
+    visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
-
   const changeBlockPosition = (index: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newIndex = index + position;
