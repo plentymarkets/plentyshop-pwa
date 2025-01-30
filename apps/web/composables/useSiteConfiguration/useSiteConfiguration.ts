@@ -5,6 +5,7 @@ import type {
   SetTailwindColorProperties,
   SetColorPalette,
   DrawerView,
+  SaveSettings,
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
@@ -14,7 +15,7 @@ import { getPaletteFromColor } from '~/utils/tailwindHelper';
  * @returns UseSiteConfigurationReturn
  * @example
  * ``` ts
- * const { data, drawerOpen, loading, currentFont, drawerView } = UseSiteConfiguration();
+ * const { data, drawerOpen, loading, currentFont, drawerView, settingsIsDirty, saveSettings } = UseSiteConfiguration();
  * ```
  */
 export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
@@ -22,15 +23,18 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
+    newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     drawerView: 'settings',
-    blockSize: 'm',
+    blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
-      blockSize: 'm',
+      blockSize: useRuntimeConfig().public.blockSize,
       selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
+      primaryColor: useRuntimeConfig().public.primaryColor,
+      secondaryColor: useRuntimeConfig().public.secondaryColor,
     },
   }));
 
@@ -104,21 +108,67 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     state.value.blockSize = size;
   };
 
+  const updateNewBlockPosition = (position: number) => {
+    state.value.newBlockPosition = position;
+  };
+
   const settingsIsDirty = computed(() => {
     return (
       state.value.blockSize !== state.value.initialData.blockSize ||
+      state.value.primaryColor !== state.value.initialData.primaryColor ||
+      state.value.secondaryColor !== state.value.initialData.secondaryColor ||
       JSON.stringify(state.value.selectedFont) !== JSON.stringify(state.value.initialData.selectedFont)
     );
   });
+
+  const saveSettings: SaveSettings = async () => {
+    if (!settingsIsDirty.value) {
+      return;
+    }
+
+    state.value.loading = true;
+
+    const settings = [
+      {
+        key: 'blockSize',
+        value: state.value.blockSize,
+      },
+      {
+        key: 'font',
+        value: state.value.selectedFont.value,
+      },
+      {
+        key: 'primary',
+        value: state.value.primaryColor,
+      },
+      {
+        key: 'secondary',
+        value: state.value.secondaryColor,
+      },
+    ];
+
+    await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
+
+    state.value.initialData = {
+      blockSize: state.value.blockSize,
+      selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
+      primaryColor: state.value.primaryColor,
+      secondaryColor: state.value.secondaryColor,
+    };
+
+    state.value.loading = false;
+  };
 
   return {
     updatePrimaryColor,
     updateSecondaryColor,
     ...toRefs(state.value),
+    updateNewBlockPosition,
     loadGoogleFont,
     updateBlockSize,
     openDrawerWithView,
     closeDrawer,
     settingsIsDirty,
+    saveSettings,
   };
 };

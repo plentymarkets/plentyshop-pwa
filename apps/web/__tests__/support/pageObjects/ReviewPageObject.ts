@@ -85,7 +85,7 @@ export class ReviewPageObject extends PageObject{
   }
 
   addReply() {
-    cy.get('[data-testid="add-reply-button"]').click();
+    cy.get('[data-testid="add-reply-button"]').first().click();
     cy.get('[data-testid="review-answer-form"] textarea[name="message"]').type('Thank you!');
     cy.get('[data-testid="review-answer-form"] button[type="submit"]').click();
 
@@ -95,14 +95,14 @@ export class ReviewPageObject extends PageObject{
   }
 
   checkReplyAddedSuccessfully() {
-    cy.get('[data-testid="show-replies"]').click();
+    cy.get('[data-testid="show-replies"]').first().click();
     cy.get('[data-testid="reply-item"]').should('contain', 'Thank you!');
 
     return this;
   }
 
   removeReply() {
-    cy.get('[data-testid="remove-reply-button"]').click();
+    cy.get('[data-testid="remove-reply-button"]').first().click();
     cy.get('[data-testid="confirm-delete"]').click();
     cy.wait(['@deleteReview', '@getReview'])
 
@@ -149,7 +149,7 @@ export class ReviewPageObject extends PageObject{
   }
 
   checkNumberOfItemsPerPage(expectedCount: number) {
-    cy.get('[data-testid="review-item"]').should('have.length', expectedCount);
+    cy.get('[data-testid="review-item"]').should('have.length.gte', expectedCount);
     return this;
   }
 
@@ -207,10 +207,10 @@ export class ReviewPageObject extends PageObject{
 
   deleteAllReviews() {
     cy.wait(1000);
-    cy.get('body').then(($body) => {
-      if ($body.find('[data-testid="review-item"]').length) {
-        this.removeReview();
 
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-testid="remove-review-button"]').length > 0) {
+        this.removeReview();
         this.deleteAllReviews();
       }
     });

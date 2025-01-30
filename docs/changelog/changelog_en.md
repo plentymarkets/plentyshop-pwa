@@ -1,11 +1,21 @@
 # Changelog PlentyONE Shop
 
-# vx.x.x (202x-xx-xx)
+# v1.x.x (2025-xx-xx)
 
 ### New
 
+- Added robots for static pages.
+- Adding saving functionality for site settings.
+- You can now add blocks on homepage from the blocks side nav!
 - Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added the logic to remove cookies after revoking consent.
+
+### 👷 Changed
+
+### 🩹 Fixed
+
+- Fixed an issue where page elements changed during navigation.
+- Fixed accessibility erros in edit mode.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
