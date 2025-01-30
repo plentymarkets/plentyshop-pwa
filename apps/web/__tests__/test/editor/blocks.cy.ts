@@ -11,7 +11,7 @@ describe('Blocks', () => {
     it('should ensure correct block logic and template', () => {
         editor.buttonsExistWithGroupClasses();
         editor.deleteBlock();
-        // This needs to be RECHED
+        // This needs to be Recheck
         // editor.addBlockTop();
         // editor.addBlockBottom();
     });
