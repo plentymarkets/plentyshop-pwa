@@ -52,17 +52,14 @@ const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteC
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
-const showBlockList = ref(runtimeConfig.public.showBlocksNavigation);
 
 const { changeBlockPosition, isLastBlock } = useBlockManager();
 
 const openBlockList = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
 
-  if (showBlockList.value) {
-    updateNewBlockPosition(insertIndex);
-    openDrawerWithView('blocks');
-  }
+  updateNewBlockPosition(insertIndex);
+  openDrawerWithView('blocks');
 };
 
 const getComponent = (name: string) => {

@@ -62,7 +62,6 @@ export default defineNuxtConfig({
       configId: process.env.CONFIG_ID || '',
       isHero: process.env.IS_HERO === 'true',
       font: process.env.TEXT || 'Red Hat Text',
-      showBlocksNavigation: process.env.SHOW_BLOCKS_NAVIGATION === '1',
     },
   },
   modules: [

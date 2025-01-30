@@ -27,7 +27,7 @@ export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
-  newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>
+  newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;
   secondaryColor: Readonly<Ref<UseSiteConfigurationState['secondaryColor']>>;
