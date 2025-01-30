@@ -52,6 +52,7 @@ const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteC
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { getRobots, setRobotForStaticPage } = useRobots();
 
 const { changeBlockPosition, isLastBlock } = useBlockManager();
 
@@ -71,6 +72,9 @@ const getComponent = (name: string) => {
     return isHero.value ? resolveComponent('UiHeroCarousel') : resolveComponent('UiBlazeCarousel');
   }
 };
+
+await getRobots();
+setRobotForStaticPage('Homepage');
 
 onMounted(() => {
   isEditingEnabled.value = false;
