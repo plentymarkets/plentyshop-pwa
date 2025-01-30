@@ -4,7 +4,6 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
-import { securityConfiguration } from './configuration/security.config';
 
 export default defineNuxtConfig({
   telemetry: false,
@@ -13,7 +12,6 @@ export default defineNuxtConfig({
     typeCheck: true,
   },
   app: appConfiguration,
-  security: securityConfiguration,
   experimental: {
     asyncContext: true,
   },
@@ -69,7 +67,6 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    'nuxt-security',
     '@nuxt/eslint',
     '@nuxt/image',
     '@nuxt/test-utils/module',
