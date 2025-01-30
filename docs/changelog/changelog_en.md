@@ -1,13 +1,13 @@
 # Changelog PlentyONE Shop
 
-## v1.x.x (2025-01-23)
+## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### 📙 Todo
 
-- We moved our packages `shop-api` and `tailwind-colors` from github's registry to npm's registry.
-  We no loger require a github token to access these packages.
-  - run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `.yarnrc.yml`.
-  - remove `NPM_AUTH_TOKEN` from your apps/web/.env file.
+- We moved our packages `shop-api` and `tailwind-colors` from GitHub's registry to npm's registry.
+  We no longer require a GitHub token to access these packages.
+  - Run `yarn setup:unix` or `yarn setup:windows` and press y to remove the `.yarnrc.yml`.
+  - Remove `NPM_AUTH_TOKEN` from your `apps/web/.env` file.
 
 ### New
 
@@ -15,7 +15,7 @@
 - Added site configuration drawer.
 - Added blocks drawer.
 - Added multiselect component that allows searching through the options.
-- Added preview functionality for blocks sizes.
+- Added preview functionality for block sizes.
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 - Added robots for static pages.
 
@@ -30,6 +30,7 @@
 - Fixed an issue that disabled the save button even though the user has edited the homepage template.
 - Removed the `nuxt-security` module for now due to issues with PayPal.
 - Fixed an issue with PayPal Express Checkout where it would require you to reauthorize the payment.
+- Fixed an accesibility issue on banner.
 
 ## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
