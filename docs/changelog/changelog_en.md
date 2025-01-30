@@ -107,7 +107,6 @@
 - Users can now move a block up or down in the block list.
 - Added a new placeholder block component to showcase to the user where his block will go
 
-
 ### 👷 Changed
 
 - Cookie handling for PayPal now relies on a functional cookie requiring user consent ([see docs for details](https://pwa-docs.plentymarkets.com/guide/how-to/cookie#read-and-react-to-a-registered-cookie)). Users will see a message prompting consent when functionality is unavailable due to missing consent.
