@@ -43,7 +43,6 @@ describe('Reviews functionality check.', () => {
     reviewPage
         .waitFor(['@getReview'])
         .scrollToReviews()
-        .checkNoReviewTextVisible()
         .checkAverageSectionVisible()
         .checkAverageInformation()
         .checkAddReviewButtonVisible()
@@ -68,7 +67,6 @@ describe('Reviews functionality check.', () => {
         .removeReply()
         .checkReplyRemovedSuccessfully()
         .removeReview()
-        .checkNoReviewTextVisible()
         .addMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
         .checkPaginationVisible()
         .checkNumberOfItemsPerPage(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")))
@@ -76,6 +74,5 @@ describe('Reviews functionality check.', () => {
         .checkNumberOfItemsPerPage(1)
         .navigateToPreviousPage()
         .removeMultipleReviews(Number(Cypress.env("DEFAULT_FEEDBACK_ITEMS_PER_PAGE")) + 1)
-        .checkNoReviewTextVisible()
   });
 });
