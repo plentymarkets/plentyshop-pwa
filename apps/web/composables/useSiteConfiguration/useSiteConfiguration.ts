@@ -9,7 +9,6 @@ import type {
 } from '~/composables/useSiteConfiguration/types';
 import type { TailwindPalette } from '~/utils/tailwindHelper';
 import { getPaletteFromColor } from '~/utils/tailwindHelper';
-import { SetActive } from '~/composables/useBlocks';
 
 /**
  * @description Composable for managing site configuration.

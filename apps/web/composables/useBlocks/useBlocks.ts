@@ -1,4 +1,4 @@
-import { UseBlocksReturn, UseBlocksState, Blocks, SetActive } from '~/composables/useBlocks/types';
+import type { UseBlocksReturn, UseBlocksState, Blocks, SetActive } from '~/composables/useBlocks/types';
 
 const blocks = {
   0: {
@@ -41,7 +41,6 @@ export const useBlocks: UseBlocksReturn = () => {
   }));
 
   const setActive: SetActive = (id: number) => {
-    console.log('id: ', id);
     state.value.activeId = id;
   };
 
