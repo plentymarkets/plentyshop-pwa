@@ -74,7 +74,7 @@ export class EditorObject extends PageObject {
   }
 
   get addBlockButton(){
-    return cy.getByTestId('block-add-image-banner-0');
+    return cy.getByTestId('block-add-image-with-text-0');
   }
 
   togglePreviewMode() {
@@ -181,17 +181,17 @@ export class EditorObject extends PageObject {
       this.recommendedProducts.should('exist');
    }
 
-  //  switchLanguage() {
-  //   cy.intercept('/plentysystems/getCart').as('getCart');
-  //   cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
-  //   cy.intercept('/plentysystems/getFacet').as('getFacet');
+   switchLanguage() {
+    cy.intercept('/plentysystems/getCart').as('getCart');
+    cy.intercept('/plentysystems/getCategoryTree').as('getCategoryTree');
+    cy.intercept('/plentysystems/getFacet').as('getFacet');
 
-  //   this.editPreviewButton.click();
-  //   this.languageSwitcher.should('exist');
-  //   this.languageSwitcher.select('de');
-  //   cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
-  //   this.title.first().should('have.text', 'Ihr Sound');
-  // }
+    this.editPreviewButton.click();
+    this.languageSwitcher.should('exist');
+    this.languageSwitcher.select('de');
+    cy.wait(['@getCart', '@getCategoryTree', '@getFacet']);
+    this.title.first().should('have.text', 'Ihr Sound');
+  }
 
   addBlockTop() {
     this.blockWrappers.then((initialBlocks) => {
@@ -199,7 +199,7 @@ export class EditorObject extends PageObject {
       this.topBlockButton.invoke('removeClass', 'opacity-0');
       this.topBlockButton.first().should('exist').click();
       cy.wait(1000);
-      this.addBlockButton.click();
+      this.addBlockButton.should('exist').click();
       cy.wait(1000);
       this.blockWrappers.should('have.length', initialLength + 1);
     });
