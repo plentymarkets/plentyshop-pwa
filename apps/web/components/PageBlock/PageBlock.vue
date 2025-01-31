@@ -1,5 +1,5 @@
 <template>
-  <ui-block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'top'" />
+  <ui-block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'top' && drawerOpen" />
   <div
     :class="[
       'relative group',
@@ -59,7 +59,7 @@
       <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
-  <ui-block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'bottom'" />
+  <ui-block-placeholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'bottom' && drawerOpen" />
 </template>
 
 <script lang="ts" setup>
@@ -87,4 +87,5 @@ defineProps<Props>();
 
 const { blockSize } = useSiteConfiguration();
 const { visiblePlaceholder } = useBlockManager();
+const { drawerOpen } = useSiteConfiguration();
 </script>
