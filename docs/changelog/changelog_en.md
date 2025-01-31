@@ -9,6 +9,7 @@
 - You can now add blocks on homepage from the blocks side nav!
 - Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added the logic to remove cookies after revoking consent.
+- Added a new placeholder block component to showcase to the user where his block will go
 
 ### 👷 Changed
 
