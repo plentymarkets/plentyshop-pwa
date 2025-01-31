@@ -6,7 +6,13 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-
+const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
+  index: null,
+  position: null,
+});
+const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
+  visiblePlaceholder.value = { index, position };
+};
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
@@ -34,11 +40,9 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-
     updatedBlocks.splice(position, 0, newBlock);
-
     data.value.blocks = updatedBlocks;
-
+    visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
@@ -109,5 +113,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastBlock,
     addNewBlock,
+    visiblePlaceholder,
+    togglePlaceholder,
   };
 };

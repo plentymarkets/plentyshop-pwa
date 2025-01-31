@@ -1,4 +1,5 @@
 <template>
+  <UiBlockPlaceholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'top'" />
   <div
     :class="[
       'relative group',
@@ -58,6 +59,7 @@
       <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
+  <UiBlockPlaceholder v-if="visiblePlaceholder.index === index && visiblePlaceholder.position === 'bottom'" />
 </template>
 
 <script lang="ts" setup>
@@ -84,4 +86,5 @@ interface Props {
 defineProps<Props>();
 
 const { blockSize } = useSiteConfiguration();
+const { visiblePlaceholder } = useBlockManager();
 </script>
