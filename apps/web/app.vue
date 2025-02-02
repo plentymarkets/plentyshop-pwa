@@ -34,7 +34,6 @@ const { currentFont } = useSiteConfiguration();
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-
 const { drawerOpen } = useSiteConfiguration();
 
 onMounted(() => {

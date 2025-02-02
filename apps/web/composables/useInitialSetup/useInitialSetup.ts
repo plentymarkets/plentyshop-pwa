@@ -1,6 +1,7 @@
 import type { Cart, SessionResult, ApiError } from '@plentymarkets/shop-api';
 
 import type { SetInitialData, UseInitialSetupReturn } from './types';
+// import { SystemConfiguration } from '../../build/configurator/SystemConfiguration';
 
 /** Function for getting current customer/cart data from session
  * @return SetInitialData
@@ -37,16 +38,20 @@ const setInitialData: SetInitialData = async () => {
  * setInitialDataSSR();
  * ```
  */
+// const systemConfiguration = new SystemConfiguration();
+
 const setInitialDataSSR: SetInitialData = async () => {
   const { setUser } = useCustomer();
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
-
   cartLoading.value = true;
-
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
+    const { updatePrimaryColor, updateSecondaryColor } = useSiteConfiguration();
+    updatePrimaryColor('#062633');
+    updateSecondaryColor('#31687d');
+
     if (data.value?.data) {
       setUser(data.value.data.session as SessionResult);
       setCart(data.value.data.session?.basket as Cart);
