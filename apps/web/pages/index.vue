@@ -2,7 +2,7 @@
   <div>
     <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
     <Editor
-      v-if="isEditing && currentBlockIndex !== null"
+      v-if="isEditing && currentBlock && currentBlockIndex !== null"
       :index="currentBlockIndex"
       :block="currentBlock"
       @update="updateBlock"

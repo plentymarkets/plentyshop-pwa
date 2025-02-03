@@ -18,7 +18,7 @@ export const useBlockManager = () => {
   const { data, initialBlocks } = useHomepage();
   const { isEditing, isEditingEnabled } = useEditor();
 
-  const currentBlock = ref<Block | null>(null);
+  const currentBlock = ref<Block>();
   const currentBlockIndex = ref<number | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
