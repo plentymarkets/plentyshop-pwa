@@ -25,15 +25,18 @@ const main = async () => {
     'FAVICON',
   ];
 
-  const config = configKeys.reduce((configAccumulator, key) => {
-    configAccumulator[key] = process.env[key];
-    return configAccumulator;
-  }, {} as Record<string, string | undefined>);
+  const config = configKeys.reduce(
+    (configAccumulator, key) => {
+      configAccumulator[key] = process.env[key];
+      return configAccumulator;
+    },
+    {} as Record<string, string | undefined>,
+  );
 
   if (process.env.FETCH_REMOTE_CONFIG === '1') {
     BuildLoggerInstance.info('Configuring application...');
     const systemConfiguration = new SystemConfiguration(config);
-    
+
     const dataWriter = new DataToFileWriter(BuildLoggerInstance);
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
     appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());

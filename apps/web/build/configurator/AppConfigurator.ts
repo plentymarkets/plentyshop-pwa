@@ -79,7 +79,9 @@ export class AppConfigurator {
   }
 
   generateLanguageFiles = (languages: Languages): void => {
-    this.logger.info(`Generating language files with languages ${languages.activated} and default language ${languages.default}...`);
+    this.logger.info(
+      `Generating language files with languages ${languages.activated} and default language ${languages.default}...`,
+    );
 
     const languageFilesPath = path.resolve(__dirname, '../../lang');
     const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
