@@ -12,7 +12,7 @@
     "setup:unix": "chmod +x yarn.sh && ./yarn.sh && yarn build",
     "setup:windows": "powershell -Command Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process; ./yarn.ps1 && yarn build",
     "turbo:disable-telemetry": "turbo telemetry disable",
-    "build": "yarn turbo:disable-telemetry && turbo run build",
+    "build": "npm run turbo:disable-telemetry && turbo run build",
     "build:analyze": "yarn turbo:disable-telemetry && turbo run build:analyze",
     "dev": "yarn turbo:disable-telemetry && turbo run dev",
     "start": "yarn turbo:disable-telemetry && turbo run start",
@@ -51,7 +51,7 @@
     "@commitlint/cli": "^17.8.1",
     "@commitlint/config-conventional": "^17.8.1",
     "@lhci/cli": "^0.14.0",
-    "@nuxt/test-utils": "^3.13.1",
+    "@nuxt/test-utils": "^3.15.4",
     "@nuxtjs/turnstile": "^0.8.0",
     "@paypal/paypal-js": "8.1.0",
     "@types/uuid": "^9.0.8",
@@ -65,23 +65,27 @@
     "husky": "^8.0.3",
     "is-ci": "^3.0.1",
     "lint-staged": "^14.0.1",
-    "nuxt": "^3.13.2",
+    "nuxt": "^3.15.4",
     "nuxt-security": "2.1.5",
     "nuxt-viewport": "^2.1.5",
     "playwright-core": "^1.45.1",
     "prettier": "^3.3.2",
     "rimraf": "^5.0.7",
-    "rollup": "^3.29.4",
+    "rollup": "^4.34.1",
     "turbo": "1.13.4",
-    "typescript": "5.6.2",
-    "vitest": "^2.1.1",
+    "typescript": "5.7.3",
+    "vitest": "^3.0.5",
     "wait-on": "^7.2.0"
   },
+  "overrides": {
+    "@vue-storefront/eslint-config": {
+      "prettier": "3.3.2"
+    }
+  },
   "engines": {
-    "yarn": ">=3.6.1",
     "node": ">=20.0.0"
   },
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "npm@10.8.1",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog",
