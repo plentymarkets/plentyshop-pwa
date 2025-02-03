@@ -23,20 +23,20 @@
     <div>
       <label for="image-desktop" class="block text-sm font-medium text-gray-700">Image (Desktop)</label>
       <input
+        type="text"
         id="image-desktop"
-        name="image-desktop"
         v-model="imageDesktop"
-        rows="3"
+        name="image-desktop"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
     <div>
       <label for="image-tablet" class="block text-sm font-medium text-gray-700">Image (Tablet)</label>
       <input
+        type="text"
         id="image-tablet"
-        name="image-tablet"
         v-model="imageTablet"
-        rows="3"
+        name="image-tablet"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
@@ -45,9 +45,8 @@
       <input
         type="text"
         id="image-mobile"
-        name="image-mobile"
         v-model="imageMobile"
-        rows="3"
+        name="image-mobile"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
@@ -56,8 +55,8 @@
       <input
         type="text"
         id="button-label"
-        name="button-label"
         v-model="buttonLabel"
+        name="button-label"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
@@ -66,8 +65,8 @@
       <input
         type="text"
         id="button-link"
-        name="button-link"
         v-model="buttonLink"
+        name="button-link"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
     </div>
@@ -75,8 +74,8 @@
       <label for="html-description" class="block text-sm font-medium text-gray-700">HTML Description</label>
       <textarea
         id="html-description"
-        name="html-description"
         v-model="htmlDescription"
+        name="html-description"
         rows="3"
         class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
       />
@@ -90,6 +89,7 @@
             name="text-align"
             type="radio"
             value="left"
+            v-model="textAlign"
             class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
           />
           <label for="align-left" class="ml-3 block text-sm font-medium text-gray-700">Left</label>
@@ -100,6 +100,7 @@
             name="text-align"
             type="radio"
             value="center"
+            v-model="textAlign"
             class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
           />
           <label for="align-center" class="ml-3 block text-sm font-medium text-gray-700">Center</label>
@@ -110,6 +111,7 @@
             name="text-align"
             type="radio"
             value="right"
+            v-model="textAlign"
             class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
           />
           <label for="align-right" class="ml-3 block text-sm font-medium text-gray-700">Right</label>
@@ -120,12 +122,13 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue';
 import type { ImageTextProps } from './types';
 
 const { data } = useHomepage();
-const uiImageTextBlock = data.value.blocks.find((block) => block.name === 'UiImageText');
+const uiImageTextBlock = ref(data.value.blocks.find((block) => block.name === 'UiImageText'));
 
-const settings = uiImageTextBlock?.options as ImageTextProps;
+const settings = uiImageTextBlock.value?.options as ImageTextProps;
 
 const title = ref(settings.text?.title);
 const subtitle = ref(settings.text?.subtitle);
@@ -135,18 +138,33 @@ const imageDesktop = ref(settings.image?.desktop);
 const imageTablet = ref(settings.image?.tablet);
 const imageMobile = ref(settings.image?.mobile);
 const htmlDescription = ref(settings.text?.htmlDescription);
-
+const textAlign = ref(settings.text?.textAlignment);
 
 watch(
-  [title, subtitle, buttonLabel, buttonLink, imageDesktop, imageTablet, imageMobile, htmlDescription],
-  ([newTitle, newSubtitle, newButtonLabel]) => {
-    if (settings && settings.text && settings.button) {
+  [title, subtitle, buttonLabel, buttonLink, imageDesktop, imageTablet, imageMobile, htmlDescription, textAlign],
+  ([
+    newTitle,
+    newSubtitle,
+    newButtonLabel,
+    newButtonLink,
+    newImageDesktop,
+    newImageTablet,
+    newImageMobile,
+    newHtmlDescription,
+    newTextAlign,
+  ]) => {
+    if (settings && settings.text && settings.button && settings.image) {
       settings.text.title = newTitle;
       settings.text.subtitle = newSubtitle;
       settings.button.label = newButtonLabel;
+      settings.button.link = newButtonLink;
+      settings.image.desktop = newImageDesktop;
+      settings.image.tablet = newImageTablet;
+      settings.image.mobile = newImageMobile;
+      settings.text.htmlDescription = newHtmlDescription;
+      settings.text.textAlignment = newTextAlign;
     }
   },
-  { deep: true }
+  { deep: true },
 );
-
 </script>
