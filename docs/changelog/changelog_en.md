@@ -10,6 +10,7 @@
 - Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added the logic to remove cookies after revoking consent.
 - Added a new placeholder block component to showcase to the user where his block will go
+- You can now add blocks on homepage from the blocks side nav
 
 ### 👷 Changed
 
@@ -17,6 +18,8 @@
 
 - Fixed an issue where page elements changed during navigation.
 - Fixed accessibility erros in edit mode.
+- Fixed an issue where the site settings view was only displayed on the second click.
+- Fixed an issue where the new block placeholder got displayed when editing the site settings.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -36,7 +39,6 @@
 - Added preview functionality for block sizes.
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 - Adding saving functionality for site settings.
-- You can now add blocks on homepage from the blocks side nav!
 
 ### 👷 Changed
 
