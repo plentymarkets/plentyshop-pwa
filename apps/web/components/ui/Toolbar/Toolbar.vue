@@ -69,7 +69,7 @@ const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
 const { loading } = useHomepage();
 const {
-  drawerOpen,
+  drawerView,
   openDrawerWithView,
   closeDrawer,
   settingsIsDirty,
@@ -95,7 +95,7 @@ const save = () => {
 };
 
 const toggleSettingsDrawer = () => {
-  drawerOpen.value ? closeDrawer() : openDrawerWithView('settings');
+  drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings');
 };
 
 const toggleEdit = () => {
