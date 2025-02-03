@@ -14,7 +14,7 @@
               'lg:right-[15%] lg:absolute',
             ]"
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
-            @click="addBlock(category.category, variationIndex), (drawerOpen = false)"
+            @click="addBlock(category.category, variationIndex); (openDrawerWithView('configuration'))"
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
@@ -25,11 +25,11 @@
 </template>
 
 <script setup lang="ts">
-import { blocksLists } from '../../blocks/blocksLists';
+import { blocksLists } from '~/blocks/blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { addNewBlock } = useBlockManager();
-const { newBlockPosition, drawerOpen } = useSiteConfiguration();
+const { newBlockPosition, openDrawerWithView } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, newBlockPosition.value);
