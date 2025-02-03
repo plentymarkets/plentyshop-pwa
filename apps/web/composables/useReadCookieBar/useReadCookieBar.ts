@@ -13,23 +13,6 @@ const checkIfScriptIsExternal = (scriptName: string): boolean => {
   return scriptName.startsWith('http');
 };
 
-const fetchScripts = (scripts: string[]) => {
-  scripts.forEach((script: string) => {
-    try {
-      if (checkIfScriptIsExternal(script)) {
-        const scriptElement = document.createElement('script');
-        scriptElement.setAttribute('src', script);
-        scriptElement.setAttribute('type', 'text/javascript');
-        document.head.append(scriptElement);
-      } else if (cookieScripts[script]) {
-        cookieScripts[script]();
-      }
-    } catch (error: unknown) {
-      console.error(error);
-    }
-  });
-};
-
 /**
  * @description Composable for managing cookie consent bar.
  * @returns UseReadCookieBarReturn
@@ -54,22 +37,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     state.value.visible = !state.value.visible;
   };
 
-  const loadThirdPartyScripts = (): void => {
-    if (!import.meta.server) {
-      state.value.data.groups.forEach((cookieGroup: CookieGroup, groupIndex: number) => {
-        cookieGroup.cookies.forEach((cookie: Cookie, cookieIndex: number) => {
-          if (cookie.accepted) {
-            const scripts = initialCookies.groups[groupIndex].cookies?.[cookieIndex]?.script;
-
-            if (scripts && scripts.length > 0) {
-              fetchScripts(scripts);
-            }
-          }
-        });
-      });
-    }
-  };
-
   /**
    * @description Function for initializing cookies.
    * @returns InitializeCookies
@@ -89,6 +56,10 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
         if (browserCookies.value?.[group.name]?.[cookie.name] !== undefined) {
           cookie.accepted = isAccepted;
+
+          if (isAccepted && cookie.script && cookie.script.length) {
+            fetchScripts(cookie.script);
+          }
         }
 
         const { consent } = useCookieConsent(cookie.name);
@@ -103,8 +74,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     if (!browserCookies.value) {
       state.value.visible = true;
     }
-
-    loadThirdPartyScripts();
   };
 
   /**
@@ -133,6 +102,8 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
         if (currentStatus && !consent.value) {
           cookieRevoke = true;
           removeCookies(cookie);
+        } else if (!currentStatus && consent.value && cookie.script && cookie.script.length) {
+          fetchScripts(cookie.script);
         }
 
         return childAccumulator;
@@ -148,7 +119,6 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
 
     consentCookie.value = JSON.stringify(jsonCookie);
     changeVisibilityState();
-    loadThirdPartyScripts();
 
     if (cookieRevoke) {
       router.go(0);
@@ -205,4 +175,21 @@ export const useReadCookieBar: UseReadCookieBarReturn = () => {
     initializeCookies,
     setAllCookiesState,
   };
+};
+
+export const fetchScripts = (scripts: string[]) => {
+  scripts.forEach((script: string) => {
+    try {
+      if (checkIfScriptIsExternal(script)) {
+        const scriptElement = document.createElement('script');
+        scriptElement.setAttribute('src', script);
+        scriptElement.setAttribute('type', 'text/javascript');
+        document.head.append(scriptElement);
+      } else if (cookieScripts[script]) {
+        cookieScripts[script]();
+      }
+    } catch (error: unknown) {
+      console.error(error);
+    }
+  });
 };
