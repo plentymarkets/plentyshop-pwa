@@ -4,13 +4,13 @@
       <div class="flex item-center justify-between mb-4">
         <h2>Slides</h2>
         <div class="flex item-center">
-          <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
+          <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
             <SfIconAdd class="text-neutral-500" />
           </button>
           <div class="relative">
             <button
-              @click="showSlidesDropdown = !showSlidesDropdown"
               class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
+              @click="showSlidesDropdown = !showSlidesDropdown"
             >
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
@@ -23,9 +23,9 @@
                     <span>Slide {{ index + 1 }}</span>
                   </div>
                   <button
-                    @click="deleteSlide(index)"
                     class="text-red-500 hover:text-red-700"
                     :disabled="slides.length === 1"
+                    @click="deleteSlide(index)"
                   >
                     <SfIconDelete class="text-neutral-500" />
                   </button>
@@ -33,7 +33,7 @@
                 <hr />
                 <div class="p-2 flex justify-between items-center">
                   <p>Add Slide</p>
-                  <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
+                  <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
                     <SfIconAdd class="text-neutral-500" />
                   </button>
                 </div>
@@ -67,9 +67,9 @@
           <button
             v-for="(_, index) in slides"
             :key="index"
-            @click="activeSlide = index"
             class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
             :class="activeSlide === index ? 'bg-primary-500 text-white' : ''"
+            @click="activeSlide = index"
           >
             Slide {{ index + 1 }}
           </button>
@@ -121,8 +121,8 @@
                   <span>100%</span>
                 </div>
                 <input
-                  type="range"
                   v-model.number="slides[activeSlide].image.brightness"
+                  type="range"
                   min="0"
                   max="100"
                   class="w-full"
@@ -131,8 +131,8 @@
 
               <div class="relative">
                 <input
-                  type="number"
                   v-model.number="slides[activeSlide].image.brightness"
+                  type="number"
                   min="0"
                   max="100"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
@@ -231,8 +231,8 @@
                   <span>100%</span>
                 </div>
                 <input
-                  type="range"
                   v-model.number="slides[activeSlide].text.bgopacity"
+                  type="range"
                   min="0"
                   max="100"
                   class="w-full"
@@ -241,8 +241,8 @@
 
               <div class="relative">
                 <input
-                  type="number"
                   v-model.number="slides[activeSlide].text.bgopacity"
+                  type="number"
                   min="0"
                   max="100"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
@@ -347,8 +347,8 @@ import {
   SfIconGridView,
   SfIconAdd,
 } from '@storefront-ui/vue';
-import { BannerProps, Slide } from '~/components/ui/Banner/types';
-import { BannerSlide } from '~/composables/useHomepage/types';
+import type { BannerProps, Slide } from '~/components/ui/Banner/types';
+import type { BannerSlide } from '~/composables/useHomepage/types';
 import Multiselect from 'vue-multiselect';
 
 const { data, updateBannerItems } = useHomepage();

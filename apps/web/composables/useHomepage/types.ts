@@ -1,4 +1,4 @@
-import { BannerProps, Slide } from '~/components/ui/Banner/types';
+import type { BannerProps, Slide } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
