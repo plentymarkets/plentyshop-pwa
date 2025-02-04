@@ -8,18 +8,14 @@
              @click="addSlide"
              class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
          >
-           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-           </svg>
+           <SfIconAdd class="text-neutral-500" />
          </button>
          <div class="relative">
            <button
                @click="showSlidesDropdown = !showSlidesDropdown"
                class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
            >
-             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
-             </svg>
+             <SfIconMoreHoriz class="text-neutral-500" />
            </button>
 
            <div
@@ -226,7 +222,9 @@ import {
   SfIconChevronLeft,
   SfIconChevronRight,
   SfIconDelete,
-  SfInput
+  SfInput,
+  SfIconMoreHoriz,
+  SfIconAdd
 } from '@storefront-ui/vue';
 import { BannerProps } from "~/components/ui/Banner/types";
 import {BannerSlide} from "~/composables/useHomepage/types";

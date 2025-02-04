@@ -6,7 +6,13 @@ const isEmptyBlock = (block: Block): boolean => {
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);
-
+const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom' | null }>({
+  index: null,
+  position: null,
+});
+const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
+  visiblePlaceholder.value = { index, position };
+};
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
@@ -21,7 +27,7 @@ export const useBlockManager = () => {
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
   const isPreview = ref(false);
-  const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+  const experimentalBlockEditForm = ref(useRuntimeConfig().public.experimentalBlockEditForm);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
@@ -34,11 +40,9 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
-
     updatedBlocks.splice(position, 0, newBlock);
-
     data.value.blocks = updatedBlocks;
-
+    visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
@@ -74,9 +78,13 @@ export const useBlockManager = () => {
 
   const handleEdit = (index: number) => {
     if (data.value.blocks && data.value.blocks.length > index) {
-      currentBlockIndex.value = index;
-      currentBlock.value = data.value.blocks[index];
-      isEditing.value = true;
+      if (experimentalBlockEditForm.value) {
+        // TODO: Implement new block edit form
+      } else {
+        currentBlockIndex.value = index;
+        currentBlock.value = data.value.blocks[index];
+        isEditing.value = true;
+      }
     }
   };
 
@@ -100,7 +108,6 @@ export const useBlockManager = () => {
     clickedBlockIndex,
     isTablet,
     isPreview,
-    experimentalAddBlock,
     blockHasData,
     tabletEdit,
     handleEdit,
@@ -109,5 +116,7 @@ export const useBlockManager = () => {
     changeBlockPosition,
     isLastBlock,
     addNewBlock,
+    visiblePlaceholder,
+    togglePlaceholder,
   };
 };
