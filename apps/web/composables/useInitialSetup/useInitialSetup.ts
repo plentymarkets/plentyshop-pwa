@@ -42,7 +42,6 @@ const setInitialDataSSR: SetInitialData = async () => {
   const { setCategoryTree } = useCategoryTree();
   const { setCart, loading: cartLoading } = useCart();
   const { setWishlistItemIds } = useWishlist();
-  
   cartLoading.value = true;
 
   try {
