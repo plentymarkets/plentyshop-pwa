@@ -4,6 +4,7 @@
 
 ### New
 
+- Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
 - You can now add blocks on homepage from the blocks side nav!
