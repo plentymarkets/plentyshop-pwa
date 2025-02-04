@@ -163,6 +163,9 @@ const getContentPosition = (axis: string) => {
     case 'right': {
       return 'flex-end';
     }
+    case 'bottom': {
+      return 'flex-end';
+    }
     default: {
       return 'flex-start';
     }
