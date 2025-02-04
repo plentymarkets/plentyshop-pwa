@@ -1,6 +1,6 @@
 import { paths } from '../../../utils/paths';
 import { EditorObject } from '../../support/pageObjects/EditorObject';
-import newContent from '../../fixtures/newContent.json';
+// import newContent from '../../fixtures/newContent.json';
 
 describe('EditMode', () => {
   const editor = new EditorObject();
