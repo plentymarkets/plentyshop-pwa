@@ -1,32 +1,29 @@
-import { getPaletteFromColor } from '../utils/tailwindHelper'
+import { getPaletteFromColor } from '../utils/tailwindHelper';
 interface PaletteColor {
-  weight: string | number
-  rgb: string
+  weight: string | number;
+  rgb: string;
 }
 
 export default defineNuxtPlugin(async () => {
-  if (!import.meta.server) return
-  const buildPalette = (
-    colorType: string,
-    baseColor?: string
-  ): Array<PaletteColor & { type: string }> => {
-    if (!baseColor) return []
+  if (!import.meta.server) return;
+  const buildPalette = (colorType: string, baseColor?: string): Array<PaletteColor & { type: string }> => {
+    if (!baseColor) return [];
 
     return getPaletteFromColor(colorType, baseColor).map((item: PaletteColor) => ({
       ...item,
       type: colorType,
-    }))
-  }
+    }));
+  };
 
   try {
-    const primaryPalette = buildPalette('primary', process.env.NUXT_PUBLIC_PRIMARY_COLOR)
-    const secondaryPalette = buildPalette('secondary', process.env.NUXT_PUBLIC_SECONDARY_COLOR)
+    const primaryPalette = buildPalette('primary', process.env.NUXT_PUBLIC_PRIMARY_COLOR);
+    const secondaryPalette = buildPalette('secondary', process.env.NUXT_PUBLIC_SECONDARY_COLOR);
 
-    const colors = [...primaryPalette, ...secondaryPalette]
+    const colors = [...primaryPalette, ...secondaryPalette];
 
     const styleString = colors.reduce((acc, { type, weight, rgb }) => {
-      return acc + `--colors-2-${type}-${weight}: ${rgb};`
-    }, '')
+      return acc + `--colors-2-${type}-${weight}: ${rgb};`;
+    }, '');
 
     useHead({
       style: [
@@ -34,8 +31,8 @@ export default defineNuxtPlugin(async () => {
           children: `:root { ${styleString} }`,
         },
       ],
-    })
+    });
   } catch (error) {
-    console.error('Failed to initialize settings:', error)
+    console.error('Failed to initialize settings:', error);
   }
-})
+});
