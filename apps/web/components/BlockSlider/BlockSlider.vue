@@ -21,10 +21,9 @@
               </div>
               <hr>
               <div class="p-2">
-
                 <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
-                    <SfIconArrowUpward v-if="index !==0 " class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowUpward v-if="index !==0" class="cursor-pointer text-neutral-500 mr-2" size="sm" />
                     <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
                     <SfIconArrowDownward v-if="index + 1 !== slides.length "class="cursor-pointer text-neutral-500 mr-2" size="sm" />
                     <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
@@ -77,7 +76,7 @@
             :key="index"
             class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
             :class="activeSlide === index ? 'bg-primary-500 text-white' : ''"
-            @click="activeSlide = index"
+            @click="slideClick(index)"
           >
             Slide {{ index + 1 }}
           </button>
@@ -99,7 +98,7 @@
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Desktop Image</UiFormLabel>
-              <SfInput v-model="slides[activeSlide].image.desktop" name="desktopImage" type="text" />
+              <SfInput v-model="slides[activeSlide].image.desktop" name="desktopImage" type="text" placeholder="Enter URL of image" />
               <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
                 Recommended dimensions: 768x432 px
               </div>
@@ -107,14 +106,14 @@
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Tablet Image</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].image.tablet" name="desktopImage" type="text" />
+            <SfInput v-model="slides[activeSlide].image.tablet" name="desktopImage" type="text" placeholder="Enter URL of image" />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
               Recommended dimensions: 768x432 px
             </div>
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Mobile Image</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].image.mobile" name="desktopImage" type="text" />
+            <SfInput v-model="slides[activeSlide].image.mobile" name="desktopImage" type="text" placeholder="Enter URL of image" />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
               Recommended dimensions: 320x320 px
             </div>
@@ -171,15 +170,15 @@
         <div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Pre Title</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.pretitle" name="preTitle" type="text" />
+            <SfInput v-model="slides[activeSlide].text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Main Title</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.title" name="mainTitle" type="text" />
+            <SfInput v-model="slides[activeSlide].text.title" name="mainTitle" type="text" placeholder="Title" />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Sub Title</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.subtitle" name="subtitle" type="text" />
+            <SfInput v-model="slides[activeSlide].text.subtitle" name="subtitle" type="text" placeholder="SubTitle" />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Description</UiFormLabel>
@@ -188,6 +187,7 @@
               name="description"
               type="text"
               class="w-full"
+              placeholder="Text that supports HTML formatting"
             />
           </div>
           <div class="mb-6">
@@ -196,12 +196,12 @@
             <SfInput v-model="slides[activeSlide].text.color" type="text">
               <template #suffix>
                 <label
-                  for="primary-color"
+                  for="text-color"
                   :style="{ backgroundColor: slides[activeSlide].text.color }"
                   class="rounded-lg cursor-pointer"
                 >
                   <input
-                    id="primary-color"
+                    id="text-color"
                     v-model="slides[activeSlide].text.color"
                     type="color"
                     class="invisible w-8"
@@ -216,12 +216,12 @@
             <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
               <template #suffix>
                 <label
-                  for="primary-color"
+                  for="text-bg-color"
                   :style="{ backgroundColor: slides[activeSlide].text.bgcolor }"
                   class="rounded-lg cursor-pointer"
                 >
                   <input
-                    id="primary-color"
+                    id="text-bg-color"
                     v-model="slides[activeSlide].text.bgcolor"
                     type="color"
                     class="invisible w-8"
@@ -265,13 +265,13 @@
             <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
 
             <Multiselect
-              v-model="slides[activeSlide].text.align"
-              :options="['top', 'center', 'bottom']"
-              placeholder="Select an alignment"
-              :allow-empty="false"
-              class="cursor-pointer"
-              select-label=""
-              deselect-label="Selected"
+                v-model="slides[activeSlide].text.justify"
+                :options="['top', 'center', 'bottom']"
+                placeholder="Select justify"
+                :allow-empty="false"
+                class="cursor-pointer"
+                select-label=""
+                deselect-label="Selected"
             />
           </div>
 
@@ -279,9 +279,9 @@
             <UiFormLabel class="mb-1">Textbox Alignment (y)</UiFormLabel>
 
             <Multiselect
-              v-model="slides[activeSlide].text.justify"
+              v-model="slides[activeSlide].text.align"
               :options="['left', 'center', 'right']"
-              placeholder="Select justify"
+              placeholder="Select an alignment"
               :allow-empty="false"
               class="cursor-pointer"
               select-label=""
@@ -296,8 +296,6 @@
               v-model="slides[activeSlide].text.textAlignment"
               :options="['left', 'center', 'right']"
               placeholder="Select align"
-              label="label"
-              track-by="value"
               :allow-empty="false"
               class="cursor-pointer"
               select-label=""
@@ -320,12 +318,12 @@
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Label</UiFormLabel>
-              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text" />
+              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text"  placeholder="Button" />
             </label>
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Link</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" />
+            <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" placeholder="Enter URL here" />
           </div>
           <div class="mb-6">
             <Multiselect
@@ -365,7 +363,7 @@ import type { BannerSlide } from '~/composables/useHomepage/types';
 import Multiselect from 'vue-multiselect';
 
 const { isOpen, open, close } = useDisclosure();
-const { data, updateBannerItems } = useHomepage();
+const { data, updateBannerItems, setIndex } = useHomepage();
 
 const sliderBlock = computed(
   () => (data.value.blocks.find((block: Block) => block.name === 'UiCarousel')?.options || {}) as BannerSlide,
@@ -383,6 +381,11 @@ const activeSlide = ref(0);
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+
+const slideClick = (index: number) => {
+  activeSlide.value = index;
+  setIndex(index)
+}
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
@@ -413,19 +416,19 @@ const addSlide = () => {
       color: '#000',
       bgcolor: '#fff',
       bgopacity: 0.9,
-      textAlignment: 'center',
+      textAlignment: 'left',
       justify: 'center',
-      align: 'center',
+      align: 'left',
     },
     button: {
-      label: 'Discover',
+      label: 'Button',
       link: '/',
       variant: 'primary',
     },
   };
 
   slides.value = [...slides.value, newSlide];
-  activeSlide.value = slides.value.length - 1;
+  slideClick(slides.value.length - 1)
 };
 
 const deleteSlide = (index: number) => {

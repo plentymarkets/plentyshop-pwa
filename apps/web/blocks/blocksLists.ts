@@ -164,8 +164,8 @@ export const blocksLists: BlocksList = {
                     title: 'h1 heading',
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
-                    justify: 'right',
-                    align: 'bottom',
+                    justify: 'bottom',
+                    align: 'right',
                   },
                   button: {
                     label: 'Button',
@@ -189,8 +189,8 @@ export const blocksLists: BlocksList = {
                     title: 'h1 heading',
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
-                    justify: 'right',
-                    align: 'bottom',
+                    justify: 'bottom',
+                    align: 'right',
                   },
                   button: {
                     label: 'Button',

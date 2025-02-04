@@ -273,7 +273,7 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              justify: 'right',
+              justify: 'bottom',
             },
           },
 
@@ -340,7 +340,7 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              align: 'bottom',
+              align: 'right',
             },
           },
 

@@ -18,8 +18,8 @@ export type BannerProps = {
     subtitle?: string;
     htmlDescription?: string;
     textAlignment?: 'left' | 'center' | 'right';
-    justify?: 'left' | 'center' | 'right';
-    align?: 'top' | 'center' | 'bottom';
+    justify?: 'top' | 'center' | 'bottom';
+    align?: 'left' | 'center' | 'right';
   };
   button?: {
     label?: string;
@@ -48,8 +48,8 @@ export type Slide = {
     subtitle?: string;
     htmlDescription?: string;
     textAlignment?: 'left' | 'center' | 'right';
-    justify?: 'left' | 'center' | 'right';
-    align?: 'top' | 'center' | 'bottom';
+    justify?: 'top' | 'center' | 'bottom';
+    align?: 'left' | 'center' | 'right';
   };
   button: {
     label?: string;
