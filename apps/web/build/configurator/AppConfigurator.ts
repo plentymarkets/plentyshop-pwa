@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import path, { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rmSync } from 'node:fs';
-import type { BaseColors, ConfigurationCategory, ConfigurationEntry, ConfigurationResponse, Languages } from './types';
+import type { BaseColors, Languages } from './types';
 import { getPaletteFromColor } from '../../utils/tailwindHelper';
 import type { Writer } from '../writers/types';
 import type { Logger } from '../logs/types';
@@ -15,13 +15,6 @@ dotenv.config({
 });
 
 export class AppConfigurator {
-  private environmentMap = {
-    FETCH_REMOTE_CONFIG: process.env.FETCH_REMOTE_CONFIG,
-    API_URL: process.env.API_URL,
-    API_ENDPOINT: process.env.API_ENDPOINT,
-    API_SECURITY_TOKEN: process.env.API_SECURITY_TOKEN,
-    CONFIG_ID: process.env.CONFIG_ID,
-  };
   private writer: Writer;
   private logger: Logger;
 
@@ -62,48 +55,6 @@ export class AppConfigurator {
     return scssContent;
   };
 
-  private isValidEnvironment = (): boolean => {
-    let isValidEnvironment = true;
-
-    Object.entries(this.environmentMap).forEach(([key, value]) => {
-      if (!value) {
-        console.error(`Missing or invalid required environment variable: ${key}`);
-        isValidEnvironment = false;
-      }
-    });
-
-    return isValidEnvironment;
-  };
-
-  private generateEnvironmentFileContent = (data: ConfigurationResponse): string => {
-    let environmentContent = '';
-
-    Object.entries(this.environmentMap).forEach(([key, value]) => {
-      environmentContent += `${key}=${value}\n`;
-    });
-
-    Object.values(data).forEach((category: ConfigurationCategory) => {
-      category.forEach((entry: ConfigurationEntry) => {
-        environmentContent += `${entry.key.toUpperCase()}="${entry.value}"\n`;
-      });
-    });
-
-    return environmentContent;
-  };
-
-  generateEnvironment = (data: ConfigurationResponse): string => {
-    const environmentFilePath = path.resolve(__dirname, '../../.env');
-    let environmentContent = '';
-
-    if (this.isValidEnvironment()) {
-      this.logger.info('Generating environment file...');
-      environmentContent = this.generateEnvironmentFileContent(data);
-      this.writer.write(environmentContent, environmentFilePath);
-    }
-
-    return environmentContent;
-  };
-
   private writeLanguageFiles(defaultLanguageFile: string, languages: Languages, languageFilesPath: string) {
     const fileData = '{}';
     this.writer.writeMissing(fileData, defaultLanguageFile);
@@ -128,7 +79,9 @@ export class AppConfigurator {
   }
 
   generateLanguageFiles = (languages: Languages): void => {
-    this.logger.info('Generating language files...');
+    this.logger.info(
+      `Generating language files with languages ${languages.activated} and default language ${languages.default}...`,
+    );
 
     const languageFilesPath = path.resolve(__dirname, '../../lang');
     const defaultLanguageFile = path.resolve(languageFilesPath, `${languages.default}.json`);
