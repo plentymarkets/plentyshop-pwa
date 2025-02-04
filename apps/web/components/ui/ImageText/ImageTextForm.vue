@@ -1,83 +1,105 @@
 <template>
   <form class="space-y-4 absolute bg-white border border-gray-800 shadow-md p-4" style="z-index: 100">
     <!-- Image Group -->
-    <div>
-      <label for="image-desktop" class="block text-sm font-medium text-gray-700">Image (Desktop)</label>
-      <input
-        type="text"
-        id="image-desktop"
-        v-model="imageDesktop"
-        name="image-desktop"
-        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-    <div>
-      <label for="image-tablet" class="block text-sm font-medium text-gray-700">Image (Tablet)</label>
-      <input
-        type="text"
-        id="image-tablet"
-        v-model="imageTablet"
-        name="image-tablet"
-        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-    <div>
-      <label for="image-mobile" class="block text-sm font-medium text-gray-700">Image (Mobile)</label>
-      <input
-        type="text"
-        id="image-mobile"
-        v-model="imageMobile"
-        name="image-mobile"
-        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
+    <UiAccordionItem
+      v-model="imageGroupOpen"
+      summary-active-class="bg-neutral-100 border-t-0"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>Images</h2>
+      </template>
 
-    <div>
-      <label for="alt" class="block text-sm font-medium text-gray-700">Alt</label>
-      <input
-        type="text"
-        id="alt"
-        name="alt"
-        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-      />
-    </div>
-
-    <fieldset>
-      <legend class="text-sm font-medium text-gray-700">Image Align</legend>
-      <div class="mt-2 space-y-2">
-        <div class="flex items-center">
-          <input
-            id="align-left"
-            name="text-align"
-            type="radio"
-            value="left"
-            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-          />
-          <label for="align-left" class="ml-3 block text-sm font-medium text-gray-700">Left</label>
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Desktop Image</UiFormLabel>
         </div>
-        <div class="flex items-center">
-          <input
-            id="align-center"
-            name="text-align"
-            type="radio"
-            value="center"
-            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-          />
-          <label for="align-center" class="ml-3 block text-sm font-medium text-gray-700">Center</label>
-        </div>
-        <div class="flex items-center">
-          <input
-            id="align-right"
-            name="text-align"
-            type="radio"
-            value="right"
-            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-          />
-          <label for="align-right" class="ml-3 block text-sm font-medium text-gray-700">Right</label>
-        </div>
+        <label>
+          <SfInput v-model="imageDesktop" type="text">
+            <template #suffix>
+              <label for="image-tabletr" class="rounded-lg cursor-pointer">
+                <input id="image-tablet" v-model="imageDesktop" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+        </label>
       </div>
-    </fieldset>
 
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Tablet Image</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="imageTablet" type="text">
+            <template #suffix>
+              <label for="image-tablet" class="rounded-lg cursor-pointer">
+                <input id="image-tablet" v-model="imageTablet" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+        </label>
+      </div>
+
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Mobile Image</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="imageMobile" type="text">
+            <template #suffix>
+              <label for="image-mobile" class="rounded-lg cursor-pointer">
+                <input id="image-mobile" v-model="imageMobile" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+          <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+        </label>
+      </div>
+
+      <div class="py-2">
+        <div class="flex justify-between mb-2">
+          <UiFormLabel>Alt</UiFormLabel>
+        </div>
+        <label>
+          <SfInput v-model="altText" type="text">
+            <template #suffix>
+              <label for="alt" class="rounded-lg cursor-pointer">
+                <input id="alt" v-model="altText" type="text" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
+        </label>
+      </div>
+
+      <fieldset class="py-2">
+        <legend class="text-sm font-medium text-gray-700">Image Align</legend>
+        <div class="mt-2 space-y-2">
+          <div class="flex items-center">
+            <SfInput type="radio" value="left">
+              <template #suffix>
+                <label for="align-left" class="rounded-lg cursor-pointer">
+                  <input id="align-left" type="radio" value="left" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+            <label for="align-left" class="ml-3 block text-sm font-medium text-gray-700">Left</label>
+          </div>
+
+          <div class="flex items-center">
+            <SfInput  type="radio" value="right">
+              <template #suffix>
+                <label for="align-right" class="rounded-lg cursor-pointer">
+                  <input id="align-right" type="radio" value="right" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+            <label for="align-right" class="ml-3 block text-sm font-medium text-gray-700">Right</label>
+          </div>
+        </div>
+      </fieldset>
+    </UiAccordionItem>
     <!-- End Image Group -->
 
     <!-- Text Group -->
@@ -256,11 +278,25 @@ const buttonLink = ref(settings.button?.link);
 const imageDesktop = ref(settings.image?.desktop);
 const imageTablet = ref(settings.image?.tablet);
 const imageMobile = ref(settings.image?.mobile);
+const altText = ref(settings.image?.alt);
 const htmlDescription = ref(settings.text?.htmlDescription);
 const textAlign = ref(settings.text?.textAlignment);
 
+const imageGroupOpen = ref(false);
+
 watch(
-  [title, subtitle, buttonLabel, buttonLink, imageDesktop, imageTablet, imageMobile, htmlDescription, textAlign],
+  [
+    title,
+    subtitle,
+    buttonLabel,
+    buttonLink,
+    imageDesktop,
+    imageTablet,
+    imageMobile,
+    altText,
+    htmlDescription,
+    textAlign,
+  ],
   ([
     newTitle,
     newSubtitle,
@@ -269,6 +305,7 @@ watch(
     newImageDesktop,
     newImageTablet,
     newImageMobile,
+    newAltText,
     newHtmlDescription,
     newTextAlign,
   ]) => {
@@ -280,6 +317,7 @@ watch(
       settings.image.desktop = newImageDesktop;
       settings.image.tablet = newImageTablet;
       settings.image.mobile = newImageMobile;
+      settings.image.alt = newAltText ?? '';
       settings.text.htmlDescription = newHtmlDescription;
       settings.text.textAlignment = newTextAlign;
     }
