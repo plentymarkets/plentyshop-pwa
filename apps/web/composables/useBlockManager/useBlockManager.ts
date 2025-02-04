@@ -27,7 +27,7 @@ export const useBlockManager = () => {
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
   const isPreview = ref(false);
-  const experimentalAddBlock = ref(useRuntimeConfig().public.experimentalAddBlock);
+  const experimentalBlockEditForm = ref(useRuntimeConfig().public.experimentalBlockEditForm);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
@@ -78,9 +78,13 @@ export const useBlockManager = () => {
 
   const handleEdit = (index: number) => {
     if (data.value.blocks && data.value.blocks.length > index) {
-      currentBlockIndex.value = index;
-      currentBlock.value = data.value.blocks[index];
-      isEditing.value = true;
+      if (experimentalBlockEditForm.value) {
+        // TODO: Implement new block edit form
+      } else {
+        currentBlockIndex.value = index;
+        currentBlock.value = data.value.blocks[index];
+        isEditing.value = true;
+      }
     }
   };
 
@@ -104,7 +108,6 @@ export const useBlockManager = () => {
     clickedBlockIndex,
     isTablet,
     isPreview,
-    experimentalAddBlock,
     blockHasData,
     tabletEdit,
     handleEdit,
