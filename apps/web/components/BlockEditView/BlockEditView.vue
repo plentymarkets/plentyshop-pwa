@@ -7,7 +7,7 @@
       </UiButton>
     </header>
 
-    <component :is="getBlock(blockType)" v-if="blockType" :id="activeId" />
+    <component :is="getBlock(blockType)" v-if="blockType" />
   </div>
 </template>
 
@@ -15,7 +15,6 @@
 import { SfIconClose } from '@storefront-ui/vue';
 const blockType = ref('slider');
 const { drawerOpen } = useSiteConfiguration();
-const { activeId } = useBlocks();
 
 const getBlock = (view: string) => {
   if (view === 'slider') return resolveComponent('BlockSlider');

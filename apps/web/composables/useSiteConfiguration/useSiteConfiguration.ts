@@ -97,10 +97,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   );
 
   const openDrawerWithView = (view: DrawerView, id: number = 0) => {
-    const { setActive } = useBlocks();
     state.value.drawerView = view;
     state.value.drawerOpen = true;
-    setActive(id);
 
     state.value.placement = view === 'editBlock' ? 'right' : 'left';
   };

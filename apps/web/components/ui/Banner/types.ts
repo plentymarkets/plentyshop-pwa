@@ -27,3 +27,4 @@ export type BannerProps = {
     variant?: 'primary' | 'secondary';
   };
 };
+
