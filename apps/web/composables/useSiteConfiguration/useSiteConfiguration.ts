@@ -98,8 +98,8 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const openDrawerWithView = (view: DrawerView, placement: string) => {
     state.value.drawerView = view;
-    state.value.drawerOpen = true;
     state.value.placement = placement;
+    state.value.drawerOpen = true;
   };
 
   const closeDrawer = () => {

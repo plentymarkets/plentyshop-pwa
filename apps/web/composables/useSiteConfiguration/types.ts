@@ -1,5 +1,5 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
-export type DrawerView = 'settings' | 'blocks' | 'configuration' | null;
+export type DrawerView = 'settings' | 'blocksList' | 'blocksSettings' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {
   blockSize: string;

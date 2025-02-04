@@ -1,6 +1,6 @@
 <template>
   <div class="flex items-center justify-between px-5 py-6 border-b border-[#F1F3F5]">
-    <div class="font-bold text-[#062633]">Block configuration</div>
+    <div class="font-bold text-[#062633]">Block settings</div>
     <button @click="drawerOpen = false">
       <SfIconClose />
     </button>

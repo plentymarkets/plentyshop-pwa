@@ -16,7 +16,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               addBlock(category.category, variationIndex);
-              openDrawerWithView('configuration', 'right');
+              openDrawerWithView('blocksSettings', 'right');
             "
           >
             <SfIconAdd class="cursor-pointer" />
