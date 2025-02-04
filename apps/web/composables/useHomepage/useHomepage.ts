@@ -95,7 +95,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   };
 
   const setIndex: SetIndex = (index: number) => {
-    state.value.activeIndex = index
+    state.value.activeIndex = index;
   };
 
   return {

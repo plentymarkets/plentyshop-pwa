@@ -8,10 +8,7 @@
             <SfIconAdd class="text-neutral-500" />
           </button>
           <div class="relative">
-            <button
-              class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
-              @click="open"
-            >
+            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full" @click="open">
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
 
@@ -19,13 +16,17 @@
               <div class="flex justify-end p-2">
                 <SfIconClose class="cursor-pointer" @click="close" />
               </div>
-              <hr>
+              <hr />
               <div class="p-2">
                 <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
-                    <SfIconArrowUpward v-if="index !==0" class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowUpward v-if="index !== 0" class="cursor-pointer text-neutral-500 mr-2" size="sm" />
                     <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
-                    <SfIconArrowDownward v-if="index + 1 !== slides.length "class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowDownward
+                      v-if="index + 1 !== slides.length"
+                      class="cursor-pointer text-neutral-500 mr-2"
+                      size="sm"
+                    />
                     <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
                     <span>Slide {{ index + 1 }}</span>
                   </div>
@@ -98,7 +99,12 @@
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Desktop Image</UiFormLabel>
-              <SfInput v-model="slides[activeSlide].image.desktop" name="desktopImage" type="text" placeholder="Enter URL of image" />
+              <SfInput
+                v-model="slides[activeSlide].image.desktop"
+                name="desktopImage"
+                type="text"
+                placeholder="Enter URL of image"
+              />
               <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
                 Recommended dimensions: 768x432 px
               </div>
@@ -106,14 +112,24 @@
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Tablet Image</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].image.tablet" name="desktopImage" type="text" placeholder="Enter URL of image" />
+            <SfInput
+              v-model="slides[activeSlide].image.tablet"
+              name="desktopImage"
+              type="text"
+              placeholder="Enter URL of image"
+            />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
               Recommended dimensions: 768x432 px
             </div>
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Mobile Image</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].image.mobile" name="desktopImage" type="text" placeholder="Enter URL of image" />
+            <SfInput
+              v-model="slides[activeSlide].image.mobile"
+              name="desktopImage"
+              type="text"
+              placeholder="Enter URL of image"
+            />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
               Recommended dimensions: 320x320 px
             </div>
@@ -200,12 +216,7 @@
                   :style="{ backgroundColor: slides[activeSlide].text.color }"
                   class="rounded-lg cursor-pointer"
                 >
-                  <input
-                    id="text-color"
-                    v-model="slides[activeSlide].text.color"
-                    type="color"
-                    class="invisible w-8"
-                  />
+                  <input id="text-color" v-model="slides[activeSlide].text.color" type="color" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -265,13 +276,13 @@
             <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
 
             <Multiselect
-                v-model="slides[activeSlide].text.justify"
-                :options="['top', 'center', 'bottom']"
-                placeholder="Select justify"
-                :allow-empty="false"
-                class="cursor-pointer"
-                select-label=""
-                deselect-label="Selected"
+              v-model="slides[activeSlide].text.justify"
+              :options="['top', 'center', 'bottom']"
+              placeholder="Select justify"
+              :allow-empty="false"
+              class="cursor-pointer"
+              select-label=""
+              deselect-label="Selected"
             />
           </div>
 
@@ -318,7 +329,7 @@
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Label</UiFormLabel>
-              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text"  placeholder="Button" />
+              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text" placeholder="Button" />
             </label>
           </div>
           <div class="mb-6">
@@ -384,8 +395,8 @@ const buttonOpen = ref(true);
 
 const slideClick = (index: number) => {
   activeSlide.value = index;
-  setIndex(index)
-}
+  setIndex(index);
+};
 
 const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
@@ -428,7 +439,7 @@ const addSlide = () => {
   };
 
   slides.value = [...slides.value, newSlide];
-  slideClick(slides.value.length - 1)
+  slideClick(slides.value.length - 1);
 };
 
 const deleteSlide = (index: number) => {
