@@ -91,14 +91,18 @@ const props = defineProps<{
 
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
   const cleanHex = hex.replace('#', '');
-  const fullHex = cleanHex.length === 3
-    ? cleanHex.split('').map(c => c + c).join('')
-    : cleanHex;
+  const fullHex =
+    cleanHex.length === 3
+      ? cleanHex
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : cleanHex;
   const red = parseInt(fullHex.substring(0, 2), 16);
   const green = parseInt(fullHex.substring(2, 4), 16);
   const blue = parseInt(fullHex.substring(4, 6), 16);
-  return `rgba(${red}, ${green}, ${blue}, ${opacity})`
-}
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+};
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {

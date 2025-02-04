@@ -86,7 +86,7 @@ const onSlideChange = (swiper: any) => {
 watch(
   () => activeIndex.value,
   (index: number) => {
-    slider.slideTo(index)
+    slider.slideTo(index);
   },
 );
 </script>
