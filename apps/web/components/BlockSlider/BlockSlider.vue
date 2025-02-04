@@ -31,8 +31,13 @@
                     <SfIconDelete class="text-neutral-500" />
                   </button>
                 </div>
+                <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
+                  <SfIconAdd class="text-neutral-500" />
+                </button>
               </div>
             </div>
+
+
           </div>
         </div>
       </div>

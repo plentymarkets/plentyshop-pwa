@@ -13,11 +13,11 @@
 
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-const blockType = ref('slider');
-const { drawerOpen } = useSiteConfiguration();
+
+const { drawerOpen, blockType } = useSiteConfiguration();
 
 const getBlock = (view: string) => {
-  if (view === 'slider') return resolveComponent('BlockSlider');
+  if (view === 'UiCarousel') return resolveComponent('BlockSlider');
   // if (view === 'recommendedProducts') return resolveComponent('BlockRecommendedProducts');
 };
 </script>

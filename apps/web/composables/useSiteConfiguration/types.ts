@@ -20,6 +20,7 @@ export interface UseSiteConfigurationState {
   blockSize: string;
   placement: string;
   drawerView: DrawerView;
+  blockType: string;
   initialData: ConfigurationSettings;
 }
 
@@ -28,13 +29,14 @@ export type UpdateBlockSize = (size: string) => void;
 export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
-export type OpenDrawerView = (view: DrawerView, id?: number) => void;
+export type OpenDrawerView = (view: DrawerView, type?: string) => void;
 export type SaveSettings = () => void;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
+  blockType: Readonly<Ref<UseSiteConfigurationState['blockType']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
   primaryColor: Readonly<Ref<UseSiteConfigurationState['primaryColor']>>;

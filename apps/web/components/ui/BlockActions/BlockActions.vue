@@ -57,7 +57,7 @@
 import { SfIconDelete, SfIconArrowUpward, SfIconArrowDownward, SfIconBase } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 
-const props = defineProps<{ index: number; isLastBlock: boolean }>();
+const props = defineProps<{ index: number; isLastBlock: boolean, blocks: Block }>();
 
 const emit = defineEmits(['edit', 'delete', 'change-position']);
 
@@ -65,7 +65,7 @@ const { openDrawerWithView } = useSiteConfiguration();
 
 const triggerEdit = () => {
   // emit('edit', props.index);
-  openDrawerWithView('editBlock', props.index);
+  openDrawerWithView('editBlock', props.blocks.name);
 };
 const triggerDelete = () => {
   emit('delete', props.index);
