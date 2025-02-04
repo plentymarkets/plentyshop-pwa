@@ -7,6 +7,9 @@ import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
 
 export default defineNuxtConfig({
   telemetry: false,
+  plugins: [
+    '~/plugins/settings.js'
+  ],
   devtools: { enabled: true },
   typescript: {
     typeCheck: true,

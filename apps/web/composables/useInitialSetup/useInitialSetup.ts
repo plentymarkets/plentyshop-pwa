@@ -48,9 +48,6 @@ const setInitialDataSSR: SetInitialData = async () => {
   cartLoading.value = true;
   try {
     const { data } = await useAsyncData(() => useSdk().plentysystems.getInit());
-    const { updatePrimaryColor, updateSecondaryColor } = useSiteConfiguration();
-    updatePrimaryColor('#062633');
-    updateSecondaryColor('#31687d');
 
     if (data.value?.data) {
       setUser(data.value.data.session as SessionResult);
