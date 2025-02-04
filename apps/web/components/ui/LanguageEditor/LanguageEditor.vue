@@ -28,13 +28,14 @@
 
 <script setup lang="ts">
 import { SfIconLanguage } from '@storefront-ui/vue';
+import type { Locale} from 'vue-i18n';
 import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale } = useI18n();
 const { switchLocale } = useLocalization();
 const { isEditing, disableActions } = useEditor();
 
-const switchLanguage = async (locale: string) => {
+const switchLanguage = async (locale: Locale) => {
   await switchLocale(locale, false);
 };
 </script>
