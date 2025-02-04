@@ -95,7 +95,7 @@ const save = () => {
 };
 
 const toggleSettingsDrawer = () => {
-  drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings');
+  drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings', 'left');
 };
 
 const toggleEdit = () => {
