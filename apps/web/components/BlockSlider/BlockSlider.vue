@@ -17,11 +17,7 @@
 
             <div v-if="showSlidesDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
               <div class="p-2">
-                <div
-                  v-for="(_, index) in slides"
-                  :key="index"
-                  class="flex items-center justify-between p-2 rounded"
-                >
+                <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
                     <SfIconGridView class="text-neutral-500 mr-2" size="sm" />
                     <span>Slide {{ index + 1 }}</span>
@@ -34,7 +30,7 @@
                     <SfIconDelete class="text-neutral-500" />
                   </button>
                 </div>
-                <hr>
+                <hr />
                 <div class="p-2 flex justify-between items-center">
                   <p>Add Slide</p>
                   <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
@@ -150,9 +146,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Alt</UiFormLabel>
             <SfInput v-model="slides[activeSlide].image.alt" name="alt" type="text" />
-            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              Alternative image text
-            </div>
+            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
           </div>
         </div>
       </UiAccordionItem>
@@ -193,8 +187,17 @@
 
             <SfInput v-model="slides[activeSlide].text.color" type="text">
               <template #suffix>
-                <label for="primary-color" :style="{ backgroundColor: slides[activeSlide].text.color }" class="rounded-lg cursor-pointer">
-                  <input id="primary-color" v-model="slides[activeSlide].text.color" type="color" class="invisible w-8" />
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: slides[activeSlide].text.color }"
+                  class="rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="primary-color"
+                    v-model="slides[activeSlide].text.color"
+                    type="color"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -204,8 +207,17 @@
 
             <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
               <template #suffix>
-                <label for="primary-color" :style="{ backgroundColor: slides[activeSlide].text.bgcolor }" class="rounded-lg cursor-pointer">
-                  <input id="primary-color" v-model="slides[activeSlide].text.bgcolor" type="color" class="invisible w-8" />
+                <label
+                  for="primary-color"
+                  :style="{ backgroundColor: slides[activeSlide].text.bgcolor }"
+                  class="rounded-lg cursor-pointer"
+                >
+                  <input
+                    id="primary-color"
+                    v-model="slides[activeSlide].text.bgcolor"
+                    type="color"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -219,22 +231,22 @@
                   <span>100%</span>
                 </div>
                 <input
-                    type="range"
-                    v-model.number="slides[activeSlide].text.bgopacity"
-                    min="0"
-                    max="100"
-                    class="w-full"
+                  type="range"
+                  v-model.number="slides[activeSlide].text.bgopacity"
+                  min="0"
+                  max="100"
+                  class="w-full"
                 />
               </div>
 
               <div class="relative">
                 <input
-                    type="number"
-                    v-model.number="slides[activeSlide].text.bgopacity"
-                    min="0"
-                    max="100"
-                    class="w-20 px-2 py-1 border rounded text-color-red-500"
-                    @input="clampBrightness($event, 'text')"
+                  type="number"
+                  v-model.number="slides[activeSlide].text.bgopacity"
+                  min="0"
+                  max="100"
+                  class="w-20 px-2 py-1 border rounded text-color-red-500"
+                  @input="clampBrightness($event, 'text')"
                 />
                 <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">%</span>
               </div>
@@ -245,13 +257,13 @@
             <UiFormLabel class="mb-1">Text Alignment</UiFormLabel>
 
             <Multiselect
-                v-model="slides[activeSlide].text.textAlignment"
-                :options="['left', 'center', 'right']"
-                placeholder="Select an alignment"
-                :allow-empty="false"
-                class="cursor-pointer"
-                select-label=""
-                deselect-label="Selected"
+              v-model="slides[activeSlide].text.textAlignment"
+              :options="['left', 'center', 'right']"
+              placeholder="Select an alignment"
+              :allow-empty="false"
+              class="cursor-pointer"
+              select-label=""
+              deselect-label="Selected"
             />
           </div>
 
@@ -259,13 +271,13 @@
             <UiFormLabel class="mb-1">Justify</UiFormLabel>
 
             <Multiselect
-                v-model="slides[activeSlide].text.justify"
-                :options="['start', 'center', 'end']"
-                placeholder="Select justify"
-                :allow-empty="false"
-                class="cursor-pointer"
-                select-label=""
-                deselect-label="Selected"
+              v-model="slides[activeSlide].text.justify"
+              :options="['start', 'center', 'end']"
+              placeholder="Select justify"
+              :allow-empty="false"
+              class="cursor-pointer"
+              select-label=""
+              deselect-label="Selected"
             />
           </div>
 
@@ -273,22 +285,22 @@
             <UiFormLabel class="mb-1">Align</UiFormLabel>
 
             <Multiselect
-                v-model="slides[activeSlide].text.align"
-                :options="['start', 'center', 'end']"
-                placeholder="Select align"
-                :allow-empty="false"
-                class="cursor-pointer"
-                select-label=""
-                deselect-label="Selected"
+              v-model="slides[activeSlide].text.align"
+              :options="['start', 'center', 'end']"
+              placeholder="Select align"
+              :allow-empty="false"
+              class="cursor-pointer"
+              select-label=""
+              deselect-label="Selected"
             />
           </div>
         </div>
       </UiAccordionItem>
 
       <UiAccordionItem
-          v-model="buttonOpen"
-          summary-active-class="bg-neutral-100"
-          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        v-model="buttonOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
           <h2>Button</h2>
@@ -307,13 +319,13 @@
           </div>
           <div class="mb-6">
             <Multiselect
-                v-model="slides[activeSlide].button.variant"
-                :options="['primary', 'secondary']"
-                placeholder="Select variant"
-                :allow-empty="false"
-                class="cursor-pointer"
-                select-label=""
-                deselect-label="Selected"
+              v-model="slides[activeSlide].button.variant"
+              :options="['primary', 'secondary']"
+              placeholder="Select variant"
+              :allow-empty="false"
+              class="cursor-pointer"
+              select-label=""
+              deselect-label="Selected"
             />
           </div>
         </div>
@@ -337,7 +349,7 @@ import {
 } from '@storefront-ui/vue';
 import { BannerProps, Slide } from '~/components/ui/Banner/types';
 import { BannerSlide } from '~/composables/useHomepage/types';
-import Multiselect from "vue-multiselect";
+import Multiselect from 'vue-multiselect';
 
 const { data, updateBannerItems } = useHomepage();
 const sliderBlock = computed(
