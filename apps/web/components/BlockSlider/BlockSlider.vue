@@ -70,22 +70,13 @@
               :key="index"
               @click="activeSlide = index"
               class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
-              :class="activeSlide === index
-                ? 'bg-primary-500 text-white'
-                : 'bg-gray-100 hover:bg-gray-200'"
+              :class="activeSlide === index ? 'bg-primary-500 text-white' : ''"
           >
             Slide {{ index + 1 }}
-            <button
-                @click.stop="deleteSlide(index)"
-                class="text-gray-500 hover:text-red-600"
-                :disabled="slides.length === 1"
-            >
-            </button>
           </button>
 
         </div>
       </SfScrollable>
-
     </div>
 
     <div>
@@ -227,40 +218,14 @@ import {
   SfIconAdd
 } from '@storefront-ui/vue';
 import { BannerProps } from "~/components/ui/Banner/types";
-import {BannerSlide} from "~/composables/useHomepage/types";
+import { BannerSlide } from "~/composables/useHomepage/types";
 
 const { data, updateBannerItems } = useHomepage();
 const sliderBlock = computed(() => (data.value.blocks.find((block: Block) => block.name === 'UiCarousel')?.options || {}) as BannerSlide);
 
 const slides = computed({
   get: () => {
-    const items = sliderBlock.value?.bannerItems || [];
-    return items.map(item => ({
-      image: {
-        desktop: item.image?.desktop || '',
-        tablet: item.image?.tablet || '',
-        mobile: item.image?.mobile || '',
-        brightness: item.image?.brightness || 50,
-        alt: item.image?.alt || ''
-      },
-      text: {
-        pretitle: item.text?.pretitle || '',
-        title: item.text?.title || '',
-        subtitle: item.text?.subtitle || '',
-        htmlDescription: item.text?.htmlDescription || '',
-        color: item.text?.color || '#000',
-        bgcolor: item.text?.bgcolor || '#fff',
-        bgopacity: item.text?.bgopacity ?? 0.9,
-        textAlignment: item.text?.textAlignment || 'left',
-        justify: item.text?.justify || 'center',
-        align: item.text?.align || 'center'
-      },
-      button: {
-        label: item.button?.label || 'Discover',
-        link: item.button?.link || '/',
-        variant: item.button?.variant || 'primary'
-      }
-    }));
+    return sliderBlock.value?.bannerItems || [];
   },
   set: (value) => updateBannerItems(value)
 });
@@ -278,7 +243,7 @@ const clampBrightness = (event: Event) => {
 };
 
 const addSlide = () => {
-  const newSlide = {
+  const newSlide: BannerProps = {
     image: {
       desktop: '',
       tablet: '',
@@ -303,7 +268,7 @@ const addSlide = () => {
       link: '/',
       variant: 'primary'
     }
-  } as BannerProps;
+  };
 
   slides.value = [...slides.value, newSlide];
   activeSlide.value = slides.value.length - 1;
