@@ -27,7 +27,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
-    drawerView: 'settings',
+    drawerView: null,
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
@@ -102,6 +102,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
   const closeDrawer = () => {
     state.value.drawerOpen = false;
+    state.value.drawerView = null;
   };
 
   const updateBlockSize: UpdateBlockSize = (size: string) => {
