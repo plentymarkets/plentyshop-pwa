@@ -1,4 +1,5 @@
 <template>
+  <UiBlockPlaceholder v-if="displayTopPlaceholder(index)" />
   <div
     :class="[
       'relative group',
@@ -58,6 +59,7 @@
       <SfIconAdd class="cursor-pointer" />
     </button>
   </div>
+  <UiBlockPlaceholder v-if="displayBottomPlaceholder(index)" />
 </template>
 
 <script lang="ts" setup>
@@ -83,5 +85,28 @@ interface Props {
 
 defineProps<Props>();
 
-const { blockSize } = useSiteConfiguration();
+const { blockSize, drawerOpen, drawerView } = useSiteConfiguration();
+const { visiblePlaceholder } = useBlockManager();
+
+const displayTopPlaceholder = (index: number): boolean => {
+  const visiblePlaceholderState = visiblePlaceholder.value;
+
+  return (
+    visiblePlaceholderState.position === 'top' &&
+    visiblePlaceholderState.index === index &&
+    drawerOpen.value &&
+    drawerView.value === 'blocks'
+  );
+};
+
+const displayBottomPlaceholder = (index: number): boolean => {
+  const visiblePlaceholderState = visiblePlaceholder.value;
+
+  return (
+    visiblePlaceholderState.position === 'bottom' &&
+    visiblePlaceholderState.index === index &&
+    drawerOpen.value &&
+    drawerView.value === 'blocks'
+  );
+};
 </script>
