@@ -95,7 +95,7 @@ const displayTopPlaceholder = (index: number): boolean => {
     visiblePlaceholderState.position === 'top' &&
     visiblePlaceholderState.index === index &&
     drawerOpen.value &&
-    drawerView.value === 'blocks'
+    drawerView.value === 'blocksList'
   );
 };
 
@@ -106,7 +106,7 @@ const displayBottomPlaceholder = (index: number): boolean => {
     visiblePlaceholderState.position === 'bottom' &&
     visiblePlaceholderState.index === index &&
     drawerOpen.value &&
-    drawerView.value === 'blocks'
+    drawerView.value === 'blocksList'
   );
 };
 </script>
