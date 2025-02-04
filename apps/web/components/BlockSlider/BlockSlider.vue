@@ -20,7 +20,7 @@
                 <div
                   v-for="(_, index) in slides"
                   :key="index"
-                  class="flex items-center justify-between hover:bg-gray-100 p-2 rounded"
+                  class="flex items-center justify-between p-2 rounded"
                 >
                   <span>Slide {{ index + 1 }}</span>
                   <button
@@ -31,13 +31,15 @@
                     <SfIconDelete class="text-neutral-500" />
                   </button>
                 </div>
-                <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
-                  <SfIconAdd class="text-neutral-500" />
-                </button>
+                <hr>
+                <div class="p-2 flex justify-between items-center">
+                  <p>Add Slide</p>
+                  <button @click="addSlide" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0">
+                    <SfIconAdd class="text-neutral-500" />
+                  </button>
+                </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
