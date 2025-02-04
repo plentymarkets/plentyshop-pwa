@@ -33,7 +33,7 @@ export default defineNuxtPlugin(async () => {
     }
   }
 
-  if (process.server) {
+  if (import.meta.server) {
     const systemConfiguration = new SystemConfiguration();
     
     try {
