@@ -130,10 +130,18 @@
                   min="0"
                   max="100"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
-                  @input="clampBrightness"
+                  @input="clampBrightness($event, 'image')"
                 />
                 <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">%</span>
               </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Alt</UiFormLabel>
+            <SfInput v-model="slides[activeSlide].image.alt" name="alt" type="text" />
+            <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+              Alternative image text
             </div>
           </div>
         </div>
@@ -167,7 +175,135 @@
               v-model="slides[activeSlide].text.htmlDescription"
               name="description"
               type="text"
-              class="w-100"
+              class="w-full"
+            />
+          </div>
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Color</UiFormLabel>
+
+            <SfInput v-model="slides[activeSlide].text.color" type="text">
+              <template #suffix>
+                <label for="primary-color" :style="{ backgroundColor: slides[activeSlide].text.color }" class="rounded-lg cursor-pointer">
+                  <input id="primary-color" v-model="slides[activeSlide].text.color" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+          </div>
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Bg Color</UiFormLabel>
+
+            <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
+              <template #suffix>
+                <label for="primary-color" :style="{ backgroundColor: slides[activeSlide].text.bgcolor }" class="rounded-lg cursor-pointer">
+                  <input id="primary-color" v-model="slides[activeSlide].text.bgcolor" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
+          </div>
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-4">Brightness</label>
+            <div class="flex items-center gap-4">
+              <div class="flex-1 space-y-1">
+                <div class="flex justify-between text-xs text-gray-500">
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
+                <input
+                    type="range"
+                    v-model.number="slides[activeSlide].text.bgopacity"
+                    min="0"
+                    max="100"
+                    class="w-full"
+                />
+              </div>
+
+              <div class="relative">
+                <input
+                    type="number"
+                    v-model.number="slides[activeSlide].text.bgopacity"
+                    min="0"
+                    max="100"
+                    class="w-20 px-2 py-1 border rounded text-color-red-500"
+                    @input="clampBrightness($event, 'text')"
+                />
+                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Text Alignment</UiFormLabel>
+
+            <Multiselect
+                v-model="slides[activeSlide].text.textAlignment"
+                :options="['left', 'center', 'right']"
+                placeholder="Select an alignment"
+                :allow-empty="false"
+                class="cursor-pointer"
+                select-label=""
+                deselect-label="Selected"
+            />
+          </div>
+
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Justify</UiFormLabel>
+
+            <Multiselect
+                v-model="slides[activeSlide].text.justify"
+                :options="['start', 'center', 'end']"
+                placeholder="Select justify"
+                :allow-empty="false"
+                class="cursor-pointer"
+                select-label=""
+                deselect-label="Selected"
+            />
+          </div>
+
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Align</UiFormLabel>
+
+            <Multiselect
+                v-model="slides[activeSlide].text.align"
+                :options="['start', 'center', 'end']"
+                placeholder="Select align"
+                :allow-empty="false"
+                class="cursor-pointer"
+                select-label=""
+                deselect-label="Selected"
+            />
+          </div>
+        </div>
+      </UiAccordionItem>
+
+      <UiAccordionItem
+          v-model="buttonOpen"
+          summary-active-class="bg-neutral-100"
+          summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2>Button</h2>
+        </template>
+
+        <div class="images">
+          <div class="mb-6 mt-4">
+            <label>
+              <UiFormLabel class="mb-1">Label</UiFormLabel>
+              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text" />
+            </label>
+          </div>
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Link</UiFormLabel>
+            <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" />
+          </div>
+          <div class="mb-6">
+            <Multiselect
+                v-model="slides[activeSlide].button.variant"
+                :options="['primary', 'secondary']"
+                placeholder="Select variant"
+                :allow-empty="false"
+                class="cursor-pointer"
+                select-label=""
+                deselect-label="Selected"
             />
           </div>
         </div>
@@ -190,6 +326,7 @@ import {
 } from '@storefront-ui/vue';
 import { BannerProps, Slide } from '~/components/ui/Banner/types';
 import { BannerSlide } from '~/composables/useHomepage/types';
+import Multiselect from "vue-multiselect";
 
 const { data, updateBannerItems } = useHomepage();
 const sliderBlock = computed(
@@ -207,12 +344,18 @@ const activeSlide = ref(0);
 const showSlidesDropdown = ref(false);
 const imagesOpen = ref(true);
 const textOpen = ref(true);
+const buttonOpen = ref(true);
 
-const clampBrightness = (event: Event) => {
+const clampBrightness = (event: Event, type: string) => {
   const currentValue = (event.target as HTMLInputElement)?.value;
   const nextValue = Number.parseFloat(currentValue);
 
-  slides.value[activeSlide.value].image.brightness = clamp(nextValue, 0, 100);
+  if (type === 'image') {
+    slides.value[activeSlide.value].image.brightness = clamp(nextValue, 0, 100);
+  }
+  if (type === 'text') {
+    slides.value[activeSlide.value].text.bgopacity = clamp(nextValue, 0, 100);
+  }
 };
 
 const addSlide = () => {
