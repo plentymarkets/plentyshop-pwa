@@ -24,7 +24,6 @@ const main = async () => {
     const dataWriter = new DataToFileWriter(BuildLoggerInstance);
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
     appConfigurator.generateEnvironment(systemConfiguration.getResponse());
-    // appConfigurator.generateScssVariables(systemConfiguration.getBaseColors());
     appConfigurator.generateLanguageFiles(systemConfiguration.getLanugages());
 
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
