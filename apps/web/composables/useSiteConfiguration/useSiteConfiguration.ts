@@ -103,7 +103,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     state.value.blockType = type;
 
-    state.value.placement = view === 'editBlock' ? 'right' : 'left';
+    state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
 
   const closeDrawer = () => {

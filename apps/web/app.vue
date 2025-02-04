@@ -36,13 +36,11 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
-const { currentFont, placement } = useSiteConfiguration();
+const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-
-const { drawerOpen } = useSiteConfiguration();
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');
