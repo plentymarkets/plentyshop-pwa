@@ -22,7 +22,10 @@
                   :key="index"
                   class="flex items-center justify-between p-2 rounded"
                 >
-                  <span>Slide {{ index + 1 }}</span>
+                  <div class="flex items-center">
+                    <SfIconGridView class="text-neutral-500 mr-2" size="sm" />
+                    <span>Slide {{ index + 1 }}</span>
+                  </div>
                   <button
                     @click="deleteSlide(index)"
                     class="text-red-500 hover:text-red-700"
@@ -329,6 +332,7 @@ import {
   SfIconDelete,
   SfInput,
   SfIconMoreHoriz,
+  SfIconGridView,
   SfIconAdd,
 } from '@storefront-ui/vue';
 import { BannerProps, Slide } from '~/components/ui/Banner/types';
