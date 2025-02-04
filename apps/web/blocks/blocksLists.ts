@@ -9,7 +9,7 @@ export const blocksLists: BlocksList = {
     variations: [
       {
         title: 'Image Banner Left',
-        image: '/images/blocks/image_banner_left.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_left.png',
         template: {
           en: {
             name: 'UiCarousel',
@@ -138,7 +138,7 @@ export const blocksLists: BlocksList = {
       },
       {
         title: 'Image Banner Right',
-        image: '/images/blocks/image_banner_right.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_right.png',
         template: {
           en: {
             name: 'UiCarousel',
@@ -267,7 +267,7 @@ export const blocksLists: BlocksList = {
       },
       {
         title: 'Image Banner Center',
-        image: '/images/blocks/image_banner_center.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_center.png',
         template: {
           en: {
             name: 'UiCarousel',
@@ -402,7 +402,7 @@ export const blocksLists: BlocksList = {
     variations: [
       {
         title: 'Image Right Text',
-        image: '/images/blocks/image_right_text.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png',
         template: {
           en: {
             name: 'UiImageText',
@@ -455,7 +455,7 @@ export const blocksLists: BlocksList = {
       },
       {
         title: 'Image Left Text',
-        image: '/images/blocks/image_left_text.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png',
         template: {
           en: {
             name: 'UiImageText',
@@ -514,7 +514,7 @@ export const blocksLists: BlocksList = {
     variations: [
       {
         title: 'Rich Text',
-        image: '/images/blocks/rich_text.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png',
         template: {
           en: {
             name: 'UiTextCard',
@@ -560,7 +560,7 @@ export const blocksLists: BlocksList = {
     variations: [
       {
         title: 'Product Galleries',
-        image: '/images/blocks/product_galleries.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/product_galleries.png',
         template: {
           en: {
             name: 'ProductRecommendedProducts',
@@ -596,7 +596,7 @@ export const blocksLists: BlocksList = {
     variations: [
       {
         title: 'Forms Preview',
-        image: '/images/blocks/forms_preview.png',
+        image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/forms_preview.png',
         template: {
           en: {
             name: 'NewsletterSubscribe',
