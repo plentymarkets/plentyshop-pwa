@@ -10,16 +10,24 @@
           <div class="relative">
             <button
               class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
-              @click="showSlidesDropdown = !showSlidesDropdown"
+              @click="open"
             >
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
 
-            <div v-if="showSlidesDropdown" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+            <div v-if="isOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+              <div class="flex justify-end p-2">
+                <SfIconClose class="cursor-pointer" @click="close" />
+              </div>
+              <hr>
               <div class="p-2">
+
                 <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
-                    <SfIconGridView class="text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowUpward v-if="index !==0 " class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
+                    <SfIconArrowDownward v-if="index + 1 !== slides.length "class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
                     <span>Slide {{ index + 1 }}</span>
                   </div>
                   <button
@@ -31,7 +39,7 @@
                   </button>
                 </div>
                 <hr />
-                <div class="p-2 flex justify-between items-center">
+                <div class="pl-2 pr-2 pt-2 flex justify-between items-center">
                   <p>Add Slide</p>
                   <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
                     <SfIconAdd class="text-neutral-500" />
@@ -183,7 +191,7 @@
             />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Color</UiFormLabel>
+            <UiFormLabel class="mb-1">Text Color</UiFormLabel>
 
             <SfInput v-model="slides[activeSlide].text.color" type="text">
               <template #suffix>
@@ -203,7 +211,7 @@
             </SfInput>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Bg Color</UiFormLabel>
+            <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
 
             <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
               <template #suffix>
@@ -223,7 +231,7 @@
             </SfInput>
           </div>
           <div class="mb-6">
-            <label class="block text-sm font-medium mb-4">Brightness</label>
+            <label class="block text-sm font-medium mb-4">Textbox Opacity</label>
             <div class="flex items-center gap-4">
               <div class="flex-1 space-y-1">
                 <div class="flex justify-between text-xs text-gray-500">
@@ -254,11 +262,11 @@
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Text Alignment</UiFormLabel>
+            <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
 
             <Multiselect
-              v-model="slides[activeSlide].text.textAlignment"
-              :options="['left', 'center', 'right']"
+              v-model="slides[activeSlide].text.align"
+              :options="['top', 'center', 'bottom']"
               placeholder="Select an alignment"
               :allow-empty="false"
               class="cursor-pointer"
@@ -268,11 +276,11 @@
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Justify</UiFormLabel>
+            <UiFormLabel class="mb-1">Textbox Alignment (y)</UiFormLabel>
 
             <Multiselect
               v-model="slides[activeSlide].text.justify"
-              :options="['start', 'center', 'end']"
+              :options="['left', 'center', 'right']"
               placeholder="Select justify"
               :allow-empty="false"
               class="cursor-pointer"
@@ -282,12 +290,14 @@
           </div>
 
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Align</UiFormLabel>
+            <UiFormLabel class="mb-1">Text Alignment (y)</UiFormLabel>
 
             <Multiselect
-              v-model="slides[activeSlide].text.align"
-              :options="['start', 'center', 'end']"
+              v-model="slides[activeSlide].text.textAlignment"
+              :options="['left', 'center', 'right']"
               placeholder="Select align"
+              label="label"
+              track-by="value"
               :allow-empty="false"
               class="cursor-pointer"
               select-label=""
@@ -344,14 +354,19 @@ import {
   SfIconDelete,
   SfInput,
   SfIconMoreHoriz,
-  SfIconGridView,
+  SfIconArrowUpward,
+  SfIconArrowDownward,
   SfIconAdd,
+  useDisclosure,
+  SfIconClose,
 } from '@storefront-ui/vue';
 import type { BannerProps, Slide } from '~/components/ui/Banner/types';
 import type { BannerSlide } from '~/composables/useHomepage/types';
 import Multiselect from 'vue-multiselect';
 
+const { isOpen, open, close } = useDisclosure();
 const { data, updateBannerItems } = useHomepage();
+
 const sliderBlock = computed(
   () => (data.value.blocks.find((block: Block) => block.name === 'UiCarousel')?.options || {}) as BannerSlide,
 );
@@ -364,7 +379,7 @@ const slides = computed({
 });
 
 const activeSlide = ref(0);
-const showSlidesDropdown = ref(false);
+
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
@@ -398,7 +413,7 @@ const addSlide = () => {
       color: '#000',
       bgcolor: '#fff',
       bgopacity: 0.9,
-      textAlignment: 'left',
+      textAlignment: 'center',
       justify: 'center',
       align: 'center',
     },
