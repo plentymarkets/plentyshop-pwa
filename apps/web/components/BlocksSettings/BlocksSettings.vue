@@ -5,8 +5,20 @@
       <SfIconClose />
     </button>
   </div>
+  <component :is="getBlock(blockType)" v-if="blockType" />
 </template>
 <script setup lang="ts">
 import { SfIconClose } from '@storefront-ui/vue';
-const { drawerOpen } = useSiteConfiguration();
+const { drawerOpen, blockType } = useSiteConfiguration();
+const tempBlockPlaceholder = defineComponent({
+  setup() {
+    return () => {
+      return h('h1', 'This block is not implemented yet!');
+    };
+  },
+});
+const getBlock = (view: string) => {
+  if (view === 'UiCarousel') return resolveComponent('BlockSlider');
+  else return tempBlockPlaceholder;
+};
 </script>

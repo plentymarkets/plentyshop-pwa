@@ -29,6 +29,7 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
     drawerView: null,
+    blockType: '',
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
@@ -96,9 +97,10 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   );
 
-  const openDrawerWithView = (view: DrawerView, placement: string) => {
+  const openDrawerWithView = (view: DrawerView, placement: string, blockType: string = '') => {
     state.value.drawerView = view;
     state.value.placement = placement;
+    state.value.blockType = blockType;
     state.value.drawerOpen = true;
   };
 

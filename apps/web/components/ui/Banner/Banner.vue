@@ -26,7 +26,7 @@
   >
     <div
       :class="bannerContentClass"
-      :style="{ backgroundColor: props.bannerProps.text.bgcolor, opacity: props.bannerProps.text.bgopacity }"
+      :style="{ backgroundColor: hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity) }"
       :data-testid="'banner-content-' + props.index"
     >
       <div
@@ -89,6 +89,17 @@ const props = defineProps<{
   index: number;
 }>();
 
+const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
+  const cleanHex = hex.replace('#', '');
+  const fullHex = cleanHex.length === 3
+    ? cleanHex.split('').map(c => c + c).join('')
+    : cleanHex;
+  const red = parseInt(fullHex.substring(0, 2), 16);
+  const green = parseInt(fullHex.substring(2, 4), 16);
+  const blue = parseInt(fullHex.substring(4, 6), 16);
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`
+}
+
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case 'lg': {
@@ -142,7 +153,7 @@ const getContentPosition = (axis: string) => {
     case 'center': {
       return 'center';
     }
-    case 'end': {
+    case 'right': {
       return 'flex-end';
     }
     default: {

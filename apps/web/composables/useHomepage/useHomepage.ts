@@ -1,6 +1,7 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
-import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState } from './types';
+import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex } from './types';
+import type { Slide } from '~/components/ui/Banner/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
@@ -12,6 +13,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     dataIsEmpty: false,
     loading: false,
     showErrors: false,
+    activeIndex: 0,
   }));
 
   const { $i18n } = useNuxtApp();
@@ -65,6 +67,17 @@ export const useHomepage: UseHomepageDataReturn = () => {
     state.value.loading = false;
   };
 
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: Slide[]) => {
+    const carouselBlock = state.value.data.blocks.find((block) => block.name === 'UiCarousel');
+    if (carouselBlock) {
+      carouselBlock.options = { ...carouselBlock.options, ...{ bannerItems: newBannerItems } };
+    }
+  };
+
+  const setIndex: SetIndex = (index: number) => {
+    state.value.activeIndex = index
+  };
+
   watch(
     () => currentLocale.value,
     async (newLocale) => {
@@ -87,6 +100,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
 
   return {
     fetchPageTemplate,
+    updateBannerItems,
+    setIndex,
     ...toRefs(state.value),
   };
 };
