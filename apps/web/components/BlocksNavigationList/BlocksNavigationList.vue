@@ -14,7 +14,10 @@
               'lg:right-[15%] lg:absolute',
             ]"
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
-            @click="addBlock(category.category, variationIndex); (openDrawerWithView('configuration', 'right'))"
+            @click="
+              addBlock(category.category, variationIndex);
+              openDrawerWithView('configuration', 'right');
+            "
           >
             <SfIconAdd class="cursor-pointer" />
           </button>
