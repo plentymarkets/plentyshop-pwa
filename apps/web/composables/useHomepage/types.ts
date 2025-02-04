@@ -1,4 +1,4 @@
-import { BannerProps } from '~/components/ui/Banner/types';
+import { BannerProps, Slide } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
@@ -39,7 +39,7 @@ export interface ProductRecommendedProductsOptions {
 }
 
 export interface BannerSlide {
-  bannerItems: BannerProps[];
+  bannerItems: Slide[];
 }
 
 export type BlockOptions =
@@ -69,8 +69,7 @@ export interface UseHomepageDataState {
   showErrors: boolean;
 }
 
-
-export type UpdateBannerItems = (newBannerItems: BannerProps[]) => void;
+export type UpdateBannerItems = (newBannerItems: Slide[]) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
