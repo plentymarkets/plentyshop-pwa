@@ -65,7 +65,9 @@ const { openDrawerWithView } = useSiteConfiguration();
 
 const triggerEdit = () => {
   emit('edit', props.index);
-  openDrawerWithView('blocksSettings', 'right');
+  if (useRuntimeConfig().public.experimentalBlockEditForm) {
+    openDrawerWithView('blocksSettings', 'right');
+  }
 };
 const triggerDelete = () => {
   emit('delete', props.index);
