@@ -16,7 +16,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               addBlock(category.category, variationIndex);
-              openDrawerWithView('blocksSettings', 'right');
+              tempOpenDrawerCondition();
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -36,5 +36,11 @@ const { newBlockPosition, openDrawerWithView } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, newBlockPosition.value);
+};
+
+const tempOpenDrawerCondition = () => {
+  if (useRuntimeConfig().public.experimentalBlockEditForm) {
+    openDrawerWithView('blocksSettings', 'right');
+  }
 };
 </script>
