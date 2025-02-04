@@ -1,6 +1,6 @@
 <template>
   <div :class="['flex flex-col md:flex-row items-center relative']">
-    <UiImageTextForm />
+    <!-- <UiImageTextForm /> -->
     <div :class="['md:w-1/2']">
       <NuxtImg
         :src="getImageUrl()"

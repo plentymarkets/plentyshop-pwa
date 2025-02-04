@@ -1,5 +1,5 @@
 <template>
-  <form class="space-y-4 absolute bg-white border border-gray-800 shadow-md p-4" style="z-index: 100">
+  <form class="w-full space-y-4 absolute bg-white">
     <!-- Image Group -->
     <UiAccordionItem
       v-model="imageGroupOpen"
@@ -72,31 +72,29 @@
           </SfInput>
         </label>
       </div>
-
       <fieldset class="py-2">
-        <legend class="text-sm font-medium text-gray-700">Image Align</legend>
-        <div class="mt-2 space-y-2">
-          <div class="flex items-center">
-            <SfInput type="radio" value="left">
-              <template #suffix>
-                <label for="align-left" class="rounded-lg cursor-pointer">
-                  <input id="align-left" type="radio" value="left" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
-            <label for="align-left" class="ml-3 block text-sm font-medium text-gray-700">Left</label>
-          </div>
+        <UiFormLabel>Image Align</UiFormLabel>
 
-          <div class="flex items-center">
-            <SfInput type="radio" value="right">
-              <template #suffix>
-                <label for="align-right" class="rounded-lg cursor-pointer">
-                  <input id="align-right" type="radio" value="right" class="invisible w-8" />
-                </label>
-              </template>
-            </SfInput>
-            <label for="align-right" class="ml-3 block text-sm font-medium text-gray-700">Right</label>
-          </div>
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <SfRadio v-model="selectedAlign" id="align-left" name="image-align" value="left" class="hidden" />
+          <label
+            for="align-left"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="selectedAlign === 'left' ? 'bg-gray-100 text-gray-900' : ''"
+          >
+            <SfIconCheck v-if="selectedAlign === 'left'" class="mr-1 w-[1.1rem]" />
+            Left
+          </label>
+
+          <SfRadio v-model="selectedAlign" id="align-right" name="image-align" value="right" class="hidden" />
+          <label
+            for="align-right"
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="selectedAlign === 'right' ? 'bg-gray-100 text-gray-900' : ''"
+          >
+            <SfIconCheck v-if="selectedAlign === 'right'" class="mr-1 w-[1.1rem]" />
+            Right
+          </label>
         </div>
       </fieldset>
     </UiAccordionItem>
@@ -306,16 +304,15 @@
 
 <script setup lang="ts">
 import type { ImageTextProps2 } from './types';
-import { SfTooltip, SfInput, SfTextarea } from '@storefront-ui/vue';
+import { SfTooltip, SfInput, SfTextarea, SfRadio, SfIconCheck } from '@storefront-ui/vue';
 const { data } = useHomepage();
 
 const imageGroupOpen = ref(false);
 const buttonGroup = ref(false);
 const textGroup = ref(false);
+const selectedAlign = ref('left'); // Default selected value
 
 const uiImageTextBlock = computed(
   () => data.value.blocks.find((block) => block.name === 'UiImageText')?.options as ImageTextProps2,
 );
-
-
 </script>
