@@ -422,7 +422,7 @@ const addSlide = () => {
     },
     button: {
       label: 'Button',
-      link: '/',
+      link: '',
       variant: 'primary',
     },
   };
