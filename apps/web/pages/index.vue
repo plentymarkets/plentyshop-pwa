@@ -61,7 +61,7 @@ const openBlockList = (index: number, position: number) => {
   const insertIndex = position === -1 ? index : index + 1;
   togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
   updateNewBlockPosition(insertIndex);
-  openDrawerWithView('blocksList', 'left');
+  openDrawerWithView('blocksList');
 };
 
 const getComponent = (name: string) => {
