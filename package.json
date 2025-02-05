@@ -7,7 +7,6 @@
     "apps/*"
   ],
   "scripts": {
-    "prepare": "is-ci || husky install",
     "update:sdk": "npm update @plentymarkets/shop-api",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "npm run turbo:disable-telemetry && turbo run build",
