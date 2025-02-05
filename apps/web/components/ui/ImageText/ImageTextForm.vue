@@ -1,4 +1,5 @@
 <template>
+  <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
   <form class="w-full space-y-4 absolute bg-white">
     <!-- Image Group -->
     <UiAccordionItem
@@ -311,40 +312,25 @@
         </label>
       </div>
 
-      <fieldset>
-        <legend class="text-sm font-medium text-gray-700">Outline</legend>
-        <div class="mt-2 space-y-2">
-          <div class="flex items-center">
-            <SfInput
-              id="align-left"
-              name="text-align"
-              type="radio"
-              value="on"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            />
-            <label for="align-left" class="ml-3 block text-sm font-medium text-gray-700">On</label>
-          </div>
+      <div class="flex items-center justify-between w-full py-2">
+        <label class="inline-flex items-center cursor-pointer w-full justify-between">
+          <UiFormLabel>Outlined</UiFormLabel>
 
-          <div class="flex items-center">
-            <SfInput
-              id="align-right"
-              name="text-align"
-              type="radio"
-              value="off"
-              class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
-            />
-            <label for="align-right" class="ml-3 block text-sm font-medium text-gray-700">Off</label>
-          </div>
-        </div>
-      </fieldset>
+          <SfCheckbox type="checkbox" value="" class="sr-only peer" />
+          <div
+            class="relative border-[2px] border-[#646F68] w-11 h-6 bg-gray-white rounded-full peer dark:bg-white  peer-checked:after:translate-x-[120%] rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-[#646F68] after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-[#646F68]"
+          />
+        </label>
+      </div>
     </UiAccordionItem>
     <!-- EndButton Group -->
   </form>
+  </div>
 </template>
 
 <script setup lang="ts">
 import type { ImageTextProps2 } from './types';
-import { SfTooltip, SfInput, SfTextarea, SfRadio, SfIconCheck } from '@storefront-ui/vue';
+import { SfTooltip, SfInput, SfTextarea, SfRadio, SfIconCheck, SfCheckbox } from '@storefront-ui/vue';
 const { data } = useHomepage();
 
 const imageGroupOpen = ref(false);
