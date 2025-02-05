@@ -1,9 +1,16 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
-  <div class="w-100 relative" :class="{ 'lg:flex': drawerOpen }">
+  <div
+    class="w-100 relative"
+    :class="{
+      'lg:flex': drawerOpen,
+      'lg:flex-row-reverse': placement !== 'left',
+    }"
+  >
     <SiteConfigurationDrawer
       v-if="drawerOpen"
-      class="sm:absolute lg:relative mr-3 bg-white"
+      class="absolute lg:relative bg-white"
+      :class="{ 'mr-3': placement === 'left', 'ml-3': placement === 'right' }"
       :style="`font-family: ${config.font}`"
     />
 
@@ -31,13 +38,11 @@ const route = useRoute();
 const { locale } = useI18n();
 const { setStaticPageMeta } = useCanonical();
 
-const { currentFont } = useSiteConfiguration();
+const { drawerOpen, currentFont, placement } = useSiteConfiguration();
 
 const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
-
-const { drawerOpen } = useSiteConfiguration();
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');

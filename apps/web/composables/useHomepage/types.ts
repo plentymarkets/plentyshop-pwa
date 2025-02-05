@@ -1,4 +1,4 @@
-import type { BannerProps } from '~/components/ui/Banner/types';
+import type { BannerProps, Slide } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
@@ -38,7 +38,12 @@ export interface ProductRecommendedProductsOptions {
   headline?: string;
 }
 
-type BlockOptions =
+export interface BannerSlide {
+  bannerItems: Slide[];
+}
+
+export type BlockOptions =
+  | BannerSlide
   | BannerProps
   | UiHeroCarouselOptions
   | UiMediaCardOptions
@@ -62,15 +67,22 @@ export interface UseHomepageDataState {
   dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
+  activeIndex: number;
 }
+
+export type UpdateBannerItems = (newBannerItems: Slide[]) => void;
+export type SetIndex = (index: number) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   initialBlocks: Ref<UseHomepageDataState['initialBlocks']>;
   dataIsEmpty: Readonly<Ref<UseHomepageDataState['dataIsEmpty']>>;
+  activeIndex: Readonly<Ref<UseHomepageDataState['activeIndex']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
+  updateBannerItems: UpdateBannerItems;
+  setIndex: SetIndex;
 }
 
 export type UseHomepageDataReturn = () => UseHomepage;
