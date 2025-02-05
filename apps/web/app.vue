@@ -1,6 +1,6 @@
 <template>
   <UiToolbar v-if="isPreview" :style="`font-family: ${config.font}`" />
-  <div class="w-100 relative" :class="{ 'lg:flex': drawerOpen }">
+  <div class="w-100 relative" :class="{ 'lg:flex': drawerOpen, 'lg:flex-row-reverse': placement !== 'left' }">
     <SiteConfigurationDrawer
       v-if="drawerOpen"
       class="sm:absolute lg:relative mr-3 bg-white"
@@ -35,7 +35,7 @@ const isPreview = ref(false);
 const config = useRuntimeConfig().public;
 const showConfigurationDrawer = config.showConfigurationDrawer;
 
-const { drawerOpen } = useSiteConfiguration();
+const { drawerOpen, placement } = useSiteConfiguration();
 
 onMounted(() => {
   const pwaCookie = useCookie('pwa');

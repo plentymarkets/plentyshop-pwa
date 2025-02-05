@@ -23,11 +23,12 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     data: [],
     drawerOpen: false,
     loading: false,
+    placement: 'left',
     newBlockPosition: 0,
     currentFont: useRuntimeConfig().public.font,
     primaryColor: useRuntimeConfig().public.primaryColor,
     secondaryColor: useRuntimeConfig().public.secondaryColor,
-    drawerView: 'settings',
+    drawerView: null,
     blockSize: useRuntimeConfig().public.blockSize,
     selectedFont: { caption: useRuntimeConfig().public.font, value: useRuntimeConfig().public.font },
     initialData: {
@@ -95,13 +96,15 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   );
 
-  const openDrawerWithView = (view: DrawerView) => {
+  const openDrawerWithView = (view: DrawerView, placement: string) => {
     state.value.drawerView = view;
+    state.value.placement = placement;
     state.value.drawerOpen = true;
   };
 
   const closeDrawer = () => {
     state.value.drawerOpen = false;
+    state.value.drawerView = null;
   };
 
   const updateBlockSize: UpdateBlockSize = (size: string) => {

@@ -1,5 +1,5 @@
 import type { TailwindPalette } from '~/utils/tailwindHelper';
-export type DrawerView = 'settings' | 'blocks' | null;
+export type DrawerView = 'settings' | 'blocksList' | 'blocksSettings' | null;
 export type SelectedFont = { caption: string; value: string };
 export type ConfigurationSettings = {
   blockSize: string;
@@ -11,6 +11,7 @@ export type ConfigurationSettings = {
 export interface UseSiteConfigurationState {
   data: [];
   loading: boolean;
+  placement: string;
   drawerOpen: boolean;
   newBlockPosition: number;
   currentFont: string;
@@ -32,6 +33,7 @@ export type SaveSettings = () => void;
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
   loading: Readonly<Ref<boolean>>;
+  placement: Readonly<Ref<UseSiteConfigurationState['placement']>>;
   drawerOpen: Readonly<Ref<UseSiteConfigurationState['drawerOpen']>>;
   newBlockPosition: Readonly<Ref<UseSiteConfigurationState['newBlockPosition']>>;
   currentFont: Readonly<Ref<UseSiteConfigurationState['currentFont']>>;
@@ -47,7 +49,7 @@ export interface UseSiteConfiguration {
   updateSecondaryColor: SetColorPalette;
   updateBlockSize: UpdateBlockSize;
   saveSettings: SaveSettings;
-  openDrawerWithView: (view: DrawerView) => void;
+  openDrawerWithView: (view: DrawerView, placement: string) => void;
   closeDrawer: () => void;
   settingsIsDirty: ComputedRef<boolean>;
 }
