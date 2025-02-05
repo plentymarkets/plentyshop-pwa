@@ -16,16 +16,16 @@
         @input="handleInput"
         @scroll="syncScroll"
       />
-      <SfButton id="close" size="sm" class="absolute top-2 right-2" @click="closeEditor"
-        ><SfIconCancel class="cursor-pointer"
-      /></SfButton>
+      <UiButton id="close" size="sm" class="absolute top-2 right-2" @click="closeEditor">
+        <SfIconCancel class="cursor-pointer" />
+      </UiButton>
     </div>
     <div v-if="errorMessage" class="text-red-500 mt-2 text-sm">{{ errorMessage }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfIconCancel, SfButton } from '@storefront-ui/vue';
+import { SfIconCancel } from '@storefront-ui/vue';
 import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<{
