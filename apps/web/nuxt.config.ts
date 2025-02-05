@@ -63,7 +63,7 @@ export default defineNuxtConfig({
       blockSize: 'm',
       primaryColor: '#062633',
       secondaryColor: '#31687d',
-      experimentalBlockEditForm: false,
+      experimentalBlockEditForm: process.env.ENABLE_BLOCK_EDIT || false,
     },
   },
   modules: [
