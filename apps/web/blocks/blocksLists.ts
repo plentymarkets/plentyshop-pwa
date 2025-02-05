@@ -414,6 +414,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 heading',
                 subtitle: 'subtitle',
                 textAlignment: 'left',
+                color: '#000',
               },
               button: {
                 label: 'Button',
@@ -438,6 +439,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 Titel',
                 subtitle: 'Untertitel',
                 textAlignment: 'right',
+                color: '#000',
               },
               button: {
                 label: 'Button',
@@ -467,6 +469,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 heading',
                 subtitle: 'Subtitle',
                 textAlignment: 'right',
+                color: '#000',
               },
               button: {
                 label: 'Button',
@@ -491,6 +494,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 Titel',
                 subtitle: 'Untertitel',
                 textAlignment: 'left',
+                color: '#000',
               },
               button: {
                 label: 'Button',

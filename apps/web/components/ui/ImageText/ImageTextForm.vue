@@ -82,7 +82,11 @@
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
               @click="uiImageTextBlock.image.imageAlignment = 'left'"
             >
-              <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'left'" class="mr-1 w-[1.1rem]" />
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }"
+                class="mr-1 w-[1.1rem]"
+              />
+
               Left
             </div>
 
@@ -92,7 +96,10 @@
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
               @click="uiImageTextBlock.image.imageAlignment = 'right'"
             >
-              <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'right'" class="mr-1 w-[1.1rem]" />
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'right' }"
+                class="mr-1 w-[1.1rem]"
+              />
               Right
             </div>
           </div>
@@ -196,56 +203,44 @@
           <legend class="text-sm font-medium text-gray-700">Text Align</legend>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-            <label
+            <div
               for="text-align-left"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'left' }"
               @click="uiImageTextBlock.text.textAlignment = 'left'"
             >
-              <SfRadio
-                id="text-align-left"
-                v-model="uiImageTextBlock.text.textAlignment"
-                name="text-align-left"
-                value="left"
-                class="hidden"
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.text.textAlignment !== 'left' }"
+                class="mr-1 w-[1.1rem]"
               />
-              <SfIconCheck v-if="uiImageTextBlock.text.textAlignment === 'left'" class="mr-1 w-[1.1rem]" />
               Left
-            </label>
+            </div>
 
-            <label
+            <div
               for="text-align-center"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'center' }"
               @click="uiImageTextBlock.text.textAlignment = 'center'"
             >
-              <SfRadio
-                id="text-align-center"
-                v-model="uiImageTextBlock.text.textAlignment"
-                name="text-align-center"
-                value="center"
-                class="hidden"
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.text.textAlignment !== 'center' }"
+                class="mr-1 w-[1.1rem]"
               />
-              <SfIconCheck v-if="uiImageTextBlock.text.textAlignment === 'center'" class="mr-1 w-[1.1rem]" />
               Center
-            </label>
+            </div>
 
-            <label
+            <div
               for="text-align-right"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'right' }"
               @click="uiImageTextBlock.text.textAlignment = 'right'"
             >
-              <SfRadio
-                id="text-align-right"
-                v-model="uiImageTextBlock.text.textAlignment"
-                name="text-align-right"
-                value="right"
-                class="hidden"
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.text.textAlignment !== 'right' }"
+                class="mr-1 w-[1.1rem]"
               />
-              <SfIconCheck v-if="uiImageTextBlock.text.textAlignment === 'right'" class="mr-1 w-[1.1rem]" />
               Right
-            </label>
+            </div>
           </div>
         </fieldset>
       </UiAccordionItem>
@@ -302,7 +297,7 @@
 
 <script setup lang="ts">
 import type { ImageTextProps2 } from './types';
-import { SfTooltip, SfInput, SfTextarea, SfRadio, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
+import { SfTooltip, SfInput, SfTextarea, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
 const { data } = useHomepage();
 
 const imageGroupOpen = ref(false);
