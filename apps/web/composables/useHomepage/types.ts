@@ -71,6 +71,7 @@ export interface UseHomepageDataState {
 }
 
 export type UpdateBannerItems = (newBannerItems: Slide[]) => void;
+export type UpdateProductRecommendedProductsOptions = (newRecomandedBlock: ProductRecommendedProductsOptions) => void;
 export type SetIndex = (index: number) => void;
 
 export interface UseHomepage {
@@ -82,6 +83,7 @@ export interface UseHomepage {
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
   updateBannerItems: UpdateBannerItems;
+  updateProductRecommendedProductsOptions: UpdateProductRecommendedProductsOptions;
   setIndex: SetIndex;
 }
 

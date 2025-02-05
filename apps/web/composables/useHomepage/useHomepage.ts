@@ -93,6 +93,13 @@ export const useHomepage: UseHomepageDataReturn = () => {
       carouselBlock.options = { ...carouselBlock.options, ...{ bannerItems: newBannerItems } };
     }
   };
+  
+  const updateProductRecommendedProductsOptions = (newRecomandedBlock: ProductRecommendedProductsOptions) => {
+    const recomandedBlock = state.value.data.blocks.find((block) => block.name === 'RecommendedProducts');
+    if (recomandedBlock) {
+      recomandedBlock.options = { ...recomandedBlock.options, ...{ categoryId: newRecomandedBlock.categoryId, headline: newRecomandedBlock.headline } };
+    }
+  };
 
   const setIndex: SetIndex = (index: number) => {
     state.value.activeIndex = index;
@@ -101,6 +108,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   return {
     fetchPageTemplate,
     updateBannerItems,
+    updateProductRecommendedProductsOptions,
     setIndex,
     ...toRefs(state.value),
   };
