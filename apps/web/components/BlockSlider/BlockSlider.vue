@@ -1,7 +1,7 @@
 <template>
   <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div class="mb-6">
-      <div class="flex item-center justify-between mb-4 p-4">
+      <div class="flex item-center justify-between mb-4 p-4 pr-2">
         <h2>Slides</h2>
         <div class="flex item-center">
           <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
@@ -12,7 +12,7 @@
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
 
-            <div v-if="isOpen" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
+            <div v-if="isOpen" class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50">
               <div class="flex justify-end p-2">
                 <SfIconClose class="cursor-pointer" @click="close" />
               </div>
