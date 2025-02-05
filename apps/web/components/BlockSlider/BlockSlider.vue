@@ -161,7 +161,7 @@
                 <input
                   v-model.number="slides[activeSlide].image.brightness"
                   type="range"
-                  min="0.1"
+                  min="0"
                   max="1"
                   step="0.01"
                   class="w-full"
@@ -172,7 +172,7 @@
                 <input
                   v-model.number="slides[activeSlide].image.brightness"
                   type="number"
-                  min="0.1"
+                  min="0"
                   max="1"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
                   @input="clampBrightness($event, 'image')"
@@ -267,7 +267,7 @@
                 <input
                   v-model.number="slides[activeSlide].text.bgopacity"
                   type="range"
-                  min="0.1"
+                  min="0"
                   max="1"
                   step="0.01"
                   class="w-full"
@@ -278,7 +278,7 @@
                 <input
                   v-model.number="slides[activeSlide].text.bgopacity"
                   type="number"
-                  min="0.1"
+                  min="0"
                   max="1"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
                   @input="clampBrightness($event, 'text')"
