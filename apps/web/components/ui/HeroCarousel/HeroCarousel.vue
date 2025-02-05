@@ -70,18 +70,15 @@ const enableModules = computed(() => bannerItems.length > 1);
 
 const generalTextColor = ref('inherit');
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let slider: SwiperType | null = null;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSwiperInit = (swiper: any) => {
+const onSwiperInit = (swiper: SwiperType) => {
   generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
   slider = swiper;
   setIndex(swiper.realIndex);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSlideChange = async (swiper: any) => {
+const onSlideChange = async (swiper: SwiperType) => {
   if (swiper.realIndex !== activeIndex.value) {
     await nextTick();
     swiper.update();
