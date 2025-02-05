@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px] p-4">
+  <div class="block-slider-edit sticky top-[52px] p-4 h-[calc(100vh-52px)] overflow-y-auto">
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4">
         <h2>Slides</h2>
@@ -20,12 +20,19 @@
               <div class="p-2">
                 <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
-                    <SfIconArrowUpward v-if="index !== 0" class="cursor-pointer text-neutral-500 mr-2" size="sm" />
+                    <SfIconArrowUpward
+                        v-if="index !== 0"
+                        class="cursor-pointer text-neutral-500 mr-2"
+                        size="sm"
+                        @click.stop="moveSlideUp(index)"
+                    />
                     <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
+
                     <SfIconArrowDownward
-                      v-if="index + 1 !== slides.length"
-                      class="cursor-pointer text-neutral-500 mr-2"
-                      size="sm"
+                        v-if="index + 1 !== slides.length"
+                        class="cursor-pointer text-neutral-500 mr-2"
+                        size="sm"
+                        @click.stop="moveSlideDown(index)"
                     />
                     <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
                     <span>Slide {{ index + 1 }}</span>
@@ -146,8 +153,9 @@
                 <input
                   v-model.number="slides[activeSlide].image.brightness"
                   type="range"
-                  min="0"
-                  max="100"
+                  min="0.1"
+                  max="1"
+                  step="0.01"
                   class="w-full"
                 />
               </div>
@@ -156,12 +164,11 @@
                 <input
                   v-model.number="slides[activeSlide].image.brightness"
                   type="number"
-                  min="0"
-                  max="100"
+                  min="0.1"
+                  max="1"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
                   @input="clampBrightness($event, 'image')"
                 />
-                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">%</span>
               </div>
             </div>
           </div>
@@ -252,8 +259,9 @@
                 <input
                   v-model.number="slides[activeSlide].text.bgopacity"
                   type="range"
-                  min="0"
-                  max="100"
+                  min="0.1"
+                  max="1"
+                  step="0.01"
                   class="w-full"
                 />
               </div>
@@ -262,12 +270,11 @@
                 <input
                   v-model.number="slides[activeSlide].text.bgopacity"
                   type="number"
-                  min="0"
-                  max="100"
+                  min="0.1"
+                  max="1"
                   class="w-20 px-2 py-1 border rounded text-color-red-500"
                   @input="clampBrightness($event, 'text')"
                 />
-                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500">%</span>
               </div>
             </div>
           </div>
@@ -374,7 +381,7 @@ import type { BannerSlide } from '~/composables/useHomepage/types';
 import Multiselect from 'vue-multiselect';
 
 const { isOpen, open, close } = useDisclosure();
-const { data, updateBannerItems, setIndex } = useHomepage();
+const { data, updateBannerItems, setIndex, activeIndex: activeSlide } = useHomepage();
 
 const sliderBlock = computed(
   () => (data.value.blocks.find((block: Block) => block.name === 'UiCarousel')?.options || {}) as BannerSlide,
@@ -387,14 +394,11 @@ const slides = computed({
   set: (value) => updateBannerItems(value),
 });
 
-const activeSlide = ref(0);
-
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
 
 const slideClick = (index: number) => {
-  activeSlide.value = index;
   setIndex(index);
 };
 
@@ -403,49 +407,85 @@ const clampBrightness = (event: Event, type: string) => {
   const nextValue = Number.parseFloat(currentValue);
 
   if (type === 'image') {
-    slides.value[activeSlide.value].image.brightness = clamp(nextValue, 0, 100);
+    slides.value[activeSlide.value].image.brightness = clamp(nextValue, 0, 1);
   }
   if (type === 'text') {
-    slides.value[activeSlide.value].text.bgopacity = clamp(nextValue, 0, 100);
+    slides.value[activeSlide.value].text.bgopacity = clamp(nextValue, 0, 1);
   }
 };
 
-const addSlide = () => {
+const addSlide = async () => {
   const newSlide: Slide = {
     image: {
-      desktop: '',
-      tablet: '',
-      mobile: '',
-      brightness: 50,
+      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      brightness: 0.5,
       alt: '',
     },
     text: {
-      pretitle: '',
-      title: '',
-      subtitle: '',
-      htmlDescription: '',
+      pretitle: 'PreTitle',
+      title: 'Title',
+      subtitle: 'SubTitle',
+      htmlDescription: 'Text that supports HTML formatting',
       color: '#000',
       bgcolor: '#fff',
-      bgopacity: 0.9,
+      bgopacity: 1,
       textAlignment: 'left',
       justify: 'center',
       align: 'left',
     },
     button: {
       label: 'Button',
-      link: '',
+      link: 'Enter URL here',
       variant: 'primary',
     },
   };
 
   slides.value = [...slides.value, newSlide];
+
+  await nextTick();
   slideClick(slides.value.length - 1);
 };
 
-const deleteSlide = (index: number) => {
+const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
   slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
-  activeSlide.value = Math.min(activeSlide.value, slides.value.length - 1);
+  if (activeSlide.value === index) {
+    setIndex(index - 1);
+  }
+  await nextTick();
+
+};
+
+const moveSlideUp = async (index: number) => {
+  if (index <= 0) return;
+
+  const newSlides = [...slides.value];
+
+  [newSlides[index - 1], newSlides[index]] = [newSlides[index], newSlides[index - 1]];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  if (activeSlide.value === index) {
+    setIndex(index - 1);
+  }
+};
+
+const moveSlideDown = async (index: number) => {
+  if (index >= slides.value.length - 1) return;
+
+  const newSlides = [...slides.value];
+
+  [newSlides[index], newSlides[index + 1]] = [newSlides[index + 1], newSlides[index]];
+  slides.value = newSlides;
+
+  await nextTick();
+
+  if (activeSlide.value === index) {
+    setIndex(index + 1);
+  }
 };
 </script>
 

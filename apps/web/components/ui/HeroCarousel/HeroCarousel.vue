@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
     <Swiper
+
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -61,6 +62,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { BannerProps } from '../Banner/types';
+import type { Swiper as SwiperType } from 'swiper';
 
 const { activeIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
@@ -70,7 +72,7 @@ const enableModules = computed(() => bannerItems.length > 1);
 const generalTextColor = ref('inherit');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-let slider = {} as any;
+let slider: SwiperType | null = null;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSwiperInit = (swiper: any) => {
@@ -80,15 +82,31 @@ const onSwiperInit = (swiper: any) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSlideChange = (swiper: any) => {
-  setIndex(swiper.realIndex);
+const onSlideChange = async (swiper: any) => {
+
+  if (swiper.realIndex !== activeIndex.value) {
+    console.log('asd')
+    console.log(swiper.realIndex, activeIndex.value)
+    await nextTick();
+    swiper.update();
+
+    setIndex(swiper.realIndex);
+  }
 };
 
 watch(
-  () => activeIndex.value,
-  (index: number) => {
-    slider.slideTo(index);
-  },
+    () => activeIndex.value,
+    (newIndex) => {
+      if (
+          slider &&
+          !slider.destroyed &&
+          slider.realIndex !== newIndex
+      ) {
+        slider.update();
+        slider.slideTo(newIndex);
+      }
+    },
+    { flush: 'post' }
 );
 </script>
 
