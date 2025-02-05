@@ -32,7 +32,7 @@ jobs:
         with:
           ref: ${{ inputs.tag-version || github.ref }}
 
-      - name: Setup Node and Yarn
+      - name: Setup Node
         uses: ./.github/actions/setup
 
       - name: Setup environment
@@ -45,10 +45,12 @@ jobs:
           EOT
 
       - name: Build
-        run: yarn build
+        run: npm run build
 
       - name: Install productive dependencies for server
-        run: yarn workspaces focus --production
+        run: npm ci --workspaces
+        env:
+          NODE_ENV: production
 
       - name: Copy Middleware Server
         run: |
