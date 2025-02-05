@@ -21,18 +21,18 @@
                 <div v-for="(_, index) in slides" :key="index" class="flex items-center justify-between p-2 rounded">
                   <div class="flex items-center">
                     <SfIconArrowUpward
-                        v-if="index !== 0"
-                        class="cursor-pointer text-neutral-500 mr-2"
-                        size="sm"
-                        @click.stop="moveSlideUp(index)"
+                      v-if="index !== 0"
+                      class="cursor-pointer text-neutral-500 mr-2"
+                      size="sm"
+                      @click.stop="moveSlideUp(index)"
                     />
                     <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
 
                     <SfIconArrowDownward
-                        v-if="index + 1 !== slides.length"
-                        class="cursor-pointer text-neutral-500 mr-2"
-                        size="sm"
-                        @click.stop="moveSlideDown(index)"
+                      v-if="index + 1 !== slides.length"
+                      class="cursor-pointer text-neutral-500 mr-2"
+                      size="sm"
+                      @click.stop="moveSlideDown(index)"
                     />
                     <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
                     <span>Slide {{ index + 1 }}</span>
@@ -455,7 +455,6 @@ const deleteSlide = async (index: number) => {
     setIndex(index - 1);
   }
   await nextTick();
-
 };
 
 const moveSlideUp = async (index: number) => {

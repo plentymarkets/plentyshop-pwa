@@ -1,7 +1,6 @@
 <template>
   <ClientOnly>
     <Swiper
-
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -83,10 +82,7 @@ const onSwiperInit = (swiper: any) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const onSlideChange = async (swiper: any) => {
-
   if (swiper.realIndex !== activeIndex.value) {
-    console.log('asd')
-    console.log(swiper.realIndex, activeIndex.value)
     await nextTick();
     swiper.update();
 
@@ -95,18 +91,14 @@ const onSlideChange = async (swiper: any) => {
 };
 
 watch(
-    () => activeIndex.value,
-    (newIndex) => {
-      if (
-          slider &&
-          !slider.destroyed &&
-          slider.realIndex !== newIndex
-      ) {
-        slider.update();
-        slider.slideTo(newIndex);
-      }
-    },
-    { flush: 'post' }
+  () => activeIndex.value,
+  (newIndex) => {
+    if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
+      slider.update();
+      slider.slideTo(newIndex);
+    }
+  },
+  { flush: 'post' },
 );
 </script>
 
