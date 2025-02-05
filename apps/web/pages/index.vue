@@ -54,9 +54,6 @@ const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteC
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
 
-console.log('data', data);
-
-
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 

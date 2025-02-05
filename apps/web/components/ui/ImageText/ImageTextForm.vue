@@ -1,7 +1,6 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <form class="w-full space-y-4 absolute bg-white">
-      <!-- Image Group -->
       <UiAccordionItem
         v-model="imageGroupOpen"
         summary-active-class="bg-neutral-100 border-t-0"
@@ -113,9 +112,7 @@
           </div>
         </fieldset>
       </UiAccordionItem>
-      <!-- End Image Group -->
 
-      <!-- Text Group -->
       <UiAccordionItem
         v-model="textGroup"
         summary-active-class="bg-neutral-100 border-t-0"
@@ -177,7 +174,7 @@
             v-model="uiImageTextBlock.text.htmlDescription"
             name="html-description"
             rows="3"
-            class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
           />
         </div>
 
@@ -213,17 +210,16 @@
           <legend class="text-sm font-medium text-gray-700">Text Align</legend>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-            <!-- Left Align -->
             <label
-              for="align-left"
+              for="text-align-left"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'left' }"
               @click="uiImageTextBlock.text.textAlignment = 'left'"
             >
               <SfRadio
+                id="text-align-left"
                 v-model="uiImageTextBlock.text.textAlignment"
-                id="align-left"
-                name="text-align"
+                name="text-align-left"
                 value="left"
                 class="hidden"
               />
@@ -231,17 +227,16 @@
               Left
             </label>
 
-            <!-- Center Align -->
             <label
-              for="align-center"
+              for="text-align-center"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'center' }"
               @click="uiImageTextBlock.text.textAlignment = 'center'"
             >
               <SfRadio
+                id="text-align-center"
                 v-model="uiImageTextBlock.text.textAlignment"
-                id="align-center"
-                name="text-align"
+                name="text-align-center"
                 value="center"
                 class="hidden"
               />
@@ -249,17 +244,16 @@
               Center
             </label>
 
-            <!-- Right Align -->
             <label
-              for="align-right"
+              for="text-align-right"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'right' }"
               @click="uiImageTextBlock.text.textAlignment = 'right'"
             >
               <SfRadio
+                id="text-align-right"
                 v-model="uiImageTextBlock.text.textAlignment"
-                id="align-right"
-                name="text-align"
+                name="text-align-right"
                 value="right"
                 class="hidden"
               />
@@ -269,10 +263,6 @@
           </div>
         </fieldset>
       </UiAccordionItem>
-      <!-- End Text Group -->
-
-      <!-- Button Group -->
-
       <UiAccordionItem
         v-model="buttonGroup"
         summary-active-class="bg-neutral-100 border-t-0"
@@ -320,7 +310,6 @@
           />
         </div>
       </UiAccordionItem>
-      <!-- EndButton Group -->
     </form>
   </div>
 </template>
