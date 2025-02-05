@@ -4,6 +4,7 @@
 
 ### New
 
+- Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
 - You can now add blocks on homepage from the blocks side nav!
@@ -11,6 +12,7 @@
 - Added the logic to remove cookies after revoking consent.
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
+- Added shipping page no configuration fallback text
 
 ### 👷 Changed
 
