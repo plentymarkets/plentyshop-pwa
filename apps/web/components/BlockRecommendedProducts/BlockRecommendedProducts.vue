@@ -8,13 +8,11 @@
 </template>
 
 <script setup lang="ts">
-import { clamp } from '@storefront-ui/shared';
 import {
   SfInput,
   useDisclosure,
 } from '@storefront-ui/vue';
 
-const { open } = useDisclosure();
 const { data, updateProductRecommendedProductsOptions } = useHomepage();
 
 const recomandedBlock = computed(
