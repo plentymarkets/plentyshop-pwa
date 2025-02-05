@@ -64,8 +64,11 @@ const emit = defineEmits(['edit', 'delete', 'change-position']);
 const { openDrawerWithView } = useSiteConfiguration();
 
 const triggerEdit = () => {
-  // emit('edit', props.index);
-  openDrawerWithView('blocksSettings', props.blocks.name);
+  if (useRuntimeConfig().public.experimentalBlockEditForm) {
+    openDrawerWithView('blocksSettings', props.blocks.name);
+  } else {
+    emit('edit', props.index);
+  }
 };
 const triggerDelete = () => {
   emit('delete', props.index);
