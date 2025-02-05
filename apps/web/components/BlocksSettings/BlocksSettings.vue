@@ -6,6 +6,9 @@
         <SfIconClose />
       </UiButton>
     </header>
+
+    <UiImageTextForm />
+
   </div>
 </template>
 <script setup lang="ts">

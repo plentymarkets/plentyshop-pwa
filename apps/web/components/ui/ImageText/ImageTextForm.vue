@@ -76,14 +76,7 @@
           <UiFormLabel>Image Align</UiFormLabel>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-            <SfRadio
-              id="align-left"
-              v-model="uiImageTextBlock.image.imageAlignment"
-              name="image-align"
-              value="left"
-              class="hidden"
-            />
-            <label
+            <div
               for="align-left"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
@@ -91,16 +84,9 @@
             >
               <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'left'" class="mr-1 w-[1.1rem]" />
               Left
-            </label>
+            </div>
 
-            <SfRadio
-              id="align-right"
-              v-model="uiImageTextBlock.image.imageAlignment"
-              name="image-align"
-              value="right"
-              class="hidden"
-            />
-            <label
+            <div
               for="align-right"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
@@ -108,7 +94,7 @@
             >
               <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'right'" class="mr-1 w-[1.1rem]" />
               Right
-            </label>
+            </div>
           </div>
         </fieldset>
       </UiAccordionItem>
@@ -306,7 +292,7 @@
           <UiFormLabel>Outlined</UiFormLabel>
           <SfSwitch
             v-model="isPrimaryVariant"
-            class="checked:before:bg-[#646F68] checked:bg-white checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
+            class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
           />
         </div>
       </UiAccordionItem>
