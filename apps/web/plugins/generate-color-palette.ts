@@ -13,8 +13,10 @@ export default defineNuxtPlugin(async () => {
   };
 
   try {
-    const primaryPalette = buildPalette('primary', process.env.NUXT_PUBLIC_PRIMARY_COLOR);
-    const secondaryPalette = buildPalette('secondary', process.env.NUXT_PUBLIC_SECONDARY_COLOR);
+    const primaryColor = process.env.NUXT_PUBLIC_PRIMARY_COLOR || '#062633';
+    const secondaryColor = process.env.NUXT_PUBLIC_SECONDARY_COLOR || '#31687d';
+    const primaryPalette = buildPalette('primary', primaryColor);
+    const secondaryPalette = buildPalette('secondary', secondaryColor);
 
     const colors = [...primaryPalette, ...secondaryPalette];
 
