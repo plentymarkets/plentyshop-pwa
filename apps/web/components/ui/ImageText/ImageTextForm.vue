@@ -315,6 +315,7 @@
         <div class="flex items-center justify-between w-full py-2">
           <UiFormLabel>Outlined</UiFormLabel>
           <SfSwitch
+            v-model="isPrimaryVariant"
             class="checked:before:bg-[#646F68] checked:bg-white checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
           />
         </div>
@@ -336,4 +337,13 @@ const textGroup = ref(false);
 const uiImageTextBlock = computed(
   () => data.value.blocks.find((block) => block.name === 'UiImageText')?.options as ImageTextProps2,
 );
+
+const isPrimaryVariant = computed({
+  get: () => uiImageTextBlock.value.button?.variant === 'secondary',
+  set: (value: boolean) => {
+    if (uiImageTextBlock.value.button) {
+      uiImageTextBlock.value.button.variant = value ? 'secondary' : 'primary';
+    }
+  },
+});
 </script>
