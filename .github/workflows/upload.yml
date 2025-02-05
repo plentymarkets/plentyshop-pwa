@@ -48,9 +48,9 @@ jobs:
         run: npm run build
 
       - name: Install productive dependencies for server
-        run: npm ci --workspaces
-        env:
-          NODE_ENV: production
+        run: |
+          npm install --production --workspace=apps/web
+          npm install --production --workspace=apps/server
 
       - name: Copy Middleware Server
         run: |
