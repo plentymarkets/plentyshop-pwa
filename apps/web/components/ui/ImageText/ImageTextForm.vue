@@ -76,23 +76,37 @@
         <UiFormLabel>Image Align</UiFormLabel>
 
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <SfRadio v-model="selectedAlign" id="align-left" name="image-align" value="left" class="hidden" />
+          <SfRadio
+            v-model="uiImageTextBlock.image.imageAlignment"
+            id="align-left"
+            name="image-align"
+            value="left"
+            class="hidden"
+          />
           <label
             for="align-left"
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="selectedAlign === 'left' ? 'bg-gray-100 text-gray-900' : ''"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
+            @click="uiImageTextBlock.image.imageAlignment = 'left'"
           >
-            <SfIconCheck v-if="selectedAlign === 'left'" class="mr-1 w-[1.1rem]" />
+            <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'left'" class="mr-1 w-[1.1rem]" />
             Left
           </label>
 
-          <SfRadio v-model="selectedAlign" id="align-right" name="image-align" value="right" class="hidden" />
+          <SfRadio
+            v-model="uiImageTextBlock.image.imageAlignment"
+            id="align-right"
+            name="image-align"
+            value="right"
+            class="hidden"
+          />
           <label
             for="align-right"
             class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="selectedAlign === 'right' ? 'bg-gray-100 text-gray-900' : ''"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
+            @click="uiImageTextBlock.image.imageAlignment = 'right'"
           >
-            <SfIconCheck v-if="selectedAlign === 'right'" class="mr-1 w-[1.1rem]" />
+            <SfIconCheck v-if="uiImageTextBlock.image.imageAlignment === 'right'" class="mr-1 w-[1.1rem]" />
             Right
           </label>
         </div>
@@ -100,6 +114,7 @@
     </UiAccordionItem>
     <!-- End Image Group -->
 
+    <!-- Text Group -->
     <UiAccordionItem
       v-model="textGroup"
       summary-active-class="bg-neutral-100 border-t-0"
@@ -108,7 +123,7 @@
       <template #summary>
         <h2>Text</h2>
       </template>
-      <!-- Text Group -->
+
       <div class="py-2">
         <div class="flex justify-between mb-2">
           <UiFormLabel>Pre title</UiFormLabel>
@@ -331,7 +346,6 @@ const { data } = useHomepage();
 const imageGroupOpen = ref(false);
 const buttonGroup = ref(false);
 const textGroup = ref(false);
-const selectedAlign = ref('left');
 
 const uiImageTextBlock = computed(
   () => data.value.blocks.find((block) => block.name === 'UiImageText')?.options as ImageTextProps2,

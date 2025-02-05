@@ -1,6 +1,5 @@
 <template>
-  <div :class="['flex flex-col md:flex-row items-center relative']">
-    <!-- <UiImageTextForm /> -->
+  <div :class="['flex flex-col md:flex-row items-center', positionClass]">
     <div :class="['md:w-1/2']">
       <NuxtImg
         :src="getImageUrl()"
@@ -25,7 +24,7 @@ const viewport = useViewport();
 
 const props = defineProps<ImageTextProps>();
 
-// const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'));
+const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'));
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
