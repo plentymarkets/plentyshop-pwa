@@ -58,7 +58,7 @@ export default defineNuxtConfig({
       storename: process.env.STORENAME || 'PLENTYSYSTEMS AG',
       noCache: process.env.NO_CACHE || '',
       configId: process.env.CONFIG_ID || '',
-      isHero: process.env.IS_HERO === 'true',
+      isHero: true,
       font: 'Red Hat Text',
       blockSize: 'm',
       primaryColor: '#062633',
