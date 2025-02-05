@@ -13,6 +13,7 @@
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
 - Added shipping page no configuration fallback text
+- Image Text Form now exists -- ready to be integrated inside the drawer
 
 ### 👷 Changed
 
