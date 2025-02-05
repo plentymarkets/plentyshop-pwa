@@ -5,8 +5,25 @@ export type TextCardProps = {
     subtitle?: string;
     htmlDescription?: string;
     textAlignment?: 'left' | 'center' | 'right';
+    color?: string;
   };
   button?: {
+    label?: string;
+    link?: string;
+    variant?: 'primary' | 'secondary';
+  };
+};
+
+export type TextCardProps2 = {
+  text: {
+    pretitle?: string;
+    title?: string;
+    subtitle?: string;
+    htmlDescription?: string;
+    textAlignment?: 'left' | 'center' | 'right';
+    color?: string;
+  };
+  button: {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
