@@ -1,5 +1,5 @@
 <template>
-  <div class="block-slider-edit sticky top-[52px] p-4 h-[calc(100vh-52px)] overflow-y-auto">
+  <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4">
         <h2>Slides</h2>
