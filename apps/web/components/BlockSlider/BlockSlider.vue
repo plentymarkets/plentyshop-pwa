@@ -209,7 +209,7 @@
               v-model="slides[activeSlide].text.htmlDescription"
               name="description"
               type="text"
-              class="w-full"
+              class="w-full min-h-[232px]"
               placeholder="Text that supports HTML formatting"
             />
           </div>
