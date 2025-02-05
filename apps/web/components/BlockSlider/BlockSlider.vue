@@ -1,7 +1,7 @@
 <template>
   <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
     <div class="mb-6">
-      <div class="flex item-center justify-between mb-4">
+      <div class="flex item-center justify-between mb-4 p-4">
         <h2>Slides</h2>
         <div class="flex item-center">
           <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
