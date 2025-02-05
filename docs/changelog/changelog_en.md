@@ -4,6 +4,7 @@
 
 ### New
 
+- Added slider edit.
 - Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.

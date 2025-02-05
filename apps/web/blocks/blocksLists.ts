@@ -1,11 +1,12 @@
 /* eslint-disable max-lines */
 
-import type { BlocksList } from '../components/BlocksNavigationList/types';
+import type { BlocksList } from '~/components/BlocksNavigationList/types';
 
 export const blocksLists: BlocksList = {
   'image-banner': {
     category: 'image-banner',
     title: 'Image Banner',
+    blockName: 'UiCarousel',
     variations: [
       {
         title: 'Image Banner Left',
@@ -164,8 +165,8 @@ export const blocksLists: BlocksList = {
                     title: 'h1 heading',
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
-                    justify: 'top',
-                    align: 'end',
+                    justify: 'bottom',
+                    align: 'right',
                   },
                   button: {
                     label: 'Button',
@@ -189,8 +190,8 @@ export const blocksLists: BlocksList = {
                     title: 'h1 heading',
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
-                    justify: 'top',
-                    align: 'end',
+                    justify: 'bottom',
+                    align: 'right',
                   },
                   button: {
                     label: 'Button',
@@ -399,6 +400,7 @@ export const blocksLists: BlocksList = {
   'image-with-text': {
     category: 'image-with-text',
     title: 'Image with Text',
+    blockName: 'UiImageText',
     variations: [
       {
         title: 'Image Right Text',
@@ -511,6 +513,7 @@ export const blocksLists: BlocksList = {
   'rich-text': {
     category: 'rich-text',
     title: 'Rich Text',
+    blockName: 'UiTextCard',
     variations: [
       {
         title: 'Rich Text',
@@ -557,6 +560,7 @@ export const blocksLists: BlocksList = {
   'product-galleries': {
     category: 'product-galleries',
     title: 'Products',
+    blockName: 'ProductRecommendedProducts',
     variations: [
       {
         title: 'Product Galleries',
@@ -593,6 +597,7 @@ export const blocksLists: BlocksList = {
   forms: {
     category: 'forms',
     title: 'Forms',
+    blockName: 'NewsletterSubscribe',
     variations: [
       {
         title: 'Forms Preview',
