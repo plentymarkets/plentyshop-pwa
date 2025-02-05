@@ -877,7 +877,8 @@
     "addButton": "Lieferadresse hinzufügen",
     "description": "Fügen Sie eine Lieferadresse hinzu, um Versanddetails anzuzeigen.",
     "heading": "Lieferadresse",
-    "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar."
+    "methodChanged": "Die von Ihnen gewählte Versandart ist nicht mehr verfügbar.",
+    "noShippingMessage": "Keine Versandinformationen verfügbar"
   },
   "shippingAddress": "Lieferadresse",
   "shippingAddressRequired": "Bitte Lieferadresse auswählen.",
