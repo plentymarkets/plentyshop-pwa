@@ -23,7 +23,7 @@
           "htmlDescription": "Description from cypress.",
           "textAlignment": "left",
           "justify": "center",
-          "align": "start"
+          "align": "left"
         },
         "button": {
           "label": "Discover Capybara",
@@ -49,7 +49,7 @@
           "htmlDescription": "A lightweight drone designed for stunning aerial footage. With a high-resolution camera on a 3-axis gimbal and up to 45 minutes of flight time, it's perfect for capturing smooth, stable video. Featuring GPS-assisted hover, obstacle avoidance, and easy portability, the Drone brings innovation and simplicity to your aerial shots.",
           "textAlignment": "left",
           "justify": "center",
-          "align": "start"
+          "align": "left"
         },
         "button": {
           "label": "Discover Omega",

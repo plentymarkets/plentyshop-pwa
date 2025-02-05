@@ -251,6 +251,12 @@
             </SfInput>
           </div>
           <div class="mb-6">
+            <SfSwitch
+
+                class="bg-primary-500 checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
+            />
+          </div>
+          <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
 
             <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
@@ -304,43 +310,109 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
 
-            <Multiselect
-              v-model="slides[activeSlide].text.justify"
-              :options="['top', 'center', 'bottom']"
-              placeholder="Select justify"
-              :allow-empty="false"
-              class="cursor-pointer"
-              select-label=""
-              deselect-label="Selected"
-            />
+            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+              <div
+                  for="align-top"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'top' }"
+                  @click="slides[activeSlide].text.justify = 'top'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'top' }" />
+                Top
+              </div>
+
+              <div
+                  for="align-center"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'center' }"
+                  @click="slides[activeSlide].text.justify = 'center'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'center' }" />
+                Center
+              </div>
+
+              <div
+                  for="align-bottom"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'bottom' }"
+                  @click="slides[activeSlide].text.justify = 'bottom'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'bottom' }" />
+                Bottom
+              </div>
+            </div>
           </div>
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Alignment (y)</UiFormLabel>
 
-            <Multiselect
-              v-model="slides[activeSlide].text.align"
-              :options="['left', 'center', 'right']"
-              placeholder="Select an alignment"
-              :allow-empty="false"
-              class="cursor-pointer"
-              select-label=""
-              deselect-label="Selected"
-            />
+            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+              <div
+                  for="textbox-align-left"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'left' }"
+                  @click="slides[activeSlide].text.align = 'left'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'left' }" />
+                Left
+              </div>
+
+              <div
+                  for="textbox-align-center"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'center' }"
+                  @click="slides[activeSlide].text.align = 'center'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'center' }" />
+                Center
+              </div>
+
+              <div
+                  for="textbox-align-right"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'right' }"
+                  @click="slides[activeSlide].text.align = 'right'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'right' }" />
+                Right
+              </div>
+            </div>
           </div>
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Text Alignment (y)</UiFormLabel>
+            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+              <div
+                  for="text-align-left"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'left' }"
+                  @click="slides[activeSlide].text.textAlignment = 'left'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'left' }" />
+                Left
+              </div>
 
-            <Multiselect
-              v-model="slides[activeSlide].text.textAlignment"
-              :options="['left', 'center', 'right']"
-              placeholder="Select align"
-              :allow-empty="false"
-              class="cursor-pointer"
-              select-label=""
-              deselect-label="Selected"
-            />
+              <div
+                  for="text-align-center"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'center' }"
+                  @click="slides[activeSlide].text.textAlignment = 'center'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'center' }" />
+                Center
+              </div>
+
+              <div
+                  for="text-align-right"
+                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'right' }"
+                  @click="slides[activeSlide].text.textAlignment = 'right'"
+              >
+                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'right' }" />
+                Right
+              </div>
+            </div>
+
           </div>
         </div>
       </UiAccordionItem>
@@ -395,6 +467,8 @@ import {
   SfIconArrowUpward,
   SfIconArrowDownward,
   SfIconAdd,
+  SfIconCheck,
+  SfSwitch,
   useDisclosure,
   SfIconClose,
 } from '@storefront-ui/vue';

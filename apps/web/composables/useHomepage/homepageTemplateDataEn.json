@@ -26,7 +26,7 @@
               "htmlDescription": "Immserse yourself in rich, crystal-clear audio with our cutting-edge headphones. Designed for the ultimate listening experience, whether you're a casual listener or an audiophile. Discover the perfect blend of style, comfort, and sound quality that elevates your music to new heights.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "start"
+              "align": "left"
             },
             "button": {
               "label": "Discover Capybara",
@@ -52,7 +52,7 @@
               "htmlDescription": "A lightweight drone designed for stunning aerial footage. With a high-resolution camera on a 3-axis gimbal and up to 45 minutes of flight time, it's perfect for capturing smooth, stable video. Featuring GPS-assisted hover, obstacle avoidance, and easy portability, the Drone brings innovation and simplicity to your aerial shots.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "start"
+              "align": "left"
             },
             "button": {
               "label": "Discover Omega",

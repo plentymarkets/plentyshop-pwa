@@ -38,7 +38,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
@@ -64,7 +64,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text that supports HTML formatting',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
@@ -102,7 +102,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text mit HTML-Formatierung',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
@@ -128,7 +128,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text mit HTML-Formatierung',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
@@ -235,7 +235,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text mit HTML-Formatierung',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
@@ -261,7 +261,7 @@ export const blocksLists: BlocksList = {
                     htmlDescription: 'Text mit HTML-Formatierung',
                     textAlignment: 'left',
                     justify: 'top',
-                    align: 'start',
+                    align: 'left',
                   },
                   button: {
                     label: 'Button',
