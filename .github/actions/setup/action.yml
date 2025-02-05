@@ -9,3 +9,5 @@ runs:
         node-version-file: '.nvmrc'
         cache: 'npm'
         registry-url: 'https://registry.npmjs.org'
+    - name: Install dependencies
+      run: npm ci
