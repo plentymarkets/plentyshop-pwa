@@ -27,8 +27,7 @@ export interface ImageDimensions {
   height: number;
 }
 
-
-export type ImageTextProps2= {
+export type ImageTextProps2 = {
   image: {
     desktop?: string;
     tablet?: string;
