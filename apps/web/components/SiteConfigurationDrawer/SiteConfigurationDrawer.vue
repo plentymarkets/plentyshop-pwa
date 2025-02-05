@@ -25,6 +25,6 @@ const { drawerOpen, drawerView, placement } = useSiteConfiguration();
 const getDrawerView = (view: string) => {
   if (view === 'settings') return resolveComponent('SiteSettingsView');
   if (view === 'blocksList') return resolveComponent('BlocksNavigation');
-  if (view === 'blocksSettings') return resolveComponent('BlocksSettings');
+  if (view === 'blocksSettings') return resolveComponent('BlockEditView');
 };
 </script>

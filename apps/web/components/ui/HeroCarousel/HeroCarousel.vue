@@ -61,24 +61,42 @@
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { BannerProps } from '../Banner/types';
+import type { Swiper as SwiperType } from 'swiper';
 
+const { activeIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
 const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
 const enableModules = computed(() => bannerItems.length > 1);
 
 const generalTextColor = ref('inherit');
-const activeIndex = ref(0);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSwiperInit = (swiper: any) => {
+let slider: SwiperType | null = null;
+
+const onSwiperInit = (swiper: SwiperType) => {
   generalTextColor.value = bannerItems[0]?.text?.color ?? 'inherit';
-  activeIndex.value = swiper.realIndex;
+  slider = swiper;
+  setIndex(swiper.realIndex);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const onSlideChange = (swiper: any) => {
-  activeIndex.value = swiper.realIndex;
+const onSlideChange = async (swiper: SwiperType) => {
+  if (swiper.realIndex !== activeIndex.value) {
+    await nextTick();
+    swiper.update();
+
+    setIndex(swiper.realIndex);
+  }
 };
+
+watch(
+  () => activeIndex.value,
+  (newIndex) => {
+    if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
+      slider.update();
+      slider.slideTo(newIndex);
+    }
+  },
+  { flush: 'post' },
+);
 </script>
 
 <style src="./styles/navigation.min.css"></style>

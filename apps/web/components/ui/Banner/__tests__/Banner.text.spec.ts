@@ -118,7 +118,7 @@ describe('Banner text', () => {
             title: 'Test title',
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
-            bgcolor: 'blue',
+            bgcolor: '#0000FF',
           },
         },
 
@@ -128,7 +128,7 @@ describe('Banner text', () => {
 
     const content = wrapper.find('[data-testid="banner-content-0"]')
 
-    expect(content.attributes('style')).toContain('background-color: blue');
+    expect(content.attributes('style')).toContain('background-color: rgba(0, 0, 255, 1)');
   });
 
   it('should set the given background opacity', () => {
@@ -150,7 +150,7 @@ describe('Banner text', () => {
 
     const content = wrapper.find('[data-testid="banner-content-0"]')
 
-    expect(content.attributes('style')).toContain('opacity: 0.5');
+    expect(content.attributes('style')).toContain('background-color: rgba(255, 255, 255, 0.5)');
   });
 
   describe('text alignment', () => {
@@ -273,7 +273,7 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              justify: 'end',
+              justify: 'bottom',
             },
           },
 
@@ -340,7 +340,7 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              align: 'end',
+              align: 'right',
             },
           },
 
