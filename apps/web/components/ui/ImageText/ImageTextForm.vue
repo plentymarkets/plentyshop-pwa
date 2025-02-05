@@ -77,8 +77,8 @@
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <SfRadio
-              v-model="uiImageTextBlock.image.imageAlignment"
               id="align-left"
+              v-model="uiImageTextBlock.image.imageAlignment"
               name="image-align"
               value="left"
               class="hidden"
@@ -94,8 +94,8 @@
             </label>
 
             <SfRadio
-              v-model="uiImageTextBlock.image.imageAlignment"
               id="align-right"
+              v-model="uiImageTextBlock.image.imageAlignment"
               name="image-align"
               value="right"
               class="hidden"
