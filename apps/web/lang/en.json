@@ -877,7 +877,8 @@
     "addButton": "Add shipping address",
     "description": "Add a shipping address to view shipping details.",
     "heading": "Shipping Address",
-    "methodChanged": "The selected shipping method is not available anymore."
+    "methodChanged": "The selected shipping method is not available anymore.",
+    "noShippingMessage": "No Shipping Information available"
   },
   "shippingAddress": "Shipping address",
   "shippingAddressRequired": "Please select a shipping address.",
