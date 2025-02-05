@@ -26,7 +26,11 @@
                       size="sm"
                       @click.stop="moveSlideUp(index)"
                     />
-                    <SfIconArrowUpward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
+                    <SfIconArrowUpward
+                      v-else
+                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
+                      size="sm"
+                    />
 
                     <SfIconArrowDownward
                       v-if="index + 1 !== slides.length"
@@ -34,7 +38,11 @@
                       size="sm"
                       @click.stop="moveSlideDown(index)"
                     />
-                    <SfIconArrowDownward v-else class="cursor-pointer text-neutral-500 mr-2 invisible" size="sm" />
+                    <SfIconArrowDownward
+                      v-else
+                      class="cursor-pointer text-neutral-500 mr-2 pointer-events-none opacity-50"
+                      size="sm"
+                    />
                     <span>Slide {{ index + 1 }}</span>
                   </div>
                   <button
