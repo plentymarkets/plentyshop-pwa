@@ -6,7 +6,12 @@
     </label>
     <label>
       <UiFormLabel class="mb-1">Category Id</UiFormLabel>
-      <SfInput v-model="recomandedBlockValue.categoryId" name="category Id" type="text" placeholder="Enter Category Id" />
+      <SfInput
+        v-model="recomandedBlockValue.categoryId"
+        name="category Id"
+        type="text"
+        placeholder="Enter Category Id"
+      />
     </label>
   </div>
 </template>
@@ -15,15 +20,15 @@
 const { data, updateProductRecommendedProductsOptions } = useHomepage();
 
 const recomandedBlock = computed(
-  () => (data.value.blocks.find((block: Block) => block.name === 'ProductRecommendedProducts')?.options || {}) as ProductRecommendedProductsOptions,
+  () =>
+    (data.value.blocks.find((block: Block) => block.name === 'ProductRecommendedProducts')?.options ||
+      {}) as ProductRecommendedProductsOptions,
 );
 
 const recomandedBlockValue = computed({
   get: () => {
     return recomandedBlock.value;
   },
-  set: (value) => updateProductRecommendedProductsOptions(value)
-  }
-);
-
+  set: (value) => updateProductRecommendedProductsOptions(value),
+});
 </script>
