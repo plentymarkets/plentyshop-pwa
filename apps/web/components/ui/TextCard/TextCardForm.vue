@@ -1,4 +1,5 @@
 <template>
+  <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
   <form class="w-full space-y-4 absolute bg-white">
     <UiAccordionItem
       v-model="textSettings"
@@ -61,7 +62,7 @@
           v-model="textCardBlock.text.htmlDescription"
           name="text-html-description"
           rows="3"
-          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
         />
       </div>
       <div class="py-2">
@@ -96,56 +97,44 @@
         <legend class="text-sm font-medium text-gray-700">Text Align</legend>
 
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <label
+          <div
             for="text-align-left"
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
             :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'left' }"
             @click="textCardBlock.text.textAlignment = 'left'"
           >
-            <SfRadio
-              id="text-align-left"
-              v-model="textCardBlock.text.textAlignment"
-              name="text-align"
-              value="left"
-              class="hidden"
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.text.textAlignment !== 'left' }"
+              class="mr-1 w-[1.1rem]"
             />
-            <SfIconCheck v-if="textCardBlock.text.textAlignment === 'left'" class="mr-1 w-[1.1rem]" />
             Left
-          </label>
+          </div>
 
-          <label
+          <div
             for="text-align-center"
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
             :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'center' }"
             @click="textCardBlock.text.textAlignment = 'center'"
           >
-            <SfRadio
-              id="text-align-center"
-              v-model="textCardBlock.text.textAlignment"
-              name="text-align"
-              value="center"
-              class="hidden"
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.text.textAlignment !== 'center' }"
+              class="mr-1 w-[1.1rem]"
             />
-            <SfIconCheck v-if="textCardBlock.text.textAlignment === 'center'" class="mr-1 w-[1.1rem]" />
             Center
-          </label>
+          </div>
 
-          <label
+          <div
             for="text-align-right"
             class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
             :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.text.textAlignment === 'right' }"
             @click="textCardBlock.text.textAlignment = 'right'"
           >
-            <SfRadio
-              id="text-align-right"
-              v-model="textCardBlock.text.textAlignment"
-              name="text-align"
-              value="right"
-              class="hidden"
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.text.textAlignment !== 'right' }"
+              class="mr-1 w-[1.1rem]"
             />
-            <SfIconCheck v-if="textCardBlock.text.textAlignment === 'right'" class="mr-1 w-[1.1rem]" />
             Right
-          </label>
+          </div>
         </div>
       </fieldset>
     </UiAccordionItem>
@@ -193,16 +182,16 @@
         <UiFormLabel>Outlined</UiFormLabel>
         <SfSwitch
           v-model="isPrimaryVariant"
-          class="checked:before:bg-[#646F68] checked:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
+          class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
         />
       </div>
     </UiAccordionItem>
   </form>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { SfInput, SfTextarea, SfRadio, SfIconCheck, SfIconInfo, SfTooltip, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfIconCheck, SfIconInfo, SfTooltip, SfSwitch } from '@storefront-ui/vue';
 import type { TextCardProps2 } from '~/components/ui/TextCard/types';
 const { data } = useHomepage();
 
