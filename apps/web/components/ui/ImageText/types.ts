@@ -12,6 +12,7 @@ export type ImageTextProps = {
     title?: string;
     subtitle?: string;
     htmlDescription?: string;
+    color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
   button?: {
@@ -41,6 +42,7 @@ export type ImageTextProps2= {
     title?: string;
     subtitle?: string;
     htmlDescription?: string;
+    color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
   button: {

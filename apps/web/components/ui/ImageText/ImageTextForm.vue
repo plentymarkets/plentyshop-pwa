@@ -193,10 +193,14 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput type="text">
+          <SfInput v-model="uiImageTextBlock.text.color" type="text">
             <template #suffix>
-              <label for="primary-color" class="rounded-lg cursor-pointer">
-                <input id="primary-color" type="color" class="invisible w-8" />
+              <label
+                for="primary-color"
+                :style="{ backgroundColor: uiImageTextBlock.text.color }"
+                class="rounded-lg cursor-pointer"
+              >
+                <input id="primary-color" v-model="uiImageTextBlock.text.color" type="color" class="invisible w-8" />
               </label>
             </template>
           </SfInput>
