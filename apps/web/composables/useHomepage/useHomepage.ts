@@ -1,7 +1,7 @@
 import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex } from './types';
-import type { Slide } from '~/components/ui/Banner/types';
+import { BannerProps } from "~/components/ui/Banner/types";
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
@@ -87,7 +87,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     { deep: true },
   );
 
-  const updateBannerItems: UpdateBannerItems = (newBannerItems: Slide[]) => {
+  const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[]) => {
     const carouselBlock = state.value.data.blocks.find((block) => block.name === 'UiCarousel');
     if (carouselBlock) {
       carouselBlock.options = { ...carouselBlock.options, ...{ bannerItems: newBannerItems } };

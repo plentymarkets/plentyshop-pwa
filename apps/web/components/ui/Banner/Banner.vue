@@ -109,14 +109,17 @@ const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
+    case 'xl': {
+      return props.bannerProps.image?.xl ?? '';
+    }
     case 'lg': {
-      return props.bannerProps.image?.desktop ?? '';
+      return props.bannerProps.image?.lg ?? '';
     }
     case 'md': {
-      return props.bannerProps.image?.tablet ?? '';
+      return props.bannerProps.image?.md ?? '';
     }
     default: {
-      return props.bannerProps.image?.mobile ?? '';
+      return props.bannerProps.image?.sm ?? '';
     }
   }
 };

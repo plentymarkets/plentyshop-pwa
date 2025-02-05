@@ -1,4 +1,4 @@
-import type { BannerProps, Slide } from '~/components/ui/Banner/types';
+import type { BannerProps } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
@@ -39,7 +39,7 @@ export interface ProductRecommendedProductsOptions {
 }
 
 export interface BannerSlide {
-  bannerItems: Slide[];
+  bannerItems: BannerProps[];
 }
 
 export type BlockOptions =
@@ -70,7 +70,7 @@ export interface UseHomepageDataState {
   activeIndex: number;
 }
 
-export type UpdateBannerItems = (newBannerItems: Slide[]) => void;
+export type UpdateBannerItems = (newBannerItems: BannerProps[]) => void;
 export type SetIndex = (index: number) => void;
 
 export interface UseHomepage {

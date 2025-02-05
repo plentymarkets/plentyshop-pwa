@@ -113,40 +113,54 @@
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
-              <UiFormLabel class="mb-1">Desktop Image</UiFormLabel>
+              <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].image.desktop"
+                v-model="slides[activeSlide].image.xl"
                 name="desktopImage"
                 type="text"
                 placeholder="Enter URL of image"
               />
               <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-                Recommended dimensions: 768x432 px
+                Recommended dimensions: 1920 x 1080 px
               </div>
             </label>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Tablet Image</UiFormLabel>
+            <label>
+              <UiFormLabel class="mb-1">Image L (Desktop)</UiFormLabel>
+              <SfInput
+                v-model="slides[activeSlide].image.lg"
+                name="desktopImage"
+                type="text"
+                placeholder="Enter URL of image"
+              />
+              <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
+                Recommended dimensions: 1024 x 576 px
+              </div>
+            </label>
+          </div>
+          <div class="mb-6">
+            <UiFormLabel class="mb-1">Image M (Tablet)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].image.tablet"
+              v-model="slides[activeSlide].image.md"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
             />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              Recommended dimensions: 768x432 px
+              Recommended dimensions: 768 x 432 px
             </div>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Mobile Image</UiFormLabel>
+            <UiFormLabel class="mb-1">Image S (Mobile)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].image.mobile"
+              v-model="slides[activeSlide].image.sm"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
             />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">
-              Recommended dimensions: 320x320 px
+              Recommended dimensions: 320 x 320 px
             </div>
           </div>
 
@@ -384,7 +398,7 @@ import {
   useDisclosure,
   SfIconClose,
 } from '@storefront-ui/vue';
-import type { BannerProps, Slide } from '~/components/ui/Banner/types';
+import type { BannerProps } from '~/components/ui/Banner/types';
 import type { BannerSlide } from '~/composables/useHomepage/types';
 import Multiselect from 'vue-multiselect';
 
@@ -423,11 +437,12 @@ const clampBrightness = (event: Event, type: string) => {
 };
 
 const addSlide = async () => {
-  const newSlide: Slide = {
+  const newSlide: BannerProps = {
     image: {
-      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      xl: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      lg: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      md: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      sm: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
       brightness: 0.5,
       alt: '',
     },
@@ -448,6 +463,9 @@ const addSlide = async () => {
       link: 'Enter URL here',
       variant: 'primary',
     },
+    controls: {
+      color: '#000'
+    }
   };
 
   slides.value = [...slides.value, newSlide];

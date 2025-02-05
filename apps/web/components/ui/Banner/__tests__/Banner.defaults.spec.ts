@@ -8,9 +8,10 @@ describe('Banner', () => {
       props: {
         bannerProps: {
           image: {
-            desktop: '/test-desktop.jpg',
-            tablet: '/test-tablet.jpg',
-            mobile: '/test-mobile.jpg',
+            xl: '/test-desktop.jpg',
+            lg: '/test-desktop.jpg',
+            md: '/test-tablet.jpg',
+            sm: '/test-mobile.jpg',
             alt: 'test alt text',
           },
           text: {
@@ -19,6 +20,7 @@ describe('Banner', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
           },
+          controls: {},
           button: {
             label: 'Test button',
             link: '/test-link',
