@@ -227,7 +227,7 @@ jobs:
           path: apps/web/__tests__/report/screenshots
           if-no-files-found: ignore
   fitness-web-vitals-mobile:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     needs: build
     steps:
       - uses: actions/checkout@v4

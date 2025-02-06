@@ -12,7 +12,7 @@
     "build": "npm run turbo:disable-telemetry && turbo run build",
     "build:analyze": "npm run turbo:disable-telemetry && turbo run build:analyze",
     "dev": "npm run turbo:disable-telemetry && turbo run dev",
-    "start": "npm run turbo:disable-telemetry && turbo run start -- --vvv --env-mode=loose",
+    "start": "npm run turbo:disable-telemetry && turbo run start",
     "lint": "npm run turbo:disable-telemetry && turbo run lint",
     "lint:fix": "npm run turbo:disable-telemetry && turbo run lint:fix",
     "format": "prettier --check \"**/*.{ts,vue,css,scss,md}\"",
