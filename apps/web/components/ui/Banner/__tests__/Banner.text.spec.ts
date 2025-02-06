@@ -159,6 +159,7 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
             bgopacity: 0.5,
+            background: true,
           },
           image: {},
           controls: {},
