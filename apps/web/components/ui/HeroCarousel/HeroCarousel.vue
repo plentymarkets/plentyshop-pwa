@@ -30,13 +30,13 @@
       </SwiperSlide>
       <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
         <span
-          v-for="(bannerItem, index) in bannerItems"
-          :key="'dot-' + index"
+          v-for="(bannerItem, bannerItemIndex) in bannerItems"
+          :key="'dot-' + bannerItemIndex"
           class="swiper-pagination-bullet"
           :style="{
             backgroundColor: controls.color + ' !important',
           }"
-          :class="{ 'swiper-pagination-bullet-active': index === activeIndex[index] }"
+          :class="{ 'swiper-pagination-bullet-active': bannerItemIndex === activeIndex[index] }"
         />
       </div>
     </Swiper>
