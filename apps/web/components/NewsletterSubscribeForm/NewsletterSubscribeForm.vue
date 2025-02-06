@@ -86,14 +86,13 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { NewsletterSubscribeProps2 } from '~/components/NewsletterSubscribe/types';
+import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
 const textGroup = ref(true);
 const inputGroup = ref(true);
 const buttonGroup = ref(true);
 const { data } = useHomepage();
+const { blockIndex } = useSiteConfiguration();
 
-const newsletterBlock = computed(
-  () => data.value.blocks.find((block) => block.name === 'NewsletterSubscribe')?.options as NewsletterSubscribeProps2,
-);
+const newsletterBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as NewsletterSubscribeProps);
 </script>
