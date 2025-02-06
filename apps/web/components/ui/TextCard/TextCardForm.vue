@@ -183,7 +183,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfIconCheck, SfIconInfo, SfTooltip, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfIconCheck,SfSwitch } from '@storefront-ui/vue';
 import type { TextCardProps2 } from '~/components/ui/TextCard/types';
 const { data } = useHomepage();
 
