@@ -274,6 +274,15 @@ jobs:
       - name: Extract build
         run: tar -xzf build.tar.gz
 
+      - name: Start application
+        run: |
+          pushd apps/server/dist
+          node index.js &
+          popd
+          pushd apps/web/.output/dist
+          node index.mjs &
+          popd
+
       - name: lighthouse desktop audit
         run: npm run lhci:desktop
   ready-to-review:
