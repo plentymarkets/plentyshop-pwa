@@ -566,11 +566,7 @@ const { isOpen, open, close } = useDisclosure();
 const { blockIndex } = useSiteConfiguration();
 const { data, updateBannerItems, setIndex, activeIndex: activeSlide } = useHomepage();
 
-const sliderBlock = computed(
-  () =>
-    (data.value.blocks.find((block: Block, index) => block.name === 'UiCarousel' && blockIndex.value === index)
-      ?.options || {}) as BannerSlide,
-);
+const sliderBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as BannerSlide);
 
 const slides = computed({
   get: () => {
