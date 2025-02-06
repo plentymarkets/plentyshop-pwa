@@ -265,10 +265,10 @@
             <UiFormLabel>Link target</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.label" type="text">
+            <SfInput v-model="uiImageTextBlock.button.link" type="text">
               <template #suffix>
                 <label for="button-label" class="rounded-lg cursor-pointer">
-                  <input id="button-label" v-model="uiImageTextBlock.button.label" type="text" class="invisible w-8" />
+                  <input id="button-label" v-model="uiImageTextBlock.button.link" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
