@@ -3,10 +3,10 @@ export type BannerProps = {
     color?: string;
   };
   image: {
-    xl?: string;
-    lg?: string;
-    md?: string;
-    sm?: string;
+    wideScreen?: string;
+    desktop?: string;
+    tablet?: string;
+    mobile?: string;
     alt?: string;
     brightness?: number;
   };

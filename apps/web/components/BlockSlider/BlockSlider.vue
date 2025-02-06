@@ -115,7 +115,7 @@
             <label>
               <UiFormLabel class="mb-1">Image XL (Desktop)</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].image.xl"
+                v-model="slides[activeSlide].image.wideScreen"
                 name="desktopImage"
                 type="text"
                 placeholder="Enter URL of image"
@@ -129,7 +129,7 @@
             <label>
               <UiFormLabel class="mb-1">Image L (Desktop)</UiFormLabel>
               <SfInput
-                v-model="slides[activeSlide].image.lg"
+                v-model="slides[activeSlide].image.desktop"
                 name="desktopImage"
                 type="text"
                 placeholder="Enter URL of image"
@@ -142,7 +142,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Image M (Tablet)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].image.md"
+              v-model="slides[activeSlide].image.tablet"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
@@ -154,7 +154,7 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Image S (Mobile)</UiFormLabel>
             <SfInput
-              v-model="slides[activeSlide].image.sm"
+              v-model="slides[activeSlide].image.mobile"
               name="desktopImage"
               type="text"
               placeholder="Enter URL of image"
@@ -563,10 +563,13 @@ import type { BannerProps } from '~/components/ui/Banner/types';
 import type { BannerSlide } from '~/composables/useHomepage/types';
 
 const { isOpen, open, close } = useDisclosure();
+const { blockIndex } = useSiteConfiguration();
 const { data, updateBannerItems, setIndex, activeIndex: activeSlide } = useHomepage();
 
 const sliderBlock = computed(
-  () => (data.value.blocks.find((block: Block) => block.name === 'UiCarousel')?.options || {}) as BannerSlide,
+  () =>
+    (data.value.blocks.find((block: Block, index) => block.name === 'UiCarousel' && blockIndex.value === index)
+      ?.options || {}) as BannerSlide,
 );
 
 const slides = computed({
@@ -602,10 +605,10 @@ const clampBrightness = (event: Event, type: string) => {
 const addSlide = async () => {
   const newSlide: BannerProps = {
     image: {
-      xl: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      lg: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      md: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
-      sm: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      tablet: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
+      mobile: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
       brightness: 0.5,
       alt: '',
     },

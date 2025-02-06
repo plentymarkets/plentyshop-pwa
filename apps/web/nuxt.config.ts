@@ -149,6 +149,7 @@ export default defineNuxtConfig({
       mobile: 'sm',
       tablet: 'md',
       desktop: 'lg',
+      wideScreen: '4xl',
     },
     fallbackBreakpoint: 'lg',
     cookie: {

@@ -4,11 +4,11 @@ import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetInde
 import type { BannerProps } from '~/components/ui/Banner/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
-  locale === 'de' ? homepageTemplateDataDe : homepageTemplateDataEn;
+  locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
 
 export const useHomepage: UseHomepageDataReturn = () => {
   const state = useState<UseHomepageDataState>('useHomepageState', () => ({
-    data: { blocks: [], meta: { isDefault: null } } as HomepageData,
+    data: { blocks: [] as Block[], meta: { isDefault: null } } as HomepageData,
     initialBlocks: [],
     dataIsEmpty: false,
     loading: false,
