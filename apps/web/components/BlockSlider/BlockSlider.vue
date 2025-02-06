@@ -8,11 +8,14 @@
             <SfIconAdd class="text-neutral-500" />
           </button>
           <div class="relative">
-            <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full" @click="open">
+            <button v-if="slides.length >= 2" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full" @click="open">
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
 
-            <div v-if="isOpen" class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50">
+            <div
+              v-if="isOpen && slides.length >= 2"
+              class="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50"
+            >
               <div class="flex justify-end p-2">
                 <SfIconClose class="cursor-pointer" @click="close" />
               </div>
@@ -637,6 +640,7 @@ const addSlide = async () => {
 
   await nextTick();
   slideClick(slides.value.length - 1);
+  close();
 };
 
 const deleteSlide = async (index: number) => {
@@ -645,6 +649,7 @@ const deleteSlide = async (index: number) => {
   if (activeSlide.value === index) {
     setIndex(blockIndex.value, index - 1);
   }
+  close();
   await nextTick();
 };
 
