@@ -564,7 +564,9 @@ import type { BannerSlide } from '~/composables/useHomepage/types';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockIndex } = useSiteConfiguration();
-const { data, updateBannerItems, setIndex, activeIndex: activeSlide } = useHomepage();
+const { data, updateBannerItems, setIndex, activeIndex } = useHomepage();
+
+const activeSlide = computed(() => activeIndex.value[blockIndex.value]);
 
 const sliderBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as BannerSlide);
 
@@ -583,7 +585,7 @@ const buttonOpen = ref(true);
 const controlsOpen = ref(true);
 
 const slideClick = (index: number) => {
-  setIndex(index);
+  setIndex(blockIndex.value, index);
 };
 
 const clampBrightness = (event: Event, type: string) => {
@@ -641,7 +643,7 @@ const deleteSlide = async (index: number) => {
   if (slides.value.length <= 1) return;
   slides.value = slides.value.filter((_: BannerProps, i: number) => i !== index);
   if (activeSlide.value === index) {
-    setIndex(index - 1);
+    setIndex(blockIndex.value, index - 1);
   }
   await nextTick();
 };
@@ -657,7 +659,7 @@ const moveSlideUp = async (index: number) => {
   await nextTick();
 
   if (activeSlide.value === index) {
-    setIndex(index - 1);
+    setIndex(blockIndex.value, index - 1);
   }
 };
 
@@ -672,7 +674,7 @@ const moveSlideDown = async (index: number) => {
   await nextTick();
 
   if (activeSlide.value === index) {
-    setIndex(index + 1);
+    setIndex(blockIndex.value, index + 1);
   }
 };
 </script>

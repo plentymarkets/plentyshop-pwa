@@ -66,17 +66,21 @@ export interface HomepageData {
   meta?: { isDefault: boolean | null };
 }
 
+export interface ActiveIndex {
+  [key: number]: number;
+}
+
 export interface UseHomepageDataState {
   data: HomepageData;
   initialBlocks: Block[];
   dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
-  activeIndex: number;
+  activeIndex: ActiveIndex;
 }
 
 export type UpdateBannerItems = (newBannerItems: BannerProps[]) => void;
-export type SetIndex = (index: number) => void;
+export type SetIndex = (blockIndex: number, slideIndex: number) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;

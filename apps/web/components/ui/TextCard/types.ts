@@ -1,4 +1,5 @@
 export type TextCardProps = {
+  index?: number;
   text: {
     pretitle?: string;
     title?: string;

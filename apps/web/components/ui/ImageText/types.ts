@@ -1,4 +1,5 @@
 export type ImageTextProps = {
+  index?: number;
   image: {
     desktop?: string;
     tablet?: string;

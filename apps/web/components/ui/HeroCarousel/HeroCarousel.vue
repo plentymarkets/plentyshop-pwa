@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
     <Swiper
+      :key="index"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -15,17 +16,17 @@
       :navigation="
         enableModules
           ? {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
+              nextEl: `.swiper-button-next-${index}`,
+              prevEl: `.swiper-button-prev-${index}`,
             }
           : false
       "
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
-      @slide-change="onSlideChange"
+      @slide-change="onSlideChange($event, index)"
     >
-      <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
-        <UiBanner :banner-props="bannerItem" :index="index" />
+      <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
+        <UiBanner :banner-props="bannerItem" :index="slideIndex" />
       </SwiperSlide>
       <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
         <span
@@ -35,20 +36,24 @@
           :style="{
             backgroundColor: controls.color + ' !important',
           }"
-          :class="{ 'swiper-pagination-bullet-active': index === activeIndex }"
+          :class="{ 'swiper-pagination-bullet-active': index === activeIndex[index] }"
         />
       </div>
     </Swiper>
 
     <div
       v-if="enableModules && handleArrows()"
-      class="swiper-button-prev"
+      :key="`prev-${index}`"
+      :class="`swiper-button-prev swiper-button-prev-${index}`"
       :style="{ color: controls.color + ' !important' }"
+      @pagination-update="onSlideChange($event, index)"
     />
     <div
       v-if="enableModules && handleArrows()"
-      class="swiper-button-next"
+      :key="`next-${index}`"
+      :class="`swiper-button-next swiper-button-next-${index}`"
       :style="{ color: controls.color + ' !important' }"
+      @pagination-update="onSlideChange($event, index)"
     />
 
     <template #fallback>
@@ -66,27 +71,27 @@ import type { SlideControls } from '~/composables/useHomepage/types';
 
 const { activeIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
-const { bannerItems } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls }>();
+const { bannerItems, index } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls; index: number }>();
 const enableModules = computed(() => bannerItems.length > 1);
 
 let slider: SwiperType | null = null;
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
-  setIndex(swiper.realIndex);
+  setIndex(index, swiper.realIndex);
 };
 
-const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeIndex.value) {
+const onSlideChange = async (swiper: SwiperType, ceva: number) => {
+  if (swiper.realIndex !== activeIndex.value[index]) {
     await nextTick();
     swiper.update();
 
-    setIndex(swiper.realIndex);
+    setIndex(index, swiper.realIndex);
   }
 };
 
 watch(
-  () => activeIndex.value,
+  () => activeIndex.value[index],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();

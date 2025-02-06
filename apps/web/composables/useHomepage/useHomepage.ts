@@ -2,6 +2,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex } from './types';
 import type { BannerProps } from '~/components/ui/Banner/types';
+import { ActiveIndex } from './types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
@@ -13,7 +14,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
     dataIsEmpty: false,
     loading: false,
     showErrors: false,
-    activeIndex: 0,
+    activeIndex: {} as ActiveIndex,
   }));
 
   const { $i18n } = useNuxtApp();
@@ -94,8 +95,8 @@ export const useHomepage: UseHomepageDataReturn = () => {
     }
   };
 
-  const setIndex: SetIndex = (index: number) => {
-    state.value.activeIndex = index;
+  const setIndex: SetIndex = (blockIndex: number, slideIndex: number) => {
+    state.value.activeIndex[blockIndex] = slideIndex;
   };
 
   return {
