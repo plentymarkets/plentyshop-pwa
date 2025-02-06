@@ -13,6 +13,7 @@ export type ImageTextProps = {
     title?: string;
     subtitle?: string;
     htmlDescription?: string;
+    color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
   button: {
@@ -21,6 +22,11 @@ export type ImageTextProps = {
     variant?: 'primary' | 'secondary';
   };
 };
+
+export interface ImageDimensions {
+  width: number;
+  height: number;
+}
 
 export interface ImageDimensions {
   width: number;
