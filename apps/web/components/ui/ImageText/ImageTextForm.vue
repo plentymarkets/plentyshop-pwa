@@ -12,6 +12,27 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
+            <UiFormLabel>Image XL (Desktop) </UiFormLabel>
+          </div>
+          <label>
+            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text">
+              <template #suffix>
+                <label for="image-tablet" class="rounded-lg cursor-pointer">
+                  <input
+                    id="image-tablet"
+                    v-model="uiImageTextBlock.image.wideScreen"
+                    type="text"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+          </label>
+        </div>
+
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
             <UiFormLabel>Desktop Image</UiFormLabel>
           </div>
           <label>

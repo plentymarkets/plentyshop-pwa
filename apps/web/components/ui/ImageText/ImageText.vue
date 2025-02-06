@@ -28,6 +28,9 @@ const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return props.image?.wideScreen;
+    }
     case 'lg': {
       return props.image?.desktop;
     }
@@ -42,6 +45,9 @@ const getImageUrl = () => {
 
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {
+    case 'xl': {
+      return { width: 1200, height: 800 };
+    }
     case 'lg': {
       return { width: 1200, height: 800 };
     }
