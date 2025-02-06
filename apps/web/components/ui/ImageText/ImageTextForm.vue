@@ -192,7 +192,7 @@
         </div>
 
         <fieldset class="py-2">
-          <legend class="text-sm font-medium text-gray-700">Text Align</legend>
+          <legend class="text-sm font-medium text-gray-700">Text alignment</legend>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <div
@@ -247,7 +247,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Button Label</UiFormLabel>
+            <UiFormLabel>Label</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.button.label" type="text">
