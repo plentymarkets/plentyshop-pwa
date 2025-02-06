@@ -16,6 +16,7 @@
 - You can now add blocks on homepage from the blocks side nav
 - Added shipping page no configuration fallback text
 - Image Text Form integrated and two way data binded
+- Added newsletter form to the block settings.
 
 ### 👷 Changed
 
