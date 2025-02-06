@@ -67,15 +67,7 @@
       </div>
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Primary color</UiFormLabel>
-          <SfTooltip
-            label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
-            :placement="'top'"
-            :show-arrow="true"
-            class="ml-2 z-10"
-          >
-            <SfIconInfo :size="'sm'" />
-          </SfTooltip>
+          <UiFormLabel>Text color</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.text.color" type="text">
@@ -150,7 +142,7 @@
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Button Label</UiFormLabel>
+          <UiFormLabel>Label</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.button.label" type="text">
@@ -165,7 +157,7 @@
 
       <div class="py-2">
         <div class="flex justify-between mb-2">
-          <UiFormLabel>Button Link</UiFormLabel>
+          <UiFormLabel>Link target</UiFormLabel>
         </div>
         <label>
           <SfInput v-model="textCardBlock.button.link" type="text">
