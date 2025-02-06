@@ -1,6 +1,9 @@
 {
   "name": "UiCarousel",
   "options": {
+    "controls": {
+      "color": "#fff"
+    },
     "bannerItems": [
       {
         "controls": {

@@ -26,7 +26,11 @@
   >
     <div
       :class="bannerContentClass"
-      :style="{ backgroundColor: hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity) }"
+      :style="{
+        backgroundColor: props.bannerProps.text.background
+          ? hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity)
+          : '',
+      }"
       :data-testid="'banner-content-' + props.index"
     >
       <div

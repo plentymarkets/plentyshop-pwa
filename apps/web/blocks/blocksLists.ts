@@ -15,6 +15,9 @@ export const blocksLists: BlocksList = {
           en: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {
@@ -79,6 +82,9 @@ export const blocksLists: BlocksList = {
           de: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {
@@ -148,6 +154,9 @@ export const blocksLists: BlocksList = {
           en: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {
@@ -212,6 +221,9 @@ export const blocksLists: BlocksList = {
           de: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {
@@ -281,6 +293,9 @@ export const blocksLists: BlocksList = {
           en: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {
@@ -345,6 +360,9 @@ export const blocksLists: BlocksList = {
           de: {
             name: 'UiCarousel',
             options: {
+              controls: {
+                color: '#fff',
+              },
               bannerItems: [
                 {
                   controls: {

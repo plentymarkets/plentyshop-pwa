@@ -38,8 +38,13 @@ export interface ProductRecommendedProductsOptions {
   headline?: string;
 }
 
+export interface SlideControls {
+  color: string;
+}
+
 export interface BannerSlide {
   bannerItems: BannerProps[];
+  controls: SlideControls;
 }
 
 export type BlockOptions =

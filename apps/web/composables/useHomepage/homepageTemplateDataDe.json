@@ -3,6 +3,9 @@
     {
       "name": "UiCarousel",
       "options": {
+        "controls": {
+          "color": "#fff"
+        },
         "bannerItems": [
           {
             "controls": {
@@ -26,7 +29,8 @@
               "htmlDescription": "Unsere hochmodernen Kopfhörer: Entwickelt für das ultimative Hörerlebnis genügen sie auch den höchsten Ansprüchen. Entdecken Sie die perfekte Mischung aus Stil, Komfort und Klangqualität, die Ihren Musikgenuss auf ein völlig neues Niveau hebt.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "left"
+              "align": "left",
+              "background": true
             },
             "button": {
               "label": "Capybara entdecken",
@@ -52,7 +56,8 @@
               "htmlDescription": "Omega ist eine leichte Drohne, die für atemberaubende Luftaufnahmen entwickelt wurde. Mit einer hochauflösenden Kamera auf einem 3-Achsen-Gimbal und einer Flugzeit von bis zu 45 Minuten sorgt sie für stabile, flüssige Videos. GPS-unterstützter Schwebeflug, Hindernisvermeidung und einfache Transportfähigkeit machen die Drone zum perfekten Begleiter für Ihre Aufnahmen.",
               "textAlignment": "left",
               "justify": "top",
-              "align": "left"
+              "align": "left",
+              "background": true
             },
             "button": {
               "label": "Omega entdecken",

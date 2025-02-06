@@ -1,5 +1,5 @@
 <template>
-  <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
+  <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4 p-4 pr-2">
         <h2>Slides</h2>
@@ -251,12 +251,14 @@
             </SfInput>
           </div>
           <div class="mb-6">
+            <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
             <SfSwitch
-                class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
+              v-model="slides[activeSlide].text.background"
+              class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
             />
           </div>
-          <div class="mb-6">
-            <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
+          <div v-if="slides[activeSlide].text.background" class="mb-6">
+            <UiFormLabel class="mb-1">Textbox Color</UiFormLabel>
 
             <SfInput v-model="slides[activeSlide].text.bgcolor" type="text">
               <template #suffix>
@@ -275,7 +277,7 @@
               </template>
             </SfInput>
           </div>
-          <div class="mb-6">
+          <div v-if="slides[activeSlide].text.background" class="mb-6">
             <label class="block text-sm font-medium mb-4">Textbox Opacity</label>
             <div class="flex items-center gap-4">
               <div class="flex-1 space-y-1">
@@ -309,34 +311,45 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Alignment (x)</UiFormLabel>
 
-            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+            <div
+              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+            >
               <div
-                  for="align-top"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'top' }"
-                  @click="slides[activeSlide].text.justify = 'top'"
+                for="align-top"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'top' }"
+                @click="slides[activeSlide].text.justify = 'top'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'top' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.justify !== 'top' }"
+                />
                 Top
               </div>
 
               <div
-                  for="align-center"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'center' }"
-                  @click="slides[activeSlide].text.justify = 'center'"
+                for="align-center"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'center' }"
+                @click="slides[activeSlide].text.justify = 'center'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'center' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.justify !== 'center' }"
+                />
                 Center
               </div>
 
               <div
-                  for="align-bottom"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'bottom' }"
-                  @click="slides[activeSlide].text.justify = 'bottom'"
+                for="align-bottom"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'bottom' }"
+                @click="slides[activeSlide].text.justify = 'bottom'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.justify !== 'bottom' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.justify !== 'bottom' }"
+                />
                 Bottom
               </div>
             </div>
@@ -345,34 +358,45 @@
           <div class="mb-6">
             <UiFormLabel class="mb-1">Textbox Alignment (y)</UiFormLabel>
 
-            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+            <div
+              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+            >
               <div
-                  for="textbox-align-left"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'left' }"
-                  @click="slides[activeSlide].text.align = 'left'"
+                for="textbox-align-left"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'left' }"
+                @click="slides[activeSlide].text.align = 'left'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'left' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.align !== 'left' }"
+                />
                 Left
               </div>
 
               <div
-                  for="textbox-align-center"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'center' }"
-                  @click="slides[activeSlide].text.align = 'center'"
+                for="textbox-align-center"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'center' }"
+                @click="slides[activeSlide].text.align = 'center'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'center' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.align !== 'center' }"
+                />
                 Center
               </div>
 
               <div
-                  for="textbox-align-right"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'right' }"
-                  @click="slides[activeSlide].text.align = 'right'"
+                for="textbox-align-right"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'right' }"
+                @click="slides[activeSlide].text.align = 'right'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.align !== 'right' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.align !== 'right' }"
+                />
                 Right
               </div>
             </div>
@@ -380,38 +404,54 @@
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Text Alignment (y)</UiFormLabel>
-            <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+            <div
+              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+            >
               <div
-                  for="text-align-left"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'left' }"
-                  @click="slides[activeSlide].text.textAlignment = 'left'"
+                for="text-align-left"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'left',
+                }"
+                @click="slides[activeSlide].text.textAlignment = 'left'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'left' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.textAlignment !== 'left' }"
+                />
                 Left
               </div>
 
               <div
-                  for="text-align-center"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'center' }"
-                  @click="slides[activeSlide].text.textAlignment = 'center'"
+                for="text-align-center"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'center',
+                }"
+                @click="slides[activeSlide].text.textAlignment = 'center'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'center' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.textAlignment !== 'center' }"
+                />
                 Center
               </div>
 
               <div
-                  for="text-align-right"
-                  class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-                  :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'right' }"
-                  @click="slides[activeSlide].text.textAlignment = 'right'"
+                for="text-align-right"
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'right',
+                }"
+                @click="slides[activeSlide].text.textAlignment = 'right'"
               >
-                <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ 'invisible': slides[activeSlide].text.textAlignment !== 'right' }" />
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].text.textAlignment !== 'right' }"
+                />
                 Right
               </div>
             </div>
-
           </div>
         </div>
       </UiAccordionItem>
@@ -437,15 +477,63 @@
             <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" placeholder="Enter URL here" />
           </div>
           <div class="mb-6">
-            <Multiselect
-              v-model="slides[activeSlide].button.variant"
-              :options="['primary', 'secondary']"
-              placeholder="Select variant"
-              :allow-empty="false"
-              class="cursor-pointer"
-              select-label=""
-              deselect-label="Selected"
-            />
+            <UiFormLabel class="mb-1">Variant</UiFormLabel>
+            <div
+              class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden"
+            >
+              <div
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].button.variant === 'primary' }"
+                @click="slides[activeSlide].button.variant = 'primary'"
+              >
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].button.variant !== 'primary' }"
+                />
+                Primary
+              </div>
+
+              <div
+                class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+                :class="{
+                  'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].button.variant === 'secondary',
+                }"
+                @click="slides[activeSlide].button.variant = 'secondary'"
+              >
+                <SfIconCheck
+                  class="mr-1 w-[1.1rem]"
+                  :class="{ invisible: slides[activeSlide].button.variant !== 'secondary' }"
+                />
+                Secondary
+              </div>
+            </div>
+          </div>
+        </div>
+      </UiAccordionItem>
+      <UiAccordionItem
+        v-model="controlsOpen"
+        summary-active-class="bg-neutral-100"
+        summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+      >
+        <template #summary>
+          <h2>Controls</h2>
+        </template>
+
+        <div class="controls">
+          <div class="mb-6 mt-4">
+            <UiFormLabel class="mb-1">Slider Controls Color</UiFormLabel>
+
+            <SfInput v-model="controls.color" type="text">
+              <template #suffix>
+                <label
+                  for="controls-color"
+                  :style="{ backgroundColor: controls.color }"
+                  class="rounded-lg cursor-pointer"
+                >
+                  <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
+                </label>
+              </template>
+            </SfInput>
           </div>
         </div>
       </UiAccordionItem>
@@ -489,9 +577,12 @@ const slides = computed({
   set: (value) => updateBannerItems(value),
 });
 
+const controls = computed(() => sliderBlock.value.controls);
+
 const imagesOpen = ref(true);
 const textOpen = ref(true);
 const buttonOpen = ref(true);
+const controlsOpen = ref(true);
 
 const slideClick = (index: number) => {
   setIndex(index);
@@ -530,10 +621,11 @@ const addSlide = async () => {
       textAlignment: 'left',
       justify: 'center',
       align: 'left',
+      background: false,
     },
     button: {
       label: 'Button',
-      link: 'Enter URL here',
+      link: '/',
       variant: 'primary',
     },
     controls: {
