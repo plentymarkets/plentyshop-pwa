@@ -6,19 +6,17 @@
     </label>
     <label>
       <UiFormLabel class="mb-1">Category Id</UiFormLabel>
-      <SfInput
-        v-model="recomandedBlockValue.categoryId"
-        name="category Id"
-        type="text"
-        placeholder="Enter Category Id"
-      />
+      <SfInput v-model="recomandedBlockValue.categoryId" name="category Id" type="text"
+        placeholder="Enter Category Id" />
     </label>
   </div>
 </template>
 
 <script setup lang="ts">
 const { data, updateProductRecommendedProductsOptions } = useHomepage();
-
+import {
+  SfInput
+} from '@storefront-ui/vue';
 const recomandedBlock = computed(
   () =>
     (data.value.blocks.find((block: Block) => block.name === 'ProductRecommendedProducts')?.options ||
