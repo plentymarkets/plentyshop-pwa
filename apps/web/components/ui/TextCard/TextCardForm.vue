@@ -86,7 +86,7 @@
       </div>
 
       <fieldset class="py-2">
-        <legend class="text-sm font-medium text-gray-700">Text Align</legend>
+        <legend class="text-sm font-medium text-gray-700">Text alignment</legend>
 
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
@@ -170,34 +170,48 @@
         </label>
       </div>
 
-      <div class="flex items-center justify-between w-full py-2">
-        <UiFormLabel>Outlined</UiFormLabel>
-        <SfSwitch
-          v-model="isPrimaryVariant"
-          class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
-        />
-      </div>
+      <fieldset class="py-2">
+        <UiFormLabel>Outline</UiFormLabel>
+
+        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'primary' }"
+            @click="textCardBlock.button.variant = 'primary'"
+          >
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.button.variant  !== 'primary' }"
+              class="mr-1 w-[1.1rem]"
+            />
+
+            Primary
+          </div>
+
+          <div
+            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+            :class="{ 'bg-gray-100 text-gray-900 font-semibold': textCardBlock.button.variant === 'secondary' }"
+            @click="textCardBlock.button.variant = 'secondary'"
+          >
+            <SfIconCheck
+              :class="{ invisible: textCardBlock.button.variant !== 'secondary' }"
+              class="mr-1 w-[1.1rem]"
+            />
+            Secondary
+          </div>
+        </div>
+      </fieldset>
     </UiAccordionItem>
   </form>
   </div>
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea, SfIconCheck,SfSwitch } from '@storefront-ui/vue';
-import type { TextCardProps2 } from '~/components/ui/TextCard/types';
+import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+import { TextCardProps2 } from '~/components/ui/TextCard/types';
 const { data } = useHomepage();
+const { blockIndex } = useSiteConfiguration();
 
-const textCardBlock = computed(
-  () => data.value.blocks.find((block) => block.name === 'UiTextCard')?.options as TextCardProps2,
-);
-const isPrimaryVariant = computed({
-  get: () => textCardBlock.value.button?.variant === 'secondary',
-  set: (value: boolean) => {
-    if (textCardBlock.value.button) {
-      textCardBlock.value.button.variant = value ? 'secondary' : 'primary';
-    }
-  },
-});
+const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as TextCardProps2);
 const textSettings = ref(true);
 const buttonSettings = ref(false);
 </script>
