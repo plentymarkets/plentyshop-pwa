@@ -144,7 +144,7 @@ export default defineNuxtConfig({
       sm: 640,
       md: 768,
       lg: 1024,
-      "4xl": 1920,
+      '4xl': 1920,
     },
     defaultBreakpoints: {
       mobile: 'sm',
