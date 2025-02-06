@@ -1,5 +1,5 @@
 export type TextCardProps = {
-  text?: {
+  text: {
     pretitle?: string;
     title?: string;
     subtitle?: string;
@@ -7,7 +7,7 @@ export type TextCardProps = {
     textAlignment?: 'left' | 'center' | 'right';
     color?: string;
   };
-  button?: {
+  button: {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
