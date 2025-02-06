@@ -62,7 +62,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
 import type { BannerProps } from '../Banner/types';
 import type { Swiper as SwiperType } from 'swiper';
-import { SlideControls } from '~/composables/useHomepage/types';
+import type { SlideControls } from '~/composables/useHomepage/types';
 
 const { activeIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();

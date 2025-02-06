@@ -561,7 +561,6 @@ import {
 } from '@storefront-ui/vue';
 import type { BannerProps } from '~/components/ui/Banner/types';
 import type { BannerSlide } from '~/composables/useHomepage/types';
-import Multiselect from 'vue-multiselect';
 
 const { isOpen, open, close } = useDisclosure();
 const { data, updateBannerItems, setIndex, activeIndex: activeSlide } = useHomepage();

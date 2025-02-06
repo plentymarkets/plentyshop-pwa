@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfIconCancel, SfButton } from '@storefront-ui/vue';
+import { SfIconCancel } from '@storefront-ui/vue';
 import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<{
