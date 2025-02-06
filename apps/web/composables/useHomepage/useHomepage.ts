@@ -95,11 +95,10 @@ export const useHomepage: UseHomepageDataReturn = () => {
   };
 
   const updateProductRecommendedProductsOptions = (newRecomandedBlock: ProductRecommendedProductsOptions) => {
-    const recomandedBlock = state.value.data.blocks.find((block) => block.name === 'RecommendedProducts');
+    const recomandedBlock = state.value.data.blocks.find((block) => block.name === 'ProductRecommendedProducts');
     if (recomandedBlock) {
       recomandedBlock.options = {
-        ...recomandedBlock.options,
-        ...{ categoryId: newRecomandedBlock.categoryId, headline: newRecomandedBlock.headline },
+        ...newRecomandedBlock,
       };
     }
   };

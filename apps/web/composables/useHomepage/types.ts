@@ -36,6 +36,18 @@ interface UiMediaCardOptions {
 export interface ProductRecommendedProductsOptions {
   categoryId: string;
   headline?: string;
+  text?: {
+    pretitle?: string;
+    title?: string;
+    subtitle?: string;
+    htmlDescription?: string;
+    color?: string;
+    bgcolor?: string;
+    bgopacity?: number;
+    textAlignment?: string;
+    justify?: string;
+    align?: string;
+  };
 }
 
 export interface BannerSlide {
