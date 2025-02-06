@@ -14,6 +14,7 @@
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
 - Added shipping page no configuration fallback text
+- Added newsletter form to the block settings.
 
 ### 👷 Changed
 
