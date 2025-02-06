@@ -12,7 +12,6 @@
       "cache": false
     },
     "start": {
-      "dependsOn": ["^start"],
       "outputs": []
     },
     "lint": {
