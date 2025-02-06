@@ -285,7 +285,7 @@
               @click="uiImageTextBlock.button.variant = 'primary'"
             >
               <SfIconCheck
-                :class="{ invisible: uiImageTextBlock.button.variant  !== 'primary' }"
+                :class="{ invisible: uiImageTextBlock.button.variant !== 'primary' }"
                 class="mr-1 w-[1.1rem]"
               />
 
