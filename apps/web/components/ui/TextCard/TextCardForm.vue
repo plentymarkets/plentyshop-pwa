@@ -207,7 +207,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import { TextCardProps2 } from '~/components/ui/TextCard/types';
+import type { TextCardProps2 } from '~/components/ui/TextCard/types';
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
