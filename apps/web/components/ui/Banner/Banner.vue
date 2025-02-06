@@ -133,7 +133,7 @@ const getImageHeight = () => {
     case '4xl': {
       return '768px';
     }
-    
+
     case 'lg': {
       return '576px';
     }
