@@ -2,7 +2,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex } from './types';
 import type { BannerProps } from '~/components/ui/Banner/types';
-import { ActiveIndex } from './types';
+import type { ActiveIndex } from './types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);

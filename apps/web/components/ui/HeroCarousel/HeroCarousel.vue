@@ -23,7 +23,7 @@
       "
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
-      @slide-change="onSlideChange($event, index)"
+      @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
         <UiBanner :banner-props="bannerItem" :index="slideIndex" />
@@ -46,14 +46,12 @@
       :key="`prev-${index}`"
       :class="`swiper-button-prev swiper-button-prev-${index}`"
       :style="{ color: controls.color + ' !important' }"
-      @pagination-update="onSlideChange($event, index)"
     />
     <div
       v-if="enableModules && handleArrows()"
       :key="`next-${index}`"
       :class="`swiper-button-next swiper-button-next-${index}`"
       :style="{ color: controls.color + ' !important' }"
-      @pagination-update="onSlideChange($event, index)"
     />
 
     <template #fallback>
@@ -81,7 +79,7 @@ const onSwiperInit = (swiper: SwiperType) => {
   setIndex(index, swiper.realIndex);
 };
 
-const onSlideChange = async (swiper: SwiperType, ceva: number) => {
+const onSlideChange = async (swiper: SwiperType) => {
   if (swiper.realIndex !== activeIndex.value[index]) {
     await nextTick();
     swiper.update();
