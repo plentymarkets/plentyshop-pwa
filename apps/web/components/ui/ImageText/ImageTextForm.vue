@@ -312,15 +312,15 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageTextProps2 } from './types';
+import type { ImageTextProps } from './types';
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 const { data } = useHomepage();
+const { blockIndex } = useSiteConfiguration();
+const uiImageTextBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as ImageTextProps);
 
 const imageGroupOpen = ref(false);
 const buttonGroup = ref(false);
 const textGroup = ref(false);
 
-const uiImageTextBlock = computed(
-  () => data.value.blocks.find((block) => block.name === 'UiImageText')?.options as ImageTextProps2,
-);
+
 </script>
