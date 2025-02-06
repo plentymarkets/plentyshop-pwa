@@ -73,7 +73,7 @@
           </label>
         </div>
         <fieldset class="py-2">
-          <UiFormLabel>Image Align</UiFormLabel>
+          <UiFormLabel>Image Alignment</UiFormLabel>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <div
@@ -174,14 +174,6 @@
         <div class="py-2">
           <div class="flex justify-between mb-2">
             <UiFormLabel>Primary color</UiFormLabel>
-            <SfTooltip
-              label="The shop uses a primary and secondary color palette. Each palette consists of ten shades. The colors configured here serve as the base value for the respective palette. All other shades are automatically generated during the build process."
-              :placement="'top'"
-              :show-arrow="true"
-              class="ml-2 z-10"
-            >
-              <SfIconInfo :size="'sm'" />
-            </SfTooltip>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.color" type="text">
@@ -270,26 +262,50 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Button Link</UiFormLabel>
+            <UiFormLabel>Button Label</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.link" type="text">
+            <SfInput v-model="uiImageTextBlock.button.label" type="text">
               <template #suffix>
-                <label for="button-link" class="rounded-lg cursor-pointer">
-                  <input id="button-link" v-model="uiImageTextBlock.button.link" type="text" class="invisible w-8" />
+                <label for="button-label" class="rounded-lg cursor-pointer">
+                  <input id="button-label" v-model="uiImageTextBlock.button.label" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
           </label>
         </div>
+        <fieldset class="py-2">
+          <UiFormLabel>Outline</UiFormLabel>
 
-        <div class="flex items-center justify-between w-full py-2">
-          <UiFormLabel>Outlined</UiFormLabel>
-          <SfSwitch
-            v-model="isPrimaryVariant"
-            class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
-          />
-        </div>
+          <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+            <div
+              for="align-left"
+              class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+              :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'primary' }"
+              @click="uiImageTextBlock.button.variant = 'primary'"
+            >
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.image.imageAlignment !== 'left' }"
+                class="mr-1 w-[1.1rem]"
+              />
+
+              Primary
+            </div>
+
+            <div
+              for="align-right"
+              class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+              :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'secondary' }"
+              @click="uiImageTextBlock.button.variant = 'secondary'"
+            >
+              <SfIconCheck
+                :class="{ invisible: uiImageTextBlock.button.variant !== 'secondary' }"
+                class="mr-1 w-[1.1rem]"
+              />
+              Secondary
+            </div>
+          </div>
+        </fieldset>
       </UiAccordionItem>
     </form>
   </div>
@@ -297,7 +313,7 @@
 
 <script setup lang="ts">
 import type { ImageTextProps2 } from './types';
-import { SfTooltip, SfInput, SfTextarea, SfIconCheck, SfSwitch } from '@storefront-ui/vue';
+import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
 const { data } = useHomepage();
 
 const imageGroupOpen = ref(false);
@@ -307,13 +323,4 @@ const textGroup = ref(false);
 const uiImageTextBlock = computed(
   () => data.value.blocks.find((block) => block.name === 'UiImageText')?.options as ImageTextProps2,
 );
-
-const isPrimaryVariant = computed({
-  get: () => uiImageTextBlock.value.button?.variant === 'secondary',
-  set: (value: boolean) => {
-    if (uiImageTextBlock.value.button) {
-      uiImageTextBlock.value.button.variant = value ? 'secondary' : 'primary';
-    }
-  },
-});
 </script>
