@@ -173,7 +173,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Primary color</UiFormLabel>
+            <UiFormLabel>Text color</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.color" type="text">
@@ -262,7 +262,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Button Label</UiFormLabel>
+            <UiFormLabel>Link target</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.button.label" type="text">
