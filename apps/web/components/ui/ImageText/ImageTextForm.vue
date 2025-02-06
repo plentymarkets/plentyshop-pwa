@@ -321,6 +321,4 @@ const uiImageTextBlock = computed(() => (data.value.blocks[blockIndex.value].opt
 const imageGroupOpen = ref(false);
 const buttonGroup = ref(false);
 const textGroup = ref(false);
-
-
 </script>
