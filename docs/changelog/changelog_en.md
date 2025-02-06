@@ -4,7 +4,7 @@
 
 ### New
 
-- Added recomanded block in right side drawer.
+- Added recommended block in right side drawer.
 - Added slider edit.
 - Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
