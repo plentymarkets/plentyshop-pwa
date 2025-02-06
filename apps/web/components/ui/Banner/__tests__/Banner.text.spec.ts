@@ -134,6 +134,7 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
             bgcolor: '#0000FF',
+            background: true,
           },
           image: {},
           controls: {},
