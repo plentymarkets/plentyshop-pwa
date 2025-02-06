@@ -207,11 +207,11 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
-import type { TextCardProps2 } from '~/components/ui/TextCard/types';
+import type { TextCardProps } from '~/components/ui/TextCard/types';
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
-const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as TextCardProps2);
-const textSettings = ref(true);
+const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as TextCardProps);
+const textSettings = ref(false);
 const buttonSettings = ref(false);
 </script>
