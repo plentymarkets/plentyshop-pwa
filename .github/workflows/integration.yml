@@ -276,12 +276,16 @@ jobs:
 
       - name: Start application
         run: |
+          ls -la
           pushd apps/server/dist
           node index.js &
           popd
-          pushd apps/web/.output/dist
+          pushd apps/web/.output/server
           node index.mjs &
           popd
+
+      - name: Wait for services
+        run: npx wait-on http://localhost:3000
 
       - name: lighthouse desktop audit
         run: npm run lhci:desktop
