@@ -71,6 +71,23 @@ jobs:
 
       - name: Run linter
         run: yarn lint
+
+  malicious-code-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Scan for malicious code
+        run: >
+           semgrep scan 
+           --error 
+           --severity ERROR
+           --exclude-rule javascript.vue.security.audit.xss.templates.avoid-v-html.avoid-v-html
+           --exclude-rule dockerfile.security.missing-user-entrypoint.missing-user-entrypoint
+           .
+
   test-unit:
     runs-on: ubuntu-latest
     steps:
