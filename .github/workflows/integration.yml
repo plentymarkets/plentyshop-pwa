@@ -59,6 +59,16 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: ${{ github.head_ref }}
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Scan for malicious code
+        run: >
+          semgrep scan 
+          --error 
+          --severity ERROR
+          .
   fitness-code-quality:
     runs-on: ubuntu-latest
     steps:
@@ -275,43 +285,4 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: lighthouse desktop audit
-        run: npm run lhci:desktop
-  ready-to-review:
-    runs-on: ubuntu-latest
-    needs: [fitness-compliance, fitness-code-quality, test-unit, build, test-e2e-stable, fitness-web-vitals-mobile, fitness-web-vitals-desktop]
-    steps:
-      - name: Ready to review (push notification)
-        if: github.event_name == 'pull_request' && github.event.pull_request.draft == false
-        run: |
-          curl --location --request POST '${{ secrets.CHAT_WEBHOOK }}' \
-          --header 'Content-Type: application/json' \
-          --data-raw '{
-            "cardsV2": [
-                {
-                    "cardId": "${{ github.event.pull_request.id }}",
-                    "card": {
-                        "header": {
-                            "title": "Boilerplate Review Required",
-                            "subtitle": "${{ github.event.pull_request.title }}"
-                        },
-                        "sections": [
-                            {
-                                "widgets": [
-                                    {
-                                        "buttonList": {
-                                            "buttons": {
-                                                "text": "Open PR",
-                                                "onClick": {
-                                                    "openLink": {
-                                                        "url": "https://github.com/${{ github.repository }}/pull/${{ github.event.pull_request.number }}"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]}'
+        run: yarn lhci:desktop

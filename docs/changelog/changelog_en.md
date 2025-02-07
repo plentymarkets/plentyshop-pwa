@@ -5,6 +5,7 @@
 ### New
 
 - Added slider edit.
+- Added block editing by position & typescipt restructuring
 - Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
@@ -14,6 +15,8 @@
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
 - Added shipping page no configuration fallback text
+- Image Text Form integrated and two way data binded
+- Added newsletter form to the block settings.
 
 ### 👷 Changed
 
@@ -124,6 +127,7 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 - New styles for blocks actions
 - Users can now move a block up or down in the block list.
 - Added a new placeholder block component to showcase to the user where his block will go
+- Added a text card form for edit settings
 
 ### 👷 Changed
 
