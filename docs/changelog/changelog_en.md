@@ -116,6 +116,7 @@
 - New styles for blocks actions
 - Users can now move a block up or down in the block list.
 - Added a new placeholder block component to showcase to the user where his block will go
+- Added a text card form for edit settings
 
 ### 👷 Changed
 
