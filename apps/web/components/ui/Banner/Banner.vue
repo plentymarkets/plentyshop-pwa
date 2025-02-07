@@ -2,7 +2,7 @@
   <NuxtImg
     :src="getImageUrl()"
     :alt="props.bannerProps.image?.alt ?? ''"
-    class="h-[320px] w-full object-cover"
+    class="w-full object-cover"
     :style="{
       filter: props.bannerProps.image?.brightness
         ? 'brightness(' + (props.bannerProps.image?.brightness ?? 1) + ')'
@@ -26,7 +26,11 @@
   >
     <div
       :class="bannerContentClass"
-      :style="{ backgroundColor: hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity) }"
+      :style="{
+        backgroundColor: props.bannerProps.text.background
+          ? hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity)
+          : '',
+      }"
       :data-testid="'banner-content-' + props.index"
     >
       <div
@@ -109,6 +113,9 @@ const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return props.bannerProps.image?.wideScreen ?? '';
+    }
     case 'lg': {
       return props.bannerProps.image?.desktop ?? '';
     }
@@ -123,6 +130,10 @@ const getImageUrl = () => {
 
 const getImageHeight = () => {
   switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return '768px';
+    }
+
     case 'lg': {
       return '576px';
     }
