@@ -68,9 +68,6 @@ jobs:
           semgrep scan 
           --error 
           --severity ERROR
-          --exclude-rule javascript.vue.security.audit.xss.templates.avoid-v-html.avoid-v-html
-          --exclude-rule dockerfile.security.missing-user-entrypoint.missing-user-entrypoint
-          --exclude-rule yaml.github-actions.security.run-shell-injection.run-shell-injection
           .
   fitness-code-quality:
     runs-on: ubuntu-latest
