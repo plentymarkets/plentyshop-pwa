@@ -52,7 +52,7 @@
         </SfInput>
       </div>
       <div class="mb-6">
-        <UiFormLabel class="mb-1">Text Alignment (y)</UiFormLabel>
+        <UiFormLabel class="mb-1">Text alignment</UiFormLabel>
         <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
           <div
             for="text-align-left"
