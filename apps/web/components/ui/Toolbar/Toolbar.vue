@@ -100,6 +100,7 @@ const toggleSettingsDrawer = () => {
 
 const toggleEdit = () => {
   disableActions.value = !disableActions.value;
+  closeDrawer();
   if (isEditing.value) {
     isEditing.value = false;
   }
