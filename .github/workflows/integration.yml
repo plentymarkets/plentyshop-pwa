@@ -81,7 +81,6 @@ jobs:
 
       - name: Run linter
         run: yarn lint
-
   test-unit:
     runs-on: ubuntu-latest
     steps:
