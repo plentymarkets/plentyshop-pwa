@@ -26,22 +26,16 @@
         <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
         <SfInput v-model="recommendedBlockValue.text.subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
       </div>
-      <div v-if="recommendedBlockValue.text.htmlDescription">
-        <label>Description</label>
-        <ExperimentalMarkupBuilder
-          :input-html="recommendedBlockValue.text.htmlDescription"
-          @update:generated-html="
-            (html: string) => {
-              recommendedBlockValue.text.htmlDescription = html;
-            }
-          "
+      <div class="mb-6">
+        <UiFormLabel class="mb-1">Description</UiFormLabel>
+        <SfTextarea
+          v-model="recommendedBlockValue.text.htmlDescription"
+          name="description"
+          type="text"
+          class="w-full min-h-[232px]"
+          placeholder="Text that supports HTML formatting"
         />
       </div>
-      <!-- <div class="mb-6">
-        <UiFormLabel class="mb-1">Description</UiFormLabel>
-        <SfTextarea v-model="recommendedBlockValue.text.htmlDescription" name="description" type="text"
-          class="w-full min-h-[232px]" placeholder="Text that supports HTML formatting" />
-      </div> -->
       <div class="mb-6">
         <UiFormLabel class="mb-1">Text Color</UiFormLabel>
 
@@ -111,8 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput } from '@storefront-ui/vue';
-// import { SfTextarea } from '@storefront-ui/vue';
+import { SfInput, SfTextarea } from '@storefront-ui/vue';
 const { data, updateProductRecommendedProductsOptions } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
