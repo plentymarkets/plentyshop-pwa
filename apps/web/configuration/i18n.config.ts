@@ -21,11 +21,9 @@ export const getLocales = (): LocaleObject[] => {
 const getDefaultLocale = () => {
   const locales = getLocales();
   const localeKeys = locales.map((locale) => locale.code);
-
   const defaultLocale = process.env.DEFAULTLANGUAGE as LocaleObject['*'];
-  const fallbackLocale = locales[0] as LocaleObject['*'];
 
-  return localeKeys.includes(defaultLocale) ? defaultLocale : fallbackLocale;
+  return localeKeys.includes(defaultLocale) ? defaultLocale : 'en';
 };
 
 export const nuxtI18nOptions: NuxtI18nOptions = {
