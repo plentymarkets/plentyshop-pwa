@@ -1,11 +1,11 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
-    <label>
-      <UiFormLabel class="mb-1">Headline</UiFormLabel>
+    <label >
+      <UiFormLabel>Headline</UiFormLabel>
       <SfInput v-model="recommendedProductsOptions.headline" name="Headline" type="text" placeholder="Enter Headline" />
     </label>
     <label>
-      <UiFormLabel class="mb-1">Category Id</UiFormLabel>
+      <UiFormLabel>Category Id</UiFormLabel>
       <SfInput
         v-model="recommendedProductsOptions.categoryId"
         name="category Id"
@@ -14,8 +14,8 @@
       />
     </label>
     <div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Pre Title</UiFormLabel>
+      <div>
+        <UiFormLabel>Pre Title</UiFormLabel>
         <SfInput
           v-model="recommendedProductsOptions.text.pretitle"
           name="preTitle"
@@ -23,12 +23,12 @@
           placeholder="PreTitle"
         />
       </div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Title</UiFormLabel>
+      <div>
+        <UiFormLabel>Title</UiFormLabel>
         <SfInput v-model="recommendedProductsOptions.text.title" name="Title" type="text" placeholder="Title" />
       </div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
+      <div>
+        <UiFormLabel>Subtitle</UiFormLabel>
         <SfInput
           v-model="recommendedProductsOptions.text.subtitle"
           name="Subtitle"
@@ -36,8 +36,8 @@
           placeholder="Subtitle"
         />
       </div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Description</UiFormLabel>
+      <div>
+        <UiFormLabel>Description</UiFormLabel>
         <SfTextarea
           v-model="recommendedProductsOptions.text.htmlDescription"
           name="description"
@@ -46,8 +46,8 @@
           placeholder="Text that supports HTML formatting"
         />
       </div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Text Color</UiFormLabel>
+      <div>
+        <UiFormLabel>Text Color</UiFormLabel>
 
         <SfInput v-model="recommendedProductsOptions.text.color" type="text">
           <template #suffix>
@@ -148,3 +148,4 @@ const recommendedProductsOptions = computed({
 recommendedProductsOptions.value.text.color = recommendedProductsOptions.value.text.color ?? '#000';
 recommendedProductsOptions.value.text.textAlignment = recommendedProductsOptions.value.text.textAlignment ?? 'left';
 </script>
+
