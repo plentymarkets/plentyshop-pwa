@@ -285,4 +285,4 @@ jobs:
         run: tar -xzf build.tar.gz
 
       - name: lighthouse desktop audit
-        run: yarn lhci:desktop
+        run: npm run lhci:desktop
