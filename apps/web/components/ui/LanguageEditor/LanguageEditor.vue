@@ -28,7 +28,7 @@
 
 <script setup lang="ts">
 import { SfIconLanguage } from '@storefront-ui/vue';
-import type { Locale} from 'vue-i18n';
+import type { Locale } from 'vue-i18n';
 import { useI18n } from 'vue-i18n';
 
 const { localeCodes, locale: currentLocale } = useI18n();
