@@ -42,11 +42,7 @@ export interface ProductRecommendedProductsOptions {
     subtitle?: string;
     htmlDescription?: string;
     color?: string;
-    bgcolor?: string;
-    bgopacity?: number;
     textAlignment?: string;
-    justify?: string;
-    align?: string;
   };
 }
 
