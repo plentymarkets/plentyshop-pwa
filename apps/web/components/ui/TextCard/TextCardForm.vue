@@ -27,7 +27,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel> Main Title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="textCardBlock.text.title" type="text">
@@ -67,7 +67,7 @@
         </div>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Text color</UiFormLabel>
+            <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="textCardBlock.text.color" type="text">
@@ -81,7 +81,6 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Choose primary color</span>
           </label>
         </div>
 
