@@ -42,14 +42,15 @@
 import BlazeSlider from 'blaze-slider';
 import 'blaze-slider/dist/blaze.css';
 import type { BannerProps } from '../Banner/types';
+import type { SlideControls } from '~/composables/useHomepage/types';
 
-const { bannerItems } = defineProps<{ bannerItems: BannerProps[] }>();
+const { bannerItems, controls } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls }>();
 const generalTextColor = ref('inherit');
 
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-generalTextColor.value = bannerItems[0]?.controls?.color ?? 'inherit';
+generalTextColor.value = controls?.color ?? 'inherit';
 
 onMounted(() => {
   document.querySelectorAll('.blaze-slider').forEach((el) => {

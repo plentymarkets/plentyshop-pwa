@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
-    <form class="w-full space-y-4 absolute bg-white">
+    <form class="w-full absolute bg-white">
       <UiAccordionItem
         v-model="imageGroupOpen"
         summary-active-class="bg-neutral-100 border-t-0"
@@ -138,7 +138,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Pre Title</UiFormLabel>
+            <UiFormLabel>Pre-title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.pretitle" type="text">
@@ -153,7 +153,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Main Title</UiFormLabel>
+            <UiFormLabel>Main title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.title" type="text">
@@ -168,7 +168,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Sub Title</UiFormLabel>
+            <UiFormLabel>Sub title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.subtitle" type="text">
