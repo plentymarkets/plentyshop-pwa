@@ -19,6 +19,7 @@
 - Added newsletter form to the block settings.
 
 ### 👷 Changed
+- Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
 ### 🩹 Fixed
 
