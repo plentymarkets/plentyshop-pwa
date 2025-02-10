@@ -94,7 +94,7 @@
             v-for="(_, index) in slides"
             :key="index"
             class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
-            :class="activeSlide === index ? 'bg-primary-500 text-white' : ''"
+            :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
             @click="slideClick(index)"
           >
             Slide {{ index + 1 }}
@@ -257,7 +257,7 @@
             <UiFormLabel class="mb-1">Textbox Background</UiFormLabel>
             <SfSwitch
               v-model="slides[activeSlide].text.background"
-              class="checked:before:bg-[#646F68] checked:bg-primary-100 checked:before:hover:bg-white checked:border-[#646F68] hover:border-[#646F68] checked:hover:before:bg-[#646F68] hover:before:bg-[#646F68] checked:hover:bg-white checked:hover:border-[#646F68]"
+              class="checked:bg-editor-button checked:before:hover:bg-editor-button checked:border-gray-500 checked:hover:border:bg-gray-700 hover:border-gray-700 hover:before:bg-gray-700 checked:hover:bg-gray-300 checked:hover:border-gray-400"
             />
           </div>
           <div v-if="slides[activeSlide].text.background" class="mb-6">

@@ -3,16 +3,14 @@
     <div class="relative flex items-center pr-5">
       <UiBrandLogo />
 
-      <UiButton
+      <button
         type="button"
-        class="relative ml-4"
-        variant="tertiary"
+        class="editor-button relative ml-4"
         aria-label="Open configuration drawer"
-        square
         @click="toggleSettingsDrawer"
       >
         <SfIconTune />
-      </UiButton>
+      </button>
 
       <div class="absolute left-1/2 transform -translate-x-1/2">
         <UiLanguageEditor />

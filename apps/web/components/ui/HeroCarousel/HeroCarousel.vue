@@ -14,15 +14,10 @@
       <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
         <UiBanner :banner-props="bannerItem" :index="slideIndex" />
       </SwiperSlide>
-      <div v-if="enableModules" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
-        <span
-          v-for="(bannerItem, bannerItemIndex) in bannerItems"
-          :key="'dot-' + bannerItemIndex"
-          class="swiper-pagination-bullet"
-          :style="{ backgroundColor: controls.color + ' !important' }"
-          :class="{ 'swiper-pagination-bullet-active': bannerItemIndex === activeSlideIndex[index] }"
-        />
-      </div>
+      <div
+        v-if="enableModules"
+        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
+      ></div>
     </Swiper>
 
     <div
@@ -53,16 +48,24 @@ import type { SlideControls } from '~/composables/useHomepage/types';
 
 const { activeSlideIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
-const { bannerItems, index } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls; index: number }>();
+const { bannerItems, index, controls } = defineProps<{
+  bannerItems: BannerProps[];
+  controls: SlideControls;
+  index: number;
+}>();
 const enableModules = computed(() => bannerItems.length > 1);
 
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value
+  return enableModules.value && controls.color
     ? {
-        el: '.custom-swiper-pagination',
+        el: `.swiper-pagination-${index}`,
         clickable: true,
+        bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
+        renderBullet(index: number, className: string) {
+          return `<span key="dot-${index}" class="${className}" style="background-color: ${controls.color}!important;"></span>`;
+        },
       }
     : false;
 });
@@ -99,6 +102,16 @@ watch(
     }
   },
   { flush: 'post' },
+);
+
+watch(
+  () => controls.color,
+  (newColor, oldColor) => {
+    if (slider && !slider.destroyed && newColor !== oldColor) {
+      slider.pagination.render();
+      slider.pagination.update();
+    }
+  },
 );
 </script>
 
