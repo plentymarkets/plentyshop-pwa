@@ -4,22 +4,8 @@
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
-      :pagination="
-        enableModules
-          ? {
-              el: '.custom-swiper-pagination',
-              clickable: true,
-            }
-          : false
-      "
-      :navigation="
-        enableModules
-          ? {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            }
-          : false
-      "
+      :pagination="paginationConfig"
+      :navigation="navigationConfig"
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
@@ -27,14 +13,12 @@
       <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
         <UiBanner :banner-props="bannerItem" :index="index" />
       </SwiperSlide>
-      <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
+      <div v-if="enableModules" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
         <span
           v-for="(bannerItem, index) in bannerItems"
           :key="'dot-' + index"
           class="swiper-pagination-bullet"
-          :style="{
-            backgroundColor: controls.color + ' !important',
-          }"
+          :style="{ backgroundColor: controls.color + ' !important' }"
           :class="{ 'swiper-pagination-bullet-active': index === activeIndex }"
         />
       </div>
@@ -70,6 +54,24 @@ const { bannerItems } = defineProps<{ bannerItems: BannerProps[]; controls: Slid
 const enableModules = computed(() => bannerItems.length > 1);
 
 let slider: SwiperType | null = null;
+
+const paginationConfig = computed(() => {
+  return enableModules.value
+    ? {
+        el: '.custom-swiper-pagination',
+        clickable: true,
+      }
+    : false;
+});
+
+const navigationConfig = computed(() => {
+  return enableModules.value
+    ? {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      }
+    : false;
+});
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
