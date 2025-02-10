@@ -1,4 +1,5 @@
 export type NewsletterSubscribeProps = {
+  index?: number;
   text: {
     bgColor?: string;
     title?: string;

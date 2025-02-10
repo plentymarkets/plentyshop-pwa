@@ -1,4 +1,5 @@
 export type ProductRecommendedProductsProps = {
+  index?: number;
   categoryId: string;
   cacheKey?: string;
   text?: {
