@@ -57,10 +57,9 @@ export const usePayPal = () => {
         return true;
       }
       return false;
-    } catch (error) {
-      console.debug('Error loading PayPal config', error);
+    } catch {
+      return false;
     }
-    
   };
 
   /**
