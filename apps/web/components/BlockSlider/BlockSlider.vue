@@ -214,15 +214,15 @@
 
         <div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Pre Title</UiFormLabel>
+            <UiFormLabel class="mb-1">Pre-title</UiFormLabel>
             <SfInput v-model="slides[activeSlide].text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Main Title</UiFormLabel>
+            <UiFormLabel class="mb-1">Main title</UiFormLabel>
             <SfInput v-model="slides[activeSlide].text.title" name="mainTitle" type="text" placeholder="Title" />
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Sub Title</UiFormLabel>
+            <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
             <SfInput v-model="slides[activeSlide].text.subtitle" name="subtitle" type="text" placeholder="SubTitle" />
           </div>
           <div class="mb-6">
@@ -473,7 +473,7 @@
             </label>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Link</UiFormLabel>
+            <UiFormLabel class="mb-1">Link Target</UiFormLabel>
             <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" placeholder="Enter URL here" />
           </div>
           <div class="mb-6">
