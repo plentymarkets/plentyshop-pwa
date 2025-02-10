@@ -12,7 +12,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Pre title</UiFormLabel>
+            <UiFormLabel>Pre-title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="textCardBlock.text.pretitle" type="text">
@@ -27,7 +27,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel>Main title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="textCardBlock.text.title" type="text">
