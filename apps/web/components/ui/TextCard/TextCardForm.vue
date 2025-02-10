@@ -67,7 +67,7 @@
         </div>
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Text color</UiFormLabel>
+            <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="textCardBlock.text.color" type="text">
@@ -81,14 +81,13 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Choose primary color</span>
           </label>
         </div>
 
         <fieldset class="py-2">
-          <legend class="text-sm font-medium text-gray-700">Text alignment</legend>
+          <legend class="text-sm font-medium text-black">Text alignment</legend>
 
-          <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+          <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <div
               for="text-align-left"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
