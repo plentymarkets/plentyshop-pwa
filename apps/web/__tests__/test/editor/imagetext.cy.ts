@@ -26,7 +26,7 @@ describe('EditMode', () => {
           .clear({ force: true })
           .type(text, { delay: 0, force: true });
       });
-
+      cy.get('[data-testid="imagetext"]').scrollIntoView().should('exist');
       cy.get('[data-testid="imagetext"]').within(() => {
         const expectedTexts = [
           { selector: 'text-pretitle', text: 'New Pre title' },
