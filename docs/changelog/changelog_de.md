@@ -1,5 +1,73 @@
 # Changelog PlentyONE Shop
 
+## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### 📙 Todo
+
+- Wir haben unsere Packages `shop-api` und `tailwind-colors` von GitHubs Registry zu NPMs Registry verschoben.
+  Ein GitHub-Token ist nicht mehr erforderlich, um auf diese Packages zuzugreifen.
+  - Führe `yarn setup:unix` oder `yarn setup:windows` aus und drücke y, um die `.yarnrc.yml` zu entfernen.
+  - Entferne den `NPM_AUTH_TOKEN` aus der `apps/web/.env` Datei.
+
+### Neu
+
+- Möglichkeit hinzugefügt, primäre und sekundäre Farben über den Seiten-Konfigurationsbereich zu ändern.
+- Seiten-Konfigurationsbereich hinzugefügt.
+- Block-Konfigurationsbereich hinzugefügt.
+- Multiselect-Komponente hinzugefügt, die das Durchsuchen der Optionen ermöglicht.
+- Vorschaufunktionalität für Blockgrößen hinzugefügt.
+- Wenn es ungespeicherte Änderungen im Editor gibt und der Benutzer versucht, die Seite zu schließen oder neu zu laden, zeigt der Browser jetzt eine Warnung an und fragt nach einer Bestätigung.
+
+### 👷 Geändert
+
+- Hintergrund des Footers für automatische Färbung geändert.
+- Logik zum Deaktivieren der Speichertaste im Editor geändert, um Änderungen in den Einstellungen zu berücksichtigen.
+
+### 🩹 Behoben
+
+- Ein Hydrationsfehler beim Abrufen empfohlener Produkte auf der Startseite behoben.
+- Ein Problem behoben, das die Speichertaste deaktivierte, obwohl der Benutzer die Startseite bearbeitet hatte.
+- Das `nuxt-security` Modul vorerst entfernt aufgrund von Problemen mit PayPal.
+- Ein Problem mit PayPal Express Checkout behoben, bei dem eine erneute Autorisierung der Zahlung erforderlich war.
+- Ein Barrierefreiheitsfehler in der Banner Komponente behoben.
+
+## v1.9.0 (2025-01-23) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.8.0...v1.9.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+### Neu
+
+- Das [Nuxt-Security-Modul](https://nuxt-security.vercel.app/) wurde zur Web-App hinzugefügt.
+- Die Web-App ist jetzt in der Lage, [Komponenten aus einem Modul](https://pwa-docs.plentymarkets.com/guide/how-to/module/inject-components) in vorgegebenen Bereichen des Shops zu rendern.
+- Im Shop gibt es jetzt eine eigene Seite mit rechtlichen Informationen zum Versand. Über die Shop-Konfiguration kann hier eine Kategorie verknüpft werden. Das Template der verknüpften Kategorie wird für die Seiteninhalte verwendet. Die URL der Seite ist `/shipping`.
+- Im Checkout werden bei den Versanddienstleistern nun voraussichtliche Liefertermine angezeigt.
+- Wenn für eine Kategorie in Terra die Robots-Einstellung konfiguriert ist, wird das Robots-Meta-Tag der Kategorie im Shop entsprechend gesetzt.
+- Produktseiten enthalten jetzt kanonische URLs.
+- Für den Block für Produktempfehlungen kann jetzt optional ein Vor-Titel, ein Titel, ein Untertitel und eine Beschreibung konfiguriert werden.
+
+### 👷 Geändert
+
+- Das `UiHeroCarousel`-Template zeigt das bereitgestellte Bild nun als Banner über die gesamte Seitenbreite an. Die Komponente enthält jetzt auch zusätzliche Einstellungen.
+  - _Experimentell_: Das Karussell kann jetzt anstelle von [SwiperJS](https://swiperjs.com/) den [Blaze Slider](https://blaze-slider.dev/) verwenden. Dies kann Auswirkungen auf die Performance und Core Web Vitals haben. Wir evaluieren noch, welche Bibliothek performanter ist. Aktuell ist es möglich, über eine Runtime-Konfiguration zwischen beiden zu wechseln.
+- Die Komponente `UiMediaCard` wurde in `UiImageText` umbenannt. Das Template wurde aktualisiert, um immer Platz für ein Bild zu reservieren. Die reine Text-Variante wurde in `UiTextCard` ausgelagert.
+- Der Newsletter verwendet jetzt das Template-JSON zur Konfiguration anstelle der Runtime-Konfiguration.
+- Das Speichern im Editor ist jetzt deaktiviert, wenn keine Änderungen am Template vorgenommen wurden oder wenn das Template ungültig ist.
+- Aktualisierte Cookie-Handhabung für PayPal: PayPal-Funktionalität basiert jetzt auf einem essentiellen Cookie, wodurch keine Benutzereinwilligung mehr erforderlich ist.
+
+### 🩹 Behoben
+
+- Bei Preisen wird jetzt immer ein Sternchen als Verweis auf die MwSt.-Information angezeigt.
+- Die Richtung der Akkordeon-Pfeile auf Produktseiten wurde korrigiert.
+- Ein Problem wurde behoben, bei dem die Benachrichtigung über erforderliche Attribute den Warenkorb blockierte.
+- Eine visuelle Inkonsistenz in der Kategoriefilter-Seitenleiste wurde behoben.
+- Ein Barrierefreiheitsfehler durch ein fehlendes Label beim Zurücksetzen des Filters wurde behoben.
+- Eine Warnung über die Verwendung des gleichen Texts in alt und title auf der Kategorieseite wurde behoben.
+- Die Anzahl der maximal sichtbaren Seiten in der mobilen Paginierung wurde korrigiert.
+- Der alternative Text für Produktgalerie-Vorschaubilder wurde korrigiert.
+- Die Startseite zeigt jetzt beim ersten Laden empfohlene Produkte an.
+- Ein Problem wurde behoben, bei dem nur der erste im Editor ausgewählte Template-Block bearbeitbar war.
+- Ein Problem wurde behoben, bei dem die Sprachauswahl des Editors eine invertierte Datenvorlage anzeigte.
+- Wenn die Mehrsprachigkeitskonfiguration des Remote-Shops weder Englisch noch Deutsch enthält, wird die entsprechende Sprachdatei jetzt zur Build-Zeit entfernt. Dadurch wird die Sprache nicht in der Sprachauswahl angezeigt.
+- Ein Problem wurde behoben, bei dem der Aufruf von `useRoute` innerhalb der Middleware zu irreführenden Ergebnissen führen konnte.
+
 ## v1.8.0 (2024-12-13) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.7.0...v1.8.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu

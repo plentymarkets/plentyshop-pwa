@@ -111,6 +111,7 @@ export const usePayPal = () => {
       return state.value.paypalScript.script;
     }
 
+    state.value.loadingScripts = {};
     state.value.isReady = false;
     state.value.paypalScript = null;
     state.value.loadingScripts[scriptKey] = loadScript(currency, localePayPal, commit)

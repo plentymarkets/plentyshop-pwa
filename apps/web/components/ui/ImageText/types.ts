@@ -1,5 +1,6 @@
 export type ImageTextProps = {
-  image?: {
+  image: {
+    wideScreen?: string;
     desktop?: string;
     tablet?: string;
     mobile?: string;
@@ -7,19 +8,25 @@ export type ImageTextProps = {
     imageAlignment: 'left' | 'right';
   };
 
-  text?: {
+  text: {
     pretitle?: string;
     title?: string;
     subtitle?: string;
     htmlDescription?: string;
+    color?: string;
     textAlignment?: 'left' | 'center' | 'right';
   };
-  button?: {
+  button: {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
   };
 };
+
+export interface ImageDimensions {
+  width: number;
+  height: number;
+}
 
 export interface ImageDimensions {
   width: number;

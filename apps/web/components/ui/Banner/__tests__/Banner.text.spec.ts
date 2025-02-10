@@ -12,6 +12,9 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -33,6 +36,9 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -54,6 +60,9 @@ describe('Banner text', () => {
             title: 'Test title',
             htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -75,6 +84,9 @@ describe('Banner text', () => {
             title: 'Test title',
             subtitle: 'Test subtitle',
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -98,6 +110,9 @@ describe('Banner text', () => {
             htmlDescription: '<p>Test description</p>',
             color: 'red',
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -118,8 +133,12 @@ describe('Banner text', () => {
             title: 'Test title',
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
-            bgcolor: 'blue',
+            bgcolor: '#0000FF',
+            background: true,
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -128,7 +147,7 @@ describe('Banner text', () => {
 
     const content = wrapper.find('[data-testid="banner-content-0"]')
 
-    expect(content.attributes('style')).toContain('background-color: blue');
+    expect(content.attributes('style')).toContain('background-color: rgba(0, 0, 255, 1)');
   });
 
   it('should set the given background opacity', () => {
@@ -141,7 +160,11 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
             bgopacity: 0.5,
+            background: true,
           },
+          image: {},
+          controls: {},
+          button: {},
         },
 
         index: 0,
@@ -150,7 +173,7 @@ describe('Banner text', () => {
 
     const content = wrapper.find('[data-testid="banner-content-0"]')
 
-    expect(content.attributes('style')).toContain('opacity: 0.5');
+    expect(content.attributes('style')).toContain('background-color: rgba(255, 255, 255, 0.5)');
   });
 
   describe('text alignment', () => {
@@ -164,6 +187,9 @@ describe('Banner text', () => {
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -186,6 +212,9 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
               textAlignment: 'center',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -208,6 +237,9 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
               textAlignment: 'right',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -231,6 +263,9 @@ describe('Banner text', () => {
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -253,6 +288,9 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
               justify: 'center',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -273,8 +311,11 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              justify: 'end',
+              justify: 'bottom',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -298,6 +339,9 @@ describe('Banner text', () => {
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -320,6 +364,9 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
               align: 'center',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,
@@ -340,8 +387,11 @@ describe('Banner text', () => {
               title: 'Test title',
               subtitle: 'Test subtitle',
               htmlDescription: '<p>Test description</p>',
-              align: 'end',
+              align: 'right',
             },
+            image: {},
+            controls: {},
+            button: {},
           },
 
           index: 0,

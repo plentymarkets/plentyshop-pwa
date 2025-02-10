@@ -2,7 +2,7 @@
   <NuxtImg
     :src="getImageUrl()"
     :alt="props.bannerProps.image?.alt ?? ''"
-    class="h-[320px] w-full object-cover"
+    class="w-full object-cover"
     :style="{
       filter: props.bannerProps.image?.brightness
         ? 'brightness(' + (props.bannerProps.image?.brightness ?? 1) + ')'
@@ -26,7 +26,11 @@
   >
     <div
       :class="bannerContentClass"
-      :style="{ backgroundColor: props.bannerProps.text.bgcolor, opacity: props.bannerProps.text.bgopacity }"
+      :style="{
+        backgroundColor: props.bannerProps.text.background
+          ? hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity)
+          : '',
+      }"
       :data-testid="'banner-content-' + props.index"
     >
       <div
@@ -89,8 +93,29 @@ const props = defineProps<{
   index: number;
 }>();
 
+const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
+  const cleanHex = hex.replace('#', '');
+
+  const fullHex =
+    cleanHex.length === 3
+      ? cleanHex
+          .split('')
+          .map((c) => c + c)
+          .join('')
+      : cleanHex;
+
+  const red = parseInt(fullHex.substring(0, 2), 16);
+  const green = parseInt(fullHex.substring(2, 4), 16);
+  const blue = parseInt(fullHex.substring(4, 6), 16);
+
+  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
+};
+
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return props.bannerProps.image?.wideScreen ?? '';
+    }
     case 'lg': {
       return props.bannerProps.image?.desktop ?? '';
     }
@@ -105,6 +130,10 @@ const getImageUrl = () => {
 
 const getImageHeight = () => {
   switch (viewport.breakpoint.value) {
+    case '4xl': {
+      return '768px';
+    }
+
     case 'lg': {
       return '576px';
     }
@@ -142,7 +171,10 @@ const getContentPosition = (axis: string) => {
     case 'center': {
       return 'center';
     }
-    case 'end': {
+    case 'right': {
+      return 'flex-end';
+    }
+    case 'bottom': {
       return 'flex-end';
     }
     default: {

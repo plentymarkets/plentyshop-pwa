@@ -64,13 +64,23 @@
                 </label>
               </div>
               <div v-for="propKey in Object.keys(cookie)" :key="propKey">
-                <div v-if="propKey !== 'name' && propKey !== 'accepted'" class="flex p-2 mb-1 bg-white">
+                <div
+                  v-if="propKey !== 'name' && propKey !== 'accepted' && propKey !== 'cookieNames'"
+                  class="flex p-2 mb-1 bg-white"
+                >
                   <div class="w-1/4">
                     {{ t(`CookieBar.keys.${propKey}`) }}
                   </div>
                   <div class="w-3/4 break-words">
                     <template v-if="propKey === 'PrivacyPolicy'">
-                      <SfLink :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
+                      <SfLink
+                        v-if="(cookie[propKey] as string).startsWith('http')"
+                        :tag="NuxtLink"
+                        target="_blank"
+                        :to="cookie[propKey]"
+                        >{{ t('CookieBar.Privacy Settings') }}</SfLink
+                      >
+                      <SfLink v-else :tag="NuxtLink" :to="privacyPolicy">{{ t('CookieBar.Privacy Settings') }}</SfLink>
                     </template>
                     <template v-else-if="getCookiePropertyValue(cookie, propKey)">
                       {{

@@ -1,15 +1,16 @@
 export type BannerProps = {
-  controls?: {
+  controls: {
     color?: string;
   };
-  image?: {
+  image: {
+    wideScreen?: string;
     desktop?: string;
     tablet?: string;
     mobile?: string;
     alt?: string;
     brightness?: number;
   };
-  text?: {
+  text: {
     color?: string;
     bgcolor?: string;
     bgopacity?: number;
@@ -18,10 +19,11 @@ export type BannerProps = {
     subtitle?: string;
     htmlDescription?: string;
     textAlignment?: 'left' | 'center' | 'right';
-    justify?: 'start' | 'center' | 'end';
-    align?: 'start' | 'center' | 'end';
+    justify?: 'top' | 'center' | 'bottom';
+    align?: 'left' | 'center' | 'right';
+    background?: boolean;
   };
-  button?: {
+  button: {
     label?: string;
     link?: string;
     variant?: 'primary' | 'secondary';
