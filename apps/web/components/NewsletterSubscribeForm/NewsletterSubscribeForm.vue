@@ -55,7 +55,7 @@
   </div>
   <div>
     <UiAccordionItem
-      v-model="inputGroup"
+      v-model="settingsGroup"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -89,8 +89,8 @@ import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
 const textGroup = ref(true);
-const inputGroup = ref(true);
 const buttonGroup = ref(true);
+const settingsGroup = ref(true);
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
