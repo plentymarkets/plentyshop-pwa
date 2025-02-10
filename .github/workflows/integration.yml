@@ -189,10 +189,10 @@ jobs:
         with:
           install: false
           command: yarn test:cypress-editor
+          env: ENABLE_BLOCK_EDIT=true
         env:
           NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
           NUXT_PUBLIC_EXPERIMENTAL_ADD_BLOCK: true
-          CYPRESS_ENABLE_BLOCK_EDIT: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
