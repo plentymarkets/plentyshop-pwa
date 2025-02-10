@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
-    <form class="w-full space-y-4 absolute bg-white">
+    <form class="w-full absolute bg-white">
       <UiAccordionItem
         v-model="imageGroupOpen"
         summary-active-class="bg-neutral-100 border-t-0"
