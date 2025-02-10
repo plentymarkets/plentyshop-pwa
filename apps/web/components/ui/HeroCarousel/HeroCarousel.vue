@@ -17,7 +17,7 @@
       <div
         v-if="enableModules"
         :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
-      ></div>
+      />
     </Swiper>
 
     <div
