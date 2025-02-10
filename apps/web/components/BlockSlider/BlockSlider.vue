@@ -476,7 +476,7 @@
             </label>
           </div>
           <div class="mb-6">
-            <UiFormLabel class="mb-1">Link</UiFormLabel>
+            <UiFormLabel class="mb-1">Link Target</UiFormLabel>
             <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" placeholder="Enter URL here" />
           </div>
           <div class="mb-6">

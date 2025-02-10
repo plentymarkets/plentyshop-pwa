@@ -1,6 +1,7 @@
 export type ImageTextProps = {
   index?: number;
   image: {
+    wideScreen?: string;
     desktop?: string;
     tablet?: string;
     mobile?: string;
