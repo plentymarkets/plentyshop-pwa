@@ -1,11 +1,29 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
-    <label >
-      <UiFormLabel>Headline</UiFormLabel>
-      <SfInput v-model="recommendedProductsOptions.headline" name="Headline" type="text" placeholder="Enter Headline" />
-    </label>
+    <div>
+      <UiFormLabel>Pre Title</UiFormLabel>
+      <SfInput v-model="recommendedProductsOptions.text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
+    </div>
+    <div>
+      <UiFormLabel>Main Title</UiFormLabel>
+      <SfInput v-model="recommendedProductsOptions.text.title" name="Title" type="text" placeholder="Title" />
+    </div>
+    <div>
+      <UiFormLabel>Sub title</UiFormLabel>
+      <SfInput v-model="recommendedProductsOptions.text.subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
+    </div>
+    <div>
+      <UiFormLabel>Description</UiFormLabel>
+      <SfTextarea
+        v-model="recommendedProductsOptions.text.htmlDescription"
+        name="description"
+        type="text"
+        class="w-full min-h-[232px]"
+        placeholder="Text that supports HTML formatting"
+      />
+    </div>
     <label>
-      <UiFormLabel>Category Id</UiFormLabel>
+      <UiFormLabel>Category-ID</UiFormLabel>
       <SfInput
         v-model="recommendedProductsOptions.categoryId"
         name="category Id"
@@ -14,105 +32,65 @@
       />
     </label>
     <div>
-      <div>
-        <UiFormLabel>Pre Title</UiFormLabel>
-        <SfInput
-          v-model="recommendedProductsOptions.text.pretitle"
-          name="preTitle"
-          type="text"
-          placeholder="PreTitle"
-        />
-      </div>
-      <div>
-        <UiFormLabel>Title</UiFormLabel>
-        <SfInput v-model="recommendedProductsOptions.text.title" name="Title" type="text" placeholder="Title" />
-      </div>
-      <div>
-        <UiFormLabel>Subtitle</UiFormLabel>
-        <SfInput
-          v-model="recommendedProductsOptions.text.subtitle"
-          name="Subtitle"
-          type="text"
-          placeholder="Subtitle"
-        />
-      </div>
-      <div>
-        <UiFormLabel>Description</UiFormLabel>
-        <SfTextarea
-          v-model="recommendedProductsOptions.text.htmlDescription"
-          name="description"
-          type="text"
-          class="w-full min-h-[232px]"
-          placeholder="Text that supports HTML formatting"
-        />
-      </div>
-      <div>
-        <UiFormLabel>Text Color</UiFormLabel>
-
-        <SfInput v-model="recommendedProductsOptions.text.color" type="text">
-          <template #suffix>
-            <label
-              for="text-color"
-              :style="{ backgroundColor: recommendedProductsOptions.text.color }"
-              class="rounded-lg cursor-pointer"
-            >
-              <input
-                id="text-color"
-                v-model="recommendedProductsOptions.text.color"
-                type="color"
-                class="invisible w-8"
-              />
-            </label>
-          </template>
-        </SfInput>
-      </div>
-      <div class="mb-6">
-        <UiFormLabel class="mb-1">Text alignment</UiFormLabel>
-        <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
-          <div
-            for="text-align-left"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'left',
-            }"
-            @click="recommendedProductsOptions.text.textAlignment = 'left'"
+      <UiFormLabel>Text Color</UiFormLabel>
+      <SfInput v-model="recommendedProductsOptions.text.color" type="text">
+        <template #suffix>
+          <label
+            for="text-color"
+            :style="{ backgroundColor: recommendedProductsOptions.text.color }"
+            class="rounded-lg cursor-pointer"
           >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'left' }"
-            />
-            Left
-          </div>
+            <input id="text-color" v-model="recommendedProductsOptions.text.color" type="color" class="invisible w-8" />
+          </label>
+        </template>
+      </SfInput>
+    </div>
+    <div class="mb-6">
+      <UiFormLabel class="mb-1">Text alignment</UiFormLabel>
+      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+        <div
+          for="text-align-left"
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+          :class="{
+            'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'left',
+          }"
+          @click="recommendedProductsOptions.text.textAlignment = 'left'"
+        >
+          <SfIconCheck
+            class="mr-1 w-[1.1rem]"
+            :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'left' }"
+          />
+          Left
+        </div>
 
-          <div
-            for="text-align-center"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'center',
-            }"
-            @click="recommendedProductsOptions.text.textAlignment = 'center'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'center' }"
-            />
-            Center
-          </div>
+        <div
+          for="text-align-center"
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+          :class="{
+            'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'center',
+          }"
+          @click="recommendedProductsOptions.text.textAlignment = 'center'"
+        >
+          <SfIconCheck
+            class="mr-1 w-[1.1rem]"
+            :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'center' }"
+          />
+          Center
+        </div>
 
-          <div
-            for="text-align-right"
-            class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
-            :class="{
-              'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'right',
-            }"
-            @click="recommendedProductsOptions.text.textAlignment = 'right'"
-          >
-            <SfIconCheck
-              class="mr-1 w-[1.1rem]"
-              :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'right' }"
-            />
-            Right
-          </div>
+        <div
+          for="text-align-right"
+          class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+          :class="{
+            'bg-gray-100 text-gray-900 font-semibold': recommendedProductsOptions.text.textAlignment === 'right',
+          }"
+          @click="recommendedProductsOptions.text.textAlignment = 'right'"
+        >
+          <SfIconCheck
+            class="mr-1 w-[1.1rem]"
+            :class="{ invisible: recommendedProductsOptions.text.textAlignment !== 'right' }"
+          />
+          Right
         </div>
       </div>
     </div>
@@ -148,4 +126,3 @@ const recommendedProductsOptions = computed({
 recommendedProductsOptions.value.text.color = recommendedProductsOptions.value.text.color ?? '#000';
 recommendedProductsOptions.value.text.textAlignment = recommendedProductsOptions.value.text.textAlignment ?? 'left';
 </script>
-
