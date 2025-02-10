@@ -48,15 +48,19 @@ export const usePayPal = () => {
    */
   const loadConfig = async () => {
     if (state.value.loadedConfig) return false;
-    const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
-
-    if (data) {
-      state.value.config = data ?? null;
-      state.value.isAvailable = !!state.value.config;
-      state.value.loadedConfig = true;
-      return true;
+    try {
+      const { data } = await useSdk().plentysystems.getPayPalMerchantAndClientIds();
+      if (data) {
+        state.value.config = data ?? null;
+        state.value.isAvailable = !!state.value.config;
+        state.value.loadedConfig = true;
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.debug('Error loading PayPal config', error);
     }
-    return false;
+    
   };
 
   /**
