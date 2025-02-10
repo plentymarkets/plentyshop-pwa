@@ -192,7 +192,7 @@ jobs:
         env:
           NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
           NUXT_PUBLIC_EXPERIMENTAL_ADD_BLOCK: true
-          ENABLE_BLOCK_EDIT: true
+          CYPRESS_ENABLE_BLOCK_EDIT: true
 
       - uses: actions/upload-artifact@v4
         if: failure()
