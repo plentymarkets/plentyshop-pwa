@@ -25,7 +25,7 @@
           />
         </div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Ask for subscriptions name</UiFormLabel>
+          <UiFormLabel class="mb-1">Ask for subscriber's name</UiFormLabel>
           <SfSwitch v-model="newsletterBlock.input.displayNameInput" />
         </div>
         <div class="mb-6">
