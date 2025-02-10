@@ -1,8 +1,0 @@
-nodeLinker: node-modules
-
-npmScopes:
-  plentymarkets:
-    npmAlwaysAuth: false
-    npmRegistryServer: 'https://registry.npmjs.org'
-
-yarnPath: .yarn/releases/yarn-4.5.3.cjs

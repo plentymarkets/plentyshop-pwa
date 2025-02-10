@@ -27,6 +27,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Locale } from '#i18n';
+
 const { $pwa } = useNuxtApp();
 const bodyClass = ref('');
 const { getCategoryTree } = useCategoryTree();
@@ -59,7 +61,7 @@ onNuxtReady(async () => {
 
 watch(
   () => locale.value,
-  async (locale: string) => {
+  async (locale: Locale) => {
     setVsfLocale(locale);
     await getCategoryTree();
   },

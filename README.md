@@ -56,7 +56,7 @@ API_ENDPOINT=
 API_SECURITY_TOKEN=
 ```
 
-Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using Yarn.
+Download Node.js from the [official website](https://nodejs.org/). We recommend using [nvm](https://github.com/nvm-sh/nvm) to easily stay compatible with new versions. Then install all dependencies using NPM.
 
 ```bash
 # installs nvm (Node Version Manager)
@@ -65,13 +65,13 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 # downloads and installs Node.js according to the project version in .nvmrc
 nvm install
 
-# downloads and installs Yarn according to the project version, and downloads, installs, and builds all dependencies
-npm run setup:unix
+# downloads and installs NPM according to the project version, and downloads, installs, and builds all dependencies
+npm install
 ```
 
 ### Start the app
 
-Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+Run `npm run dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Resources
 

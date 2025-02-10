@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "yarn start",
+      "startServerCommand": "npm run start",
       "url": [
         "http://localhost:3000/?mobile",
         "http://localhost:3000/living-room?mobile",
