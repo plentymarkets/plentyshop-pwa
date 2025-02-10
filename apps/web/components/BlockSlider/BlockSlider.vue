@@ -570,20 +570,14 @@ const { blockIndex } = useSiteConfiguration();
 const { data, updateBannerItems, setIndex, activeSlideIndex } = useHomepage();
 
 const activeSlide = computed(() => activeSlideIndex.value[blockIndex.value]);
-console.log('activeSlideIndex:', activeSlideIndex.value);
-console.log('blockIndex.value:', blockIndex.value);
-console.log('activeSlide:', activeSlide.value);
 const sliderBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as BannerSlide);
 
-console.log('sliderBlock:', sliderBlock.value);
 const slides = computed({
   get: () => {
     return sliderBlock.value?.bannerItems || [];
   },
   set: (value) => updateBannerItems(value, blockIndex.value),
 });
-
-console.log('slides:', slides.value);
 
 const controls = computed(() => sliderBlock.value.controls);
 

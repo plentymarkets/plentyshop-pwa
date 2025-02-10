@@ -101,7 +101,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   const openDrawerWithView = (view: DrawerView, type: string = '', blockIndex: number = 0) => {
     const { setIndex } = useHomepage();
 
-    console.log('open: ', view, type, blockIndex);
     setIndex(blockIndex, 0);
 
     state.value.drawerView = view;
