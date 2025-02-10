@@ -14,7 +14,6 @@ describe('Banner image', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -45,7 +44,6 @@ describe('Banner image', () => {
             brightness: 0.5,
           },
           text: {},
-          controls: {},
           button: {},
         },
 

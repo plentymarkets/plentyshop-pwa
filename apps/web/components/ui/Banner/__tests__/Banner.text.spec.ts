@@ -13,7 +13,6 @@ describe('Banner text', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -37,7 +36,6 @@ describe('Banner text', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -61,7 +59,6 @@ describe('Banner text', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -85,7 +82,6 @@ describe('Banner text', () => {
             subtitle: 'Test subtitle',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -111,7 +107,6 @@ describe('Banner text', () => {
             color: 'red',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -137,7 +132,6 @@ describe('Banner text', () => {
             background: true,
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -163,7 +157,6 @@ describe('Banner text', () => {
             background: true,
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -188,7 +181,6 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -213,7 +205,6 @@ describe('Banner text', () => {
               textAlignment: 'center',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -238,7 +229,6 @@ describe('Banner text', () => {
               textAlignment: 'right',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -264,7 +254,6 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -289,7 +278,6 @@ describe('Banner text', () => {
               justify: 'center',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -314,7 +302,6 @@ describe('Banner text', () => {
               justify: 'bottom',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -340,7 +327,6 @@ describe('Banner text', () => {
               htmlDescription: '<p>Test description</p>',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -365,7 +351,6 @@ describe('Banner text', () => {
               align: 'center',
             },
             image: {},
-            controls: {},
             button: {},
           },
 
@@ -390,7 +375,6 @@ describe('Banner text', () => {
               align: 'right',
             },
             image: {},
-            controls: {},
             button: {},
           },
 

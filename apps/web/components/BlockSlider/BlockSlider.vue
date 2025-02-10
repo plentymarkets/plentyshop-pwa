@@ -630,9 +630,6 @@ const addSlide = async () => {
       link: '/',
       variant: 'primary',
     },
-    controls: {
-      color: '#000',
-    },
   };
 
   slides.value = [...slides.value, newSlide];
