@@ -12,7 +12,28 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Desktop Image</UiFormLabel>
+            <UiFormLabel>Image XL (Desktop) </UiFormLabel>
+          </div>
+          <label>
+            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text">
+              <template #suffix>
+                <label for="image-tablet" class="rounded-lg cursor-pointer">
+                  <input
+                    id="image-tablet"
+                    v-model="uiImageTextBlock.image.wideScreen"
+                    type="text"
+                    class="invisible w-8"
+                  />
+                </label>
+              </template>
+            </SfInput>
+            <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1920 x 1080 px </span>
+          </label>
+        </div>
+
+        <div class="py-2">
+          <div class="flex justify-between mb-2">
+            <UiFormLabel>Image L (Desktop) </UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.image.desktop" type="text">
@@ -22,13 +43,13 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+            <span class="typography-text-xs text-neutral-700">Recommended dimensions: 1024 x 576 px</span>
           </label>
         </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Tablet Image</UiFormLabel>
+            <UiFormLabel>Image M (Laptop) </UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.image.tablet" type="text">
@@ -38,13 +59,13 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+            <span class="typography-text-xs text-neutral-700">Recommended dimensions: 768 x 432 px</span>
           </label>
         </div>
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Mobile Image</UiFormLabel>
+            <UiFormLabel>Image S (Mobile) </UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.image.mobile" type="text">
@@ -54,7 +75,7 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Recommended dimensions 1024x576 px</span>
+            <span class="typography-text-xs text-neutral-700">Recommended dimensions: 320 x 320 px </span>
           </label>
         </div>
 
@@ -117,7 +138,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Pre title</UiFormLabel>
+            <UiFormLabel>Pre Title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.pretitle" type="text">
@@ -132,7 +153,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Title</UiFormLabel>
+            <UiFormLabel>Main Title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.title" type="text">
@@ -147,7 +168,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Subtitle</UiFormLabel>
+            <UiFormLabel>Sub Title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.subtitle" type="text">
@@ -173,7 +194,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Text color</UiFormLabel>
+            <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.color" type="text">
@@ -187,12 +208,11 @@
                 </label>
               </template>
             </SfInput>
-            <span class="typography-text-xs text-neutral-700">Choose primary color</span>
           </label>
         </div>
 
         <fieldset class="py-2">
-          <legend class="text-sm font-medium text-gray-700">Text alignment</legend>
+          <legend class="text-sm font-medium text-gray-700">Text Alignment</legend>
 
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <div
