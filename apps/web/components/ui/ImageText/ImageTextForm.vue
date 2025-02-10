@@ -138,7 +138,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Pre Title</UiFormLabel>
+            <UiFormLabel>Pre-title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.pretitle" type="text">
@@ -153,7 +153,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Main Title</UiFormLabel>
+            <UiFormLabel>Main title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.title" type="text">
@@ -168,7 +168,7 @@
 
         <div class="py-2">
           <div class="flex justify-between mb-2">
-            <UiFormLabel>Sub Title</UiFormLabel>
+            <UiFormLabel>Sub title</UiFormLabel>
           </div>
           <label>
             <SfInput v-model="uiImageTextBlock.text.subtitle" type="text">
