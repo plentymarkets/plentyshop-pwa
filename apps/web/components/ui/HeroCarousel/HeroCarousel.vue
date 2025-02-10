@@ -5,22 +5,8 @@
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
-      :pagination="
-        enableModules
-          ? {
-              el: '.custom-swiper-pagination',
-              clickable: true,
-            }
-          : false
-      "
-      :navigation="
-        enableModules
-          ? {
-              nextEl: `.swiper-button-next-${index}`,
-              prevEl: `.swiper-button-prev-${index}`,
-            }
-          : false
-      "
+      :pagination="paginationConfig"
+      :navigation="navigationConfig"
       class="!z-0 !w-full !max-h-[85vh]"
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
@@ -28,14 +14,12 @@
       <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
         <UiBanner :banner-props="bannerItem" :index="slideIndex" />
       </SwiperSlide>
-      <div class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
+      <div v-if="enableModules" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
         <span
           v-for="(bannerItem, bannerItemIndex) in bannerItems"
           :key="'dot-' + bannerItemIndex"
           class="swiper-pagination-bullet"
-          :style="{
-            backgroundColor: controls.color + ' !important',
-          }"
+          :style="{ backgroundColor: controls.color + ' !important' }"
           :class="{ 'swiper-pagination-bullet-active': bannerItemIndex === activeSlideIndex[index] }"
         />
       </div>
@@ -73,6 +57,24 @@ const { bannerItems, index } = defineProps<{ bannerItems: BannerProps[]; control
 const enableModules = computed(() => bannerItems.length > 1);
 
 let slider: SwiperType | null = null;
+
+const paginationConfig = computed(() => {
+  return enableModules.value
+    ? {
+        el: '.custom-swiper-pagination',
+        clickable: true,
+      }
+    : false;
+});
+
+const navigationConfig = computed(() => {
+  return enableModules.value
+    ? {
+        nextEl: `.swiper-button-next-${index}`,
+        prevEl: `.swiper-button-prev-${index}`,
+      }
+    : false;
+});
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
