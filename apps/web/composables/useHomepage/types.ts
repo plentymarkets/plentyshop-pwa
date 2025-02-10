@@ -66,7 +66,7 @@ export interface HomepageData {
   meta?: { isDefault: boolean | null };
 }
 
-export interface ActiveIndex {
+export interface ActiveSlideIndex {
   [key: number]: number;
 }
 
@@ -76,17 +76,17 @@ export interface UseHomepageDataState {
   dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
-  activeIndex: ActiveIndex;
+  activeSlideIndex: ActiveSlideIndex;
 }
 
-export type UpdateBannerItems = (newBannerItems: BannerProps[]) => void;
+export type UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => void;
 export type SetIndex = (blockIndex: number, slideIndex: number) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   initialBlocks: Ref<UseHomepageDataState['initialBlocks']>;
   dataIsEmpty: Readonly<Ref<UseHomepageDataState['dataIsEmpty']>>;
-  activeIndex: Readonly<Ref<UseHomepageDataState['activeIndex']>>;
+  activeSlideIndex: Readonly<Ref<UseHomepageDataState['activeSlideIndex']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;

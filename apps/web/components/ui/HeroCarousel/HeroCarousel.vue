@@ -36,7 +36,7 @@
           :style="{
             backgroundColor: controls.color + ' !important',
           }"
-          :class="{ 'swiper-pagination-bullet-active': bannerItemIndex === activeIndex[index] }"
+          :class="{ 'swiper-pagination-bullet-active': bannerItemIndex === activeSlideIndex[index] }"
         />
       </div>
     </Swiper>
@@ -67,7 +67,7 @@ import type { BannerProps } from '../Banner/types';
 import type { Swiper as SwiperType } from 'swiper';
 import type { SlideControls } from '~/composables/useHomepage/types';
 
-const { activeIndex, setIndex } = useHomepage();
+const { activeSlideIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
 const { bannerItems, index } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls; index: number }>();
 const enableModules = computed(() => bannerItems.length > 1);
@@ -80,7 +80,7 @@ const onSwiperInit = (swiper: SwiperType) => {
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeIndex.value[index]) {
+  if (swiper.realIndex !== activeSlideIndex.value[index]) {
     await nextTick();
     swiper.update();
 
@@ -89,7 +89,7 @@ const onSlideChange = async (swiper: SwiperType) => {
 };
 
 watch(
-  () => activeIndex.value[index],
+  () => activeSlideIndex.value[index],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();

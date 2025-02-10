@@ -16,12 +16,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
 
                   image: {
@@ -83,12 +83,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -155,12 +155,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
 
                   image: {
@@ -222,12 +222,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -294,12 +294,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
 
                   image: {
@@ -361,12 +361,12 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
                   controls: {
-                    color: '#fff',
+                    color: '#000',
                   },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
