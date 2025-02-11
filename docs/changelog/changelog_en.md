@@ -18,6 +18,7 @@
 - Added shipping page no configuration fallback text
 - Image Text Form integrated and two way data binded
 - Added newsletter form to the block settings.
+- Added the `shop-core` module to the project.
 
 ### 👷 Changed
 
@@ -32,6 +33,7 @@
 - Fixed an issue where multiple sliders placed in one page ware not controlled independently via control arrows.
 - Fixed slider navigation bullet points.
 - Fixed default editor colors.
+- Fixed the image-to-text ratio in the Image Text block, so that both now take up 50% of the available space.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
