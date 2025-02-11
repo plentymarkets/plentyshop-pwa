@@ -64,6 +64,7 @@ const localePath = useLocalePath();
 const { t } = useI18n();
 const currency = computed(() => cartGetters.getCurrency(cart.value) || (useAppConfig().fallbackCurrency as string));
 const paypal = await getScript(currency.value);
+const { emit: emitPlentyEvent } = usePlentyEvent();
 
 const confirmCancel = () => {
   emit('confirmCancel');
@@ -112,6 +113,7 @@ onMounted(() => {
           useProcessingOrder().processingOrder.value = true;
           clearCartItems();
 
+          emitPlentyEvent('frontend:orderCreated', order);
           navigateTo(
             localePath(`${paths.confirmation}/${orderGetters.getId(order)}/${orderGetters.getAccessKey(order)}`),
           );

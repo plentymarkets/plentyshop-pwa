@@ -55,6 +55,7 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  * ```
  */
 export const useCart: UseCartReturn = () => {
+  const { emit } = usePlentyEvent();
   const state = useState<UseCartState>('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
@@ -131,6 +132,11 @@ export const useCart: UseCartReturn = () => {
 
       if (item) {
         state.value.lastUpdatedCartItem = item;
+        emit('frontend:addToCart', {
+          item,
+          cart: state.value.data,
+          addItemParams: params
+        });
       }
 
       return !!data;
@@ -168,6 +174,18 @@ export const useCart: UseCartReturn = () => {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
       state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
+
+      params.forEach((param) => {
+        const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
+
+        if (item) {
+          emit('frontend:addToCart', {
+            item,
+            cart: state.value.data,
+            addItemParams: param,
+          })
+        }
+      });
 
       return !!data;
     } catch (error) {
@@ -251,6 +269,10 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
 
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      emit('frontend:removeFromCart', {
+        deleteItemParams: params,
+        cart: state.value.data,
+      });
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);
