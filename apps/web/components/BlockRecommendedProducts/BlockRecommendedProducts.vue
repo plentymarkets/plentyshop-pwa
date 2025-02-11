@@ -23,7 +23,7 @@
       />
     </div>
     <label>
-      <UiFormLabel>Category-ID</UiFormLabel>
+      <UiFormLabel>Category ID</UiFormLabel>
       <SfInput
         v-model="recommendedProductsOptions.categoryId"
         name="category Id"
