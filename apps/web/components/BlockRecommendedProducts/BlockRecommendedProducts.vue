@@ -1,7 +1,7 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
     <div>
-      <UiFormLabel>Pre Title</UiFormLabel>
+      <UiFormLabel>Pre-title</UiFormLabel>
       <SfInput v-model="recommendedProductsOptions.text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
     </div>
     <div>
