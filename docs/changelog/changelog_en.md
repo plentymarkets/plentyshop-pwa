@@ -17,6 +17,7 @@
 - Added shipping page no configuration fallback text
 - Image Text Form integrated and two way data binded
 - Added newsletter form to the block settings.
+- Automated tests for Image Text
 
 ### 👷 Changed
 
