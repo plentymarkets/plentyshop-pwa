@@ -245,7 +245,8 @@
             <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.text.color" type="text">
+            <SfInput v-model="uiImageTextBlock.text.color" type="text" data-testid="color-picker"
+            >
               <template #suffix>
                 <label
                   for="primary-color"
@@ -255,7 +256,6 @@
                   <input
                     id="primary-color"
                     v-model="uiImageTextBlock.text.color"
-                    data-testid="input-primary-color"
                     type="color"
                     class="invisible w-8"
                   />
