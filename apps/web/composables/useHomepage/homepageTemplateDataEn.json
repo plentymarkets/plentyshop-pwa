@@ -76,7 +76,8 @@
           "title": "Discover Tech & Style",
           "subtitle": "Innovative technology meets modern fashion",
           "pretitle": "Welcome to your new favorite shop",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "label": "Get shopping",
