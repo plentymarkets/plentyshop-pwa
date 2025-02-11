@@ -1,5 +1,5 @@
 <template>
-  <div :class="['flex flex-col items-center', positionClass]">
+  <div :style="{ color: props.text?.color }" :class="['flex flex-col items-center', positionClass]">
     <NuxtImg
       :src="getImageUrl()"
       :alt="props.image?.alt"
