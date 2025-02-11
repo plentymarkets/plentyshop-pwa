@@ -45,7 +45,7 @@ const getImageUrl = () => {
 const getImageDimensions = (): ImageDimensions => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
-      return { width: 1920, height: 1080 };
+      return { width: 696, height: 392 };
     }
     case 'lg': {
       return { width: 712, height: 474 };
