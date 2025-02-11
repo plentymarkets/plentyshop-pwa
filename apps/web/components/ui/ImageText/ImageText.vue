@@ -1,19 +1,18 @@
 <template>
-  <div :class="['flex flex-col md:flex-row items-center', positionClass]">
-    <div :class="['md:w-1/2']">
-      <NuxtImg
-        :src="getImageUrl()"
-        :alt="props.image?.alt"
-        :class="[
-          'h-auto',
-          'object-cover',
-          { 'pr-4': props.image?.imageAlignment === 'left', 'pl-4': props.image?.imageAlignment === 'right' },
-        ]"
-        :width="getImageDimensions().width"
-        :height="getImageDimensions().height"
-      />
-    </div>
-    <TextContent :text="props.text" :button="props.button" />
+  <div :class="['flex flex-col items-center', positionClass]">
+    <NuxtImg
+      :src="getImageUrl()"
+      :alt="props.image?.alt"
+      :class="[
+        'lg:w-1/2',
+        'object-cover',
+        'md:px-4',
+        { 'lg:pr-4': props.image?.imageAlignment === 'left', 'lg:pl-4': props.image?.imageAlignment === 'right' },
+      ]"
+      :width="getImageDimensions().width"
+      :height="getImageDimensions().height"
+    />
+    <TextContent class="lg:w-1/2" :text="props.text" :button="props.button" />
   </div>
 </template>
 
@@ -24,7 +23,7 @@ const viewport = useViewport();
 
 const props = defineProps<ImageTextProps>();
 
-const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 'md:flex-row-reverse' : 'md:flex-row'));
+const positionClass = computed(() => (props.image?.imageAlignment === 'right' ? 'lg:flex-row-reverse' : 'lg:flex-row'));
 
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
@@ -49,13 +48,13 @@ const getImageDimensions = (): ImageDimensions => {
       return { width: 1920, height: 1080 };
     }
     case 'lg': {
-      return { width: 1200, height: 800 };
+      return { width: 712, height: 474 };
     }
     case 'md': {
-      return { width: 800, height: 533 };
+      return { width: 757, height: 483 };
     }
     default: {
-      return { width: 400, height: 267 };
+      return { width: 320, height: 320 };
     }
   }
 };
