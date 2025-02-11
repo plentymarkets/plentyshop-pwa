@@ -116,7 +116,7 @@ export const useCustomer: UseCustomerReturn = () => {
       await useSdk()
         .plentysystems.doLogin({ email: email, password: password })
         .then(async () => {
-          await getSession()
+          await getSession();
 
           if (state.value.data?.user) {
             emit('frontend:login', { user: state.value.data.user });

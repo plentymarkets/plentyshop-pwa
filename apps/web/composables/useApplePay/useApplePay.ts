@@ -131,7 +131,7 @@ export const useApplePay = () => {
           paymentSession.completePayment(ApplePaySession.STATUS_SUCCESS);
           clearCartItems();
 
-          emit('frontend:orderCreated', order)
+          emit('frontend:orderCreated', order);
           navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
         } catch (error: unknown) {
           showErrorNotification(error?.toString() ?? $i18n.t('errorMessages.paymentFailed'));

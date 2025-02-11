@@ -135,7 +135,7 @@ export const useCart: UseCartReturn = () => {
         emit('frontend:addToCart', {
           item,
           cart: state.value.data,
-          addItemParams: params
+          addItemParams: params,
         });
       }
 
@@ -183,7 +183,7 @@ export const useCart: UseCartReturn = () => {
             item,
             cart: state.value.data,
             addItemParams: param,
-          })
+          });
         }
       });
 
