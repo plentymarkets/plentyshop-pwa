@@ -1,6 +1,6 @@
-import type { BannerProps } from '~/components/ui/Banner/types';
-import type { TextCardProps } from '~/components/ui/TextCard/types';
-import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { BannerProps, BannerSlide } from '~/components/blocks/BannerCarousel/types';
+import type { TextCardProps } from '~/components/blocks/TextCard/types';
+import type { NewsletterSubscribeProps } from '~/components/blocks/NewsletterSubscribe/types';
 
 interface ImageProps {
   lg: string;
@@ -40,11 +40,6 @@ export interface ProductRecommendedProductsOptions {
 
 export interface SlideControls {
   color: string;
-}
-
-export interface BannerSlide {
-  bannerItems: BannerProps[];
-  controls: SlideControls;
 }
 
 export type BlockOptions =

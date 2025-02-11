@@ -7,7 +7,7 @@
       </button>
     </header>
 
-    <component :is="getBlock(blockType)" v-if="blockType" />
+    <component :is="getComponent(blockType)" v-if="getComponent(blockType)" />
   </div>
 </template>
 
@@ -16,10 +16,21 @@ import { SfIconClose } from '@storefront-ui/vue';
 
 const { drawerOpen, blockType } = useSiteConfiguration();
 
-const getBlock = (view: string) => {
-  if (view === 'UiCarousel') return resolveComponent('BlockSlider');
-  if (view === 'UiImageText') return resolveComponent('UiImageTextForm');
-  if (view === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribeForm');
-  if (view === 'UiTextCard') return resolveComponent('UiTextCardForm');
+const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
+  string,
+  () => Promise<{ default: any }>
+>;
+
+const getComponent = (name: string) => {
+  if (!name) return null;
+
+  const regex = new RegExp(`${blockType.value}Form\\.vue$`, 'i');
+  const matched = Object.keys(modules).find((path) => regex.test(path));
+
+  if (matched) {
+    return defineAsyncComponent(modules[matched]) || '';
+  }
+
+  return '';
 };
 </script>

@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils'
-import { UiBanner } from '#components';
+import { BlocksBannerCarouselBanner } from '#components';
 
 describe('Banner image', () => {
   it('should not render an image if no image is provided', () => {
-    const wrapper = mount(UiBanner, {
+    const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
           text: {
@@ -32,7 +32,7 @@ describe('Banner image', () => {
   });
 
   it('should set the given brightness', () => {
-    const wrapper = mount(UiBanner, {
+    const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
           image: {

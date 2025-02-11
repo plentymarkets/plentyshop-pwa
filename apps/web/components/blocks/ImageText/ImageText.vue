@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ImageTextProps, ImageDimensions } from '~/components/ui/ImageText/types';
+import type { ImageTextProps, ImageDimensions } from './types';
 
 const viewport = useViewport();
 
