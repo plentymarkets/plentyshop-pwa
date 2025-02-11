@@ -28,9 +28,9 @@ describe('Text Form block test', () => {
     cy.get('[data-testid="alt-input"]').should('exist').clear().type('New Alt Text', { delay: 0 });
     cy.get('[data-testid="image-block"]').should('have.attr', 'alt', 'New Alt Text');
     cy.get('[data-testid="image-align-right"]').should('exist').click();
-    cy.get('[data-testid="text-image-parent"]').should('have.class', 'md:flex-row-reverse');
+    cy.get('[data-testid="text-image-parent"]').should('have.class', 'lg:flex-row-reverse');
     cy.get('[data-testid="image-align-left"]').should('exist').click();
-    cy.get('[data-testid="text-image-parent"]').should('have.class', 'md:flex-row');
+    cy.get('[data-testid="text-image-parent"]').should('have.class', 'lg:flex-row');
 
   });
 
