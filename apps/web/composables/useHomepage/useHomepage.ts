@@ -2,6 +2,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex } from './types';
 import type { BannerProps } from '~/components/ui/Banner/types';
+import type { ProductRecommendedProductsProps } from '../../components/ProductRecommendedProducts/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
@@ -28,7 +29,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const fetchRecommendedProducts = async () => {
     state.value.data.blocks.forEach((block) => {
       if (block.name === 'ProductRecommendedProducts') {
-        const options = block.options as ProductRecommendedProductsOptions;
+        const options = block.options as ProductRecommendedProductsProps;
         const id = options.categoryId;
 
         if (tryUseNuxtApp()) {
@@ -94,15 +95,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
     }
   };
 
-  const updateProductRecommendedProductsOptions = (newRecomandedBlock: ProductRecommendedProductsOptions) => {
-    const recomandedBlock = state.value.data.blocks.find((block) => block.name === 'ProductRecommendedProducts');
-    if (recomandedBlock) {
-      recomandedBlock.options = {
-        ...newRecomandedBlock,
-      };
-    }
-  };
-
   const setIndex: SetIndex = (blockIndex: number, slideIndex: number) => {
     state.value.activeSlideIndex[blockIndex] = slideIndex;
   };
@@ -110,7 +102,6 @@ export const useHomepage: UseHomepageDataReturn = () => {
   return {
     fetchPageTemplate,
     updateBannerItems,
-    updateProductRecommendedProductsOptions,
     setIndex,
     ...toRefs(state.value),
   };

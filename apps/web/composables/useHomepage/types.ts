@@ -33,19 +33,6 @@ interface UiMediaCardOptions {
   alignment?: string;
 }
 
-export interface ProductRecommendedProductsOptions {
-  categoryId: string;
-  headline?: string;
-  text?: {
-    pretitle?: string;
-    title?: string;
-    subtitle?: string;
-    htmlDescription?: string;
-    color?: string;
-    textAlignment?: string;
-  };
-}
-
 export interface SlideControls {
   color: string;
 }
@@ -61,7 +48,6 @@ export type BlockOptions =
   | UiHeroCarouselOptions
   | UiMediaCardOptions
   | TextCardProps
-  | ProductRecommendedProductsOptions
   | NewsletterSubscribeProps;
 
 export interface Block {
@@ -87,7 +73,6 @@ export interface UseHomepageDataState {
   activeSlideIndex: ActiveSlideIndex;
 }
 
-export type UpdateProductRecommendedProductsOptions = (newRecomandedBlock: ProductRecommendedProductsOptions) => void;
 export type UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => void;
 export type SetIndex = (blockIndex: number, slideIndex: number) => void;
 
@@ -100,7 +85,6 @@ export interface UseHomepage {
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
   updateBannerItems: UpdateBannerItems;
-  updateProductRecommendedProductsOptions: UpdateProductRecommendedProductsOptions;
   setIndex: SetIndex;
 }
 

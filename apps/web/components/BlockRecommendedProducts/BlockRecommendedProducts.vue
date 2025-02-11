@@ -98,12 +98,13 @@
 </template>
 
 <script setup lang="ts">
-import { SfInput, SfTextarea } from '@storefront-ui/vue';
-const { data, updateProductRecommendedProductsOptions } = useHomepage();
+import type { ProductRecommendedProductsProps } from '../ProductRecommendedProducts/types';
+import { SfInput, SfTextarea, SfIconCheck } from '@storefront-ui/vue';
+const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
 const recommendedBlock = computed(
-  () => (data.value.blocks[blockIndex.value].options || {}) as ProductRecommendedProductsOptions,
+  () => (data.value.blocks[blockIndex.value].options || {}) as ProductRecommendedProductsProps,
 );
 const recommendedProductsOptions = computed({
   get: () => {
@@ -119,9 +120,7 @@ const recommendedProductsOptions = computed({
       },
     };
   },
-  set: (value) => {
-    updateProductRecommendedProductsOptions(value);
-  },
+  set: () => {},
 });
 recommendedProductsOptions.value.text.color = recommendedProductsOptions.value.text.color ?? '#000';
 recommendedProductsOptions.value.text.textAlignment = recommendedProductsOptions.value.text.textAlignment ?? 'left';
