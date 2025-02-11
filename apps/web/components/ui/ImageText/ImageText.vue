@@ -1,5 +1,9 @@
 <template>
-  <div data-testid="text-image-parent" :style="{ color: props.text?.color }" :class="['flex flex-col md:flex-row items-center', positionClass]">
+  <div
+    data-testid="text-image-parent"
+    :style="{ color: props.text?.color }"
+    :class="['flex flex-col md:flex-row items-center', positionClass]"
+  >
     <div :class="['md:w-1/2']">
       <NuxtImg
         :src="getImageUrl()"
