@@ -118,6 +118,7 @@ const localePath = useLocalePath();
 const { isLoading: navigationInProgress } = useLoadingIndicator();
 const { loading: createOrderLoading, createOrder } = useMakeOrder();
 const { shippingPrivacyAgreement } = useAdditionalInformation();
+const { emit } = usePlentyEvent();
 const { checkboxValue: termsAccepted } = useAgreementCheckbox('checkoutGeneralTerms');
 const {
   cart,
@@ -142,6 +143,8 @@ const {
   handleShippingMethodUpdate,
   handlePaymentMethodUpdate,
 } = useCheckoutPagePaymentAndShipping();
+
+emit('frontend:beginCheckout', cart.value);
 
 const checkPayPalPaymentsEligible = async () => {
   if (import.meta.client) {
@@ -234,6 +237,7 @@ const handleRegularOrder = async () => {
   });
 
   if (data?.order?.id) {
+    emit('frontend:orderCreated', data);
     clearCartItems();
     navigateTo(localePath(paths.confirmation + '/' + data.order.id + '/' + data.order.accessKey));
   }
