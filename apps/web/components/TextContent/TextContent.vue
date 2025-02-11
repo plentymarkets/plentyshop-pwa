@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ color: props.text?.color }" data-testid="text-content" :class="['w-full', 'space-y-4', textAlignmentClass]">
+  <div  data-testid="text-content" :class="['w-full', 'space-y-4', textAlignmentClass]">
     <div v-if="text?.pretitle" data-testid="text-pretitle" class="text-xl font-bold mb-2">{{ text.pretitle }}</div>
     <h2  v-if="text?.title" data-testid="text-title" class="text-2xl font-semibold mb-4">{{ text.title }}</h2>
     <div v-if="text?.subtitle" data-testid="text-subtitle" class="text-lg font-semibold">{{ text.subtitle }}</div>
