@@ -4,12 +4,12 @@
       "name": "UiCarousel",
       "options": {
         "controls": {
-          "color": "#fff"
+          "color": "#a39f9f"
         },
         "bannerItems": [
           {
             "controls": {
-              "color": "#fff"
+              "color": "#a39f9f"
             },
             "image": {
               "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",

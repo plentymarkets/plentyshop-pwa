@@ -98,12 +98,16 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
     },
   );
 
-  const openDrawerWithView = (view: DrawerView, type: string = '', index: number = 0) => {
+  const openDrawerWithView = (view: DrawerView, type: string = '', blockIndex: number = 0) => {
+    const { setIndex } = useHomepage();
+
+    setIndex(blockIndex, 0);
+
     state.value.drawerView = view;
     state.value.drawerOpen = true;
 
     state.value.blockType = type;
-    state.value.blockIndex = index;
+    state.value.blockIndex = blockIndex;
 
     state.value.placement = view === 'blocksSettings' ? 'right' : 'left';
   };
