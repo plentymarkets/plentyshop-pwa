@@ -7,7 +7,7 @@ interface RGB {
   b: number;
 }
 
-interface Shade {
+export interface Shade {
   weight: string;
   rgb: string;
 }

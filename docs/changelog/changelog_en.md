@@ -4,6 +4,9 @@
 
 ### New
 
+- Added slider edit.
+- Added block editing by position & typescipt restructuring
+- Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
 - You can now add blocks on homepage from the blocks side nav!
@@ -11,8 +14,13 @@
 - Added the logic to remove cookies after revoking consent.
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
+- Added shipping page no configuration fallback text
+- Image Text Form integrated and two way data binded
+- Added newsletter form to the block settings.
 
 ### 👷 Changed
+
+- Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
 ### 🩹 Fixed
 
@@ -20,6 +28,9 @@
 - Fixed accessibility erros in edit mode.
 - Fixed an issue where the site settings view was only displayed on the second click.
 - Fixed an issue where the new block placeholder got displayed when editing the site settings.
+- Fixed an issue where multiple sliders placed in one page ware not controlled independently via control arrows.
+- Fixed slider navigation bullet points.
+- Fixed default editor colors.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -109,6 +120,7 @@
 - New styles for blocks actions
 - Users can now move a block up or down in the block list.
 - Added a new placeholder block component to showcase to the user where his block will go
+- Added a text card form for edit settings
 
 ### 👷 Changed
 

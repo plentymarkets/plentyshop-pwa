@@ -8,6 +8,7 @@ describe('Banner', () => {
       props: {
         bannerProps: {
           image: {
+            wideScreen: '/test-desktop.jpg',
             desktop: '/test-desktop.jpg',
             tablet: '/test-tablet.jpg',
             mobile: '/test-mobile.jpg',

@@ -13,7 +13,10 @@ describe('Banner image', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
           },
+          image: {},
+          button: {},
         },
+
 
         index: 0,
       },
@@ -33,12 +36,15 @@ describe('Banner image', () => {
       props: {
         bannerProps: {
           image: {
+            wideScreen: '/test-desktop.jpg',
             desktop: '/test-desktop.jpg',
             tablet: '/test-tablet.jpg',
             mobile: '/test-mobile.jpg',
             alt: 'test alt text',
             brightness: 0.5,
           },
+          text: {},
+          button: {},
         },
 
         index: 0,

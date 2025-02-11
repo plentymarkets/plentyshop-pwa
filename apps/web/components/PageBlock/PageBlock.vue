@@ -47,7 +47,7 @@
       @delete="deleteBlock"
       @change-position="changeBlockPosition"
     />
-    <component :is="getComponent && getComponent(block.name)" v-bind="block.options" />
+    <component :is="getComponent && getComponent(block.name)" v-bind="block.options" :index="index" />
     <button
       v-if="disableActions && isPreview"
       class="z-[0] md:z-[1] lg:z-[10] absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rounded-[18px] p-[6px] bg-[#538aea] text-white opacity-0 group-hover:opacity-100 group-focus:opacity-100"
@@ -95,7 +95,7 @@ const displayTopPlaceholder = (index: number): boolean => {
     visiblePlaceholderState.position === 'top' &&
     visiblePlaceholderState.index === index &&
     drawerOpen.value &&
-    drawerView.value === 'blocks'
+    drawerView.value === 'blocksList'
   );
 };
 
@@ -106,7 +106,7 @@ const displayBottomPlaceholder = (index: number): boolean => {
     visiblePlaceholderState.position === 'bottom' &&
     visiblePlaceholderState.index === index &&
     drawerOpen.value &&
-    drawerView.value === 'blocks'
+    drawerView.value === 'blocksList'
   );
 };
 </script>

@@ -38,7 +38,17 @@ export interface ProductRecommendedProductsOptions {
   headline?: string;
 }
 
-type BlockOptions =
+export interface SlideControls {
+  color: string;
+}
+
+export interface BannerSlide {
+  bannerItems: BannerProps[];
+  controls: SlideControls;
+}
+
+export type BlockOptions =
+  | BannerSlide
   | BannerProps
   | UiHeroCarouselOptions
   | UiMediaCardOptions
@@ -56,21 +66,32 @@ export interface HomepageData {
   meta?: { isDefault: boolean | null };
 }
 
+export interface ActiveSlideIndex {
+  [key: number]: number;
+}
+
 export interface UseHomepageDataState {
   data: HomepageData;
   initialBlocks: Block[];
   dataIsEmpty: boolean;
   loading: boolean;
   showErrors: boolean;
+  activeSlideIndex: ActiveSlideIndex;
 }
+
+export type UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => void;
+export type SetIndex = (blockIndex: number, slideIndex: number) => void;
 
 export interface UseHomepage {
   data: Readonly<Ref<UseHomepageDataState['data']>>;
   initialBlocks: Ref<UseHomepageDataState['initialBlocks']>;
   dataIsEmpty: Readonly<Ref<UseHomepageDataState['dataIsEmpty']>>;
+  activeSlideIndex: Readonly<Ref<UseHomepageDataState['activeSlideIndex']>>;
   loading: Ref<boolean>;
   showErrors: Readonly<Ref<boolean>>;
   fetchPageTemplate: () => void;
+  updateBannerItems: UpdateBannerItems;
+  setIndex: SetIndex;
 }
 
 export type UseHomepageDataReturn = () => UseHomepage;
