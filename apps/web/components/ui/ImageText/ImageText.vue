@@ -1,5 +1,9 @@
 <template>
-  <div :style="{ color: props.text?.color }" :class="['flex flex-col items-center', positionClass]">
+  <div
+    data-testid="text-image-parent"
+    :style="{ color: props.text?.color }"
+    :class="['flex flex-col items-center', positionClass]"
+  >
     <NuxtImg
       :src="getImageUrl()"
       :alt="props.image?.alt"
@@ -12,7 +16,6 @@
       :width="getImageDimensions().width"
       :height="getImageDimensions().height"
       data-testid="image-block"
-
     />
     <TextContent class="lg:w-1/2" :text="props.text" :button="props.button" />
   </div>
