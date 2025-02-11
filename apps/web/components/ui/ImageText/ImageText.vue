@@ -11,6 +11,7 @@
         ]"
         :width="getImageDimensions().width"
         :height="getImageDimensions().height"
+        data-testid="image-block"
       />
     </div>
     <TextContent :text="props.text" :button="props.button" />

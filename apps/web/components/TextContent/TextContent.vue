@@ -9,6 +9,7 @@
       :tag="NuxtLink"
       :to="localePath(button?.link ?? '')"
       :variant="button?.variant ?? 'primary'"
+      data-testid="text-button"
       class="mt-3 px-4 py-2"
     >
       {{ button?.label }}

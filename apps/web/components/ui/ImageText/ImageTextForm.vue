@@ -16,7 +16,7 @@
             <UiFormLabel>Image XL (Desktop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text">
+            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text" data-testid="wide-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
                   <input
@@ -24,7 +24,6 @@
                     v-model="uiImageTextBlock.image.wideScreen"
                     type="text"
                     class="invisible w-8"
-                    data-testid="wide-screen-input"
                   />
                 </label>
               </template>
@@ -38,16 +37,10 @@
             <UiFormLabel>Image L (Desktop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.desktop" type="text">
+            <SfInput v-model="uiImageTextBlock.image.desktop" type="text" data-testid="large-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
-                  <input
-                    id="image-tablet"
-                    v-model="uiImageTextBlock.image.desktop"
-                    type="text"
-                    class="invisible w-8"
-                    data-testid="large-screen-input"
-                  />
+                  <input id="image-tablet" v-model="uiImageTextBlock.image.desktop" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -60,16 +53,10 @@
             <UiFormLabel>Image M (Laptop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.tablet" type="text">
+            <SfInput v-model="uiImageTextBlock.image.tablet" type="text" data-testid="medium-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
-                  <input
-                    id="image-tablet"
-                    v-model="uiImageTextBlock.image.tablet"
-                    type="text"
-                    class="invisible w-8"
-                    data-testid="medium-screen-input"
-                  />
+                  <input id="image-tablet" v-model="uiImageTextBlock.image.tablet" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -82,7 +69,7 @@
             <UiFormLabel>Image S (Mobile) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.mobile" type="text">
+            <SfInput v-model="uiImageTextBlock.image.mobile" type="text" data-testid="small-screen-input">
               <template #suffix>
                 <label for="image-mobile" class="rounded-lg cursor-pointer">
                   <input
@@ -104,16 +91,10 @@
             <UiFormLabel>Alt</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.alt" type="text">
+            <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
               <template #suffix>
                 <label for="alt" class="rounded-lg cursor-pointer">
-                  <input
-                    id="alt"
-                    v-model="uiImageTextBlock.image.alt"
-                    data-testid="alt-input"
-                    type="text"
-                    class="invisible w-8"
-                  />
+                  <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -245,20 +226,14 @@
             <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.text.color" type="text" data-testid="color-picker"
-            >
+            <SfInput v-model="uiImageTextBlock.text.color" type="text" data-testid="color-picker">
               <template #suffix>
                 <label
                   for="primary-color"
                   :style="{ backgroundColor: uiImageTextBlock.text.color }"
                   class="rounded-lg cursor-pointer"
                 >
-                  <input
-                    id="primary-color"
-                    v-model="uiImageTextBlock.text.color"
-                    type="color"
-                    class="invisible w-8"
-                  />
+                  <input id="primary-color" v-model="uiImageTextBlock.text.color" type="color" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -328,16 +303,10 @@
             <UiFormLabel>Label</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.label" type="text">
+            <SfInput v-model="uiImageTextBlock.button.label" type="text" data-testid="input-label">
               <template #suffix>
                 <label for="button-label" class="rounded-lg cursor-pointer">
-                  <input
-                    id="button-label"
-                    v-model="uiImageTextBlock.button.label"
-                    data-testid="input-label"
-                    type="text"
-                    class="invisible w-8"
-                  />
+                  <input id="button-label" v-model="uiImageTextBlock.button.label" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
@@ -349,16 +318,10 @@
             <UiFormLabel>Link target</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.link" type="text">
+            <SfInput v-model="uiImageTextBlock.button.link" type="text" data-testid="input-link">
               <template #suffix>
                 <label for="button-label" class="rounded-lg cursor-pointer">
-                  <input
-                    id="button-label"
-                    v-model="uiImageTextBlock.button.link"
-                    data-testid="input-link"
-                    type="text"
-                    class="invisible w-8"
-                  />
+                  <input id="button-label" v-model="uiImageTextBlock.button.link" type="text" class="invisible w-8" />
                 </label>
               </template>
             </SfInput>
