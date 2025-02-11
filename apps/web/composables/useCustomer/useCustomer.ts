@@ -21,6 +21,7 @@ import type {
  * ```
  */
 export const useCustomer: UseCustomerReturn = () => {
+  const { emit } = usePlentyEvent();
   const state = useState<UseCustomerState>(`useCustomer`, () => ({
     data: {} as SessionResult,
     loading: false,
@@ -114,7 +115,13 @@ export const useCustomer: UseCustomerReturn = () => {
     try {
       await useSdk()
         .plentysystems.doLogin({ email: email, password: password })
-        .then(async () => await getSession());
+        .then(async () => {
+          await getSession();
+
+          if (state.value.data?.user) {
+            emit('frontend:login', { user: state.value.data.user });
+          }
+        });
 
       return state.value.isAuthorized;
     } catch (error) {
@@ -161,6 +168,10 @@ export const useCustomer: UseCustomerReturn = () => {
 
     if (data.value) {
       await getSession();
+
+      if (state.value.data?.user) {
+        emit('frontend:signUp', { user: state.value.data.user });
+      }
     }
 
     return data.value?.data ?? null;

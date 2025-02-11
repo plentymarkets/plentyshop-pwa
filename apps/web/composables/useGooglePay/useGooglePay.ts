@@ -89,6 +89,7 @@ export const useGooglePay = () => {
     const { createOrder } = useMakeOrder();
     const { $i18n } = useNuxtApp();
     const { processingOrder } = useProcessingOrder();
+    const { emit } = usePlentyEvent();
 
     state.value.paymentLoading = true;
 
@@ -135,6 +136,7 @@ export const useGooglePay = () => {
       });
 
       processingOrder.value = true;
+      emit('frontend:orderCreated', order);
       clearCartItems();
       navigateTo(localePath(paths.confirmation + '/' + order.order.id + '/' + order.order.accessKey));
       state.value.paymentLoading = false;
