@@ -9,7 +9,7 @@
       <SfInput v-model="recommendedProductsOptions.text.title" name="Title" type="text" placeholder="Title" />
     </div>
     <div>
-      <UiFormLabel>Sub title</UiFormLabel>
+      <UiFormLabel>Subtitle</UiFormLabel>
       <SfInput v-model="recommendedProductsOptions.text.subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
     </div>
     <div>
