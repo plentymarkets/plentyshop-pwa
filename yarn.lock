@@ -5038,7 +5038,7 @@ __metadata:
     "@nuxtjs/turnstile": "npm:^0.8.0"
     "@paypal/paypal-js": "npm:8.1.0"
     "@plentymarkets/shop-api": "npm:^0.89.0"
-    "@plentymarkets/shop-core": "npm:^1.1.0"
+    "@plentymarkets/shop-core": "npm:^1.1.1"
     "@types/applepayjs": "npm:^14.0.8"
     "@types/drift-zoom": "npm:^1.5.2"
     "@types/googlepay": "npm:^0.7.6"
@@ -5097,13 +5097,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plentymarkets/shop-core@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "@plentymarkets/shop-core@npm:1.1.0"
+"@plentymarkets/shop-core@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "@plentymarkets/shop-core@npm:1.1.1"
   dependencies:
     "@plentymarkets/shop-api": "npm:^0.88.0"
     mitt: "npm:^3.0.1"
-  checksum: 10c0/40d919065a324b87d5b7ec4fa3d2ddb0808225efd2566871955afda665315382e3fdb5a91dca3d3274958ce1214768ab182b628e8e8188b4816240690c853d14
+  checksum: 10c0/5757dfcd82fc55a9d4192ff2892f86769c390c63a1624aa8f76dc5c3e7f5df606d492b36a36c03b41f28e0223c826bc1f50965686e21df35c43669de431a6c68
   languageName: node
   linkType: hard
 
