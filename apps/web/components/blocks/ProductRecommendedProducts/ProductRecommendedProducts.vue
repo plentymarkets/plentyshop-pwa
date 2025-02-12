@@ -5,10 +5,20 @@
 
 <script setup lang="ts">
 import type { ProductRecommendedProductsProps } from './types';
+import { watchDebounced } from '@vueuse/core';
 
 const props = defineProps<ProductRecommendedProductsProps>();
 const { data: recommendedProducts, fetchProductRecommended } = useProductRecommended(props.categoryId + props.cacheKey);
 if (props.categoryId) {
   fetchProductRecommended(props.categoryId);
 }
+watchDebounced(
+  () => props.categoryId,
+  () => {
+    if (props.categoryId) {
+      fetchProductRecommended(props.categoryId);
+    }
+  },
+  { debounce: 500 },
+);
 </script>

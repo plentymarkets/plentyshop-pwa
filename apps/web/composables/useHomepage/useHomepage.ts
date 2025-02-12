@@ -2,6 +2,7 @@ import homepageTemplateDataEn from './homepageTemplateDataEn.json';
 import homepageTemplateDataDe from './homepageTemplateDataDe.json';
 import type { HomepageData, UseHomepageDataReturn, UseHomepageDataState, SetIndex, ActiveSlideIndex } from './types';
 import type { BannerProps } from '~/components/blocks/BannerCarousel/types';
+import type { ProductRecommendedProductsProps } from '../../components/ProductRecommendedProducts/types';
 
 const useLocaleSpecificHomepageTemplate = (locale: string) =>
   locale === 'de' ? (homepageTemplateDataDe as HomepageData) : (homepageTemplateDataEn as HomepageData);
@@ -28,7 +29,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const fetchRecommendedProducts = async () => {
     state.value.data.blocks.forEach((block) => {
       if (block.name === 'ProductRecommendedProducts') {
-        const options = block.options as ProductRecommendedProductsOptions;
+        const options = block.options as ProductRecommendedProductsProps;
         const id = options.categoryId;
 
         if (tryUseNuxtApp()) {

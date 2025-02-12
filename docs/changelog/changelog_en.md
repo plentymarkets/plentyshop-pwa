@@ -4,6 +4,7 @@
 
 ### New
 
+- Added recommended products block editing.
 - Dynamic blocks register.
 - Added slider edit.
 - Added block editing by position & typescipt restructuring
