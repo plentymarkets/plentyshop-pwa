@@ -4,7 +4,8 @@
 
 ### New
 
-- Added recommended block in right side drawer.
+- Added recommended products block editing.
+- Dynamic blocks register.
 - Added slider edit.
 - Added block editing by position & typescipt restructuring
 - Fetch color settings at runtime instead of build time.

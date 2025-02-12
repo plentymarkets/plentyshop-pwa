@@ -3,14 +3,14 @@ import { paths } from '../../../utils/paths';
 describe('Image Text Block Form', () => {
 
   const openSettingsForImageTextBlock = () => {
-    cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4); 
+    cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4);
 
     cy.get('[data-testid="open-editor-button"]')
       .eq(3)
       .should('exist')
       .click({ force: true });
     cy.wait(1000);
-    
+
     cy.get('[data-testid="image-text-form"]').should('exist');
   };
 
@@ -18,7 +18,7 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="image-group"]').should('exist').click();
 
   }
-  
+
   const changeImage = () => {
 
     cy.get('[data-testid="wide-screen-input"]').should('exist').clear().type("https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png", { delay: 0 });
@@ -49,9 +49,9 @@ describe('Image Text Block Form', () => {
       { selector: 'input-title', text: 'New title' },
       { selector: 'input-sub-title', text: 'New sub title' },
       { selector: 'textarea-html', text: 'New Text Area Content' },
-     
+
     ];
-    
+
     textInputs.forEach(({ selector, text }) => {
       cy.get(`[data-testid="${selector}"]`)
         .should('exist')
@@ -66,7 +66,7 @@ describe('Image Text Block Form', () => {
         { selector: 'text-subtitle', text: 'New sub title' },
         { selector: 'text-html', text: 'New Text Area Content' }
       ];
-    
+
       expectedTexts.forEach(({ selector, text }) => {
         cy.get(`[data-testid="${selector}"]`).should('have.text', text);
       });
@@ -84,15 +84,15 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="text-align-center"]').should('exist').click();
 
     cy.get('[data-testid="text-content"]')
-      .should('have.class', 'text-center'); 
-    
+      .should('have.class', 'text-center');
+
     cy.get('[data-testid="text-align-right"]').should('exist').click();
-    
+
     cy.get('[data-testid="text-content"]')
       .should('have.class', 'text-right');
-    
+
     cy.get('[data-testid="text-align-left"]').should('exist').click();
-    
+
     cy.get('[data-testid="text-content"]')
       .should('have.class', 'text-left');
   }
@@ -100,7 +100,7 @@ describe('Image Text Block Form', () => {
   const openButtonGroup = () => {
     cy.get('[data-testid="button-group"]').should('exist').click();
   }
-  
+
   const changeButtonLabel = () => {
     cy.get('[data-testid="input-label"]').should('exist').clear().type('New Button Label', { delay: 0 });
     cy.get('[data-testid="text-button"]').should('have.text', 'New Button Label');
@@ -111,7 +111,7 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="text-button"]')
     .should('have.attr', 'href', 'https://www.google.com');
   }
-  
+
   const changeButtonVariants = () => {
     cy.get('[data-testid="outline-secondary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');

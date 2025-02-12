@@ -562,8 +562,7 @@ import {
   useDisclosure,
   SfIconClose,
 } from '@storefront-ui/vue';
-import type { BannerProps } from '~/components/ui/Banner/types';
-import type { BannerSlide } from '~/composables/useHomepage/types';
+import type { BannerProps, BannerSlide } from './types';
 
 const { isOpen, open, close } = useDisclosure();
 const { blockIndex } = useSiteConfiguration();
@@ -635,7 +634,8 @@ const addSlide = async () => {
   slides.value = [...slides.value, newSlide];
 
   await nextTick();
-  slideClick(slides.value.length - 1);
+
+  setIndex(blockIndex.value, slides.value.length - 1);
   close();
 };
 

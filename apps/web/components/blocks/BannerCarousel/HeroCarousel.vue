@@ -12,7 +12,7 @@
       @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
-        <UiBanner :banner-props="bannerItem" :index="slideIndex" />
+        <BlocksBannerCarouselBanner :banner-props="bannerItem" :index="slideIndex" />
       </SwiperSlide>
       <div
         v-if="enableModules"
@@ -32,9 +32,8 @@
       :class="`swiper-button-next swiper-button-next-${index}`"
       :style="{ color: controls.color + ' !important' }"
     />
-
     <template #fallback>
-      <UiBannerSkeleton />
+      <BlocksBannerCarouselBannerSkeleton />
     </template>
   </ClientOnly>
 </template>
@@ -42,7 +41,7 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import type { BannerProps } from '../Banner/types';
+import type { BannerProps } from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import type { SlideControls } from '~/composables/useHomepage/types';
 
@@ -81,6 +80,7 @@ const navigationConfig = computed(() => {
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
+
   setIndex(index, swiper.realIndex);
 };
 

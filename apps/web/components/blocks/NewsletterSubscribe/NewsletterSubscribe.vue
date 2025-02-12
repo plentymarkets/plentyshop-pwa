@@ -128,7 +128,7 @@ import { useForm, ErrorMessage } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import { object, string, boolean } from 'yup';
 import { paths } from '~/utils/paths';
-import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { NewsletterSubscribeProps } from './types';
 
 const runtimeConfig = useRuntimeConfig();
 const { subscribe, loading } = useNewsletter();

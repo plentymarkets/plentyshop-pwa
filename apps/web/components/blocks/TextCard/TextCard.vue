@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import type { TextCardProps } from '~/components/ui/TextCard/types';
+import type { TextCardProps } from './types';
 
 const props = defineProps<TextCardProps>();
 

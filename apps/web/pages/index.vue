@@ -18,7 +18,6 @@
           :clicked-block-index="clickedBlockIndex"
           :is-tablet="isTablet"
           :block-has-data="blockHasData"
-          :get-component="getComponent"
           :tablet-edit="tabletEdit"
           :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
@@ -48,8 +47,6 @@ const {
   togglePlaceholder,
 } = useBlockManager();
 
-const runtimeConfig = useRuntimeConfig();
-const isHero = ref(runtimeConfig.public.isHero);
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
 const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
@@ -62,16 +59,6 @@ const openBlockList = (index: number, position: number) => {
   togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
   updateNewBlockPosition(insertIndex);
   openDrawerWithView('blocksList');
-};
-
-const getComponent = (name: string) => {
-  if (name === 'NewsletterSubscribe') return resolveComponent('NewsletterSubscribe');
-  if (name === 'UiTextCard') return resolveComponent('UiTextCard');
-  if (name === 'UiImageText') return resolveComponent('UiImageText');
-  if (name === 'ProductRecommendedProducts') return resolveComponent('ProductRecommendedProducts');
-  if (name === 'UiCarousel') {
-    return isHero.value ? resolveComponent('UiHeroCarousel') : resolveComponent('UiBlazeCarousel');
-  }
 };
 
 await getRobots();
