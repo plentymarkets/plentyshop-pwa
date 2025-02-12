@@ -1,6 +1,7 @@
 import type { BannerProps } from '~/components/ui/Banner/types';
 import type { TextCardProps } from '~/components/ui/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { ProductRecommendedProductsProps } from '../../components/ProductRecommendedProducts/types';
 
 interface ImageProps {
   lg: string;
@@ -48,6 +49,7 @@ export type BlockOptions =
   | UiHeroCarouselOptions
   | UiMediaCardOptions
   | TextCardProps
+  | ProductRecommendedProductsProps
   | NewsletterSubscribeProps;
 
 export interface Block {
