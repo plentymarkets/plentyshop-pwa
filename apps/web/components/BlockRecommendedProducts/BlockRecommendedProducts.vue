@@ -40,9 +40,9 @@
         </template>
       </SfInput>
     </div>
-    <div v-if="recommendedBlock.text" class="mb-6">
-      <UiFormLabel class="mb-1">Text alignment</UiFormLabel>
-      <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
+    <div v-if="recommendedBlock.text">
+      <UiFormLabel>Text alignment</UiFormLabel>
+      <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
           for="text-align-left"
           class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
