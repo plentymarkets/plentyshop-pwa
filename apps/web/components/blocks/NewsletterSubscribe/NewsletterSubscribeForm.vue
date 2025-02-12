@@ -99,7 +99,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { NewsletterSubscribeProps } from './types';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);

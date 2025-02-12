@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils'
-import { UiBanner } from '#components';
+import { BlocksBannerCarouselBanner } from '#components';
 
 describe('Banner', () => {
   describe('with default settings', () => {
-    const wrapper = mount(UiBanner, {
+    const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
           image: {

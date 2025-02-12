@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import BlazeSlider from 'blaze-slider';
 import 'blaze-slider/dist/blaze.css';
-import type { BannerProps } from '../Banner/types';
+import type { BannerProps } from './types';
 import type { SlideControls } from '~/composables/useHomepage/types';
 
 const { bannerItems, controls } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls }>();

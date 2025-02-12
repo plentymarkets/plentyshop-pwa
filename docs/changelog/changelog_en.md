@@ -4,6 +4,8 @@
 
 ### New
 
+- Added recommended products block editing.
+- Dynamic blocks register.
 - Added slider edit.
 - Added block editing by position & typescipt restructuring
 - Fetch color settings at runtime instead of build time.
@@ -21,6 +23,7 @@
 - Automated tests for Image Text
 - Automated tests for Newsletter Form.
 - Color picker labels now have border
+- Automated tests for Text Card Form
 
 ### 👷 Changed
 
