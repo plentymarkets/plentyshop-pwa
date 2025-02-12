@@ -1,5 +1,4 @@
 <template>
-  <ClientOnly>
     <Swiper
       :key="index"
       :modules="enableModules ? [Pagination, Navigation] : []"
@@ -32,11 +31,6 @@
       :class="`swiper-button-next swiper-button-next-${index}`"
       :style="{ color: controls.color + ' !important' }"
     />
-
-    <template #fallback>
-      <UiBannerSkeleton />
-    </template>
-  </ClientOnly>
 </template>
 
 <script setup lang="ts">
