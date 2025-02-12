@@ -98,7 +98,10 @@ const getBlockComponent = computed(() => {
   const matched = Object.keys(modules).find((path) => regex.test(path));
 
   if (matched) {
-    return defineAsyncComponent(modules[matched]);
+    return defineAsyncComponent({
+      loader: modules[matched],
+      delay: 0,
+    });
   }
 
   return '';
