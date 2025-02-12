@@ -7,8 +7,7 @@ describe('Text Card Block Form', () => {
 
     cy.get('[data-testid="open-editor-button"]')
       .eq(1)
-      .should('exist')
-
+      .should('exist');
     cy.get('[data-testid="text-card-form"]').should('exist');
   };
 
