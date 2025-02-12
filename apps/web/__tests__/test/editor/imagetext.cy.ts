@@ -133,18 +133,18 @@ describe('Image Text Block Form', () => {
       openImageGroup();
   });
 
-  it('should test the text group', () => {
+  it('should test the text settings', () => {
       openTextGroup();
       changeText();
       changeTextColor();
       changeTextAlignment();
-});
+  });
 
   it('should change button settings', () => {
       openButtonGroup();
       changeButtonLabel();
       changeButtonLink();
       changeButtonVariants();
-});
+  });
 
 });
