@@ -85,7 +85,7 @@
               <label
                 for="text-color"
                 :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-                class="rounded-lg cursor-pointer"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
                 <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
               </label>

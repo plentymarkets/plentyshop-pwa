@@ -1,10 +1,11 @@
 <template>
   <div class="sticky top-[52px] h-[calc(100vh-52px)] overflow-y-auto">
-    <form class="w-full absolute bg-white">
+    <form class="w-full absolute bg-white" data-testid="image-text-form">
       <UiAccordionItem
         v-model="imageGroupOpen"
         summary-active-class="bg-neutral-100 border-t-0"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        data-testid="image-group"
       >
         <template #summary>
           <h2>Images</h2>
@@ -15,7 +16,7 @@
             <UiFormLabel>Image XL (Desktop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text">
+            <SfInput v-model="uiImageTextBlock.image.wideScreen" type="text" data-testid="wide-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
                   <input
@@ -36,7 +37,7 @@
             <UiFormLabel>Image L (Desktop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.desktop" type="text">
+            <SfInput v-model="uiImageTextBlock.image.desktop" type="text" data-testid="large-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
                   <input id="image-tablet" v-model="uiImageTextBlock.image.desktop" type="text" class="invisible w-8" />
@@ -52,7 +53,7 @@
             <UiFormLabel>Image M (Laptop) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.tablet" type="text">
+            <SfInput v-model="uiImageTextBlock.image.tablet" type="text" data-testid="medium-screen-input">
               <template #suffix>
                 <label for="image-tablet" class="rounded-lg cursor-pointer">
                   <input id="image-tablet" v-model="uiImageTextBlock.image.tablet" type="text" class="invisible w-8" />
@@ -68,10 +69,16 @@
             <UiFormLabel>Image S (Mobile) </UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.mobile" type="text">
+            <SfInput v-model="uiImageTextBlock.image.mobile" type="text" data-testid="small-screen-input">
               <template #suffix>
                 <label for="image-mobile" class="rounded-lg cursor-pointer">
-                  <input id="image-mobile" v-model="uiImageTextBlock.image.mobile" type="text" class="invisible w-8" />
+                  <input
+                    id="image-mobile"
+                    v-model="uiImageTextBlock.image.mobile"
+                    data-testid="small-screen-input"
+                    type="text"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -84,7 +91,7 @@
             <UiFormLabel>Alt</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.image.alt" type="text">
+            <SfInput v-model="uiImageTextBlock.image.alt" type="text" data-testid="alt-input">
               <template #suffix>
                 <label for="alt" class="rounded-lg cursor-pointer">
                   <input id="alt" v-model="uiImageTextBlock.image.alt" type="text" class="invisible w-8" />
@@ -101,6 +108,7 @@
               for="align-left"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'left' }"
+              data-testid="image-align-left"
               @click="uiImageTextBlock.image.imageAlignment = 'left'"
             >
               <SfIconCheck
@@ -115,6 +123,7 @@
               for="align-right"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.image.imageAlignment === 'right' }"
+              data-testid="image-align-right"
               @click="uiImageTextBlock.image.imageAlignment = 'right'"
             >
               <SfIconCheck
@@ -131,6 +140,7 @@
         v-model="textGroup"
         summary-active-class="bg-neutral-100 border-t-0"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        data-testid="text-group"
       >
         <template #summary>
           <h2>Text</h2>
@@ -144,7 +154,13 @@
             <SfInput v-model="uiImageTextBlock.text.pretitle" type="text">
               <template #suffix>
                 <label for="pretitle" class="rounded-lg cursor-pointer">
-                  <input id="pretitle" v-model="uiImageTextBlock.text.pretitle" type="text" class="invisible w-8" />
+                  <input
+                    id="pretitle"
+                    v-model="uiImageTextBlock.text.pretitle"
+                    data-testid="input-pre-title"
+                    type="text"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -159,7 +175,13 @@
             <SfInput v-model="uiImageTextBlock.text.title" type="text">
               <template #suffix>
                 <label for="title" class="rounded-lg cursor-pointer">
-                  <input id="title" v-model="uiImageTextBlock.text.title" type="text" class="invisible w-8" />
+                  <input
+                    id="title"
+                    v-model="uiImageTextBlock.text.title"
+                    data-testid="input-title"
+                    type="text"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -174,7 +196,13 @@
             <SfInput v-model="uiImageTextBlock.text.subtitle" type="text">
               <template #suffix>
                 <label for="subtitle" class="rounded-lg cursor-pointer">
-                  <input id="subtitle" v-model="uiImageTextBlock.text.subtitle" type="text" class="invisible w-8" />
+                  <input
+                    id="subtitle"
+                    v-model="uiImageTextBlock.text.subtitle"
+                    data-testid="input-sub-title"
+                    type="text"
+                    class="invisible w-8"
+                  />
                 </label>
               </template>
             </SfInput>
@@ -186,6 +214,7 @@
           <SfTextarea
             id="html-description"
             v-model="uiImageTextBlock.text.htmlDescription"
+            data-testid="textarea-html"
             name="html-description"
             rows="3"
             class="min-h-[232px] mt-1 block w-full border border-gray-300 rounded-md shadow-sm sm:text-sm"
@@ -197,12 +226,12 @@
             <UiFormLabel>Text Color</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.text.color" type="text">
+            <SfInput v-model="uiImageTextBlock.text.color" type="text" data-testid="color-picker">
               <template #suffix>
                 <label
                   for="primary-color"
                   :style="{ backgroundColor: uiImageTextBlock.text.color }"
-                  class="rounded-lg cursor-pointer"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input id="primary-color" v-model="uiImageTextBlock.text.color" type="color" class="invisible w-8" />
                 </label>
@@ -217,6 +246,7 @@
           <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
             <div
               for="text-align-left"
+              data-testid="text-align-left"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'left' }"
               @click="uiImageTextBlock.text.textAlignment = 'left'"
@@ -230,6 +260,7 @@
 
             <div
               for="text-align-center"
+              data-testid="text-align-center"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm border-r"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'center' }"
               @click="uiImageTextBlock.text.textAlignment = 'center'"
@@ -243,6 +274,7 @@
 
             <div
               for="text-align-right"
+              data-testid="text-align-right"
               class="flex items-center justify-center w-1/3 px-4 py-2 cursor-pointer text-sm"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.text.textAlignment === 'right' }"
               @click="uiImageTextBlock.text.textAlignment = 'right'"
@@ -260,6 +292,7 @@
         v-model="buttonGroup"
         summary-active-class="bg-neutral-100 border-t-0"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        data-testid="button-group"
       >
         <template #summary>
           <h2>Button</h2>
@@ -270,7 +303,7 @@
             <UiFormLabel>Label</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.label" type="text">
+            <SfInput v-model="uiImageTextBlock.button.label" type="text" data-testid="input-label">
               <template #suffix>
                 <label for="button-label" class="rounded-lg cursor-pointer">
                   <input id="button-label" v-model="uiImageTextBlock.button.label" type="text" class="invisible w-8" />
@@ -285,7 +318,7 @@
             <UiFormLabel>Link target</UiFormLabel>
           </div>
           <label>
-            <SfInput v-model="uiImageTextBlock.button.link" type="text">
+            <SfInput v-model="uiImageTextBlock.button.link" type="text" data-testid="input-link">
               <template #suffix>
                 <label for="button-label" class="rounded-lg cursor-pointer">
                   <input id="button-label" v-model="uiImageTextBlock.button.link" type="text" class="invisible w-8" />
@@ -301,6 +334,7 @@
             <div
               for="align-left"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+              data-testid="outline-primary"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'primary' }"
               @click="uiImageTextBlock.button.variant = 'primary'"
             >
@@ -315,6 +349,7 @@
             <div
               for="align-right"
               class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
+              data-testid="outline-secondary"
               :class="{ 'bg-gray-100 text-gray-900 font-semibold': uiImageTextBlock.button.variant === 'secondary' }"
               @click="uiImageTextBlock.button.variant = 'secondary'"
             >
