@@ -86,7 +86,12 @@
         }
       }
     },
-
+    {
+      "name": "ProductRecommendedProducts",
+      "options": {
+        "categoryId": "73"
+      }
+    },
     {
       "name": "ImageText",
       "options": {

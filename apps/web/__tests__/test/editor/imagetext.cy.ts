@@ -6,7 +6,7 @@ describe('Image Text Block Form', () => {
     cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4);
 
     cy.get('[data-testid="open-editor-button"]')
-      .eq(2)
+      .eq(3)
       .should('exist')
       .click({ force: true });
     cy.wait(1000);
