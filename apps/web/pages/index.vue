@@ -55,7 +55,7 @@ const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
 const openBlockList = (index: number, position: number) => {
-  const insertIndex = position === -1 ? index : index + 1;
+  const insertIndex = (position === -1 ? index : index + 1) || 0;
   togglePlaceholder(index, position === -1 ? 'top' : 'bottom');
   updateNewBlockPosition(insertIndex);
   openDrawerWithView('blocksList');

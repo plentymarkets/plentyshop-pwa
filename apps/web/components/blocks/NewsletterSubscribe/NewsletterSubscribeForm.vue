@@ -12,7 +12,13 @@
       <div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Main Title</UiFormLabel>
-          <SfInput v-model="newsletterBlock.text.title" name="maintitle" type="text" placeholder="maintitle" />
+          <SfInput
+            v-model="newsletterBlock.text.title"
+            name="maintitle"
+            type="text"
+            placeholder="maintitle"
+            data-testid="newsletter-form-title"
+          />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Description</UiFormLabel>
@@ -22,15 +28,16 @@
             type="text"
             class="w-full min-h-[232px]"
             placeholder="Text that supports HTML formatting"
+            data-testid="newsletter-form-description"
           />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Ask for subscriber's name</UiFormLabel>
-          <SfSwitch v-model="newsletterBlock.input.displayNameInput" />
+          <SfSwitch v-model="newsletterBlock.input.displayNameInput" data-testid="newsletter-form-display-name" />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Mandatory Field</UiFormLabel>
-          <SfSwitch v-model="newsletterBlock.input.nameIsRequired" />
+          <SfSwitch v-model="newsletterBlock.input.nameIsRequired" data-testid="newsletter-form-mandatory-name" />
         </div>
       </div>
     </UiAccordionItem>
@@ -48,7 +55,13 @@
       <div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Text</UiFormLabel>
-          <SfInput v-model="newsletterBlock.button.label" name="label" type="text" placeholder="label" />
+          <SfInput
+            v-model="newsletterBlock.button.label"
+            name="label"
+            type="text"
+            placeholder="label"
+            data-testid="newsletter-form-button-text"
+          />
         </div>
       </div>
     </UiAccordionItem>
@@ -67,7 +80,7 @@
         <div class="mb-6">
           <UiFormLabel class="mb-1">Background Color</UiFormLabel>
 
-          <SfInput v-model="newsletterBlock.text.bgColor" type="text">
+          <SfInput v-model="newsletterBlock.text.bgColor" type="text" data-testid="newsletter-form-background-color">
             <template #suffix>
               <label
                 for="text-color"

@@ -5039,6 +5039,7 @@ __metadata:
     "@paypal/paypal-js": "npm:8.1.0"
     "@plentymarkets/shop-api": "npm:^0.89.0"
     "@plentymarkets/shop-core": "npm:^1.1.1"
+    "@plentymarkets/shop-module-gtag": "npm:^1.0.0"
     "@types/applepayjs": "npm:^14.0.8"
     "@types/drift-zoom": "npm:^1.5.2"
     "@types/googlepay": "npm:^0.7.6"
@@ -5104,6 +5105,19 @@ __metadata:
     "@plentymarkets/shop-api": "npm:^0.88.0"
     mitt: "npm:^3.0.1"
   checksum: 10c0/5757dfcd82fc55a9d4192ff2892f86769c390c63a1624aa8f76dc5c3e7f5df606d492b36a36c03b41f28e0223c826bc1f50965686e21df35c43669de431a6c68
+  languageName: node
+  linkType: hard
+
+"@plentymarkets/shop-module-gtag@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@plentymarkets/shop-module-gtag@npm:1.0.0"
+  dependencies:
+    "@nuxt/kit": "npm:3.13.2"
+    "@plentymarkets/shop-core": "npm:^1.1.1"
+    defu: "npm:^6.1.4"
+    pathe: "npm:^2.0.1"
+    ufo: "npm:^1.5.4"
+  checksum: 10c0/44285c1aa51c4f6e3e3efbd678a430e8aeaf7866e158989f0c5a6805f72e9a63296490726f071a76ab46b592d86227a5c6748e3abf5bbc837cce6c25a2356ae1
   languageName: node
   linkType: hard
 
@@ -18521,6 +18535,13 @@ __metadata:
   version: 2.0.0
   resolution: "pathe@npm:2.0.0"
   checksum: 10c0/00cddf57d9ac2eb631599727393c58b888f7216c5908476fcfd1c50c749f45c24aaab86f27ab3e42f71d2588522cb5bb45683626cd2caf68319244d22fa87cd2
+  languageName: node
+  linkType: hard
+
+"pathe@npm:^2.0.1":
+  version: 2.0.3
+  resolution: "pathe@npm:2.0.3"
+  checksum: 10c0/c118dc5a8b5c4166011b2b70608762e260085180bb9e33e80a50dcdb1e78c010b1624f4280c492c92b05fc276715a4c357d1f9edc570f8f1b3d90b6839ebaca1
   languageName: node
   linkType: hard
 
