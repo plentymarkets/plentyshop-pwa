@@ -246,7 +246,7 @@
                 <label
                   for="text-color"
                   :style="{ backgroundColor: slides[activeSlide].text.color }"
-                  class="rounded-lg cursor-pointer"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input id="text-color" v-model="slides[activeSlide].text.color" type="color" class="invisible w-8" />
                 </label>
@@ -268,7 +268,7 @@
                 <label
                   for="text-bg-color"
                   :style="{ backgroundColor: slides[activeSlide].text.bgcolor }"
-                  class="rounded-lg cursor-pointer"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input
                     id="text-bg-color"
@@ -531,7 +531,7 @@
                 <label
                   for="controls-color"
                   :style="{ backgroundColor: controls.color }"
-                  class="rounded-lg cursor-pointer"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input id="controls-color" v-model="controls.color" type="color" class="invisible w-8" />
                 </label>

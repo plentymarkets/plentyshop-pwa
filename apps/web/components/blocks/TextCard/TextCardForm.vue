@@ -75,7 +75,7 @@
                 <label
                   for="primary-color"
                   :style="{ backgroundColor: textCardBlock.text.color }"
-                  class="rounded-lg cursor-pointer"
+                  class="border border-[#a0a0a0] rounded-lg cursor-pointer"
                 >
                   <input id="primary-color" v-model="textCardBlock.text.color" type="color" class="invisible w-8" />
                 </label>
