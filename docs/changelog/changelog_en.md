@@ -20,6 +20,7 @@
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
 - Automated tests for Image Text
+- Color picker labels now have border
 
 ### 👷 Changed
 
