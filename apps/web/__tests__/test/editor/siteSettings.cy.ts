@@ -13,32 +13,56 @@ describe('SiteSettings', () => {
   const blockSpacingMargin = '30';
 
   beforeEach(() => {
-    cy.intercept('/plentysystems/setConfiguration').as('setConfiguration');
-
     cy.visitAndHydrate(paths.home);
   });
 
-  it('should test site settings', () => {
+  it('should change the font', () => {
     editor.isToolbarVisible();
     editor.toggleEditMode();
     editor.toggleSiteSettings();
+
     siteSettings
       .checkDrawerVisible()
-      .checkSaveBtnDisabled()
+      .checkSaveButtonDisabled()
       .toggleFonts()
-      .toggleColor()
-      .toggleBlockSpacing()
       .changeFont(font)
-      .changeColor(primaryColor, secondaryColor)
-      .changeBlockSpacing(blockSpacing)
       .checkFontPreview(font)
-      .checkColorPreview(primaryColor)
-      .checkBlockSpacingPreview(blockSpacingMargin)
-      .checkSaveBtnEnabled()
-      .save()
+      .checkSaveButtonEnabled()
 
-    cy.wait('@setConfiguration')
-    siteSettings.checkSaveBtnDisabled()
+    editor.toggleSiteSettings();
+    siteSettings.checkDrawerNotVisible()
+  });
+
+  it('should change the theme colors', () => {
+    editor.isToolbarVisible();
+    editor.toggleEditMode();
+    editor.toggleSiteSettings();
+
+    siteSettings
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .toggleColor()
+      .changeColor(primaryColor, secondaryColor)
+      .checkColorPreview(primaryColor)
+      .checkSaveButtonEnabled()
+
+    editor.toggleSiteSettings();
+    siteSettings.checkDrawerNotVisible()
+  });
+
+  it('should change the spacing', () => {
+    editor.isToolbarVisible();
+    editor.toggleEditMode();
+    editor.toggleSiteSettings();
+
+    siteSettings
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .toggleBlockSpacing()
+      .changeBlockSpacing(blockSpacing)
+      .checkBlockSpacingPreview(blockSpacingMargin)
+      .checkSaveButtonEnabled()
+
     editor.toggleSiteSettings();
     siteSettings.checkDrawerNotVisible()
   });

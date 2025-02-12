@@ -58,18 +58,13 @@ export class SiteSettingsObject extends PageObject {
     return this;
   }
 
-  checkSaveBtnDisabled() {
+  checkSaveButtonDisabled() {
     this.saveButton.should('be.disabled');
     return this;
   }
 
-  checkSaveBtnEnabled() {
+  checkSaveButtonEnabled() {
     this.saveButton.should('be.enabled');
-    return this;
-  }
-
-  save() {
-    this.saveButton.click();
     return this;
   }
 

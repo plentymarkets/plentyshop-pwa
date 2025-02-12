@@ -30,8 +30,8 @@
       </div>
 
       <Multiselect
-        data-testid="font-select"
         v-model="selectedFont"
+        data-testid="font-select"
         :options="fonts"
         placeholder="Select a font"
         label="value"
@@ -46,8 +46,8 @@
     </UiAccordionItem>
 
     <UiAccordionItem
-      data-testid="color-section"
       v-model="colorsOpen"
+      data-testid="color-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
