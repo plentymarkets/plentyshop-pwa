@@ -7,7 +7,10 @@ describe('Text Card Block Form', () => {
 
     cy.get('[data-testid="open-editor-button"]')
       .eq(1)
-      .should('exist');
+      .should('exist')
+      .click({ force: true });
+    cy.wait(1000);
+
     cy.get('[data-testid="text-card-form"]').should('exist');
   };
 
