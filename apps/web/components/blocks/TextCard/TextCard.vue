@@ -1,11 +1,11 @@
 <template>
-  <div :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]">
+  <div data-testid="text-card" :class="['w-full', 'flex', 'flex-col', 'items-start', 'space-y-4', textAlignmentClass]">
     <TextContent :text="props.text" :button="props.button" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { TextCardProps } from '~/components/ui/TextCard/types';
+import type { TextCardProps } from './types';
 
 const props = defineProps<TextCardProps>();
 

@@ -72,7 +72,7 @@
               <label
                 for="text-color"
                 :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-                class="rounded-lg cursor-pointer"
+                class="border border-[#a0a0a0] rounded-lg cursor-pointer"
               >
                 <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
               </label>
@@ -86,7 +86,7 @@
 
 <script setup lang="ts">
 import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
-import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { NewsletterSubscribeProps } from './types';
 
 const textGroup = ref(true);
 const buttonGroup = ref(true);

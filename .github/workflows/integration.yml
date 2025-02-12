@@ -191,7 +191,7 @@ jobs:
           command: yarn test:cypress-editor
         env:
           NUXT_PUBLIC_SHOW_CONFIGURATION_DRAWER: true
-          NUXT_PUBLIC_EXPERIMENTAL_ADD_BLOCK: true
+          NUXT_PUBLIC_EXPERIMENTAL_BLOCK_EDIT_FORM: true
 
       - uses: actions/upload-artifact@v4
         if: failure()

@@ -4,6 +4,8 @@
 
 ### New
 
+- Added recommended products block editing.
+- Dynamic blocks register.
 - Added slider edit.
 - Added block editing by position & typescipt restructuring
 - Fetch color settings at runtime instead of build time.
@@ -18,6 +20,9 @@
 - Image Text Form integrated and two-way data binded
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
+- Automated tests for Image Text
+- Color picker labels now have border
+- Automated tests for Text Card Form
 
 ### 👷 Changed
 

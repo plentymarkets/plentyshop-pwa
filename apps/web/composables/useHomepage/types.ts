@@ -1,6 +1,7 @@
-import type { BannerProps } from '~/components/ui/Banner/types';
-import type { TextCardProps } from '~/components/ui/TextCard/types';
-import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
+import type { BannerProps, BannerSlide } from '~/components/blocks/BannerCarousel/types';
+import type { TextCardProps } from '~/components/blocks/TextCard/types';
+import type { NewsletterSubscribeProps } from '~/components/blocks/NewsletterSubscribe/types';
+import type { ProductRecommendedProductsProps } from '~/components/blocks/ProductRecommendedProducts/types';
 
 interface ImageProps {
   lg: string;
@@ -33,18 +34,8 @@ interface UiMediaCardOptions {
   alignment?: string;
 }
 
-export interface ProductRecommendedProductsOptions {
-  categoryId: string;
-  headline?: string;
-}
-
 export interface SlideControls {
   color: string;
-}
-
-export interface BannerSlide {
-  bannerItems: BannerProps[];
-  controls: SlideControls;
 }
 
 export type BlockOptions =
@@ -53,7 +44,7 @@ export type BlockOptions =
   | UiHeroCarouselOptions
   | UiMediaCardOptions
   | TextCardProps
-  | ProductRecommendedProductsOptions
+  | ProductRecommendedProductsProps
   | NewsletterSubscribeProps;
 
 export interface Block {

@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "name": "UiCarousel",
+      "name": "BannerCarousel",
       "options": {
         "controls": {
           "color": "#a39f9f"
@@ -69,14 +69,15 @@
       }
     },
     {
-      "name": "UiTextCard",
+      "name": "TextCard",
       "options": {
         "text": {
           "htmlDescription": "<p>Willkommen in unserem Shop, wo Technikbegeisterte und Fashion-Liebhaber gleichermaßen fündig werden! Von hochwertigen Kopfhörern und leistungsstarken Drohnen bis hin zu stilvoller Kleidung finden Sie bei uns alles, was Ihren Alltag smarter und Ihren Look einzigartig macht.</p><p>Unser Ziel ist es, Ihnen eine erstklassige Auswahl an Produkten zu bieten, die Qualität, Innovation und Design vereinen. Ob Sie nach einem neuen Lautsprecher für den perfekten Sound suchen oder nach einem lässigen Hoodie, der Ihrem Stil entspricht – wir haben, was Sie brauchen.</p>",
           "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
           "title": "Entdecke Technik & Style",
           "subtitle": "Innovative Technik trifft auf moderne Mode",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "buttonText": "Jetzt zuschlagen",
@@ -92,7 +93,7 @@
       }
     },
     {
-      "name": "UiImageText",
+      "name": "ImageText",
       "options": {
         "text": {
           "htmlDescription": "<p>Unsere Kopfhörer-Kollektion setzt neue Maßstäbe in Sachen Audio-Präzision. Mit tiefem Bass, klaren Höhen und einem eindrucksvollen Klangbild bieten diese Kopfhörer ein einzigartiges Hörerlebnis für jedes Musikgenre. Mit einer Kombination aus modernem Design, höchstem Komfort und neuester Technologie sind sie die perfekte Wahl für alle, die keine Kompromisse bei der Klangqualität eingehen möchten.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium-Sound in Studioqualität</li><li>Elegant und formschön</li><li>Lange Akkulaufzeit</li><li>Kabellose Verbindung via Bluetooth</li></ul>",
@@ -100,7 +101,6 @@
           "subtitle": "Innovative Technologie trifft moderne Fashion",
           "textAlignment": "left",
           "color": "#000"
-
         },
         "button": {
           "label": "Zu unseren Kopfhörern",
