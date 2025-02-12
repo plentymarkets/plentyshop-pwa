@@ -7,5 +7,7 @@ export type ProductRecommendedProductsProps = {
     title?: string;
     subtitle?: string;
     htmlDescription?: string;
+    color?: string;
+    textAlignment?: 'left' | 'center' | 'right';
   };
 };
