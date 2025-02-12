@@ -1,5 +1,5 @@
 <template>
-  <div class="site-settings-view sticky top-[52px]">
+  <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
       <button class="!p-0" @click="drawerOpen = false">
@@ -9,6 +9,7 @@
 
     <UiAccordionItem
       v-model="fontsOpen"
+      data-testid="font-section"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -29,6 +30,7 @@
       </div>
 
       <Multiselect
+        data-testid="font-select"
         v-model="selectedFont"
         :options="fonts"
         placeholder="Select a font"
@@ -44,6 +46,7 @@
     </UiAccordionItem>
 
     <UiAccordionItem
+      data-testid="color-section"
       v-model="colorsOpen"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
@@ -64,7 +67,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="primaryColor" type="text">
+          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
             <template #suffix>
               <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
                 <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
@@ -87,7 +90,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="secondaryColor" type="text">
+          <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
             <template #suffix>
               <label
                 for="secondary-color"
@@ -105,6 +108,7 @@
 
     <UiAccordionItem
       v-model="blocksSpacingOpen"
+      data-testid="block-spacing-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -116,6 +120,7 @@
           v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
           :key="key"
           type="button"
+          data-testid="block-spacing-btn"
           :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
           @click="updateBlockSize(blocksSpacingSize)"
         >
