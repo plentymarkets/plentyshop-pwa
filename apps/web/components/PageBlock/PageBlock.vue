@@ -100,7 +100,6 @@ const getBlockComponent = computed(() => {
   if (matched) {
     return defineAsyncComponent({
       loader: modules[matched],
-      delay: 0,
     });
   }
 
