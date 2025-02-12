@@ -18,7 +18,7 @@ const { drawerOpen, blockType } = useSiteConfiguration();
 
 const modules = import.meta.glob('@/components/**/blocks/**/*Form.vue') as Record<
   string,
-  () => Promise<{ default: any }>
+  () => Promise<{ default: unknown }>
 >;
 
 const getComponent = (name: string) => {
