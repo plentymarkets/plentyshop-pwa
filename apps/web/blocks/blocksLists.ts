@@ -545,6 +545,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 heading',
                 subtitle: 'Subtitle',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Button',
@@ -562,6 +563,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 Titel',
                 subtitle: 'Untertitel',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Buttom',

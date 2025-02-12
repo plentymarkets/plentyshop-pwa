@@ -76,7 +76,8 @@
           "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
           "title": "Entdecke Technik & Style",
           "subtitle": "Innovative Technik trifft auf moderne Mode",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "buttonText": "Jetzt zuschlagen",
@@ -100,7 +101,6 @@
           "subtitle": "Innovative Technologie trifft moderne Fashion",
           "textAlignment": "left",
           "color": "#000"
-
         },
         "button": {
           "label": "Zu unseren Kopfhörern",
