@@ -24,7 +24,7 @@
 - Automated tests for Newsletter Form.
 - Color picker labels now have border
 - Automated tests for Text Card Form
-- Added the `shop-module-gtag` module for Google Analytics to the project.
+- Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag). 
 
 ### 👷 Changed
 
