@@ -19,6 +19,7 @@
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
 - Automated tests for Image Text
+- Automated tests for Text Card Form
 
 ### 👷 Changed
 
