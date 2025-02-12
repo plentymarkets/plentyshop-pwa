@@ -16,14 +16,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
-
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -83,13 +79,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -155,14 +148,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
-
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -222,13 +211,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -294,14 +280,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
-
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -361,13 +343,10 @@ export const blocksLists: BlocksList = {
             name: 'UiCarousel',
             options: {
               controls: {
-                color: '#fff',
+                color: '#000',
               },
               bannerItems: [
                 {
-                  controls: {
-                    color: '#fff',
-                  },
                   image: {
                     wideScreen: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
                     desktop: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png',
@@ -566,6 +545,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 heading',
                 subtitle: 'Subtitle',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Button',
@@ -583,6 +563,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 Titel',
                 subtitle: 'Untertitel',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Buttom',

@@ -14,7 +14,6 @@ describe('Banner button', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {},
         },
 
@@ -36,7 +35,6 @@ describe('Banner button', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {
             link: '/test-link',
           },
@@ -60,7 +58,6 @@ describe('Banner button', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {
             label: 'Test button',
           },
@@ -84,7 +81,6 @@ describe('Banner button', () => {
             htmlDescription: '<p>Test description</p>',
           },
           image: {},
-          controls: {},
           button: {
             label: 'Test button',
             link: '/test-link',

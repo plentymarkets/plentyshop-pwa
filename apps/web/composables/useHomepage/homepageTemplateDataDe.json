@@ -4,12 +4,12 @@
       "name": "UiCarousel",
       "options": {
         "controls": {
-          "color": "#fff"
+          "color": "#a39f9f"
         },
         "bannerItems": [
           {
             "controls": {
-              "color": "#fff"
+              "color": "#a39f9f"
             },
             "image": {
               "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/Test_Banner_Person/guy-1024.avif",
@@ -76,7 +76,8 @@
           "pretitle": "Willkommen in Ihrem neuen Lieblingsshop",
           "title": "Entdecke Technik & Style",
           "subtitle": "Innovative Technik trifft auf moderne Mode",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "buttonText": "Jetzt zuschlagen",
@@ -100,7 +101,6 @@
           "subtitle": "Innovative Technologie trifft moderne Fashion",
           "textAlignment": "left",
           "color": "#000"
-
         },
         "button": {
           "label": "Zu unseren Kopfhörern",

@@ -84,6 +84,7 @@ export const useWishlist: UseWishlistReturn = () => {
    * ```
    */
   const addWishlistItem: AddWishlistItem = async (params: AddWishlistItemParams) => {
+    const { emit } = usePlentyEvent();
     state.value.loading = true;
 
     return await useSdk()
@@ -91,6 +92,7 @@ export const useWishlist: UseWishlistReturn = () => {
       .then(({ data }) => {
         setWishlistItemIds([...state.value.wishlistItemIds, params.variationId]);
         state.value.loading = false;
+        emit('frontend:addToWishlist', { variationId: params.variationId });
         return data || ({} as AddWishlistItemResponse);
       });
   };
