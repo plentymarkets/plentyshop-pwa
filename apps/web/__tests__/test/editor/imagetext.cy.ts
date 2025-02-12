@@ -1,8 +1,7 @@
 import { paths } from '../../../utils/paths';
 
-describe('Text Form block test', () => {
+describe('Image Text Block Form', () => {
 
-  // Functions image Group 
   const openSettingsForImageTextBlock = () => {
     cy.get('[data-testid="open-editor-button"]').should('have.length.at.least', 4); 
 
@@ -21,7 +20,6 @@ describe('Text Form block test', () => {
   }
   
   const changeImage = () => {
-    // Add all screens for safety except mobile! 
 
     cy.get('[data-testid="wide-screen-input"]').should('exist').clear().type("https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png", { delay: 0 });
     cy.get('[data-testid="large-screen-input"]').should('exist').clear().type("https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/placeholder-image.png", { delay: 0 });
@@ -41,8 +39,6 @@ describe('Text Form block test', () => {
     cy.get('[data-testid="text-image-parent"]').should('have.class', 'lg:flex-row');
   }
 
-
-  // Functions text group
   const openTextGroup = () => {
     cy.get('[data-testid="text-group"]').should('exist').click();
   }
@@ -85,26 +81,21 @@ describe('Text Form block test', () => {
   }
 
   const changeTextAlignment = () => {
-    cy.get('[data-testid="text-align-center"]').should('exist').click({ force: true });
+    cy.get('[data-testid="text-align-center"]').should('exist').click();
 
     cy.get('[data-testid="text-content"]')
       .should('have.class', 'text-center'); 
     
-    cy.wait(500);
-    cy.get('[data-testid="text-align-right"]').should('exist').click({ force: true });
+    cy.get('[data-testid="text-align-right"]').should('exist').click();
     
     cy.get('[data-testid="text-content"]')
       .should('have.class', 'text-right');
     
-    cy.wait(500); 
-    
-    cy.get('[data-testid="text-align-left"]').should('exist').click({ force: true });
+    cy.get('[data-testid="text-align-left"]').should('exist').click();
     
     cy.get('[data-testid="text-content"]')
       .should('have.class', 'text-left');
   }
-
-  // Functions button group
 
   const openButtonGroup = () => {
     cy.get('[data-testid="button-group"]').should('exist').click();
@@ -130,30 +121,30 @@ describe('Text Form block test', () => {
 
 
   beforeEach(() => {
-    cy.visitAndHydrate(paths.home);
-    openSettingsForImageTextBlock();
+      cy.visitAndHydrate(paths.home);
+      openSettingsForImageTextBlock();
   });
 
-  it('should test the image group', () => {
-    openImageGroup();
-    changeImage();
-    changeAltText();
-    changeImageGridLayout();
-    openImageGroup();
+  it('should change image settings', () => {
+      openImageGroup();
+      changeImage();
+      changeAltText();
+      changeImageGridLayout();
+      openImageGroup();
   });
 
   it('should test the text group', () => {
-    openTextGroup();
-    changeText();
-    changeTextColor();
-    changeTextAlignment();
+      openTextGroup();
+      changeText();
+      changeTextColor();
+      changeTextAlignment();
 });
 
-  it('should test the button group', () => {
-    openButtonGroup();
-    changeButtonLabel();
-    changeButtonLink();
-    changeButtonVariants();
+  it('should change button settings', () => {
+      openButtonGroup();
+      changeButtonLabel();
+      changeButtonLink();
+      changeButtonVariants();
 });
 
 });
