@@ -1,7 +1,7 @@
 import type { BannerProps, BannerSlide } from '~/components/blocks/BannerCarousel/types';
 import type { TextCardProps } from '~/components/blocks/TextCard/types';
 import type { NewsletterSubscribeProps } from '~/components/blocks/NewsletterSubscribe/types';
-import type { ProductRecommendedProductsProps } from '../../components/ProductRecommendedProducts/types';
+import type { ProductRecommendedProductsProps } from '~/components/blocks/ProductRecommendedProducts/types';
 
 interface ImageProps {
   lg: string;
