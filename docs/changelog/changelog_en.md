@@ -23,6 +23,7 @@
 - Automated tests for Image Text
 - Color picker labels now have border
 - Automated tests for Text Card Form
+- Added site settings test
 
 ### 👷 Changed
 
