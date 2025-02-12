@@ -20,7 +20,6 @@ describe('Banner', () => {
             subtitle: 'Test subtitle',
             htmlDescription: '<p>Test description</p>',
           },
-          controls: {},
           button: {
             label: 'Test button',
             link: '/test-link',

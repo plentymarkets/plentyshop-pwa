@@ -11,23 +11,8 @@
 
       <div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Background Color</UiFormLabel>
-
-          <SfInput v-model="newsletterBlock.text.bgColor" type="text">
-            <template #suffix>
-              <label
-                for="text-color"
-                :style="{ backgroundColor: newsletterBlock.text.bgColor }"
-                class="rounded-lg cursor-pointer"
-              >
-                <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
-              </label>
-            </template>
-          </SfInput>
-        </div>
-        <div class="mb-6">
-          <UiFormLabel class="mb-1">Title</UiFormLabel>
-          <SfInput v-model="newsletterBlock.text.title" name="title" type="text" placeholder="title" />
+          <UiFormLabel class="mb-1">Main Title</UiFormLabel>
+          <SfInput v-model="newsletterBlock.text.title" name="maintitle" type="text" placeholder="maintitle" />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Description</UiFormLabel>
@@ -39,26 +24,12 @@
             placeholder="Text that supports HTML formatting"
           />
         </div>
-      </div>
-    </UiAccordionItem>
-  </div>
-  <div>
-    <UiAccordionItem
-      v-model="inputGroup"
-      summary-active-class="bg-neutral-100"
-      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
-    >
-      <template #summary>
-        <h2>Input</h2>
-      </template>
-
-      <div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Display Name</UiFormLabel>
+          <UiFormLabel class="mb-1">Ask for subscriber's name</UiFormLabel>
           <SfSwitch v-model="newsletterBlock.input.displayNameInput" />
         </div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Name Required</UiFormLabel>
+          <UiFormLabel class="mb-1">Mandatory Field</UiFormLabel>
           <SfSwitch v-model="newsletterBlock.input.nameIsRequired" />
         </div>
       </div>
@@ -76,8 +47,37 @@
 
       <div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Label</UiFormLabel>
+          <UiFormLabel class="mb-1">Text</UiFormLabel>
           <SfInput v-model="newsletterBlock.button.label" name="label" type="text" placeholder="label" />
+        </div>
+      </div>
+    </UiAccordionItem>
+  </div>
+  <div>
+    <UiAccordionItem
+      v-model="settingsGroup"
+      summary-active-class="bg-neutral-100"
+      summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+    >
+      <template #summary>
+        <h2>Settings</h2>
+      </template>
+
+      <div>
+        <div class="mb-6">
+          <UiFormLabel class="mb-1">Background Color</UiFormLabel>
+
+          <SfInput v-model="newsletterBlock.text.bgColor" type="text">
+            <template #suffix>
+              <label
+                for="text-color"
+                :style="{ backgroundColor: newsletterBlock.text.bgColor }"
+                class="rounded-lg cursor-pointer"
+              >
+                <input id="text-color" v-model="newsletterBlock.text.bgColor" type="color" class="invisible w-8" />
+              </label>
+            </template>
+          </SfInput>
         </div>
       </div>
     </UiAccordionItem>
@@ -89,8 +89,8 @@ import { SfInput, SfTextarea, SfSwitch } from '@storefront-ui/vue';
 import type { NewsletterSubscribeProps } from '~/components/NewsletterSubscribe/types';
 
 const textGroup = ref(true);
-const inputGroup = ref(true);
 const buttonGroup = ref(true);
+const settingsGroup = ref(true);
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 

@@ -1,6 +1,7 @@
 <template>
   <ClientOnly>
     <Swiper
+      :key="index"
       :modules="enableModules ? [Pagination, Navigation] : []"
       :slides-per-view="1"
       :loop="true"
@@ -10,28 +11,25 @@
       @swiper="onSwiperInit"
       @slide-change="onSlideChange"
     >
-      <SwiperSlide v-for="(bannerItem, index) in bannerItems" :key="index">
-        <UiBanner :banner-props="bannerItem" :index="index" />
+      <SwiperSlide v-for="(bannerItem, slideIndex) in bannerItems" :key="slideIndex">
+        <UiBanner :banner-props="bannerItem" :index="slideIndex" />
       </SwiperSlide>
-      <div v-if="enableModules" class="swiper-pagination swiper-pagination-bullets swiper-pagination-horizontal">
-        <span
-          v-for="(bannerItem, index) in bannerItems"
-          :key="'dot-' + index"
-          class="swiper-pagination-bullet"
-          :style="{ backgroundColor: controls.color + ' !important' }"
-          :class="{ 'swiper-pagination-bullet-active': index === activeIndex }"
-        />
-      </div>
+      <div
+        v-if="enableModules"
+        :class="`swiper-pagination swiper-pagination-${index} swiper-pagination-bullets swiper-pagination-horizontal`"
+      />
     </Swiper>
 
     <div
       v-if="enableModules && handleArrows()"
-      class="swiper-button-prev"
+      :key="`prev-${index}`"
+      :class="`swiper-button-prev swiper-button-prev-${index}`"
       :style="{ color: controls.color + ' !important' }"
     />
     <div
       v-if="enableModules && handleArrows()"
-      class="swiper-button-next"
+      :key="`next-${index}`"
+      :class="`swiper-button-next swiper-button-next-${index}`"
       :style="{ color: controls.color + ' !important' }"
     />
 
@@ -48,18 +46,26 @@ import type { BannerProps } from '../Banner/types';
 import type { Swiper as SwiperType } from 'swiper';
 import type { SlideControls } from '~/composables/useHomepage/types';
 
-const { activeIndex, setIndex } = useHomepage();
+const { activeSlideIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
-const { bannerItems } = defineProps<{ bannerItems: BannerProps[]; controls: SlideControls }>();
+const { bannerItems, index, controls } = defineProps<{
+  bannerItems: BannerProps[];
+  controls: SlideControls;
+  index: number;
+}>();
 const enableModules = computed(() => bannerItems.length > 1);
 
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value
+  return enableModules.value && controls.color
     ? {
-        el: '.custom-swiper-pagination',
+        el: `.swiper-pagination-${index}`,
         clickable: true,
+        bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
+        renderBullet(index: number, className: string) {
+          return `<span key="dot-${index}" class="${className}" style="background-color: ${controls.color}!important;"></span>`;
+        },
       }
     : false;
 });
@@ -67,28 +73,28 @@ const paginationConfig = computed(() => {
 const navigationConfig = computed(() => {
   return enableModules.value
     ? {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
+        nextEl: `.swiper-button-next-${index}`,
+        prevEl: `.swiper-button-prev-${index}`,
       }
     : false;
 });
 
 const onSwiperInit = (swiper: SwiperType) => {
   slider = swiper;
-  setIndex(swiper.realIndex);
+  setIndex(index, swiper.realIndex);
 };
 
 const onSlideChange = async (swiper: SwiperType) => {
-  if (swiper.realIndex !== activeIndex.value) {
+  if (swiper.realIndex !== activeSlideIndex.value[index]) {
     await nextTick();
     swiper.update();
 
-    setIndex(swiper.realIndex);
+    setIndex(index, swiper.realIndex);
   }
 };
 
 watch(
-  () => activeIndex.value,
+  () => activeSlideIndex.value[index],
   (newIndex) => {
     if (slider && !slider.destroyed && slider.realIndex !== newIndex) {
       slider.update();
@@ -96,6 +102,16 @@ watch(
     }
   },
   { flush: 'post' },
+);
+
+watch(
+  () => controls.color,
+  (newColor, oldColor) => {
+    if (slider && !slider.destroyed && newColor !== oldColor) {
+      slider.pagination.render();
+      slider.pagination.update();
+    }
+  },
 );
 </script>
 
