@@ -2,7 +2,7 @@ export type ProductRecommendedProductsProps = {
   index?: number;
   categoryId: string;
   cacheKey?: string;
-  text: {
+  text?: {
     pretitle?: string;
     title?: string;
     subtitle?: string;

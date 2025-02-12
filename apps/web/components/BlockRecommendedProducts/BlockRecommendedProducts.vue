@@ -1,18 +1,18 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
-    <div>
+    <div v-if="recommendedBlock.text">
       <UiFormLabel>Pre-title</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
     </div>
-    <div>
+    <div v-if="recommendedBlock.text">
       <UiFormLabel>Main Title</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.title" name="Title" type="text" placeholder="Title" />
     </div>
-    <div>
+    <div v-if="recommendedBlock.text">
       <UiFormLabel>Subtitle</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
     </div>
-    <div>
+    <div v-if="recommendedBlock.text">
       <UiFormLabel>Description</UiFormLabel>
       <SfTextarea
         v-model="recommendedBlock.text.htmlDescription"
@@ -26,7 +26,7 @@
       <UiFormLabel>Category ID</UiFormLabel>
       <SfInput v-model="recommendedBlock.categoryId" name="category Id" type="text" placeholder="Enter Category Id" />
     </label>
-    <div>
+    <div v-if="recommendedBlock.text">
       <UiFormLabel>Text Color</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.color" type="text">
         <template #suffix>
@@ -40,7 +40,7 @@
         </template>
       </SfInput>
     </div>
-    <div class="mb-6">
+    <div v-if="recommendedBlock.text" class="mb-6">
       <UiFormLabel class="mb-1">Text alignment</UiFormLabel>
       <div class="mt-2 w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
@@ -96,6 +96,17 @@ const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
 const recommendedBlock = computed(
-  () => (data.value.blocks[blockIndex.value].options || {}) as ProductRecommendedProductsProps,
+  () =>
+    (data.value.blocks[blockIndex.value].options || {
+      text: {
+        pretitle: '',
+        title: '',
+        subtitle: '',
+        htmlDescription: '',
+        color: '#000000',
+        textAlignment: 'left',
+      },
+      categoryId: '',
+    }) as ProductRecommendedProductsProps,
 );
 </script>
