@@ -14,7 +14,11 @@
     />
 
     <form class="mx-auto max-w-[550px] pt-2" novalidate @submit.prevent="onSubmit">
-      <div v-if="props.input?.displayNameInput" class="grid grid-cols-1 sm:grid-cols-2" data-testid="newsletter-display-name">
+      <div
+        v-if="props.input?.displayNameInput"
+        class="grid grid-cols-1 sm:grid-cols-2"
+        data-testid="newsletter-display-name"
+      >
         <div class="sm:mr-[1rem]">
           <label for="newsletter-first-name">
             <UiFormLabel class="text-start">{{ t('newsletter.firstName') }}</UiFormLabel>

@@ -18,6 +18,7 @@
 - Image Text Form integrated and two way data binded
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
+- Added e2e tests for newsletter form.
 
 ### 👷 Changed
 

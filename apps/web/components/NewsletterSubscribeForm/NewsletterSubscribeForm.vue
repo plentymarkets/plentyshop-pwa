@@ -12,7 +12,13 @@
       <div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Main Title</UiFormLabel>
-          <SfInput v-model="newsletterBlock.text.title" name="maintitle" type="text" placeholder="maintitle" data-testid="newsletter-form-title"/>
+          <SfInput
+            v-model="newsletterBlock.text.title"
+            name="maintitle"
+            type="text"
+            placeholder="maintitle"
+            data-testid="newsletter-form-title"
+          />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Description</UiFormLabel>
@@ -27,11 +33,11 @@
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Ask for subscriber's name</UiFormLabel>
-          <SfSwitch v-model="newsletterBlock.input.displayNameInput" data-testid="newsletter-form-display-name"/>
+          <SfSwitch v-model="newsletterBlock.input.displayNameInput" data-testid="newsletter-form-display-name" />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Mandatory Field</UiFormLabel>
-          <SfSwitch v-model="newsletterBlock.input.nameIsRequired" data-testid="newsletter-form-mandatory-name"/>
+          <SfSwitch v-model="newsletterBlock.input.nameIsRequired" data-testid="newsletter-form-mandatory-name" />
         </div>
       </div>
     </UiAccordionItem>
@@ -49,7 +55,13 @@
       <div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Text</UiFormLabel>
-          <SfInput v-model="newsletterBlock.button.label" name="label" type="text" placeholder="label" data-testid="newsletter-form-button-text" />
+          <SfInput
+            v-model="newsletterBlock.button.label"
+            name="label"
+            type="text"
+            placeholder="label"
+            data-testid="newsletter-form-button-text"
+          />
         </div>
       </div>
     </UiAccordionItem>
