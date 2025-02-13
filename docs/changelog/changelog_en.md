@@ -4,6 +4,7 @@
 
 ### New
 
+- Added testing for recommended products block.
 - Added recommended products block editing.
 - Dynamic blocks register.
 - Added slider edit.
