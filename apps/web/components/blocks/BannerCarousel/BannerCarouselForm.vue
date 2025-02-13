@@ -128,9 +128,10 @@
         v-model="imagesOpen"
         summary-active-class="bg-neutral-100"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        data-testid="slider-image-group"
       >
         <template #summary>
-          <h2>Images</h2>
+          <h2 data-testid="slider-image-group-title">Images</h2>
         </template>
 
         <div class="images">
@@ -140,6 +141,7 @@
               <SfInput
                 v-model="slides[activeSlide].image.wideScreen"
                 name="desktopImage"
+                data-testid="slide-4xl-image-input"
                 type="text"
                 placeholder="Enter URL of image"
               />
@@ -154,6 +156,7 @@
               <SfInput
                 v-model="slides[activeSlide].image.desktop"
                 name="desktopImage"
+                data-testid="slide-desktop-image-input"
                 type="text"
                 placeholder="Enter URL of image"
               />
@@ -220,7 +223,7 @@
 
           <div class="mb-6">
             <UiFormLabel class="mb-1">Alt</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].image.alt" name="alt" type="text" />
+            <SfInput v-model="slides[activeSlide].image.alt" name="alt" type="text" data-testid="slide-alt-text" />
             <div class="typography-text-xs text-gray-500 flex gap-1 mt-2 sm:mb-0">Alternative image text</div>
           </div>
         </div>
@@ -230,29 +233,49 @@
         v-model="textOpen"
         summary-active-class="bg-neutral-100"
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
+        data-testid="banner-text-group"
       >
         <template #summary>
-          <h2>Text</h2>
+          <h2 data-testid="slider-text-group-title">Text</h2>
         </template>
 
         <div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Pre-title</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
+            <SfInput
+              v-model="slides[activeSlide].text.pretitle"
+              name="preTitle"
+              type="text"
+              placeholder="PreTitle"
+              data-testid="banner-input-pre-title"
+            />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Main title</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.title" name="mainTitle" type="text" placeholder="Title" />
+            <SfInput
+              v-model="slides[activeSlide].text.title"
+              name="mainTitle"
+              type="text"
+              placeholder="Title"
+              data-testid="banner-input-title"
+            />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Subtitle</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].text.subtitle" name="subtitle" type="text" placeholder="SubTitle" />
+            <SfInput
+              v-model="slides[activeSlide].text.subtitle"
+              name="subtitle"
+              type="text"
+              placeholder="SubTitle"
+              data-testid="banner-input-sub-title"
+            />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Description</UiFormLabel>
             <SfTextarea
               v-model="slides[activeSlide].text.htmlDescription"
               name="description"
+              data-testid="banner-text-content"
               type="text"
               class="w-full min-h-[232px]"
               placeholder="Text that supports HTML formatting"
@@ -341,6 +364,7 @@
                 for="align-top"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'top' }"
+                data-testid="slider-textbox-align-top"
                 @click="slides[activeSlide].text.justify = 'top'"
               >
                 <SfIconCheck
@@ -354,6 +378,7 @@
                 for="align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'center' }"
+                data-testid="slider-textbox-align-center"
                 @click="slides[activeSlide].text.justify = 'center'"
               >
                 <SfIconCheck
@@ -367,6 +392,7 @@
                 for="align-bottom"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.justify === 'bottom' }"
+                data-testid="slider-textbox-align-bottom"
                 @click="slides[activeSlide].text.justify = 'bottom'"
               >
                 <SfIconCheck
@@ -388,6 +414,7 @@
                 for="textbox-align-left"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'left' }"
+                data-testid="slider-textbox-y-align-left"
                 @click="slides[activeSlide].text.align = 'left'"
               >
                 <SfIconCheck
@@ -401,6 +428,7 @@
                 for="textbox-align-center"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'center' }"
+                data-testid="slider-textbox-y-align-center"
                 @click="slides[activeSlide].text.align = 'center'"
               >
                 <SfIconCheck
@@ -414,6 +442,7 @@
                 for="textbox-align-right"
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.align === 'right' }"
+                data-testid="slider-textbox-y-align-right"
                 @click="slides[activeSlide].text.align = 'right'"
               >
                 <SfIconCheck
@@ -436,6 +465,7 @@
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'left',
                 }"
+                data-testid="slider-text-align-left"
                 @click="slides[activeSlide].text.textAlignment = 'left'"
               >
                 <SfIconCheck
@@ -451,6 +481,7 @@
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'center',
                 }"
+                data-testid="slider-text-align-center"
                 @click="slides[activeSlide].text.textAlignment = 'center'"
               >
                 <SfIconCheck
@@ -466,6 +497,7 @@
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].text.textAlignment === 'right',
                 }"
+                data-testid="slider-text-align-right"
                 @click="slides[activeSlide].text.textAlignment = 'right'"
               >
                 <SfIconCheck
@@ -485,19 +517,31 @@
         summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
       >
         <template #summary>
-          <h2>Button</h2>
+          <h2 data-testid="slider-button-group-title">Button</h2>
         </template>
 
         <div class="images">
           <div class="mb-6 mt-4">
             <label>
               <UiFormLabel class="mb-1">Label</UiFormLabel>
-              <SfInput v-model="slides[activeSlide].button.label" name="label" type="text" placeholder="Button" />
+              <SfInput
+                v-model="slides[activeSlide].button.label"
+                data-testid="slider-button-label"
+                name="label"
+                type="text"
+                placeholder="Button"
+              />
             </label>
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Link Target</UiFormLabel>
-            <SfInput v-model="slides[activeSlide].button.link" name="link" type="text" placeholder="Enter URL here" />
+            <SfInput
+              v-model="slides[activeSlide].button.link"
+              name="link"
+              data-testid="slider-button-link"
+              type="text"
+              placeholder="Enter URL here"
+            />
           </div>
           <div class="mb-6">
             <UiFormLabel class="mb-1">Variant</UiFormLabel>
@@ -507,6 +551,7 @@
               <div
                 class="flex items-center justify-center w-1/2 px-4 py-2 cursor-pointer text-sm"
                 :class="{ 'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].button.variant === 'primary' }"
+                data-testid="slider-button-primary"
                 @click="slides[activeSlide].button.variant = 'primary'"
               >
                 <SfIconCheck
@@ -521,6 +566,7 @@
                 :class="{
                   'bg-gray-100 text-gray-900 font-semibold': slides[activeSlide].button.variant === 'secondary',
                 }"
+                data-testid="slider-button-secondary"
                 @click="slides[activeSlide].button.variant = 'secondary'"
               >
                 <SfIconCheck
