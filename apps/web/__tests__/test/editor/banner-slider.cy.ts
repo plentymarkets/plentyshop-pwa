@@ -154,22 +154,22 @@ class BannerSliderObject extends PageObject {
   cy.get('[data-testid="slider-button-group-title"]').should('be.visible').click();
 }
 
-changeButtonLabelAndLink(){
+  changeButtonLabelAndLink(){
   cy.get('[data-testid="slider-button-label"]').should('be.visible').clear().type('New Button Label', { delay: 0 });
   cy.get('[data-testid="slider-button-link"]').should('be.visible').clear().type('https://www.google.com', { delay: 0 });
 }
 
-checkButtonLabelAndLink(){
+  checkButtonLabelAndLink(){
   cy.get('[data-testid="banner-button-0"]').should('have.text', 'New Button Label').should('have.attr', 'href', 'https://www.google.com');
 
 }
 
-checkButtonSecondary(){
+  checkButtonSecondary(){
   cy.get('[data-testid="slider-button-secondary"]').should('exist').click();
   cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:text-primary-900');
 }
 
-checkButtonPrimary(){
+  checkButtonPrimary(){
   cy.get('[data-testid="slider-button-primary"]').should('exist').click();
   cy.get('[data-testid="banner-button-0"]').should('have.class', 'active:bg-primary-700');
 }
