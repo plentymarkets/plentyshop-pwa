@@ -1,6 +1,6 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Pre-title</UiFormLabel>
       <SfInput
         v-model="recommendedBlock.text.pretitle"
@@ -10,7 +10,7 @@
         placeholder="PreTitle"
       />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Main Title</UiFormLabel>
       <SfInput
         v-model="recommendedBlock.text.title"
@@ -20,7 +20,7 @@
         placeholder="Title"
       />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Subtitle</UiFormLabel>
       <SfInput
         v-model="recommendedBlock.text.subtitle"
@@ -30,7 +30,7 @@
         placeholder="Subtitle"
       />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Description</UiFormLabel>
       <SfTextarea
         v-model="recommendedBlock.text.htmlDescription"
@@ -41,7 +41,7 @@
         data-testid="recommended-form-html"
       />
     </div>
-    <label>
+    <div class="p-2">
       <UiFormLabel>Category ID</UiFormLabel>
       <SfInput
         v-model="recommendedBlock.categoryId"
@@ -50,8 +50,8 @@
         type="text"
         placeholder="Enter Category Id"
       />
-    </label>
-    <div v-if="recommendedBlock.text">
+    </div>
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Text Color</UiFormLabel>
       <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
         <template #suffix>
@@ -65,7 +65,7 @@
         </template>
       </SfInput>
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Text alignment</UiFormLabel>
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
@@ -137,4 +137,6 @@ const recommendedBlock = computed(
       categoryId: '',
     }) as ProductRecommendedProductsProps,
 );
+recommendedBlock.value.text.textAlignment = recommendedBlock.value.text.textAlignment || 'left';
+recommendedBlock.value.text.color = recommendedBlock.value.text.color || '#000000';
 </script>
