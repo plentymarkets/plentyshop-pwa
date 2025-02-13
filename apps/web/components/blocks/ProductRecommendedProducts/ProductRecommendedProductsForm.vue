@@ -2,15 +2,33 @@
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
     <div v-if="recommendedBlock.text">
       <UiFormLabel>Pre-title</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.pretitle" data-testid="recommended-form-pretitle" name="preTitle" type="text" placeholder="PreTitle" />
+      <SfInput
+        v-model="recommendedBlock.text.pretitle"
+        data-testid="recommended-form-pretitle"
+        name="preTitle"
+        type="text"
+        placeholder="PreTitle"
+      />
     </div>
     <div v-if="recommendedBlock.text">
       <UiFormLabel>Main Title</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.title" data-testid="recommended-form-title" name="Title" type="text" placeholder="Title" />
+      <SfInput
+        v-model="recommendedBlock.text.title"
+        data-testid="recommended-form-title"
+        name="Title"
+        type="text"
+        placeholder="Title"
+      />
     </div>
     <div v-if="recommendedBlock.text">
       <UiFormLabel>Subtitle</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.subtitle" data-testid="recommended-form-subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
+      <SfInput
+        v-model="recommendedBlock.text.subtitle"
+        data-testid="recommended-form-subtitle"
+        name="Subtitle"
+        type="text"
+        placeholder="Subtitle"
+      />
     </div>
     <div v-if="recommendedBlock.text">
       <UiFormLabel>Description</UiFormLabel>
@@ -25,7 +43,13 @@
     </div>
     <label>
       <UiFormLabel>Category ID</UiFormLabel>
-      <SfInput v-model="recommendedBlock.categoryId" data-testid="recommended-form-categoryid" name="category Id" type="text" placeholder="Enter Category Id" />
+      <SfInput
+        v-model="recommendedBlock.categoryId"
+        data-testid="recommended-form-categoryid"
+        name="category Id"
+        type="text"
+        placeholder="Enter Category Id"
+      />
     </label>
     <div v-if="recommendedBlock.text">
       <UiFormLabel>Text Color</UiFormLabel>
