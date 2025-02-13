@@ -77,6 +77,10 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('block-add-image-with-text-0');
   }
 
+  get siteSettingsButton(){
+    return cy.getByTestId('open-settings-drawer');
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -85,6 +89,11 @@ export class EditorObject extends PageObject {
   toggleEditMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Edit');
+    return this;
+  }
+
+  toggleSiteSettings() {
+    this.siteSettingsButton.should('be.visible').click();
     return this;
   }
 
