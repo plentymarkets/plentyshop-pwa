@@ -28,7 +28,6 @@
 - Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
 - All titles in blocks can now support html
 
-
 ### 👷 Changed
 
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
