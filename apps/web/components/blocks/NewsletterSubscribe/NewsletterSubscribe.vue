@@ -4,9 +4,11 @@
     :style="{ backgroundColor: props.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
-    <h2 class="typography-headline-4 sm:typography-headline-3 font-bold mb-2" data-testid="newsletter-title">
-      {{ props.text?.title ?? t('newsletter.heading') }}
-    </h2>
+    <h2
+      class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
+      data-testid="newsletter-title"
+      v-html="props.text?.title ?? t('newsletter.heading')"
+    />
     <p
       class="typography-text-sm sm:typography-text-base my-2 mb-4"
       data-testid="newsletter-description"
