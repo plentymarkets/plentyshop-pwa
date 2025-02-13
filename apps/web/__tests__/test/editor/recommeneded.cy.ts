@@ -24,8 +24,8 @@ describe('Recommended Block Form', () => {
 
     const changeTextAlinment = (value: string) => {
         cy.getByTestId(`recommended-form-text-align-${value}`)
-        .should('exist')
-        .click();
+            .should('exist')
+            .click();
     };
 
     const changeColor = (value: string) => {
@@ -79,8 +79,14 @@ describe('Recommended Block Form', () => {
         checkClassOnRecommendedBlock('text-right');
     });
 
-    // it('should change the categoryId on recommended form', () => {
-    //     // set the id
-    //     // check if first element on recommend black has changed !
-    // });
+    it('should change the categoryId on recommended form', () => {
+        cy.intercept('/plentysystems/getFacet').as('getFacet')
+        typeInRecommendedForm('categoryid', '16');
+        cy.wait('@getFacet');
+        cy.getByTestId('product-slider').first().should('exist').within(() => {
+            cy.get('[data-testid="productcard-name"]').first().invoke('text').then((text) => {
+                expect(text.trim()).to.equal('Dining room chair JuicyOrange');
+            });
+        });
+    });
 });
