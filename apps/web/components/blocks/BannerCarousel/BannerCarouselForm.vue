@@ -1,14 +1,26 @@
 <template>
-  <div class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
+  <div
+    data-testid="banner-carousel-form"
+    class="block-slider-edit sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto"
+  >
     <div class="mb-6">
       <div class="flex item-center justify-between mb-4 p-4 pr-2">
         <h2>Slides</h2>
         <div class="flex item-center">
-          <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
+          <button
+            data-testid="quick-add-slide-button"
+            class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
+            @click="addSlide"
+          >
             <SfIconAdd class="text-neutral-500" />
           </button>
           <div class="relative">
-            <button v-if="slides.length >= 2" class="p-2 text-gray-600 hover:bg-gray-100 rounded-full" @click="open">
+            <button
+              v-if="slides.length >= 2"
+              data-testid="open-slide-actions"
+              class="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
+              @click="open"
+            >
               <SfIconMoreHoriz class="text-neutral-500" />
             </button>
 
@@ -25,6 +37,7 @@
                   <div class="flex items-center">
                     <SfIconArrowUpward
                       v-if="index !== 0"
+                      :data-testid="`actions-move-slide-up-${index}`"
                       class="cursor-pointer text-neutral-500 mr-2"
                       size="sm"
                       @click.stop="moveSlideUp(index)"
@@ -37,6 +50,7 @@
 
                     <SfIconArrowDownward
                       v-if="index + 1 !== slides.length"
+                      :data-testid="`actions-move-slide-down-${index}`"
                       class="cursor-pointer text-neutral-500 mr-2"
                       size="sm"
                       @click.stop="moveSlideDown(index)"
@@ -49,6 +63,7 @@
                     <span>Slide {{ index + 1 }}</span>
                   </div>
                   <button
+                    :data-testid="`actions-delete-slide-${index}`"
                     class="text-red-500 hover:text-red-700"
                     :disabled="slides.length === 1"
                     @click="deleteSlide(index)"
@@ -59,7 +74,11 @@
                 <hr />
                 <div class="pl-2 pr-2 pt-2 flex justify-between items-center">
                   <p>Add Slide</p>
-                  <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0" @click="addSlide">
+                  <button
+                    data-testid="actions-add-slide-button"
+                    class="p-2 text-gray-600 hover:bg-gray-100 rounded-full shrink-0"
+                    @click="addSlide"
+                  >
                     <SfIconAdd class="text-neutral-500" />
                   </button>
                 </div>
@@ -93,6 +112,7 @@
           <button
             v-for="(_, index) in slides"
             :key="index"
+            :data-testid="`slide-settings-${index}`"
             class="px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shrink-0"
             :class="activeSlide === index ? 'bg-editor-button text-white' : ''"
             @click="slideClick(index)"
@@ -103,7 +123,7 @@
       </SfScrollable>
     </div>
 
-    <div>
+    <div :data-testid="`slide-settings-${activeSlide}`">
       <UiAccordionItem
         v-model="imagesOpen"
         summary-active-class="bg-neutral-100"
