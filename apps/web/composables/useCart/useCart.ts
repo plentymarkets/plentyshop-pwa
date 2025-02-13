@@ -242,6 +242,7 @@ export const useCart: UseCartReturn = () => {
         if (state.value.data?.apiEvents) {
           // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
           Object.entries(state.value.data.apiEvents as PlentyEvents).forEach(([event, data]) =>
+            // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
             emit(`backend:${event}`, data),
           );
           // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
