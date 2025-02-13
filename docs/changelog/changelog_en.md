@@ -21,8 +21,11 @@
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
 - Automated tests for Image Text
+- Automated tests for Newsletter Form.
 - Color picker labels now have border
 - Automated tests for Text Card Form
+- Added site settings test
+- Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
 
 ### 👷 Changed
 
@@ -39,6 +42,8 @@
 - Fixed slider navigation bullet points.
 - Fixed default editor colors.
 - Fixed the image-to-text ratio in the Image Text block, so that both now take up 50% of the available space.
+- Close edit drawer on block removal.
+- Fixed index error on first block add.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 

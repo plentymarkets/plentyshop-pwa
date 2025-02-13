@@ -13,6 +13,7 @@ const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom
 const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
   visiblePlaceholder.value = { index, position };
 };
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
@@ -93,6 +94,9 @@ export const useBlockManager = () => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
       isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+
+      const { closeDrawer } = useSiteConfiguration();
+      closeDrawer();
     }
   };
 

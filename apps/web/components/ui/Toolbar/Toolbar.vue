@@ -7,6 +7,7 @@
         type="button"
         class="editor-button relative ml-4"
         aria-label="Open configuration drawer"
+        data-testid="open-settings-drawer"
         @click="toggleSettingsDrawer"
       >
         <SfIconTune />

@@ -1,0 +1,69 @@
+import { paths } from '../../../utils/paths';
+import { EditorObject } from '../../support/pageObjects/EditorObject';
+import { SiteSettingsObject } from '../../support/pageObjects/SiteSettingsObject';
+
+describe('SiteSettings', () => {
+  const editor = new EditorObject();
+  const siteSettings = new SiteSettingsObject();
+
+  const font = 'Almarai';
+  const primaryColor = '#11ff00';
+  const secondaryColor = '#c3c3c3';
+  const blockSpacing = 'l';
+  const blockSpacingMargin = '30';
+
+  beforeEach(() => {
+    cy.visitAndHydrate(paths.home);
+  });
+
+  it('should change the font', () => {
+    editor.isToolbarVisible();
+    editor.toggleEditMode();
+    editor.toggleSiteSettings();
+
+    siteSettings
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .toggleFonts()
+      .changeFont(font)
+      .checkFontPreview(font)
+      .checkSaveButtonEnabled()
+
+    editor.toggleSiteSettings();
+    siteSettings.checkDrawerNotVisible()
+  });
+
+  it('should change the theme colors', () => {
+    editor.isToolbarVisible();
+    editor.toggleEditMode();
+    editor.toggleSiteSettings();
+
+    siteSettings
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .toggleColor()
+      .changeColor(primaryColor, secondaryColor)
+      .checkColorPreview(primaryColor)
+      .checkSaveButtonEnabled()
+
+    editor.toggleSiteSettings();
+    siteSettings.checkDrawerNotVisible()
+  });
+
+  it('should change the spacing', () => {
+    editor.isToolbarVisible();
+    editor.toggleEditMode();
+    editor.toggleSiteSettings();
+
+    siteSettings
+      .checkDrawerVisible()
+      .checkSaveButtonDisabled()
+      .toggleBlockSpacing()
+      .changeBlockSpacing(blockSpacing)
+      .checkBlockSpacingPreview(blockSpacingMargin)
+      .checkSaveButtonEnabled()
+
+    editor.toggleSiteSettings();
+    siteSettings.checkDrawerNotVisible()
+  });
+});
