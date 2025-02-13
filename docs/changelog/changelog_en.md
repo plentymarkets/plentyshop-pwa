@@ -17,7 +17,7 @@
 - Added a new placeholder block component to showcase to the user where his block will go
 - You can now add blocks on homepage from the blocks side nav
 - Added shipping page no configuration fallback text
-- Image Text Form integrated and two way data binded
+- Image Text Form integrated and two-way data binded
 - Added newsletter form to the block settings.
 - Added the `shop-core` module to the project.
 - Automated tests for Image Text
@@ -34,6 +34,7 @@
 
 ### 🩹 Fixed
 
+- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed an issue where page elements changed during navigation.
 - Fixed accessibility erros in edit mode.
 - Fixed an issue where the site settings view was only displayed on the second click.
