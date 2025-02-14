@@ -1,18 +1,36 @@
 <template>
   <div class="p-2 sticky top-[52px] h-[calc(100vh-150px)] overflow-y-auto">
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Pre-title</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.pretitle" name="preTitle" type="text" placeholder="PreTitle" />
+      <SfInput
+        v-model="recommendedBlock.text.pretitle"
+        data-testid="recommended-form-pretitle"
+        name="preTitle"
+        type="text"
+        placeholder="PreTitle"
+      />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Main Title</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.title" name="Title" type="text" placeholder="Title" />
+      <SfInput
+        v-model="recommendedBlock.text.title"
+        data-testid="recommended-form-title"
+        name="Title"
+        type="text"
+        placeholder="Title"
+      />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Subtitle</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.subtitle" name="Subtitle" type="text" placeholder="Subtitle" />
+      <SfInput
+        v-model="recommendedBlock.text.subtitle"
+        data-testid="recommended-form-subtitle"
+        name="Subtitle"
+        type="text"
+        placeholder="Subtitle"
+      />
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Description</UiFormLabel>
       <SfTextarea
         v-model="recommendedBlock.text.htmlDescription"
@@ -20,15 +38,22 @@
         type="text"
         class="w-full min-h-[232px]"
         placeholder="Text that supports HTML formatting"
+        data-testid="recommended-form-html"
       />
     </div>
-    <label>
+    <div class="p-2">
       <UiFormLabel>Category ID</UiFormLabel>
-      <SfInput v-model="recommendedBlock.categoryId" name="category Id" type="text" placeholder="Enter Category Id" />
-    </label>
-    <div v-if="recommendedBlock.text">
+      <SfInput
+        v-model="recommendedBlock.categoryId"
+        data-testid="recommended-form-categoryid"
+        name="category Id"
+        type="text"
+        placeholder="Enter Category Id"
+      />
+    </div>
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Text Color</UiFormLabel>
-      <SfInput v-model="recommendedBlock.text.color" type="text">
+      <SfInput v-model="recommendedBlock.text.color" type="text" data-testid="recommended-form-color">
         <template #suffix>
           <label
             for="text-color"
@@ -40,7 +65,7 @@
         </template>
       </SfInput>
     </div>
-    <div v-if="recommendedBlock.text">
+    <div v-if="recommendedBlock.text" class="p-2">
       <UiFormLabel>Text alignment</UiFormLabel>
       <div class="w-full inline-flex rounded-lg border border-gray-300 bg-white text-gray-700 overflow-hidden">
         <div
@@ -49,6 +74,7 @@
           :class="{
             'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'left',
           }"
+          data-testid="recommended-form-text-align-left"
           @click="recommendedBlock.text.textAlignment = 'left'"
         >
           <SfIconCheck class="mr-1 w-[1.1rem]" :class="{ invisible: recommendedBlock.text.textAlignment !== 'left' }" />
@@ -61,6 +87,7 @@
           :class="{
             'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'center',
           }"
+          data-testid="recommended-form-text-align-center"
           @click="recommendedBlock.text.textAlignment = 'center'"
         >
           <SfIconCheck
@@ -76,6 +103,7 @@
           :class="{
             'bg-gray-100 text-gray-900 font-semibold': recommendedBlock.text.textAlignment === 'right',
           }"
+          data-testid="recommended-form-text-align-right"
           @click="recommendedBlock.text.textAlignment = 'right'"
         >
           <SfIconCheck
