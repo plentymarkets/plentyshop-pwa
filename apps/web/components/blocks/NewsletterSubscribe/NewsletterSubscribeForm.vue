@@ -31,23 +31,30 @@
             data-testid="newsletter-form-description"
           />
         </div>
-        <div class="mb-6">
+        <div class="mb-4">
           <UiFormLabel class="mb-1">Ask for subscriber's name</UiFormLabel>
-          <SfSwitch
+        </div>
+        <div class="mb-4">
+          <label for="display-name-input" class="flex items-center">
+            <SfSwitch
             v-model="newsletterBlock.input.displayNameInput"
             data-testid="newsletter-form-display-name"
             @change="
               newsletterBlock.input.displayNameInput === false ? (newsletterBlock.input.nameIsRequired = false) : null
-            "
+              "
           />
+          <span class="text-sm ml-2 align-top cursor-pointer font-body">Display name input</span>
+        </label>
         </div>
         <div class="mb-6">
-          <UiFormLabel class="mb-1">Mandatory Field</UiFormLabel>
-          <SfSwitch
+          <label for="name-input-required" class="flex items-center">
+            <SfSwitch
             v-model="newsletterBlock.input.nameIsRequired"
             :disabled="!newsletterBlock.input.displayNameInput"
             data-testid="newsletter-form-mandatory-name"
-          />
+            />
+            <span class="text-sm ml-2 align-top cursor-pointer font-body">Input is required</span>
+          </label>
         </div>
       </div>
     </UiAccordionItem>
