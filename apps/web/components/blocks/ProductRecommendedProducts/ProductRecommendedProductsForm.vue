@@ -137,6 +137,4 @@ const recommendedBlock = computed(
       categoryId: '',
     }) as ProductRecommendedProductsProps,
 );
-recommendedBlock.value.text.textAlignment = recommendedBlock.value.text.textAlignment || 'left';
-recommendedBlock.value.text.color = recommendedBlock.value.text.color || '#000000';
 </script>
