@@ -627,15 +627,15 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 bgColor: '#f5f5f5',
-                title: 'h2 heading',
+                title: 'Newsletter',
                 htmlDescription: 'Text that supports HTML formatting',
               },
               input: {
-                displayNameInput: false,
+                displayNameInput: true,
                 nameIsRequired: false,
               },
               button: {
-                label: 'Button',
+                label: 'Subscribe',
               },
             },
           },
@@ -645,15 +645,15 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 bgColor: '#f5f5f5',
-                title: 'h2 Titel',
+                title: 'Abonnieren Sie unseren Newsletter',
                 htmlDescription: 'Text mit HTML-Formatierung',
               },
               input: {
-                displayNameInput: false,
+                displayNameInput: true,
                 nameIsRequired: false,
               },
               button: {
-                label: 'Button',
+                label: 'Newsletter abonnieren',
               },
             },
           },
