@@ -5,6 +5,7 @@
 ### New
 
 - Added testing for recommended products block.
+- Added the ability to push API events into our Core Module.
 - Added recommended products block editing.
 - Dynamic blocks register.
 - Added slider edit.
