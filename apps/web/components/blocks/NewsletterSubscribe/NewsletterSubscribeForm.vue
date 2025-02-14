@@ -36,14 +36,18 @@
           <SfSwitch
             v-model="newsletterBlock.input.displayNameInput"
             data-testid="newsletter-form-display-name"
-            @change="newsletterBlock.input.displayNameInput === false ? newsletterBlock.input.nameIsRequired = false : null" />
+            @change="
+              newsletterBlock.input.displayNameInput === false ? (newsletterBlock.input.nameIsRequired = false) : null
+            "
+          />
         </div>
         <div class="mb-6">
           <UiFormLabel class="mb-1">Mandatory Field</UiFormLabel>
           <SfSwitch
             v-model="newsletterBlock.input.nameIsRequired"
             :disabled="!newsletterBlock.input.displayNameInput"
-            data-testid="newsletter-form-mandatory-name" />
+            data-testid="newsletter-form-mandatory-name"
+          />
         </div>
       </div>
     </UiAccordionItem>
