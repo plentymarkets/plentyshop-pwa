@@ -29,7 +29,7 @@ describe('Recommended Block Form', () => {
     };
 
     const changeColor = (value: string) => {
-        cy.getByTestId(`recommended-form-color`).type(value);
+        cy.getByTestId(`recommended-form-color`).clear().type(value);
     };
 
     const checkClassOnRecommendedBlock = (className: string) => {
@@ -80,12 +80,14 @@ describe('Recommended Block Form', () => {
     });
 
     it('should change the categoryId on recommended form', () => {
+        const firstProductTitle = 'Dining room chair JuicyOrange';
+        const categoryId = '16';
         cy.intercept('/plentysystems/getFacet').as('getFacet')
-        typeInRecommendedForm('categoryid', '16');
+        typeInRecommendedForm('categoryid', categoryId);
         cy.wait('@getFacet');
         cy.getByTestId('product-slider').first().should('exist').within(() => {
             cy.get('[data-testid="productcard-name"]').first().invoke('text').then((text) => {
-                expect(text.trim()).to.equal('Dining room chair JuicyOrange');
+                expect(text.trim()).to.equal(firstProductTitle);
             });
         });
     });
