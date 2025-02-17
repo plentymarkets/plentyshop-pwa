@@ -37,24 +37,21 @@
         v-if="props.bannerProps.text.pretitle"
         class="typography-headline-6 font-bold tracking-widest"
         :data-testid="'banner-pretitle-' + props.index"
-      >
-        {{ props.bannerProps.text.pretitle }}
-      </div>
+        v-html="props.bannerProps.text.pretitle"
+      />
       <h1
         v-if="props.bannerProps.text.title"
         class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
         :data-testid="'banner-title-' + props.index"
-      >
-        {{ props.bannerProps.text.title }}
-      </h1>
+        v-html="props.bannerProps.text.title"
+      />
 
       <div
         v-if="props.bannerProps.text.subtitle"
         class="typography-headline-6 font-bold tracking-widest mb-4"
         :data-testid="'banner-subtitle-' + props.index"
-      >
-        {{ props.bannerProps.text.subtitle }}
-      </div>
+        v-html="props.bannerProps.text.subtitle"
+      />
 
       <div
         v-if="props.bannerProps.text.htmlDescription"
