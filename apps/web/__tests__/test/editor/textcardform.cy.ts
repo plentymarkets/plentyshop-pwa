@@ -99,6 +99,12 @@ describe('Text Card Block Form', () => {
     cy.get('[data-testid="button-outline-primary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
   }
+
+  const checkTextGroupClass = () => {
+    cy.get('[data-testid="text-content"]').should('have.class', 'px-4 ').and('have.class', 'md:px-0');
+  }
+
+
   beforeEach(() => {
     cy.visitAndHydrate(paths.home);
     openSettingsForTextCardBlock();
@@ -118,5 +124,10 @@ describe('Text Card Block Form', () => {
     changeButtonLabel();
     changeButtonVariants();
   });
+
+  it('should ensure correct spacings', () => {
+    checkTextGroupClass();
+  });
+
 
 });
