@@ -125,7 +125,7 @@ describe('Text Card Block Form', () => {
     changeButtonVariants();
   });
 
-  it.only('should ensure correct spacings', () => {
+  it('should ensure correct spacings', () => {
     checkTextGroupClass();
   });
 
