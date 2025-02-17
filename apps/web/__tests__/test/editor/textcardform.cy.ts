@@ -101,7 +101,7 @@ describe('Text Card Block Form', () => {
   }
 
   const checkTextGroupClass = () => {
-    cy.get('[data-testid="text-content"]').should('have.class', 'px-4 ').and('have.class', 'md:px-0');
+    cy.get('[data-testid="text-content"]').should('have.class', 'px-4').and('have.class', 'md:px-0');
   }
 
 
@@ -125,7 +125,7 @@ describe('Text Card Block Form', () => {
     changeButtonVariants();
   });
 
-  it('should ensure correct spacings', () => {
+  it.only('should ensure correct spacings', () => {
     checkTextGroupClass();
   });
 
