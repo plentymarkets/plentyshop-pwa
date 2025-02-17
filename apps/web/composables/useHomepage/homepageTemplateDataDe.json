@@ -138,7 +138,7 @@
           "htmlDescription": "Informieren Sie sich über bevorstehende Aktionen und Veranstaltungen. Erhalten Sie Geschenke und Sonderangebote!"
         },
         "input": {
-          "displayNameInput": false,
+          "displayNameInput": true,
           "nameIsRequired": false
         },
         "button": {
