@@ -22,6 +22,12 @@ describe('PWA Cookie Test', () => {
       cy.get('[data-testid="edit-mode-toolbar"]').should('not.exist');
     }
   };
+  const checkPwaCookieIsRemoved = () => {
+    cy.clearCookie('pwa');
+    cy.reload();
+    cy.getCookie('pwa').should('not.exist');
+  };
+
 
   beforeEach(() => {
     setPwaCookie('1');
@@ -34,9 +40,7 @@ describe('PWA Cookie Test', () => {
   });
 
   it('should remove the PWA cookie and verify it is gone', () => {
-    cy.clearCookie('pwa');
-    cy.reload();
-    cy.getCookie('pwa').should('not.exist');
+    checkPwaCookieIsRemoved();
     checkToolbarVisibility(false);
   });
 });
