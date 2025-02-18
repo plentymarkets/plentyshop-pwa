@@ -54,7 +54,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
       state.value.data = useLocaleSpecificHomepageTemplate(currentLocale.value);
     }
 
-    state.value.initialBlocks = state.value.data.blocks.map((block) => toRaw(block));
+    state.value.initialBlocks = structuredClone(toRaw(state.value.data.blocks));
 
     await fetchRecommendedProducts();
   };

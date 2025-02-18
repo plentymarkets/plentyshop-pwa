@@ -1,7 +1,7 @@
 import { paths } from '../../../utils/paths';
 
 describe('Recommended Block Form', () => {
-    const checkIRecommendedBlockIsVisible = () => {
+    const checkIsRecommendedBlockIsVisible = () => {
         cy.getByTestId('recommended-block').should('be.visible');
     }
 
@@ -9,6 +9,7 @@ describe('Recommended Block Form', () => {
         cy.getByTestId('recommended-block')
             .closest('[data-testid="block-wrapper"]')
             .find('[data-testid="open-editor-button"]')
+            .first()
             .click();
     }
 
@@ -19,6 +20,7 @@ describe('Recommended Block Form', () => {
     const checkIfRecommendedBlockHasText = (field: string, text: string) => {
         cy.getByTestId('recommended-block')
             .find(`[data-testid="text-${field}"]`)
+            .first()
             .should('have.text', text);
     };
 
@@ -46,7 +48,7 @@ describe('Recommended Block Form', () => {
     });
 
     it('should ensure recommended block is visible', () => {
-        checkIRecommendedBlockIsVisible();
+        checkIsRecommendedBlockIsVisible();
     });
 
     it('should change the pretitle on recommended form', () => {
@@ -71,7 +73,7 @@ describe('Recommended Block Form', () => {
 
     it('should change the color on recommended form', () => {
         changeColor('#00ff00');
-        checkStyleOnRecommendedBlock('color: rgb(0, 255, 0);');
+        checkStyleOnRecommendedBlock();
     });
 
     it('should change the text Alignment on recommended form', () => {

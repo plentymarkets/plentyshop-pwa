@@ -10,7 +10,10 @@
         'mb-xl': blockSize === 'xl',
       },
       {
-        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'BannerCarousel',
+        'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'BannerCarousel',
+      },
+      {
+        'px-4 md:px-6': block.name !== 'BannerCarousel' && block.name !== 'NewsletterSubscribe',
       },
       {
         'outline outline-4 outline-[#538AEA]':
@@ -43,7 +46,6 @@
       :index="index"
       :blocks="block"
       :is-last-block="isLastBlock(index)"
-      @edit="handleEdit"
       @delete="deleteBlock"
       @change-position="changeBlockPosition"
     />
@@ -78,7 +80,6 @@ interface Props {
   addNewBlock: (index: number, position: number) => void;
   changeBlockPosition: (index: number, position: number) => void;
   isLastBlock: (index: number) => boolean;
-  handleEdit: (index: number) => void;
   deleteBlock: (index: number) => void;
 }
 
