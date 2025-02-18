@@ -66,7 +66,7 @@ export const useBlockManager = () => {
   const pwaCookie = useCookie('pwa');
   const config = useRuntimeConfig().public;
   const showConfigurationDrawer = config.showConfigurationDrawer;
-  const isPreview = computed(() => !!pwaCookie.value && showConfigurationDrawer);
+  const isPreview = computed(() => !!pwaCookie.value || showConfigurationDrawer);
 
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
