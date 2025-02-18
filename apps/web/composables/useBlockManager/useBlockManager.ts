@@ -23,7 +23,7 @@ export const useBlockManager = () => {
   const currentBlockIndex = ref<number | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
-
+  const firstBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
@@ -38,6 +38,10 @@ export const useBlockManager = () => {
     return lang === 'de' ? variationTemplate.de : variationTemplate.en;
   };
 
+  const updateFirstBlock = () => {
+    firstBlockIndex.value = data.value.blocks.length > 0 ? 0 : null;
+  };
+  
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
@@ -46,6 +50,7 @@ export const useBlockManager = () => {
     data.value.blocks = updatedBlocks;
     visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+    updateFirstBlock(); 
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -61,6 +66,7 @@ export const useBlockManager = () => {
 
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
+
 
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
@@ -106,6 +112,8 @@ export const useBlockManager = () => {
     }
   };
 
+  updateFirstBlock();
+
   return {
     currentBlock,
     currentBlockIndex,
@@ -123,5 +131,6 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
+    firstBlockIndex,
   };
 };

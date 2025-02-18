@@ -69,6 +69,7 @@ setRobotForStaticPage('Homepage');
 onMounted(() => {
   isEditingEnabled.value = false;
   window.addEventListener('beforeunload', handleBeforeUnload);
+
 });
 
 onBeforeUnmount(() => {
