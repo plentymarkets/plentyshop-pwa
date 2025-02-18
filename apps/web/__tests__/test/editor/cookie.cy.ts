@@ -24,12 +24,11 @@ describe('PWA Cookie Test', () => {
   };
 
   beforeEach(() => {
-    cy.visit(paths.home);
+    setPwaCookie('1');
+    cy.visitAndHydrate(paths.home);
   });
 
   it('should set and check if the PWA cookie exists', () => {
-    setPwaCookie('1');
-    cy.reload();
     checkPwaCookieExists();
     checkToolbarVisibility(true);
   });
