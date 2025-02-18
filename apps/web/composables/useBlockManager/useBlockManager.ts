@@ -39,8 +39,14 @@ export const useBlockManager = () => {
   };
 
   const updateFirstBlock = () => {
-    firstBlockIndex.value = data.value.blocks.length > 0 ? 0 : null;
+    const firstBlock = data.value.blocks.findIndex((block) => blockHasData(block));
+    firstBlockIndex.value = firstBlock !== -1 ? firstBlock : null;
+    console.log('updateFirstBlock:', firstBlockIndex.value); // Debugging log
   };
+  
+  // Initialize it 
+  updateFirstBlock();
+
   
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
@@ -65,6 +71,8 @@ export const useBlockManager = () => {
     data.value.blocks = updatedBlocks;
 
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+    updateFirstBlock(); 
+
   };
 
 
@@ -103,6 +111,7 @@ export const useBlockManager = () => {
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
+      updateFirstBlock(); 
     }
   };
 
@@ -112,7 +121,6 @@ export const useBlockManager = () => {
     }
   };
 
-  updateFirstBlock();
 
   return {
     currentBlock,

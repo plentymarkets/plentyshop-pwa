@@ -31,8 +31,11 @@ import type { TextContentProps } from '~/components/TextContent/types';
 const { firstBlockIndex, currentBlockIndex } = useBlockManager();
 
 const isFirstBlock = () => {
-  return currentBlockIndex.value !== null && currentBlockIndex.value === 0;
+  console.log('isFirstBlock:', firstBlockIndex.value); // Debugging log
+  return firstBlockIndex.value !== null && firstBlockIndex.value === 0;
 };
+
+
 
 onMounted(() => {
   console.log('firstBlock', firstBlockIndex.value);
