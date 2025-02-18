@@ -261,5 +261,18 @@ export class EditorObject extends PageObject {
       first().should('contain.text', 'Discover Tech').
       next().should('contain.text', 'Feel the music');
   }
+
+  checkWrapperSpacings() {
+    this.blockWrappers.eq(0).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+    this.blockWrappers.eq(4).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+  
+    this.blockWrappers.each((el, index) => {
+      if (index !== 0 && index !== 4) {
+        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
+      }
+    });
+  }
+  
+
 }
 
