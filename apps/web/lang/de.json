@@ -83,6 +83,7 @@
       },
       "delete": "Löschen",
       "edit": "Bearbeiten",
+      "cancel": "Abbrechen",
       "heading": "Kontoeinstellungen",
       "makeDefault": "Als Standard festlegen",
       "noAddresses": "Es sind noch keine Addresse vorhanden.",
