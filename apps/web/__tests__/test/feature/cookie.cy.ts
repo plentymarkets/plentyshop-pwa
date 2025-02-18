@@ -1,6 +1,6 @@
 import { paths } from '../../../utils/paths';
 
-describe('PWA Cookie Test', () => {
+describe('Preview Cookie', () => {
   const setPwaCookie = (value: string) => {
     cy.setCookie('pwa', value);
   };
@@ -9,18 +9,16 @@ describe('PWA Cookie Test', () => {
     cy.getCookie('pwa')
       .should('exist')
       .then((cookie) => {
-        const message = cookie ? 'Cookie exists.' : 'Cookie does not exist.';
-        cy.log(message);
         assert.isNotNull(cookie, 'Cookie should not be null');
         assert.isNotEmpty(cookie?.value, 'Cookie value should not be empty');
       });
   };
-  const checkToolbarVisibility = (shouldBeVisible: boolean) => {
-    if (shouldBeVisible) {
-      cy.get('[data-testid="edit-mode-toolbar"]').should('be.visible');
-    } else {
-      cy.get('[data-testid="edit-mode-toolbar"]').should('not.exist');
-    }
+  const toolbarIsVisible = () => {
+    cy.get('[data-testid="edit-mode-toolbar"]').should('be.visible');
+  };
+
+  const toolbarIsNotVisible = () => {
+    cy.get('[data-testid="edit-mode-toolbar"]').should('not.exist');
   };
   const checkPwaCookieIsRemoved = () => {
     cy.clearCookie('pwa');
@@ -34,13 +32,13 @@ describe('PWA Cookie Test', () => {
     cy.visitAndHydrate(paths.home);
   });
 
-  it('should set and check if the PWA cookie exists', () => {
+  it('should display the editor if the pwa cookie is set', () => {
     checkPwaCookieExists();
-    checkToolbarVisibility(true);
+    toolbarIsVisible();
   });
 
-  it('should remove the PWA cookie and verify it is gone', () => {
+  it('should not show the editor if the pwa cookie is not set', () => {
     checkPwaCookieIsRemoved();
-    checkToolbarVisibility(false);
+    toolbarIsNotVisible();
   });
 });
