@@ -1,13 +1,7 @@
 <template>
   <div>
     <EmptyBlock v-if="dataIsEmpty" @add-new-block="openBlockList" />
-    <Editor
-      v-if="isEditing && currentBlockIndex !== null"
-      :index="currentBlockIndex"
-      :block="currentBlock"
-      @update="updateBlock"
-    />
-    <div v-else class="content">
+    <div class="content">
       <template v-for="(block, index) in data.blocks" :key="index">
         <PageBlock
           :index="index"
@@ -22,7 +16,6 @@
           :add-new-block="openBlockList"
           :change-block-position="changeBlockPosition"
           :is-last-block="isLastBlock"
-          :handle-edit="handleEdit"
           :delete-block="deleteBlock"
         />
       </template>
@@ -33,17 +26,13 @@
 import { watchDebounced } from '@vueuse/core';
 
 const {
-  currentBlock,
-  currentBlockIndex,
   isClicked,
   clickedBlockIndex,
   isTablet,
   isPreview,
   blockHasData,
   tabletEdit,
-  handleEdit,
   deleteBlock,
-  updateBlock,
   changeBlockPosition,
   isLastBlock,
   togglePlaceholder,
@@ -53,7 +42,7 @@ const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteC
 
 const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
 
-const { isEditing, isEditingEnabled, disableActions } = useEditor();
+const { isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
 
 const openBlockList = (index: number, position: number) => {
