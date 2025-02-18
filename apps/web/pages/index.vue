@@ -30,6 +30,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { watchDebounced } from '@vueuse/core';
+
 const {
   currentBlock,
   currentBlockIndex,
@@ -49,7 +51,7 @@ const {
 
 const { settingsIsDirty, openDrawerWithView, updateNewBlockPosition } = useSiteConfiguration();
 
-const { data, fetchPageTemplate, dataIsEmpty } = useHomepage();
+const { data, fetchPageTemplate, dataIsEmpty, initialBlocks } = useHomepage();
 
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 const { getRobots, setRobotForStaticPage } = useRobots();
@@ -83,4 +85,12 @@ const handleBeforeUnload = (event: BeforeUnloadEvent) => {
 };
 
 fetchPageTemplate();
+
+watchDebounced(
+  () => data.value.blocks,
+  (newData) => {
+    isEditingEnabled.value = !deepEqual(initialBlocks.value, newData);
+  },
+  { debounce: 100, deep: true },
+);
 </script>
