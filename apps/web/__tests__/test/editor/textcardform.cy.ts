@@ -92,13 +92,13 @@ describe('Text Card Block Form', () => {
       .should('have.text', 'New Button Label');
   };
 
-
   const changeButtonVariants = () => {
     cy.get('[data-testid="button-outline-secondary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:text-primary-900');
     cy.get('[data-testid="button-outline-primary"]').should('exist').click();
     cy.get('[data-testid="text-button"]').should('have.class', 'active:bg-primary-700');
   }
+
   beforeEach(() => {
     cy.visitAndHydrate(paths.home);
     openSettingsForTextCardBlock();
@@ -118,5 +118,4 @@ describe('Text Card Block Form', () => {
     changeButtonLabel();
     changeButtonVariants();
   });
-
 });

@@ -32,4 +32,8 @@ describe('Blocks', () => {
     it('should check for recommended products', () => {
       editor.recommendedProductsExist();
     });
-  });
+
+    it('should ensure correct spacings', () => {
+      editor.checkWrapperSpacings();
+    });
+});
