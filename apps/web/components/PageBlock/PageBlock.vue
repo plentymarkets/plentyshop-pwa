@@ -10,7 +10,7 @@
         'mb-xl': blockSize === 'xl',
       },
       {
-        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'BannerCarousel',
+        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3 px-4 md:px-0': block.name !== 'BannerCarousel',
       },
       {
         'outline outline-4 outline-[#538AEA]':

@@ -40,10 +40,6 @@ describe('Recommended Block Form', () => {
         cy.getByTestId('recommended-block').should('have.css', 'color', 'rgb(0, 255, 0)');
     }
 
-    const checkRecommendedGroupClass = () => {
-        cy.getByTestId('recommended-block').should('have.class', 'px-4 md:px-0');
-    }
-
     beforeEach(() => {
         cy.visitAndHydrate(paths.home);
         clickOnRecommendedBlockEditButton();
@@ -95,10 +91,4 @@ describe('Recommended Block Form', () => {
             });
         });
     });
-
-
-    it('should ensure correct spacings', () => {
-        checkRecommendedGroupClass();
-    });
-    
 });
