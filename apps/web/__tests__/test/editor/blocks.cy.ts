@@ -33,8 +33,7 @@ describe('Blocks', () => {
       editor.recommendedProductsExist();
     });
 
-    it.only('shpuld ensure correct spacings', () => {
+    it('should ensure correct spacings', () => {
       editor.checkWrapperSpacings();
     });
-    
 });
