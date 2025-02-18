@@ -4,17 +4,20 @@
     :class="[
       'relative group',
       {
-        'mb-s': blockSize === 's',
-        'mb-m': blockSize === 'm',
-        'mb-l': blockSize === 'l',
-        'mb-xl': blockSize === 'xl',
+      'mb-s': blockSize === 's',
+      'mb-m': blockSize === 'm',
+      'mb-l': blockSize === 'l',
+      'mb-xl': blockSize === 'xl',
       },
       {
-        'max-w-screen-3xl mx-auto lg:px-10 mt-3 px-4 md:px-6': block.name !== 'BannerCarousel',
+      'max-w-screen-3xl mx-auto lg:px-10 mt-3': block.name !== 'BannerCarousel',
       },
       {
-        'outline outline-4 outline-[#538AEA]':
-          isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
+      'px-4 md:px-0': block.name !== 'BannerCarousel' && block.name !== 'NewsletterSubscribe',
+      },
+      {
+      'outline outline-4 outline-[#538AEA]':
+        isPreview && disableActions && isClicked && isTablet && clickedBlockIndex === index,
       },
       { 'hover:outline hover:outline-4 hover:outline-[#538AEA]': isPreview && disableActions && !isTablet },
     ]"

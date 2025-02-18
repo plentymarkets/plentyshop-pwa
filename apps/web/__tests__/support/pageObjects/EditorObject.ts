@@ -262,12 +262,16 @@ export class EditorObject extends PageObject {
       next().should('contain.text', 'Feel the music');
   }
 
- checkWrapperSpacings() {
-  this.blockWrappers.eq(0).should('not.have.class', 'px-4').and('not.have.class', 'md:px-0');
-  this.blockWrappers.not(':first').each(($el) => {
-    cy.wrap($el).should('have.class', 'px-4').and('have.class', 'md:px-0');
-  });
- }
+  checkWrapperSpacings() {
+    this.blockWrappers.eq(0).should('not.have.class', 'px-4').and('not.have.class', 'md:px-0');
+    this.blockWrappers.eq(4).should('not.have.class', 'px-4').and('not.have.class', 'md:px-0');
+  
+    this.blockWrappers.each((el, index) => {
+      if (index !== 0 && index !== 4) {
+        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-0');
+      }
+    });
+  }
   
 
 }
