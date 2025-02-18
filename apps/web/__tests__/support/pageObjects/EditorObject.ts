@@ -81,6 +81,14 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('open-settings-drawer');
   }
 
+  blockIsBanner(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('banner-image')
+  }
+
+  blockIsNewsletter(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('newsletter-block')
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -263,11 +271,11 @@ export class EditorObject extends PageObject {
   }
 
   checkWrapperSpacings() {
-    this.blockWrappers.eq(0).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
-    this.blockWrappers.eq(4).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
-  
-    this.blockWrappers.each((el, index) => {
-      if (index !== 0 && index !== 4) {
+    this.blockWrappers.each((el) => {
+      if (this.blockIsBanner(el) || this.blockIsNewsletter(el)) {
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+      } else {
         cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
       }
     });

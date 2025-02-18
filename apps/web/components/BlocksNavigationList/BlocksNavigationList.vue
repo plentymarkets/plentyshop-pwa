@@ -16,8 +16,7 @@
             :data-testid="'block-add-' + categoryIndex + '-' + variationIndex"
             @click="
               addBlock(category.category, variationIndex);
-              drawerOpen = false;
-              tempOpenDrawerCondition(category.blockName);
+              openSettingsDrawer(category.blockName);
             "
           >
             <SfIconAdd class="cursor-pointer" />
@@ -33,15 +32,13 @@ import { blocksLists } from '~/blocks/blocksLists';
 import { SfIconAdd } from '@storefront-ui/vue';
 
 const { addNewBlock } = useBlockManager();
-const { newBlockPosition, drawerOpen, openDrawerWithView } = useSiteConfiguration();
+const { newBlockPosition, openDrawerWithView } = useSiteConfiguration();
 
 const addBlock = (category: string, variationIndex: number) => {
   addNewBlock(category, variationIndex, newBlockPosition.value);
 };
 
-const tempOpenDrawerCondition = (blockName: string) => {
-  if (useRuntimeConfig().public.experimentalBlockEditForm) {
-    openDrawerWithView('blocksSettings', blockName, newBlockPosition.value);
-  }
+const openSettingsDrawer = (blockName: string) => {
+  openDrawerWithView('blocksSettings', blockName, newBlockPosition.value);
 };
 </script>
