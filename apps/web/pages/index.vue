@@ -91,6 +91,6 @@ watchDebounced(
   (newData) => {
     isEditingEnabled.value = !deepEqual(initialBlocks.value, newData);
   },
-  { debounce: 100, deep: true }
+  { debounce: 100, deep: true },
 );
 </script>
