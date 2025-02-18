@@ -27,7 +27,6 @@ export const useBlockManager = () => {
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-  const isPreview = ref(false);
   const experimentalBlockEditForm = ref(useRuntimeConfig().public.experimentalBlockEditForm);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
@@ -64,12 +63,10 @@ export const useBlockManager = () => {
 
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
-  onMounted(() => {
-    const config = useRuntimeConfig().public;
-    const showConfigurationDrawer = config.showConfigurationDrawer;
-    const pwaCookie = useCookie('pwa');
-    isPreview.value = !!pwaCookie.value || (showConfigurationDrawer as boolean);
-  });
+  const pwaCookie = useCookie('pwa');
+  const config = useRuntimeConfig().public;
+  const showConfigurationDrawer = config.showConfigurationDrawer;
+  const isPreview = computed(() => !!pwaCookie.value && showConfigurationDrawer);
 
   const tabletEdit = (index: number) => {
     if (isTablet.value) {
