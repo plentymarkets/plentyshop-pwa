@@ -54,7 +54,7 @@ export class CheckoutPageObject extends PageObject {
     return cy.getByTestId('checkout-edit-address-modal');
   }
 
-   editBillingAddress() {
+  editBillingAddress() {
     cy.getByTestId('edit-address-1').click();
     return this;
   }
@@ -105,6 +105,14 @@ export class CheckoutPageObject extends PageObject {
 
   get shippingAsBillingText() {
     return cy.getByTestId('address-info-text-1');
+  }
+
+  get billingAddressSelect() {
+    return cy.getByTestId('address-select-1');
+  }
+
+  get shippingAddressSelect() {
+    return cy.getByTestId('address-select-2');
   }
 
   goToGuestCheckout() {
@@ -200,6 +208,16 @@ export class CheckoutPageObject extends PageObject {
 
   shouldShowShippingAsBillingText() {
     this.shippingAsBillingText.contains('Same as shipping address');
+    return this;
+  }
+
+  shouldNotShowBillingAddressSelection() {
+    this.billingAddressSelect.should('not.exist');
+    return this;
+  }
+
+  shouldNotShowShippingAddressSelection() {
+    this.shippingAddressSelect.should('not.exist');
     return this;
   }
 

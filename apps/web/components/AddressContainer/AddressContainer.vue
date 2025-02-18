@@ -7,14 +7,16 @@
 
       <div class="flex mt-4 sm:justify-center sm:mt-0">
         <AddressSelect
-          v-if="!editing && !showNewForm"
+          v-if="showAdressSelection"
+          :data-testid="'address-select-' + type"
           :type="type"
           :disabled="disabled"
           @new="showNewForm = true"
           @edit="edit"
         />
+
         <UiButton
-          v-else
+          v-if="showAddressSaveButton"
           :data-testid="'save-address-' + type"
           :disabled="formIsLoading"
           variant="secondary"
@@ -24,8 +26,8 @@
         </UiButton>
 
         <SfTooltip
-          v-if="showNewForm || hasCheckoutAddress"
-          class="ml-2"
+          v-if="showTooltip"
+          :class="{ 'ml-2': addTooltipClass }"
           :label="!editing && !showNewForm && !disabled ? t('editAddress') : ''"
         >
           <UiButton
@@ -78,10 +80,15 @@ const isShipping = type === AddressType.Shipping;
 const { checkoutAddress, hasCheckoutAddress } = useCheckoutAddress(type);
 const { isLoading: formIsLoading, addressToEdit, add: showNewForm, open: editing } = useAddressForm(type);
 const { shippingAsBilling } = useShippingAsBilling();
+const { isAuthorized } = useCustomer();
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const addressFormShipping = ref(null as any);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const addressFormBilling = ref(null as any);
+
+const showAdressSelection = computed(() => isAuthorized.value && !editing.value && !showNewForm.value);
+const showAddressSaveButton = computed(() => editing.value || showNewForm.value);
+const addTooltipClass = computed(() => isAuthorized.value || editing.value || showNewForm.value);
 
 const sameAsShippingAddress = computed(() =>
   isBilling
@@ -97,6 +104,12 @@ const showSameAsShippingText = computed(
 const showDynamicAddressText = computed(
   () =>
     showSameAsShippingText.value || (!hasCheckoutAddress.value && !showSameAsShippingText.value && !showNewForm.value),
+);
+
+const showTooltip = computed(
+  () =>
+    (isAuthorized.value && (showNewForm.value || hasCheckoutAddress.value)) ||
+    (!isAuthorized.value && hasCheckoutAddress.value),
 );
 
 const dynamicAddressText = computed(() =>
