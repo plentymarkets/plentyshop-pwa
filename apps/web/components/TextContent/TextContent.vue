@@ -28,10 +28,10 @@
 <script setup lang="ts">
 import type { TextContentProps } from '~/components/TextContent/types';
 
-const { firstBlockIndex } = useBlockManager();
+const { firstBlockIndex, currentBlockIndex } = useBlockManager();
 
 const isFirstBlock = () => {
-  return firstBlockIndex.value !== null && firstBlockIndex.value === 0;
+  return currentBlockIndex.value !== null && currentBlockIndex.value === 0;
 };
 
 onMounted(() => {
