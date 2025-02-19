@@ -40,7 +40,14 @@
         v-html="props.bannerProps.text.pretitle"
       />
       <h1
-        v-if="props.bannerProps.text.title"
+        v-if="props.bannerProps.text.title && index === 0"
+        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+        :data-testid="'banner-title-' + props.index"
+        v-html="props.bannerProps.text.title"
+      />
+
+      <h2
+        v-if="props.bannerProps.text.title && index !== 0"
         class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
         :data-testid="'banner-title-' + props.index"
         v-html="props.bannerProps.text.title"
