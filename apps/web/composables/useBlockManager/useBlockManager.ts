@@ -23,7 +23,6 @@ export const useBlockManager = () => {
   const currentBlockIndex = ref<number | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
-  const firstBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
@@ -38,16 +37,6 @@ export const useBlockManager = () => {
     return lang === 'de' ? variationTemplate.de : variationTemplate.en;
   };
 
-  const updateFirstBlock = () => {
-    const firstBlock = data.value.blocks.findIndex((block) => blockHasData(block));
-    firstBlockIndex.value = firstBlock !== -1 ? firstBlock : null;
-    console.log('updateFirstBlock:', firstBlockIndex.value); // Debugging log
-  };
-  
-  // Initialize it 
-  updateFirstBlock();
-
-  
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
@@ -56,7 +45,6 @@ export const useBlockManager = () => {
     data.value.blocks = updatedBlocks;
     visiblePlaceholder.value = { index: null, position: null };
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-    updateFirstBlock(); 
   };
 
   const changeBlockPosition = (index: number, position: number) => {
@@ -71,10 +59,7 @@ export const useBlockManager = () => {
     data.value.blocks = updatedBlocks;
 
     isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
-    updateFirstBlock(); 
-
   };
-
 
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
@@ -111,7 +96,6 @@ export const useBlockManager = () => {
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
-      updateFirstBlock(); 
     }
   };
 
@@ -120,7 +104,6 @@ export const useBlockManager = () => {
       data.value.blocks[index] = updatedBlock;
     }
   };
-
 
   return {
     currentBlock,
@@ -139,6 +122,5 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
-    firstBlockIndex,
   };
 };
