@@ -6,6 +6,7 @@ import type {
   CartItemError,
   ApiError,
   Cart,
+  PlentyEvents,
 } from '@plentymarkets/shop-api';
 import type {
   UseCartState,
@@ -55,6 +56,7 @@ const isCartItemError = (data: Cart | CartItemError): data is CartItemError => {
  * ```
  */
 export const useCart: UseCartReturn = () => {
+  const { emit } = usePlentyEvent();
   const state = useState<UseCartState>('useCart', () => ({
     data: {} as Cart,
     useAsShippingAddress: true,
@@ -131,6 +133,11 @@ export const useCart: UseCartReturn = () => {
 
       if (item) {
         state.value.lastUpdatedCartItem = item;
+        emit('frontend:addToCart', {
+          item,
+          cart: state.value.data,
+          addItemParams: params,
+        });
       }
 
       return !!data;
@@ -168,6 +175,18 @@ export const useCart: UseCartReturn = () => {
       const { data } = await useSdk().plentysystems.doAddCartItems(params);
 
       state.value.data = migrateVariationData(state.value.data, data) ?? state.value.data;
+
+      params.forEach((param) => {
+        const item = state?.value?.data?.items?.find((item) => item.variationId === param.productId);
+
+        if (item) {
+          emit('frontend:addToCart', {
+            item,
+            cart: state.value.data,
+            addItemParams: param,
+          });
+        }
+      });
 
       return !!data;
     } catch (error) {
@@ -219,6 +238,16 @@ export const useCart: UseCartReturn = () => {
         send({ message: $i18n.t('storefrontError.cart.reachedMaximumQuantity'), type: 'warning' });
       } else {
         state.value.data = migrateVariationData(state.value.data, data?.value?.data as Cart) ?? state.value.data;
+        // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+        if (state.value.data?.apiEvents) {
+          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+          Object.entries(state.value.data.apiEvents as PlentyEvents).forEach(([event, data]) =>
+            // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+            emit(`backend:${event}`, data),
+          );
+          // @ts-expect-error The type of `state.value.data.apiEvents` is not recognized
+          delete state.value.data.apiEvents;
+        }
       }
 
       return state.value.data;
@@ -251,6 +280,10 @@ export const useCart: UseCartReturn = () => {
       useHandleError(error.value);
 
       state.value.data = migrateVariationData(state.value.data, data?.value?.data) ?? state.value.data;
+      emit('frontend:removeFromCart', {
+        deleteItemParams: params,
+        cart: state.value.data,
+      });
       return state.value.data;
     } catch (error) {
       throw new Error(error as string);

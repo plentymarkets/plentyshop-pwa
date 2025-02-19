@@ -77,6 +77,18 @@ export class EditorObject extends PageObject {
     return cy.getByTestId('block-add-image-with-text-0');
   }
 
+  get siteSettingsButton(){
+    return cy.getByTestId('open-settings-drawer');
+  }
+
+  blockIsBanner(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('banner-image')
+  }
+
+  blockIsNewsletter(el: JQuery<HTMLElement>) {
+    return el[0].innerHTML.includes('newsletter-block')
+  }
+
   togglePreviewMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Preview');
@@ -85,6 +97,11 @@ export class EditorObject extends PageObject {
   toggleEditMode() {
     this.editPreviewButton.should('be.enabled').click();
     this.editPreviewButton.should('contain.text', 'Edit');
+    return this;
+  }
+
+  toggleSiteSettings() {
+    this.siteSettingsButton.should('be.visible').click();
     return this;
   }
 
@@ -252,5 +269,18 @@ export class EditorObject extends PageObject {
       first().should('contain.text', 'Discover Tech').
       next().should('contain.text', 'Feel the music');
   }
+
+  checkWrapperSpacings() {
+    this.blockWrappers.each((el) => {
+      if (this.blockIsBanner(el) || this.blockIsNewsletter(el)) {
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+        cy.wrap(el).should('not.have.class', 'px-4').and('not.have.class', 'md:px-6');
+      } else {
+        cy.wrap(el).should('have.class', 'px-4').and('have.class', 'md:px-6');
+      }
+    });
+  }
+  
+
 }
 

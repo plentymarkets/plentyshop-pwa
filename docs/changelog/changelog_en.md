@@ -4,19 +4,51 @@
 
 ### New
 
+- Added testing for recommended products block.
+- Added the ability to push API events into our Core Module.
+- Added recommended products block editing.
+- Dynamic blocks register.
+- Added slider edit.
+- Added block editing by position & typescipt restructuring
+- Fetch color settings at runtime instead of build time.
 - Added robots for static pages.
 - Adding saving functionality for site settings.
 - You can now add blocks on homepage from the blocks side nav!
 - Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
 - Added the logic to remove cookies after revoking consent.
 - Added a new placeholder block component to showcase to the user where his block will go
+- You can now add blocks on homepage from the blocks side nav
+- Added shipping page no configuration fallback text
+- Image Text Form integrated and two way data binded
+- Added newsletter form to the block settings.
+- Added the `shop-core` module to the project.
+- Automated tests for Image Text
+- Automated tests for Newsletter Form.
+- Color picker labels now have border
+- Automated tests for Text Card Form
+- Added site settings test
+- Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
+- All titles in blocks can now support html
 
 ### 👷 Changed
+
+- The `Saved addresses` listing option is no longer available in the guest checkout flow.
+- Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
 ### 🩹 Fixed
 
 - Fixed an issue where page elements changed during navigation.
 - Fixed accessibility erros in edit mode.
+- Fixed an issue where the site settings view was only displayed on the second click.
+- Fixed an issue where the new block placeholder got displayed when editing the site settings.
+- Fixed an issue where multiple sliders placed in one page ware not controlled independently via control arrows.
+- Fixed slider navigation bullet points.
+- Fixed default editor colors.
+- Fixed the image-to-text ratio in the Image Text block, so that both now take up 50% of the available space.
+- Close edit drawer on block removal.
+- Fixed index error on first block add.
+- Fixed the SfSwitcher from Newsletter Form to be reactive.
+- Fixed the 'Save changes' button to be reactive to form editor changes.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
@@ -36,7 +68,6 @@
 - Added preview functionality for block sizes.
 - If there are unsaved changes in the editor and the user tries to close or reload the page, the browser will now display a warning and ask for confirmation.
 - Adding saving functionality for site settings.
-- You can now add blocks on homepage from the blocks side nav!
 
 ### 👷 Changed
 
@@ -107,6 +138,7 @@
 - New styles for blocks actions
 - Users can now move a block up or down in the block list.
 - Added a new placeholder block component to showcase to the user where his block will go
+- Added a text card form for edit settings
 
 ### 👷 Changed
 

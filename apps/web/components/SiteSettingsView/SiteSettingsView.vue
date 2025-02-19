@@ -1,14 +1,15 @@
 <template>
-  <div class="site-settings-view sticky top-[52px]">
+  <div class="site-settings-view sticky top-[52px]" data-testid="site-settings-drawer">
     <header class="flex items-center justify-between px-4 py-5 border-b">
       <div class="flex items-center text-xl font-bold">Settings</div>
-      <UiButton square variant="tertiary" size="sm" class="!p-0" @click="drawerOpen = false">
+      <button class="!p-0" @click="drawerOpen = false">
         <SfIconClose />
-      </UiButton>
+      </button>
     </header>
 
     <UiAccordionItem
       v-model="fontsOpen"
+      data-testid="font-section"
       summary-active-class="bg-neutral-100 border-t-0"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -30,6 +31,7 @@
 
       <Multiselect
         v-model="selectedFont"
+        data-testid="font-select"
         :options="fonts"
         placeholder="Select a font"
         label="value"
@@ -45,6 +47,7 @@
 
     <UiAccordionItem
       v-model="colorsOpen"
+      data-testid="color-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -64,7 +67,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="primaryColor" type="text">
+          <SfInput v-model="primaryColor" type="text" data-testid="primary-color-select">
             <template #suffix>
               <label for="primary-color" :style="{ backgroundColor: primaryColor }" class="rounded-lg cursor-pointer">
                 <input id="primary-color" v-model="primaryColor" type="color" class="invisible w-8" />
@@ -87,7 +90,7 @@
           </SfTooltip>
         </div>
         <label>
-          <SfInput v-model="secondaryColor" type="text">
+          <SfInput v-model="secondaryColor" type="text" data-testid="secondary-color-select">
             <template #suffix>
               <label
                 for="secondary-color"
@@ -105,6 +108,7 @@
 
     <UiAccordionItem
       v-model="blocksSpacingOpen"
+      data-testid="block-spacing-section"
       summary-active-class="bg-neutral-100"
       summary-class="w-full hover:bg-neutral-100 px-4 py-5 flex justify-between items-center select-none border-b"
     >
@@ -112,16 +116,16 @@
         <h2 class="">Blocks spacing</h2>
       </template>
       <div class="border-b py-1">
-        <UiButton
+        <button
           v-for="(blocksSpacingSize, key) in blocksSpacingSizes"
           :key="key"
           type="button"
-          :variant="blocksSpacingSize === blockSize ? 'primary' : 'tertiary'"
-          class="!hover:bg-gray-100 uppercase"
+          data-testid="block-spacing-btn"
+          :class="[btnClasses, { 'bg-editor-button text-white': blocksSpacingSize === blockSize }]"
           @click="updateBlockSize(blocksSpacingSize)"
         >
           {{ blocksSpacingSize }}
-        </UiButton>
+        </button>
       </div>
       <div class="px-4 py-3">
         <span class="typography-text-xs text-neutral-700">Spacing between blocks: {{ spacingInPx }}px</span>
@@ -143,6 +147,10 @@ const { drawerOpen, loadGoogleFont, primaryColor, secondaryColor, updateBlockSiz
 const fontsOpen = ref(false);
 const colorsOpen = ref(false);
 const blocksSpacingOpen = ref(false);
+
+const btnClasses = ref(
+  'py-2 leading-6 px-4 gap-2 !hover:bg-gray-100 uppercase inline-flex items-center justify-center font-medium text-base focus-visible:outline focus-visible:outline-offset rounded-md disabled:text-disabled-500 disabled:bg-disabled-300 disabled:shadow-none disabled:ring-0 disabled:cursor-not-allowed',
+);
 
 const blocksSpacingSizes = ref(['s', 'm', 'l', 'xl']);
 

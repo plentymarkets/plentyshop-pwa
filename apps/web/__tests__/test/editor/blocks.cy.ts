@@ -11,9 +11,8 @@ describe('Blocks', () => {
     it('should ensure correct block logic and template', () => {
         editor.buttonsExistWithGroupClasses();
         editor.deleteBlock();
-        // This needs to be Recheck
-        // editor.addBlockTop();
-        // editor.addBlockBottom();
+        editor.addBlockTop();
+        editor.addBlockBottom();
     });
 
     it('should not be possible to move the first block up', () => {
@@ -33,4 +32,8 @@ describe('Blocks', () => {
     it('should check for recommended products', () => {
       editor.recommendedProductsExist();
     });
-  });
+
+    it('should ensure correct spacings', () => {
+      editor.checkWrapperSpacings();
+    });
+});

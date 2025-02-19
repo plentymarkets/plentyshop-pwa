@@ -13,13 +13,12 @@ const visiblePlaceholder = ref<{ index: number | null; position: 'top' | 'bottom
 const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
   visiblePlaceholder.value = { index, position };
 };
+
 export const useBlockManager = () => {
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
-  const { isEditing, isEditingEnabled } = useEditor();
+  const { isEditingEnabled } = useEditor();
 
-  const currentBlock = ref<Block | null>(null);
-  const currentBlockIndex = ref<number | null>(null);
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
 
@@ -27,7 +26,6 @@ export const useBlockManager = () => {
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
   const isPreview = ref(false);
-  const experimentalBlockEditForm = ref(useRuntimeConfig().public.experimentalBlockEditForm);
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists[category];
@@ -40,6 +38,7 @@ export const useBlockManager = () => {
   const addNewBlock = (category: string, variationIndex: number, position: number) => {
     const updatedBlocks = [...data.value.blocks];
     const newBlock = getTemplateByLanguage(category, variationIndex, $i18n.locale.value);
+
     updatedBlocks.splice(position, 0, newBlock);
     data.value.blocks = updatedBlocks;
     visiblePlaceholder.value = { index: null, position: null };
@@ -76,22 +75,13 @@ export const useBlockManager = () => {
     }
   };
 
-  const handleEdit = (index: number) => {
-    if (data.value.blocks && data.value.blocks.length > index) {
-      if (experimentalBlockEditForm.value) {
-        // TODO: Implement new block edit form
-      } else {
-        currentBlockIndex.value = index;
-        currentBlock.value = data.value.blocks[index];
-        isEditing.value = true;
-      }
-    }
-  };
-
   const deleteBlock = (index: number) => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
       isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
+
+      const { closeDrawer } = useSiteConfiguration();
+      closeDrawer();
     }
   };
 
@@ -102,15 +92,12 @@ export const useBlockManager = () => {
   };
 
   return {
-    currentBlock,
-    currentBlockIndex,
     isClicked,
     clickedBlockIndex,
     isTablet,
     isPreview,
     blockHasData,
     tabletEdit,
-    handleEdit,
     deleteBlock,
     updateBlock,
     changeBlockPosition,
