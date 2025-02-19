@@ -4,7 +4,14 @@
     :style="{ backgroundColor: props.text?.bgColor ?? '#f5f5f5' }"
     data-testid="newsletter-block"
   >
+    <h1
+      v-if="props.index === 0"
+      class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
+      data-testid="newsletter-title"
+      v-html="props.text?.title ?? t('newsletter.heading')"
+    />
     <h2
+      v-if="props.index !== 0"
       class="typography-headline-4 sm:typography-headline-3 font-bold mb-2"
       data-testid="newsletter-title"
       v-html="props.text?.title ?? t('newsletter.heading')"
