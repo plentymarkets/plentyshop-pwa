@@ -43,6 +43,8 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 - `yarn` commands have been replaced by their `npm` equivalent. For example, `yarn build` is now `npm run build`.
 - Double check `.env.example` for updates. In particular, make sure to set a `DEFAULTLANGUAGE` in your environment.
+
+#### Checkout
 - The `Saved addresses` listing option is no longer available in the guest checkout flow.
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
