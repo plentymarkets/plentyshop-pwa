@@ -39,20 +39,23 @@
         :data-testid="'banner-pretitle-' + props.index"
         v-html="props.bannerProps.text.pretitle"
       />
-      <h1
-        v-if="props.bannerProps.text.title && index === 0"
-        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-        :data-testid="'banner-title-' + props.index"
-        v-html="props.bannerProps.text.title"
-      />
+      <template v-if="isFirstBanner">
+        <h1
+          v-if="props.bannerProps.text.title"
+          class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+          :data-testid="'banner-title-' + props.index"
+          v-html="props.bannerProps.text.title"
+        />
+      </template>
 
-      <h2
-        v-if="props.bannerProps.text.title && index !== 0"
-        class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
-        :data-testid="'banner-title-' + props.index"
-        v-html="props.bannerProps.text.title"
-      />
-
+      <template v-else>
+        <h2
+          v-if="props.bannerProps.text.title"
+          class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+          :data-testid="'banner-title-' + props.index"
+          v-html="props.bannerProps.text.title"
+        />
+      </template>
       <div
         v-if="props.bannerProps.text.subtitle"
         class="typography-headline-6 font-bold tracking-widest mb-4"
@@ -91,6 +94,9 @@ const localePath = useLocalePath();
 
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
+
+const { globalIndex } = useGlobalBannerIndex();
+const isFirstBanner = computed(() => globalIndex.value === 0);
 
 const props = defineProps<{
   bannerProps: BannerProps;
