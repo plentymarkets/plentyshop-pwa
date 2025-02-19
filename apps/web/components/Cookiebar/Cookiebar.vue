@@ -172,7 +172,7 @@
 <script setup lang="ts">
 import { SfLink, SfCheckbox, SfIconBase, SfTooltip } from '@storefront-ui/vue';
 import { defaults } from '~/composables';
-import type { Cookie, CookieGroup } from '~/configuration/cookie.config';
+import type { CookieGroup, Cookie } from '@plentymarkets/shop-core';
 
 const NuxtLink = resolveComponent('NuxtLink');
 const localePath = useLocalePath();
@@ -187,7 +187,7 @@ const {
   setConsent,
   setAllCookiesState,
   changeVisibilityState,
-} = useReadCookieBar();
+} = useCookieBar();
 
 initializeCookies();
 

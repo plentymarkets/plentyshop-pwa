@@ -6,14 +6,14 @@ export const blocksLists: BlocksList = {
   'image-banner': {
     category: 'image-banner',
     title: 'Image Banner',
-    blockName: 'UiCarousel',
+    blockName: 'BannerCarousel',
     variations: [
       {
         title: 'Image Banner Left',
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_left.png',
         template: {
           en: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -76,7 +76,7 @@ export const blocksLists: BlocksList = {
           },
 
           de: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -145,7 +145,7 @@ export const blocksLists: BlocksList = {
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_right.png',
         template: {
           en: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -208,7 +208,7 @@ export const blocksLists: BlocksList = {
           },
 
           de: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -277,7 +277,7 @@ export const blocksLists: BlocksList = {
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_banner_center.png',
         template: {
           en: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -340,7 +340,7 @@ export const blocksLists: BlocksList = {
           },
 
           de: {
-            name: 'UiCarousel',
+            name: 'BannerCarousel',
             options: {
               controls: {
                 color: '#000',
@@ -409,14 +409,14 @@ export const blocksLists: BlocksList = {
   'image-with-text': {
     category: 'image-with-text',
     title: 'Image with Text',
-    blockName: 'UiImageText',
+    blockName: 'ImageText',
     variations: [
       {
         title: 'Image Right Text',
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_right_text.png',
         template: {
           en: {
-            name: 'UiImageText',
+            name: 'ImageText',
             options: {
               text: {
                 htmlDescription: 'Text that supports HTML formatting',
@@ -442,7 +442,7 @@ export const blocksLists: BlocksList = {
           },
 
           de: {
-            name: 'UiImageText',
+            name: 'ImageText',
             options: {
               text: {
                 htmlDescription: 'Text mit HTML-Formatierung',
@@ -473,7 +473,7 @@ export const blocksLists: BlocksList = {
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/image_left_text.png',
         template: {
           en: {
-            name: 'UiImageText',
+            name: 'ImageText',
             options: {
               text: {
                 htmlDescription: 'Text that supports HTML formatting',
@@ -499,7 +499,7 @@ export const blocksLists: BlocksList = {
           },
 
           de: {
-            name: 'UiImageText',
+            name: 'ImageText',
             options: {
               text: {
                 htmlDescription: 'Text mit HTML-Formatierung',
@@ -530,14 +530,14 @@ export const blocksLists: BlocksList = {
   'rich-text': {
     category: 'rich-text',
     title: 'Rich Text',
-    blockName: 'UiTextCard',
+    blockName: 'TextCard',
     variations: [
       {
         title: 'Rich Text',
         image: 'https://cdn02.plentymarkets.com/v5vzmmmcb10k/frontend/PWA/Blocks/rich_text.png',
         template: {
           en: {
-            name: 'UiTextCard',
+            name: 'TextCard',
             options: {
               text: {
                 htmlDescription: 'Text that supports HTML formatting',
@@ -545,6 +545,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 heading',
                 subtitle: 'Subtitle',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Button',
@@ -554,7 +555,7 @@ export const blocksLists: BlocksList = {
             },
           },
           de: {
-            name: 'UiTextCard',
+            name: 'TextCard',
             options: {
               text: {
                 htmlDescription: 'Text mit HTML-Formatierung',
@@ -562,6 +563,7 @@ export const blocksLists: BlocksList = {
                 title: 'h2 Titel',
                 subtitle: 'Untertitel',
                 textAlignment: 'center',
+                color: '#000',
               },
               button: {
                 buttonText: 'Buttom',
@@ -625,15 +627,15 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 bgColor: '#f5f5f5',
-                title: 'h2 heading',
+                title: 'Newsletter',
                 htmlDescription: 'Text that supports HTML formatting',
               },
               input: {
-                displayNameInput: false,
+                displayNameInput: true,
                 nameIsRequired: false,
               },
               button: {
-                label: 'Button',
+                label: 'Subscribe',
               },
             },
           },
@@ -643,15 +645,15 @@ export const blocksLists: BlocksList = {
             options: {
               text: {
                 bgColor: '#f5f5f5',
-                title: 'h2 Titel',
+                title: 'Abonnieren Sie unseren Newsletter',
                 htmlDescription: 'Text mit HTML-Formatierung',
               },
               input: {
-                displayNameInput: false,
+                displayNameInput: true,
                 nameIsRequired: false,
               },
               button: {
-                label: 'Button',
+                label: 'Newsletter abonnieren',
               },
             },
           },

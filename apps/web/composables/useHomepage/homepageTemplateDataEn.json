@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "name": "UiCarousel",
+      "name": "BannerCarousel",
       "options": {
         "controls": {
           "color": "#a39f9f"
@@ -69,14 +69,15 @@
       }
     },
     {
-      "name": "UiTextCard",
+      "name": "TextCard",
       "options": {
         "text": {
           "htmlDescription": "<p>Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.</p><p>Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.</p>",
           "title": "Discover Tech & Style",
           "subtitle": "Innovative technology meets modern fashion",
           "pretitle": "Welcome to your new favorite shop",
-          "textAlignment": "center"
+          "textAlignment": "center",
+          "color": "#000"
         },
         "button": {
           "label": "Get shopping",
@@ -88,11 +89,17 @@
     {
       "name": "ProductRecommendedProducts",
       "options": {
-        "categoryId": "73"
+        "categoryId": "73",
+        "text": {
+          "pretitle": "More than just technology",
+          "title": "Discover our fashion collection",
+          "subtitle": "Sporty fashion and accessories for everyone.",
+          "htmlDescription": "<a class='underline' href='https://plentyshop.plentymarkets.com/wear' target='_self'>To our full collection.</a>"
+        }
       }
     },
     {
-      "name": "UiImageText",
+      "name": "ImageText",
       "options": {
         "text": {
           "htmlDescription": "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul class='list-disc pl-4 mt-4 space-y-1'><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",

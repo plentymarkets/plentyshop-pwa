@@ -4,6 +4,10 @@
 
 ### New
 
+- Added testing for recommended products block.
+- Added the ability to push API events into our Core Module.
+- Added recommended products block editing.
+- Dynamic blocks register.
 - Added slider edit.
 - Added block editing by position & typescipt restructuring
 - Fetch color settings at runtime instead of build time.
@@ -17,6 +21,14 @@
 - Added shipping page no configuration fallback text
 - Image Text Form integrated and two way data binded
 - Added newsletter form to the block settings.
+- Added the `shop-core` module to the project.
+- Automated tests for Image Text
+- Automated tests for Newsletter Form.
+- Color picker labels now have border
+- Automated tests for Text Card Form
+- Added site settings test
+- Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
+- All titles in blocks can now support html
 
 ### 👷 Changed
 
@@ -31,6 +43,8 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 - `yarn` commands have been replaced by their `npm` equivalent. For example, `yarn build` is now `npm run build`.
 - Double check `.env.example` for updates. In particular, make sure to set a `DEFAULTLANGUAGE` in your environment.
+- The `Saved addresses` listing option is no longer available in the guest checkout flow.
+- Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
 ### 🩹 Fixed
 
@@ -41,6 +55,11 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 - Fixed an issue where multiple sliders placed in one page ware not controlled independently via control arrows.
 - Fixed slider navigation bullet points.
 - Fixed default editor colors.
+- Fixed the image-to-text ratio in the Image Text block, so that both now take up 50% of the available space.
+- Close edit drawer on block removal.
+- Fixed index error on first block add.
+- Fixed the SfSwitcher from Newsletter Form to be reactive.
+- Fixed the 'Save changes' button to be reactive to form editor changes.
 
 ## v1.9.1 (2025-01-29) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.0...v1.9.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
