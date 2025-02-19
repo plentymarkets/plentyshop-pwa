@@ -17,5 +17,4 @@ const { bannerItems, index, controls } = defineProps<{
 }>();
 
 setIndex(index);
-
 </script>
