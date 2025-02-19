@@ -39,8 +39,7 @@ const main = async () => {
 
     const dataWriter = new DataToFileWriter(BuildLoggerInstance);
     const appConfigurator = new AppConfigurator(dataWriter, BuildLoggerInstance);
-    appConfigurator.generateEnvironment(systemConfiguration.getResponse());
-    appConfigurator.generateLanguageFiles(systemConfiguration.getLanugages());
+    appConfigurator.generateLanguageFiles(systemConfiguration.getLanguages());
 
     const cdnWriter = new CdnToFileWriter(BuildLoggerInstance);
     const assetDownloader = new AssetDownloader(cdnWriter, BuildLoggerInstance);
