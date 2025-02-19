@@ -83,7 +83,6 @@
       },
       "delete": "Delete",
       "edit": "Edit",
-      "cancel": "Cancel",
       "heading": "Account Settings",
       "makeDefault": "Make default",
       "noAddresses": "You don't have any addresses yet",

@@ -16,7 +16,7 @@
 
         <SfTooltip v-if="showEditAddressTooltip" :class="{ 'ml-2': showAdressSelection }" :label="t('editAddress')">
           <UiButton
-            :disabled="formIsLoading || disabled"
+            :disabled="!hasCheckoutAddress || formIsLoading || disabled"
             variant="secondary"
             :data-testid="'edit-address-' + type"
             @click="edit(checkoutAddress)"
@@ -58,16 +58,15 @@
           {{ t('saveAddress') }}
         </UiButton>
 
-        <SfTooltip class="ml-2" :label="t('account.accountSettings.cancel')">
-          <UiButton
-            :disabled="formIsLoading || disabled"
-            variant="secondary"
-            :data-testid="'close-address-' + type"
-            @click="edit(checkoutAddress)"
-          >
-            <SfIconClose />
-          </UiButton>
-        </SfTooltip>
+        <UiButton
+          :disabled="!hasCheckoutAddress || formIsLoading || disabled"
+          variant="secondary"
+          class="ml-2"
+          :data-testid="'close-address-' + type"
+          @click="edit(checkoutAddress)"
+        >
+          <SfIconClose />
+        </UiButton>
       </div>
     </div>
   </div>
@@ -111,7 +110,9 @@ const showDynamicAddressText = computed(
     showSameAsShippingText.value || (!hasCheckoutAddress.value && !showSameAsShippingText.value && !showNewForm.value),
 );
 
-const showEditAddressTooltip = computed(() => !editing.value && !showNewForm.value && !disabled);
+const showEditAddressTooltip = computed(
+  () => !editing.value && hasCheckoutAddress.value && !showNewForm.value && !disabled,
+);
 
 const dynamicAddressText = computed(() =>
   t(showSameAsShippingText.value ? 'addressContainer.sameAsShippingAddress' : 'account.accountSettings.noAddresses'),
