@@ -7,6 +7,7 @@
     "apps/*"
   ],
   "scripts": {
+    "update:core": "npm update @plentymarkets/shop-core",
     "update:sdk": "npm update @plentymarkets/shop-api",
     "turbo:disable-telemetry": "turbo telemetry disable",
     "build": "npm run turbo:disable-telemetry && turbo run build",
