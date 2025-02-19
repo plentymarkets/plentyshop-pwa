@@ -32,6 +32,7 @@
 
 ### 👷 Changed
 
+- The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
 - The `Saved addresses` listing option is no longer available in the guest checkout flow.
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 
