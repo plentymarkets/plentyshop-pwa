@@ -34,6 +34,7 @@
 
 - The `Saved addresses` listing option is no longer available in the guest checkout flow.
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
+- The build script now reads the configuration from the environment instead of fetching it from the remote system.
 
 ### 🩹 Fixed
 
