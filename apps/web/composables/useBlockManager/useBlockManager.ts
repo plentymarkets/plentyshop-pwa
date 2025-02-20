@@ -21,7 +21,6 @@ export const useBlockManager = () => {
 
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
-
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
