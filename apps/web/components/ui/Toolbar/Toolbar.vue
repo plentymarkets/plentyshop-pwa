@@ -63,6 +63,7 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
+import { useToolbar } from '~/composables/useToolbar/useToolbar';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 
@@ -72,55 +73,12 @@ const {
   openDrawerWithView,
   closeDrawer,
   settingsIsDirty,
-  saveSettings,
   loading: settingsLoading,
 } = useSiteConfiguration();
-const { updatePageTemplate } = useUpdatePageTemplate();
-
+const { save } = useToolbar();
 const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
-
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
-
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
-const { send } = useNotification();
-const { $i18n } = useNuxtApp();
-
-const save = async () => {
-  const messageList: string[] = [];
-  let hasError = false;
-  const errorMessage = $i18n.t('errorMessages.editor.save.error');
-
-  const handleSave = async (saveFunction: () => Promise<boolean>, successMessage: string) => {
-    const saved = await saveFunction();
-    if (saved) {
-      messageList.push(successMessage);
-    } else {
-      hasError = true;
-    }
-  };
-
-  if (!isLocalTemplate.value && isEditingEnabled.value) {
-    await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
-  }
-
-  if (settingsIsDirty.value) {
-    await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
-  }
-
-  if (messageList.length > 0) {
-    send({
-      message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
-      type: 'positive',
-    });
-  }
-
-  if (hasError) {
-    send({
-      message: errorMessage,
-      type: 'negative',
-    });
-  }
-};
 
 const toggleSettingsDrawer = () => {
   drawerView.value === 'settings' ? closeDrawer() : openDrawerWithView('settings');
