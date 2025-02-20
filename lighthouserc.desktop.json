@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "yarn start",
+      "startServerCommand": "npm run start",
       "settings": {
         "preset": "desktop"
       },
