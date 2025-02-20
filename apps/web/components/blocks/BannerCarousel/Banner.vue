@@ -39,7 +39,7 @@
         :data-testid="'banner-pretitle-' + props.index"
         v-html="props.bannerProps.text.pretitle"
       />
-      <template v-if="isFirstBanner">
+      <template v-if="!rootIndex">
         <h1
           v-if="props.bannerProps.text.title"
           class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
@@ -95,12 +95,13 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-const { globalIndex } = useGlobalBannerIndex();
-const isFirstBanner = computed(() => globalIndex.value === 0);
+// const { globalIndex } = useGlobalBannerIndex();
+// const isFirstBanner = computed(() => globalIndex.value === 0);
 
 const props = defineProps<{
   bannerProps: BannerProps;
   index: number;
+  rootIndex?: number;
 }>();
 
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
