@@ -116,7 +116,7 @@ const save = async () => {
 
   if (hasError) {
     send({
-      message: errorMessage, // Only one error message
+      message: errorMessage,
       type: 'negative',
     });
   }
