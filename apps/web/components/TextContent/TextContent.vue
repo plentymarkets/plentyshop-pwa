@@ -5,7 +5,7 @@
     <h1
       v-if="text?.title && index === 0"
       data-testid="text-title"
-      class="text-2xl font-semibold mb-4"
+      class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
       v-html="text.title"
     />
 

@@ -51,7 +51,7 @@
       <template v-else>
         <h2
           v-if="props.bannerProps.text.title"
-          class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
+          class="text-2xl font-semibold mb-4"
           :data-testid="'banner-title-' + props.index"
           v-html="props.bannerProps.text.title"
         />
