@@ -29,6 +29,7 @@
 - Added site settings test
 - Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
 - All titles in blocks can now support html
+- Added feedback notifications for 'Save changes' button.
 
 ### 👷 Changed
 

@@ -162,6 +162,13 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
 
     await useAsyncData(() => useSdk().plentysystems.setConfiguration({ settings }));
 
+    const { send } = useNotification();
+    const { $i18n } = useNuxtApp();
+    send({
+      message: [$i18n.t('errorMessages.editor.save.success'), $i18n.t('errorMessages.editor.save.settings')],
+      type: 'positive',
+    });
+
     state.value.initialData = {
       blockSize: state.value.blockSize,
       selectedFont: { caption: state.value.selectedFont.value, value: state.value.selectedFont.value },
