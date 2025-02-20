@@ -82,14 +82,43 @@ const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
 const isLocalTemplate = computed(() => typeof homepageCategoryId !== 'number');
 
 const isTouched = computed(() => settingsIsDirty.value || (!isLocalTemplate.value && isEditingEnabled.value));
+const { send } = useNotification();
+const { $i18n } = useNuxtApp();
 
-const save = () => {
+const save = async () => {
+  const messageList: string[] = [];
+  let hasError = false;
+  const errorMessage = $i18n.t('errorMessages.editor.save.error');
+
+  const handleSave = async (saveFunction: () => Promise<boolean>, successMessage: string) => {
+    const saved = await saveFunction();
+    if (saved) {
+      messageList.push(successMessage);
+    } else {
+      hasError = true;
+    }
+  };
+
   if (!isLocalTemplate.value && isEditingEnabled.value) {
-    updatePageTemplate();
+    await handleSave(updatePageTemplate, $i18n.t('errorMessages.editor.save.editor'));
   }
 
   if (settingsIsDirty.value) {
-    saveSettings();
+    await handleSave(saveSettings, $i18n.t('errorMessages.editor.save.settings'));
+  }
+
+  if (messageList.length > 0) {
+    send({
+      message: [$i18n.t('errorMessages.editor.save.success'), ...messageList],
+      type: 'positive',
+    });
+  }
+
+  if (hasError) {
+    send({
+      message: errorMessage, // Only one error message
+      type: 'negative',
+    });
   }
 };
 

@@ -6,26 +6,21 @@ const stripArrayBrackets = (jsonString: string): string => {
   return jsonString;
 };
 
-const updatePageTemplate = async (): Promise<void> => {
+const updatePageTemplate = async (): Promise<boolean> => {
   const { setCategoryTemplate } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
   const { initialBlocks } = useHomepage();
   const runtimeConfig = useRuntimeConfig();
   const homepageCategoryId = runtimeConfig.public.homepageCategoryId;
   const { data, loading } = useHomepage();
-  const { send } = useNotification();
-  const { $i18n } = useNuxtApp();
   loading.value = true;
   try {
     const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
     await setCategoryTemplate(homepageCategoryId, cleanedData);
-    send({
-      message: [$i18n.t('errorMessages.editor.save.success'), $i18n.t('errorMessages.editor.save.editor')],
-      type: 'positive',
-    });
+    return true;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error: unknown) {
-    send({ message: $i18n.t('errorMessages.editor.save.error'), type: 'negative' });
+    return false;
   } finally {
     loading.value = false;
     isEditingEnabled.value = false;
