@@ -10,6 +10,7 @@ export type SizeKey = 'lg' | 'md' | 'sm' | 'xs';
 export type Sizes = Record<SizeKey, { width: string; height: string }>;
 
 export type HeroContentProps = {
+  index?: number;
   image?: Record<SizeKey, string> | object;
   alt?: string;
   tagline?: string;
@@ -23,6 +24,7 @@ export type HeroContentProps = {
 };
 
 export type BannerProps = {
+  index?: number;
   image: {
     wideScreen?: string;
     desktop?: string;
