@@ -25,7 +25,7 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
     state.value.loading = true;
     const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }), {
-      lazy: true
+      lazy: true,
     });
 
     state.value.loading = false;
