@@ -59,7 +59,8 @@
         </UiButton>
 
         <UiButton
-          :disabled="!hasCheckoutAddress || formIsLoading || disabled"
+          v-if="hasCheckoutAddress"
+          :disabled="formIsLoading || disabled"
           variant="secondary"
           class="ml-2"
           :data-testid="'close-address-' + type"
