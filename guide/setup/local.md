@@ -5,10 +5,9 @@ This section describes how to run the project locally.
 ## Prerequisites
 
 - `Node.js` 20+
-- `Yarn` 3
 - [Personal Access Token](https://github.com/settings/tokens/new) with the scope **read:packages**
 
-Download Node.js from the [official website](https://nodejs.org/) or use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version. For installation instructions for Yarn, refer to the [Yarn documentation](https://yarnpkg.com/getting-started/install).
+Download Node.js from the [official website](https://nodejs.org/) and use [nvm](https://github.com/nvm-sh/nvm) to switch to a compatible version.
 
 ## Repository fork
 
@@ -19,20 +18,6 @@ We recommend working with a fork of the [app repository](https://github.com/plen
 
 ## Authentication
 
-### NPM registry
-
-This project queries data from PlentyONE by using other NPM packages as middleware. These packages are published on the GitHub registry. To download packages from GitHub's registry, you have to authenticate. To enable authentication, carry out the following steps:
-
-1. In the root directory, create a new file called `.yarnrc.yml`.
-2. Copy the contents of `.yarnrc.yml.example` to `.yarnrc.yml`.
-3. In `.yarnrc.yml`, replace `<TOKEN>` with the Personal Access Token you created earlier.
-
-The `.gitignore` doesn't track `.yarnrc.yml`, so you don't have to worry about exposing your token.
-
-::: tip
-You can enable [push protection](https://docs.github.com/en/code-security/secret-scanning/push-protection-for-users) in your GitHub account for an additional layer of security.
-:::
-
 ### PlentyONE system
 
 1. Add your [API endpoint](/guide/how-to/middleware#api-endpoint)
@@ -41,8 +26,8 @@ You can enable [push protection](https://docs.github.com/en/code-security/secret
 ## Starting the app
 
 1. Open the repository in your command line interface.
-2. Run `yarn` to install all dependencies.
-3. Run `yarn dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
+2. Run `npm install` to install all dependencies.
+3. Run `npm run dev` to start the development server. The app will be served with hot reload at [localhost:3000](http://localhost:3000/).
 
 ## Custom configuration
 

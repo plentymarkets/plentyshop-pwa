@@ -27,13 +27,11 @@ jobs:
           with:
             repository: 'plentymarkets/plentyshop-pwa'
 
-        - name: Setup Node and Yarn
+        - name: Setup Node
           uses: ./.github/actions/setup
-          with:
-            npm-auth-token: ${{ secrets.GITHUB_TOKEN }}
   
         - name: Build typedoc
-          run: cd apps/web && yarn publish-typedoc
+          run: cd apps/web && npm run publish-typedoc
   
         - name: Upload artifact
           uses: actions/upload-artifact@v4
