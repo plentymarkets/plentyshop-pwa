@@ -17,7 +17,7 @@
       :height="getImageDimensions().height"
       data-testid="image-block"
     />
-    <TextContent class="lg:w-1/2" :text="props.text" :button="props.button" />
+    <TextContent class="lg:w-1/2" :index="props.index" :text="props.text" :button="props.button" />
   </div>
 </template>
 
