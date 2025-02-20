@@ -91,7 +91,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const updateBannerItems: UpdateBannerItems = (newBannerItems: BannerProps[], blockIndex: number) => {
     const carouselBlock = state.value.data.blocks[blockIndex];
     if (carouselBlock) {
-      carouselBlock.options = { ...carouselBlock.options, ...{ bannerItems: newBannerItems } };
+      carouselBlock.content = { ...carouselBlock.content, ...newBannerItems };
     }
   };
 

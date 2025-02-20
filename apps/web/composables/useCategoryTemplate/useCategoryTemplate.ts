@@ -24,7 +24,9 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
    */
   const fetchCategoryTemplate: FetchCategoryTemplate = async (categoryId) => {
     state.value.loading = true;
-    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }));
+    const { data } = await useAsyncData(() => useSdk().plentysystems.getCategoryTemplate({ id: categoryId }), {
+      lazy: true,
+    });
 
     state.value.loading = false;
     state.value.data = data?.value?.data ?? state.value.data;
@@ -32,11 +34,13 @@ export const useCategoryTemplate: UseCategoryTemplateReturn = () => {
 
   const setCategoryTemplate: SetCategoryTemplate = async (categoryId: number, content: string) => {
     state.value.loading = true;
+    console.log('content:', content)
     try {
       const { data } = await useAsyncData(() =>
-        useSdk().plentysystems.setCategoryTemplate({
-          id: categoryId,
-          content: content,
+        useSdk().plentysystems.doSaveBlocks({
+          url: 'index',
+          entityType: 'immutable',
+          blocks: content,
         }),
       );
       state.value.data = data?.value?.data ?? state.value.data;

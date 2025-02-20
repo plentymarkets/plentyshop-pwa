@@ -7,6 +7,9 @@ describe('Banner button', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
+          name: 'Banner',
+          type: 'content',
+          content: {
           text: {
             pretitle: 'Test pretitle',
             title: 'Test title',
@@ -15,6 +18,7 @@ describe('Banner button', () => {
           },
           image: {},
           button: {},
+      }
         },
 
         index: 0,
@@ -28,16 +32,20 @@ describe('Banner button', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {
-            link: '/test-link',
-          },
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {
+              link: '/test-link',
+            },
+          }
         },
 
         index: 0,
@@ -51,16 +59,20 @@ describe('Banner button', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {
-            label: 'Test button',
-          },
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {
+              label: 'Test button',
+            },
+          }
         },
 
         index: 0,
@@ -74,18 +86,22 @@ describe('Banner button', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-          },
-          image: {},
-          button: {
-            label: 'Test button',
-            link: '/test-link',
-            variant: 'secondary',
-          },
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {
+              label: 'Test button',
+              link: '/test-link',
+              variant: 'secondary',
+            },
+          }
         },
 
         index: 0,

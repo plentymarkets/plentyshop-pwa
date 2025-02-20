@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils';
 import { BlocksBannerCarouselBanner } from '#components';
 
 describe('Banner text', () => {
@@ -7,15 +7,18 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
@@ -30,15 +33,18 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
@@ -53,15 +59,18 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            htmlDescription: '<p>Test description</p>',
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              htmlDescription: '<p>Test description</p>',
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
@@ -76,15 +85,18 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
@@ -99,23 +111,25 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-            color: 'red',
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              color: 'red',
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
 
-    const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+    const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
     expect(overlay.attributes('style')).toContain('color: red');
   });
 
@@ -123,24 +137,26 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-            bgcolor: '#0000FF',
-            background: true,
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              bgcolor: '#0000FF',
+              background: true,
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
 
-    const content = wrapper.find('[data-testid="banner-content-0"]')
-
+    const content = wrapper.find('[data-testid="banner-content-0"]');
     expect(content.attributes('style')).toContain('background-color: rgba(0, 0, 255, 1)');
   });
 
@@ -148,24 +164,26 @@ describe('Banner text', () => {
     const wrapper = mount(BlocksBannerCarouselBanner, {
       props: {
         bannerProps: {
-          text: {
-            pretitle: 'Test pretitle',
-            title: 'Test title',
-            subtitle: 'Test subtitle',
-            htmlDescription: '<p>Test description</p>',
-            bgopacity: 0.5,
-            background: true,
+          name: 'Banner',
+          type: 'content',
+          content: {
+            text: {
+              pretitle: 'Test pretitle',
+              title: 'Test title',
+              subtitle: 'Test subtitle',
+              htmlDescription: '<p>Test description</p>',
+              bgopacity: 0.5,
+              background: true,
+            },
+            image: {},
+            button: {},
           },
-          image: {},
-          button: {},
         },
-
         index: 0,
       },
     });
 
-    const content = wrapper.find('[data-testid="banner-content-0"]')
-
+    const content = wrapper.find('[data-testid="banner-content-0"]');
     expect(content.attributes('style')).toContain('background-color: rgba(255, 255, 255, 0.5)');
   });
 
@@ -174,22 +192,24 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('text-align: left');
     });
 
@@ -197,23 +217,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              textAlignment: 'center',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                textAlignment: 'center',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('text-align: center');
     });
 
@@ -221,23 +243,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              textAlignment: 'right',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                textAlignment: 'right',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('text-align: right');
     });
   });
@@ -247,22 +271,24 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('justify-content: flex-start');
     });
 
@@ -270,23 +296,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              justify: 'center',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                justify: 'center',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('justify-content: center');
     });
 
@@ -294,23 +322,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              justify: 'bottom',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                justify: 'bottom',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('justify-content: flex-end');
     });
   });
@@ -320,22 +350,24 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('align-items: flex-start');
     });
 
@@ -343,23 +375,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              align: 'center',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                align: 'center',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('align-items: center');
     });
 
@@ -367,23 +401,25 @@ describe('Banner text', () => {
       const wrapper = mount(BlocksBannerCarouselBanner, {
         props: {
           bannerProps: {
-            text: {
-              pretitle: 'Test pretitle',
-              title: 'Test title',
-              subtitle: 'Test subtitle',
-              htmlDescription: '<p>Test description</p>',
-              align: 'right',
+            name: 'Banner',
+            type: 'content',
+            content: {
+              text: {
+                pretitle: 'Test pretitle',
+                title: 'Test title',
+                subtitle: 'Test subtitle',
+                htmlDescription: '<p>Test description</p>',
+                align: 'right',
+              },
+              image: {},
+              button: {},
             },
-            image: {},
-            button: {},
           },
-
           index: 0,
         },
       });
 
-      const overlay = wrapper.find('[data-testid="banner-overlay-0"]')
-
+      const overlay = wrapper.find('[data-testid="banner-overlay-0"]');
       expect(overlay.attributes('style')).toContain('align-items: flex-end');
     });
   });

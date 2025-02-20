@@ -49,7 +49,9 @@ export type BlockOptions =
 
 export interface Block {
   name: string;
-  options: BlockOptions;
+  type: string;
+  configuration?: unknown;
+  content: BlockOptions;
 }
 
 export interface HomepageData {

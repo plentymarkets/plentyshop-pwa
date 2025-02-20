@@ -1,11 +1,11 @@
 <template>
   <NuxtImg
     :src="getImageUrl()"
-    :alt="props.bannerProps.image?.alt ?? ''"
+    :alt="banner.image?.alt ?? ''"
     class="w-full object-cover"
     :style="{
-      filter: props.bannerProps.image?.brightness
-        ? 'brightness(' + (props.bannerProps.image?.brightness ?? 1) + ')'
+      filter: banner.image?.brightness
+        ? 'brightness(' + (banner.image?.brightness ?? 1) + ')'
         : '',
       height: getImageHeight(),
     }"
@@ -14,62 +14,62 @@
   />
 
   <div
-    v-if="props.bannerProps.text"
-    :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': props.bannerProps.text.bgcolor }]"
+    v-if="banner.text"
+    :class="['absolute inset-0 p-4 flex flex-col md:basis-2/4', { 'md:p-10': banner.text.bgcolor }]"
     :style="{
-      color: props.bannerProps.text.color,
+      color: banner.text.color,
       textAlign: getTextAlignment(),
-      alignItems: getContentPosition(props.bannerProps.text.align ?? ''),
-      justifyContent: getContentPosition(props.bannerProps.text.justify ?? ''),
+      alignItems: getContentPosition(banner.text.align ?? ''),
+      justifyContent: getContentPosition(banner.text.justify ?? ''),
     }"
     :data-testid="'banner-overlay-' + props.index"
   >
     <div
       :class="bannerContentClass"
       :style="{
-        backgroundColor: props.bannerProps.text.background
-          ? hexToRgba(props.bannerProps.text.bgcolor, props.bannerProps.text.bgopacity)
+        backgroundColor: banner.text.background
+          ? hexToRgba(banner.text.bgcolor, banner.text.bgopacity)
           : '',
       }"
       :data-testid="'banner-content-' + props.index"
     >
       <div
-        v-if="props.bannerProps.text.pretitle"
+        v-if="banner.text.pretitle"
         class="typography-headline-6 font-bold tracking-widest"
         :data-testid="'banner-pretitle-' + props.index"
-        v-html="props.bannerProps.text.pretitle"
+        v-html="banner.text.pretitle"
       />
       <h1
-        v-if="props.bannerProps.text.title"
+        v-if="banner.text.title"
         class="typography-display-3 md:typography-display-2 lg:typography-display-1 font-bold my-2 lg:leading-[4rem]"
         :data-testid="'banner-title-' + props.index"
-        v-html="props.bannerProps.text.title"
+        v-html="banner.text.title"
       />
 
       <div
-        v-if="props.bannerProps.text.subtitle"
+        v-if="banner.text.subtitle"
         class="typography-headline-6 font-bold tracking-widest mb-4"
         :data-testid="'banner-subtitle-' + props.index"
-        v-html="props.bannerProps.text.subtitle"
+        v-html="banner.text.subtitle"
       />
 
       <div
-        v-if="props.bannerProps.text.htmlDescription"
+        v-if="banner.text.htmlDescription"
         class="typography-text-sm md:typography-text-lg font-normal"
         :data-testid="'banner-description-' + props.index"
-        v-html="props.bannerProps.text.htmlDescription"
+        v-html="banner.text.htmlDescription"
       />
 
       <UiButton
-        v-if="props.bannerProps.button && props.bannerProps.button.label && props.bannerProps.button.link"
+        v-if="banner.button && banner.button.label && banner.button.link"
         class="flex flex-col md:flex-row gap-4 mt-6"
         :tag="NuxtLink"
-        :to="localePath(props.bannerProps.button.link ?? '')"
-        :variant="props.bannerProps.button.variant ?? 'primary'"
+        :to="localePath(banner.button.link ?? '')"
+        :variant="banner.button.variant ?? 'primary'"
         size="lg"
         :data-testid="'banner-button-' + props.index"
       >
-        {{ props.bannerProps.button.label }}
+        {{ banner.button.label }}
       </UiButton>
     </div>
   </div>
@@ -89,6 +89,11 @@ const props = defineProps<{
   bannerProps: BannerProps;
   index: number;
 }>();
+
+console.log('props.bannerProps: ', props.bannerProps);
+const banner = computed(() => [])
+
+
 
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
   const cleanHex = hex.replace('#', '');
@@ -111,16 +116,16 @@ const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
 const getImageUrl = () => {
   switch (viewport.breakpoint.value) {
     case '4xl': {
-      return props.bannerProps.image?.wideScreen ?? '';
+      return banner.value.image?.wideScreen ?? '';
     }
     case 'lg': {
-      return props.bannerProps.image?.desktop ?? '';
+      return banner.value.image?.desktop ?? '';
     }
     case 'md': {
-      return props.bannerProps.image?.tablet ?? '';
+      return banner.value.image?.tablet ?? '';
     }
     default: {
-      return props.bannerProps.image?.mobile ?? '';
+      return banner.value.image?.mobile ?? '';
     }
   }
 };
@@ -144,7 +149,7 @@ const getImageHeight = () => {
 };
 
 const getTextAlignment = () => {
-  const textAlignment = props.bannerProps.text?.textAlignment ?? '';
+  const textAlignment = banner.value.text?.textAlignment ?? '';
 
   switch (textAlignment) {
     case 'center': {
