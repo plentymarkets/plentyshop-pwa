@@ -2,8 +2,9 @@ import { createSharedComposable } from '@vueuse/core';
 import type { CategoryTreeItem } from '@plentymarkets/shop-api';
 import { categoryTreeGetters } from '@plentymarkets/shop-api';
 import { useDisclosure } from '@storefront-ui/vue';
+import type { Locale } from '#i18n';
 
-const setVsfLocale = (locale: string) => {
+const setVsfLocale = (locale: Locale) => {
   const { $i18n } = useNuxtApp();
   const { setLocaleCookie } = $i18n;
   const DAYS = 100;
@@ -100,7 +101,7 @@ export const useLocalization = createSharedComposable(() => {
    * @param hideMenu
    * @example switchLocale('en')
    */
-  const switchLocale = async (language: string, hideMenu = true) => {
+  const switchLocale = async (language: Locale, hideMenu = true) => {
     const { getCart } = useCart();
     const switchLocalePath = useSwitchLocalePath();
     const route = useRoute();
