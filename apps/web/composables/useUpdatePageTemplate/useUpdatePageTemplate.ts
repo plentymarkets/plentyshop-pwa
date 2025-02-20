@@ -28,8 +28,8 @@ const updatePageTemplate = async (): Promise<void> => {
     send({ message: $i18n.t('errorMessages.editor.save.error'), type: 'negative' });
   } finally {
     loading.value = false;
-    initialBlocks.value = data.value.blocks.map((block) => toRaw(block));
     isEditingEnabled.value = false;
+    initialBlocks.value = data.value.blocks.map((block) => toRaw(block));
   }
 };
 
