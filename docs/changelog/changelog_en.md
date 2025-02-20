@@ -9,6 +9,7 @@
 # v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
+- Added feedback notifications for 'Save changes' button.
 
 #### Editor
 
@@ -41,7 +42,6 @@
 - Added site settings test
 - Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
 - All titles in blocks can now support html
-- Added feedback notifications for 'Save changes' button.
 - Added a fallback text to the shipping page if none is configured.
 
 ### 👷 Changed
