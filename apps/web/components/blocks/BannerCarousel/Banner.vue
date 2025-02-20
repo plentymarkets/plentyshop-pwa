@@ -95,9 +95,6 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-// const { globalIndex } = useGlobalBannerIndex();
-// const isFirstBanner = computed(() => globalIndex.value === 0);
-
 const props = defineProps<{
   bannerProps: BannerProps;
   index: number;

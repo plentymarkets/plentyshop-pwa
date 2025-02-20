@@ -9,12 +9,9 @@ import type { SlideControls } from '~/composables/useHomepage/types';
 
 const runtimeConfig = useRuntimeConfig();
 const isHero = ref(runtimeConfig.public.isHero);
-const { setIndex } = useGlobalBannerIndex();
 const { bannerItems, index, controls } = defineProps<{
   bannerItems: BannerProps[];
   controls: SlideControls;
   index: number;
 }>();
-
-setIndex(index);
 </script>
