@@ -1,6 +1,6 @@
 # Changelog PlentyONE Shop
 
-# v1.10.0 (2025-02-20)
+# v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### New
 
@@ -38,10 +38,10 @@ We've switched our package manager from Yarn to NPM. There are two main reasons 
 
 - The `Saved addresses` listing option is no longer available in the guest checkout flow.
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
-- The build script now reads the configuration from the environment instead of fetching it from the remote system.
 
 #### Misc
 
+- The build script now reads the configuration from the environment instead of fetching it from the remote system.
 - The shop's color palette now gets generated at runtime instead of build time.
 
 ### 🩹 Fixed
