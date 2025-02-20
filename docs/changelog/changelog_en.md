@@ -32,6 +32,20 @@
 
 ### 👷 Changed
 
+#### Package manager
+
+We've switched our package manager from Yarn to NPM. There are two main reasons for this change:
+
+1. NPM has better tools to audit and fix security vulnerabilities in the dependency tree than Yarn does.
+2. NPM provides better tools for version management via [nvm](https://github.com/nvm-sh/nvm). This matters because it allows us to consolidate apps created by different providers more easily.
+
+**_IMPORTANT_**
+
+- `yarn` commands have been replaced by their `npm` equivalent. For example, `yarn build` is now `npm run build`.
+- Double check `.env.example` for updates. In particular, make sure to set a `DEFAULTLANGUAGE` in your environment.
+
+#### Checkout
+
 - The `Saved addresses` listing option is no longer available in the guest checkout flow.
 - Incomplete PayPal setup will no longer throw an alert in the ui. The error is suppressed and only logged in the browser console.
 - Changed lighthouse performance assertion to error instead of warning
