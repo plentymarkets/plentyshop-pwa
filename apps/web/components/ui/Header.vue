@@ -11,7 +11,9 @@
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
-            :disabled="isPreview || (showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            :disabled="
+              isPreview || (showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)
+            "
             @click="toggleLanguageSelect()"
           >
             <template #prefix>
