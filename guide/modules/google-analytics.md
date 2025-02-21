@@ -3,7 +3,7 @@ prev: false
 next: false
 ---
 # Google Analytics
-This module allows you to integrate Google Analytics into your PlentyONE Shop. Starting from version **v2.0.0**, it comes pre-installed. Be sure that the `@plentymarkets/shop-gtag-module` package exists in your `apps/web/package.json`. If you're using an earlier version or the package isn't part of your `apps/web/package.json`, you can install it manually with:
+This module allows you to integrate Google Analytics into your shop. Starting from version **v1.10.0**, it comes pre-installed. Be sure that the `@plentymarkets/shop-gtag-module` package exists in your `apps/web/package.json`. If you're using an earlier version or the package isn't part of your `apps/web/package.json`, you can install it manually with:
 ```bash
 yarn add @plentymarkets/shop-gtag-module
 ```
@@ -20,7 +20,7 @@ You can manage Google Analytics settings in the backend, go to:
 
 In the left sidebar, navigate to the `SEO` tab, where you'll find the Google Analytics settings.
 
-- **Enable Google Analytics** – Activate or deactivate Google Analytics for your PlentyONE Shop.
+- **Enable Google Analytics** – Activate or deactivate Google Analytics for your shop.
 - **Tracking ID** – Enter your Google Analytics Tracking ID (e.g., `UA-12345678-9`). Without this, tracking won't work.
 - **Send Gross Prices** – Choose whether to send gross prices to Google Analytics (default is net prices).
 - **Anonymize IP** – Enable this to anonymize visitor IPs for privacy compliance.
