@@ -1,4 +1,5 @@
 export type TextContentProps = {
+  index?: number;
   text?: {
     pretitle?: string;
     title?: string;
