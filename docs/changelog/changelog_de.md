@@ -1,5 +1,9 @@
 # Changelog PlentyONE Shop
 
+# v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
+
+- Problem behoben, bei dem während des Bauens Sprachdateien in den falschen Pfad geschrieben werden.
+
 # v1.10.0 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.9.1...v1.10.0" target="_blank" rel="noopener"><b>Übersicht aller Änderungen</b></a>
 
 ### Neu
