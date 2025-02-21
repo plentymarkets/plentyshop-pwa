@@ -135,10 +135,6 @@ export const useSiteConfiguration: UseSiteConfigurationReturn = () => {
   });
 
   const saveSettings: SaveSettings = async (): Promise<boolean> => {
-    if (!settingsIsDirty.value) {
-      return false;
-    }
-
     state.value.loading = true;
 
     const settings = [

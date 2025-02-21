@@ -63,7 +63,6 @@
 import { SfLoaderCircular, SfIconBase, SfIconVisibility, SfIconTune } from '@storefront-ui/vue';
 import { editPath } from 'assets/icons/paths/edit';
 import { savePath } from '~/assets/icons/paths/save';
-import { useToolbar } from '~/composables/useToolbar/useToolbar';
 const runtimeConfig = useRuntimeConfig();
 const { isEditing, isEditingEnabled, disableActions } = useEditor();
 

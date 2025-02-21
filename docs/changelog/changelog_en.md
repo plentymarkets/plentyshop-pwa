@@ -1,5 +1,10 @@
 # Changelog PlentyONE Shop
 
+# v1.xx.x (2025-xx-xx)
+
+### New
+- Added feedback notifications for 'Save changes' button.
+
 # v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
 ### Fixed
@@ -24,24 +29,6 @@
 #### Misc
 
 - Added robots for static pages.
-- Adding saving functionality for site settings.
-- You can now add blocks on homepage from the blocks side nav!
-- Added the option to opt-out cookies in the cookie bar when the cookie is not in the "Necessary" group.
-- Added the logic to remove cookies after revoking consent.
-- Added a new placeholder block component to showcase to the user where his block will go
-- You can now add blocks on homepage from the blocks side nav
-- Added shipping page no configuration fallback text
-- Image Text Form integrated and two way data binded
-- Added newsletter form to the block settings.
-- Added the `shop-core` module to the project.
-- Automated tests for Image Text
-- Automated tests for Newsletter Form.
-- Color picker labels now have border
-- Automated tests for Text Card Form
-- Added site settings test
-- Integrated Google Analytics module [shop-module-gtag](https://github.com/plentymarkets/shop-module-gtag).
-- All titles in blocks can now support html
-- Added feedback notifications for 'Save changes' button.
 - Added a fallback text to the shipping page if none is configured.
 
 ### 👷 Changed
