@@ -1,16 +1,14 @@
 # Changelog PlentyONE Shop
 
-# v1.x.x (2025-xx-xx)
+# v1.xx.x (2025-xx-xx)
 
 ### New
+
+- Added feedback notifications for 'Save changes' button.
 
 ### 👷 Changed
 
 - The address saving buttons have been relocated to the bottom of the form to enhance the user experience.
-
-### 🩹 Fixed
-
-# Changelog PlentyONE Shop
 
 # v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
