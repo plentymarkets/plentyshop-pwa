@@ -11,7 +11,7 @@
             variant="tertiary"
             square
             data-testid="open-languageselect-button"
-            :disabled="(showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
+            :disabled="isPreview || (showConfigurationDrawer && isEditing) || (showConfigurationDrawer && disableActions)"
             @click="toggleLanguageSelect()"
           >
             <template #prefix>
@@ -220,6 +220,7 @@ const viewport = useViewport();
 const runtimeConfig = useRuntimeConfig();
 const showConfigurationDrawer = runtimeConfig.public.showConfigurationDrawer;
 const { isEditing, disableActions } = useEditor();
+const { isPreview } = useBlockManager();
 
 onNuxtReady(() => {
   cartItemsCount.value = cart.value?.items?.reduce((price, { quantity }) => price + quantity, 0) ?? 0;
