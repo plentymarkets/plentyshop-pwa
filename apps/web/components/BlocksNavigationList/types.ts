@@ -9,11 +9,13 @@ export type BlocksList = {
       template: {
         en: {
           name: string;
-          options: Record<string, unknown>;
+          type: string;
+          content: Record<string, unknown>;
         };
         de: {
           name: string;
-          options: Record<string, unknown>;
+          type: string;
+          content: Record<string, unknown>;
         };
       };
     }[];

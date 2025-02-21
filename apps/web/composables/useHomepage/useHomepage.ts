@@ -29,7 +29,7 @@ export const useHomepage: UseHomepageDataReturn = () => {
   const fetchRecommendedProducts = async () => {
     state.value.data.blocks.forEach((block) => {
       if (block.name === 'ProductRecommendedProducts') {
-        const options = block.options as ProductRecommendedProductsProps;
+        const options = block.content as ProductRecommendedProductsProps;
         const id = options.categoryId;
 
         if (tryUseNuxtApp()) {

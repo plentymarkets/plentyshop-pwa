@@ -125,7 +125,7 @@ const { blockIndex } = useSiteConfiguration();
 
 const recommendedBlock = computed(
   () =>
-    (data.value.blocks[blockIndex.value].options || {
+    (data.value.blocks[blockIndex.value].content || {
       text: {
         pretitle: '',
         title: '',

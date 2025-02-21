@@ -10,7 +10,7 @@
         'mb-xl': blockSize === 'xl',
       },
       {
-        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'BannerCarousel',
+        'max-w-screen-3xl mx-auto md:px-6 lg:px-10 mt-3': block.name !== 'Banner' && block.name !== 'CarouselStructure',
       },
       {
         'outline outline-4 outline-[#538AEA]':
@@ -32,7 +32,7 @@
       <SfIconAdd class="cursor-pointer" />
     </button>
     <UiBlockActions
-        v-if="disableActions && blockHasData && blockHasData(block) && isPreview"
+
       :class="[
         'opacity-0',
         {
@@ -48,7 +48,26 @@
         @change-position="changeBlockPosition"
     />
 
-    <component :is="getBlockComponent" v-bind="block" :index="index" />
+    <component :is="getBlockComponent" v-bind="block" :index="index">
+      <template v-slot:content="{ blo }">
+        <PageBlock
+            :index="index"
+            :block="blo"
+            :is-preview="isPreview"
+            :disable-actions="disableActions"
+            :is-clicked="isClicked"
+            :clicked-block-index="clickedBlockIndex"
+            :is-tablet="isTablet"
+            :block-has-data="blockHasData"
+            :tablet-edit="tabletEdit"
+            :add-new-block="addNewBlock"
+            :change-block-position="changeBlockPosition"
+            :is-last-block="isLastBlock"
+            :handle-edit="handleEdit"
+            :delete-block="deleteBlock"
+        />
+      </template>
+    </component>
 
     <button
         v-if="disableActions && isPreview"
@@ -89,14 +108,16 @@ const props = defineProps<Props>();
 const { blockSize, drawerOpen, drawerView } = useSiteConfiguration();
 const { visiblePlaceholder } = useBlockManager();
 
-const modules = import.meta.glob('@/components/**/blocks/**/*.vue') as Record<
+const modules = import.meta.glob(`@/components/**/blocks/**/*.vue`) as Record<
   string,
   () => Promise<{ default: unknown }>
 >;
+
 const getBlockComponent = computed(() => {
   if (!props.block.name) return null;
   const regex = new RegExp(`${props.block.name}\\.vue$`, 'i');
   const matched = Object.keys(modules).find((path) => regex.test(path));
+
   if (matched) {
     return defineAsyncComponent({
       loader: modules[matched],
@@ -104,6 +125,8 @@ const getBlockComponent = computed(() => {
   }
   return '';
 });
+
+console.log('getBlockComponent: ', getBlockComponent.value)
 
 const displayTopPlaceholder = (index: number): boolean => {
   const visiblePlaceholderState = visiblePlaceholder.value;

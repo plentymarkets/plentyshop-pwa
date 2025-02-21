@@ -2,7 +2,7 @@ import { deepEqual } from '~/utils/jsonHelper';
 import { blocksLists } from '~/blocks/blocksLists';
 
 const isEmptyBlock = (block: Block): boolean => {
-  const options = block?.options;
+  const options = block?.content;
   return !options || (typeof options === 'object' && Object.keys(options).length === 0);
 };
 const blockHasData = (block: Block): boolean => !isEmptyBlock(block);

@@ -73,6 +73,114 @@
           }
         }
       ]
+    },
+    {
+      "name": "TextCard",
+      "type": "content",
+      "content": {
+        "text": {
+          "htmlDescription": "<p>Welcome to our shop, where tech enthusiasts and fashion lovers alike will find exactly what they’re looking for! From premium headphones and high-performance drones to stylish clothing, we offer everything to make your life smarter and your style unique.</p><p>Our mission is to provide you with a carefully curated selection of products that combine quality, innovation, and design. Whether you’re in search of a new speaker for perfect sound or a casual hoodie to complete your look – we’ve got you covered.</p>",
+          "title": "Discover Tech & Style",
+          "subtitle": "Innovative technology meets modern fashion",
+          "pretitle": "Welcome to your new favorite shop",
+          "textAlignment": "center",
+          "color": "#000"
+        },
+        "button": {
+          "label": "Get shopping",
+          "link": "",
+          "variant": "primary"
+        }
+      }
+    },
+    {
+      "name": "ProductRecommendedProducts",
+      "type": "content",
+      "content": {
+        "categoryId": "73",
+        "text": {
+          "pretitle": "More than just technology",
+          "title": "Discover our fashion collection",
+          "subtitle": "Sporty fashion and accessories for everyone.",
+          "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
+        }
+      }
+    },
+    {
+      "name": "MultiColumns",
+      "type": "structure",
+      "configuration": {
+        "columnWidths": [
+          4,
+          4,
+          4
+        ]
+      },
+      "content": [
+        {
+          "name": "TextCard",
+          "type": "content",
+          "content": {
+            "text": {
+              "htmlDescription": "<p>Our headphone collection sets new standards in audio precision. With deep bass, crystal-clear highs, and an impressive soundstage, these headphones deliver a unique listening experience for every music genre. Combining modern design, maximum comfort, and cutting-edge technology, they are the perfect choice for anyone who refuses to compromise on sound quality.</p><ul><li>Premium, studio-quality sound</li><li>Comfortable fit for extended listening</li><li>Long-lasting battery life</li><li>Seamless wireless connectivity</li></ul>",
+              "title": "A New Listening Experience",
+              "subtitle": "Innovative technology meets modern fashion",
+              "textAlignment": "left",
+              "color": "#000"
+            },
+            "button": {
+              "label": "To our headphones",
+              "link": "/gear/headphones-capybara_157",
+              "variant": "primary"
+            }
+          }
+        },
+        {
+          "name": "Image",
+          "type": "content",
+          "content": {
+            "image": {
+              "wideScreen": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+              "desktop": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+              "tablet": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+              "mobile": "https://cdn02.plentymarkets.com/mevofvd5omld/frontend/headphones-mediacard.avif",
+              "alt": "Headphones",
+              "imageAlignment": "left"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "ProductRecommendedProducts",
+      "type": "content",
+      "content": {
+        "categoryId": "49",
+        "text": {
+          "pretitle": "More than just technology",
+          "title": "Explore our fashion collection",
+          "subtitle": "Sportive fashion and accessoires for everybody.",
+          "htmlDescription": "<a name=underline href='https://plentyshop.plentymarkets.com/wear'>To our full collection.</a>"
+        }
+      }
+    },
+    {
+      "name": "NewsletterSubscribe",
+      "type": "content",
+      "content": {
+        "text": {
+          "bgColor": "#f5f5f5",
+          "title": "Newsletter",
+          "htmlDescription": "Be aware of upcoming sales and events. Receive gifts and special offers!"
+        },
+        "input": {
+          "displayNameInput": true,
+          "nameIsRequired": false
+        },
+        "button": {
+          "label": "Subscribe"
+        }
+      }
     }
   ],
   "meta": {

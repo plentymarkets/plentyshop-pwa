@@ -1,7 +1,7 @@
-import type { CategoryTemplate } from '@plentymarkets/shop-api';
+import type { CategoryTemplate, Block } from '@plentymarkets/shop-api';
 
 export interface UseCategoryTemplateState {
-  data: CategoryTemplate | null;
+  data: CategoryTemplate | Block[] | null;
   loading: boolean;
 }
 

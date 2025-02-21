@@ -226,7 +226,7 @@ import type { TextCardProps } from './types';
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
-const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as TextCardProps);
+const textCardBlock = computed(() => (data.value.blocks[blockIndex.value].content || {}) as TextCardProps);
 const textSettings = ref(false);
 const buttonSettings = ref(false);
 </script>

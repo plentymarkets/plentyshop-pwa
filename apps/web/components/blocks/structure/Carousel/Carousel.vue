@@ -12,8 +12,7 @@
         @slide-change="onSlideChange"
     >
       <SwiperSlide v-for="(banner, slideIndex) in content" :key="slideIndex">
-        <PageBlock :block="banner" />
-<!--        <BlocksBannerCarouselBanner v-if="banner.type === 'content'" :banner-props="banner" :index="slideIndex" />-->
+        <slot name="content" :blo="banner" />
       </SwiperSlide>
       <div
           v-if="enableModules"
@@ -25,13 +24,13 @@
         v-if="enableModules && handleArrows()"
         :key="`prev-${index}`"
         :class="`swiper-button-prev swiper-button-prev-${index}`"
-        :style="{ color: controls.color + ' !important' }"
+        :style="{ color: configuration.controls.color + ' !important' }"
     />
     <div
         v-if="enableModules && handleArrows()"
         :key="`next-${index}`"
         :class="`swiper-button-next swiper-button-next-${index}`"
-        :style="{ color: controls.color + ' !important' }"
+        :style="{ color: configuration.controls.color + ' !important' }"
     />
     <template #fallback>
       <BlocksBannerCarouselBannerSkeleton />
@@ -42,30 +41,27 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Pagination, Navigation } from 'swiper/modules';
-import type { BannerProps } from './types';
+import { CarouselStructureProps} from './types';
 import type { Swiper as SwiperType } from 'swiper';
 import type { SlideControls } from '~/composables/useHomepage/types';
 
 const { activeSlideIndex, setIndex } = useHomepage();
 const { handleArrows } = useCarousel();
-const { content, index, controls } = defineProps<{
-  content: BannerProps[];
-  controls: SlideControls;
-  index: number;
-}>();
-console.log('hero content: ', content);
+const { content, index, configuration } = defineProps<CarouselStructureProps>();
+
+console.log('carousel structure: ', content);
 const enableModules = computed(() => content.length > 1);
 
 let slider: SwiperType | null = null;
 
 const paginationConfig = computed(() => {
-  return enableModules.value && controls.color
+  return enableModules.value && configuration.controls.color
       ? {
         el: `.swiper-pagination-${index}`,
         clickable: true,
         bulletActiveClass: 'swiper-pagination-bullet-active !bg-primary-500',
         renderBullet(index: number, className: string) {
-          return `<span key="dot-${index}" class="${className}" style="background-color: ${controls.color}!important;"></span>`;
+          return `<span key="dot-${index}" class="${className}" style="background-color: ${configuration.controls.color}!important;"></span>`;
         },
       }
       : false;
@@ -107,7 +103,7 @@ watch(
 );
 
 watch(
-    () => controls.color,
+    () => configuration.controls.color,
     (newColor, oldColor) => {
       if (slider && !slider.destroyed && newColor !== oldColor) {
         slider.pagination.render();

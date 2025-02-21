@@ -124,5 +124,5 @@ const settingsGroup = ref(true);
 const { data } = useHomepage();
 const { blockIndex } = useSiteConfiguration();
 
-const newsletterBlock = computed(() => (data.value.blocks[blockIndex.value].options || {}) as NewsletterSubscribeProps);
+const newsletterBlock = computed(() => (data.value.blocks[blockIndex.value].content || {}) as NewsletterSubscribeProps);
 </script>

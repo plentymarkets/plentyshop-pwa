@@ -53,6 +53,7 @@ export type BannerProps = {
       variant?: 'primary' | 'secondary';
     };
   }
+  index
 };
 
 export interface BannerSlide {

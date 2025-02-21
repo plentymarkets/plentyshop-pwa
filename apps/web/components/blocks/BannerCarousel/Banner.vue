@@ -85,15 +85,9 @@ const localePath = useLocalePath();
 const viewport = useViewport();
 const isMobile = computed(() => viewport.isLessThan('lg'));
 
-const props = defineProps<{
-  bannerProps: BannerProps;
-  index: number;
-}>();
+const props = defineProps<BannerProps>();
 
-console.log('props.bannerProps: ', props.bannerProps);
-const banner = computed(() => [])
-
-
+const banner = computed(() => props.content)
 
 const hexToRgba = (hex: string = '#fff', opacity: number = 1) => {
   const cleanHex = hex.replace('#', '');
