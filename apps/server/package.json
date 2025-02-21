@@ -1,11 +1,11 @@
 {
   "name": "server",
-  "version": "1.2.0",
+  "version": "1.10.0",
   "main": "./src/index.ts",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon",
-    "start": "nodemon",
+    "start": "echo \"Starting server...\" && nodemon --spawn",
     "lint": "echo \"No linting configured for server app\"",
     "lint:fix": "echo \"No linting configured for server app\"",
     "build": "tsup --minify"
