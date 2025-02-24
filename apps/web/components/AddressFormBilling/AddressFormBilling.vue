@@ -137,7 +137,7 @@
     >
       <div v-if="showAddressSaveButton" class="flex items-center">
         <UiButton
-          :data-testid="`save-address-${AddressType.Shipping}`"
+          :data-testid="`save-address-${AddressType.Billing}`"
           :disabled="formIsLoading"
           variant="secondary"
           type="submit"
@@ -150,7 +150,7 @@
           :disabled="formIsLoading || disabled"
           variant="secondary"
           class="ml-2"
-          :data-testid="`close-address-${AddressType.Shipping}`"
+          :data-testid="`close-address-${AddressType.Billing}`"
           @click="edit"
         >
           <SfIconClose />
