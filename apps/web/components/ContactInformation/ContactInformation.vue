@@ -18,6 +18,13 @@
       </UiButton>
     </div>
 
+    <div class="w-full mt-2 flex flex-col sm:flex-row">
+      <div>{{ $t('auth.signup.alreadyHaveAccount') }}</div>
+      <SfLink class="select-none hover:cursor-pointer sm:ml-2">
+        {{ $t('auth.signup.signInLinkLabel') }}
+      </SfLink>
+    </div>
+
     <UiModal
       v-if="isOpen"
       v-model="isOpen"
@@ -42,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SfIconBase, SfIconClose, useDisclosure } from '@storefront-ui/vue';
+import { SfIconBase, SfIconClose, SfLink, useDisclosure } from '@storefront-ui/vue';
 import type { ContactInformationProps } from './types';
 import { penPath } from '~/assets/icons/paths/pen';
 
