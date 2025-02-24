@@ -6,7 +6,7 @@ const stripArrayBrackets = (jsonString: string): string => {
   return jsonString;
 };
 
-const updatePageTemplate = async (): Promise<void> => {
+const updatePageTemplate = async (): Promise<boolean> => {
   const { setCategoryTemplate } = useCategoryTemplate();
   const { isEditingEnabled } = useEditor();
   const { initialBlocks } = useHomepage();
@@ -17,6 +17,10 @@ const updatePageTemplate = async (): Promise<void> => {
   try {
     const cleanedData = stripArrayBrackets(JSON.stringify(data.value));
     await setCategoryTemplate(homepageCategoryId, cleanedData);
+    return true;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error: unknown) {
+    return false;
   } finally {
     loading.value = false;
     isEditingEnabled.value = false;

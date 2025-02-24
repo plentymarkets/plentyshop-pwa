@@ -31,7 +31,7 @@ export type UpdateNewBlockPosition = (position: number) => void;
 export type SetTailwindColorProperties = (type: string, tailwindPalette: TailwindPalette) => void;
 export type SetColorPalette = (hexColor: string) => void;
 export type OpenDrawerView = (view: DrawerView, type?: string, blockIndex?: number) => void;
-export type SaveSettings = () => void;
+export type SaveSettings = () => Promise<boolean>;
 
 export interface UseSiteConfiguration {
   data: Readonly<Ref<UseSiteConfigurationState['data']>>;
