@@ -4,8 +4,20 @@ import cookieConfig from './configuration/cookie.config';
 import { nuxtI18nOptions } from './configuration/i18n.config';
 import { appConfiguration } from './configuration/app.config';
 import { fontFamilyNuxtConfig } from './configuration/fontFamily.config';
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineNuxtConfig({
+  vite: {
+    plugins: [
+      visualizer({
+        template: 'treemap', // sunburst, treemap, network
+        open: true, // Auto-opens the report in a browser
+        filename: 'stats.html', // Saves the report
+        gzipSize: true,
+        brotliSize: true
+      })
+    ]
+  },
   telemetry: false,
   devtools: { enabled: true },
   typescript: {
