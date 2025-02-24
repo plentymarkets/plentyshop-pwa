@@ -256,7 +256,6 @@
       },
       "emailAlreadyExists": "This email address is already registered.",
       "heading": "Create an account",
-      "signInLinkLabel": "Sign in instead",
       "logInLinkLabel": "Log in instead",
       "passwordValidation": {
         "characters": "The password must contain at least 8 characters.",
