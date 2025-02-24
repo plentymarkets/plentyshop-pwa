@@ -9,6 +9,7 @@
 ### 🩹 Fixed
 
 - Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
+- Fixed displayed the recommended products on product pages.
 
 # v1.10.1 (2025-02-20) <a href="https://github.com/plentymarkets/plentyshop-pwa/compare/v1.10.0...v1.10.1" target="_blank" rel="noopener"><b>Overview of all changes</b></a>
 
