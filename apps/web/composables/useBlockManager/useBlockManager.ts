@@ -1,5 +1,7 @@
 import { deepEqual } from '~/utils/jsonHelper';
-import { blocksLists } from '~/blocks/blocksLists';
+import { ref, onMounted } from 'vue';
+import type { BlocksList } from '../../components/BlocksNavigationList/types';
+const blocksLists = ref<BlocksList>({});
 
 const isEmptyBlock = (block: Block): boolean => {
   const options = block?.options;
@@ -15,6 +17,8 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
 };
 
 export const useBlockManager = () => {
+
+  
   const { $i18n } = useNuxtApp();
   const { data, initialBlocks } = useHomepage();
   const { isEditingEnabled } = useEditor();
@@ -24,10 +28,25 @@ export const useBlockManager = () => {
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
+
+  
   const isPreview = ref(false);
 
+  const getBlocksLists = async () => {
+    try {
+      const response = await fetch('/blocks/blocksLists.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      blocksLists.value = await response.json();
+    } catch (error) {
+      console.error('Failed to fetch blocksLists:', error);
+    }
+  };
+  
+
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
-    const variationsInCategory = blocksLists[category];
+    const variationsInCategory = blocksLists.value[category];
     const variationToAdd = variationsInCategory.variations[variationIndex];
     const variationTemplate = variationToAdd.template;
 
@@ -61,6 +80,7 @@ export const useBlockManager = () => {
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
 
   onMounted(() => {
+    getBlocksLists();
     const config = useRuntimeConfig().public;
     const showConfigurationDrawer = config.showConfigurationDrawer;
     const pwaCookie = useCookie('pwa');
@@ -104,5 +124,6 @@ export const useBlockManager = () => {
     addNewBlock,
     visiblePlaceholder,
     togglePlaceholder,
+    getBlocksLists,
   };
 };
