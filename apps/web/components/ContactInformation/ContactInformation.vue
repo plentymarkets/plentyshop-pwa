@@ -32,7 +32,7 @@
       :disable-esc="!cart.customerEmail"
       tag="section"
       role="dialog"
-      class="h-full w-full overflow-auto md:w-[600px] md:h-fit"
+      class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
       aria-labelledby="contact-modal-title"
     >
       <header>
@@ -62,7 +62,7 @@
       v-if="isAuthenticationOpen"
       v-model="isAuthenticationOpen"
       tag="section"
-      class="h-full md:w-[500px] md:h-fit m-0 p-0 overflow-y-auto"
+      class="h-full w-full overflow-auto md:w-[500px] md:h-fit"
     >
       <header>
         <UiButton
@@ -75,7 +75,7 @@
           <SfIconClose />
         </UiButton>
       </header>
-      <LoginComponent :is-soft-login="true" :is-modal="true" @logged-in="closeAuthentication" />
+      <LoginComponent :is-soft-login="true" :is-modal="true" @logged-in="handleSuccessfulLogin" />
     </UiModal>
   </div>
 </template>
@@ -84,6 +84,7 @@
 import { SfIconBase, SfIconClose, SfLink, useDisclosure } from '@storefront-ui/vue';
 import type { ContactInformationProps } from './types';
 import { penPath } from '~/assets/icons/paths/pen';
+import { AddressType } from '@plentymarkets/shop-api';
 
 const { disabled = false } = defineProps<ContactInformationProps>();
 
@@ -91,6 +92,7 @@ const viewport = useViewport();
 const { data: sessionData, loginAsGuest, getSession, isAuthorized, isGuest } = useCustomer();
 const { isOpen: isGuestOpen, open: openGuest, close: closeGuest } = useDisclosure();
 const { isOpen: isAuthenticationOpen, open: openAuthentication, close: closeAuthentication } = useDisclosure();
+const { persistShippingAddress, persistBillingAddress } = useCheckout();
 const cart = ref({ customerEmail: sessionData.value?.user?.email ?? sessionData.value?.user?.guestMail ?? '' });
 const isMobile = computed(() => viewport.isLessThan('md'));
 
@@ -98,7 +100,7 @@ const saveContactInformation = async (email: string) => {
   cart.value.customerEmail = email;
   await loginAsGuest(email);
   await getSession();
-  close();
+  closeGuest();
 };
 
 const openGuestModal = () => {
@@ -113,6 +115,31 @@ const openLoginModal = () => {
     if (isGuestOpen.value) closeGuest();
     openAuthentication();
   }
+};
+
+const checkPayPalPaymentsEligible = async () => {
+  if (import.meta.client) {
+    const googlePayAvailable = await useGooglePay().checkIsEligible();
+    const applePayAvailable = await useApplePay().checkIsEligible();
+
+    if (googlePayAvailable || applePayAvailable) {
+      await usePaymentMethods().fetchPaymentMethods();
+    }
+  }
+};
+
+const handleSuccessfulLogin = async () => {
+  await useFetchAddress(AddressType.Shipping)
+    .fetchServer()
+    .then(() => persistShippingAddress());
+
+  await useFetchAddress(AddressType.Billing)
+    .fetchServer()
+    .then(() => persistBillingAddress())
+    .catch((error) => useHandleError(error));
+
+  await checkPayPalPaymentsEligible();
+  closeAuthentication();
 };
 
 watch(
