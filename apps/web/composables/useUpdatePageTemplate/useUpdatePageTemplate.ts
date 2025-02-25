@@ -25,10 +25,6 @@ const updatePageTemplate = async (): Promise<boolean> => {
     loading.value = false;
     isEditingEnabled.value = false;
     initialBlocks.value = structuredClone(toRaw(data.value.blocks));
-    // eslint-disable-next-line no-console
-    console.log('data', data.value);
-    // eslint-disable-next-line no-console
-    console.log('initialBlocks', initialBlocks.value);
   }
 };
 
