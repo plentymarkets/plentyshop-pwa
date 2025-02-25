@@ -17,19 +17,14 @@ const togglePlaceholder = (index: number, position: 'top' | 'bottom') => {
 };
 
 export const useBlockManager = () => {
-
-  
   const { $i18n } = useNuxtApp();
-  const { data, initialBlocks } = useHomepage();
-  const { isEditingEnabled } = useEditor();
+  const { data } = useHomepage();
 
   const isClicked = ref(false);
   const clickedBlockIndex = ref<number | null>(null);
   const viewport = useViewport();
   const isTablet = computed(() => viewport.isLessThan('lg') && viewport.isGreaterThan('sm'));
 
-
-  
   const isPreview = ref(false);
 
   const getBlocksLists = async () => {
@@ -43,7 +38,7 @@ export const useBlockManager = () => {
       console.error('Failed to fetch blocksLists:', error);
     }
   };
-  
+
 
   const getTemplateByLanguage = (category: string, variationIndex: number, lang: string) => {
     const variationsInCategory = blocksLists.value[category];
@@ -73,8 +68,6 @@ export const useBlockManager = () => {
     updatedBlocks.splice(newIndex, 0, blockToChange);
 
     data.value.blocks = updatedBlocks;
-
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
   const isLastBlock = (index: number) => index === data.value.blocks.length - 1;
@@ -97,7 +90,6 @@ export const useBlockManager = () => {
   const deleteBlock = (index: number) => {
     if (data.value.blocks && index !== null && index < data.value.blocks.length) {
       data.value.blocks.splice(index, 1);
-      isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
 
       const { closeDrawer } = useSiteConfiguration();
       closeDrawer();
