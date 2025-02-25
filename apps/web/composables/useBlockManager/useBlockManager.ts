@@ -55,7 +55,6 @@ export const useBlockManager = () => {
     updatedBlocks.splice(position, 0, newBlock);
     data.value.blocks = updatedBlocks;
     visiblePlaceholder.value = { index: null, position: null };
-    isEditingEnabled.value = !deepEqual(initialBlocks.value, data.value.blocks);
   };
 
   const changeBlockPosition = (index: number, position: number) => {
