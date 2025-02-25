@@ -1,6 +1,7 @@
 import type { Address } from '@plentymarkets/shop-api';
 
-export type AddressFormProps = {
+export type AddressFormBillingProps = {
+  disabled: boolean;
   address?: Address;
   addAddress?: boolean;
 };
