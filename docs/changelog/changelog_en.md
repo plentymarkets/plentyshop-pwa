@@ -6,8 +6,9 @@
 
 - Added feedback notifications for 'Save changes' button.
 
-### Fixed
+### 🩹 Fixed
 
+- Fixed an issue where deleting the checkout address as a guest triggered an unknown error.
 - Fixed displayed the recommended products on product pages.
 - Fixed the save button not being re-enabled on subsequent edits.
 - Fixed an issue where an empty initial category template couldn't get edited.
